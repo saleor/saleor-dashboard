@@ -8,7 +8,7 @@ import {
 } from "@dashboard/graphql";
 import difference from "lodash/difference";
 
-import { PermissionGroupDetailsPageFormData } from "./components/PermissonGroupDetailsPage";
+import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
 /**
  * Will return true if group has all permissions available in shop assigned.
  */

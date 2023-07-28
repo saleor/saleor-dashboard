@@ -25,9 +25,9 @@ import { useIntl } from "react-intl";
 
 import AssignMembersDialog from "../../components/AssignMembersDialog";
 import {
+  PermissionGroupDetailsPage,
   PermissionGroupDetailsPageFormData,
-  PermissonGroupDetailsPage,
-} from "../../components/PermissonGroupDetailsPage";
+} from "../../components/PermissionGroupDetailsPage";
 import UnassignMembersDialog from "../../components/UnassignMembersDialog";
 import {
   permissionGroupDetailsUrl,
@@ -185,7 +185,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
 
   return (
     <>
-      <PermissonGroupDetailsPage
+      <PermissionGroupDetailsPage
         permissionGroup={data?.permissionGroup}
         permissionsExceeded={permissionsExceeded}
         isUserAbleToEditChannels={!!isGroupEditable}

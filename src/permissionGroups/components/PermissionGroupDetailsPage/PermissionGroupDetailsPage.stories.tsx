@@ -9,10 +9,10 @@ import {
   users,
 } from "../../fixtures";
 import {
-  PermissonGroupDetailsPage,
+  PermissionGroupDetailsPage,
   PermissonGroupDetailsPageProps,
-} from "./PermissonGroupDetailsPage";
-export * from "./PermissonGroupDetailsPage";
+} from "./PermissionGroupDetailsPage";
+export * from "./PermissionGroupDetailsPage";
 
 const props: PermissonGroupDetailsPageProps = {
   disabled: false,
@@ -40,13 +40,13 @@ const props: PermissonGroupDetailsPageProps = {
 };
 
 export default {
-  title: "Permission Groups / Permission Group Details With Channels",
+  title: "Permission Groups / Permission Group Details",
 };
 
-export const Default = () => <PermissonGroupDetailsPage {...props} />;
+export const Default = () => <PermissionGroupDetailsPage {...props} />;
 
 export const NoMembers = () => (
-  <PermissonGroupDetailsPage
+  <PermissionGroupDetailsPage
     {...props}
     members={[]}
     permissionGroup={emptyPermissionGroup}
@@ -54,7 +54,7 @@ export const NoMembers = () => (
 );
 
 export const Loading = () => (
-  <PermissonGroupDetailsPage
+  <PermissionGroupDetailsPage
     {...props}
     disabled={true}
     permissionGroup={permissionGroup}
@@ -63,14 +63,14 @@ export const Loading = () => (
 );
 
 export const WithRestrictedChannels = () => (
-  <PermissonGroupDetailsPage
+  <PermissionGroupDetailsPage
     {...props}
     permissionGroup={permissionGroupWithChannels}
   />
 );
 
 export const WithRestrictedChannelsAndWithoutAccessToEdit = () => (
-  <PermissonGroupDetailsPage
+  <PermissionGroupDetailsPage
     {...props}
     disabled={true}
     isUserAbleToEditChannels={false}

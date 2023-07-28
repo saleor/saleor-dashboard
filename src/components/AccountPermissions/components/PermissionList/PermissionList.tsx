@@ -1,5 +1,5 @@
 import Skeleton from "@dashboard/components/Skeleton";
-import { PermissionData } from "@dashboard/permissionGroups/components/PermissonGroupDetailsPage";
+import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
 import {
   Checkbox,
   ListItem,

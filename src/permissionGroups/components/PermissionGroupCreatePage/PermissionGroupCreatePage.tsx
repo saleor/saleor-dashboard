@@ -21,8 +21,8 @@ import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { PermissionData } from "../PermissionGroupDetailsPage";
 import PermissionGroupInfo from "../PermissionGroupInfo";
-import { PermissionData } from "../PermissonGroupDetailsPage";
 
 export interface PermissionGroupCreateFormData {
   name: string;

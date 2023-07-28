@@ -70,7 +70,7 @@ export interface PermissonGroupDetailsPageProps
   onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
 
-export const PermissonGroupDetailsPage: React.FC<
+export const PermissionGroupDetailsPage: React.FC<
   PermissonGroupDetailsPageProps
 > = ({
   disabled,
