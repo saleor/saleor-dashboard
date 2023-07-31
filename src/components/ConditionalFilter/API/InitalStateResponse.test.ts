@@ -68,7 +68,7 @@ describe("ConditionalFilter / API / InitialStateResponse", () => {
     const initialState = InitialStateResponse.empty();
     initialState.attribute = {
       size: {
-        value: null,
+        value: "",
         label: "Size",
         slug: "size",
         inputType: "NUMERIC",
