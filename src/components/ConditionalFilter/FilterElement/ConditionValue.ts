@@ -2,7 +2,7 @@ export interface ItemOption {
   label: string;
   value: string;
   slug: string;
-  // TODO: remove this when is ready https://github.com/saleor/saleor/issues/13076
+  // TODO: remove this when https://github.com/saleor/saleor/issues/13076 is ready
   originalSlug?: string | null;
 }
 
