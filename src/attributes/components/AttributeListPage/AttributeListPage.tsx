@@ -20,7 +20,7 @@ import {
   SortPage,
   TabPageProps,
 } from "../../../types";
-import AttributeList from "../AttributeList/AttributeList";
+import { AttributeListDatagrid } from "../AttributeListDatagrid";
 import {
   AttributeFilterKeys,
   AttributeListFilterOpts,
@@ -93,7 +93,14 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
         />
-        <AttributeList {...listProps} />
+
+        <AttributeListDatagrid
+          onSelectAttributesIds={() => {
+            // eslint-disable-next-line no-console
+            console.log("Hello");
+          }}
+          {...listProps}
+        />
       </Card>
     </>
   );
