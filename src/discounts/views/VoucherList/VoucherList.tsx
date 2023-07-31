@@ -154,8 +154,8 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
       },
     });
 
-  const onVoucherBulkDelete = () => {
-    voucherBulkDelete({
+  const onVoucherBulkDelete = async () => {
+    await voucherBulkDelete({
       variables: {
         ids: selectedRowIds,
       },
@@ -173,7 +173,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         return;
       }
 
-      const rowsIds = rows.map(row => vouchers[row].id);
+      const rowsIds = rows.map(row => vouchers[row]?.id);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
