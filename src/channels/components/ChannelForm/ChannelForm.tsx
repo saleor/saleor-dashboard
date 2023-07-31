@@ -211,7 +211,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             __height={12.5}
           />
         </Box>
-        <Box paddingX={6}>
+        <Box paddingX={6} marginTop={4}>
           <Checkbox
             data-test-id="order-settings-mark-as-paid"
             disabled={disabled}
@@ -221,15 +221,19 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             }
             onCheckedChange={onMarkAsPaidStrategyChange}
             name="markAsPaidStrategy"
-            marginBottom={2}
           >
             <Text>
               <FormattedMessage {...messages.markAsPaid} />
             </Text>
             <PreviewPill />
           </Checkbox>
-          <Box display="flex" flexDirection="column">
-            <Text variant="caption" color="textNeutralSubdued" size="large">
+          <Box display="flex" flexDirection="column" paddingLeft={4}>
+            <Text
+              variant="caption"
+              color="textNeutralSubdued"
+              size="large"
+              paddingLeft={0.5}
+            >
               <FormattedMessage
                 defaultMessage='"Mark as paid" feature creates a'
                 id="MDOw8D"
@@ -246,7 +250,12 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                 id="Fqe4aB"
               />
             </Text>
-            <Text variant="caption" color="textNeutralSubdued" size="large">
+            <Text
+              variant="caption"
+              color="textNeutralSubdued"
+              size="large"
+              paddingLeft={0.5}
+            >
               <FormattedMessage
                 defaultMessage="If left unchecked it creates a"
                 id="hHv0ih"
@@ -275,16 +284,23 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             onCheckedChange={value =>
               onChange({ target: { name: "allowUnpaidOrders", value } })
             }
-            marginBottom={2}
           >
             <Text>
               <FormattedMessage {...messages.allowUnpaidOrdersLabel} />
             </Text>{" "}
             <PreviewPill />
           </Checkbox>
-          <Text variant="caption" color="textNeutralSubdued" size="large">
-            <FormattedMessage {...messages.allowUnpaidOrdersDescription} />
-          </Text>
+          <Box paddingLeft={4}>
+            {" "}
+            <Text
+              variant="caption"
+              color="textNeutralSubdued"
+              size="large"
+              paddingLeft={0.5}
+            >
+              <FormattedMessage {...messages.allowUnpaidOrdersDescription} />
+            </Text>
+          </Box>
         </Box>
       </Box>
     </>
