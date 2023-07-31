@@ -27,17 +27,17 @@ export const vouchersListStaticColumnsAdapter = (
       width: 350,
     },
     {
-      id: "minSpent",
+      id: "min-spent",
       title: intl.formatMessage(columnsMessages.minSpent),
       width: 200,
     },
     {
-      id: "starts",
+      id: "start-date",
       title: intl.formatMessage(columnsMessages.starts),
       width: 200,
     },
     {
-      id: "ends",
+      id: "end-date",
       title: intl.formatMessage(columnsMessages.ends),
       width: 200,
     },
@@ -47,7 +47,7 @@ export const vouchersListStaticColumnsAdapter = (
       width: 200,
     },
     {
-      id: "uses",
+      id: "limit",
       title: intl.formatMessage(columnsMessages.uses),
       width: 200,
     },
@@ -84,7 +84,7 @@ export const createGetCellContent =
     switch (columnId) {
       case "code":
         return readonlyTextCell(rowData?.code ?? PLACEHOLDER);
-      case "minSpent":
+      case "min-spent":
         return rowData?.code && hasChannelsLoaded
           ? moneyCell(
               channel?.minSpent?.amount ?? "",
@@ -94,13 +94,13 @@ export const createGetCellContent =
               },
             )
           : readonlyTextCell(PLACEHOLDER);
-      case "starts":
+      case "start-date":
         return readonlyTextCell(
           rowData.startDate
             ? moment(rowData.startDate).locale(locale).format("lll")
             : PLACEHOLDER,
         );
-      case "ends":
+      case "end-date":
         return readonlyTextCell(
           rowData.endDate
             ? moment(rowData.endDate).locale(locale).format("lll")
@@ -110,7 +110,7 @@ export const createGetCellContent =
       case "value":
         return getVoucherValueCell(rowData, channel, locale);
 
-      case "uses":
+      case "limit":
         return readonlyTextCell(
           rowData.usageLimit === null
             ? PLACEHOLDER
