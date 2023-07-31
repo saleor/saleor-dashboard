@@ -40,7 +40,7 @@ describe("ChannelPermission", () => {
     expect(screen.getByRole("checkbox")).toBeInTheDocument();
     expect(screen.getByRole("checkbox")).toBeChecked();
     expect(
-      screen.getByText(/allow access to all channels/i),
+      screen.getByText(/allow access to orders of all channels/i),
     ).toBeInTheDocument();
   });
 

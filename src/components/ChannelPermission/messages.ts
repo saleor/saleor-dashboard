@@ -5,17 +5,13 @@ export const messages = defineMessages({
     defaultMessage: "Channels permissions",
     id: "vz3yxp",
   },
-  titleLable: {
-    defaultMessage: "only applicable to orders",
-    id: "pSLUXi",
-  },
   allowAllChannels: {
-    defaultMessage: "Allow access to all channels",
-    id: "B/TEDt",
+    defaultMessage: "Allow access to orders of all channels",
+    id: "9FGTOt",
   },
   selectChannels: {
-    defaultMessage: "Select visible channels",
-    id: "xGknjS",
+    defaultMessage: "Select visible order channels",
+    id: "vprU7C",
   },
   searchChannels: {
     defaultMessage: "Search channels",
