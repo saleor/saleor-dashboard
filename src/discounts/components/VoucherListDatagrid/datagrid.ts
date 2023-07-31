@@ -5,7 +5,6 @@ import {
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
-import { formatPercantage } from "@dashboard/components/Percent/utils";
 import { VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import { VoucherFragment } from "@dashboard/graphql";
 import { Sort } from "@dashboard/types";
@@ -108,7 +107,7 @@ export const createGetCellContent =
         );
 
       case "value":
-        return getVoucherValueCell(rowData, channel, locale);
+        return getVoucherValueCell(rowData, channel);
 
       case "limit":
         return readonlyTextCell(
@@ -125,7 +124,6 @@ export const createGetCellContent =
 function getVoucherValueCell(
   voucher: VoucherFragment,
   channel: NonNullable<VoucherFragment["channelListings"]>[number] | undefined,
-  locale: Locale,
 ) {
   const hasChannelsLoaded = voucher?.channelListings?.length;
 
@@ -139,7 +137,7 @@ function getVoucherValueCell(
     });
   }
 
-  return readonlyTextCell(
-    formatPercantage(channel?.discountValue ?? 0, locale),
-  );
+  return moneyCell(channel?.discountValue ?? "", "%", {
+    readonly: true,
+  });
 }
