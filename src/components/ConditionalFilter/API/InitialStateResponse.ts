@@ -69,12 +69,12 @@ export class InitialStateResponse implements InitialState {
       return [token.value] as string[];
     }
 
-    return this.getEntryByname(token.name).filter(
+    return this.getEntryByName(token.name).filter(
       ({ slug }) => slug && token.value.includes(slug),
     );
   }
 
-  private getEntryByname(name: string) {
+  private getEntryByName(name: string) {
     switch (name) {
       case "category":
         return this.category;

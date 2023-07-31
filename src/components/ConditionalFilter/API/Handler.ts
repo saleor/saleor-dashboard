@@ -28,7 +28,6 @@ export interface Handler {
 }
 
 export const createOptionsFromAPI = (
-  // TODO: try to use type from graphql
   data: Array<{ node: { name: string | null; id: string; slug: string } }>,
 ): ItemOption[] =>
   data.map(({ node }) => ({
@@ -170,6 +169,6 @@ export class BooleanValuesHandler implements Handler {
   constructor(public options: LeftOperand[]) {}
 
   fetch = async (): Promise<LeftOperand[]> => {
-    return this.options
+    return this.options;
   };
 }

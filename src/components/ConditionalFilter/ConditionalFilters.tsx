@@ -11,18 +11,18 @@ export const ConditionalFilters: FC<{ onClose: () => void }> = ({
   onClose,
 }) => {
   const { valueProvider, containerState } = useConditionalFilterContext();
-  const [errors, setErrors] = useState<ErrorEntry[]>([])
+  const [errors, setErrors] = useState<ErrorEntry[]>([]);
 
   const handleConfirm = (value: FilterContainer) => {
-    const validator = new Validator(value)
+    const validator = new Validator(value);
 
     if (validator.isValid()) {
       valueProvider.persist(value);
       onClose();
-      return
+      return;
     }
 
-    setErrors(validator.getErrors())
+    setErrors(validator.getErrors());
   };
 
   const handleCancel = () => {
@@ -34,13 +34,12 @@ export const ConditionalFilters: FC<{ onClose: () => void }> = ({
   return valueProvider.loading ? (
     <LoadingFiltersArea />
   ) : (
-    <Box
-      padding={3}
-      backgroundColor="interactiveNeutralSecondaryHovering"
-      borderBottomLeftRadius={2}
-      borderBottomRightRadius={2}
-    >
-      <FiltersArea onConfirm={handleConfirm} errors={errors} onCancel={handleCancel} />
+    <Box padding={3} borderBottomLeftRadius={2} borderBottomRightRadius={2}>
+      <FiltersArea
+        onConfirm={handleConfirm}
+        errors={errors}
+        onCancel={handleCancel}
+      />
     </Box>
   );
 };
