@@ -117,7 +117,7 @@ export const PermissionGroupCreatePage: React.FC<
 
               <FormSpacer />
 
-              <Box paddingX={9}>
+              <Box paddingX={6}>
                 <ChannelPermission
                   allChannels={channels}
                   selectedChannels={data.channels}

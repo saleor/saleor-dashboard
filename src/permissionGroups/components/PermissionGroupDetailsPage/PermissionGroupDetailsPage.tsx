@@ -147,7 +147,7 @@ export const PermissionGroupDetailsPage: React.FC<
 
               <FormSpacer />
 
-              <Box paddingX={9}>
+              <Box paddingX={6}>
                 <ChannelPermission
                   allChannels={
                     // I pass all channels because Multiselect components based on ids,
