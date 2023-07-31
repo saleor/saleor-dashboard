@@ -1,4 +1,5 @@
 import { ConditionalProductFilterProvider } from "@dashboard/components/ConditionalFilter/context";
+import { useFlag } from "@dashboard/featureFlags";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { getArrayQueryParam } from "@dashboard/utils/urls";
@@ -6,7 +7,6 @@ import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
-import { useFlag } from "@dashboard/featureFlags";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {

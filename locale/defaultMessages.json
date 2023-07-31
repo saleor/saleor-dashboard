@@ -5949,6 +5949,10 @@
     "context": "product inventory, checkbox",
     "string": "Variant currently in preorder"
   },
+  "eIGXwJ": {
+    "context": "Alert text",
+    "string": "You are using an old version of filter presets. The following presets: {presetNames} must be updated to continue using filters"
+  },
   "eLJQSh": {
     "context": "column title gift card",
     "string": "Gift Card"
@@ -8185,10 +8189,6 @@
   "v9ILn/": {
     "context": "button",
     "string": "CANCEL END DATE"
-  },
-  "vBykp8": {
-    "context": "Alert text",
-    "string": "You are using an old version of the filter presets. Update your presets to continue using filters."
   },
   "vC8vyb": {
     "context": "enabled status option label",
