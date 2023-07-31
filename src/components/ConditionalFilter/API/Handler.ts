@@ -28,12 +28,20 @@ export interface Handler {
 }
 
 export const createOptionsFromAPI = (
-  data: Array<{ node: { name: string | null; id: string; slug: string } }>,
+  data: Array<{
+    node: {
+      name: string | null;
+      id: string;
+      slug: string;
+      originalSlug?: string | null;
+    };
+  }>,
 ): ItemOption[] =>
   data.map(({ node }) => ({
     label: node.name ?? "",
     value: node.id,
     slug: node.slug,
+    originalSlug: node.originalSlug,
   }));
 
 export class AttributeChoicesHandler implements Handler {
