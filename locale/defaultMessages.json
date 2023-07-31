@@ -304,6 +304,10 @@
   "/vCXIP": {
     "string": "Translation"
   },
+  "/vgHaF": {
+    "context": "mark as paid strategy checkbox label",
+    "string": "Use transactions mechanism to determine whether order was paid"
+  },
   "/w919H": {
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
@@ -1444,6 +1448,10 @@
   "8hrH/z": {
     "context": "dialog header",
     "string": "Search Category"
+  },
+  "8iUzOU": {
+    "context": "allow unpaid orders checbkox description",
+    "string": "Enables completing checkout with order before a successful payment."
   },
   "8oIbMI": {
     "string": "Reached limit for this plan"
@@ -6117,6 +6125,10 @@
   },
   "ftcHpD": {
     "string": "Customer created"
+  },
+  "fuFCpI": {
+    "context": "allow unpaid orders checkbox label",
+    "string": "Allow unpaid orders"
   },
   "fw+VAN": {
     "context": "product's sku",
