@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
-import { FilterContainer } from "../FilterElement";
+import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
-import { useTokenArray } from "./TokenArray";
+import { TokenArray } from "./TokenArray";
 import { UrlEntry } from "./UrlToken";
 
 type Structure = Array<string | UrlEntry | Structure>;
@@ -25,20 +25,24 @@ const prepareStructure = (filterValue: FilterContainer): Structure =>
 
 export const useUrlValueProvider = (
   initialState: InitialAPIState,
+  locationSearch: string,
 ): FilterValueProvider => {
   const router = useRouter();
-  const params = new URLSearchParams(router.location.search);
+  const params = new URLSearchParams(locationSearch);
   const { data, loading, fetchQueries } = initialState;
   const [value, setValue] = useState<FilterContainer>([]);
 
+  const activeTab = params.get("activeTab");
   params.delete("asc");
   params.delete("sort");
+  params.delete("activeTab");
 
-  const tokenizedUrl = useTokenArray(params.toString());
+  const tokenizedUrl = new TokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
+
   useEffect(() => {
     fetchQueries(fetchingParams);
-  }, []);
+  }, [locationSearch]);
 
   useEffect(() => {
     if (loading) return;
@@ -49,7 +53,10 @@ export const useUrlValueProvider = (
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
       pathname: router.location.pathname,
-      search: stringify(prepareStructure(filterValue)),
+      search: stringify({
+        ...prepareStructure(filterValue),
+        ...{ activeTab: activeTab || undefined },
+      }),
     });
     setValue(filterValue);
   };
@@ -61,6 +68,10 @@ export const useUrlValueProvider = (
     setValue([]);
   };
 
+  const isPersisted = (element: FilterElement) => {
+    return value.some(p => FilterElement.isCompatible(p) && p.equals(element));
+  };
+
   const count = value.filter(v => typeof v !== "string").length;
 
   return {
@@ -68,6 +79,7 @@ export const useUrlValueProvider = (
     loading,
     persist,
     clear,
+    isPersisted,
     count,
   };
 };

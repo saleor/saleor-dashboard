@@ -46,7 +46,7 @@ describe("As an admin I want to update sales", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     deleteProductsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
     deleteSalesStartsWith(startsWith);
@@ -104,7 +104,7 @@ describe("As an admin I want to update sales", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,

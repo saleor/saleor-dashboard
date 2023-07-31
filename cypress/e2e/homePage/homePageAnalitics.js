@@ -44,7 +44,7 @@ describe("As an admin I want to see correct information on dashboard home page",
   let ordersRegexp;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productsUtils
       .createProductWithShipping({
         name: randomName,
@@ -140,7 +140,7 @@ describe("As an admin I want to see correct information on dashboard home page",
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

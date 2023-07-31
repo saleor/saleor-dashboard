@@ -8,8 +8,12 @@ import {
   createCheckout,
 } from "../../support/api/requests/Checkout";
 import { getVariants } from "../../support/api/requests/Product";
-import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtils";
-import { createNewProductWithSeveralVariants } from "../../support/api/utils/products/productsUtils";
+import {
+  createWaitingForCaptureOrder,
+} from "../../support/api/utils/ordersUtils";
+import {
+  createNewProductWithSeveralVariants,
+} from "../../support/api/utils/products/productsUtils";
 
 describe("Manage products stocks in checkout", () => {
   const startsWith = "CyStocksCheckout-";
@@ -23,7 +27,7 @@ describe("Manage products stocks in checkout", () => {
   let lastVariantInStock;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     const variantsData = [
       {

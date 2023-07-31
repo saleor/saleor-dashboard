@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { UrlToken } from "./../ValueProvider/UrlToken";
@@ -26,7 +25,7 @@ export class Condition {
   }
 
   public isEmpty() {
-    return this.options.isEmpty() || this.selected.isEmpty()
+    return this.options.isEmpty() || this.selected.isEmpty();
   }
 
   public static createEmpty() {
@@ -81,7 +80,7 @@ export class Condition {
     if (token.isAttribute()) {
       const attribute = response.attributeByName(token.name);
       const options = ConditionOptions.fromAtributeType(attribute.inputType);
-      const option = options.find(item => item.label === token.conditionKind)!
+      const option = options.find(item => item.label === token.conditionKind)!;
       const value = response.filterByUrlToken(token);
 
       return new Condition(

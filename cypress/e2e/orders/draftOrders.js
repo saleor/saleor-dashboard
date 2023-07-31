@@ -19,7 +19,9 @@ import {
   getDefaultChannel,
 } from "../../support/api/utils/";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import { ensureCanvasStatic } from "../../support/customCommands/sharedElementsOperations/canvas";
+import {
+  ensureCanvasStatic,
+} from "../../support/customCommands/sharedElementsOperations/canvas";
 import {
   finalizeDraftOrder,
   selectChannelInPicker,
@@ -36,7 +38,7 @@ describe("Draft orders", () => {
   let shippingMethod;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateOrdersSettings();
     getDefaultChannel()
       .then(channel => {
@@ -94,7 +96,7 @@ describe("Draft orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

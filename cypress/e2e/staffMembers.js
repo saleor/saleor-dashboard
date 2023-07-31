@@ -12,7 +12,11 @@ import {
   STAFF_MEMBERS_LIST_SELECTORS,
 } from "../elements/";
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
-import { MESSAGES, TEST_ADMIN_USER, urlList } from "../fixtures";
+import {
+  MESSAGES,
+  TEST_ADMIN_USER,
+  urlList,
+} from "../fixtures";
 import { userDetailsUrl } from "../fixtures/urlList";
 import {
   activatePlugin,
@@ -42,7 +46,7 @@ describe("Staff members", () => {
   let user;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     activatePlugin({ id: "mirumee.notifications.admin_email" });
     inviteStaffMemberWithFirstPermission({ email })
       .then(({ user: userResp }) => {
@@ -58,7 +62,7 @@ describe("Staff members", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

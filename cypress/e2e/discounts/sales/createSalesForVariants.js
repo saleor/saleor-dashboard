@@ -11,7 +11,8 @@ import {
   createSaleInChannel,
   getVariantWithSaleStatus,
 } from "../../../support/api/utils/discounts/salesUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
 import { createShipping } from "../../../support/api/utils/shippingUtils";
 import {
   getDefaultTaxClass,
@@ -36,7 +37,7 @@ describe("Sales discounts for variant", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -86,7 +87,7 @@ describe("Sales discounts for variant", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,

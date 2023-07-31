@@ -12,7 +12,6 @@ import { useDevModeContext } from "../DevModePanel/hooks";
 import { useDevModeKeyTrigger } from "../DevModePanel/useDevModeKeyTrigger";
 import Navigator from "../Navigator";
 import { Sidebar } from "../Sidebar";
-import { contentMaxWidth } from "./consts";
 import { useStyles } from "./styles";
 import { extractQueryParams } from "./util";
 
@@ -64,7 +63,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />
-      <Box display="grid" __gridTemplateColumns="auto 1fr">
+      <Box
+        display="grid"
+        __gridTemplateColumns="auto 1fr"
+        className="big-desktop-max-width"
+      >
         {appState.loading && (
           <LinearProgress className={classes.appLoader} color="primary" />
         )}
@@ -96,8 +99,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             borderTopWidth={1}
             borderTopStyle="solid"
             borderColor="neutralPlain"
-            __maxWidth={contentMaxWidth}
-            margin="auto"
             zIndex="2"
           />
         </Box>

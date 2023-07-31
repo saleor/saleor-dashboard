@@ -1,6 +1,6 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { createBoleanOption } from "../constants";
+import { createBooleanOption } from "../constants";
 import { AttributeInputType } from "../FilterElement/ConditionOptions";
 import { ItemOption } from "../FilterElement/ConditionValue";
 import { UrlToken } from "../ValueProvider/UrlToken";
@@ -58,7 +58,7 @@ export class InitialStateResponse implements InitialState {
     if (token.isAttribute()) {
       const attr = this.attribute[token.name];
       return attr.inputType === "BOOLEAN"
-        ? createBoleanOption(
+        ? createBooleanOption(
             token.value === "true",
             AttributeInputTypeEnum.BOOLEAN,
           )

@@ -10,13 +10,8 @@ import { createProductType } from "../../../support/pages/productTypePage";
 describe("As an admin I want to create product types", () => {
   const startsWith = "productType";
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
+    cy.loginUserViaRequest()
       .visit(urlList.productTypes)
       .expectSkeletonIsVisible();
   });

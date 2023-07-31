@@ -37,7 +37,7 @@ export function changeQuantityOfProducts() {
   cy.get(ORDERS_SELECTORS.dataGridTable).should("be.visible");
   cy.get(ORDERS_SELECTORS.quantityCellFirstRowOrderDetails)
     .click({ force: true })
-    .wait(200)
+    .should("have.attr", "aria-selected", "true")
     .click({ force: true })
     .wait(1000);
   cy.get(ORDERS_SELECTORS.gridClip)

@@ -66,6 +66,7 @@ export function getSortQueryVariables(
   }
 
   const field = getSortQueryField(params.sort);
+  // TODO: how to handle search & sort
   return {
     direction,
     field,

@@ -3,15 +3,22 @@
 
 import faker from "faker";
 
-import { ATTRIBUTES_DETAILS } from "../../../elements/attribute/attributes_details";
+import {
+  ATTRIBUTES_DETAILS,
+} from "../../../elements/attribute/attributes_details";
 import { ATTRIBUTES_LIST } from "../../../elements/attribute/attributes_list";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { attributeDetailsUrl, urlList } from "../../../fixtures/urlList";
+import {
+  attributeDetailsUrl,
+  urlList,
+} from "../../../fixtures/urlList";
 import {
   createAttribute,
   getAttribute,
 } from "../../../support/api/requests/Attribute";
-import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
+import {
+  expectCorrectDataInAttribute,
+} from "../../../support/api/utils/attributes/checkAttributeData";
 import {
   createAttributeWithInputType,
   fillUpAttributeNameAndCode,
@@ -48,13 +55,8 @@ describe("As an admin I want to create product attribute", () => {
     { unitSystem: "without selecting unit", testCase: "SALEOR_0510" },
   ];
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
+    cy.loginUserViaRequest()
       .visit(urlList.attributes)
       .get(ATTRIBUTES_LIST.createAttributeButton)
       .click();

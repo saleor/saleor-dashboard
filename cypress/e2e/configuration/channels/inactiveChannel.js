@@ -3,8 +3,12 @@
 
 import faker from "faker";
 
-import { CHANNEL_FORM_SELECTORS } from "../../../elements/channels/channel-form-selectors";
-import { DRAFT_ORDER_SELECTORS } from "../../../elements/orders/draft-order-selectors";
+import {
+  CHANNEL_FORM_SELECTORS,
+} from "../../../elements/channels/channel-form-selectors";
+import {
+  DRAFT_ORDER_SELECTORS,
+} from "../../../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../../../elements/orders/orders-selectors";
 import { urlList } from "../../../fixtures/urlList";
 import {
@@ -12,13 +16,17 @@ import {
   createChannel,
 } from "../../../support/api/requests/Channels";
 import { createCheckout } from "../../../support/api/requests/Checkout";
-import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
+import {
+  getProductDetails,
+} from "../../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
 } from "../../../support/api/utils/products/productsUtils";
-import { isProductVisible } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import {
+  isProductVisible,
+} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 
 describe("Tests on inactive channel", () => {
   const channelStartsWith = `InactiveChannel`;
@@ -30,7 +38,7 @@ describe("Tests on inactive channel", () => {
   let newChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.fixture("addresses").then(({ plAddress }) => {
       address = plAddress;
     });
@@ -47,7 +55,7 @@ describe("Tests on inactive channel", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

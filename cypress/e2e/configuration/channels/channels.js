@@ -2,14 +2,25 @@
 /// <reference types="../../../support"/>
 import faker from "faker";
 
-import { ADD_CHANNEL_FORM_SELECTORS } from "../../../elements/channels/add-channel-form-selectors";
-import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-channels-form";
-import { CHANNELS_SELECTORS } from "../../../elements/channels/channels-selectors";
-import { SELECT_CHANNELS_TO_ASSIGN } from "../../../elements/channels/select-channels-to-assign";
+import {
+  ADD_CHANNEL_FORM_SELECTORS,
+} from "../../../elements/channels/add-channel-form-selectors";
+import {
+  AVAILABLE_CHANNELS_FORM,
+} from "../../../elements/channels/available-channels-form";
+import {
+  CHANNELS_SELECTORS,
+} from "../../../elements/channels/channels-selectors";
+import {
+  SELECT_CHANNELS_TO_ASSIGN,
+} from "../../../elements/channels/select-channels-to-assign";
 import { HEADER_SELECTORS } from "../../../elements/header/header-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { MESSAGES } from "../../../fixtures/";
-import { productDetailsUrl, urlList } from "../../../fixtures/urlList";
+import {
+  productDetailsUrl,
+  urlList,
+} from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
 import { getFirstProducts } from "../../../support/api/requests/Product";
@@ -17,7 +28,9 @@ import {
   createShippingZoneWithoutWarehouse,
   getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
-import { createWarehouse as createWarehouseViaApi } from "../../../support/api/requests/Warehouse";
+import {
+  createWarehouse as createWarehouseViaApi,
+} from "../../../support/api/requests/Warehouse";
 import {
   createChannelByView,
   setChannelRequiredFields,
@@ -32,7 +45,7 @@ describe("Channels", () => {
   let usAddress;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createShippingZoneWithoutWarehouse(randomName, "US").then(
       shippingZoneResp => {
         shippingZone = shippingZoneResp;
@@ -52,10 +65,7 @@ describe("Channels", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.channel,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.channel);
   });
 
   it(

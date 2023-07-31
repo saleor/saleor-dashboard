@@ -10,8 +10,11 @@ import {
   addPayment,
   createCheckoutWithVoucher,
 } from "../../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
+import {
+  updateTaxConfigurationForChannel,
+} from "../../../support/api/utils/taxesUtils";
 import {
   createVoucher,
   discountOptions,
@@ -30,7 +33,7 @@ describe("As an admin I want to create voucher", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(
@@ -63,7 +66,7 @@ describe("As an admin I want to create voucher", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,

@@ -5,12 +5,19 @@ import faker from "faker";
 
 import { productDetailsUrl } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
+import {
+  getProductDetails,
+} from "../../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
-import { isProductAvailableForPurchase } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import { updateProductIsAvailableForPurchase } from "../../../support/pages/catalog/products/productDetailsPage";
+import {
+  isProductAvailableForPurchase,
+} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import {
+  updateProductIsAvailableForPurchase,
+} from "../../../support/pages/catalog/products/productDetailsPage";
 
 describe("Products available in listings", () => {
   const startsWith = "CyAvailForPurchase-";
@@ -22,7 +29,7 @@ describe("Products available in listings", () => {
   let warehouse;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     shippingUtils.deleteShippingStartsWith(startsWith);
     productsUtils.deleteProductsStartsWith(startsWith);
 
@@ -65,10 +72,7 @@ describe("Products available in listings", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(

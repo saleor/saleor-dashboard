@@ -14,7 +14,6 @@ import "./customCommands/sharedElementsOperations/selects.js";
 import "./customCommands/sharedElementsOperations/tables";
 import "./customCommands/softAssertions";
 import "./customCommands/user";
-import "@percy/cypress";
 
 import { commandTimings } from "cypress-timings";
 
@@ -24,7 +23,9 @@ import {
   SHARED_ELEMENTS,
 } from "../elements";
 import { urlList } from "../fixtures/urlList";
-import { ensureCanvasStatic } from "../support/customCommands/sharedElementsOperations/canvas";
+import {
+  ensureCanvasStatic,
+} from "../support/customCommands/sharedElementsOperations/canvas";
 import cypressGrep from "../support/cypress-grep/support";
 
 commandTimings();

@@ -36,7 +36,7 @@ describe("Adyen payments", () => {
   let cardData;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.fixture("cards").then(cardsResp => {
       paymentCards = cardsResp.adyen;
       cardData = {
@@ -101,7 +101,7 @@ describe("Adyen payments", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createCheckout({
       channelSlug: defaultChannel.slug,
       email,

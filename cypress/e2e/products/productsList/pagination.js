@@ -2,13 +2,17 @@
 /// <reference types="../../../support"/>
 
 import { PAGINATION } from "../../../elements";
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import {
+  PRODUCTS_LIST,
+} from "../../../elements/catalog/products/products-list";
 import { urlList } from "../../../fixtures/urlList";
-import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
+import {
+  ensureCanvasStatic,
+} from "../../../support/customCommands/sharedElementsOperations/canvas";
 
 describe("As an admin I should be able to manage products table", () => {
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.visit(urlList.products);
   });
 
