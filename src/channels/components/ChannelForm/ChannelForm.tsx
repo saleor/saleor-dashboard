@@ -4,7 +4,6 @@ import {
   ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
-import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
 import PreviewPill from "@dashboard/components/PreviewPill";
@@ -22,7 +21,14 @@ import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import { Box, Button, CopyIcon, Input, Text } from "@saleor/macaw-ui/next";
+import {
+  Box,
+  Button,
+  Checkbox,
+  CopyIcon,
+  Input,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -42,6 +48,7 @@ export interface FormData extends StockSettingsInput {
   defaultCountry: CountryCode;
   markAsPaidStrategy: MarkAsPaidStrategyEnum;
   deleteExpiredOrdersAfter: number;
+  allowUnpaidOrders: boolean;
 }
 
 export interface ChannelFormProps {
@@ -200,56 +207,80 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             __height={12.5}
           />
         </Box>
-        <Box display="flex" gap={1.5} alignItems="center" paddingX={6}>
-          <ControlledSwitch
+        <Box paddingX={6}>
+          <Checkbox
             data-test-id="order-settings-mark-as-paid"
             disabled={disabled}
             checked={
               data.markAsPaidStrategy ===
               MarkAsPaidStrategyEnum.TRANSACTION_FLOW
             }
-            onChange={onMarkAsPaidStrategyChange}
+            onCheckedChange={onMarkAsPaidStrategyChange}
             name="markAsPaidStrategy"
-            label={
-              <span>
-                <FormattedMessage
-                  defaultMessage='"Mark as paid" feature creates a'
-                  id="MDOw8D"
-                />{" "}
-                <Link
-                  href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
-                  target="_blank"
-                  rel="noopener noreferer"
-                >
-                  <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
-                </Link>{" "}
-                <FormattedMessage
-                  defaultMessage="- used by Payment Apps"
-                  id="Fqe4aB"
-                />
-              </span>
+            marginBottom={2}
+          >
+            <Text>
+              <FormattedMessage {...messages.markAsPaid} />
+            </Text>
+            <PreviewPill />
+          </Checkbox>
+          <Box display="flex" flexDirection="column">
+            <Text variant="caption" color="textNeutralSubdued" size="large">
+              <FormattedMessage
+                defaultMessage='"Mark as paid" feature creates a'
+                id="MDOw8D"
+              />{" "}
+              <Link
+                href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
+                target="_blank"
+                rel="noopener noreferer"
+              >
+                <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
+              </Link>{" "}
+              <FormattedMessage
+                defaultMessage="- used by Payment Apps"
+                id="Fqe4aB"
+              />
+            </Text>
+            <Text variant="caption" color="textNeutralSubdued" size="large">
+              <FormattedMessage
+                defaultMessage="If left unchecked it creates a"
+                id="hHv0ih"
+              />{" "}
+              <Link
+                href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
+                target="_blank"
+                rel="noopener noreferer"
+              >
+                <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
+              </Link>{" "}
+              <FormattedMessage
+                defaultMessage="- used by Payment Plugins"
+                id="50lR2F"
+              />
+            </Text>
+          </Box>
+        </Box>
+        <Box />
+        <Box paddingX={6}>
+          <Checkbox
+            name="allowUnpaidOrders"
+            data-test-id="allow-unpaid-orders-checkbox"
+            checked={data.allowUnpaidOrders}
+            error={!!formErrors.allowUnpaidOrders}
+            onCheckedChange={value =>
+              onChange({ target: { name: "allowUnpaidOrders", value } })
             }
-            secondLabel={
-              <span>
-                <FormattedMessage
-                  defaultMessage="If left unchecked it creates a"
-                  id="hHv0ih"
-                />{" "}
-                <Link
-                  href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
-                  target="_blank"
-                  rel="noopener noreferer"
-                >
-                  <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
-                </Link>{" "}
-                <FormattedMessage
-                  defaultMessage="- used by Payment Plugins"
-                  id="50lR2F"
-                />
-              </span>
-            }
-          />
-          <PreviewPill />
+            marginBottom={2}
+          >
+            <Text>
+              <FormattedMessage {...messages.allowUnpaidOrdersLabel} />
+            </Text>{" "}
+            <PreviewPill />
+          </Checkbox>
+          <Text variant="caption" color="textNeutralSubdued" size="large">
+            <FormattedMessage {...messages.allowUnpaidOrdersDescription} />
+          </Text>
         </Box>
       </Box>
     </>
