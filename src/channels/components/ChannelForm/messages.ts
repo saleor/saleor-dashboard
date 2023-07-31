@@ -42,9 +42,8 @@ export const messages = defineMessages({
     description: "order expiration card description",
   },
   markAsPaid: {
-    id: "/vgHaF",
-    defaultMessage:
-      "Use transactions mechanism to determine whether order was paid",
+    id: "L2tvTm",
+    defaultMessage: "Use Transaction flow when marking order as paid",
     description: "mark as paid strategy checkbox label",
   },
   allowUnpaidOrdersLabel: {

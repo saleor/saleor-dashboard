@@ -304,10 +304,6 @@
   "/vCXIP": {
     "string": "Translation"
   },
-  "/vgHaF": {
-    "context": "mark as paid strategy checkbox label",
-    "string": "Use transactions mechanism to determine whether order was paid"
-  },
   "/w919H": {
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
@@ -3237,6 +3233,10 @@
   },
   "L/sNGY": {
     "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
+  },
+  "L2tvTm": {
+    "context": "mark as paid strategy checkbox label",
+    "string": "Use Transaction flow when marking order as paid"
   },
   "L5io1l": {
     "context": "returned products list title",
