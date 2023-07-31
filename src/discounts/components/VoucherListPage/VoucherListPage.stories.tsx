@@ -2,12 +2,11 @@
 import { voucherList } from "@dashboard/discounts/fixtures";
 import { VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import {
-  filterPageProps,
+  filterPresetsProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps,
 } from "@dashboard/fixtures";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
 import { Meta, StoryObj } from "@storybook/react";
@@ -20,9 +19,11 @@ const props: VoucherListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
-  ...tabPageProps,
-  ...filterPageProps,
+  ...filterPresetsProps,
   onSelectVouchersIds: () => undefined,
+  selectedVouchersIds: [],
+  onVoucherDelete: () => undefined,
+  onFilterChange: () => undefined,
   filterOpts: {
     channel: {
       active: false,
