@@ -32,6 +32,7 @@ export const useUrlValueProvider = (
   const { data, loading, fetchQueries } = initialState;
   const [value, setValue] = useState<FilterContainer>([]);
 
+  const activeTab = params.get("activeTab");
   params.delete("asc");
   params.delete("sort");
   params.delete("activeTab");
@@ -52,7 +53,10 @@ export const useUrlValueProvider = (
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
       pathname: router.location.pathname,
-      search: stringify(prepareStructure(filterValue)),
+      search: stringify({
+        ...prepareStructure(filterValue),
+        ...{ activeTab: activeTab || undefined },
+      }),
     });
     setValue(filterValue);
   };
