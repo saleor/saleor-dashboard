@@ -32,8 +32,10 @@ export const useUrlValueProvider = (
   const { data, loading, fetchQueries } = initialState;
   const [value, setValue] = useState<FilterContainer>([]);
 
+  const activeTab = params.get("activeTab");
   params.delete("asc");
   params.delete("sort");
+  params.delete("activeTab");
 
   const tokenizedUrl = new TokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
@@ -51,7 +53,10 @@ export const useUrlValueProvider = (
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
       pathname: router.location.pathname,
-      search: stringify(prepareStructure(filterValue)),
+      search: stringify({
+        ...prepareStructure(filterValue),
+        ...{ activeTab: activeTab || undefined },
+      }),
     });
     setValue(filterValue);
   };
@@ -64,8 +69,8 @@ export const useUrlValueProvider = (
   };
 
   const isPersisted = (element: FilterElement) => {
-    return value.some(p => FilterElement.isCompatible(p) && p.equals(element))
-  }
+    return value.some(p => FilterElement.isCompatible(p) && p.equals(element));
+  };
 
   const count = value.filter(v => typeof v !== "string").length;
 

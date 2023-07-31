@@ -6,6 +6,7 @@ import React, { ReactNode } from "react";
 
 import { ExpressionFilters } from "./components/ExpressionFilters";
 import { FiltersSelect } from "./components/FiltersSelect";
+import { LegacyFiltersPresetsAlert } from "./components/LegacyFiltersPresetsAlert";
 import SearchInput from "./components/SearchInput";
 
 export interface ListFiltersProps<TKeys extends string = string>
@@ -34,6 +35,7 @@ export const ListFilters = <TFilterKeys extends string = string>({
 
   return (
     <>
+      {filtersEnabled && <LegacyFiltersPresetsAlert />}
       <Box
         display="grid"
         __gridTemplateColumns="auto 1fr"
