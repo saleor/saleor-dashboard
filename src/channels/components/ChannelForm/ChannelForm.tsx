@@ -91,9 +91,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   );
 
   const renderCurrencySelection =
-    currencyCodes &&
-    selectedCurrencyCode &&
-    typeof onCurrencyCodeChange === "function";
+    currencyCodes && typeof onCurrencyCodeChange === "function";
 
   return (
     <>
@@ -157,8 +155,8 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               label={intl.formatMessage(messages.channelCurrency)}
               choices={currencyCodes}
               name="currencyCode"
-              displayValue={selectedCurrencyCode}
-              value={selectedCurrencyCode}
+              displayValue={selectedCurrencyCode ?? ""}
+              value={selectedCurrencyCode ?? ""}
               onChange={onCurrencyCodeChange}
             />
           ) : (
