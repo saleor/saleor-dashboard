@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   ChannelShippingZones,
   ChannelWarehouses,
@@ -91,6 +90,11 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
     errors,
   );
 
+  const renderCurrencySelection =
+    currencyCodes &&
+    selectedCurrencyCode &&
+    typeof onCurrencyCodeChange === "function";
+
   return (
     <>
       <DashboardCard>
@@ -135,7 +139,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           <FormattedMessage {...messages.orderExpiration} />
         </Text>
         <Box paddingX={6}>
-          {currencyCodes ? (
+          {renderCurrencySelection ? (
             <SingleAutocompleteSelectField
               data-test-id="channel-currency-select-input"
               allowCustomValues
