@@ -1,0 +1,150 @@
+import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
+import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
+import Datagrid from "@dashboard/components/Datagrid/Datagrid";
+import {
+  DatagridChangeStateContext,
+  useDatagridChangeState,
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { StaffMember, StaffMembers } from "@dashboard/staff/types";
+import {
+  StaffListUrlSortField,
+  staffMemberDetailsUrl,
+} from "@dashboard/staff/urls";
+import { ListProps, SortPage } from "@dashboard/types";
+import { Item } from "@glideapps/glide-data-grid";
+import { Box } from "@saleor/macaw-ui/next";
+import React, { useCallback, useMemo } from "react";
+import { useIntl } from "react-intl";
+
+import {
+  createGetCellContent,
+  staffMemebersListStaticColumnsAdapter,
+} from "./datagrid";
+import { messages } from "./messages";
+
+interface StaffListDatagridProps
+  extends ListProps,
+    SortPage<StaffListUrlSortField> {
+  staffMembers: StaffMembers;
+  onSelectStaffMemebersIds: (
+    rowsIndex: number[],
+    clearSelection: () => void,
+  ) => void;
+}
+
+export const StaffListDatagrid = ({
+  staffMembers,
+  settings,
+  sort,
+  disabled,
+  onSort,
+  onSelectStaffMemebersIds,
+  onUpdateListSettings,
+}: StaffListDatagridProps) => {
+  const datagridState = useDatagridChangeState();
+  const navigate = useNavigator();
+  const intl = useIntl();
+
+  const staffMemebersListStaticColumns = useMemo(
+    () => staffMemebersListStaticColumnsAdapter(intl, sort),
+    [intl, sort],
+  );
+
+  const onColumnChange = useCallback(
+    (picked: string[]) => {
+      if (onUpdateListSettings) {
+        onUpdateListSettings("columns", picked.filter(Boolean));
+      }
+    },
+    [onUpdateListSettings],
+  );
+
+  const {
+    handlers,
+    visibleColumns,
+    recentlyAddedColumn,
+    staticColumns,
+    selectedColumns,
+  } = useColumns({
+    selectedColumns: settings?.columns ?? [],
+    staticColumns: staffMemebersListStaticColumns,
+    onSave: onColumnChange,
+  });
+
+  const getCellContent = useCallback(
+    createGetCellContent({
+      staffMembers,
+      columns: visibleColumns,
+      intl,
+    }),
+    [staffMembers, intl, visibleColumns],
+  );
+
+  const handleRowClick = useCallback(
+    ([_, row]: Item) => {
+      const rowData: StaffMember = staffMembers[row];
+
+      if (rowData) {
+        navigate(staffMemberDetailsUrl(rowData.id));
+      }
+    },
+    [staffMembers],
+  );
+
+  const handleRowAnchor = useCallback(
+    ([, row]: Item) => staffMemberDetailsUrl(staffMembers[row].id),
+    [staffMembers],
+  );
+  const handleHeaderClick = useCallback(
+    (col: number) => {
+      const columnName = visibleColumns[col].id as StaffListUrlSortField;
+      onSort(columnName);
+    },
+    [visibleColumns, onSort],
+  );
+
+  return (
+    <DatagridChangeStateContext.Provider value={datagridState}>
+      <Datagrid
+        readonly
+        loading={disabled}
+        rowMarkers="checkbox"
+        columnSelect="single"
+        hasRowHover={true}
+        onColumnMoved={handlers.onMove}
+        onColumnResize={handlers.onResize}
+        verticalBorder={col => col > 0}
+        rows={staffMembers?.length ?? 0}
+        availableColumns={visibleColumns}
+        emptyText={intl.formatMessage(messages.empty)}
+        onRowSelectionChange={onSelectStaffMemebersIds}
+        getCellContent={getCellContent}
+        getCellError={() => false}
+        selectionActions={() => null}
+        menuItems={() => []}
+        onRowClick={handleRowClick}
+        onHeaderClicked={handleHeaderClick}
+        rowAnchor={handleRowAnchor}
+        recentlyAddedColumn={recentlyAddedColumn}
+        renderColumnPicker={() => (
+          <ColumnPicker
+            staticColumns={staticColumns}
+            selectedColumns={selectedColumns}
+            onToggle={handlers.onToggle}
+          />
+        )}
+      />
+
+      <Box paddingX={6}>
+        <TablePaginationWithContext
+          component="div"
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      </Box>
+    </DatagridChangeStateContext.Provider>
+  );
+};

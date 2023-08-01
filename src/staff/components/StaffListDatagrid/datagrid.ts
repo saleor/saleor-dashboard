@@ -1,0 +1,75 @@
+import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
+import {
+  readonlyTextCell,
+  thumbnailCell,
+} from "@dashboard/components/Datagrid/customCells/cells";
+import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { commonStatusMessages } from "@dashboard/intl";
+import { getUserName } from "@dashboard/misc";
+import { StaffMember, StaffMembers } from "@dashboard/staff/types";
+import { StaffListUrlSortField } from "@dashboard/staff/urls";
+import { Sort } from "@dashboard/types";
+import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
+import { GridCell, Item } from "@glideapps/glide-data-grid";
+import { IntlShape } from "react-intl";
+
+import { columnsMessages } from "./messages";
+
+export const staffMemebersListStaticColumnsAdapter = (
+  intl: IntlShape,
+  sort: Sort<StaffListUrlSortField>,
+) =>
+  [
+    {
+      id: "name",
+      title: intl.formatMessage(columnsMessages.name),
+      width: 300,
+    },
+    {
+      id: "status",
+      title: intl.formatMessage(columnsMessages.status),
+      width: 150,
+    },
+    {
+      id: "email",
+      title: intl.formatMessage(columnsMessages.email),
+      width: 300,
+    },
+  ].map(column => ({
+    ...column,
+    icon: getColumnSortDirectionIcon(sort, column.id),
+  }));
+
+export const createGetCellContent =
+  ({
+    staffMembers,
+    columns,
+    intl,
+  }: {
+    staffMembers: StaffMembers;
+    columns: AvailableColumn[];
+    intl: IntlShape;
+  }) =>
+  ([column, row]: Item): GridCell => {
+    const rowData: StaffMember | undefined = staffMembers[row];
+    const columnId = columns[column]?.id;
+
+    if (!columnId || !rowData) {
+      return readonlyTextCell("");
+    }
+
+    switch (columnId) {
+      case "name":
+        return thumbnailCell(getUserName(rowData), rowData?.avatar?.url, {});
+      case "status":
+        return readonlyTextCell(
+          rowData?.isActive
+            ? intl.formatMessage(commonStatusMessages.active)
+            : intl.formatMessage(commonStatusMessages.notActive),
+        );
+      case "email":
+        return readonlyTextCell(rowData?.email ?? PLACEHOLDER);
+      default:
+        return readonlyTextCell("");
+    }
+  };
