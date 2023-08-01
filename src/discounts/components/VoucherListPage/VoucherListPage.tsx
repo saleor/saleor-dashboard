@@ -10,6 +10,7 @@ import {
   VoucherListUrlSortField,
 } from "@dashboard/discounts/urls";
 import { VoucherFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
@@ -58,6 +59,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
@@ -101,7 +103,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
           </Box>
           <Box>
             <Button
-              href={voucherAddUrl()}
+              onClick={() => navigate(voucherAddUrl())}
               variant="primary"
               data-test-id="create-voucher"
             >
