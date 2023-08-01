@@ -550,9 +550,6 @@
   "1X6HtI": {
     "string": "All Categories"
   },
-  "1div9r": {
-    "string": "Search Attribute"
-  },
   "1gzck6": {
     "string": "{firstName} {lastName}"
   },
@@ -1532,6 +1529,9 @@
   "9RvXNg": {
     "context": "section header",
     "string": "Media Information"
+  },
+  "9ScmSs": {
+    "string": "Search attributes..."
   },
   "9Sz0By": {
     "context": "channel currency",
@@ -2788,6 +2788,10 @@
   },
   "HvJPcU": {
     "string": "Category deleted"
+  },
+  "I+1KzL": {
+    "context": "tab name",
+    "string": "All attributes"
   },
   "I+UwqI": {
     "context": "is filter range or value",
@@ -5852,10 +5856,6 @@
     "context": "vat included in order price",
     "string": "VAT included"
   },
-  "dKPMyh": {
-    "context": "tab name",
-    "string": "All Attributes"
-  },
   "dM86a2": {
     "string": "No categories found"
   },
@@ -6151,6 +6151,9 @@
   },
   "g/BrOt": {
     "string": "Url has invalid format"
+  },
+  "g0GAdN": {
+    "string": "Delete attributes"
   },
   "g3qjSf": {
     "context": "button",

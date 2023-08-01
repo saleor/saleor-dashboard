@@ -92,8 +92,8 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
               selectAllLabel={intl.formatMessage({
-                id: "pOUOnw",
-                defaultMessage: "All vouchers",
+                id: "I+1KzL",
+                defaultMessage: "All attributes",
                 description: "tab name",
               })}
             />
@@ -121,16 +121,16 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
           onSearchChange={onSearchChange}
           filterStructure={structure}
           searchPlaceholder={intl.formatMessage({
-            id: "bPshhv",
-            defaultMessage: "Search vouchers...",
+            id: "9ScmSs",
+            defaultMessage: "Search attributes...",
           })}
           actions={
             <Box display="flex" gap={4}>
               {selectedAttributesIds.length > 0 && (
                 <BulkDeleteButton onClick={onAttributesDelete}>
                   <FormattedMessage
-                    defaultMessage="Delete vouchers"
-                    id="lfXze9"
+                    defaultMessage="Delete attributes"
+                    id="g0GAdN"
                   />
                 </BulkDeleteButton>
               )}
