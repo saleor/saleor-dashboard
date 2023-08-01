@@ -20,8 +20,10 @@ import { columnsMessages } from "./messages";
 export const staffMemebersListStaticColumnsAdapter = (
   intl: IntlShape,
   sort: Sort<StaffListUrlSortField>,
+  emptyColumn: AvailableColumn,
 ) =>
   [
+    emptyColumn,
     {
       id: "name",
       title: intl.formatMessage(columnsMessages.name),

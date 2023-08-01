@@ -5,6 +5,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { StaffMember, StaffMembers } from "@dashboard/staff/types";
@@ -43,9 +44,10 @@ export const StaffListDatagrid = ({
   const intl = useIntl();
   const { themeValues } = useTheme();
 
+  const emptyColumn = useEmptyColumn();
   const staffMemebersListStaticColumns = useMemo(
-    () => staffMemebersListStaticColumnsAdapter(intl, sort),
-    [intl, sort],
+    () => staffMemebersListStaticColumnsAdapter(intl, sort, emptyColumn),
+    [intl, sort, emptyColumn],
   );
 
   const onColumnChange = useCallback(
@@ -115,7 +117,7 @@ export const StaffListDatagrid = ({
         hasRowHover={true}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 0}
+        verticalBorder={col => col > 1}
         rows={staffMembers?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
