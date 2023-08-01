@@ -64,6 +64,10 @@ const props: VoucherListPageProps = {
     sort: VoucherListUrlSortField.code,
   },
   vouchers: voucherList,
+  settings: {
+    rowNumber: 20,
+    columns: ["code", "min-spent", "start-date", "end-date", "value", "limit"],
+  },
 };
 
 const meta: Meta<typeof VoucherListPage> = {
@@ -87,6 +91,7 @@ export const Loading: Story = {
   args: {
     ...props,
     vouchers: undefined,
+    disabled: true,
   },
   parameters: {
     chromatic: { diffThreshold: 0.85 },

@@ -2,7 +2,6 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { Button } from "@dashboard/components/Button";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -19,7 +18,7 @@ import {
   SortPage,
 } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
