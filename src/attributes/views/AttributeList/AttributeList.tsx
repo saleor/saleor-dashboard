@@ -14,6 +14,7 @@ import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
@@ -29,7 +30,6 @@ import isEqual from "lodash/isEqual";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import { PAGINATE_BY } from "../../../config";
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
 import {
@@ -54,14 +54,16 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     ListViews.ATTRIBUTE_LIST,
   );
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  usePaginationReset(attributeListUrl, params, settings.rowNumber);
+
+  const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params),
     }),
-    [params],
+    [params, settings.rowNumber],
   );
   const { data, loading, refetch } = useAttributeListQuery({
     variables: queryVariables,
@@ -186,6 +188,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         sort={getSortParams(params)}
         onSelectAttributesIds={handleSelectAttributesIds}
       />
+
       <AttributeBulkDeleteDialog
         confirmButtonState={attributeBulkDeleteOpts.status}
         open={params.action === "remove" && selectedRowIds.length > 0}
@@ -196,12 +199,14 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         onClose={closeModal}
         quantity={selectedRowIds.length}
       />
+
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetSave}
       />
+
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
