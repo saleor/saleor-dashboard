@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   getFilterOpts,
   getFilterVariables,
