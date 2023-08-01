@@ -9475,8 +9475,8 @@ export type CustomerGiftCardListQuery = { __typename: 'Query', giftCards: { __ty
 export type HomeQueryVariables = Exact<{
   channel: Scalars['String'];
   datePeriod: DateRangeInput;
-  PERMISSION_MANAGE_PRODUCTS: Scalars['Boolean'];
-  PERMISSION_MANAGE_ORDERS: Scalars['Boolean'];
+  hasPermissionToManageProducts: Scalars['Boolean'];
+  hasPermissionToManageOrders: Scalars['Boolean'];
 }>;
 
 
