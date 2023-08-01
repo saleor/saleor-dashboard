@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
@@ -111,24 +110,24 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
                 description="button"
               />
             </Button>
-            {hasLimits(limits, "staffUsers") && (
-              <LimitsInfo
-                text={intl.formatMessage(
-                  {
-                    id: "9xlPgt",
-                    defaultMessage: "{count}/{max} members",
-                    description: "used staff users counter",
-                  },
-                  {
-                    count: limits.currentUsage.staffUsers,
-                    max: limits.allowedUsage.staffUsers,
-                  },
-                )}
-              />
-            )}
           </Box>
         </Box>
       </TopNav>
+      {hasLimits(limits, "staffUsers") && (
+        <Box gridColumn="8" marginLeft={6} marginBottom={reachedLimit ? 0 : 3}>
+          {intl.formatMessage(
+            {
+              id: "9xlPgt",
+              defaultMessage: "{count}/{max} members",
+              description: "used staff users counter",
+            },
+            {
+              count: limits.currentUsage.staffUsers,
+              max: limits.allowedUsage.staffUsers,
+            },
+          )}
+        </Box>
+      )}
       {reachedLimit && (
         <LimitReachedAlert
           title={intl.formatMessage({
