@@ -1,6 +1,6 @@
 import { InitialStateResponse } from "../API/InitialStateResponse";
-import { UrlToken } from "../ValueProvider/UrlToken";
 import { STATIC_CONDITIONS } from "../constants";
+import { UrlToken } from "../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
 
 describe("ConditionalFilter / FilterElement / Condition", () => {
