@@ -86,14 +86,14 @@ export const StaffListDatagrid = ({
       const rowData: StaffMember = staffMembers[row];
 
       if (rowData) {
-        navigate(staffMemberDetailsUrl(rowData.id));
+        navigate(staffMemberDetailsUrl(rowData?.id));
       }
     },
     [staffMembers],
   );
 
   const handleRowAnchor = useCallback(
-    ([, row]: Item) => staffMemberDetailsUrl(staffMembers[row].id),
+    ([, row]: Item) => staffMemberDetailsUrl(staffMembers[row]?.id),
     [staffMembers],
   );
   const handleHeaderClick = useCallback(

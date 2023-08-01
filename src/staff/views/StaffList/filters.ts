@@ -1,10 +1,9 @@
-// @ts-strict-ignore
 import {
   FilterElement,
   FilterElementRegular,
 } from "@dashboard/components/Filter";
 import { StaffMemberStatus, StaffUserInput } from "@dashboard/graphql";
-import { findValueInEnum, maybe } from "@dashboard/misc";
+import { findValueInEnum } from "@dashboard/misc";
 import {
   StaffFilterKeys,
   StaffListFilterOpts,
@@ -28,8 +27,10 @@ export function getFilterOpts(
 ): StaffListFilterOpts {
   return {
     status: {
-      active: maybe(() => params.status !== undefined, false),
-      value: maybe(() => findValueInEnum(params.status, StaffMemberStatus)),
+      active: params?.status !== undefined ?? false,
+      value: params?.status
+        ? findValueInEnum(params.status, StaffMemberStatus)
+        : null,
     },
   };
 }

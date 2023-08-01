@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { newPasswordUrl } from "@dashboard/auth/urls";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
@@ -83,18 +82,18 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
 
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
     onCompleted: data => {
-      if (data.staffCreate.errors.length === 0) {
+      if (data?.staffCreate?.errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate(staffMemberDetailsUrl(data.staffCreate.user.id));
+        navigate(staffMemberDetailsUrl(data?.staffCreate?.user?.id ?? ""));
       }
     },
   });
 
   const paginationValues = usePaginator({
-    pageInfo: staffQueryData?.staffUsers.pageInfo,
+    pageInfo: staffQueryData?.staffUsers?.pageInfo,
     paginationState,
     queryString: params,
   });
@@ -175,28 +174,30 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         onFilterPresetPresetSave={() => openModal("save-search")}
         filterPresets={presets.map(preset => preset.name)}
         disabled={loading || addStaffMemberData.loading || limitOpts.loading}
-        limits={limitOpts.data?.shop.limits}
+        limits={limitOpts.data?.shop?.limits}
         settings={settings}
         sort={getSortParams(params)}
-        staffMembers={mapEdgesToItems(staffQueryData?.staffUsers)}
+        staffMembers={mapEdgesToItems(staffQueryData?.staffUsers) ?? []}
         onAdd={() => openModal("add")}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
       />
 
       <StaffAddMemberDialog
-        availablePermissionGroups={mapEdgesToItems(
-          searchPermissionGroupsOpts?.data?.search,
-        )}
+        availablePermissionGroups={
+          mapEdgesToItems(searchPermissionGroupsOpts?.data?.search) ?? []
+        }
         confirmButtonState={addStaffMemberData.status}
         initialSearch=""
         disabled={loading}
-        errors={addStaffMemberData.data?.staffCreate.errors || []}
+        errors={addStaffMemberData.data?.staffCreate?.errors || []}
         open={params.action === "add"}
         onClose={closeModal}
         onConfirm={handleStaffMemberAdd}
         fetchMorePermissionGroups={{
-          hasMore: searchPermissionGroupsOpts.data?.search.pageInfo.hasNextPage,
+          hasMore:
+            searchPermissionGroupsOpts.data?.search?.pageInfo?.hasNextPage ??
+            false,
           loading: searchPermissionGroupsOpts.loading,
           onFetchMore: loadMorePermissionGroups,
         }}

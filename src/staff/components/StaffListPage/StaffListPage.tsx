@@ -1,17 +1,16 @@
-// @ts-strict-ignore
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration";
-import { RefreshLimitsQuery, StaffListQuery } from "@dashboard/graphql";
+import { RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import { StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import {
   FilterPagePropsWithPresets,
   ListProps,
-  RelayToFlat,
   SortPage,
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
@@ -31,8 +30,8 @@ export interface StaffListPageProps
   extends ListProps,
     FilterPagePropsWithPresets<StaffFilterKeys, StaffListFilterOpts>,
     SortPage<StaffListUrlSortField> {
-  limits: RefreshLimitsQuery["shop"]["limits"];
-  staffMembers: RelayToFlat<StaffListQuery["staffUsers"]>;
+  limits: RefreshLimitsQuery["shop"]["limits"] | undefined;
+  staffMembers: StaffMembers;
   onAdd: () => void;
 }
 
@@ -122,8 +121,8 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
               description: "used staff users counter",
             },
             {
-              count: limits.currentUsage.staffUsers,
-              max: limits.allowedUsage.staffUsers,
+              count: limits?.currentUsage?.staffUsers ?? 0,
+              max: limits?.allowedUsage?.staffUsers ?? 0,
             },
           )}
         </Box>

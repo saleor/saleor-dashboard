@@ -66,7 +66,13 @@ export const createGetCellContent =
 
     switch (columnId) {
       case "name":
-        return thumbnailCell(getUserName(rowData), rowData?.avatar?.url, {});
+        return thumbnailCell(
+          getUserName(rowData) ?? "",
+          rowData?.avatar?.url ?? "",
+          {
+            cursor: "pointer",
+          },
+        );
       case "status":
         const isActive = rowData?.isActive;
         const status = isActive
@@ -78,7 +84,10 @@ export const createGetCellContent =
           [
             {
               tag: status,
-              color: currentTheme.colors.background[statusColor],
+              color:
+                currentTheme.colors.background[
+                  statusColor as keyof typeof currentTheme.colors.background
+                ],
             },
           ],
           [status],
