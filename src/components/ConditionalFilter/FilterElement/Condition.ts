@@ -6,7 +6,7 @@ import { ConditionSelected } from "./ConditionSelected";
 import { ItemOption } from "./ConditionValue";
 
 export class Condition {
-  private constructor(
+  public constructor(
     public options: ConditionOptions,
     public selected: ConditionSelected,
     public loading: boolean,
@@ -79,7 +79,7 @@ export class Condition {
 
     if (token.isAttribute()) {
       const attribute = response.attributeByName(token.name);
-      const options = ConditionOptions.fromAtributeType(attribute.inputType);
+      const options = ConditionOptions.fromAttributeType(attribute.inputType);
       const option = options.find(item => item.label === token.conditionKind)!;
       const value = response.filterByUrlToken(token);
 
