@@ -23,7 +23,7 @@ export const staffMemebersListStaticColumnsAdapter = (
     {
       id: "name",
       title: intl.formatMessage(columnsMessages.name),
-      width: 300,
+      width: 400,
     },
     {
       id: "status",
@@ -33,7 +33,7 @@ export const staffMemebersListStaticColumnsAdapter = (
     {
       id: "email",
       title: intl.formatMessage(columnsMessages.email),
-      width: 300,
+      width: 400,
     },
   ].map(column => ({
     ...column,

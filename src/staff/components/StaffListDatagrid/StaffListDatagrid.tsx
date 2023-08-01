@@ -28,10 +28,6 @@ interface StaffListDatagridProps
   extends ListProps,
     SortPage<StaffListUrlSortField> {
   staffMembers: StaffMembers;
-  onSelectStaffMemebersIds: (
-    rowsIndex: number[],
-    clearSelection: () => void,
-  ) => void;
 }
 
 export const StaffListDatagrid = ({
@@ -40,7 +36,6 @@ export const StaffListDatagrid = ({
   sort,
   disabled,
   onSort,
-  onSelectStaffMemebersIds,
   onUpdateListSettings,
 }: StaffListDatagridProps) => {
   const datagridState = useDatagridChangeState();
@@ -100,7 +95,10 @@ export const StaffListDatagrid = ({
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as StaffListUrlSortField;
-      onSort(columnName);
+
+      if (Object.values(StaffListUrlSortField).includes(columnName)) {
+        onSort(columnName);
+      }
     },
     [visibleColumns, onSort],
   );
@@ -110,7 +108,7 @@ export const StaffListDatagrid = ({
       <Datagrid
         readonly
         loading={disabled}
-        rowMarkers="checkbox"
+        rowMarkers="none"
         columnSelect="single"
         hasRowHover={true}
         onColumnMoved={handlers.onMove}
@@ -119,7 +117,6 @@ export const StaffListDatagrid = ({
         rows={staffMembers?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
-        onRowSelectionChange={onSelectStaffMemebersIds}
         getCellContent={getCellContent}
         getCellError={() => false}
         selectionActions={() => null}
