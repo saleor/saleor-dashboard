@@ -14,7 +14,7 @@ import {
 } from "@dashboard/staff/urls";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, useTheme } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -41,6 +41,7 @@ export const StaffListDatagrid = ({
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
   const intl = useIntl();
+  const { themeValues } = useTheme();
 
   const staffMemebersListStaticColumns = useMemo(
     () => staffMemebersListStaticColumnsAdapter(intl, sort),
@@ -73,6 +74,7 @@ export const StaffListDatagrid = ({
       staffMembers,
       columns: visibleColumns,
       intl,
+      currentTheme: themeValues,
     }),
     [staffMembers, intl, visibleColumns],
   );

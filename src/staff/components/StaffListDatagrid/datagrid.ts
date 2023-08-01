@@ -1,16 +1,18 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import {
   readonlyTextCell,
+  tagsCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { commonStatusMessages } from "@dashboard/intl";
-import { getUserName } from "@dashboard/misc";
+import { getStatusColor, getUserName } from "@dashboard/misc";
 import { StaffMember, StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
+import { ThemeTokensValues } from "@saleor/macaw-ui/next";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
@@ -45,10 +47,12 @@ export const createGetCellContent =
     staffMembers,
     columns,
     intl,
+    currentTheme,
   }: {
     staffMembers: StaffMembers;
     columns: AvailableColumn[];
     intl: IntlShape;
+    currentTheme: ThemeTokensValues;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData: StaffMember | undefined = staffMembers[row];
@@ -62,10 +66,24 @@ export const createGetCellContent =
       case "name":
         return thumbnailCell(getUserName(rowData), rowData?.avatar?.url, {});
       case "status":
-        return readonlyTextCell(
-          rowData?.isActive
-            ? intl.formatMessage(commonStatusMessages.active)
-            : intl.formatMessage(commonStatusMessages.notActive),
+        const isActive = rowData?.isActive;
+        const status = isActive
+          ? intl.formatMessage(commonStatusMessages.active)
+          : intl.formatMessage(commonStatusMessages.notActive);
+        const statusColor = getStatusColor(isActive ? "success" : "error");
+
+        return tagsCell(
+          [
+            {
+              tag: status,
+              color: currentTheme.colors.background[statusColor],
+            },
+          ],
+          [status],
+          {
+            readonly: true,
+            allowOverlay: false,
+          },
         );
       case "email":
         return readonlyTextCell(rowData?.email ?? PLACEHOLDER);
