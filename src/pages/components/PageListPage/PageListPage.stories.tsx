@@ -1,7 +1,10 @@
 // @ts-strict-ignore
 import {
+  filterPageProps,
+  filterPresetsProps,
   listActionsProps,
   pageListProps,
+  searchPageProps,
   sortPageProps,
 } from "@dashboard/fixtures";
 import { pageList } from "@dashboard/pages/fixtures";
@@ -12,21 +15,37 @@ import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import PageListPage, { PageListPageProps } from "./PageListPage";
 
 const props: PageListPageProps = {
+  ...filterPageProps,
   ...listActionsProps,
   ...pageListProps.default,
+  ...searchPageProps,
   ...sortPageProps,
+  ...filterPresetsProps,
+  settings: {
+    ...pageListProps.default.settings,
+    columns: ["title", "slug", "visible"],
+  },
   pages: pageList,
   sort: {
     ...sortPageProps.sort,
     sort: PageListUrlSortField.title,
   },
-  actionDialogOpts: {
-    open: () => undefined,
-    close: () => undefined,
+  filterOpts: {
+    pageType: {
+      active: false,
+      value: [],
+      choices: [],
+      displayValues: [],
+    },
   },
-  params: {
-    ids: [],
-  },
+  selectedPageIds: [],
+  loading: false,
+  hasPresetsChanged: () => false,
+  onSelectPageIds: () => undefined,
+  onPagesDelete: () => undefined,
+  onPagesPublish: () => undefined,
+  onPagesUnpublish: () => undefined,
+  onPageCreate: () => undefined,
 };
 
 const meta: Meta<typeof PageListPage> = {

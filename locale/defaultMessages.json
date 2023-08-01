@@ -388,6 +388,10 @@
     "context": "menu item name",
     "string": "Name"
   },
+  "0XHXTZ": {
+    "context": "column header",
+    "string": "Title"
+  },
   "0a0fLZ": {
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
@@ -1027,10 +1031,6 @@
   },
   "5BajZK": {
     "string": "View and update your site settings"
-  },
-  "5GSYCR": {
-    "context": "page status",
-    "string": "Visibility"
   },
   "5HwLx9": {
     "context": "alert",
@@ -2343,10 +2343,6 @@
   "F7DxHw": {
     "string": "Subcategories"
   },
-  "F8gsds": {
-    "context": "unpublish page, button",
-    "string": "Unpublish"
-  },
   "FA+MRz": {
     "string": "Set plugin as active"
   },
@@ -2803,10 +2799,6 @@
   "I7HyJZ": {
     "context": "order refund amount",
     "string": "Max Refund"
-  },
-  "I8dAAe": {
-    "context": "page internal name",
-    "string": "Slug"
   },
   "I8mqqj": {
     "context": "PageTypeDeleteWarningDialog single assigned items button label",
@@ -4505,10 +4497,6 @@
   "UN+yTt": {
     "string": "Staff Settings"
   },
-  "UN3qWD": {
-    "context": "page status",
-    "string": "Not Published"
-  },
   "UNwG+4": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this page?} other{Are you sure you want to delete {displayQuantity} pages?}}"
@@ -4634,10 +4622,6 @@
   "V1mqpZ": {
     "context": "button",
     "string": "Create Permission Group"
-  },
-  "V2+HTM": {
-    "context": "dialog header",
-    "string": "Title"
   },
   "V2BBQu": {
     "string": "Currency in both channels must be the same"
@@ -4889,6 +4873,10 @@
   "Wr5UOV": {
     "context": "error message",
     "string": "Login went wrong. Please try again."
+  },
+  "WvMDHa": {
+    "context": "page status",
+    "string": "Not published"
   },
   "Ww69SE": {
     "context": "search input placeholder",
@@ -6119,6 +6107,10 @@
     "context": "button, form submit, grant refund create",
     "string": "Grant refund"
   },
+  "ftOPoy": {
+    "context": "bulk actions button label",
+    "string": "Unpublish"
+  },
   "ftcHpD": {
     "string": "Customer created"
   },
@@ -6294,6 +6286,10 @@
   },
   "hJZwTS": {
     "string": "Email address"
+  },
+  "hJrzlT": {
+    "context": "tab name",
+    "string": "All content"
   },
   "hLOEeb": {
     "context": "button",
@@ -6513,6 +6509,10 @@
     "context": "label",
     "string": "Search pages"
   },
+  "j/Oo0B": {
+    "context": "bulk actions button label",
+    "string": "Publish"
+  },
   "j/vV0n": {
     "context": "channel name",
     "string": "Channel Name"
@@ -6696,6 +6696,10 @@
   },
   "kFsTMN": {
     "string": "Delete customers"
+  },
+  "kIcyUo": {
+    "context": "column header",
+    "string": "Slug"
   },
   "kIvvax": {
     "string": "Search Products..."
@@ -8367,6 +8371,10 @@
   "wL7VAE": {
     "string": "Actions"
   },
+  "wLB8B3": {
+    "context": "column header",
+    "string": "Visibility"
+  },
   "wNQzS/": {
     "string": "The primary address of this customer."
   },
@@ -8573,10 +8581,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
   },
-  "yEmwxD": {
-    "context": "publish page, button",
-    "string": "Publish"
-  },
   "yH56V+": {
     "string": "Ooops!..."
   },
@@ -8766,6 +8770,10 @@
   "zf48rQ": {
     "context": "sum of captured amount of all transactions",
     "string": "Total captured"
+  },
+  "zfBsje": {
+    "context": "bulk actions button label",
+    "string": "Delete content"
   },
   "zfjAc7": {
     "context": "grant refund, card header",
