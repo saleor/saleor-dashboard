@@ -1445,6 +1445,10 @@
     "context": "dialog header",
     "string": "Search Category"
   },
+  "8iUzOU": {
+    "context": "allow unpaid orders checbkox description",
+    "string": "Enables completing checkout with order before a successful payment."
+  },
   "8oIbMI": {
     "string": "Reached limit for this plan"
   },
@@ -3221,6 +3225,10 @@
   },
   "L/sNGY": {
     "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
+  },
+  "L2tvTm": {
+    "context": "mark as paid strategy checkbox label",
+    "string": "Use Transaction flow when marking order as paid"
   },
   "L5io1l": {
     "context": "returned products list title",
@@ -6113,6 +6121,10 @@
   },
   "ftcHpD": {
     "string": "Customer created"
+  },
+  "fuFCpI": {
+    "context": "allow unpaid orders checkbox label",
+    "string": "Allow unpaid orders"
   },
   "fw+VAN": {
     "context": "product's sku",
