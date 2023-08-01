@@ -5,13 +5,13 @@ import {
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { Button } from "@dashboard/components/Button";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { AttributeFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Card } from "@material-ui/core";
-import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -56,6 +56,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
@@ -99,7 +100,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
           </Box>
           <Box>
             <Button
-              href={attributeAddUrl()}
+              onClick={() => navigate(attributeAddUrl())}
               variant="primary"
               data-test-id="create-attribute-button"
             >
