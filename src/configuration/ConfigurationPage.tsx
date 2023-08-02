@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { UserFragment } from "@dashboard/graphql";
@@ -99,7 +100,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
         {isSmUp && renderVersionInfo}
       </TopNav>
       <DetailPageLayout.Content data-test-id="configuration-menu">
-        <Box paddingX={9} __maxWidth={"1024px"} margin="auto">
+        <Box paddingX={6} __maxWidth={"1024px"} margin="auto">
           {menus
             .filter(menu =>
               menu.menuItems.some(menuItem =>
@@ -117,7 +118,11 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                       hasUserMenuItemPermissions(menuItem, user),
                     )
                     .map((item, itemIndex) => (
-                      <Link className={classes.link} to={item.url}>
+                      <Link
+                        className={classes.link}
+                        to={item.url}
+                        key={`${item.title}-${itemIndex}`}
+                      >
                         <NavigationCard
                           className={classes.navigationCard}
                           key={itemIndex}

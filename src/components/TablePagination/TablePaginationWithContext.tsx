@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
 import React from "react";
 
@@ -15,12 +16,8 @@ export type TablePaginationWithContextProps = Omit<
 export const TablePaginationWithContext = (
   props: TablePaginationWithContextProps,
 ) => {
-  const {
-    hasNextPage,
-    hasPreviousPage,
-    paginatorType,
-    ...paginationProps
-  } = usePaginatorContext();
+  const { hasNextPage, hasPreviousPage, paginatorType, ...paginationProps } =
+    usePaginatorContext();
 
   if (paginatorType === "click") {
     const { loadNextPage, loadPreviousPage } = paginationProps;

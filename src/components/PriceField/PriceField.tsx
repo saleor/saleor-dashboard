@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { InputAdornment, InputLabelProps, TextField } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -42,7 +43,7 @@ export interface PriceFieldProps {
   inputProps?: InputProps["inputProps"];
   InputLabelProps?: InputLabelProps;
   required?: boolean;
-  onChange(event: any);
+  onChange: (event: any) => any;
 }
 
 export const PriceField: React.FC<PriceFieldProps> = props => {
@@ -77,6 +78,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
       fullWidth
       value={value}
       InputLabelProps={InputLabelProps}
+      data-test-id="price-field"
       InputProps={{
         ...InputProps,
         endAdornment: currencySymbol ? (

@@ -2,6 +2,7 @@ import { SALES_SELECTORS } from "../../../elements/discounts/sales";
 import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { urlList } from "../../../fixtures/urlList";
+import { getVariantWithSaleStatus } from "../../../support/api/utils/discounts/salesUtils";
 import { formatDate } from "../../../support/formatData/formatDate";
 import { getVariant } from "../../api/requests/Product";
 import { createProductInChannel } from "../../api/utils/products/productsUtils";
@@ -23,7 +24,6 @@ export function createSale({
 
   cy.get(SALES_SELECTORS.createSaleButton)
     .click()
-    .waitForProgressBarToNotBeVisible()
     .get(SALES_SELECTORS.nameInput)
     .type(saleName)
     .get(discountOption)
@@ -36,7 +36,6 @@ export function createSale({
     .addAliasToGraphRequest("SaleCreate")
     .get(SALES_SELECTORS.saveButton)
     .click()
-    .confirmationMessageShouldDisappear()
     .waitForRequestAndCheckIfNoErrors("@SaleCreate");
 }
 
@@ -101,9 +100,7 @@ export function createSaleWithNewProduct({
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
-    cy.visit(urlList.sales)
-      .expectSkeletonIsVisible()
-      .waitForProgressBarToNotExist();
+    cy.visit(urlList.sales);
     createSale({
       saleName: name,
       channelName: channel.name,
@@ -140,9 +137,7 @@ export function createSaleWithNewVariant({
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
-    cy.visit(urlList.sales)
-      .expectSkeletonIsVisible()
-      .waitForProgressBarToNotExist();
+    cy.visit(urlList.sales);
     createSale({
       saleName: name,
       channelName: channel.name,
@@ -150,6 +145,11 @@ export function createSaleWithNewVariant({
       discountOption,
     });
     assignVariants(product.name, variant.name);
+    getVariantWithSaleStatus({
+      channelSlug: channel.slug,
+      variantId: variant.id,
+      onSaleStatus: true,
+    });
     return getVariant(variant.id, channel.slug, "token");
   });
 }

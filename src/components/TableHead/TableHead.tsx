@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   TableCell,
@@ -95,7 +96,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
           >
             <Checkbox
               indeterminate={items && items.length > selected && selected > 0}
-              checked={selected === 0 ? false : true}
+              checked={selected !== 0}
               disabled={disabled}
               onChange={() => toggleAll(items, selected)}
             />

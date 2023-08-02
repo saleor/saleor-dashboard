@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import SingleSelectField from "@dashboard/components/SingleSelectField";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -20,7 +21,7 @@ interface PhoneFieldProps {
   number: string;
   prefixes: string[];
   label?: string;
-  onChange(event: React.ChangeEvent<any>);
+  onChange: (event: React.ChangeEvent<any>) => any;
 }
 
 const PhoneField: React.FC<PhoneFieldProps> = props => {

@@ -3,9 +3,13 @@
 
 import faker from "faker";
 
-import { CHANNEL_FORM_SELECTORS } from "../../elements/channels/channel-form-selectors";
+import {
+  CHANNEL_FORM_SELECTORS,
+} from "../../elements/channels/channel-form-selectors";
 import { HEADER_SELECTORS } from "../../elements/header/header-selectors";
-import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
+import {
+  DRAFT_ORDER_SELECTORS,
+} from "../../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
 import { urlList } from "../../fixtures/urlList";
 import { createChannel } from "../../support/api/requests/Channels";
@@ -23,8 +27,7 @@ xdescribe("Channels in draft orders", () => {
   let otherChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannelsStartsWith(startsWith);
+    cy.loginUserViaRequest();
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -38,7 +41,7 @@ xdescribe("Channels in draft orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

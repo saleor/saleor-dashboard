@@ -4,7 +4,6 @@
 import faker from "faker";
 
 import { getGiftCardsWithCode } from "../../../support/api/requests/GiftCard";
-import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
 import { addToDate } from "../../../support/api/utils/misc";
 import { formatDate } from "../../../support/formatData/formatDate";
 import {
@@ -21,12 +20,11 @@ describe("As an admin I want to create gift card", () => {
   const currency = "USD";
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteGiftCardsWithTagStartsWith(startsWith);
+    cy.loginUserViaRequest();
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

@@ -1,11 +1,15 @@
+// @ts-strict-ignore
 import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderErrorFragment, OrderLineFragment } from "@dashboard/graphql";
+import {
+  OrderDetailsFragment,
+  OrderErrorFragment,
+  OrderLineFragment,
+} from "@dashboard/graphql";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
-import { OrderBothTypes } from "@dashboard/orders/types";
 import {
   Card,
   CardContent,
@@ -95,11 +99,11 @@ interface OrderReturnRefundLinesCardProps {
   canReplace?: boolean;
   errors: OrderErrorFragment[];
   lines: OrderLineFragment[];
-  order: OrderBothTypes;
+  order: OrderDetailsFragment;
   itemsSelections: FormsetReplacementData;
   itemsQuantities: FormsetQuantityData;
   onChangeSelected: FormsetChange<boolean>;
-  onSetMaxQuantity();
+  onSetMaxQuantity: () => any;
 }
 
 const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({

@@ -1,7 +1,9 @@
+// @ts-strict-ignore
 import { handleNestedMutationErrors } from "@dashboard/auth";
 import { formatMoney } from "@dashboard/components/Money";
 import messages from "@dashboard/containers/BackgroundTasks/messages";
 import {
+  CreateManualTransactionCaptureMutation,
   InvoiceEmailSendMutation,
   InvoiceRequestMutation,
   OrderAddNoteMutation,
@@ -19,13 +21,10 @@ import {
   OrderLineUpdateMutation,
   OrderMarkAsPaidMutation,
   OrderShippingMethodUpdateMutation,
+  OrderTransactionRequestActionMutation,
   OrderUpdateMutation,
   OrderVoidMutation,
 } from "@dashboard/graphql";
-import {
-  CreateManualTransactionCaptureMutation,
-  OrderTransactionRequestActionMutation,
-} from "@dashboard/graphql/transactions";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";

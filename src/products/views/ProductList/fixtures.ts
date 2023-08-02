@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { attributes } from "@dashboard/attributes/fixtures";
 import { categories } from "@dashboard/categories/fixtures";
 import { collections } from "@dashboard/collections/fixtures";

@@ -1,15 +1,13 @@
-import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 
 const useStyles = makeStyles(
   theme => {
     const hover = {
       "&:hover": {
-        background: alpha(theme.palette.primary.main, 0.1),
+        background: vars.colors.background.interactiveNeutralHighlightHovering,
       },
     };
-
-    const isDarkMode = theme.palette.type === "dark";
 
     return {
       editor: {
@@ -20,17 +18,18 @@ const useStyles = makeStyles(
           minHeight: 24,
         },
         "& .ce-block--selected .ce-block__content": {
-          background: `${alpha(theme.palette.primary.main, 0.2)} !important`,
+          background: `${vars.colors.background.interactiveNeutralHighlightPressing} !important`,
         },
         "& .ce-block__content": {
           margin: 0,
           maxWidth: "unset",
+          paddingRight: "54px",
         },
         "& .ce-conversion-tool": {
           ...hover,
         },
         "& .ce-conversion-tool--focused": {
-          background: `${alpha(theme.palette.primary.main, 0.1)} !important`,
+          background: `${vars.colors.background.interactiveNeutralHighlightHovering} !important`,
         },
         "& .ce-conversion-tool__icon": {
           background: "none",
@@ -77,13 +76,21 @@ const useStyles = makeStyles(
           ...hover,
         },
         "& .ce-popover": {
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: vars.colors.background.surfaceNeutralPlain,
+          position: "absolute",
+          top: 0,
+          left: "-186px",
+        },
+        "& .ce-settings": {
+          position: "absolute",
+          left: "-56px",
         },
         "& .ce-popover__item": {
           ...hover,
         },
         "& .ce-popover__item-icon": {
-          color: theme.palette.saleor.generic.verydark,
+          color: vars.colors.foreground.iconNeutralDefault,
+          backgroundColor: vars.colors.background.surfaceNeutralPlain,
         },
 
         "& .codex-editor__loader": {
@@ -97,38 +104,61 @@ const useStyles = makeStyles(
           paddingBottom: "0 !important",
         },
         "& a": {
-          color: theme.palette.primary.light,
+          color: vars.colors.foreground.textBrandDefault,
         },
-        "&:not($rootDisabled):hover": {
-          borderColor: isDarkMode
-            ? theme.palette.saleor.main[2]
-            : theme.palette.saleor.main[4],
+        "& .ce-popover__item--focused": {
+          background: `${vars.colors.background.interactiveNeutralHighlightHovering} !important`,
+        },
+        "& .cdx-search-field": {
+          backgroundColor: vars.colors.background.surfaceNeutralPlain,
         },
       },
       root: {
-        border: `1px solid ${theme.palette.saleor.main[4]}`,
-        borderRadius: 4,
-        fontSize: theme.typography.body1.fontSize,
+        border: "1px solid transparent",
+        borderRadius: vars.borderRadius[3],
+        fontSize: vars.fontSize.bodyMedium,
+        backgroundColor: vars.colors.background.surfaceNeutralHighlight,
         minHeight: 56,
-        padding: theme.spacing(3, 2),
-        paddingBottom: theme.spacing(),
-        paddingLeft: 10,
         position: "relative",
         transition: theme.transitions.duration.short + "ms",
+        padding: theme.spacing(3, 2),
+        paddingBottom: theme.spacing(),
+        paddingLeft: vars.spacing[4],
+        "&:hover": {
+          border: `1px solid ${vars.colors.border.neutralHighlight}`,
+        },
       },
       rootActive: {
-        borderColor: theme.palette.saleor.main[1],
+        border: `1px solid ${vars.colors.border.brandSubdued} !important`,
+        backgroundColor: `${vars.colors.background.interactiveNeutralHighlightDefault} !important`,
       },
       rootDisabled: {
-        ...theme.overrides.MuiOutlinedInput.root["&$disabled"]["& fieldset"],
-        background: theme.palette.background.default,
-        color: theme.palette.saleor.main[4],
+        pointerEvents: "none",
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+        border: `1px solid ${vars.colors.border.neutralHighlight}`,
+        color: vars.colors.foreground.textNeutralDisabled,
       },
       rootError: {
-        borderColor: theme.palette.error.main,
+        backgroundColor: vars.colors.background.surfaceCriticalSubdued,
       },
       rootStatic: {
         fontSize: theme.typography.body1.fontSize,
+      },
+      labelRoot: {
+        marginLeft: "-6px",
+        color: `${vars.colors.foreground.textNeutralSubdued} !important`,
+      },
+      labelError: {
+        color: `${vars.colors.foreground.textCriticalSubdued} !important`,
+      },
+      rootErrorFocus: {
+        border: "1px solid transparent !important",
+      },
+      labelDisabled: {
+        color: `${vars.colors.foreground.textNeutralDisabled} !important`,
+      },
+      rootTyped: {
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
     };
   },

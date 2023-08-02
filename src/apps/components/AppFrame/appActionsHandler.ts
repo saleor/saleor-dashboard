@@ -6,10 +6,12 @@ import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import {
+  DashboardEventFactory,
   DispatchResponseEvent,
   NotificationAction,
   NotifyReady,
   RedirectAction,
+  RequestPermissions,
   UpdateRouting,
 } from "@saleor/app-sdk/app-bridge";
 import { useIntl } from "react-intl";
@@ -185,6 +187,10 @@ const useNotifyReadyAction = (
   frameEl: HTMLIFrameElement | null,
   appOrigin: string,
   appToken: string,
+  versions: {
+    core: string;
+    dashboard: string;
+  },
 ) => {
   const postToExtension = usePostToExtension(frameEl, appOrigin);
 
@@ -192,14 +198,46 @@ const useNotifyReadyAction = (
 
   return {
     handle(action: NotifyReady) {
-      postToExtension({
-        type: "handshake",
-        payload: {
-          token: appToken,
-          version: 1,
-        },
-      });
+      postToExtension(
+        DashboardEventFactory.createHandshakeEvent(appToken, 1, {
+          core: versions.core,
+          dashboard: versions.dashboard,
+        }),
+      );
       return createResponseStatus(action.payload.actionId, true);
+    },
+  };
+};
+
+const useHandlePermissionRequest = (appId: string) => {
+  const navigate = useNavigator();
+
+  return {
+    handle: (action: RequestPermissions) => {
+      const { actionId, permissions, redirectPath } = action.payload;
+
+      debug("Received RequestPermissions action");
+
+      if (permissions.length === 0) {
+        debug("Empty permissions array, skipping");
+
+        return createResponseStatus(actionId, false);
+      }
+
+      if (!redirectPath || redirectPath.length === 0) {
+        debug("Invalid path, skipping");
+
+        return createResponseStatus(actionId, false);
+      }
+
+      navigate(
+        AppUrls.resolveRequestPermissionsUrl(appId, {
+          redirectPath,
+          requestedPermissions: permissions,
+        }),
+      );
+
+      return createResponseStatus(actionId, true);
     },
   };
 };
@@ -210,4 +248,5 @@ export const AppActionsHandler = {
   useHandleRedirectAction,
   useNotifyReadyAction,
   createResponseStatus,
+  useHandlePermissionRequest,
 };

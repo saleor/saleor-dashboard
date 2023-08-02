@@ -4,15 +4,21 @@
 import faker from "faker";
 
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
-import { WAREHOUSES_DETAILS } from "../../../elements/warehouses/warehouse-details";
+import {
+  SHIPPING_ZONE_DETAILS,
+} from "../../../elements/shipping/shipping-zone-details";
+import {
+  WAREHOUSES_DETAILS,
+} from "../../../elements/warehouses/warehouse-details";
 import { WAREHOUSES_LIST } from "../../../elements/warehouses/warehouses-list";
 import {
   shippingZoneDetailsUrl,
   urlList,
   warehouseDetailsUrl,
 } from "../../../fixtures/urlList";
-import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
+import {
+  updateChannelWarehouses,
+} from "../../../support/api/requests/Channels";
 import {
   createShippingZone,
   createShippingZoneWithoutWarehouse,
@@ -22,7 +28,6 @@ import {
   getWarehouse,
 } from "../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 
 describe("As an admin I want to manage warehouses", () => {
   const startsWith = "CyWarehouse";
@@ -30,8 +35,7 @@ describe("As an admin I want to manage warehouses", () => {
   let secondUsAddress;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteShippingStartsWith(startsWith);
+    cy.loginUserViaRequest();
     cy.fixture("addresses").then(addresses => {
       usAddress = addresses.usAddress;
       secondUsAddress = addresses.secondUsAddress;
@@ -40,12 +44,12 @@ describe("As an admin I want to manage warehouses", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(
     "should be able to create warehouse. TC: SALEOR_1101",
-    { tags: ["@warehouse", "@allEnv", "@stable", "@oldRelease"] },
+    { tags: ["@warehouse", "@allEnv", "@stable", "@oldRelease", "@critical"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       cy.visit(urlList.warehouses)
@@ -193,7 +197,9 @@ describe("As an admin I want to manage warehouses", () => {
           warehouse = warehouseResp;
           cy.visit(warehouseDetailsUrl(warehouse.id))
             .get(WAREHOUSES_DETAILS.nameInput)
-            .clearAndType(updatedName)
+            .clear()
+            .type(updatedName)
+            // .clearAndType(updatedName)
             .fillUpBasicAddress(secondUsAddress)
             .addAliasToGraphRequest("WarehouseUpdate")
             .get(BUTTON_SELECTORS.confirm)

@@ -1,8 +1,10 @@
-import { TransactionEventFragment } from "@dashboard/graphql/transactions";
+// @ts-strict-ignore
+import { TransactionEventFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -17,12 +19,10 @@ const useStyles = makeStyles(
   theme => ({
     table: {
       "&& td": {
-        // Gap = 24px
-        paddingLeft: "12px",
-        paddingRight: "12px",
+        paddingLeft: vars.spacing[4],
+        paddingRight: vars.spacing[4],
         "&:first-child": {
-          // Override for Material first td
-          paddingRight: "12px",
+          paddingLeft: vars.spacing[9],
         },
       },
     },
@@ -63,6 +63,7 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
         events,
         transactionEvent => (
           <EventItem
+            key={transactionEvent.id}
             event={transactionEvent}
             onHover={setHoveredPspReference}
             hoveredPspReference={hoveredPspReference}

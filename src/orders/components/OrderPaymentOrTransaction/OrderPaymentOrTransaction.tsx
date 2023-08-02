@@ -1,26 +1,28 @@
+// @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { TransactionActionEnum } from "@dashboard/graphql/transactions";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import {
-  OrderBothTypes,
-  orderChannelUseTransactions,
-  ShopBothTypes,
-  ShopWithTransactions,
-} from "@dashboard/orders/types";
+  OrderDetailsFragment,
+  OrderDetailsQuery,
+  TransactionActionEnum,
+} from "@dashboard/graphql";
+import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import React from "react";
 
 import OrderPayment from "../OrderPayment/OrderPayment";
 import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
 
-interface OrderPaymentOrTransactionProps {
-  order: OrderBothTypes;
-  shop: ShopBothTypes;
-  onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
-  onPaymentCapture();
-  onPaymentVoid();
-  onPaymentRefund();
-  onMarkAsPaid();
-  onAddManualTransaction();
+export interface OrderPaymentOrTransactionProps {
+  order: OrderDetailsFragment;
+  shop: OrderDetailsQuery["shop"];
+  onTransactionAction: (
+    transactionId: string,
+    actionType: TransactionActionEnum,
+  ) => any;
+  onPaymentCapture: () => any;
+  onPaymentVoid: () => any;
+  onPaymentRefund: () => any;
+  onMarkAsPaid: () => any;
+  onAddManualTransaction: () => any;
 }
 
 export const OrderPaymentOrTransaction: React.FC<
@@ -35,13 +37,11 @@ export const OrderPaymentOrTransaction: React.FC<
   onMarkAsPaid,
   onAddManualTransaction,
 }) => {
-  const { orderTransactions } = useFlags(["orderTransactions"]);
-
-  if (orderChannelUseTransactions(order, orderTransactions.enabled)) {
+  if (orderShouldUseTransactions(order)) {
     return (
       <OrderTransactionsWrapper
         order={order}
-        shop={shop as ShopWithTransactions}
+        shop={shop}
         onTransactionAction={onTransactionAction}
         onPaymentCapture={onPaymentCapture}
         onMarkAsPaid={onMarkAsPaid}

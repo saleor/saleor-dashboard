@@ -14,7 +14,7 @@ import { arrayDiff } from "@dashboard/utils/arrays";
 import { filterMetadataArray } from "./filterMetadataArray";
 import { areMetadataArraysEqual } from "./metadataUpdateHelpers";
 
-interface ObjectWithMetadata {
+export interface ObjectWithMetadata {
   id: string;
   metadata: MetadataInput[];
   privateMetadata: MetadataInput[];
@@ -52,22 +52,24 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
       if (data.metadata && hasMetadataChanged) {
         const initialKeys = initial.metadata.map(m => m.key);
         const modifiedKeys = data.metadata.map(m => m.key);
-
         const keyDiff = arrayDiff(initialKeys, modifiedKeys);
+        const metadataInput = filterMetadataArray(data.metadata);
 
-        const updateMetaResult = await updateMetadata({
-          id: initial.id,
-          input: filterMetadataArray(data.metadata),
-          keysToDelete: keyDiff.removed,
-        });
+        if (metadataInput.length || keyDiff.removed.length) {
+          const updateMetaResult = await updateMetadata({
+            id: initial.id,
+            input: metadataInput,
+            keysToDelete: keyDiff.removed,
+          });
 
-        const updateMetaErrors = [
-          ...(updateMetaResult.data?.deleteMetadata?.errors || []),
-          ...(updateMetaResult.data?.updateMetadata?.errors || []),
-        ];
+          const updateMetaErrors = [
+            ...(updateMetaResult.data?.deleteMetadata?.errors || []),
+            ...(updateMetaResult.data?.updateMetadata?.errors || []),
+          ];
 
-        if (updateMetaErrors.length > 0) {
-          return updateMetaErrors;
+          if (updateMetaErrors.length > 0) {
+            return updateMetaErrors;
+          }
         }
       }
 
@@ -76,22 +78,25 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         const modifiedKeys = data.privateMetadata.map(m => m.key);
 
         const keyDiff = arrayDiff(initialKeys, modifiedKeys);
+        const privateMetadataInput = filterMetadataArray(data.privateMetadata);
 
-        const updatePrivateMetaResult = await updatePrivateMetadata({
-          id: initial.id,
-          input: filterMetadataArray(data.privateMetadata),
-          keysToDelete: keyDiff.removed,
-        });
+        if (privateMetadataInput.length || keyDiff.removed.length) {
+          const updatePrivateMetaResult = await updatePrivateMetadata({
+            id: initial.id,
+            input: privateMetadataInput,
+            keysToDelete: keyDiff.removed,
+          });
 
-        const updatePrivateMetaErrors = [
-          ...(updatePrivateMetaResult.data?.deletePrivateMetadata?.errors ||
-            []),
-          ...(updatePrivateMetaResult.data?.updatePrivateMetadata?.errors ||
-            []),
-        ];
+          const updatePrivateMetaErrors = [
+            ...(updatePrivateMetaResult.data?.deletePrivateMetadata?.errors ||
+              []),
+            ...(updatePrivateMetaResult.data?.updatePrivateMetadata?.errors ||
+              []),
+          ];
 
-        if (updatePrivateMetaErrors.length > 0) {
-          return updatePrivateMetaErrors;
+          if (updatePrivateMetaErrors.length > 0) {
+            return updatePrivateMetaErrors;
+          }
         }
       }
     }

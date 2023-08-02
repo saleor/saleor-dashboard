@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { getUserInitials } from "@dashboard/misc";
 import { Card, CardContent, Typography } from "@material-ui/core";
@@ -22,6 +23,7 @@ const useStyles = makeStyles(
       background: vars.colors.background.surfaceNeutralPlain,
     },
     cardContent: {
+      wordBreak: "break-all",
       borderRadius: "4px",
       border: `1px solid ${vars.colors.border.neutralDefault}`,
       "&:last-child": {
@@ -63,10 +65,10 @@ const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
   <>
     {message.split("\n").map(string => {
       if (string === "") {
-        return <br />;
+        return <br key={`break-${string}`} />;
       }
 
-      return <Typography>{string}</Typography>;
+      return <Typography key={`note-${string}`}>{string}</Typography>;
     })}
   </>
 );

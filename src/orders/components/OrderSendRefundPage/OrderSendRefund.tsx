@@ -1,16 +1,16 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Hr from "@dashboard/components/Hr";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   CreateManualTransactionRefundMutationVariables,
   OrderDetailsFragment,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Card, CardContent } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -122,7 +122,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
             {loading && <Skeleton />}
             <ul className={classes.dataList}>
               {order?.transactions.map(transaction => (
-                <DataLine label={transaction.type}>
+                <DataLine label={transaction.name} key={transaction.id}>
                   <DataLineMoney money={transaction.refundedAmount} />
                 </DataLine>
               ))}

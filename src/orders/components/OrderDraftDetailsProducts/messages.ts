@@ -2,18 +2,18 @@ import { defineMessages } from "react-intl";
 
 export const lineAlertMessages = defineMessages({
   notPublished: {
-    id: "Oad+ES",
-    defaultMessage: "This product is not published in this channel.",
+    id: "QL4a0Z",
+    defaultMessage: "Not published in this channel",
     description: "alert message",
   },
   notAvailable: {
-    id: "zO+l0L",
-    defaultMessage: "This product is not available for sale in this channel.",
+    id: "dDCLFW",
+    defaultMessage: "Not available for sale this channel",
     description: "alert message",
   },
   notExists: {
-    id: "pEMxyy",
-    defaultMessage: "This product does no longer exist.",
+    id: "ZJOX8n",
+    defaultMessage: "Product no longer exists",
     description: "alert message",
   },
 });

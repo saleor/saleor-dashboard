@@ -1,16 +1,18 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import EventTime from "@dashboard/components/EventTime";
 import Money, { formatMoney } from "@dashboard/components/Money";
 import OverflowTooltip from "@dashboard/components/OverflowTooltip";
+import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import { OrderDetailsFragment } from "@dashboard/graphql/transactions";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { getUserInitials, renderCollection } from "@dashboard/misc";
 import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
 import { Card, TableCell, TableRow } from "@material-ui/core";
-import { Avatar, Pill } from "@saleor/macaw-ui";
+import { Avatar } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

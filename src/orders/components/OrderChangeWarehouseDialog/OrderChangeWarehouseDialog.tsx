@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Debounce from "@dashboard/components/Debounce";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -43,22 +44,18 @@ export interface OrderChangeWarehouseDialogProps {
   line: OrderFulfillLineFragment;
   currentWarehouseId: string;
   onConfirm: (warehouse: WarehouseFragment) => void;
-  onClose();
+  onClose: () => any;
 }
 
-export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProps> = ({
-  open,
-  line,
-  currentWarehouseId,
-  onConfirm,
-  onClose,
-}) => {
+export const OrderChangeWarehouseDialog: React.FC<
+  OrderChangeWarehouseDialogProps
+> = ({ open, line, currentWarehouseId, onConfirm, onClose }) => {
   const classes = useStyles();
   const intl = useIntl();
 
   const { anchor, position, setAnchor } = useElementScroll();
-  const topShadow = isScrolledToTop(anchor, position, 20) === false;
-  const bottomShadow = isScrolledToBottom(anchor, position, 20) === false;
+  const topShadow = !isScrolledToTop(anchor, position, 20);
+  const bottomShadow = !isScrolledToBottom(anchor, position, 20);
 
   const [query, setQuery] = React.useState<string>("");
   const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<
@@ -71,7 +68,11 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     }
   }, [currentWarehouseId]);
 
-  const { result: warehousesOpts, loadMore, search } = useWarehouseSearch({
+  const {
+    result: warehousesOpts,
+    loadMore,
+    search,
+  } = useWarehouseSearch({
     variables: {
       after: null,
       first: 20,
@@ -158,10 +159,8 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
             className={classes.tableBody}
           >
             {filteredWarehouses.map(warehouse => {
-              const lineQuantityInWarehouse = getLineAvailableQuantityInWarehouse(
-                line,
-                warehouse,
-              );
+              const lineQuantityInWarehouse =
+                getLineAvailableQuantityInWarehouse(line, warehouse);
               return (
                 <TableRowLink key={warehouse.id}>
                   <TableCell className={classes.tableCell}>

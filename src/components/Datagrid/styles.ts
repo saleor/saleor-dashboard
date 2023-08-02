@@ -3,9 +3,9 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { useTheme, vars } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
-export const cellHeight = 36;
+export const cellHeight = 40;
 
-const useStyles = makeStyles(
+const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
   () => {
     const rowActionSelected = {
       background: vars.colors.background.plain,
@@ -16,6 +16,8 @@ const useStyles = makeStyles(
     return {
       actionBtnBar: {
         position: "absolute",
+        left: props => (props.actionButtonPosition === "left" ? 0 : "auto"),
+        right: props => (props.actionButtonPosition === "right" ? 0 : "auto"),
         zIndex: 1,
         background: vars.colors.background.plain,
         borderRadius: vars.borderRadius[4],
@@ -27,20 +29,20 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
-        padding: vars.space[4],
+        padding: vars.spacing[1.5],
       },
       columnPicker: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: cellHeight + 16,
+        height: cellHeight,
       },
       columnPickerBackground: {
         background: vars.colors.background.plain,
       },
       ghostIcon: {
         color: vars.colors.foreground.iconNeutralPlain,
-        padding: vars.space["3"],
+        padding: vars.spacing[1],
       },
       portal: {
         "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button":
@@ -66,7 +68,7 @@ const useStyles = makeStyles(
           boxShadow: "none !important",
           padding: "0 !important",
         },
-        "& input, & textarea": {
+        "& input:not([class*='MuiInputBase']), & textarea": {
           appearance: "none",
           background: "none",
           border: "none",
@@ -74,10 +76,10 @@ const useStyles = makeStyles(
           letterSpacing: vars.letterSpacing.bodyStrongSmall,
           lineHeight: vars.lineHeight.bodyEmpMedium,
           fontWeight: vars.fontWeight.bodySmall,
-          padding: vars.space[3],
+          padding: vars.spacing[1],
           outline: 0,
         },
-        '& input[type="number"]': {
+        "& input[type='number']:not([class*='MuiInputBase'])": {
           textAlign: "right",
           width: "100%",
         },
@@ -89,15 +91,11 @@ const useStyles = makeStyles(
       datagrid: {
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
-          scrollbarWidth: "none",
-        },
-        "& .dvn-scroller::-webkit-scrollbar": {
-          display: "none",
+          overflowY: "hidden",
         },
         borderRadius: 0,
         boxSizing: "content-box",
         width: "100%",
-        paddingBottom: "1px",
       },
       root: {
         position: "relative",
@@ -123,7 +121,6 @@ const useStyles = makeStyles(
         border: `1px solid ${vars.colors.border.neutralHighlight}`,
         borderLeft: "none",
         borderRight: "none",
-        cursor: "pointer",
         color: vars.colors.foreground.iconNeutralPlain,
         marginLeft: -1,
         display: "flex",
@@ -132,7 +129,7 @@ const useStyles = makeStyles(
         height: `calc(${cellHeight}px - 1px)`,
       },
       rowColumnGroup: {
-        height: cellHeight + 15,
+        height: cellHeight,
       },
       rowActionScrolledToRight: {
         borderLeftColor: vars.colors.border.neutralHighlight,
@@ -205,23 +202,24 @@ export function useDatagridTheme(
       accentFg: "transparent",
       bgCell: themeValues.colors.background.plain,
       bgHeader: themeValues.colors.background.plain,
-      bgHeaderHasFocus: themeValues.colors.background.plain,
+      bgHeaderHasFocus:
+        themeValues.colors.background.interactiveNeutralSecondaryHovering,
       bgHeaderHovered: hasHeaderClickable
-        ? themeValues.colors.background.surfaceNeutralHighlight
+        ? themeValues.colors.background.interactiveNeutralSecondaryHovering
         : themeValues.colors.background.plain,
       bgBubbleSelected: themeValues.colors.background.plain,
-      textHeader: themeValues.colors.foreground.iconNeutralPlain,
       borderColor: themeValues.colors.border.neutralHighlight,
       fontFamily: "'Inter var', sans-serif",
       baseFontStyle: themeValues.fontSize.bodySmall,
-      headerFontStyle: themeValues.fontSize.captionSmall,
+      headerFontStyle: `${themeValues.fontWeight.bodyStrongSmall} ${themeValues.fontSize.bodyStrongSmall}`,
       editorFontSize: themeValues.fontSize.bodySmall,
-      textMedium: themeValues.colors.background.interactiveNeutralDefault,
-      textGroupHeader: themeValues.colors.foreground.iconNeutralPlain,
+      textMedium: themeValues.colors.foreground.iconNeutralPlain,
+      textGroupHeader: themeValues.colors.foreground.iconNeutralDefault,
       textBubble: themeValues.colors.background.interactiveNeutralDefault,
-      textDark: themeValues.colors.background.interactiveNeutralDefault,
-      textLight: themeValues.colors.background.interactiveNeutralDefault,
-      textHeaderSelected: themeValues.colors.foreground.textBrandDefault,
+      textDark: themeValues.colors.foreground.iconNeutralDefault,
+      textLight: themeValues.colors.foreground.iconNeutralDefault,
+      textHeader: themeValues.colors.foreground.iconNeutralDefault,
+      textHeaderSelected: themeValues.colors.background.plain,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
@@ -232,8 +230,9 @@ export function useDatagridTheme(
   const readonylDatagridTheme = useMemo(
     () => ({
       ...datagridTheme,
-      accentColor: themeValues.colors.background.surfaceBrandDepressed,
-      accentLight: themeValues.colors.background.plain,
+      accentColor: themeValues.colors.background.decorativeSurfacePlain3,
+      accentLight:
+        themeValues.colors.background.interactiveNeutralSecondaryHovering,
     }),
     [themeValues, datagridTheme],
   );

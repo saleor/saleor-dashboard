@@ -1,15 +1,18 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import Checkbox from "@dashboard/components/Checkbox";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import PriceField from "@dashboard/components/PriceField";
 import Skeleton from "@dashboard/components/Skeleton";
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql/transactions";
+import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
-import { ConfirmButtonTransitionState, LayoutButton } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -58,6 +61,7 @@ export const RefundCard = ({
               id={`checkbox-${id}`}
               value={state.refundShipping}
               onChange={() => dispatch({ type: "toggleRefundShipping" })}
+              data-test-id="refundShippingCheckbox"
             />
             <label htmlFor={`checkbox-${id}`}>
               {!currency ? (
@@ -98,14 +102,15 @@ export const RefundCard = ({
               locale,
             )}
           </span>
-          <LayoutButton
-            state={!loading && "hover"}
+          <Button
             disabled={loading}
-            className={classes.applyButton}
+            variant="secondary"
+            size="small"
             onClick={() => form.set({ amount: totalSelectedPrice.toString() })}
+            data-test-id="applySelectedRefundButton"
           >
             <FormattedMessage {...buttonMessages.apply} />
-          </LayoutButton>
+          </Button>
         </div>
         <div>
           <PriceField
@@ -117,7 +122,11 @@ export const RefundCard = ({
             name={"amount" as keyof OrderGrantRefundFormData}
             currencySymbol={currency}
             value={form.data.amount}
-            inputProps={{ "data-test-id": "amountInput" }}
+            InputProps={{
+              inputProps: {
+                "data-test-id": "amountInput",
+              },
+            }}
           />
         </div>
         <div className={classes.submitLine}>
@@ -126,6 +135,7 @@ export const RefundCard = ({
             transitionState={submitState}
             variant="primary"
             type="submit"
+            data-test-id="grantRefundButton"
           >
             {isEdit ? (
               <FormattedMessage {...grantRefundPageMessages.editRefundBtn} />

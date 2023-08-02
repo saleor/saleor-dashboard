@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid, {
@@ -78,7 +79,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
             getColumnData(c, channels, warehouses, variantAttributes, intl),
           )
         : [],
-    [variantAttributes, warehouses, channels],
+    [variantAttributes, warehouses, channels, intl],
   );
 
   const {
@@ -103,7 +104,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [columns, variants],
+    [channels, columns, onAttributeValuesSearch, variants],
   );
 
   const getCellError = React.useCallback(
@@ -117,7 +118,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [columns, variants, errors],
+    [errors, columns, channels, variants, onAttributeValuesSearch],
   );
 
   return (
@@ -127,6 +128,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         id: "3C3Nj5",
         description: "button",
       })}
+      fillHandle={true}
       availableColumns={columns}
       emptyText={intl.formatMessage(messages.empty)}
       getCellContent={getCellContent}

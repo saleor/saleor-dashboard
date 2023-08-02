@@ -3,20 +3,18 @@
 
 import faker from "faker";
 
-import { PLUGINS_DETAILS_SELECTORS } from "../../../elements/plugins/pluginDetails";
+import {
+  PLUGINS_DETAILS_SELECTORS,
+} from "../../../elements/plugins/pluginDetails";
 import { PLUGINS_LIST_SELECTORS } from "../../../elements/plugins/pluginsList";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { urlList } from "../../../fixtures/urlList";
 import {
   customerRegistration,
-  deleteCustomersStartsWith,
   requestPasswordReset,
 } from "../../../support/api/requests/Customer";
 import { activatePlugin } from "../../../support/api/requests/Plugins";
-import {
-  deleteChannelsStartsWith,
-  getDefaultChannel,
-} from "../../../support/api/utils/channelsUtils";
+import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   getMailsForUser,
   getMailWithResetPasswordLink,
@@ -29,9 +27,7 @@ describe("As an admin I want to manage plugins", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteCustomersStartsWith(startsWith);
-    deleteChannelsStartsWith(startsWith);
+    cy.loginUserViaRequest();
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
       activatePlugin({ id: "mirumee.notifications.admin_email" });
@@ -43,10 +39,7 @@ describe("As an admin I want to manage plugins", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
-      .visit(urlList.plugins)
-      .expectSkeletonIsVisible();
+    cy.loginUserViaRequest().visit(urlList.plugins).expectSkeletonIsVisible();
   });
 
   it(
@@ -68,16 +61,22 @@ describe("As an admin I want to manage plugins", () => {
       customerRegistration({
         email: customerEmail,
         channel: defaultChannel.slug,
-      });
-      getMailsForUser(customerEmail)
-        .its("0.Content.Headers.Subject.0")
-        .should("eq", randomName);
+      })
+        .then(() => {
+          getMailsForUser(customerEmail)
+            .mpLatest()
+            .mpGetMailDetails()
+            .its("Subject");
+        })
+        .then(subject => {
+          expect(subject).to.eq(randomName);
+        });
     },
   );
 
   it(
     "should change admin email plugin. TC: SALEOR_3602",
-    { tags: ["@plugins", "@allEnv", "@stable"] },
+    { tags: ["@plugins", "@allEnv", "@stable"], browser: "chrome" },
     () => {
       const adminName = `Admin${randomName}`;
 
@@ -92,7 +91,7 @@ describe("As an admin I want to manage plugins", () => {
         .confirmationMessageShouldDisappear();
       requestPasswordReset(Cypress.env("USER_NAME"), defaultChannel.slug);
       getMailWithResetPasswordLink(Cypress.env("USER_NAME"), adminName)
-        .its("0.Content.Headers.Subject.0")
+        .its("Subject")
         .should("contains", adminName);
     },
   );

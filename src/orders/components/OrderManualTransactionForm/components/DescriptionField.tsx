@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TextField, TextFieldProps } from "@material-ui/core";
 import React from "react";
 
@@ -16,6 +17,11 @@ export const DescriptionField: React.FC<
       disabled={submitState === "loading" || disabled}
       onChange={handleChangeDescription}
       value={description}
+      inputProps={{
+        ...props.inputProps,
+        maxLength: 512,
+        "data-test-id": "transactionDescription",
+      }}
     />
   );
 };

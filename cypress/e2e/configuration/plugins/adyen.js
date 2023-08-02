@@ -18,12 +18,8 @@ import {
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import { createShipping } from "../../../support/api/utils/shippingUtils";
 
 describe("Adyen payments", () => {
   const startsWith = "Adyen";
@@ -40,9 +36,7 @@ describe("Adyen payments", () => {
   let cardData;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
+    cy.loginUserViaRequest();
     cy.fixture("cards").then(cardsResp => {
       paymentCards = cardsResp.adyen;
       cardData = {
@@ -107,7 +101,7 @@ describe("Adyen payments", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createCheckout({
       channelSlug: defaultChannel.slug,
       email,

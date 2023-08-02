@@ -80,7 +80,9 @@ export function selectProductsOutOfStock() {
 }
 
 export function selectFilterBy(filter) {
-  return showFilters().get(PRODUCTS_LIST.filters.filterBy[filter]).click();
+  return showFilters()
+    .get(PRODUCTS_LIST.filters.filterBy[filter])
+    .click({ force: true });
 }
 
 export function selectFilterByAttribute(attributeSlug) {
@@ -100,12 +102,15 @@ export function showFilters() {
 export function selectChannel(channelSlug) {
   cy.waitForProgressBarToNotExist();
   selectFilterBy("channel");
+  // react is not as fast as cypress makes it flaky and can not follow with actions on filters
+  cy.wait(1000);
   cy.get(getElementByDataTestId(channelSlug)).click();
 }
 
 export function submitFilters() {
-  cy.addAliasToGraphRequest("ProductList")
-    .get(BUTTON_SELECTORS.submit)
+  cy.get(BUTTON_SELECTORS.submit)
+    .scrollIntoView()
+    .should("be.visible")
     .click()
     .waitForRequestAndCheckIfNoErrors("@ProductList")
     .get(PRODUCTS_LIST.emptyProductRow)
@@ -126,4 +131,12 @@ export function sortProductsBy(sortBy) {
     .waitForProgressBarToNotExist()
     .waitForRequestAndCheckIfNoErrors("@ProductList");
   expectProductsSortedBy(sortBy, false);
+}
+
+export function changeToTileView() {
+  cy.clickOnElement(PRODUCTS_LIST.tileViewButton);
+}
+
+export function changeToDatagridView() {
+  cy.clickOnElement(PRODUCTS_LIST.datagridViewButton);
 }

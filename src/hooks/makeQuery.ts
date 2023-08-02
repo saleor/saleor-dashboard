@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   ApolloError,
   ApolloQueryResult,
@@ -55,7 +56,7 @@ export interface LoadMore<TData, TVariables> {
 
 export type LazyQueryHookOptions<
   TData = any,
-  TVariables = OperationVariables
+  TVariables = OperationVariables,
 > = BaseLazyQueryHookOptions<TData, TVariables>;
 
 export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> &

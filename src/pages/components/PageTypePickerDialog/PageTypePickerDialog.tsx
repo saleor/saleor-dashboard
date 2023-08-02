@@ -1,11 +1,12 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "@dashboard/components/SingleAutocompleteSelectField";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { FetchMoreProps } from "@dashboard/types";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

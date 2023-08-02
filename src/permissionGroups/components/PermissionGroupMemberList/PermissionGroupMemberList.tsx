@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import Checkbox from "@dashboard/components/Checkbox";
@@ -45,7 +46,7 @@ const useStyles = makeStyles(
     colName: {
       display: "flex",
       alignItems: "center",
-      gap: vars.space[5],
+      gap: vars.spacing[2],
     },
     avatarDefault: {
       "& div": {

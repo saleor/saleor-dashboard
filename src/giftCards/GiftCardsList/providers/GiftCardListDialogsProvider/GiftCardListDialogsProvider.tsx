@@ -30,17 +30,24 @@ export interface GiftCardListDialogsConsumerProps {
   id: string;
 }
 
-export const GiftCardListDialogsContext = createContext<
-  GiftCardListDialogsConsumerProps
->(null);
+export const GiftCardListDialogsContext =
+  createContext<GiftCardListDialogsConsumerProps | null>(null);
 
-export const useGiftCardListDialogs = () =>
-  useContext(GiftCardListDialogsContext);
+export const useGiftCardListDialogs = () => {
+  const context = useContext(GiftCardListDialogsContext);
 
-const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = ({
-  children,
-  params,
-}) => {
+  if (!context) {
+    throw new Error(
+      "You are trying to use GiftCardListDialogsContext outside of its provider",
+    );
+  }
+
+  return context;
+};
+
+const GiftCardListDialogsProvider: React.FC<
+  GiftCardListDialogsProviderProps
+> = ({ children, params }) => {
   const navigate = useNavigator();
 
   const id = params?.id;
@@ -58,8 +65,8 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
   const isDialogOpen = (type: GiftCardListActionParamsEnum) =>
     params?.action === type;
 
-  const handleDeleteDialogOpen = (id?: string) => {
-    openDialog(DELETE, id ? { id } : undefined);
+  const handleDeleteDialogOpen = () => {
+    openDialog(DELETE);
   };
 
   const openSearchDeleteDialog = () =>
@@ -76,7 +83,7 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
     openSearchSaveDialog,
     openSearchDeleteDialog,
     onClose,
-    id,
+    id: id ?? "",
   };
 
   return (

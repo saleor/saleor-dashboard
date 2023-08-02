@@ -1,5 +1,5 @@
 import { getApiUrl } from "@dashboard/config";
-import { FlagWithName } from "@dashboard/hooks/useFlags/types";
+import { FlagList } from "@dashboard/featureFlags";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import urlJoin from "url-join";
@@ -24,7 +24,7 @@ export interface AppDetailsUrlMountQueryParams {
 }
 
 interface FeatureFlagsQueryParams {
-  featureFlags?: Record<string, string>;
+  featureFlags?: FlagList;
 }
 export interface AppDetailsCommonParams {
   theme: ThemeType;
@@ -35,16 +35,6 @@ export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
   FeatureFlagsQueryParams;
 
 export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
-
-export const prepareFeatureFlagsList = (
-  flags: FlagWithName[],
-): Record<string, string> =>
-  flags.reduce<Record<string, string>>((acc, flag) => {
-    if (flag.enabled) {
-      acc[flag.name] = `${flag.value || true}`;
-    }
-    return acc;
-  }, {});
 
 export const AppSections = {
   appsSection: "/apps/",
@@ -57,6 +47,8 @@ export const AppPaths = {
   resolveAppDeepPath: (id: string, subPath: string) =>
     urlJoin(AppPaths.resolveAppPath(id), subPath),
   appInstallPath: urlJoin(AppSections.appsSection, "install"),
+  resolveRequestPermissionsPath: (id: string) =>
+    urlJoin(AppSections.appsSection, id, "permissions"),
 };
 
 export const AppUrls = {
@@ -150,4 +142,20 @@ export const AppUrls = {
 
     return urlJoin(appUrl, window.location.search, iframeContextQueryString);
   },
+  resolveRequestPermissionsUrl: (
+    id: string,
+    params: {
+      requestedPermissions: string[];
+      redirectPath: string;
+    },
+  ) =>
+    urlJoin(
+      AppSections.appsSection,
+      id,
+      "permissions",
+      `?${stringifyQs({
+        redirectPath: params.redirectPath,
+        requestedPermissions: params.requestedPermissions.join(","),
+      })}`,
+    ),
 };

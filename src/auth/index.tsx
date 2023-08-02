@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { parse as parseQs } from "qs";
 import React, { useContext } from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -16,7 +17,7 @@ import ResetPassword from "./views/ResetPassword";
 import ResetPasswordSuccess from "./views/ResetPasswordSuccess";
 
 const LoginView: React.FC<RouteComponentProps<any>> = () => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: LoginUrlQueryParams = qs;
 
   return <LoginViewComponent params={params} />;

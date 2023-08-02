@@ -1,9 +1,10 @@
+// @ts-strict-ignore
 import {
   TransactionCreateErrorCode,
   TransactionCreateErrorFragment,
   TransactionRequestActionErrorCode,
   TransactionRequestActionErrorFragment,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

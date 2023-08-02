@@ -1,7 +1,8 @@
+// @ts-strict-ignore
 import {
   TransactionActionEnum,
   TransactionItemFragment,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
 import { Card } from "@material-ui/core";
 import clsx from "clsx";
@@ -41,7 +42,10 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
   }
 
   return (
-    <Card className={clsx(classes.card, disabled && classes.disabled)}>
+    <Card
+      className={clsx(classes.card, disabled && classes.disabled)}
+      data-test-id="orderTransactionsList"
+    >
       <CardTitle
         transaction={transaction}
         onTransactionAction={onTransactionAction}

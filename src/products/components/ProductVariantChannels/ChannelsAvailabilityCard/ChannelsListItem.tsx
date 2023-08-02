@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { CardContent, Divider, Typography } from "@material-ui/core";
 import React from "react";

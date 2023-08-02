@@ -1,5 +1,7 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
@@ -13,7 +15,6 @@ import {
   OrderFulfillStockFormsetData,
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -26,19 +27,15 @@ export interface OrderFulfillStockExceededDialogProps {
   open: boolean;
   formsetData: OrderFulfillStockFormsetData;
   confirmButtonState: ConfirmButtonTransitionState;
-  onSubmit();
-  onClose();
+  onSubmit: () => any;
+  onClose: () => any;
 }
 
-const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogProps> = props => {
-  const {
-    lines,
-    open,
-    formsetData,
-    confirmButtonState,
-    onClose,
-    onSubmit,
-  } = props;
+const OrderFulfillStockExceededDialog: React.FC<
+  OrderFulfillStockExceededDialogProps
+> = props => {
+  const { lines, open, formsetData, confirmButtonState, onClose, onSubmit } =
+    props;
 
   const intl = useIntl();
   const classes = useStyles(props);

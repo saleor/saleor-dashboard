@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   FilledInput,
   FormControl,
@@ -43,7 +44,7 @@ interface MultiSelectFieldProps {
   name?: string;
   selectProps?: SelectProps;
   value?: string[];
-  onChange(event: any);
+  onChange: (event: any) => any;
 }
 
 export const MultiSelectField: React.FC<MultiSelectFieldProps> = props => {

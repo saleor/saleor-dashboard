@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -116,7 +117,7 @@ const CustomerAddressListPage: React.FC<
           display="flex"
           justifyContent="center"
           alignItems="center"
-          padding={9}
+          padding={6}
           flexDirection="column"
         >
           <Typography variant="h5">

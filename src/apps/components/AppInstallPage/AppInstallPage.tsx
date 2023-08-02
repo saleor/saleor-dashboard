@@ -1,5 +1,7 @@
-import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import plusIcon from "@assets/images/plus-icon.svg";
+import saleorLogoDarkMode from "@assets/images/sidebar-deafult-logo-darkMode.png";
+import saleorLogoLightMode from "@assets/images/sidebar-default-logo.png";
+import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import Hr from "@dashboard/components/Hr";
@@ -8,14 +10,14 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { AppFetchMutation, AppInstallMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
+import { useTheme } from "@dashboard/theme";
 import {
   Card,
   CardContent,
   CircularProgress,
   Typography,
 } from "@material-ui/core";
-import { Box, Button, GenericAppIcon } from "@saleor/macaw-ui/next";
-import clsx from "clsx";
+import { Box, Button } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -39,13 +41,25 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles();
+  const { theme } = useTheme();
+
+  const getSaleorLogoUrl = () => {
+    switch (theme) {
+      case "defaultLight":
+        return saleorLogoLightMode;
+      case "defaultDark":
+        return saleorLogoDarkMode;
+      default:
+        throw new Error("Invalid theme mode, should not happen.");
+    }
+  };
 
   const name = data?.name || "";
 
   return (
     <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
       <DetailPageLayout.Content>
-        <Box paddingY={9}>
+        <Box paddingY={6}>
           <CardSpacer />
           <Card>
             <CardTitle
@@ -62,18 +76,27 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                 <CircularProgress />
               ) : (
                 <div className={classes.installAppContainer}>
-                  <div
-                    className={clsx(
-                      classes.installIcon,
-                      classes.installSaleorIcon,
-                    )}
+                  <Box
+                    width={12}
+                    height={12}
+                    display="flex"
+                    placeItems="center"
+                    borderRadius={2}
+                    overflow="hidden"
                   >
-                    <img src={saleorDarkLogoSmall} alt="" />
-                  </div>
+                    <img src={getSaleorLogoUrl()} alt="Saleor" />
+                  </Box>
                   <img src={plusIcon} alt="" />
-                  <div className={classes.installIcon}>
-                    <GenericAppIcon />
-                  </div>
+                  <AppAvatar
+                    size={12}
+                    logo={
+                      data?.brand?.logo.default
+                        ? {
+                            source: data?.brand?.logo.default,
+                          }
+                        : undefined
+                    }
+                  />
                 </div>
               )}
             </CardContent>
@@ -127,7 +150,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
             </CardContent>
           </Card>
           <CardSpacer />
-          <Box display="flex" justifyContent="space-between" padding={9}>
+          <Box display="flex" justifyContent="space-between" padding={6}>
             <Button variant="secondary" onClick={navigateToAppsList}>
               <FormattedMessage {...buttonMessages.cancel} />
             </Button>

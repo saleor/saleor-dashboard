@@ -5,18 +5,22 @@ import faker from "faker";
 
 import { shippingZoneDetailsUrl } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
+import {
+  updateChannelWarehouses,
+} from "../../../support/api/requests/Channels";
 import { createCheckout } from "../../../support/api/requests/Checkout";
-import { createShippingZone } from "../../../support/api/requests/ShippingMethod";
+import {
+  createShippingZone,
+} from "../../../support/api/requests/ShippingMethod";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
-import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
+import {
+  isShippingAvailableInCheckout,
+} from "../../../support/api/utils/storeFront/checkoutUtils";
 import {
   createRateWithPostalCode,
   postalCodesOptions,
@@ -36,10 +40,7 @@ describe("As a user I want to create shipping method with postal codes", () => {
   let variantsList;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteShippingStartsWith(startsWith);
-    deleteProductsStartsWith(startsWith);
-
+    cy.loginUserViaRequest();
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
@@ -95,9 +96,9 @@ describe("As a user I want to create shipping method with postal codes", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping)
-      .visit(shippingZoneDetailsUrl(shippingZone.id));
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping).visit(
+      shippingZoneDetailsUrl(shippingZone.id),
+    );
   });
 
   it(

@@ -1,4 +1,5 @@
-import { orderWithTransactions } from "@dashboard/orders/fixtures";
+// @ts-strict-ignore
+import { order } from "@dashboard/orders/fixtures";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -22,10 +23,7 @@ describe("OrderAddTransaction", () => {
 
     render(
       <Wrapper>
-        <OrderAddTransaction
-          order={orderWithTransactions}
-          onAddTransaction={callback}
-        />
+        <OrderAddTransaction order={order(null)} onAddTransaction={callback} />
       </Wrapper>,
     );
     const button = await screen.findByRole("button");

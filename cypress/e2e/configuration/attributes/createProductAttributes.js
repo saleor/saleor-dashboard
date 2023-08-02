@@ -3,27 +3,32 @@
 
 import faker from "faker";
 
-import { ATTRIBUTES_DETAILS } from "../../../elements/attribute/attributes_details";
+import {
+  ATTRIBUTES_DETAILS,
+} from "../../../elements/attribute/attributes_details";
 import { ATTRIBUTES_LIST } from "../../../elements/attribute/attributes_list";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { attributeDetailsUrl, urlList } from "../../../fixtures/urlList";
+import {
+  attributeDetailsUrl,
+  urlList,
+} from "../../../fixtures/urlList";
 import {
   createAttribute,
   getAttribute,
 } from "../../../support/api/requests/Attribute";
-import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
-import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
+import {
+  expectCorrectDataInAttribute,
+} from "../../../support/api/utils/attributes/checkAttributeData";
 import {
   createAttributeWithInputType,
   fillUpAttributeNameAndCode,
 } from "../../../support/pages/attributesPage";
 
 describe("As an admin I want to create product attribute", () => {
-  const startsWith = "AttrCreate";
+  const startsWith = "AttrCreate" + Date.now();
   const attributesTypes = [
     { type: "DROPDOWN", testCase: "SALEOR_0501" },
     { type: "MULTISELECT", testCase: "SALEOR_0502" },
-    { type: "FILE", testCase: "SALEOR_0503" },
     { type: "RICH_TEXT", testCase: "SALEOR_0504" },
     { type: "BOOLEAN", testCase: "SALEOR_0505" },
     { type: "DATE", testCase: "SALEOR_0523" },
@@ -50,14 +55,8 @@ describe("As an admin I want to create product attribute", () => {
     { unitSystem: "without selecting unit", testCase: "SALEOR_0510" },
   ];
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteAttributesStartsWith(startsWith);
-  });
-
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
+    cy.loginUserViaRequest()
       .visit(urlList.attributes)
       .get(ATTRIBUTES_LIST.createAttributeButton)
       .click();
@@ -86,6 +85,28 @@ describe("As an admin I want to create product attribute", () => {
       },
     );
   });
+
+  it(
+    `should be able to create FILE attribute. TC: SALEOR_0503`,
+    { tags: ["@attribute", "@allEnv", "@stable", "@oldRelease", "@critical"] },
+    () => {
+      const attributeName = `${startsWith}${faker.datatype.number()}`;
+
+      createAttributeWithInputType({
+        name: attributeName,
+        attributeType: "FILE",
+      })
+        .then(({ attribute }) => {
+          getAttribute(attribute.id);
+        })
+        .then(attribute => {
+          expectCorrectDataInAttribute(attribute, {
+            attributeName,
+            attributeType: "FILE",
+          });
+        });
+    },
+  );
 
   attributeReferenceType.forEach(entityType => {
     it(

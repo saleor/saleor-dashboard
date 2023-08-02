@@ -1,6 +1,7 @@
+// @ts-strict-ignore
 import { Channel } from "@dashboard/channels/utils";
 import ActionDialog from "@dashboard/components/ActionDialog";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import React from "react";
 
 import ChannelsAvailabilityDialogChannelsList from "../ChannelsAvailabilityDialogChannelsList";
@@ -23,7 +24,9 @@ export interface ChannelsAvailabilityDialogProps {
   toggleAll?: (items: Channel[], selected: number) => void;
 }
 
-export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProps> = ({
+export const ChannelsAvailabilityDialog: React.FC<
+  ChannelsAvailabilityDialogProps
+> = ({
   isSelected,
   channels,
   confirmButtonState,
@@ -37,9 +40,8 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
   title,
   toggleAll,
 }) => {
-  const { query, onQueryChange, filteredChannels } = useChannelsSearch(
-    channels,
-  );
+  const { query, onQueryChange, filteredChannels } =
+    useChannelsSearch(channels);
   const hasChannels = channels.length > 0;
 
   const handleToggleAll = () => toggleAll(channels, selected);

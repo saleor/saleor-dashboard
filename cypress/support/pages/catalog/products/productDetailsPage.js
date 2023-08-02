@@ -8,40 +8,39 @@ import { editSeoSettings } from "../seoComponent";
 const valueTrue = AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue;
 const valueFalse = AVAILABLE_CHANNELS_FORM.radioButtonsValueFalse;
 
-export function updateProductIsAvailableForPurchase(
-  productUrl,
-  isAvailableForPurchase,
-) {
+export function updateProductIsAvailableForPurchase(isAvailableForPurchase) {
   const isAvailableForPurchaseSelector = isAvailableForPurchase
     ? valueTrue
     : valueFalse;
   const availableForPurchaseSelector = `${AVAILABLE_CHANNELS_FORM.availableForPurchaseRadioButtons}${isAvailableForPurchaseSelector}`;
-  updateProductManageInChannel(productUrl, availableForPurchaseSelector);
+  updateProductManageInChannel(availableForPurchaseSelector);
 }
 
-export function updateProductPublish(productUrl, isPublished) {
+export function updateProductPublish(isPublished) {
   const isPublishedSelector = isPublished ? valueTrue : valueFalse;
   const publishedSelector = `${AVAILABLE_CHANNELS_FORM.publishedRadioButtons}${isPublishedSelector}`;
-  updateProductManageInChannel(productUrl, publishedSelector);
+  updateProductManageInChannel(publishedSelector);
 }
 
-export function updateProductVisibleInListings(productUrl) {
-  updateProductManageInChannel(
-    productUrl,
-    AVAILABLE_CHANNELS_FORM.visibleInListingsButton,
-  );
+export function updateProductVisibleInListings() {
+  updateProductManageInChannel(AVAILABLE_CHANNELS_FORM.visibleInListingsButton);
 }
 
-function updateProductManageInChannel(productUrl, manageSelector) {
-  cy.visit(productUrl)
-    .get(AVAILABLE_CHANNELS_FORM.assignedChannels)
+function updateProductManageInChannel(manageSelector) {
+  cy.get(AVAILABLE_CHANNELS_FORM.assignedChannels)
     .click()
     .get(manageSelector)
+    .first()
+    .scrollIntoView()
     .click()
+    // cypress click is to fast - our app is nor ready to handle new event when click occurs - solution could be disabling save button until app is ready to handle new event
+    .wait(1000)
     .waitForProgressBarToNotBeVisible()
     .addAliasToGraphRequest("ProductChannelListingUpdate")
     .get(BUTTON_SELECTORS.confirm)
     .click()
+    .confirmationMessageShouldAppear()
+    .confirmationMessageShouldDisappear()
     .wait("@ProductChannelListingUpdate");
 }
 
@@ -85,7 +84,7 @@ export function fillUpAllCommonFieldsInCreateAndUpdate({
 export function fillUpProductGeneralInfo({ name, description, rating }) {
   return cy
     .get(PRODUCT_DETAILS.productNameInput)
-    .click()
+    .click({ force: true })
     .clearAndType(name)
     .get(PRODUCT_DETAILS.descriptionInput)
     .clearAndType(description)
@@ -153,6 +152,7 @@ export function addVariantToDataGrid(variantName) {
 
 export function enterVariantEditPage() {
   cy.get(PRODUCT_DETAILS.dataGridTable)
+    .scrollIntoView()
     .should("be.visible")
     .wait(1000)
     .get(PRODUCT_DETAILS.editVariant)

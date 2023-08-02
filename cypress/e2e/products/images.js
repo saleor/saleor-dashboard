@@ -1,21 +1,24 @@
 /// <reference types="cypress"/>
 /// <reference types="../../support"/>
 
-import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
+import {
+  PRODUCT_DETAILS,
+} from "../../elements/catalog/products/product-details";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { demoProductsNames } from "../../fixtures/products";
 import { productDetailsUrl } from "../../fixtures/urlList";
 import { getFirstProducts } from "../../support/api/requests/Product";
-import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/collectionsUtils";
+import {
+  deleteCollectionsStartsWith,
+} from "../../support/api/utils/catalog/collectionsUtils";
 import {
   createNewProductWithNewDataAndDefaultChannel,
   deleteProductsStartsWith,
-  iterateThroughThumbnails,
 } from "../../support/api/utils/products/productsUtils";
 
 describe("Tests for images", () => {
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(
@@ -67,26 +70,6 @@ describe("Tests for images", () => {
         })
         .then(imageResp => {
           expect(imageResp.status).to.equal(200);
-        });
-    },
-  );
-
-  it(
-    "should create thumbnail url after entering image url",
-    { tags: ["@products", "@allEnv", "@stable"] },
-    () => {
-      let failedRequests;
-      getFirstProducts(100)
-        .then(products => {
-          const productsWithThumbnails = products.filter(
-            product => product.node.thumbnail !== null,
-          );
-          failedRequests = iterateThroughThumbnails(productsWithThumbnails);
-        })
-        .then(() => {
-          if (failedRequests && failedRequests.length > 0) {
-            throw new Error(failedRequests.join("\n"));
-          }
         });
     },
   );

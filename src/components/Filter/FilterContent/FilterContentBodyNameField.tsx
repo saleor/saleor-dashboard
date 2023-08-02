@@ -39,7 +39,7 @@ const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
         }
         label={filter.label}
         onClick={event => event.stopPropagation()}
-        onChange={() =>
+        onChange={() => {
           onFilterPropertyChange({
             payload: {
               name: filter.name,
@@ -48,8 +48,8 @@ const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
               },
             },
             type: "set-property",
-          })
-        }
+          });
+        }}
       />
     </div>
   );

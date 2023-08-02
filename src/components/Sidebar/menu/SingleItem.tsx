@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   extensionMountPoints,
   useExtensions,
@@ -21,13 +22,12 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
     const extension = getMenuItemExtension(extensions, menuItem.id);
     if (extension) {
       extension.open();
-      return;
     }
   };
   return (
     <List.Item
       borderRadius={3}
-      paddingX={5}
+      paddingX={2}
       active={active}
       onClick={handleMenuItemClick}
       data-test-id={`menu-item-label-${menuItem.id}`}
@@ -42,8 +42,8 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
       >
         <Box
           className={sprinkles({
-            paddingY: 4,
-            gap: 6,
+            paddingY: 1.5,
+            gap: 3,
             display: "flex",
             alignItems: "center",
           })}

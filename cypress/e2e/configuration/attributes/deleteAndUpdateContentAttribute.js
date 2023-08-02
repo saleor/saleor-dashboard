@@ -9,20 +9,16 @@ import {
   createAttribute,
   getAttribute,
 } from "../../../support/api/requests/Attribute";
-import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
-import { fillUpAttributeNameAndCode } from "../../../support/pages/attributesPage";
+import {
+  fillUpAttributeNameAndCode,
+} from "../../../support/pages/attributesPage";
 
 describe("As an admin I want to delete and update content attribute", () => {
-  const startsWith = "AttrContDel";
+  const startsWith = "AttrContDel" + Date.now();
   let attribute;
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteAttributesStartsWith(startsWith);
-  });
-
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createAttribute({
       name: `${startsWith}${faker.datatype.number()}`,
       type: "PAGE_TYPE",

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { customerUrl } from "@dashboard/customers/urls";
 import { SearchCustomersQuery } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";

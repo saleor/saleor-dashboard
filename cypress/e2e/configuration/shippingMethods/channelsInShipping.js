@@ -4,14 +4,15 @@
 import faker from "faker";
 
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
-import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
+import {
+  SHIPPING_ZONE_DETAILS,
+} from "../../../elements/shipping/shipping-zone-details";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
 import {
   addChannelToShippingMethod,
   addChannelToShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
-import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { selectChannelInHeader } from "../../../support/pages/channelsPage";
 import {
@@ -22,12 +23,6 @@ import {
 describe("As a staff user I want have different shipping method prices for each channel", () => {
   const startsWith = "ChannelShippingMethod";
   let defaultChannel;
-
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    shippingUtils.deleteShippingStartsWith(startsWith);
-    channelsUtils.deleteChannelsStartsWith(startsWith);
-  });
 
   it(
     "should be able to display different price for each channel. TC: SALEOR_0805",

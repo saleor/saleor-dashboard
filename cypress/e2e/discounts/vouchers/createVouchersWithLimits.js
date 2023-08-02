@@ -4,13 +4,12 @@
 import faker from "faker";
 
 import { completeCheckout } from "../../../support/api/requests/Checkout";
-import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import { deleteVouchersStartsWith } from "../../../support/api/utils/discounts/vouchersUtils";
 import {
   addPayment,
   createCheckoutWithVoucher,
 } from "../../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
 import {
   discountOptions,
   loginAndCreateCheckoutForVoucherWithDiscount,
@@ -28,9 +27,7 @@ describe("As an admin I want to create voucher", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannelsStartsWith(startsWith);
-    deleteVouchersStartsWith(startsWith);
+    cy.loginUserViaRequest();
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(

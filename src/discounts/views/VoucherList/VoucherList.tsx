@@ -1,15 +1,14 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useVoucherBulkDeleteMutation,
   useVoucherListQuery,
 } from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -18,8 +17,8 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages, sectionNames } from "@dashboard/intl";
-import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -27,8 +26,8 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React, { useEffect } from "react";
+import isEqual from "lodash/isEqual";
+import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import VoucherListPage from "../../components/VoucherListPage";
@@ -38,14 +37,10 @@ import {
   VoucherListUrlQueryParams,
 } from "../../urls";
 import {
-  deleteFilterTab,
-  getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
-  getFiltersCurrentTab,
-  getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
+  storageUtils,
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
@@ -56,9 +51,7 @@ interface VoucherListProps {
 export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
+
   const { updateListSettings, settings } = useListSettings(
     ListViews.VOUCHER_LIST,
   );
@@ -95,21 +88,39 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     variables: queryVariables,
   });
 
-  const tabs = getFilterTabs();
+  const {
+    clearRowSelection,
+    selectedRowIds,
+    setSelectedRowIds,
+    setClearDatagridRowSelectionCallback,
+  } = useRowSelection(params);
 
-  const currentTab = getFiltersCurrentTab(params, tabs);
-
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: voucherListUrl,
-    getFilterQueryParam,
-    navigate,
+  const {
+    hasPresetsChanged,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    selectedPreset,
+    presets,
+    getPresetNameToDelete,
+    setPresetIdToDelete,
+  } = useFilterPresets({
+    getUrl: voucherListUrl,
     params,
+    storageUtils,
+    reset: clearRowSelection,
   });
+
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: clearRowSelection,
+      createUrl: voucherListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+      keepActiveTab: true,
+    });
 
   useEffect(() => {
     if (!canBeSorted(params.sort, !!selectedChannel)) {
@@ -122,105 +133,99 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     }
   }, [params]);
 
-  const handleTabChange = (tab: number) => {
-    reset();
-    navigate(
-      voucherListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
-    );
-  };
-
-  const handleTabDelete = () => {
-    deleteFilterTab(currentTab);
-    reset();
-    navigate(voucherListUrl());
-  };
-
-  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
-    handleTabChange(tabs.length + 1);
-  };
-
-  const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
-
   const paginationValues = usePaginator({
     pageInfo: data?.vouchers?.pageInfo,
     paginationState,
     queryString: params,
   });
 
-  const [
-    voucherBulkDelete,
-    voucherBulkDeleteOpts,
-  ] = useVoucherBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.voucherBulkDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        reset();
-        closeModal();
-        refetch();
-      }
-    },
-  });
-
-  const onVoucherBulkDelete = () =>
-    voucherBulkDelete({
-      variables: {
-        ids: params.ids,
+  const [voucherBulkDelete, voucherBulkDeleteOpts] =
+    useVoucherBulkDeleteMutation({
+      onCompleted: data => {
+        if (data.voucherBulkDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          clearRowSelection();
+          closeModal();
+          refetch();
+        }
       },
     });
 
+  const onVoucherBulkDelete = async () => {
+    await voucherBulkDelete({
+      variables: {
+        ids: selectedRowIds,
+      },
+    });
+    clearRowSelection();
+  };
+
   const handleSort = createSortHandler(navigate, voucherListUrl, params);
+
+  const vouchers = mapEdgesToItems(data?.vouchers) ?? [];
+
+  const handleSelectVouchersIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!vouchers) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => vouchers[row]?.id);
+      const haveSaveValues = isEqual(rowsIds, selectedRowIds);
+
+      if (!haveSaveValues) {
+        setSelectedRowIds(rowsIds);
+      }
+
+      setClearDatagridRowSelectionCallback(clearSelection);
+    },
+    [
+      vouchers,
+      selectedRowIds,
+      setClearDatagridRowSelectionCallback,
+      setSelectedRowIds,
+    ],
+  );
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
       <VoucherListPage
-        currentTab={currentTab}
+        onSelectVouchersIds={handleSelectVouchersIds}
         filterOpts={getFilterOpts(params, channelOpts)}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onFilterChange={filter => changeFilters(filter)}
-        onAll={resetFilters}
-        onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
-        onTabSave={() => openModal("save-search")}
-        tabs={tabs.map(tab => tab.name)}
+        onFilterPresetsAll={resetFilters}
+        onFilterPresetDelete={(id: number) => {
+          setPresetIdToDelete(id);
+          openModal("delete-search");
+        }}
+        onFilterPresetPresetSave={() => openModal("save-search")}
+        onFilterPresetChange={onPresetChange}
+        onFilterPresetUpdate={onPresetUpdate}
+        hasPresetsChanged={hasPresetsChanged}
+        onVoucherDelete={() => openModal("remove")}
+        selectedFilterPreset={selectedPreset}
+        selectedVouchersIds={selectedRowIds}
+        currencySymbol={selectedChannel?.currencyCode}
+        filterPresets={presets.map(tab => tab.name)}
         settings={settings}
-        vouchers={mapEdgesToItems(data?.vouchers)}
+        vouchers={vouchers}
         disabled={loading}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
-        isChecked={isSelected}
-        selected={listElements.length}
         sort={getSortParams(params)}
-        toggle={toggle}
-        toggleAll={toggleAll}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            onClick={() =>
-              openModal("remove", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
         selectedChannelId={selectedChannel?.id}
       />
       <ActionDialog
         confirmButtonState={voucherBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={onVoucherBulkDelete}
-        open={params.action === "remove" && canOpenBulkActionDialog}
+        open={params.action === "remove" && selectedRowIds.length > 0}
         title={intl.formatMessage({
           id: "Q0JJ4F",
           defaultMessage: "Delete Vouchers",
@@ -228,32 +233,30 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         })}
         variant="delete"
       >
-        {canOpenBulkActionDialog && (
-          <DialogContentText>
-            <FormattedMessage
-              id="O9QPe1"
-              defaultMessage="{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
-              description="dialog content"
-              values={{
-                counter: params.ids.length,
-                displayQuantity: <strong>{params.ids.length}</strong>,
-              }}
-            />
-          </DialogContentText>
-        )}
+        <DialogContentText>
+          <FormattedMessage
+            id="O9QPe1"
+            defaultMessage="{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
+            description="dialog content"
+            values={{
+              counter: selectedRowIds.length,
+              displayQuantity: <strong>{selectedRowIds.length}</strong>,
+            }}
+          />
+        </DialogContentText>
       </ActionDialog>
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabSave}
+        onSubmit={onPresetSave}
       />
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        onSubmit={onPresetDelete}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import "@saleor/macaw-ui/next/style";
 import "./index.css";
 
@@ -15,15 +16,16 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import AppsSection from "./apps";
+import { AppsSectionRoot } from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
-import Auth, { useUser } from "./auth";
+import Auth from "./auth";
 import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
+import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
 import CategorySection from "./categories";
 import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
@@ -50,11 +52,15 @@ import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
+import {
+  EnvVarsStrategy,
+  FeatureFlagsProvider,
+  LocalStorageStrategy,
+} from "./featureFlags";
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
-import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import NavigationSection from "./navigation";
@@ -115,7 +121,12 @@ const App: React.FC = () => (
                   <ServiceWorker />
                   <BackgroundTasksProvider>
                     <AppStateProvider>
-                      <FlagsServiceProvider>
+                      <FeatureFlagsProvider
+                        strategies={[
+                          new LocalStorageStrategy(),
+                          new EnvVarsStrategy(),
+                        ]}
+                      >
                         <AuthProvider>
                           <ShopProvider>
                             <AppChannelProvider>
@@ -129,7 +140,7 @@ const App: React.FC = () => (
                             </AppChannelProvider>
                           </ShopProvider>
                         </AuthProvider>
-                      </FlagsServiceProvider>
+                      </FeatureFlagsProvider>
                     </AppStateProvider>
                   </BackgroundTasksProvider>
                 </MessageManagerProvider>
@@ -145,7 +156,7 @@ const App: React.FC = () => (
 const Routes: React.FC = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
-  const { authenticated, authenticating } = useUser();
+  const { authenticated, authenticating } = useAuthRedirection();
 
   const { channel } = useAppChannel(false);
 
@@ -284,7 +295,7 @@ const Routes: React.FC = () => {
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_APPS]}
                 path={AppSections.appsSection}
-                component={AppsSection}
+                component={AppsSectionRoot}
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PRODUCTS]}

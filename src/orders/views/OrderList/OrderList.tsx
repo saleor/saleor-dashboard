@@ -1,14 +1,15 @@
+// @ts-strict-ignore
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
   useOrderDraftCreateMutation,
   useOrderListQuery,
 } from "@dashboard/graphql";
+import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -17,11 +18,8 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useSortRedirects } from "@dashboard/hooks/useSortRedirects";
-import { getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
@@ -33,19 +31,14 @@ import {
   orderListUrl,
   OrderListUrlDialog,
   OrderListUrlQueryParams,
-  OrderListUrlSortField,
   orderSettingsPath,
   orderUrl,
 } from "../../urls";
 import {
-  deleteFilterTab,
-  getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
-  getFiltersCurrentTab,
-  getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
+  storageUtils,
 } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
@@ -59,6 +52,23 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.ORDER_LIST,
   );
+
+  const {
+    hasPresetsChanged,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    presetIdToDelete,
+    presets,
+    selectedPreset,
+    setPresetIdToDelete,
+  } = useFilterPresets({
+    params,
+    getUrl: orderListUrl,
+    storageUtils,
+    reset: () => "",
+  });
 
   usePaginationReset(orderListUrl, params, settings.rowNumber);
 
@@ -89,40 +99,19 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     ? mapNodeToChoice(availableChannels)
     : null;
 
-  const tabs = getFilterTabs();
-
-  const currentTab = getFiltersCurrentTab(params, tabs);
-
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      createUrl: orderListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-    });
+  const [changeFilters, resetFilters, handleSearchChange] = useFilterHandlers({
+    createUrl: orderListUrl,
+    getFilterQueryParam,
+    params,
+    defaultSortField: DEFAULT_SORT_KEY,
+    hasSortWithRank: true,
+    keepActiveTab: true,
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderListUrlDialog,
     OrderListUrlQueryParams
   >(navigate, orderListUrl, params);
-
-  const handleTabChange = (tab: number) =>
-    navigate(
-      orderListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
-    );
-
-  const handleFilterTabDelete = () => {
-    deleteFilterTab(currentTab);
-    navigate(orderListUrl());
-  };
-
-  const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
-    handleTabChange(tabs.length + 1);
-  };
 
   const paginationState = createPaginationState(settings.rowNumber, params);
 
@@ -147,17 +136,11 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, orderListUrl, params);
 
-  useSortRedirects<OrderListUrlSortField>({
-    params,
-    defaultSortField: DEFAULT_SORT_KEY,
-    urlFunc: orderListUrl,
-  });
-
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <OrderListPage
         settings={settings}
-        currentTab={currentTab}
+        currentTab={selectedPreset}
         disabled={loading}
         filterOpts={getFilterOpts(params, channelOpts)}
         limits={limitOpts.data?.shop.limits}
@@ -169,26 +152,31 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
         onTabSave={() => openModal("save-search")}
-        onTabDelete={() => openModal("delete-search")}
-        onTabChange={handleTabChange}
+        onTabDelete={(tabIndex: number) => {
+          setPresetIdToDelete(tabIndex);
+          openModal("delete-search");
+        }}
+        onTabChange={onPresetChange}
+        onTabUpdate={onPresetUpdate}
         initialSearch={params.query || ""}
-        tabs={getFilterTabs().map(tab => tab.name)}
+        tabs={presets.map(tab => tab.name)}
         onAll={resetFilters}
         onSettingsOpen={() => navigate(orderSettingsPath)}
         params={params}
+        hasPresetsChanged={hasPresetsChanged()}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleFilterTabSave}
+        onSubmit={onPresetSave}
       />
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleFilterTabDelete}
-        tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
+        onSubmit={onPresetDelete}
+        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
       />
       {!noChannel && (
         <ChannelPickerDialog

@@ -1,7 +1,5 @@
 import { installedAppsList } from "@dashboard/apps/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
 import AppListPage, { AppListPageProps } from "./AppListPage";
 
@@ -10,14 +8,30 @@ const props: AppListPageProps = {
   installedApps: installedAppsList,
 };
 
-storiesOf("Apps / New Apps / App List", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AppListPage {...props} />)
-  .add("empty", () => (
-    <AppListPage
-      {...props}
-      installedApps={[]}
-      installableMarketplaceApps={[]}
-      comingSoonMarketplaceApps={[]}
-    />
-  ));
+const meta: Meta<typeof AppListPage> = {
+  title: "Apps / New Apps / App List",
+  component: AppListPage,
+};
+export default meta;
+type Story = StoryObj<typeof AppListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.9, pauseAnimationAtEnd: true },
+  },
+};
+
+export const Empty: Story = {
+  args: {
+    ...props,
+    installedApps: [],
+    installableMarketplaceApps: [],
+    comingSoonMarketplaceApps: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

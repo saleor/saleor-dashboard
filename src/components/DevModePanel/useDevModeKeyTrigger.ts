@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useEffect } from "react";
 
 type DevModeKeyTriggerCallback = ({ shift }: { shift: boolean }) => void;

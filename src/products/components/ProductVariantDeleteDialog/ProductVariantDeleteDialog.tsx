@@ -1,5 +1,9 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import {
   Dialog,
   DialogActions,
@@ -7,7 +11,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -28,8 +32,8 @@ export interface ProductVariantDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name: string;
-  onClose?();
-  onConfirm?();
+  onClose?: () => any;
+  onConfirm?: () => any;
 }
 
 const ProductVariantDeleteDialog: React.FC<

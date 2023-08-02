@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import react from "@vitejs/plugin-react-swc";
-import { copyFileSync } from "fs";
+import { copyFileSync, mkdirSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { VitePWA } from "vite-plugin-pwa";
 import viteSentry from "vite-plugin-sentry";
@@ -13,7 +13,11 @@ const copyOgImage = () => ({
   name: "copy-og-image",
   apply: "build",
   writeBundle: () => {
-    copyFileSync("./assets/og.png", "./build/dashboard/og.png");
+    mkdirSync(path.resolve("build", "dashboard"), { recursive: true });
+    copyFileSync(
+      path.resolve("assets", "og.png"),
+      path.resolve("build", "dashboard", "og.png"),
+    );
   },
 });
 
@@ -39,8 +43,8 @@ export default defineConfig(({ command, mode }) => {
     APPS_TUNNEL_URL_KEYWORDS,
     SKIP_SOURCEMAPS,
     DEMO_MODE,
+    CUSTOM_VERSION,
     FLAGS_SERVICE_ENABLED,
-    FLAGSMITH_ID,
   } = env;
 
   const base = STATIC_URL ?? "/";
@@ -56,7 +60,7 @@ export default defineConfig(({ command, mode }) => {
   const plugins = [
     react(),
     createHtmlPlugin({
-      entry: "/index.tsx",
+      entry: path.resolve(__dirname, "src", "index.tsx"),
       template: "index.html",
       inject: {
         data: {
@@ -114,7 +118,7 @@ export default defineConfig(({ command, mode }) => {
           Since "src" is exposed as a root,
           sw.js has to be moved above, to preventing loading in a dev mode.
         */
-        srcDir: "../",
+        srcDir: path.resolve(__dirname),
         filename: "sw.js",
       }),
     );
@@ -127,7 +131,6 @@ export default defineConfig(({ command, mode }) => {
     */
     ...(isDev ? { global: {} } : {}),
     FLAGS_SERVICE_ENABLED: FLAGS_SERVICE_ENABLED === "true",
-    FLAGSMITH_ID: JSON.stringify(FLAGSMITH_ID),
     // Keep all feature flags from env in global variable
     FLAGS: JSON.stringify(featureFlagsEnvs),
   };
@@ -138,6 +141,9 @@ export default defineConfig(({ command, mode }) => {
     envDir: "..",
     server: {
       port: 9000,
+      fs: {
+        allow: [searchForWorkspaceRoot(process.cwd()), "../.."],
+      },
     },
     define: {
       ...globals,
@@ -154,6 +160,7 @@ export default defineConfig(({ command, mode }) => {
         SENTRY_DSN,
         ENVIRONMENT,
         DEMO_MODE,
+        CUSTOM_VERSION,
       },
     },
     build: {
@@ -184,7 +191,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     optimizeDeps: {
-      include: ["esm-dep > cjs-dep"],
+      include: ["esm-dep > cjs-dep", "@saleor/macaw-ui"],
       esbuildOptions: {
         plugins: [
           /*
@@ -196,6 +203,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     resolve: {
+      dedupe: ["react", "react-dom", "clsx", "@material-ui/styles"],
       alias: {
         "@assets": path.resolve(__dirname, "./assets"),
         "@locale": path.resolve(__dirname, "./locale"),

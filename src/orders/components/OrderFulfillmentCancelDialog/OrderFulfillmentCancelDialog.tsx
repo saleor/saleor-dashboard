@@ -1,5 +1,9 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
@@ -14,7 +18,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -42,8 +46,8 @@ export interface OrderFulfillmentCancelDialogProps {
   errors: OrderErrorFragment[];
   open: boolean;
   warehouses: WarehouseFragment[];
-  onClose();
-  onConfirm(data: OrderFulfillmentCancelDialogFormData);
+  onClose: () => any;
+  onConfirm: (data: OrderFulfillmentCancelDialogFormData) => any;
 }
 
 const OrderFulfillmentCancelDialog: React.FC<

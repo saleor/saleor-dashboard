@@ -1,7 +1,6 @@
-import { OrderErrorCode } from "@dashboard/graphql";
+import { OrderErrorCode, OrderErrorFragment } from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
-import { OrderErrorFragment } from "../../orders/types";
 import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
@@ -71,6 +70,10 @@ const messages = defineMessages({
     defaultMessage: "Shipping method is required for this order",
     description: "error message",
   },
+  noZeroValue: {
+    defaultMessage: "Ensure this value is greater than 0.",
+    id: "YzLUXA",
+  },
 });
 
 function getOrderErrorMessage(
@@ -105,6 +108,8 @@ function getOrderErrorMessage(
         return intl.formatMessage(messages.shippingRequired);
       case OrderErrorCode.VOID_INACTIVE_PAYMENT:
         return intl.formatMessage(messages.cannotVoid);
+      case OrderErrorCode.ZERO_QUANTITY:
+        return intl.formatMessage(messages.noZeroValue);
     }
   }
 

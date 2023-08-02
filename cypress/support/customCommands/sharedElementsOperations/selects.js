@@ -20,6 +20,12 @@ Cypress.Commands.add("clickPrevPagePaginationButton", () =>
 Cypress.Commands.add("clickSubmitButton", () =>
   cy.get(BUTTON_SELECTORS.submit).click(),
 );
+Cypress.Commands.add("clickConfirmButton", () =>
+  cy.get(BUTTON_SELECTORS.confirm).click(),
+);
+Cypress.Commands.add("openColumnPicker", () =>
+  cy.get(SHARED_ELEMENTS.openColumnPickerButton).click(),
+);
 
 Cypress.Commands.add("createNewOption", (selectSelector, newOption) => {
   cy.get(selectSelector).type(newOption);

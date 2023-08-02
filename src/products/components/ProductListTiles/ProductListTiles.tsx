@@ -1,9 +1,10 @@
+// @ts-strict-ignore
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { ProductListColumns } from "@dashboard/config";
 import { ProductListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text, vars } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
@@ -29,7 +30,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
   const renderContent = useCallback(() => {
     if (loading) {
       return (
-        <Box display="flex" justifyContent="center" height="100%" marginY={12}>
+        <Box display="flex" justifyContent="center" marginY={9}>
           <CircularProgress />
         </Box>
       );
@@ -40,8 +41,10 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
         <Box
           display="grid"
           gridTemplateColumns={{ mobile: 3, tablet: 5, desktop: 6 }}
-          gap={9}
-          padding={9}
+          gap={6}
+          padding={6}
+          __paddingTop={`calc(${vars.spacing[9]} - ${vars.spacing[5]}`}
+          data-test-id="tile-view"
         >
           {products.map(product => (
             <ProductTile
@@ -55,7 +58,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
     }
 
     return (
-      <Box padding={9} textAlign="center">
+      <Box padding={6} textAlign="center">
         <Text size="small">{intl.formatMessage(messages.emptyText)}</Text>
       </Box>
     );
@@ -64,7 +67,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
   return (
     <>
       {renderContent()}
-      <Box paddingX={9}>
+      <Box paddingX={6}>
         <TablePaginationWithContext
           component="div"
           settings={settings}

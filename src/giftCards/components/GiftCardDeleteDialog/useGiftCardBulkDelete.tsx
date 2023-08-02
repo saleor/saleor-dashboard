@@ -25,42 +25,36 @@ const useGiftCardBulkDelete = ({
   const notify = useNotifier();
   const intl = useIntl();
 
-  const {
-    listElements,
-    selectedItemsCount,
-    reset: resetSelectedItems,
-  } = useGiftCardList();
+  const { selectedRowIds, clearRowSelection } = useGiftCardList();
 
-  const [
-    bulkDeleteGiftCard,
-    bulkDeleteGiftCardOpts,
-  ] = useBulkDeleteGiftCardMutation({
-    onCompleted: data => {
-      const errors = data?.giftCardBulkDelete?.errors;
+  const [bulkDeleteGiftCard, bulkDeleteGiftCardOpts] =
+    useBulkDeleteGiftCardMutation({
+      onCompleted: data => {
+        const errors = data?.giftCardBulkDelete?.errors;
 
-      if (!errors.length) {
+        if (!errors?.length) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(messages.deleteSuccessAlertText, {
+              selectedItemsCount: selectedRowIds.length,
+            }),
+          });
+
+          onClose();
+          clearRowSelection();
+          return;
+        }
+
         notify({
-          status: "success",
-          text: intl.formatMessage(messages.deleteSuccessAlertText, {
-            selectedItemsCount,
-          }),
+          status: "error",
+          text: intl.formatMessage(commonErrorMessages.unknownError),
         });
-
-        onClose();
-        resetSelectedItems();
-        return;
-      }
-
-      notify({
-        status: "error",
-        text: intl.formatMessage(commonErrorMessages.unknownError),
-      });
-    },
-    refetchQueries,
-  });
+      },
+      refetchQueries,
+    });
 
   const onBulkDeleteGiftCards = () =>
-    bulkDeleteGiftCard({ variables: { ids: listElements } });
+    bulkDeleteGiftCard({ variables: { ids: selectedRowIds } });
 
   return {
     onBulkDeleteGiftCards,

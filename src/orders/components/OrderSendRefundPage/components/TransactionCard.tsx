@@ -1,4 +1,5 @@
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+// @ts-strict-ignore
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
 import {
   OrderDetailsDocument,
@@ -6,7 +7,7 @@ import {
   TransactionActionEnum,
   TransactionItemFragment,
   useOrderSendRefundMutation,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import { Typography } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
 import { Button, makeStyles } from "@saleor/macaw-ui";

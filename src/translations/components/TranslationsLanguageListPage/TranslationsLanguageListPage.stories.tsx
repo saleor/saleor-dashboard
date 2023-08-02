@@ -1,5 +1,4 @@
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
+// @ts-strict-ignore
 import React from "react";
 
 import TranslationsLanguageListPage, {
@@ -11,12 +10,16 @@ const props: TranslationsLanguageListPageProps = {
   languages,
 };
 
-storiesOf("Translations / Language list", module)
-  .addDecorator(Decorator)
-  .add("default", () => <TranslationsLanguageListPage {...props} />)
-  .add("loading", () => (
-    <TranslationsLanguageListPage {...props} languages={undefined} />
-  ))
-  .add("no data", () => (
-    <TranslationsLanguageListPage {...props} languages={[]} />
-  ));
+export default {
+  title: "Translations / Language list",
+};
+
+export const Default = () => <TranslationsLanguageListPage {...props} />;
+
+export const Loading = () => (
+  <TranslationsLanguageListPage {...props} languages={undefined} />
+);
+
+export const NoData = () => (
+  <TranslationsLanguageListPage {...props} languages={[]} />
+);

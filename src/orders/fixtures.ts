@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   AppAvatarFragment,
   ChannelUsabilityDataQuery,
@@ -5,33 +6,31 @@ import {
   FulfillmentStatus,
   InvoiceFragment,
   JobStatusEnum,
+  MarkAsPaidStrategyEnum,
   OrderAction,
   OrderDetailsFragment,
   OrderDetailsQuery,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   OrderFulfillLineFragment,
+  OrderGrantedRefundFragment,
   OrderListQuery,
+  OrderPaymentFragment,
   OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
+  PaymentGatewayFragment,
   SearchCustomersQuery,
   SearchOrderVariantQuery,
   SearchWarehousesQuery,
   ShopOrderSettingsFragment,
   TransactionActionEnum,
-  TransactionKind,
-  WeightUnitsEnum,
-} from "@dashboard/graphql";
-import {
-  OrderDetailsWithTransactionsFragment,
-  OrderDetailsWithTransactionsQuery,
-  OrderGrantedRefundFragment,
-  OrderPaymentFragment,
   TransactionEventFragment,
   TransactionEventTypeEnum,
   TransactionItemFragment,
-} from "@dashboard/graphql/transactions";
+  TransactionKind,
+  WeightUnitsEnum,
+} from "@dashboard/graphql";
 import { staffMember } from "@dashboard/staff/fixtures";
 import { RelayToFlat } from "@dashboard/types";
 import {
@@ -59,23 +58,23 @@ export const countries: CountryWithCodeFragment[] = [
   { __typename: "CountryDisplay", code: "DZ", country: "Algeria" },
   { __typename: "CountryDisplay", code: "AS", country: "American Samoa" },
 ];
+
+const paymentGateways: PaymentGatewayFragment[] = [
+  { __typename: "PaymentGateway", id: "app.saleor.adyen", name: "Adyen" },
+  {
+    id: MOCK_PAYMENT_GATEWAY_ID,
+    name: "Mock Payment Gateway",
+    __typename: "PaymentGateway",
+  },
+];
+
 export const shop: OrderDetailsQuery["shop"] = {
   __typename: "Shop",
   countries,
   defaultWeightUnit: WeightUnitsEnum.KG,
   fulfillmentAllowUnpaid: true,
   fulfillmentAutoApprove: true,
-};
-
-export const shopWithTransactions: OrderDetailsWithTransactionsQuery["shop"] = {
-  ...shop,
-  availablePaymentGateways: [
-    {
-      id: MOCK_PAYMENT_GATEWAY_ID,
-      name: "Mock Payment Gateway",
-      __typename: "PaymentGateway",
-    },
-  ],
+  availablePaymentGateways: paymentGateways,
 };
 
 export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [
@@ -108,6 +107,106 @@ export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [
     lastName: "Jonas",
   },
 ];
+
+export const orderTransactions: TransactionItemFragment[] = [
+  {
+    id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+    name: "mollie-creditcard",
+    pspReference: "ord_3d41ih",
+    actions: [],
+    externalUrl: null,
+    events: [
+      {
+        id: "VHJhbnNhY3Rpb25FdmVudDox",
+        pspReference: "XCFDSDXCDF232332DFGS",
+        createdAt: "2022-08-12T14:22:22.226875+00:00",
+        type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+        createdBy: null,
+        externalUrl: null,
+        message: null,
+        amount: {
+          amount: 58.98,
+          currency: "USD",
+          __typename: "Money",
+        },
+        __typename: "TransactionEvent",
+      },
+    ],
+    authorizedAmount: prepareMoney(0),
+    authorizePendingAmount: prepareMoney(0),
+    chargedAmount: prepareMoney(58.98),
+    chargePendingAmount: prepareMoney(0),
+    refundedAmount: prepareMoney(0),
+    refundPendingAmount: prepareMoney(0),
+    canceledAmount: prepareMoney(0),
+    cancelPendingAmount: prepareMoney(0),
+    __typename: "TransactionItem",
+  },
+  {
+    id: "VHJhbnNhY3Rpb25JdGVtOjI=",
+    name: "test",
+    pspReference: "123",
+    externalUrl: null,
+    actions: [],
+    events: [
+      {
+        id: "VHJhbnNhY3Rpb25FdmVudDoy",
+        pspReference: "SDFDS34543SDDFS",
+        createdAt: "2022-08-12T14:14:27.119138+00:00",
+        type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+        createdBy: null,
+        externalUrl: null,
+        message: null,
+        amount: {
+          amount: 35.42,
+          currency: "USD",
+          __typename: "Money",
+        },
+        __typename: "TransactionEvent",
+      },
+      {
+        id: "VHJhbnNhY3Rpb25FdmVudDoy",
+        pspReference: "SDFDS34543SS",
+        createdAt: "2022-08-12T16:14:27.119138+00:00",
+        type: TransactionEventTypeEnum.REFUND_REQUEST,
+        createdBy: null,
+        externalUrl: null,
+        message: null,
+        amount: {
+          amount: 33.21,
+          currency: "USD",
+          __typename: "Money",
+        },
+        __typename: "TransactionEvent",
+      },
+      {
+        id: "VHJhbnNhY3Rpb25FdmVudDoy",
+        pspReference: "SDFDS34543SS",
+        createdAt: "2022-08-12T16:14:29.119138+00:00",
+        type: TransactionEventTypeEnum.REFUND_SUCCESS,
+        createdBy: null,
+        externalUrl: null,
+        message: null,
+        amount: {
+          amount: 33.21,
+          currency: "USD",
+          __typename: "Money",
+        },
+        __typename: "TransactionEvent",
+      },
+    ],
+    authorizedAmount: prepareMoney(1.21),
+    authorizePendingAmount: prepareMoney(0),
+    chargedAmount: prepareMoney(0),
+    chargePendingAmount: prepareMoney(0),
+    refundedAmount: prepareMoney(34.21),
+    refundPendingAmount: prepareMoney(0),
+    canceledAmount: prepareMoney(0),
+    cancelPendingAmount: prepareMoney(0),
+    __typename: "TransactionItem",
+  },
+];
+
 export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   {
     __typename: "Order",
@@ -814,6 +913,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
 ];
 
 export const ORDER_AMOUNT = 234.93;
+
 export const order = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order",
   giftCards: [],
@@ -823,7 +923,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     OrderAction.REFUND,
     OrderAction.VOID,
   ],
-  transactions: [{ id: "1234", __typename: "TransactionItem" }],
   shippingMethods: [
     {
       __typename: "ShippingMethod",
@@ -889,6 +988,10 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     id: "123454",
     isActive: true,
     name: "Default Channel",
+    orderSettings: {
+      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      __typename: "OrderSettings",
+    },
     defaultCountry: {
       code: "CA",
       __typename: "CountryDisplay",
@@ -1103,6 +1206,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       __typename: "Fulfillment",
       fulfillmentOrder: 2,
       id: "RnVsZmlsbG1lbnQ6MjQ=",
+      metadata: [],
+      privateMetadata: [],
       lines: [
         {
           __typename: "FulfillmentLine",
@@ -1183,6 +1288,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             variant: {
               __typename: "ProductVariant",
               id: "dsfsfuhb",
+              name: "XS",
               quantityAvailable: 10,
               preorder: null,
               product: {
@@ -1227,6 +1333,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       __typename: "Fulfillment",
       fulfillmentOrder: 1,
       id: "RnVsZmlsbG1lbnQ6OQ==",
+      metadata: [],
+      privateMetadata: [],
       lines: [
         {
           __typename: "FulfillmentLine",
@@ -1307,6 +1415,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             variant: {
               __typename: "ProductVariant",
               id: "dsfsfuhb",
+              name: "XS",
               quantityAvailable: 10,
               preorder: null,
               product: {
@@ -1439,6 +1548,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
+        name: "Soft",
         quantityAvailable: 10,
         preorder: null,
         product: {
@@ -1548,6 +1658,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
+        name: "XXL",
         quantityAvailable: 10,
         preorder: null,
         product: {
@@ -1677,10 +1788,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
   },
   user: null,
   userEmail: "melissa.simon@example.com",
-});
-
-export const orderWithTransactions: OrderDetailsWithTransactionsFragment = {
-  ...(order(undefined) as unknown as OrderDetailsWithTransactionsFragment),
   payments: [],
   grantedRefunds: [],
   totalGrantedRefund: prepareMoney(0),
@@ -1692,107 +1799,8 @@ export const orderWithTransactions: OrderDetailsWithTransactionsFragment = {
   totalCanceled: prepareMoney(0),
   totalCancelPending: prepareMoney(0),
   totalRemainingGrant: prepareMoney(0),
-  transactions: [
-    {
-      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "mollie-creditcard",
-      pspReference: "ord_3d41ih",
-      actions: [],
-      status: "Paid",
-      externalUrl: null,
-      events: [
-        {
-          id: "VHJhbnNhY3Rpb25FdmVudDox",
-          pspReference: "XCFDSDXCDF232332DFGS",
-          createdAt: "2022-08-12T14:22:22.226875+00:00",
-          type: TransactionEventTypeEnum.CHARGE_SUCCESS,
-          createdBy: null,
-          externalUrl: null,
-          message: null,
-          amount: {
-            amount: 58.98,
-            currency: "USD",
-            __typename: "Money",
-          },
-          __typename: "TransactionEvent",
-        },
-      ],
-      authorizedAmount: prepareMoney(0),
-      authorizePendingAmount: prepareMoney(0),
-      chargedAmount: prepareMoney(58.98),
-      chargePendingAmount: prepareMoney(0),
-      refundedAmount: prepareMoney(0),
-      refundPendingAmount: prepareMoney(0),
-      canceledAmount: prepareMoney(0),
-      cancelPendingAmount: prepareMoney(0),
-      __typename: "TransactionItem",
-    },
-    {
-      id: "VHJhbnNhY3Rpb25JdGVtOjI=",
-      type: "test",
-      pspReference: "123",
-      externalUrl: null,
-      status: "Partially refunded",
-      actions: [],
-      events: [
-        {
-          id: "VHJhbnNhY3Rpb25FdmVudDoy",
-          pspReference: "SDFDS34543SDDFS",
-          createdAt: "2022-08-12T14:14:27.119138+00:00",
-          type: TransactionEventTypeEnum.CHARGE_SUCCESS,
-          createdBy: null,
-          externalUrl: null,
-          message: null,
-          amount: {
-            amount: 35.42,
-            currency: "USD",
-            __typename: "Money",
-          },
-          __typename: "TransactionEvent",
-        },
-        {
-          id: "VHJhbnNhY3Rpb25FdmVudDoy",
-          pspReference: "SDFDS34543SS",
-          createdAt: "2022-08-12T16:14:27.119138+00:00",
-          type: TransactionEventTypeEnum.REFUND_REQUEST,
-          createdBy: null,
-          externalUrl: null,
-          message: null,
-          amount: {
-            amount: 33.21,
-            currency: "USD",
-            __typename: "Money",
-          },
-          __typename: "TransactionEvent",
-        },
-        {
-          id: "VHJhbnNhY3Rpb25FdmVudDoy",
-          pspReference: "SDFDS34543SS",
-          createdAt: "2022-08-12T16:14:29.119138+00:00",
-          type: TransactionEventTypeEnum.REFUND_SUCCESS,
-          createdBy: null,
-          externalUrl: null,
-          message: null,
-          amount: {
-            amount: 33.21,
-            currency: "USD",
-            __typename: "Money",
-          },
-          __typename: "TransactionEvent",
-        },
-      ],
-      authorizedAmount: prepareMoney(1.21),
-      authorizePendingAmount: prepareMoney(0),
-      chargedAmount: prepareMoney(0),
-      chargePendingAmount: prepareMoney(0),
-      refundedAmount: prepareMoney(34.21),
-      refundPendingAmount: prepareMoney(0),
-      canceledAmount: prepareMoney(0),
-      cancelPendingAmount: prepareMoney(0),
-      __typename: "TransactionItem",
-    },
-  ],
-};
+  transactions: orderTransactions,
+});
 
 export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order" as "Order",
@@ -1801,7 +1809,18 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   shippingMethods: [],
   billingAddress: null,
   canFinalize: true,
-  transactions: [{ id: "1234", __typename: "TransactionItem" }],
+  grantedRefunds: [],
+  totalGrantedRefund: prepareMoney(0),
+  totalAuthorizePending: prepareMoney(0),
+  totalCharged: prepareMoney(0),
+  totalChargePending: prepareMoney(0),
+  totalRefunded: prepareMoney(0),
+  totalRefundPending: prepareMoney(0),
+  totalCanceled: prepareMoney(0),
+  totalCancelPending: prepareMoney(0),
+  totalRemainingGrant: prepareMoney(0),
+  transactions: orderTransactions,
+  payments: [],
   channel: {
     __typename: "Channel",
     slug: "channel-default",
@@ -1809,6 +1828,10 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
     id: "123454",
     isActive: true,
     name: "Default Channel",
+    orderSettings: {
+      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      __typename: "OrderSettings",
+    },
     defaultCountry: {
       code: "CA",
       __typename: "CountryDisplay",
@@ -1910,6 +1933,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
+        name: "Hard",
         quantityAvailable: 10,
         preorder: null,
         product: {
@@ -2019,6 +2043,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
+        name: "15-1337",
         quantityAvailable: 10,
         preorder: null,
         product: {
@@ -2126,24 +2151,21 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   userEmail: null,
 });
 
-export const draftOrderWithTransactions: OrderDetailsWithTransactionsFragment =
-  {
-    ...(draftOrder(
-      undefined,
-    ) as unknown as OrderDetailsWithTransactionsFragment),
-    payments: [],
-    transactions: [],
-    grantedRefunds: [],
-    totalRemainingGrant: prepareMoney(0),
-    totalGrantedRefund: prepareMoney(0),
-    totalAuthorizePending: prepareMoney(0),
-    totalCharged: prepareMoney(0),
-    totalChargePending: prepareMoney(0),
-    totalRefunded: prepareMoney(0),
-    totalRefundPending: prepareMoney(0),
-    totalCanceled: prepareMoney(0),
-    totalCancelPending: prepareMoney(0),
-  };
+export const draftOrderWithTransactions: OrderDetailsFragment = {
+  ...(draftOrder(undefined) as unknown as OrderDetailsFragment),
+  payments: [],
+  transactions: [],
+  grantedRefunds: [],
+  totalRemainingGrant: prepareMoney(0),
+  totalGrantedRefund: prepareMoney(0),
+  totalAuthorizePending: prepareMoney(0),
+  totalCharged: prepareMoney(0),
+  totalChargePending: prepareMoney(0),
+  totalRefunded: prepareMoney(0),
+  totalRefundPending: prepareMoney(0),
+  totalCanceled: prepareMoney(0),
+  totalCancelPending: prepareMoney(0),
+};
 
 export const flatOrders = orders.map(order => ({
   ...order,
@@ -2227,8 +2249,8 @@ export const variants = [
 ];
 export const prefixes = ["01", "02", "41", "49"];
 export const shippingMethods = [
-  { country: "whole world", id: "s1", name: "DHL", price: {} },
-  { country: "Afghanistan", id: "s2", name: "UPS" },
+  { country: "whole world", id: 1, name: "DHL", price: {} },
+  { country: "Afghanistan", id: 2, name: "UPS" },
 ];
 export const orderLineSearch = (
   placeholderImage: string,
@@ -2609,10 +2631,9 @@ export const transactions: Record<
   preauthorized: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
-      actions: [TransactionActionEnum.VOID, TransactionActionEnum.CHARGE],
-      status: "Authorized",
+      actions: [TransactionActionEnum.CANCEL, TransactionActionEnum.CHARGE],
       externalUrl: null,
       events: [
         {
@@ -2645,9 +2666,8 @@ export const transactions: Record<
   pendingCharge: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
-      status: "Pending charge",
       externalUrl: null,
       actions: [],
       events: [
@@ -2696,10 +2716,9 @@ export const transactions: Record<
   chargeSuccess: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.REFUND],
-      status: "Fully paid",
       externalUrl: null,
       events: [
         {
@@ -2762,10 +2781,9 @@ export const transactions: Record<
   chargePartial: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.REFUND],
-      status: "Partially charged",
       externalUrl: null,
       events: [
         {
@@ -2828,10 +2846,9 @@ export const transactions: Record<
   chargeFail: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.CHARGE],
-      status: "Failed",
       externalUrl: null,
       events: [
         {
@@ -2894,10 +2911,9 @@ export const transactions: Record<
   refundRequested: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
-      status: "Pending refund",
       externalUrl: null,
       events: [
         {
@@ -2975,10 +2991,9 @@ export const transactions: Record<
   refundCompleted: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
-      status: "Refund completed",
       externalUrl: null,
       events: [
         {
@@ -3071,10 +3086,9 @@ export const transactions: Record<
   refundPartial: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
-      status: "Partially charged",
       externalUrl: null,
       events: [
         {

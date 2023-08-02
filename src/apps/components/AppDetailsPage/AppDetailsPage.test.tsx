@@ -1,8 +1,9 @@
+// @ts-strict-ignore
 import { render } from "@testing-library/react";
 import React from "react";
 
 import { appDetails } from "../../fixtures";
-import AppDetailsPage from "./AppDetailsPage";
+import { AppDetailsPage } from "./AppDetailsPage";
 
 const mockHeader = jest.fn();
 jest.mock("./Header", () => props => {
@@ -11,22 +12,29 @@ jest.mock("./Header", () => props => {
 });
 
 const mockAboutCard = jest.fn();
-jest.mock("./AboutCard", () => props => {
-  mockAboutCard(props);
-  return <></>;
-});
+jest.mock("./AboutCard", () => ({
+  AboutCard: props => {
+    mockAboutCard(props);
+    return <></>;
+  },
+}));
 
 const mockPermissionsCard = jest.fn();
-jest.mock("./PermissionsCard", () => props => {
-  mockPermissionsCard(props);
-  return <></>;
-});
+
+jest.mock("./PermissionsCard", () => ({
+  PermissionsCard: props => {
+    mockPermissionsCard(props);
+    return <></>;
+  },
+}));
 
 const mockDataPrivacyCard = jest.fn();
-jest.mock("./DataPrivacyCard", () => props => {
-  mockDataPrivacyCard(props);
-  return <></>;
-});
+jest.mock("./DataPrivacyCard", () => ({
+  DataPrivacyCard: props => {
+    mockDataPrivacyCard(props);
+    return <></>;
+  },
+}));
 
 beforeEach(() => {
   mockHeader.mockClear();
@@ -35,10 +43,12 @@ beforeEach(() => {
   mockDataPrivacyCard.mockClear();
 });
 
+/**
+ * TODO Rewrite tests to actually render the tree
+ */
 describe("Apps AppDetailsPage", () => {
   it("displays app details when app data passed", () => {
     // Arrange
-    const navigateToApp = jest.fn();
     const onAppActivateOpen = jest.fn();
     const onAppDeactivateOpen = jest.fn();
     const onAppDeleteOpen = jest.fn();
@@ -48,7 +58,6 @@ describe("Apps AppDetailsPage", () => {
       <AppDetailsPage
         data={appDetails}
         loading={false}
-        navigateToApp={navigateToApp}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
@@ -58,22 +67,27 @@ describe("Apps AppDetailsPage", () => {
     // Assert
     expect(mockHeader).toHaveBeenCalledWith({
       data: appDetails,
-      navigateToApp,
       onAppActivateOpen,
       onAppDeactivateOpen,
       onAppDeleteOpen,
     });
-    expect(mockAboutCard).toHaveBeenCalledWith({
-      aboutApp: appDetails.aboutApp,
-      loading: false,
-    });
-    expect(mockPermissionsCard).toHaveBeenCalledWith({
-      permissions: appDetails.permissions,
-      loading: false,
-    });
-    expect(mockDataPrivacyCard).toHaveBeenCalledWith({
-      dataPrivacyUrl: appDetails.dataPrivacyUrl,
-      loading: false,
-    });
+    expect(mockAboutCard).toHaveBeenCalledWith(
+      expect.objectContaining({
+        aboutApp: appDetails.aboutApp,
+        loading: false,
+      }),
+    );
+    expect(mockPermissionsCard).toHaveBeenCalledWith(
+      expect.objectContaining({
+        permissions: appDetails.permissions,
+        loading: false,
+      }),
+    );
+    expect(mockDataPrivacyCard).toHaveBeenCalledWith(
+      expect.objectContaining({
+        dataPrivacyUrl: appDetails.dataPrivacyUrl,
+        loading: false,
+      }),
+    );
   });
 });

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { SetPasswordData, useAuth } from "@saleor/sdk";
 import { parse as parseQs } from "qs";
@@ -17,7 +18,9 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<SetPasswordData["errors"]>([]);
 
-  const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1));
+  const params: NewPasswordUrlQueryParams = parseQs(
+    location.search.substr(1),
+  ) as any;
 
   const handleSubmit = async (data: NewPasswordPageFormData) => {
     setLoading(true);

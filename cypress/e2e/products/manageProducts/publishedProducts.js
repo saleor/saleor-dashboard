@@ -5,11 +5,18 @@ import faker from "faker";
 
 import { productDetailsUrl } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
+import {
+  getProductDetails,
+} from "../../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import { isProductVisible } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import { updateProductPublish } from "../../../support/pages/catalog/products/productDetailsPage";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
+import {
+  isProductVisible,
+} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import {
+  updateProductPublish,
+} from "../../../support/pages/catalog/products/productDetailsPage";
 
 describe("Published products", () => {
   const startsWith = "CyPublishedProducts-";
@@ -20,8 +27,7 @@ describe("Published products", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
+    cy.loginUserViaRequest();
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
@@ -48,10 +54,7 @@ describe("Published products", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(
@@ -73,7 +76,8 @@ describe("Published products", () => {
         .then(({ product: productResp }) => {
           const product = productResp;
           const productUrl = productDetailsUrl(product.id);
-          updateProductPublish(productUrl, true);
+          cy.visit(productUrl);
+          updateProductPublish(true);
           getProductDetails(product.id, defaultChannel.slug);
         })
         .then(resp => {
@@ -101,7 +105,8 @@ describe("Published products", () => {
         .then(({ product: productResp }) => {
           product = productResp;
           const productUrl = productDetailsUrl(product.id);
-          updateProductPublish(productUrl, false);
+          cy.visit(productUrl);
+          updateProductPublish(false);
           getProductDetails(product.id, defaultChannel.slug);
         })
         .then(resp => {

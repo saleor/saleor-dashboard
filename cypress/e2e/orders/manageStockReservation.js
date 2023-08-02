@@ -4,18 +4,15 @@
 import faker from "faker";
 
 import { createCheckout } from "../../support/api/requests/Checkout";
-import { updateStockReservation } from "../../support/api/requests/ShopSettings";
+import {
+  updateStockReservation,
+} from "../../support/api/requests/ShopSettings";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
-import { deleteWarehouseStartsWith } from "../../support/api/utils/warehouseUtils";
+import { createShipping } from "../../support/api/utils/shippingUtils";
 import {
   enterSiteSettingAndSetStockReservation,
   userType,
@@ -39,10 +36,8 @@ describe("As an admin I want to manage stock reservation", () => {
   let dataForCheckout;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    deleteWarehouseStartsWith(startsWith);
+    cy.loginUserViaRequest();
+
     cy.fixture("addresses").then(addresses => {
       address = addresses.usAddress;
 
@@ -82,15 +77,13 @@ describe("As an admin I want to manage stock reservation", () => {
   });
 
   after(() => {
-    updateStockReservation({})
-      .its("errors")
-      .should("be.empty");
+    updateStockReservation({}).its("errors").should("be.empty");
   });
 
   beforeEach(() => {
     const productName = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     createProductInChannel({
       attributeId: attribute.id,
@@ -119,9 +112,7 @@ describe("As an admin I want to manage stock reservation", () => {
 
       updateStockReservation({});
       enterSiteSettingAndSetStockReservation(userType.authenticated, 10);
-      createCheckout(dataForCheckout)
-        .its("checkout")
-        .should("be.ok");
+      createCheckout(dataForCheckout).its("checkout").should("be.ok");
       createCheckout(dataForCheckout)
         .its("errors.0")
         .should("include", { field: "quantity" })
@@ -139,9 +130,7 @@ describe("As an admin I want to manage stock reservation", () => {
 
       updateStockReservation({});
       enterSiteSettingAndSetStockReservation(userType.anonymous, 10);
-      createCheckout(dataForCheckout)
-        .its("checkout")
-        .should("be.ok");
+      createCheckout(dataForCheckout).its("checkout").should("be.ok");
       createCheckout(dataForCheckout)
         .its("errors.0")
         .should("include", { field: "quantity" })
@@ -159,9 +148,7 @@ describe("As an admin I want to manage stock reservation", () => {
 
       updateStockReservation({ authenticatedUserStock: 10 });
       enterSiteSettingAndSetStockReservation(userType.authenticated);
-      createCheckout(dataForCheckout)
-        .its("checkout")
-        .should("be.ok");
+      createCheckout(dataForCheckout).its("checkout").should("be.ok");
       createCheckout(dataForCheckout)
         .should("be.ok")
         .its("errors")
@@ -177,9 +164,7 @@ describe("As an admin I want to manage stock reservation", () => {
 
       updateStockReservation({ anonymousUserStock: 10 });
       enterSiteSettingAndSetStockReservation(userType.anonymous);
-      createCheckout(dataForCheckout)
-        .its("checkout")
-        .should("be.ok");
+      createCheckout(dataForCheckout).its("checkout").should("be.ok");
       createCheckout(dataForCheckout)
         .should("be.ok")
         .its("errors")

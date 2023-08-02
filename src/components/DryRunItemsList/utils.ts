@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   AppsListDocument,
   AppsListQuery,
@@ -188,7 +189,6 @@ export const DocumentMap: Record<string, Document> = {
     variables: {
       first: 100,
       hasChannel: true,
-      hasSelectedAttributes: true,
     },
     displayedAttribute: "name",
   },

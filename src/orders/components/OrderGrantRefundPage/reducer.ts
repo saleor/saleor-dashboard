@@ -1,4 +1,5 @@
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql/transactions";
+// @ts-strict-ignore
+import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { exhaustiveCheck } from "@dashboard/utils/ts";
 
 export interface ReducerOrderLine {

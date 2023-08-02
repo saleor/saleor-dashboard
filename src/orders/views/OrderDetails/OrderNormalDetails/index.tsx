@@ -1,22 +1,20 @@
+// @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
+  CreateManualTransactionCaptureMutation,
+  CreateManualTransactionCaptureMutationVariables,
   FulfillmentFragment,
   FulfillmentStatus,
   OrderDetailsQueryResult,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
+  OrderTransactionRequestActionMutation,
+  OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
-import {
-  CreateManualTransactionCaptureMutation,
-  CreateManualTransactionCaptureMutationVariables,
-  OrderDetailsWithTransactionsQueryResult,
-  OrderTransactionRequestActionMutation,
-  OrderTransactionRequestActionMutationVariables,
-} from "@dashboard/graphql/transactions";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   extractMutationErrors,
@@ -66,9 +64,8 @@ import {
 interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
-  data:
-    | OrderDetailsQueryResult["data"]
-    | OrderDetailsWithTransactionsQueryResult["data"];
+  data: OrderDetailsQueryResult["data"];
+  loading: boolean;
   orderAddNote: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
@@ -109,6 +106,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   id,
   params,
   data,
+  loading,
   orderAddNote,
   orderInvoiceRequest,
   handleSubmit,
@@ -191,8 +189,10 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderDetailsPage
         onOrderReturn={() => navigate(orderReturnUrl(id))}
-        disabled={
-          updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
+        loading={
+          loading ||
+          updateMetadataOpts.loading ||
+          updatePrivateMetadataOpts.loading
         }
         errors={errors}
         onNoteAdd={variables =>

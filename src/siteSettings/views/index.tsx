@@ -28,24 +28,22 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
     displayLoader: true,
   });
 
-  const [
-    updateShopSettings,
-    updateShopSettingsOpts,
-  ] = useShopSettingsUpdateMutation({
-    onCompleted: data => {
-      if (
-        [
-          ...(data?.shopAddressUpdate?.errors || []),
-          ...(data?.shopSettingsUpdate?.errors || []),
-        ].length === 0
-      ) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+  const [updateShopSettings, updateShopSettingsOpts] =
+    useShopSettingsUpdateMutation({
+      onCompleted: data => {
+        if (
+          [
+            ...(data?.shopAddressUpdate?.errors || []),
+            ...(data?.shopSettingsUpdate?.errors || []),
+          ].length === 0
+        ) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
 
   const errors = [
     ...(updateShopSettingsOpts.data?.shopSettingsUpdate?.errors || []),
@@ -79,6 +77,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
               data.reserveStockDurationAnonymousUser || null,
             reserveStockDurationAuthenticatedUser:
               data.reserveStockDurationAuthenticatedUser || null,
+            enableAccountConfirmationByEmail: data.emailConfirmation,
           },
         },
       }),

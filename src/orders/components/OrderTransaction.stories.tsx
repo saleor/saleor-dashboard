@@ -1,12 +1,11 @@
+// @ts-strict-ignore
 import {
   TransactionActionEnum,
   TransactionEventTypeEnum,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import OrderTransaction, {
   OrderTransactionProps,
 } from "@dashboard/orders/components/OrderTransaction";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { prepareMoney } from "../fixtures";
@@ -16,14 +15,13 @@ const props: OrderTransactionProps = {
   transaction: {
     __typename: "TransactionItem",
     id: "VHJhbnNhY3Rpb25JdGVtOjI=",
-    type: "Adyen: refund",
+    name: "Adyen: refund",
     pspReference: "12345",
     actions: [
       TransactionActionEnum.CHARGE,
       TransactionActionEnum.REFUND,
-      TransactionActionEnum.VOID,
+      TransactionActionEnum.CANCEL,
     ],
-    status: "Partial capture",
     externalUrl: "https://google.com",
     events: [
       {
@@ -150,7 +148,10 @@ const longAmountProps: OrderTransactionProps = {
   },
 };
 
-storiesOf("Orders / OrderTransaction", module)
-  .addDecorator(Decorator)
-  .add("default", () => <OrderTransaction {...props} />)
-  .add("long amounts", () => <OrderTransaction {...longAmountProps} />);
+export default {
+  title: "Orders / OrderTransaction",
+};
+
+export const Default = () => <OrderTransaction {...props} />;
+
+export const LongAmounts = () => <OrderTransaction {...longAmountProps} />;

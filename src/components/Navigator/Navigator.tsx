@@ -1,4 +1,4 @@
-import { APP_VERSION } from "@dashboard/config";
+// @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Divider, Fade, Modal, Paper } from "@material-ui/core";
@@ -7,7 +7,6 @@ import Downshift from "downshift";
 import hotkeys from "hotkeys-js";
 import React from "react";
 import { useIntl } from "react-intl";
-import cmp from "semver-compare";
 
 import {
   getActions,
@@ -83,9 +82,8 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
       setVisibility(!visible);
     });
 
-    if (cmp(APP_VERSION, "2.1.0") !== 1 && !notifiedAboutNavigator) {
+    if (!notifiedAboutNavigator) {
       notify({
-        autohide: null,
         text: intl.formatMessage(
           {
             id: "EM+30g",
@@ -94,10 +92,9 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
             description: "navigator notification",
           },
           {
-            keyboardShortcut:
-              navigator.platform.toLowerCase().indexOf("mac") >= 0
-                ? "⌘+K"
-                : "Ctrl+K",
+            keyboardShortcut: navigator.platform.toLowerCase().includes("mac")
+              ? "⌘+K"
+              : "Ctrl+K",
           },
         ),
         title: intl.formatMessage({

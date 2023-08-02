@@ -11,14 +11,14 @@ export interface UseExitFormDialogResult
 }
 
 export interface UseExitFormDialogProps {
-  formId: symbol;
+  formId: symbol | undefined;
   isDisabled?: boolean;
 }
 
 export const useExitFormDialog = (
   { formId, isDisabled }: UseExitFormDialogProps = { formId: undefined },
 ): UseExitFormDialogResult => {
-  const id = useRef(formId || Symbol()).current;
+  const id = useRef(formId || Symbol("exit-form-fallback-id")).current;
 
   const exitDialogProps = useContext(ExitFormDialogContext);
   const { setIsDirty, setIsSubmitDisabled, setExitDialogSubmitRef } =

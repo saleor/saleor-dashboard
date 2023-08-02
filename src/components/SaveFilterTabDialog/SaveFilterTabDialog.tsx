@@ -1,3 +1,5 @@
+// @ts-strict-ignore
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import {
   Dialog,
@@ -6,12 +8,11 @@ import {
   DialogTitle,
   TextField,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
-import ConfirmButton from "../ConfirmButton";
+import { ConfirmButton } from "../ConfirmButton";
 import Form from "../Form";
 
 export interface SaveFilterTabDialogFormData {
@@ -71,16 +72,18 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
                 value={data.name}
                 onChange={change}
                 error={errors}
+                data-test-id="preset-name-text-field"
                 helperText={errors ? "This field is required" : null}
               />
             </DialogContent>
             <DialogActions>
-              <BackButton onClick={onClose}>
+              <BackButton onClick={onClose} data-test-id="cancel-preset-button">
                 <FormattedMessage {...buttonMessages.cancel} />
               </BackButton>
               <ConfirmButton
                 transitionState={confirmButtonState}
                 onClick={submit}
+                data-test-id="save-preset-button"
               >
                 <FormattedMessage {...buttonMessages.save} />
               </ConfirmButton>

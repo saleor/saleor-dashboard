@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import { Button } from "@dashboard/components/Button";
 import { buttonMessages } from "@dashboard/intl";
@@ -30,8 +31,8 @@ const useStyles = makeStyles(
 export interface CategoryDeleteDialogProps {
   open: boolean;
   name: string;
-  onClose();
-  onConfirm();
+  onClose: () => any;
+  onConfirm: () => any;
 }
 
 const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {

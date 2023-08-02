@@ -1,11 +1,11 @@
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
+import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { AppLogo } from "./AppLogo";
 
 interface AppListCardDescriptionProps {
-  app: GetV2SaleorAppsResponse.SaleorApp;
+  app: AppstoreApi.SaleorApp;
 }
 
 const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
@@ -18,14 +18,14 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
     borderTopRightRadius={3}
     borderColor="neutralPlain"
     borderBottomStyle="none"
-    padding={8}
+    padding={5}
   >
     <Box
       display="flex"
       flexDirection="row"
       alignItems="center"
-      marginBottom={8}
-      gap={6}
+      marginBottom={5}
+      gap={3}
     >
       <AppLogo backgroundColor={app.logo.color}>
         {app.logo.source ? (

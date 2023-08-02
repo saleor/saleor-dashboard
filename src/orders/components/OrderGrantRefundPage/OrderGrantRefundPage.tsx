@@ -1,11 +1,12 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Skeleton from "@dashboard/components/Skeleton";
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql/transactions";
+import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -61,7 +62,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     }
   }, [order]);
 
-  const { set, change, data, submit } = useGrantRefundForm({
+  const { set, change, data, submit, setIsDirty } = useGrantRefundForm({
     onSubmit,
     initialData,
   });
@@ -92,7 +93,10 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
       <form onSubmit={handleSubmit} className={classes.form}>
         <GrantRefundContext.Provider
           value={{
-            dispatch,
+            dispatch: (...args) => {
+              setIsDirty(true);
+              dispatch(...args);
+            },
             state,
             form: { change, data, set },
             totalSelectedPrice,
@@ -119,6 +123,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
               />
               {order?.fulfillments?.map?.(fulfillment => (
                 <ProductsCard
+                  key={fulfillment.id}
                   title={intl.formatMessage(
                     getOrderTitleMessage(fulfillment.status),
                   )}
@@ -152,6 +157,11 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                     name={"reason" as keyof OrderGrantRefundFormData}
                     onChange={change}
                     type="text"
+                    InputProps={{
+                      inputProps: {
+                        "data-test-id": "refundReasonInput",
+                      },
+                    }}
                   />
                 </CardContent>
               </Card>

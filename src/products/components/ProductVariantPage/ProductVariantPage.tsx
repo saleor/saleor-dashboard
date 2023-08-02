@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -5,15 +6,17 @@ import {
 import { ChannelPriceData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
-import Attributes, {
+import {
   AttributeInput,
+  Attributes,
   VariantAttributeScope,
 } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { MetadataFormData } from "@dashboard/components/Metadata";
-import Metadata from "@dashboard/components/Metadata/Metadata";
+import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import {
   ProductChannelListingErrorFragment,
@@ -29,12 +32,11 @@ import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/comp
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import ProductShipping from "../ProductShipping/ProductShipping";
-import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import { ProductShipping } from "../ProductShipping";
+import { ProductStockInput, ProductStocks } from "../ProductStocks";
 import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
 import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
@@ -43,7 +45,7 @@ import ProductVariantMediaSelectDialog from "../ProductVariantImageSelectDialog"
 import ProductVariantMedia from "../ProductVariantMedia";
 import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
-import ProductVariantPrice from "../ProductVariantPrice";
+import { ProductVariantPrice } from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 import ProductVariantUpdateForm, {
   ProductVariantUpdateData,
@@ -116,10 +118,10 @@ interface ProductVariantPageProps {
   variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
-  onDelete();
-  onSubmit(data: ProductVariantUpdateSubmitData);
-  onSetDefaultVariant();
-  onWarehouseConfigure();
+  onDelete: () => any;
+  onSubmit: (data: ProductVariantUpdateSubmitData) => any;
+  onSetDefaultVariant: () => any;
+  onWarehouseConfigure: () => any;
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({

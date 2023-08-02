@@ -8,12 +8,19 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { voucherDetailsUrl } from "../../../fixtures/urlList";
 import {
   createVoucherInChannel,
-  deleteVouchersStartsWith,
 } from "../../../support/api/utils/discounts/vouchersUtils";
-import { createCheckoutWithVoucher } from "../../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
-import { formatDate, formatTime } from "../../../support/formatData/formatDate";
+import {
+  createCheckoutWithVoucher,
+} from "../../../support/api/utils/ordersUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
+import {
+  updateTaxConfigurationForChannel,
+} from "../../../support/api/utils/taxesUtils";
+import {
+  formatDate,
+  formatTime,
+} from "../../../support/formatData/formatDate";
 import { setVoucherDate } from "../../../support/pages/discounts/vouchersPage";
 
 describe("As an admin I want to update vouchers", () => {
@@ -29,8 +36,7 @@ describe("As an admin I want to update vouchers", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
-    deleteVouchersStartsWith(startsWith);
+    cy.loginUserViaRequest();
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(
@@ -61,7 +67,7 @@ describe("As an admin I want to update vouchers", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,

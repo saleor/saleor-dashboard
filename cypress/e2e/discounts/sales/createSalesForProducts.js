@@ -7,13 +7,12 @@ import { urlList } from "../../../fixtures/urlList";
 import { createChannel } from "../../../support/api/requests/Channels";
 import { updateChannelInProduct } from "../../../support/api/requests/Product";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import { deleteSalesStartsWith } from "../../../support/api/utils/discounts/salesUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
+import { createShipping } from "../../../support/api/utils/shippingUtils";
 import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
-import { getProductPrice } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+  getProductPrice,
+} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,
@@ -40,11 +39,7 @@ describe("As an admin I want to create sale for products", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannelsStartsWith(startsWith);
-    deleteSalesStartsWith(startsWith);
-    productsUtils.deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
+    cy.loginUserViaRequest();
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
@@ -90,7 +85,7 @@ describe("As an admin I want to create sale for products", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,
@@ -174,9 +169,7 @@ describe("As an admin I want to create sale for products", () => {
            cy.clearSessionData()
           .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
           */
-          cy.visit(urlList.sales)
-            .expectSkeletonIsVisible()
-            .waitForProgressBarToNotExist();
+          cy.visit(urlList.sales);
           createSale({
             saleName,
             channelName: channel.name,

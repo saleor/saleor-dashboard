@@ -34,19 +34,17 @@ const useStyles = makeStyles(
   }),
   { name: "FilterKeyValueField" },
 );
-
-const getUpdateArrayFn = <T,>(key: "key" | "value") => (
-  array: T[],
-  index: number,
-  value: string,
-) => {
-  const item = array[index];
-  return [
-    ...array.slice(0, index),
-    { ...item, [key]: value },
-    ...array.slice(index + 1),
-  ];
-};
+// @eslint-ignore-next-line
+const getUpdateArrayFn =
+  <T,>(key: "key" | "value") =>
+  (array: T[], index: number, value: string) => {
+    const item = array[index];
+    return [
+      ...array.slice(0, index),
+      { ...item, [key]: value },
+      ...array.slice(index + 1),
+    ];
+  };
 
 const updateKeyFn = getUpdateArrayFn<KeyValue>("key");
 const updateValueFn = getUpdateArrayFn<KeyValue>("value");
@@ -72,7 +70,10 @@ export const FilterKeyValueField = <K extends string = string>({
     <div className={classes.formWrapper}>
       <div className={classes.fieldsWrapper}>
         {values.map((innerField, index) => (
-          <div className={classes.metadataField}>
+          <div
+            className={classes.metadataField}
+            key={`${innerField.key}-${index}`}
+          >
             <TextField
               fullWidth
               name={filter.name}

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ApolloClient, useApolloClient } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
 import useNotifier from "@dashboard/hooks/useNotifier";

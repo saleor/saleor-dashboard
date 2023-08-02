@@ -1,5 +1,9 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -11,7 +15,6 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -19,8 +22,8 @@ export interface OrderPaymentVoidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
-  onClose?();
-  onConfirm?();
+  onClose?: () => any;
+  onConfirm?: () => any;
 }
 
 const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({

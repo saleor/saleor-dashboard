@@ -1,19 +1,35 @@
+// @ts-strict-ignore
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
-import React from "react";
+import { Box } from "@saleor/macaw-ui/next";
+import React, { memo } from "react";
 
-import CardSpacer from "../CardSpacer";
-import MetadataCard, { MetadataCardProps } from "./MetadataCard";
+import { MetadataCard, MetadataCardProps } from "./MetadataCard";
 import { EventDataAction, EventDataField } from "./types";
 import { getDataKey, parseEventData } from "./utils";
 
 export interface MetadataProps
   extends Omit<MetadataCardProps, "data" | "isPrivate"> {
   data: Record<"metadata" | "privateMetadata", MetadataInput[]>;
+  isLoading?: boolean;
 }
 
-const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
+const propsCompare = (_, newProps: MetadataProps) => {
+  /**
+    If we pass `isLoading` render only when the loading finishes
+  */
+  if (typeof newProps.isLoading !== "undefined") {
+    return newProps.isLoading;
+  }
+
+  /*
+    If `isLoading` is not present, keep the old behavior
+  */
+  return false;
+};
+
+export const Metadata: React.FC<MetadataProps> = memo(({ data, onChange }) => {
   const change = (event: ChangeEvent, isPrivate: boolean) => {
     const { action, field, fieldIndex, value } = parseEventData(event);
     const key = getDataKey(isPrivate);
@@ -53,21 +69,17 @@ const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
   };
 
   return (
-    <>
+    <Box display="grid" gap={2} paddingBottom={6}>
       <MetadataCard
         data={data?.metadata}
         isPrivate={false}
         onChange={event => change(event, false)}
       />
-      <CardSpacer />
       <MetadataCard
         data={data?.privateMetadata}
         isPrivate={true}
         onChange={event => change(event, true)}
       />
-    </>
+    </Box>
   );
-};
-
-Metadata.displayName = "Metadata";
-export default Metadata;
+}, propsCompare);

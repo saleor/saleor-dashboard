@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import TextWithSelectField from "@dashboard/components/TextWithSelectField";
 import { useChannelCurrenciesQuery } from "@dashboard/graphql";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";

@@ -3,11 +3,18 @@ import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostT
 import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
 import React, { useState } from "react";
 
+/**
+ * TODO Refactor to named attributes
+ */
 export const useAppActions = (
   frameEl: HTMLIFrameElement | null,
   appOrigin: string,
   appId: string,
   appToken: string,
+  versions: {
+    core: string;
+    dashboard: string;
+  },
 ) => {
   const postToExtension = usePostToExtension(frameEl, appOrigin);
 
@@ -21,7 +28,10 @@ export const useAppActions = (
     frameEl,
     appOrigin,
     appToken,
+    versions,
   );
+  const { handle: handlePermissionRequest } =
+    AppActionsHandler.useHandlePermissionRequest(appId);
 
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
@@ -48,6 +58,9 @@ export const useAppActions = (
         setHandshakeDone(true);
 
         return response;
+      }
+      case "requestPermissions": {
+        return handlePermissionRequest(action)
       }
       default: {
         throw new Error("Unknown action type");

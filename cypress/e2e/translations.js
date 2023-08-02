@@ -8,26 +8,25 @@ import {
   getCategory,
   updateCategoryTranslation,
 } from "../support/api/requests/Category";
-import { deleteCategoriesStartsWith } from "../support/api/utils/catalog/categoryUtils";
 import { updateTranslationToCategory } from "../support/pages/translationsPage";
 
 describe("As an admin I want to manage translations", () => {
-  const startsWith = "TestTranslations";
+  const startsWith = "TestTranslations - " + Date.now();
   const randomNumber = faker.datatype.number();
+  const slug = `${faker.lorem.slug()}slug`;
 
   let category;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteCategoriesStartsWith(startsWith);
-    createCategory({ name: startsWith }).then(categoryResp => {
+    cy.loginUserViaRequest();
+    createCategory({ name: startsWith, slug }).then(categoryResp => {
       category = categoryResp;
       cy.checkIfDataAreNotNull({ category });
     });
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

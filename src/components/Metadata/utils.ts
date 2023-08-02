@@ -1,7 +1,11 @@
+// @ts-strict-ignore
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 
-import { nameSeparator } from "./MetadataCard";
 import { EventData, EventDataAction, EventDataField } from "./types";
+
+export const nameSeparator = ":";
+export const nameInputPrefix = EventDataField.name;
+export const valueInputPrefix = EventDataField.value;
 
 export function parseEventData(event: ChangeEvent): EventData {
   let action: EventDataAction;

@@ -1,5 +1,7 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
@@ -25,7 +27,6 @@ import {
   TextField,
 } from "@material-ui/core";
 import {
-  ConfirmButtonTransitionState,
   List,
   ListHeader,
   ListItem,
@@ -94,7 +95,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav title={<TaxPageTitle />} />
             <DetailPageLayout.Content>
-              <Box padding={9}>
+              <Box padding={6}>
                 <PageTabs value="countries" onChange={handleTabChange}>
                   <PageTab
                     label={intl.formatMessage(taxesMessages.channelsSection)}

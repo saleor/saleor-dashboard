@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   CustomerDetailsQuery,
   useCustomerDetailsQuery,
@@ -13,14 +14,12 @@ interface CustomerDetailsConsumerProps {
   loading: boolean | null;
 }
 
-export const CustomerDetailsContext = createContext<
-  CustomerDetailsConsumerProps
->(null);
+export const CustomerDetailsContext =
+  createContext<CustomerDetailsConsumerProps>(null);
 
-export const CustomerDetailsProvider: React.FC<CustomerDetailsProviderProps> = ({
-  children,
-  id,
-}) => {
+export const CustomerDetailsProvider: React.FC<
+  CustomerDetailsProviderProps
+> = ({ children, id }) => {
   const { data, loading } = useCustomerDetailsQuery({
     displayLoader: true,
     variables: {

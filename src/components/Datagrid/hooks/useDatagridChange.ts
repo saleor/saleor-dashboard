@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { updateAtIndex } from "@dashboard/utils/lists";
 import { EditableGridCell, Item } from "@glideapps/glide-data-grid";
 import {
@@ -24,7 +25,10 @@ export interface DatagridChangeOpts {
   removed: number[];
   updates: DatagridChange[];
 }
-export type OnDatagridChange = (opts: DatagridChangeOpts) => void;
+export type OnDatagridChange = (
+  opts: DatagridChangeOpts,
+  setMarkCellsDirty: (areCellsDirty: boolean) => void,
+) => void;
 
 export interface UseDatagridChangeState {
   added: number[];
@@ -64,6 +68,7 @@ function useDatagridChange(
   availableColumns: readonly AvailableColumn[],
   rows: number,
   onChange?: OnDatagridChange,
+  setMarkCellsDirty?: (areCellsDirty: boolean) => void,
 ) {
   const { added, setAdded, removed, setRemoved, changes } =
     useDatagridChangeStateContext();
@@ -78,14 +83,17 @@ function useDatagridChange(
   const notify = useCallback(
     (updates: DatagridChange[], added: number[], removed: number[]) => {
       if (onChange) {
-        onChange({
-          updates,
-          removed,
-          added,
-        });
+        onChange(
+          {
+            updates,
+            removed,
+            added,
+          },
+          setMarkCellsDirty,
+        );
       }
     },
-    [onChange],
+    [onChange, setMarkCellsDirty],
   );
 
   const onCellEdited = useCallback(

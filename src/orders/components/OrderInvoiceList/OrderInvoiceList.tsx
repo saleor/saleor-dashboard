@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import Date from "@dashboard/components/Date";
@@ -75,7 +76,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           onInvoiceGenerate && (
             <Button
               onClick={onInvoiceGenerate}
-              className={sprinkles({ marginRight: 2 })}
+              className={sprinkles({ marginRight: 0.5 })}
             >
               <FormattedMessage
                 id="e0RKe+"

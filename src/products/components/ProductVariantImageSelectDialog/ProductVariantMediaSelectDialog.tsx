@@ -1,5 +1,6 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { ProductMediaFragment } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
@@ -81,8 +82,9 @@ const ProductVariantMediaSelectDialog: React.FC<
                   className={clsx([
                     classes.imageContainer,
                     {
-                      [classes.selectedImageContainer]:
-                        selectedMedia.indexOf(mediaObj.id) !== -1,
+                      [classes.selectedImageContainer]: selectedMedia.includes(
+                        mediaObj.id,
+                      ),
                     },
                   ])}
                   onClick={() => handleMediaSelect(mediaObj.id)}

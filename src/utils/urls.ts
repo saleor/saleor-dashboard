@@ -1,7 +1,11 @@
+// @ts-strict-ignore
 import { getAppDefaultUri, getAppMountUri } from "@dashboard/config";
 import { stringify } from "qs";
 
-export function stringifyQs(params: unknown, arrayFormat?: string): string {
+export function stringifyQs(
+  params: unknown,
+  arrayFormat?: "repeat" | "indices" | "brackets" | "comma",
+): string {
   return stringify(params, {
     arrayFormat: arrayFormat || "indices",
   });

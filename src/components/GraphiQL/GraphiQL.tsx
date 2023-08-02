@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { WebhookFormData } from "@dashboard/custom-apps/components/WebhookDetailsPage";
 import {
   CopyIcon,
@@ -205,12 +206,25 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     }
   };
 
+  const overwriteCodeMirrorCSSVariables = {
+    __html: `
+      .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
+        --font-size-hint: ${rootStyle["--font-size-hint"]} !important;
+        --font-size-inline-code: ${rootStyle["--font-size-inline-code"]} !important;
+        --font-size-body: ${rootStyle["--font-size-body"]} !important;
+        --font-size-h4: ${rootStyle["--font-size-h4"]} !important;
+        --font-size-h3: ${rootStyle["--font-size-h3"]} !important;
+        --font-size-h2: ${rootStyle["--font-size-h2"]} !important;
+    `,
+  };
+
   return (
     <div
       data-test-id="graphiql-container"
-      className="graphiql-container"
+      className={clsx("graphiql-container", classes.graphiqlContainer)}
       style={rootStyle}
     >
+      <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
       <div className="graphiql-sidebar">
         <div className="graphiql-sidebar-section">
           {pluginContext?.plugins.map(plugin => {
@@ -260,7 +274,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           ) : null}
         </div>
         <div ref={pluginResize.secondRef} style={{ minWidth: 0 }}>
-          <div className="graphiql-sessions">
+          <div className={clsx("graphiql-sessions", classes.graphiqlSessions)}>
             <div
               role="tabpanel"
               id="graphiql-session"
@@ -270,7 +284,10 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
             >
               <div ref={editorResize.firstRef}>
                 <div
-                  className="graphiql-editors full-height"
+                  className={clsx(
+                    "graphiql-editors full-height",
+                    classes.graphiqlEditors,
+                  )}
                   style={{ boxShadow: "none" }}
                 >
                   <div ref={editorToolsResize.firstRef}>

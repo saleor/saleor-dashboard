@@ -1,9 +1,10 @@
+// @ts-strict-ignore
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useOrderDetailsGrantRefundEditQuery,
   useOrderGrantRefundEditMutation,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";

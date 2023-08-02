@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
 import { createFilterStructure } from "@dashboard/products/components/ProductListPage";
 import { ProductListUrlFilters } from "@dashboard/products/urls";
@@ -12,7 +13,7 @@ import {
   FilterParam,
   getAttributeValuesFromParams,
   getFilterQueryParam,
-  getFilterVariables,
+  getLegacyFilterVariables,
   mapAttributeParamsToFilterOpts,
   parseFilterValue,
 } from "./filters";
@@ -21,7 +22,7 @@ import { productListFilterOpts } from "./fixtures";
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {
     const params: ProductListUrlFilters = {};
-    const filterVariables = getFilterVariables(params, undefined);
+    const filterVariables = getLegacyFilterVariables(params, undefined);
 
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
@@ -33,7 +34,7 @@ describe("Filtering query params", () => {
       status: true.toString(),
       stockStatus: StockAvailability.IN_STOCK,
     };
-    const filterVariables = getFilterVariables(params, true);
+    const filterVariables = getLegacyFilterVariables(params, true);
 
     expect(getExistingKeys(filterVariables)).toHaveLength(2);
   });

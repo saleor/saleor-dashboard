@@ -1,4 +1,8 @@
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+// @ts-strict-ignore
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import CustomerAddressChoiceCard from "@dashboard/customers/components/CustomerAddressChoiceCard";
 import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
@@ -13,11 +17,7 @@ import {
   InputAdornment,
   TextField,
 } from "@material-ui/core";
-import {
-  Button,
-  ConfirmButtonTransitionState,
-  SearchIcon,
-} from "@saleor/macaw-ui";
+import { Button, SearchIcon } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -35,7 +35,7 @@ export interface OrderCustomerAddressesSearchProps {
   customerAddresses: AddressFragment[];
   onChangeCustomerShippingAddress: (customerAddress: AddressFragment) => void;
   onChangeCustomerBillingAddress: (customerAddress: AddressFragment) => void;
-  exitSearch();
+  exitSearch: () => any;
 }
 
 const OrderCustomerAddressesSearch: React.FC<

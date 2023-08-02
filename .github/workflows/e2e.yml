@@ -126,6 +126,7 @@ jobs:
           CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
           COMMIT_INFO_MESSAGE: ${{ needs.get-selected-tags-and-containers.outputs.tags }} tests triggered on PR - https://github.com/${{ github.repository }}/pull/${{ github.ref_name }}
           CYPRESS_grepTags: ${{ needs.get-selected-tags-and-containers.outputs.tags }}
+          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }} 
         with:
           parallel: true
           group: 'UI - Chrome'

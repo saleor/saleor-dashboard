@@ -1,6 +1,10 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
@@ -19,7 +23,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -91,9 +94,7 @@ const DiscountCountrySelectDialog: React.FC<
                 <TextField
                   name="query"
                   value={data.query}
-                  onChange={event =>
-                    change(event /* TO BE CHECKED: () => fetch(data.query)*/)
-                  }
+                  onChange={event => change(event)}
                   label={intl.formatMessage({
                     id: "8EGagh",
                     defaultMessage: "Filter Countries",

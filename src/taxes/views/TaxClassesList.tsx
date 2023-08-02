@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   TaxClassCreateErrorFragment,
   TaxClassFragment,
@@ -73,42 +74,38 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     },
   });
 
-  const [
-    taxClassUpdateMutation,
-    taxClassUpdateMutationState,
-  ] = useTaxClassUpdateMutation({
-    onCompleted: data => {
-      const errors = data?.taxClassUpdate?.errors;
-      if (errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+  const [taxClassUpdateMutation, taxClassUpdateMutationState] =
+    useTaxClassUpdateMutation({
+      onCompleted: data => {
+        const errors = data?.taxClassUpdate?.errors;
+        if (errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
 
-  const [
-    taxClassCreateMutation,
-    taxClassCreateMutationState,
-  ] = useTaxClassCreateMutation({
-    onCompleted: data => {
-      const errors = data?.taxClassCreate?.errors;
-      if (errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate(taxClassesListUrl(data?.taxClassCreate?.taxClass?.id));
-      }
-    },
-  });
+  const [taxClassCreateMutation, taxClassCreateMutationState] =
+    useTaxClassCreateMutation({
+      onCompleted: data => {
+        const errors = data?.taxClassCreate?.errors;
+        if (errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          navigate(taxClassesListUrl(data?.taxClassCreate?.taxClass?.id));
+        }
+      },
+    });
 
   const createTaxClass = async (
     data: TaxClassesPageFormData,
-  ): Promise<CreateMetadataHandlerFunctionResult<
-    TaxClassCreateErrorFragment
-  >> => {
+  ): Promise<
+    CreateMetadataHandlerFunctionResult<TaxClassCreateErrorFragment>
+  > => {
     const res = await taxClassCreateMutation({
       variables: {
         input: createTaxClassCreateInput(data),

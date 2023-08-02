@@ -10,7 +10,7 @@ interface RowActionsProps {
 }
 
 export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
-  const classes = useStyles();
+  const classes = useStyles({});
   const hasSingleMenuItem = menuItems.length === 1;
   const firstMenuItem = menuItems[0];
 
@@ -27,7 +27,7 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
       {hasSingleMenuItem && firstMenuItem.Icon ? (
         <IconButton
           data-test-id="row-action-button"
-          disabled={disabled}
+          disabled={disabled || firstMenuItem.disabled}
           onClick={handleIconClick}
           className={classes.ghostIcon}
           variant="ghost"
@@ -37,6 +37,8 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
       ) : (
         <CardMenu
           disabled={disabled}
+          autoFocusItem={false}
+          showMenuIcon={true}
           Icon={MoreHorizontalIcon}
           IconButtonProps={{
             className: classes.ghostIcon,

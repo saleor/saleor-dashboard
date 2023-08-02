@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   createShippingChannelsFromRate,
   createSortedShippingChannels,
@@ -60,7 +61,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-const FORM_ID = Symbol();
+const FORM_ID = Symbol("shipping-zone-rates-details-form-id");
 
 export interface RateUpdateProps {
   id: string;
@@ -77,9 +78,8 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
 
-  const [paginationState, setPaginationState] = useLocalPaginationState(
-    PAGINATE_BY,
-  );
+  const [paginationState, setPaginationState] =
+    useLocalPaginationState(PAGINATE_BY);
   const paginate = useLocalPaginator(setPaginationState);
 
   const { data, loading, refetch } = useShippingZoneQuery({
@@ -116,31 +116,27 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     updateShippingMethodChannelListingOpts,
   ] = useShippingMethodChannelListingUpdateMutation({});
 
-  const [
-    unassignProduct,
-    unassignProductOpts,
-  ] = useShippingPriceRemoveProductFromExcludeMutation({
-    onCompleted: data => {
-      if (data.shippingPriceRemoveProductFromExclude.errors.length === 0) {
-        handleSuccess();
-        refetch();
-        closeModal();
-      }
-    },
-  });
+  const [unassignProduct, unassignProductOpts] =
+    useShippingPriceRemoveProductFromExcludeMutation({
+      onCompleted: data => {
+        if (data.shippingPriceRemoveProductFromExclude.errors.length === 0) {
+          handleSuccess();
+          refetch();
+          closeModal();
+        }
+      },
+    });
 
-  const [
-    assignProduct,
-    assignProductOpts,
-  ] = useShippingPriceExcludeProductMutation({
-    onCompleted: data => {
-      if (data.shippingPriceExcludeProducts.errors.length === 0) {
-        handleSuccess();
-        refetch();
-        closeModal();
-      }
-    },
-  });
+  const [assignProduct, assignProductOpts] =
+    useShippingPriceExcludeProductMutation({
+      onCompleted: data => {
+        if (data.shippingPriceExcludeProducts.errors.length === 0) {
+          handleSuccess();
+          refetch();
+          closeModal();
+        }
+      },
+    });
   const shippingChannels = createShippingChannelsFromRate(
     rate?.channelListings,
   );
@@ -166,10 +162,8 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
 
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
-  const [
-    updateShippingRate,
-    updateShippingRateOpts,
-  ] = useUpdateShippingRateMutation({});
+  const [updateShippingRate, updateShippingRateOpts] =
+    useUpdateShippingRateMutation({});
 
   const handleSuccess = () => {
     notify({
@@ -177,17 +171,15 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
       text: intl.formatMessage(commonMessages.savedChanges),
     });
   };
-  const [
-    deleteShippingRate,
-    deleteShippingRateOpts,
-  ] = useDeleteShippingRateMutation({
-    onCompleted: data => {
-      if (data.shippingPriceDelete.errors.length === 0) {
-        handleSuccess();
-        navigate(shippingZoneUrl(id));
-      }
-    },
-  });
+  const [deleteShippingRate, deleteShippingRateOpts] =
+    useDeleteShippingRateMutation({
+      onCompleted: data => {
+        if (data.shippingPriceDelete.errors.length === 0) {
+          handleSuccess();
+          navigate(shippingZoneUrl(id));
+        }
+      },
+    });
 
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});

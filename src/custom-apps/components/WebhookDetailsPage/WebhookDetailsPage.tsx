@@ -1,4 +1,5 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -20,7 +21,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import { parse, print } from "graphql";
 import React, { useEffect, useState } from "react";
@@ -117,7 +117,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
             <DetailPageLayout.Content>
-              <Box padding={9}>
+              <Box padding={6}>
                 <WebhookStatus
                   data={data.isActive}
                   disabled={disabled}

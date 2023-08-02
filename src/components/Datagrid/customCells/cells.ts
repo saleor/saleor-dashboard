@@ -2,14 +2,15 @@ import {
   NumberCell,
   numberCellEmptyValue,
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
-import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
+import { Locale } from "@dashboard/components/Locale";
+import { GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
 
 import {
   DropdownCell,
   DropdownCellContentProps,
   DropdownChoice,
 } from "./DropdownCell";
-import { MoneyCell } from "./MoneyCell";
+import { MoneyCell, MoneyDiscuntedCell } from "./Money";
 import { ThumbnailCell } from "./ThumbnailCell";
 
 const common = {
@@ -29,7 +30,7 @@ export function textCell(value: string): GridCell {
 export function readonlyTextCell(
   value: string,
   hasCursorPointer: boolean = true,
-): GridCell {
+): TextCell {
   return {
     cursor: hasCursorPointer ? "pointer" : "default",
     allowOverlay: false,
@@ -37,6 +38,24 @@ export function readonlyTextCell(
     data: value,
     displayData: value,
     kind: GridCellKind.Text,
+  };
+}
+
+export function tagsCell(
+  tags: Array<{ tag: string; color: string }>,
+  selectedTags: string[],
+  opts?: Partial<GridCell>,
+): GridCell {
+  return {
+    ...opts,
+    kind: GridCellKind.Custom,
+    allowOverlay: true,
+    copyData: selectedTags.join(", "),
+    data: {
+      kind: "tags-cell",
+      possibleTags: tags,
+      tags: selectedTags,
+    },
   };
 }
 
@@ -51,8 +70,12 @@ export function booleanCell(value: boolean): GridCell {
 
 export function loadingCell(): GridCell {
   return {
-    kind: GridCellKind.Loading,
+    kind: GridCellKind.Custom,
     allowOverlay: true,
+    copyData: "",
+    data: {
+      kind: "spinner-cell",
+    },
   };
 }
 
@@ -70,14 +93,54 @@ export function numberCell(
   };
 }
 
-export function moneyCell(value: number | null, currency: string): MoneyCell {
+export function moneyCell(
+  value: number | string | null,
+  currency: string,
+  opts?: Partial<GridCell>,
+): MoneyCell {
   return {
     ...common,
+    ...opts,
     kind: GridCellKind.Custom,
     data: {
       kind: "money-cell",
       value,
       currency,
+    },
+    copyData: value?.toString() ?? "",
+  };
+}
+
+interface MoneyDiscountedCellData {
+  value: number | string | null;
+  discount?: string | number;
+  undiscounted?: string | number;
+  currency: string;
+  locale: Locale;
+  lineItemId?: string;
+}
+
+export function moneyDiscountedCell(
+  {
+    value,
+    undiscounted,
+    currency,
+    locale,
+    lineItemId,
+  }: MoneyDiscountedCellData,
+  opts?: Partial<GridCell>,
+): MoneyDiscuntedCell {
+  return {
+    ...common,
+    ...opts,
+    kind: GridCellKind.Custom,
+    data: {
+      kind: "money-discounted-cell",
+      value,
+      currency,
+      undiscounted,
+      lineItemId,
+      locale,
     },
     copyData: value?.toString() ?? "",
   };

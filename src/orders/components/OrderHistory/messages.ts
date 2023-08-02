@@ -1,5 +1,9 @@
-import { OrderEventsEmailsEnum } from "@dashboard/graphql";
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/orders/types";
+// @ts-strict-ignore
+import {
+  OrderEventFragment,
+  OrderEventsEmailsEnum,
+  OrderEventsEnum,
+} from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
 const getUserOrApp = (event: OrderEventFragment) => {
@@ -283,18 +287,6 @@ export const getEventMessage = (
       return intl.formatMessage({
         id: "fqJXzO",
         defaultMessage: "Transaction refund requested",
-        description: "order history message",
-      });
-    case OrderEventsEnum.TRANSACTION_VOID_REQUESTED:
-      return intl.formatMessage({
-        id: "ZKuzRy",
-        defaultMessage: "Transaction void requested",
-        description: "order history message",
-      });
-    case OrderEventsEnum.TRANSACTION_CAPTURE_REQUESTED:
-      return intl.formatMessage({
-        id: "DRwqnt",
-        defaultMessage: "Transaction capture requested",
         description: "order history message",
       });
     case OrderEventsEnum.TRANSACTION_CHARGE_REQUESTED:

@@ -10,7 +10,7 @@ Cypress.Commands.add("clearAndType", { prevSubject: true }, (subject, text) => {
     if (subject.find("[contenteditable]").length > 0) {
       cy.wrap(subject).find("[contenteditable]").clear().type(text);
     } else {
-      cy.wrap(subject).clear().type(text);
+      cy.wrap(subject).clear({ force: true }).type(text);
     }
   });
 });
@@ -49,6 +49,15 @@ Cypress.Commands.add("checkIfDataAreNotNull", data => {
 });
 Cypress.Commands.add("checkIfElementIsVisible", element => {
   cy.get(element).should("be.visible");
+});
+Cypress.Commands.add("checkIfElementIsNotVisible", element => {
+  cy.get(element).should("not.be.visible");
+});
+Cypress.Commands.add("checkIfElementExist", element => {
+  cy.get(element).should("exist");
+});
+Cypress.Commands.add("checkIfElementNotExist", element => {
+  cy.get(element).should("not.exist");
 });
 Cypress.Commands.add("assertCanvasRowsNumber", (canvas, rowNumber) => {
   cy.get(canvas).find("tr").should("have.length", rowNumber);

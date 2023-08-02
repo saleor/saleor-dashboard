@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import PriceField, { PriceFieldProps } from "@dashboard/components/PriceField";
 import React from "react";
 
@@ -16,6 +17,11 @@ export const PriceInputField: React.FC<
       disabled={submitState === "loading" || disabled}
       onChange={handleChangeAmount}
       value={amount?.toString() ?? ""}
+      InputProps={{
+        inputProps: {
+          "data-test-id": "transactAmountInput",
+        },
+      }}
     />
   );
 };

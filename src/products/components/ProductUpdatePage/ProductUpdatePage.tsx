@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   extensionMountPoints,
   mapToMenuItemsForProductDetails,
@@ -10,15 +11,15 @@ import {
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
-import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
-import CardMenu from "@dashboard/components/CardMenu";
+import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Metadata from "@dashboard/components/Metadata/Metadata";
+import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
-import SeoForm from "@dashboard/components/SeoForm";
+import { SeoForm } from "@dashboard/components/SeoForm";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   ChannelFragment,
@@ -42,19 +43,18 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { maybe } from "@dashboard/misc";
 import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
+import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
 import { productImageUrl, productListUrl } from "@dashboard/products/urls";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { getChoices } from "../../utils/data";
-import ProductDetailsForm from "../ProductDetailsForm";
+import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
-import ProductOrganization from "../ProductOrganization";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
 import ProductUpdateForm from "./form";
@@ -72,7 +72,6 @@ export interface ProductUpdatePageProps {
   channelsErrors: ProductChannelListingErrorFragment[];
   variantListErrors: ProductVariantListError[];
   errors: UseProductUpdateHandlerError[];
-  placeholderImage: string;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
   attributeValues: RelayToFlat<
@@ -114,11 +113,11 @@ export interface ProductUpdatePageProps {
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   onVariantShow: (id: string) => void;
   onAttributeSelectBlur: () => void;
-  onDelete();
-  onImageReorder?(event: { oldIndex: number; newIndex: number });
-  onImageUpload(file: File);
-  onMediaUrlUpload(mediaUrl: string);
-  onSeoClick?();
+  onDelete: () => any;
+  onImageReorder?: (event: { oldIndex: number; newIndex: number }) => any;
+  onImageUpload: (file: File) => any;
+  onMediaUrlUpload: (mediaUrl: string) => any;
+  onSeoClick?: () => any;
 }
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
@@ -139,7 +138,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   media,
   header,
   limits,
-  placeholderImage,
   product,
   saveButtonBarState,
   variants,
@@ -326,8 +324,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav href={productListUrl()} title={header}>
-              <CardMenu
-                menuItems={[
+              <TopNav.Menu
+                items={[
                   ...extensionMenuItems,
                   {
                     label: intl.formatMessage(messages.openGraphiQL),
@@ -335,7 +333,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     testId: "graphiql-redirect",
                   },
                 ]}
-                data-test-id="menu"
+                dataTestId="menu"
               />
             </TopNav>
 
@@ -349,7 +347,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               <CardSpacer />
               <ProductMedia
                 media={media}
-                placeholderImage={placeholderImage}
                 onImageDelete={onImageDelete}
                 onImageReorder={onImageReorder}
                 onImageUpload={onImageUpload}

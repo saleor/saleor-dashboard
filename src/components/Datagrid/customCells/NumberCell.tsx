@@ -1,20 +1,24 @@
+// @ts-strict-ignore
 import {
   CustomCell,
-  CustomCellRenderer,
+  CustomRenderer,
   getMiddleCenterBias,
+  GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import React from "react";
 
 import { Locale } from "../../Locale";
 
-export const numberCellEmptyValue = Symbol();
+export const numberCellEmptyValue = Symbol("number-cell-empty-value");
 interface NumberCellProps {
   readonly kind: "number-cell";
   readonly value: number | typeof numberCellEmptyValue;
 }
 
 export type NumberCell = CustomCell<NumberCellProps>;
+
+const onlyDigitsRegExp = /^\d+$/;
 
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
@@ -38,7 +42,8 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
 
 export const numberCellRenderer = (
   locale: Locale,
-): CustomCellRenderer<NumberCell> => ({
+): CustomRenderer<NumberCell> => ({
+  kind: GridCellKind.Custom,
   isMatch: (c): c is NumberCell => (c.data as any).kind === "number-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
@@ -67,8 +72,14 @@ export const numberCellRenderer = (
       },
     }),
   }),
-  onPaste: (value, data) => ({
-    ...data,
-    value: value ? parseFloat(value) : numberCellEmptyValue,
-  }),
+  onPaste: (value, data) => {
+    if (!onlyDigitsRegExp.test(value)) {
+      return undefined;
+    }
+
+    return {
+      ...data,
+      value: value ? parseFloat(value) : numberCellEmptyValue,
+    };
+  },
 });

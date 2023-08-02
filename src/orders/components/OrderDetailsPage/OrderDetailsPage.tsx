@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   extensionMountPoints,
   mapToMenuItemsForOrderDetails,
@@ -6,26 +7,23 @@ import {
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
+import { Metadata, MetadataIdSchema } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
-import { OrderDetailsFragment, OrderDetailsQuery } from "@dashboard/graphql";
 import {
-  OrderDetailsWithTransactionsFragment,
-  OrderDetailsWithTransactionsQuery,
+  OrderDetailsFragment,
+  OrderDetailsQuery,
+  OrderErrorFragment,
   OrderStatus,
   TransactionActionEnum,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
-import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -42,16 +40,21 @@ import { OrderPaymentOrTransaction } from "../OrderPaymentOrTransaction/OrderPay
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import Title from "./Title";
-import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
+import {
+  createMetadataHandler,
+  createOrderMetadataIdSchema,
+  filteredConditionalItems,
+  hasAnyItemsReplaceable,
+} from "./utils";
 
 export interface OrderDetailsPageProps {
-  order: OrderDetailsFragment | OrderDetailsWithTransactionsFragment;
-  shop: OrderDetailsQuery["shop"] | OrderDetailsWithTransactionsQuery["shop"];
+  order: OrderDetailsFragment | OrderDetailsFragment;
+  shop: OrderDetailsQuery["shop"];
   shippingMethods?: Array<{
     id: string;
     name: string;
   }>;
-  disabled: boolean;
+  loading: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   onOrderLineAdd?: () => void;
@@ -61,32 +64,35 @@ export interface OrderDetailsPageProps {
   ) => void;
   onOrderLineRemove?: (id: string) => void;
   onShippingMethodEdit?: () => void;
-  onBillingAddressEdit();
-  onFulfillmentApprove(id: string);
-  onFulfillmentCancel(id: string);
-  onFulfillmentTrackingNumberUpdate(id: string);
-  onOrderFulfill();
-  onProductClick?(id: string);
-  onPaymentCapture();
-  onMarkAsPaid();
-  onPaymentRefund();
-  onPaymentVoid();
-  onShippingAddressEdit();
-  onOrderCancel();
-  onNoteAdd(data: HistoryFormData);
-  onProfileView();
-  onOrderReturn();
-  onInvoiceClick(invoiceId: string);
-  onInvoiceGenerate();
-  onInvoiceSend(invoiceId: string);
-  onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
-  onAddManualTransaction();
-  onSubmit(data: MetadataFormData): SubmitPromise;
+  onBillingAddressEdit: () => any;
+  onFulfillmentApprove: (id: string) => any;
+  onFulfillmentCancel: (id: string) => any;
+  onFulfillmentTrackingNumberUpdate: (id: string) => any;
+  onOrderFulfill: () => any;
+  onProductClick?: (id: string) => any;
+  onPaymentCapture: () => any;
+  onMarkAsPaid: () => any;
+  onPaymentRefund: () => any;
+  onPaymentVoid: () => any;
+  onShippingAddressEdit: () => any;
+  onOrderCancel: () => any;
+  onNoteAdd: (data: HistoryFormData) => any;
+  onProfileView: () => any;
+  onOrderReturn: () => any;
+  onInvoiceClick: (invoiceId: string) => any;
+  onInvoiceGenerate: () => any;
+  onInvoiceSend: (invoiceId: string) => any;
+  onTransactionAction: (
+    transactionId: string,
+    actionType: TransactionActionEnum,
+  ) => any;
+  onAddManualTransaction: () => any;
+  onSubmit: (data: MetadataIdSchema) => SubmitPromise;
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const {
-    disabled,
+    loading,
     order,
     shop,
     saveButtonBarState,
@@ -119,13 +125,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const {
-    isMetadataModified,
-    isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler,
-    resetMetadataChanged,
-  } = useMetadataChangeTrigger();
-
   const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
   const canCancel = order?.status !== OrderStatus.CANCELED;
   const canEditAddresses = order?.status !== OrderStatus.CANCELED;
@@ -138,24 +137,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     line => line.quantityToFulfill > 0,
   );
 
-  const handleSubmit = async (data: MetadataFormData) => {
-    const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified
-      ? data.privateMetadata
-      : undefined;
-
-    const result = await onSubmit({
-      metadata,
-      privateMetadata,
-    });
-    resetMetadataChanged();
+  const handleSubmit = async (data: MetadataIdSchema) => {
+    const result = await onSubmit(data);
     return getMutationErrors(result);
   };
 
-  const initial: MetadataFormData = {
-    metadata: order?.metadata.map(mapMetadataItemToInput),
-    privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput),
-  };
+  const initial = createOrderMetadataIdSchema(order);
 
   const saveLabel = isOrderUnconfirmed
     ? { confirm: intl.formatMessage(messages.confirmOrder) }
@@ -163,11 +150,11 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
   const allowSave = () => {
     if (!isOrderUnconfirmed) {
-      return disabled;
+      return loading;
     } else if (!order?.lines?.length) {
       return true;
     }
-    return disabled;
+    return loading;
   };
 
   const selectCardMenuItems = filteredConditionalItems([
@@ -183,7 +170,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         label: intl.formatMessage(messages.returnOrder),
         onSelect: onOrderReturn,
       },
-      shouldExist: hasAnyItemsReplaceable(order as OrderSharedType),
+      shouldExist: hasAnyItemsReplaceable(order),
     },
   ]);
 
@@ -205,16 +192,22 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   };
 
   return (
-    <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
-      {({ change, data, submit }) => {
-        const changeMetadata = makeMetadataChangeHandler(change);
+    <Form
+      confirmLeave
+      initial={initial}
+      onSubmit={handleSubmit}
+      mergeData={false}
+    >
+      {({ set, triggerChange, data, submit }) => {
+        const handleChangeMetadata = createMetadataHandler(
+          data,
+          set,
+          triggerChange,
+        );
 
         return (
           <DetailPageLayout>
-            <TopNav
-              href={orderListUrl()}
-              title={<Title order={order as OrderSharedType} />}
-            >
+            <TopNav href={orderListUrl()} title={<Title order={order} />}>
               <CardMenu
                 menuItems={[
                   ...selectCardMenuItems,
@@ -235,12 +228,14 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
                   lines={unfulfilled}
                   onFulfill={onOrderFulfill}
+                  loading={loading}
                 />
               ) : (
                 <>
                   <OrderDraftDetails
-                    order={order as OrderSharedType}
+                    order={order}
                     errors={errors}
+                    loading={loading}
                     onOrderLineAdd={onOrderLineAdd}
                     onOrderLineChange={onOrderLineChange}
                     onOrderLineRemove={onOrderLineRemove}
@@ -250,22 +245,28 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 </>
               )}
               {order?.fulfillments?.map(fulfillment => (
-                <React.Fragment key={fulfillment.id}>
-                  <OrderFulfilledProductsCard
-                    fulfillment={fulfillment}
-                    fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
-                    order={order as OrderSharedType}
-                    onOrderFulfillmentCancel={() =>
-                      onFulfillmentCancel(fulfillment.id)
-                    }
-                    onTrackingCodeAdd={() =>
-                      onFulfillmentTrackingNumberUpdate(fulfillment.id)
-                    }
-                    onOrderFulfillmentApprove={() =>
-                      onFulfillmentApprove(fulfillment.id)
-                    }
+                <OrderFulfilledProductsCard
+                  dataTestId="fulfilled-order-section"
+                  key={fulfillment.id}
+                  fulfillment={fulfillment}
+                  fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+                  order={order}
+                  onOrderFulfillmentCancel={() =>
+                    onFulfillmentCancel(fulfillment.id)
+                  }
+                  onTrackingCodeAdd={() =>
+                    onFulfillmentTrackingNumberUpdate(fulfillment.id)
+                  }
+                  onOrderFulfillmentApprove={() =>
+                    onFulfillmentApprove(fulfillment.id)
+                  }
+                >
+                  <Metadata
+                    isLoading={loading}
+                    data={data[fulfillment.id]}
+                    onChange={x => handleChangeMetadata(x, fulfillment.id)}
                   />
-                </React.Fragment>
+                </OrderFulfilledProductsCard>
               ))}
               <OrderPaymentOrTransaction
                 order={order}
@@ -277,7 +278,11 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 onMarkAsPaid={onMarkAsPaid}
                 onAddManualTransaction={onAddManualTransaction}
               />
-              <Metadata data={data} onChange={changeMetadata} />
+              <Metadata
+                isLoading={loading}
+                data={data[order?.id]}
+                onChange={x => handleChangeMetadata(x, order?.id)}
+              />
               <OrderHistory
                 history={order?.events}
                 orderCurrency={order?.total?.gross.currency}
@@ -288,7 +293,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               <OrderCustomer
                 canEditAddresses={canEditAddresses}
                 canEditCustomer={false}
-                order={order as OrderSharedType}
+                order={order}
                 errors={errors}
                 onBillingAddressEdit={onBillingAddressEdit}
                 onShippingAddressEdit={onShippingAddressEdit}

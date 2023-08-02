@@ -16,9 +16,8 @@ const useStyles = makeStyles(
   { name: "FilterGroupLabel" },
 );
 
-export type FilterGroupLabelProps<
-  K extends string = string
-> = FilterFieldBaseProps<K>;
+export type FilterGroupLabelProps<K extends string = string> =
+  FilterFieldBaseProps<K>;
 
 const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({
   filter,

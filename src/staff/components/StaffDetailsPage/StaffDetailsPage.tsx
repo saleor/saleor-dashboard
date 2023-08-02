@@ -1,7 +1,9 @@
+// @ts-strict-ignore
 import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
@@ -26,7 +28,6 @@ import {
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -58,7 +59,7 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   onDelete: () => void;
   onImageDelete: () => void;
   onSubmit: (data: StaffDetailsFormData) => SubmitPromise;
-  onImageUpload(file: File);
+  onImageUpload: (file: File) => any;
 }
 
 const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({

@@ -40,4 +40,5 @@ export const shop: SiteSettingsQuery["shop"] = {
   reserveStockDurationAnonymousUser: 10,
   reserveStockDurationAuthenticatedUser: 10,
   limitQuantityPerCheckout: 50,
+  enableAccountConfirmationByEmail: true,
 };

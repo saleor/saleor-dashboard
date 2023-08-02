@@ -1,5 +1,8 @@
 import { Button } from "@dashboard/components/Button";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -13,7 +16,6 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -27,8 +29,8 @@ export interface OrderFulfillmentAcceptDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
-  onClose(): void;
-  onConfirm(data: OrderFulfillmentAcceptDialogFormData): void;
+  onClose: () => void;
+  onConfirm: (data: OrderFulfillmentAcceptDialogFormData) => void;
 }
 
 const OrderFulfillmentAcceptDialog: React.FC<

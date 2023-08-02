@@ -1,26 +1,30 @@
 import { saleList } from "@dashboard/discounts/fixtures";
 import { SaleListUrlSortField } from "@dashboard/discounts/urls";
 import {
-  filterPageProps,
-  listActionsProps,
+  filterPresetsProps,
   pageListProps,
+  searchPageProps,
   sortPageProps,
-  tabPageProps,
 } from "@dashboard/fixtures";
 import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import SaleListPage, { SaleListPageProps } from "./SaleListPage";
 
 const props: SaleListPageProps = {
-  ...listActionsProps,
   ...pageListProps.default,
-  ...filterPageProps,
+  ...searchPageProps,
   ...sortPageProps,
-  ...tabPageProps,
+  ...filterPresetsProps,
+  onFilterChange: () => undefined,
+  selectedSaleIds: [],
+  onSelectSaleIds: () => {},
+  onSalesDelete: () => {},
+  settings: {
+    ...pageListProps.default.settings,
+    columns: ["name", "startDate", "endDate", "value"],
+  },
   filterOpts: {
     channel: {
       active: false,
@@ -39,8 +43,8 @@ const props: SaleListPageProps = {
     started: {
       active: false,
       value: {
-        max: undefined,
-        min: undefined,
+        max: "",
+        min: "",
       },
     },
     status: {
@@ -56,16 +60,51 @@ const props: SaleListPageProps = {
   },
 };
 
-storiesOf("Discounts / Sale list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <SaleListPage {...props} />)
-  .add("loading", () => <SaleListPage {...props} sales={undefined} />)
-  .add("no data", () => <SaleListPage {...props} sales={[]} />)
-  .add("no channels", () => (
-    <SaleListPage
-      {...props}
-      sales={saleList.map(sale => ({ ...sale, channelListings: [] }))}
-      selectedChannelId=""
-    />
-  ));
+const meta: Meta<typeof SaleListPage> = {
+  title: "Discounts / Sale list",
+  decorators: [PaginatorContextDecorator],
+  component: SaleListPage,
+};
+export default meta;
+type Story = StoryObj<typeof SaleListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    ...props,
+    sales: undefined,
+    disabled: true,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoData: Story = {
+  args: {
+    ...props,
+    sales: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoChannels: Story = {
+  args: {
+    ...props,
+    sales: saleList.map(sale => ({ ...sale, channelListings: [] })),
+    selectedChannelId: "",
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

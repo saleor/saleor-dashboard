@@ -1,5 +1,3 @@
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { installApp } from "../../fixtures";
@@ -12,7 +10,10 @@ const props: AppInstallPageProps = {
   onSubmit: () => Promise.resolve([]),
 };
 
-storiesOf("Apps / Install App", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AppInstallPage {...props} />)
-  .add("loading", () => <AppInstallPage {...props} loading={true} />);
+export default {
+  title: "Apps / Install App",
+};
+
+export const Default = () => <AppInstallPage {...props} />;
+
+export const Loading = () => <AppInstallPage {...props} loading={true} />;

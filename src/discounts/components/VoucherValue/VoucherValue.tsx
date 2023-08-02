@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
@@ -6,7 +7,6 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import TextFieldWithChoice from "@dashboard/components/TextFieldWithChoice";
 import { ChannelInput } from "@dashboard/discounts/handlers";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { DiscountErrorFragment } from "@dashboard/graphql";
@@ -20,6 +20,7 @@ import {
   TableCell,
   Typography,
 } from "@material-ui/core";
+import { Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -67,12 +68,6 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
         })}
       />
       <CardContent>
-        <Typography variant="caption">
-          <FormattedMessage
-            id="qnPzX7"
-            defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the value. Value will be converted to channel’s currency"
-          />
-        </Typography>
         <div className={classes.tableContainer}>
           <ResponsiveTable className={classes.table}>
             <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
@@ -105,22 +100,21 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                   return (
                     <TableRowLink key={listing?.id || `skeleton-${index}`}>
                       <TableCell>
-                        <Typography>{listing?.name || <Skeleton />}</Typography>
+                        <Text>{listing?.name || <Skeleton />}</Text>
                       </TableCell>
                       <TableCell className={classes.colPrice}>
                         {listing ? (
-                          <TextFieldWithChoice
+                          <Input
                             disabled={disabled}
                             error={!!error?.length}
-                            ChoiceProps={{
-                              label:
-                                data.discountType ===
+                            endAdornment={
+                              <Text variant="caption">
+                                {data.discountType ===
                                 DiscountTypeEnum.VALUE_FIXED
                                   ? listing.currency
-                                  : "%",
-                              name: "discountType" as keyof FormData,
-                              values: null,
-                            }}
+                                  : "%"}
+                              </Text>
+                            }
                             helperText={
                               error
                                 ? getDiscountErrorMessage(
@@ -141,10 +135,6 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                             })}
                             value={listing.discountValue || ""}
                             type="number"
-                            fullWidth
-                            inputProps={{
-                              min: 0,
-                            }}
                           />
                         ) : (
                           <Skeleton />

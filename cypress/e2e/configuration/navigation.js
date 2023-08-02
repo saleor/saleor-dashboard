@@ -7,7 +7,6 @@ import {
   createMenu as createMenuViaApi,
   getMenu,
 } from "../../support/api/requests/Menu";
-import { deleteMenusStartsWith } from "../../support/api/utils/navigationUtils";
 import {
   createMenu,
   createNewMenuItem,
@@ -22,8 +21,7 @@ describe("Tests for menu navigation", () => {
   let menu;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteMenusStartsWith(startsWith);
+    cy.loginUserViaRequest();
     createMenuViaApi(randomName).then(({ menu: menuResp }) => {
       menu = menuResp;
       cy.checkIfDataAreNotNull(menu);
@@ -31,7 +29,7 @@ describe("Tests for menu navigation", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

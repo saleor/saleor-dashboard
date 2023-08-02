@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { createSortedShippingChannels } from "@dashboard/channels/utils";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -29,7 +30,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import React from "react";
 import { useIntl } from "react-intl";
 
-const FORM_ID = Symbol();
+const FORM_ID = Symbol("shipping-zone-rates-create-form-id");
 
 export interface RateCreateProps {
   id: string;
@@ -45,13 +46,11 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     ShippingRateCreateUrlQueryParams
   >(navigate, params => shippingRateCreateUrl(id, params), params);
 
-  const {
-    data: shippingZoneData,
-    loading: channelsLoading,
-  } = useShippingZoneChannelsQuery({
-    displayLoader: true,
-    variables: { id },
-  });
+  const { data: shippingZoneData, loading: channelsLoading } =
+    useShippingZoneChannelsQuery({
+      displayLoader: true,
+      variables: { id },
+    });
 
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
@@ -85,17 +84,13 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     postalCodeRules: [],
   });
 
-  const {
-    channelErrors,
-    createShippingRate,
-    errors,
-    status,
-  } = useShippingRateCreator(
-    id,
-    params.type,
-    state.postalCodeRules,
-    state.inclusionType,
-  );
+  const { channelErrors, createShippingRate, errors, status } =
+    useShippingRateCreator(
+      id,
+      params.type,
+      state.postalCodeRules,
+      state.inclusionType,
+    );
 
   const onPostalCodeAssign = (rule: MinMax) => {
     if (

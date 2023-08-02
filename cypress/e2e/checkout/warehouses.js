@@ -1,6 +1,5 @@
 /// <reference types="cypress"/>
 /// <reference types="../../support"/>
-
 import faker from "faker";
 
 import { createCheckout } from "../../support/api/requests/Checkout";
@@ -8,12 +7,8 @@ import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping } from "../../support/api/utils/shippingUtils";
 
 describe("Warehouses in checkout", () => {
   const startsWith = `CyWarehouseCheckout`;
@@ -26,9 +21,7 @@ describe("Warehouses in checkout", () => {
     "should not be possible to buy product for country not listed in warehouse",
     { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },
     () => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteShippingStartsWith(startsWith);
-      deleteProductsStartsWith(startsWith);
+      cy.loginUserViaRequest();
       const name = `${startsWith}${faker.datatype.number()}`;
       cy.fixture("addresses")
         .then(addresses => {

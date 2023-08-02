@@ -5,6 +5,7 @@ export interface AvailableColumn {
   title: string;
   width: number;
   group?: string;
+  metaGroup?: string; // Description for column picker
   hasMenu?: boolean;
   icon?: string;
   themeOverride?: Partial<Theme>;

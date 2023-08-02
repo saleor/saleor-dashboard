@@ -1,3 +1,5 @@
+// @ts-strict-ignore
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   AddressFragment,
   CustomerAddressesQuery,
@@ -6,7 +8,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { transformAddressToForm } from "@dashboard/misc";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 
 import OrderCustomerAddressesEditDialog, {

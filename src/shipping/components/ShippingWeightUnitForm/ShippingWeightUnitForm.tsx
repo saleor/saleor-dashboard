@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import Form from "@dashboard/components/Form";
@@ -60,7 +61,7 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
               onChange={change}
             />
           </CardContent>
-          <CardActions style={{ paddingLeft: vars.space[9] }}>
+          <CardActions style={{ paddingLeft: vars.spacing[6] }}>
             <Button onClick={submit} data-test-id="save-unit">
               <FormattedMessage {...buttonMessages.save} />
             </Button>

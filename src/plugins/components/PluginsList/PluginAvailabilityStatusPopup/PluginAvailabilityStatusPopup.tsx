@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ChannelsAvailabilityMenuContent from "@dashboard/components/ChannelsAvailabilityMenuContent";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
@@ -24,11 +25,9 @@ interface PluginAvailabilityStatusPopupProps {
   anchor: React.RefObject<HTMLTableCellElement>;
 }
 
-const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps> = ({
-  plugin,
-  isOpen,
-  anchor,
-}) => {
+const PluginAvailabilityStatusPopup: React.FC<
+  PluginAvailabilityStatusPopupProps
+> = ({ plugin, isOpen, anchor }) => {
   const classes = useStyles({});
 
   const isGlobalPlugin = isPluginGlobal(plugin.globalConfiguration);

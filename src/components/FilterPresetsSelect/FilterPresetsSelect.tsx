@@ -48,6 +48,7 @@ export const FilterPresetsSelect = ({
   const intl = useIntl();
   const showUpdateButton =
     presetsChanged && savedPresets.length > 0 && activePreset;
+
   const showSaveButton = presetsChanged;
 
   const getLabel = () => {
@@ -118,21 +119,21 @@ export const FilterPresetsSelect = ({
             __minWidth={175}
             __maxHeight={400}
             overflowY="auto"
-            padding={3}
+            padding={1}
             borderRadius={3}
             boxShadow="overlay"
             borderColor="neutralHighlight"
             borderStyle="solid"
             borderWidth={1}
             width="100%"
-            marginTop={2}
+            marginTop={0.5}
             backgroundColor="surfaceNeutralPlain"
           >
             <Dropdown.Item>
               <List.Item
-                paddingX={4}
-                paddingY={3}
-                gap={6}
+                paddingX={1.5}
+                paddingY={1}
+                gap={3}
                 borderRadius={3}
                 onClick={onSelectAll}
               >
@@ -143,14 +144,14 @@ export const FilterPresetsSelect = ({
             </Dropdown.Item>
             {savedPresets.length > 0 && (
               <Box
-                height={1}
-                marginY={3}
+                height="px"
+                marginY={1}
                 __backgroundColor={vars.colors.border.neutralHighlight}
                 __marginLeft={-4}
                 __width={getSeparatorWidth("4px")}
               />
             )}
-            <Box display="flex" flexDirection="column" gap={2}>
+            <Box display="flex" flexDirection="column" gap={0.5}>
               {savedPresets.map((preset, index) => (
                 <FilterPresetItem
                   isActive={activePreset === index + 1}
@@ -158,6 +159,7 @@ export const FilterPresetsSelect = ({
                   onRemove={() => {
                     onRemove(index + 1);
                   }}
+                  key={`filter-preset-${index}`}
                 >
                   {preset}
                 </FilterPresetItem>
@@ -174,8 +176,9 @@ export const FilterPresetsSelect = ({
       {renderDropdown()}
       {showUpdateButton && (
         <Button
+          data-test-id="update-preset-button"
           className={sprinkles({
-            marginLeft: 6,
+            marginLeft: 3,
           })}
           onClick={() => onUpdate(savedPresets[activePreset - 1])}
           variant="secondary"
@@ -188,8 +191,9 @@ export const FilterPresetsSelect = ({
         <Tooltip>
           <Tooltip.Trigger>
             <Button
+              data-test-id="add-preset-button"
               className={sprinkles({
-                marginLeft: 6,
+                marginLeft: 3,
               })}
               icon={<PlusIcon />}
               onClick={onSave}

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import MuiCheckbox, {
   CheckboxProps as MuiCheckboxProps,
 } from "@material-ui/core/Checkbox";
@@ -35,6 +36,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ helperText, error, ...props }) => {
   return (
     <>
       <MuiCheckbox
+        data-test-id="checkbox"
         {...rest}
         onClick={
           disableClickPropagation

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
@@ -7,14 +8,11 @@ import {
   useChannelCreateMutation,
   useChannelReorderWarehousesMutation,
 } from "@dashboard/graphql";
-import { useChannelCreateWithSettingsMutation } from "@dashboard/graphql/transactions";
-import { MarkAsPaidStrategyEnum } from "@dashboard/graphql/types.transactions.generated";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import currencyCodes from "currency-codes";
@@ -27,12 +25,11 @@ import { calculateItemsOrderMoves } from "../ChannelDetails/handlers";
 import { useShippingZones } from "../ChannelDetails/useShippingZones";
 import { useWarehouses } from "../ChannelDetails/useWarehouses";
 
-export const ChannelCreateView = ({}) => {
+export const ChannelCreateView = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   const handleError = (error: ChannelErrorFragment) => {
     notify({
@@ -41,22 +38,16 @@ export const ChannelCreateView = ({}) => {
     });
   };
 
-  const [createChannel, createChannelRegularOpts] = useChannelCreateMutation({
+  const [createChannel, createChannelOpts] = useChannelCreateMutation({
     onCompleted: ({ channelCreate: { errors } }: ChannelCreateMutation) => {
-      notify(getDefaultNotifierSuccessErrorData(errors, intl));
+      if (!errors.length) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
     },
   });
-
-  const [createChannelWithSettings, createChannelWithSettingsOpts] =
-    useChannelCreateWithSettingsMutation({
-      onCompleted: ({ channelCreate: { errors } }: ChannelCreateMutation) => {
-        notify(getDefaultNotifierSuccessErrorData(errors, intl));
-      },
-    });
-
-  const createChannelOpts = orderTransactions?.enabled
-    ? createChannelWithSettingsOpts
-    : createChannelRegularOpts;
 
   const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
     useChannelReorderWarehousesMutation({
@@ -80,6 +71,8 @@ export const ChannelCreateView = ({}) => {
     slug,
     defaultCountry,
     markAsPaidStrategy,
+    deleteExpiredOrdersAfter,
+    allowUnpaidOrders,
   }: FormData) => {
     const input: ChannelCreateInput = {
       defaultCountry,
@@ -91,18 +84,18 @@ export const ChannelCreateView = ({}) => {
       stockSettings: {
         allocationStrategy,
       },
+      orderSettings: {
+        markAsPaidStrategy,
+        deleteExpiredOrdersAfter,
+        allowUnpaidOrders,
+      },
     };
-    const createChannelMutation = orderTransactions.enabled
-      ? createChannelWithSettings({
-          variables: {
-            input: { ...input, orderSettings: { markAsPaidStrategy } },
-          },
-        })
-      : createChannel({
-          variables: {
-            input,
-          },
-        });
+
+    const createChannelMutation = createChannel({
+      variables: {
+        input,
+      },
+    });
 
     const result = await createChannelMutation;
     const errors = await extractMutationErrors(createChannelMutation);
@@ -166,13 +159,6 @@ export const ChannelCreateView = ({}) => {
       />
       <>
         <ChannelDetailsPage
-          orderSettings={{
-            markAsPaidStrategy: orderTransactions?.enabled
-              ? // Use new transactions strategy by default if feature flag is enabled
-                MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-              : MarkAsPaidStrategyEnum.PAYMENT_FLOW,
-            __typename: "OrderSettings",
-          }}
           allShippingZonesCount={
             shippingZonesCountData?.shippingZones?.totalCount
           }

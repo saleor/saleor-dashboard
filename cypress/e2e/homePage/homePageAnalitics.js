@@ -6,14 +6,12 @@ import faker from "faker";
 import { HOMEPAGE_SELECTORS } from "../../elements/homePage/homePage-selectors";
 import { urlList } from "../../fixtures/urlList";
 import { createCustomer } from "../../support/api/requests/Customer";
-import { deleteChannelsStartsWith } from "../../support/api/utils/channelsUtils";
 import * as homePageUtils from "../../support/api/utils/homePageUtils";
 import {
   createReadyToFulfillOrder,
   createWaitingForCaptureOrder,
 } from "../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import {
   changeChannel,
   getOrdersReadyForCaptureRegex,
@@ -46,11 +44,7 @@ describe("As an admin I want to see correct information on dashboard home page",
   let ordersRegexp;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    deleteChannelsStartsWith(startsWith);
-
+    cy.loginUserViaRequest();
     productsUtils
       .createProductWithShipping({
         name: randomName,
@@ -146,12 +140,12 @@ describe("As an admin I want to see correct information on dashboard home page",
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(
     "should display correct information on dashboard home page. SALEOR_2004",
-    { tags: ["@homePage", "@allEnv"] },
+    { tags: ["@homePage", "@allEnv", "@critical"] },
     () => {
       cy.visit(urlList.homePage);
       changeChannel(defaultChannel.name);

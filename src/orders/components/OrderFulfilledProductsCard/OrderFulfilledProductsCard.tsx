@@ -1,18 +1,15 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+// @ts-strict-ignore
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import TrashIcon from "@dashboard/icons/Trash";
-import { orderHasTransactions, OrderSharedType } from "@dashboard/orders/types";
+import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { Card, CardContent, TableBody } from "@material-ui/core";
+import { CardContent } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
+import { Box, Divider } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import { renderCollection } from "../../../misc";
 import OrderCardTitle from "../OrderCardTitle";
-import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
-import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
+import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
 import useStyles from "./styles";
@@ -20,10 +17,11 @@ import useStyles from "./styles";
 interface OrderFulfilledProductsCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
   fulfillmentAllowUnpaid: boolean;
-  order?: OrderSharedType;
+  order?: OrderDetailsFragment;
   onOrderFulfillmentApprove: () => void;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
+  dataTestId?: string;
 }
 
 const statusesToMergeLines = [
@@ -47,11 +45,9 @@ const OrderFulfilledProductsCard: React.FC<
     onOrderFulfillmentApprove,
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
+    dataTestId,
   } = props;
   const classes = useStyles(props);
-  const { orderTransactions: transactionsFeatureFlag } = useFlags([
-    "orderTransactions",
-  ]);
 
   if (!fulfillment) {
     return null;
@@ -59,24 +55,26 @@ const OrderFulfilledProductsCard: React.FC<
 
   const getLines = () => {
     if (statusesToMergeLines.includes(fulfillment?.status)) {
-      return mergeRepeatedOrderLines(fulfillment.lines);
+      return mergeRepeatedOrderLines(fulfillment.lines).map(
+        order => order.orderLine,
+      );
     }
 
-    return fulfillment?.lines || [];
+    return fulfillment?.lines.map(order => order.orderLine) || [];
   };
 
   return (
-    <>
-      <Card>
-        <OrderCardTitle
-          withStatus
-          lines={fulfillment?.lines}
-          fulfillmentOrder={fulfillment?.fulfillmentOrder}
-          status={fulfillment?.status}
-          warehouseName={fulfillment?.warehouse?.name}
-          orderNumber={order?.number}
-          toolbar={
-            cancelableStatuses.includes(fulfillment?.status) && (
+    <Box data-test-id={dataTestId}>
+      <OrderCardTitle
+        withStatus
+        lines={fulfillment?.lines}
+        fulfillmentOrder={fulfillment?.fulfillmentOrder}
+        status={fulfillment?.status}
+        warehouseName={fulfillment?.warehouse?.name}
+        orderNumber={order?.number}
+        toolbar={
+          <Box display="flex" alignItems="center" gap={6}>
+            {cancelableStatuses.includes(fulfillment?.status) && (
               <IconButton
                 variant="secondary"
                 className={classes.deleteIcon}
@@ -85,36 +83,27 @@ const OrderFulfilledProductsCard: React.FC<
               >
                 <TrashIcon />
               </IconButton>
-            )
-          }
-        />
-        <CardContent>
-          <ResponsiveTable className={classes.table}>
-            <TableHeader />
-            <TableBody>
-              {renderCollection(getLines(), line => (
-                <TableLine key={line.id} line={line} />
-              ))}
-            </TableBody>
-            <ExtraInfoLines fulfillment={fulfillment} />
-          </ResponsiveTable>
-          <ActionButtons
-            orderId={order?.id}
-            status={fulfillment?.status}
-            trackingNumber={fulfillment?.trackingNumber}
-            orderIsPaid={order?.isPaid}
-            fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
-            onTrackingCodeAdd={onTrackingCodeAdd}
-            onApprove={onOrderFulfillmentApprove}
-            hasTransactions={orderHasTransactions(
-              order,
-              transactionsFeatureFlag.enabled,
             )}
-          />
-        </CardContent>
-      </Card>
-      <CardSpacer />
-    </>
+            <ActionButtons
+              orderId={order?.id}
+              status={fulfillment?.status}
+              trackingNumber={fulfillment?.trackingNumber}
+              orderIsPaid={order?.isPaid}
+              fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
+              onTrackingCodeAdd={onTrackingCodeAdd}
+              onApprove={onOrderFulfillmentApprove}
+              hasTransactions={orderHasTransactions(order)}
+            />
+          </Box>
+        }
+      />
+      <CardContent>
+        <OrderDetailsDatagrid lines={getLines()} loading={false} />
+        <ExtraInfoLines fulfillment={fulfillment} />
+      </CardContent>
+      {props.children}
+      <Divider />
+    </Box>
   );
 };
 

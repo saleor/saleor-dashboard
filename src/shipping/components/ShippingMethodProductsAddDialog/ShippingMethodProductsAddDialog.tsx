@@ -1,7 +1,11 @@
+// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -23,7 +27,7 @@ import {
   TableCell,
   TextField,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -36,10 +40,6 @@ const useStyles = makeStyles(
     },
     colName: {
       paddingLeft: 0,
-    },
-    content: {
-      overflowY: "scroll",
-      height: 450,
     },
     searchBar: {
       marginBottom: theme.spacing(3),
@@ -93,8 +93,6 @@ const handleProductAssign = (
     setSelectedProducts([...selectedProducts, product]);
   }
 };
-
-const scrollableTargetId = "shippingMethodProductsAddScrollableDialog";
 
 const ShippingMethodProductsAddDialog: React.FC<
   ShippingMethodProductsAddDialogProps
@@ -161,7 +159,7 @@ const ShippingMethodProductsAddDialog: React.FC<
             }}
           />
         </div>
-        <div className={classes.content} id={scrollableTargetId}>
+        <div>
           <InfiniteScroll
             dataLength={products?.length}
             next={onFetchMore}
@@ -172,7 +170,7 @@ const ShippingMethodProductsAddDialog: React.FC<
                 <CircularProgress size={16} />
               </div>
             }
-            scrollableTarget={scrollableTargetId}
+            height={450}
           >
             <ResponsiveTable key="table">
               <TableBody>

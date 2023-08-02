@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   extensionMountPoints,
   useExtensions,
@@ -49,7 +50,7 @@ export function useMenuStructure() {
     id: "extensions",
     label: intl.formatMessage(sectionNames.appExtensions),
     type: "divider",
-    paddingY: 4,
+    paddingY: 1.5,
   };
 
   const getAppSection = (): SidebarMenuItem => ({

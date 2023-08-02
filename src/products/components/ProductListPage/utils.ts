@@ -5,7 +5,7 @@ export function getAttributeColumnValue(id: string) {
 }
 
 export function isAttributeColumnValue(value: string) {
-  return value.includes(`${prefix}:`);
+  return value?.includes(`${prefix}:`);
 }
 
 export function getAttributeIdFromColumnValue(value: string) {

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -8,8 +9,8 @@ import {
   TimelineEventProps,
   TimelineNote,
 } from "@dashboard/components/Timeline";
+import { OrderEventFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { OrderEventFragment } from "@dashboard/orders/types";
 import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -97,6 +98,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
               if (isTimelineEventOfType("extendable", type)) {
                 return (
                   <ExtendedTimelineEvent
+                    key={event.id}
                     event={event}
                     orderCurrency={orderCurrency}
                     hasPlainDate={true}

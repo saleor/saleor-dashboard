@@ -1,7 +1,10 @@
 /// <reference types="cypress" />
 import faker from "faker";
 
-import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList";
+import {
+  GIFT_CARD_LIST,
+} from "../../../elements/catalog/giftCard/giftCardList";
+import { urlList } from "../../../fixtures/urlList";
 import { completeCheckout } from "../../../support/api/requests/Checkout";
 import {
   createGiftCard,
@@ -9,22 +12,19 @@ import {
 } from "../../../support/api/requests/GiftCard";
 import {
   createCheckoutWithDisabledGiftCard,
-  deleteGiftCardsWithTagStartsWith,
   isGiftCardDataAsExpected,
   purchaseProductWithActiveGiftCard,
 } from "../../../support/api/utils/catalog/giftCardUtils";
-import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import {
   addPayment,
   purchaseProductWithPromoCode,
 } from "../../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
-import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
 import {
-  changeGiftCardActiveStatus,
-  enterAndSelectGiftCards,
-} from "../../../support/pages/catalog/giftCardPage";
+  updateTaxConfigurationForChannel,
+} from "../../../support/api/utils/taxesUtils";
+import { giftCardsPage } from "../../../support/pages";
 
 describe("As a admin I want to use enabled gift card in checkout", () => {
   const startsWith = "ActivateGiftCards";
@@ -43,12 +43,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
-
-    channelsUtils.deleteChannelsStartsWith(startsWith);
-    productsUtils.deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    deleteGiftCardsWithTagStartsWith(startsWith);
+    cy.loginUserViaRequest();
 
     productsUtils
       .createProductWithShipping({ name, shippingPrice, productPrice })
@@ -69,7 +64,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,
@@ -92,7 +87,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
           giftCardDeactivate(giftCard.id);
         })
         .then(() => {
-          changeGiftCardActiveStatus(giftCard.id);
+          giftCardsPage.changeGiftCardActiveStatus(giftCard.id);
           dataForCheckout.voucherCode = giftCard.code;
           purchaseProductWithPromoCode(dataForCheckout);
         })
@@ -122,7 +117,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
       createGiftCard(giftCardData)
         .then(giftCardResp => {
           giftCard = giftCardResp;
-          changeGiftCardActiveStatus(giftCard.id);
+          giftCardsPage.changeGiftCardActiveStatus(giftCard.id);
           dataForCheckout.voucherCode = giftCard.code;
           createCheckoutWithDisabledGiftCard(dataForCheckout);
         })
@@ -146,34 +141,44 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
     "should not be able to disable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1013",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
-      const firstGiftCardName = `${startsWith}${faker.datatype.number()}`;
-      const secondGiftCardName = `${startsWith}${faker.datatype.number()}`;
+      const firstGiftCardTag = faker.datatype.number();
+      const secondGiftCardTag = faker.datatype.number();
       const amount = 10;
       let firstGiftCard;
+      let firstGiftCardCode;
       let secondGiftCard;
-
+      let secondGiftCardCode;
+      cy.addAliasToGraphRequest("GiftCardBulkDeactivate");
       createGiftCard({
-        tag: firstGiftCardName,
+        tag: firstGiftCardTag,
         amount,
         currency: "USD",
       })
         .then(giftCard => {
           firstGiftCard = giftCard;
+          firstGiftCardCode = firstGiftCard.code;
           createGiftCard({
-            tag: secondGiftCardName,
+            tag: secondGiftCardTag,
             amount,
             currency: "USD",
           });
         })
         .then(giftCard => {
           secondGiftCard = giftCard;
+          secondGiftCardCode = secondGiftCard.code;
+          cy.visit(
+            giftCardsPage.getUrlWithFilteredTags(urlList.giftCards, [
+              firstGiftCardTag,
+              secondGiftCardTag,
+            ]),
+          );
 
-          enterAndSelectGiftCards([firstGiftCard.id, secondGiftCard.id]);
-          cy.addAliasToGraphRequest("GiftCardBulkDeactivate")
-            .get(GIFT_CARD_LIST.deactivateGiftCardButton)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@GiftCardBulkDeactivate")
-            .confirmationMessageShouldAppear();
+          giftCardsPage.selectGiftCardOnListView(secondGiftCardCode);
+          giftCardsPage.selectGiftCardOnListView(firstGiftCardCode);
+          giftCardsPage.clickDeactivateButton();
+          cy.waitForRequestAndCheckIfNoErrors(
+            "@GiftCardBulkDeactivate",
+          ).confirmationMessageShouldAppear();
           dataForCheckout.voucherCode = firstGiftCard.code;
           createCheckoutWithDisabledGiftCard(dataForCheckout);
           dataForCheckout.voucherCode = secondGiftCard.code;
@@ -200,23 +205,27 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
     "should be able to enable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1012",
     { tags: ["@giftCard", "@allEnv"] },
     () => {
-      const firstGiftCardName = `${startsWith}${faker.datatype.number()}`;
-      const secondGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const amount = 10;
       const expectedOrderPrice = shippingPrice + productPrice - amount;
+      const firstGiftCardTag = faker.datatype.number();
+      const secondGiftCardTag = faker.datatype.number();
       let firstGiftCard;
+      let firstGiftCardCode;
       let secondGiftCard;
-
+      let secondGiftCardCode;
+      cy.addAliasToGraphRequest("GiftCardBulkActivate");
       createGiftCard({
-        tag: firstGiftCardName,
+        tag: firstGiftCardTag,
         amount,
         currency: "USD",
         isActive: false,
       })
         .then(giftCard => {
           firstGiftCard = giftCard;
+          firstGiftCardCode = giftCard.code;
+
           createGiftCard({
-            tag: secondGiftCardName,
+            tag: secondGiftCardTag,
             amount,
             currency: "USD",
             isActive: false,
@@ -224,9 +233,16 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
         })
         .then(giftCard => {
           secondGiftCard = giftCard;
-          enterAndSelectGiftCards([firstGiftCard.id, secondGiftCard.id]);
-          cy.addAliasToGraphRequest("GiftCardBulkActivate")
-            .get(GIFT_CARD_LIST.activateGiftCardButton)
+          secondGiftCardCode = giftCard.code;
+          cy.visit(
+            giftCardsPage.getUrlWithFilteredTags(urlList.giftCards, [
+              firstGiftCardTag,
+              secondGiftCardTag,
+            ]),
+          );
+          giftCardsPage.selectGiftCardOnListView(secondGiftCardCode);
+          giftCardsPage.selectGiftCardOnListView(firstGiftCardCode);
+          cy.get(GIFT_CARD_LIST.activateGiftCardButton)
             .click()
             .waitForRequestAndCheckIfNoErrors("@GiftCardBulkActivate")
             .confirmationMessageShouldAppear();

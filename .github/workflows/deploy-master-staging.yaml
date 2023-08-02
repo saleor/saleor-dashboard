@@ -21,6 +21,12 @@ jobs:
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
+      - name: Set custom version
+        run: |
+          HASH=$(git rev-parse --short HEAD)
+          CURRENT_VERSION=$(jq -r .version package.json)
+          echo "CUSTOM_VERSION=${CURRENT_VERSION}-${HASH}" >> $GITHUB_ENV
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -59,6 +65,7 @@ jobs:
           JOB_DEPLOYMENT_KIND: staging
           JOB_STATUS: ${{ job.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
+          SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
           JOB_TITLE: "Dashboard deployment to saleor-master-staging"
         run: |
           python3 ./.github/workflows/notify/notify-slack.py

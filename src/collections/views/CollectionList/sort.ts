@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
 import { CollectionSortField } from "@dashboard/graphql";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
@@ -12,7 +13,7 @@ export function canBeSorted(
     case CollectionListUrlSortField.name:
     case CollectionListUrlSortField.productCount:
       return true;
-    case CollectionListUrlSortField.available:
+    case CollectionListUrlSortField.availability:
       return isChannelSelected;
     default:
       return false;
@@ -25,7 +26,7 @@ export function getSortQueryField(
   switch (sort) {
     case CollectionListUrlSortField.name:
       return CollectionSortField.NAME;
-    case CollectionListUrlSortField.available:
+    case CollectionListUrlSortField.availability:
       return CollectionSortField.AVAILABILITY;
     case CollectionListUrlSortField.productCount:
       return CollectionSortField.PRODUCT_COUNT;
@@ -34,6 +35,5 @@ export function getSortQueryField(
   }
 }
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables =
+  createGetSortQueryVariables(getSortQueryField);

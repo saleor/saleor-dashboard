@@ -1,6 +1,6 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -16,7 +16,9 @@ export interface BulkAttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = ({
+const BulkAttributeUnassignDialog: React.FC<
+  BulkAttributeUnassignDialogProps
+> = ({
   title,
   attributeQuantity,
   confirmButtonState,

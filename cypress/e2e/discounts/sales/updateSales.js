@@ -8,12 +8,12 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { saleDetailsUrl } from "../../../fixtures/urlList";
 import { updateSale } from "../../../support/api/requests/Discounts/Sales";
-import { getVariant } from "../../../support/api/requests/Product";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createSaleInChannel,
   createSaleInChannelWithProduct,
   deleteSalesStartsWith,
+  getVariantWithSaleStatus,
 } from "../../../support/api/utils/discounts/salesUtils";
 import {
   createProductInChannel,
@@ -46,7 +46,7 @@ describe("As an admin I want to update sales", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     deleteProductsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
     deleteSalesStartsWith(startsWith);
@@ -104,7 +104,7 @@ describe("As an admin I want to update sales", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,
@@ -116,9 +116,10 @@ describe("As an admin I want to update sales", () => {
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
+      const productSku = `${startsWith}${faker.datatype.number()}`;
 
       productData.name = productName;
-      productData.sku = productName;
+      productData.sku = productSku;
 
       createProductInChannel(productData)
         .then(({ variantsList }) => {
@@ -133,9 +134,12 @@ describe("As an admin I want to update sales", () => {
           });
         })
         .then(saleResp => {
-          getVariant(variants[0].id, defaultChannel.slug)
+          getVariantWithSaleStatus({
+            channelSlug: defaultChannel.slug,
+            variantId: variants[0].id,
+            onSaleStatus: true,
+          })
             .its("pricing")
-            .should("include", { onSale: true })
             .its("price.gross.amount")
             .should("eq", productPriceOnSale);
           cy.visit(saleDetailsUrl(saleResp.id))
@@ -145,9 +149,12 @@ describe("As an admin I want to update sales", () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .wait("@SaleDelete");
-          getVariant(variants[0].id, defaultChannel.slug)
+          getVariantWithSaleStatus({
+            channelSlug: defaultChannel.slug,
+            variantId: variants[0].id,
+            onSaleStatus: false,
+          })
             .its("pricing")
-            .should("include", { onSale: false })
             .its("price.gross.amount")
             .should("eq", productPrice);
         });
@@ -173,9 +180,12 @@ describe("As an admin I want to update sales", () => {
             saleId: sale.id,
             variants,
           });
-          getVariant(variants[0].id, defaultChannel.slug)
+          getVariantWithSaleStatus({
+            channelSlug: defaultChannel.slug,
+            variantId: variants[0].id,
+            onSaleStatus: true,
+          })
             .its("pricing")
-            .should("include", { onSale: true })
             .its("price.gross.amount")
             .should("eq", productPriceOnSale);
           cy.visit(saleDetailsUrl(sale.id))
@@ -188,9 +198,12 @@ describe("As an admin I want to update sales", () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .wait("@SaleCataloguesRemove");
-          getVariant(variants[0].id, defaultChannel.slug)
+          getVariantWithSaleStatus({
+            channelSlug: defaultChannel.slug,
+            variantId: variants[0].id,
+            onSaleStatus: false,
+          })
             .its("pricing")
-            .should("include", { onSale: false })
             .its("price.gross.amount")
             .should("eq", productPrice);
         },

@@ -3,33 +3,32 @@
 
 import faker from "faker";
 
-import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
-import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { urlList } from "../../../fixtures/urlList";
-import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import { updateVariantWarehouse } from "../../../support/api/requests/Product";
-import { createTypeProduct } from "../../../support/api/requests/ProductType";
-import { deleteChannelsStartsWith } from "../../../support/api/utils/channelsUtils";
-import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
-import * as productUtils from "../../../support/api/utils/products/productsUtils";
-import * as shippingUtils from "../../../support/api/utils/shippingUtils";
-import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
-import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 import {
-  fillUpPriceList,
-  priceInputLists,
-} from "../../../support/pages/catalog/products/priceListComponent";
+  BUTTON_SELECTORS,
+  PRODUCT_DETAILS,
+  PRODUCTS_LIST,
+} from "../../../elements/";
 import {
-  enterVariantEditPage,
-  fillUpProductTypeDialog,
-} from "../../../support/pages/catalog/products/productDetailsPage";
+  ONE_PERMISSION_USERS,
+  urlList,
+} from "../../../fixtures/";
 import {
-  createVariant,
-  selectChannelsForVariant,
-} from "../../../support/pages/catalog/products/VariantsPage";
-import { selectChannelInDetailsPages } from "../../../support/pages/channelsPage";
+  productsRequests,
+  productsTypeRequests,
+} from "../../../support/api/requests/";
+import {
+  ordersUtils,
+  productsUtils,
+  shippingUtils,
+  storeFrontProductsUtils,
+  updateTaxConfigurationForChannel,
+} from "../../../support/api/utils/";
+import {
+  channelsPage,
+  priceListComponent,
+  productDetailsPage,
+  variantsPage,
+} from "../../../support/pages";
 
 describe("Creating variants", () => {
   const startsWith = "CreateProdSku";
@@ -45,12 +44,7 @@ describe("Creating variants", () => {
   let address;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    shippingUtils.deleteShippingStartsWith(startsWith);
-    productUtils.deleteProductsStartsWith(startsWith);
-    deleteChannelsStartsWith(startsWith);
-    deleteWarehouseStartsWith(startsWith);
-
+    cy.loginUserViaRequest();
     const name = `${startsWith}${faker.datatype.number()}`;
     const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
 
@@ -72,7 +66,7 @@ describe("Creating variants", () => {
         });
       });
 
-    productUtils
+    productsUtils
       .createTypeAttributeAndCategoryForProduct({ name, attributeValues })
       .then(
         ({
@@ -83,7 +77,7 @@ describe("Creating variants", () => {
           attribute = attributeResp;
           productType = productTypeResp;
           category = categoryResp;
-          createTypeProduct({
+          productsTypeRequests.createTypeProduct({
             name: simpleProductTypeName,
             attributeId: attribute.id,
             hasVariants: false,
@@ -106,10 +100,7 @@ describe("Creating variants", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(
@@ -120,7 +111,7 @@ describe("Creating variants", () => {
       const variants = [{ price: 7 }, { name: attributeValues[1], price: 16 }];
       let createdProduct;
 
-      productUtils
+      productsUtils
         .createProductInChannel({
           name,
           attributeId: attribute.id,
@@ -133,11 +124,11 @@ describe("Creating variants", () => {
         .then(({ product: productResp }) => {
           createdProduct = productResp;
           cy.visit(`${urlList.products}${createdProduct.id}`);
-          enterVariantEditPage();
+          productDetailsPage.enterVariantEditPage();
           cy.get(PRODUCT_DETAILS.addVariantButton)
             .click()
             .then(() => {
-              createVariant({
+              variantsPage.createVariant({
                 attributeName: variants[1].name,
                 price: variants[1].price,
                 channelName: defaultChannel.name,
@@ -147,16 +138,19 @@ describe("Creating variants", () => {
             });
         })
         .then(() => {
-          getProductVariants(createdProduct.id, defaultChannel.slug);
+          storeFrontProductsUtils.getProductVariants(
+            createdProduct.id,
+            defaultChannel.slug,
+          );
         })
         .then(([firstVariant, secondVariant]) => {
-          expect(firstVariant).to.have.property("price", variants[0].price);
-          expect(secondVariant).to.have.property("name", name);
-          expect(secondVariant).to.have.property("price", variants[1].price);
-          createWaitingForCaptureOrder({
+          expect(secondVariant).to.have.property("price", variants[0].price);
+          expect(firstVariant).to.have.property("name", name);
+          expect(firstVariant).to.have.property("price", variants[1].price);
+          ordersUtils.createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
-            variantsList: [secondVariant],
+            variantsList: [firstVariant],
             shippingMethodName: shippingMethod.name,
             address,
           });
@@ -173,34 +167,39 @@ describe("Creating variants", () => {
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const prices = { sellingPrice: 10, costPrice: 6 };
+      cy.addAliasToGraphRequest("VariantUpdate");
+      cy.addAliasToGraphRequest("VariantCreate");
 
       cy.visit(urlList.products).get(PRODUCTS_LIST.createProductBtn).click();
-      fillUpProductTypeDialog({ productType: simpleProductType.name });
+      productDetailsPage.fillUpProductTypeDialog({
+        productType: simpleProductType.name,
+      });
       cy.get(BUTTON_SELECTORS.submit)
         .click()
         .get(PRODUCT_DETAILS.productNameInput)
-        .type(name)
+        .type(name, { force: true })
         .fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput);
-      selectChannelInDetailsPages(defaultChannel.name);
-      fillUpPriceList(prices.sellingPrice);
-      fillUpPriceList(prices.costPrice, priceInputLists.costPrice);
-      cy.addAliasToGraphRequest("VariantCreate")
-        .get(BUTTON_SELECTORS.confirm)
+      channelsPage.selectChannelInDetailsPages(defaultChannel.name);
+      priceListComponent.fillUpPriceList(prices.sellingPrice);
+      priceListComponent.fillUpPriceList(
+        prices.costPrice,
+        priceListComponent.priceInputLists.costPrice,
+      );
+      cy.get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
         .wait("@VariantCreate")
         .then(({ response }) => {
           const variantId =
             response.body.data.productVariantCreate.productVariant.id;
-          updateVariantWarehouse({
+          productsRequests.updateVariantWarehouse({
             variantId,
             warehouseId: warehouse.id,
             quantity: 10,
           });
         });
-      enterVariantEditPage();
-      cy.addAliasToGraphRequest("VariantUpdate");
-      selectChannelsForVariant();
+      productDetailsPage.enterVariantEditPage();
+      variantsPage.selectChannelsForVariant();
       cy.get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
@@ -209,13 +208,14 @@ describe("Creating variants", () => {
           const variants = [
             response.body.data.productVariantUpdate.productVariant,
           ];
-          createWaitingForCaptureOrder({
-            channelSlug: defaultChannel.slug,
-            email: "example@example.com",
-            variantsList: variants,
-            shippingMethodName: shippingMethod.name,
-            address,
-          })
+          ordersUtils
+            .createWaitingForCaptureOrder({
+              channelSlug: defaultChannel.slug,
+              email: "example@example.com",
+              variantsList: variants,
+              shippingMethodName: shippingMethod.name,
+              address,
+            })
             .its("order.id")
             .should("be.ok");
         });

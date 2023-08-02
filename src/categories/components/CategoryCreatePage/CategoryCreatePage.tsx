@@ -1,12 +1,13 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Metadata from "@dashboard/components/Metadata";
+import { Metadata } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
-import SeoForm from "@dashboard/components/SeoForm";
+import { SeoForm } from "@dashboard/components/SeoForm";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -19,7 +20,7 @@ export interface CategoryCreatePageProps {
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   backUrl: string;
-  onSubmit(data: CategoryCreateData);
+  onSubmit: (data: CategoryCreateData) => any;
 }
 
 export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({

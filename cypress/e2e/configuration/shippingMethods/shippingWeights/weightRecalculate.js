@@ -4,18 +4,25 @@
 import faker from "faker";
 
 import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
-import { SHIPPING_RATE_DETAILS } from "../../../../elements/shipping/shipping-rate-details";
-import { shippingRateUrl, urlList } from "../../../../fixtures/urlList";
-import { updateChannelWarehouses } from "../../../../support/api/requests/Channels";
+import {
+  SHIPPING_RATE_DETAILS,
+} from "../../../../elements/shipping/shipping-rate-details";
+import {
+  shippingRateUrl,
+  urlList,
+} from "../../../../fixtures/urlList";
+import {
+  updateChannelWarehouses,
+} from "../../../../support/api/requests/Channels";
 import {
   createShippingRate as createShippingRateViaApi,
   createShippingZone,
 } from "../../../../support/api/requests/ShippingMethod";
-import { updateShopWeightUnit } from "../../../../support/api/requests/ShopSettings";
+import {
+  updateShopWeightUnit,
+} from "../../../../support/api/requests/ShopSettings";
 import { createWarehouse } from "../../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../../support/api/utils/channelsUtils";
-import { deleteProductsStartsWith } from "../../../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
 import { changeWeightUnit } from "../../../../support/pages/shippingMethodPage";
 
 describe("As a staff user I want to change shop default weight unit", () => {
@@ -28,10 +35,7 @@ describe("As a staff user I want to change shop default weight unit", () => {
   let warehouse;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    deleteShippingStartsWith(startsWith);
-    deleteProductsStartsWith(startsWith);
-
+    cy.loginUserViaRequest();
     updateShopWeightUnit("KG")
       .then(() => {
         getDefaultChannel().then(channel => {

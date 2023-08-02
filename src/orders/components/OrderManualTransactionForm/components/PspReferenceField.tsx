@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TextField, TextFieldProps } from "@material-ui/core";
 import React from "react";
 
@@ -16,6 +17,11 @@ export const PspReferenceField: React.FC<
       disabled={submitState === "loading" || disabled}
       onChange={handleChangePspReference}
       value={pspReference}
+      inputProps={{
+        ...props.inputProps,
+        maxLength: 512,
+        "data-test-id": "transactionPspReference",
+      }}
     />
   );
 };

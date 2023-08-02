@@ -29,17 +29,6 @@ export const useStyles = makeStyles(
       justifyContent: "center",
       position: "relative",
     },
-    installIcon: {
-      alignItems: "center",
-      backgroundColor: theme.palette.divider,
-      border: `1px solid ${theme.palette.divider}`,
-      borderRadius: "50%",
-      display: "flex",
-      height: theme.spacing(9),
-      justifyContent: "center",
-      overflow: "hidden",
-      width: theme.spacing(9),
-    },
     installPermissionTitle: {
       fontWeight: 500,
     },
@@ -50,13 +39,6 @@ export const useStyles = makeStyles(
       },
       color: theme.palette.text.hint,
       marginTop: theme.spacing(1),
-    },
-    installSaleorIcon: {
-      backgroundColor:
-        theme.palette.type === "dark"
-          ? theme.palette.saleor.gray.default
-          : theme.palette.saleor.main[1],
-      border: "none",
     },
     installSpacer: {
       margin: theme.spacing(2, 0),

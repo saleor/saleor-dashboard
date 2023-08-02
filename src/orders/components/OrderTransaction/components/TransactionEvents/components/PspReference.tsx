@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import OverflowTooltip from "@dashboard/components/OverflowTooltip";
 import useClipboard from "@dashboard/hooks/useClipboard";
 import { commonMessages } from "@dashboard/intl";
@@ -15,12 +16,15 @@ const useStyles = makeStyles(
       gap: theme.spacing(1),
     },
     pill: {
-      // TODO: change to new dashboard monospace font
-      fontFamily: "monospace",
+      fontFamily:
+        "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
       fontWeight: 600,
       fontSize: "12px",
       borderRadius: "4px",
-      background: "#F5F5F5",
+      background:
+        theme.palette.type === "light"
+          ? theme.palette.grey[100]
+          : theme.palette.background.paper,
       padding: "4px",
       cursor: "default",
       whiteSpace: "nowrap",

@@ -5,15 +5,21 @@ import faker from "faker";
 
 import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
+import {
+  updateChannelWarehouses,
+} from "../../../support/api/requests/Channels";
 import { createCheckout } from "../../../support/api/requests/Checkout";
 import { createVariant } from "../../../support/api/requests/Product";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import * as shippingUtils from "../../../support/api/utils/shippingUtils";
-import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
+import {
+  createWaitingForCaptureOrder,
+} from "../../../support/api/utils/ordersUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
+import {
+  isShippingAvailableInCheckout,
+} from "../../../support/api/utils/storeFront/checkoutUtils";
 import {
   createShippingRate,
   createShippingZone,
@@ -35,10 +41,10 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
-    shippingUtils.deleteShippingStartsWith(startsWith);
-
+    const productTypeSlug = `${faker.lorem.slug()}slug`;
+    const productSlug = `${faker.lorem.slug()}slug`;
+    const warehouseSlug = `${faker.lorem.slug()}slug`;
+    cy.loginUserViaRequest();
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -49,7 +55,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
       .then(addresses => {
         address = addresses.usAddress;
 
-        createWarehouse({ name, address });
+        createWarehouse({ name, address, slug: warehouseSlug });
       })
       .then(warehouseResp => {
         warehouse = warehouseResp;
@@ -57,6 +63,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
         updateChannelWarehouses(defaultChannel.id, warehouse.id);
         productsUtils.createTypeAttributeAndCategoryForProduct({
           name: startsWith,
+          slug: productTypeSlug,
         });
       })
       .then(
@@ -76,6 +83,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
             warehouseId: warehouse.id,
             quantityInWarehouse: 10,
             price,
+            slug: productSlug,
           });
         },
       )
@@ -107,12 +115,12 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(
     "should be able to create price based shipping method. TC: SALEOR_0803",
-    { tags: ["@shipping", "@allEnv", "@stable", "@oldRelease"] },
+    { tags: ["@shipping", "@allEnv", "@stable", "@oldRelease", "@critical"] },
     () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       cy.clearSessionData().loginUserViaRequest(

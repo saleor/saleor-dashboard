@@ -19,9 +19,9 @@ const GiftCardsListHeaderAlert: React.FC = () => {
     });
 
   const giftCardProductTypesExist =
-    giftCardProductsCount?.giftCardProductTypes.totalCount > 0;
+    (giftCardProductsCount?.giftCardProductTypes?.totalCount ?? 0) > 0;
   const giftCardProductsExist =
-    giftCardProductsCount?.giftCardProducts.totalCount > 0;
+    (giftCardProductsCount?.giftCardProducts?.totalCount ?? 0) > 0;
 
   const showNoGiftCardProductsAlert =
     !giftCardProductsCountLoading &&
@@ -33,7 +33,7 @@ const GiftCardsListHeaderAlert: React.FC = () => {
         title={intl.formatMessage(messages.noGiftCardsAlertTitle)}
         variant="warning"
         close={false}
-        className="remove-icon-background"
+        className="remove-icon-background remove-content-padding-top "
       >
         <GiftCardsListHeaderAlertContent
           giftCardProductTypesExist={giftCardProductTypesExist}

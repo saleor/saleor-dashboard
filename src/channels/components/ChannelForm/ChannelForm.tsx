@@ -2,39 +2,36 @@ import {
   ChannelShippingZones,
   ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
-import ControlledSwitch from "@dashboard/components/ControlledSwitch";
+import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import Link from "@dashboard/components/Link";
+import PreviewPill from "@dashboard/components/PreviewPill";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ChannelErrorFragment,
   CountryCode,
+  MarkAsPaidStrategyEnum,
   StockSettingsInput,
 } from "@dashboard/graphql";
-import {
-  ChannelOrderSettingsFragment,
-  MarkAsPaidStrategyEnum,
-} from "@dashboard/graphql/types.transactions.generated";
 import useClipboard from "@dashboard/hooks/useClipboard";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import {
-  Card,
-  CardContent,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+  Box,
+  Button,
+  Checkbox,
+  CopyIcon,
+  Input,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "../styles";
+import { messages } from "./messages";
 import { ExtendedFormHelperTextProps } from "./types";
 
 export interface FormData extends StockSettingsInput {
@@ -49,6 +46,8 @@ export interface FormData extends StockSettingsInput {
   warehousesToDisplay: ChannelWarehouses;
   defaultCountry: CountryCode;
   markAsPaidStrategy: MarkAsPaidStrategyEnum;
+  deleteExpiredOrdersAfter: number;
+  allowUnpaidOrders: boolean;
 }
 
 export interface ChannelFormProps {
@@ -63,7 +62,6 @@ export interface ChannelFormProps {
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
   onDefaultCountryChange: (event: ChangeEvent) => void;
   onMarkAsPaidStrategyChange: () => void;
-  orderSettings: ChannelOrderSettingsFragment["orderSettings"];
 }
 
 export const ChannelForm: React.FC<ChannelFormProps> = ({
@@ -80,93 +78,66 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   onMarkAsPaidStrategyChange,
 }) => {
   const intl = useIntl();
-  const [copied, copy] = useClipboard();
+  const [, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    ["name", "slug", "currencyCode", "defaultCountry"],
+    [
+      "name",
+      "slug",
+      "currencyCode",
+      "defaultCountry",
+      "deleteExpiredOrdersAfter",
+    ],
     errors,
   );
-  const classes = useStyles();
-  const { orderTransactions } = useFlags(["orderTransactions"]);
+
+  const renderCurrencySelection =
+    currencyCodes && typeof onCurrencyCodeChange === "function";
 
   return (
     <>
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(commonMessages.generalInformations)}
-        />
-        <CardContent>
-          <TextField
+      <DashboardCard>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+        <DashboardCard.Content data-test-id="general-information">
+          <Input
             error={!!formErrors.name}
             helperText={getChannelsErrorMessage(formErrors?.name, intl)}
             disabled={disabled}
-            fullWidth
-            label={intl.formatMessage({
-              id: "UymotP",
-              defaultMessage: "Channel name",
-              description: "channel name",
-            })}
+            label={intl.formatMessage(messages.channelName)}
             name="name"
             value={data.name}
             onChange={onChange}
           />
           <FormSpacer />
-          <TextField
+          <Input
             error={!!formErrors.slug}
             helperText={getChannelsErrorMessage(formErrors?.slug, intl)}
             disabled={disabled}
-            fullWidth
-            FormHelperTextProps={
-              {
-                "data-test-id": "slug-text-input-helper-text",
-              } as ExtendedFormHelperTextProps
-            }
-            label={intl.formatMessage({
-              id: "74Zo/H",
-              defaultMessage: "Slug",
-              description: "channel slug",
-            })}
+            label={intl.formatMessage(messages.channelSlug)}
             name="slug"
             value={data.slug}
             onChange={onChange}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment
-                  className={classes.copyBtn}
-                  position="end"
-                  disableTypography
-                  onClick={() => copy(data.slug)}
-                >
-                  {copied ? (
-                    <FormattedMessage
-                      id="r86alc"
-                      defaultMessage="Copied"
-                      description="button"
-                    />
-                  ) : (
-                    <FormattedMessage
-                      id="ZhaXLU"
-                      defaultMessage="Copy"
-                      description="button"
-                    />
-                  )}
-                </InputAdornment>
-              ),
-            }}
+            endAdornment={
+              <Button
+                variant="tertiary"
+                onClick={() => copy(data.slug)}
+                textTransform="uppercase"
+                icon={<CopyIcon />}
+              />
+            }
           />
-          <FormSpacer />
-        </CardContent>
-      </Card>
-      <CardSpacer />
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
-            id: "3y4r+z",
-            defaultMessage: "Channel Settings",
-            description: "channel settings",
-          })}
-        />
-        <CardContent>
-          {currencyCodes ? (
+        </DashboardCard.Content>
+      </DashboardCard>
+      <Box display="grid" __gridTemplateColumns="2fr 1fr" rowGap={2}>
+        <Text variant="heading" margin={6}>
+          <FormattedMessage {...messages.channelSettings} />
+        </Text>
+        <Text variant="heading" margin={6}>
+          <FormattedMessage {...messages.orderExpiration} />
+        </Text>
+        <Box paddingX={6}>
+          {renderCurrencySelection ? (
             <SingleAutocompleteSelectField
               data-test-id="channel-currency-select-input"
               allowCustomValues
@@ -181,30 +152,26 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                 intl,
               )}
               disabled={disabled}
-              label={intl.formatMessage({
-                id: "9Sz0By",
-                defaultMessage: "Currency",
-                description: "channel currency",
-              })}
+              label={intl.formatMessage(messages.channelCurrency)}
               choices={currencyCodes}
               name="currencyCode"
-              displayValue={selectedCurrencyCode}
-              value={selectedCurrencyCode}
+              displayValue={selectedCurrencyCode ?? ""}
+              value={selectedCurrencyCode ?? ""}
               onChange={onCurrencyCodeChange}
             />
           ) : (
-            <>
-              <Typography variant="caption" className={classes.label}>
-                <FormattedMessage
-                  id="39yi8w"
-                  defaultMessage="Selected currency"
-                  description="selected currency"
-                />
-              </Typography>
-              <Typography>{data.currencyCode}</Typography>
-            </>
+            <Box display="flex" flexDirection="column">
+              <Text variant="caption">
+                <FormattedMessage {...messages.selectedCurrency} />
+              </Text>
+              <Text>{data.currencyCode}</Text>
+            </Box>
           )}
-          <FormSpacer />
+        </Box>
+        <Text variant="caption" paddingX={6}>
+          <FormattedMessage {...messages.orderExpirationDescription} />
+        </Text>
+        <Box paddingX={6}>
           <SingleAutocompleteSelectField
             data-test-id="country-select-input"
             error={!!formErrors.defaultCountry}
@@ -218,40 +185,122 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               intl,
             )}
             disabled={disabled}
-            label={intl.formatMessage({
-              id: "tV+Dcm",
-              defaultMessage: "Default country",
-            })}
+            label={intl.formatMessage(messages.defaultCountry)}
             choices={countries}
             name="defaultCountry"
             displayValue={selectedCountryDisplayName}
             value={data.defaultCountry}
             onChange={onDefaultCountryChange}
           />
-          <FormSpacer />
-          <ControlledSwitch
+        </Box>
+        <Box paddingX={6}>
+          <Input
+            name="deleteExpiredOrdersAfter"
+            data-test-id="delete-expired-order-input"
+            value={data.deleteExpiredOrdersAfter}
+            error={!!formErrors.deleteExpiredOrdersAfter}
+            type="number"
+            label="TTL"
+            onChange={onChange}
+            min={0}
+            max={120}
+            // TODO: Should be removed after single autocomplete
+            // select is migrated to macaw inputs
+            __height={12.5}
+          />
+        </Box>
+        <Box paddingX={6} marginTop={4}>
+          <Checkbox
             data-test-id="order-settings-mark-as-paid"
-            disabled={disabled || !orderTransactions.enabled}
+            disabled={disabled}
             checked={
               data.markAsPaidStrategy ===
               MarkAsPaidStrategyEnum.TRANSACTION_FLOW
             }
-            onChange={onMarkAsPaidStrategyChange}
+            onCheckedChange={onMarkAsPaidStrategyChange}
             name="markAsPaidStrategy"
-            label={intl.formatMessage({
-              defaultMessage: "Mark as paid uses Transactions API",
-              id: "NkLZBG",
-            })}
-            secondLabel={intl.formatMessage({
-              defaultMessage: "Creates a single payment when unchecked",
-              id: "F5OqYa",
-            })}
-          />
-        </CardContent>
-      </Card>
+          >
+            <Text>
+              <FormattedMessage {...messages.markAsPaid} />
+            </Text>
+            <PreviewPill />
+          </Checkbox>
+          <Box display="flex" flexDirection="column" paddingLeft={4}>
+            <Text
+              variant="caption"
+              color="textNeutralSubdued"
+              size="large"
+              paddingLeft={0.5}
+            >
+              <FormattedMessage
+                defaultMessage='"Mark as paid" feature creates a'
+                id="MDOw8D"
+              />{" "}
+              <Link
+                href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
+                target="_blank"
+                rel="noopener noreferer"
+              >
+                <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
+              </Link>{" "}
+              <FormattedMessage
+                defaultMessage="- used by Payment Apps"
+                id="Fqe4aB"
+              />
+            </Text>
+            <Text
+              variant="caption"
+              color="textNeutralSubdued"
+              size="large"
+              paddingLeft={0.5}
+            >
+              <FormattedMessage
+                defaultMessage="If left unchecked it creates a"
+                id="hHv0ih"
+              />{" "}
+              <Link
+                href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
+                target="_blank"
+                rel="noopener noreferer"
+              >
+                <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
+              </Link>{" "}
+              <FormattedMessage
+                defaultMessage="- used by Payment Plugins"
+                id="50lR2F"
+              />
+            </Text>
+          </Box>
+        </Box>
+        <Box />
+        <Box paddingX={6}>
+          <Checkbox
+            name="allowUnpaidOrders"
+            data-test-id="allow-unpaid-orders-checkbox"
+            checked={data.allowUnpaidOrders}
+            error={!!formErrors.allowUnpaidOrders}
+            onCheckedChange={value =>
+              onChange({ target: { name: "allowUnpaidOrders", value } })
+            }
+          >
+            <Text>
+              <FormattedMessage {...messages.allowUnpaidOrdersLabel} />
+            </Text>{" "}
+            <PreviewPill />
+          </Checkbox>
+          <Box paddingLeft={4}>
+            {" "}
+            <Text
+              variant="caption"
+              color="textNeutralSubdued"
+              size="large"
+              paddingLeft={0.5}
+            >
+              <FormattedMessage {...messages.allowUnpaidOrdersDescription} />
+            </Text>
+          </Box>
+        </Box>
+      </Box>
     </>
   );
 };
-
-ChannelForm.displayName = "ChannelForm";
-export default ChannelForm;

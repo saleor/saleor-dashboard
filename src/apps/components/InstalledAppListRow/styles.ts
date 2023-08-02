@@ -8,13 +8,13 @@ export const useStyles = makeStyles<InstalledApp>(
       alignItems: "center",
       gap: theme.spacing(2),
     },
-    logo: props => ({
-      backgroundColor: props.logo?.color || theme.palette.grey[300],
-      color: props.logo?.color ? "#fff" : theme.palette.grey[600],
+    logo: {
+      backgroundColor: theme.palette.grey[300],
+      color: theme.palette.grey[600],
       padding: theme.spacing(1.2),
       borderRadius: theme.spacing(1),
       borderWidth: 0,
-    }),
+    },
     name: {
       fontWeight: 600,
     },

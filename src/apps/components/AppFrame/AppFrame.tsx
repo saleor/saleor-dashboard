@@ -1,15 +1,14 @@
+// @ts-strict-ignore
 import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
-import {
-  AppDetailsUrlQueryParams,
-  AppUrls,
-  prepareFeatureFlagsList,
-} from "@dashboard/apps/urls";
-import { useAllFlags } from "@dashboard/hooks/useFlags";
+import { useUpdateAppToken } from "@dashboard/apps/components/AppFrame/useUpdateAppToken";
+import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
+import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
-import { useTheme } from "@saleor/macaw-ui";
+import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
-import React from "react";
+import React, { useCallback } from "react";
 
+import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
 import useTokenRefresh from "./useTokenRefresh";
@@ -21,8 +20,9 @@ interface Props {
   className?: string;
   params?: AppDetailsUrlQueryParams;
   refetch?: () => void;
-  onLoad?(): void;
-  onError?(): void;
+  dashboardVersion: string;
+  coreVersion?: string;
+  onError?: () => void;
 }
 
 const getOrigin = (url: string) => new URL(url).origin;
@@ -32,13 +32,13 @@ export const AppFrame: React.FC<Props> = ({
   appToken,
   appId,
   className,
-  params = {},
-  onLoad,
+  params,
   onError,
   refetch,
+  dashboardVersion,
+  coreVersion,
 }) => {
   const frameRef = React.useRef<HTMLIFrameElement | null>(null);
-  const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
@@ -51,6 +51,10 @@ export const AppFrame: React.FC<Props> = ({
     appOrigin,
     appId,
     appToken,
+    {
+      core: coreVersion,
+      dashboard: dashboardVersion,
+    },
   );
 
   /**
@@ -60,27 +64,31 @@ export const AppFrame: React.FC<Props> = ({
 
   useTokenRefresh(appToken, refetch);
 
-  const handleLoad = () => {
+  const handleLoad = useCallback(() => {
     /**
      * @deprecated
      *
      * Move handshake to notifyReady, so app is requesting token after it's ready to receive it
      * Currently handshake it 2 times, for compatibility
      */
-    postToExtension({
-      type: "handshake",
-      payload: {
-        token: appToken,
-        version: 1,
-      },
-    });
+    postToExtension(
+      DashboardEventFactory.createHandshakeEvent(appToken, 1, {
+        core: coreVersion,
+        dashboard: dashboardVersion,
+      }),
+    );
 
     setHandshakeDone(true);
+  }, [appToken, postToExtension, setHandshakeDone]);
 
-    if (onLoad) {
-      onLoad();
-    }
-  };
+  useUpdateAppToken({
+    postToExtension,
+    appToken,
+    /**
+     * If app is not ready, ignore this flow
+     */
+    enabled: handshakeDone,
+  });
 
   return (
     <>
@@ -89,19 +97,17 @@ export const AppFrame: React.FC<Props> = ({
           <CircularProgress color="primary" />
         </div>
       )}
-      <iframe
+      <AppIFrame
         ref={frameRef}
-        src={AppUrls.resolveAppIframeUrl(appId, src, {
-          ...params,
-          featureFlags: prepareFeatureFlagsList(flags),
-          theme: themeType,
-        })}
-        onError={onError}
+        src={src}
+        appId={appId}
+        featureFlags={flags}
+        params={params}
         onLoad={handleLoad}
+        onError={onError}
         className={clsx(classes.iframe, className, {
           [classes.iframeHidden]: !handshakeDone,
         })}
-        sandbox="allow-same-origin allow-forms allow-scripts"
       />
     </>
   );

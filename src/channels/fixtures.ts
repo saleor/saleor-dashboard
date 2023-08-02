@@ -1,8 +1,10 @@
+// @ts-strict-ignore
 import {
   AllocationStrategyEnum,
   ChannelDetailsFragment,
   ChannelErrorCode,
   ChannelErrorFragment,
+  MarkAsPaidStrategyEnum,
   ProductFragment,
 } from "@dashboard/graphql";
 import { Money } from "@saleor/sdk/dist/apollo/types";
@@ -46,6 +48,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    orderSettings: {
+      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
+      allowUnpaidOrders: false,
+      __typename: "OrderSettings",
+    },
   },
   {
     __typename: "Channel",
@@ -76,6 +84,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    orderSettings: {
+      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
+      allowUnpaidOrders: false,
+      __typename: "OrderSettings",
+    },
   },
   {
     __typename: "Channel",
@@ -106,6 +120,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    orderSettings: {
+      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
+      allowUnpaidOrders: false,
+      __typename: "OrderSettings",
+    },
   },
   {
     __typename: "Channel",
@@ -136,6 +156,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    orderSettings: {
+      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
+      allowUnpaidOrders: false,
+      __typename: "OrderSettings",
+    },
   },
   {
     __typename: "Channel",
@@ -166,6 +192,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    orderSettings: {
+      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
+      allowUnpaidOrders: false,
+      __typename: "OrderSettings",
+    },
   },
   {
     __typename: "Channel",
@@ -196,6 +228,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    orderSettings: {
+      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
+      allowUnpaidOrders: false,
+      __typename: "OrderSettings",
+    },
   },
   {
     __typename: "Channel",
@@ -226,6 +264,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    orderSettings: {
+      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
+      allowUnpaidOrders: false,
+      __typename: "OrderSettings",
+    },
   },
 ];
 
@@ -258,6 +302,12 @@ export const channel: ChannelDetailsFragment = {
       name: "Warehouse 2",
     },
   ],
+  orderSettings: {
+    markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+    deleteExpiredOrdersAfter: 60,
+    allowUnpaidOrders: false,
+    __typename: "OrderSettings",
+  },
 };
 
 type ProductChannelsWithPricing = ProductFragment["channelListings"][0] & {

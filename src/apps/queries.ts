@@ -46,12 +46,18 @@ export const appDetails = gql`
     app(id: $id) {
       ...App
       aboutApp
+      author
       permissions {
         code
         name
       }
       dataPrivacy
       dataPrivacyUrl
+      brand {
+        logo {
+          default(size: 64, format: WEBP)
+        }
+      }
     }
   }
 `;

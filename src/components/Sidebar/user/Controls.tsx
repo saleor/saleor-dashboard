@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme";
@@ -11,13 +12,13 @@ import {
   sprinkles,
   Text,
 } from "@saleor/macaw-ui/next";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
-const useLegacyThemeHandler = () => {
+export const useLegacyThemeHandler = () => {
   const { theme, setTheme } = useTheme();
   const { setTheme: setLegacyTheme } = useLegacyTheme();
 
@@ -48,21 +49,28 @@ const useLegacyThemeHandler = () => {
 export const UserControls = () => {
   const { user, logout } = useUser();
   const { changeTheme, theme } = useLegacyThemeHandler();
+  const [open, setOpen] = useState(false);
 
   return (
-    <Dropdown>
+    <Dropdown
+      open={open}
+      onOpenChange={value => {
+        setOpen(value);
+      }}
+    >
       <Dropdown.Trigger>
         <Button
           variant="tertiary"
           icon={<MoreOptionsIcon />}
           data-test-id="userMenu"
           size="medium"
+          onClick={() => setOpen(true)}
         />
       </Dropdown.Trigger>
       <Dropdown.Content align="end">
         <Box __minWidth={192}>
           <List
-            padding={5}
+            padding={2}
             borderRadius={4}
             boxShadow="overlay"
             backgroundColor="surfaceNeutralPlain"
@@ -71,6 +79,7 @@ export const UserControls = () => {
               <List.Item
                 borderRadius={4}
                 data-test-id="account-settings-button"
+                onClick={() => setOpen(false)}
               >
                 <Link
                   to={staffMemberDetailsUrl(user?.id)}
@@ -108,9 +117,12 @@ export const UserControls = () => {
               <List.Item
                 display="flex"
                 alignItems="center"
-                gap={5}
-                marginTop={3}
-                onClick={changeTheme}
+                gap={2}
+                marginTop={1}
+                onClick={() => {
+                  changeTheme();
+                  setOpen(false);
+                }}
                 {...listItemStyles}
                 data-test-id="theme-switch"
               >
@@ -125,7 +137,7 @@ export const UserControls = () => {
 };
 
 const listItemStyles = {
-  paddingX: 4,
-  paddingY: 5,
+  paddingX: 1.5,
+  paddingY: 2,
   borderRadius: 4,
 } as const;

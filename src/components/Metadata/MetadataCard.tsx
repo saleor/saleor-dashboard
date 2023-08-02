@@ -1,27 +1,44 @@
-import { Button } from "@dashboard/components/Button";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { MetadataInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import {
-  Card,
-  CardActions,
-  CardContent,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TextField,
-  Typography,
 } from "@material-ui/core";
-import { DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
-import clsx from "clsx";
+import { makeStyles } from "@saleor/macaw-ui";
+import {
+  Box,
+  Button,
+  ChervonDownIcon,
+  ChervonUpIcon,
+  Text,
+  TrashBinIcon,
+  vars,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import CardTitle from "../CardTitle";
+import { DashboardCard } from "../Card";
 import Skeleton from "../Skeleton";
-import useStyles from "./styles";
-import { EventDataAction, EventDataField } from "./types";
+import { EventDataAction } from "./types";
+import { nameInputPrefix, nameSeparator, valueInputPrefix } from "./utils";
+
+const useStyles = makeStyles(
+  theme => ({
+    input: {
+      padding: theme.spacing(0.5, 2),
+    },
+    nameInput: {
+      padding: "13px 16px",
+    },
+  }),
+  {
+    name: "Metadata",
+  },
+);
 
 export interface MetadataCardProps {
   data: MetadataInput[];
@@ -29,11 +46,7 @@ export interface MetadataCardProps {
   onChange: FormChange;
 }
 
-export const nameSeparator = ":";
-export const nameInputPrefix = EventDataField.name;
-export const valueInputPrefix = EventDataField.value;
-
-const MetadataCard: React.FC<MetadataCardProps> = ({
+export const MetadataCard: React.FC<MetadataCardProps> = ({
   data,
   isPrivate,
   onChange,
@@ -43,49 +56,47 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
   const classes = useStyles();
 
   return (
-    <Card
+    <DashboardCard
       data-test-id="metadata-editor"
       data-test-is-private={isPrivate}
       data-test-expanded={expanded}
+      gap={1}
     >
-      <CardTitle
-        className={classes.header}
-        title={
-          <>
-            {isPrivate
-              ? intl.formatMessage({
-                  id: "ETHnjq",
-                  defaultMessage: "Private Metadata",
-                  description: "header",
-                })
-              : intl.formatMessage({
-                  id: "VcI+Zh",
-                  defaultMessage: "Metadata",
-                  description: "header",
-                })}
-            <IconButton
-              className={clsx(classes.expandBtn, {
-                [classes.rotate]: expanded,
+      <DashboardCard.Title>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          onClick={() => setExpanded(!expanded)}
+          cursor="pointer"
+        >
+          {isPrivate
+            ? intl.formatMessage({
+                id: "ETHnjq",
+                defaultMessage: "Private Metadata",
+                description: "header",
+              })
+            : intl.formatMessage({
+                id: "VcI+Zh",
+                defaultMessage: "Metadata",
+                description: "header",
               })}
-              hoverOutline={false}
-              variant="secondary"
-              data-test-id="expand"
-              onClick={() => setExpanded(!expanded)}
-            >
-              <ExpandIcon />
-            </IconButton>
-          </>
-        }
-      />
+          <Button
+            variant="secondary"
+            data-test-id="expand"
+            type="button"
+            icon={expanded ? <ChervonUpIcon /> : <ChervonDownIcon />}
+          />
+        </Box>
+      </DashboardCard.Title>
       {data === undefined ? (
-        <CardContent>
+        <DashboardCard.Content>
           <Skeleton />
-        </CardContent>
+        </DashboardCard.Content>
       ) : (
         <>
-          <CardContent className={classes.content}>
-            {data.length > 0 && (
-              <Typography color="textSecondary" variant="body2">
+          {data.length > 0 && (
+            <DashboardCard.Content>
+              <Text variant="caption">
                 <FormattedMessage
                   id="2+v1wX"
                   defaultMessage="{number,plural,one{{number} string} other{{number} strings}}"
@@ -94,52 +105,63 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                     number: data.length,
                   }}
                 />
-              </Typography>
-            )}
-          </CardContent>
+              </Text>
+            </DashboardCard.Content>
+          )}
           {expanded && (
             <>
               {data.length === 0 ? (
-                <CardContent className={classes.emptyContainer}>
-                  <Typography variant="body2" color="textSecondary">
+                <DashboardCard.Content>
+                  <Text variant="caption" color="textNeutralSubdued">
                     <FormattedMessage
                       id="cY6H2C"
                       defaultMessage="No metadata created for this element. Use the button below to add new metadata field."
                       description="empty metadata text"
                     />
-                  </Typography>
-                </CardContent>
+                  </Text>
+                </DashboardCard.Content>
               ) : (
-                <Table className={classes.table}>
+                <Table>
                   <TableHead>
                     <TableRowLink>
-                      <TableCell className={classes.colNameHeader}>
-                        <FormattedMessage
-                          id="nudPsY"
-                          defaultMessage="Field"
-                          description="metadata field name, header"
-                        />
+                      <TableCell style={{ paddingLeft: vars.spacing[6] }}>
+                        <Text variant="caption" color="textNeutralSubdued">
+                          <FormattedMessage
+                            id="nudPsY"
+                            defaultMessage="Field"
+                            description="metadata field name, header"
+                          />
+                        </Text>
                       </TableCell>
-                      <TableCell className={classes.colValue}>
-                        <FormattedMessage
-                          id="LkuDEb"
-                          defaultMessage="Value"
-                          description="metadata field value, header"
-                        />
+                      <TableCell style={{ paddingLeft: vars.spacing[8] }}>
+                        <Text variant="caption" color="textNeutralSubdued">
+                          <FormattedMessage
+                            id="LkuDEb"
+                            defaultMessage="Value"
+                            description="metadata field value, header"
+                          />
+                        </Text>
                       </TableCell>
-                      <TableCell className={classes.colActionHeader}>
-                        <FormattedMessage
-                          id="nEixpu"
-                          defaultMessage="Actions"
-                          description="table action"
-                        />
+                      <TableCell
+                        style={{
+                          textAlign: "end",
+                          paddingRight: vars.spacing[6],
+                        }}
+                      >
+                        <Text variant="caption" color="textNeutralSubdued">
+                          <FormattedMessage
+                            id="nEixpu"
+                            defaultMessage="Actions"
+                            description="table action"
+                          />
+                        </Text>
                       </TableCell>
                     </TableRowLink>
                   </TableHead>
                   <TableBody>
                     {data.map((field, fieldIndex) => (
                       <TableRowLink data-test-id="field" key={fieldIndex}>
-                        <TableCell className={classes.colName}>
+                        <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                           <TextField
                             InputProps={{
                               classes: {
@@ -155,7 +177,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                             value={field.key}
                           />
                         </TableCell>
-                        <TableCell className={classes.colValue}>
+                        <TableCell>
                           <TextField
                             InputProps={{
                               classes: {
@@ -172,31 +194,34 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                             value={field.value}
                           />
                         </TableCell>
-                        <TableCell className={classes.colAction}>
-                          <IconButton
-                            variant="secondary"
-                            data-test-id={"delete-field-" + fieldIndex}
-                            onClick={() =>
-                              onChange({
-                                target: {
-                                  name: EventDataAction.delete,
-                                  value: fieldIndex,
-                                },
-                              })
-                            }
-                          >
-                            <DeleteIcon />
-                          </IconButton>
+                        <TableCell style={{ paddingRight: vars.spacing[6] }}>
+                          <Box display="flex" justifyContent="flex-end">
+                            <Button
+                              variant="secondary"
+                              data-test-id={"delete-field-" + fieldIndex}
+                              onClick={() =>
+                                onChange({
+                                  target: {
+                                    name: EventDataAction.delete,
+                                    value: fieldIndex,
+                                  },
+                                })
+                              }
+                              type="button"
+                              icon={<TrashBinIcon />}
+                            />
+                          </Box>
                         </TableCell>
                       </TableRowLink>
                     ))}
                   </TableBody>
                 </Table>
               )}
-              <CardActions className={classes.actions}>
+              <DashboardCard.Content marginTop={2} paddingLeft={6}>
                 <Button
                   variant="secondary"
                   data-test-id="add-field"
+                  type="button"
                   onClick={() =>
                     onChange({
                       target: {
@@ -212,14 +237,11 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                     description="add metadata field,button"
                   />
                 </Button>
-              </CardActions>
+              </DashboardCard.Content>
             </>
           )}
         </>
       )}
-    </Card>
+    </DashboardCard>
   );
 };
-
-MetadataCard.displayName = "MetadataCard";
-export default MetadataCard;

@@ -3,11 +3,18 @@
 
 import faker from "faker";
 
-import { PAGE_TYPE_DETAILS_SELECTORS } from "../../elements/pageTypes/pageTypeDetails";
-import { PAGE_TYPES_LIST_SELECTORS } from "../../elements/pageTypes/pageTypesList";
+import {
+  PAGE_TYPE_DETAILS_SELECTORS,
+} from "../../elements/pageTypes/pageTypeDetails";
+import {
+  PAGE_TYPES_LIST_SELECTORS,
+} from "../../elements/pageTypes/pageTypesList";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { pageTypeDetailsUrl, urlList } from "../../fixtures/urlList";
+import {
+  pageTypeDetailsUrl,
+  urlList,
+} from "../../fixtures/urlList";
 import { createAttribute } from "../../support/api/requests/Attribute";
 import {
   createPageType,
@@ -18,7 +25,7 @@ describe("Tests for page types", () => {
   const startsWith = "PageTypes";
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

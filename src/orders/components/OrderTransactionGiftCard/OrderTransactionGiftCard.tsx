@@ -1,9 +1,10 @@
+// @ts-strict-ignore
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderGiftCardFragment,
   TransactionEventTypeEnum,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
 import React from "react";
@@ -61,12 +62,11 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
 
   const fakeTransaction: FakeTransaction = {
     id: giftCard.id,
-    type: intl.formatMessage(transactionGiftCardMessages.giftCard, {
+    name: intl.formatMessage(transactionGiftCardMessages.giftCard, {
       code: giftCard.last4CodeChars,
     }),
     actions: [],
     pspReference: giftCard.last4CodeChars,
-    status: "",
     externalUrl: null,
     chargedAmount: prepareMoney(amount, currency),
     // Fake amounts

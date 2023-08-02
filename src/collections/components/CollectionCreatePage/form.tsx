@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { createChannelsChangeHandler } from "@dashboard/collections/utils";
 import { COLLECTION_CREATE_FORM_ID } from "@dashboard/collections/views/consts";
@@ -102,9 +103,8 @@ function useCollectionCreateForm(
     triggerChange,
   });
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 

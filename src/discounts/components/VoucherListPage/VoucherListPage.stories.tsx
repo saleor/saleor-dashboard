@@ -1,19 +1,17 @@
+// @ts-strict-ignore
 import { voucherList } from "@dashboard/discounts/fixtures";
 import { VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import {
-  filterPageProps,
+  filterPresetsProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps,
 } from "@dashboard/fixtures";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import VoucherListPage, { VoucherListPageProps } from "./VoucherListPage";
 
 const props: VoucherListPageProps = {
@@ -21,8 +19,11 @@ const props: VoucherListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
-  ...tabPageProps,
-  ...filterPageProps,
+  ...filterPresetsProps,
+  onSelectVouchersIds: () => undefined,
+  selectedVouchersIds: [],
+  onVoucherDelete: () => undefined,
+  onFilterChange: () => undefined,
   filterOpts: {
     channel: {
       active: false,
@@ -63,21 +64,50 @@ const props: VoucherListPageProps = {
     sort: VoucherListUrlSortField.code,
   },
   vouchers: voucherList,
+  settings: {
+    rowNumber: 20,
+    columns: ["code", "min-spent", "start-date", "end-date", "value", "limit"],
+  },
 };
 
-storiesOf("Discounts / Voucher list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <VoucherListPage {...props} />)
-  .add("loading", () => <VoucherListPage {...props} vouchers={undefined} />)
-  .add("no data", () => <VoucherListPage {...props} vouchers={[]} />)
-  .add("no channels", () => (
-    <VoucherListPage
-      {...props}
-      selectedChannelId=""
-      vouchers={voucherList.map(voucher => ({
-        ...voucher,
-        channelListings: [],
-      }))}
-    />
-  ));
+const meta: Meta<typeof VoucherListPage> = {
+  title: "Discounts / Voucher list",
+  decorators: [PaginatorContextDecorator],
+  component: VoucherListPage,
+};
+export default meta;
+type Story = StoryObj<typeof VoucherListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    ...props,
+    vouchers: undefined,
+    disabled: true,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoChannels: Story = {
+  args: {
+    ...props,
+    selectedChannelId: "",
+    vouchers: voucherList.map(voucher => ({
+      ...voucher,
+      channelListings: [],
+    })),
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
@@ -8,14 +9,16 @@ import Link from "@dashboard/components/Link";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import Skeleton from "@dashboard/components/Skeleton";
-import { PermissionEnum, SearchCustomersQuery } from "@dashboard/graphql";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { buttonMessages } from "@dashboard/intl";
 import {
+  OrderDetailsFragment,
   OrderErrorCode,
   OrderErrorFragment,
-  OrderSharedType,
-} from "@dashboard/orders/types";
+  PermissionEnum,
+  SearchCustomersQuery,
+} from "@dashboard/graphql";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { buttonMessages } from "@dashboard/intl";
+import { orderListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { Card, CardContent, Typography } from "@material-ui/core";
@@ -36,7 +39,7 @@ export interface CustomerEditData {
 }
 
 export interface OrderCustomerProps extends Partial<FetchMoreProps> {
-  order: OrderSharedType;
+  order: OrderDetailsFragment;
   users?: RelayToFlat<SearchCustomersQuery["search"]>;
   loading?: boolean;
   errors: OrderErrorFragment[];
@@ -166,7 +169,23 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               <FormattedMessage id="Qovenh" defaultMessage="Anonymous user" />
             </Typography>
           ) : (
-            <Typography className={classes.userEmail}>{userEmail}</Typography>
+            <>
+              <Typography className={classes.userEmail}>{userEmail}</Typography>
+              <div>
+                <Link
+                  underline={false}
+                  href={orderListUrl({
+                    customer: userEmail,
+                  })}
+                >
+                  <FormattedMessage
+                    id="J4NBVR"
+                    defaultMessage="View Orders"
+                    description="link"
+                  />
+                </Link>
+              </div>
+            </>
           )
         ) : (
           <>
