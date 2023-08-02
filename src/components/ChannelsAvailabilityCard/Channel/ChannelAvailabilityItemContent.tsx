@@ -167,7 +167,8 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
             onValueChange={value =>
               onChange(id, {
                 ...formData,
-                availableForPurchase: !value ? null : availableForPurchase,
+                availableForPurchase:
+                  value === "false" ? null : availableForPurchase,
                 isAvailableForPurchase: value === "true",
               })
             }

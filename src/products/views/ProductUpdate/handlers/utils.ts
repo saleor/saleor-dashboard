@@ -104,8 +104,13 @@ export function getProductChannelsUpdateVariables(
   const updateChannels = channels
     .filter(channelId => dataUpdated.has(channelId))
     .map(channelId => {
+      const data = dataUpdated.get(channelId);
       return {
-        ...dataUpdated.get(channelId),
+        ...data,
+        isAvailableForPurchase:
+          data.availableForPurchaseDate !== null
+            ? true
+            : data.isAvailableForPurchase,
       };
     });
 
