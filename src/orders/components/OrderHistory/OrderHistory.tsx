@@ -98,6 +98,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
               if (isTimelineEventOfType("extendable", type)) {
                 return (
                   <ExtendedTimelineEvent
+                    key={event.id}
                     event={event}
                     orderCurrency={orderCurrency}
                     hasPlainDate={true}
