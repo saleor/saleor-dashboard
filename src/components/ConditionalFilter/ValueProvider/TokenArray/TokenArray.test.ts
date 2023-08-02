@@ -1,5 +1,5 @@
-import { TokenArray } from ".";
 import { InitialStateResponse } from "../../API/InitialStateResponse";
+import { TokenArray } from ".";
 
 describe("ConditionalFilter / ValueProvider / TokenArray", () => {
   it("should parse empty params", () => {
