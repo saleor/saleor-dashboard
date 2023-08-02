@@ -177,10 +177,7 @@ export class FilterElement {
     );
   }
 
-  public static fromValueEntry(valueEntry: {
-    value: ExpressionValue;
-    condition: Condition;
-  }) {
+  public static fromValueEntry(valueEntry: any) {
     return new FilterElement(valueEntry.value, valueEntry.condition, false);
   }
 

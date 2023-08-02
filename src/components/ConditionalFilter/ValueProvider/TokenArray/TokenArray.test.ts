@@ -1,9 +1,12 @@
 import { TokenArray } from ".";
 
-describe("ConditionalFilter / ValueProvider / TokenArrary", () => {
+describe("ConditionalFilter / ValueProvider / TokenArray", () => {
   it.skip("should parse empty params", () => {
+    // Arrange
     const url = new TokenArray("");
+    // Act
     const fetchingParams = url.getFetchingParams();
+    // Assert
     expect(fetchingParams).toEqual({
       category: [],
       collection: [],
@@ -14,6 +17,7 @@ describe("ConditionalFilter / ValueProvider / TokenArrary", () => {
   });
 
   it("should parse params with values", () => {
+    // Arrange
     const params = new URLSearchParams({
       "0[s0.price]": "123",
       "1": "AND",
@@ -28,8 +32,10 @@ describe("ConditionalFilter / ValueProvider / TokenArrary", () => {
       "10": "AND",
       "11[o2.bottle-size][0]": "attribute-id",
     });
+    // Act
     const url = new TokenArray(params.toString());
     const fetchingParams = url.getFetchingParams();
+    // Assert
     expect(fetchingParams).toEqual({
       attribute: {
         "bottle-size": ["attribute-id"],
