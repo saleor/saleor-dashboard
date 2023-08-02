@@ -6,7 +6,10 @@ import {
   useBulkRemoveCustomersMutation,
   useListCustomersQuery,
 } from "@dashboard/graphql";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import {
+  getPresetNameToDelete,
+  useFilterPresets,
+} from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -38,7 +41,6 @@ import {
   getFilterOpts,
   getFilterQueryParam,
   getFilterVariables,
-  getPresetNameToDelete,
   storageUtils,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";

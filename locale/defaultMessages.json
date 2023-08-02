@@ -391,6 +391,10 @@
     "context": "menu item name",
     "string": "Name"
   },
+  "0XHXTZ": {
+    "context": "column header",
+    "string": "Title"
+  },
   "0a0fLZ": {
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
@@ -996,9 +1000,6 @@
   "50lR2F": {
     "string": "- used by Payment Plugins"
   },
-  "51HE+Q": {
-    "string": "No sales found"
-  },
   "54KYgS": {
     "context": "months after label",
     "string": "months after issue"
@@ -1030,10 +1031,6 @@
   },
   "5BajZK": {
     "string": "View and update your site settings"
-  },
-  "5GSYCR": {
-    "context": "page status",
-    "string": "Visibility"
   },
   "5HwLx9": {
     "context": "alert",
@@ -1447,6 +1444,10 @@
   "8hrH/z": {
     "context": "dialog header",
     "string": "Search Category"
+  },
+  "8iUzOU": {
+    "context": "allow unpaid orders checbkox description",
+    "string": "Enables completing checkout with order before a successful payment."
   },
   "8oIbMI": {
     "string": "Reached limit for this plan"
@@ -2349,10 +2350,6 @@
   "F7DxHw": {
     "string": "Subcategories"
   },
-  "F8gsds": {
-    "context": "unpublish page, button",
-    "string": "Unpublish"
-  },
   "FA+MRz": {
     "string": "Set plugin as active"
   },
@@ -2810,10 +2807,6 @@
     "context": "order refund amount",
     "string": "Max Refund"
   },
-  "I8dAAe": {
-    "context": "page internal name",
-    "string": "Slug"
-  },
   "I8mqqj": {
     "context": "PageTypeDeleteWarningDialog single assigned items button label",
     "string": "View pages"
@@ -2930,9 +2923,6 @@
   "Irflxf": {
     "context": "window title",
     "string": "Create category"
-  },
-  "IruP2T": {
-    "string": "Search Voucher"
   },
   "IwEQvz": {
     "context": "success activate alert message",
@@ -3235,6 +3225,10 @@
   },
   "L/sNGY": {
     "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
+  },
+  "L2tvTm": {
+    "context": "mark as paid strategy checkbox label",
+    "string": "Use Transaction flow when marking order as paid"
   },
   "L5io1l": {
     "context": "returned products list title",
@@ -4511,10 +4505,6 @@
   "UN+yTt": {
     "string": "Staff Settings"
   },
-  "UN3qWD": {
-    "context": "page status",
-    "string": "Not Published"
-  },
   "UNwG+4": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this page?} other{Are you sure you want to delete {displayQuantity} pages?}}"
@@ -4640,10 +4630,6 @@
   "V1mqpZ": {
     "context": "button",
     "string": "Create Permission Group"
-  },
-  "V2+HTM": {
-    "context": "dialog header",
-    "string": "Title"
   },
   "V2BBQu": {
     "string": "Currency in both channels must be the same"
@@ -4895,6 +4881,10 @@
   "Wr5UOV": {
     "context": "error message",
     "string": "Login went wrong. Please try again."
+  },
+  "WvMDHa": {
+    "context": "page status",
+    "string": "Not published"
   },
   "Ww69SE": {
     "context": "search input placeholder",
@@ -5561,6 +5551,9 @@
     "context": "product type",
     "string": "Product Type"
   },
+  "bPshhv": {
+    "string": "Search vouchers..."
+  },
   "bRJD/v": {
     "context": "button",
     "string": "Create permission group"
@@ -6125,8 +6118,16 @@
     "context": "button, form submit, grant refund create",
     "string": "Grant refund"
   },
+  "ftOPoy": {
+    "context": "bulk actions button label",
+    "string": "Unpublish"
+  },
   "ftcHpD": {
     "string": "Customer created"
+  },
+  "fuFCpI": {
+    "context": "allow unpaid orders checkbox label",
+    "string": "Allow unpaid orders"
   },
   "fw+VAN": {
     "context": "product's sku",
@@ -6300,6 +6301,10 @@
   },
   "hJZwTS": {
     "string": "Email address"
+  },
+  "hJrzlT": {
+    "context": "tab name",
+    "string": "All content"
   },
   "hLOEeb": {
     "context": "button",
@@ -6519,6 +6524,10 @@
     "context": "label",
     "string": "Search pages"
   },
+  "j/Oo0B": {
+    "context": "bulk actions button label",
+    "string": "Publish"
+  },
   "j/vV0n": {
     "context": "channel name",
     "string": "Channel Name"
@@ -6702,6 +6711,10 @@
   },
   "kFsTMN": {
     "string": "Delete customers"
+  },
+  "kIcyUo": {
+    "context": "column header",
+    "string": "Slug"
   },
   "kIvvax": {
     "string": "Search Products..."
@@ -6914,6 +6927,9 @@
   "lehGc9": {
     "context": "section header",
     "string": "Eligible Variants"
+  },
+  "lfXze9": {
+    "string": "Delete vouchers"
   },
   "li1BBk": {
     "context": "export items as csv file",
@@ -7380,9 +7396,9 @@
     "context": "status",
     "string": "Deactivated"
   },
-  "pNrF72": {
+  "pOUOnw": {
     "context": "tab name",
-    "string": "All Vouchers"
+    "string": "All vouchers"
   },
   "pPef6L": {
     "context": "order payment",
@@ -8375,6 +8391,10 @@
   "wL7VAE": {
     "string": "Actions"
   },
+  "wLB8B3": {
+    "context": "column header",
+    "string": "Visibility"
+  },
   "wNQzS/": {
     "string": "The primary address of this customer."
   },
@@ -8581,10 +8601,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
   },
-  "yEmwxD": {
-    "context": "publish page, button",
-    "string": "Publish"
-  },
   "yH56V+": {
     "string": "Ooops!..."
   },
@@ -8774,6 +8790,10 @@
   "zf48rQ": {
     "context": "sum of captured amount of all transactions",
     "string": "Total captured"
+  },
+  "zfBsje": {
+    "context": "bulk actions button label",
+    "string": "Delete content"
   },
   "zfjAc7": {
     "context": "grant refund, card header",

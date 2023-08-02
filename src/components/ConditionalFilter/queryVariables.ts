@@ -112,11 +112,14 @@ const createAttributeQueryPart = (
   }
 
   if (isItemOption(value)) {
-    return { slug: attributeSlug, values: [value.value] };
+    return { slug: attributeSlug, values: [value.originalSlug || value.value] };
   }
 
   if (isItemOptionArray(value)) {
-    return { slug: attributeSlug, values: value.map(x => x.value) };
+    return {
+      slug: attributeSlug,
+      values: value.map(x => x.originalSlug || x.value),
+    };
   }
 
   if (typeof value === "string") {

@@ -127,6 +127,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     warehousesToDisplay: channelWarehouses,
     markAsPaidStrategy: orderSettings?.markAsPaidStrategy,
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
+    allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
   };
 
   const getFilteredShippingZonesChoices = (
