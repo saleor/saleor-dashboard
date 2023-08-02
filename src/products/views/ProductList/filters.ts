@@ -1,5 +1,8 @@
 // @ts-strict-ignore
+import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { FlagValue } from "@dashboard/featureFlags/FlagContent";
 import {
   AttributeFragment,
   AttributeInputTypeEnum,
@@ -8,6 +11,7 @@ import {
   InitialProductFilterCollectionsQuery,
   InitialProductFilterProductTypesQuery,
   ProductFilterInput,
+  ProductWhereInput,
   SearchAttributeValuesQuery,
   SearchAttributeValuesQueryVariables,
   SearchCategoriesQuery,
@@ -57,6 +61,7 @@ import {
   ProductListUrlQueryParams,
 } from "../../urls";
 import { getProductGiftCardFilterParam } from "./utils";
+
 export const PRODUCT_FILTERS_KEY = "productPresets";
 
 function getAttributeFilterParamType(inputType: AttributeInputTypeEnum) {
@@ -367,7 +372,8 @@ function getFilteredAttributeValue(
   return attrValues;
 }
 
-export function getFilterVariables(
+// TODO: Remove this function when productListingPageFiltersFlag is removed
+export function getLegacyFilterVariables(
   params: ProductListUrlFilters,
   isChannelSelected: boolean,
 ): ProductFilterInput {
@@ -473,3 +479,45 @@ export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
     ...ProductListUrlFiltersWithMultipleValues,
     ...ProductListUrlFiltersAsDictWithMultipleValues,
   });
+
+export const getWhereVariables = (
+  productListingPageFiltersFlag: FlagValue,
+  value: FilterContainer,
+): ProductWhereInput => {
+  if (productListingPageFiltersFlag.enabled) {
+    const queryVars = createProductQueryVariables(value);
+    return queryVars;
+  }
+
+  return undefined;
+};
+
+export const getFilterVariables = ({
+  isProductListingPageFiltersFlagEnabled,
+  filterContainer,
+  queryParams,
+  isChannelSelected,
+  channelSlug,
+}: {
+  isProductListingPageFiltersFlagEnabled: boolean;
+  filterContainer: FilterContainer;
+  queryParams: ProductListUrlFilters;
+  isChannelSelected: boolean;
+  channelSlug: string | undefined;
+}) => {
+  if (isProductListingPageFiltersFlagEnabled) {
+    const queryVars = createProductQueryVariables(filterContainer);
+    const { channel, ...where } = queryVars;
+
+    return {
+      where,
+      search: queryParams.query,
+      channel: channel?.eq,
+    };
+  }
+
+  return {
+    filter: getLegacyFilterVariables(queryParams, isChannelSelected),
+    channel: channelSlug,
+  };
+};

@@ -9,7 +9,11 @@ import {
   ORDERS_SELECTORS,
   SHARED_ELEMENTS,
 } from "../../elements/";
-import { MESSAGES, ONE_PERMISSION_USERS, urlList } from "../../fixtures";
+import {
+  MESSAGES,
+  ONE_PERMISSION_USERS,
+  urlList,
+} from "../../fixtures";
 import {
   createCustomer,
   getOrder,
@@ -28,6 +32,9 @@ import {
   productsUtils,
   updateTaxConfigurationForChannel,
 } from "../../support/api/utils/";
+import {
+  ensureCanvasStatic,
+} from "../../support/customCommands/sharedElementsOperations/canvas";
 import {
   addNewProductToOrder,
   addPrivateMetadataFieldFulfillmentOrder,
@@ -73,7 +80,7 @@ describe("Orders", () => {
     privateMetadataValue + "- updated private metadata value";
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateOrdersSettings();
     getDefaultChannel()
       .then(channel => {
@@ -141,10 +148,7 @@ describe("Orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.order,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.order);
   });
 
   it(
@@ -308,7 +312,7 @@ describe("Orders", () => {
         address,
       }).then(unconfirmedOrderResponse => {
         cy.visit(urlList.orders + `${unconfirmedOrderResponse.order.id}`);
-
+        ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
         changeQuantityOfProducts();
 
         cy.get(ORDERS_SELECTORS.orderSummarySubtotalPriceRow).should(
@@ -571,6 +575,49 @@ describe("Orders", () => {
               .invoke("attr", "href")
               .should("contain", productDetails.id.replace("=", ""));
           });
+      });
+    },
+  );
+  it(
+    "should be able to turn off all but one static columns on orders detail. TC: SALEOR_2136",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      let order;
+      createReadyToFulfillOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+      }).then(({ order: orderResp }) => {
+        order = orderResp;
+        cy.visit(urlList.orders + `${order.id}`);
+        cy.openColumnPicker();
+        cy.get(SHARED_ELEMENTS.staticColumnContainer)
+          .should("contain.text", "Product")
+          .should("contain.text", "SKU")
+          .should("contain.text", "Variant")
+          .should("contain.text", "Quantity")
+          .should("contain.text", "Price")
+          .should("contain.text", "Total");
+        // switching off all but one static columns
+        cy.get(SHARED_ELEMENTS.gridStaticSkuButton).click();
+        cy.get(SHARED_ELEMENTS.gridStaticVariantNameButton).click();
+        cy.get(SHARED_ELEMENTS.gridStaticQuantityButton).click();
+        cy.get(SHARED_ELEMENTS.gridStaticPriceButton).click();
+        cy.get(SHARED_ELEMENTS.gridStaticTotalButton).click();
+        cy.get(SHARED_ELEMENTS.gridStaticProductButton).should(
+          "have.attr",
+          "data-state",
+          "on",
+        );
+        cy.get(SHARED_ELEMENTS.dataGridTable)
+          .find("th")
+          .should("have.length", 1)
+          .should("have.text", "Product");
+        //next line hides picker
+        cy.get(SHARED_ELEMENTS.pageHeader).click({ force: true });
+        cy.get(SHARED_ELEMENTS.dynamicColumnContainer).should("not.exist");
       });
     },
   );

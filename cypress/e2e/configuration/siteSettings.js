@@ -12,7 +12,7 @@ describe("Tests for site settings", () => {
   let address;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     cy.fixture("addresses").then(({ usAddress, plAddress }) => {
       address = usAddress;

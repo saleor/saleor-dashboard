@@ -123,6 +123,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
               />
               {order?.fulfillments?.map?.(fulfillment => (
                 <ProductsCard
+                  key={fulfillment.id}
                   title={intl.formatMessage(
                     getOrderTitleMessage(fulfillment.status),
                   )}

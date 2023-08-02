@@ -21,7 +21,7 @@
       "@locale/*": ["locale/*"],
       "@dashboard/*": ["src/*"],
       "@test/*": ["testUtils/*"]
-    },
+    }
   },
   "exclude": ["node_modules", "cypress"]
 }

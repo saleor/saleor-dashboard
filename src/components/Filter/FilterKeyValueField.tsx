@@ -70,7 +70,10 @@ export const FilterKeyValueField = <K extends string = string>({
     <div className={classes.formWrapper}>
       <div className={classes.fieldsWrapper}>
         {values.map((innerField, index) => (
-          <div className={classes.metadataField}>
+          <div
+            className={classes.metadataField}
+            key={`${innerField.key}-${index}`}
+          >
             <TextField
               fullWidth
               name={filter.name}

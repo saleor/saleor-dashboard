@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import {
   filterPageProps,
+  filterPresetsProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps,
 } from "@dashboard/fixtures";
 import { Meta, StoryObj } from "@storybook/react";
 import React from "react";
@@ -24,7 +24,7 @@ const props: CustomerListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
-  ...tabPageProps,
+  ...filterPresetsProps,
   customers: customerList,
   selectedCustomerIds: ["123"],
   filterOpts: {
@@ -47,9 +47,13 @@ const props: CustomerListPageProps = {
     ...sortPageProps.sort,
     sort: CustomerListUrlSortField.name,
   },
+  loading: false,
+  hasPresetsChanged: () => false,
+  onSelectCustomerIds: () => undefined,
+  onCustomersDelete: () => undefined,
 };
 
-const CustomerListPage = props => (
+const CustomerListPage = (props: CustomerListPageProps) => (
   <MockedUserProvider>
     <CustomerListPageComponent {...props} />
   </MockedUserProvider>

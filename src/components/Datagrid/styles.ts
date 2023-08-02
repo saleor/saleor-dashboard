@@ -91,15 +91,11 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
       datagrid: {
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
-          scrollbarWidth: "none",
-        },
-        "& .dvn-scroller::-webkit-scrollbar": {
-          display: "none",
+          overflowY: "hidden",
         },
         borderRadius: 0,
         boxSizing: "content-box",
         width: "100%",
-        paddingBottom: "1px",
       },
       root: {
         position: "relative",
@@ -215,7 +211,7 @@ export function useDatagridTheme(
       borderColor: themeValues.colors.border.neutralHighlight,
       fontFamily: "'Inter var', sans-serif",
       baseFontStyle: themeValues.fontSize.bodySmall,
-      headerFontStyle: themeValues.fontSize.bodySmall,
+      headerFontStyle: `${themeValues.fontWeight.bodyStrongSmall} ${themeValues.fontSize.bodyStrongSmall}`,
       editorFontSize: themeValues.fontSize.bodySmall,
       textMedium: themeValues.colors.foreground.iconNeutralPlain,
       textGroupHeader: themeValues.colors.foreground.iconNeutralDefault,

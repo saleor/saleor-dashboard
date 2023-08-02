@@ -24,19 +24,24 @@ import { ItemOption } from "../FilterElement/ConditionValue";
 import { LeftOperand } from "../LeftOperandsProvider";
 
 export interface Handler {
-  client: ApolloClient<unknown>;
-  query: string;
   fetch: () => Promise<ItemOption[]>;
 }
 
 export const createOptionsFromAPI = (
-  // TODO: try to use type from graphql
-  data: Array<{ node: { name: string | null; id: string; slug: string } }>,
+  data: Array<{
+    node: {
+      name: string | null;
+      id: string;
+      slug: string;
+      originalSlug?: string | null;
+    };
+  }>,
 ): ItemOption[] =>
   data.map(({ node }) => ({
     label: node.name ?? "",
     value: node.id,
     slug: node.slug,
+    originalSlug: node.originalSlug,
   }));
 
 export class AttributeChoicesHandler implements Handler {
@@ -165,5 +170,13 @@ export class AttributesHandler implements Handler {
         slug: node.slug ?? "",
       })) ?? []
     );
+  };
+}
+
+export class BooleanValuesHandler implements Handler {
+  constructor(public options: LeftOperand[]) {}
+
+  fetch = async (): Promise<LeftOperand[]> => {
+    return this.options;
   };
 }

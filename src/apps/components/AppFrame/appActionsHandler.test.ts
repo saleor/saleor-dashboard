@@ -269,4 +269,26 @@ describe("AppActionsHandler", function () {
       });
     });
   });
+
+  describe("useHandlePermissionRequest", () => {
+    it("Redirects to a dedicated page with params from action", () => {
+      const hookRenderResult = renderHook(() =>
+        AppActionsHandler.useHandlePermissionRequest("XYZ"),
+      );
+
+      hookRenderResult.result.current.handle({
+        type: "requestPermissions",
+        payload: {
+          actionId: "123",
+          permissions: ["MANAGE_ORDERS", "MANAGE_CHANNELS"],
+          redirectPath: "/permissions-result",
+        },
+      });
+
+      expect(mockNavigate).toHaveBeenCalledTimes(1);
+      expect(mockNavigate).toHaveBeenCalledWith(
+        "/apps/XYZ/permissions?redirectPath=%2Fpermissions-result&requestedPermissions=MANAGE_ORDERS%2CMANAGE_CHANNELS"
+      );
+    });
+  });
 });

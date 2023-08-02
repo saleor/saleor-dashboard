@@ -1,5 +1,4 @@
 import { parse, ParsedQs } from "qs";
-import { useRef } from "react";
 
 import { InitialStateResponse } from "../../API/InitialStateResponse";
 import { FilterContainer, FilterElement } from "../../FilterElement";
@@ -91,13 +90,3 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
     });
   }
 }
-
-export const useTokenArray = (url: string) => {
-  const instance = useRef<TokenArray | null>(null);
-
-  if (!instance.current) {
-    instance.current = new TokenArray(url);
-  }
-
-  return instance.current;
-};

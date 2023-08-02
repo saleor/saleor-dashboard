@@ -8,12 +8,13 @@
       const result: PossibleTypesResultData = {
   "possibleTypes": {
     "DeliveryMethod": [
-      "Warehouse",
-      "ShippingMethod"
+      "ShippingMethod",
+      "Warehouse"
     ],
     "Event": [
       "AccountChangeEmailRequested",
       "AccountConfirmationRequested",
+      "AccountConfirmed",
       "AccountDeleteRequested",
       "AddressCreated",
       "AddressDeleted",
@@ -34,6 +35,7 @@
       "CategoryUpdated",
       "ChannelCreated",
       "ChannelDeleted",
+      "ChannelMetadataUpdated",
       "ChannelStatusChanged",
       "ChannelUpdated",
       "CheckoutCreated",
@@ -126,6 +128,7 @@
       "ShippingZoneDeleted",
       "ShippingZoneMetadataUpdated",
       "ShippingZoneUpdated",
+      "ShopMetadataUpdated",
       "StaffCreated",
       "StaffDeleted",
       "StaffUpdated",
@@ -248,6 +251,7 @@
       "App",
       "Attribute",
       "Category",
+      "Channel",
       "Checkout",
       "CheckoutLine",
       "Collection",
@@ -270,6 +274,7 @@
       "ShippingMethod",
       "ShippingMethodType",
       "ShippingZone",
+      "Shop",
       "TaxClass",
       "TaxConfiguration",
       "TransactionItem",
@@ -290,48 +295,48 @@
       "Order"
     ],
     "TranslatableItem": [
-      "ProductTranslatableContent",
-      "CollectionTranslatableContent",
-      "CategoryTranslatableContent",
       "AttributeTranslatableContent",
       "AttributeValueTranslatableContent",
-      "ProductVariantTranslatableContent",
+      "CategoryTranslatableContent",
+      "CollectionTranslatableContent",
+      "MenuItemTranslatableContent",
       "PageTranslatableContent",
-      "ShippingMethodTranslatableContent",
+      "ProductTranslatableContent",
+      "ProductVariantTranslatableContent",
       "SaleTranslatableContent",
-      "VoucherTranslatableContent",
-      "MenuItemTranslatableContent"
+      "ShippingMethodTranslatableContent",
+      "VoucherTranslatableContent"
     ],
     "TranslationTypes": [
-      "ProductTranslation",
-      "CollectionTranslation",
-      "CategoryTranslation",
       "AttributeTranslation",
       "AttributeValueTranslation",
-      "ProductVariantTranslation",
+      "CategoryTranslation",
+      "CollectionTranslation",
+      "MenuItemTranslation",
       "PageTranslation",
-      "ShippingMethodTranslation",
+      "ProductTranslation",
+      "ProductVariantTranslation",
       "SaleTranslation",
-      "VoucherTranslation",
-      "MenuItemTranslation"
+      "ShippingMethodTranslation",
+      "VoucherTranslation"
     ],
     "UserOrApp": [
-      "User",
-      "App"
+      "App",
+      "User"
     ],
     "_Entity": [
-      "App",
       "Address",
-      "User",
-      "Group",
-      "ProductVariant",
-      "Product",
-      "ProductType",
-      "ProductMedia",
+      "App",
       "Category",
       "Collection",
+      "Group",
       "Order",
-      "PageType"
+      "PageType",
+      "Product",
+      "ProductMedia",
+      "ProductType",
+      "ProductVariant",
+      "User"
     ]
   }
 };

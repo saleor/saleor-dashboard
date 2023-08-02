@@ -125,7 +125,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const {
     selectedPreset,
     presets,
-    hasPresetsChange,
+    hasPresetsChanged,
     onPresetChange,
     onPresetDelete,
     onPresetSave,
@@ -221,7 +221,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         onSort={handleSort}
         sort={getSortParams(params)}
         currencySymbol={channel?.currencyCode}
-        hasPresetsChanged={hasPresetsChange}
+        hasPresetsChanged={hasPresetsChanged}
         onDraftOrdersDelete={() =>
           openModal("remove", {
             ids: selectedRowIds,

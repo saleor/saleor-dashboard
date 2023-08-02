@@ -3,7 +3,9 @@
 
 import faker from "faker";
 
-import { PLUGINS_DETAILS_SELECTORS } from "../../../elements/plugins/pluginDetails";
+import {
+  PLUGINS_DETAILS_SELECTORS,
+} from "../../../elements/plugins/pluginDetails";
 import { PLUGINS_LIST_SELECTORS } from "../../../elements/plugins/pluginsList";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { urlList } from "../../../fixtures/urlList";
@@ -25,7 +27,7 @@ describe("As an admin I want to manage plugins", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
       activatePlugin({ id: "mirumee.notifications.admin_email" });
@@ -37,10 +39,7 @@ describe("As an admin I want to manage plugins", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
-      .visit(urlList.plugins)
-      .expectSkeletonIsVisible();
+    cy.loginUserViaRequest().visit(urlList.plugins).expectSkeletonIsVisible();
   });
 
   it(

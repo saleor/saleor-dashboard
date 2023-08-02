@@ -59,7 +59,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   } = useRowSelection(params);
 
   const {
-    hasPresetsChange,
+    hasPresetsChanged,
     onPresetChange,
     onPresetDelete,
     onPresetSave,
@@ -164,7 +164,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <CategoryListPage
-        hasPresetsChanged={hasPresetsChange()}
+        hasPresetsChanged={hasPresetsChanged()}
         categories={mapEdgesToItems(data?.categories)}
         currentTab={selectedPreset}
         initialSearch={params.query || ""}

@@ -1,7 +1,9 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
 
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import {
+  PRODUCTS_LIST,
+} from "../../../elements/catalog/products/products-list";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { urlList } from "../../../fixtures/urlList";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
@@ -16,15 +18,14 @@ describe.skip("As an admin I should be able to sort products", () => {
   let defaultChannel;
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
+    cy.loginUserViaRequest()
       .visit(urlList.products)
       .get(SHARED_ELEMENTS.header)
       .should("be.visible");
   });
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
       cy.checkIfDataAreNotNull({ defaultChannel });

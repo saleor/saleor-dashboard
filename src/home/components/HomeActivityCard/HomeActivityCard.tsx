@@ -1,104 +1,84 @@
-// @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
 import Skeleton from "@dashboard/components/Skeleton";
-import { HomeQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import {
-  Card,
-  CardContent,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Activities } from "@dashboard/home/types";
+import { Box, List, Text, useTheme } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
 import { getActivityMessage } from "./activityMessages";
 
-const useStyles = makeStyles(
-  {
-    loadingProducts: {
-      paddingBottom: "10px",
-      paddingTop: "10px",
-    },
-    noProducts: {
-      paddingBottom: "16px",
-      paddingTop: "16px",
-    },
-    listItem: {
-      paddingLeft: 0,
-    },
-  },
-  { name: "HomeActivityCard" },
-);
-
 interface HomeActivityCardProps {
-  activities: RelayToFlat<HomeQuery["activities"]>;
+  activities: Activities;
   testId?: string;
 }
 
-const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
-  const { activities, testId } = props;
-  const classes = useStyles(props);
-
+export const HomeActivityCard = ({
+  activities,
+  testId,
+}: HomeActivityCardProps) => {
   const intl = useIntl();
+  const { themeValues } = useTheme();
 
   return (
-    <Card data-test-id={testId}>
-      <CardTitle
-        title={intl.formatMessage({
+    <DashboardCard data-test-id={testId}>
+      <DashboardCard.Title>
+        {intl.formatMessage({
           id: "BXkF8Z",
           defaultMessage: "Activity",
           description: "header",
         })}
-      />
-      <CardContent>
-        <List dense>
+      </DashboardCard.Title>
+      <DashboardCard.Content>
+        <List>
           {renderCollection(
             activities,
             (activity, activityId) => (
-              <ListItem key={activityId} className={classes.listItem}>
+              <List.Item
+                key={activityId}
+                flexDirection="column"
+                alignItems="flex-start"
+                cursor="auto"
+                paddingY={1}
+                paddingX={6}
+                __marginLeft={"-" + themeValues.spacing[6]}
+                __marginRight={"-" + themeValues.spacing[6]}
+                marginBottom={3}
+              >
                 {activity ? (
-                  <ListItemText
-                    primary={
-                      <Typography>
-                        {getActivityMessage(activity, intl)}
-                      </Typography>
-                    }
-                    secondary={<DateTime date={activity.date} plain />}
-                  />
+                  <>
+                    <Text variant="body" size="small">
+                      {getActivityMessage(activity, intl)}
+                    </Text>
+                    <Text
+                      variant="body"
+                      size="small"
+                      color="textNeutralSubdued"
+                    >
+                      <DateTime date={activity.date} plain />
+                    </Text>
+                  </>
                 ) : (
-                  <ListItemText className={classes.loadingProducts}>
-                    <Typography>
-                      <Skeleton />
-                    </Typography>
-                  </ListItemText>
+                  <Box paddingY={4}>
+                    <Skeleton />
+                  </Box>
                 )}
-              </ListItem>
+              </List.Item>
             ),
             () => (
-              <ListItem className={classes.noProducts}>
-                <ListItemText
-                  primary={
-                    <Typography>
-                      <FormattedMessage
-                        id="wWTUrM"
-                        defaultMessage="No activities found"
-                      />
-                    </Typography>
-                  }
-                />
-              </ListItem>
+              <Box paddingY={4}>
+                <Text variant="body" size="small">
+                  <FormattedMessage
+                    id="wWTUrM"
+                    defaultMessage="No activities found"
+                  />
+                </Text>
+              </Box>
             ),
           )}
         </List>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
-HomeActivityCard.displayName = "HomeActivityCard";
-export default HomeActivityCard;

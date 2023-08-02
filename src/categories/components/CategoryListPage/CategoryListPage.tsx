@@ -4,6 +4,7 @@ import {
 } from "@dashboard/categories/urls";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { Button } from "@dashboard/components/Button";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -20,7 +21,6 @@ import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CategoryDeleteButton } from "../CategoryDeleteButton";
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 import { messages } from "./messages";
 
@@ -116,9 +116,9 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
             />
           </Box>
           {selectedCategoriesIds.length > 0 && (
-            <CategoryDeleteButton onClick={onCategoriesDelete}>
+            <BulkDeleteButton onClick={onCategoriesDelete}>
               <FormattedMessage {...messages.bulkCategoryDelete} />
-            </CategoryDeleteButton>
+            </BulkDeleteButton>
           )}
         </Box>
         <CategoryListDatagrid

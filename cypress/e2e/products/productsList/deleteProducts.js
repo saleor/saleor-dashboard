@@ -2,11 +2,19 @@
 /// <reference types="../../../support"/>
 import faker from "faker";
 
-import { BUTTON_SELECTORS, PRODUCTS_LIST } from "../../../elements/";
+import {
+  BUTTON_SELECTORS,
+  PRODUCTS_LIST,
+} from "../../../elements/";
 import { MESSAGES } from "../../../fixtures/";
 import { urlList } from "../../../fixtures/urlList";
-import { getDefaultChannel, productsUtils } from "../../../support/api/utils/";
-import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
+import {
+  getDefaultChannel,
+  productsUtils,
+} from "../../../support/api/utils/";
+import {
+  ensureCanvasStatic,
+} from "../../../support/customCommands/sharedElementsOperations/canvas";
 
 describe("Test for deleting products", () => {
   const startsWith = "AABulkDeleteCypress";
@@ -16,7 +24,7 @@ describe("Test for deleting products", () => {
   let product;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel()
       .then(channelResp => {
         channel = channelResp;
@@ -45,7 +53,7 @@ describe("Test for deleting products", () => {
   });
 
   it(
-    "should delete 2 first products on products grid view - SALEOR_2709",
+    "should delete 2 first products on products grid view - SALEOR_2715",
     { tags: ["@metadata", "@allEnv", "@stable"] },
     () => {
       cy.clearSessionData().loginUserViaRequest();

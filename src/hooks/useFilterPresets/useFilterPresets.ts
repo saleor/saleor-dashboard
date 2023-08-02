@@ -4,10 +4,23 @@ import {
   getActiveTabIndexAfterTabDelete,
   getNextUniqueTabName,
 } from "@dashboard/products/views/ProductList/utils";
-import { StorageUtils } from "@dashboard/utils/filters";
+import { GetFilterTabsOutput, StorageUtils } from "@dashboard/utils/filters";
 import { prepareQs } from "@dashboard/utils/filters/qs";
 import { stringify } from "qs";
 import { useState } from "react";
+
+export interface UseFilterPresets {
+  presetIdToDelete: number | null;
+  setPresetIdToDelete: React.Dispatch<React.SetStateAction<number | null>>;
+  presets: GetFilterTabsOutput<string>;
+  selectedPreset: number | undefined;
+  onPresetChange: (index: number) => void;
+  onPresetDelete: () => void;
+  onPresetSave: (data: SaveFilterTabDialogFormData) => void;
+  onPresetUpdate: (tabName: string) => void;
+  getPresetNameToDelete: () => string;
+  hasPresetsChanged: () => boolean;
+}
 
 export const useFilterPresets = <
   T extends { activeTab?: string; action?: string },
@@ -21,7 +34,7 @@ export const useFilterPresets = <
   reset: () => void;
   getUrl: () => string;
   storageUtils: StorageUtils<string>;
-}) => {
+}): UseFilterPresets => {
   const navigate = useNavigator();
   const baseUrl = getUrl();
   const [presetIdToDelete, setPresetIdToDelete] = useState<number | null>(null);
@@ -94,7 +107,7 @@ export const useFilterPresets = <
     onPresetChange(presets.findIndex(tab => tab.name === tabName) + 1);
   };
 
-  const hasPresetsChange = () => {
+  const hasPresetsChanged = () => {
     const { parsedQs } = prepareQs(location.search);
 
     if (!selectedPreset) {
@@ -110,15 +123,35 @@ export const useFilterPresets = <
     );
   };
 
+  const getPresetNameToDelete = (): string => {
+    const presetIndex = presetIdToDelete ? presetIdToDelete - 1 : 0;
+    const preset = presets?.[presetIndex];
+    const tabName = preset?.name ?? "...";
+
+    return tabName;
+  };
+
   return {
     presetIdToDelete,
     setPresetIdToDelete,
+    getPresetNameToDelete,
     presets,
     selectedPreset,
     onPresetChange,
     onPresetDelete,
     onPresetSave,
     onPresetUpdate,
-    hasPresetsChange,
+    hasPresetsChanged,
   };
+};
+
+export const getPresetNameToDelete = (
+  presets: GetFilterTabsOutput<string>,
+  presetIdToDelete: number | null,
+): string => {
+  const presetIndex = presetIdToDelete ? presetIdToDelete - 1 : 0;
+  const preset = presets?.[presetIndex];
+  const tabName = preset?.name ?? "...";
+
+  return tabName;
 };

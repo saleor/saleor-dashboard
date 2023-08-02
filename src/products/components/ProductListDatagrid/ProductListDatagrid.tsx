@@ -69,8 +69,6 @@ interface ProductListDatagridProps
   >;
   onSelectProductIds: (rowsIndex: number[], clearSelection: () => void) => void;
   hasRowHover?: boolean;
-  columnPickerSettings: string[];
-  setDynamicColumnSettings: (cols: string[]) => void;
   loading: boolean;
 }
 
@@ -91,8 +89,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   onSelectProductIds,
   hasRowHover,
   rowAnchor,
-  columnPickerSettings,
-  setDynamicColumnSettings,
 }) => {
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
@@ -149,8 +145,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     }),
     selectedColumns: settings.columns,
     onSave: handleColumnChange,
-    columnPickerSettings,
-    setDynamicColumnSettings,
   });
 
   // Logic for updating sort icon in dynamic columns
@@ -291,9 +285,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
               dynamicColumns={dynamicColumns}
               selectedColumns={selectedColumns}
               columnCategories={columnCategories}
-              onDynamicColumnSelect={handlers.onDynamicColumnSelect}
-              columnPickerSettings={columnPickerSettings}
-              onSave={handlers.onChange}
+              onToggle={handlers.onToggle}
             />
           )}
         />

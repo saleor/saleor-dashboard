@@ -2,24 +2,34 @@ import {
   _ExperimentalFilters,
   Box,
   FilterEvent,
+  Row,
 } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { FC } from "react";
 
-import { FilterAPIProvider } from "./API/FilterAPIProvider";
+import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
-import { LeftOperandsProvider } from "./LeftOperandsProvider";
+import { LeftOperand } from "./LeftOperandsProvider";
+import { useFiltersAreaTranslations } from "./messages";
 import { useFilterContainer } from "./useFilterContainer";
+import { ErrorEntry } from "./Validation";
 
 interface FiltersAreaProps {
-  filterValue: FilterContainer
-  apiProvider: FilterAPIProvider
-  leftOperandsProvider: LeftOperandsProvider
-  onConfirm: (value: FilterContainer) => void
+  onConfirm: (value: FilterContainer) => void;
+  errors?: ErrorEntry[];
+  onCancel?: () => void;
 }
 
-export const FiltersArea = ({ filterValue, apiProvider, leftOperandsProvider, onConfirm }: FiltersAreaProps) => {
+export const FiltersArea: FC<FiltersAreaProps> = ({
+  onConfirm,
+  onCancel,
+  errors,
+}) => {
+  const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
+  const translations = useFiltersAreaTranslations();
+
   const {
     value,
+    hasEmptyRows,
     addEmpty,
     removeAt,
     updateLeftOperator,
@@ -27,10 +37,10 @@ export const FiltersArea = ({ filterValue, apiProvider, leftOperandsProvider, on
     updateCondition,
     updateRightOptions,
     updateLeftOptions,
-  } = useFilterContainer(filterValue, apiProvider, leftOperandsProvider);
+  } = useFilterContainer(apiProvider, leftOperandsProvider);
 
   const handleStateChange = async (event: FilterEvent["detail"]) => {
-    if (!event) return
+    if (!event) return;
 
     if (event.type === "row.add") {
       addEmpty();
@@ -41,7 +51,7 @@ export const FiltersArea = ({ filterValue, apiProvider, leftOperandsProvider, on
     }
 
     if (event.type === "leftOperator.onChange") {
-      updateLeftOperator(event.path, event.value);
+      updateLeftOperator(event.path, event.value as LeftOperand);
     }
 
     if (event.type === "condition.onChange") {
@@ -66,22 +76,32 @@ export const FiltersArea = ({ filterValue, apiProvider, leftOperandsProvider, on
   };
 
   return (
-    <Box>
-      <_ExperimentalFilters
-        leftOptions={leftOperandsProvider.operands}
-        // @ts-expect-error
-        value={value}
-        onChange={handleStateChange}
-      >
-        <_ExperimentalFilters.Footer>
-          <_ExperimentalFilters.AddRowButton>
-            Add new row
-          </_ExperimentalFilters.AddRowButton>
-          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
-            Confirm
+    <_ExperimentalFilters
+      leftOptions={leftOperandsProvider.operands}
+      value={value as Array<string | Row>}
+      onChange={handleStateChange}
+      error={errors}
+      locale={translations.locale}
+    >
+      <_ExperimentalFilters.Footer>
+        <_ExperimentalFilters.AddRowButton variant="tertiary">
+          {translations.addFilter}
+        </_ExperimentalFilters.AddRowButton>
+        <Box display="flex" gap={3}>
+          <_ExperimentalFilters.ClearButton
+            onClick={onCancel}
+            variant="tertiary"
+          >
+            {translations.clearFilters}
+          </_ExperimentalFilters.ClearButton>
+          <_ExperimentalFilters.ConfirmButton
+            onClick={() => onConfirm(value)}
+            disabled={hasEmptyRows}
+          >
+            {translations.saveFilters}
           </_ExperimentalFilters.ConfirmButton>
-        </_ExperimentalFilters.Footer>
-      </_ExperimentalFilters>
-    </Box>
+        </Box>
+      </_ExperimentalFilters.Footer>
+    </_ExperimentalFilters>
   );
 };

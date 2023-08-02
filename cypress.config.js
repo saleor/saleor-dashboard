@@ -14,19 +14,20 @@ module.exports = defineConfig({
     runMode: 1,
     openMode: 0,
   },
+  reporter: "junit",
+  reporterOptions: {
+    mochaFile: "results/test-output-[hash].xml",
+    jenkinsMode: true,
+    outputs: true,
+    testCaseSwitchClassnameAndName: true,
+  },
   e2e: {
     env: {
       grepFilterSpecs: true,
-      demoTests: false,
     },
     setupNodeEvents(on, config) {
-      config.specPattern = process.env.CYPRESS_demoTests
-        ? "cypress/e2e/percy/**/*.{js,jsx,ts,tsx}"
-        : "cypress/e2e/**/*.{js,jsx,ts,tsx}";
-
       config = require("./cypress/support/cypress-grep/plugin")(config);
       config = require("./cypress/plugins/index.js")(on, config);
-
       on("after:spec", (spec, results) => {
         if (results && results.video) {
           return fs.unlink(results.video, function (err) {
@@ -40,5 +41,6 @@ module.exports = defineConfig({
       });
       return config;
     },
+    specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
   },
 });

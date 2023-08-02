@@ -3,7 +3,9 @@
 
 import faker from "faker";
 
-import { WAREHOUSES_DETAILS } from "../../elements/warehouses/warehouse-details";
+import {
+  WAREHOUSES_DETAILS,
+} from "../../elements/warehouses/warehouse-details";
 import {
   completeCheckout,
   createCheckout,
@@ -39,7 +41,7 @@ describe("Warehouses in checkout", () => {
   const warehouseSlug = `${faker.lorem.slug()}slug`;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.fixture("addresses")
       .then(addresses => {
         usAddress = addresses.usAddress;
@@ -101,7 +103,7 @@ describe("Warehouses in checkout", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

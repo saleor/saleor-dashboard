@@ -4,7 +4,10 @@
 import faker from "faker";
 
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import { ONE_PERMISSION_USERS, urlList } from "../../fixtures";
+import {
+  ONE_PERMISSION_USERS,
+  urlList,
+} from "../../fixtures";
 import {
   createChannel,
   createCustomer,
@@ -16,7 +19,6 @@ import {
   createShipping,
   getDefaultTaxClass,
   productsUtils,
-  updateTaxConfigurationForChannel,
 } from "../../support/api/utils";
 import { transactionsOrderUtils } from "../../support/pages/";
 
@@ -35,7 +37,7 @@ describe("Orders", () => {
   let taxClass;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createChannel({ name: randomName })
       .then(channelResp => {
         channel = channelResp;
@@ -44,7 +46,6 @@ describe("Orders", () => {
           channelId: channel.id,
           markAsPaidStrategy: "TRANSACTION_FLOW",
         });
-        updateTaxConfigurationForChannel({ channelSlug: channel.slug });
         getDefaultTaxClass();
       })
       .then(resp => {
@@ -105,12 +106,10 @@ describe("Orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest("auth", ONE_PERMISSION_USERS.order)
-      .then(() => {
-        // set notifiedAboutNavigator to make navigator banner gone from the start - banner was covering needed elements during test
-        window.localStorage.setItem("notifiedAboutNavigator", "true");
-      });
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.order).then(() => {
+      // set notifiedAboutNavigator to make navigator banner gone from the start - banner was covering needed elements during test
+      window.localStorage.setItem("notifiedAboutNavigator", "true");
+    });
   });
 
   it(

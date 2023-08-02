@@ -277,19 +277,7 @@ function getDescriptionCellContent(
     return readonlyTextCell("");
   }
 
-  const parsed = JSON.parse(value);
-
-  if (parsed) {
-    const descriptionFirstParagraph = parsed.blocks.find(
-      block => block.type === "paragraph",
-    );
-
-    if (descriptionFirstParagraph) {
-      return readonlyTextCell(descriptionFirstParagraph.data.text);
-    }
-  }
-
-  return readonlyTextCell(value || "");
+  return readonlyTextCell(getDescriptionValue(value));
 }
 
 function getNameCellContent(
@@ -355,6 +343,22 @@ function getAttributeCellContent(
   }
 
   return readonlyTextCell("");
+}
+
+export function getDescriptionValue(value: string) {
+  const parsed = JSON.parse(value);
+
+  if (parsed) {
+    const descriptionFirstParagraph = parsed?.blocks.find(
+      block => block.type === "paragraph",
+    );
+
+    if (descriptionFirstParagraph) {
+      return (descriptionFirstParagraph.data?.text ?? "").replace("&nbsp;", "");
+    }
+  }
+
+  return "";
 }
 
 export function getColumnMetadata(column: string) {

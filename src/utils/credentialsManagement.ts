@@ -20,6 +20,16 @@ export async function login<T>(
   return result!;
 }
 
+export async function checkIfCredentialsExist() {
+  const credential = await navigator.credentials.get({ password: true });
+
+  if (credential === null) {
+    return false;
+  }
+
+  return true;
+}
+
 export function saveCredentials(
   user: UserFragment | UserDetailsFragment,
   password: string,

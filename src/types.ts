@@ -30,6 +30,8 @@ export enum ListViews {
   DRAFT_LIST = "DRAFT_LIST",
   NAVIGATION_LIST = "NAVIGATION_LIST",
   ORDER_LIST = "ORDER_LIST",
+  ORDER_DETAILS_LIST = "ORDER_DETAILS_LIST",
+  ORDER_DRAFT_DETAILS_LIST = "ORDER_DRAFT_DETAILS_LIST",
   PAGES_LIST = "PAGES_LIST",
   PAGE_TYPES_LIST = "PAGE_TYPES_LIST",
   PLUGINS_LIST = "PLUGIN_LIST",
@@ -43,7 +45,7 @@ export enum ListViews {
   WAREHOUSE_LIST = "WAREHOUSE_LIST",
   WEBHOOK_LIST = "WEBHOOK_LIST",
   TRANSLATION_ATTRIBUTE_VALUE_LIST = "TRANSLATION_ATTRIBUTE_VALUE_LIST",
-  GIFT_CARD_LIST = " GIFT_CARD_LIST",
+  GIFT_CARD_LIST = "GIFT_CARD_LIST",
 }
 
 export interface ListProps<TColumns extends string = string> {
@@ -123,17 +125,18 @@ export interface FilterProps<TKeys extends string> {
 }
 
 export interface FilterPresetsProps {
-  selectedFilterPreset: number;
+  selectedFilterPreset: number | undefined;
   filterPresets: string[];
   onFilterPresetsAll: () => void;
   onFilterPresetChange: (id: number) => void;
   onFilterPresetUpdate: (name: string) => void;
   onFilterPresetDelete: (id: number) => void;
   onFilterPresetPresetSave: () => void;
+  hasPresetsChanged: () => boolean;
 }
 
 export interface TabPageProps {
-  currentTab: number;
+  currentTab: number | undefined;
   tabs: string[];
   onAll: () => void;
   onTabChange: (tab: number) => void;

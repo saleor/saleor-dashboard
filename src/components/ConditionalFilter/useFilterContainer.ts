@@ -1,25 +1,42 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
 
 import { FilterAPIProvider } from "./API/FilterAPIProvider";
-import { FilterContainer } from "./FilterElement";
+import { useConditionalFilterContext } from "./context";
+import { FilterElement } from "./FilterElement";
 import { ConditionValue, ItemOption } from "./FilterElement/ConditionValue";
-import { LeftOperandsProvider } from "./LeftOperandsProvider";
-import { useContainerState } from "./useContainerState";
+import { Constraint } from "./FilterElement/Constraint";
+import { hasEmptyRows } from "./FilterElement/FilterElement";
+import { LeftOperand, LeftOperandsProvider } from "./LeftOperandsProvider";
 
 export const useFilterContainer = (
-  initialValue: FilterContainer,
   apiProvider: FilterAPIProvider,
   leftOperandsProvider: LeftOperandsProvider,
 ) => {
-  const { value, updateAt, removeAt, createEmpty } =
-    useContainerState(initialValue);
+  const {
+    containerState: { value, updateAt, removeAt, createEmpty, create, exist, updateBySlug },
+  } = useConditionalFilterContext();
 
   const addEmpty = () => {
     createEmpty();
   };
 
-  const updateLeftOperator = (position: string, leftOperator: any) => {
+  const updateLeftOperator = (position: string, leftOperator: LeftOperand) => {
     updateAt(position, el => el.updateLeftOperator(leftOperator));
+
+    const dependency = Constraint.getDependency(leftOperator.value)
+
+    if (!dependency) return
+   
+    if (!exist(dependency)) {
+      create(FilterElement.createStaticBySlug(dependency))
+      return
+    }
+
+    updateBySlug(dependency, (el) => {
+      const newConstraint = Constraint.fromSlug(dependency)
+
+      if (newConstraint) el.setConstraint(newConstraint)
+    })
   };
 
   const updateLeftLoadingState = (position: string, loading: boolean) => {
@@ -69,6 +86,7 @@ export const useFilterContainer = (
 
   return {
     value,
+    hasEmptyRows: hasEmptyRows(value),
     addEmpty,
     removeAt,
     updateLeftOperator,

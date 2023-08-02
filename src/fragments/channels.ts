@@ -34,6 +34,8 @@ export const channelDetailsFragment = gql`
     }
     orderSettings {
       markAsPaidStrategy
+      deleteExpiredOrdersAfter
+      allowUnpaidOrders
     }
   }
 `;

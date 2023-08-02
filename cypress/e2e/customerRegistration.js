@@ -3,7 +3,9 @@
 
 import faker from "faker";
 
-import { CUSTOMER_DETAILS_SELECTORS } from "../elements/customers/customer-details";
+import {
+  CUSTOMER_DETAILS_SELECTORS,
+} from "../elements/customers/customer-details";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { customerDetailsUrl } from "../fixtures/urlList";
 import {
@@ -20,7 +22,7 @@ describe("Tests for customer registration", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
       cy.checkIfDataAreNotNull({ defaultChannel });

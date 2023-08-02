@@ -1,18 +1,35 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
+import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
-import { ConditionItem, ConditionOptions } from "./ConditionOptions";
+import {
+  ConditionItem,
+  ConditionOptions,
+  StaticElementName,
+} from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
 import { ConditionValue, ItemOption } from "./ConditionValue";
+import { Constraint } from "./Constraint";
 
-class ExpressionValue {
+export class ExpressionValue {
   constructor(
     public value: string,
     public label: string,
     public type: string,
   ) {}
+
+  public isEmpty() {
+    return this.value.length === 0 || this.label.length === 0;
+  }
+
+  public static fromSlug(slug: string) {
+    const option = STATIC_OPTIONS.find(o => o.slug === slug);
+
+    if (!option) return ExpressionValue.emptyStatic();
+
+    return new ExpressionValue(option.slug, option.label, option.type);
+  }
 
   public static fromLeftOperand(leftOperand: LeftOperand) {
     return new ExpressionValue(
@@ -23,7 +40,13 @@ class ExpressionValue {
   }
 
   public static fromUrlToken(token: UrlToken) {
-    return new ExpressionValue(token.name, token.name, token.name);
+    const option = STATIC_OPTIONS.find(o => o.slug === token.name);
+
+    if (!option) {
+      return new ExpressionValue(token.name, token.name, token.name);
+    }
+
+    return new ExpressionValue(token.name, option.label, token.name);
   }
 
   public static forAttribute(
@@ -45,11 +68,18 @@ class ExpressionValue {
 }
 
 export class FilterElement {
-  private constructor(
+  public constructor(
     public value: ExpressionValue,
     public condition: Condition,
     public loading: boolean,
-  ) {}
+    public constraint?: Constraint,
+  ) {
+    const newConstraint = Constraint.fromSlug(this.value.value);
+
+    if (newConstraint) {
+      this.constraint = newConstraint;
+    }
+  }
 
   public enableLoading() {
     this.loading = true;
@@ -95,7 +125,7 @@ export class FilterElement {
   }
 
   public isEmpty() {
-    return this.value.type === "e";
+    return this.value.isEmpty() || this.condition.isEmpty();
   }
 
   public isStatic() {
@@ -106,22 +136,25 @@ export class FilterElement {
     return ConditionOptions.isAttributeInputType(this.value.type);
   }
 
-  public isCollection() {
-    return this.value.value === "collection";
+  public rowType(): RowType | null {
+    if (this.isStatic()) {
+      return this.value.value as RowType;
+    }
+
+    if (this.isAttribute()) {
+      return "attribute";
+    }
+
+    return null;
   }
 
-  public isCategory() {
-    return this.value.value === "category";
+  public setConstraint(constraint: Constraint) {
+    this.constraint = constraint;
   }
 
-  public isProductType() {
-    return this.value.value === "producttype";
+  public clearConstraint() {
+    this.constraint = undefined;
   }
-
-  public isChannel() {
-    return this.value.value === "channel";
-  }
-
 
   public asUrlEntry(): UrlEntry {
     if (this.isAttribute()) {
@@ -131,14 +164,31 @@ export class FilterElement {
     return UrlEntry.forStatic(this.condition.selected, this.value.value);
   }
 
-  public static fromValueEntry(valueEntry: any) {
-    return new FilterElement(valueEntry.value, valueEntry.condition, false);
+  public equals(element: FilterElement) {
+    return this.value.value === element.value.value;
+  }
+
+  public static isCompatible(element: unknown): element is FilterElement {
+    return (
+      typeof element === "object" &&
+      !Array.isArray(element) &&
+      element !== null &&
+      "value" in element
+    );
   }
 
   public static createEmpty() {
     return new FilterElement(
       ExpressionValue.emptyStatic(),
       Condition.createEmpty(),
+      false,
+    );
+  }
+
+  public static createStaticBySlug(slug: StaticElementName) {
+    return new FilterElement(
+      ExpressionValue.fromSlug(slug),
+      Condition.emptyFromSlug(slug),
       false,
     );
   }
@@ -159,9 +209,14 @@ export class FilterElement {
         false,
       );
     }
-
     return FilterElement.createEmpty();
   }
 }
+
+export const hasEmptyRows = (container: FilterContainer) => {
+  return container
+    .filter(FilterElement.isCompatible)
+    .some((e: FilterElement) => e.isEmpty());
+};
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;

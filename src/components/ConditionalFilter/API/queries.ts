@@ -2,15 +2,35 @@ import { gql } from "@apollo/client";
 
 export const initialDynamicLeftOperands = gql`
   query _GetDynamicLeftOperands($first: Int!, $query: String!) {
-    attributes(first: $first, filter: { type: PRODUCT_TYPE, search: $query }) {
+    attributes(
+      first: $first
+      search: $query
+      where: {
+        type: { eq: PRODUCT_TYPE }
+        inputType: {
+          oneOf: [
+            DROPDOWN
+            MULTISELECT
+            BOOLEAN
+            NUMERIC
+            DATE
+            DATE_TIME
+            SWATCH
+          ]
+        }
+      }
+    ) {
       edges {
         node {
           id
           name
           slug
           inputType
+          __typename
         }
+        __typename
       }
+      __typename
     }
   }
 `;
@@ -18,7 +38,7 @@ export const initialDynamicLeftOperands = gql`
 export const initialDynamicOperands = gql`
   query _GetChannelOperands {
     channels {
-      id
+      id: slug
       name
       slug
     }
@@ -94,6 +114,7 @@ export const initialDynamicOperands = gql`
                 slug: id
                 id
                 name
+                originalSlug: slug
               }
             }
           }
@@ -112,6 +133,7 @@ export const dynamicOperandsQueries = gql`
             slug: id
             id
             name
+            originalSlug: slug
           }
         }
       }

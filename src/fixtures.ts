@@ -313,6 +313,7 @@ export const filterPresetsProps: FilterPresetsProps = {
   onFilterPresetDelete: () => undefined,
   onFilterPresetPresetSave: () => undefined,
   onFilterPresetUpdate: () => undefined,
+  hasPresetsChanged: () => false,
   filterPresets: ["Tab X"],
 };
 

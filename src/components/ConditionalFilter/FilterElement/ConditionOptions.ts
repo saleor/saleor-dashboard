@@ -32,7 +32,7 @@ export class ConditionOptions extends Array<ConditionItem> {
     return name in ATTRIBUTE_INPUT_TYPE_CONDITIONS;
   }
 
-  public static fromAtributeType(inputType: AttributeInputType) {
+  public static fromAttributeType(inputType: AttributeInputType) {
     const options = ATTRIBUTE_INPUT_TYPE_CONDITIONS[inputType];
 
     if (!options) {
@@ -72,6 +72,10 @@ export class ConditionOptions extends Array<ConditionItem> {
 
   public static empty() {
     return new ConditionOptions([]);
+  }
+
+  public isEmpty() {
+    return this.length === 0;
   }
 
   public findByLabel(label: string) {

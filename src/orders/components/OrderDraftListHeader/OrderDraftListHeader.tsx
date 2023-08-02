@@ -9,10 +9,8 @@ import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderDraftListHeaderProps
-  extends Omit<FilterPresetsProps, "onTabDelete"> {
+export interface OrderDraftListHeaderProps extends FilterPresetsProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
-  hasPresetsChanged: boolean;
   isFilterPresetOpen: boolean;
   disabled: boolean;
   onAdd: () => void;
@@ -55,7 +53,7 @@ export const OrderDraftListHeader = ({
           </Box>
 
           <FilterPresetsSelect
-            presetsChanged={hasPresetsChanged}
+            presetsChanged={hasPresetsChanged()}
             onSelect={onFilterPresetChange}
             onRemove={onFilterPresetDelete}
             onUpdate={onFilterPresetUpdate}

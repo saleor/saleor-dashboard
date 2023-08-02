@@ -2,7 +2,7 @@
 import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useColumnPickerSettings } from "@dashboard/components/Datagrid/ColumnPicker/useColumnPickerSettings";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -13,6 +13,7 @@ import {
   ProductListColumns,
 } from "@dashboard/config";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   ProductListQueryVariables,
   useAvailableColumnAttributesLazyQuery,
@@ -85,63 +86,70 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
+  const { valueProvider } = useConditionalFilterContext();
+  const productListingPageFiltersFlag = useFlag("product_filters");
 
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
   );
 
-  const { columnPickerSettings, setDynamicColumnsSettings } =
-    useColumnPickerSettings("PRODUCT_LIST");
-
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
   const { data: initialFilterAttributes } =
-    useInitialProductFilterAttributesQuery();
+    useInitialProductFilterAttributesQuery({
+      skip: productListingPageFiltersFlag.enabled,
+    });
   const { data: initialFilterCategories } =
     useInitialProductFilterCategoriesQuery({
       variables: {
         categories: params.categories,
       },
-      skip: !params.categories?.length,
+      skip: !params.categories?.length || productListingPageFiltersFlag.enabled,
     });
   const { data: initialFilterCollections } =
     useInitialProductFilterCollectionsQuery({
       variables: {
         collections: params.collections,
       },
-      skip: !params.collections?.length,
+      skip:
+        !params.collections?.length || productListingPageFiltersFlag.enabled,
     });
   const { data: initialFilterProductTypes } =
     useInitialProductFilterProductTypesQuery({
       variables: {
         productTypes: params.productTypes,
       },
-      skip: !params.productTypes?.length,
+      skip:
+        !params.productTypes?.length || productListingPageFiltersFlag.enabled,
     });
   const searchCategories = useCategorySearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5,
     },
+    skip: productListingPageFiltersFlag.enabled,
   });
   const searchCollections = useCollectionSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5,
     },
+    skip: productListingPageFiltersFlag.enabled,
   });
   const searchProductTypes = useProductTypeSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5,
     },
+    skip: productListingPageFiltersFlag.enabled,
   });
   const searchAttributes = useAttributeSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 10,
     },
+    skip: productListingPageFiltersFlag.enabled,
   });
   const [focusedAttribute, setFocusedAttribute] = useState<string>();
   const searchAttributeValues = useAttributeValueSearch({
@@ -183,7 +191,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   } = useRowSelection(params);
 
   const {
-    hasPresetsChange,
+    hasPresetsChanged,
     onPresetChange,
     onPresetDelete,
     onPresetSave,
@@ -275,21 +283,29 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const channelOpts = availableChannels
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
     : null;
-  const filter = getFilterVariables(params, !!selectedChannel);
+
+  const filterVariables = getFilterVariables({
+    isProductListingPageFiltersFlagEnabled:
+      productListingPageFiltersFlag.enabled,
+    filterContainer: valueProvider.value,
+    queryParams: params,
+    isChannelSelected: !!selectedChannel,
+    channelSlug: selectedChannel?.slug,
+  });
+
   const sort = getSortQueryVariables(params, !!selectedChannel);
   const queryVariables = React.useMemo<
     Omit<ProductListQueryVariables, "hasChannel" | "hasSelectedAttributes">
   >(
     () => ({
       ...paginationState,
-      filter,
+      ...filterVariables,
       sort,
-      channel: selectedChannel?.slug,
     }),
-    [params, settings.rowNumber],
+    [params, settings.rowNumber, valueProvider.value],
   );
 
-  const filteredColumnIds = (columnPickerSettings ?? [])
+  const filteredColumnIds = (settings.columns ?? [])
     .filter(isAttributeColumnValue)
     .map(getAttributeIdFromColumnValue);
 
@@ -299,6 +315,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       ...queryVariables,
       hasChannel: !!selectedChannel,
     },
+    skip: valueProvider.loading,
   });
 
   const products = mapEdgesToItems(data?.products);
@@ -395,7 +412,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         gridAttributesOpts={gridAttributesOpts}
         settings={settings}
         availableColumnsAttributesOpts={availableColumnsAttributesOpts}
-        disabled={loading}
+        disabled={loading || valueProvider.loading}
         limits={limitOpts.data?.shop.limits}
         products={products}
         onUpdateListSettings={(...props) => {
@@ -415,13 +432,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         }}
         onProductsDelete={() => openModal("delete")}
         onTabChange={onPresetChange}
-        hasPresetsChanged={hasPresetsChange()}
+        hasPresetsChanged={hasPresetsChanged()}
         initialSearch={params.query || ""}
         tabs={presets.map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
-        columnPickerSettings={columnPickerSettings}
-        setDynamicColumnSettings={setDynamicColumnsSettings}
         selectedProductIds={selectedRowIds}
         onSelectProductIds={handleSetSelectedProductIds}
         clearRowSelection={clearRowSelection}
@@ -478,7 +493,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             variables: {
               input: {
                 ...data,
-                filter,
+                ...filterVariables,
                 ids: selectedRowIds,
               },
             },
