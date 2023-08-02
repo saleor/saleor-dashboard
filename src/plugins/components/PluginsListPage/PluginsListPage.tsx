@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import ExternalLink from "@dashboard/components/ExternalLink";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -12,7 +13,8 @@ import {
   SortPage,
   TabPageProps,
 } from "@dashboard/types";
-import { Card } from "@material-ui/core";
+import { Card, Typography } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -22,7 +24,10 @@ import {
   PluginFilterKeys,
   PluginListFilterOpts,
 } from "./filters";
-import { pluginsFilterErrorMessages } from "./messages";
+import {
+  pluginsFilterErrorMessages,
+  pluginsListPageMessages,
+} from "./messages";
 
 export interface PluginsListPageProps
   extends PageListProps,
@@ -56,6 +61,20 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
         title={intl.formatMessage(sectionNames.plugins)}
       />
       <Card>
+        <div>
+          <Alert severity="warning" title="Warning">
+            <Typography variant="body1">
+              {intl.formatMessage(pluginsListPageMessages.appStoreWarning)}{" "}
+              <ExternalLink
+                target="blank"
+                typographyProps={{ display: "inline" }}
+                href="https://docs.saleor.io/docs/3.x/developer/app-store/overview"
+              >
+                Saleor App Store.
+              </ExternalLink>
+            </Typography>
+          </Alert>
+        </div>
         <FilterBar
           errorMessages={pluginsFilterErrorMessages}
           currentTab={currentTab}
