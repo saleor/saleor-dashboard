@@ -1,4 +1,3 @@
-import { Token } from "graphql";
 import { TokenArray } from ".";
 import { InitialStateResponse } from "../../API/InitialStateResponse";
 
