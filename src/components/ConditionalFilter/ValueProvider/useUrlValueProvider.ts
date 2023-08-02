@@ -37,7 +37,6 @@ export const useUrlValueProvider = (
   params.delete("sort");
   params.delete("activeTab");
 
-  console.log("params", params.toString(), locationSearch);
   const tokenizedUrl = new TokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
 
