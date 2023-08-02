@@ -3,6 +3,7 @@ import { InitialStateResponse } from "./InitialStateResponse";
 
 describe("ConditionalFilter / API / InitialStateResponse", () => {
   it("should filter by dynamic attribute token", () => {
+    // Arrange
     const initialState = InitialStateResponse.empty();
     initialState.attribute = {
       "attribute-1": {
@@ -22,11 +23,14 @@ describe("ConditionalFilter / API / InitialStateResponse", () => {
     const expectedOutput = [
       { label: "Choice 1", slug: "choice-1", value: "value-1" },
     ];
+    // Act
     const result = initialState.filterByUrlToken(token);
+    // Assert
     expect(result).toEqual(expectedOutput);
   });
 
   it("should filter by static token type", () => {
+    // Arrange
     const initialState = InitialStateResponse.empty();
     initialState.category = [
       { label: "Category 1", value: "1", slug: "category-1" },
@@ -35,11 +39,14 @@ describe("ConditionalFilter / API / InitialStateResponse", () => {
       new UrlEntry("s0.category-1", "category-1"),
     );
     const expectedOutput = ["category-1"];
+    // Act
     const result = initialState.filterByUrlToken(token);
+    // Assert
     expect(result).toEqual(expectedOutput);
   });
 
   it("should filter by boolean attribute token", () => {
+    // Arrange
     const initialState = InitialStateResponse.empty();
     initialState.attribute = {
       "attribute-2": {
@@ -60,11 +67,14 @@ describe("ConditionalFilter / API / InitialStateResponse", () => {
       type: "BOOLEAN",
       value: "true",
     };
+    // Act
     const result = initialState.filterByUrlToken(token);
+    // Assert
     expect(result).toEqual(expectedOutput);
   });
 
   it("should filter by static attribute token", () => {
+    // Arrange
     const initialState = InitialStateResponse.empty();
     initialState.attribute = {
       size: {
@@ -75,9 +85,10 @@ describe("ConditionalFilter / API / InitialStateResponse", () => {
         choices: [],
       },
     };
-
     const token = UrlToken.fromUrlEntry(new UrlEntry("n0.size", "123"));
+    // Act
     const result = initialState.filterByUrlToken(token);
+    // Assert
     expect(result).toEqual("123");
   });
 });

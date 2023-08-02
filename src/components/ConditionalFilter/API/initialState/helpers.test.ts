@@ -10,92 +10,96 @@ import {
 import { createInitialStateFromData } from "./helpers";
 
 describe("ConditionalFilter / API / createInitialStateFromData", () => {
-  const channelQuery = {
-    data: {
-      channels: [
-        { id: "1", name: "Channel 1", slug: "channel-1" },
-        { id: "2", name: "Channel 2", slug: "channel-2" },
-      ],
-    },
-  } as ApolloQueryResult<_GetChannelOperandsQuery>;
-
-  const collectionQuery = {
-    data: {
-      collections: {
-        edges: [
-          { node: { id: "1", name: "Collection 1", slug: "collection-1" } },
-          { node: { id: "2", name: "Collection 2", slug: "collection-2" } },
+  it("should create initial state from queries", () => {
+    // Arrange
+    const channelQuery = {
+      data: {
+        channels: [
+          { id: "1", name: "Channel 1", slug: "channel-1" },
+          { id: "2", name: "Channel 2", slug: "channel-2" },
         ],
       },
-    },
-  } as ApolloQueryResult<_SearchCollectionsOperandsQuery>;
+    } as ApolloQueryResult<_GetChannelOperandsQuery>;
 
-  const categoryQuery = {
-    data: {
-      categories: {
-        edges: [
-          { node: { id: "1", name: "Category 1", slug: "category-1" } },
-          { node: { id: "2", name: "Category 2", slug: "category-2" } },
-        ],
+    const collectionQuery = {
+      data: {
+        collections: {
+          edges: [
+            { node: { id: "1", name: "Collection 1", slug: "collection-1" } },
+            { node: { id: "2", name: "Collection 2", slug: "collection-2" } },
+          ],
+        },
       },
-    },
-  } as ApolloQueryResult<_SearchCategoriesOperandsQuery>;
+    } as ApolloQueryResult<_SearchCollectionsOperandsQuery>;
 
-  const productTypeQuery = {
-    data: {
-      productTypes: {
-        edges: [
-          { node: { id: "1", name: "Product Type 1", slug: "product-type-1" } },
-          { node: { id: "2", name: "Product Type 2", slug: "product-type-2" } },
-        ],
+    const categoryQuery = {
+      data: {
+        categories: {
+          edges: [
+            { node: { id: "1", name: "Category 1", slug: "category-1" } },
+            { node: { id: "2", name: "Category 2", slug: "category-2" } },
+          ],
+        },
       },
-    },
-  } as ApolloQueryResult<_SearchProductTypesOperandsQuery>;
+    } as ApolloQueryResult<_SearchCategoriesOperandsQuery>;
 
-  const attributeQuery = {
-    data: {
-      attributes: {
-        edges: [
-          {
-            node: {
-              id: "1",
-              name: "Attribute 1",
-              slug: "attribute-1",
-              inputType: "MULTISELECT",
-              choices: {
-                edges: [
-                  {
-                    node: {
-                      id: "1",
-                      name: "Choice 1",
-                      slug: "choice-1",
+    const productTypeQuery = {
+      data: {
+        productTypes: {
+          edges: [
+            {
+              node: { id: "1", name: "Product Type 1", slug: "product-type-1" },
+            },
+            {
+              node: { id: "2", name: "Product Type 2", slug: "product-type-2" },
+            },
+          ],
+        },
+      },
+    } as ApolloQueryResult<_SearchProductTypesOperandsQuery>;
+
+    const attributeQuery = {
+      data: {
+        attributes: {
+          edges: [
+            {
+              node: {
+                id: "1",
+                name: "Attribute 1",
+                slug: "attribute-1",
+                inputType: "MULTISELECT",
+                choices: {
+                  edges: [
+                    {
+                      node: {
+                        id: "1",
+                        name: "Choice 1",
+                        slug: "choice-1",
+                      },
                     },
-                  },
-                  {
-                    node: {
-                      id: "2",
-                      name: "Choice 2",
-                      slug: "choice-2",
+                    {
+                      node: {
+                        id: "2",
+                        name: "Choice 2",
+                        slug: "choice-2",
+                      },
                     },
-                  },
-                ],
+                  ],
+                },
               },
             },
-          },
-          {
-            node: {
-              id: "2",
-              name: "Attribute 2",
-              slug: "attribute-2",
-              inputType: "BOOLEAN",
+            {
+              node: {
+                id: "2",
+                name: "Attribute 2",
+                slug: "attribute-2",
+                inputType: "BOOLEAN",
+              },
             },
-          },
-        ],
+          ],
+        },
       },
-    },
-  } as ApolloQueryResult<_SearchAttributeOperandsQuery>;
-
-  it("should create initial state from queries", () => {
+    } as ApolloQueryResult<_SearchAttributeOperandsQuery>;
     const data = [
       channelQuery,
       collectionQuery,
@@ -104,8 +108,9 @@ describe("ConditionalFilter / API / createInitialStateFromData", () => {
       attributeQuery,
     ];
     const channel = ["channel-1"];
-
+    // Act
     const result = createInitialStateFromData(data, channel);
+    // Assert
     expect(result).toMatchSnapshot();
   });
 });
