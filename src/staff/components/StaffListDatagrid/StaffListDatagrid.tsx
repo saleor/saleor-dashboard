@@ -1,4 +1,3 @@
-import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
@@ -59,13 +58,7 @@ export const StaffListDatagrid = ({
     [onUpdateListSettings],
   );
 
-  const {
-    handlers,
-    visibleColumns,
-    recentlyAddedColumn,
-    staticColumns,
-    selectedColumns,
-  } = useColumns({
+  const { handlers, visibleColumns, recentlyAddedColumn } = useColumns({
     selectedColumns: settings?.columns ?? [],
     staticColumns: staffMemebersListStaticColumns,
     onSave: onColumnChange,
@@ -129,13 +122,6 @@ export const StaffListDatagrid = ({
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         recentlyAddedColumn={recentlyAddedColumn}
-        renderColumnPicker={() => (
-          <ColumnPicker
-            staticColumns={staticColumns}
-            selectedColumns={selectedColumns}
-            onToggle={handlers.onToggle}
-          />
-        )}
       />
 
       <Box paddingX={6}>
