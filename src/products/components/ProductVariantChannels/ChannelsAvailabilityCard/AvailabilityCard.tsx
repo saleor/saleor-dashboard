@@ -38,7 +38,11 @@ export const AvailabilityCard: React.FC<AvailabilityCardProps> = ({
     <CardContainer cardTitle={children}>
       <ChannelsList summary={channelListSummary}>
         {items.map(channel => (
-          <ChannelsListItem {...channel} listings={productChannelListings} />
+          <ChannelsListItem
+            {...channel}
+            listings={productChannelListings}
+            key={channel.id}
+          />
         ))}
       </ChannelsList>
     </CardContainer>

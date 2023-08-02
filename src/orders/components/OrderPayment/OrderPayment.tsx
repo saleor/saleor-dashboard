@@ -124,7 +124,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
       <CardContent className={classes.payments}>
         <div className={classes.root}>
           {order?.discounts?.map(discount => (
-            <div>
+            <div key={discount.id}>
               <FormattedMessage {...orderPaymentMessages.discount} />
               <HorizontalSpacer spacing={4} />
               <span className={classes.supportText}>
