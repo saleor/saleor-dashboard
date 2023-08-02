@@ -177,10 +177,6 @@ export class FilterElement {
     );
   }
 
-  public static fromValueEntry(valueEntry: any) {
-    return new FilterElement(valueEntry.value, valueEntry.condition, false);
-  }
-
   public static createEmpty() {
     return new FilterElement(
       ExpressionValue.emptyStatic(),
