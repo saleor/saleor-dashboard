@@ -1,7 +1,7 @@
 import { TokenArray } from ".";
 
 describe("ConditionalFilter / ValueProvider / TokenArray", () => {
-  it.skip("should parse empty params", () => {
+  it("should parse empty params", () => {
     // Arrange
     const url = new TokenArray("");
     // Act
