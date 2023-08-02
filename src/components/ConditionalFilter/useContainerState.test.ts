@@ -1,12 +1,11 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { FilterValueProvider } from "./FilterValueProvider";
-import {
-  attributeBottleSizeElement,
-  emptyFilterElement,
-  staticPriceElement,
-} from "./fixtures";
 import { useContainerState } from "./useContainerState";
+import { Condition, FilterElement } from "./FilterElement";
+import { ExpressionValue } from "./FilterElement/FilterElement";
+import { ConditionOptions } from "./FilterElement/ConditionOptions";
+import { ConditionSelected } from "./FilterElement/ConditionSelected";
 
 describe("useContainerState", () => {
   const valueProvider: FilterValueProvider = {
@@ -33,12 +32,26 @@ describe("useContainerState", () => {
       result.current.createEmpty();
     });
     // Assert
-    expect(result.current.value).toEqual([emptyFilterElement]);
+    expect(result.current.value).toEqual([FilterElement.createEmpty()]);
   });
 
   it("should add new row", () => {
     // Arrange
     const { result } = renderHook(() => useContainerState(valueProvider));
+    const staticPriceElement = new FilterElement(
+      new ExpressionValue("price", "Price", "price"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("price"),
+        new ConditionSelected(
+          { label: "price", slug: "price", value: "123" },
+          { type: "price", value: "123", label: "Price" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
     // Act
     act(() => {
       result.current.createEmpty();
@@ -48,7 +61,7 @@ describe("useContainerState", () => {
     });
     // Assert
     expect(result.current.value).toEqual([
-      emptyFilterElement,
+      FilterElement.createEmpty(),
       "AND",
       staticPriceElement,
     ]);
@@ -57,6 +70,20 @@ describe("useContainerState", () => {
   it("should update row", () => {
     // Arrange
     const { result } = renderHook(() => useContainerState(valueProvider));
+    const staticPriceElement = new FilterElement(
+      new ExpressionValue("price", "Price", "price"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("price"),
+        new ConditionSelected(
+          { label: "price", slug: "price", value: "123" },
+          { type: "price", value: "123", label: "Price" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
     // Act
     act(() => {
       result.current.create(staticPriceElement);
@@ -78,6 +105,20 @@ describe("useContainerState", () => {
   it("should remove row", () => {
     // Arrange
     const { result } = renderHook(() => useContainerState(valueProvider));
+    const staticPriceElement = new FilterElement(
+      new ExpressionValue("price", "Price", "price"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("price"),
+        new ConditionSelected(
+          { label: "price", slug: "price", value: "123" },
+          { type: "price", value: "123", label: "Price" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
     // Act
     act(() => {
       result.current.createEmpty();
@@ -95,17 +136,31 @@ describe("useContainerState", () => {
   it("should clear not filled rows", () => {
     // Arrange
     const { result } = renderHook(() => useContainerState(valueProvider));
+    const staticPriceElement = new FilterElement(
+      new ExpressionValue("price", "Price", "price"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("price"),
+        new ConditionSelected(
+          { label: "price", slug: "price", value: "123" },
+          { type: "price", value: "123", label: "Price" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
     // Act
     act(() => {
       result.current.createEmpty();
     });
     act(() => {
-      result.current.create(attributeBottleSizeElement);
+      result.current.create(staticPriceElement);
     });
     act(() => {
       result.current.clearEmpty();
     });
     // Assert
-    expect(result.current.value).toEqual([attributeBottleSizeElement]);
+    expect(result.current.value).toEqual([staticPriceElement]);
   });
 });
