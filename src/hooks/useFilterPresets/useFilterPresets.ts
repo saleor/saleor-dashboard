@@ -18,6 +18,7 @@ export interface UseFilterPresets {
   onPresetDelete: () => void;
   onPresetSave: (data: SaveFilterTabDialogFormData) => void;
   onPresetUpdate: (tabName: string) => void;
+  getPresetNameToDelete: () => string;
   hasPresetsChanged: () => boolean;
 }
 
@@ -122,9 +123,18 @@ export const useFilterPresets = <
     );
   };
 
+  const getPresetNameToDelete = (): string => {
+    const presetIndex = presetIdToDelete ? presetIdToDelete - 1 : 0;
+    const preset = presets?.[presetIndex];
+    const tabName = preset?.name ?? "...";
+
+    return tabName;
+  };
+
   return {
     presetIdToDelete,
     setPresetIdToDelete,
+    getPresetNameToDelete,
     presets,
     selectedPreset,
     onPresetChange,

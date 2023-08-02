@@ -997,9 +997,6 @@
   "50lR2F": {
     "string": "- used by Payment Plugins"
   },
-  "51HE+Q": {
-    "string": "No sales found"
-  },
   "54KYgS": {
     "context": "months after label",
     "string": "months after issue"
@@ -2920,9 +2917,6 @@
   "Irflxf": {
     "context": "window title",
     "string": "Create category"
-  },
-  "IruP2T": {
-    "string": "Search Voucher"
   },
   "IwEQvz": {
     "context": "success activate alert message",
@@ -5551,6 +5545,9 @@
     "context": "product type",
     "string": "Product Type"
   },
+  "bPshhv": {
+    "string": "Search vouchers..."
+  },
   "bRJD/v": {
     "context": "button",
     "string": "Create permission group"
@@ -6925,6 +6922,9 @@
     "context": "section header",
     "string": "Eligible Variants"
   },
+  "lfXze9": {
+    "string": "Delete vouchers"
+  },
   "li1BBk": {
     "context": "export items as csv file",
     "string": "Plain CSV file"
@@ -7394,9 +7394,9 @@
     "context": "status",
     "string": "Deactivated"
   },
-  "pNrF72": {
+  "pOUOnw": {
     "context": "tab name",
-    "string": "All Vouchers"
+    "string": "All vouchers"
   },
   "pPef6L": {
     "context": "order payment",
