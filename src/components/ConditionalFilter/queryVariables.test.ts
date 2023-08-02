@@ -4,37 +4,6 @@ import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
 import { createProductQueryVariables } from "./queryVariables";
 
-const createConditionValue = (
-  label: string,
-  slug: string,
-  value: string,
-  originalSlug?: string,
-) => ({
-  label,
-  slug,
-  value,
-  originalSlug,
-});
-const createConditionItem = (type: string, value: string, label: string) => ({
-  type,
-  value,
-  label,
-});
-
-const createConditionOptions = (
-  label: string,
-  slug: string,
-  value: string,
-  originalSlug: string,
-) => [
-  {
-    label,
-    slug,
-    value,
-    originalSlug,
-  },
-];
-
 describe("ConditionalFilter / queryVariables / createProductQueryVariables", () => {
   it("should return empty variables for empty filters", () => {
     // Arrange
@@ -56,8 +25,8 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
         new Condition(
           ConditionOptions.fromStaticElementName("price"),
           new ConditionSelected(
-            createConditionValue("price", "price", "123"),
-            createConditionItem("price", "123", "Price"),
+            { label: "price", slug: "price", value: "123" },
+            { type: "price", value: "123", label: "Price" },
             [],
             false,
           ),
@@ -71,19 +40,25 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
         new Condition(
           ConditionOptions.fromAttributeType("DROPDOWN"),
           new ConditionSelected(
-            createConditionValue(
-              "bottle-size",
-              "bottle-id",
-              "bottle-id",
-              "0-5l",
-            ),
-            createConditionItem("DROPDOWN", "bottle-id", "Bottle size"),
-            createConditionOptions(
-              "bottle-size",
-              "bottle-id",
-              "bottle-id",
-              "0-5l",
-            ),
+            {
+              label: "bottle-size",
+              slug: "bottle-id",
+              value: "bottle-id",
+              originalSlug: "0-5l",
+            },
+            {
+              type: "DROPDOWN",
+              value: "bottle-id",
+              label: "Bottle size",
+            },
+            [
+              {
+                label: "bottle-size",
+                slug: "bottle-id",
+                value: "bottle-id",
+                originalSlug: "0-5l",
+              },
+            ],
             false,
           ),
           false,

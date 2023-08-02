@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react-hooks";
 
 import { useFilterPresets } from "./useFilterPresets";
 
@@ -94,7 +94,9 @@ describe("useFilterPresets", () => {
     );
 
     // Act
-    result.current.onPresetChange(1);
+    act(() => {
+      result.current.onPresetChange(1);
+    });
 
     // Assert
     expect(mockNavigate).toHaveBeenCalledWith(
@@ -124,9 +126,13 @@ describe("useFilterPresets", () => {
       }),
     );
 
-    // Act(
-    result.current.setPresetIdToDelete(1);
-    result.current.onPresetDelete();
+    // Act
+    act(() => {
+      result.current.setPresetIdToDelete(1);
+    });
+    act(() => {
+      result.current.onPresetDelete();
+    });
 
     // Assert
     expect(mockDeleteStorage).toHaveBeenCalledWith(1);
@@ -156,9 +162,13 @@ describe("useFilterPresets", () => {
       }),
     );
 
-    // Act(
-    result.current.setPresetIdToDelete(1);
-    result.current.onPresetDelete();
+    // Act
+    act(() => {
+      result.current.setPresetIdToDelete(1);
+    });
+    act(() => {
+      result.current.onPresetDelete();
+    });
 
     // Assert
     expect(mockDeleteStorage).toHaveBeenCalledWith(1);
@@ -186,7 +196,9 @@ describe("useFilterPresets", () => {
     );
 
     // Act
-    result.current.onPresetSave({ name: "new-preset" });
+    act(() => {
+      result.current.onPresetSave({ name: "new-preset" });
+    });
 
     // Assert
     expect(mockSaveStorage).toHaveBeenCalledWith("new-preset", "query=John");
@@ -218,7 +230,9 @@ describe("useFilterPresets", () => {
     );
 
     // Act
-    result.current.onPresetUpdate("current-preset");
+    act(() => {
+      result.current.onPresetUpdate("current-preset");
+    });
 
     // Assert
     expect(mockUpdateStorage).toHaveBeenCalledWith(
