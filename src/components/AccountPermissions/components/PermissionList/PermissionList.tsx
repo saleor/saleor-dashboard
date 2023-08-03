@@ -28,48 +28,52 @@ export const PermissionList = ({
 }: PermissionListProps) => {
   const intl = useIntl();
 
-  const render = () => {
-    if (permissions === undefined) {
-      return <Skeleton />;
-    }
+  if (permissions === undefined) {
+    return (
+      <Box>
+        <Skeleton />
+      </Box>
+    );
+  }
 
-    return permissions.map(perm => (
-      <ListItem
-        key={perm.code}
-        disabled={disabled || perm.disabled}
-        role={undefined}
-        dense
-        button
-        onClick={() =>
-          onPermissionChange(
-            perm.code,
-            hasPermissionSelected(selectedPermissions, perm.code),
-          )
-        }
-      >
-        <ListItemIcon>
-          <Checkbox
-            color="secondary"
-            edge="start"
-            checked={hasPermissionSelected(selectedPermissions, perm.code)}
-            tabIndex={-1}
-            disableRipple
-            name={perm.code}
-            inputProps={{ "aria-labelledby": perm.code }}
-          />
-        </ListItemIcon>
-        <ListItemText
-          id={perm.code}
-          primary={perm.name.replace(/\./, "")}
-          secondary={
-            perm.lastSource
-              ? intl.formatMessage(messages.permissionListItemDescipription)
-              : perm.code
+  return (
+    <Box>
+      {permissions.map(perm => (
+        <ListItem
+          key={perm.code}
+          disabled={disabled || perm.disabled}
+          role={undefined}
+          dense
+          button
+          onClick={() =>
+            onPermissionChange(
+              perm.code,
+              hasPermissionSelected(selectedPermissions, perm.code),
+            )
           }
-        />
-      </ListItem>
-    ));
-  };
-
-  return <Box>{render()}</Box>;
+        >
+          <ListItemIcon>
+            <Checkbox
+              color="secondary"
+              edge="start"
+              checked={hasPermissionSelected(selectedPermissions, perm.code)}
+              tabIndex={-1}
+              disableRipple
+              name={perm.code}
+              inputProps={{ "aria-labelledby": perm.code }}
+            />
+          </ListItemIcon>
+          <ListItemText
+            id={perm.code}
+            primary={perm.name.replace(/\./, "")}
+            secondary={
+              perm.lastSource
+                ? intl.formatMessage(messages.permissionListItemDescipription)
+                : perm.code
+            }
+          />
+        </ListItem>
+      ))}
+    </Box>
+  );
 };
