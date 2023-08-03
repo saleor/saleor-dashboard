@@ -3511,6 +3511,9 @@
     "context": "dialog header",
     "string": "Cancel Orders"
   },
+  "NL6mvR": {
+    "string": "Visit App Store to replace with the App"
+  },
   "NLNonj": {
     "context": "send to channel select label",
     "string": "Send to channel"
@@ -8666,6 +8669,9 @@
   "ycrTBX": {
     "context": "table header channel col label",
     "string": "Channel"
+  },
+  "yfhLcv": {
+    "string": "We are working on replacing plugins with apps. Read more about"
   },
   "yhv3HX": {
     "context": "voucher requirements, header",
