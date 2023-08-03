@@ -23,7 +23,7 @@ import {
   SearchWarehousesQuery,
   StockSettingsInput,
 } from "@dashboard/graphql";
-import { MarkAsPaidStrategyEnum } from "@dashboard/graphql/types.generated";
+import { MarkAsPaidStrategyEnum, TransactionFlowStrategyEnum } from "@dashboard/graphql/types.generated";
 import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -128,6 +128,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     markAsPaidStrategy: orderSettings?.markAsPaidStrategy,
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
+    defaultTransactionFlowStrategy: orderSettings?.defaultTransactionFlowStrategy
   };
 
   const getFilteredShippingZonesChoices = (
@@ -207,6 +208,15 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           });
         };
 
+        const handleTransactionFlowStrategyChange = () => {
+          set({
+            defaultTransactionFlowStrategy:
+              data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.CHARGE
+                ? TransactionFlowStrategyEnum.AUTHORIZATION
+                : TransactionFlowStrategyEnum.CHARGE,
+          });
+        };
+
         const allErrors = [...errors, ...validationErrors];
 
         return (
@@ -234,6 +244,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 onCurrencyCodeChange={handleCurrencyCodeSelect}
                 onDefaultCountryChange={handleDefaultCountrySelect}
                 onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
+                onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
                 errors={allErrors}
               />
             </DetailPageLayout.Content>

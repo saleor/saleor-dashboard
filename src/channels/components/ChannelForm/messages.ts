@@ -57,4 +57,15 @@ export const messages = defineMessages({
       "Enables completing checkout with order before a successful payment.",
     description: "allow unpaid orders checbkox description",
   },
+  defaultTransactionFlowStrategyLabel: {
+    id: '/bhtiu',
+    defaultMessage: "Processed transaction should be only authorized",
+    description: "Processed transaction should be only authorized",
+  },
+  defaultTransactionFlowStrategyDescription: {
+    id: 'rMD49q',
+    defaultMessage:
+      "Changes transaction strategy flow. By default transactions are always charged. Checking this on, will make transactions to be only authorized.",
+    description: "Changes transaction strategy flow",
+  },
 });

@@ -256,6 +256,10 @@
   "/Zee1r": {
     "string": "Only added postal codes will be able to use this shipping rate"
   },
+  "/bhtiu": {
+    "context": "Processed transaction should be only authorized",
+    "string": "Processed transaction should be only authorized"
+  },
   "/cow4T": {
     "context": "WarehousesSection select field placeholder",
     "string": "Select Warehouse"
@@ -7650,6 +7654,10 @@
   "rKf4LU": {
     "context": "dialog title",
     "string": "Delete attributes"
+  },
+  "rMD49q": {
+    "context": "Changes transaction strategy flow",
+    "string": "Changes transaction strategy flow. By default transactions are always charged. Checking this on, will make transactions to be only authorized."
   },
   "rNzkIt": {
     "context": "dialog content",
