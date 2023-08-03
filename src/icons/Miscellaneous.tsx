@@ -1,7 +1,7 @@
 import { createSvgIcon, SvgIconProps } from "@material-ui/core";
 import React from "react";
 
-const Miscellaneous = createSvgIcon(
+const MiscellaneousIcon = createSvgIcon(
   <>
     <path
       fillRule="evenodd"
@@ -31,6 +31,6 @@ const Miscellaneous = createSvgIcon(
   "Miscellaneous",
 );
 
-export default (props: SvgIconProps) => (
-  <Miscellaneous {...props} viewBox="0 0 24 24" fill="none" />
-);
+export default function Miscellaneous(props: SvgIconProps) {
+  return <MiscellaneousIcon {...props} viewBox="0 0 24 24" fill="none" />;
+}

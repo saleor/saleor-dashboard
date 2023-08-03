@@ -26,13 +26,7 @@ export const InstallWithManifestFormButton: React.FC<
     const form = new FormData(e.currentTarget);
     const inputValue = form.get("manifest-url") as string;
 
-    try {
-      new URL(inputValue);
-
-      onSubmitted(inputValue);
-    } catch (e) {
-      console.error("Invalid URL from input. Should be validated by browser");
-    }
+    onSubmitted(inputValue);
   };
 
   if (inputOpened) {

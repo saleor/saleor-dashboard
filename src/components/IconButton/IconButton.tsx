@@ -18,6 +18,8 @@ const _IconButton: React.FC<any> = React.forwardRef(
   },
 );
 
+_IconButton.displayName = "IconButton";
+
 export const IconButton = _IconButton as <
   T extends React.ElementType = "button",
 >(
