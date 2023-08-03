@@ -9,7 +9,7 @@ export enum StaffFilterKeys {
 }
 
 export interface StaffListFilterOpts {
-  status: FilterOpts<StaffMemberStatus>;
+  status: FilterOpts<StaffMemberStatus | null>;
 }
 
 const messages = defineMessages({
@@ -39,7 +39,7 @@ export function createFilterStructure(
       ...createOptionsField(
         StaffFilterKeys.status,
         intl.formatMessage(messages.status),
-        [opts.status.value],
+        [opts.status.value ?? ""],
         false,
         [
           {

@@ -121,6 +121,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.STAFF_MEMBERS_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["name", "email", "status"],
   },
   [ListViews.PERMISSION_GROUP_LIST]: {
     rowNumber: PAGINATE_BY,

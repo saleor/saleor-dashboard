@@ -1,27 +1,25 @@
-// @ts-strict-ignore
-import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
-import FilterBar from "@dashboard/components/FilterBar";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration";
-import { RefreshLimitsQuery, StaffListQuery } from "@dashboard/graphql";
+import { RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import { StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import {
-  FilterPageProps,
+  FilterPagePropsWithPresets,
   ListProps,
-  RelayToFlat,
   SortPage,
-  TabPageProps,
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import React from "react";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import StaffList from "../StaffList/StaffList";
+import { StaffListDatagrid } from "../StaffListDatagrid";
 import {
   createFilterStructure,
   StaffFilterKeys,
@@ -30,30 +28,33 @@ import {
 
 export interface StaffListPageProps
   extends ListProps,
-    FilterPageProps<StaffFilterKeys, StaffListFilterOpts>,
-    SortPage<StaffListUrlSortField>,
-    TabPageProps {
-  limits: RefreshLimitsQuery["shop"]["limits"];
-  staffMembers: RelayToFlat<StaffListQuery["staffUsers"]>;
+    FilterPagePropsWithPresets<StaffFilterKeys, StaffListFilterOpts>,
+    SortPage<StaffListUrlSortField> {
+  limits: RefreshLimitsQuery["shop"]["limits"] | undefined;
+  staffMembers: StaffMembers;
   onAdd: () => void;
 }
 
 const StaffListPage: React.FC<StaffListPageProps> = ({
-  currentTab,
   filterOpts,
   initialSearch,
   limits,
+  currencySymbol,
+  filterPresets,
+  selectedFilterPreset,
   onAdd,
-  onAll,
   onFilterChange,
   onSearchChange,
-  onTabChange,
-  onTabDelete,
-  onTabSave,
-  tabs,
+  hasPresetsChanged,
+  onFilterPresetChange,
+  onFilterPresetDelete,
+  onFilterPresetPresetSave,
+  onFilterPresetUpdate,
+  onFilterPresetsAll,
   ...listProps
 }) => {
   const intl = useIntl();
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const structure = createFilterStructure(intl, filterOpts);
   const reachedLimit = isLimitReached(limits, "staffUsers");
@@ -63,35 +64,69 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.staff)}
+        isAlignToRight={false}
+        withoutBorder
       >
-        <Button
-          data-test-id="invite-staff-member"
-          disabled={reachedLimit}
-          variant="primary"
-          onClick={onAdd}
+        <Box
+          __flex={1}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          <FormattedMessage
-            id="4JcNaA"
-            defaultMessage="Invite staff member"
-            description="button"
-          />
-        </Button>
-        {hasLimits(limits, "staffUsers") && (
-          <LimitsInfo
-            text={intl.formatMessage(
-              {
-                id: "9xlPgt",
-                defaultMessage: "{count}/{max} members",
-                description: "used staff users counter",
-              },
-              {
-                count: limits.currentUsage.staffUsers,
-                max: limits.allowedUsage.staffUsers,
-              },
-            )}
-          />
-        )}
+          <Box display="flex">
+            <Box marginX={3} display="flex" alignItems="center">
+              <ChevronRightIcon />
+            </Box>
+
+            <FilterPresetsSelect
+              presetsChanged={hasPresetsChanged()}
+              onSelect={onFilterPresetChange}
+              onRemove={onFilterPresetDelete}
+              onUpdate={onFilterPresetUpdate}
+              savedPresets={filterPresets}
+              activePreset={selectedFilterPreset}
+              onSelectAll={onFilterPresetsAll}
+              onSave={onFilterPresetPresetSave}
+              isOpen={isFilterPresetOpen}
+              onOpenChange={setFilterPresetOpen}
+              selectAllLabel={intl.formatMessage({
+                id: "OTDo9I",
+                defaultMessage: "All staff members",
+                description: "tab name",
+              })}
+            />
+          </Box>
+          <Box>
+            <Button
+              data-test-id="invite-staff-member"
+              disabled={reachedLimit}
+              variant="primary"
+              onClick={onAdd}
+            >
+              <FormattedMessage
+                id="4JcNaA"
+                defaultMessage="Invite staff member"
+                description="button"
+              />
+            </Button>
+          </Box>
+        </Box>
       </TopNav>
+      {hasLimits(limits, "staffUsers") && (
+        <Box gridColumn="8" marginLeft={6} marginBottom={reachedLimit ? 0 : 3}>
+          {intl.formatMessage(
+            {
+              id: "9xlPgt",
+              defaultMessage: "{count}/{max} members",
+              description: "used staff users counter",
+            },
+            {
+              count: limits?.currentUsage?.staffUsers ?? 0,
+              max: limits?.allowedUsage?.staffUsers ?? 0,
+            },
+          )}
+        </Box>
+      )}
       {reachedLimit && (
         <LimitReachedAlert
           title={intl.formatMessage({
@@ -107,28 +142,19 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
         </LimitReachedAlert>
       )}
       <Card>
-        <FilterBar
-          allTabLabel={intl.formatMessage({
-            id: "YJ4TXc",
-            defaultMessage: "All Staff Members",
-            description: "tab name",
-          })}
-          currentTab={currentTab}
-          filterStructure={structure}
+        <ListFilters<StaffFilterKeys>
+          currencySymbol={currencySymbol}
           initialSearch={initialSearch}
-          searchPlaceholder={intl.formatMessage({
-            id: "aDbrOK",
-            defaultMessage: "Search Staff Member",
-          })}
-          tabs={tabs}
-          onAll={onAll}
           onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
-          onTabChange={onTabChange}
-          onTabDelete={onTabDelete}
-          onTabSave={onTabSave}
+          filterStructure={structure}
+          searchPlaceholder={intl.formatMessage({
+            id: "o68j+t",
+            defaultMessage: "Search staff members...",
+          })}
         />
-        <StaffList {...listProps} />
+
+        <StaffListDatagrid {...listProps} />
       </Card>
     </ListPageLayout>
   );

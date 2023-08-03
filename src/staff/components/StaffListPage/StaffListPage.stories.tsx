@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import {
   filterPageProps,
+  filterPresetsProps,
   limits,
   limitsReached,
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps,
 } from "@dashboard/fixtures";
 import { StaffMemberStatus } from "@dashboard/graphql";
 import { staffMembers } from "@dashboard/staff/fixtures";
@@ -20,8 +20,8 @@ const props: StaffListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
-  ...tabPageProps,
   ...filterPageProps,
+  ...filterPresetsProps,
   filterOpts: {
     status: {
       active: false,
@@ -35,6 +35,10 @@ const props: StaffListPageProps = {
     sort: StaffListUrlSortField.name,
   },
   staffMembers,
+  settings: {
+    rowNumber: 10,
+    columns: ["name", "email", "status"],
+  },
 };
 
 const meta: Meta<typeof StaffListPage> = {

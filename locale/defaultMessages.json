@@ -3673,6 +3673,10 @@
     "context": "header",
     "string": "{webhookName} Details"
   },
+  "OTDo9I": {
+    "context": "tab name",
+    "string": "All staff members"
+  },
   "OVOU1z": {
     "context": "section header",
     "string": "Metadata"
@@ -5133,10 +5137,6 @@
     "context": "no address is set in draft order",
     "string": "Not set"
   },
-  "YJ4TXc": {
-    "context": "tab name",
-    "string": "All Staff Members"
-  },
   "YKyNm9": {
     "context": "label",
     "string": "Gift Card"
@@ -5385,9 +5385,6 @@
   "aCX8rl": {
     "context": "subheader",
     "string": "Here is some information we gathered about your store"
-  },
-  "aDbrOK": {
-    "string": "Search Staff Member"
   },
   "aEc9Ar": {
     "context": "gift card history message",
@@ -7257,6 +7254,9 @@
   "o6260f": {
     "context": "attributes, section header",
     "string": "Variant Selection Attributes"
+  },
+  "o68j+t": {
+    "string": "Search staff members..."
   },
   "o8S0Ac": {
     "context": "usage limit uses left caption",
