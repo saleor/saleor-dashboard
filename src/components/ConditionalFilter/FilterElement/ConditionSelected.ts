@@ -3,7 +3,7 @@ import { ConditionItem } from "./ConditionOptions";
 import { ConditionValue, isItemOptionArray, isTuple } from "./ConditionValue";
 
 export class ConditionSelected {
-  private constructor(
+  public constructor(
     public value: ConditionValue,
     public conditionValue: ConditionItem | null,
     public options: ConditionValue[],

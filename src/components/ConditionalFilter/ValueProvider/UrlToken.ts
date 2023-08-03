@@ -97,7 +97,7 @@ export class UrlEntry {
 }
 
 export class UrlToken {
-  private constructor(
+  constructor(
     public name: string,
     public value: string | string[],
     public type: TokenTypeValue,

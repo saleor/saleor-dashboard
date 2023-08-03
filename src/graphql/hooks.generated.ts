@@ -255,6 +255,7 @@ export const ChannelDetailsFragmentDoc = gql`
   orderSettings {
     markAsPaidStrategy
     deleteExpiredOrdersAfter
+    allowUnpaidOrders
   }
 }
     ${ChannelFragmentDoc}
@@ -5687,6 +5688,7 @@ export const _SearchAttributeOperandsDocument = gql`
               slug: id
               id
               name
+              originalSlug: slug
             }
           }
         }
@@ -5734,6 +5736,7 @@ export const _GetAttributeChoicesDocument = gql`
           slug: id
           id
           name
+          originalSlug: slug
         }
       }
     }

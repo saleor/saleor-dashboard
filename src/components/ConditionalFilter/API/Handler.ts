@@ -28,13 +28,20 @@ export interface Handler {
 }
 
 export const createOptionsFromAPI = (
-  // TODO: try to use type from graphql
-  data: Array<{ node: { name: string | null; id: string; slug: string } }>,
+  data: Array<{
+    node: {
+      name: string | null;
+      id: string;
+      slug: string;
+      originalSlug?: string | null;
+    };
+  }>,
 ): ItemOption[] =>
   data.map(({ node }) => ({
     label: node.name ?? "",
     value: node.id,
     slug: node.slug,
+    originalSlug: node.originalSlug,
   }));
 
 export class AttributeChoicesHandler implements Handler {
@@ -170,6 +177,6 @@ export class BooleanValuesHandler implements Handler {
   constructor(public options: LeftOperand[]) {}
 
   fetch = async (): Promise<LeftOperand[]> => {
-    return this.options
+    return this.options;
   };
 }

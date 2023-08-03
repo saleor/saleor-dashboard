@@ -114,6 +114,7 @@ export const initialDynamicOperands = gql`
                 slug: id
                 id
                 name
+                originalSlug: slug
               }
             }
           }
@@ -132,6 +133,7 @@ export const dynamicOperandsQueries = gql`
             slug: id
             id
             name
+            originalSlug: slug
           }
         }
       }

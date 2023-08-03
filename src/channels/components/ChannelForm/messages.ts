@@ -36,9 +36,25 @@ export const messages = defineMessages({
     description: "order expiration card title",
   },
   orderExpirationDescription: {
-    id: 'U+79k0',
+    id: "U+79k0",
     defaultMessage:
       "The time in days after expired orders will be deleted. Allowed range between 1 and 120.",
     description: "order expiration card description",
+  },
+  markAsPaid: {
+    id: "L2tvTm",
+    defaultMessage: "Use Transaction flow when marking order as paid",
+    description: "mark as paid strategy checkbox label",
+  },
+  allowUnpaidOrdersLabel: {
+    id: "fuFCpI",
+    defaultMessage: "Allow unpaid orders",
+    description: "allow unpaid orders checkbox label",
+  },
+  allowUnpaidOrdersDescription: {
+    id: "8iUzOU",
+    defaultMessage:
+      "Enables completing checkout with order before a successful payment.",
+    description: "allow unpaid orders checbkox description",
   },
 });

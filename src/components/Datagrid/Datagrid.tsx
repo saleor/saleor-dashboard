@@ -72,7 +72,7 @@ export interface MenuItemsActions {
 }
 
 export interface DatagridProps {
-  fillHandle?: boolean,
+  fillHandle?: boolean;
   addButtonLabel?: string;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
@@ -574,6 +574,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                           .fill(0)
                           .map((_, index) => (
                             <RowActions
+                              key={`row-actions-${index}`}
                               menuItems={menuItems(index)}
                               disabled={index >= rowsTotal - added.length}
                             />

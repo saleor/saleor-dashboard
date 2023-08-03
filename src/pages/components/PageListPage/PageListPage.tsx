@@ -1,19 +1,34 @@
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
-import { PageFragment } from "@dashboard/graphql";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { Pages } from "@dashboard/pages/types";
 import {
   PageListUrlDialog,
   PageListUrlQueryParams,
   PageListUrlSortField,
+  pageUrl,
 } from "@dashboard/pages/urls";
-import { ListActions, PageListProps, SortPage } from "@dashboard/types";
+import {
+  FilterPagePropsWithPresets,
+  PageListProps,
+  SortPage,
+} from "@dashboard/types";
 import { Card } from "@material-ui/core";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import PageList from "../PageList";
-import PageListSearchAndFilters from "./PageListSearchAndFilters";
+import {
+  createFilterStructure,
+  PageListFilterKeys,
+  PageListFilterOpts,
+} from "../../views/PageList/filters";
+import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
+import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 
 export interface PageListActionDialogOpts {
   open: (action: PageListUrlDialog, newParams?: PageListUrlQueryParams) => void;
@@ -21,41 +36,125 @@ export interface PageListActionDialogOpts {
 }
 export interface PageListPageProps
   extends PageListProps,
-    ListActions,
+    FilterPagePropsWithPresets<PageListFilterKeys, PageListFilterOpts>,
     SortPage<PageListUrlSortField> {
-  pages: PageFragment[];
-  params: PageListUrlQueryParams;
-  actionDialogOpts: PageListActionDialogOpts;
-  onAdd: () => void;
+  pages: Pages | undefined;
+  selectedPageIds: string[];
+  loading: boolean;
+  onSelectPageIds: (rows: number[], clearSelection: () => void) => void;
+  onPagesDelete: () => void;
+  onPagesPublish: () => void;
+  onPagesUnpublish: () => void;
+  onPageCreate: () => void;
 }
 
 const PageListPage: React.FC<PageListPageProps> = ({
-  params,
-  actionDialogOpts,
-  onAdd,
+  selectedFilterPreset,
+  filterOpts,
+  initialSearch,
+  onFilterPresetsAll,
+  onFilterChange,
+  onFilterPresetDelete,
+  onFilterPresetUpdate,
+  onSearchChange,
+  onFilterPresetChange,
+  onFilterPresetPresetSave,
+  filterPresets,
+  selectedPageIds,
+  hasPresetsChanged,
+  onPagesDelete,
+  onPagesPublish,
+  onPagesUnpublish,
+  onPageCreate,
   ...listProps
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
+  const structure = createFilterStructure(intl, filterOpts);
+  const [isFilterPresetOpen, setFilterPresetOpen] = React.useState(false);
 
   return (
-    <>
-      <TopNav title={intl.formatMessage(sectionNames.content)}>
-        <Button onClick={onAdd} variant="primary" data-test-id="create-page">
-          <FormattedMessage
-            id="DOVEZF"
-            defaultMessage="Create content"
-            description="button"
-          />
-        </Button>
+    <ListPageLayout>
+      <TopNav
+        title={intl.formatMessage(sectionNames.content)}
+        isAlignToRight={false}
+        withoutBorder
+      >
+        <Box
+          __flex={1}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Box display="flex">
+            <Box marginX={5} display="flex" alignItems="center">
+              <ChevronRightIcon />
+            </Box>
+            <FilterPresetsSelect
+              presetsChanged={hasPresetsChanged()}
+              onSelect={onFilterPresetChange}
+              onRemove={onFilterPresetDelete}
+              onUpdate={onFilterPresetUpdate}
+              savedPresets={filterPresets}
+              activePreset={selectedFilterPreset}
+              onSelectAll={onFilterPresetsAll}
+              onSave={onFilterPresetPresetSave}
+              isOpen={isFilterPresetOpen}
+              onOpenChange={setFilterPresetOpen}
+              selectAllLabel={intl.formatMessage({
+                id: "hJrzlT",
+                defaultMessage: "All content",
+                description: "tab name",
+              })}
+            />
+          </Box>
+          <Box display="flex" alignItems="center" gap={2}>
+            <Button
+              onClick={onPageCreate}
+              variant="primary"
+              data-test-id="create-page"
+            >
+              <FormattedMessage
+                id="DOVEZF"
+                defaultMessage="Create content"
+                description="button"
+              />
+            </Button>
+          </Box>
+        </Box>
       </TopNav>
       <Card>
-        <PageListSearchAndFilters
-          params={params}
-          actionDialogOpts={actionDialogOpts}
+        <ListFilters
+          filterStructure={structure}
+          initialSearch={initialSearch}
+          searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
+          onFilterChange={onFilterChange}
+          onSearchChange={onSearchChange}
+          actions={
+            selectedPageIds.length > 0 && (
+              <Box display="flex" gap={4}>
+                <Button variant="secondary" onClick={onPagesUnpublish}>
+                  <FormattedMessage {...messages.unpublish} />
+                </Button>
+                <Button variant="secondary" onClick={onPagesPublish}>
+                  <FormattedMessage {...messages.publish} />
+                </Button>
+                <BulkDeleteButton onClick={onPagesDelete}>
+                  <FormattedMessage {...messages.delete} />
+                </BulkDeleteButton>
+              </Box>
+            )
+          }
         />
-        <PageList {...listProps} />
+        <PageListDatagrid
+          {...listProps}
+          hasRowHover={!isFilterPresetOpen}
+          rowAnchor={pageUrl}
+          onRowClick={id => navigate(pageUrl(id))}
+        />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 PageListPage.displayName = "PageListPage";

@@ -8,7 +8,6 @@ import { CustomerFilterInput } from "@dashboard/graphql";
 import {
   createFilterTabUtils,
   createFilterUtils,
-  GetFilterTabsOutput,
   getGteLteVariables,
   getMinMaxQueryParam,
 } from "../../../utils/filters";
@@ -95,14 +94,3 @@ export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<CustomerListUrlQueryParams, CustomerListUrlFilters>(
     CustomerListUrlFiltersEnum,
   );
-
-export const getPresetNameToDelete = (
-  presets: GetFilterTabsOutput<string>,
-  presetIdToDelete: number | null,
-): string => {
-  const presetIndex = presetIdToDelete ? presetIdToDelete - 1 : 0;
-  const preset = presets?.[presetIndex];
-  const tabName = preset?.name ?? "...";
-
-  return tabName;
-};

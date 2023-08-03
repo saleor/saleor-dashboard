@@ -65,6 +65,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
           />
           {order?.discounts?.map(discount => (
             <SummaryLine
+              key={discount.id}
               text={<FormattedMessage {...orderSummaryMessages.discount} />}
               subText={
                 discount.type === OrderDiscountType.MANUAL
