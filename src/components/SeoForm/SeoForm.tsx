@@ -20,7 +20,7 @@ enum SeoField {
   description = "seoDescription",
 }
 
-const SLUG_REGEX = /^[a-zA-Z0-9\-\_]+$/;
+const SLUG_REGEX = /^[a-zA-Z0-9\-_]+$/;
 const maxSlugLength = 255;
 const maxTitleLength = 70;
 const maxDescriptionLength = 300;

@@ -1,7 +1,7 @@
 import { createSvgIcon, SvgIconProps } from "@material-ui/core";
 import React from "react";
 
-const Channels = createSvgIcon(
+const ChannelsIcon = createSvgIcon(
   <path
     fillRule="evenodd"
     clipRule="evenodd"
@@ -11,6 +11,6 @@ const Channels = createSvgIcon(
   "Channels",
 );
 
-export default (props: SvgIconProps) => (
-  <Channels {...props} viewBox="0 0 32 32" />
-);
+export default function Channels(props: SvgIconProps) {
+  return <ChannelsIcon {...props} viewBox="0 0 32 32" />;
+}

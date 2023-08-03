@@ -83,3 +83,5 @@ export const Metadata: React.FC<MetadataProps> = memo(({ data, onChange }) => {
     </Box>
   );
 }, propsCompare);
+
+Metadata.displayName = "Metadata";
