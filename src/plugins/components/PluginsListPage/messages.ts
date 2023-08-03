@@ -19,4 +19,8 @@ export const pluginsListPageMessages = defineMessages({
       "We are working on replacing plugins with apps. Read more about",
     id: "yfhLcv",
   },
+  warningHeadline: {
+    defaultMessage: "Warning",
+    id: "3SVI5p",
+  },
 });

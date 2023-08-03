@@ -1,11 +1,12 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import ExternalLink from "@dashboard/components/ExternalLink";
+import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import { getStatusColor } from "@dashboard/misc";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import {
   FilterPageProps,
@@ -13,8 +14,8 @@ import {
   SortPage,
   TabPageProps,
 } from "@dashboard/types";
-import { Card, Typography } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
+import { Card } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -62,18 +63,25 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
       />
       <Card>
         <div>
-          <Alert severity="warning" title="Warning">
-            <Typography variant="body1">
+          <Box
+            paddingX={7}
+            paddingY={5}
+            marginBottom={5}
+            __backgroundColor={getStatusColor("warning")}
+          >
+            <Text variant="heading" as="h2">
+              {intl.formatMessage(pluginsListPageMessages.warningHeadline)}
+            </Text>
+            <Text variant="body">
               {intl.formatMessage(pluginsListPageMessages.appStoreWarning)}{" "}
-              <ExternalLink
-                target="blank"
-                typographyProps={{ display: "inline" }}
+              <ExternalLinkNext
+                target="_blank"
                 href="https://docs.saleor.io/docs/3.x/developer/app-store/overview"
               >
                 Saleor App Store.
-              </ExternalLink>
-            </Typography>
-          </Alert>
+              </ExternalLinkNext>
+            </Text>
+          </Box>
         </div>
         <FilterBar
           errorMessages={pluginsFilterErrorMessages}
