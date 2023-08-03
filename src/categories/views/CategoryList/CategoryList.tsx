@@ -64,7 +64,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     onPresetDelete,
     onPresetSave,
     onPresetUpdate,
-    presetIdToDelete,
+    getPresetNameToDelete,
     presets,
     selectedPreset,
     setPresetIdToDelete,
@@ -243,7 +243,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

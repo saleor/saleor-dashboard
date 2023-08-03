@@ -9,10 +9,7 @@ import {
   usePageListQuery,
 } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import {
-  getPresetNameToDelete,
-  useFilterPresets,
-} from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -85,7 +82,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     onPresetSave,
     onPresetUpdate,
     setPresetIdToDelete,
-    presetIdToDelete,
+    getPresetNameToDelete,
   } = useFilterPresets({
     params,
     reset: clearRowSelection,
@@ -353,7 +350,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={getPresetNameToDelete(presets, presetIdToDelete)}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

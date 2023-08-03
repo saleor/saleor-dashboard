@@ -59,7 +59,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     onPresetDelete,
     onPresetSave,
     onPresetUpdate,
-    presetIdToDelete,
+    getPresetNameToDelete,
     presets,
     selectedPreset,
     setPresetIdToDelete,
@@ -176,7 +176,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
+        tabName={getPresetNameToDelete()}
       />
       {!noChannel && (
         <ChannelPickerDialog
