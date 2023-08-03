@@ -1,3 +1,4 @@
+import { InitialStateResponse } from "../../API/InitialStateResponse";
 import { TokenArray } from ".";
 
 describe("ConditionalFilter / ValueProvider / TokenArray", () => {
@@ -46,4 +47,52 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
       productType: ["beer"],
     });
   });
+
+  it("should create filter container from a given response", () => {
+    // Arrange
+    const params = new URLSearchParams({
+      "0[s0.price]": "123",
+      "1": "AND",
+      "2[s0.channel]": "channel-pln",
+    });
+    const response = new InitialStateResponse([{
+      label: "Cat1",
+      value: "cat-1-id",
+      slug: "cat1"
+    }], {}, [{
+      label: "Channel PLN",
+      value: "channel-pln",
+      slug: "channel-pln"
+    }])
+
+    // Act
+    const tokenArray = new TokenArray(params.toString());
+    const container = tokenArray.asFilterValuesFromResponse(response)
+
+    // Assert
+    expect(container).toMatchSnapshot()
+  })
+
+  it("creates filter container with removing constrain if there is no depepdent rows", () => {
+    // Arrange
+    const params = new URLSearchParams({
+      "0[s0.channel]": "channel-pln",
+    });
+    const response = new InitialStateResponse([{
+      label: "Cat1",
+      value: "cat-1-id",
+      slug: "cat1"
+    }], {}, [{
+      label: "Channel PLN",
+      value: "channel-pln",
+      slug: "channel-pln"
+    }])
+
+    // Act
+    const tokenArray = new TokenArray(params.toString());
+    const container = tokenArray.asFilterValuesFromResponse(response)
+
+    // Assert
+    expect(container).toMatchSnapshot()
+  })
 });
