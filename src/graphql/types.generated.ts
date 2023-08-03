@@ -10675,6 +10675,7 @@ export type ProductListQueryVariables = Exact<{
   last?: InputMaybe<Scalars['Int']>;
   before?: InputMaybe<Scalars['String']>;
   filter?: InputMaybe<ProductFilterInput>;
+  search?: InputMaybe<Scalars['String']>;
   where?: InputMaybe<ProductWhereInput>;
   channel?: InputMaybe<Scalars['String']>;
   sort?: InputMaybe<ProductOrder>;
