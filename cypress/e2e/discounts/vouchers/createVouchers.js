@@ -10,11 +10,9 @@ import {
   addPayment,
   createCheckoutWithVoucher,
 } from "../../../support/api/utils/ordersUtils";
-import * as productsUtils
-  from "../../../support/api/utils/products/productsUtils";
-import {
-  updateTaxConfigurationForChannel,
-} from "../../../support/api/utils/taxesUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
+import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
 import {
   createVoucher,
   discountOptions,
@@ -166,7 +164,7 @@ describe("As an admin I want to create voucher", () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
 
       cy.clearSessionData().loginUserViaRequest().visit(urlList.vouchers);
-      cy.expectSkeletonIsVisible();
+      ensureCanvasStatic();
       createChannel({ name }).then(channel => {
         createdChannel = channel;
 
