@@ -39,7 +39,7 @@ export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
         height="100%"
         __flex={isAlignToRight ? "initial" : 1}
       >
-        {isPickerActive && (
+        {isPickerActive && channels.length > 0 && (
           <AppChannelSelect
             channels={channels}
             selectedChannelId={channel?.id}
