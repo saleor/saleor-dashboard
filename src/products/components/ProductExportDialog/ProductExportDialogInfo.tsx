@@ -492,6 +492,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
               <div className={classes.quickPeekContainer}>
                 {selectedInventoryFields.slice(0, maxChips).map(field => (
                   <Chip
+                    key={field}
                     className={classes.chip}
                     label={getFieldLabel(field)}
                     onClose={() =>
@@ -508,6 +509,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                   .slice(0, maxChips - selectedInventoryFields.length)
                   .map(warehouseId => (
                     <Chip
+                      key={warehouseId}
                       className={classes.chip}
                       label={
                         warehouses.find(

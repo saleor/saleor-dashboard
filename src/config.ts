@@ -42,6 +42,7 @@ export type ProductListColumns =
 export interface AppListViewSettings {
   [ListViews.APPS_LIST]: ListSettings;
   [ListViews.ATTRIBUTE_VALUE_LIST]: ListSettings;
+  [ListViews.ATTRIBUTE_LIST]: ListSettings;
   [ListViews.CATEGORY_LIST]: ListSettings;
   [ListViews.COLLECTION_LIST]: ListSettings;
   [ListViews.CUSTOMER_LIST]: ListSettings;
@@ -70,6 +71,10 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.ATTRIBUTE_VALUE_LIST]: {
     rowNumber: 10,
+  },
+  [ListViews.ATTRIBUTE_LIST]: {
+    rowNumber: 10,
+    columns: ["slug", "name", "visible", "searchable", "use-in-faceted-search"],
   },
   [ListViews.CATEGORY_LIST]: {
     rowNumber: PAGINATE_BY,
@@ -121,6 +126,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.STAFF_MEMBERS_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["name", "email", "status"],
   },
   [ListViews.PERMISSION_GROUP_LIST]: {
     rowNumber: PAGINATE_BY,

@@ -557,9 +557,6 @@
   "1X6HtI": {
     "string": "All Categories"
   },
-  "1div9r": {
-    "string": "Search Attribute"
-  },
   "1gzck6": {
     "string": "{firstName} {lastName}"
   },
@@ -1539,6 +1536,9 @@
   "9RvXNg": {
     "context": "section header",
     "string": "Media Information"
+  },
+  "9ScmSs": {
+    "string": "Search attributes..."
   },
   "9Sz0By": {
     "context": "channel currency",
@@ -2792,6 +2792,10 @@
   "HvJPcU": {
     "string": "Category deleted"
   },
+  "I+1KzL": {
+    "context": "tab name",
+    "string": "All attributes"
+  },
   "I+UwqI": {
     "context": "is filter range or value",
     "string": "equal to"
@@ -3678,6 +3682,10 @@
   "OPtrMg": {
     "context": "header",
     "string": "{webhookName} Details"
+  },
+  "OTDo9I": {
+    "context": "tab name",
+    "string": "All staff members"
   },
   "OVOU1z": {
     "context": "section header",
@@ -5139,10 +5147,6 @@
     "context": "no address is set in draft order",
     "string": "Not set"
   },
-  "YJ4TXc": {
-    "context": "tab name",
-    "string": "All Staff Members"
-  },
   "YKyNm9": {
     "context": "label",
     "string": "Gift Card"
@@ -5391,9 +5395,6 @@
   "aCX8rl": {
     "context": "subheader",
     "string": "Here is some information we gathered about your store"
-  },
-  "aDbrOK": {
-    "string": "Search Staff Member"
   },
   "aEc9Ar": {
     "context": "gift card history message",
@@ -5851,10 +5852,6 @@
     "context": "vat included in order price",
     "string": "VAT included"
   },
-  "dKPMyh": {
-    "context": "tab name",
-    "string": "All Attributes"
-  },
   "dM86a2": {
     "string": "No categories found"
   },
@@ -6158,6 +6155,9 @@
   },
   "g/BrOt": {
     "string": "Url has invalid format"
+  },
+  "g0GAdN": {
+    "string": "Delete attributes"
   },
   "g3qjSf": {
     "context": "button",
@@ -6961,10 +6961,6 @@
     "context": "order refund amount, input label",
     "string": "Amount"
   },
-  "lw9WIk": {
-    "context": "deleted multiple attributes",
-    "string": "Attributes successfully delete"
-  },
   "lwjzVj": {
     "string": "Edit order"
   },
@@ -7259,6 +7255,9 @@
   "o6260f": {
     "context": "attributes, section header",
     "string": "Variant Selection Attributes"
+  },
+  "o68j+t": {
+    "string": "Search staff members..."
   },
   "o8S0Ac": {
     "context": "usage limit uses left caption",
@@ -8714,6 +8713,10 @@
   "z2yYL3": {
     "context": "hint",
     "string": "Usually ends with /api/manifest"
+  },
+  "z3GGbZ": {
+    "context": "deleted multiple attributes",
+    "string": "Attributes successfully deleted"
   },
   "z8jo8h": {
     "context": "button",

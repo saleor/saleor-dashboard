@@ -45,10 +45,10 @@ export const CardTitle: React.FC<CardTitleProps> = ({
     chargePendingAmount,
     canceledAmount,
     chargedAmount,
-    authorizedAmount
+    authorizedAmount,
   } = transaction;
 
-  const title = capitalize(transaction.name || "Transaction")
+  const title = capitalize(transaction.name || "Transaction");
   return (
     <DefaultCardTitle
       className={className}
@@ -127,7 +127,7 @@ export const CardTitle: React.FC<CardTitleProps> = ({
               transaction.actions
                 .filter(action => action !== TransactionActionEnum.REFUND)
                 .map(action => (
-                  <div>
+                  <div key={`translation-action-${action}`}>
                     <Button
                       variant="tertiary"
                       onClick={() =>

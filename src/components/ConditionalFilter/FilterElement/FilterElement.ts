@@ -12,7 +12,7 @@ import { ConditionSelected } from "./ConditionSelected";
 import { ConditionValue, ItemOption } from "./ConditionValue";
 import { Constraint } from "./Constraint";
 
-class ExpressionValue {
+export class ExpressionValue {
   constructor(
     public value: string,
     public label: string,
@@ -68,7 +68,7 @@ class ExpressionValue {
 }
 
 export class FilterElement {
-  private constructor(
+  public constructor(
     public value: ExpressionValue,
     public condition: Condition,
     public loading: boolean,
@@ -165,7 +165,7 @@ export class FilterElement {
   }
 
   public equals(element: FilterElement) {
-    return this.value.value === element.value.value
+    return this.value.value === element.value.value;
   }
 
   public static isCompatible(element: unknown): element is FilterElement {
@@ -175,10 +175,6 @@ export class FilterElement {
       element !== null &&
       "value" in element
     );
-  }
-
-  public static fromValueEntry(valueEntry: any) {
-    return new FilterElement(valueEntry.value, valueEntry.condition, false);
   }
 
   public static createEmpty() {
