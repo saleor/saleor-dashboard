@@ -98,8 +98,7 @@ export function getFilterQueryParam(
   }
 }
 
-export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
-  createFilterTabUtils<AttributeListUrlFilters>(ATTRIBUTE_FILTERS_KEY);
+export const storageUtils = createFilterTabUtils<string>(ATTRIBUTE_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<AttributeListUrlQueryParams, AttributeListUrlFilters>(

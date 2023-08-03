@@ -34,6 +34,7 @@ export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
       <Box
         display="flex"
         flexWrap="nowrap"
+        height="100%"
         __flex={isAlignToRight ? "initial" : 1}
       >
         {isPickerActive && (

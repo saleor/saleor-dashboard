@@ -554,9 +554,6 @@
   "1X6HtI": {
     "string": "All Categories"
   },
-  "1div9r": {
-    "string": "Search Attribute"
-  },
   "1gzck6": {
     "string": "{firstName} {lastName}"
   },
@@ -1533,6 +1530,9 @@
   "9RvXNg": {
     "context": "section header",
     "string": "Media Information"
+  },
+  "9ScmSs": {
+    "string": "Search attributes..."
   },
   "9Sz0By": {
     "context": "channel currency",
@@ -2785,6 +2785,10 @@
   },
   "HvJPcU": {
     "string": "Category deleted"
+  },
+  "I+1KzL": {
+    "context": "tab name",
+    "string": "All attributes"
   },
   "I+UwqI": {
     "context": "is filter range or value",
@@ -5842,10 +5846,6 @@
     "context": "vat included in order price",
     "string": "VAT included"
   },
-  "dKPMyh": {
-    "context": "tab name",
-    "string": "All Attributes"
-  },
   "dM86a2": {
     "string": "No categories found"
   },
@@ -6149,6 +6149,9 @@
   },
   "g/BrOt": {
     "string": "Url has invalid format"
+  },
+  "g0GAdN": {
+    "string": "Delete attributes"
   },
   "g3qjSf": {
     "context": "button",
@@ -6951,10 +6954,6 @@
   "lrq8O6": {
     "context": "order refund amount, input label",
     "string": "Amount"
-  },
-  "lw9WIk": {
-    "context": "deleted multiple attributes",
-    "string": "Attributes successfully delete"
   },
   "lwjzVj": {
     "string": "Edit order"
@@ -8706,6 +8705,10 @@
   "z2yYL3": {
     "context": "hint",
     "string": "Usually ends with /api/manifest"
+  },
+  "z3GGbZ": {
+    "context": "deleted multiple attributes",
+    "string": "Attributes successfully deleted"
   },
   "z8jo8h": {
     "context": "button",
