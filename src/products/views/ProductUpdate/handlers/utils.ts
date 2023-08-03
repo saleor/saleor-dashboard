@@ -85,12 +85,14 @@ export function getProductChannelsUpdateVariables(
         "isAvailableForPurchase",
         "isPublished",
         "visibleInListings",
-        "publicationDate",
-        "publishedAt",
       ] as Array<keyof ProductChannelListingAddInput>;
 
       if (!listing.isAvailableForPurchase) {
         fielsToPick.push("availableForPurchaseAt", "availableForPurchaseDate");
+      }
+
+      if (!listing.isPublished) {
+        fielsToPick.push("publicationDate", "publishedAt");
       }
 
       return pick(
