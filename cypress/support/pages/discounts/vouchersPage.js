@@ -1,10 +1,8 @@
 import { VOUCHERS_SELECTORS } from "../../../elements/discounts/vouchers";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import {
-  urlList,
-  voucherDetailsUrl,
-} from "../../../fixtures/urlList";
+import { urlList, voucherDetailsUrl } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
 import { createCheckoutWithVoucher } from "../../api/utils/ordersUtils";
 import { selectChannelInDetailsPages } from "../channelsPage";
 
@@ -103,7 +101,7 @@ export function loginAndCreateCheckoutForVoucherWithDiscount({
   cy.clearSessionData()
     .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
     .visit(urlList.vouchers);
-  cy.expectSkeletonIsVisible();
+  ensureCanvasStatic();
   createVoucher({
     voucherCode,
     voucherValue,
