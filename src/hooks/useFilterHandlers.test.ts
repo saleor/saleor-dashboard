@@ -249,7 +249,7 @@ describe("useFilterHandlers", () => {
             query: "query",
           },
           defaultSortField: "",
-          keepActiveTab: true,
+          keepActiveTab: false,
         }),
       );
 
@@ -287,7 +287,7 @@ describe("useFilterHandlers", () => {
           },
           hasSortWithRank: true,
           defaultSortField: "",
-          keepActiveTab: true,
+          keepActiveTab: false,
         }),
       );
 
