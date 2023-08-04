@@ -103,7 +103,10 @@ export const AppWebhooksDisplay = ({
     return (
       <Wrapper {...boxProps}>
         <Accordion>
-          {webhooksData.app.webhooks.map(wh => {
+          {webhooksData.app.webhooks.map((wh, index) => {
+            const isLastWebhook =
+              index === (webhooksData?.app?.webhooks ?? []).length - 1;
+
             const events = [...wh.asyncEvents, ...wh.syncEvents]
               .flatMap(e => e.name)
               .join(", ");
@@ -114,78 +117,75 @@ export const AppWebhooksDisplay = ({
               <Box
                 key={wh.id}
                 padding={4}
-                borderBottomWidth={1}
+                borderBottomWidth={isLastWebhook ? 0 : 1}
                 borderColor="neutralHighlight"
                 borderBottomStyle="solid"
               >
-                <Box
-                  display={"grid"}
-                  __gridTemplateColumns="1fr 1fr"
-                  alignItems="center"
-                >
-                  <Box>
-                    <Box
-                      display="flex"
-                      gap={2}
-                      alignItems="center"
-                      marginBottom={2}
-                    >
-                      <Text variant="bodyStrong">{wh.name}</Text>
-                      {wh.isActive === false && <DisabledWebhookChip />}
-                    </Box>
-                    <Text variant="caption">Event: {events}</Text>
+                <Box>
+                  <Box
+                    display="flex"
+                    gap={2}
+                    alignItems="center"
+                    marginBottom={2}
+                  >
+                    <Text variant="bodyStrong">{wh.name}</Text>
+                    {wh.isActive === false && <DisabledWebhookChip />}
                   </Box>
+                  <Text variant="caption">Event: {events}</Text>
                 </Box>
                 {eventDeliveries.length > 0 && (
-                  <Box marginLeft={0} marginTop={6} paddingLeft={6}>
-                    <Text
-                      variant="heading"
-                      size="small"
-                      as="h2"
-                      marginBottom={6}
+                  <Accordion.Item value={wh.id} marginTop={6}>
+                    <Accordion.Trigger
+                      __width="fit-content"
+                      alignItems="center"
                     >
-                      Pending & failed deliveries (last 10)
-                    </Text>
-                    {eventDeliveries.map(ed => {
-                      const { createdAt } = ed.node;
-                      const attempts = ed.node.attempts?.edges ?? [];
+                      <Accordion.TriggerButton />
+                      <Text variant="heading" size="small" as="h2">
+                        Pending & failed deliveries (last 10)
+                      </Text>
+                    </Accordion.Trigger>
+                    <Accordion.Content marginTop={6}>
+                      {eventDeliveries.map(ed => {
+                        const { createdAt } = ed.node;
+                        const attempts = ed.node.attempts?.edges ?? [];
 
-                      const attemptsCount = attempts.length;
-                      const lastAttemptDate =
-                        attempts[attemptsCount - 1]?.node.createdAt;
+                        const attemptsCount = attempts.length;
+                        const lastAttemptDate =
+                          attempts[attemptsCount - 1]?.node.createdAt;
 
-                      return (
-                        <Box key={createdAt} marginBottom={4}>
-                          <Box
-                            paddingLeft={0}
-                            display="grid"
-                            __gridTemplateColumns={"1fr 1fr"}
-                          >
-                            <Text as="p" variant="bodyStrong">
-                              <DateTime plain date={createdAt} />
-                            </Text>
-                            <Box marginLeft="auto">
-                              <StatusChip status={ed.node.status} />
+                        return (
+                          <Box key={createdAt} marginBottom={4}>
+                            <Box
+                              paddingLeft={0}
+                              display="grid"
+                              __gridTemplateColumns={"1fr 1fr"}
+                            >
+                              <Text as="p" variant="bodyStrong">
+                                <DateTime plain date={createdAt} />
+                              </Text>
+                              <Box marginLeft="auto">
+                                <StatusChip status={ed.node.status} />
+                              </Box>
                             </Box>
-                          </Box>
-                          {attempts.length > 0 && (
-                            <Box>
-                              <Text>
-                                Attempts{" "}
-                                <Text variant="bodyStrong">
-                                  {attemptsCount} / 6
+                            {attempts.length > 0 && (
+                              <Box>
+                                <Text>
+                                  Attempts{" "}
+                                  <Text variant="bodyStrong">
+                                    {attemptsCount} / 6
+                                  </Text>
                                 </Text>
-                              </Text>
-                              <Text as="p">
-                                Last delivery attempt:{" "}
-                                <DateTime plain date={lastAttemptDate} />
-                              </Text>
-                            </Box>
-                          )}
-                        </Box>
-                      );
-                    })}
-                  </Box>
+                                <Text as="p">
+                                  Last delivery attempt:{" "}
+                                  <DateTime plain date={lastAttemptDate} />
+                                </Text>
+                              </Box>
+                            )}
+                          </Box>
+                        );
+                      })}
+                    </Accordion.Content>
+                  </Accordion.Item>
                 )}
               </Box>
             );
