@@ -109,15 +109,17 @@ export const AppWebhooksDisplay = ({
                   </Box>
 
                   <Box marginLeft="auto">
-                    <Text
-                      color={
-                        wh.isActive
-                          ? "textNeutralDefault"
-                          : "textNeutralSubdued"
-                      }
-                    >
-                      {wh.isActive ? "Active" : "Disabled"}
-                    </Text>
+                    <Chip backgroundColor={"surfaceNeutralHighlight"}>
+                      <Text 
+                        color={
+                          wh.isActive
+                            ? "textNeutralDefault"
+                            : "textNeutralSubdued"
+                        }
+                      >
+                        {wh.isActive ? "Active" : "Disabled"}
+                      </Text>
+                    </Chip>
                   </Box>
                 </Box>
                 {eventDeliveries.length > 0 && (

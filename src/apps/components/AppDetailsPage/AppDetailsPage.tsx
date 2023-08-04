@@ -44,8 +44,15 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
       />
-      <Box display="grid" gridTemplateColumns={2}>
-        <Box borderColor="neutralHighlight" borderRightStyle={"solid"} borderRightWidth={1}>
+      <Box
+        display="grid"
+        gridTemplateColumns={{ desktop: 2, tablet: 2, mobile: 1 }}
+      >
+        <Box
+          borderColor="neutralHighlight"
+          borderRightStyle={"solid"}
+          borderRightWidth={1}
+        >
           <AboutCard margin={6} aboutApp={data?.aboutApp} loading={loading} />
           <PermissionsCard
             appId={data.id}
