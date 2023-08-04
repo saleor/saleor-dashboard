@@ -310,7 +310,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               ...channel,
               ...listing,
               id: listing.channelId,
-              availableForPurchase: listing.availableForPurchaseDate,
               currency: channel.currencyCode,
             };
           },
