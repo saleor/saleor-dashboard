@@ -81,7 +81,7 @@ export interface SortPage<TSortKey extends string> {
 
 export interface ListActionsWithoutToolbar {
   toggle: (id: string) => void;
-  toggleAll: (items: React.ReactNodeArray, selected: number) => void;
+  toggleAll: (items: Node[], selected: number) => void;
   isChecked: (id: string) => boolean;
   selected: number;
 }

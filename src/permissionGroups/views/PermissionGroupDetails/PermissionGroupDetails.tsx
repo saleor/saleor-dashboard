@@ -1,8 +1,9 @@
-// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { Button } from "@dashboard/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
+  PermissionGroupDetailsQuery,
   usePermissionGroupDetailsQuery,
   usePermissionGroupUpdateMutation,
 } from "@dashboard/graphql";
@@ -14,11 +15,6 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import MembersErrorDialog from "@dashboard/permissionGroups/components/MembersErrorDialog";
-import {
-  arePermissionsExceeded,
-  permissionsDiff,
-  usersDiff,
-} from "@dashboard/permissionGroups/utils";
 import useStaffMemberSearch from "@dashboard/searches/useStaffMemberSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
@@ -28,7 +24,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignMembersDialog from "../../components/AssignMembersDialog";
-import PermissionGroupDetailsPage, {
+import {
+  PermissionGroupDetailsPage,
   PermissionGroupDetailsPageFormData,
 } from "../../components/PermissionGroupDetailsPage";
 import UnassignMembersDialog from "../../components/UnassignMembersDialog";
@@ -37,11 +34,22 @@ import {
   PermissionGroupDetailsUrlDialog,
   PermissionGroupDetailsUrlQueryParams,
 } from "../../urls";
+import {
+  arePermissionsExceeded,
+  channelsDiff,
+  checkIfUserBelongToPermissionGroup,
+  permissionsDiff,
+  usersDiff,
+} from "../../utils";
 
 interface PermissionGroupDetailsProps {
   id: string;
   params: PermissionGroupDetailsUrlQueryParams;
 }
+
+type Members = NonNullable<
+  NonNullable<PermissionGroupDetailsQuery["permissionGroup"]>["users"]
+>;
 
 export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   id,
@@ -55,11 +63,13 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
 
   const { data, loading, refetch } = usePermissionGroupDetailsQuery({
     displayLoader: true,
-    variables: { id, userId: user?.user.id },
+    variables: { id, userId: user?.user?.id ?? "" },
   });
 
-  const [membersList, setMembersList] = useStateFromProps(
-    data?.permissionGroup.users,
+  const { availableChannels } = useAppChannel(false);
+
+  const [membersList, setMembersList] = useStateFromProps<Members>(
+    data?.permissionGroup?.users ?? [],
   );
 
   const {
@@ -76,16 +86,30 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
 
   const [permissionGroupUpdate, permissionGroupUpdateResult] =
     usePermissionGroupUpdateMutation({
-      onCompleted: data => {
-        if (data.permissionGroupUpdate.errors.length === 0) {
+      onCompleted: updatedData => {
+        if (updatedData?.permissionGroupUpdate?.errors?.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
           });
+
+          // When user belong to editedd permission group refetch user details
+          // as they are root of user accessible channels
+          if (
+            checkIfUserBelongToPermissionGroup(
+              data?.permissionGroup,
+              user?.user?.id ?? "",
+            )
+          ) {
+            user.refetchUser();
+          }
+
           refetch();
           closeModal();
         } else if (
-          data.permissionGroupUpdate.errors.some(e => e.field === "removeUsers")
+          updatedData?.permissionGroupUpdate?.errors.some(
+            e => e.field === "removeUsers",
+          )
         ) {
           openModal("unassignError");
         }
@@ -104,22 +128,25 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   );
 
   const unassignMembers = () => {
-    setMembersList(membersList?.filter(m => !listElements.includes(m.id)));
+    setMembersList(
+      membersList?.filter(m => !listElements.includes(m.id)) ?? [],
+    );
     closeModal();
   };
 
   const isGroupEditable =
-    (data?.user.editableGroups || []).filter(g => g.id === id).length > 0;
+    (data?.user?.editableGroups || []).filter(g => g.id === id).length > 0 &&
+    data?.permissionGroup?.userCanManage;
 
-  const lastSourcesOfPermission = (data?.user.userPermissions || [])
+  const lastSourcesOfPermission = (data?.user?.userPermissions || [])
     .filter(
       perm =>
-        perm.sourcePermissionGroups.length === 1 &&
-        perm.sourcePermissionGroups[0].id === id,
+        perm.sourcePermissionGroups?.length === 1 &&
+        perm.sourcePermissionGroups?.[0].id === id,
     )
     .map(perm => perm.code);
 
-  const userPermissions = user?.user.userPermissions.map(p => p.code) || [];
+  const userPermissions = user?.user?.userPermissions?.map(p => p.code) || [];
 
   const permissions = (shop?.permissions || []).map(perm => ({
     ...perm,
@@ -129,9 +156,11 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
 
   const permissionsExceeded = arePermissionsExceeded(
     data?.permissionGroup,
-    user.user,
+    user?.user,
   );
-  const disabled = loading || !isGroupEditable || permissionsExceeded;
+
+  const isLoading = loading || permissionGroupUpdateResult.loading;
+  const disabled = isLoading || !isGroupEditable || permissionsExceeded;
 
   const handleSubmit = async (formData: PermissionGroupDetailsPageFormData) =>
     extractMutationErrors(
@@ -142,6 +171,13 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
             name: formData.name,
             ...permissionsDiff(data?.permissionGroup, formData),
             ...usersDiff(data?.permissionGroup, formData),
+            ...channelsDiff(
+              data?.permissionGroup,
+              formData,
+              availableChannels,
+              !!isGroupEditable,
+            ),
+            restrictedAccessToChannels: !formData.hasAllChannels,
           },
         },
       }),
@@ -152,11 +188,13 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
       <PermissionGroupDetailsPage
         permissionGroup={data?.permissionGroup}
         permissionsExceeded={permissionsExceeded}
-        members={membersList || []}
+        isUserAbleToEditChannels={!!isGroupEditable}
+        channels={availableChannels}
+        members={membersList}
         onAssign={() => openModal("assign")}
         onUnassign={ids => openModal("unassign", { ids })}
         errors={
-          permissionGroupUpdateResult?.data?.permissionGroupUpdate.errors || []
+          permissionGroupUpdateResult?.data?.permissionGroupUpdate?.errors ?? []
         }
         onSubmit={handleSubmit}
         permissions={permissions}
@@ -183,20 +221,17 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
       />
       <AssignMembersDialog
         loading={searchResult.loading}
-        staffMembers={mapEdgesToItems(searchResult?.data?.search)}
+        staffMembers={mapEdgesToItems(searchResult?.data?.search) ?? []}
         onSearchChange={search}
         onFetchMore={loadMore}
         disabled={disabled}
-        hasMore={searchResult?.data?.search.pageInfo.hasNextPage}
+        hasMore={searchResult?.data?.search?.pageInfo?.hasNextPage ?? false}
         initialSearch=""
         confirmButtonState={permissionGroupUpdateResult.status}
         open={params.action === "assign"}
         onClose={closeModal}
         onSubmit={formData => {
-          setMembersList([
-            ...membersList,
-            ...formData.filter(member => !membersList.includes(member)),
-          ]);
+          setMembersList([...(membersList ?? []), ...formData] as Members);
           closeModal();
         }}
       />
@@ -216,5 +251,3 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     </>
   );
 };
-
-export default PermissionGroupDetails;

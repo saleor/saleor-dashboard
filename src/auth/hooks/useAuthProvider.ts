@@ -245,6 +245,7 @@ export function useAuthProvider({
     authenticating: authenticating && !errors.length,
     authenticated: authenticated && !!user?.isStaff && !errors.length,
     user: userDetails.data?.me,
+    refetchUser: userDetails.refetch,
     errors,
   };
 }

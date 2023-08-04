@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   PermissionGroupErrorFragment,
   usePermissionGroupDeleteMutation,
@@ -60,7 +59,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
   });
 
   const paginationValues = usePaginator({
-    pageInfo: data?.permissionGroups.pageInfo,
+    pageInfo: data?.permissionGroups?.pageInfo,
     paginationState,
     queryString: params,
   });
@@ -76,13 +75,13 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
     PermissionGroupListUrlQueryParams
   >(navigate, permissionGroupListUrl, params);
 
-  const permissionGroups = mapEdgesToItems(data?.permissionGroups);
+  const permissionGroups = mapEdgesToItems(data?.permissionGroups) ?? [];
   const [deleteError, setDeleteError] =
     React.useState<PermissionGroupErrorFragment>();
 
   const [permissionGroupDelete] = usePermissionGroupDeleteMutation({
     onCompleted: data => {
-      if (data.permissionGroupDelete.errors.length === 0) {
+      if (data?.permissionGroupDelete?.errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -94,7 +93,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
         setDeleteError(undefined);
         closeModal();
       } else {
-        setDeleteError(data.permissionGroupDelete.errors[0]);
+        setDeleteError(data?.permissionGroupDelete?.errors?.[0]);
       }
     },
   });
@@ -114,7 +113,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
         onConfirm={() =>
           permissionGroupDelete({
             variables: {
-              id: params.id,
+              id: params?.id ?? "",
             },
           })
         }

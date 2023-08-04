@@ -15,8 +15,8 @@ import {
   PermissionGroupListUrlQueryParams,
   PermissionGroupListUrlSortField,
 } from "./urls";
-import PermissionGroupCreate from "./views/PermissionGroupCreate";
-import PermissionGroupDetailsComponent from "./views/PermissionGroupDetails";
+import { PermissionGroupCreate } from "./views/PermissionGroupCreate";
+import { PermissionGroupDetails as PermissionGroupDetailsComponent } from "./views/PermissionGroupDetails";
 import PermissionGroupListComponent from "./views/PermissionGroupList";
 
 const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({

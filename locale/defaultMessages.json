@@ -349,6 +349,9 @@
     "context": "min price in channel",
     "string": "Min. value"
   },
+  "0HBlkO": {
+    "string": "Search channels"
+  },
   "0KmZCN": {
     "context": "button",
     "string": "Open playground"
@@ -1508,6 +1511,9 @@
   "9CEu8k": {
     "context": "modal button images upload",
     "string": "Upload Images"
+  },
+  "9FGTOt": {
+    "string": "Allow access to orders of all channels"
   },
   "9IWg/f": {
     "context": "button",
@@ -6248,6 +6254,9 @@
     "context": "page header",
     "string": "Create Page"
   },
+  "grkY2V": {
+    "string": "You don't have access to any channels"
+  },
   "gvOzOl": {
     "string": "Page Title"
   },
@@ -6978,10 +6987,6 @@
   "m8cjcK": {
     "context": "add authorization key error",
     "string": "Authorization key with this type already exists"
-  },
-  "mAabef": {
-    "context": "checkbox label",
-    "string": "Group has full access to the store"
   },
   "mCP0UD": {
     "context": "order draft creation date",
@@ -8323,9 +8328,15 @@
     "context": "button",
     "string": "Create category"
   },
+  "vprU7C": {
+    "string": "Select visible order channels"
+  },
   "vwMO04": {
     "context": "draft order",
     "string": "Created"
+  },
+  "vz3yxp": {
+    "string": "Channels permissions"
   },
   "vzce9B": {
     "context": "customer gift cards card subtitle",
