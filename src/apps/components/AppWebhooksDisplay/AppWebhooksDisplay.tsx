@@ -77,7 +77,7 @@ export const AppWebhooksDisplay = ({
     return <Wrapper {...boxProps}>Loading</Wrapper>;
   }
 
-  if (webhooksData) {
+  if (webhooksData?.app?.webhooks) {
     return (
       <Wrapper {...boxProps}>
         <Box>
@@ -86,7 +86,7 @@ export const AppWebhooksDisplay = ({
               .flatMap(e => e.name)
               .join(", ");
 
-            const eventDeliveries = wh.eventDeliveries.edges;
+            const eventDeliveries = wh.eventDeliveries?.edges ?? [];
 
             return (
               <Box
@@ -110,7 +110,7 @@ export const AppWebhooksDisplay = ({
 
                   <Box marginLeft="auto">
                     <Chip backgroundColor={"surfaceNeutralHighlight"}>
-                      <Text 
+                      <Text
                         color={
                           wh.isActive
                             ? "textNeutralDefault"
@@ -136,7 +136,7 @@ export const AppWebhooksDisplay = ({
                     </Text>
                     {eventDeliveries.map(ed => {
                       const { createdAt } = ed.node;
-                      const attempts = ed.node.attempts.edges;
+                      const attempts = ed.node.attempts?.edges ?? [];
 
                       return (
                         <Box key={createdAt} marginBottom={6}>
@@ -198,4 +198,6 @@ export const AppWebhooksDisplay = ({
       </Wrapper>
     );
   }
+
+  return null;
 };
