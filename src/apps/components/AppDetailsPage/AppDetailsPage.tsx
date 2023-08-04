@@ -4,11 +4,11 @@ import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
+import { AppWebhooksDisplay } from "../AppWebhooksDisplay/AppWebhooksDisplay";
 import { AboutCard } from "./AboutCard";
 import { DataPrivacyCard } from "./DataPrivacyCard";
 import Header from "./Header";
 import { PermissionsCard } from "./PermissionsCard";
-import { AppWebhooksDisplay } from "../AppWebhooksDisplay/AppWebhooksDisplay";
 
 export interface AppDetailsPageProps {
   loading: boolean;

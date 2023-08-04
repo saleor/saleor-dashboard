@@ -4,6 +4,7 @@ import {
   useAppWebhookDeliveriesQuery,
 } from "@dashboard/graphql";
 import {
+  Accordion,
   Box,
   BoxProps,
   Chip,
@@ -51,16 +52,37 @@ const mapDeliveryStatusToBackgroundColor = (
     case EventDeliveryStatusEnum.FAILED:
       return "surfaceCriticalSubdued";
     case EventDeliveryStatusEnum.PENDING:
-      return "surfaceNeutralDepressed";
+      return "surfaceNeutralHighlight";
     case EventDeliveryStatusEnum.SUCCESS:
       return "surfaceBrandSubdued";
+  }
+};
+
+const printStatus = (status: EventDeliveryStatusEnum) => {
+  switch (status) {
+    case EventDeliveryStatusEnum.FAILED:
+      return "Failed";
+    case EventDeliveryStatusEnum.PENDING:
+      return "Pending";
+    case EventDeliveryStatusEnum.SUCCESS:
+      return "Success";
   }
 };
 
 const StatusChip = ({ status }: { status: EventDeliveryStatusEnum }) => {
   return (
     <Chip backgroundColor={mapDeliveryStatusToBackgroundColor(status)}>
-      <Text color={mapDeliveryStatusToTextColor(status)}>{status}</Text>
+      <Text color={mapDeliveryStatusToTextColor(status)}>
+        {printStatus(status)}
+      </Text>
+    </Chip>
+  );
+};
+
+const DisabledWebhookChip = () => {
+  return (
+    <Chip backgroundColor="surfaceNeutralHighlight">
+      <Text color="textNeutralDefault">Disabled</Text>
     </Chip>
   );
 };
@@ -80,7 +102,7 @@ export const AppWebhooksDisplay = ({
   if (webhooksData?.app?.webhooks) {
     return (
       <Wrapper {...boxProps}>
-        <Box>
+        <Accordion>
           {webhooksData.app.webhooks.map(wh => {
             const events = [...wh.asyncEvents, ...wh.syncEvents]
               .flatMap(e => e.name)
@@ -102,88 +124,62 @@ export const AppWebhooksDisplay = ({
                   alignItems="center"
                 >
                   <Box>
-                    <Text marginBottom={2} variant="bodyStrong" as="p">
-                      {wh.name}
-                    </Text>
+                    <Box
+                      display="flex"
+                      gap={2}
+                      alignItems="center"
+                      marginBottom={2}
+                    >
+                      <Text variant="bodyStrong">{wh.name}</Text>
+                      {wh.isActive === false && <DisabledWebhookChip />}
+                    </Box>
                     <Text variant="caption">Event: {events}</Text>
-                  </Box>
-
-                  <Box marginLeft="auto">
-                    <Chip backgroundColor={"surfaceNeutralHighlight"}>
-                      <Text
-                        color={
-                          wh.isActive
-                            ? "textNeutralDefault"
-                            : "textNeutralSubdued"
-                        }
-                      >
-                        {wh.isActive ? "Active" : "Disabled"}
-                      </Text>
-                    </Chip>
                   </Box>
                 </Box>
                 {eventDeliveries.length > 0 && (
-                  <Box
-                    marginLeft={0}
-                    marginTop={6}
-                    borderLeftStyle={"solid"}
-                    borderLeftWidth={1}
-                    borderColor="neutralHighlight"
-                    paddingLeft={6}
-                  >
-                    <Text variant="heading" size="small" as="h2">
-                      Deliveries
+                  <Box marginLeft={0} marginTop={6} paddingLeft={6}>
+                    <Text
+                      variant="heading"
+                      size="small"
+                      as="h2"
+                      marginBottom={6}
+                    >
+                      Pending & failed deliveries (last 10)
                     </Text>
                     {eventDeliveries.map(ed => {
                       const { createdAt } = ed.node;
                       const attempts = ed.node.attempts?.edges ?? [];
 
+                      const attemptsCount = attempts.length;
+                      const lastAttemptDate =
+                        attempts[attemptsCount - 1]?.node.createdAt;
+
                       return (
-                        <Box key={createdAt} marginBottom={6}>
+                        <Box key={createdAt} marginBottom={4}>
                           <Box
-                            paddingTop={4}
-                            padding={6}
                             paddingLeft={0}
                             display="grid"
                             __gridTemplateColumns={"1fr 1fr"}
                           >
-                            <Text>
-                              Event triggered at{" "}
+                            <Text as="p" variant="bodyStrong">
                               <DateTime plain date={createdAt} />
                             </Text>
+                            <Box marginLeft="auto">
+                              <StatusChip status={ed.node.status} />
+                            </Box>
                           </Box>
                           {attempts.length > 0 && (
-                            <Box
-                              borderLeftStyle={"solid"}
-                              borderLeftWidth={1}
-                              borderColor="neutralHighlight"
-                              paddingLeft={6}
-                            >
-                              <Text
-                                variant="heading"
-                                size="small"
-                                marginBottom={4}
-                                as="h2"
-                              >
-                                Attempts
+                            <Box>
+                              <Text>
+                                Attempts{" "}
+                                <Text variant="bodyStrong">
+                                  {attemptsCount} / 6
+                                </Text>
                               </Text>
-                              {attempts.map(attempt => {
-                                const { createdAt, status } = attempt.node;
-
-                                return (
-                                  <Box
-                                    key={createdAt}
-                                    display="flex"
-                                    gap={4}
-                                    paddingY={1}
-                                  >
-                                    <Text>
-                                      <DateTime plain date={createdAt} />
-                                    </Text>
-                                    <StatusChip status={status} />
-                                  </Box>
-                                );
-                              })}
+                              <Text as="p">
+                                Last delivery attempt:{" "}
+                                <DateTime plain date={lastAttemptDate} />
+                              </Text>
                             </Box>
                           )}
                         </Box>
@@ -194,7 +190,7 @@ export const AppWebhooksDisplay = ({
               </Box>
             );
           })}
-        </Box>
+        </Accordion>
       </Wrapper>
     );
   }
