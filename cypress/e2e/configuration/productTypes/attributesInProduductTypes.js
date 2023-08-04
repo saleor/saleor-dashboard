@@ -18,13 +18,13 @@ describe("As an admin I want to manage attributes in product types", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
     cy.checkIfDataAreNotNull(attribute);
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

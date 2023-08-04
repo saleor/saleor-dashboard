@@ -16,7 +16,7 @@ describe("Test for deleting products", () => {
   let product;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel()
       .then(channelResp => {
         channel = channelResp;

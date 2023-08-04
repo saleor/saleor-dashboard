@@ -9,11 +9,7 @@ import {
   ORDERS_SELECTORS,
   SHARED_ELEMENTS,
 } from "../../elements/";
-import {
-  MESSAGES,
-  ONE_PERMISSION_USERS,
-  urlList,
-} from "../../fixtures";
+import { MESSAGES, ONE_PERMISSION_USERS, urlList } from "../../fixtures";
 import {
   createCustomer,
   getOrder,
@@ -32,9 +28,7 @@ import {
   productsUtils,
   updateTaxConfigurationForChannel,
 } from "../../support/api/utils/";
-import {
-  ensureCanvasStatic,
-} from "../../support/customCommands/sharedElementsOperations/canvas";
+import { ensureCanvasStatic } from "../../support/customCommands/sharedElementsOperations/canvas";
 import {
   addNewProductToOrder,
   addPrivateMetadataFieldFulfillmentOrder,
@@ -80,7 +74,7 @@ describe("Orders", () => {
     privateMetadataValue + "- updated private metadata value";
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateOrdersSettings();
     getDefaultChannel()
       .then(channel => {
@@ -148,10 +142,7 @@ describe("Orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.order,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.order);
   });
 
   it(

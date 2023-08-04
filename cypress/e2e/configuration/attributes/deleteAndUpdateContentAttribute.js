@@ -15,12 +15,8 @@ describe("As an admin I want to delete and update content attribute", () => {
   const startsWith = "AttrContDel" + Date.now();
   let attribute;
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createAttribute({
       name: `${startsWith}${faker.datatype.number()}`,
       type: "PAGE_TYPE",

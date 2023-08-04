@@ -37,7 +37,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
     const productTypeSlug = `${faker.lorem.slug()}slug`;
     const productSlug = `${faker.lorem.slug()}slug`;
     const warehouseSlug = `${faker.lorem.slug()}slug`;
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -108,7 +108,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

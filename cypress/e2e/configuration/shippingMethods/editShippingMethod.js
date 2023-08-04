@@ -30,7 +30,7 @@ describe("As a user I should be able to update and delete shipping method", () =
   let warehouse;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     getDefaultChannel()
       .then(channel => {
@@ -64,7 +64,7 @@ describe("As a user I should be able to update and delete shipping method", () =
   beforeEach(() => {
     const rateName = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createShippingRate({
       name: rateName,
       shippingZone: shippingZone.id,

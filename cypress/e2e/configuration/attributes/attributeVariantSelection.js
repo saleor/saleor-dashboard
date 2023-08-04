@@ -24,7 +24,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
   let category;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel().then(defaultChannel => (channel = defaultChannel));
     createCategory({ name: startsWith }).then(categoryResp => {
       category = categoryResp;
@@ -33,7 +33,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   attributesTypes.forEach(attributeType => {

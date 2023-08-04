@@ -18,10 +18,6 @@ import {
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
-import {
-  changeGiftCardActiveStatus,
-  enterAndSelectGiftCards,
-} from "../../../support/pages/catalog/giftCardPage";
 
 describe("As a admin I want to use enabled gift card in checkout", () => {
   const startsWith = "ActivateGiftCards";
@@ -40,7 +36,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     productsUtils
       .createProductWithShipping({ name, shippingPrice, productPrice })
@@ -61,7 +57,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,

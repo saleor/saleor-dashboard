@@ -18,7 +18,7 @@ describe("Tests for page types", () => {
   const startsWith = "PageTypes";
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

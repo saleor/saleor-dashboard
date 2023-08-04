@@ -3,9 +3,7 @@
 
 import faker from "faker";
 
-import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList";
 import { GIFT_CARD_UPDATE } from "../../../elements/catalog/giftCard/giftCardUpdate";
-import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors.js";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { giftCardDetailsUrl } from "../../../fixtures/urlList";
 import {
@@ -17,13 +15,8 @@ import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCard
 
 describe("As an admin I want to update gift card", () => {
   const startsWith = "updateGCard";
-
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

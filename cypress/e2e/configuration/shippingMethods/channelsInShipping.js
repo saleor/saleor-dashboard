@@ -22,10 +22,6 @@ describe("As a staff user I want have different shipping method prices for each 
   const startsWith = "ChannelShippingMethod";
   let defaultChannel;
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   it(
     "should be able to display different price for each channel. TC: SALEOR_0805",
     { tags: ["@shipping", "@allEnv", "@stable"] },

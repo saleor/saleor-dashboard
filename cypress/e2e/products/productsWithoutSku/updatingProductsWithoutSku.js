@@ -38,7 +38,7 @@ describe("Updating products without sku", () => {
   const attributeValues = ["value1", "value2"];
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productUtils.deleteProductsStartsWith(startsWith);
     shippingUtils.deleteShippingStartsWith(startsWith);
     deleteWarehouseStartsWith(startsWith);
@@ -90,7 +90,7 @@ describe("Updating products without sku", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
   it(
     "should be able to add SKU to simple product TC: SALEOR_2802",

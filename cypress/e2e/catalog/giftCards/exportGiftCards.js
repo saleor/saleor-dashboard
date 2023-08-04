@@ -14,18 +14,17 @@ import {
   updatePlugin,
 } from "../../../support/api/requests/Plugins";
 import { getMailWithGiftCardExportWithAttachment } from "../../../support/api/utils/users";
-import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCardPage";
 
 describe("As an admin I want to export gift card", () => {
   const startsWith = "updateGCard";
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     activatePlugin({ id: "mirumee.notifications.admin_email" });
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

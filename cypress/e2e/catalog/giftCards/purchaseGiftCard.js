@@ -25,7 +25,7 @@ describe("As a customer I should be able to purchase gift card as a product", ()
   };
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     const name = `${startsWith}${faker.datatype.number()}`;
 
@@ -84,7 +84,7 @@ describe("As a customer I should be able to purchase gift card as a product", ()
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

@@ -3,23 +3,14 @@
 
 import faker from "faker";
 
-import {
-  BUTTON_SELECTORS,
-  PAGE_DETAILS_SELECTORS,
-} from "../../elements";
-import {
-  pageDetailsUrl,
-  urlList,
-} from "../../fixtures/urlList";
+import { BUTTON_SELECTORS, PAGE_DETAILS_SELECTORS } from "../../elements";
+import { pageDetailsUrl, urlList } from "../../fixtures/urlList";
 import {
   attributeRequests,
   pageRequests,
   pageTypeRequests,
 } from "../../support/api/requests";
-import {
-  pageDetailsPage,
-  pagesPage,
-} from "../../support/pages";
+import { pageDetailsPage, pagesPage } from "../../support/pages";
 
 describe("Tests for pages", () => {
   const startsWith = `Pages`;
@@ -37,7 +28,7 @@ describe("Tests for pages", () => {
   };
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     attributeRequests
       .createAttribute({ name, type: "PAGE_TYPE" })
       .then(attributeResp => {
@@ -51,7 +42,7 @@ describe("Tests for pages", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

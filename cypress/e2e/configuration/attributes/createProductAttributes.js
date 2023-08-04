@@ -48,13 +48,8 @@ describe("As an admin I want to create product attribute", () => {
     { unitSystem: "without selecting unit", testCase: "SALEOR_0510" },
   ];
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
+    cy.loginUserViaRequest()
       .visit(urlList.attributes)
       .get(ATTRIBUTES_LIST.createAttributeButton)
       .click();

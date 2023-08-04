@@ -30,7 +30,7 @@ describe("Draft orders", () => {
   let address;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateOrdersSettings();
     getDefaultChannel()
       .then(channel => {
@@ -79,7 +79,7 @@ describe("Draft orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

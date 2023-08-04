@@ -3,10 +3,7 @@
 
 import faker from "faker";
 
-import {
-  CATEGORIES_LIST_SELECTORS,
-  categoryRow,
-} from "../../elements/catalog/categories/categories-list";
+import { CATEGORIES_LIST_SELECTORS } from "../../elements/catalog/categories/categories-list";
 import { CATEGORY_DETAILS_SELECTORS } from "../../elements/catalog/categories/category-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
@@ -34,7 +31,7 @@ describe("As an admin I want to manage categories", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     channelsUtils
       .getDefaultChannel()
@@ -73,7 +70,7 @@ describe("As an admin I want to manage categories", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

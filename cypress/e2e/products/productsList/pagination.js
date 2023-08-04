@@ -8,7 +8,7 @@ import { ensureCanvasStatic } from "../../../support/customCommands/sharedElemen
 
 describe("As an admin I should be able to manage products table", () => {
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.visit(urlList.products);
   });
 

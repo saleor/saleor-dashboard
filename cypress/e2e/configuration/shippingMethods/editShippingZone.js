@@ -25,7 +25,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
   let warehouse;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
@@ -48,7 +48,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(
       shippingZoneResp => {
         shippingZone = shippingZoneResp;

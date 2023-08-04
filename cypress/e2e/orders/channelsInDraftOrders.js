@@ -23,7 +23,7 @@ xdescribe("Channels in draft orders", () => {
   let otherChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -37,7 +37,7 @@ xdescribe("Channels in draft orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

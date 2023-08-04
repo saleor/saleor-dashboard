@@ -41,7 +41,7 @@ describe("As a staff user I want to manage apps", () => {
   const email = `example@example.com`;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     createApp(name, "MANAGE_APPS").then(app => {
       createdApp = app;
@@ -93,7 +93,7 @@ describe("As a staff user I want to manage apps", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.app);
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.app);
   });
 
   it(

@@ -26,7 +26,7 @@ describe("As an admin I want to create voucher", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(

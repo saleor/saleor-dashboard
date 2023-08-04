@@ -20,7 +20,7 @@ describe("Tests for customer", () => {
   let secondAddress;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.fixture("addresses").then(({ usAddress, secondUsAddress }) => {
       address = usAddress;
       secondAddress = secondUsAddress;
@@ -29,7 +29,7 @@ describe("Tests for customer", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

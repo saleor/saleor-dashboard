@@ -42,13 +42,8 @@ describe("As an admin I want to create content attribute", () => {
     { unitSystem: "without selecting unit", testCase: "SALEOR_0521" },
   ];
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
+    cy.loginUserViaRequest()
       .visit(urlList.attributes)
       .get(ATTRIBUTES_LIST.createAttributeButton)
       .click()

@@ -25,7 +25,7 @@ describe("As an admin I want to manage plugins", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
       activatePlugin({ id: "mirumee.notifications.admin_email" });
@@ -37,10 +37,7 @@ describe("As an admin I want to manage plugins", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
-      .visit(urlList.plugins)
-      .expectSkeletonIsVisible();
+    cy.loginUserViaRequest().visit(urlList.plugins).expectSkeletonIsVisible();
   });
 
   it(

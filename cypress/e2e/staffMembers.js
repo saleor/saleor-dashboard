@@ -42,7 +42,7 @@ describe("Staff members", () => {
   let user;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     activatePlugin({ id: "mirumee.notifications.admin_email" });
     inviteStaffMemberWithFirstPermission({ email })
       .then(({ user: userResp }) => {
@@ -58,7 +58,7 @@ describe("Staff members", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

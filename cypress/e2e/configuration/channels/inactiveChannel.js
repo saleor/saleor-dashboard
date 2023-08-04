@@ -30,7 +30,7 @@ describe("Tests on inactive channel", () => {
   let newChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.fixture("addresses").then(({ plAddress }) => {
       address = plAddress;
     });
@@ -47,7 +47,7 @@ describe("Tests on inactive channel", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

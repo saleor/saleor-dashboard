@@ -30,7 +30,7 @@ describe("Update products", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;

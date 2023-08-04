@@ -52,14 +52,14 @@ describe("As an admin I should be able to create product", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createAttribute({ name }).then(attributeResp => {
       attribute = attributeResp;
       cy.checkIfDataAreNotNull({ attribute });
     });
   });
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

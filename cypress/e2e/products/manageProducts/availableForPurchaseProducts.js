@@ -22,7 +22,7 @@ describe("Products available in listings", () => {
   let warehouse;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     shippingUtils.deleteShippingStartsWith(startsWith);
     productsUtils.deleteProductsStartsWith(startsWith);
 
@@ -65,10 +65,7 @@ describe("Products available in listings", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(

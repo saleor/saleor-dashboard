@@ -36,7 +36,7 @@ describe("As an admin I want to create sale for products", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
@@ -82,7 +82,7 @@ describe("As an admin I want to create sale for products", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,

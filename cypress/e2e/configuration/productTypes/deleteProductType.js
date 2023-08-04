@@ -22,7 +22,7 @@ describe("As an admin I want to manage product types", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
     createCategory({ name: startsWith }).then(resp => (category = resp));
     getDefaultChannel().then(resp => {
@@ -32,7 +32,7 @@ describe("As an admin I want to manage product types", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

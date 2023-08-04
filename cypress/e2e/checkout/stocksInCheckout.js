@@ -23,7 +23,7 @@ describe("Manage products stocks in checkout", () => {
   let lastVariantInStock;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     const variantsData = [
       {

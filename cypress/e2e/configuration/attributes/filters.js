@@ -21,7 +21,7 @@ xdescribe("Tests for using attributes in filters", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createTypeAttributeAndCategoryForProduct({
       name: startsWith,
       attributeValues: [startsWith],
@@ -38,7 +38,7 @@ xdescribe("Tests for using attributes in filters", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

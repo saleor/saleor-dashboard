@@ -26,7 +26,7 @@ describe("As an admin I want to update vouchers", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(
@@ -57,7 +57,7 @@ describe("As an admin I want to update vouchers", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,

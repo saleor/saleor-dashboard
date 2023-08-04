@@ -34,7 +34,7 @@ describe("As a user I want to create shipping method with postal codes", () => {
   let variantsList;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
@@ -90,9 +90,9 @@ describe("As a user I want to create shipping method with postal codes", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping)
-      .visit(shippingZoneDetailsUrl(shippingZone.id));
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping).visit(
+      shippingZoneDetailsUrl(shippingZone.id),
+    );
   });
 
   it(

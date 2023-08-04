@@ -23,12 +23,8 @@ describe("Permissions groups", () => {
   const startsWith = "CyPermissions-" + Date.now();
   const permissionManageProducts = "[MANAGE_PRODUCTS]";
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

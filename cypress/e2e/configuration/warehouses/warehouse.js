@@ -29,7 +29,7 @@ describe("As an admin I want to manage warehouses", () => {
   let secondUsAddress;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.fixture("addresses").then(addresses => {
       usAddress = addresses.usAddress;
       secondUsAddress = addresses.secondUsAddress;
@@ -38,7 +38,7 @@ describe("As an admin I want to manage warehouses", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

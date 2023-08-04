@@ -33,7 +33,7 @@ describe("As an unlogged customer I want to order physical and digital products"
   let physicalVariants;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createDigitalAndPhysicalProductWithNewDataAndDefaultChannel({
       physicalProductName: physicalName,
       digitalProductName: digitalName,
@@ -54,7 +54,7 @@ describe("As an unlogged customer I want to order physical and digital products"
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

@@ -47,6 +47,7 @@ Cypress.Commands.add(
         "_saleorRefreshToken",
         resp.body.data.tokenCreate.refreshToken,
       );
+      window.localStorage.setItem("notifiedAboutNavigator", "true");
       window.sessionStorage.setItem(
         authorization,
         resp.body.data.tokenCreate.token,

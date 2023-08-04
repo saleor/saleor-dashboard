@@ -28,7 +28,7 @@ describe("Stripe payments", () => {
   let cardData;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.fixture("cards").then(({ stripe }) => {
       paymentCards = stripe;
       cardData = {
@@ -56,7 +56,7 @@ describe("Stripe payments", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createCheckout({
       channelSlug: defaultChannel.slug,
       email,

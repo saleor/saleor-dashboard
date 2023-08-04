@@ -16,15 +16,14 @@ describe.skip("As an admin I should be able to sort products", () => {
   let defaultChannel;
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
+    cy.loginUserViaRequest()
       .visit(urlList.products)
       .get(SHARED_ELEMENTS.header)
       .should("be.visible");
   });
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
       cy.checkIfDataAreNotNull({ defaultChannel });

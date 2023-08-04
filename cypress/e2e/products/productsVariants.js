@@ -36,7 +36,7 @@ describe("As an admin I should be able to create variant", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     productUtils
       .createShippingProductTypeAttributeAndCategory(name, attributeValues)
@@ -63,10 +63,7 @@ describe("As an admin I should be able to create variant", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(

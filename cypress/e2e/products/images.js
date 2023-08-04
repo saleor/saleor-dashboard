@@ -14,7 +14,7 @@ import {
 
 describe("Tests for images", () => {
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

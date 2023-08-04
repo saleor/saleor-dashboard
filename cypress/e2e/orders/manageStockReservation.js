@@ -34,7 +34,7 @@ describe("As an admin I want to manage stock reservation", () => {
   let dataForCheckout;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     cy.fixture("addresses").then(addresses => {
       address = addresses.usAddress;
@@ -81,7 +81,7 @@ describe("As an admin I want to manage stock reservation", () => {
   beforeEach(() => {
     const productName = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     createProductInChannel({
       attributeId: attribute.id,

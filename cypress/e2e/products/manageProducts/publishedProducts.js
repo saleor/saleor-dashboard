@@ -20,7 +20,7 @@ describe("Published products", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
@@ -47,10 +47,7 @@ describe("Published products", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(

@@ -41,7 +41,7 @@ describe("Creating variants", () => {
   let address;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     const name = `${startsWith}${faker.datatype.number()}`;
     const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
 
@@ -97,10 +97,7 @@ describe("Creating variants", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(

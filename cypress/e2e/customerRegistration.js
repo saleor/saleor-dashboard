@@ -20,7 +20,7 @@ describe("Tests for customer registration", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
       cy.checkIfDataAreNotNull({ defaultChannel });

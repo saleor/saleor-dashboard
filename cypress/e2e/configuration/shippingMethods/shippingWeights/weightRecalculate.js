@@ -26,7 +26,7 @@ describe("As a staff user I want to change shop default weight unit", () => {
   let warehouse;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateShopWeightUnit("KG")
       .then(() => {
         getDefaultChannel().then(channel => {

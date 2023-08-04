@@ -27,7 +27,7 @@ describe("Channels", () => {
   let usAddress;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createShippingZoneWithoutWarehouse(randomName, "US").then(
       shippingZoneResp => {
         shippingZone = shippingZoneResp;
@@ -47,10 +47,7 @@ describe("Channels", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.channel,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.channel);
   });
 
   it(
