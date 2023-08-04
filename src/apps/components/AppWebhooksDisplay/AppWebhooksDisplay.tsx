@@ -133,7 +133,7 @@ export const AppWebhooksDisplay = ({
                       Deliveries
                     </Text>
                     {eventDeliveries.map(ed => {
-                      const { createdAt, status } = ed.node;
+                      const { createdAt } = ed.node;
                       const attempts = ed.node.attempts.edges;
 
                       return (

@@ -44,19 +44,23 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
       />
-      <AboutCard margin={6} aboutApp={data?.aboutApp} loading={loading} />
-      <PermissionsCard
-        appId={data.id}
-        margin={6}
-        permissions={data?.permissions}
-        loading={loading}
-      />
-      <DataPrivacyCard
-        margin={6}
-        dataPrivacyUrl={data?.dataPrivacyUrl}
-        loading={loading}
-      />
-      <AppWebhooksDisplay appId={data.id} margin={6} />
+      <Box display="grid" gridTemplateColumns={2}>
+        <Box borderColor="neutralHighlight" borderRightStyle={"solid"} borderRightWidth={1}>
+          <AboutCard margin={6} aboutApp={data?.aboutApp} loading={loading} />
+          <PermissionsCard
+            appId={data.id}
+            margin={6}
+            permissions={data?.permissions}
+            loading={loading}
+          />
+          <DataPrivacyCard
+            margin={6}
+            dataPrivacyUrl={data?.dataPrivacyUrl}
+            loading={loading}
+          />
+        </Box>
+        <AppWebhooksDisplay padding={6} appId={data.id} />
+      </Box>
     </ErrorBoundary>
   );
 };
