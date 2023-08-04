@@ -8,6 +8,7 @@ import {
   useAppDeactivateMutation,
   useAppDeleteMutation,
   useAppQuery,
+  useAppWebhookDeliveriesQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";

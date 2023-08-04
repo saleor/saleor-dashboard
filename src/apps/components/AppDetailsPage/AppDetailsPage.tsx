@@ -8,6 +8,7 @@ import { AboutCard } from "./AboutCard";
 import { DataPrivacyCard } from "./DataPrivacyCard";
 import Header from "./Header";
 import { PermissionsCard } from "./PermissionsCard";
+import { AppWebhooksDisplay } from "../AppWebhooksDisplay/AppWebhooksDisplay";
 
 export interface AppDetailsPageProps {
   loading: boolean;
@@ -55,6 +56,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         dataPrivacyUrl={data?.dataPrivacyUrl}
         loading={loading}
       />
+      <AppWebhooksDisplay appId={data.id} margin={6} />
     </ErrorBoundary>
   );
 };
