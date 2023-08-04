@@ -4,7 +4,7 @@ import {
   mapToMenuItems,
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
-import { useUser } from "@dashboard/auth";
+import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -76,9 +76,8 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
-  const user = useUser();
-  const hasAccessibleChannels =
-    (user?.user?.accessibleChannels?.length ?? 0) > 0;
+  const userAccessibleChannels = useUserAccessibleChannels();
+  const hasAccessibleChannels = userAccessibleChannels.length > 0;
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);

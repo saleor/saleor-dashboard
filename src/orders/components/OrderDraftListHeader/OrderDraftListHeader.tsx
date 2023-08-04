@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
 import { TopNav } from "@dashboard/components/AppLayout";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
@@ -34,9 +34,8 @@ export const OrderDraftListHeader = ({
   onAdd,
 }: OrderDraftListHeaderProps) => {
   const intl = useIntl();
-  const user = useUser();
-  const hasAccessibleChannels =
-    (user?.user?.accessibleChannels?.length ?? 0) > 0;
+  const userAccessibleChannels = useUserAccessibleChannels();
+  const hasAccessibleChannels = userAccessibleChannels.length > 0;
   const limitsReached = isLimitReached(limits, "orders");
 
   return (
