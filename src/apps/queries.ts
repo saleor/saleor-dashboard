@@ -112,7 +112,6 @@ export const appWebhookDeliveries = gql`
                   node {
                     createdAt
                     status
-                    responseHeaders
                   }
                 }
               }

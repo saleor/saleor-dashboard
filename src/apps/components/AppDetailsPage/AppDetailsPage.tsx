@@ -53,15 +53,28 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           borderRightStyle={"solid"}
           borderRightWidth={1}
         >
-          <AboutCard margin={6} aboutApp={data?.aboutApp} loading={loading} />
+          <AboutCard
+            padding={6}
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="neutralHighlight"
+            aboutApp={data?.aboutApp}
+            loading={loading}
+          />
           <PermissionsCard
             appId={data.id}
-            margin={6}
+            padding={6}
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="neutralHighlight"
             permissions={data?.permissions}
             loading={loading}
           />
           <DataPrivacyCard
-            margin={6}
+            padding={6}
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="neutralHighlight"
             dataPrivacyUrl={data?.dataPrivacyUrl}
             loading={loading}
           />
