@@ -128,21 +128,30 @@ export const AppWebhooksDisplay = ({
                     alignItems="center"
                     marginBottom={2}
                   >
-                    <Text variant="bodyStrong">{wh.name}</Text>
+                    <Text>{wh.name}</Text>
                     {wh.isActive === false && <DisabledWebhookChip />}
                   </Box>
-                  <Text variant="caption">Event: {events}</Text>
+                  <Text variant="caption" size="small">
+                    Event: {events}
+                  </Text>
                 </Box>
                 {eventDeliveries.length > 0 && (
-                  <Accordion.Item value={wh.id} marginTop={6}>
+                  <Accordion.Item
+                    value={wh.id}
+                    marginTop={6}
+                    borderColor="neutralHighlight"
+                    borderWidth={1}
+                    borderStyle="solid"
+                    padding={4}
+                    borderRadius={4}
+                  >
                     <Accordion.Trigger
-                      __width="fit-content"
                       alignItems="center"
                     >
-                      <Accordion.TriggerButton />
-                      <Text variant="heading" size="small" as="h2">
+                      <Text variant="button" as="h2">
                         Pending & failed deliveries (last 10)
                       </Text>
+                      <Accordion.TriggerButton />
                     </Accordion.Trigger>
                     <Accordion.Content marginTop={6}>
                       {eventDeliveries.map(ed => {
