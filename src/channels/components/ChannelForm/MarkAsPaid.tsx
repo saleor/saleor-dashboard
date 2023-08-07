@@ -6,7 +6,7 @@ import {
   Text,
 } from "@saleor/macaw-ui/next";
 import React from "react";
-import { FormattedMessage,  } from "react-intl";
+import { FormattedMessage, } from "react-intl";
 
 import { messages } from "./messages";
 
@@ -38,19 +38,19 @@ export const MarkAsPaid = ({ isDiabled, isChecked, onCheckedChange }: MarkAsPaid
         paddingLeft={0.5}
       >
         <FormattedMessage
-          defaultMessage='"Mark as paid" feature creates a'
-          id="MDOw8D"
-        />{" "}
-        <Link
-          href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
-          target="_blank"
-          rel="noopener noreferer"
-        >
-          <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
-        </Link>{" "}
-        <FormattedMessage
-          defaultMessage="- used by Payment Apps"
-          id="Fqe4aB"
+          defaultMessage='"Mark as paid" feature creates a {link} - used by Payment Apps'
+          id="Qb2XN5"
+          values={{
+            link: (
+              <Link
+                href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
+                target="_blank"
+                rel="noopener noreferer"
+              >
+                <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
+              </Link>
+            )
+          }}
         />
       </Text>
       <Text
@@ -60,19 +60,19 @@ export const MarkAsPaid = ({ isDiabled, isChecked, onCheckedChange }: MarkAsPaid
         paddingLeft={0.5}
       >
         <FormattedMessage
-          defaultMessage="If left unchecked it creates a"
-          id="hHv0ih"
-        />{" "}
-        <Link
-          href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
-          target="_blank"
-          rel="noopener noreferer"
-        >
-          <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
-        </Link>{" "}
-        <FormattedMessage
-          defaultMessage="- used by Payment Plugins"
-          id="50lR2F"
+          defaultMessage="If left unchecked it creates a {link} - used by Payment Plugins"
+          id="eR2vV/"
+          values={{
+            link: (
+              <Link
+                href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
+                target="_blank"
+                rel="noopener noreferer"
+              >
+                <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
+              </Link>
+            )
+          }}
         />
       </Text>
     </Box>

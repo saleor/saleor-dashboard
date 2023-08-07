@@ -995,9 +995,6 @@
     "context": "content",
     "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
   },
-  "50lR2F": {
-    "string": "- used by Payment Plugins"
-  },
   "54KYgS": {
     "context": "months after label",
     "string": "months after issue"
@@ -2458,9 +2455,6 @@
   "FpIcp9": {
     "string": "No customers found"
   },
-  "Fqe4aB": {
-    "string": "- used by Payment Apps"
-  },
   "Ftz7VI": {
     "context": "input label, transaction amount",
     "string": "Transaction amount"
@@ -3361,9 +3355,6 @@
     "context": "custom app token key",
     "string": "Key"
   },
-  "MDOw8D": {
-    "string": "\"Mark as paid\" feature creates a"
-  },
   "MHVglr": {
     "context": "deactivate",
     "string": "Deactivate"
@@ -4002,6 +3993,9 @@
   "QZoU0r": {
     "context": "dialog header",
     "string": "Delete Channel"
+  },
+  "Qb2XN5": {
+    "string": "\"Mark as paid\" feature creates a {link} - used by Payment Apps"
   },
   "QclvqG": {
     "context": "input label",
@@ -5955,6 +5949,9 @@
     "context": "button",
     "string": "Done"
   },
+  "eR2vV/": {
+    "string": "If left unchecked it creates a {link} - used by Payment Plugins"
+  },
   "eRqx44": {
     "string": "Search collections..."
   },
@@ -6293,9 +6290,6 @@
   "hHOI7D": {
     "context": "product type name",
     "string": "Type Name"
-  },
-  "hHv0ih": {
-    "string": "If left unchecked it creates a"
   },
   "hJZwTS": {
     "string": "Email address"

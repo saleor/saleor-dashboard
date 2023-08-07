@@ -29,7 +29,7 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AllowUnpaidOrders } from "./AllowInpaidOrders";
+import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
 import { DefaultTransactionFlowStrategy } from "./DefaultTransactionFlowStrategy";
 import { MarkAsPaid } from "./MarkAsPaid";
 import { messages } from "./messages";
