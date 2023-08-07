@@ -14,6 +14,7 @@ describe("ConditionalFilter / validation / numeric", () => {
     [["123", "321"], false],
     [["100", "1"], { rightText: "The value must be higher", row: 0 }],
   ])("should validate %p", (value, expected) => {
+    // Arrange
     const element = new FilterElement(
       new ExpressionValue("price", "Price", "price"),
       new Condition(
