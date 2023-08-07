@@ -8,24 +8,34 @@ import {
   Box,
   BoxProps,
   Chip,
+  Skeleton,
   Text,
   ThemeTokensValues,
 } from "@saleor/macaw-ui/next";
 import React from "react";
+import { useIntl } from "react-intl";
 
 interface AppWebhooksDisplayProps extends BoxProps {
   appId: string;
 }
 
 const Wrapper = (boxProps: BoxProps) => {
+  const intl = useIntl();
+
   return (
     <Box {...boxProps}>
       <Text variant={"heading"} marginBottom={4} as={"h2"}>
-        App Webhooks
+        {intl.formatMessage({
+          defaultMessage: "App Webhooks",
+          id: "eQ7bCN",
+        })}
       </Text>
       <Text>
-        All webhooks registered by this app. In case of failed webhook delivery,
-        list of attempts is displayed.
+        {intl.formatMessage({
+          defaultMessage:
+            "All webhooks registered by this app. In case of failed webhook delivery, list of attempts is displayed.",
+          id: "Xy48q5",
+        })}
       </Text>
       <Box marginTop={6}>{boxProps.children}</Box>
     </Box>
@@ -58,31 +68,46 @@ const mapDeliveryStatusToBackgroundColor = (
   }
 };
 
-const printStatus = (status: EventDeliveryStatusEnum) => {
+const DeliveryStatusDisplay = ({
+  status,
+}: {
+  status: EventDeliveryStatusEnum;
+}) => {
+  const { formatMessage } = useIntl();
+
   switch (status) {
     case EventDeliveryStatusEnum.FAILED:
-      return "Failed";
+      return <>{formatMessage({ defaultMessage: "Failed", id: "vXCeIi" })}</>;
     case EventDeliveryStatusEnum.PENDING:
-      return "Pending";
+      return <>{formatMessage({ defaultMessage: "Pending", id: "eKEL/g" })}</>;
     case EventDeliveryStatusEnum.SUCCESS:
-      return "Success";
+      return <>{formatMessage({ defaultMessage: "Success", id: "xrKHS6" })} </>;
   }
+
+  throw new Error("Invalid EventDeliveryStatusEnum value");
 };
 
 const StatusChip = ({ status }: { status: EventDeliveryStatusEnum }) => {
   return (
     <Chip backgroundColor={mapDeliveryStatusToBackgroundColor(status)}>
       <Text color={mapDeliveryStatusToTextColor(status)}>
-        {printStatus(status)}
+        <DeliveryStatusDisplay status={status} />
       </Text>
     </Chip>
   );
 };
 
 const DisabledWebhookChip = () => {
+  const { formatMessage } = useIntl();
+
   return (
     <Chip backgroundColor="surfaceNeutralHighlight">
-      <Text color="textNeutralDefault">Disabled</Text>
+      <Text color="textNeutralDefault">
+        {formatMessage({
+          defaultMessage: "Disabled",
+          id: "tthToS",
+        })}
+      </Text>
     </Chip>
   );
 };
@@ -91,12 +116,20 @@ export const AppWebhooksDisplay = ({
   appId,
   ...boxProps
 }: AppWebhooksDisplayProps) => {
+  const { formatMessage } = useIntl();
+
   const { data: webhooksData, loading } = useAppWebhookDeliveriesQuery({
     variables: { appId },
   });
 
   if (loading) {
-    return <Wrapper {...boxProps}>Loading</Wrapper>;
+    return (
+      <Wrapper {...boxProps}>
+        <Skeleton height={8} marginBottom={4} />
+        <Skeleton height={8} marginBottom={4} />
+        <Skeleton height={8} />
+      </Wrapper>
+    );
   }
 
   if (webhooksData?.app?.webhooks) {
@@ -129,10 +162,10 @@ export const AppWebhooksDisplay = ({
                     marginBottom={2}
                   >
                     <Text>{wh.name}</Text>
-                    {wh.isActive === false && <DisabledWebhookChip />}
+                    {!wh.isActive && <DisabledWebhookChip />}
                   </Box>
                   <Text variant="caption" size="small">
-                    Event: {events}
+                    {events}
                   </Text>
                 </Box>
                 {eventDeliveries.length > 0 && (
@@ -142,14 +175,17 @@ export const AppWebhooksDisplay = ({
                     borderColor="neutralHighlight"
                     borderWidth={1}
                     borderStyle="solid"
-                    padding={4}
+                    paddingY={2}
+                    paddingX={4}
                     borderRadius={4}
                   >
-                    <Accordion.Trigger
-                      alignItems="center"
-                    >
+                    <Accordion.Trigger alignItems="center">
                       <Text variant="button" as="h2">
-                        Pending & failed deliveries (last 10)
+                        {formatMessage({
+                          defaultMessage:
+                            "Pending & failed deliveries (last 10)",
+                          id: "SRMNCS",
+                        })}
                       </Text>
                       <Accordion.TriggerButton />
                     </Accordion.Trigger>
@@ -179,13 +215,19 @@ export const AppWebhooksDisplay = ({
                             {attempts.length > 0 && (
                               <Box>
                                 <Text>
-                                  Attempts{" "}
+                                  {formatMessage({
+                                    defaultMessage: "Attempts:",
+                                    id: "OFTsI1",
+                                  })}{" "}
                                   <Text variant="bodyStrong">
                                     {attemptsCount} / 6
                                   </Text>
                                 </Text>
                                 <Text as="p">
-                                  Last delivery attempt:{" "}
+                                  {formatMessage({
+                                    defaultMessage: "Last delivery attempt:",
+                                    id: "EY/jqC",
+                                  })}{" "}
                                   <DateTime plain date={lastAttemptDate} />
                                 </Text>
                               </Box>
