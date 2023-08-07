@@ -119,7 +119,6 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
 
       default:
         throw unknownTypeError;
-        break;
     }
   };
 

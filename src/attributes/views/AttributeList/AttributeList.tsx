@@ -1,39 +1,34 @@
-// @ts-strict-ignore
 import {
-  deleteFilterTab,
-  getActiveFilters,
   getFilterOpts,
-  getFiltersCurrentTab,
-  getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
+  storageUtils,
 } from "@dashboard/attributes/views/AttributeList/filters";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import {
   useAttributeBulkDeleteMutation,
   useAttributeListQuery,
 } from "@dashboard/graphql";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
+import isEqual from "lodash/isEqual";
+import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import { PAGINATE_BY } from "../../../config";
-import useBulkActions from "../../../hooks/useBulkActions";
-import { maybe } from "../../../misc";
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
 import {
@@ -51,22 +46,50 @@ interface AttributeListProps {
 const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
+
   const intl = useIntl();
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  const { updateListSettings, settings } = useListSettings(
+    ListViews.ATTRIBUTE_LIST,
+  );
+
+  usePaginationReset(attributeListUrl, params, settings.rowNumber);
+
+  const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params),
     }),
-    [params],
+    [params, settings.rowNumber],
   );
   const { data, loading, refetch } = useAttributeListQuery({
     variables: queryVariables,
+  });
+
+  const {
+    clearRowSelection,
+    selectedRowIds,
+    setSelectedRowIds,
+    setClearDatagridRowSelectionCallback,
+  } = useRowSelection(params);
+
+  const {
+    hasPresetsChanged,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    selectedPreset,
+    presets,
+    getPresetNameToDelete,
+    setPresetIdToDelete,
+  } = useFilterPresets({
+    getUrl: attributeListUrl,
+    params,
+    storageUtils,
+    reset: clearRowSelection,
   });
 
   const [attributeBulkDelete, attributeBulkDeleteOpts] =
@@ -77,20 +100,16 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
           notify({
             status: "success",
             text: intl.formatMessage({
-              id: "lw9WIk",
-              defaultMessage: "Attributes successfully delete",
+              id: "z3GGbZ",
+              defaultMessage: "Attributes successfully deleted",
               description: "deleted multiple attributes",
             }),
           });
-          reset();
+          clearRowSelection();
           refetch();
         }
       },
     });
-
-  const tabs = getFilterTabs();
-
-  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeListUrlDialog,
@@ -99,33 +118,13 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
 
   const [changeFilters, resetFilters, handleSearchChange] =
     createFilterHandlers({
-      cleanupFn: reset,
+      cleanupFn: clearRowSelection,
       createUrl: attributeListUrl,
       getFilterQueryParam,
       navigate,
       params,
+      keepActiveTab: true,
     });
-
-  const handleTabChange = (tab: number) => {
-    reset();
-    navigate(
-      attributeListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
-    );
-  };
-
-  const handleTabDelete = () => {
-    deleteFilterTab(currentTab);
-    reset();
-    navigate(attributeListUrl());
-  };
-
-  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
-    handleTabChange(tabs.length + 1);
-  };
 
   const paginationValues = usePaginator({
     pageInfo: data?.attributes?.pageInfo,
@@ -135,64 +134,84 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, attributeListUrl, params);
 
+  const attributes = mapEdgesToItems(data?.attributes);
+
+  const handleSelectAttributesIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!attributes) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => attributes[row]?.id);
+      const haveSaveValues = isEqual(rowsIds, selectedRowIds);
+
+      if (!haveSaveValues) {
+        setSelectedRowIds(rowsIds);
+      }
+
+      setClearDatagridRowSelectionCallback(clearSelection);
+    },
+    [
+      attributes,
+      selectedRowIds,
+      setClearDatagridRowSelectionCallback,
+      setSelectedRowIds,
+    ],
+  );
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <AttributeListPage
-        attributes={mapEdgesToItems(data?.attributes) ?? []}
-        currentTab={currentTab}
+        settings={settings}
+        onUpdateListSettings={updateListSettings}
+        onFilterPresetsAll={resetFilters}
+        onFilterPresetDelete={(id: number) => {
+          setPresetIdToDelete(id);
+          openModal("delete-search");
+        }}
+        onFilterPresetPresetSave={() => openModal("save-search")}
+        onFilterPresetChange={onPresetChange}
+        onFilterPresetUpdate={onPresetUpdate}
+        hasPresetsChanged={hasPresetsChanged}
+        onAttributesDelete={() => openModal("remove")}
+        selectedFilterPreset={selectedPreset}
+        selectedAttributesIds={selectedRowIds}
+        filterPresets={presets.map(tab => tab.name)}
+        attributes={attributes ?? []}
         disabled={loading || attributeBulkDeleteOpts.loading}
         filterOpts={getFilterOpts(params)}
         initialSearch={params.query || ""}
-        isChecked={isSelected}
-        onAll={resetFilters}
         onFilterChange={changeFilters}
         onSearchChange={handleSearchChange}
         onSort={handleSort}
-        onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
-        onTabSave={() => openModal("save-search")}
-        selected={listElements.length}
         sort={getSortParams(params)}
-        tabs={tabs.map(tab => tab.name)}
-        toggle={toggle}
-        toggleAll={toggleAll}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            onClick={() =>
-              openModal("remove", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
+        onSelectAttributesIds={handleSelectAttributesIds}
       />
+
       <AttributeBulkDeleteDialog
         confirmButtonState={attributeBulkDeleteOpts.status}
-        open={
-          params.action === "remove" && !!params.ids && params.ids.length > 0
-        }
-        onConfirm={() =>
-          attributeBulkDelete({ variables: { ids: params?.ids ?? [] } })
-        }
+        open={params.action === "remove" && selectedRowIds.length > 0}
+        onConfirm={async () => {
+          await attributeBulkDelete({ variables: { ids: selectedRowIds } });
+          clearRowSelection();
+        }}
         onClose={closeModal}
-        quantity={params.ids?.length ?? 0}
+        quantity={selectedRowIds.length}
       />
+
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabSave}
+        onSubmit={onPresetSave}
       />
+
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        onSubmit={onPresetDelete}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

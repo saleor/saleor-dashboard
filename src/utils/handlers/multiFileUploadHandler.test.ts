@@ -48,7 +48,7 @@ describe("Multiple file upload handler", () => {
     const handle = createMultiFileUploadHandler((_, fileIndex) => {
       const promise = new Promise<void>((resolve, reject) => {
         if (fileIndex === 2) {
-          reject();
+          reject(new Error("mock error"));
         } else {
           resolve();
         }

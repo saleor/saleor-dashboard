@@ -8368,7 +8368,7 @@ export type AvailableExternalAuthenticationsQuery = { __typename: 'Query', shop:
 export type UserDetailsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailsQuery = { __typename: 'Query', me: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null } | null };
+export type UserDetailsQuery = { __typename: 'Query', me: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, restrictedAccessToChannels: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null } | null };
 
 export type CategoryDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9083,7 +9083,9 @@ export type AvailableAttributeFragment = { __typename: 'Attribute', id: string, 
 
 export type UserPermissionFragment = { __typename: 'UserPermission', code: PermissionEnum, name: string };
 
-export type UserFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null };
+export type UserUserPermissionWithSourcePermissionGroupsFragment = { __typename: 'UserPermission', code: PermissionEnum, name: string, sourcePermissionGroups: Array<{ __typename: 'Group', id: string }> | null };
+
+export type UserFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, restrictedAccessToChannels: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
 
 export type UserBaseFragment = { __typename: 'User', id: string, firstName: string, lastName: string };
 
@@ -9405,7 +9407,7 @@ export type PermissionFragment = { __typename: 'Permission', code: PermissionEnu
 
 export type PermissionGroupMemberFragment = { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null };
 
-export type PermissionGroupDetailsFragment = { __typename: 'Group', id: string, name: string, userCanManage: boolean, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null };
+export type PermissionGroupDetailsFragment = { __typename: 'Group', restrictedAccessToChannels: boolean, id: string, name: string, userCanManage: boolean, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null };
 
 export type ConfigurationItemFragment = { __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null };
 
@@ -9691,8 +9693,8 @@ export type CustomerGiftCardListQuery = { __typename: 'Query', giftCards: { __ty
 export type HomeQueryVariables = Exact<{
   channel: Scalars['String'];
   datePeriod: DateRangeInput;
-  PERMISSION_MANAGE_PRODUCTS: Scalars['Boolean'];
-  PERMISSION_MANAGE_ORDERS: Scalars['Boolean'];
+  hasPermissionToManageProducts: Scalars['Boolean'];
+  hasPermissionToManageOrders: Scalars['Boolean'];
 }>;
 
 
@@ -10312,7 +10314,7 @@ export type PermissionGroupCreateMutationVariables = Exact<{
 }>;
 
 
-export type PermissionGroupCreateMutation = { __typename: 'Mutation', permissionGroupCreate: { __typename: 'PermissionGroupCreate', errors: Array<{ __typename: 'PermissionGroupError', code: PermissionGroupErrorCode, field: string | null, message: string | null }>, group: { __typename: 'Group', id: string, name: string, userCanManage: boolean, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null } | null } | null };
+export type PermissionGroupCreateMutation = { __typename: 'Mutation', permissionGroupCreate: { __typename: 'PermissionGroupCreate', errors: Array<{ __typename: 'PermissionGroupError', code: PermissionGroupErrorCode, field: string | null, message: string | null }>, group: { __typename: 'Group', restrictedAccessToChannels: boolean, id: string, name: string, userCanManage: boolean, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null } | null } | null };
 
 export type PermissionGroupUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -10320,7 +10322,7 @@ export type PermissionGroupUpdateMutationVariables = Exact<{
 }>;
 
 
-export type PermissionGroupUpdateMutation = { __typename: 'Mutation', permissionGroupUpdate: { __typename: 'PermissionGroupUpdate', errors: Array<{ __typename: 'PermissionGroupError', code: PermissionGroupErrorCode, field: string | null, message: string | null }>, group: { __typename: 'Group', id: string, name: string, userCanManage: boolean, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null } | null } | null };
+export type PermissionGroupUpdateMutation = { __typename: 'Mutation', permissionGroupUpdate: { __typename: 'PermissionGroupUpdate', errors: Array<{ __typename: 'PermissionGroupError', code: PermissionGroupErrorCode, field: string | null, message: string | null }>, group: { __typename: 'Group', restrictedAccessToChannels: boolean, id: string, name: string, userCanManage: boolean, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null } | null } | null };
 
 export type PermissionGroupListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
@@ -10340,7 +10342,7 @@ export type PermissionGroupDetailsQueryVariables = Exact<{
 }>;
 
 
-export type PermissionGroupDetailsQuery = { __typename: 'Query', permissionGroup: { __typename: 'Group', id: string, name: string, userCanManage: boolean, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null } | null, user: { __typename: 'User', editableGroups: Array<{ __typename: 'Group', id: string }> | null, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, sourcePermissionGroups: Array<{ __typename: 'Group', id: string }> | null }> | null } | null };
+export type PermissionGroupDetailsQuery = { __typename: 'Query', permissionGroup: { __typename: 'Group', restrictedAccessToChannels: boolean, id: string, name: string, userCanManage: boolean, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null } | null, user: { __typename: 'User', editableGroups: Array<{ __typename: 'Group', id: string }> | null, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, sourcePermissionGroups: Array<{ __typename: 'Group', id: string }> | null }> | null } | null };
 
 export type PluginUpdateMutationVariables = Exact<{
   channelId?: InputMaybe<Scalars['ID']>;

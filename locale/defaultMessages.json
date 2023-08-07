@@ -349,6 +349,9 @@
     "context": "min price in channel",
     "string": "Min. value"
   },
+  "0HBlkO": {
+    "string": "Search channels"
+  },
   "0KmZCN": {
     "context": "button",
     "string": "Open playground"
@@ -553,9 +556,6 @@
   },
   "1X6HtI": {
     "string": "All Categories"
-  },
-  "1div9r": {
-    "string": "Search Attribute"
   },
   "1gzck6": {
     "string": "{firstName} {lastName}"
@@ -1512,6 +1512,9 @@
     "context": "modal button images upload",
     "string": "Upload Images"
   },
+  "9FGTOt": {
+    "string": "Allow access to orders of all channels"
+  },
   "9IWg/f": {
     "context": "button",
     "string": "SETUP END DATE"
@@ -1533,6 +1536,9 @@
   "9RvXNg": {
     "context": "section header",
     "string": "Media Information"
+  },
+  "9ScmSs": {
+    "string": "Search attributes..."
   },
   "9Sz0By": {
     "context": "channel currency",
@@ -2786,6 +2792,10 @@
   "HvJPcU": {
     "string": "Category deleted"
   },
+  "I+1KzL": {
+    "context": "tab name",
+    "string": "All attributes"
+  },
   "I+UwqI": {
     "context": "is filter range or value",
     "string": "equal to"
@@ -3507,6 +3517,9 @@
     "context": "dialog header",
     "string": "Cancel Orders"
   },
+  "NL6mvR": {
+    "string": "Visit App Store to replace with the App"
+  },
   "NLNonj": {
     "context": "send to channel select label",
     "string": "Send to channel"
@@ -3672,6 +3685,10 @@
   "OPtrMg": {
     "context": "header",
     "string": "{webhookName} Details"
+  },
+  "OTDo9I": {
+    "context": "tab name",
+    "string": "All staff members"
   },
   "OVOU1z": {
     "context": "section header",
@@ -5133,10 +5150,6 @@
     "context": "no address is set in draft order",
     "string": "Not set"
   },
-  "YJ4TXc": {
-    "context": "tab name",
-    "string": "All Staff Members"
-  },
   "YKyNm9": {
     "context": "label",
     "string": "Gift Card"
@@ -5385,9 +5398,6 @@
   "aCX8rl": {
     "context": "subheader",
     "string": "Here is some information we gathered about your store"
-  },
-  "aDbrOK": {
-    "string": "Search Staff Member"
   },
   "aEc9Ar": {
     "context": "gift card history message",
@@ -5845,10 +5855,6 @@
     "context": "vat included in order price",
     "string": "VAT included"
   },
-  "dKPMyh": {
-    "context": "tab name",
-    "string": "All Attributes"
-  },
   "dM86a2": {
     "string": "No categories found"
   },
@@ -6153,6 +6159,9 @@
   "g/BrOt": {
     "string": "Url has invalid format"
   },
+  "g0GAdN": {
+    "string": "Delete attributes"
+  },
   "g3qjSf": {
     "context": "button",
     "string": "Assign categories"
@@ -6244,6 +6253,9 @@
   "gr53VQ": {
     "context": "page header",
     "string": "Create Page"
+  },
+  "grkY2V": {
+    "string": "You don't have access to any channels"
   },
   "gvOzOl": {
     "string": "Page Title"
@@ -6955,10 +6967,6 @@
     "context": "order refund amount, input label",
     "string": "Amount"
   },
-  "lw9WIk": {
-    "context": "deleted multiple attributes",
-    "string": "Attributes successfully delete"
-  },
   "lwjzVj": {
     "string": "Edit order"
   },
@@ -6979,10 +6987,6 @@
   "m8cjcK": {
     "context": "add authorization key error",
     "string": "Authorization key with this type already exists"
-  },
-  "mAabef": {
-    "context": "checkbox label",
-    "string": "Group has full access to the store"
   },
   "mCP0UD": {
     "context": "order draft creation date",
@@ -7257,6 +7261,9 @@
   "o6260f": {
     "context": "attributes, section header",
     "string": "Variant Selection Attributes"
+  },
+  "o68j+t": {
+    "string": "Search staff members..."
   },
   "o8S0Ac": {
     "context": "usage limit uses left caption",
@@ -8321,9 +8328,15 @@
     "context": "button",
     "string": "Create category"
   },
+  "vprU7C": {
+    "string": "Select visible order channels"
+  },
   "vwMO04": {
     "context": "draft order",
     "string": "Created"
+  },
+  "vz3yxp": {
+    "string": "Channels permissions"
   },
   "vzce9B": {
     "context": "customer gift cards card subtitle",
@@ -8668,6 +8681,9 @@
     "context": "table header channel col label",
     "string": "Channel"
   },
+  "yfhLcv": {
+    "string": "We are working on replacing plugins with apps. Read more about"
+  },
   "yhv3HX": {
     "context": "voucher requirements, header",
     "string": "Minimum Requirements"
@@ -8706,6 +8722,10 @@
   "z2yYL3": {
     "context": "hint",
     "string": "Usually ends with /api/manifest"
+  },
+  "z3GGbZ": {
+    "context": "deleted multiple attributes",
+    "string": "Attributes successfully deleted"
   },
   "z8jo8h": {
     "context": "button",

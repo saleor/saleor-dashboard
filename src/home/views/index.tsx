@@ -2,8 +2,10 @@
 import { useUser } from "@dashboard/auth";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import {
   OrderStatusFilter,
+  PermissionEnum,
   StockAvailability,
   useHomeQuery,
 } from "@dashboard/graphql";
@@ -21,10 +23,21 @@ const HomeSection = () => {
 
   const noChannel = !channel && typeof channel !== "undefined";
 
+  const userPermissions = user?.userPermissions || [];
+
   const { data } = useHomeQuery({
     displayLoader: true,
     skip: noChannel,
-    variables: { channel: channel?.slug, datePeriod: getDatePeriod(1) },
+    variables: {
+      channel: channel?.slug,
+      datePeriod: getDatePeriod(1),
+      hasPermissionToManageOrders: hasPermissions(userPermissions, [
+        PermissionEnum.MANAGE_ORDERS,
+      ]),
+      hasPermissionToManageProducts: hasPermissions(userPermissions, [
+        PermissionEnum.MANAGE_PRODUCTS,
+      ]),
+    },
   });
 
   return (

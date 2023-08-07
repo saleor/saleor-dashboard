@@ -4,6 +4,7 @@ import {
   mapToMenuItems,
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
+import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -29,7 +30,7 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -75,6 +76,8 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const userAccessibleChannels = useUserAccessibleChannels();
+  const hasAccessibleChannels = userAccessibleChannels.length > 0;
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
@@ -162,32 +165,46 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
                 ]}
               />
             )}
-            {extensionCreateButtonItems.length > 0 ? (
-              <ButtonWithDropdown
-                onClick={onAdd}
-                testId={"create-order-button"}
-                options={extensionCreateButtonItems}
-                disabled={limitsReached}
-              >
-                <FormattedMessage
-                  id="LshEVn"
-                  defaultMessage="Create order"
-                  description="button"
-                />
-              </ButtonWithDropdown>
-            ) : (
-              <Button
-                data-test-id="create-order-button"
-                onClick={onAdd}
-                disabled={limitsReached}
-              >
-                <FormattedMessage
-                  id="LshEVn"
-                  defaultMessage="Create order"
-                  description="button"
-                />
-              </Button>
-            )}
+
+            <Tooltip>
+              <Tooltip.Trigger>
+                {extensionCreateButtonItems.length > 0 ? (
+                  <ButtonWithDropdown
+                    onClick={onAdd}
+                    testId={"create-order-button"}
+                    options={extensionCreateButtonItems}
+                    disabled={limitsReached || !hasAccessibleChannels}
+                  >
+                    <FormattedMessage
+                      id="LshEVn"
+                      defaultMessage="Create order"
+                      description="button"
+                    />
+                  </ButtonWithDropdown>
+                ) : (
+                  <Button
+                    data-test-id="create-order-button"
+                    onClick={onAdd}
+                    disabled={limitsReached || !hasAccessibleChannels}
+                  >
+                    <FormattedMessage
+                      id="LshEVn"
+                      defaultMessage="Create order"
+                      description="button"
+                    />
+                  </Button>
+                )}
+              </Tooltip.Trigger>
+              <Tooltip.Content>
+                {!hasAccessibleChannels && (
+                  <FormattedMessage
+                    defaultMessage="You don't have access to any channels"
+                    id="grkY2V"
+                  />
+                )}
+              </Tooltip.Content>
+            </Tooltip>
+
             {hasLimits(limits, "orders") && (
               <LimitsInfo
                 text={intl.formatMessage(

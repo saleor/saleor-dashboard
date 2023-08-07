@@ -68,7 +68,7 @@ interface SortingInput<T extends string> {
 }
 type GetSortQueryField<TUrlField extends string, TSortField extends string> = (
   sort: TUrlField,
-) => TSortField;
+) => TSortField | undefined;
 type GetSortQueryVariables<
   TSortField extends string,
   TParams extends Record<any, any>,

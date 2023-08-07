@@ -1,7 +1,7 @@
 import { createSvgIcon, SvgIconProps } from "@material-ui/core";
 import React from "react";
 
-const ShippingMethods = createSvgIcon(
+const ShippingMethodsIcons = createSvgIcon(
   <path
     fillRule="evenodd"
     clipRule="evenodd"
@@ -11,6 +11,6 @@ const ShippingMethods = createSvgIcon(
   "ShippingMethods",
 );
 
-export default (props: SvgIconProps) => (
-  <ShippingMethods {...props} viewBox="0 0 32 32" />
-);
+export default function ShippingMethods(props: SvgIconProps) {
+  return <ShippingMethodsIcons {...props} viewBox="0 0 32 32" />;
+}
