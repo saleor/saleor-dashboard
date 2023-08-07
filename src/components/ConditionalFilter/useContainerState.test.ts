@@ -7,7 +7,7 @@ import { ExpressionValue } from "./FilterElement/FilterElement";
 import { FilterValueProvider } from "./FilterValueProvider";
 import { useContainerState } from "./useContainerState";
 
-describe("useContainerState", () => {
+describe("ConditionalFilter / useContainerState", () => {
   const valueProvider: FilterValueProvider = {
     loading: false,
     value: [],
