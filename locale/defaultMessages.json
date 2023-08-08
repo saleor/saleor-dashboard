@@ -557,6 +557,10 @@
   "1X6HtI": {
     "string": "All Categories"
   },
+  "1dpNll": {
+    "context": "order payment",
+    "string": "Paid with Gift Card: ({link})"
+  },
   "1gzck6": {
     "string": "{firstName} {lastName}"
   },
@@ -8231,10 +8235,6 @@
   "vEwjub": {
     "context": "button",
     "string": "Open in GraphiQL"
-  },
-  "vM9quW": {
-    "context": "order payment",
-    "string": "Paid with Gift Card"
   },
   "vN3qdA": {
     "context": "button",

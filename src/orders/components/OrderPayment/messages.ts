@@ -91,8 +91,8 @@ export const orderPaymentMessages = defineMessages({
     description: "order payment",
   },
   paidWithGiftCard: {
-    id: "vM9quW",
-    defaultMessage: "Paid with Gift Card",
+    id: "yivxZJ",
+    defaultMessage: "Paid with Gift Card: ({link})",
     description: "order payment",
   },
   includedInSubtotal: {
