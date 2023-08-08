@@ -5411,6 +5411,10 @@
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
   },
+  "aFU0vm": {
+    "context": "description",
+    "string": "or continue with"
+  },
   "aHc89n": {
     "context": "select warehouse to restock items",
     "string": "Select Warehouse"
@@ -8660,10 +8664,6 @@
   "yOaNWB": {
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
-  },
-  "yPpf6N": {
-    "context": "description",
-    "string": "or continue with"
   },
   "ySqncG": {
     "context": "ExitFormPrompt keep editing button",
