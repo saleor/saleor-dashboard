@@ -2233,10 +2233,6 @@
   "EM730i": {
     "string": "Manage Channel Availability"
   },
-  "ENBELI": {
-    "context": "description",
-    "string": "or login using"
-  },
   "EP+jcU": {
     "context": "checkbox",
     "string": "Refund shipment costs"
@@ -8664,6 +8660,10 @@
   "yOaNWB": {
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
+  },
+  "yPpf6N": {
+    "context": "description",
+    "string": "or continue with"
   },
   "ySqncG": {
     "context": "ExitFormPrompt keep editing button",
