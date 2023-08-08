@@ -4,6 +4,7 @@ import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
+import { AppWebhooksDisplay } from "../AppWebhooksDisplay/AppWebhooksDisplay";
 import { AboutCard } from "./AboutCard";
 import { DataPrivacyCard } from "./DataPrivacyCard";
 import Header from "./Header";
@@ -43,18 +44,43 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
       />
-      <AboutCard margin={6} aboutApp={data?.aboutApp} loading={loading} />
-      <PermissionsCard
-        appId={data.id}
-        margin={6}
-        permissions={data?.permissions}
-        loading={loading}
-      />
-      <DataPrivacyCard
-        margin={6}
-        dataPrivacyUrl={data?.dataPrivacyUrl}
-        loading={loading}
-      />
+      <Box
+        display="grid"
+        gridTemplateColumns={{ desktop: 2, tablet: 2, mobile: 1 }}
+      >
+        <Box
+          borderColor="neutralHighlight"
+          borderRightStyle={"solid"}
+          borderRightWidth={1}
+        >
+          <AboutCard
+            padding={6}
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="neutralHighlight"
+            aboutApp={data?.aboutApp}
+            loading={loading}
+          />
+          <PermissionsCard
+            appId={data.id}
+            padding={6}
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="neutralHighlight"
+            permissions={data?.permissions}
+            loading={loading}
+          />
+          <DataPrivacyCard
+            padding={6}
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="neutralHighlight"
+            dataPrivacyUrl={data?.dataPrivacyUrl}
+            loading={loading}
+          />
+        </Box>
+        <AppWebhooksDisplay padding={6} appId={data.id} />
+      </Box>
     </ErrorBoundary>
   );
 };

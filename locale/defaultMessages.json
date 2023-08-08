@@ -2259,6 +2259,9 @@
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
   },
+  "EY/jqC": {
+    "string": "Last delivery attempt:"
+  },
   "EYkW1J": {
     "context": "checkbox label",
     "string": "Charge taxes for this channel"
@@ -3663,6 +3666,9 @@
     "context": "WarehouseSettings disabled warehouse label",
     "string": "Disabled"
   },
+  "OFTsI1": {
+    "string": "Attempts:"
+  },
   "OFW7nq": {
     "context": "placeholder",
     "string": "Search by page name, etc..."
@@ -4261,6 +4267,9 @@
   "SPp3cx": {
     "context": "alert message",
     "string": "Orders cannot be placed in an inactive channel."
+  },
+  "SRMNCS": {
+    "string": "Pending & failed deliveries (last 10)"
   },
   "SSWFo8": {
     "context": "window title",
@@ -5085,6 +5094,9 @@
   "Xy2T+y": {
     "context": "header",
     "string": "Edit Authorization Field"
+  },
+  "Xy48q5": {
+    "string": "All webhooks registered by this app. In case of failed webhook delivery, list of attempts is displayed."
   },
   "Xz/sDf": {
     "context": "Dry run items list item",
@@ -5952,6 +5964,9 @@
     "context": "Alert text",
     "string": "You are using an old version of filter presets. The following presets: {presetNames} must be updated to continue using filters"
   },
+  "eKEL/g": {
+    "string": "Pending"
+  },
   "eLJQSh": {
     "context": "column title gift card",
     "string": "Gift Card"
@@ -5959,6 +5974,9 @@
   "eOrLzG": {
     "context": "button",
     "string": "Done"
+  },
+  "eQ7bCN": {
+    "string": "App Webhooks"
   },
   "eRqx44": {
     "string": "Search collections..."
@@ -8276,6 +8294,9 @@
   "vWapBZ": {
     "context": "card title",
     "string": "Order Weight"
+  },
+  "vXCeIi": {
+    "string": "Failed"
   },
   "vXFPD6": {
     "context": "voucher discount type",

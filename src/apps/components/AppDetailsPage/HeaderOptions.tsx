@@ -25,7 +25,7 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
   const classes = useStyles();
 
   return (
-    <Box marginX={7}>
+    <Box paddingX={6} borderBottomStyle="solid" borderColor="neutralHighlight" borderBottomWidth={1}>
       <div className={classes.appHeaderLinks}>
         <ButtonBase
           className={classes.headerLinkContainer}
@@ -48,7 +48,6 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
           <FormattedMessage {...buttonMessages.delete} />
         </ButtonBase>
       </div>
-      <div className={classes.hr} />
     </Box>
   );
 };

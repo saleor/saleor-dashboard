@@ -8253,6 +8253,13 @@ export type ExtensionListQueryVariables = Exact<{
 
 export type ExtensionListQuery = { __typename: 'Query', appExtensions: { __typename: 'AppExtensionCountableConnection', edges: Array<{ __typename: 'AppExtensionCountableEdge', node: { __typename: 'AppExtension', id: string, label: string, url: string, mount: AppExtensionMountEnum, target: AppExtensionTargetEnum, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }>, app: { __typename: 'App', id: string, appUrl: string | null } } }> } | null };
 
+export type AppWebhookDeliveriesQueryVariables = Exact<{
+  appId: Scalars['ID'];
+}>;
+
+
+export type AppWebhookDeliveriesQuery = { __typename: 'Query', app: { __typename: 'App', webhooks: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', name: string }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', name: string }>, eventDeliveries: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', createdAt: any, status: EventDeliveryStatusEnum, eventType: WebhookEventTypeEnum, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', createdAt: any, status: EventDeliveryStatusEnum } }> } | null } }> } | null }> | null } | null };
+
 export type AttributeBulkDeleteMutationVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
 }>;
