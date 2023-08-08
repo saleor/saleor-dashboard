@@ -215,7 +215,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
       <Divider />
       <CardContent className={classes.payments}>
         <div className={classes.root}>
-          {!!usedGiftCardAmount && (
+          {!!usedGiftCardAmount && usedGiftcard && (
             <div>
               <FormattedMessage
                 {...orderPaymentMessages.paidWithGiftCard}
