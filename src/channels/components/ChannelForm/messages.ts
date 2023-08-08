@@ -58,14 +58,14 @@ export const messages = defineMessages({
     description: "allow unpaid orders checbkox description",
   },
   defaultTransactionFlowStrategyLabel: {
-    id: '/bhtiu',
-    defaultMessage: "Processed transaction should be only authorized",
-    description: "Processed transaction should be only authorized",
+    id: '5O8EIz',
+    defaultMessage: "Authorize transactions instead of charging",
+    description: "Authorize transactions instead of charging",
   },
   defaultTransactionFlowStrategyDescription: {
-    id: 'rMD49q',
+    id: 'nwcJVT',
     defaultMessage:
-      "Changes transaction strategy flow. By default transactions are always charged. Checking this on, will make transactions to be only authorized.",
-    description: "Changes transaction strategy flow",
+      "When enabled, all transactions would require an additional step to be charged. ({link})",
+    description: "When enabled, all transactions would require an additional step to be charged.",
   },
 });

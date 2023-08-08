@@ -1,4 +1,5 @@
 
+import Link from "@dashboard/components/Link";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import { FormChange, } from "@dashboard/hooks/useForm";
 import {
@@ -41,7 +42,19 @@ export const DefaultTransactionFlowStrategy = ({ onChange, isChecked, hasError }
         size="large"
         paddingLeft={0.5}
       >
-        <FormattedMessage {...messages.defaultTransactionFlowStrategyDescription} />
+        <FormattedMessage
+          {...messages.defaultTransactionFlowStrategyDescription}
+          values={{
+            link: (<Link
+              href="https://docs.saleor.io/docs/3.x/api-reference/payments/enums/transaction-flow-strategy-enum"
+              target="_blank"
+              rel="noopener noreferer"
+            >
+              <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
+            </Link>)
+  
+          }}
+        />
       </Text>
     </Box>
   </Box>

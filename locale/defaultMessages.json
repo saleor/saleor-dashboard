@@ -256,10 +256,6 @@
   "/Zee1r": {
     "string": "Only added postal codes will be able to use this shipping rate"
   },
-  "/bhtiu": {
-    "context": "Processed transaction should be only authorized",
-    "string": "Processed transaction should be only authorized"
-  },
   "/cow4T": {
     "context": "WarehousesSection select field placeholder",
     "string": "Select Warehouse"
@@ -1046,6 +1042,10 @@
   "5Jo3C5": {
     "context": "vat not included in order price",
     "string": "does not apply"
+  },
+  "5O8EIz": {
+    "context": "Authorize transactions instead of charging",
+    "string": "Authorize transactions instead of charging"
   },
   "5ObBlW": {
     "string": "Dark Mode"
@@ -4417,6 +4417,9 @@
     "context": "dialog subtitle",
     "string": "You can only add products available for the order's channel"
   },
+  "TdTXXf": {
+    "string": "Learn more"
+  },
   "Tenl9A": {
     "context": "grant refund, refund card toggle",
     "string": "Refund shipment: {currency} {amount}"
@@ -7228,6 +7231,10 @@
     "context": "discount reason input lavel",
     "string": "Reason"
   },
+  "nwcJVT": {
+    "context": "When enabled, all transactions would require an additional step to be charged.",
+    "string": "When enabled, all transactions would require an additional step to be charged. ({link})"
+  },
   "nwnwJ0": {
     "context": "payment status",
     "string": "Refused"
@@ -7648,10 +7655,6 @@
   "rKf4LU": {
     "context": "dialog title",
     "string": "Delete attributes"
-  },
-  "rMD49q": {
-    "context": "Changes transaction strategy flow",
-    "string": "Changes transaction strategy flow. By default transactions are always charged. Checking this on, will make transactions to be only authorized."
   },
   "rNzkIt": {
     "context": "dialog content",
