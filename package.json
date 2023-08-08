@@ -285,7 +285,7 @@
     "resolve": "1.20.0"
   },
   "lint-staged": {
-    "./src/*.{js,jsx,ts,tsx}": [
+    "./src/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
     ]
