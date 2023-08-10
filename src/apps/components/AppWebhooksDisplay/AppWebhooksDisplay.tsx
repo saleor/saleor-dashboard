@@ -112,6 +112,11 @@ const DisabledWebhookChip = () => {
   );
 };
 
+/**
+ * Refresh webhooks deliveries every 5 seconds
+ */
+const REFRESH_INTERVAL = 5000;
+
 export const AppWebhooksDisplay = ({
   appId,
   ...boxProps
@@ -120,6 +125,7 @@ export const AppWebhooksDisplay = ({
 
   const { data: webhooksData, loading } = useAppWebhookDeliveriesQuery({
     variables: { appId },
+    pollInterval: REFRESH_INTERVAL,
   });
 
   if (loading) {
