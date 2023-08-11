@@ -16,6 +16,7 @@ import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
+import { FeatureFlagsModal } from "./FeatureFlagsModal";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
 export const useLegacyThemeHandler = () => {
@@ -97,6 +98,19 @@ export const UserControls = () => {
                   </Text>
                 </Link>
               </List.Item>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <FeatureFlagsModal>
+                <List.Item {...listItemStyles}>
+                  <Text>
+                    <FormattedMessage
+                      id="38dc43"
+                      defaultMessage="Features preview"
+                      description="Features preview"
+                    />
+                  </Text>
+                </List.Item>
+              </FeatureFlagsModal>
             </Dropdown.Item>
             <Dropdown.Item>
               <List.Item

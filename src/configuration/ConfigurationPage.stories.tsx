@@ -26,6 +26,7 @@ const user = {
   userPermissions: staffMember.userPermissions,
   restrictedAccessToChannels: false,
   accessibleChannels: [],
+  metadata: [],
 };
 
 const versions = {

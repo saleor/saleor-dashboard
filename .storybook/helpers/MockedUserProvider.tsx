@@ -27,6 +27,7 @@ export const MockedUserProvider: React.FC<{
         __typename: "User",
         accessibleChannels: [],
         restrictedAccessToChannels: false,
+        metadata: []
       },
       errors: [],
     }}
