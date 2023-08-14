@@ -28,13 +28,14 @@ describe("Tests for pages", () => {
   let pageType;
   let pageTypeId;
 
-  const attributeValuesOnPage = {
-    NUMERIC: 1,
-    RICH_TEXT: faker.lorem.sentence(),
-    DROPDOWN: "value",
-    MULTISELECT: "value",
-    BOOLEAN: true,
-  };
+
+  const attributes = [
+    { key: "DROPDOWN", value: "value",  TC: "SALEOR_2203" },
+    { key: "MULTISELECT", value: "value", TC: "SALEOR_2204" },
+    { key: "RICH_TEXT", value: faker.lorem.sentence(), TC: "SALEOR_2205" },
+    { key: "BOOLEAN", value: true, TC: "SALEOR_2206" },
+    { key: "NUMERIC", value: 1, TC: "SALEOR_2207" },
+  ];
 
   before(() => {
     cy.loginUserViaRequest();
@@ -100,19 +101,20 @@ describe("Tests for pages", () => {
     },
   );
 
-  Object.keys(pagesPage.attributesTypes).forEach(attributeType => {
+  attributes.forEach(attributeType => {
     it(
-      `should create page with ${attributeType} attribute`,
-      { tags: ["@pages", "@allEnv", "@stable"] },
+      `should create page with ${attributeType.key} attribute TC: ${attributeType.TC}`,
+      { tags: ["@attribute", "@pages", "@allEnv"] },
       () => {
         const randomName = `${startsWith}${faker.datatype.number()}`;
-        const attributeValues = [attributeValuesOnPage[attributeType]];
+        const attributeKey = attributeType.key
+        const attributeValue =  attributeType.value
         attributeRequests
           .createAttribute({
             name: randomName,
             type: "PAGE_TYPE",
-            inputType: attributeType,
-            attributeValues,
+            inputType: attributeKey,
+            attributeValues: [attributeValue]
           })
           .then(attributeResp => {
             attribute = attributeResp;
@@ -128,23 +130,23 @@ describe("Tests for pages", () => {
                   .createPageWithAttribute({
                     pageName: randomName,
                     pageTypeName: randomName,
-                    attributeType,
-                    attributeValue: attributeValuesOnPage[attributeType],
+                    attributeType: attributeKey,
+                    attributeValue: attributeValue,
                   })
                   .then(page => {
                     pageRequests.getPage(page.id);
                   })
                   .then(page => {
                     expect(page.attributes[0].values[0].inputType).to.eq(
-                      attributeType,
+                      attributeKey,
                     );
-                    if (attributeType !== "BOOLEAN") {
-                      expect(page.attributes[0].values[0].name).to.eq(
-                        attributeValuesOnPage[attributeType].toString(),
-                      );
-                    } else {
+                    if (attributeKey === "BOOLEAN") {
                       expect(page.attributes[0].values[0].name).to.includes(
                         "Yes".toString(),
+                      );
+                    } else {
+                      expect(page.attributes[0].values[0].name).to.eq(
+                        attributeValue.toString(),
                       );
                     }
                   });
