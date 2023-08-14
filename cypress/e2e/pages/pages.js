@@ -55,7 +55,7 @@ describe("Tests for pages", () => {
   });
 
   it(
-    "should create not published page",
+    "should create not published page. TC: SALEOR_2201",
     { tags: ["@pages", "@allEnv", "@stable"] },
     () => {
       cy.addAliasToGraphRequest("PageType");
@@ -78,7 +78,7 @@ describe("Tests for pages", () => {
   );
 
   it(
-    "should create published page",
+    "should create published page. TC: SALEOR_2202",
     { tags: ["@pages", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -154,7 +154,8 @@ describe("Tests for pages", () => {
     );
   });
 
-  it("should delete page", { tags: ["@pages", "@allEnv", "@stable"] }, () => {
+  it("should delete page TC: SALEOR_2209", 
+  { tags: ["@pages", "@allEnv", "@stable"] }, () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
 
     pageRequests
@@ -174,7 +175,8 @@ describe("Tests for pages", () => {
       });
   });
 
-  it("should update page", { tags: ["@pages", "@allEnv", "@stable"] }, () => {
+  it("should update page TC: SALEOR_2208", 
+  { tags: ["@pages", "@allEnv", "@stable"] }, () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
     const updatedName = `${startsWith}${faker.datatype.number()}`;
 
