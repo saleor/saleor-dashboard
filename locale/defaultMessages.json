@@ -2233,10 +2233,6 @@
   "EM730i": {
     "string": "Manage Channel Availability"
   },
-  "ENBELI": {
-    "context": "description",
-    "string": "or login using"
-  },
   "EP+jcU": {
     "context": "checkbox",
     "string": "Refund shipment costs"
@@ -5414,6 +5410,10 @@
   "aEc9Ar": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
+  },
+  "aFU0vm": {
+    "context": "description",
+    "string": "or continue with"
   },
   "aHc89n": {
     "context": "select warehouse to restock items",
