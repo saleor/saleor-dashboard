@@ -51,7 +51,10 @@ export const ProductVariantPrice: React.FC<
     disabledMessage,
   } = props;
   const intl = useIntl();
-  const apiErrors = getFormChannelErrors(["price", "costPrice"], errors);
+  const channelErrors = errors.filter(
+    e => "channels" in e,
+  ) as ProductChannelListingErrorFragment[];
+  const apiErrors = getFormChannelErrors(["price", "costPrice"], channelErrors);
 
   if (disabled || !ProductVariantChannelListings.length) {
     return (
