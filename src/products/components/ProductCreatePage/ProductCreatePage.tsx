@@ -233,7 +233,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           assignReferencesAttributeId,
           data.attributes,
         );
-
         return (
           <DetailPageLayout>
             <TopNav href={productListUrl()} title={header} />
@@ -275,7 +274,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   />
                   <ProductVariantPrice
                     ProductVariantChannelListings={data.channelListings}
-                    errors={channelsErrors}
+                    errors={[...errors, ...channelsErrors]}
                     loading={loading}
                     onChange={handlers.changeChannelPrice}
                   />
