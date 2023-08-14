@@ -67,10 +67,10 @@ const components = imageImports.reduce((p, c) => {
 
 const imports = imageImports.reduce((p, c) => `${p}\nimport ${c.componentName} from "${c.href}"`, "")
 
-const template = `
-// @ts-nocheck
+const template = `// @ts-nocheck
 ${imports}
 ${components}
+
 export const AVAILABLE_FLAGS = [${availableFilters}]
 `
 
