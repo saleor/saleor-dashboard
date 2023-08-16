@@ -15,8 +15,8 @@ describe("getStockData", () => {
         row: 1,
       },
       { column: "attribute:2", row: 2, data: { value: { value: "test2" } } },
-      { column: "stock:Q2hhbm5lbDox", row: 1, data: { value: "12345" } },
-      { column: "stock:Q2hhbm5lbDot", row: 1, data: { value: "5666" } },
+      { column: "warehouse:Q2hhbm5lbDox", row: 1, data: { value: "12345" } },
+      { column: "warehouse:Q2hhbm5lbDot", row: 1, data: { value: "5666" } },
     ];
 
     // Act
@@ -81,8 +81,8 @@ describe("getVaraintUpdateStockData", () => {
   test("should handle update stocks", () => {
     // Arrange
     const changeData: DatagridChange[] = [
-      { column: "stock:Q2hhbm5lbDox", row: 1, data: { value: "12345" } },
-      { column: "stock:Q2hhbm5lbDot", row: 1, data: { value: "5666" } },
+      { column: "warehouse:Q2hhbm5lbDox", row: 1, data: { value: "12345" } },
+      { column: "warehouse:Q2hhbm5lbDot", row: 1, data: { value: "5666" } },
     ];
 
     // Act
@@ -111,12 +111,12 @@ describe("getVaraintUpdateStockData", () => {
     // Arrange
     const changeData: DatagridChange[] = [
       {
-        column: "stock:Q2hhbm5lbDox",
+        column: "warehouse:Q2hhbm5lbDox",
         row: 1,
         data: { value: numberCellEmptyValue },
       },
       {
-        column: "stock:Q2hhbm5lbDot",
+        column: "warehouse:Q2hhbm5lbDot",
         row: 1,
         data: { value: numberCellEmptyValue },
       },
@@ -141,8 +141,8 @@ describe("getVaraintUpdateStockData", () => {
   test("should handle create stocks", () => {
     // Arrange
     const changeData: DatagridChange[] = [
-      { column: "stock:Q2hhbm5lbDof", row: 1, data: { value: "12345" } },
-      { column: "stock:Q2hhbm5lbDod", row: 1, data: { value: "5666" } },
+      { column: "warehouse:Q2hhbm5lbDof", row: 1, data: { value: "12345" } },
+      { column: "warehouse:Q2hhbm5lbDod", row: 1, data: { value: "5666" } },
     ];
 
     // Act
