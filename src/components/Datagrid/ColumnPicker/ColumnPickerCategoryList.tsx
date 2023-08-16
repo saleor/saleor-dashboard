@@ -11,7 +11,7 @@ export const ColumnPickerCategoryList = ({
   columnCategories,
   setCurrentCategory,
 }: ColumnPickerCategoryListProps) => (
-  <List padding={8} data-test-id="dynamic-category-container">
+  <List padding={4} data-test-id="dynamic-category-container">
     {columnCategories.map(category => (
       <List.Item
         key={category.prefix}
