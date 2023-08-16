@@ -4,7 +4,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 
 import { FlagList } from "./availableFlags";
 import { Provider } from "./context";
-import { useFlagsResolver } from "./FlagsResolver";
+import { FlagsResolver } from "./FlagsResolver";
 import {
   AvailableStrategies,
   EnvVarsStrategy,
@@ -22,13 +22,14 @@ export const FeatureFlagsProvider = ({
   children,
   strategies,
 }: FeatureFlagsProviderProps) => {
-  const resolver = useFlagsResolver(strategies);
   const [flags, setFlags] = useState<FlagList | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
   const disableLoading = () => setLoading(false);
 
   useEffect(() => {
+    const resolver = new FlagsResolver(strategies);
+
     resolver
       .fetchAll()
       .combineWithPriorities()
