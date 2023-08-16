@@ -34,7 +34,7 @@ export const FeatureFlagsProvider = ({
       .combineWithPriorities()
       .then(setFlags)
       .finally(disableLoading);
-  }, []);
+  }, [strategies]);
 
   return (
     <Provider value={flags}>{loading ? <LoginLoading /> : children}</Provider>
