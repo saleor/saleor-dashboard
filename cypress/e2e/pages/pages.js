@@ -140,13 +140,13 @@ describe("Tests for pages", () => {
                     expect(page.attributes[0].values[0].inputType).to.eq(
                       attributeKey,
                     );
-                    if (attributeKey === "BOOLEAN") {
-                      expect(page.attributes[0].values[0].name).to.includes(
-                        "Yes".toString(),
+                    if (attributeType !== "BOOLEAN") {
+                      expect(page.attributes[0].values[0].name).to.eq(
+                        attributeValuesOnPage[attributeType].toString(),
                       );
                     } else {
-                      expect(page.attributes[0].values[0].name).to.eq(
-                        attributeValue.toString(),
+                      expect(page.attributes[0].values[0].name).to.includes(
+                        "Yes".toString(),
                       );
                     }
                   });
