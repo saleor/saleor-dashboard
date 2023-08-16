@@ -1,8 +1,8 @@
 // @ts-nocheck
 
-import V54646 from "./images/filters.png"
+import K00120 from "./images/filters.png"
 
-const product_filters = () => (<><p><img src={V54646} alt="new filters"/></p>
+const product_filters = () => (<><p><img src={K00120} alt="new filters"/></p>
 <p>Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
@@ -11,6 +11,7 @@ export const AVAILABLE_FLAGS = [{
   name: "product_filters",
   displayName: "Products filtering",
   component: product_filters,
+  visible: true,
   content: {
     enabled: false,
     value: "undefined",

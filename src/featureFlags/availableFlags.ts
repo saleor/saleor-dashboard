@@ -5,6 +5,7 @@ export interface FlagDefinition {
   name: string;
   displayName: string;
   component: () => JSX.Element;
+  visible: boolean;
   content: {
     enabled: boolean;
     payload?: string;

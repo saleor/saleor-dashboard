@@ -1,7 +1,9 @@
 ---
 name: product_filters
 displayName: Products filtering
-content: { enabled: false, payload: "default" }
+enabled: false
+payload: "default"
+visible: true
 ---
 
 ![new filters](./images/filters.png)

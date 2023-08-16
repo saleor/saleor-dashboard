@@ -9,7 +9,8 @@ type FlagsState =
   | { hasNoFlags: true; selectedFlag: undefined; changeTab: changeTab };
 
 export const useFlagsState = (): FlagsState => {
-  const flags = useFlagsInfo();
+  const flagsInfo = useFlagsInfo();
+  const flags = flagsInfo.filter(f => f.visible);
   const firstFlag = flags.length > 0 ? flags[0].name : null;
   const [tab, changeTab] = useState(firstFlag);
   const selectedFlag = flags.find(f => f.name === tab);

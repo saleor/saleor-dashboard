@@ -50,9 +50,10 @@ const availableFilters = mdParsed
   name: "${el.name}",
   displayName: "${el.displayName}",
   component: ${el.name},
+  visible: ${el.visible},
   content: {
-    enabled: ${el.content.enabled},
-    value: "${el.content.value}",
+    enabled: ${el.enabled},
+    value: "${el.value}",
   }
 }`
   )
