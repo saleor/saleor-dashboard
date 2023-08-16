@@ -1,7 +1,7 @@
 import { Button, Spinner } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 
-import { usePersistence } from "./usePersistance";
+import { usePersistence } from "./usePersistence";
 
 interface ToggleButtonProps {
   isEnabled: boolean;
