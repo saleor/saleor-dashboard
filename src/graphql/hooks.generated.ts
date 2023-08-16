@@ -2252,7 +2252,7 @@ export const ProductWithChannelListingsFragmentDoc = gql`
     fragment ProductWithChannelListings on Product {
   id
   name
-  thumbnail {
+  thumbnail(size: 1024) {
     url
   }
   productType {
