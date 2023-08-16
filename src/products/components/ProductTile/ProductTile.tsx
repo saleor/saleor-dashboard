@@ -45,7 +45,7 @@ export const ProductTile: React.FC<ProductTileProps> = ({
         {...commonThumbnailProps}
         as="img"
         alt={product.name}
-        objectFit="scale-down"
+        objectFit="cover"
         src={product.thumbnail.url}
       />
     ) : (
