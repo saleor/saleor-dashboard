@@ -26,7 +26,7 @@ export const Content = ({
       backgroundColor="surfaceNeutralPlain"
       borderColor="neutralHighlight"
       width="100%"
-      overflow="scroll"
+      overflowY="scroll"
       padding={3}
     >
       <Box display="flex" justifyContent="space-between">

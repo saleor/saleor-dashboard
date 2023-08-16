@@ -18,6 +18,7 @@ export const FlagList = ({ selectedName, onItemClick }: FlagListProps) => {
       borderStyle="solid"
       borderBottomWidth={0}
       borderColor="neutralHighlight"
+      overflowY="scroll"
     >
       {flags
         .filter(flag => flag.visible)
