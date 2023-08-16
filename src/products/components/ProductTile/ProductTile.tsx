@@ -19,9 +19,6 @@ export interface ProductTileProps {
 }
 
 const commonThumbnailProps = {
-  borderColor: "neutralHighlight",
-  borderStyle: "solid",
-  borderWidth: 1,
   marginBottom: 1.5,
   borderRadius: 3,
   aspectRatio: "1 / 1",
