@@ -6,7 +6,7 @@ import { flagListToMetadata } from "@dashboard/featureFlags/strategies/MetadataS
 import { useFlagsInfo } from "@dashboard/featureFlags/useFlagsInfo";
 import { useUserAccountUpdateMutation } from "@dashboard/graphql";
 
-export const usePersistance = () => {
+export const usePersistence = () => {
   const flags = useFlagsInfo();
   const [updateAccount] = useUserAccountUpdateMutation();
 

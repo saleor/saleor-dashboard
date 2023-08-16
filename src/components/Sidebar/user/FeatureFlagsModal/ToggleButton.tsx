@@ -1,7 +1,7 @@
 import { Button, Spinner } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 
-import { usePersistance } from "./usePersistance";
+import { usePersistence } from "./usePersistance";
 
 interface ToggleButtonProps {
   isEnabled: boolean;
@@ -9,7 +9,7 @@ interface ToggleButtonProps {
 }
 
 export const ToggleButton = ({ isEnabled, flagSlug }: ToggleButtonProps) => {
-  const { toggleFlag } = usePersistance();
+  const { toggleFlag } = usePersistence();
   const [loading, setLoading] = useState(false);
 
   const handleToggleClick = async () => {
