@@ -19,26 +19,28 @@ export const FlagList = ({ selectedName, onItemClick }: FlagListProps) => {
       borderBottomWidth={0}
       borderColor="neutralHighlight"
     >
-      {flags.map(flag => (
-        <List.Item
-          key={flag.name}
-          paddingX={3}
-          paddingY={4}
-          backgroundColor={{
-            default:
-              selectedName === flag.name
-                ? "surfaceNeutralHighlight"
-                : "surfaceNeutralSubdued",
-            hover: "surfaceNeutralHighlight",
-          }}
-          borderColor="neutralHighlight"
-          borderBottomWidth={1}
-          borderBottomStyle="solid"
-          onClick={() => onItemClick(flag.name)}
-        >
-          <Text variant="body">{flag.displayName}</Text>
-        </List.Item>
-      ))}
+      {flags
+        .filter(flag => flag.visible)
+        .map(flag => (
+          <List.Item
+            key={flag.name}
+            paddingX={3}
+            paddingY={4}
+            backgroundColor={{
+              default:
+                selectedName === flag.name
+                  ? "surfaceNeutralHighlight"
+                  : "surfaceNeutralSubdued",
+              hover: "surfaceNeutralHighlight",
+            }}
+            borderColor="neutralHighlight"
+            borderBottomWidth={1}
+            borderBottomStyle="solid"
+            onClick={() => onItemClick(flag.name)}
+          >
+            <Text variant="body">{flag.displayName}</Text>
+          </List.Item>
+        ))}
     </List>
   );
 };

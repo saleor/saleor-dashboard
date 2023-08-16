@@ -53,7 +53,7 @@ const availableFilters = mdParsed
   visible: ${el.visible},
   content: {
     enabled: ${el.enabled},
-    value: "${el.value}",
+    payload: "${el.payload}",
   }
 }`
   )
