@@ -23,7 +23,7 @@ describe("As a user I should be able to save selected filters with search querie
   });
 
   it(
-    "should be able to add preset. TC: SALEOR_3802",
+    "should be able to add preset. TC: SALEOR_2712",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       cy.visit(urlList.products);

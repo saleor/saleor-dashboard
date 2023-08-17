@@ -29,7 +29,7 @@ describe("Tests for customer registration", () => {
     });
   });
 
-  it("should register customer", { tags: ["@customer", "@allEnv"] }, () => {
+  it("should register customer TC: SALEOR_1212", { tags: ["@customer", "@allEnv"] }, () => {
     const email = `${startsWith}${faker.datatype.number()}@example.com`;
     customerRegistration({ email, channel: defaultChannel.slug });
     const registrationLinkRegex = /\[(\s*http[^\]]*)\]/;
@@ -53,7 +53,7 @@ describe("Tests for customer registration", () => {
   });
 
   it(
-    "shouldn't register customer with duplicated email",
+    "shouldn't register customer with duplicated email TC: SALEOR_1213",
     { tags: ["@customer", "@allEnv", "@stable"] },
     () => {
       const duplicatedEmail = Cypress.env("USER_NAME");
@@ -68,7 +68,7 @@ describe("Tests for customer registration", () => {
   );
 
   it(
-    "should activate customer from dashboard",
+    "should activate customer from dashboard SALEOR_1211",
     { tags: ["@customer", "@allEnv", "@stable"] },
     () => {
       customerRegistration({ email, channel: defaultChannel.slug })
