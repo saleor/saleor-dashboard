@@ -6,6 +6,7 @@ import { appDetails } from "../../fixtures";
 import { AppDetailsPage } from "./AppDetailsPage";
 
 const mockHeader = jest.fn();
+// eslint-disable-next-line react/display-name
 jest.mock("./Header", () => props => {
   mockHeader(props);
   return <></>;

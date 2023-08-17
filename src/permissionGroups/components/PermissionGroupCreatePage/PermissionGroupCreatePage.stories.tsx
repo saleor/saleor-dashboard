@@ -1,18 +1,20 @@
-// @ts-strict-ignore
-import { permissions } from "@dashboard/fixtures";
+import { channels, permissions } from "@dashboard/fixtures";
 import React from "react";
 
 import { errorsOfPermissionGroupCreate } from "../../fixtures";
-import PermissionGroupCreatePage, {
+import {
+  PermissionGroupCreatePage,
   PermissionGroupCreatePageProps,
 } from "./PermissionGroupCreatePage";
 
 const props: PermissionGroupCreatePageProps = {
   disabled: false,
   errors: [],
-  onSubmit: () => undefined,
+  onSubmit: () => new Promise(resolve => resolve(undefined)),
   permissions,
-  saveButtonBarState: undefined,
+  channels,
+  saveButtonBarState: "default",
+  hasRestrictedChannels: false,
 };
 
 export default {

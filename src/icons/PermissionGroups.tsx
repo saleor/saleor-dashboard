@@ -1,7 +1,7 @@
 import { createSvgIcon, SvgIconProps } from "@material-ui/core";
 import React from "react";
 
-const PermissionGroups = createSvgIcon(
+const PermissionGroupsIcon = createSvgIcon(
   <path
     fillRule="evenodd"
     clipRule="evenodd"
@@ -11,6 +11,6 @@ const PermissionGroups = createSvgIcon(
   "PermissionGroups",
 );
 
-export default (props: SvgIconProps) => (
-  <PermissionGroups {...props} viewBox="0 0 32 32" />
-);
+export default function PermissionGroups(props: SvgIconProps) {
+  return <PermissionGroupsIcon {...props} viewBox="0 0 32 32" />;
+}

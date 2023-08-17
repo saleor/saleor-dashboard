@@ -53,3 +53,4 @@ django-queries-results.html
 
 !.env.template
 !.dependency-cruiser.js
+!.featureFlags

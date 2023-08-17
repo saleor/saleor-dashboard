@@ -30,7 +30,7 @@ const messages = defineMessages({
 });
 
 function getPermissionGroupErrorMessage(
-  err: PermissionGroupErrorFragment,
+  err: PermissionGroupErrorFragment | undefined,
   intl: IntlShape,
 ): string | undefined {
   if (err) {

@@ -1,4 +1,5 @@
-import { UserFragment } from "@dashboard/graphql";
+import { ApolloQueryResult } from "@apollo/client";
+import { UserDetailsQuery, UserFragment } from "@dashboard/graphql";
 import {
   GetExternalAccessTokenData,
   GetExternalAuthUrlData,
@@ -44,4 +45,5 @@ export interface UserContext {
   authenticating: boolean;
   authenticated: boolean;
   errors: UserContextError[];
+  refetchUser: () => Promise<ApolloQueryResult<UserDetailsQuery>>;
 }

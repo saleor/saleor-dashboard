@@ -14,6 +14,7 @@ jest.mock("react-intl", () => ({
 jest.mock("@saleor/macaw-ui", () => ({
   useStyles: jest.fn(() => () => ({})),
   makeStyles: jest.fn(() => () => ({})),
+  // eslint-disable-next-line react/display-name
   DialogHeader: jest.fn(() => () => <></>),
 }));
 

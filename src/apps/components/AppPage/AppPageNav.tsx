@@ -14,7 +14,10 @@ interface AppPageNavProps {
   author?: string | undefined | null;
   appId: string;
   appLogoUrl?: string | undefined | null;
-  goBackUrl: string;
+  /**
+   * Render a back arrow only if an URL is provided.
+   */
+  goBackUrl?: string;
   /**
    * Temporary prop, so the header can be composed with buttons instead hard coding them.
    * Component is used on Manage App page too, so the button should be hidden there
@@ -56,9 +59,9 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
         justifyContent="space-between"
         width="100%"
       >
-        <Box display="flex" gap={4} alignItems="center">
-          <TopNavLink to={goBackUrl} variant="tertiary" />
-          <Box display="flex" gap={2} alignItems="center">
+        <Box display="flex" gap={2} alignItems="center">
+          {goBackUrl && <TopNavLink to={goBackUrl} variant="tertiary" />}
+          <Box display="flex" gap={4} alignItems="center">
             <AppAvatar size={8} logo={logo} />
             <Box display="flex" flexDirection="column">
               <Text variant="heading">{name}</Text>

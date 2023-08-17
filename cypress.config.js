@@ -24,6 +24,7 @@ module.exports = defineConfig({
   e2e: {
     env: {
       grepFilterSpecs: true,
+      grepOmitFiltered: true,
     },
     setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);

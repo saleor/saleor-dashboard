@@ -155,6 +155,7 @@ export const staffMember: StaffMemberDetailsFragment = {
     ...p,
     __typename: "UserPermission",
   })),
+  metadata: [],
 };
 
 export const staffMemberAvatar: StaffMemberAvatarFragment = {

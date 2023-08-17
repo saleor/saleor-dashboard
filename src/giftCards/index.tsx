@@ -41,7 +41,7 @@ const GiftCardList: React.FC<RouteComponentProps<any>> = () => {
   return <GiftCardListComponent params={params} />;
 };
 
-const Component: React.FC = ({}) => {
+const Component: React.FC = () => {
   const intl = useIntl();
 
   return (

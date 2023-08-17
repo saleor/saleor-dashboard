@@ -349,6 +349,9 @@
     "context": "min price in channel",
     "string": "Min. value"
   },
+  "0HBlkO": {
+    "string": "Search channels"
+  },
   "0KmZCN": {
     "context": "button",
     "string": "Open playground"
@@ -754,6 +757,10 @@
   "38dS1A": {
     "context": "code ending with label",
     "string": "Code ending with {last4CodeChars}"
+  },
+  "38dc43": {
+    "context": "Features preview",
+    "string": "Features preview"
   },
   "39yi8w": {
     "context": "selected currency",
@@ -1510,6 +1517,9 @@
     "context": "modal button images upload",
     "string": "Upload Images"
   },
+  "9FGTOt": {
+    "string": "Allow access to orders of all channels"
+  },
   "9IWg/f": {
     "context": "button",
     "string": "SETUP END DATE"
@@ -2228,10 +2238,6 @@
   "EM730i": {
     "string": "Manage Channel Availability"
   },
-  "ENBELI": {
-    "context": "description",
-    "string": "or login using"
-  },
   "EP+jcU": {
     "context": "checkbox",
     "string": "Refund shipment costs"
@@ -2253,6 +2259,9 @@
   "EWD/wU": {
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+  },
+  "EY/jqC": {
+    "string": "Last delivery attempt:"
   },
   "EYkW1J": {
     "context": "checkbox label",
@@ -3506,6 +3515,9 @@
     "context": "dialog header",
     "string": "Cancel Orders"
   },
+  "NL6mvR": {
+    "string": "Visit App Store to replace with the App"
+  },
   "NLNonj": {
     "context": "send to channel select label",
     "string": "Send to channel"
@@ -3648,6 +3660,9 @@
   "OBQ+th": {
     "context": "WarehouseSettings disabled warehouse label",
     "string": "Disabled"
+  },
+  "OFTsI1": {
+    "string": "Attempts:"
   },
   "OFW7nq": {
     "context": "placeholder",
@@ -4250,6 +4265,9 @@
   "SPp3cx": {
     "context": "alert message",
     "string": "Orders cannot be placed in an inactive channel."
+  },
+  "SRMNCS": {
+    "string": "Pending & failed deliveries (last 10)"
   },
   "SSWFo8": {
     "context": "window title",
@@ -5078,6 +5096,9 @@
     "context": "header",
     "string": "Edit Authorization Field"
   },
+  "Xy48q5": {
+    "string": "All webhooks registered by this app. In case of failed webhook delivery, list of attempts is displayed."
+  },
   "Xz/sDf": {
     "context": "Dry run items list item",
     "string": "Item:"
@@ -5394,6 +5415,10 @@
   "aEc9Ar": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
+  },
+  "aFU0vm": {
+    "context": "description",
+    "string": "or continue with"
   },
   "aHc89n": {
     "context": "select warehouse to restock items",
@@ -5944,6 +5969,9 @@
     "context": "Alert text",
     "string": "You are using an old version of filter presets. The following presets: {presetNames} must be updated to continue using filters"
   },
+  "eKEL/g": {
+    "string": "Pending"
+  },
   "eLJQSh": {
     "context": "column title gift card",
     "string": "Gift Card"
@@ -5951,6 +5979,9 @@
   "eOrLzG": {
     "context": "button",
     "string": "Done"
+  },
+  "eQ7bCN": {
+    "string": "App Webhooks"
   },
   "eR2vV/": {
     "string": "If left unchecked it creates a {link} - used by Payment Plugins"
@@ -6248,6 +6279,9 @@
   "gr53VQ": {
     "context": "page header",
     "string": "Create Page"
+  },
+  "grkY2V": {
+    "string": "You don't have access to any channels"
   },
   "gvOzOl": {
     "string": "Page Title"
@@ -6815,6 +6849,9 @@
     "context": "Require email confirmation link",
     "string": "Require email confirmation link"
   },
+  "krer6Z": {
+    "string": "Features preview"
+  },
   "kuo4fW": {
     "context": "dialog title",
     "string": "Capture manual transaction"
@@ -6976,10 +7013,6 @@
   "m8cjcK": {
     "context": "add authorization key error",
     "string": "Authorization key with this type already exists"
-  },
-  "mAabef": {
-    "context": "checkbox label",
-    "string": "Group has full access to the store"
   },
   "mCP0UD": {
     "context": "order draft creation date",
@@ -7386,6 +7419,9 @@
   "pCy5EP": {
     "context": "gift card history message",
     "string": "Gift card was activated"
+  },
+  "pEf/m+": {
+    "string": "There are no previews at the moment. Stay tuned!"
   },
   "pFVX6g": {
     "string": "Variant with these attributes already exists"
@@ -8229,10 +8265,6 @@
     "context": "button",
     "string": "Open in GraphiQL"
   },
-  "vM9quW": {
-    "context": "order payment",
-    "string": "Paid with Gift Card"
-  },
   "vN3qdA": {
     "context": "button",
     "string": "Undo"
@@ -8273,6 +8305,9 @@
   "vWapBZ": {
     "context": "card title",
     "string": "Order Weight"
+  },
+  "vXCeIi": {
+    "string": "Failed"
   },
   "vXFPD6": {
     "context": "voucher discount type",
@@ -8325,9 +8360,15 @@
     "context": "button",
     "string": "Create category"
   },
+  "vprU7C": {
+    "string": "Select visible order channels"
+  },
   "vwMO04": {
     "context": "draft order",
     "string": "Created"
+  },
+  "vz3yxp": {
+    "string": "Channels permissions"
   },
   "vzce9B": {
     "context": "customer gift cards card subtitle",
@@ -8672,12 +8713,19 @@
     "context": "table header channel col label",
     "string": "Channel"
   },
+  "yfhLcv": {
+    "string": "We are working on replacing plugins with apps. Read more about"
+  },
   "yhv3HX": {
     "context": "voucher requirements, header",
     "string": "Minimum Requirements"
   },
   "yi1HSj": {
     "string": "({numberOfCharacters} of {maxCharacters} characters)"
+  },
+  "yivxZJ": {
+    "context": "order payment",
+    "string": "Paid with Gift Card: ({link})"
   },
   "ymo+cm": {
     "context": "voucher discount",

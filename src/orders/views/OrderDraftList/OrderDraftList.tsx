@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
@@ -100,7 +101,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     },
   });
 
-  const { channel, availableChannels } = useAppChannel(false);
+  const { channel } = useAppChannel(false);
+  const user = useUser();
+  const channels = user?.user?.accessibleChannels ?? [];
+
   const limitOpts = useShopLimitsQuery({
     variables: {
       orders: true,
@@ -274,7 +278,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
       />
       <ChannelPickerDialog
-        channelsChoices={mapNodeToChoice(availableChannels)}
+        channelsChoices={mapNodeToChoice(channels)}
         confirmButtonState="success"
         defaultChoice={channel?.id}
         open={params.action === "create-order"}
