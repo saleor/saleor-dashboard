@@ -1,6 +1,6 @@
 import { Name } from "@dashboard/featureFlags/availableFlags";
 import { Box, Button, CloseIcon, Modal } from "@saleor/macaw-ui/next";
-import React, { ReactNode } from "react";
+import React from "react";
 
 import { Content } from "./Content";
 import { FlagList } from "./FlagList";
@@ -9,10 +9,14 @@ import { NoFlags } from "./NoFlags";
 import { useFlagsState } from "./useFlagsState";
 
 interface FeatureFlagsModalProps {
-  children: ReactNode;
+  open: boolean;
+  onChange: (open: boolean) => void;
 }
 
-export const FeatureFlagsModal = ({ children }: FeatureFlagsModalProps) => {
+export const FeatureFlagsModal = ({
+  open,
+  onChange,
+}: FeatureFlagsModalProps) => {
   const { selectedFlag, hasNoFlags, changeTab } = useFlagsState();
 
   const handleTabClick = (tabName: Name) => {
@@ -20,8 +24,7 @@ export const FeatureFlagsModal = ({ children }: FeatureFlagsModalProps) => {
   };
 
   return (
-    <Modal>
-      <Modal.Trigger>{children}</Modal.Trigger>
+    <Modal open={open} onChange={onChange}>
       <Modal.Content>
         <Box
           backgroundColor="surfaceNeutralPlain"
