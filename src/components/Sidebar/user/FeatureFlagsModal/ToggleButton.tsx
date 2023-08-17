@@ -1,3 +1,4 @@
+import { Name } from "@dashboard/featureFlags/availableFlags";
 import { Button, Spinner } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 
@@ -5,7 +6,7 @@ import { usePersistence } from "./usePersistence";
 
 interface ToggleButtonProps {
   isEnabled: boolean;
-  flagSlug: string;
+  flagSlug: Name;
 }
 
 export const ToggleButton = ({ isEnabled, flagSlug }: ToggleButtonProps) => {

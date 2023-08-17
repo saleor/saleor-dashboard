@@ -12,7 +12,7 @@ export interface FlagDefinition {
   };
 }
 
-export const AVAILABLE_FLAGS = GENERATED_FLAGS as FlagDefinition[];
+export const AVAILABLE_FLAGS = GENERATED_FLAGS;
 
 type TypedEntry = (typeof AVAILABLE_FLAGS)[number];
 type GeneralEntry = TypedEntry extends never ? FlagDefinition : TypedEntry;
@@ -36,7 +36,7 @@ export const isSupported = (name: string): name is Name =>
 export const asFlagValue = () =>
   AVAILABLE_FLAGS.reduce(toFlagValue, {} as FlagList);
 
-export const asFlagInfoArray = (list: GeneralFlagList): FlagDefinition[] =>
+export const asFlagInfoArray = (list: GeneralFlagList) =>
   AVAILABLE_FLAGS.map((el: GeneralEntry) => ({
     ...el,
     content: list[el.name],
@@ -44,7 +44,10 @@ export const asFlagInfoArray = (list: GeneralFlagList): FlagDefinition[] =>
 
 export const flagInfoToFlagList = (flagInfos: FlagDefinition[]): FlagList => {
   return flagInfos.reduce((prev, curr) => {
-    prev[curr.name] = new FlagValue(curr.content.enabled, curr.content.payload);
+    prev[curr.name as Name] = new FlagValue(
+      curr.content.enabled,
+      curr.content.payload,
+    );
 
     return prev;
   }, {} as FlagList);

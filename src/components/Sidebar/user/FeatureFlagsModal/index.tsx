@@ -55,7 +55,7 @@ export const FeatureFlagsModal = ({ children }: FeatureFlagsModalProps) => {
                 />
                 <Content
                   flagName={selectedFlag.displayName}
-                  flagSlug={selectedFlag.name}
+                  flagSlug={selectedFlag.name as Name}
                   component={selectedFlag.component}
                   isEnabled={selectedFlag.content.enabled}
                 />

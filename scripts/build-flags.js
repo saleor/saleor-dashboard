@@ -72,7 +72,7 @@ const template = `// @ts-nocheck
 ${imports}
 ${components}
 
-export const AVAILABLE_FLAGS = [${availableFilters}]
+export const AVAILABLE_FLAGS = [${availableFilters}] as const;
 `
 
 fs.writeFileSync(path.resolve(__dirname, "./../.featureFlags/generated.tsx"), template)

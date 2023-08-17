@@ -1,3 +1,4 @@
+import { Name } from "@dashboard/featureFlags/availableFlags";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
@@ -5,7 +6,7 @@ import { ToggleButton } from "./ToggleButton";
 
 interface ContentProps {
   flagName: string;
-  flagSlug: string;
+  flagSlug: Name;
   component: () => JSX.Element;
   isEnabled: boolean;
 }
@@ -33,7 +34,7 @@ export const Content = ({
         <Text variant="heading">{flagName}</Text>
         <ToggleButton isEnabled={isEnabled} flagSlug={flagSlug} />
       </Box>
-      <Box fontSize="bodyMedium">
+      <Box fontSize="bodyMedium" paddingBottom={12}>
         <TabComponent />
       </Box>
     </Box>

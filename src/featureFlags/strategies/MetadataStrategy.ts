@@ -22,10 +22,10 @@ export const flagListFromMetadata = (
     : (defaultsList as FlagList);
 
   return Object.keys(defaultsList).reduce((list: FlagList, key: string) => {
-    list[key] = defaultsList[key];
+    list[key as AvailableFlags.Name] = defaultsList[key as AvailableFlags.Name];
 
     if (flagList[key]) {
-      list[key] = flagList[key];
+      list[key as AvailableFlags.Name] = flagList[key];
     }
 
     return list;
