@@ -117,6 +117,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     allocationStrategy,
     markAsPaidStrategy,
     deleteExpiredOrdersAfter,
+    allowUnpaidOrders,
+    defaultTransactionFlowStrategy,
   }: FormData) => {
     const updateChannelMutation = updateChannel({
       variables: {
@@ -135,6 +137,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
           orderSettings: {
             markAsPaidStrategy,
             deleteExpiredOrdersAfter,
+            allowUnpaidOrders,
+            defaultTransactionFlowStrategy,
           },
         },
       },

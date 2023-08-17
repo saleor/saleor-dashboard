@@ -159,6 +159,7 @@ export const FilterPresetsSelect = ({
                   onRemove={() => {
                     onRemove(index + 1);
                   }}
+                  key={`filter-preset-${index}`}
                 >
                   {preset}
                 </FilterPresetItem>

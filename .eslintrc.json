@@ -101,17 +101,7 @@
     "array-callback-return": "off",
     "import/export": "off",
     "n/no-callback-literal": "off",
-    "no-case-declarations": "off",
-    "no-empty-pattern": "off",
-    "no-fallthrough": "off",
-    "no-new": "off",
-    "no-prototype-builtins": "off",
-    "no-unreachable": "off",
-    "no-useless-catch": "off",
-    "no-useless-escape": "off",
-    "prefer-promise-reject-errors": "off",
-    "react/display-name": "off",
-    "react/jsx-key": "warn"
+    "no-case-declarations": "warn"
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }

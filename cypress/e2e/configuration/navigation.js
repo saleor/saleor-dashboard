@@ -21,7 +21,7 @@ describe("Tests for menu navigation", () => {
   let menu;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createMenuViaApi(randomName).then(({ menu: menuResp }) => {
       menu = menuResp;
       cy.checkIfDataAreNotNull(menu);
@@ -29,7 +29,7 @@ describe("Tests for menu navigation", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

@@ -1,6 +1,5 @@
 import {
   borderHeight,
-  contentMaxWidth,
   savebarHeight,
 } from "@dashboard/components/AppLayout/consts";
 import { Box, Sprinkles } from "@saleor/macaw-ui/next";
@@ -45,10 +44,8 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
       // https://github.com/saleor/macaw-ui/issues/498
       className="mobile-full-height"
       display="grid"
-      margin="auto"
       gridTemplateColumns={gridTemplateColumnsValue}
       __gridTemplateRows="auto 1fr"
-      __maxWidth={contentMaxWidth}
       __height={heightValue}
     >
       {children}

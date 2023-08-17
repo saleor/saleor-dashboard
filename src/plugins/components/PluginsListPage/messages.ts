@@ -12,3 +12,15 @@ export const pluginsFilterErrorMessages = defineMessages({
     description: "plugin filters error messages channels",
   },
 });
+
+export const pluginsListPageMessages = defineMessages({
+  appStoreWarning: {
+    defaultMessage:
+      "We are working on replacing plugins with apps. Read more about",
+    id: "yfhLcv",
+  },
+  warningHeadline: {
+    defaultMessage: "Warning",
+    id: "3SVI5p",
+  },
+});

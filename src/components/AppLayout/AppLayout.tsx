@@ -12,7 +12,6 @@ import { useDevModeContext } from "../DevModePanel/hooks";
 import { useDevModeKeyTrigger } from "../DevModePanel/useDevModeKeyTrigger";
 import Navigator from "../Navigator";
 import { Sidebar } from "../Sidebar";
-import { contentMaxWidth } from "./consts";
 import { useStyles } from "./styles";
 import { extractQueryParams } from "./util";
 
@@ -96,8 +95,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             borderTopWidth={1}
             borderTopStyle="solid"
             borderColor="neutralPlain"
-            __maxWidth={contentMaxWidth}
-            margin="auto"
             zIndex="2"
           />
         </Box>

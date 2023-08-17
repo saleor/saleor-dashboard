@@ -3,7 +3,9 @@
 
 import faker from "faker";
 
-import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
+import {
+  PRODUCT_DETAILS,
+} from "../../elements/catalog/products/product-details";
 import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { urlList } from "../../fixtures/urlList";
@@ -52,14 +54,14 @@ describe("As an admin I should be able to create product", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createAttribute({ name }).then(attributeResp => {
       attribute = attributeResp;
       cy.checkIfDataAreNotNull({ attribute });
     });
   });
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

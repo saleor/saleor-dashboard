@@ -1,13 +1,9 @@
-// @ts-strict-ignore
 import {
   ChannelShippingZones,
   ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
-import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import Link from "@dashboard/components/Link";
-import PreviewPill from "@dashboard/components/PreviewPill";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "@dashboard/components/SingleAutocompleteSelectField";
@@ -16,6 +12,7 @@ import {
   CountryCode,
   MarkAsPaidStrategyEnum,
   StockSettingsInput,
+  TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
 import useClipboard from "@dashboard/hooks/useClipboard";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
@@ -26,6 +23,9 @@ import { Box, Button, CopyIcon, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
+import { DefaultTransactionFlowStrategy } from "./DefaultTransactionFlowStrategy";
+import { MarkAsPaid } from "./MarkAsPaid";
 import { messages } from "./messages";
 import { ExtendedFormHelperTextProps } from "./types";
 
@@ -42,6 +42,8 @@ export interface FormData extends StockSettingsInput {
   defaultCountry: CountryCode;
   markAsPaidStrategy: MarkAsPaidStrategyEnum;
   deleteExpiredOrdersAfter: number;
+  allowUnpaidOrders: boolean;
+  defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
 }
 
 export interface ChannelFormProps {
@@ -56,6 +58,7 @@ export interface ChannelFormProps {
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
   onDefaultCountryChange: (event: ChangeEvent) => void;
   onMarkAsPaidStrategyChange: () => void;
+  onTransactionFlowStrategyChange: () => void;
 }
 
 export const ChannelForm: React.FC<ChannelFormProps> = ({
@@ -70,6 +73,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   onCurrencyCodeChange,
   onDefaultCountryChange,
   onMarkAsPaidStrategyChange,
+  onTransactionFlowStrategyChange,
 }) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
@@ -83,6 +87,9 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
     ],
     errors,
   );
+
+  const renderCurrencySelection =
+    currencyCodes && typeof onCurrencyCodeChange === "function";
 
   return (
     <>
@@ -128,7 +135,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           <FormattedMessage {...messages.orderExpiration} />
         </Text>
         <Box paddingX={6}>
-          {currencyCodes ? (
+          {renderCurrencySelection ? (
             <SingleAutocompleteSelectField
               data-test-id="channel-currency-select-input"
               allowCustomValues
@@ -146,8 +153,8 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               label={intl.formatMessage(messages.channelCurrency)}
               choices={currencyCodes}
               name="currencyCode"
-              displayValue={selectedCurrencyCode}
-              value={selectedCurrencyCode}
+              displayValue={selectedCurrencyCode ?? ""}
+              value={selectedCurrencyCode ?? ""}
               onChange={onCurrencyCodeChange}
             />
           ) : (
@@ -200,57 +207,28 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             __height={12.5}
           />
         </Box>
-        <Box display="flex" gap={1.5} alignItems="center" paddingX={6}>
-          <ControlledSwitch
-            data-test-id="order-settings-mark-as-paid"
-            disabled={disabled}
-            checked={
-              data.markAsPaidStrategy ===
-              MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-            }
-            onChange={onMarkAsPaidStrategyChange}
-            name="markAsPaidStrategy"
-            label={
-              <span>
-                <FormattedMessage
-                  defaultMessage='"Mark as paid" feature creates a'
-                  id="MDOw8D"
-                />{" "}
-                <Link
-                  href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
-                  target="_blank"
-                  rel="noopener noreferer"
-                >
-                  <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
-                </Link>{" "}
-                <FormattedMessage
-                  defaultMessage="- used by Payment Apps"
-                  id="Fqe4aB"
-                />
-              </span>
-            }
-            secondLabel={
-              <span>
-                <FormattedMessage
-                  defaultMessage="If left unchecked it creates a"
-                  id="hHv0ih"
-                />{" "}
-                <Link
-                  href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
-                  target="_blank"
-                  rel="noopener noreferer"
-                >
-                  <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
-                </Link>{" "}
-                <FormattedMessage
-                  defaultMessage="- used by Payment Plugins"
-                  id="50lR2F"
-                />
-              </span>
-            }
-          />
-          <PreviewPill />
-        </Box>
+        <MarkAsPaid
+          isDiabled={disabled}
+          isChecked={
+            data.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+          }
+          onCheckedChange={onMarkAsPaidStrategyChange}
+        />
+        <Box />
+        <AllowUnpaidOrders
+          onChange={onChange}
+          isChecked={data.allowUnpaidOrders}
+          hasError={!!formErrors.allowUnpaidOrders}
+        />
+        <Box />
+        <DefaultTransactionFlowStrategy
+          onChange={onTransactionFlowStrategyChange}
+          isChecked={
+            data.defaultTransactionFlowStrategy ===
+            TransactionFlowStrategyEnum.AUTHORIZATION
+          }
+          hasError={!!formErrors.defaultTransactionFlowStrategy}
+        />
       </Box>
     </>
   );

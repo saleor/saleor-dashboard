@@ -1,6 +1,6 @@
 import { ParsedQs } from "qs";
 
-import { getAtributeInputType } from "../constants";
+import { getAttributeInputType } from "../constants";
 import { ConditionSelected } from "../FilterElement/ConditionSelected";
 import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
@@ -15,7 +15,7 @@ const STATIC_TO_LOAD = [
   "isPublished",
   "isVisibleInListing",
   "hasCategory",
-  "giftCard"
+  "giftCard",
 ];
 
 export const TokenType = {
@@ -28,18 +28,17 @@ export const TokenType = {
   STATIC: "s",
 } as const;
 
-
 export type TokenTypeValue = (typeof TokenType)[keyof typeof TokenType];
 
 const resolveTokenType = (name: string): TokenTypeValue => {
-  const key = `ATTRIBUTE_${name}` as keyof typeof TokenType
+  const key = `ATTRIBUTE_${name}` as keyof typeof TokenType;
 
   if (key in TokenType) {
-    return TokenType[key]
+    return TokenType[key];
   }
 
-  return TokenType.STATIC
-}
+  return TokenType.STATIC;
+};
 
 export class UrlEntry {
   constructor(key: string, value: string | string[]) {
@@ -54,14 +53,10 @@ export class UrlEntry {
   }
 
   public static forAttribute(condition: ConditionSelected, paramName: string) {
-    const inputType = getAtributeInputType(condition.conditionValue)
-    const tokenSlug = resolveTokenType(inputType || "")
+    const inputType = getAttributeInputType(condition.conditionValue);
+    const tokenSlug = resolveTokenType(inputType || "");
 
-    return UrlEntry.fromConditionSelected(
-      condition,
-      paramName,
-      tokenSlug,
-    );
+    return UrlEntry.fromConditionSelected(condition, paramName, tokenSlug);
   }
 
   public static forStatic(condition: ConditionSelected, paramName: string) {
@@ -102,7 +97,7 @@ export class UrlEntry {
 }
 
 export class UrlToken {
-  private constructor(
+  constructor(
     public name: string,
     public value: string | string[],
     public type: TokenTypeValue,
@@ -120,15 +115,18 @@ export class UrlToken {
   }
 
   public isAttribute() {
-    const result = Object.entries(TokenType)
-      .find(([_, slug]) => slug === this.type)
+    const result = Object.entries(TokenType).find(
+      ([_, slug]) => slug === this.type,
+    );
 
-    return result && result[0].includes("ATTRIBUTE")
+    return result && result[0].includes("ATTRIBUTE");
   }
 
   public hasDynamicValues() {
-    return TokenType.ATTRIBUTE_DROPDOWN === this.type
-      || TokenType.ATTRIBUTE_MULTISELECT === this.type
+    return (
+      TokenType.ATTRIBUTE_DROPDOWN === this.type ||
+      TokenType.ATTRIBUTE_MULTISELECT === this.type
+    );
   }
 
   public isLoadable() {

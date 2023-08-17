@@ -54,6 +54,7 @@ export const TimelineEventHeader: React.FC<
                     marginRight: 0.5,
                   })}
                   onClick={() => navigate(link)}
+                  key={`timeline-event-${link}`}
                 >
                   {text}
                 </Link>
@@ -61,7 +62,12 @@ export const TimelineEventHeader: React.FC<
             }
 
             return (
-              <Text variant="caption" size="large" marginRight={0.5}>
+              <Text
+                variant="caption"
+                size="large"
+                marginRight={0.5}
+                key={`timeline-event-${text}`}
+              >
                 {text}
               </Text>
             );

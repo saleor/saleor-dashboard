@@ -1,5 +1,5 @@
-// @ts-strict-ignore
 import avatarImg from "@assets/images/avatars/avatar.png";
+import { channels } from "@dashboard/fixtures";
 import {
   PermissionEnum,
   PermissionGroupDetailsFragment,
@@ -113,6 +113,7 @@ export const emptyPermissionGroup: PermissionGroupDetailsFragment = {
   userCanManage: true,
   users: [],
   __typename: "Group",
+
   permissions: [
     {
       code: PermissionEnum.MANAGE_PAGES,
@@ -120,6 +121,8 @@ export const emptyPermissionGroup: PermissionGroupDetailsFragment = {
       __typename: "Permission",
     },
   ],
+  accessibleChannels: [],
+  restrictedAccessToChannels: false,
 };
 
 export const errorsOfPermissionGroupCreate: PermissionGroupErrorFragment[] = [
@@ -161,6 +164,8 @@ export const permissionGroup: PermissionGroupDetailsFragment = {
       avatar: null,
     },
   ],
+  accessibleChannels: [],
+  restrictedAccessToChannels: false,
   __typename: "Group",
   permissions: [
     {
@@ -171,7 +176,46 @@ export const permissionGroup: PermissionGroupDetailsFragment = {
   ],
 };
 
-export const users: RelayToFlat<SearchStaffMembersQuery["search"]> = [
+export const permissionGroupWithChannels: NonNullable<PermissionGroupDetailsFragment> =
+  {
+    id: "R3JvdXA6Mw==",
+    name: "Editors",
+    userCanManage: true,
+    users: [
+      {
+        id: "VXNlcjoyMg==",
+        firstName: "Joshua",
+        lastName: "Mitchell",
+        __typename: "User",
+        email: "joshua.mitchell@example.com",
+        isActive: true,
+        avatar: null,
+      },
+      {
+        id: "VXNlcjoyMw==",
+        firstName: "Bryan",
+        lastName: "Rodgers",
+        __typename: "User",
+        email: "bryan.rodgers@example.com",
+        isActive: true,
+        avatar: null,
+      },
+    ],
+    accessibleChannels: [channels[0]],
+    restrictedAccessToChannels: true,
+    __typename: "Group",
+    permissions: [
+      {
+        code: PermissionEnum.MANAGE_PAGES,
+        name: "Manage pages.",
+        __typename: "Permission",
+      },
+    ],
+  };
+
+export const users: RelayToFlat<
+  NonNullable<SearchStaffMembersQuery["search"]>
+> = [
   {
     node: {
       id: "VXNlcjoyMQ==",

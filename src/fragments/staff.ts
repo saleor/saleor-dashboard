@@ -24,6 +24,10 @@ export const staffMemberDetailsFragment = gql`
     avatar(size: 512) {
       url
     }
+    metadata {
+      key
+      value
+    }
   }
 `;
 

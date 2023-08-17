@@ -1,7 +1,4 @@
-import { useRef } from "react";
-
 import * as AvailableFlags from "./../availableFlags";
-import { AvailableStrategies } from "./../strategies";
 import { DefaultsStrategy } from "./../strategies/DefaultsStrategy";
 import { Strategy } from "./../Strategy";
 import { reduceFlagListArray } from "./reduceFlagListArray";
@@ -35,9 +32,3 @@ export class FlagsResolver {
     return this.results;
   }
 }
-
-export const useFlagsResolver = (strategies: AvailableStrategies[]) => {
-  const resolver = useRef<FlagsResolver>(new FlagsResolver(strategies));
-
-  return resolver.current;
-};

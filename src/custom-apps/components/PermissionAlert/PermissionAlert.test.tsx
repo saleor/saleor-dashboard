@@ -23,6 +23,7 @@ jest.mock("@saleor/macaw-ui", () => ({
   useTheme: jest.fn(() => () => ({})),
   useStyles: jest.fn(() => () => ({})),
   makeStyles: jest.fn(() => () => ({})),
+  // eslint-disable-next-line react/display-name
   DialogHeader: jest.fn(() => () => <></>),
 }));
 

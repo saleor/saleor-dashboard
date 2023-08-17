@@ -12,6 +12,7 @@ import {
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
+import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
 import {
   createVoucher,
   discountOptions,
@@ -30,7 +31,7 @@ describe("As an admin I want to create voucher", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(
@@ -63,7 +64,7 @@ describe("As an admin I want to create voucher", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,
@@ -163,7 +164,7 @@ describe("As an admin I want to create voucher", () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
 
       cy.clearSessionData().loginUserViaRequest().visit(urlList.vouchers);
-      cy.expectSkeletonIsVisible();
+      ensureCanvasStatic();
       createChannel({ name }).then(channel => {
         createdChannel = channel;
 

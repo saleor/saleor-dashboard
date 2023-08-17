@@ -33,7 +33,6 @@ import React, {
 } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { contentMaxWidth } from "../AppLayout/consts";
 import { CardMenuItem } from "../CardMenu";
 import { ColumnPickerProps } from "../ColumnPicker";
 import { FullScreenContainer } from "./components/FullScreenContainer";
@@ -73,6 +72,7 @@ export interface MenuItemsActions {
 }
 
 export interface DatagridProps {
+  fillHandle?: boolean;
   addButtonLabel?: string;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
@@ -182,6 +182,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
       const columnIndex = availableColumns.findIndex(
         column => column.id === recentlyAddedColumn,
       );
+
+      if (columnIndex === -1) {
+        return;
+      }
+
       const datagridScroll = editor.current.scrollTo;
       datagridScroll(columnIndex, 0, "horizontal", 0, 0, { hAlign: "start" });
     }
@@ -495,8 +500,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   borderTopWidth={1}
                   borderTopStyle="solid"
                   borderColor="neutralPlain"
-                  __maxWidth={contentMaxWidth}
-                  margin="auto"
                 />
                 <DataEditor
                   {...datagridProps}
@@ -571,6 +574,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                           .fill(0)
                           .map((_, index) => (
                             <RowActions
+                              key={`row-actions-${index}`}
                               menuItems={menuItems(index)}
                               disabled={index >= rowsTotal - added.length}
                             />

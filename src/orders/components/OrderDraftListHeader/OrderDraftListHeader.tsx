@@ -1,3 +1,4 @@
+import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
 import { TopNav } from "@dashboard/components/AppLayout";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
@@ -5,7 +6,7 @@ import { RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPresetsProps } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -33,6 +34,8 @@ export const OrderDraftListHeader = ({
   onAdd,
 }: OrderDraftListHeaderProps) => {
   const intl = useIntl();
+  const userAccessibleChannels = useUserAccessibleChannels();
+  const hasAccessibleChannels = userAccessibleChannels.length > 0;
   const limitsReached = isLimitReached(limits, "orders");
 
   return (
@@ -71,18 +74,30 @@ export const OrderDraftListHeader = ({
           />
         </Box>
         <Box display="flex" alignItems="center" gap={2}>
-          <Button
-            variant="primary"
-            disabled={disabled || limitsReached}
-            onClick={onAdd}
-            data-test-id="create-draft-order-button"
-          >
-            <FormattedMessage
-              id="LshEVn"
-              defaultMessage="Create order"
-              description="button"
-            />
-          </Button>
+          <Tooltip>
+            <Tooltip.Trigger>
+              <Button
+                variant="primary"
+                disabled={disabled || limitsReached || !hasAccessibleChannels}
+                onClick={onAdd}
+                data-test-id="create-draft-order-button"
+              >
+                <FormattedMessage
+                  id="LshEVn"
+                  defaultMessage="Create order"
+                  description="button"
+                />
+              </Button>
+            </Tooltip.Trigger>
+            <Tooltip.Content>
+              {!hasAccessibleChannels && (
+                <FormattedMessage
+                  defaultMessage="You don't have access to any channels"
+                  id="grkY2V"
+                />
+              )}
+            </Tooltip.Content>
+          </Tooltip>
 
           {hasLimits(limits, "orders") && (
             <LimitsInfo

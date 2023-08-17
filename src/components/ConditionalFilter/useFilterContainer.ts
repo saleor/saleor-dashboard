@@ -5,6 +5,7 @@ import { useConditionalFilterContext } from "./context";
 import { FilterElement } from "./FilterElement";
 import { ConditionValue, ItemOption } from "./FilterElement/ConditionValue";
 import { Constraint } from "./FilterElement/Constraint";
+import { hasEmptyRows } from "./FilterElement/FilterElement";
 import { LeftOperand, LeftOperandsProvider } from "./LeftOperandsProvider";
 
 export const useFilterContainer = (
@@ -12,7 +13,16 @@ export const useFilterContainer = (
   leftOperandsProvider: LeftOperandsProvider,
 ) => {
   const {
-    containerState: { value, updateAt, removeAt, createEmpty, create, exist, updateBySlug },
+    containerState: {
+      value,
+      updateAt,
+      getAt,
+      removeAt,
+      createEmpty,
+      create,
+      exist,
+      updateBySlug,
+    },
   } = useConditionalFilterContext();
 
   const addEmpty = () => {
@@ -20,22 +30,33 @@ export const useFilterContainer = (
   };
 
   const updateLeftOperator = (position: string, leftOperator: LeftOperand) => {
+    const current = getAt(position);
+    const dependency = Constraint.getDependency(leftOperator.value);
+    const currentDependency =
+      FilterElement.isCompatible(current) &&
+      Constraint.getDependency(current.value.value);
+
     updateAt(position, el => el.updateLeftOperator(leftOperator));
 
-    const dependency = Constraint.getDependency(leftOperator.value)
+    if (currentDependency && !dependency) {
+      updateBySlug(currentDependency, el => {
+        el.clearConstraint();
+      });
 
-    if (!dependency) return
-   
-    if (!exist(dependency)) {
-      create(FilterElement.createStaticBySlug(dependency))
-      return
+      return;
     }
 
-    updateBySlug(dependency, (el) => {
-      const newConstraint = Constraint.fromSlug(dependency)
+    if (!dependency) return;
 
-      if (newConstraint) el.setConstraint(newConstraint)
-    })
+    if (!exist(dependency)) {
+      create(FilterElement.createStaticBySlug(dependency));
+      return;
+    }
+
+    updateBySlug(dependency, el => {
+      const newConstraint = Constraint.fromSlug(dependency);
+      if (newConstraint) el.setConstraint(newConstraint);
+    });
   };
 
   const updateLeftLoadingState = (position: string, loading: boolean) => {
@@ -85,6 +106,7 @@ export const useFilterContainer = (
 
   return {
     value,
+    hasEmptyRows: hasEmptyRows(value),
     addEmpty,
     removeAt,
     updateLeftOperator,

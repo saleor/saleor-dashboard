@@ -1,5 +1,7 @@
 // @ts-strict-ignore
 import {
+  AllocationStrategyEnum,
+  ChannelFragment,
   PermissionEnum,
   ShopInfoQuery,
   ShopLimitFragment,
@@ -354,6 +356,43 @@ export const sortPageProps: SortPage<string> = {
     asc: true,
   },
 };
+
+export const channels: ChannelFragment[] = [
+  {
+    id: "Q2hhbm5lbDoyMjQ0",
+    isActive: true,
+    name: "Channel-PLN",
+    slug: "channel-pln",
+    currencyCode: "PLN",
+    defaultCountry: {
+      code: "US",
+      country: "United States of America",
+      __typename: "CountryDisplay",
+    },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      __typename: "StockSettings",
+    },
+    __typename: "Channel",
+  },
+  {
+    id: "Q2hhbm5lbDoyMjQz",
+    isActive: true,
+    name: "Channel-USD",
+    slug: "default-channel",
+    currencyCode: "USD",
+    defaultCountry: {
+      code: "US",
+      country: "United States of America",
+      __typename: "CountryDisplay",
+    },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      __typename: "StockSettings",
+    },
+    __typename: "Channel",
+  },
+];
 
 export const permissions: ShopInfoQuery["shop"]["permissions"] = [
   {

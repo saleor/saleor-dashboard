@@ -30,6 +30,8 @@ export enum ListViews {
   DRAFT_LIST = "DRAFT_LIST",
   NAVIGATION_LIST = "NAVIGATION_LIST",
   ORDER_LIST = "ORDER_LIST",
+  ORDER_DETAILS_LIST = "ORDER_DETAILS_LIST",
+  ORDER_DRAFT_DETAILS_LIST = "ORDER_DRAFT_DETAILS_LIST",
   PAGES_LIST = "PAGES_LIST",
   PAGE_TYPES_LIST = "PAGE_TYPES_LIST",
   PLUGINS_LIST = "PLUGIN_LIST",
@@ -79,7 +81,7 @@ export interface SortPage<TSortKey extends string> {
 
 export interface ListActionsWithoutToolbar {
   toggle: (id: string) => void;
-  toggleAll: (items: React.ReactNodeArray, selected: number) => void;
+  toggleAll: (items: Node[], selected: number) => void;
   isChecked: (id: string) => boolean;
   selected: number;
 }

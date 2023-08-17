@@ -13,7 +13,9 @@ import {
   addStripePaymentAndGetConfirmationData,
   getShippingMethodIdFromCheckout,
 } from "../../../support/api/utils/ordersUtils";
-import { createProductWithShipping } from "../../../support/api/utils/products/productsUtils";
+import {
+  createProductWithShipping,
+} from "../../../support/api/utils/products/productsUtils";
 
 describe("Stripe payments", () => {
   const startsWith = "Stripe-" + faker.datatype.number();
@@ -28,7 +30,7 @@ describe("Stripe payments", () => {
   let cardData;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.fixture("cards").then(({ stripe }) => {
       paymentCards = stripe;
       cardData = {
@@ -56,7 +58,7 @@ describe("Stripe payments", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createCheckout({
       channelSlug: defaultChannel.slug,
       email,

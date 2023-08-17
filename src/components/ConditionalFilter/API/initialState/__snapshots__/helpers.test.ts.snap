@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConditionalFilter / API / createInitialStateFromData should create initial state from queries 1`] = `
+Object {
+  "attribute": Object {
+    "attribute-1": Object {
+      "choices": Array [
+        Object {
+          "label": "Choice 1",
+          "originalSlug": undefined,
+          "slug": "choice-1",
+          "value": "1",
+        },
+        Object {
+          "label": "Choice 2",
+          "originalSlug": undefined,
+          "slug": "choice-2",
+          "value": "2",
+        },
+      ],
+      "inputType": "MULTISELECT",
+      "label": "Attribute 1",
+      "slug": "attribute-1",
+      "value": "1",
+    },
+    "attribute-2": Object {
+      "choices": Array [
+        Object {
+          "label": "Yes",
+          "slug": "true",
+          "type": undefined,
+          "value": "true",
+        },
+        Object {
+          "label": "No",
+          "slug": "false",
+          "type": undefined,
+          "value": "false",
+        },
+      ],
+      "inputType": "BOOLEAN",
+      "label": "Attribute 2",
+      "slug": "attribute-2",
+      "value": "2",
+    },
+  },
+  "category": Array [
+    Object {
+      "label": "Category 1",
+      "originalSlug": undefined,
+      "slug": "category-1",
+      "value": "1",
+    },
+    Object {
+      "label": "Category 2",
+      "originalSlug": undefined,
+      "slug": "category-2",
+      "value": "2",
+    },
+  ],
+  "channel": Array [
+    Object {
+      "label": "Channel 1",
+      "slug": "channel-1",
+      "value": "1",
+    },
+  ],
+  "collection": Array [
+    Object {
+      "label": "Collection 1",
+      "originalSlug": undefined,
+      "slug": "collection-1",
+      "value": "1",
+    },
+    Object {
+      "label": "Collection 2",
+      "originalSlug": undefined,
+      "slug": "collection-2",
+      "value": "2",
+    },
+  ],
+  "giftCard": Array [
+    Object {
+      "label": "Yes",
+      "slug": "true",
+      "type": undefined,
+      "value": "true",
+    },
+    Object {
+      "label": "No",
+      "slug": "false",
+      "type": undefined,
+      "value": "false",
+    },
+  ],
+  "hasCategory": Array [
+    Object {
+      "label": "Yes",
+      "slug": "true",
+      "type": undefined,
+      "value": "true",
+    },
+    Object {
+      "label": "No",
+      "slug": "false",
+      "type": undefined,
+      "value": "false",
+    },
+  ],
+  "isAvailable": Array [
+    Object {
+      "label": "Yes",
+      "slug": "true",
+      "type": undefined,
+      "value": "true",
+    },
+    Object {
+      "label": "No",
+      "slug": "false",
+      "type": undefined,
+      "value": "false",
+    },
+  ],
+  "isPublished": Array [
+    Object {
+      "label": "Yes",
+      "slug": "true",
+      "type": undefined,
+      "value": "true",
+    },
+    Object {
+      "label": "No",
+      "slug": "false",
+      "type": undefined,
+      "value": "false",
+    },
+  ],
+  "isVisibleInListing": Array [
+    Object {
+      "label": "Yes",
+      "slug": "true",
+      "type": undefined,
+      "value": "true",
+    },
+    Object {
+      "label": "No",
+      "slug": "false",
+      "type": undefined,
+      "value": "false",
+    },
+  ],
+  "productType": Array [
+    Object {
+      "label": "Product Type 1",
+      "originalSlug": undefined,
+      "slug": "product-type-1",
+      "value": "1",
+    },
+    Object {
+      "label": "Product Type 2",
+      "originalSlug": undefined,
+      "slug": "product-type-2",
+      "value": "2",
+    },
+  ],
+}
+`;

@@ -36,16 +36,17 @@ const isStaticBoolean = (rowType: RowType) => {
     "isPublished",
     "isVisibleInListing",
     "hasCategory",
-    "giftCard"
-  ].includes(rowType)
-}
+    "giftCard",
+    "price",
+  ].includes(rowType);
+};
 
 const createAPIHandler = (
   selectedRow: FilterElement,
   client: ApolloClient<unknown>,
   inputValue: string,
 ): Handler => {
-  const rowType = selectedRow.rowType()
+  const rowType = selectedRow.rowType();
 
   if (rowType === "attribute" && selectedRow.value.type === "BOOLEAN") {
     return new BooleanValuesHandler([
@@ -53,15 +54,15 @@ const createAPIHandler = (
         label: "Yes",
         value: "true",
         type: AttributeInputTypeEnum.BOOLEAN,
-        slug: "true"
+        slug: "true",
       },
       {
         label: "No",
         value: "false",
         type: AttributeInputTypeEnum.BOOLEAN,
-        slug: "false"
-      }
-    ])
+        slug: "false",
+      },
+    ]);
   }
 
   if (rowType === "attribute") {
@@ -78,15 +79,15 @@ const createAPIHandler = (
         label: "Yes",
         value: "true",
         type: rowType,
-        slug: "true"
+        slug: "true",
       },
       {
         label: "No",
         value: "false",
         type: rowType,
-        slug: "false"
-      }
-    ])
+        slug: "false",
+      },
+    ]);
   }
 
   if (rowType === "collection") {
@@ -105,7 +106,7 @@ const createAPIHandler = (
     return new ChannelHandler(client, inputValue);
   }
 
-  throw new Error("Unknown filter element");
+  throw new Error(`Unknown filter element: "${rowType}"`);
 };
 
 export const useProductFilterAPIProvider = (): FilterAPIProvider => {

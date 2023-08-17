@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConditionalFilter / ValueProvider / TokenArray creates filter container with removing constrain if there is no depepdent rows 1`] = `
+TokenArray [
+  FilterElement {
+    "condition": Condition {
+      "loading": false,
+      "options": ConditionOptions [
+        Object {
+          "label": "is",
+          "type": "select",
+          "value": "input-5",
+        },
+      ],
+      "selected": ConditionSelected {
+        "conditionValue": Object {
+          "label": "is",
+          "type": "select",
+          "value": "input-5",
+        },
+        "loading": false,
+        "options": Array [],
+        "value": Object {
+          "label": "Channel PLN",
+          "slug": "channel-pln",
+          "value": "channel-pln",
+        },
+      },
+    },
+    "constraint": undefined,
+    "loading": false,
+    "value": ExpressionValue {
+      "label": "Channel",
+      "type": "channel",
+      "value": "channel",
+    },
+  },
+]
+`;
+
+exports[`ConditionalFilter / ValueProvider / TokenArray should create filter container from a given response 1`] = `
+TokenArray [
+  FilterElement {
+    "condition": Condition {
+      "loading": false,
+      "options": ConditionOptions [
+        Object {
+          "label": "is",
+          "type": "number",
+          "value": "input-1",
+        },
+        Object {
+          "label": "lower",
+          "type": "number",
+          "value": "input-2",
+        },
+        Object {
+          "label": "greater",
+          "type": "number",
+          "value": "input-3",
+        },
+        Object {
+          "label": "between",
+          "type": "number.range",
+          "value": "input-4",
+        },
+      ],
+      "selected": ConditionSelected {
+        "conditionValue": Object {
+          "label": "is",
+          "type": "number",
+          "value": "input-1",
+        },
+        "loading": false,
+        "options": Array [],
+        "value": "123",
+      },
+    },
+    "constraint": undefined,
+    "loading": false,
+    "value": ExpressionValue {
+      "label": "Price",
+      "type": "price",
+      "value": "price",
+    },
+  },
+  "AND",
+  FilterElement {
+    "condition": Condition {
+      "loading": false,
+      "options": ConditionOptions [
+        Object {
+          "label": "is",
+          "type": "select",
+          "value": "input-5",
+        },
+      ],
+      "selected": ConditionSelected {
+        "conditionValue": Object {
+          "label": "is",
+          "type": "select",
+          "value": "input-5",
+        },
+        "loading": false,
+        "options": Array [],
+        "value": Object {
+          "label": "Channel PLN",
+          "slug": "channel-pln",
+          "value": "channel-pln",
+        },
+      },
+    },
+    "constraint": Constraint {
+      "dependsOn": Array [
+        "price",
+        "isVisibleInListing",
+        "isAvailable",
+        "isPublished",
+      ],
+      "disabled": Array [
+        "left",
+        "condition",
+      ],
+      "removable": false,
+    },
+    "loading": false,
+    "value": ExpressionValue {
+      "label": "Channel",
+      "type": "channel",
+      "value": "channel",
+    },
+  },
+]
+`;

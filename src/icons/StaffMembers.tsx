@@ -1,7 +1,7 @@
 import { createSvgIcon, SvgIconProps } from "@material-ui/core";
 import React from "react";
 
-const StaffMembers = createSvgIcon(
+const StaffMembersIcon = createSvgIcon(
   <path
     fillRule="evenodd"
     clipRule="evenodd"
@@ -11,6 +11,6 @@ const StaffMembers = createSvgIcon(
   "StaffMembers",
 );
 
-export default (props: SvgIconProps) => (
-  <StaffMembers {...props} viewBox="0 0 32 32" />
-);
+export default function StaffMembers(props: SvgIconProps) {
+  return <StaffMembersIcon {...props} viewBox="0 0 32 32" />;
+}

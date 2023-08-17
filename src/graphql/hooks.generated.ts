@@ -171,6 +171,30 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
+export const UserUserPermissionWithSourcePermissionGroupsFragmentDoc = gql`
+    fragment UserUserPermissionWithSourcePermissionGroups on UserPermission {
+  ...UserPermission
+  sourcePermissionGroups(userId: $userId) {
+    id
+  }
+}
+    ${UserPermissionFragmentDoc}`;
+export const ChannelFragmentDoc = gql`
+    fragment Channel on Channel {
+  id
+  isActive
+  name
+  slug
+  currencyCode
+  defaultCountry {
+    code
+    country
+  }
+  stockSettings {
+    allocationStrategy
+  }
+}
+    `;
 export const UserFragmentDoc = gql`
     fragment User on User {
   id
@@ -178,14 +202,23 @@ export const UserFragmentDoc = gql`
   firstName
   lastName
   isStaff
+  metadata {
+    key
+    value
+  }
   userPermissions {
     ...UserPermission
   }
-  avatar {
+  avatar(size: 128) {
     url
   }
+  accessibleChannels {
+    ...Channel
+  }
+  restrictedAccessToChannels
 }
-    ${UserPermissionFragmentDoc}`;
+    ${UserPermissionFragmentDoc}
+${ChannelFragmentDoc}`;
 export const CategoryFragmentDoc = gql`
     fragment Category on Category {
   id
@@ -223,22 +256,6 @@ export const ChannelErrorFragmentDoc = gql`
   message
 }
     `;
-export const ChannelFragmentDoc = gql`
-    fragment Channel on Channel {
-  id
-  isActive
-  name
-  slug
-  currencyCode
-  defaultCountry {
-    code
-    country
-  }
-  stockSettings {
-    allocationStrategy
-  }
-}
-    `;
 export const WarehouseFragmentDoc = gql`
     fragment Warehouse on Warehouse {
   id
@@ -255,6 +272,8 @@ export const ChannelDetailsFragmentDoc = gql`
   orderSettings {
     markAsPaidStrategy
     deleteExpiredOrdersAfter
+    allowUnpaidOrders
+    defaultTransactionFlowStrategy
   }
 }
     ${ChannelFragmentDoc}
@@ -2116,6 +2135,10 @@ export const PermissionGroupMemberFragmentDoc = gql`
 export const PermissionGroupDetailsFragmentDoc = gql`
     fragment PermissionGroupDetails on Group {
   ...PermissionGroup
+  restrictedAccessToChannels
+  accessibleChannels {
+    ...Channel
+  }
   permissions {
     ...Permission
   }
@@ -2124,6 +2147,7 @@ export const PermissionGroupDetailsFragmentDoc = gql`
   }
 }
     ${PermissionGroupFragmentDoc}
+${ChannelFragmentDoc}
 ${PermissionFragmentDoc}
 ${PermissionGroupMemberFragmentDoc}`;
 export const PluginConfigurationBaseFragmentDoc = gql`
@@ -2738,6 +2762,10 @@ export const StaffMemberDetailsFragmentDoc = gql`
   }
   avatar(size: 512) {
     url
+  }
+  metadata {
+    key
+    value
   }
 }
     ${StaffMemberFragmentDoc}`;
@@ -3817,6 +3845,68 @@ export function useExtensionListLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type ExtensionListQueryHookResult = ReturnType<typeof useExtensionListQuery>;
 export type ExtensionListLazyQueryHookResult = ReturnType<typeof useExtensionListLazyQuery>;
 export type ExtensionListQueryResult = Apollo.QueryResult<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>;
+export const AppWebhookDeliveriesDocument = gql`
+    query AppWebhookDeliveries($appId: ID!) {
+  app(id: $appId) {
+    webhooks {
+      id
+      name
+      isActive
+      syncEvents {
+        name
+      }
+      asyncEvents {
+        name
+      }
+      eventDeliveries(first: 10) {
+        edges {
+          node {
+            createdAt
+            status
+            eventType
+            attempts(first: 10) {
+              edges {
+                node {
+                  createdAt
+                  status
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAppWebhookDeliveriesQuery__
+ *
+ * To run a query within a React component, call `useAppWebhookDeliveriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppWebhookDeliveriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppWebhookDeliveriesQuery({
+ *   variables: {
+ *      appId: // value for 'appId'
+ *   },
+ * });
+ */
+export function useAppWebhookDeliveriesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>(AppWebhookDeliveriesDocument, options);
+      }
+export function useAppWebhookDeliveriesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>(AppWebhookDeliveriesDocument, options);
+        }
+export type AppWebhookDeliveriesQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesQuery>;
+export type AppWebhookDeliveriesLazyQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesLazyQuery>;
+export type AppWebhookDeliveriesQueryResult = Apollo.QueryResult<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>;
 export const AttributeBulkDeleteDocument = gql`
     mutation AttributeBulkDelete($ids: [ID!]!) {
   attributeBulkDelete(ids: $ids) {
@@ -5460,15 +5550,22 @@ export type AddressValidationRulesLazyQueryHookResult = ReturnType<typeof useAdd
 export type AddressValidationRulesQueryResult = Apollo.QueryResult<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>;
 export const _GetDynamicLeftOperandsDocument = gql`
     query _GetDynamicLeftOperands($first: Int!, $query: String!) {
-  attributes(first: $first, filter: {type: PRODUCT_TYPE, search: $query}) {
+  attributes(
+    first: $first
+    search: $query
+    where: {type: {eq: PRODUCT_TYPE}, inputType: {oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH]}}
+  ) {
     edges {
       node {
         id
         name
         slug
         inputType
+        __typename
       }
+      __typename
     }
+    __typename
   }
 }
     `;
@@ -5504,7 +5601,7 @@ export type _GetDynamicLeftOperandsQueryResult = Apollo.QueryResult<Types._GetDy
 export const _GetChannelOperandsDocument = gql`
     query _GetChannelOperands {
   channels {
-    id
+    id: slug
     name
     slug
   }
@@ -5680,6 +5777,7 @@ export const _SearchAttributeOperandsDocument = gql`
               slug: id
               id
               name
+              originalSlug: slug
             }
           }
         }
@@ -5727,6 +5825,7 @@ export const _GetAttributeChoicesDocument = gql`
           slug: id
           id
           name
+          originalSlug: slug
         }
       }
     }
@@ -6128,14 +6227,14 @@ export const ShopInfoDocument = gql`
     name
     trackInventoryByDefault
     permissions {
-      code
-      name
+      ...Permission
     }
     version
   }
 }
     ${CountryWithCodeFragmentDoc}
-${LanguageFragmentDoc}`;
+${LanguageFragmentDoc}
+${PermissionFragmentDoc}`;
 
 /**
  * __useShopInfoQuery__
@@ -8608,20 +8707,20 @@ export type CustomerGiftCardListQueryHookResult = ReturnType<typeof useCustomerG
 export type CustomerGiftCardListLazyQueryHookResult = ReturnType<typeof useCustomerGiftCardListLazyQuery>;
 export type CustomerGiftCardListQueryResult = Apollo.QueryResult<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>;
 export const HomeDocument = gql`
-    query Home($channel: String!, $datePeriod: DateRangeInput!, $PERMISSION_MANAGE_PRODUCTS: Boolean!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
-  salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    query Home($channel: String!, $datePeriod: DateRangeInput!, $hasPermissionToManageProducts: Boolean!, $hasPermissionToManageOrders: Boolean!) {
+  salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $hasPermissionToManageOrders) {
     gross {
       amount
       currency
     }
   }
-  ordersToday: orders(filter: {created: $datePeriod}, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
+  ordersToday: orders(filter: {created: $datePeriod}, channel: $channel) @include(if: $hasPermissionToManageOrders) {
     totalCount
   }
-  ordersToFulfill: orders(filter: {status: READY_TO_FULFILL}, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
+  ordersToFulfill: orders(filter: {status: READY_TO_FULFILL}, channel: $channel) @include(if: $hasPermissionToManageOrders) {
     totalCount
   }
-  ordersToCapture: orders(filter: {status: READY_TO_CAPTURE}, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
+  ordersToCapture: orders(filter: {status: READY_TO_CAPTURE}, channel: $channel) @include(if: $hasPermissionToManageOrders) {
     totalCount
   }
   productsOutOfStock: products(
@@ -8630,7 +8729,7 @@ export const HomeDocument = gql`
   ) {
     totalCount
   }
-  productTopToday: reportProductSales(period: TODAY, first: 5, channel: $channel) @include(if: $PERMISSION_MANAGE_PRODUCTS) {
+  productTopToday: reportProductSales(period: TODAY, first: 5, channel: $channel) @include(if: $hasPermissionToManageProducts) {
     edges {
       node {
         id
@@ -8657,7 +8756,7 @@ export const HomeDocument = gql`
       }
     }
   }
-  activities: homepageEvents(last: 10) @include(if: $PERMISSION_MANAGE_ORDERS) {
+  activities: homepageEvents(last: 10) @include(if: $hasPermissionToManageOrders) {
     edges {
       node {
         amount
@@ -8695,8 +8794,8 @@ export const HomeDocument = gql`
  *   variables: {
  *      channel: // value for 'channel'
  *      datePeriod: // value for 'datePeriod'
- *      PERMISSION_MANAGE_PRODUCTS: // value for 'PERMISSION_MANAGE_PRODUCTS'
- *      PERMISSION_MANAGE_ORDERS: // value for 'PERMISSION_MANAGE_ORDERS'
+ *      hasPermissionToManageProducts: // value for 'hasPermissionToManageProducts'
+ *      hasPermissionToManageOrders: // value for 'hasPermissionToManageOrders'
  *   },
  * });
  */
@@ -13839,13 +13938,14 @@ export type InitialProductFilterProductTypesQueryHookResult = ReturnType<typeof 
 export type InitialProductFilterProductTypesLazyQueryHookResult = ReturnType<typeof useInitialProductFilterProductTypesLazyQuery>;
 export type InitialProductFilterProductTypesQueryResult = Apollo.QueryResult<Types.InitialProductFilterProductTypesQuery, Types.InitialProductFilterProductTypesQueryVariables>;
 export const ProductListDocument = gql`
-    query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $where: ProductWhereInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!) {
+    query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $search: String, $where: ProductWhereInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!) {
   products(
     before: $before
     after: $after
     first: $first
     last: $last
     filter: $filter
+    search: $search
     where: $where
     sortBy: $sort
     channel: $channel
@@ -13889,6 +13989,7 @@ ${ProductListAttributeFragmentDoc}`;
  *      last: // value for 'last'
  *      before: // value for 'before'
  *      filter: // value for 'filter'
+ *      search: // value for 'search'
  *      where: // value for 'where'
  *      channel: // value for 'channel'
  *      sort: // value for 'sort'

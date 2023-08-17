@@ -4,30 +4,30 @@ export const home = gql`
   query Home(
     $channel: String!
     $datePeriod: DateRangeInput!
-    $PERMISSION_MANAGE_PRODUCTS: Boolean!
-    $PERMISSION_MANAGE_ORDERS: Boolean!
+    $hasPermissionToManageProducts: Boolean!
+    $hasPermissionToManageOrders: Boolean!
   ) {
     salesToday: ordersTotal(period: TODAY, channel: $channel)
-      @include(if: $PERMISSION_MANAGE_ORDERS) {
+      @include(if: $hasPermissionToManageOrders) {
       gross {
         amount
         currency
       }
     }
     ordersToday: orders(filter: { created: $datePeriod }, channel: $channel)
-      @include(if: $PERMISSION_MANAGE_ORDERS) {
+      @include(if: $hasPermissionToManageOrders) {
       totalCount
     }
     ordersToFulfill: orders(
       filter: { status: READY_TO_FULFILL }
       channel: $channel
-    ) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    ) @include(if: $hasPermissionToManageOrders) {
       totalCount
     }
     ordersToCapture: orders(
       filter: { status: READY_TO_CAPTURE }
       channel: $channel
-    ) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    ) @include(if: $hasPermissionToManageOrders) {
       totalCount
     }
     productsOutOfStock: products(
@@ -40,7 +40,7 @@ export const home = gql`
       period: TODAY
       first: 5
       channel: $channel
-    ) @include(if: $PERMISSION_MANAGE_PRODUCTS) {
+    ) @include(if: $hasPermissionToManageProducts) {
       edges {
         node {
           id
@@ -68,7 +68,7 @@ export const home = gql`
       }
     }
     activities: homepageEvents(last: 10)
-      @include(if: $PERMISSION_MANAGE_ORDERS) {
+      @include(if: $hasPermissionToManageOrders) {
       edges {
         node {
           amount

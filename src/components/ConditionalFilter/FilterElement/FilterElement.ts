@@ -1,31 +1,34 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
-import { ConditionItem, ConditionOptions, StaticElementName } from "./ConditionOptions";
+import {
+  ConditionItem,
+  ConditionOptions,
+  StaticElementName,
+} from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
 import { ConditionValue, ItemOption } from "./ConditionValue";
 import { Constraint } from "./Constraint";
 
-class ExpressionValue {
+export class ExpressionValue {
   constructor(
     public value: string,
     public label: string,
     public type: string,
   ) {}
 
-  public static fromSlug (slug: string) {
-    const option = STATIC_OPTIONS.find(o => o.slug === slug)
+  public isEmpty() {
+    return this.value.length === 0 || this.label.length === 0;
+  }
 
-    if (!option) return ExpressionValue.emptyStatic()
+  public static fromSlug(slug: string) {
+    const option = STATIC_OPTIONS.find(o => o.slug === slug);
 
-    return new ExpressionValue(
-      option.slug,
-      option.label,
-      option.type,
-    );
+    if (!option) return ExpressionValue.emptyStatic();
+
+    return new ExpressionValue(option.slug, option.label, option.type);
   }
 
   public static fromLeftOperand(leftOperand: LeftOperand) {
@@ -65,16 +68,16 @@ class ExpressionValue {
 }
 
 export class FilterElement {
-  private constructor(
+  public constructor(
     public value: ExpressionValue,
     public condition: Condition,
     public loading: boolean,
     public constraint?: Constraint,
   ) {
-    const newConstraint = Constraint.fromSlug(this.value.value)
+    const newConstraint = Constraint.fromSlug(this.value.value);
 
     if (newConstraint) {
-      this.constraint = newConstraint
+      this.constraint = newConstraint;
     }
   }
 
@@ -122,7 +125,7 @@ export class FilterElement {
   }
 
   public isEmpty() {
-    return this.value.type === "e";
+    return this.value.isEmpty() || this.condition.isEmpty();
   }
 
   public isStatic() {
@@ -145,14 +148,13 @@ export class FilterElement {
     return null;
   }
 
-  public setConstraint (constraint: Constraint) {
-    this.constraint = constraint
+  public setConstraint(constraint: Constraint) {
+    this.constraint = constraint;
   }
 
-  public clearConstraint () {
-    this.constraint = undefined
+  public clearConstraint() {
+    this.constraint = undefined;
   }
-
 
   public asUrlEntry(): UrlEntry {
     if (this.isAttribute()) {
@@ -162,12 +164,17 @@ export class FilterElement {
     return UrlEntry.forStatic(this.condition.selected, this.value.value);
   }
 
-  public static isCompatible(element: unknown): element is FilterElement {
-    return typeof element !== "string" && !Array.isArray(element)
+  public equals(element: FilterElement) {
+    return this.value.value === element.value.value;
   }
 
-  public static fromValueEntry(valueEntry: any) {
-    return new FilterElement(valueEntry.value, valueEntry.condition, false);
+  public static isCompatible(element: unknown): element is FilterElement {
+    return (
+      typeof element === "object" &&
+      !Array.isArray(element) &&
+      element !== null &&
+      "value" in element
+    );
   }
 
   public static createEmpty() {
@@ -178,7 +185,7 @@ export class FilterElement {
     );
   }
 
-  public static createStaticBySlug (slug: StaticElementName) {
+  public static createStaticBySlug(slug: StaticElementName) {
     return new FilterElement(
       ExpressionValue.fromSlug(slug),
       Condition.emptyFromSlug(slug),
@@ -205,5 +212,11 @@ export class FilterElement {
     return FilterElement.createEmpty();
   }
 }
+
+export const hasEmptyRows = (container: FilterContainer) => {
+  return container
+    .filter(FilterElement.isCompatible)
+    .some((e: FilterElement) => e.isEmpty());
+};
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;

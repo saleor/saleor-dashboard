@@ -2,7 +2,7 @@
 /// <reference types="../../../support"/>
 
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
-import { SEARCH } from "../../../elements/shared";
+import { PRESETS, SEARCH } from "../../../elements/shared";
 import { LOCAL_STORAGE_KEYS, urlList } from "../../../fixtures/";
 import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
 import {
@@ -19,11 +19,11 @@ import {
 
 describe("As a user I should be able to save selected filters with search queries under the given name", () => {
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(
-    "should be able to add preset. TC: SALEOR_3802",
+    "should be able to add preset. TC: SALEOR_2712",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       cy.visit(urlList.products);
@@ -90,7 +90,7 @@ describe("As a user I should be able to save selected filters with search querie
           localStorage.getItem(LOCAL_STORAGE_KEYS.keys.productPresets),
         ).to.not.contains(`query=${secondPreset}`);
         clickShowSavedPresetsButton();
-        cy.contains(firstPreset).should("be.visible");
+        cy.get(PRESETS.savedPreset).contains(firstPreset).should("be.visible");
       });
     },
   );

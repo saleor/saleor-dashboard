@@ -92,12 +92,20 @@ export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
     { type: "number", label: "greater", value: "input-3" },
     { type: "number.range", label: "between", value: "input-4" },
   ],
-  DATE_TIME: [{ type: "date", label: "is", value: "input-1" }],
-  DATE: [{ type: "date", label: "is", value: "input-1" }],
+  DATE_TIME: [
+    { type: "datetime", label: "lower", value: "input-2" },
+    { type: "datetime", label: "greater", value: "input-3" },
+    { type: "datetime.range", label: "between", value: "input-4" },
+  ],
+  DATE: [
+    { type: "date", label: "lower", value: "input-1" },
+    { type: "date", label: "greater", value: "input-2" },
+    { type: "date.range", label: "between", value: "input-4" },
+  ],
   SWATCH: [{ type: "multiselect", label: "in", value: "input-2" }],
 };
 
-export const getAtributeInputType = (item: ConditionItem | null) => {
+export const getAttributeInputType = (item: ConditionItem | null) => {
   const result = Object.entries(ATTRIBUTE_INPUT_TYPE_CONDITIONS).find(
     ([_, value]) =>
       value.find(
@@ -129,7 +137,7 @@ export const createBooleanOptions = (type?: string): ItemOption[] => [
   booleanOptionFalse(type),
 ];
 
-export const createBoleanOption = (
+export const createBooleanOption = (
   flag: boolean,
   type?: string,
 ): ItemOption => {

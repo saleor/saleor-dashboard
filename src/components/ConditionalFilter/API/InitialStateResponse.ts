@@ -1,12 +1,17 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { createBoleanOption } from "../constants";
+import { createBooleanOption } from "../constants";
 import { AttributeInputType } from "../FilterElement/ConditionOptions";
 import { ItemOption } from "../FilterElement/ConditionValue";
 import { UrlToken } from "../ValueProvider/UrlToken";
 
 export interface AttributeDTO {
-  choices: Array<{ label: string; value: string; slug: string }>;
+  choices: Array<{
+    label: string;
+    value: string;
+    slug: string;
+    originalSlug?: string;
+  }>;
   inputType: AttributeInputType;
   label: string;
   slug: string;
@@ -58,7 +63,7 @@ export class InitialStateResponse implements InitialState {
     if (token.isAttribute()) {
       const attr = this.attribute[token.name];
       return attr.inputType === "BOOLEAN"
-        ? createBoleanOption(
+        ? createBooleanOption(
             token.value === "true",
             AttributeInputTypeEnum.BOOLEAN,
           )
@@ -69,12 +74,12 @@ export class InitialStateResponse implements InitialState {
       return [token.value] as string[];
     }
 
-    return this.getEntryByname(token.name).filter(
+    return this.getEntryByName(token.name).filter(
       ({ slug }) => slug && token.value.includes(slug),
     );
   }
 
-  private getEntryByname(name: string) {
+  private getEntryByName(name: string) {
     switch (name) {
       case "category":
         return this.category;
