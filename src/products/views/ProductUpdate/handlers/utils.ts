@@ -141,9 +141,12 @@ export function getBulkVariantUpdateInputs(
 
 const createToUpdateInput =
   (data: DatagridChangeOpts) =>
-  (variant, variantIndex): ProductVariantBulkUpdateInput => ({
+  (
+    variant: ProductFragment["variants"][number],
+    variantIndex: number,
+  ): ProductVariantBulkUpdateInput => ({
     id: variant.id,
-    attributes: getAttributeData(data.updates, variantIndex, data.removed),
+    attributes: getVariantAttributesForUpdate(data, variantIndex, variant),
     sku: getSkuData(data.updates, variantIndex, data.removed),
     name: getNameData(data.updates, variantIndex, data.removed),
     stocks: getVaraintUpdateStockData(
@@ -154,6 +157,31 @@ const createToUpdateInput =
     ),
     channelListings: getUpdateVariantChannelInputs(data, variantIndex, variant),
   });
+
+const getVariantAttributesForUpdate = (
+  data: DatagridChangeOpts,
+  variantIndex: number,
+  variant: ProductFragment["variants"][number],
+) => {
+  const updatedAttributes = getAttributeData(
+    data.updates,
+    variantIndex,
+    data.removed,
+  );
+  // Re-send current values for all not-updated attributes, in case some of them were required
+  const notUpdatedAttributes: ReturnType<typeof getAttributeData> =
+    variant.attributes
+      .filter(attribute =>
+        updatedAttributes.find(
+          updatedAttribute => updatedAttribute.id !== attribute.attribute.id,
+        ),
+      )
+      .map(attribute => ({
+        id: attribute.attribute.id,
+        values: attribute.values.map(({ name }) => name),
+      }));
+  return [...updatedAttributes, ...notUpdatedAttributes];
+};
 
 const byAvailability = (variant: ProductVariantBulkUpdateInput): boolean =>
   variant.name !== undefined ||
