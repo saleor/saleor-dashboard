@@ -1,11 +1,15 @@
 // @ts-strict-ignore
 import { LazyQueryResult, QueryLazyOptions } from "@apollo/client";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
-import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import {
+  getChannelAvailabilityLabel,
+  getChannelAvailabilityStatus,
+} from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
   dropdownCell,
   readonlyTextCell,
+  statusCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import {
@@ -252,18 +256,22 @@ function getAvailabilityCellContent(
   >[number]["channelListings"][number],
 ) {
   if (!!selectedChannnel) {
-    return readonlyTextCell(
+    return statusCell(
+      getChannelAvailabilityStatus(selectedChannnel),
       intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
     );
   }
 
-  return readonlyTextCell(
-    rowData?.channelListings?.length
-      ? intl.formatMessage(messages.dropdownLabel, {
-          channelCount: rowData?.channelListings?.length,
-        })
-      : intl.formatMessage(messages.noChannels),
-  );
+  if (rowData?.channelListings?.length) {
+    return statusCell(
+      "success",
+      intl.formatMessage(messages.dropdownLabel, {
+        channelCount: rowData?.channelListings?.length,
+      }),
+    );
+  } else {
+    return statusCell("error", intl.formatMessage(messages.noChannels));
+  }
 }
 
 function getDescriptionCellContent(

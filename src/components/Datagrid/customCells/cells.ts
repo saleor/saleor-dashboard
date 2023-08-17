@@ -3,6 +3,7 @@ import {
   numberCellEmptyValue,
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { Locale } from "@dashboard/components/Locale";
+import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
 
 import {
@@ -182,6 +183,24 @@ export function thumbnailCell(
       kind: "thumbnail-cell",
       image,
       name,
+    },
+  };
+}
+
+export function statusCell(
+  status: DotStatus,
+  value: string,
+  opts?: Partial<GridCell>,
+): GridCell {
+  return {
+    ...common,
+    ...opts,
+    kind: GridCellKind.Custom,
+    copyData: status ?? "",
+    data: {
+      kind: "status-cell",
+      value,
+      status,
     },
   };
 }
