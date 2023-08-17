@@ -557,10 +557,6 @@
   "1X6HtI": {
     "string": "All Categories"
   },
-  "1dpNll": {
-    "context": "order payment",
-    "string": "Paid with Gift Card: ({link})"
-  },
   "1gzck6": {
     "string": "{firstName} {lastName}"
   },
@@ -8690,6 +8686,10 @@
   },
   "yi1HSj": {
     "string": "({numberOfCharacters} of {maxCharacters} characters)"
+  },
+  "yivxZJ": {
+    "context": "order payment",
+    "string": "Paid with Gift Card: ({link})"
   },
   "ymo+cm": {
     "context": "voucher discount",
