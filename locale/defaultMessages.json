@@ -758,6 +758,10 @@
     "context": "code ending with label",
     "string": "Code ending with {last4CodeChars}"
   },
+  "38dc43": {
+    "context": "Features preview",
+    "string": "Features preview"
+  },
   "39yi8w": {
     "context": "selected currency",
     "string": "Selected currency"
@@ -6844,6 +6848,9 @@
     "context": "Require email confirmation link",
     "string": "Require email confirmation link"
   },
+  "krer6Z": {
+    "string": "Features preview"
+  },
   "kuo4fW": {
     "context": "dialog title",
     "string": "Capture manual transaction"
@@ -7407,6 +7414,9 @@
   "pCy5EP": {
     "context": "gift card history message",
     "string": "Gift card was activated"
+  },
+  "pEf/m+": {
+    "string": "There are no previews at the moment. Stay tuned!"
   },
   "pFVX6g": {
     "string": "Variant with these attributes already exists"

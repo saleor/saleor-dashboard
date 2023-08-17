@@ -202,6 +202,10 @@ export const UserFragmentDoc = gql`
   firstName
   lastName
   isStaff
+  metadata {
+    key
+    value
+  }
   userPermissions {
     ...UserPermission
   }
@@ -2757,6 +2761,10 @@ export const StaffMemberDetailsFragmentDoc = gql`
   }
   avatar(size: 512) {
     url
+  }
+  metadata {
+    key
+    value
   }
 }
     ${StaffMemberFragmentDoc}`;
