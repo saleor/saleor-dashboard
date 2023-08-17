@@ -7,14 +7,15 @@ import {
 } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
-  dropdownCell,
+  autoTagsCell,
+  // dropdownCell,
   readonlyTextCell,
   statusCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import {
   DropdownChoice,
-  emptyDropdownCellValue,
+  // emptyDropdownCellValue,
 } from "@dashboard/components/Datagrid/customCells/DropdownCell";
 import { ThumbnailCellProps } from "@dashboard/components/Datagrid/customCells/ThumbnailCell";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
@@ -163,7 +164,7 @@ interface GetCellContentProps {
 
 export function createGetCellContent({
   columns,
-  getProductTypes,
+  // getProductTypes,
   intl,
   locale,
   products,
@@ -190,7 +191,7 @@ export function createGetCellContent({
 
     switch (columnId) {
       case "productType":
-        return getProductTypeCellContent(change, rowData, getProductTypes);
+        return getProductTypeCellContent(rowData);
       case "availability":
         return getAvailabilityCellContent(rowData, intl, channel);
 
@@ -214,39 +215,26 @@ export function createGetCellContent({
 }
 
 function getProductTypeCellContent(
-  change: { value: DropdownChoice },
+  // change: { value: DropdownChoice },
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
-  getProductTypes: (query: string) => Promise<DropdownChoice[]>,
+  // getProductTypes: (query: string) => Promise<DropdownChoice[]>,
 ) {
-  const value = change?.value ?? getRowDataValue(rowData, change?.value);
-
-  return dropdownCell(
-    value,
-    {
-      allowCustomValues: false,
-      emptyOption: false,
-      update: (text: string) =>
-        getProductTypes(value.label !== text ? text : ""),
-    },
-    {
-      cursor: "pointer",
-    },
-  );
+  return autoTagsCell(rowData.productType?.name);
 }
 
-function getRowDataValue(
-  rowData?: RelayToFlat<ProductListQuery["products"]>[number],
-  changeValue?: DropdownChoice,
-): DropdownChoice {
-  if (changeValue === null || !rowData) {
-    return emptyDropdownCellValue;
-  }
+// function getRowDataValue(
+//   rowData?: RelayToFlat<ProductListQuery["products"]>[number],
+//   changeValue?: DropdownChoice,
+// ): DropdownChoice {
+//   if (changeValue === null || !rowData) {
+//     return emptyDropdownCellValue;
+//   }
 
-  return {
-    label: rowData.productType?.name,
-    value: rowData.productType?.id,
-  };
-}
+//   return {
+//     label: rowData.productType?.name,
+//     value: rowData.productType?.id,
+//   };
+// }
 
 function getAvailabilityCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],

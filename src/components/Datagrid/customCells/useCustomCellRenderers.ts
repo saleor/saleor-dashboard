@@ -3,6 +3,7 @@ import { useExtraCells } from "@glideapps/glide-data-grid-cells";
 import { useTheme } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
+import { autoTagsCellRenderer } from "./AutoTagCell";
 import { dropdownCellRenderer } from "./DropdownCell";
 import { moneyCellRenderer } from "./Money/MoneyCell";
 import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
@@ -20,6 +21,7 @@ export function useCustomCellRenderers() {
       moneyCellRenderer(),
       moneyDiscountedCellRenderer(),
       numberCellRenderer(locale),
+      autoTagsCellRenderer(),
       statusCellRenderer(themeValues),
       dropdownCellRenderer,
       thumbnailCellRenderer,

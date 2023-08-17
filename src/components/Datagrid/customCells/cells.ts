@@ -196,11 +196,27 @@ export function statusCell(
     ...common,
     ...opts,
     kind: GridCellKind.Custom,
-    copyData: status ?? "",
+    copyData: value ?? "",
     data: {
       kind: "status-cell",
       value,
       status,
+    },
+  };
+}
+
+export function autoTagsCell(
+  value: string,
+  opts?: Partial<GridCell>,
+): GridCell {
+  return {
+    ...common,
+    ...opts,
+    kind: GridCellKind.Custom,
+    copyData: value ?? "",
+    data: {
+      kind: "auto-tags-cell",
+      value,
     },
   };
 }
