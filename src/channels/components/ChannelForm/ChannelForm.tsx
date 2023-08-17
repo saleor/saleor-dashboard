@@ -19,13 +19,7 @@ import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import {
-  Box,
-  Button,
-  CopyIcon,
-  Input,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Box, Button, CopyIcon, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -49,7 +43,7 @@ export interface FormData extends StockSettingsInput {
   markAsPaidStrategy: MarkAsPaidStrategyEnum;
   deleteExpiredOrdersAfter: number;
   allowUnpaidOrders: boolean;
-  defaultTransactionFlowStrategy: TransactionFlowStrategyEnum
+  defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
 }
 
 export interface ChannelFormProps {
@@ -79,7 +73,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   onCurrencyCodeChange,
   onDefaultCountryChange,
   onMarkAsPaidStrategyChange,
-  onTransactionFlowStrategyChange
+  onTransactionFlowStrategyChange,
 }) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
@@ -215,7 +209,9 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
         </Box>
         <MarkAsPaid
           isDiabled={disabled}
-          isChecked={data.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW}
+          isChecked={
+            data.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+          }
           onCheckedChange={onMarkAsPaidStrategyChange}
         />
         <Box />
@@ -227,7 +223,10 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
         <Box />
         <DefaultTransactionFlowStrategy
           onChange={onTransactionFlowStrategyChange}
-          isChecked={data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.AUTHORIZATION}
+          isChecked={
+            data.defaultTransactionFlowStrategy ===
+            TransactionFlowStrategyEnum.AUTHORIZATION
+          }
           hasError={!!formErrors.defaultTransactionFlowStrategy}
         />
       </Box>

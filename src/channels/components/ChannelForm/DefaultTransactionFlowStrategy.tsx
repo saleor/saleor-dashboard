@@ -1,24 +1,23 @@
-
 import Link from "@dashboard/components/Link";
 import PreviewPill from "@dashboard/components/PreviewPill";
-import { FormChange, } from "@dashboard/hooks/useForm";
-import {
-  Box,
-  Checkbox,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
 
 interface AllowUnpaidOrdersProps {
-  onChange: FormChange
-  isChecked: boolean
-  hasError: boolean
+  onChange: FormChange;
+  isChecked: boolean;
+  hasError: boolean;
 }
 
-export const DefaultTransactionFlowStrategy = ({ onChange, isChecked, hasError }: AllowUnpaidOrdersProps) => (
+export const DefaultTransactionFlowStrategy = ({
+  onChange,
+  isChecked,
+  hasError,
+}: AllowUnpaidOrdersProps) => (
   <Box paddingX={6}>
     <Checkbox
       name="defaultTransactionFlowStrategy"
@@ -45,17 +44,18 @@ export const DefaultTransactionFlowStrategy = ({ onChange, isChecked, hasError }
         <FormattedMessage
           {...messages.defaultTransactionFlowStrategyDescription}
           values={{
-            link: (<Link
-              href="https://docs.saleor.io/docs/3.x/api-reference/payments/enums/transaction-flow-strategy-enum"
-              target="_blank"
-              rel="noopener noreferer"
-            >
-              <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
-            </Link>)
-  
+            link: (
+              <Link
+                href="https://docs.saleor.io/docs/3.x/api-reference/payments/enums/transaction-flow-strategy-enum"
+                target="_blank"
+                rel="noopener noreferer"
+              >
+                <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
+              </Link>
+            ),
           }}
         />
       </Text>
     </Box>
   </Box>
-)
+);

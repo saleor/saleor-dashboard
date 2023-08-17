@@ -40,7 +40,7 @@ export const useAuthRedirection = () => {
 
   useEffect(() => {
     if (shouldRedirect && !authenticated && !authenticating) {
-      handleAuthentication()
+      handleAuthentication();
     }
   }, [shouldRedirect, authenticated, authenticating]);
 

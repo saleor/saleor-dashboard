@@ -1,22 +1,22 @@
 import Link from "@dashboard/components/Link";
 import PreviewPill from "@dashboard/components/PreviewPill";
-import {
-  Box,
-  Checkbox,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui/next";
 import React from "react";
-import { FormattedMessage, } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
 
 interface MarkAsPaidProps {
-  isDiabled: boolean
-  isChecked: boolean
+  isDiabled: boolean;
+  isChecked: boolean;
   onCheckedChange: () => void;
 }
 
-export const MarkAsPaid = ({ isDiabled, isChecked, onCheckedChange }: MarkAsPaidProps) => (
+export const MarkAsPaid = ({
+  isDiabled,
+  isChecked,
+  onCheckedChange,
+}: MarkAsPaidProps) => (
   <Box paddingX={6} marginTop={4}>
     <Checkbox
       data-test-id="order-settings-mark-as-paid"
@@ -49,7 +49,7 @@ export const MarkAsPaid = ({ isDiabled, isChecked, onCheckedChange }: MarkAsPaid
               >
                 <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
               </Link>
-            )
+            ),
           }}
         />
       </Text>
@@ -71,10 +71,10 @@ export const MarkAsPaid = ({ isDiabled, isChecked, onCheckedChange }: MarkAsPaid
               >
                 <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
               </Link>
-            )
+            ),
           }}
         />
       </Text>
     </Box>
   </Box>
-)
+);

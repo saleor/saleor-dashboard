@@ -4,55 +4,52 @@ import { numeric } from "./numeric";
 
 const VALIDATORS = {
   NUMERIC: numeric,
-  price: numeric
-} as Record<string, ValidateFn>
+  price: numeric,
+} as Record<string, ValidateFn>;
 
+const toValidated = (
+  element: string | FilterElement | FilterContainer,
+  index: number,
+): RawValidateEntry => {
+  if (!FilterElement.isCompatible(element)) return false;
 
-const toValidated = (element: string | FilterElement | FilterContainer, index: number): RawValidateEntry => {
-  if (!FilterElement.isCompatible(element)) return false
+  const key = element.isAttribute() ? element.value.type : element.value.value;
 
-  const key = element.isAttribute() ?
-    element.value.type :
-    element.value.value
-
-  const validateFn = VALIDATORS[key as keyof typeof VALIDATORS]
+  const validateFn = VALIDATORS[key as keyof typeof VALIDATORS];
 
   if (validateFn) {
-    return validateFn(element, index)
+    return validateFn(element, index);
   }
 
-  return false
-}
+  return false;
+};
 
-const hasErrors = (element: RawValidateEntry): element is ErrorEntry  => {
-  return element !== false
-}
+const hasErrors = (element: RawValidateEntry): element is ErrorEntry => {
+  return element !== false;
+};
 
 export interface ErrorEntry {
-  row: number
+  row: number;
   leftText?: string;
   conditionText?: string;
   rightText?: string;
 }
 
-type RawValidateEntry = false | ErrorEntry
-type ValidateFn = (element: FilterElement, row: number) =>  RawValidateEntry
-
+type RawValidateEntry = false | ErrorEntry;
+type ValidateFn = (element: FilterElement, row: number) => RawValidateEntry;
 
 export class Validator {
-  constructor(
-    public container: FilterContainer
-  ) { }
+  constructor(public container: FilterContainer) {}
 
   public isValid() {
-    return !this.validate().some(hasErrors)
+    return !this.validate().some(hasErrors);
   }
 
   public getErrors() {
-    return this.validate().filter(hasErrors)
+    return this.validate().filter(hasErrors);
   }
 
   private validate() {
-    return this.container.map(toValidated)
+    return this.container.map(toValidated);
   }
 }

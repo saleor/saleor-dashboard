@@ -1,23 +1,22 @@
-
 import PreviewPill from "@dashboard/components/PreviewPill";
-import { FormChange, } from "@dashboard/hooks/useForm";
-import {
-  Box,
-  Checkbox,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
 
 interface AllowUnpaidOrdersProps {
-  onChange: FormChange
-  isChecked: boolean
-  hasError: boolean
+  onChange: FormChange;
+  isChecked: boolean;
+  hasError: boolean;
 }
 
-export const AllowUnpaidOrders = ({ onChange, isChecked, hasError }: AllowUnpaidOrdersProps) => (
+export const AllowUnpaidOrders = ({
+  onChange,
+  isChecked,
+  hasError,
+}: AllowUnpaidOrdersProps) => (
   <Box paddingX={6}>
     <Checkbox
       name="allowUnpaidOrders"
@@ -45,4 +44,4 @@ export const AllowUnpaidOrders = ({ onChange, isChecked, hasError }: AllowUnpaid
       </Text>
     </Box>
   </Box>
-)
+);
