@@ -6,12 +6,14 @@ import { Locale } from "@dashboard/components/Locale";
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
 
+import { AutoTagsCell } from "./AutoTagsCell";
 import {
   DropdownCell,
   DropdownCellContentProps,
   DropdownChoice,
 } from "./DropdownCell";
 import { MoneyCell, MoneyDiscuntedCell } from "./Money";
+import { StatusCell } from "./StatusCell";
 import { ThumbnailCell } from "./ThumbnailCell";
 
 const common = {
@@ -191,7 +193,7 @@ export function statusCell(
   status: DotStatus,
   value: string,
   opts?: Partial<GridCell>,
-): GridCell {
+): StatusCell {
   return {
     ...common,
     ...opts,
@@ -208,15 +210,16 @@ export function statusCell(
 export function autoTagsCell(
   value: string,
   opts?: Partial<GridCell>,
-): GridCell {
+): AutoTagsCell {
   return {
     ...common,
     ...opts,
-    kind: GridCellKind.Custom,
+
     copyData: value ?? "",
     data: {
       kind: "auto-tags-cell",
       value,
     },
+    kind: GridCellKind.Custom,
   };
 }

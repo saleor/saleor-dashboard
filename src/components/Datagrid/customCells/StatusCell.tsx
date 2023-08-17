@@ -1,13 +1,24 @@
-import { getStatusDotColor } from "@dashboard/components/StatusDot/StatusDot";
-import { CustomCell, GridCellKind } from "@glideapps/glide-data-grid";
+import {
+  DotStatus,
+  getStatusDotColor,
+} from "@dashboard/components/StatusDot/StatusDot";
+import {
+  CustomCell,
+  CustomRenderer,
+  GridCellKind,
+} from "@glideapps/glide-data-grid";
 import { ThemeTokensValues } from "@saleor/macaw-ui/next";
 
 interface StatusCellProps {
-  readonly color: string;
+  readonly status: DotStatus;
+  readonly value: string;
+  readonly kind: "status-cell";
 }
-type StatusCell = CustomCell<StatusCellProps>;
+export type StatusCell = CustomCell<StatusCellProps>;
 
-export const statusCellRenderer = (themeValues: ThemeTokensValues) => ({
+export const statusCellRenderer = (
+  themeValues: ThemeTokensValues,
+): CustomRenderer<StatusCell> => ({
   kind: GridCellKind.Custom,
   isMatch: (c): c is StatusCell => (c.data as any).kind === "status-cell",
   draw: (args, cell) => {

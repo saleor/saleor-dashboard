@@ -1,10 +1,11 @@
 import {
   CustomCell,
+  CustomRenderer,
   getMiddleCenterBias,
   GridCellKind,
 } from "@glideapps/glide-data-grid";
 
-const stringToHue = str => {
+const stringToHue = (str: string): number => {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
@@ -16,11 +17,12 @@ const stringToHue = str => {
 
 interface AutoTagsCellProps {
   readonly kind: "auto-tags-cell";
+  readonly value: string;
 }
 
 export type AutoTagsCell = CustomCell<AutoTagsCellProps>;
 
-export const autoTagsCellRenderer = () => ({
+export const autoTagsCellRenderer = (): CustomRenderer<AutoTagsCell> => ({
   kind: GridCellKind.Custom,
   isMatch: (c): c is AutoTagsCell => (c.data as any).kind === "auto-tags-cell",
   draw: (args, cell) => {
