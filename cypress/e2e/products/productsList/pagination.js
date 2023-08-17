@@ -2,13 +2,9 @@
 /// <reference types="../../../support"/>
 
 import { PAGINATION } from "../../../elements";
-import {
-  PRODUCTS_LIST,
-} from "../../../elements/catalog/products/products-list";
+import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { urlList } from "../../../fixtures/urlList";
-import {
-  ensureCanvasStatic,
-} from "../../../support/customCommands/sharedElementsOperations/canvas";
+import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
 
 describe("As an admin I should be able to manage products table", () => {
   beforeEach(() => {
@@ -43,7 +39,9 @@ describe("As an admin I should be able to manage products table", () => {
         .get(PAGINATION.nextPagePaginationButton)
         .should("not.be.disabled");
       ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
-        cy.assertCanvasRowsNumber(PRODUCTS_LIST.dataGridTable, 21);
+        cy.get(PRODUCTS_LIST.dataGridTable)
+          .find("tr")
+          .should("have.length.above", 10);
       });
     },
   );

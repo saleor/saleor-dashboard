@@ -3,23 +3,14 @@
 
 import faker from "faker";
 
-import {
-  BUTTON_SELECTORS,
-  PAGE_DETAILS_SELECTORS,
-} from "../../elements";
-import {
-  pageDetailsUrl,
-  urlList,
-} from "../../fixtures/urlList";
+import { BUTTON_SELECTORS, PAGE_DETAILS_SELECTORS } from "../../elements";
+import { pageDetailsUrl, urlList } from "../../fixtures/urlList";
 import {
   attributeRequests,
   pageRequests,
   pageTypeRequests,
 } from "../../support/api/requests";
-import {
-  pageDetailsPage,
-  pagesPage,
-} from "../../support/pages";
+import { pageDetailsPage, pagesPage } from "../../support/pages";
 
 describe("Tests for pages", () => {
   const startsWith = `Pages`;
@@ -65,7 +56,7 @@ describe("Tests for pages", () => {
       pagesPage.selectPageTypeOnIndex(0);
       cy.clickSubmitButton();
       cy.waitForRequestAndCheckIfNoErrors("@PageType");
-      pageDetailsPage.typePageName(pageName);
+      pageDetailsPage.typePageName(pageName).should("have.value", pageName);
       cy.get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox).click();
       pagesPage.savePage().then(page => {
         pageRequests.getPage(page.id).then(page => {
