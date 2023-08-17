@@ -8250,10 +8250,6 @@
     "context": "button",
     "string": "Open in GraphiQL"
   },
-  "vM9quW": {
-    "context": "order payment",
-    "string": "Paid with Gift Card"
-  },
   "vN3qdA": {
     "context": "button",
     "string": "Undo"
@@ -8711,6 +8707,10 @@
   },
   "yi1HSj": {
     "string": "({numberOfCharacters} of {maxCharacters} characters)"
+  },
+  "yivxZJ": {
+    "context": "order payment",
+    "string": "Paid with Gift Card: ({link})"
   },
   "ymo+cm": {
     "context": "voucher discount",
