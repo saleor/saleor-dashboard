@@ -26,6 +26,7 @@ module.exports = defineConfig({
       grepFilterSpecs: true,
       grepOmitFiltered: true,
       numTestsKeptInMemory: 10,
+      experimentalMemoryManagement: true,
     },
     setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
