@@ -1,13 +1,13 @@
 import {
   CustomCell,
   CustomRenderer,
+  getMiddleCenterBias,
   GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import React from "react";
 
 import { usePriceField } from "../../../PriceField/usePriceField";
-import { drawCurrency, drawPrice } from "./utils";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";
@@ -46,22 +46,66 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   );
 };
 
+// todo replace this with actual user settings. Using this to avoid prop drilling
+const locale = (navigator && navigator.language) || "en";
+
 export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
   kind: GridCellKind.Custom,
   isMatch: (c): c is MoneyCell => (c.data as any).kind === "money-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
     const { currency, value } = cell.data;
+
     const hasValue = value === 0 ? true : !!value;
-    const formatted = value?.toString() ?? "-";
 
-    drawPrice(ctx, theme, rect, formatted);
+    if (!hasValue) {
+      return true;
+    }
 
-    ctx.save();
+    // todo add range support
+    const format = new Intl.NumberFormat(locale, {
+      style: "currency",
+      currencyDisplay: "code",
+      currency,
+    }).formatToParts(value);
 
-    drawCurrency(ctx, theme, rect, hasValue ? currency : "-");
+    const shortFormat = new Intl.NumberFormat(locale, {
+      style: "currency",
+      currencyDisplay: "symbol",
+      currency,
+    }).formatToParts(value);
 
-    ctx.restore();
+    // todo replace with macaw-ui theme font weight values
+    ctx.font = `550 ${theme.baseFontStyle} ${theme.fontFamily}`;
+
+    const w = ctx.measureText(format.map(x => x.value).join(""));
+    const isHugging = w.width > rect.width - theme.cellHorizontalPadding * 2;
+
+    let drawingPosition = rect.x + rect.width - theme.cellHorizontalPadding;
+    const y = rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme);
+
+    const displayFormat = isHugging ? shortFormat : format;
+
+    for (const item of displayFormat.reverse()) {
+      ctx.textAlign = "right";
+      if (item.type === "integer") {
+        ctx.fillStyle = theme.textLight;
+      } else if (item.type === "currency" && item.value.length > 2) {
+        ctx.fillStyle = "#a4a4a4";
+      } else {
+        ctx.fillStyle = theme.textLight;
+      }
+
+      if (item.type === "currency" && item.value.length > 2 && !isHugging) {
+        ctx.textAlign = "left";
+        ctx.fillText(item.value, rect.x + theme.cellHorizontalPadding, y);
+      } else {
+        ctx.fillText(item.value, drawingPosition, y);
+        const textWidth = ctx.measureText(item.value).width;
+        drawingPosition -= textWidth;
+      }
+    }
+
     return true;
   },
   provideEditor: () => ({

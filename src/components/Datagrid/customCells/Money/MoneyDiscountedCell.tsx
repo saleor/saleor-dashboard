@@ -68,6 +68,7 @@ const MoneyDiscountedCellEditor = ({ onFinishedEditing, value }) => {
   );
 };
 
+// todo add new design
 export const moneyDiscountedCellRenderer =
   (): CustomRenderer<MoneyDiscuntedCell> => ({
     kind: GridCellKind.Custom,
