@@ -196,7 +196,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     onPresetDelete,
     onPresetSave,
     onPresetUpdate,
-    presetIdToDelete,
+    getPresetNameToDelete,
     presets,
     selectedPreset,
     setPresetIdToDelete,
@@ -511,7 +511,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
+        tabName={getPresetNameToDelete()}
       />
       <ProductTypePickerDialog
         confirmButtonState="success"

@@ -6,10 +6,7 @@ import {
   useBulkRemoveCustomersMutation,
   useListCustomersQuery,
 } from "@dashboard/graphql";
-import {
-  getPresetNameToDelete,
-  useFilterPresets,
-} from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -75,7 +72,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     onPresetSave,
     onPresetUpdate,
     setPresetIdToDelete,
-    presetIdToDelete,
+    getPresetNameToDelete,
   } = useFilterPresets({
     params,
     reset: clearRowSelection,
@@ -229,7 +226,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={getPresetNameToDelete(presets, presetIdToDelete)}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );
