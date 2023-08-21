@@ -88,12 +88,10 @@ export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
 
     for (const item of displayFormat.reverse()) {
       ctx.textAlign = "right";
-      if (item.type === "integer") {
+      if (item.type === "currency" && item.value.length > 2) {
         ctx.fillStyle = theme.textLight;
-      } else if (item.type === "currency" && item.value.length > 2) {
-        ctx.fillStyle = "#a4a4a4";
       } else {
-        ctx.fillStyle = theme.textLight;
+        ctx.fillStyle = theme.textDark;
       }
 
       if (item.type === "currency" && item.value.length > 2 && !isHugging) {
