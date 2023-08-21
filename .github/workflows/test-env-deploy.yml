@@ -256,8 +256,6 @@ jobs:
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
-        with:
-          tag: Critical, ${{github.event.action}}
 
       - name: Install dependencies
         working-directory: .github/workflows
