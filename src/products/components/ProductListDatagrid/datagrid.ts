@@ -8,6 +8,7 @@ import {
 import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
   autoTagsCell,
+  dateCell,
   // dropdownCell,
   readonlyTextCell,
   statusCell,
@@ -202,7 +203,7 @@ export function createGetCellContent({
       case "price":
         return getPriceCellContent(intl, locale, channel);
       case "date":
-        return getUpdatedAtrCellContent(rowData, locale);
+        return getDateCellContent(rowData);
     }
 
     if (columnId.startsWith("attribute")) {
@@ -214,6 +215,11 @@ export function createGetCellContent({
   };
 }
 
+function getDateCellContent(
+  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+) {
+  return dateCell(rowData?.updatedAt);
+}
 function getProductTypeCellContent(
   // change: { value: DropdownChoice },
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
@@ -297,19 +303,6 @@ function getPriceCellContent(
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
 
   return readonlyTextCell(getMoneyRange(locale, intl, from, to));
-}
-
-function getUpdatedAtrCellContent(
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
-  locale: Locale,
-) {
-  if (!rowData) {
-    return readonlyTextCell("");
-  }
-
-  return readonlyTextCell(
-    moment(rowData.updatedAt).locale(locale).format("lll"),
-  );
 }
 
 function getAttributeCellContent(

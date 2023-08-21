@@ -223,3 +223,16 @@ export function autoTagsCell(
     kind: GridCellKind.Custom,
   };
 }
+
+export function dateCell(value: string, opts?: Partial<GridCell>): GridCell {
+  return {
+    ...common,
+    ...opts,
+    copyData: value ?? "",
+    data: {
+      kind: "date-cell",
+      value,
+    },
+    kind: GridCellKind.Custom,
+  };
+}

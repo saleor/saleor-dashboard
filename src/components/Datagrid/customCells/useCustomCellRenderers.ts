@@ -10,6 +10,7 @@ import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
 import { numberCellRenderer } from "./NumberCell";
 import { statusCellRenderer } from "./StatusCell";
 import { thumbnailCellRenderer } from "./ThumbnailCell";
+import { dateCellRenderer } from "@dashboard/components/Datagrid/customCells/DateCell";
 
 export function useCustomCellRenderers() {
   const { locale } = useLocale();
@@ -23,6 +24,7 @@ export function useCustomCellRenderers() {
       moneyCellRenderer(),
       moneyDiscountedCellRenderer(),
       numberCellRenderer(locale),
+      dateCellRenderer(locale),
       dropdownCellRenderer,
       thumbnailCellRenderer,
       ...customRenderers,
