@@ -9,6 +9,7 @@ import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useC
 import {
   autoTagsCell,
   dateCell,
+  moneyCell,
   // dropdownCell,
   readonlyTextCell,
   statusCell,
@@ -301,7 +302,10 @@ function getPriceCellContent(
   const from = selectedChannnel?.pricing?.priceRange?.start?.net;
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
 
-  return readonlyTextCell(getMoneyRange(locale, intl, from, to));
+  const price =
+    from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
+
+  return from ? moneyCell(price, from?.currency || "") : readonlyTextCell("–");
 }
 
 function getAttributeCellContent(

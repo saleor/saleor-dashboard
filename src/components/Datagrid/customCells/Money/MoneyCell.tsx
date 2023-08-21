@@ -12,7 +12,7 @@ import { usePriceField } from "../../../PriceField/usePriceField";
 interface MoneyCellProps {
   readonly kind: "money-cell";
   readonly currency: string;
-  readonly value: number | string | null;
+  readonly value: number | number[] | null;
 }
 
 export type MoneyCell = CustomCell<MoneyCellProps>;
@@ -56,24 +56,36 @@ export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
     const { ctx, theme, rect } = args;
     const { currency, value } = cell.data;
 
-    const hasValue = value === 0 ? true : !!value;
+    const isRange = Array.isArray(value);
+    const displayValue = isRange ? value[0] : value;
 
-    if (!hasValue) {
+    if (!displayValue) {
       return true;
     }
 
-    // todo add range support
-    const format = new Intl.NumberFormat(locale, {
-      style: "currency",
-      currencyDisplay: "code",
-      currency,
-    }).formatToParts(value);
+    const format = isRange
+      ? new Intl.NumberFormat(locale, {
+          style: "currency",
+          currencyDisplay: "code",
+          currency,
+        }).formatRangeToParts(value[0], value[1])
+      : new Intl.NumberFormat(locale, {
+          style: "currency",
+          currencyDisplay: "code",
+          currency,
+        }).formatToParts(displayValue);
 
-    const shortFormat = new Intl.NumberFormat(locale, {
-      style: "currency",
-      currencyDisplay: "symbol",
-      currency,
-    }).formatToParts(value);
+    const shortFormat = isRange
+      ? new Intl.NumberFormat(locale, {
+          style: "currency",
+          currencyDisplay: "symbol",
+          currency,
+        }).formatRangeToParts(value[0], value[1])
+      : new Intl.NumberFormat(locale, {
+          style: "currency",
+          currencyDisplay: "symbol",
+          currency,
+        }).formatToParts(displayValue);
 
     // todo replace with macaw-ui theme font weight values
     ctx.font = `550 ${theme.baseFontStyle} ${theme.fontFamily}`;
