@@ -256,6 +256,7 @@ jobs:
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
+          SPEC: ${{ needs.prepare-tests.outputs.tags }}
         with:
           group: "UI - Chrome"
           tag: Critical, ${{github.event.action}}
