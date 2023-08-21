@@ -26,7 +26,7 @@ module.exports = defineConfig({
       grepFilterSpecs: true,
       grepOmitFiltered: true,
     },
-    setupNodeEvents(on, config) {
+    setupNodeEvents(cypressOn, config) {
       const on = require("cypress-on-fix")(cypressOn);
 
       config = require("./cypress/support/cypress-grep/plugin")(config);
