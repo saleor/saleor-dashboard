@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import {
+  autoTagsCell,
   dateCell,
   moneyCell,
   readonlyTextCell,
-  tagsCell,
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
@@ -12,7 +12,7 @@ import { Locale } from "@dashboard/components/Locale";
 import { OrderListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
-  getStatusColor,
+  getStatusHue,
   transformOrderStatus,
   transformPaymentStatus,
 } from "@dashboard/misc";
@@ -29,6 +29,7 @@ import moment from "moment-timezone";
 import { IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
+import { pillLabelToColor } from "@dashboard/components/Datagrid/customCells/AutoTagsCell";
 
 export const orderListStaticColumnAdapter = (
   emptyColumn: AvailableColumn,
@@ -108,9 +109,9 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
       case "customer":
         return getCustomerCellContent(rowData);
       case "payment":
-        return getPaymentCellContent(intl, themeValues, currentTheme, rowData);
+        return getPaymentCellContent(intl, rowData);
       case "status":
-        return getStatusCellContent(intl, themeValues, currentTheme, rowData);
+        return getStatusCellContent(intl, rowData);
       case "total":
         return getTotalCellContent(rowData);
       default:
@@ -142,55 +143,31 @@ export function getCustomerCellContent(
   return readonlyTextCell("-");
 }
 
-export function getPaymentCellContent(
+export function getStatusCellContent(
   intl: IntlShape,
-  theme: ThemeTokensValues,
-  currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
-  if (paymentStatus?.status) {
-    const statusColor = getStatusColor(paymentStatus.status, currentTheme);
+  const status = transformOrderStatus(rowData.status, intl);
+  const statusHue = getStatusHue(status.status);
 
-    return tagsCell(
-      [
-        {
-          tag: paymentStatus.localized,
-          color: statusColor.startsWith("#")
-            ? statusColor
-            : theme.colors.background[statusColor],
-        },
-      ],
-      [paymentStatus.localized],
-      { cursor: "pointer" },
-    );
+  if (status) {
+    const color = pillLabelToColor(statusHue);
+    return autoTagsCell(status.localized, color);
   }
 
   return readonlyTextCell("-");
 }
 
-export function getStatusCellContent(
+export function getPaymentCellContent(
   intl: IntlShape,
-  theme: ThemeTokensValues,
-  currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  const status = transformOrderStatus(rowData.status, intl);
-  const statusColor = getStatusColor(status.status, currentTheme);
+  const status = transformPaymentStatus(rowData.paymentStatus, intl);
+  const statusHue = getStatusHue(status.status);
 
   if (status) {
-    return tagsCell(
-      [
-        {
-          tag: status.localized,
-          color: statusColor.startsWith("#")
-            ? statusColor
-            : theme.colors.background[statusColor],
-        },
-      ],
-      [status.localized],
-      { cursor: "pointer" },
-    );
+    const color = pillLabelToColor(statusHue);
+    return autoTagsCell(status.localized, color);
   }
 
   return readonlyTextCell("-");

@@ -6,7 +6,12 @@ import { Locale } from "@dashboard/components/Locale";
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
 
-import { AutoTagsCell } from "./AutoTagsCell";
+import {
+  AutoTagsCell,
+  PillColor,
+  pillLabelToColor,
+  stringToHue,
+} from "./AutoTagsCell";
 import {
   DropdownCell,
   DropdownCellContentProps,
@@ -209,16 +214,18 @@ export function statusCell(
 
 export function autoTagsCell(
   value: string,
+  color: PillColor | null,
   opts?: Partial<GridCell>,
 ): AutoTagsCell {
+  const pillColor = color ?? pillLabelToColor(stringToHue(value));
   return {
     ...common,
     ...opts,
-
     copyData: value ?? "",
     data: {
       kind: "auto-tags-cell",
       value,
+      color: pillColor,
     },
     kind: GridCellKind.Custom,
   };

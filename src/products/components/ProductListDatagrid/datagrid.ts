@@ -23,7 +23,7 @@ import { ThumbnailCellProps } from "@dashboard/components/Datagrid/customCells/T
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
-import { getMoneyRange } from "@dashboard/components/MoneyRange";
+
 import {
   AvailableColumnAttributesQuery,
   Exact,

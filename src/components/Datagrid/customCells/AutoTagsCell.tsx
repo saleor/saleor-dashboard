@@ -5,7 +5,7 @@ import {
   GridCellKind,
 } from "@glideapps/glide-data-grid";
 
-const stringToHue = (str: string): number => {
+export const stringToHue = (str: string): number => {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
@@ -15,9 +15,30 @@ const stringToHue = (str: string): number => {
   return hash % 360;
 };
 
+export interface PillColor {
+  readonly base: string;
+  readonly border: string;
+  readonly text: string;
+}
+
+export const pillLabelToColor = (hue: number): PillColor => {
+  const l = 94;
+  const s = 0.05;
+  const base = `oklch(${l}% ${s} ${hue})`;
+  const border = `oklch(${l - 8}% ${s} ${hue})`;
+  const text = `oklch(${l - 50}% ${s} ${hue})`;
+
+  return { base, border, text };
+};
+
 interface AutoTagsCellProps {
   readonly kind: "auto-tags-cell";
   readonly value: string;
+  readonly color: {
+    readonly text: string;
+    readonly border: string;
+    readonly base: string;
+  };
 }
 
 export type AutoTagsCell = CustomCell<AutoTagsCellProps>;
@@ -27,15 +48,9 @@ export const autoTagsCellRenderer = (): CustomRenderer<AutoTagsCell> => ({
   isMatch: (c): c is AutoTagsCell => (c.data as any).kind === "auto-tags-cell",
   draw: (args, cell) => {
     const label = cell.data.value;
+    const { text, border, base } = cell.data.color;
     const { rect, ctx, theme } = args;
     const { x, y, height } = rect;
-
-    const h = stringToHue(label);
-    const l = 94;
-    const s = 0.05;
-    const base = `oklch(${l}% ${s} ${h})`;
-    const border = `oklch(${l - 9}% ${s} ${h})`;
-    const text = `oklch(${l - 50}% ${s} ${h})`;
 
     const textMetrics = ctx.measureText(label);
     const textWidth = textMetrics.width;
