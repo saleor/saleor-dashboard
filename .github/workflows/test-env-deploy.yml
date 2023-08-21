@@ -210,7 +210,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Get API_URI
         id: api_uri
@@ -251,14 +251,13 @@ jobs:
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
           COMMIT_INFO_MESSAGE: ${{github.event.inputs.tags}} tests triggered on PR - https://github.com/${{ github.repository }}/pull/${{ github.ref_name }}
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
         with:
-          parallel: true
           group: "UI - Chrome"
-          record: true
           tag: Critical, ${{github.event.action}}
       - name: Install dependencies
         working-directory: .github/workflows
