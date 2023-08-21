@@ -52,6 +52,9 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
 
     if (name !== undefined) {
       ctx.fillStyle = theme.textDark;
+
+      // todo replace with macaw-ui theme font weight values
+      ctx.font = `550 ${theme.baseFontStyle} ${theme.fontFamily}`;
       ctx.fillText(
         name,
         drawX + size + xPad,
