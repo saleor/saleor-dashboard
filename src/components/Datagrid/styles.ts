@@ -217,7 +217,7 @@ export function useDatagridTheme(
       textGroupHeader: themeValues.colors.foreground.iconNeutralDefault,
       textBubble: themeValues.colors.background.interactiveNeutralDefault,
       textDark: themeValues.colors.foreground.iconNeutralDefault,
-      textLight: themeValues.colors.foreground.iconNeutralDefault,
+      textLight: themeValues.colors.foreground.textNeutralSubdued,
       textHeader: themeValues.colors.foreground.iconNeutralDefault,
       textHeaderSelected: themeValues.colors.background.plain,
       cellHorizontalPadding: 8,
