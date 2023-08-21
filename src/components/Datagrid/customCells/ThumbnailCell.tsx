@@ -23,7 +23,7 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
     const { ctx, rect, theme, imageLoader, col, row } = args;
     const { image, name } = cell.data;
 
-    const xPad = 7;
+    const xPad = 5;
     const size = rect.height - xPad * 2;
 
     const drawX = rect.x + xPad;
@@ -52,12 +52,9 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
 
     if (name !== undefined) {
       ctx.fillStyle = theme.textDark;
-
-      // todo replace with macaw-ui theme font weight values
-      ctx.font = `550 ${theme.baseFontStyle} ${theme.fontFamily}`;
       ctx.fillText(
         name,
-        drawX + size + xPad,
+        drawX + size + 10,
         rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
       );
     }
