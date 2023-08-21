@@ -28,13 +28,10 @@ module.exports = defineConfig({
     },
     setupNodeEvents(cypressOn, config) {
       const on = require("cypress-on-fix")(cypressOn);
-      const allSpecs = findCypressSpecs();
-      const chunk = getChunk(allSpecs, k, n);
 
       config = require("./cypress/support/cypress-grep/plugin")(config);
       config = require("./cypress/plugins/index.js")(on, config);
       config = require("cypress-split")(on, config);
-      config.specPattern = chunk;
 
       on("after:spec", (spec, results) => {
         if (results && results.video) {
@@ -49,5 +46,6 @@ module.exports = defineConfig({
       });
       return config;
     },
+    specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
   },
 });
