@@ -243,4 +243,63 @@ describe("useFilterPresets", () => {
       `${baseUrl}?query=John&activeTab=1`,
     );
   });
+
+  it("should return preset name to delete when presetIdToDelete has been specific", () => {
+    // Arrange
+    const presets = [
+      { name: "preset1", data: "data1" },
+      { name: "preset2", data: "data2" },
+    ];
+
+    const { result } = renderHook(() =>
+      useFilterPresets({
+        getUrl: jest.fn(),
+        params: {
+          action: "delete",
+        },
+        reset: jest.fn(),
+        storageUtils: {
+          deleteFilterTab: jest.fn(),
+          getFilterTabs: jest.fn(() => presets),
+          saveFilterTab: jest.fn(),
+          updateFilterTab: jest.fn(),
+        },
+      }),
+    );
+
+    // Act
+    act(() => {
+      result.current.setPresetIdToDelete(1);
+    });
+
+    // Assert
+    expect(result.current.getPresetNameToDelete()).toEqual("preset1");
+  });
+
+  it("should return '...'  when presetIdToDelete has not been specific", () => {
+    // Arrange
+    const presets = [
+      { name: "preset1", data: "data1" },
+      { name: "preset2", data: "data2" },
+    ];
+
+    const { result } = renderHook(() =>
+      useFilterPresets({
+        getUrl: jest.fn(),
+        params: {
+          action: "delete",
+        },
+        reset: jest.fn(),
+        storageUtils: {
+          deleteFilterTab: jest.fn(),
+          getFilterTabs: jest.fn(() => presets),
+          saveFilterTab: jest.fn(),
+          updateFilterTab: jest.fn(),
+        },
+      }),
+    );
+
+    // Assert
+    expect(result.current.getPresetNameToDelete()).toEqual("preset1");
+  });
 });
