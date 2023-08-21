@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import {
+  dateCell,
   moneyCell,
   readonlyTextCell,
   tagsCell,
@@ -122,7 +123,7 @@ export function getDateCellContent(
   locale: Locale,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  return readonlyTextCell(moment(rowData.created).locale(locale).format("lll"));
+  return dateCell(moment(rowData.created).locale(locale).format("lll"));
 }
 
 export function getCustomerCellContent(
