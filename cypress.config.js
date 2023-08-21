@@ -24,13 +24,11 @@ module.exports = defineConfig({
   e2e: {
     env: {
       grepFilterSpecs: true,
-      grepOmitFiltered: true,
+      grepOmitFiltered: true
     },
-    setupNodeEvents(cypressOn, config) {
-      const on = require("cypress-on-fix")(cypressOn);
-
+    async setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
-      config = require("./cypress/plugins/index.js")(on, config);
+      config = await require("./cypress/plugins/index.js")(on, config);
       config = require("cypress-split")(on, config);
 
       on("after:spec", (spec, results) => {
