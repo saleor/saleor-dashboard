@@ -119,15 +119,19 @@ export const PermissionGroupListDatagrid = ({
         getCellError={() => false}
         selectionActions={() => null}
         menuItems={id => [
-          {
-            label: intl.formatMessage(messages.deletePermissionGroup),
-            Icon: <TrashBinIcon />,
-            onSelect: () => {
-              if (permissionGroups?.[id]?.id) {
-                onDelete(permissionGroups[id].id);
-              }
-            },
-          },
+          ...(permissionGroups[id]?.userCanManage
+            ? [
+                {
+                  label: intl.formatMessage(messages.deletePermissionGroup),
+                  Icon: <TrashBinIcon />,
+                  onSelect: () => {
+                    if (permissionGroups?.[id]?.id) {
+                      onDelete(permissionGroups[id].id);
+                    }
+                  },
+                },
+              ]
+            : []),
         ]}
         onRowClick={handleRowClick}
         onHeaderClicked={handleHeaderClick}
