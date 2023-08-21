@@ -20,12 +20,12 @@ export const permissionGroupsListStaticColumnsAdapter = (
     {
       id: "name",
       title: intl.formatMessage(columnsMessages.name),
-      width: 300,
+      width: 450,
     },
     {
       id: "members",
       title: intl.formatMessage(columnsMessages.members),
-      width: 300,
+      width: 200,
     },
   ].map(column => ({
     ...column,

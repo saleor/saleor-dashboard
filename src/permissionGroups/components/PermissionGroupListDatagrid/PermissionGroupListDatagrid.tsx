@@ -1,4 +1,3 @@
-import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
@@ -13,6 +12,7 @@ import {
   permissionGroupDetailsUrl,
   PermissionGroupListUrlSortField,
 } from "@dashboard/permissionGroups/urls";
+import { canBeSorted } from "@dashboard/permissionGroups/views/PermissionGroupList/sort";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, TrashBinIcon } from "@saleor/macaw-ui/next";
@@ -60,13 +60,7 @@ export const PermissionGroupListDatagrid = ({
     [onUpdateListSettings],
   );
 
-  const {
-    handlers,
-    visibleColumns,
-    recentlyAddedColumn,
-    staticColumns,
-    selectedColumns,
-  } = useColumns({
+  const { handlers, visibleColumns, recentlyAddedColumn } = useColumns({
     selectedColumns: settings?.columns ?? [],
     staticColumns: permissionGroupsListStaticColumns,
     onSave: onColumnChange,
@@ -99,7 +93,9 @@ export const PermissionGroupListDatagrid = ({
     (col: number) => {
       const columnName = visibleColumns[col]
         .id as PermissionGroupListUrlSortField;
-      onSort(columnName);
+      if (canBeSorted(columnName)) {
+        onSort(columnName);
+      }
     },
     [visibleColumns, onSort],
   );
@@ -112,6 +108,7 @@ export const PermissionGroupListDatagrid = ({
         rowMarkers="none"
         columnSelect="single"
         hasRowHover={true}
+        freezeColumns={2}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
         verticalBorder={col => col > 1}
@@ -123,7 +120,7 @@ export const PermissionGroupListDatagrid = ({
         selectionActions={() => null}
         menuItems={id => [
           {
-            label: "Delete",
+            label: intl.formatMessage(messages.deletePermissionGroup),
             Icon: <TrashBinIcon />,
             onSelect: () => {
               if (permissionGroups?.[id]?.id) {
@@ -136,13 +133,6 @@ export const PermissionGroupListDatagrid = ({
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         recentlyAddedColumn={recentlyAddedColumn}
-        renderColumnPicker={() => (
-          <ColumnPicker
-            staticColumns={staticColumns}
-            selectedColumns={selectedColumns}
-            onToggle={handlers.onToggle}
-          />
-        )}
       />
 
       <Box paddingX={6}>

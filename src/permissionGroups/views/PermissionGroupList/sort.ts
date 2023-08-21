@@ -15,3 +15,12 @@ export function getSortQueryField(
 
 export const getSortQueryVariables =
   createGetSortQueryVariables(getSortQueryField);
+
+export function canBeSorted(sort: PermissionGroupListUrlSortField) {
+  switch (sort) {
+    case PermissionGroupListUrlSortField.name:
+      return true;
+    default:
+      return false;
+  }
+}

@@ -17,4 +17,8 @@ export const messages = defineMessages({
     id: "CXn88q",
     defaultMessage: "No permission groups found",
   },
+  deletePermissionGroup: {
+    defaultMessage: "Delete permission group",
+    id: "nBzIBG",
+  },
 });
