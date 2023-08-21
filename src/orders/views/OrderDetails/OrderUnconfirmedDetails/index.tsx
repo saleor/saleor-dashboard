@@ -11,6 +11,8 @@ import {
   OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
+  StockAvailability,
+  useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
@@ -136,8 +138,17 @@ export const OrderUnconfirmedDetails: React.FC<
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       channel: order.channel.slug,
+      isPublished: true,
+      stockAvailability: StockAvailability.IN_STOCK,
     },
   });
+
+  const { data: channelUsabilityData } = useChannelUsabilityDataQuery({
+    variables: {
+      channel: order.channel.slug,
+    },
+  });
+
   const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
@@ -276,6 +287,7 @@ export const OrderUnconfirmedDetails: React.FC<
             }
             onInvoiceSend={id => openModal("invoice-send", { id })}
             onSubmit={handleSubmit}
+            channelUsabilityData={channelUsabilityData}
           />
         </OrderLineDiscountProvider>
       </OrderDiscountProvider>

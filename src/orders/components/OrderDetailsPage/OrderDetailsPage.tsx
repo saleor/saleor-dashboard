@@ -14,6 +14,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataIdSchema } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import {
+  ChannelUsabilityDataQuery,
   OrderDetailsFragment,
   OrderDetailsQuery,
   OrderErrorFragment,
@@ -50,6 +51,7 @@ import {
 export interface OrderDetailsPageProps {
   order: OrderDetailsFragment | OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
+  channelUsabilityData?: ChannelUsabilityDataQuery;
   shippingMethods?: Array<{
     id: string;
     name: string;
@@ -121,6 +123,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onAddManualTransaction,
     onMarkAsPaid,
     onSubmit,
+    channelUsabilityData,
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
@@ -234,6 +237,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 <>
                   <OrderDraftDetails
                     order={order}
+                    channelUsabilityData={channelUsabilityData}
                     errors={errors}
                     loading={loading}
                     onOrderLineAdd={onOrderLineAdd}
