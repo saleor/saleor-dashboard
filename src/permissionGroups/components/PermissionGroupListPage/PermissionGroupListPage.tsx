@@ -13,7 +13,7 @@ import {
   permissionGroupAddUrl,
   PermissionGroupListUrlSortField,
 } from "../../urls";
-import PermissionGroupList from "../PermissionGroupList";
+import { PermissionGroupListDatagrid } from "../PermissionGroupListDatagrid";
 
 export interface PermissionGroupListPageProps
   extends PageListProps,
@@ -46,7 +46,7 @@ const PermissionGroupListPage: React.FC<
         </Button>
       </TopNav>
       <Card>
-        <PermissionGroupList {...listProps} />
+        <PermissionGroupListDatagrid {...listProps} />
       </Card>
     </ListPageLayout>
   );
