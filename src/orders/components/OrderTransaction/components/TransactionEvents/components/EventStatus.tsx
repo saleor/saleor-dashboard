@@ -53,8 +53,9 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
           label={intl.formatMessage(statusMessages.info)}
         />
       );
-    default:
+    default: {
       const _exhaustiveCheck: never = status;
       return _exhaustiveCheck;
+    }
   }
 };

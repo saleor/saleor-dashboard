@@ -147,7 +147,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           />
         </BasicAttributeRow>
       );
-    case AttributeInputTypeEnum.RICH_TEXT:
+    case AttributeInputTypeEnum.RICH_TEXT: {
       const {
         getShouldMount,
         getDefaultValue,
@@ -178,6 +178,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           )}
         </BasicAttributeRow>
       );
+    }
     case AttributeInputTypeEnum.NUMERIC:
       return (
         <BasicAttributeRow

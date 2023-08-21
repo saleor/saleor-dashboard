@@ -64,7 +64,7 @@ export const createGetCellContent =
         return readonlyTextCell(rowData?.title ?? "");
       case "slug":
         return readonlyTextCell(rowData?.slug ?? "");
-      case "visible":
+      case "visible": {
         const tag = rowData?.isPublished
           ? intl.formatMessage(messages.published)
           : intl.formatMessage(messages.notPublished);
@@ -82,6 +82,7 @@ export const createGetCellContent =
           ],
           [tag],
         );
+      }
       default:
         return readonlyTextCell("");
     }
