@@ -3,23 +3,14 @@
 
 import faker from "faker";
 
-import {
-  BUTTON_SELECTORS,
-  PAGE_DETAILS_SELECTORS,
-} from "../../elements";
-import {
-  pageDetailsUrl,
-  urlList,
-} from "../../fixtures/urlList";
+import { BUTTON_SELECTORS, PAGE_DETAILS_SELECTORS } from "../../elements";
+import { pageDetailsUrl, urlList } from "../../fixtures/urlList";
 import {
   attributeRequests,
   pageRequests,
   pageTypeRequests,
 } from "../../support/api/requests";
-import {
-  pageDetailsPage,
-  pagesPage,
-} from "../../support/pages";
+import { pageDetailsPage, pagesPage } from "../../support/pages";
 
 describe("Tests for pages", () => {
   const startsWith = `Pages`;
@@ -28,13 +19,14 @@ describe("Tests for pages", () => {
   let pageType;
   let pageTypeId;
 
-  const attributeValuesOnPage = {
-    NUMERIC: 1,
-    RICH_TEXT: faker.lorem.sentence(),
-    DROPDOWN: "value",
-    MULTISELECT: "value",
-    BOOLEAN: true,
-  };
+
+  const attributes = [
+    { key: "DROPDOWN", value: "value",  TC: "SALEOR_2203" },
+    { key: "MULTISELECT", value: "value", TC: "SALEOR_2204" },
+    { key: "RICH_TEXT", value: faker.lorem.sentence(), TC: "SALEOR_2205" },
+    { key: "BOOLEAN", value: true, TC: "SALEOR_2206" },
+    { key: "NUMERIC", value: 1, TC: "SALEOR_2207" },
+  ];
 
   before(() => {
     cy.loginUserViaRequest();
@@ -55,7 +47,7 @@ describe("Tests for pages", () => {
   });
 
   it(
-    "should create not published page",
+    "should create not published page. TC: SALEOR_2201",
     { tags: ["@pages", "@allEnv", "@stable"] },
     () => {
       cy.addAliasToGraphRequest("PageType");
@@ -65,7 +57,7 @@ describe("Tests for pages", () => {
       pagesPage.selectPageTypeOnIndex(0);
       cy.clickSubmitButton();
       cy.waitForRequestAndCheckIfNoErrors("@PageType");
-      pageDetailsPage.typePageName(pageName);
+      pageDetailsPage.typePageName(pageName).should("have.value", pageName);
       cy.get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox).click();
       pagesPage.savePage().then(page => {
         pageRequests.getPage(page.id).then(page => {
@@ -78,7 +70,7 @@ describe("Tests for pages", () => {
   );
 
   it(
-    "should create published page",
+    "should create published page. TC: SALEOR_2202",
     { tags: ["@pages", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -100,19 +92,20 @@ describe("Tests for pages", () => {
     },
   );
 
-  Object.keys(pagesPage.attributesTypes).forEach(attributeType => {
+  attributes.forEach(attributeType => {
     it(
-      `should create page with ${attributeType} attribute`,
-      { tags: ["@pages", "@allEnv", "@stable"] },
+      `should create page with ${attributeType.key} attribute TC: ${attributeType.TC}`,
+      { tags: ["@attribute", "@pages", "@allEnv"] },
       () => {
         const randomName = `${startsWith}${faker.datatype.number()}`;
-        const attributeValues = [attributeValuesOnPage[attributeType]];
+        const attributeKey = attributeType.key
+        const attributeValue =  attributeType.value
         attributeRequests
           .createAttribute({
             name: randomName,
             type: "PAGE_TYPE",
-            inputType: attributeType,
-            attributeValues,
+            inputType: attributeKey,
+            attributeValues: [attributeValue]
           })
           .then(attributeResp => {
             attribute = attributeResp;
@@ -128,15 +121,15 @@ describe("Tests for pages", () => {
                   .createPageWithAttribute({
                     pageName: randomName,
                     pageTypeName: randomName,
-                    attributeType,
-                    attributeValue: attributeValuesOnPage[attributeType],
+                    attributeType: attributeKey,
+                    attributeValue: attributeValue,
                   })
                   .then(page => {
                     pageRequests.getPage(page.id);
                   })
                   .then(page => {
                     expect(page.attributes[0].values[0].inputType).to.eq(
-                      attributeType,
+                      attributeKey,
                     );
                     if (attributeType !== "BOOLEAN") {
                       expect(page.attributes[0].values[0].name).to.eq(
@@ -154,7 +147,8 @@ describe("Tests for pages", () => {
     );
   });
 
-  it("should delete page", { tags: ["@pages", "@allEnv", "@stable"] }, () => {
+  it("should delete page TC: SALEOR_2209", 
+  { tags: ["@pages", "@allEnv", "@stable"] }, () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
 
     pageRequests
@@ -174,7 +168,8 @@ describe("Tests for pages", () => {
       });
   });
 
-  it("should update page", { tags: ["@pages", "@allEnv", "@stable"] }, () => {
+  it("should update page TC: SALEOR_2208", 
+  { tags: ["@pages", "@allEnv", "@stable"] }, () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
     const updatedName = `${startsWith}${faker.datatype.number()}`;
 

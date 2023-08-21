@@ -1,11 +1,14 @@
 // @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
+import Link from "@dashboard/components/Link";
+import { giftCardPath } from "@dashboard/giftCards/urls";
 import { OrderDetailsFragment, OrderDiscountType } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { obtainUsedGifrcard } from "../OrderPayment/utils";
 import { orderSummaryMessages } from "./messages";
 import SummaryLine from "./SummaryLine";
 import { SummaryList } from "./SummaryList";
@@ -41,6 +44,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
   const intl = useIntl();
 
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
+  const usedGiftcard = obtainUsedGifrcard(order);
 
   return (
     <Card data-test-id="OrderSummaryCard">
@@ -79,7 +83,17 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
           {giftCardAmount > 0 && (
             <SummaryLine
               text={
-                <FormattedMessage {...orderSummaryMessages.paidWithGiftCard} />
+                <FormattedMessage
+                  {...orderSummaryMessages.paidWithGiftCard}
+                  values={{
+                    link: (
+                      <Link href={giftCardPath(usedGiftcard.id)}>
+                        {" "}
+                        {usedGiftcard.last4CodeChars}
+                      </Link>
+                    ),
+                  }}
+                />
               }
               negative
               money={{

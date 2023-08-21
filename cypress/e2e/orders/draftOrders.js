@@ -3,14 +3,12 @@
 
 import faker from "faker";
 
-import {
-  BUTTON_SELECTORS,
-  ORDERS_SELECTORS,
-  SHARED_ELEMENTS,
-} from "../../elements/";
+import { SHARED_ELEMENTS } from "../../elements/";
 import { urlList } from "../../fixtures/urlList";
 import {
   createCustomer,
+  getDraftOrdersList,
+  getOrdersList,
   updateOrdersSettings,
 } from "../../support/api/requests/";
 import {
@@ -19,13 +17,6 @@ import {
   getDefaultChannel,
 } from "../../support/api/utils/";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import {
-  ensureCanvasStatic,
-} from "../../support/customCommands/sharedElementsOperations/canvas";
-import {
-  finalizeDraftOrder,
-  selectChannelInPicker,
-} from "../../support/pages/";
 
 describe("Draft orders", () => {
   const startsWith = "CyDraftOrders-";
@@ -104,32 +95,41 @@ describe("Draft orders", () => {
     { tags: ["@orders", "@allEnv"] },
     () => {
       let draftOrderNumber;
+      let order;
       cy.addAliasToGraphRequest("OrderDraftFinalize");
-      cy.addAliasToGraphRequest("OrderList");
-
-      cy.visit(urlList.orders);
-      cy.get(ORDERS_SELECTORS.createOrderButton).click();
-      selectChannelInPicker(defaultChannel.name);
-      finalizeDraftOrder(randomName, address)
-        .wait("@OrderDraftFinalize")
-        .then(finalizedDraftOrderResponse => {
-          cy.log(finalizedDraftOrderResponse);
-          draftOrderNumber =
-            finalizedDraftOrderResponse.response.body.data.draftOrderComplete
-              .order.number;
-          cy.get(SHARED_ELEMENTS.pageHeader).should(
-            "contain.text",
-            draftOrderNumber,
-          );
-          cy.get(BUTTON_SELECTORS.back)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@OrderList");
-          cy.visit(urlList.draftOrders).then(() => {
-            cy.url().should("include", urlList.draftOrders);
-            ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
-            cy.contains(draftOrderNumber).should("not.exist");
+      createUnconfirmedOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+        warehouse: warehouse.id,
+      }).then(({ order: orderResp }) => {
+        order = orderResp;
+        cy.visit(urlList.orders + `${order.id}`);
+        cy.clickFinalizeButton()
+          .confirmationMessageShouldAppear()
+          .waitForRequestAndCheckIfNoErrors("@OrderDraftFinalize")
+          .then(finalizedDraftOrderResponse => {
+            draftOrderNumber =
+              finalizedDraftOrderResponse.response.body.data.draftOrderComplete
+                .order.number;
+            cy.get(SHARED_ELEMENTS.pageHeader).should(
+              "contain.text",
+              draftOrderNumber,
+            );
+            getDraftOrdersList().then(draftOrdersListResponse => {
+              draftOrdersListResponse.edges.forEach(order => {
+                expect(order.node.number).not.eq(draftOrderNumber);
+              });
+            });
+            getOrdersList().then(ordersListResponse => {
+              expect(JSON.stringify(ordersListResponse.edges)).to.contains(
+                `"number":"${draftOrderNumber}"`,
+              );
+            });
           });
-        });
+      });
     },
   );
 

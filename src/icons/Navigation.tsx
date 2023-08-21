@@ -1,7 +1,7 @@
 import { createSvgIcon, SvgIconProps } from "@material-ui/core";
 import React from "react";
 
-const Navigation = createSvgIcon(
+const NavigationIcon = createSvgIcon(
   <path
     fillRule="evenodd"
     clipRule="evenodd"
@@ -11,6 +11,6 @@ const Navigation = createSvgIcon(
   "Navigation",
 );
 
-export default (props: SvgIconProps) => (
-  <Navigation {...props} viewBox="0 0 32 32" />
-);
+export default function Navigation(props: SvgIconProps) {
+  return <NavigationIcon {...props} viewBox="0 0 32 32" />;
+}

@@ -27,8 +27,7 @@ export const shopInfo = gql`
       name
       trackInventoryByDefault
       permissions {
-        code
-        name
+        ...Permission
       }
       version
     }

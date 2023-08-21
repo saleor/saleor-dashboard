@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme";
@@ -16,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
+import { FeatureFlagsModal } from "./FeatureFlagsModal";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
 export const useLegacyThemeHandler = () => {
@@ -28,11 +28,11 @@ export const useLegacyThemeHandler = () => {
   };
 
   const handleStorage = (event: StorageEvent) => {
-    if (!["macaw-ui-theme", "activeMacawUITheme"].includes(event.key)) {
+    if (!["macaw-ui-theme", "activeMacawUITheme"].includes(event.key || "")) {
       return;
     }
 
-    const isDark = event.newValue.toLowerCase().includes("dark");
+    const isDark = event.newValue?.toLowerCase().includes("dark");
     setLegacyTheme(isDark ? "dark" : "light");
     setTheme(isDark ? "defaultDark" : "defaultLight");
   };
@@ -50,89 +50,107 @@ export const UserControls = () => {
   const { user, logout } = useUser();
   const { changeTheme, theme } = useLegacyThemeHandler();
   const [open, setOpen] = useState(false);
+  const [flagsModalOpen, setFlagsModalOpen] = useState(false);
 
   return (
-    <Dropdown
-      open={open}
-      onOpenChange={value => {
-        setOpen(value);
-      }}
-    >
-      <Dropdown.Trigger>
-        <Button
-          variant="tertiary"
-          icon={<MoreOptionsIcon />}
-          data-test-id="userMenu"
-          size="medium"
-          onClick={() => setOpen(true)}
-        />
-      </Dropdown.Trigger>
-      <Dropdown.Content align="end">
-        <Box __minWidth={192}>
-          <List
-            padding={2}
-            borderRadius={4}
-            boxShadow="overlay"
-            backgroundColor="surfaceNeutralPlain"
-          >
-            <Dropdown.Item>
-              <List.Item
-                borderRadius={4}
-                data-test-id="account-settings-button"
-                onClick={() => setOpen(false)}
-              >
-                <Link
-                  to={staffMemberDetailsUrl(user?.id)}
-                  className={sprinkles({
-                    display: "block",
-                    width: "100%",
-                    ...listItemStyles,
-                  })}
+    <>
+      <Dropdown
+        open={open}
+        onOpenChange={value => {
+          setOpen(value);
+        }}
+      >
+        <Dropdown.Trigger>
+          <Button
+            variant="tertiary"
+            icon={<MoreOptionsIcon />}
+            data-test-id="userMenu"
+            size="medium"
+            onClick={() => setOpen(true)}
+          />
+        </Dropdown.Trigger>
+        <Dropdown.Content align="end">
+          <Box __minWidth={192}>
+            <List
+              padding={2}
+              borderRadius={4}
+              boxShadow="overlay"
+              backgroundColor="surfaceNeutralPlain"
+            >
+              <Dropdown.Item>
+                <List.Item
+                  borderRadius={4}
+                  data-test-id="account-settings-button"
+                  onClick={() => setOpen(false)}
+                >
+                  <Link
+                    to={staffMemberDetailsUrl(user?.id || "")}
+                    className={sprinkles({
+                      display: "block",
+                      width: "100%",
+                      ...listItemStyles,
+                    })}
+                  >
+                    <Text>
+                      <FormattedMessage
+                        id="NQgbYA"
+                        defaultMessage="Account Settings"
+                      />
+                    </Text>
+                  </Link>
+                </List.Item>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <List.Item
+                  {...listItemStyles}
+                  onClick={() => setFlagsModalOpen(true)}
                 >
                   <Text>
                     <FormattedMessage
-                      id="NQgbYA"
-                      defaultMessage="Account Settings"
+                      id="38dc43"
+                      defaultMessage="Features preview"
+                      description="Features preview"
                     />
                   </Text>
-                </Link>
-              </List.Item>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <List.Item
-                onClick={logout}
-                {...listItemStyles}
-                data-test-id="log-out-button"
-              >
-                <Text>
-                  <FormattedMessage
-                    id="qLbse5"
-                    defaultMessage="Log out"
-                    description="button"
-                  />
-                </Text>
-              </List.Item>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <List.Item
-                display="flex"
-                alignItems="center"
-                gap={2}
-                marginTop={1}
-                onClick={() => {
-                  changeTheme();
-                  setOpen(false);
-                }}
-                {...listItemStyles}
-                data-test-id="theme-switch"
-              >
-                <ThemeSwitcher theme={theme} />
-              </List.Item>
-            </Dropdown.Item>
-          </List>
-        </Box>
-      </Dropdown.Content>
-    </Dropdown>
+                </List.Item>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <List.Item
+                  onClick={logout}
+                  {...listItemStyles}
+                  data-test-id="log-out-button"
+                >
+                  <Text>
+                    <FormattedMessage
+                      id="qLbse5"
+                      defaultMessage="Log out"
+                      description="button"
+                    />
+                  </Text>
+                </List.Item>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <List.Item
+                  display="flex"
+                  alignItems="center"
+                  gap={2}
+                  marginTop={1}
+                  onClick={() => {
+                    changeTheme();
+                    setOpen(false);
+                  }}
+                  {...listItemStyles}
+                  data-test-id="theme-switch"
+                >
+                  <ThemeSwitcher theme={theme} />
+                </List.Item>
+              </Dropdown.Item>
+            </List>
+          </Box>
+        </Dropdown.Content>
+      </Dropdown>
+      <FeatureFlagsModal open={flagsModalOpen} onChange={setFlagsModalOpen} />
+    </>
   );
 };
 

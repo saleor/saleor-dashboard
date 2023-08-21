@@ -48,6 +48,8 @@ const _AppIFrame = forwardRef<HTMLIFrameElement, AppIFrameProps>(
   },
 );
 
+_AppIFrame.displayName = "AppIFrame";
+
 export const AppIFrame = memo(_AppIFrame, (prev, next) =>
   isEqualWith(prev, next),
 );

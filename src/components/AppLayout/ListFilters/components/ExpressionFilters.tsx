@@ -20,8 +20,8 @@ export const ExpressionFilters = () => {
   const { valueProvider, containerState } = useConditionalFilterContext();
 
   const clickOutside = () => {
-    containerState.clearEmpty()
-  }
+    containerState.clearEmpty();
+  };
 
   return (
     <Popover open={open} onOpenChange={open => setOpen(open)}>

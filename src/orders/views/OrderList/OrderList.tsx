@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
@@ -73,6 +74,9 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   usePaginationReset(orderListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
+  const { channel, availableChannels } = useAppChannel(false);
+  const user = useUser();
+  const channels = user?.user?.accessibleChannels ?? [];
 
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: data => {
@@ -87,7 +91,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     },
   });
 
-  const { channel, availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
       orders: true,
@@ -95,9 +98,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   });
 
   const noChannel = !channel && typeof channel !== "undefined";
-  const channelOpts = availableChannels
-    ? mapNodeToChoice(availableChannels)
-    : null;
+  const channelOpts = availableChannels ? mapNodeToChoice(channels) : null;
 
   const [changeFilters, resetFilters, handleSearchChange] = useFilterHandlers({
     createUrl: orderListUrl,

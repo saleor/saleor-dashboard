@@ -33,9 +33,11 @@ export const useUrlValueProvider = (
   const [value, setValue] = useState<FilterContainer>([]);
 
   const activeTab = params.get("activeTab");
+  const query = params.get("query");
   params.delete("asc");
   params.delete("sort");
   params.delete("activeTab");
+  params.delete("query");
 
   const tokenizedUrl = new TokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
@@ -56,6 +58,7 @@ export const useUrlValueProvider = (
       search: stringify({
         ...prepareStructure(filterValue),
         ...{ activeTab: activeTab || undefined },
+        ...{ query: query || undefined },
       }),
     });
     setValue(filterValue);

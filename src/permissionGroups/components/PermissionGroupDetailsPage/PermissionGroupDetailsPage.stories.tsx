@@ -1,30 +1,42 @@
-// @ts-strict-ignore
-import { permissions } from "@dashboard/fixtures";
+import { channels, permissions } from "@dashboard/fixtures";
+import { MembersListUrlSortField } from "@dashboard/permissionGroups/urls";
 import React from "react";
 
-import { emptyPermissionGroup, permissionGroup, users } from "../../fixtures";
-import PermissionGroupDetailsPage, {
-  PermissionGroupDetailsPageProps,
+import {
+  emptyPermissionGroup,
+  permissionGroup,
+  permissionGroupWithChannels,
+  users,
+} from "../../fixtures";
+import {
+  PermissionGroupDetailsPage,
+  PermissonGroupDetailsPageProps,
 } from "./PermissionGroupDetailsPage";
+export * from "./PermissionGroupDetailsPage";
 
-const props: PermissionGroupDetailsPageProps = {
+const props: PermissonGroupDetailsPageProps = {
   disabled: false,
+  isUserAbleToEditChannels: true,
   errors: [],
   isChecked: () => false,
   members: users,
   onAssign: () => undefined,
   onSort: () => undefined,
-  onSubmit: () => undefined,
+  onSubmit: () => new Promise(resolve => resolve(undefined)),
   onUnassign: () => undefined,
   permissionGroup,
   permissions,
   permissionsExceeded: false,
-  saveButtonBarState: undefined,
+  saveButtonBarState: "default",
   selected: 0,
-  sort: null,
+  sort: {
+    asc: true,
+    sort: MembersListUrlSortField.name,
+  },
   toggle: () => undefined,
   toggleAll: () => undefined,
   toolbar: null,
+  channels,
 };
 
 export default {
@@ -45,7 +57,23 @@ export const Loading = () => (
   <PermissionGroupDetailsPage
     {...props}
     disabled={true}
-    permissionGroup={undefined}
-    permissions={undefined}
+    permissionGroup={permissionGroup}
+    permissions={permissions}
+  />
+);
+
+export const WithRestrictedChannels = () => (
+  <PermissionGroupDetailsPage
+    {...props}
+    permissionGroup={permissionGroupWithChannels}
+  />
+);
+
+export const WithRestrictedChannelsAndWithoutAccessToEdit = () => (
+  <PermissionGroupDetailsPage
+    {...props}
+    disabled={true}
+    isUserAbleToEditChannels={false}
+    permissionGroup={permissionGroupWithChannels}
   />
 );
