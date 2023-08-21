@@ -27,9 +27,12 @@ module.exports = defineConfig({
       grepOmitFiltered: true,
     },
     setupNodeEvents(on, config) {
+      const on = require("cypress-on-fix")(cypressOn);
+
       config = require("./cypress/support/cypress-grep/plugin")(config);
       config = require("./cypress/plugins/index.js")(on, config);
       config = require("cypress-split")(on, config);
+
       on("after:spec", (spec, results) => {
         if (results && results.video) {
           return fs.unlink(results.video, function (err) {
