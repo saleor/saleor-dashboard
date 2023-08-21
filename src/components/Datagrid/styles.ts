@@ -210,7 +210,7 @@ export function useDatagridTheme(
       bgBubbleSelected: themeValues.colors.background.plain,
       borderColor: themeValues.colors.border.neutralHighlight,
       fontFamily: "'Inter var', sans-serif",
-      baseFontStyle: themeValues.fontSize.bodySmall,
+      baseFontStyle: `${themeValues.fontWeight.bodyEmpMedium} ${themeValues.fontSize.bodySmall}`,
       headerFontStyle: `${themeValues.fontWeight.bodyStrongSmall} ${themeValues.fontSize.bodyStrongSmall}`,
       editorFontSize: themeValues.fontSize.bodySmall,
       textMedium: themeValues.colors.foreground.iconNeutralPlain,
