@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 const { defineConfig } = require("cypress");
 const fs = require("fs");
-const cypressSplit = require("cypress-split");
 
 module.exports = defineConfig({
   projectId: "51ef7c",
@@ -30,7 +29,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
       config = require("./cypress/plugins/index.js")(on, config);
-      cypressSplit(on, config);
+      config = require("cypress-split")(on, config);
       on("after:spec", (spec, results) => {
         if (results && results.video) {
           return fs.unlink(results.video, function (err) {
