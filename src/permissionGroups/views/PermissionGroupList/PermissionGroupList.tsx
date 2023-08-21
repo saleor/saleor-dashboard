@@ -40,7 +40,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(
-    ListViews.STAFF_MEMBERS_LIST,
+    ListViews.PERMISSION_GROUP_LIST,
   );
 
   usePaginationReset(permissionGroupListUrl, params, settings.rowNumber);
