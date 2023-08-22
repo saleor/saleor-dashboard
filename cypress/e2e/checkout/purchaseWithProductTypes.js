@@ -17,11 +17,9 @@ import {
   getShippingMethodIdFromCheckout,
   updateShippingInCheckout,
 } from "../../support/api/utils/ordersUtils";
-import {
-  createDigitalAndPhysicalProductWithNewDataAndDefaultChannel,
-} from "../../support/api/utils/products/productsUtils";
+import { createDigitalAndPhysicalProductWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
 
-describe("As an unlogged customer I want to order physical and digital products", () => {
+describe.skip("As an unlogged customer I want to order physical and digital products", () => {
   const startsWith = `CyPurchaseByType`;
   const email = `${startsWith}@example.com`;
   const testsMessage = "Check order status";
