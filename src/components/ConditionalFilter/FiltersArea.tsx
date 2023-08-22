@@ -19,6 +19,8 @@ interface FiltersAreaProps {
   onCancel?: () => void;
 }
 
+const MAX_VALUE_ITEMS = 12;
+
 export const FiltersArea: FC<FiltersAreaProps> = ({
   onConfirm,
   onCancel,
@@ -84,7 +86,10 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
       locale={translations.locale}
     >
       <_ExperimentalFilters.Footer>
-        <_ExperimentalFilters.AddRowButton variant="tertiary">
+        <_ExperimentalFilters.AddRowButton
+          variant="tertiary"
+          disabled={value.length > MAX_VALUE_ITEMS}
+        >
           {translations.addFilter}
         </_ExperimentalFilters.AddRowButton>
         <Box display="flex" gap={3}>

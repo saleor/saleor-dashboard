@@ -1762,10 +1762,6 @@
   "AyQkmp": {
     "string": "Sorting by this column is not available"
   },
-  "AyW1j6": {
-    "context": "Clear filters button text",
-    "string": "Clear all fields"
-  },
   "AzMSmb": {
     "context": "caption",
     "string": "If enabled this attribute can be used as a column in product table."
@@ -7181,6 +7177,10 @@
   },
   "nLML8Y": {
     "string": "Default Shipping Address"
+  },
+  "nMojhT": {
+    "context": "Clear filters button text",
+    "string": "Reset"
   },
   "nNeWAx": {
     "context": "dialog header",
