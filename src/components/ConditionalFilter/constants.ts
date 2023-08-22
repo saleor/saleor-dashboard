@@ -76,7 +76,7 @@ export const STATIC_OPTIONS: LeftOperand[] = [
   },
   {
     value: "giftCard",
-    label: "Has giftcard",
+    label: "Is giftcard",
     type: "giftCard",
     slug: "giftCard",
   },
