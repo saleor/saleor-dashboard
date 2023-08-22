@@ -20,11 +20,6 @@ import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item, TextCell } from "@glideapps/glide-data-grid";
-import {
-  DefaultTheme,
-  ThemeTokensValues,
-  useTheme,
-} from "@saleor/macaw-ui/next";
 import moment from "moment-timezone";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -85,7 +80,6 @@ function getDatagridRowDataIndex(row, removeArray) {
 export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
-  const { theme: currentTheme, themeValues } = useTheme();
 
   return (
     [column, row]: Item,

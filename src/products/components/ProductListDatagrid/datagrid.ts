@@ -42,6 +42,7 @@ import { IntlShape } from "react-intl";
 
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
 import { categoryMetaGroups, columnsMessages } from "./messages";
+import { pillLabelToColor } from "@dashboard/components/Datagrid/customCells/AutoTagsCell";
 
 export const productListStaticColumnAdapter = (
   intl: IntlShape,
@@ -225,7 +226,7 @@ function getProductTypeCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
   // getProductTypes: (query: string) => Promise<DropdownChoice[]>,
 ) {
-  return autoTagsCell(rowData.productType?.name);
+  return autoTagsCell(rowData.productType?.name, null);
 }
 
 // function getRowDataValue(
@@ -293,8 +294,6 @@ function getNameCellContent(
 }
 
 function getPriceCellContent(
-  intl: IntlShape,
-  locale: Locale,
   selectedChannnel?: RelayToFlat<
     ProductListQuery["products"]
   >[number]["channelListings"][number],
