@@ -16,12 +16,18 @@ import {
 import FileUploadField from "@dashboard/components/FileUploadField";
 import MultiAutocompleteSelectField from "@dashboard/components/MultiAutocompleteSelectField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
-import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui/next";
+import {
+  Box,
+  Checkbox,
+  DynamicCombobox,
+  Input,
+  Text,
+} from "@saleor/macaw-ui/next";
+import { debounce } from "lodash-es";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -46,6 +52,16 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   richTextGetters,
 }) => {
   const intl = useIntl();
+
+  const debouncedFetchAttributeValues = debounce((inputValue: string) => {
+    if (!inputValue) {
+      onChange(attribute.id, null);
+      fetchAttributeValues("", attribute.id);
+      return;
+    }
+
+    fetchAttributeValues(inputValue, attribute.id);
+  }, 600);
 
   switch (attribute.data.inputType) {
     case AttributeInputTypeEnum.REFERENCE:
@@ -94,23 +110,32 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           label={attribute.label}
           id={`attribute:${attribute.label}`}
         >
-          <SingleAutocompleteSelectField
-            choices={getSingleChoices(attributeValues)}
+          <DynamicCombobox
             disabled={disabled}
-            displayValue={getSingleDisplayValue(attribute, attributeValues)}
-            emptyOption={!attribute.data.isRequired}
+            options={getSingleChoices(attributeValues)}
+            value={
+              attribute.value[0]
+                ? {
+                    label: getSingleDisplayValue(attribute, attributeValues),
+                    value: attribute.value[0],
+                  }
+                : null
+            }
             error={!!error}
             helperText={getErrorMessage(error, intl)}
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
             label={intl.formatMessage(attributeRowMessages.valueLabel)}
-            value={attribute.value[0]}
-            onChange={event => onChange(attribute.id, event.target.value)}
-            allowCustomValues={true}
-            fetchOnFocus={true}
-            fetchChoices={value => fetchAttributeValues(value, attribute.id)}
+            onChange={value => onChange(attribute.id, value.value)}
+            onInputValueChange={debouncedFetchAttributeValues}
+            onFocus={() => {
+              fetchAttributeValues("", attribute.id);
+            }}
             onBlur={onAttributeSelectBlur}
-            {...fetchMoreAttributeValues}
+            loading={fetchMoreAttributeValues.loading}
+            locale={{
+              loadingText: "Loading...",
+            }}
           />
         </BasicAttributeRow>
       );
