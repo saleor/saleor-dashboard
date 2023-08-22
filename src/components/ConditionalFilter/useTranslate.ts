@@ -9,21 +9,25 @@ type TranslationKeys = keyof typeof leftOperatorsMessages;
 export const useTranslate = () => {
   const intl = useIntl();
 
+  const formatLeftOperand = (label: TranslationKeys) => {
+    const key = leftOperatorsMessages[label];
+
+    if (!key) return label;
+
+    return intl.formatMessage(leftOperatorsMessages[label]);
+  };
+
   return {
     translateOperandOptions: (operands: LeftOperand[]) =>
       operands.map(el => ({
         ...el,
-        label: intl.formatMessage(
-          leftOperatorsMessages[el.label as TranslationKeys],
-        ),
+        label: formatLeftOperand(el.label as TranslationKeys),
       })),
     translateSelectedOperands: (container: FilterContainer) =>
       container.map(el => {
         if (FilterElement.isCompatible(el)) {
           el.value.setLabel(
-            intl.formatMessage(
-              leftOperatorsMessages[el.value.label as TranslationKeys],
-            ),
+            formatLeftOperand(el.value.label as TranslationKeys),
           );
         }
 
