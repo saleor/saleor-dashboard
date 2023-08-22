@@ -11,6 +11,7 @@ import { FilterContainer } from "./FilterElement";
 import { LeftOperand } from "./LeftOperandsProvider";
 import { useFiltersAreaTranslations } from "./messages";
 import { useFilterContainer } from "./useFilterContainer";
+import { useTranslate } from "./useTranslate";
 import { ErrorEntry } from "./Validation";
 
 interface FiltersAreaProps {
@@ -28,6 +29,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
 }) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
   const translations = useFiltersAreaTranslations();
+  const { translateOperandOptions, translateSelectedOperands } = useTranslate();
 
   const {
     value,
@@ -79,8 +81,8 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
 
   return (
     <_ExperimentalFilters
-      leftOptions={leftOperandsProvider.operands}
-      value={value as Array<string | Row>}
+      leftOptions={translateOperandOptions(leftOperandsProvider.operands)}
+      value={translateSelectedOperands(value) as Array<string | Row>}
       onChange={handleStateChange}
       error={errors}
       locale={translations.locale}

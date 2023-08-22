@@ -19,6 +19,10 @@ export class ExpressionValue {
     public type: string,
   ) {}
 
+  public setLabel(label: string) {
+    this.label = label;
+  }
+
   public isEmpty() {
     return this.value.length === 0 || this.label.length === 0;
   }
