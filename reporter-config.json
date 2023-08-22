@@ -5,9 +5,8 @@
   },
   "reporterOptions": {
     "reportDir": "cypress/results/mochawesome",
-    "charts": true,
-    "embeddedScreenshots": true,
-    "inlineAssets": false,
-    "saveAllAttempts": true
+    "overwrite": false,
+    "html": false,
+    "json": true
   }
 }

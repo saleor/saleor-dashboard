@@ -34,7 +34,7 @@ import {
   updateUserActiveFlag,
 } from "../support/pages/";
 
-describe.skip("Staff members", () => {
+describe("Staff members", () => {
   const startsWith = "StaffMembers" + Date.now();
   const password = Cypress.env("USER_PASSWORD");
   const lastName = faker.name.lastName();

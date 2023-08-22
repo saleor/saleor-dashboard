@@ -7,7 +7,7 @@ import { urlList } from "../../../fixtures/urlList";
 import { getProductType } from "../../../support/api/requests/ProductType";
 import { createProductType } from "../../../support/pages/productTypePage";
 
-describe.skip("As an admin I want to create product types", () => {
+describe("As an admin I want to create product types", () => {
   const startsWith = "productType";
 
   beforeEach(() => {
