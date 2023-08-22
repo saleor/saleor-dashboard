@@ -25,12 +25,11 @@ program
         environment.service.version,
         sortedSnapshotList,
       );
-      if (latestSnapshot){
+      if (latestSnapshot) {
         cleanEnvironment(environment, latestSnapshot, token);
-      }
-      else {
+      } else {
         sendWarningOnSlack = "true";
-        warningMessage += `Could not find any snapshot compatible with environment ${environment.domain}.\n`;
+        warningMessage += `Snapshot compatible with environment ${environment.domain} does not exist, please create snapshot on cloud staging.\n`;
       }
     });
     core.setOutput("sendWarningOnSlack", sendWarningOnSlack);
@@ -41,10 +40,10 @@ program
 async function getEnvironmentsForReleaseTesting(token) {
   const environments = await getEnvironments(token);
   const environmentsForReleaseTesting = environments.filter(environment => {
-    // REMOVE AFTER TESTING!!
-    return environment.domain.match(/update-snapshot/);
-    // environment.domain.match(/^v\d*.staging/) ||
-    // environment.domain == "master.staging.saleor.cloud"
+    return (
+      environment.domain.match(/^v\d*.staging/) ||
+      environment.domain == "master.staging.saleor.cloud"
+    );
   });
   return environmentsForReleaseTesting;
 }
