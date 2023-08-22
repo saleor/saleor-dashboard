@@ -15,9 +15,19 @@ program
   .name("cleanEnvironments")
   .description("Clean environments")
   .option("--token <token>", "token fo login to cloud")
+  .option(
+    "--environments_to_clean_regex <environments_to_clean_regex>",
+    "Regex for environment which need cleaning",
+  )
   .action(async options => {
     const token = options.token;
-    const environmentsToClean = await getEnvironmentsForReleaseTesting(token);
+    const environmentsToCleanRegex = new RegExp(
+      options.environments_to_clean_regex,
+    );
+    const environmentsToClean = await getEnvironmentsToClean(
+      token,
+      environmentsToCleanRegex,
+    );
     const snapshotsForRestore = await getSnapshotsForRestore(token);
     const sortedSnapshotList = sortSnapshots(snapshotsForRestore);
     environmentsToClean.forEach(environment => {
@@ -37,13 +47,10 @@ program
   })
   .parse();
 
-async function getEnvironmentsForReleaseTesting(token) {
+async function getEnvironmentsToClean(token, environmentsToCleanRegex) {
   const environments = await getEnvironments(token);
   const environmentsForReleaseTesting = environments.filter(environment => {
-    return (
-      environment.domain.match(/^v\d*.staging/) ||
-      environment.domain == "master.staging.saleor.cloud"
-    );
+    return environment.domain.match(environmentsToCleanRegex)
   });
   return environmentsForReleaseTesting;
 }
