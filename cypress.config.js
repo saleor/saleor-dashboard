@@ -14,15 +14,17 @@ module.exports = defineConfig({
     runMode: 1,
     openMode: 0,
   },
-  screenshotsFolder: "TestResults/assets",
-  reporter: "cypress-multi-reporters",
+  reporter: "junit",
   reporterOptions: {
-    configFile: "reporter-config.json",
+    mochaFile: "results/test-output-[hash].xml",
+    jenkinsMode: true,
+    outputs: true,
+    testCaseSwitchClassnameAndName: true,
   },
   e2e: {
     env: {
       grepFilterSpecs: true,
-      grepOmitFiltered: true,
+      grepOmitFiltered: true
     },
     async setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
