@@ -47,7 +47,10 @@ webpack-bundle.json
 /templates/templated_email/compiled/*
 !/templates/templated_email/compiled/.gitkeep
 cypress/reports
-
+cypress/TestResults
+mochawesome-report
+mochawesome.json
+cypress/results
 # Exported results file
 django-queries-results.html
 

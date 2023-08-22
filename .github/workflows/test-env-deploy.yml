@@ -256,7 +256,14 @@ jobs:
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
-
+      - name: Merge report files
+        run: npm run mochawesome-merge
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: mochawesome.json
+          path: ./
       - name: Install dependencies
         working-directory: .github/workflows
         run: npm ci
