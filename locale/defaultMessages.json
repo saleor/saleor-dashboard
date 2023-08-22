@@ -4767,6 +4767,10 @@
   "VyzsWZ": {
     "string": "Default Billing Address"
   },
+  "Vze3qI": {
+    "context": "column category descriptor",
+    "string": "Channels"
+  },
   "W/Es0H": {
     "string": "Order successfully cancelled"
   },
