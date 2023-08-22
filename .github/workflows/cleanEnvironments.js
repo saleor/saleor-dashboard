@@ -25,7 +25,9 @@ program
         environment.service.version,
         sortedSnapshotList,
       );
-      if (latestSnapshot) cleanEnvironment(environment, latestSnapshot, token);
+      if (latestSnapshot){
+        cleanEnvironment(environment, latestSnapshot, token);
+      }
       else {
         sendWarningOnSlack = "true";
         warningMessage += `Could not find any snapshot compatible with environment ${environment.domain}.\n`;
@@ -67,7 +69,7 @@ async function cleanEnvironment(environment, snapshot, token) {
     `${pathToCloudAPI}organizations/saleor/environments/${environment.key}/restore/`,
     {
       method: "PUT",
-      body: JSON.stringify({ restore_from: snapshot }),
+      body: JSON.stringify({ restore_from: snapshot.key }),
       headers: {
         Authorization: `Token ${token}`,
         Accept: "application/json",
@@ -106,7 +108,7 @@ async function getSnapshotsForRestore(token) {
   );
   const allSnapshots = await snapshotsResponse.json();
   return allSnapshots.filter(snapshot => {
-    snapshot.name.includes(snapshotName);
+    return snapshot.name.includes(snapshotName);
   });
 }
 
@@ -120,8 +122,6 @@ function sortSnapshots(snapshotList) {
 }
 
 function compareVersions(versionA, versionB) {
-  // if version A is grater return <0, if equal 0, if less then >0
-
   // Convert version from string to array eg. from "3.5.7" to [3, 5, 7]
   // Where 3 is main version, 5 is major version and 7 is patch version
 
@@ -146,7 +146,7 @@ function compareVersions(versionA, versionB) {
 
 function getLatestSnapshotForEnvironment(environmentVersion, snapshotList) {
   const compatibleSnapshots = snapshotList.filter(snapshot => {
-    compareVersions(environmentVersion, snapshot.saleor_version) >= 0;
+    return compareVersions(environmentVersion, snapshot.saleor_version) <= 0;
   });
   if (compatibleSnapshots.length > 0) {
     const latestSnapshot = compatibleSnapshots[0];
