@@ -17,8 +17,8 @@ export const conditionalFilterMessages = defineMessages({
     description: "Add filter button text",
   },
   clearFilters: {
-    defaultMessage: "Clear all fields",
-    id: "AyW1j6",
+    defaultMessage: "Reset",
+    id: "nMojhT",
     description: "Clear filters button text",
   },
   saveFilters: {
