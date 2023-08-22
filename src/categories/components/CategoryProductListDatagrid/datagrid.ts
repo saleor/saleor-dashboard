@@ -35,10 +35,13 @@ export const createGetCellContent =
 
     switch (columnId) {
       case "name":
-        const name = rowData?.name ?? "";
-        return thumbnailCell(name, rowData?.thumbnail?.url ?? "", {
-          cursor: "pointer",
-        });
+        return thumbnailCell(
+          rowData?.name ?? "",
+          rowData?.thumbnail?.url ?? "",
+          {
+            cursor: "pointer",
+          },
+        );
       default:
         return readonlyTextCell("", false);
     }
