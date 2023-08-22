@@ -1,6 +1,7 @@
 import {
   NumberCell,
   numberCellEmptyValue,
+  NumberCellProps,
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { Locale } from "@dashboard/components/Locale";
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
@@ -89,12 +90,14 @@ export function loadingCell(): GridCell {
 
 export function numberCell(
   value: number | typeof numberCellEmptyValue,
+  options?: NumberCellProps["options"],
 ): NumberCell {
   return {
     ...common,
     data: {
       kind: "number-cell",
       value,
+      options,
     },
     kind: GridCellKind.Custom,
     copyData: value !== numberCellEmptyValue ? value.toString() : "",

@@ -1,6 +1,7 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import {
   moneyCell,
+  numberCell,
   readonlyTextCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
@@ -127,7 +128,7 @@ function getVoucherValueCell(
 ) {
   const hasChannelsLoaded = voucher?.channelListings?.length;
 
-  if (!hasChannelsLoaded) {
+  if (!hasChannelsLoaded || !channel) {
     return readonlyTextCell(PLACEHOLDER);
   }
 
@@ -137,7 +138,5 @@ function getVoucherValueCell(
     });
   }
 
-  return moneyCell(channel?.discountValue ?? "", "%", {
-    readonly: true,
-  });
+  return numberCell(channel?.discountValue, { format: "percent" });
 }
