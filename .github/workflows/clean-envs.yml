@@ -29,5 +29,15 @@ jobs:
         id: clean-environments
         run: |
           node .github/workflows/cleanEnvironments.js \
-          --token "$TOKEN" \
-          --snapshot "$SNAPSHOT"
+          --token "$TOKEN" 
+
+      - name: Notify Slack
+        if: steps.clean-environments.outputs.sendWarningOnSlack == 'true'
+        env:
+          JOB_DEPLOYMENT_KIND: "release and master envs"
+          JOB_STATUS: 'Failure'
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_SALEOR_QA_WEBHOOK_URL }}
+          JOB_TITLE: ${{ steps.clean-environments.outputs.warningMessage }}
+          JOB_KIND: "Clean Environments"
+        run: |
+          python3 .github/workflows/notify/notify-slack.py
