@@ -273,7 +273,7 @@ jobs:
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
       - name: Combine Mocha reports
-        run: npx mochawesome-merge "cypress/results/mochawesome/*.json" > mochawesome.json
+        run: npx mochawesome-merge "cypress/results/*.json" > mochawesome.json
       - name: Merge Mocha reports
         run: npx marge mochawesome.json
   test-complete:
