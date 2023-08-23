@@ -243,7 +243,7 @@ jobs:
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
 
       - name: Cypress run critical
-        uses: cypress-io/github-action@v5
+        uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v1
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
@@ -262,7 +262,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: mochawesome.html
+          name: mochawesome-${{ strategy.job-index }}.html
           path: ./mochawesome-report/
       - name: Install dependencies
         working-directory: .github/workflows

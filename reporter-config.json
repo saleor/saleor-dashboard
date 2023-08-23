@@ -5,6 +5,7 @@
   },
   "reporterOptions": {
     "reportDir": "cypress/results/mochawesome",
+    "reportFilename": "[name].html",
     "overwrite": false,
     "html": false,
     "json": true
