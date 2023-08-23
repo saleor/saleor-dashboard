@@ -262,8 +262,8 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: mochawesome.json
-          path: ./
+          name: mochawesome.html
+          path: ./mochawesome-report/
       - name: Install dependencies
         working-directory: .github/workflows
         run: npm ci
