@@ -26,7 +26,7 @@ import {
   Input,
   Text,
 } from "@saleor/macaw-ui/next";
-import { debounce } from "lodash-es";
+import debounce from "lodash/debounce";
 import React from "react";
 import { useIntl } from "react-intl";
 
