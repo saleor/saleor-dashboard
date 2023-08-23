@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
@@ -132,23 +131,26 @@ export const useAttributesAdapter = ({
   selectedColumns: string[];
   attributes: ProductFragment["productType"]["variantAttributes"];
 }) => {
-  const supportedAttributes = attributes.filter(attribute =>
-    [
+  const supportedAttributes = attributes?.filter(attribute => {
+    if (!attribute.inputType) {
+      return false;
+    }
+    return [
       AttributeInputTypeEnum.DROPDOWN,
       AttributeInputTypeEnum.PLAIN_TEXT,
-    ].includes(attribute.inputType),
-  );
+    ].includes(attribute.inputType);
+  });
 
   const [attributeQuery, setAttributeQuery] = React.useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
 
   const paginatedAttributes = paginate(
-    supportedAttributes.filter(attribute =>
-      attribute.name.includes(attributeQuery),
-    ),
+    supportedAttributes?.filter(attribute =>
+      attribute.name?.includes(attributeQuery),
+    ) ?? [],
   );
 
-  const selectedAttributes = attributes.filter(attribute =>
+  const selectedAttributes = attributes?.filter(attribute =>
     selectedColumns.includes(`attribute:${attribute.id}`),
   );
 
@@ -157,7 +159,7 @@ export const useAttributesAdapter = ({
     prefix: "attribute",
     availableNodes: parseAttributeColumns(paginatedAttributes.data, intl),
     selectedNodes: parseAttributeColumns(selectedAttributes, intl),
-    onSearch: query => setAttributeQuery(query),
+    onSearch: (query: string) => setAttributeQuery(query),
     initialSearch: attributeQuery,
     hasNextPage: paginatedAttributes.hasNextPage,
     hasPreviousPage: paginatedAttributes.hasPreviousPage,
@@ -167,14 +169,14 @@ export const useAttributesAdapter = ({
 };
 
 export const parseAttributeColumns = (
-  attributes: ProductFragment["productType"]["variantAttributes"],
+  attributes: ProductFragment["productType"]["variantAttributes"] | undefined,
   intl: IntlShape,
-): AvailableColumn[] =>
+): AvailableColumn[] | undefined =>
   attributes?.map(attribute => ({
     id: `attribute:${attribute.id}`,
     group: intl.formatMessage(messages.attributes),
     metaGroup: intl.formatMessage(messages.attributes),
-    title: attribute.name,
+    title: attribute.name ?? "",
     width: 150,
   }));
 
@@ -184,8 +186,6 @@ export const useWarehouseAdapter = ({
 }: {
   intl: IntlShape;
   selectedColumns: string[];
-  // availableWarehousesQuery: ReturnType<typeof useWarehouseListLazyQuery>;
-  // gridWarehousesQuery: ReturnType<typeof useGridWarehousesLazyQuery>;
 }) => {
   const [queryAvailableWarehouses, availableWarehouses] =
     useWarehouseListLazyQuery();
@@ -215,7 +215,7 @@ export const useWarehouseAdapter = ({
       mapEdgesToItems(initialWarehouses.data?.selectedWarehouses),
       intl,
     ),
-    onSearch: query =>
+    onSearch: (query: string) =>
       queryAvailableWarehouses({
         variables: { filter: { search: query }, first: 10 },
       }),
@@ -240,7 +240,10 @@ export const getAvailableWarehousesData = ({
     ? undefined
     : mapEdgesToItems(initialWarehouses.data?.availableWarehouses) ?? []);
 
-const parseWarehousesColumns = (data: WarehouseFragment[], intl: IntlShape) => {
+const parseWarehousesColumns = (
+  data: WarehouseFragment[] | undefined,
+  intl: IntlShape,
+) => {
   return data?.map(warehouse => ({
     id: `warehouse:${warehouse.id}`,
     group: intl.formatMessage(messages.warehouses),
@@ -254,11 +257,17 @@ export const getWarehousesFetchMoreProps = ({
   queryAvailableWarehouses,
   availableWarehousesData,
   gridWarehousesData,
+}: {
+  queryAvailableWarehouses: ReturnType<typeof useWarehouseListLazyQuery>[0];
+  availableWarehousesData: ReturnType<typeof useWarehouseListLazyQuery>[1];
+  gridWarehousesData: ReturnType<typeof useGridWarehousesLazyQuery>[1];
 }) => {
   const onNextPage = (query: string) =>
     queryAvailableWarehouses({
       variables: {
-        search: query,
+        filter: {
+          search: query,
+        },
         after:
           availableWarehousesData.data?.warehouses?.pageInfo.endCursor ??
           gridWarehousesData.data?.availableWarehouses?.pageInfo.endCursor,
@@ -270,8 +279,10 @@ export const getWarehousesFetchMoreProps = ({
   const onPreviousPage = (query: string) =>
     queryAvailableWarehouses({
       variables: {
-        search: query,
-        before: queryAvailableWarehouses.data?.warehouses?.pageInfo.startCursor,
+        filter: {
+          search: query,
+        },
+        before: availableWarehousesData.data?.warehouses?.pageInfo.startCursor,
         last: 10,
         first: null,
         after: null,

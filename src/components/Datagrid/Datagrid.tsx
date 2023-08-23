@@ -34,7 +34,6 @@ import React, {
 import { FormattedMessage } from "react-intl";
 
 import { CardMenuItem } from "../CardMenu";
-import { ColumnPickerProps } from "../ColumnPicker";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { Header } from "./components/Header";
 import { RowActions } from "./components/RowActions";
@@ -55,10 +54,7 @@ import useStyles, {
   useFullScreenStyles,
 } from "./styles";
 import { AvailableColumn } from "./types";
-import {
-  getDefultColumnPickerProps,
-  preventRowClickOnSelectionCheckbox,
-} from "./utils";
+import { preventRowClickOnSelectionCheckbox } from "./utils";
 
 export interface GetCellContentOpts {
   changes: MutableRefObject<DatagridChange[]>;
@@ -90,9 +86,7 @@ export interface DatagridProps {
   ) => ReactNode;
   onChange?: OnDatagridChange;
   onHeaderClicked?: (colIndex: number, event: HeaderClickedEventArgs) => void;
-  renderColumnPicker?: (
-    defaultProps: Partial<ColumnPickerProps>,
-  ) => ReactElement;
+  renderColumnPicker?: () => ReactElement;
   onRowClick?: (item: Item) => void;
   onColumnMoved?: (startIndex: number, endIndex: number) => void;
   onColumnResize?: (column: GridColumn, newSize: number) => void;
@@ -153,10 +147,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const navigate = useNavigator();
 
   const { scrolledToRight, scroller } = useScrollRight();
-
-  const defualtColumnPickerProps = getDefultColumnPickerProps(
-    classes.ghostIcon,
-  );
 
   const fullScreenClasses = useFullScreenStyles(classes);
   const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
@@ -553,9 +543,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                           [classes.columnPickerBackground]: !hasMenuItem,
                         })}
                       >
-                        {renderColumnPicker
-                          ? renderColumnPicker(defualtColumnPickerProps)
-                          : null}
+                        {renderColumnPicker ? renderColumnPicker() : null}
                       </div>
                       {hasColumnGroups && (
                         <div

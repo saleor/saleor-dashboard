@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
@@ -100,34 +99,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     [intl],
   );
 
-  // console.log(channels);
-
-  // const variantDefaultColumns = React.useMemo(
-  //   () =>
-  //     variantAttributes && warehouses && channels
-  //       ? [
-  //           "name",
-  //           "sku",
-  //           ...channels?.flatMap(channel => [
-  //             `availableInChannel:${channel.id}`,
-  //             `channel:${channel.id}`,
-  //           ]),
-  //           ...warehouses?.map(warehouse => `stock:${warehouse.id}`),
-  //           ...variantAttributes
-  //             .filter(attribute =>
-  //               [
-  //                 AttributeInputTypeEnum.DROPDOWN,
-  //                 AttributeInputTypeEnum.PLAIN_TEXT,
-  //               ].includes(attribute.inputType),
-  //             )
-  //             .map(attribute => `attribute:${attribute.id}`),
-  //         ].map(c =>
-  //           getColumnData(c, channels, warehouses, variantAttributes, intl),
-  //         )
-  //       : [],
-  //   [variantAttributes, warehouses, channels, intl],
-  // );
-
   const {
     handlers,
     columnCategories,
@@ -144,20 +115,9 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
       attributeCategory,
       warehouseCategory,
     ],
-    selectedColumns: settings.columns,
+    selectedColumns: settings.columns ?? [],
     onSave: handleColumnChange,
   });
-
-  // const {
-  //   availableColumnsChoices,
-  //   columnChoices,
-  //   columns,
-  //   defaultColumns,
-  //   onColumnMoved,
-  //   onColumnResize,
-  //   onColumnsChange,
-  //   picker,
-  // } = useColumnsDefault(variantDefaultColumns);
 
   const getCellContent = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
