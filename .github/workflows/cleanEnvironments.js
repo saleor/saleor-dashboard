@@ -16,7 +16,7 @@ program
   .description("Clean environments")
   .option("--token <token>", "token fo login to cloud")
   .option(
-    "--environments_to_clean_regex <environments_to_clean_regex>",
+    "--environments-to-clean-regex <environments_to_clean_regex>",
     "Regex for environment which need cleaning",
   )
   .action(async options => {
