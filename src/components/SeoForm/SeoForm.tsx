@@ -6,9 +6,7 @@ import {
 } from "@dashboard/graphql";
 import { getFieldError, getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, Input, Text, Textarea } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,21 +22,6 @@ const SLUG_REGEX = /^[a-zA-Z0-9\-_]+$/;
 const maxSlugLength = 255;
 const maxTitleLength = 70;
 const maxDescriptionLength = 300;
-
-const useStyles = makeStyles(
-  {
-    label: {
-      flex: 1,
-    },
-    labelContainer: {
-      "& span": {
-        paddingRight: 30,
-      },
-      display: "flex",
-    },
-  },
-  { name: "SeoForm" },
-);
 
 interface SeoFormProps {
   description?: string | null;
@@ -72,8 +55,6 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
     titlePlaceholder,
     onChange,
   } = props;
-  const classes = useStyles(props);
-
   const intl = useIntl();
 
   const [expanded, setExpansionStatus] = React.useState(false);
@@ -197,19 +178,25 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                 </Box>
               }
             />
-            <TextField
+
+            <Textarea
               error={description?.length > maxDescriptionLength}
               name={SeoField.description}
+              value={description ?? ""}
+              disabled={loading || disabled}
+              onChange={onChange}
+              maxLength={maxDescriptionLength}
+              placeholder={descriptionPlaceholder}
               label={
-                <div className={classes.labelContainer}>
-                  <div className={classes.label}>
+                <Box display="flex" gap={1}>
+                  <Box as="span">
                     <FormattedMessage
                       id="CXTIq8"
                       defaultMessage="Search engine description"
                     />
-                  </div>
+                  </Box>
                   {description?.length > 0 && (
-                    <span>
+                    <Box as="span">
                       <FormattedMessage
                         id="ChAjJu"
                         defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
@@ -219,22 +206,10 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                           numberOfCharacters: description.length,
                         }}
                       />
-                    </span>
+                    </Box>
                   )}
-                </div>
+                </Box>
               }
-              InputProps={{
-                inputProps: {
-                  maxLength: maxDescriptionLength,
-                },
-              }}
-              value={description ?? ""}
-              onChange={onChange}
-              disabled={loading || disabled}
-              fullWidth
-              multiline
-              placeholder={descriptionPlaceholder}
-              rows={10}
             />
           </Box>
         )}

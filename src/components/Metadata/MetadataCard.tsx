@@ -1,20 +1,15 @@
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { MetadataInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TextField,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import {
   Box,
   Button,
   ChervonDownIcon,
   ChervonUpIcon,
+  Input,
   Text,
+  Textarea,
   TrashBinIcon,
   vars,
 } from "@saleor/macaw-ui/next";
@@ -25,20 +20,6 @@ import { DashboardCard } from "../Card";
 import Skeleton from "../Skeleton";
 import { EventDataAction } from "./types";
 import { nameInputPrefix, nameSeparator, valueInputPrefix } from "./utils";
-
-const useStyles = makeStyles(
-  theme => ({
-    input: {
-      padding: theme.spacing(0.5, 2),
-    },
-    nameInput: {
-      padding: "13px 16px",
-    },
-  }),
-  {
-    name: "Metadata",
-  },
-);
 
 export interface MetadataCardProps {
   data: MetadataInput[];
@@ -53,7 +34,6 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
 }) => {
   const intl = useIntl();
   const [expanded, setExpanded] = React.useState(false);
-  const classes = useStyles();
 
   return (
     <DashboardCard
@@ -162,34 +142,20 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                     {data.map((field, fieldIndex) => (
                       <TableRowLink data-test-id="field" key={fieldIndex}>
                         <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-                          <TextField
-                            InputProps={{
-                              classes: {
-                                input: classes.nameInput,
-                              },
-                            }}
-                            inputProps={{
-                              "aria-label": `${nameInputPrefix}${nameSeparator}${fieldIndex}`,
-                            }}
+                          <Input
+                            width="100%"
+                            aria-label={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
                             name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
-                            fullWidth
                             onChange={onChange}
                             value={field.key}
                           />
                         </TableCell>
                         <TableCell>
-                          <TextField
-                            InputProps={{
-                              classes: {
-                                root: classes.input,
-                              },
-                            }}
-                            inputProps={{
-                              "aria-label": `${valueInputPrefix}${nameSeparator}${fieldIndex}`,
-                            }}
-                            multiline
+                          <Textarea
+                            width="100%"
+                            maxRows={1}
+                            aria-label={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
                             name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
-                            fullWidth
                             onChange={onChange}
                             value={field.value}
                           />
