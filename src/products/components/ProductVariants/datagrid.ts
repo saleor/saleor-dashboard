@@ -37,19 +37,18 @@ export const useChannelAdapter = ({
 }: {
   intl: IntlShape;
   selectedColumns: string[];
-  listings: ChannelData[];
+  listings: ChannelData[] | undefined;
 }): ColumnCategory => {
   const [channelQuery, setChannelQuery] = React.useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
 
   const paginatedChannels = paginate(
-    listings.filter(channel => channel.name.includes(channelQuery)),
+    (listings ?? [])?.filter(channel => channel.name.includes(channelQuery)),
   );
 
-  const selectedChannels = listings.filter(channel =>
+  const selectedChannels = listings?.filter(channel =>
     selectedColumns.includes(`channel:${channel.id}`),
   );
-
   return {
     name: intl.formatMessage(messages.channel),
     prefix: "channel",
@@ -78,10 +77,10 @@ export const useChannelAvailabilityAdapter = ({
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
 
   const paginatedChannels = paginate(
-    listings.filter(channel => channel.name.includes(channelQuery)),
+    (listings ?? []).filter(channel => channel.name.includes(channelQuery)),
   );
 
-  const selectedChannels = listings.filter(channel =>
+  const selectedChannels = listings?.filter(channel =>
     selectedColumns.includes(`channel:${channel.id}`),
   );
 
@@ -110,9 +109,9 @@ const parseAvailabilityColumns = (channels: ChannelData[], intl: IntlShape) =>
   }));
 
 const parseChannelColumns = (
-  channels: ChannelData[],
+  channels: ChannelData[] | undefined,
   intl: IntlShape,
-): AvailableColumn[] =>
+): AvailableColumn[] | undefined =>
   channels?.map(channel => ({
     id: `channel:${channel.id}`,
     group: channel.name,
@@ -145,9 +144,9 @@ export const useAttributesAdapter = ({
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
 
   const paginatedAttributes = paginate(
-    supportedAttributes?.filter(attribute =>
+    (supportedAttributes ?? []).filter(attribute =>
       attribute.name?.includes(attributeQuery),
-    ) ?? [],
+    ),
   );
 
   const selectedAttributes = attributes?.filter(attribute =>

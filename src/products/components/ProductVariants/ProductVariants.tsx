@@ -86,7 +86,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   const attributeCategory = useAttributesAdapter({
     intl,
     selectedColumns: settings?.columns ?? [],
-    attributes: variantAttributes ?? [],
+    attributes: variantAttributes,
   });
 
   const warehouseCategory = useWarehouseAdapter({

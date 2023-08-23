@@ -26,7 +26,7 @@ const ProductChannelsListingsDialog: React.FC<
   const intl = useIntl();
 
   const [selected, setSelected] = useStateFromProps(
-    data.channels.updateChannels.map(listing => listing.channelId),
+    data.channels.updateChannels?.map(listing => listing.channelId),
   );
 
   const handleConfirm = () => {
@@ -59,7 +59,7 @@ const ProductChannelsListingsDialog: React.FC<
         defaultMessage: "Manage Products Channel Availability",
       })}
       confirmButtonState="default"
-      selected={selected.length}
+      selected={selected?.length}
       onConfirm={handleConfirm}
     />
   );

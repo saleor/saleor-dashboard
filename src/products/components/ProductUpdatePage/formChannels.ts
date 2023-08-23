@@ -48,12 +48,11 @@ export function useProductChannelListingsForm(
   const [channels, setChannels] =
     useStateFromProps<ProductChannelListingUpdateInput>({
       removeChannels: [],
-      updateChannels:
-        product?.channelListings.map(listing => ({
-          channelId: listing.channel.id,
-          availableForPurchaseDate: listing.availableForPurchase,
-          ...listing,
-        })) ?? [],
+      updateChannels: product?.channelListings.map(listing => ({
+        channelId: listing.channel.id,
+        availableForPurchaseDate: listing.availableForPurchase,
+        ...listing,
+      })),
     });
   const touched = useRef<string[]>([]);
 

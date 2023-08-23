@@ -299,7 +299,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           openModal: () => setChannelPickerOpen(true),
         };
 
-        const listings = data.channels.updateChannels.map<ChannelData>(
+        const listings = data.channels.updateChannels?.map<ChannelData>(
           listing => {
             const channel = channels?.find(ac => ac.id === listing.channelId);
 
@@ -423,7 +423,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               <CardSpacer />
               <ChannelsAvailabilityCard
                 {...availabilityCommonProps}
-                channels={listings}
+                channels={listings ?? []}
               />
               <CardSpacer />
               <ProductTaxes
