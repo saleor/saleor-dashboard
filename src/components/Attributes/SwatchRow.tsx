@@ -4,7 +4,8 @@ import {
   getErrorMessage,
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
-import { DynamicCombobox } from "@saleor/macaw-ui/next";
+import { getBySlug } from "@dashboard/misc";
+import { Box, DynamicCombobox } from "@saleor/macaw-ui/next";
 import { debounce } from "lodash-es";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -22,6 +23,37 @@ type SwatchRowProps = Pick<
   | "fetchMoreAttributeValues"
 >;
 
+const ColorBox = (
+  props:
+    | { isFile: true; backgroundImageUrl: string }
+    | {
+        isFile: false;
+        backgroundColor: string;
+      },
+) => {
+  return (
+    <Box
+      width={8}
+      height={8}
+      borderRadius={2}
+      marginRight={2}
+      style={{
+        ...(props.isFile
+          ? {
+              backgroundImage: `url(${props.backgroundImageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }
+          : {}),
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+        ...(props.isFile === false
+          ? { backgroundColor: props.backgroundColor }
+          : {}),
+      }}
+    />
+  );
+};
+
 export const SwatchRow: React.FC<SwatchRowProps> = ({
   attributeValues,
   fetchAttributeValues,
@@ -32,7 +64,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
-  // const value = attribute.data.values.find(getBySlug(attribute.value[0]));
+  const value = attribute.data.values.find(getBySlug(attribute.value[0]));
 
   const debouncedFetchAttributeValues = debounce((inputValue: string) => {
     if (!inputValue) {
@@ -54,21 +86,35 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
         options={attributeValues.map(({ file, value, slug, name }) => ({
           label: name,
           value: slug,
+          startAdornment: (
+            <ColorBox
+              isFile={!!file}
+              backgroundImageUrl={file?.url}
+              backgroundColor={value}
+            />
+          ),
         }))}
         value={
           attribute.value[0]
             ? {
                 label: getSingleDisplayValue(attribute, attributeValues),
                 value: attribute.value[0],
+                startAdornment: null,
               }
             : null
         }
+        startAdornment={() => (
+          <ColorBox
+            isFile={!!value?.file}
+            backgroundImageUrl={value?.file?.url}
+            backgroundColor={value?.value}
+          />
+        )}
         error={!!error}
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
         id={`attribute:${attribute.label}`}
-        label={"Swatch"}
-        onChange={value => onChange(attribute.id, value.value)}
+        onChange={value => onChange(attribute.id, value?.value)}
         onInputValueChange={debouncedFetchAttributeValues}
         onFocus={() => {
           fetchAttributeValues("", attribute.id);
