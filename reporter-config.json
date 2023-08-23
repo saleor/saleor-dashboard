@@ -7,6 +7,10 @@
     "reportDir": "cypress/results/mochawesome",
     "overwrite": false,
     "html": false,
+    "embeddedScreenshots": true,
+    "inlineAssets": false,
+    "saveAllAttempts": true,
+    "charts": true,
     "json": true
   }
 }
