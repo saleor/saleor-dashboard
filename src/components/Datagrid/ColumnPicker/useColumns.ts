@@ -16,6 +16,8 @@ import {
 export interface ColumnCategory {
   name: string;
   prefix: string;
+  children?: string[];
+  hidden?: boolean;
   availableNodes: AvailableColumn[] | undefined;
   selectedNodes: AvailableColumn[] | undefined;
   initialSearch?: string;
@@ -116,22 +118,38 @@ export const useColumns = ({
   const onToggle = (columnId: string) => {
     const isAdded = !selectedColumns.includes(columnId);
     const isDynamic = columnId.includes(":");
-    if (isAdded) {
-      onSave([...selectedColumns, columnId]);
-      setRecentlyAddedColumn(columnId);
-    } else {
-      onSave(selectedColumns.filter(id => id !== columnId));
+    if (!isDynamic) {
+      if (isAdded) {
+        onSave([...selectedColumns, columnId]);
+        setRecentlyAddedColumn(columnId);
+      } else {
+        onSave(selectedColumns.filter(id => id !== columnId));
+      }
     }
     if (isDynamic) {
+      const [prefix, id] = columnId.split(":");
+      const hiddenColumnPrefixes =
+        columnCategories?.find(cat => cat.prefix === prefix).children ?? [];
+
       if (isAdded) {
+        onSave([
+          ...selectedColumns,
+          ...hiddenColumnPrefixes.map(prefix => `${prefix}:${id}`),
+          columnId,
+        ]);
+        setRecentlyAddedColumn(columnId);
         updateDynamicColumns(prevDynamicColumns => [
           ...(prevDynamicColumns ?? []),
+          ...hiddenColumnPrefixes.map(prefix =>
+            findDynamicColumn(columnCategories, `${prefix}:${id}`),
+          ),
           findDynamicColumn(columnCategories, columnId),
         ]);
       } else {
         updateDynamicColumns(prevDynamicColumns =>
-          (prevDynamicColumns ?? []).filter(column => column.id !== columnId),
+          (prevDynamicColumns ?? []).filter(column => !column.id.includes(id)),
         );
+        onSave(selectedColumns.filter(currentId => !currentId.includes(id)));
       }
     }
   };

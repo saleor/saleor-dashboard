@@ -26,6 +26,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import {
   useAttributesAdapter,
   useChannelAdapter,
+  useChannelAvailabilityAdapter,
   useWarehouseAdapter,
   variantsStaticColumnsAdapter,
 } from "./datagrid";
@@ -72,6 +73,12 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   // const limitReached = isLimitReached(limits, "productVariants");
 
   const channelCategory = useChannelAdapter({
+    intl,
+    listings: channels,
+    selectedColumns: settings?.columns ?? [],
+  });
+
+  const availabilityCategory = useChannelAvailabilityAdapter({
     intl,
     listings: channels,
     selectedColumns: settings?.columns ?? [],
@@ -131,7 +138,12 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     recentlyAddedColumn,
   } = useColumns({
     staticColumns: memoizedStaticColumns,
-    columnCategories: [channelCategory, attributeCategory, warehouseCategory],
+    columnCategories: [
+      channelCategory,
+      availabilityCategory,
+      attributeCategory,
+      warehouseCategory,
+    ],
     selectedColumns: settings.columns,
     onSave: handleColumnChange,
   });
@@ -147,39 +159,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   //   picker,
   // } = useColumnsDefault(variantDefaultColumns);
 
-  const visibleColumnsWithChannelAvailability = React.useMemo(
-    () =>
-      visibleColumns?.reduce((acc, col) => {
-        const [prefix, id] = col.id.split(":");
-        const isNewChannelColumn =
-          prefix === "channel" &&
-          !visibleColumns.find(c => c.id === `availableInChannel:${id}`);
-
-        if (isNewChannelColumn) {
-          const availabilityCol = {
-            id: `availableInChannel:${col.id.split(":")[1]}`,
-            title: intl.formatMessage(messages.available),
-            width: 80,
-            group: col.group,
-          };
-          acc.push(availabilityCol);
-          const newCol = {
-            ...col,
-            title: intl.formatMessage(messages.price),
-          };
-          acc.push(newCol);
-          return acc;
-        }
-        acc.push(col);
-        return acc;
-      }, []),
-    [visibleColumns],
-  );
-
   const getCellContent = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getData({
-        availableColumns: visibleColumnsWithChannelAvailability,
+        availableColumns: visibleColumns,
         column,
         row,
         channels,
@@ -187,18 +170,13 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [
-      channels,
-      visibleColumnsWithChannelAvailability,
-      onAttributeValuesSearch,
-      variants,
-    ],
+    [channels, visibleColumns, onAttributeValuesSearch, variants],
   );
 
   const getCellError = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getError(errors, {
-        availableColumns: visibleColumnsWithChannelAvailability,
+        availableColumns: visibleColumns,
         column,
         row,
         channels,
@@ -206,13 +184,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [
-      errors,
-      visibleColumnsWithChannelAvailability,
-      channels,
-      variants,
-      onAttributeValuesSearch,
-    ],
+    [errors, visibleColumns, channels, variants, onAttributeValuesSearch],
   );
 
   return (
@@ -223,7 +195,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         description: "button",
       })}
       fillHandle={true}
-      availableColumns={visibleColumnsWithChannelAvailability}
+      availableColumns={visibleColumns}
       emptyText={intl.formatMessage(messages.empty)}
       getCellContent={getCellContent}
       getCellError={getCellError}

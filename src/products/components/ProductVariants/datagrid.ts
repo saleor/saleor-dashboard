@@ -54,6 +54,7 @@ export const useChannelAdapter = ({
   return {
     name: intl.formatMessage(messages.channel),
     prefix: "channel",
+    children: ["availableInChannel"],
     availableNodes: parseChannelColumns(paginatedChannels.data, intl),
     selectedNodes: parseChannelColumns(selectedChannels, intl),
     onSearch: query => setChannelQuery(query),
@@ -65,6 +66,50 @@ export const useChannelAdapter = ({
   };
 };
 
+export const useChannelAvailabilityAdapter = ({
+  intl,
+  selectedColumns,
+  listings,
+}: {
+  intl: IntlShape;
+  selectedColumns: string[];
+  listings: ChannelData[];
+}): ColumnCategory => {
+  const [channelQuery, setChannelQuery] = React.useState("");
+  const { paginate, currentPage, changeCurrentPage } = useClientPagination();
+
+  const paginatedChannels = paginate(
+    listings.filter(channel => channel.name.includes(channelQuery)),
+  );
+
+  const selectedChannels = listings.filter(channel =>
+    selectedColumns.includes(`channel:${channel.id}`),
+  );
+
+  return {
+    name: intl.formatMessage(messages.available),
+    prefix: "availableInChannel",
+    hidden: true,
+    availableNodes: parseAvailabilityColumns(paginatedChannels.data, intl),
+    selectedNodes: parseAvailabilityColumns(selectedChannels, intl),
+    onSearch: query => setChannelQuery(query),
+    initialSearch: channelQuery,
+    hasNextPage: paginatedChannels.hasNextPage,
+    hasPreviousPage: paginatedChannels.hasPreviousPage,
+    onNextPage: () => changeCurrentPage(currentPage + 1),
+    onPreviousPage: () => changeCurrentPage(currentPage - 1),
+  };
+};
+
+const parseAvailabilityColumns = (channels: ChannelData[], intl: IntlShape) =>
+  channels?.map(channel => ({
+    id: `availableInChannel:${channel.id}`,
+    group: channel.name,
+    metaGroup: null,
+    title: intl.formatMessage(messages.available),
+    width: 80,
+  }));
+
 const parseChannelColumns = (
   channels: ChannelData[],
   intl: IntlShape,
@@ -73,15 +118,10 @@ const parseChannelColumns = (
     id: `channel:${channel.id}`,
     group: channel.name,
     metaGroup: intl.formatMessage(messages.channel),
-    title: channel.name,
+    pickerTitle: channel.name,
+    title: intl.formatMessage(messages.price),
     width: 150,
   }));
-
-// export const useWarehouseAdapter = ({intl, selectedColumns, warehouses}: {
-//     intl: IntlShape;
-//     selectedColumns: string[];
-//     warehouses: warehouseFragment[];
-// });
 
 export const useAttributesAdapter = ({
   intl,
@@ -179,7 +219,7 @@ export const useWarehouseAdapter = ({
       queryAvailableWarehouses({
         variables: { filter: { search: query }, first: 10 },
       }),
-    initialSearch: "",
+    initialSearch: availableWarehouses.variables?.filter?.search ?? "",
     ...getWarehousesFetchMoreProps({
       queryAvailableWarehouses,
       availableWarehousesData: availableWarehouses,

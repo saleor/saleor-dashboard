@@ -5,7 +5,9 @@ export interface AvailableColumn {
   title: string;
   width: number;
   group?: string;
-  metaGroup?: string; // Description for column picker
+  metaGroup?: string | null; // Description for column picker
+  // null means that column is not visible in column picker
+  pickerTitle?: string;
   hasMenu?: boolean;
   icon?: string;
   themeOverride?: Partial<Theme>;
