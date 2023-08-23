@@ -34,7 +34,6 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   );
 
   // todo range is read only - we don't need support for editing, it is better to split component into range and editable money cell
-  // todo range is read only - we don't need support for editing, it is better to split component into range and editable money cell
   return (
     <input
       type="number"
