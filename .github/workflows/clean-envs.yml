@@ -29,7 +29,7 @@ jobs:
         run: |
           node .github/workflows/cleanEnvironments.js \
           --token "$TOKEN" \
-          --environments_to_clean_regex "^v\d*.staging"
+          --environments_to_clean_regex "^v\d+.staging"
 
       - name: clean master environment
         id: clean-master-environment
