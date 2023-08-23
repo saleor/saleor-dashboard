@@ -73,7 +73,7 @@ export const createGetCellContent =
             cursor: "pointer",
           },
         );
-      case "status":
+      case "status": {
         const isActive = rowData?.isActive;
         const status = isActive
           ? intl.formatMessage(commonStatusMessages.active)
@@ -96,6 +96,7 @@ export const createGetCellContent =
             allowOverlay: false,
           },
         );
+      }
       case "email":
         return readonlyTextCell(rowData?.email ?? PLACEHOLDER);
       default:

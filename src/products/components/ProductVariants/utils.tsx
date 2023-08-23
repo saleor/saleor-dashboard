@@ -122,9 +122,10 @@ export function getData({
 
   switch (columnId) {
     case "name":
-    case "sku":
+    case "sku": {
       const value = change ?? (dataRow ? dataRow[columnId] : "");
       return textCell(value || "");
+    }
   }
 
   if (getColumnStock(columnId)) {

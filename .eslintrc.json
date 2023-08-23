@@ -100,8 +100,7 @@
     "react-refresh/only-export-components": "off",
     "array-callback-return": "off",
     "import/export": "off",
-    "n/no-callback-literal": "off",
-    "no-case-declarations": "warn"
+    "n/no-callback-literal": "warn"
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }
