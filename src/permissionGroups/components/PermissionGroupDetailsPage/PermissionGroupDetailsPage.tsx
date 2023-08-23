@@ -66,6 +66,7 @@ export interface PermissonGroupDetailsPageProps
   permissionsExceeded: boolean;
   saveButtonBarState: "loading" | "success" | "error" | "default";
   onAssign: () => void;
+  onDelete: () => void;
   onUnassign: (ids: string[]) => void;
   onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
@@ -77,6 +78,7 @@ export const PermissionGroupDetailsPage: React.FC<
   errors,
   members,
   onSubmit,
+  onDelete,
   permissionGroup,
   permissions,
   permissionsExceeded,
@@ -190,6 +192,7 @@ export const PermissionGroupDetailsPage: React.FC<
             <div>
               <Savebar
                 onCancel={() => navigate(permissionGroupListUrl())}
+                onDelete={onDelete}
                 onSubmit={submit}
                 state={saveButtonBarState}
                 disabled={disabled}
