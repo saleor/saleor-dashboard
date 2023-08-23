@@ -10,6 +10,7 @@ import { debounce } from "lodash-es";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { attributeRowMessages } from "./messages";
 import { AttributeRowProps } from "./types";
 
 type SwatchRowProps = Pick<
@@ -111,6 +112,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
           />
         )}
         error={!!error}
+        label={intl.formatMessage(attributeRowMessages.valueLabel)}
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
         id={`attribute:${attribute.label}`}
