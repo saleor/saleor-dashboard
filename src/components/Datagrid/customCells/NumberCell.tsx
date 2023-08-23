@@ -53,7 +53,7 @@ export const numberCellRenderer = (
     const { value, options } = cell.data;
     let formatted =
       value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
-    if (options.format === "percent") {
+    if (options?.format === "percent") {
       formatted += "%";
     }
     ctx.fillStyle = theme.textDark;
