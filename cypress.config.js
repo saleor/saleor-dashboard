@@ -28,18 +28,6 @@ module.exports = defineConfig({
       config = require("./cypress/support/cypress-grep/plugin")(config);
       config = await require("./cypress/plugins/index.js")(on, config);
       config = require("cypress-split")(on, config);
-
-      on("after:spec", (spec, results) => {
-        if (results && results.video) {
-          return fs.unlink(results.video, function (err) {
-            if (err) {
-              console.warn(`Could not remove video - ${err}`);
-            } else {
-              console.log("File removed:", results.video);
-            }
-          });
-        }
-      });
       return config;
     },
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
