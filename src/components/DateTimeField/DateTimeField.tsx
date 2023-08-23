@@ -6,9 +6,8 @@ import {
 } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { joinDateTime, splitDateTime } from "@dashboard/misc";
-import { TextField } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Input } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -31,8 +30,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
   return (
     <Box display="flex" gap={0.5}>
-      <TextField
-        fullWidth
+      <Input
+        width="100%"
         disabled={disabled}
         error={!!error}
         helperText={getErrorMessage(error, intl)}
@@ -45,10 +44,9 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         }}
         type="date"
         value={parsedValue.date}
-        InputLabelProps={{ shrink: true }}
       />
-      <TextField
-        fullWidth
+      <Input
+        width="100%"
         disabled={disabled}
         error={!!error}
         helperText={getErrorMessage(error, intl)}
@@ -61,7 +59,6 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         }}
         type="time"
         value={parsedValue.time}
-        InputLabelProps={{ shrink: true }}
       />
     </Box>
   );

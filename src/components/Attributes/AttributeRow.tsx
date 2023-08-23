@@ -14,16 +14,15 @@ import {
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import FileUploadField from "@dashboard/components/FileUploadField";
-import MultiAutocompleteSelectField from "@dashboard/components/MultiAutocompleteSelectField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { TextField } from "@material-ui/core";
 import {
   Box,
   Checkbox,
   DynamicCombobox,
+  DynamicMultiselect,
   Input,
   Text,
 } from "@saleor/macaw-ui/next";
@@ -263,8 +262,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           label={attribute.label}
           id={`attribute:${attribute.label}`}
         >
-          <TextField
-            fullWidth
+          <Input
+            width="100%"
             disabled={disabled}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
@@ -274,7 +273,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             onChange={event => onChange(attribute.id, event.target.value)}
             type="date"
             value={attribute.value[0]}
-            InputLabelProps={{ shrink: true }}
           />
         </BasicAttributeRow>
       );
@@ -295,21 +293,25 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
     default:
       return (
         <BasicAttributeRow label={attribute.label}>
-          <MultiAutocompleteSelectField
-            choices={getMultiChoices(attributeValues)}
-            displayValues={getMultiDisplayValue(attribute, attributeValues)}
+          <DynamicMultiselect
+            label={intl.formatMessage(attributeRowMessages.multipleValueLabel)}
             disabled={disabled}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
-            label={intl.formatMessage(attributeRowMessages.multipleValueLabel)}
             name={`attribute:${attribute.label}`}
-            value={attribute.value}
-            onChange={event => onMultiChange(attribute.id, event.target.value)}
-            allowCustomValues={true}
-            fetchOnFocus={true}
-            fetchChoices={value => fetchAttributeValues(value, attribute.id)}
+            value={getMultiDisplayValue(attribute, attributeValues)}
+            options={getMultiChoices(attributeValues)}
+            onChange={value => {
+              onMultiChange(
+                attribute.id,
+                value.map(({ value }) => value),
+              );
+            }}
+            onFocus={() => fetchAttributeValues("", attribute.id)}
+            onInputValueChange={value =>
+              fetchAttributeValues(value, attribute.id)
+            }
             onBlur={onAttributeSelectBlur}
-            {...fetchMoreAttributeValues}
           />
         </BasicAttributeRow>
       );
