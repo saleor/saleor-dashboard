@@ -95,6 +95,18 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                   />
                 );
               }
+
+              if (isTimelineEventOfType("note_updated", type)) {
+                return (
+                  <TimelineNote
+                    date={date}
+                    user={user}
+                    message={message}
+                    key={id}
+                  />
+                );
+              }
+
               if (isTimelineEventOfType("extendable", type)) {
                 return (
                   <ExtendedTimelineEvent
