@@ -20,7 +20,6 @@ export interface PermissionGroupListPageProps
   extends PageListProps,
     SortPage<PermissionGroupListUrlSortField> {
   permissionGroups: PermissionGroupFragment[];
-  onDelete: (id: string) => void;
 }
 
 const PermissionGroupListPage: React.FC<

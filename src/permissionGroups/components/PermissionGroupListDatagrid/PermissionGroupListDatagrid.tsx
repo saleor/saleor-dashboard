@@ -15,7 +15,7 @@ import {
 import { canBeSorted } from "@dashboard/permissionGroups/views/PermissionGroupList/sort";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box, TrashBinIcon } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -29,7 +29,6 @@ interface PermissionGroupListDatagridProps
   extends ListProps,
     SortPage<PermissionGroupListUrlSortField> {
   permissionGroups: PermissionGroupFragment[];
-  onDelete: (id: string) => void;
 }
 
 export const PermissionGroupListDatagrid = ({
@@ -39,7 +38,6 @@ export const PermissionGroupListDatagrid = ({
   sort,
   settings,
   onUpdateListSettings,
-  onDelete,
 }: PermissionGroupListDatagridProps) => {
   const intl = useIntl();
   const datagridState = useDatagridChangeState();
@@ -118,21 +116,7 @@ export const PermissionGroupListDatagrid = ({
         getCellContent={getCellContent}
         getCellError={() => false}
         selectionActions={() => null}
-        menuItems={id => [
-          ...(permissionGroups[id]?.userCanManage
-            ? [
-                {
-                  label: intl.formatMessage(messages.deletePermissionGroup),
-                  Icon: <TrashBinIcon />,
-                  onSelect: () => {
-                    if (permissionGroups?.[id]?.id) {
-                      onDelete(permissionGroups[id].id);
-                    }
-                  },
-                },
-              ]
-            : []),
-        ]}
+        menuItems={() => []}
         onRowClick={handleRowClick}
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
