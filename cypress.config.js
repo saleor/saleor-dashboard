@@ -10,14 +10,14 @@ module.exports = defineConfig({
   requestTimeout: 20000,
   viewportWidth: 1400,
   viewportHeight: 660,
-  screenshotsFolder: "cypress/results/mochawesome/assets",
+  screenshotsFolder: "cypress/reports/mochareports/assets",
   screenshotOnRunFailure: true,
-
   retries: {
     runMode: 1,
     openMode: 0,
   },
   reporter: "cypress-multi-reporters",
+  screenshotOnRunFailure: true,
   reporterOptions: {
     configFile: "reporter-config.json",
   },

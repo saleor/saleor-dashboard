@@ -339,7 +339,9 @@
     "change:add": "changeset add",
     "release:prepare-main": "./scripts/prepare-main-after-release.sh",
     "format:code": "prettier --ignore-unknown --write src/*",
-    "mochawesome-merge": "npx mochawesome-merge \"cypress/results/mochawesome/*.json\" > mochawesome.json && npx marge mochawesome.json"
+    "combine:reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
+    "generate:report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports -- inline",
+    "posttest": "npm run combine:reports && npm run generate:report"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }

@@ -258,13 +258,13 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
       - name: Merge report files
-        run: npm run mochawesome-merge
+        run: npm run posttest
       - name: Upload reports
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: mochawesome-${{ strategy.job-index }}.html
-          path: ./mochawesome-report/
+          name: mochawesome-${{ strategy.job-index }}
+          path: ./cypress/reports/mochareports
       - name: Install dependencies
         working-directory: .github/workflows
         run: npm ci
