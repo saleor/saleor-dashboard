@@ -257,7 +257,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxClass={setSelectedTaxClass}
       taxClasses={taxClassesChoices}
-      // warehouses={warehouses}
       hasVariants={hasVariants}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
