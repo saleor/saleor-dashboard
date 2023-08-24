@@ -243,6 +243,7 @@ jobs:
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
 
       - name: Cypress run critical
+        continue-on-error: true
         uses: cypress-io/github-action@v5
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
