@@ -257,6 +257,8 @@ jobs:
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
+      - name: Move screenshots into single file
+        run: find cypress/reports/mochareports -type d -name "*.js" -exec mv {} cypress/reports/mochareports \;
       - name: Merge report files
         run: npm run html:report
       - name: Upload reports

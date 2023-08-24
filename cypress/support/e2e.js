@@ -168,9 +168,19 @@ Cypress.on(
     false,
 );
 
+const titleToFileName = title => title.replace(/[:\/]/g, "");
+
 Cypress.on("test:after:run", (test, runnable) => {
   if (test.state === "failed") {
-    const screenshot = `${Cypress.spec.name}/${runnable.parent.title} -- ${test.title} (failed).png`;
-    addContext({ test }, screenshot);
+    let parent = runnable.parent;
+    let filename = "";
+    while (parent && parent.title) {
+      filename = `${titleToFileName(parent.title)} -- ${filename}`;
+      parent = parent.parent;
+    }
+    filename += `${titleToFileName(test.title)} (failed).png`;
+    addContext({ test }, `${Cypress.spec.name}/${filename}`);
   }
+  // always add the video
+  addContext({ test }, `../../videos/${Cypress.spec.name}.mp4`);
 });
