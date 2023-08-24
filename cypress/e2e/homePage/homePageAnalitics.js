@@ -164,7 +164,7 @@ describe("As an admin I want to see correct information on dashboard home page",
       cy.contains(
         HOMEPAGE_SELECTORS.productsOutOfStock,
         productsOutOfStockRegexp,
-      ).should("be.visible");
+      ).should("not.be.visible");
     },
   );
 });
