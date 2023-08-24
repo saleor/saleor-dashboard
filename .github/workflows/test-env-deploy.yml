@@ -258,7 +258,7 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
       - name: Merge report files
-        run: npm run posttest
+        run: npm run html:report
       - name: Upload reports
         uses: actions/upload-artifact@v3
         if: always()
