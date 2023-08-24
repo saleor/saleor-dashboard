@@ -10,7 +10,7 @@ module.exports = defineConfig({
   requestTimeout: 20000,
   viewportWidth: 1400,
   viewportHeight: 660,
-  screenshotsFolder: "cypress/reports/mochareports/assets",
+  screenshotsFolder: "cypress/reports/mochareports",
   screenshotOnRunFailure: true,
   retries: {
     runMode: 1,
