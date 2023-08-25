@@ -180,7 +180,6 @@ Cypress.on("test:after:run", (test, runnable) => {
     }
     filename += `${titleToFileName(test.title)} (failed).png`;
     addContext({ test }, `${Cypress.spec.name}/${filename}`);
+    addContext({ test }, `../../videos/${Cypress.spec.name}.mp4`);
   }
-  // always add the video
-  addContext({ test }, `../../videos/${Cypress.spec.name}.mp4`);
 });

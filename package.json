@@ -339,7 +339,7 @@
     "change:add": "changeset add",
     "release:prepare-main": "./scripts/prepare-main-after-release.sh",
     "format:code": "prettier --ignore-unknown --write src/*",
-    "combine:reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
+    "combine:reports": "mkdir -p cypress/reports/mochareports &&  mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
     "generate:report": "marge cypress/reports/mochareports/report.json --reportDir cypress/reports/mochareports",
     "html:report": "npm run combine:reports && npm run generate:report"
   },
