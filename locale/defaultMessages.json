@@ -1524,6 +1524,9 @@
     "context": "button",
     "string": "SETUP END DATE"
   },
+  "9MGrEp": {
+    "string": "Is available"
+  },
   "9Mro3c": {
     "context": "Transaction event status - pending",
     "string": "Pending"
@@ -1761,10 +1764,6 @@
   },
   "AyQkmp": {
     "string": "Sorting by this column is not available"
-  },
-  "AyW1j6": {
-    "context": "Clear filters button text",
-    "string": "Clear all fields"
   },
   "AzMSmb": {
     "context": "caption",
@@ -2293,6 +2292,9 @@
   "Epm41J": {
     "context": "change warehouse dialog warehouse list label",
     "string": "Warehouses A to Z"
+  },
+  "Eq3GFh": {
+    "string": "Is giftcard"
   },
   "ErNH3D": {
     "string": "Define where this attribute should be used in Saleor system"
@@ -3974,6 +3976,9 @@
     "context": "table header name col label",
     "string": "Name"
   },
+  "QHDtwH": {
+    "string": "Has category"
+  },
   "QJG+d/": {
     "context": "staff added type order discount",
     "string": "Staff added"
@@ -4060,6 +4065,9 @@
   "Qph0GE": {
     "context": "dialog content",
     "string": "Add a new address:"
+  },
+  "QqnNUm": {
+    "string": "Visible in listing"
   },
   "QzseV7": {
     "context": "dialog header",
@@ -5900,6 +5908,9 @@
   "dWK/Ck": {
     "string": "Choose countries, you want voucher to be limited to, from the list below"
   },
+  "da1ebU": {
+    "string": "Product type"
+  },
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
@@ -7026,6 +7037,9 @@
     "context": "modal button upload",
     "string": "Upload"
   },
+  "mIRBuW": {
+    "string": "Is published"
+  },
   "mIUNgR": {
     "context": "button",
     "string": "Create shipping zone"
@@ -7181,6 +7195,10 @@
   },
   "nLML8Y": {
     "string": "Default Shipping Address"
+  },
+  "nMojhT": {
+    "context": "Clear filters button text",
+    "string": "Reset"
   },
   "nNeWAx": {
     "context": "dialog header",

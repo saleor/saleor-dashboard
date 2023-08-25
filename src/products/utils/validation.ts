@@ -34,7 +34,9 @@ export const validateProductCreateData = (data: ProductCreateData) => {
     errors = [...errors, createEmptyRequiredError("name")];
   }
 
-  if (data.channelListings) {
+  const { productType, channelListings } = data;
+
+  if (!productType.hasVariants && channelListings) {
     const emptyPrices = data.channelListings
       .filter(channel => channel.price?.length === 0)
       .map(({ id }) => createEmptyRequiredError(`${id}-channel-price`));

@@ -28,10 +28,12 @@ describe("validateProductCreateData", () => {
     ]);
   });
 
-  it("returns errors when there is no prices for channels", () => {
+  it("returns errors when there is no prices for channels in simple product", () => {
     // Arrange
     const data = {
-      productType: "something",
+      productType: {
+        hasVariants: false,
+      },
       name: "something",
       channelListings: [
         { id: "chann-1", price: "" },
@@ -59,5 +61,25 @@ describe("validateProductCreateData", () => {
         message: null,
       },
     ]);
+  });
+
+  it("returns errors when there is no prices for channels in product with variants", () => {
+    // Arrange
+    const data = {
+      productType: {
+        hasVariants: true,
+      },
+      name: "something",
+      channelListings: [
+        { id: "chann-1", price: "" },
+        { id: "chann-2", price: "" },
+      ],
+    } as unknown as ProductCreateData;
+
+    // Act
+    const errors = validateProductCreateData(data);
+
+    // Assert
+    expect(errors).toEqual([]);
   });
 });

@@ -39,6 +39,10 @@ const createStaticQueryPart = (
     return { range: { lte, gte } };
   }
 
+  if (isItemOption(value) && ["true", "false"].includes(value.value)) {
+    return value.value === "true";
+  }
+
   if (isItemOption(value)) {
     return { eq: value.value };
   }
