@@ -1,9 +1,9 @@
 // @ts-strict-ignore
-import { Input, Text } from "@saleor/macaw-ui/next";
+import { Input, InputProps, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { usePriceField } from "./usePriceField";
-export interface PriceFieldProps {
+export interface PriceFieldProps extends InputProps {
   className?: string;
   currencySymbol?: string;
   disabled?: boolean;
@@ -12,6 +12,7 @@ export interface PriceFieldProps {
   label?: string;
   name?: string;
   value?: string;
+  minValue?: string;
   required?: boolean;
   onChange: (event: any) => any;
 }
@@ -28,6 +29,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     onChange: onChangeBase,
     required,
     value,
+    ...inputProps
   } = props;
 
   const { onChange, onKeyDown, minValue, step } = usePriceField(
@@ -44,7 +46,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
       error={error}
       helperText={hint}
       value={value}
-      min={minValue}
+      min={props.minValue || minValue}
       step={step}
       name={name}
       required={required}
@@ -52,6 +54,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
       onKeyDown={onKeyDown}
       type="number"
       endAdornment={<Text marginRight={2}>{currencySymbol || ""}</Text>}
+      {...inputProps}
     />
   );
 };

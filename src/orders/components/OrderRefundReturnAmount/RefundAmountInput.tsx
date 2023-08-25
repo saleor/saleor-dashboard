@@ -94,11 +94,8 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
       value={data.amount}
       label={intl.formatMessage(messages.label)}
       className={classes.priceField}
-      InputProps={{ inputProps: { max: maxRefund?.amount } }}
-      inputProps={{
-        "data-test-id": "amountInput",
-        max: maxRefund?.amount,
-      }}
+      max={maxRefund?.amount}
+      data-test-id="amountInput"
       error={isError}
       hint={
         getOrderErrorMessage(formErrors.amount, intl) ||
