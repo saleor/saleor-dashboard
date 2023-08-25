@@ -283,7 +283,7 @@ jobs:
           npx testmo automation:run:submit-thread \
           --instance "$TESTMO_URL" \
           --run-id "$TESTMO_RUN_ID" \
-          --results ../../results/junit/*.xml
+          --results ../../reports/junit/*.xml
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
