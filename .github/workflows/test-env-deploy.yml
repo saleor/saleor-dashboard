@@ -259,7 +259,7 @@ jobs:
           SPLIT_INDEX: ${{ strategy.job-index }}
       - name: Move screenshots and videos into reports dir
         continue-on-error: true
-        run: npm run create:report:dir && find cypress/reports/mochareports -type d -name "*.js" -exec mv {} cypress/reports/mochareports \; && mv cypress/videos cypress/reports/mochareports
+        run: npm run create:artifacts:dirs && find cypress/reports/mochareports -type d -name "*.js" -exec mv {} cypress/reports/mochareports \; && find cypress/videos -type f -name "*.js.mp4" -exec mv {} cypress/reports/mochareports/videos \;
       - name: Merge report files
         run: npm run html:report
       - name: Upload reports
