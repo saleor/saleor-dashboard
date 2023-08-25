@@ -257,12 +257,14 @@ jobs:
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
-      - name: Move screenshots and videos into reports dir
+      - name: Create reports dir
+        run: npm run create:artifacts:dirs
+      - name: Move screenshots into reports dir
         continue-on-error: true
-        run: |
-          npm run create:artifacts:dirs 
-          npm run move:screenshots
-          npm run move:videos
+        run: npm run move:screenshots
+      - name: Move videos into reports dir
+        continue-on-error: true
+        run: npm run move:videos
       - name: Merge report files
         run: npm run html:report
       - name: Upload reports
