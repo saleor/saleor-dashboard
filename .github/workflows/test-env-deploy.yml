@@ -258,6 +258,7 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
       - name: Move screenshots into single file
+        continue-on-error: true
         run: find cypress/reports/mochareports -type d -name "*.js" -exec mv {} cypress/reports/mochareports \;
       - name: Merge report files
         run: npm run html:report
