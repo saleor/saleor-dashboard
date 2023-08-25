@@ -1,15 +1,13 @@
 import CardTitle from "@dashboard/components/CardTitle";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
 import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Combobox } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
-
-import { ProductCreateFormData } from "../ProductCreatePage";
 
 interface ProductTaxesProps {
   value: string;
@@ -36,7 +34,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
     taxClasses,
     taxClassDisplayName,
     onChange,
-    onFetchMore,
+    // onFetchMore,
   } = props;
   const classes = useStyles(props);
 
@@ -46,21 +44,21 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
     <Card className={classes.root}>
       <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
       <CardContent>
-        <SingleAutocompleteSelectField
+        <Combobox
+          data-test-id="category"
           disabled={disabled}
-          displayValue={taxClassDisplayName}
-          label={intl.formatMessage(taxesMessages.taxClass)}
-          name={"taxClassId" as keyof ProductCreateFormData}
-          onChange={onChange}
-          value={value}
-          choices={taxClasses.map(choice => ({
+          options={taxClasses.map(choice => ({
             label: choice.name,
             value: choice.id,
           }))}
-          InputProps={{
-            autoComplete: "off",
-          }}
-          {...onFetchMore}
+          value={value ? { value, label: taxClassDisplayName } : null}
+          name="taxClassId"
+          label={intl.formatMessage(taxesMessages.taxClass)}
+          onChange={value =>
+            onChange({
+              target: { value: value?.value ?? null, name: "taxClassId" },
+            } as any)
+          }
         />
       </CardContent>
     </Card>

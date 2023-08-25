@@ -171,7 +171,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           />
         </BasicAttributeRow>
       );
-    case AttributeInputTypeEnum.RICH_TEXT:
+    case AttributeInputTypeEnum.RICH_TEXT: {
       const {
         getShouldMount,
         getDefaultValue,
@@ -202,6 +202,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           )}
         </BasicAttributeRow>
       );
+    }
     case AttributeInputTypeEnum.NUMERIC:
       return (
         <BasicAttributeRow
@@ -280,12 +281,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       return (
         <BasicAttributeRow label={attribute.label}>
           <DateTimeField
-            fullWidth
             name={`attribute:${attribute.label}`}
             disabled={disabled}
             error={error}
             value={attribute.value[0]}
-            helperText={getErrorMessage(error, intl)}
             onChange={value => onChange(attribute.id, value)}
           />
         </BasicAttributeRow>

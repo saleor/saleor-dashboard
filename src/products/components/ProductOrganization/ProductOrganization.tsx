@@ -1,12 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType,
-} from "@dashboard/components/MultiAutocompleteSelectField";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorCode,
@@ -16,7 +10,14 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import {
+  Box,
+  DynamicCombobox,
+  DynamicMultiselect,
+  Option,
+  Text,
+} from "@saleor/macaw-ui/next";
+import debounce from "lodash/debounce";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,10 +29,10 @@ interface ProductType {
 
 interface ProductOrganizationProps {
   canChangeType: boolean;
-  categories?: SingleAutocompleteChoiceType[];
+  categories?: Option[];
   categoryInputDisplayValue: string;
-  collections?: MultiAutocompleteChoiceType[];
-  collectionsInputDisplayValue: MultiAutocompleteChoiceType[];
+  collections?: Option[];
+  collectionsInputDisplayValue: Option[];
   data: {
     category: string;
     collections: string[];
@@ -41,7 +42,7 @@ interface ProductOrganizationProps {
   errors: Array<ProductErrorFragment | ProductChannelListingErrorFragment>;
   productType?: ProductType;
   productTypeInputDisplayValue?: string;
-  productTypes?: SingleAutocompleteChoiceType[];
+  productTypes?: Option[];
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   fetchMoreCategories: FetchMoreProps;
@@ -61,7 +62,7 @@ export const ProductOrganization: React.FC<
     categories,
     categoryInputDisplayValue,
     collections,
-    collectionsInputDisplayValue,
+    // collectionsInputDisplayValue,
     data,
     disabled,
     errors,
@@ -90,6 +91,18 @@ export const ProductOrganization: React.FC<
       ? formErrors.isPublished
       : null;
 
+  const debouncedFetchProductTypes = debounce((value: string) => {
+    fetchProductTypes(value);
+  }, 500);
+
+  const debouncedFetchCategories = debounce((value: string) => {
+    fetchCategories(value);
+  }, 500);
+
+  const debouncedFetchCollections = debounce((value: string) => {
+    fetchCollections(value);
+  }, 500);
+
   return (
     <DashboardCard>
       <DashboardCard.Title>
@@ -101,22 +114,38 @@ export const ProductOrganization: React.FC<
       </DashboardCard.Title>
       <DashboardCard.Content gap={5} display="flex" flexDirection="column">
         {canChangeType ? (
-          <SingleAutocompleteSelectField
-            displayValue={productTypeInputDisplayValue}
+          <DynamicCombobox
+            data-test-id="product-type"
+            disabled={disabled}
+            options={productTypes}
+            value={
+              data.productType?.id
+                ? {
+                    label: productTypeInputDisplayValue,
+                    value: data.productType?.id,
+                  }
+                : null
+            }
             error={!!formErrors.productType}
             helperText={getProductErrorMessage(formErrors.productType, intl)}
             name="productType"
-            disabled={disabled}
             label={intl.formatMessage({
               id: "anK7jD",
               defaultMessage: "Product Type",
             })}
-            choices={productTypes}
-            value={data.productType?.id}
-            onChange={onProductTypeChange}
-            fetchChoices={fetchProductTypes}
-            data-test-id="product-type"
-            {...fetchMoreProductTypes}
+            onChange={value =>
+              onProductTypeChange({
+                target: { value: value?.value ?? null, name: "productType" },
+              })
+            }
+            onInputValueChange={debouncedFetchProductTypes}
+            onFocus={() => {
+              fetchProductTypes("");
+            }}
+            loading={fetchMoreProductTypes.loading}
+            locale={{
+              loadingText: "Loading...",
+            }}
           />
         ) : (
           <Box display="flex" flexDirection="column" gap={3}>
@@ -135,36 +164,51 @@ export const ProductOrganization: React.FC<
             </Box>
           </Box>
         )}
-        <SingleAutocompleteSelectField
-          displayValue={categoryInputDisplayValue}
+        <DynamicCombobox
+          data-test-id="category"
+          disabled={disabled}
+          options={disabled ? [] : categories}
+          value={
+            data.category
+              ? {
+                  label: categoryInputDisplayValue,
+                  value: data.category,
+                }
+              : null
+          }
           error={!!(formErrors.category || noCategoryError)}
           helperText={getProductErrorMessage(
             formErrors.category || noCategoryError,
             intl,
           )}
-          disabled={disabled}
+          name="category"
           label={intl.formatMessage({
             id: "ccXLVi",
             defaultMessage: "Category",
           })}
-          choices={disabled ? [] : categories}
-          name="category"
-          value={data.category}
-          onChange={onCategoryChange}
-          fetchChoices={fetchCategories}
-          data-test-id="category"
-          {...fetchMoreCategories}
+          onChange={value =>
+            onCategoryChange({
+              target: { value: value?.value ?? null, name: "category" },
+            })
+          }
+          onInputValueChange={debouncedFetchCategories}
+          onFocus={() => {
+            fetchCategories("");
+          }}
+          loading={fetchMoreCategories.loading}
+          locale={{
+            loadingText: "Loading...",
+          }}
         />
-        <MultiAutocompleteSelectField
-          displayValues={collectionsInputDisplayValue}
+        <DynamicMultiselect
+          data-test-id="collections"
+          disabled={disabled}
+          options={disabled ? [] : collections}
+          value={data.collections.map(collection => ({
+            label: "test",
+            value: collection,
+          }))}
           error={!!formErrors.collections}
-          label={intl.formatMessage({
-            id: "ulh3kf",
-            defaultMessage: "Collections",
-          })}
-          choices={disabled ? [] : collections}
-          name="collections"
-          value={data.collections}
           helperText={
             getProductErrorMessage(formErrors.collections, intl) ||
             intl.formatMessage({
@@ -174,11 +218,27 @@ export const ProductOrganization: React.FC<
               description: "field is optional",
             })
           }
-          onChange={onCollectionChange}
-          fetchChoices={fetchCollections}
-          data-test-id="collections"
-          testId="collection"
-          {...fetchMoreCollections}
+          name="collections"
+          label={intl.formatMessage({
+            id: "ccXLVi",
+            defaultMessage: "Category",
+          })}
+          onChange={value => {
+            onCollectionChange({
+              target: {
+                value: value?.map(({ value }) => value) ?? null,
+                name: "collections",
+              },
+            });
+          }}
+          onInputValueChange={debouncedFetchCollections}
+          onFocus={() => {
+            fetchCollections("");
+          }}
+          loading={fetchMoreCollections.loading}
+          locale={{
+            loadingText: "Loading...",
+          }}
         />
       </DashboardCard.Content>
     </DashboardCard>

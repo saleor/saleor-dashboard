@@ -153,7 +153,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                         <TableCell>
                           <Textarea
                             width="100%"
-                            maxRows={1}
+                            rows={1}
                             aria-label={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
                             name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
                             onChange={onChange}

@@ -6,16 +6,17 @@ import {
 } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { joinDateTime, splitDateTime } from "@dashboard/misc";
-import { TextFieldProps } from "@material-ui/core/TextField";
 import { Box, Input } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-type DateTimeFieldProps = Omit<TextFieldProps, "label" | "error"> & {
+interface DateTimeFieldProps {
   onChange: (value: string) => void;
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
   value: string;
-};
+  disabled: boolean;
+  name: string;
+}
 
 export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   disabled,

@@ -1,35 +1,8 @@
 // @ts-strict-ignore
-import { InputAdornment, InputLabelProps, TextField } from "@material-ui/core";
-import { InputProps } from "@material-ui/core/Input";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { usePriceField } from "./usePriceField";
-
-const useStyles = makeStyles(
-  theme => ({
-    currencySymbol: {
-      fontSize: "0.875rem",
-    },
-    inputContainer: {
-      display: "grid",
-      gridTemplateColumns: "1fr 2rem 1fr",
-    },
-    pullDown: {
-      marginTop: theme.spacing(2),
-    },
-    separator: {
-      marginTop: theme.spacing(3),
-      textAlign: "center",
-      width: "100%",
-    },
-    widgetContainer: {
-      marginTop: theme.spacing(2),
-    },
-  }),
-  { name: "PriceField" },
-);
-
 export interface PriceFieldProps {
   className?: string;
   currencySymbol?: string;
@@ -39,9 +12,6 @@ export interface PriceFieldProps {
   label?: string;
   name?: string;
   value?: string;
-  InputProps?: InputProps;
-  inputProps?: InputProps["inputProps"];
-  InputLabelProps?: InputLabelProps;
   required?: boolean;
   onChange: (event: any) => any;
 }
@@ -58,53 +28,30 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     onChange: onChangeBase,
     required,
     value,
-    InputProps,
-    InputLabelProps,
-    inputProps,
   } = props;
 
-  const classes = useStyles(props);
   const { onChange, onKeyDown, minValue, step } = usePriceField(
     currencySymbol,
     onChangeBase,
   );
 
   return (
-    <TextField
+    <Input
       className={className}
+      disabled={disabled}
+      label={label}
+      data-test-id="price-field"
       error={error}
       helperText={hint}
-      label={label}
-      fullWidth
       value={value}
-      InputLabelProps={InputLabelProps}
-      data-test-id="price-field"
-      InputProps={{
-        ...InputProps,
-        endAdornment: currencySymbol ? (
-          <InputAdornment position="end" className={classes.currencySymbol}>
-            {currencySymbol}
-          </InputAdornment>
-        ) : (
-          <span />
-        ),
-        inputProps: {
-          min: 0,
-          step,
-          ...InputProps?.inputProps,
-        },
-        type: "number",
-      }}
-      inputProps={{
-        min: minValue,
-        type: "number",
-        ...inputProps,
-      }}
+      min={minValue}
+      step={step}
       name={name}
-      disabled={disabled}
       required={required}
       onChange={onChange}
       onKeyDown={onKeyDown}
+      type="number"
+      endAdornment={<Text marginRight={2}>{currencySymbol || ""}</Text>}
     />
   );
 };

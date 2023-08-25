@@ -273,7 +273,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     onChange={change}
                   />
                   <ProductVariantPrice
-                    ProductVariantChannelListings={data.channelListings}
+                    productVariantChannelListings={data.channelListings}
                     errors={[...errors, ...channelsErrors]}
                     loading={loading}
                     onChange={handlers.changeChannelPrice}
