@@ -590,13 +590,13 @@ export const getStatusColor = (
   }
 };
 
-const red = 0;
-const blue = 236;
-const green = 145;
-const yellow = 71;
 export const getStatusHue = (
   status: "error" | "warning" | "info" | "success" | "generic",
 ): number => {
+  const red = 0;
+  const blue = 236;
+  const green = 145;
+  const yellow = 71;
   switch (status) {
     case "error":
       return red;

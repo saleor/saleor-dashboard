@@ -4,11 +4,11 @@ import { useExtraCells } from "@glideapps/glide-data-grid-cells";
 import { useTheme } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
-import { autoTagsCellRenderer } from "./AutoTagsCell";
 import { dropdownCellRenderer } from "./DropdownCell";
 import { moneyCellRenderer } from "./Money/MoneyCell";
 import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
 import { numberCellRenderer } from "./NumberCell";
+import { pillCellRenderer } from "./PillCell";
 import { statusCellRenderer } from "./StatusCell";
 import { thumbnailCellRenderer } from "./ThumbnailCell";
 
@@ -19,7 +19,7 @@ export function useCustomCellRenderers() {
 
   const renderers = useMemo(
     () => [
-      autoTagsCellRenderer(),
+      pillCellRenderer(),
       statusCellRenderer(themeValues),
       moneyCellRenderer(locale),
       moneyDiscountedCellRenderer(),

@@ -8,17 +8,17 @@ import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
 
 import {
-  AutoTagsCell,
-  hueToPillColorLight,
-  PillColor,
-  stringToHue,
-} from "./AutoTagsCell";
-import {
   DropdownCell,
   DropdownCellContentProps,
   DropdownChoice,
 } from "./DropdownCell";
 import { MoneyCell, MoneyDiscuntedCell } from "./Money";
+import {
+  hueToPillColorLight,
+  PillCell,
+  PillColor,
+  stringToHue,
+} from "./PillCell";
 import { StatusCell } from "./StatusCell";
 import { ThumbnailCell } from "./ThumbnailCell";
 
@@ -215,11 +215,11 @@ export function statusCell(
   };
 }
 
-export function autoTagsCell(
+export function pillCell(
   value: string,
   color: PillColor | null,
   opts?: Partial<GridCell>,
-): AutoTagsCell {
+): PillCell {
   const pillColor = color;
   const fallbackColor = hueToPillColorLight(stringToHue(value));
   return {

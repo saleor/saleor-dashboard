@@ -7,14 +7,9 @@ import {
 } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
-  hueToPillColorDark,
-  hueToPillColorLight,
-  stringToHue,
-} from "@dashboard/components/Datagrid/customCells/AutoTagsCell";
-import {
-  autoTagsCell,
   dateCell,
   moneyCell,
+  pillCell,
   // dropdownCell,
   readonlyTextCell,
   statusCell,
@@ -24,6 +19,11 @@ import {
   DropdownChoice,
   // emptyDropdownCellValue,
 } from "@dashboard/components/Datagrid/customCells/DropdownCell";
+import {
+  hueToPillColorDark,
+  hueToPillColorLight,
+  stringToHue,
+} from "@dashboard/components/Datagrid/customCells/PillCell";
 import { ThumbnailCellProps } from "@dashboard/components/Datagrid/customCells/ThumbnailCell";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
@@ -237,7 +237,7 @@ function getProductTypeCellContent(
     theme === "defaultDark"
       ? hueToPillColorDark(hue)
       : hueToPillColorLight(hue);
-  return autoTagsCell(rowData.productType?.name, color);
+  return pillCell(rowData.productType?.name, color);
 }
 
 // function getRowDataValue(

@@ -1,15 +1,15 @@
 // @ts-strict-ignore
 import {
-  hueToPillColorDark,
-  hueToPillColorLight,
-} from "@dashboard/components/Datagrid/customCells/AutoTagsCell";
-import {
-  autoTagsCell,
   dateCell,
   moneyCell,
+  pillCell,
   readonlyTextCell,
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
+import {
+  hueToPillColorDark,
+  hueToPillColorLight,
+} from "@dashboard/components/Datagrid/customCells/PillCell";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
@@ -155,7 +155,7 @@ export function getStatusCellContent(
       theme === "defaultDark"
         ? hueToPillColorDark(statusHue)
         : hueToPillColorLight(statusHue);
-    return autoTagsCell(status.localized, color);
+    return pillCell(status.localized, color);
   }
 
   return readonlyTextCell("-");
@@ -174,7 +174,7 @@ export function getPaymentCellContent(
       theme === "defaultDark"
         ? hueToPillColorDark(statusHue)
         : hueToPillColorLight(statusHue);
-    return autoTagsCell(status.localized, color);
+    return pillCell(status.localized, color);
   }
 
   return readonlyTextCell("-");

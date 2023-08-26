@@ -41,7 +41,7 @@ export interface PillColor {
   readonly border: string;
   readonly text: string;
 }
-interface AutoTagsCellProps {
+interface PillCellProps {
   readonly kind: "auto-tags-cell";
   readonly value: string;
   readonly color: {
@@ -51,11 +51,11 @@ interface AutoTagsCellProps {
   };
 }
 
-export type AutoTagsCell = CustomCell<AutoTagsCellProps>;
+export type PillCell = CustomCell<PillCellProps>;
 
-export const autoTagsCellRenderer = (): CustomRenderer<AutoTagsCell> => ({
+export const pillCellRenderer = (): CustomRenderer<PillCell> => ({
   kind: GridCellKind.Custom,
-  isMatch: (c): c is AutoTagsCell => (c.data as any).kind === "auto-tags-cell",
+  isMatch: (c): c is PillCell => (c.data as any).kind === "auto-tags-cell",
   draw: (args, cell) => {
     const label = cell.data.value;
     const { rect, ctx, theme } = args;
