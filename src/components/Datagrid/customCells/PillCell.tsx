@@ -26,11 +26,11 @@ export const hueToPillColorLight = (hue: number): PillColor => {
 };
 
 export const hueToPillColorDark = (hue: number): PillColor => {
-  const l = 50;
-  const s = 0.3;
-  const contrast = 50;
+  const l = 40;
+  const s = 0.09;
+  const contrast = 55;
   const base = `oklch(${l}% ${s} ${hue})`;
-  const border = `oklch(${l + 3}% ${s} ${hue})`;
+  const border = `oklch(${l}% ${s} ${hue})`;
   const text = `oklch(${l + contrast}% ${s} ${hue})`;
 
   return { base, border, text };
