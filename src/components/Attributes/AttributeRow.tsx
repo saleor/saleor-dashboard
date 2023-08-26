@@ -10,8 +10,6 @@ import {
   getMultiChoices,
   getMultiDisplayValue,
   getReferenceDisplayValue,
-  getSingleChoices,
-  getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
@@ -21,16 +19,15 @@ import { commonMessages } from "@dashboard/intl";
 import {
   Box,
   Checkbox,
-  DynamicCombobox,
   DynamicMultiselect,
   Input,
   Text,
 } from "@saleor/macaw-ui/next";
-import debounce from "lodash/debounce";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { DateTimeField } from "../DateTimeField";
+import { AttributeRowDropdown } from "./AttributeRowDropdown";
 import { AttributeRowProps } from "./types";
 
 const AttributeRow: React.FC<AttributeRowProps> = ({
@@ -51,16 +48,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   richTextGetters,
 }) => {
   const intl = useIntl();
-
-  const debouncedFetchAttributeValues = debounce((inputValue: string) => {
-    if (!inputValue) {
-      onChange(attribute.id, null);
-      fetchAttributeValues("", attribute.id);
-      return;
-    }
-
-    fetchAttributeValues(inputValue, attribute.id);
-  }, 600);
 
   switch (attribute.data.inputType) {
     case AttributeInputTypeEnum.REFERENCE:
@@ -109,32 +96,15 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           label={attribute.label}
           id={`attribute:${attribute.label}`}
         >
-          <DynamicCombobox
+          <AttributeRowDropdown
             disabled={disabled}
-            options={getSingleChoices(attributeValues)}
-            value={
-              attribute.value[0]
-                ? {
-                    label: getSingleDisplayValue(attribute, attributeValues),
-                    value: attribute.value[0],
-                  }
-                : null
-            }
-            error={!!error}
-            helperText={getErrorMessage(error, intl)}
-            name={`attribute:${attribute.label}`}
-            id={`attribute:${attribute.label}`}
-            label={intl.formatMessage(attributeRowMessages.valueLabel)}
-            onChange={value => onChange(attribute.id, value.value)}
-            onInputValueChange={debouncedFetchAttributeValues}
-            onFocus={() => {
-              fetchAttributeValues("", attribute.id);
-            }}
-            onBlur={onAttributeSelectBlur}
+            attributeValues={attributeValues}
+            attribute={attribute}
+            error={error}
             loading={fetchMoreAttributeValues.loading}
-            locale={{
-              loadingText: "Loading...",
-            }}
+            fetchAttributeValues={fetchAttributeValues}
+            onBlur={onAttributeSelectBlur}
+            onChange={onChange}
           />
         </BasicAttributeRow>
       );
