@@ -114,10 +114,9 @@ const useStyles = makeStyles(
         },
       },
       root: {
-        border: "1px solid transparent",
+        border: `1px solid ${vars.colors.border.neutralPlain}`,
         borderRadius: vars.borderRadius[3],
         fontSize: vars.fontSize.bodyMedium,
-        backgroundColor: vars.colors.background.surfaceNeutralHighlight,
         minHeight: 56,
         position: "relative",
         transition: theme.transitions.duration.short + "ms",
