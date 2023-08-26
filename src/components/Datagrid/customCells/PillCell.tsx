@@ -4,6 +4,7 @@ import {
   getMiddleCenterBias,
   GridCellKind,
 } from "@glideapps/glide-data-grid";
+import chroma from "chroma-js";
 
 export const stringToHue = (str: string): number => {
   let hash = 0;
@@ -15,12 +16,23 @@ export const stringToHue = (str: string): number => {
   return hash % 360;
 };
 
+const oklchIsSupported =
+  typeof CSS !== "undefined" && CSS.supports("color: oklch(0% 0 0)");
+
+const oklch = (l: number, c: number, h: number) => {
+  if (oklchIsSupported) {
+    return `oklch(${l}% ${c} ${h})`;
+  } else {
+    return chroma(l / 100, c, h, "oklch").hex();
+  }
+};
+
 export const hueToPillColorLight = (hue: number): PillColor => {
   const l = 94;
-  const s = 0.05;
-  const base = `oklch(${l}% ${s} ${hue})`;
-  const border = `oklch(${l - 8}% ${s} ${hue})`;
-  const text = `oklch(${l - 50}% ${s} ${hue})`;
+  const c = 0.05;
+  const base = oklch(l, c, hue);
+  const border = oklch(l - 8, c, hue);
+  const text = oklch(l - 50, c, hue);
 
   return { base, border, text };
 };
@@ -29,9 +41,9 @@ export const hueToPillColorDark = (hue: number): PillColor => {
   const l = 40;
   const s = 0.09;
   const contrast = 55;
-  const base = `oklch(${l}% ${s} ${hue})`;
-  const border = `oklch(${l}% ${s} ${hue})`;
-  const text = `oklch(${l + contrast}% ${s} ${hue})`;
+  const base = oklch(l, s, hue);
+  const border = oklch(l, s, hue);
+  const text = oklch(l + contrast, s, hue);
 
   return { base, border, text };
 };
