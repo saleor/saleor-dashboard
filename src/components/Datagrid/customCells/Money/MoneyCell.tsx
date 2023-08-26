@@ -1,3 +1,4 @@
+import { Locale } from "@dashboard/components/Locale";
 import {
   CustomCell,
   CustomRenderer,
@@ -33,7 +34,8 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
       }),
   );
 
-  // todo range is read only - we don't need support for editing, it is better to split component into range and editable money cell
+  // TODO: range is read only - we don't need support for editing,
+  // it is better to split component into range and editable money cell
   return (
     <input
       type="number"
@@ -47,10 +49,9 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   );
 };
 
-// todo replace this with actual user settings. Using this to avoid prop drilling
-const locale = (navigator && navigator.language) || "en";
-
-export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
+export const moneyCellRenderer = (
+  locale: Locale,
+): CustomRenderer<MoneyCell> => ({
   kind: GridCellKind.Custom,
   isMatch: (c): c is MoneyCell => (c.data as any).kind === "money-cell",
   draw: (args, cell) => {
@@ -88,7 +89,7 @@ export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
           currency,
         }).formatToParts(displayValue);
 
-    // todo replace with macaw-ui theme font weight values
+    // TODO: replace with macaw-ui theme font weight values
     ctx.font = `550 ${theme.baseFontStyle} ${theme.fontFamily}`;
 
     const w = ctx.measureText(format.map(x => x.value).join(""));

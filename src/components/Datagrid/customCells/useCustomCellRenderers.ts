@@ -21,7 +21,7 @@ export function useCustomCellRenderers() {
     () => [
       autoTagsCellRenderer(),
       statusCellRenderer(themeValues),
-      moneyCellRenderer(),
+      moneyCellRenderer(locale),
       moneyDiscountedCellRenderer(),
       numberCellRenderer(locale),
       dateCellRenderer(locale),
