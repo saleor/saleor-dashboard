@@ -12,7 +12,7 @@ import { usePriceField } from "../../../PriceField/usePriceField";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";
-  readonly currency: string;
+  readonly currency: string | undefined;
   readonly value: number | number[] | null;
 }
 

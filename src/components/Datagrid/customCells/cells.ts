@@ -106,7 +106,7 @@ export function numberCell(
 
 export function moneyCell(
   value: number | number[] | null,
-  currency: string,
+  currency: string | undefined,
   opts?: Partial<GridCell>,
 ): MoneyCell {
   return {

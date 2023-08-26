@@ -88,7 +88,7 @@ export const createGetCellContent =
         return rowData?.code && hasChannelsLoaded
           ? moneyCell(
               channel?.minSpent?.amount ?? null,
-              channel?.minSpent?.currency ?? null,
+              channel?.minSpent?.currency,
               {
                 readonly: true,
               },
