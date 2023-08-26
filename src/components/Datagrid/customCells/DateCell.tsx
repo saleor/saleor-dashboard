@@ -1,14 +1,10 @@
-// @ts-strict-ignore
+import { Locale } from "@dashboard/components/Locale";
 import {
   CustomCell,
   CustomRenderer,
   getMiddleCenterBias,
   GridCellKind,
-  ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import React from "react";
-
-import { Locale } from "../../Locale";
 
 export const numberCellEmptyValue = Symbol("date-cell-empty-value");
 interface DateCellProps {
@@ -17,28 +13,6 @@ interface DateCellProps {
 }
 
 export type DateCell = CustomCell<DateCellProps>;
-
-const onlyDigitsRegExp = /^\d+$/;
-
-const DateCellEdit: ReturnType<ProvideEditorCallback<DateCell>> = ({
-  value: cell,
-  onChange,
-}) => (
-  <input
-    type="number"
-    onChange={event =>
-      onChange({
-        ...cell,
-        data: {
-          ...cell.data,
-          value: event.target.value ? parseFloat(event.target.value) : null,
-        },
-      })
-    }
-    value={cell.data.value === numberCellEmptyValue ? "" : cell.data.value}
-    autoFocus
-  />
-);
 
 export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
   kind: GridCellKind.Custom,
@@ -72,34 +46,33 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
     ctx.textAlign = "left";
     let justifyToRight = true;
 
-    if (
-      ctx.measureText(`${displayDate} ${time}`).width >
-      rect.width - theme.cellHorizontalPadding * 2
-    ) {
-      if (
-        ctx.measureText(`${dateFormats.long} ${time}`).width >
-        rect.width - theme.cellHorizontalPadding * 2
-      ) {
-        if (
-          ctx.measureText(`${dateFormats.short} ${time}`).width >
-          rect.width - theme.cellHorizontalPadding * 2
-        ) {
-          if (
-            ctx.measureText(`${dateFormats.short} ${time}`).width >
-            rect.width - theme.cellHorizontalPadding * 2
-          ) {
-            displayDate = dateFormats.short;
-            justifyToRight = false;
-          } else {
-            displayDate = dateFormats.short;
-          }
-        } else {
-          displayDate = dateFormats.short;
-        }
-      } else {
-        displayDate = dateFormats.long;
-      }
+    const candidateFormats = [
+      {
+        format: dateFormats.short,
+        width: ctx.measureText(`${dateFormats.short} ${time}`).width,
+      },
+      {
+        format: dateFormats.long,
+        width: ctx.measureText(`${dateFormats.long} ${time}`).width,
+      },
+      {
+        format: displayDate,
+        width: ctx.measureText(`${displayDate} ${time}`).width,
+      },
+    ];
+
+    let chosenFormat = candidateFormats.find(
+      candidate =>
+        candidate.width <= rect.width - theme.cellHorizontalPadding * 2,
+    );
+
+    if (!chosenFormat) {
+      chosenFormat = candidateFormats[candidateFormats.length - 1];
     }
+
+    displayDate = chosenFormat.format;
+    justifyToRight =
+      chosenFormat.format === dateFormats.short ? false : justifyToRight;
 
     ctx.fillStyle = theme.textDark;
 
@@ -123,27 +96,5 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
     );
 
     return true;
-  },
-  provideEditor: () => ({
-    editor: DateCellEdit,
-    disablePadding: true,
-    deletedValue: cell => ({
-      ...cell,
-      copyData: "",
-      data: {
-        ...cell.data,
-        value: numberCellEmptyValue,
-      },
-    }),
-  }),
-  onPaste: (value, data) => {
-    if (!onlyDigitsRegExp.test(value)) {
-      return undefined;
-    }
-
-    return {
-      ...data,
-      value: value ? parseFloat(value) : numberCellEmptyValue,
-    };
   },
 });
