@@ -63,7 +63,7 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
       }).format(date),
     };
 
-    let time = new Intl.DateTimeFormat(locale, {
+    const time = new Intl.DateTimeFormat(locale, {
       timeStyle: "short",
     }).format(date);
 
