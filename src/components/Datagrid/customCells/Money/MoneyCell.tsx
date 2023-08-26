@@ -41,7 +41,7 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
       type="number"
       onChange={onChange}
       onKeyDown={onKeyDown}
-      value={Array.isArray(cell.data.value) ? "" : cell.data.value}
+      value={Array.isArray(cell.data.value) ? "" : cell.data.value ?? ""}
       min={minValue}
       step={step}
       autoFocus

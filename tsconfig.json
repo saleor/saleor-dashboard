@@ -13,7 +13,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "downlevelIteration": true,
-    "strict": false,
+    "strict": true,
     "resolveJsonModule": true,
     "plugins": [{ "name": "typescript-strict-plugin" }],
     "paths": {

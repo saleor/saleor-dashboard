@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   CustomCell,
   CustomRenderer,
@@ -14,7 +13,7 @@ export const numberCellEmptyValue = Symbol("number-cell-empty-value");
 export interface NumberCellProps {
   readonly kind: "number-cell";
   readonly value: number | typeof numberCellEmptyValue;
-  readonly options: {
+  readonly options?: {
     format: "number" | "percent";
   };
 }
@@ -34,7 +33,9 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
         ...cell,
         data: {
           ...cell.data,
-          value: event.target.value ? parseFloat(event.target.value) : null,
+          value: event.target.value
+            ? parseFloat(event.target.value)
+            : numberCellEmptyValue,
         },
       })
     }

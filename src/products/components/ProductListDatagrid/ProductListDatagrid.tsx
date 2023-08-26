@@ -19,7 +19,6 @@ import {
 import useLocale from "@dashboard/hooks/useLocale";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
-import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
 import {
   ChannelProps,
   ListProps,
@@ -92,7 +91,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 }) => {
   const intl = useIntl();
   const { theme } = useTheme();
-  const searchProductType = useSearchProductTypes();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
   const productsLength = getProductRowsLength(disabled, products, disabled);
@@ -241,18 +239,10 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         products,
         intl,
         theme,
-        getProductTypes: searchProductType,
         locale,
         selectedChannelId,
       }),
-    [
-      visibleColumns,
-      products,
-      intl,
-      searchProductType,
-      locale,
-      selectedChannelId,
-    ],
+    [visibleColumns, products, intl, locale, selectedChannelId],
   );
 
   return (

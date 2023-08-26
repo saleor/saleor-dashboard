@@ -10,15 +10,10 @@ import {
   dateCell,
   moneyCell,
   pillCell,
-  // dropdownCell,
   readonlyTextCell,
   statusCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import {
-  DropdownChoice,
-  // emptyDropdownCellValue,
-} from "@dashboard/components/Datagrid/customCells/DropdownCell";
 import {
   hueToPillColorDark,
   hueToPillColorLight,
@@ -164,14 +159,12 @@ interface GetCellContentProps {
   products: RelayToFlat<ProductListQuery["products"]>;
   intl: IntlShape;
   theme: DefaultTheme;
-  getProductTypes: (query: string) => Promise<DropdownChoice[]>;
   locale: Locale;
   selectedChannelId?: string;
 }
 
 export function createGetCellContent({
   columns,
-  // getProductTypes,
   intl,
   theme,
   products,
@@ -227,10 +220,8 @@ function getDateCellContent(
   return dateCell(rowData?.updatedAt);
 }
 function getProductTypeCellContent(
-  // change: { value: DropdownChoice },
   theme: DefaultTheme,
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
-  // getProductTypes: (query: string) => Promise<DropdownChoice[]>,
 ) {
   const hue = stringToHue(rowData.productType?.name);
   const color =
@@ -239,20 +230,6 @@ function getProductTypeCellContent(
       : hueToPillColorLight(hue);
   return pillCell(rowData.productType?.name, color);
 }
-
-// function getRowDataValue(
-//   rowData?: RelayToFlat<ProductListQuery["products"]>[number],
-//   changeValue?: DropdownChoice,
-// ): DropdownChoice {
-//   if (changeValue === null || !rowData) {
-//     return emptyDropdownCellValue;
-//   }
-
-//   return {
-//     label: rowData.productType?.name,
-//     value: rowData.productType?.id,
-//   };
-// }
 
 function getAvailabilityCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
