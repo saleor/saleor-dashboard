@@ -1,3 +1,4 @@
+import { dateCellRenderer } from "@dashboard/components/Datagrid/customCells/DateCell";
 import useLocale from "@dashboard/hooks/useLocale";
 import { useExtraCells } from "@glideapps/glide-data-grid-cells";
 import { useTheme } from "@saleor/macaw-ui/next";
@@ -10,7 +11,6 @@ import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
 import { numberCellRenderer } from "./NumberCell";
 import { statusCellRenderer } from "./StatusCell";
 import { thumbnailCellRenderer } from "./ThumbnailCell";
-import { dateCellRenderer } from "@dashboard/components/Datagrid/customCells/DateCell";
 
 export function useCustomCellRenderers() {
   const { locale } = useLocale();

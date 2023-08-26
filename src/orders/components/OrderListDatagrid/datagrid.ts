@@ -1,5 +1,9 @@
 // @ts-strict-ignore
 import {
+  hueToPillColorDark,
+  hueToPillColorLight,
+} from "@dashboard/components/Datagrid/customCells/AutoTagsCell";
+import {
   autoTagsCell,
   dateCell,
   moneyCell,
@@ -20,11 +24,11 @@ import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item, TextCell } from "@glideapps/glide-data-grid";
+import { DefaultTheme, useTheme } from "@saleor/macaw-ui/next";
 import moment from "moment-timezone";
 import { IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
-import { pillLabelToColor } from "@dashboard/components/Datagrid/customCells/AutoTagsCell";
 
 export const orderListStaticColumnAdapter = (
   emptyColumn: AvailableColumn,
@@ -80,6 +84,7 @@ function getDatagridRowDataIndex(row, removeArray) {
 export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
+  const { theme } = useTheme();
 
   return (
     [column, row]: Item,
@@ -103,9 +108,9 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
       case "customer":
         return getCustomerCellContent(rowData);
       case "payment":
-        return getPaymentCellContent(intl, rowData);
+        return getPaymentCellContent(intl, theme, rowData);
       case "status":
-        return getStatusCellContent(intl, rowData);
+        return getStatusCellContent(intl, theme, rowData);
       case "total":
         return getTotalCellContent(rowData);
       default:
@@ -139,13 +144,17 @@ export function getCustomerCellContent(
 
 export function getStatusCellContent(
   intl: IntlShape,
+  theme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   const status = transformOrderStatus(rowData.status, intl);
   const statusHue = getStatusHue(status.status);
 
   if (status) {
-    const color = pillLabelToColor(statusHue);
+    const color =
+      theme === "defaultDark"
+        ? hueToPillColorDark(statusHue)
+        : hueToPillColorLight(statusHue);
     return autoTagsCell(status.localized, color);
   }
 
@@ -154,13 +163,17 @@ export function getStatusCellContent(
 
 export function getPaymentCellContent(
   intl: IntlShape,
+  theme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   const status = transformPaymentStatus(rowData.paymentStatus, intl);
   const statusHue = getStatusHue(status.status);
 
   if (status) {
-    const color = pillLabelToColor(statusHue);
+    const color =
+      theme === "defaultDark"
+        ? hueToPillColorDark(statusHue)
+        : hueToPillColorLight(statusHue);
     return autoTagsCell(status.localized, color);
   }
 

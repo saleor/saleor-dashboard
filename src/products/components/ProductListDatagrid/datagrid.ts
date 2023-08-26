@@ -7,6 +7,11 @@ import {
 } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
+  hueToPillColorDark,
+  hueToPillColorLight,
+  stringToHue,
+} from "@dashboard/components/Datagrid/customCells/AutoTagsCell";
+import {
   autoTagsCell,
   dateCell,
   moneyCell,
@@ -23,7 +28,6 @@ import { ThumbnailCellProps } from "@dashboard/components/Datagrid/customCells/T
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
-
 import {
   AvailableColumnAttributesQuery,
   Exact,
@@ -38,6 +42,7 @@ import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
+import { DefaultTheme } from "@saleor/macaw-ui/next";
 import { IntlShape } from "react-intl";
 
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
@@ -158,6 +163,7 @@ interface GetCellContentProps {
   columns: AvailableColumn[];
   products: RelayToFlat<ProductListQuery["products"]>;
   intl: IntlShape;
+  theme: DefaultTheme;
   getProductTypes: (query: string) => Promise<DropdownChoice[]>;
   locale: Locale;
   selectedChannelId?: string;
@@ -167,6 +173,7 @@ export function createGetCellContent({
   columns,
   // getProductTypes,
   intl,
+  theme,
   products,
   selectedChannelId,
 }: GetCellContentProps) {
@@ -191,7 +198,7 @@ export function createGetCellContent({
 
     switch (columnId) {
       case "productType":
-        return getProductTypeCellContent(rowData);
+        return getProductTypeCellContent(theme, rowData);
       case "availability":
         return getAvailabilityCellContent(rowData, intl, channel);
 
@@ -221,10 +228,16 @@ function getDateCellContent(
 }
 function getProductTypeCellContent(
   // change: { value: DropdownChoice },
+  theme: DefaultTheme,
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
   // getProductTypes: (query: string) => Promise<DropdownChoice[]>,
 ) {
-  return autoTagsCell(rowData.productType?.name, null);
+  const hue = stringToHue(rowData.productType?.name);
+  const color =
+    theme === "defaultDark"
+      ? hueToPillColorDark(hue)
+      : hueToPillColorLight(hue);
+  return autoTagsCell(rowData.productType?.name, color);
 }
 
 // function getRowDataValue(

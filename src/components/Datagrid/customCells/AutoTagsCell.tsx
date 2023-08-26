@@ -15,13 +15,7 @@ export const stringToHue = (str: string): number => {
   return hash % 360;
 };
 
-export interface PillColor {
-  readonly base: string;
-  readonly border: string;
-  readonly text: string;
-}
-
-export const pillLabelToColor = (hue: number): PillColor => {
+export const hueToPillColorLight = (hue: number): PillColor => {
   const l = 94;
   const s = 0.05;
   const base = `oklch(${l}% ${s} ${hue})`;
@@ -31,6 +25,22 @@ export const pillLabelToColor = (hue: number): PillColor => {
   return { base, border, text };
 };
 
+export const hueToPillColorDark = (hue: number): PillColor => {
+  const l = 50;
+  const s = 0.3;
+  const contrast = 50;
+  const base = `oklch(${l}% ${s} ${hue})`;
+  const border = `oklch(${l + 3}% ${s} ${hue})`;
+  const text = `oklch(${l + contrast}% ${s} ${hue})`;
+
+  return { base, border, text };
+};
+
+export interface PillColor {
+  readonly base: string;
+  readonly border: string;
+  readonly text: string;
+}
 interface AutoTagsCellProps {
   readonly kind: "auto-tags-cell";
   readonly value: string;
@@ -48,9 +58,9 @@ export const autoTagsCellRenderer = (): CustomRenderer<AutoTagsCell> => ({
   isMatch: (c): c is AutoTagsCell => (c.data as any).kind === "auto-tags-cell",
   draw: (args, cell) => {
     const label = cell.data.value;
-    const { text, border, base } = cell.data.color;
     const { rect, ctx, theme } = args;
     const { x, y, height } = rect;
+    const { base, border, text } = cell.data.color;
 
     const textMetrics = ctx.measureText(label);
     const textWidth = textMetrics.width;

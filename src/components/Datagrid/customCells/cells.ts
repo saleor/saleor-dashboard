@@ -9,8 +9,8 @@ import { GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
 
 import {
   AutoTagsCell,
+  hueToPillColorLight,
   PillColor,
-  pillLabelToColor,
   stringToHue,
 } from "./AutoTagsCell";
 import {
@@ -220,7 +220,8 @@ export function autoTagsCell(
   color: PillColor | null,
   opts?: Partial<GridCell>,
 ): AutoTagsCell {
-  const pillColor = color ?? pillLabelToColor(stringToHue(value));
+  const pillColor = color;
+  const fallbackColor = hueToPillColorLight(stringToHue(value));
   return {
     ...common,
     ...opts,
@@ -228,7 +229,7 @@ export function autoTagsCell(
     data: {
       kind: "auto-tags-cell",
       value,
-      color: pillColor,
+      color: pillColor ?? fallbackColor,
     },
     kind: GridCellKind.Custom,
   };

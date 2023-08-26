@@ -29,7 +29,7 @@ import {
 } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, useTheme } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -91,6 +91,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   rowAnchor,
 }) => {
   const intl = useIntl();
+  const { theme } = useTheme();
   const searchProductType = useSearchProductTypes();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
@@ -239,6 +240,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         columns: visibleColumns,
         products,
         intl,
+        theme,
         getProductTypes: searchProductType,
         locale,
         selectedChannelId,
