@@ -28,7 +28,6 @@ import {
   useVariantMediaAssignMutation,
   useVariantMediaUnassignMutation,
   useVariantUpdateMutation,
-  useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -59,6 +58,7 @@ import {
 } from "../../urls";
 import { mapFormsetStockToStockInput } from "../../utils/data";
 import { createVariantReorderHandler } from "./../ProductUpdate/handlers";
+import { useFetchAllWarehouses } from "./useFetchAllWarehouses";
 import { useSubmitChannels } from "./useSubmitChannels";
 
 interface ProductUpdateProps {
@@ -141,13 +141,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
 
-  const warehouses = useWarehouseListQuery({
-    displayLoader: true,
-    variables: {
-      first: 50,
-      filter: {
-        channels: channels.map(channel => channel.id),
-      },
+  const warehouses = useFetchAllWarehouses({
+    first: 100,
+    filter: {
+      channels: channels.map(channel => channel.id),
     },
   });
 

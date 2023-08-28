@@ -1,3 +1,4 @@
+import { PageInfoFragment } from "@dashboard/graphql";
 import { DocumentNode } from "graphql";
 import { useEffect } from "react";
 
@@ -5,7 +6,7 @@ import makeQuery from "./makeQuery";
 
 export function makeFetchAll<TData, TVariables>(
   query: DocumentNode,
-  accessKey: string,
+  accessKey: keyof TData,
   mergeFn: (
     previousQueryResult: TData,
     options: {
@@ -20,11 +21,11 @@ export function makeFetchAll<TData, TVariables>(
       displayLoader: true,
       variables,
     });
-
     useEffect(() => {
       if (result.data) {
-        const nextPage = result.data[accessKey]?.pageInfo?.hasNextPage;
-        const after = result.data[accessKey]?.pageInfo?.endCursor;
+        const data = result.data[accessKey] as { pageInfo?: PageInfoFragment };
+        const nextPage = data?.pageInfo?.hasNextPage;
+        const after = data?.pageInfo?.endCursor;
 
         if (nextPage && after !== null) {
           result.fetchMore({
