@@ -321,6 +321,8 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                         padding={2}
                         borderRadius={4}
                         boxShadow="overlay"
+                        __maxHeight={400}
+                        overflow="auto"
                         backgroundColor="surfaceNeutralPlain"
                       >
                         {warehousesToAssign.map(warehouse => (
