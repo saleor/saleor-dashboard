@@ -130,6 +130,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.PERMISSION_GROUP_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["name", "members"],
   },
   [ListViews.VOUCHER_LIST]: {
     rowNumber: PAGINATE_BY,
