@@ -3,12 +3,8 @@
 
 import faker from "faker";
 
-import {
-  PERMISSION_GROUP_DETAILS_SELECTORS,
-} from "../../elements/permissionGroup/permissionGroupDetails";
-import {
-  PERMISSION_GROUP_LIST_SELECTORS,
-} from "../../elements/permissionGroup/permissionGroupsList";
+import { PERMISSION_GROUP_DETAILS_SELECTORS } from "../../elements/permissionGroup/permissionGroupDetails";
+import { PERMISSION_GROUP_LIST_SELECTORS } from "../../elements/permissionGroup/permissionGroupsList";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import {
@@ -21,9 +17,8 @@ import {
   createPermissionGroup,
   getPermissionGroup,
 } from "../../support/api/requests/PermissionGroup.js";
-import {
-  getStaffMembersStartsWith,
-} from "../../support/api/requests/StaffMembers";
+import { getStaffMembersStartsWith } from "../../support/api/requests/StaffMembers";
+import { ensureCanvasStatic } from "../../support/customCommands/sharedElementsOperations/canvas";
 
 describe("Permissions groups", () => {
   const startsWith = "CyPermissions-" + Date.now();
@@ -69,37 +64,31 @@ describe("Permissions groups", () => {
     () => {
       const permissionName = `A-${startsWith}${faker.datatype.number()}`;
       let staffMember;
-
+      cy.addAliasToGraphRequest("PermissionGroupDelete");
       getStaffMembersStartsWith(TEST_ADMIN_USER.email)
         .its("body.data.staffUsers.edges")
         .then(staffMemberResp => {
           staffMember = staffMemberResp[0].node;
-
           createPermissionGroup({
             name: permissionName,
             userIdsArray: `["${staffMember.id}"]`,
             permissionsArray: permissionManageProducts,
+          }).then(createPermissionGroupResponse => {
+            cy.visit(
+              urlList.permissionsGroups +
+                createPermissionGroupResponse.group.id,
+            );
+            cy.contains(SHARED_ELEMENTS.header, permissionName);
+            cy.get(BUTTON_SELECTORS.deleteButton).click();
+            cy.clickSubmitButton().waitForRequestAndCheckIfNoErrors(
+              "@PermissionGroupDelete",
+            );
+            ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
+            cy.get(SHARED_ELEMENTS.dataGridTable).should(
+              "not.contain.text",
+              permissionName,
+            );
           });
-          cy.visit(urlList.permissionsGroups);
-          cy.contains(
-            PERMISSION_GROUP_LIST_SELECTORS.permissionGroupRow,
-            permissionName,
-          )
-            .should("be.visible")
-            .find(BUTTON_SELECTORS.deleteIcon)
-            .click()
-            .get(BUTTON_SELECTORS.submit)
-            .click();
-          cy.contains(
-            PERMISSION_GROUP_LIST_SELECTORS.permissionGroupRow,
-            permissionName,
-          )
-            .should("not.exist")
-            .visit(staffMemberDetailsUrl(staffMember.id))
-            .get(SHARED_ELEMENTS.header)
-            .should("be.visible")
-            .contains(permissionName)
-            .should("not.exist");
         });
     },
   );

@@ -4,6 +4,8 @@ import { Button } from "@dashboard/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   PermissionGroupDetailsQuery,
+  PermissionGroupErrorFragment,
+  usePermissionGroupDeleteMutation,
   usePermissionGroupDetailsQuery,
   usePermissionGroupUpdateMutation,
 } from "@dashboard/graphql";
@@ -13,8 +15,9 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
+import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import MembersErrorDialog from "@dashboard/permissionGroups/components/MembersErrorDialog";
+import PermissionGroupDeleteDialog from "@dashboard/permissionGroups/components/PermissionGroupDeleteDialog";
 import useStaffMemberSearch from "@dashboard/searches/useStaffMemberSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
@@ -33,6 +36,7 @@ import {
   permissionGroupDetailsUrl,
   PermissionGroupDetailsUrlDialog,
   PermissionGroupDetailsUrlQueryParams,
+  permissionGroupListUrl,
 } from "../../urls";
 import {
   arePermissionsExceeded,
@@ -127,6 +131,27 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     params,
   );
 
+  const [deleteError, setDeleteError] =
+    React.useState<PermissionGroupErrorFragment>();
+
+  const [permissionGroupDelete, permissionGroupDeleteOps] =
+    usePermissionGroupDeleteMutation({
+      onCompleted: data => {
+        if (data?.permissionGroupDelete?.errors?.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "DovGIa",
+              defaultMessage: "Permission Group Deleted",
+            }),
+          });
+          navigate(permissionGroupListUrl());
+        } else {
+          setDeleteError(data?.permissionGroupDelete?.errors?.[0]);
+        }
+      },
+    });
+
   const unassignMembers = () => {
     setMembersList(
       membersList?.filter(m => !listElements.includes(m.id)) ?? [],
@@ -193,6 +218,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         members={membersList}
         onAssign={() => openModal("assign")}
         onUnassign={ids => openModal("unassign", { ids })}
+        onDelete={() => openModal("remove")}
         errors={
           permissionGroupUpdateResult?.data?.permissionGroupUpdate?.errors ?? []
         }
@@ -219,6 +245,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         }
         onSort={handleSort}
       />
+
       <AssignMembersDialog
         loading={searchResult.loading}
         staffMembers={mapEdgesToItems(searchResult?.data?.search) ?? []}
@@ -235,6 +262,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
           closeModal();
         }}
       />
+
       <UnassignMembersDialog
         onConfirm={unassignMembers}
         confirmButtonState={permissionGroupUpdateResult.status}
@@ -242,10 +270,26 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         open={params.action === "unassign"}
         onClose={closeModal}
       />
+
       <MembersErrorDialog
         onConfirm={closeModal}
         confirmButtonState={permissionGroupUpdateResult.status}
         open={params.action === "unassignError"}
+        onClose={closeModal}
+      />
+
+      <PermissionGroupDeleteDialog
+        onConfirm={() =>
+          permissionGroupDelete({
+            variables: {
+              id: data?.permissionGroup?.id ?? "",
+            },
+          })
+        }
+        error={deleteError}
+        name={getStringOrPlaceholder(data?.permissionGroup?.name)}
+        confirmButtonState={permissionGroupDeleteOps.status}
+        open={params.action === "remove"}
         onClose={closeModal}
       />
     </>
