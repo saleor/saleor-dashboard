@@ -10,16 +10,12 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import {
-  Box,
-  DynamicCombobox,
-  DynamicMultiselect,
-  Option,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Box, DynamicMultiselect, Option, Text } from "@saleor/macaw-ui/next";
 import debounce from "lodash/debounce";
-import React from "react";
+import React, { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { ProductOrganizationProductType } from "./ProductOrganizationCombobox";
 
 interface ProductType {
   hasVariants: boolean;
@@ -35,7 +31,7 @@ interface ProductOrganizationProps {
   collectionsInputDisplayValue: Option[];
   data: {
     category: string;
-    collections: string[];
+    collections: Option[];
     productType?: ProductType;
   };
   disabled: boolean;
@@ -62,7 +58,7 @@ export const ProductOrganization: React.FC<
     categories,
     categoryInputDisplayValue,
     collections,
-    // collectionsInputDisplayValue,
+    collectionsInputDisplayValue,
     data,
     disabled,
     errors,
@@ -91,17 +87,11 @@ export const ProductOrganization: React.FC<
       ? formErrors.isPublished
       : null;
 
-  const debouncedFetchProductTypes = debounce((value: string) => {
-    fetchProductTypes(value);
-  }, 500);
-
-  const debouncedFetchCategories = debounce((value: string) => {
-    fetchCategories(value);
-  }, 500);
-
-  const debouncedFetchCollections = debounce((value: string) => {
-    fetchCollections(value);
-  }, 500);
+  const debouncedFetchCollections = useRef(
+    debounce(async value => {
+      fetchCollections(value);
+    }, 300),
+  ).current;
 
   return (
     <DashboardCard>
@@ -114,38 +104,22 @@ export const ProductOrganization: React.FC<
       </DashboardCard.Title>
       <DashboardCard.Content gap={5} display="flex" flexDirection="column">
         {canChangeType ? (
-          <DynamicCombobox
-            data-test-id="product-type"
+          <ProductOrganizationProductType
             disabled={disabled}
+            dataTestId="product-type"
             options={productTypes}
-            value={
-              data.productType?.id
-                ? {
-                    label: productTypeInputDisplayValue,
-                    value: data.productType?.id,
-                  }
-                : null
-            }
+            valueLabel={productTypeInputDisplayValue}
+            value={data.productType?.id}
             error={!!formErrors.productType}
             helperText={getProductErrorMessage(formErrors.productType, intl)}
+            onChange={onProductTypeChange}
+            fetchOptions={fetchProductTypes}
+            loading={fetchMoreProductTypes.loading}
             name="productType"
             label={intl.formatMessage({
               id: "anK7jD",
               defaultMessage: "Product Type",
             })}
-            onChange={value =>
-              onProductTypeChange({
-                target: { value: value?.value ?? null, name: "productType" },
-              })
-            }
-            onInputValueChange={debouncedFetchProductTypes}
-            onFocus={() => {
-              fetchProductTypes("");
-            }}
-            loading={fetchMoreProductTypes.loading}
-            locale={{
-              loadingText: "Loading...",
-            }}
           />
         ) : (
           <Box display="flex" flexDirection="column" gap={3}>
@@ -164,50 +138,33 @@ export const ProductOrganization: React.FC<
             </Box>
           </Box>
         )}
-        <DynamicCombobox
-          data-test-id="category"
+
+        <ProductOrganizationProductType
           disabled={disabled}
+          dataTestId="category"
           options={disabled ? [] : categories}
-          value={
-            data.category
-              ? {
-                  label: categoryInputDisplayValue,
-                  value: data.category,
-                }
-              : null
-          }
+          valueLabel={categoryInputDisplayValue}
+          value={data.category}
           error={!!(formErrors.category || noCategoryError)}
           helperText={getProductErrorMessage(
             formErrors.category || noCategoryError,
             intl,
           )}
+          onChange={onCategoryChange}
+          fetchOptions={fetchCategories}
+          loading={fetchMoreCategories.loading}
           name="category"
           label={intl.formatMessage({
             id: "ccXLVi",
             defaultMessage: "Category",
           })}
-          onChange={value =>
-            onCategoryChange({
-              target: { value: value?.value ?? null, name: "category" },
-            })
-          }
-          onInputValueChange={debouncedFetchCategories}
-          onFocus={() => {
-            fetchCategories("");
-          }}
-          loading={fetchMoreCategories.loading}
-          locale={{
-            loadingText: "Loading...",
-          }}
         />
+
         <DynamicMultiselect
           data-test-id="collections"
           disabled={disabled}
           options={disabled ? [] : collections}
-          value={data.collections.map(collection => ({
-            label: "test",
-            value: collection,
-          }))}
+          value={collectionsInputDisplayValue}
           error={!!formErrors.collections}
           helperText={
             getProductErrorMessage(formErrors.collections, intl) ||
@@ -220,13 +177,13 @@ export const ProductOrganization: React.FC<
           }
           name="collections"
           label={intl.formatMessage({
-            id: "ccXLVi",
-            defaultMessage: "Category",
+            id: "ulh3kf",
+            defaultMessage: "Collections",
           })}
           onChange={value => {
             onCollectionChange({
               target: {
-                value: value?.map(({ value }) => value) ?? null,
+                value,
                 name: "collections",
               },
             });

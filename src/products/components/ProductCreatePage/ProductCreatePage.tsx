@@ -13,7 +13,6 @@ import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailability
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import Savebar from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
@@ -39,6 +38,7 @@ import {
   productListUrl,
 } from "@dashboard/products/urls";
 import { getChoices } from "@dashboard/products/utils/data";
+import { Option } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -153,7 +153,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   );
 
   const [selectedCollections, setSelectedCollections] = useStateFromProps<
-    MultiAutocompleteChoiceType[]
+    Option[]
   >([]);
 
   const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(
