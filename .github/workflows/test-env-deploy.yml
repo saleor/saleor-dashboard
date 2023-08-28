@@ -243,7 +243,7 @@ jobs:
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
 
       - name: Cypress run critical
-        if: ${{ success() || failure() }}
+        if: ${{ ! cancelled() }}
         uses: cypress-io/github-action@v5
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
@@ -258,15 +258,16 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
       - name: Create reports dir
-        if: ${{ success() || failure() }}
+        if: ${{ ! cancelled() }}
         run: npm run qa:create-artifacts-dirs
       - name: Move screenshots into reports dir
-        continue-on-error: true
+        if: ${{ ! cancelled() }}
         run: npm run qa:move-screenshots
       - name: Move videos into reports dir
-        continue-on-error: true
+        if: ${{ ! cancelled() }}
         run: npm run qa:move-videos
       - name: Merge report files
+        if: ${{ ! cancelled() }}
         run: npm run qa:generate-html-report
       - name: Upload reports
         uses: actions/upload-artifact@v3
@@ -275,10 +276,11 @@ jobs:
           name: mochawesome-${{ strategy.job-index }}
           path: ./cypress/reports/mochareports
       - name: Install dependencies
+        if: ${{ ! cancelled() }}
         working-directory: .github/workflows
         run: npm ci
       - name: Testmo threads submit
-        if: github.event.pull_request.head.repo.fork == false
+        if: github.event.pull_request.head.repo.fork == false && !cancelled()
         working-directory: .github/workflows
         run: |
           npx testmo automation:run:submit-thread \
