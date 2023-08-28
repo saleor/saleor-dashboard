@@ -42,7 +42,6 @@ describe("As a staff user I want to navigate through shop using different permis
       cy.addAliasToGraphRequest("SaleList")
         .clickOnElement(MENU_SELECTORS.MENU.discounts)
         .waitForRequestAndCheckIfNoErrors("@SaleList");
-      expect(true).equals(false);
     },
   );
   it(
