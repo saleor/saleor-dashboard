@@ -258,15 +258,15 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
       - name: Create reports dir
-        run: npm run create:artifacts:dirs
+        run: npm run qa:create-artifacts-dirs
       - name: Move screenshots into reports dir
         continue-on-error: true
-        run: npm run move:screenshots
+        run: npm run qa:move-screenshots
       - name: Move videos into reports dir
         continue-on-error: true
-        run: npm run move:videos
+        run: npm run qa:move-videos
       - name: Merge report files
-        run: npm run html:report
+        run: npm run qa:generate-html-report
       - name: Upload reports
         uses: actions/upload-artifact@v3
         if: always()
