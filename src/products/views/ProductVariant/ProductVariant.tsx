@@ -28,6 +28,7 @@ import {
   useVariantMediaAssignMutation,
   useVariantMediaUnassignMutation,
   useVariantUpdateMutation,
+  useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -58,8 +59,8 @@ import {
 } from "../../urls";
 import { mapFormsetStockToStockInput } from "../../utils/data";
 import { createVariantReorderHandler } from "./../ProductUpdate/handlers";
-import { useFetchAllWarehouses } from "./useFetchAllWarehouses";
 import { useSubmitChannels } from "./useSubmitChannels";
+import { mergeWarehousesQuery } from "./utils";
 
 interface ProductUpdateProps {
   variantId: string;
@@ -141,10 +142,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
 
-  const warehouses = useFetchAllWarehouses({
-    first: 100,
-    filter: {
-      channels: channels.map(channel => channel.id),
+  const warehouses = useWarehouseListQuery({
+    displayLoader: true,
+    variables: {
+      first: 50,
+      filter: {
+        channels: channels.map(channel => channel.id),
+      },
     },
   });
 
@@ -255,6 +259,15 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       }),
     );
 
+  const handleFetchMoreWarehouses = () => {
+    warehouses?.fetchMore({
+      updateQuery: mergeWarehousesQuery,
+      variables: {
+        after: warehouses?.data?.warehouses?.pageInfo?.endCursor,
+      },
+    });
+  };
+
   const {
     loadMore: loadMorePages,
     search: searchPages,
@@ -322,6 +335,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         variant={variant}
         header={variant?.name || variant?.sku}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
+        onFetchMoreWarehouses={handleFetchMoreWarehouses}
+        hasNextWarehouses={
+          warehouses?.data?.warehouses?.pageInfo?.hasNextPage ?? false
+        }
         onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
