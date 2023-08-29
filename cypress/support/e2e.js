@@ -16,6 +16,7 @@ import "./customCommands/softAssertions";
 import "./customCommands/user";
 
 import { commandTimings } from "cypress-timings";
+import addContext from "mochawesome/addContext";
 
 import {
   BUTTON_SELECTORS,
@@ -23,9 +24,7 @@ import {
   SHARED_ELEMENTS,
 } from "../elements";
 import { urlList } from "../fixtures/urlList";
-import {
-  ensureCanvasStatic,
-} from "../support/customCommands/sharedElementsOperations/canvas";
+import { ensureCanvasStatic } from "../support/customCommands/sharedElementsOperations/canvas";
 import cypressGrep from "../support/cypress-grep/support";
 
 commandTimings();
@@ -168,3 +167,19 @@ Cypress.on(
     // failing the test
     false,
 );
+
+const titleToFileName = title => title.replace(/[:\/]/g, "");
+
+Cypress.on("test:after:run", (test, runnable) => {
+  if (test.state === "failed") {
+    let parent = runnable.parent;
+    let filename = "";
+    while (parent && parent.title) {
+      filename = `${titleToFileName(parent.title)} -- ${filename}`;
+      parent = parent.parent;
+    }
+    filename += `${titleToFileName(test.title)} (failed).png`;
+    addContext({ test }, `${Cypress.spec.name}/${filename}`);
+    addContext({ test }, `videos/${Cypress.spec.name}.mp4`);
+  }
+});

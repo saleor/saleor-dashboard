@@ -210,7 +210,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Get API_URI
         id: api_uri
@@ -241,8 +241,10 @@ jobs:
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
+
       - name: Cypress run critical
-        uses: cypress-io/github-action@v4
+        if: ${{ ! cancelled() }}
+        uses: cypress-io/github-action@v5
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
@@ -251,26 +253,40 @@ jobs:
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
-          COMMIT_INFO_MESSAGE: ${{github.event.inputs.tags}} tests triggered on PR - https://github.com/${{ github.repository }}/pull/${{ github.ref_name }}
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
+      - name: Create reports dir
+        if: ${{ ! cancelled() }}
+        run: npm run qa:create-artifacts-dirs
+      - name: Move screenshots into reports dir
+        if: ${{ ! cancelled() }}
+        run: npm run qa:move-screenshots
+      - name: Move videos into reports dir
+        if: ${{ ! cancelled() }}
+        run: npm run qa:move-videos
+      - name: Merge report files
+        if: ${{ ! cancelled() }}
+        run: npm run qa:generate-html-report
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()
         with:
-          parallel: true
-          group: "UI - Chrome"
-          record: true
-          tag: Critical, ${{github.event.action}}
+          name: mochawesome-${{ strategy.job-index }}
+          path: ./cypress/reports/mochareports
       - name: Install dependencies
+        if: ${{ ! cancelled() }}
         working-directory: .github/workflows
         run: npm ci
       - name: Testmo threads submit
-        if: github.event.pull_request.head.repo.fork == false
+        if: github.event.pull_request.head.repo.fork == false && !cancelled()
         working-directory: .github/workflows
         run: |
           npx testmo automation:run:submit-thread \
           --instance "$TESTMO_URL" \
           --run-id "$TESTMO_RUN_ID" \
-          --results ../../results/*.xml
+          --results ../../cypress/reports/junit/*.xml
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
