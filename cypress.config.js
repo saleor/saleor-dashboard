@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 const { defineConfig } = require("cypress");
 const fs = require("fs");
+const cypressSplit = require("cypress-split");
 
 module.exports = defineConfig({
   projectId: "51ef7c",
@@ -31,7 +32,7 @@ module.exports = defineConfig({
     async setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
       config = await require("./cypress/plugins/index.js")(on, config);
-      config = require("cypress-split")(on, config);
+      cypressSplit(on, config);
       return config;
     },
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
