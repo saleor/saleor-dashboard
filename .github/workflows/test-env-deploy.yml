@@ -108,7 +108,7 @@ jobs:
           status: ${{ job.status }}
           env_url: https://${{ steps.set-domain.outputs.domain }}/
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-      ##        env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
 
       - name: Update storybook deployment status
         uses: bobheadxi/deployments@v1
@@ -119,6 +119,7 @@ jobs:
           status: ${{ job.status }}
           env_url: https://${{ steps.set-domain.outputs.domain }}/storybook/index.html
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
+          env: storybook ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
 
   prepare-tests:
     runs-on: ubuntu-22.04
