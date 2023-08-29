@@ -11,6 +11,31 @@ const commonListStyles = {
   gap: 2,
 } as const;
 
+const hardcodedData = [
+  {
+    link: "https://automation-dashboard.staging.saleor.cloud/dashboard?saleorPluginId=cloud_auth.CloudAuthorizationPlugin",
+    initials: "AU",
+    // based on info.json
+    type: "sandbox",
+    color: "decorative2",
+    name: "Automation",
+  },
+  {
+    link: "https://v315.staging.saleor.cloud/dashboard?saleorPluginId=cloud_auth.CloudAuthorizationPlugin",
+    initials: "3.5",
+    type: "sandbox",
+    color: "decorative2",
+    name: "v3.5",
+  },
+  {
+    link: "https://master.staging.saleor.cloud/dashboard?saleorPluginId=cloud_auth.CloudAuthorizationPlugin",
+    initials: "MA",
+    type: "production",
+    color: "decorative1",
+    name: "Master",
+  },
+] as const;
+
 export const MountingPoint = () => {
   const { theme } = useLegacyThemeHandler();
   const logo =
@@ -32,7 +57,37 @@ export const MountingPoint = () => {
               boxShadow="overlay"
               backgroundColor="surfaceNeutralPlain"
             >
-              <Dropdown.Item>
+              {hardcodedData.map((item, idx) => (
+                <Dropdown.Item key={`hardcoded-url-${idx}`}>
+                  <List.Item {...commonListStyles}>
+                    <Box
+                      as="a"
+                      href={item.link}
+                      display="flex"
+                      gap={3}
+                      alignItems="center"
+                    >
+                      <Avatar.Store
+                        initials={item.initials}
+                        size="small"
+                        scheme={item.color}
+                      />
+                      <Box display="flex" flexDirection="column">
+                        <Text>{item.name}</Text>
+                        <Text
+                          variant="caption"
+                          size="small"
+                          textTransform="uppercase"
+                          color="textNeutralSubdued"
+                        >
+                          {item.type}
+                        </Text>
+                      </Box>
+                    </Box>
+                  </List.Item>
+                </Dropdown.Item>
+              ))}
+              {/* <Dropdown.Item>
                 <List.Item {...commonListStyles}>
                   <Box
                     as="a"
@@ -65,7 +120,7 @@ export const MountingPoint = () => {
                     <Text>Master</Text>
                   </Box>
                 </List.Item>
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               <Dropdown.Item>
                 <List.Item {...commonListStyles}>
                   <Avatar.Store
