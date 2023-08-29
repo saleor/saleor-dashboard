@@ -146,24 +146,22 @@ type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
 export const createProductQueryVariables = (
   value: FilterContainer,
 ): ProductQueryVars => {
-  return value.reduce(
-    (p, c) => {
-      if (typeof c === "string" || Array.isArray(c)) return p;
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
 
-      if (c.isStatic()) {
-        p[c.value.value as keyof ProductWhereInput] = createStaticQueryPart(
-          c.condition.selected,
-        );
-      }
+    if (c.isStatic()) {
+      p[c.value.value as keyof ProductWhereInput] = createStaticQueryPart(
+        c.condition.selected,
+      );
+    }
 
-      if (c.isAttribute()) {
-        p.attributes!.push(
-          createAttributeQueryPart(c.value.value, c.condition.selected),
-        );
-      }
+    if (c.isAttribute()) {
+      p.attributes = p.attributes || [];
+      p.attributes!.push(
+        createAttributeQueryPart(c.value.value, c.condition.selected),
+      );
+    }
 
-      return p;
-    },
-    { attributes: [] } as ProductWhereInput,
-  );
+    return p;
+  }, {} as ProductWhereInput);
 };
