@@ -266,15 +266,7 @@ jobs:
       - name: Move videos into reports dir
         if: ${{ ! cancelled() }}
         run: npm run qa:move-videos
-      - name: Merge report files
-        if: ${{ ! cancelled() }}
-        run: npm run qa:generate-html-report
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: mochawesome-${{ strategy.job-index }}
-          path: ./cypress/reports/mochareports
+
       - name: Install dependencies
         if: ${{ ! cancelled() }}
         working-directory: .github/workflows
@@ -291,6 +283,14 @@ jobs:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: report-${{ strategy.job-index }}
+          path: ./cypress/reports
+          retention-days: 1
+          if-no-files-found: ignore
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected]
     if: |
@@ -314,3 +314,13 @@ jobs:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
+      - name: Download reports artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: ./cypress/reports
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: ./cypress/reports
+      - name: Merge report files
+        if: ${{ ! cancelled() }}
+        run: npm run qa:generate-html-report

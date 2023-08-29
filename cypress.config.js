@@ -14,7 +14,7 @@ module.exports = defineConfig({
   screenshotsFolder: "cypress/reports/mochareports",
   screenshotOnRunFailure: true,
   retries: {
-    runMode: 1,
+    runMode: 2,
     openMode: 0,
   },
   reporter: "cypress-multi-reporters",
