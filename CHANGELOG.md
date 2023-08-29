@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.15.1
+
+### Patch Changes
+
+- f452c6540: Fix user can not reach all warehouses in dropdown
+- e292059b8: Fix showing only first 50 warehouses at variant page
+- fdc7bc99a: Fix docker build with feature flags
+
 ## 3.15.0
 
 ### Minor Changes
