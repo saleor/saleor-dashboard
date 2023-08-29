@@ -24,12 +24,14 @@ import {
   Input,
   List,
   PlusIcon,
+  Spinner,
   sprinkles,
   Text,
   TrashBinIcon,
   vars,
 } from "@saleor/macaw-ui/next";
 import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductCreateData } from "../ProductCreatePage";
@@ -77,6 +79,8 @@ export interface ProductStocksProps {
   onWarehouseStockAdd: (warehouseId: string) => void;
   onWarehouseStockDelete: (warehouseId: string) => void;
   onWarehouseConfigure: () => void;
+  onFetchMoreWarehouses?: () => void;
+  hasNextWarehouses?: boolean;
 }
 
 export const ProductStocks: React.FC<ProductStocksProps> = ({
@@ -96,6 +100,8 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
   onWarehouseStockAdd,
   onWarehouseStockDelete,
   onWarehouseConfigure,
+  onFetchMoreWarehouses,
+  hasNextWarehouses,
 }) => {
   const intl = useIntl();
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
@@ -321,24 +327,40 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                         padding={2}
                         borderRadius={4}
                         boxShadow="overlay"
-                        __maxHeight={400}
-                        overflow="auto"
                         backgroundColor="surfaceNeutralPlain"
                       >
-                        {warehousesToAssign.map(warehouse => (
-                          <Dropdown.Item key={warehouse.id}>
+                        <InfiniteScroll
+                          height={400}
+                          dataLength={warehousesToAssign.length}
+                          next={onFetchMoreWarehouses}
+                          hasMore={hasNextWarehouses}
+                          loader={
                             <List.Item
                               paddingX={1.5}
                               paddingY={2}
                               borderRadius={4}
-                              onClick={() =>
-                                handleWarehouseStockAdd(warehouse.id)
-                              }
                             >
-                              <Text>{warehouse.name}</Text>
+                              <Text>
+                                Loading <Spinner />
+                              </Text>
                             </List.Item>
-                          </Dropdown.Item>
-                        ))}
+                          }
+                        >
+                          {warehousesToAssign.map(warehouse => (
+                            <Dropdown.Item key={warehouse.id}>
+                              <List.Item
+                                paddingX={1.5}
+                                paddingY={2}
+                                borderRadius={4}
+                                onClick={() =>
+                                  handleWarehouseStockAdd(warehouse.id)
+                                }
+                              >
+                                <Text>{warehouse.name}</Text>
+                              </List.Item>
+                            </Dropdown.Item>
+                          ))}
+                        </InfiniteScroll>
                       </List>
                     </Box>
                   </Dropdown.Content>
