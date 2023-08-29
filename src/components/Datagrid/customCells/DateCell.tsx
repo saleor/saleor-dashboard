@@ -60,7 +60,7 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
     ];
 
     const cellWidth = rect.width - theme.cellHorizontalPadding * 2;
-    let displayDate = dateFormats.full;
+    let displayDate: string | undefined = dateFormats.full;
 
     if (cellWidth < candidateFormats[0].width) {
       displayDate = candidateFormats.find(
