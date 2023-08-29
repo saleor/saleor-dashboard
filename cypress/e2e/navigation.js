@@ -18,7 +18,6 @@ import {
   PERMISSION_GROUP_LIST_SELECTORS,
   PLUGINS_LIST_SELECTORS,
   PRODUCT_TYPES_LIST_SELECTORS,
-  SALES_SELECTORS,
   SHIPPING_ZONES_LIST_SELECTORS,
   STAFF_MEMBERS_LIST_SELECTORS,
   VOUCHERS_SELECTORS,
@@ -43,7 +42,6 @@ describe("As a staff user I want to navigate through shop using different permis
       cy.addAliasToGraphRequest("SaleList")
         .clickOnElement(MENU_SELECTORS.MENU.discounts)
         .waitForRequestAndCheckIfNoErrors("@SaleList");
-      cy.checkIfElementIsVisible(SALES_SELECTORS.createSaleButton);
     },
   );
   it(

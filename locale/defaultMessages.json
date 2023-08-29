@@ -7157,6 +7157,9 @@
     "context": "label",
     "string": "External app"
   },
+  "nBzIBG": {
+    "string": "Delete permission group"
+  },
   "nEWp+k": {
     "context": "quantity of ordered products",
     "string": "Quantity"
