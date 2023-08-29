@@ -41,38 +41,36 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
       timeStyle: "short",
     }).format(date);
 
-    let displayDate = dateFormats.full;
-
     ctx.textAlign = "left";
     let justifyToRight = true;
 
     const candidateFormats = [
       {
-        format: dateFormats.short,
-        width: ctx.measureText(`${dateFormats.short} ${time}`).width,
+        format: dateFormats.full,
+        width: ctx.measureText(`${dateFormats.full} ${time}`).width,
       },
       {
         format: dateFormats.long,
         width: ctx.measureText(`${dateFormats.long} ${time}`).width,
       },
       {
-        format: displayDate,
-        width: ctx.measureText(`${displayDate} ${time}`).width,
+        format: dateFormats.short,
+        width: ctx.measureText(`${dateFormats.short} ${time}`).width,
       },
     ];
 
-    let chosenFormat = candidateFormats.find(
-      candidate =>
-        candidate.width <= rect.width - theme.cellHorizontalPadding * 2,
-    );
+    const cellWidth = rect.width - theme.cellHorizontalPadding * 2;
+    let displayDate = dateFormats.full;
 
-    if (!chosenFormat) {
-      chosenFormat = candidateFormats[candidateFormats.length - 1];
+    if (cellWidth < candidateFormats[0].width) {
+      displayDate = candidateFormats.find(
+        format => format.width <= cellWidth,
+      )?.format;
+      if (!displayDate) {
+        displayDate = dateFormats.short;
+        justifyToRight = false;
+      }
     }
-
-    displayDate = chosenFormat.format;
-    justifyToRight =
-      chosenFormat.format === dateFormats.short ? false : justifyToRight;
 
     ctx.fillStyle = theme.textDark;
 
