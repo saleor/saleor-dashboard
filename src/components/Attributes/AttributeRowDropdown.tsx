@@ -25,7 +25,7 @@ interface AttributeRowDropdownProps {
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
   allowCustomValue?: boolean;
   loading: boolean;
-  onChange: FormsetChange<string | boolean>;
+  onChange: FormsetChange<string | null>;
   fetchAttributeValues: (query: string, attributeId: string) => void;
   onBlur: () => void;
 }

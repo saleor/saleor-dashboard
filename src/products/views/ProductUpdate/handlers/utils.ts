@@ -46,7 +46,7 @@ export function getProductUpdateVariables(
         updatedFileAttributes,
       }),
       category: data.category,
-      collections: data.collections,
+      collections: data.collections.map(collection => collection.value),
       description: getParsedDataForJsonStringField(data.description),
       name: data.name,
       rating: data.rating,
