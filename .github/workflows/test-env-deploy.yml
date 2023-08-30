@@ -335,16 +335,16 @@ jobs:
         run: ls -R
         working-directory: ./cypress/reports
       - name: Create reports dir
-        if: ${{ ! cancelled() }}
+        continue-on-error: true
         run: npm run qa:create-artifacts-dirs
       - name: Merge report files
-        if: ${{ ! cancelled() }}
+        continue-on-error: true
         run: npm run qa:generate-html-report
       - name: Move artifacts screenshots into reports dir
-        if: ${{ ! cancelled() }}
+        continue-on-error: true
         run: npm run qa:artifact-move-screenshots
       - name: Move artifacts videos into reports dir
-        if: ${{ ! cancelled() }}
+        continue-on-error: true
         run: npm run qa:artifact-move-videos
       - name: Upload reports
         uses: actions/upload-artifact@v3
