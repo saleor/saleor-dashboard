@@ -18,8 +18,6 @@ export default {
 export const WhenLoadedData = () => (
   <ProductVariantPage
     productId=""
-    hasNextWarehouses={false}
-    onFetchMoreWarehouses={() => undefined}
     defaultWeightUnit="kg"
     header={variant.name || variant.sku}
     errors={[]}
@@ -48,8 +46,6 @@ export const WhenLoadedData = () => (
 export const WhenLoadingData = () => (
   <ProductVariantPage
     productId=""
-    hasNextWarehouses={false}
-    onFetchMoreWarehouses={() => undefined}
     defaultWeightUnit="kg"
     header={undefined}
     errors={[]}
@@ -79,8 +75,6 @@ export const WhenLoadingData = () => (
 export const NoWarehouses = () => (
   <ProductVariantPage
     productId=""
-    hasNextWarehouses={false}
-    onFetchMoreWarehouses={() => undefined}
     defaultWeightUnit="kg"
     header={variant.name || variant.sku}
     errors={[]}
@@ -109,8 +103,6 @@ export const NoWarehouses = () => (
 export const AttributeErrors = () => (
   <ProductVariantPage
     productId=""
-    hasNextWarehouses={false}
-    onFetchMoreWarehouses={() => undefined}
     defaultWeightUnit="kg"
     header={variant.name || variant.sku}
     channels={channels}

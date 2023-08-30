@@ -118,12 +118,10 @@ interface ProductVariantPageProps {
   variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
-  onFetchMoreWarehouses: () => void;
-  hasNextWarehouses: boolean;
-  onDelete();
-  onSubmit(data: ProductVariantUpdateSubmitData);
-  onSetDefaultVariant();
-  onWarehouseConfigure();
+  onDelete: () => any;
+  onSubmit: (data: ProductVariantUpdateSubmitData) => any;
+  onSetDefaultVariant: () => any;
+  onWarehouseConfigure: () => any;
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
@@ -159,8 +157,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   onAttributeSelectBlur,
-  hasNextWarehouses,
-  onFetchMoreWarehouses,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -359,8 +355,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                           ...channel.value,
                         }),
                       )}
-                      onFetchMoreWarehouses={onFetchMoreWarehouses}
-                      hasNextWarehouses={hasNextWarehouses}
                       onVariantChannelListingChange={handlers.changeChannels}
                       data={data}
                       disabled={loading}

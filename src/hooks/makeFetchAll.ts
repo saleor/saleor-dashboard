@@ -4,6 +4,12 @@ import { useEffect } from "react";
 
 import makeQuery from "./makeQuery";
 
+interface QueryHookOptions<TVariables> {
+  skip?: boolean;
+  variables?: TVariables;
+  displayLoader?: boolean;
+}
+
 export function makeFetchAll<TData, TVariables>(
   query: DocumentNode,
   accessKey: keyof TData,
@@ -14,12 +20,11 @@ export function makeFetchAll<TData, TVariables>(
     },
   ) => TData,
 ) {
-  return (variables: TVariables) => {
+  return (opts: QueryHookOptions<TVariables>) => {
     const useQuery = makeQuery<TData, TVariables>(query);
 
     const result = useQuery({
-      displayLoader: true,
-      variables,
+      ...opts,
     });
     useEffect(() => {
       if (result.data) {
