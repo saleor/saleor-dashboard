@@ -288,7 +288,7 @@ jobs:
         with:
           name: report-${{ strategy.job-index }}
           path: ./cypress/reports
-          retention-days: 1
+          retention-days: 5
           if-no-files-found: ignore
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected]
@@ -350,7 +350,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: report-${{ strategy.job-index }}
+          name: combined-report
           path: ./cypress/reports
-          retention-days: 1
+          retention-days: 5
           if-no-files-found: ignore
