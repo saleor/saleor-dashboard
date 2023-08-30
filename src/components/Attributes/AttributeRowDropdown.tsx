@@ -7,7 +7,7 @@ import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { commonMessages } from "@dashboard/intl";
 import { DynamicCombobox } from "@saleor/macaw-ui/next";
 import debounce from "lodash/debounce";
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AttributeInput } from "./Attributes";
@@ -23,7 +23,6 @@ interface AttributeRowDropdownProps {
   attributeValues: AttributeValueFragment[];
   attribute: AttributeInput;
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
-  allowCustomValue?: boolean;
   loading: boolean;
   onChange: FormsetChange<string | null>;
   fetchAttributeValues: (query: string, attributeId: string) => void;
@@ -39,38 +38,43 @@ export const AttributeRowDropdown = ({
   onChange,
   fetchAttributeValues,
   onBlur,
-  allowCustomValue = true,
 }: AttributeRowDropdownProps) => {
   const intl = useIntl();
   const inputValue = useRef("");
-  const value = attribute.value[0];
+  const mounted = useRef(false);
+
+  const [value, setValue] = useState(
+    attribute.value[0]
+      ? {
+          label: getSingleDisplayValue(attribute, attributeValues),
+          value: attribute.value[0],
+        }
+      : null,
+  );
 
   const debouncedFetchAttributeValues = useRef(
     debounce(async value => {
       fetchAttributeValues(value, attribute.id);
-    }, 300),
+    }, 500),
   ).current;
-
-  useEffect(() => {
-    if (allowCustomValue) {
-      if (inputValue.current.length > 0 && attributeValues.length === 0) {
-        onChange(attribute.id, inputValue.current);
-      }
-    }
-  }, [attributeValues, allowCustomValue]);
 
   return (
     <DynamicCombobox
       disabled={disabled}
-      options={getSingleChoices(attributeValues)}
-      value={
-        value
-          ? {
-              label: getSingleDisplayValue(attribute, attributeValues),
-              value,
-            }
-          : null
-      }
+      options={[
+        ...(inputValue.current &&
+        !loading &&
+        attribute.value[0] !== inputValue.current
+          ? [
+              {
+                label: `Add custom value: ${inputValue.current}`,
+                value: inputValue.current,
+              },
+            ]
+          : []),
+        ...getSingleChoices(attributeValues),
+      ]}
+      value={value}
       error={!!error}
       helperText={getErrorMessage(error, intl)}
       name={`attribute:${attribute.label}`}
@@ -78,13 +82,22 @@ export const AttributeRowDropdown = ({
       label={intl.formatMessage(attributeRowMessages.valueLabel)}
       onChange={value => {
         onChange(attribute.id, value?.value ?? null);
+
+        if (value?.label.includes("Add custom value")) {
+          setValue({ label: value.value, value: value.value });
+        } else {
+          setValue(value);
+        }
       }}
       onInputValueChange={value => {
         inputValue.current = value;
         debouncedFetchAttributeValues(value);
       }}
       onFocus={() => {
-        fetchAttributeValues("", attribute.id);
+        if (!mounted.current) {
+          mounted.current = true;
+          fetchAttributeValues(inputValue.current, attribute.id);
+        }
       }}
       onBlur={onBlur}
       loading={loading}

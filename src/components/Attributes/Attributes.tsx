@@ -90,7 +90,7 @@ export const Attributes: React.FC<AttributesProps> = ({
                 </Text>
                 <Accordion.TriggerButton dataTestId="expand-icon" />
               </Accordion.Trigger>
-              <Accordion.Content overflow={"visible"}>
+              <Accordion.Content overflow="visible">
                 {attributes.length > 0 && (
                   <ul>
                     <Divider />
