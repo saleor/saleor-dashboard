@@ -30,8 +30,8 @@ program
   .parse();
 
 function getFormattedVersion(version) {
-  const regex = /^v{0,1}(\d+\.\d+\.)/;
-  return version.match(regex)[1].replace(/\./g, "");
+  const regex = /^\d+\.\d+\./;
+  return version.match(regex)[0].replace(/\./g, "");
 }
 
 async function checkIfOldVersion(version, token) {
