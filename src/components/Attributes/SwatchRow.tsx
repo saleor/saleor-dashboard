@@ -7,7 +7,7 @@ import {
 import { getBySlug } from "@dashboard/misc";
 import { Box, DynamicCombobox } from "@saleor/macaw-ui/next";
 import debounce from "lodash/debounce";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { attributeRowMessages } from "./messages";
@@ -24,37 +24,6 @@ type SwatchRowProps = Pick<
   | "fetchMoreAttributeValues"
 >;
 
-const ColorBox = (
-  props:
-    | { isFile: true; backgroundImageUrl: string }
-    | {
-        isFile: false;
-        backgroundColor: string;
-      },
-) => {
-  return (
-    <Box
-      width={8}
-      height={8}
-      borderRadius={2}
-      marginRight={2}
-      style={{
-        ...(props.isFile
-          ? {
-              backgroundImage: `url(${props.backgroundImageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }
-          : {}),
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-        ...(props.isFile === false
-          ? { backgroundColor: props.backgroundColor }
-          : {}),
-      }}
-    />
-  );
-};
-
 export const SwatchRow: React.FC<SwatchRowProps> = ({
   attributeValues,
   fetchAttributeValues,
@@ -65,17 +34,26 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
+  const mounted = useRef(false);
+  const inputValue = useRef("");
+
   const value = attribute.data.values.find(getBySlug(attribute.value[0]));
 
-  const debouncedFetchAttributeValues = debounce((inputValue: string) => {
-    if (!inputValue) {
-      onChange(attribute.id, null);
-      fetchAttributeValues("", attribute.id);
-      return;
-    }
+  const [selectedValue, setSelectedValue] = useState(
+    attribute.value[0]
+      ? {
+          label: getSingleDisplayValue(attribute, attributeValues),
+          value: attribute.value[0],
+          startAdornment: null,
+        }
+      : null,
+  );
 
-    fetchAttributeValues(inputValue, attribute.id);
-  }, 600);
+  const debouncedFetchAttributeValues = useRef(
+    debounce(async value => {
+      fetchAttributeValues(value, attribute.id);
+    }, 500),
+  ).current;
 
   return (
     <BasicAttributeRow
@@ -88,38 +66,40 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
           label: name,
           value: slug,
           startAdornment: (
-            <ColorBox
+            <SwatchPreviewBox
               isFile={!!file}
               backgroundImageUrl={file?.url}
               backgroundColor={value}
             />
           ),
         }))}
-        value={
-          attribute.value[0]
-            ? {
-                label: getSingleDisplayValue(attribute, attributeValues),
-                value: attribute.value[0],
-                startAdornment: null,
-              }
-            : null
+        value={selectedValue}
+        startAdornment={() =>
+          selectedValue ? (
+            <SwatchPreviewBox
+              isFile={!!value?.file}
+              backgroundImageUrl={value?.file?.url}
+              backgroundColor={value?.value}
+            />
+          ) : null
         }
-        startAdornment={() => (
-          <ColorBox
-            isFile={!!value?.file}
-            backgroundImageUrl={value?.file?.url}
-            backgroundColor={value?.value}
-          />
-        )}
         error={!!error}
         label={intl.formatMessage(attributeRowMessages.valueLabel)}
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
         id={`attribute:${attribute.label}`}
-        onChange={value => onChange(attribute.id, value?.value)}
-        onInputValueChange={debouncedFetchAttributeValues}
+        onChange={value => {
+          setSelectedValue(value);
+          onChange(attribute.id, value?.value);
+        }}
+        onInputValueChange={value => {
+          inputValue.current = value;
+          debouncedFetchAttributeValues(value);
+        }}
         onFocus={() => {
-          fetchAttributeValues("", attribute.id);
+          if (!mounted.current) {
+            fetchAttributeValues("", attribute.id);
+          }
         }}
         loading={fetchMoreAttributeValues.loading}
         locale={{
@@ -127,5 +107,33 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
         }}
       />
     </BasicAttributeRow>
+  );
+};
+
+const SwatchPreviewBox = ({
+  isFile,
+  backgroundColor,
+  backgroundImageUrl,
+}: {
+  isFile: boolean;
+  backgroundImageUrl?: string;
+  backgroundColor?: string;
+}) => {
+  return (
+    <Box
+      width={8}
+      height={8}
+      borderRadius={2}
+      marginRight={2}
+      style={{
+        ...(isFile
+          ? {
+              backgroundImage: `url(${backgroundImageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }
+          : { backgroundColor }),
+      }}
+    />
   );
 };
