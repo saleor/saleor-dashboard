@@ -2,7 +2,13 @@ import { PageInfoFragment } from "@dashboard/graphql";
 import { DocumentNode } from "graphql";
 import { useEffect } from "react";
 
-import makeQuery, { QueryHookOptions } from "./makeQuery";
+import makeQuery from "./makeQuery";
+
+interface QueryHookOptions<TVariables> {
+  skip?: boolean;
+  variables?: TVariables;
+  displayLoader?: boolean;
+}
 
 export function makeFetchAll<TData, TVariables>(
   query: DocumentNode,
@@ -14,7 +20,7 @@ export function makeFetchAll<TData, TVariables>(
     },
   ) => TData,
 ) {
-  return (opts: QueryHookOptions<TData, TVariables>) => {
+  return (opts: QueryHookOptions<TVariables>) => {
     const useQuery = makeQuery<TData, TVariables>(query);
 
     const result = useQuery({
