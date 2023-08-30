@@ -266,7 +266,6 @@ jobs:
       - name: Move videos into reports dir
         if: ${{ ! cancelled() }}
         run: npm run qa:move-videos
-
       - name: Install dependencies
         if: ${{ ! cancelled() }}
         working-directory: .github/workflows
@@ -324,3 +323,20 @@ jobs:
       - name: Merge report files
         if: ${{ ! cancelled() }}
         run: npm run qa:generate-html-report
+      - name: Create reports dir
+        if: ${{ ! cancelled() }}
+        run: npm run qa:create-artifacts-dirs
+      - name: Move artifacts screenshots into reports dir
+        if: ${{ ! cancelled() }}
+        run: npm run qa:artifact-move-screenshots
+      - name: Move artifacts videos into reports dir
+        if: ${{ ! cancelled() }}
+        run: npm run qa:artifact-move-videos
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: report-${{ strategy.job-index }}
+          path: ./cypress/reports
+          retention-days: 1
+          if-no-files-found: ignore
