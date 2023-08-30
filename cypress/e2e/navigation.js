@@ -76,6 +76,7 @@ describe("As a staff user I want to navigate through shop using different permis
             .then(() => {
               cy.checkIfElementIsVisible(ORDERS_SELECTORS.createOrderButton);
             });
+          expect(true).equals(false);
         });
     },
   );
