@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.15.2
+
+### Patch Changes
+
+- c33134957: Fix assign warehouses in variant page
+
 ## 3.15.1
 
 ### Patch Changes
