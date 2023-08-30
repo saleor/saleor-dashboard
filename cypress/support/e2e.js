@@ -178,8 +178,8 @@ Cypress.on("test:after:run", (test, runnable) => {
       filename = `${titleToFileName(parent.title)} -- ${filename}`;
       parent = parent.parent;
     }
-    filename += `${titleToFileName(test.title)} (failed).png`;
+    filename += `${titleToFileName(test.title)}(failed).png`;
     addContext({ test }, `mochareports/${Cypress.spec.name}/${filename}`);
   }
-  addContext({ test }, `videos/${Cypress.spec.name}.mp4`);
+  addContext({ test }, `mochareports/videos/${Cypress.spec.name}.mp4`);
 });
