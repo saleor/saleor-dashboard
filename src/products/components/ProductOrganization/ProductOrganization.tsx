@@ -1,6 +1,8 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { Combobox } from "@dashboard/components/Combobox";
 import Link from "@dashboard/components/Link";
+import { Multiselect } from "@dashboard/components/Multiselect";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorCode,
@@ -10,12 +12,9 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, DynamicMultiselect, Option, Text } from "@saleor/macaw-ui/next";
-import debounce from "lodash/debounce";
-import React, { useRef } from "react";
+import { Box, Option, Text } from "@saleor/macaw-ui/next";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { ProductOrganizationDropdown } from "./ProductOrganizationDropdown";
 
 interface ProductType {
   hasVariants: boolean;
@@ -87,12 +86,6 @@ export const ProductOrganization: React.FC<
       ? formErrors.isPublished
       : null;
 
-  const debouncedFetchCollections = useRef(
-    debounce(async value => {
-      fetchCollections(value);
-    }, 300),
-  ).current;
-
   return (
     <DashboardCard>
       <DashboardCard.Title>
@@ -104,7 +97,7 @@ export const ProductOrganization: React.FC<
       </DashboardCard.Title>
       <DashboardCard.Content gap={5} display="flex" flexDirection="column">
         {canChangeType ? (
-          <ProductOrganizationDropdown
+          <Combobox
             disabled={disabled}
             dataTestId="product-type"
             options={productTypes}
@@ -139,7 +132,7 @@ export const ProductOrganization: React.FC<
           </Box>
         )}
 
-        <ProductOrganizationDropdown
+        <Combobox
           disabled={disabled}
           dataTestId="category"
           options={disabled ? [] : categories}
@@ -160,12 +153,20 @@ export const ProductOrganization: React.FC<
           })}
         />
 
-        <DynamicMultiselect
-          data-test-id="collections"
+        <Multiselect
           disabled={disabled}
-          options={disabled ? [] : collections}
+          options={collections}
+          dataTestId="collections"
           value={collectionsInputDisplayValue}
           error={!!formErrors.collections}
+          name="collections"
+          loading={fetchMoreCollections.loading}
+          onChange={onCollectionChange}
+          fetchOptions={fetchCollections}
+          label={intl.formatMessage({
+            id: "ulh3kf",
+            defaultMessage: "Collections",
+          })}
           helperText={
             getProductErrorMessage(formErrors.collections, intl) ||
             intl.formatMessage({
@@ -175,27 +176,6 @@ export const ProductOrganization: React.FC<
               description: "field is optional",
             })
           }
-          name="collections"
-          label={intl.formatMessage({
-            id: "ulh3kf",
-            defaultMessage: "Collections",
-          })}
-          onChange={value => {
-            onCollectionChange({
-              target: {
-                value,
-                name: "collections",
-              },
-            });
-          }}
-          onInputValueChange={debouncedFetchCollections}
-          onFocus={() => {
-            fetchCollections("");
-          }}
-          loading={fetchMoreCollections.loading}
-          locale={{
-            loadingText: "Loading...",
-          }}
         />
       </DashboardCard.Content>
     </DashboardCard>

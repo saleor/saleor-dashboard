@@ -5,11 +5,12 @@ import debounce from "lodash/debounce";
 import React, { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-interface ProductOrganizationDropdownProps {
+interface ComboboxProps {
   disabled: boolean;
   options: Option[];
   name: string;
   label: string;
+  id?: string;
   value: string;
   displayValue: string;
   error?: boolean;
@@ -18,22 +19,16 @@ interface ProductOrganizationDropdownProps {
   dataTestId?: string;
   fetchOptions: (data: string) => void;
   onChange: (event: ChangeEvent) => void;
+  onBlur?: () => void;
 }
 
-export const ProductOrganizationDropdown = ({
-  disabled,
-  options,
+export const Combobox = ({
   value,
   displayValue,
-  error,
-  helperText,
-  loading,
-  dataTestId,
-  name,
-  label,
   fetchOptions,
   onChange,
-}: ProductOrganizationDropdownProps) => {
+  ...rest
+}: ComboboxProps) => {
   const intl = useIntl();
   const mounted = useRef(false);
   const [selectedValue, setSelectedValue] = useState(
@@ -53,17 +48,10 @@ export const ProductOrganizationDropdown = ({
 
   return (
     <DynamicCombobox
-      data-test-id={dataTestId}
-      disabled={disabled}
-      options={options}
       value={selectedValue}
-      error={!!error}
-      helperText={helperText}
-      name={name}
-      label={label}
       onChange={value => {
         onChange({
-          target: { value: value?.value ?? null, name },
+          target: { value: value?.value ?? null, name: rest.name },
         });
         setSelectedValue(value);
       }}
@@ -76,10 +64,10 @@ export const ProductOrganizationDropdown = ({
           fetchOptions("");
         }
       }}
-      loading={loading}
       locale={{
         loadingText: intl.formatMessage(commonMessages.loading),
       }}
+      {...rest}
     />
   );
 };
