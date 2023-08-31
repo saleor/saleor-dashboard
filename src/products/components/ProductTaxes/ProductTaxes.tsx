@@ -1,11 +1,11 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
 import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Combobox } from "@saleor/macaw-ui/next";
+import { Combobox, sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,18 +14,9 @@ interface ProductTaxesProps {
   taxClassDisplayName: string;
   taxClasses: TaxClassBaseFragment[];
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent) => void;
   onFetchMore: FetchMoreProps;
 }
-
-const useStyles = makeStyles(
-  {
-    root: {
-      overflow: "visible",
-    },
-  },
-  { name: "ProductTaxes" },
-);
 
 const ProductTaxes: React.FC<ProductTaxesProps> = props => {
   const {
@@ -37,12 +28,10 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
     // TODO: use onFetchMore when combobox will handle infity scroll
     // onFetchMore,
   } = props;
-  const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
-    <Card className={classes.root}>
+    <Card className={sprinkles({ overflow: "visible" })}>
       <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
       <CardContent>
         <Combobox
@@ -55,11 +44,11 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
           value={value ? { value, label: taxClassDisplayName } : null}
           name="taxClassId"
           label={intl.formatMessage(taxesMessages.taxClass)}
-          onChange={value =>
+          onChange={value => {
             onChange({
               target: { value: value?.value ?? null, name: "taxClassId" },
-            } as any)
-          }
+            });
+          }}
         />
       </CardContent>
     </Card>
