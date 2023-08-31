@@ -23,6 +23,7 @@ interface ComboboxProps {
   onChange: (event: ChangeEvent<string | null>) => void;
   onBlur?: () => void;
   allowCustomValues?: boolean;
+  alwaysFetchOnFocus?: boolean;
 }
 
 export const Combobox = ({
@@ -31,6 +32,7 @@ export const Combobox = ({
   fetchOptions,
   onChange,
   options,
+  alwaysFetchOnFocus = false,
   allowCustomValues = false,
   ...rest
 }: ComboboxProps) => {
@@ -63,7 +65,7 @@ export const Combobox = ({
     }, 500),
   ).current;
 
-  const handleOnChange = (value: Option) => {
+  const handleOnChange = (value: Option | null) => {
     onChange({
       target: { value: value?.value ?? null, name: rest.name },
     });
@@ -95,7 +97,7 @@ export const Combobox = ({
         debouncedFetchOptions(value);
       }}
       onFocus={() => {
-        if (!mounted.current) {
+        if (alwaysFetchOnFocus || !mounted.current) {
           mounted.current = true;
           fetchOptions("");
         }

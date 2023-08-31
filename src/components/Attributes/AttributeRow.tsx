@@ -41,6 +41,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   onChange,
   fetchAttributeValues,
   fetchMoreAttributeValues,
+  onAttributeSelectBlur,
   richTextGetters,
 }) => {
   const intl = useIntl();
@@ -93,7 +94,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           id={`attribute:${attribute.label}`}
         >
           <Combobox
-            allowCustomValues={true}
+            allowCustomValues
+            alwaysFetchOnFocus
             disabled={disabled}
             options={getSingleChoices(attributeValues)}
             value={attribute.value[0]}
@@ -108,6 +110,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
               fetchAttributeValues(query, attribute.id);
             }}
             loading={fetchMoreAttributeValues.loading}
+            onBlur={onAttributeSelectBlur}
           />
         </BasicAttributeRow>
       );
@@ -266,7 +269,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       return (
         <BasicAttributeRow label={attribute.label}>
           <Multiselect
-            allowCustomValues={true}
+            allowCustomValues
+            alwaysFetchOnFocus
             disabled={disabled}
             name={`attribute:${attribute.label}`}
             label={intl.formatMessage(attributeRowMessages.multipleValueLabel)}
@@ -281,6 +285,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
               onMultiChange(attribute.id, e.target.value);
             }}
             loading={fetchMoreAttributeValues.loading}
+            onBlur={onAttributeSelectBlur}
           />
         </BasicAttributeRow>
       );

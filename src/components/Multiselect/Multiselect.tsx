@@ -21,6 +21,7 @@ interface MultiselectProps {
   fetchOptions: (data: string) => void;
   onChange: (event: ChangeEvent<string[]>) => void;
   onBlur?: () => void;
+  alwaysFetchOnFocus?: boolean;
   allowCustomValues?: boolean;
 }
 
@@ -30,6 +31,7 @@ export const Multiselect = ({
   onChange,
   fetchOptions,
   value,
+  alwaysFetchOnFocus = false,
   allowCustomValues = false,
   ...rest
 }: MultiselectProps) => {
@@ -98,7 +100,7 @@ export const Multiselect = ({
         debouncedFetchOptions(value);
       }}
       onFocus={() => {
-        if (!mounted.current) {
+        if (alwaysFetchOnFocus || !mounted.current) {
           mounted.current = true;
           fetchOptions("");
         }
