@@ -6077,6 +6077,9 @@
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
   },
+  "fLCV/w": {
+    "string": "Add new value"
+  },
   "fLhj3a": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated"
@@ -6272,6 +6275,9 @@
   "gj3MUg": {
     "context": "gift card history message",
     "string": "Gift card was resent"
+  },
+  "gjBiyj": {
+    "string": "Loading..."
   },
   "gksZwp": {
     "context": "button",
