@@ -8,7 +8,7 @@ function createMultiselectChangeHandler(
   change: FormChange,
   setSelected: (choices: Option[]) => void,
 ): FormChange {
-  return (event: ChangeEvent) => {
+  return (event: ChangeEvent<Option[]>) => {
     change(event);
     setSelected(event.target.value);
   };

@@ -282,7 +282,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
               fetchAttributeValues(query, attribute.id);
             }}
             onChange={e => {
-              onMultiChange(attribute.id, e.target.value);
+              onMultiChange(
+                attribute.id,
+                e.target.value.map(({ value }) => value),
+              );
             }}
             loading={fetchMoreAttributeValues.loading}
             onBlur={onAttributeSelectBlur}

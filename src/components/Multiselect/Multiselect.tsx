@@ -2,11 +2,11 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { DynamicMultiselect, Option } from "@saleor/macaw-ui/next";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
-import { toValue, toWithCustomValues } from "./utils";
+import { toWithCustomValues } from "./utils";
 
 interface MultiselectProps {
   disabled: boolean;
@@ -19,7 +19,7 @@ interface MultiselectProps {
   helperText?: string;
   dataTestId?: string;
   fetchOptions: (data: string) => void;
-  onChange: (event: ChangeEvent<string[]>) => void;
+  onChange: (event: ChangeEvent<Option[]>) => void;
   onBlur?: () => void;
   alwaysFetchOnFocus?: boolean;
   allowCustomValues?: boolean;
@@ -40,6 +40,10 @@ export const Multiselect = ({
   const mounted = useRef(false);
 
   const [selectedValues, setSelectedValues] = useState(value);
+
+  useEffect(() => {
+    setSelectedValues(value);
+  }, [value]);
 
   const debouncedFetchOptions = useRef(
     useDebounce(async (value: string) => {
@@ -66,12 +70,11 @@ export const Multiselect = ({
 
     onChange({
       target: {
-        value: valuesWithCustom.map(toValue),
+        value: valuesWithCustom,
         name: rest.name,
       },
     });
 
-    setSelectedValues(valuesWithCustom);
     inputValue.current = "";
 
     if (hasCustomValue) {

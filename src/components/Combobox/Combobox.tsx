@@ -2,7 +2,7 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { DynamicCombobox, Option } from "@saleor/macaw-ui/next";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../Multiselect/messages";
@@ -49,6 +49,17 @@ export const Combobox = ({
       : null,
   );
 
+  useEffect(() => {
+    setSelectedValue(
+      value
+        ? {
+            label: displayValue,
+            value,
+          }
+        : null,
+    );
+  }, [value]);
+
   const addNewValueLabel = intl.formatMessage(messages.addNewValue, {
     value: inputValue.current,
   });
@@ -69,12 +80,6 @@ export const Combobox = ({
     onChange({
       target: { value: value?.value ?? null, name: rest.name },
     });
-
-    if (value?.label.includes(addNewValueLabel)) {
-      setSelectedValue({ label: value.value, value: value.value });
-    } else {
-      setSelectedValue(value);
-    }
   };
 
   return (
