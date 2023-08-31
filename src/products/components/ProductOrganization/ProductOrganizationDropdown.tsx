@@ -2,16 +2,16 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { DynamicCombobox, Option } from "@saleor/macaw-ui/next";
 import debounce from "lodash/debounce";
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-interface ProductOrganizationProductTypeProps {
+interface ProductOrganizationDropdownProps {
   disabled: boolean;
   options: Option[];
   name: string;
   label: string;
   value: string;
-  valueLabel: string;
+  displayValue: string;
   error?: boolean;
   loading: boolean;
   helperText?: string;
@@ -20,11 +20,11 @@ interface ProductOrganizationProductTypeProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-export const ProductOrganizationProductType = ({
+export const ProductOrganizationDropdown = ({
   disabled,
   options,
   value,
-  valueLabel,
+  displayValue,
   error,
   helperText,
   loading,
@@ -33,8 +33,17 @@ export const ProductOrganizationProductType = ({
   label,
   fetchOptions,
   onChange,
-}: ProductOrganizationProductTypeProps) => {
+}: ProductOrganizationDropdownProps) => {
   const intl = useIntl();
+  const mounted = useRef(false);
+  const [selectedValue, setSelectedValue] = useState(
+    value
+      ? {
+          label: displayValue,
+          value,
+        }
+      : null,
+  );
 
   const debouncedFetchOptions = useRef(
     debounce(async value => {
@@ -42,32 +51,12 @@ export const ProductOrganizationProductType = ({
     }, 300),
   ).current;
 
-  const refValue = useRef(
-    value
-      ? {
-          label: valueLabel,
-          value,
-        }
-      : null,
-  );
-
-  useEffect(() => {
-    if (refValue.current?.value !== value) {
-      refValue.current = value
-        ? {
-            label: valueLabel,
-            value,
-          }
-        : null;
-    }
-  }, [value]);
-
   return (
     <DynamicCombobox
       data-test-id={dataTestId}
       disabled={disabled}
       options={options}
-      value={refValue.current}
+      value={selectedValue}
       error={!!error}
       helperText={helperText}
       name={name}
@@ -76,12 +65,16 @@ export const ProductOrganizationProductType = ({
         onChange({
           target: { value: value?.value ?? null, name },
         });
+        setSelectedValue(value);
       }}
       onInputValueChange={value => {
         debouncedFetchOptions(value);
       }}
       onFocus={() => {
-        fetchOptions("");
+        if (!mounted.current) {
+          mounted.current = true;
+          fetchOptions("");
+        }
       }}
       loading={loading}
       locale={{

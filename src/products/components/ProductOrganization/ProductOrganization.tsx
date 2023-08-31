@@ -15,7 +15,7 @@ import debounce from "lodash/debounce";
 import React, { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductOrganizationProductType } from "./ProductOrganizationCombobox";
+import { ProductOrganizationDropdown } from "./ProductOrganizationDropdown";
 
 interface ProductType {
   hasVariants: boolean;
@@ -104,11 +104,11 @@ export const ProductOrganization: React.FC<
       </DashboardCard.Title>
       <DashboardCard.Content gap={5} display="flex" flexDirection="column">
         {canChangeType ? (
-          <ProductOrganizationProductType
+          <ProductOrganizationDropdown
             disabled={disabled}
             dataTestId="product-type"
             options={productTypes}
-            valueLabel={productTypeInputDisplayValue}
+            displayValue={productTypeInputDisplayValue}
             value={data.productType?.id}
             error={!!formErrors.productType}
             helperText={getProductErrorMessage(formErrors.productType, intl)}
@@ -139,11 +139,11 @@ export const ProductOrganization: React.FC<
           </Box>
         )}
 
-        <ProductOrganizationProductType
+        <ProductOrganizationDropdown
           disabled={disabled}
           dataTestId="category"
           options={disabled ? [] : categories}
-          valueLabel={categoryInputDisplayValue}
+          displayValue={categoryInputDisplayValue}
           value={data.category}
           error={!!(formErrors.category || noCategoryError)}
           helperText={getProductErrorMessage(
