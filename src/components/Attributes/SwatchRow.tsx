@@ -4,9 +4,9 @@ import {
   getErrorMessage,
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { getBySlug } from "@dashboard/misc";
 import { Box, DynamicCombobox } from "@saleor/macaw-ui/next";
-import debounce from "lodash/debounce";
 import React, { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -50,7 +50,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   );
 
   const debouncedFetchAttributeValues = useRef(
-    debounce(async value => {
+    useDebounce(async (value: string) => {
       fetchAttributeValues(value, attribute.id);
     }, 500),
   ).current;

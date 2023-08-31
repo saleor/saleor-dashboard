@@ -3,10 +3,10 @@ import {
   PageErrorWithAttributesFragment,
   ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { commonMessages } from "@dashboard/intl";
 import { DynamicCombobox } from "@saleor/macaw-ui/next";
-import debounce from "lodash/debounce";
 import React, { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -52,15 +52,15 @@ export const AttributeRowDropdown = ({
       : null,
   );
 
-  const addNewValueLabel = intl.formatMessage(attributeRowMessages.addNewValue);
-  const showAddNewValueOption =
-    inputValue.current && !loading && attribute.value[0] !== inputValue.current;
-
   const debouncedFetchAttributeValues = useRef(
-    debounce(async value => {
+    useDebounce(async (value: string) => {
       fetchAttributeValues(value, attribute.id);
     }, 500),
   ).current;
+
+  const addNewValueLabel = intl.formatMessage(attributeRowMessages.addNewValue);
+  const showAddNewValueOption =
+    inputValue.current && !loading && attribute.value[0] !== inputValue.current;
 
   return (
     <DynamicCombobox

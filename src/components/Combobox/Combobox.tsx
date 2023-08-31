@@ -1,7 +1,7 @@
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { DynamicCombobox, Option } from "@saleor/macaw-ui/next";
-import debounce from "lodash/debounce";
 import React, { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -41,9 +41,9 @@ export const Combobox = ({
   );
 
   const debouncedFetchOptions = useRef(
-    debounce(async value => {
+    useDebounce(async (value: string) => {
       fetchOptions(value);
-    }, 300),
+    }, 500),
   ).current;
 
   return (

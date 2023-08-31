@@ -1,7 +1,7 @@
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { DynamicMultiselect, Option } from "@saleor/macaw-ui/next";
-import debounce from "lodash/debounce";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";
 
@@ -29,10 +29,10 @@ export const Multiselect = ({
   const intl = useIntl();
   const mounted = useRef(false);
 
-  const debouncedFetchCollections = useRef(
-    debounce(async value => {
+  const debouncedFetchOptions = useRef(
+    useDebounce(async (value: string) => {
       fetchOptions(value);
-    }, 300),
+    }, 500),
   ).current;
 
   return (
@@ -48,7 +48,7 @@ export const Multiselect = ({
         });
       }}
       onInputValueChange={value => {
-        debouncedFetchCollections(value);
+        debouncedFetchOptions(value);
       }}
       onFocus={() => {
         if (!mounted.current) {
