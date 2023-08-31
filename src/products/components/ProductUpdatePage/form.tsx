@@ -30,7 +30,7 @@ import {
   getProductUpdatePageFormData,
 } from "@dashboard/products/utils/data";
 import { PRODUCT_UPDATE_FORM_ID } from "@dashboard/products/views/ProductUpdate/consts";
-import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
+import createMultiselectChangeHandler from "@dashboard/utils/handlers/multiselectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -70,7 +70,7 @@ function useProductUpdateForm(
   const {
     handleChange,
     triggerChange,
-    toggleValue,
+    toggleValues,
     data: formData,
     setIsSubmitDisabled,
   } = form;
@@ -123,11 +123,9 @@ function useProductUpdateForm(
     touched: touchedChannels,
   } = useProductChannelListingsForm(product, triggerChange);
 
-  const handleCollectionSelect = createMultiAutocompleteSelectHandler(
-    event => toggleValue(event),
+  const handleCollectionSelect = createMultiselectChangeHandler(
+    toggleValues,
     opts.setSelectedCollections,
-    opts.selectedCollections,
-    opts.collections,
   );
   const handleCategorySelect = createSingleAutocompleteSelectHandler(
     handleChange,
