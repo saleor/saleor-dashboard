@@ -52,6 +52,10 @@ export const AttributeRowDropdown = ({
       : null,
   );
 
+  const addNewValueLabel = intl.formatMessage(attributeRowMessages.addNewValue);
+  const showAddNewValueOption =
+    inputValue.current && !loading && attribute.value[0] !== inputValue.current;
+
   const debouncedFetchAttributeValues = useRef(
     debounce(async value => {
       fetchAttributeValues(value, attribute.id);
@@ -62,12 +66,10 @@ export const AttributeRowDropdown = ({
     <DynamicCombobox
       disabled={disabled}
       options={[
-        ...(inputValue.current &&
-        !loading &&
-        attribute.value[0] !== inputValue.current
+        ...(showAddNewValueOption
           ? [
               {
-                label: `Add custom value: ${inputValue.current}`,
+                label: `${addNewValueLabel}: ${inputValue.current}`,
                 value: inputValue.current,
               },
             ]
@@ -83,7 +85,7 @@ export const AttributeRowDropdown = ({
       onChange={value => {
         onChange(attribute.id, value?.value ?? null);
 
-        if (value?.label.includes("Add custom value")) {
+        if (value?.label.includes(addNewValueLabel)) {
           setValue({ label: value.value, value: value.value });
         } else {
           setValue(value);
