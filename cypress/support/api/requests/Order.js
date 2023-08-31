@@ -170,6 +170,38 @@ export function getOrder(orderId) {
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.order");
 }
+export function getDraftOrdersList() {
+  const query = `query OrderDraftList{
+    draftOrders(first:100){
+      edges{
+        node{
+          id
+          number
+          errors{
+            message
+          }
+        }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.draftOrders");
+}
+export function getOrdersList() {
+  const query = `query OrderList{
+    orders(first:100){
+      edges{
+        node{
+          id
+          number
+          errors{
+            message
+          }
+        }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.orders");
+}
 
 export function fulfillOrder({ orderId, warehouse, quantity, linesId }) {
   const lines = linesId.reduce((lines, lineId) => {

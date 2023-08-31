@@ -4,8 +4,6 @@ import {
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import Link from "@dashboard/components/Link";
-import PreviewPill from "@dashboard/components/PreviewPill";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "@dashboard/components/SingleAutocompleteSelectField";
@@ -14,23 +12,20 @@ import {
   CountryCode,
   MarkAsPaidStrategyEnum,
   StockSettingsInput,
+  TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
 import useClipboard from "@dashboard/hooks/useClipboard";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import {
-  Box,
-  Button,
-  Checkbox,
-  CopyIcon,
-  Input,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Box, Button, CopyIcon, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
+import { DefaultTransactionFlowStrategy } from "./DefaultTransactionFlowStrategy";
+import { MarkAsPaid } from "./MarkAsPaid";
 import { messages } from "./messages";
 import { ExtendedFormHelperTextProps } from "./types";
 
@@ -48,6 +43,7 @@ export interface FormData extends StockSettingsInput {
   markAsPaidStrategy: MarkAsPaidStrategyEnum;
   deleteExpiredOrdersAfter: number;
   allowUnpaidOrders: boolean;
+  defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
 }
 
 export interface ChannelFormProps {
@@ -62,6 +58,7 @@ export interface ChannelFormProps {
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
   onDefaultCountryChange: (event: ChangeEvent) => void;
   onMarkAsPaidStrategyChange: () => void;
+  onTransactionFlowStrategyChange: () => void;
 }
 
 export const ChannelForm: React.FC<ChannelFormProps> = ({
@@ -76,6 +73,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   onCurrencyCodeChange,
   onDefaultCountryChange,
   onMarkAsPaidStrategyChange,
+  onTransactionFlowStrategyChange,
 }) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
@@ -209,97 +207,28 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             __height={12.5}
           />
         </Box>
-        <Box paddingX={6} marginTop={4}>
-          <Checkbox
-            data-test-id="order-settings-mark-as-paid"
-            disabled={disabled}
-            checked={
-              data.markAsPaidStrategy ===
-              MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-            }
-            onCheckedChange={onMarkAsPaidStrategyChange}
-            name="markAsPaidStrategy"
-          >
-            <Text>
-              <FormattedMessage {...messages.markAsPaid} />
-            </Text>
-            <PreviewPill />
-          </Checkbox>
-          <Box display="flex" flexDirection="column" paddingLeft={4}>
-            <Text
-              variant="caption"
-              color="textNeutralSubdued"
-              size="large"
-              paddingLeft={0.5}
-            >
-              <FormattedMessage
-                defaultMessage='"Mark as paid" feature creates a'
-                id="MDOw8D"
-              />{" "}
-              <Link
-                href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
-                target="_blank"
-                rel="noopener noreferer"
-              >
-                <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
-              </Link>{" "}
-              <FormattedMessage
-                defaultMessage="- used by Payment Apps"
-                id="Fqe4aB"
-              />
-            </Text>
-            <Text
-              variant="caption"
-              color="textNeutralSubdued"
-              size="large"
-              paddingLeft={0.5}
-            >
-              <FormattedMessage
-                defaultMessage="If left unchecked it creates a"
-                id="hHv0ih"
-              />{" "}
-              <Link
-                href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
-                target="_blank"
-                rel="noopener noreferer"
-              >
-                <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
-              </Link>{" "}
-              <FormattedMessage
-                defaultMessage="- used by Payment Plugins"
-                id="50lR2F"
-              />
-            </Text>
-          </Box>
-        </Box>
+        <MarkAsPaid
+          isDiabled={disabled}
+          isChecked={
+            data.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+          }
+          onCheckedChange={onMarkAsPaidStrategyChange}
+        />
         <Box />
-        <Box paddingX={6}>
-          <Checkbox
-            name="allowUnpaidOrders"
-            data-test-id="allow-unpaid-orders-checkbox"
-            checked={data.allowUnpaidOrders}
-            error={!!formErrors.allowUnpaidOrders}
-            onCheckedChange={value =>
-              onChange({ target: { name: "allowUnpaidOrders", value } })
-            }
-          >
-            <Text>
-              <FormattedMessage {...messages.allowUnpaidOrdersLabel} />
-            </Text>{" "}
-            <PreviewPill />
-          </Checkbox>
-          <Box paddingLeft={4}>
-            {" "}
-            <Text
-              variant="caption"
-              color="textNeutralSubdued"
-              size="large"
-              paddingLeft={0.5}
-            >
-              <FormattedMessage {...messages.allowUnpaidOrdersDescription} />
-            </Text>
-          </Box>
-        </Box>
+        <AllowUnpaidOrders
+          onChange={onChange}
+          isChecked={data.allowUnpaidOrders}
+          hasError={!!formErrors.allowUnpaidOrders}
+        />
+        <Box />
+        <DefaultTransactionFlowStrategy
+          onChange={onTransactionFlowStrategyChange}
+          isChecked={
+            data.defaultTransactionFlowStrategy ===
+            TransactionFlowStrategyEnum.AUTHORIZATION
+          }
+          hasError={!!formErrors.defaultTransactionFlowStrategy}
+        />
       </Box>
     </>
   );

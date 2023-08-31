@@ -49,7 +49,7 @@ describe("Test for metadata", () => {
   });
 
   it(
-    "should create metadata for product",
+    "should create metadata for product TC: SALEOR_3301",
     { tags: ["@metadata", "@allEnv", "@stable"] },
     () => {
       cy.loginUserViaRequest();
@@ -91,7 +91,7 @@ describe("Test for metadata", () => {
     },
   );
   it(
-    "should create metadata for order",
+    "should create metadata for order TC: SALEOR_3302",
     { tags: ["@metadata", "@allEnv", "@stable"] },
     () => {
       let order;

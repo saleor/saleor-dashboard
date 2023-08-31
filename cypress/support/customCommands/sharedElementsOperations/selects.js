@@ -1,4 +1,4 @@
-import { PAGINATION } from "../../../elements";
+import { DRAFT_ORDER_SELECTORS, PAGINATION } from "../../../elements";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import {
   selectorWithDataValue,
@@ -22,6 +22,9 @@ Cypress.Commands.add("clickSubmitButton", () =>
 );
 Cypress.Commands.add("clickConfirmButton", () =>
   cy.get(BUTTON_SELECTORS.confirm).click(),
+);
+Cypress.Commands.add("clickFinalizeButton", () =>
+  cy.get(DRAFT_ORDER_SELECTORS.finalizeButton).click(),
 );
 Cypress.Commands.add("openColumnPicker", () =>
   cy.get(SHARED_ELEMENTS.openColumnPickerButton).click(),

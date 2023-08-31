@@ -23,6 +23,10 @@ export const fragmentUser = gql`
     firstName
     lastName
     isStaff
+    metadata {
+      key
+      value
+    }
     userPermissions {
       ...UserPermission
     }

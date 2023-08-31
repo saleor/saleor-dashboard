@@ -89,7 +89,7 @@ export const createGetCellContent =
             last4CodeChars: rowData?.last4CodeChars ?? "",
           }),
         );
-      case "status":
+      case "status": {
         const status = getStatusText(rowData);
 
         if (!status) {
@@ -121,6 +121,7 @@ export const createGetCellContent =
           ],
           [statusLabel],
         );
+      }
       case "tag":
         return readonlyTextCell(getTagCellText(rowData?.tags ?? []));
       case "product":

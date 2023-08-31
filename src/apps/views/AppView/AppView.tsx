@@ -48,7 +48,7 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
     id,
   );
 
-  if(appPath) {
+  if (appPath) {
     appCompleteUrl = `${appCompleteUrl}/${appPath}`;
   }
 

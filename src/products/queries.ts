@@ -61,6 +61,7 @@ export const productListQuery = gql`
     $last: Int
     $before: String
     $filter: ProductFilterInput
+    $search: String
     $where: ProductWhereInput
     $channel: String
     $sort: ProductOrder
@@ -72,6 +73,7 @@ export const productListQuery = gql`
       first: $first
       last: $last
       filter: $filter
+      search: $search
       where: $where
       sortBy: $sort
       channel: $channel

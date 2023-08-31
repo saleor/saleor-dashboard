@@ -9,11 +9,15 @@ import PriceField from "@dashboard/components/PriceField";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { ProductChannelListingErrorFragment } from "@dashboard/graphql";
+import {
+  ProductChannelListingErrorFragment,
+  ProductErrorFragment,
+} from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import {
   getFormChannelError,
   getFormChannelErrors,
+  getFormErrors,
 } from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
@@ -23,7 +27,7 @@ import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 interface ProductVariantPriceProps {
   ProductVariantChannelListings?: ChannelData[];
-  errors?: ProductChannelListingErrorFragment[];
+  errors: Array<ProductErrorFragment | ProductChannelListingErrorFragment>;
   loading?: boolean;
   disabled?: boolean;
   onChange?: (
@@ -47,7 +51,10 @@ export const ProductVariantPrice: React.FC<
     disabledMessage,
   } = props;
   const intl = useIntl();
-  const formErrors = getFormChannelErrors(["price", "costPrice"], errors);
+  const channelErrors = errors.filter(
+    e => "channels" in e,
+  ) as ProductChannelListingErrorFragment[];
+  const apiErrors = getFormChannelErrors(["price", "costPrice"], channelErrors);
 
   if (disabled || !ProductVariantChannelListings.length) {
     return (
@@ -120,12 +127,15 @@ export const ProductVariantPrice: React.FC<
           {renderCollection(
             ProductVariantChannelListings,
             (listing, index) => {
-              const priceError = getFormChannelError(
-                formErrors.price,
-                listing.id,
-              );
+              const fieldName = `${listing.id}-channel-price`;
+              const formErrors = getFormErrors([fieldName], errors);
+
+              const priceError =
+                getFormChannelError(apiErrors.price, listing.id) ||
+                formErrors[fieldName];
+
               const costPriceError = getFormChannelError(
-                formErrors.costPrice,
+                apiErrors.costPrice,
                 listing.id,
               );
 
@@ -142,7 +152,7 @@ export const ProductVariantPrice: React.FC<
                           id: "b1zuN9",
                           defaultMessage: "Price",
                         })}
-                        name={`${listing.id}-channel-price`}
+                        name={fieldName}
                         value={listing.price || ""}
                         currencySymbol={listing.currency}
                         onChange={e =>

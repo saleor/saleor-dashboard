@@ -1,10 +1,10 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { act,renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react-hooks";
 
 import { STATIC_OPTIONS } from "./constants";
 import { useFilterLeftOperandsProvider } from "./useFilterLeftOperands";
 
-describe("useFilterLeftOperandsProvider", () => {
+describe("ConditionalFilter / useFilterLeftOperandsProvider", () => {
   it("should set unique operands", () => {
     // Arrange
     const { result } = renderHook(() => useFilterLeftOperandsProvider());

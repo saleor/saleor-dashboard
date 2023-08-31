@@ -51,41 +51,28 @@ jobs:
   revert-automation-env-to-snap:
     if: ${{ github.event.inputs.environment == null && github.event_name != 'repository_dispatch' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    env:
+      TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          # use explicit version as this job does not checkout code
-          node-version: '18'
+          node-version-file: ".nvmrc"
 
-      - name: Install saleor cli
-        id: install-saleor-cli
-        run: npm i -g @saleor/cli
-
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules-cli
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-      - name: Write config file
-        id: write-config-file
-        env:
-          ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
-        run: echo '{"token":"Token ${{ secrets.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"qa","organization_name":"QA","environment_id":"lHECN87U"}' > ~/.config/saleor.json
-
-      - name: revert snapshot
-        env:
-          CI: true
-          SALEOR_CLI_ENV: staging
-        run: npx saleor backup restore 3R5IPRr6 --skip-webhooks-update
+      - name: Install dependencies
+        run: |
+          cd .github/workflows
+          npm ci
+      
+      - name: clean automation environment
+        id: clean-automation-environment
+        run: |
+          node .github/workflows/cleanEnvironments.js \
+          --token "$TOKEN" \
+          --environments_to_clean_regex "automation-dashboard.staging.saleor.cloud"
 
       - name: Notify Slack
         if: ${{ failure() }}

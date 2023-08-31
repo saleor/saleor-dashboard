@@ -1,4 +1,4 @@
-import ExternalLink from "@dashboard/components/ExternalLink";
+import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
 import Skeleton from "@dashboard/components/Skeleton";
 import { Box, BoxProps, Text } from "@saleor/macaw-ui/next";
 import React from "react";
@@ -29,9 +29,9 @@ export const DataPrivacyCard: React.FC<DataPrivacyCardProps> = ({
 
     if (dataPrivacyUrl) {
       return (
-        <ExternalLink href={dataPrivacyUrl} target="_blank">
+        <ExternalLinkNext href={dataPrivacyUrl} target="_blank">
           <FormattedMessage {...messages.dataPrivacyDescription} />
-        </ExternalLink>
+        </ExternalLinkNext>
       );
     }
 

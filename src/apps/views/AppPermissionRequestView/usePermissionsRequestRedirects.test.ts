@@ -20,7 +20,9 @@ describe("usePermissionsRequestRedirects", () => {
 
     result.current.navigateToAppApproved();
 
-    expect(mockNavigate).toHaveBeenCalledWith("/apps/XYZ/app?appPath=/permissions-request-result");
+    expect(mockNavigate).toHaveBeenCalledWith(
+      "/apps/XYZ/app?appPath=/permissions-request-result",
+    );
   });
 
   it("Navigates to redirect url provided by app and appends ?error - provided", () => {
@@ -31,8 +33,10 @@ describe("usePermissionsRequestRedirects", () => {
       }),
     );
 
-    result.current.navigateToAppDenied('USER_DENIED_PERMISSIONS');
+    result.current.navigateToAppDenied("USER_DENIED_PERMISSIONS");
 
-    expect(mockNavigate).toHaveBeenCalledWith("/apps/XYZ/app?appPath=/permissions-request-result&error=USER_DENIED_PERMISSIONS");
+    expect(mockNavigate).toHaveBeenCalledWith(
+      "/apps/XYZ/app?appPath=/permissions-request-result&error=USER_DENIED_PERMISSIONS",
+    );
   });
 });
