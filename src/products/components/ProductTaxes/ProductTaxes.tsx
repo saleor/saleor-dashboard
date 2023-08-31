@@ -34,6 +34,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
     taxClasses,
     taxClassDisplayName,
     onChange,
+    // TODO: use onFetchMore when combobox will handle infity scroll
     // onFetchMore,
   } = props;
   const classes = useStyles(props);
