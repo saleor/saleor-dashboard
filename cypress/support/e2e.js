@@ -181,5 +181,4 @@ Cypress.on("test:after:run", (test, runnable) => {
     filename += `${titleToFileName(test.title)}(failed).png`;
     addContext({ test }, `mochareports/${Cypress.spec.name}/${filename}`);
   }
-  addContext({ test }, `mochareports/videos/${Cypress.spec.name}.mp4`);
 });

@@ -263,9 +263,6 @@ jobs:
       - name: Move screenshots into reports dir
         if: ${{ ! cancelled() }}
         run: npm run qa:move-screenshots
-      - name: Move videos into reports dir
-        if: ${{ ! cancelled() }}
-        run: npm run qa:move-videos
       - name: Install dependencies
         if: ${{ ! cancelled() }}
         working-directory: .github/workflows
@@ -343,9 +340,6 @@ jobs:
       - name: Move artifacts screenshots into reports dir
         continue-on-error: true
         run: npm run qa:artifact-move-screenshots
-      - name: Move artifacts videos into reports dir
-        continue-on-error: true
-        run: npm run qa:artifact-move-videos
       - name: Upload reports
         uses: actions/upload-artifact@v3
         if: always()
