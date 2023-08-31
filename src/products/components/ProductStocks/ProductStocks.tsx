@@ -378,7 +378,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
             {data.hasPreorderEndDate && (
               <Box>
                 <DateTimeTimezoneField
-                  name={"preorderEndDateTime"}
+                  name="preorderEndDateTime"
                   disabled={disabled}
                   futureDatesOnly
                   fullWidth={false}
