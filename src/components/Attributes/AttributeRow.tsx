@@ -10,24 +10,21 @@ import {
   getMultiChoices,
   getMultiDisplayValue,
   getReferenceDisplayValue,
+  getSingleChoices,
+  getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import {
-  Box,
-  Checkbox,
-  DynamicMultiselect,
-  Input,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { Combobox } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
-import { AttributeRowDropdown } from "./AttributeRowDropdown";
+import { Multiselect } from "../Multiselect";
 import { AttributeRowProps } from "./types";
 
 const AttributeRow: React.FC<AttributeRowProps> = ({
@@ -44,7 +41,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   onChange,
   fetchAttributeValues,
   fetchMoreAttributeValues,
-  onAttributeSelectBlur,
   richTextGetters,
 }) => {
   const intl = useIntl();
@@ -96,15 +92,22 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           label={attribute.label}
           id={`attribute:${attribute.label}`}
         >
-          <AttributeRowDropdown
+          <Combobox
+            allowCustomValues={true}
             disabled={disabled}
-            attributeValues={attributeValues}
-            attribute={attribute}
-            error={error}
+            options={getSingleChoices(attributeValues)}
+            value={attribute.value[0]}
+            displayValue={getSingleDisplayValue(attribute, attributeValues)}
+            error={!!error}
+            helperText={getErrorMessage(error, intl)}
+            name={`attribute:${attribute.label}`}
+            id={`attribute:${attribute.label}`}
+            label={intl.formatMessage(attributeRowMessages.valueLabel)}
+            onChange={e => onChange(attribute.id, e.target.value)}
+            fetchOptions={query => {
+              fetchAttributeValues(query, attribute.id);
+            }}
             loading={fetchMoreAttributeValues.loading}
-            fetchAttributeValues={fetchAttributeValues}
-            onBlur={onAttributeSelectBlur}
-            onChange={onChange}
           />
         </BasicAttributeRow>
       );
@@ -262,25 +265,22 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
     default:
       return (
         <BasicAttributeRow label={attribute.label}>
-          <DynamicMultiselect
-            label={intl.formatMessage(attributeRowMessages.multipleValueLabel)}
+          <Multiselect
+            allowCustomValues={true}
             disabled={disabled}
+            name={`attribute:${attribute.label}`}
+            label={intl.formatMessage(attributeRowMessages.multipleValueLabel)}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
-            name={`attribute:${attribute.label}`}
-            value={getMultiDisplayValue(attribute, attributeValues)}
             options={getMultiChoices(attributeValues)}
-            onChange={value => {
-              onMultiChange(
-                attribute.id,
-                value.map(({ value }) => value),
-              );
+            value={getMultiDisplayValue(attribute, attributeValues)}
+            fetchOptions={query => {
+              fetchAttributeValues(query, attribute.id);
             }}
-            onFocus={() => fetchAttributeValues("", attribute.id)}
-            onInputValueChange={value =>
-              fetchAttributeValues(value, attribute.id)
-            }
-            onBlur={onAttributeSelectBlur}
+            onChange={e => {
+              onMultiChange(attribute.id, e.target.value);
+            }}
+            loading={fetchMoreAttributeValues.loading}
           />
         </BasicAttributeRow>
       );
