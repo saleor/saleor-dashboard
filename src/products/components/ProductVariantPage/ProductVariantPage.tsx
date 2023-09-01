@@ -220,7 +220,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           {({
             change,
             data,
-            formErrors,
             validationErrors,
             isSaveDisabled,
             handlers,

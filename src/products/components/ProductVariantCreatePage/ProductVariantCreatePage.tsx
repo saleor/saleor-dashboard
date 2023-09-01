@@ -171,7 +171,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
       {({
         change,
         data,
-        formErrors,
         validationErrors,
         handlers,
         submit,
