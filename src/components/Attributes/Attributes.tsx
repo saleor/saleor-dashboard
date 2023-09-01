@@ -96,7 +96,6 @@ export const Attributes: React.FC<AttributesProps> = ({
                     <Divider />
                     {attributes.map((attribute, attributeIndex) => (
                       <React.Fragment key={attribute.id}>
-                        {attributeIndex > 0 && <Divider />}
                         <AttributeListItem
                           attribute={attribute}
                           errors={errors}

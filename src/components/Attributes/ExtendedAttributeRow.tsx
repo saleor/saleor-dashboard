@@ -15,10 +15,12 @@ const ExtendedAttributeRow: React.FC<ExtendedAttributeRowProps> = props => {
     <>
       <Box
         as="li"
-        display="flex"
-        justifyContent="space-between"
         alignItems="center"
-        paddingY={6}
+        paddingY={2}
+        display="grid"
+        gridTemplateColumns={2}
+        __gridTemplateColumns="1fr 2fr"
+        gap={5}
       >
         <Text data-test-id="attribute-label">{label}</Text>
         <Button
@@ -26,12 +28,26 @@ const ExtendedAttributeRow: React.FC<ExtendedAttributeRowProps> = props => {
           variant="secondary"
           data-test-id="button-attribute-selector"
           onClick={onSelect}
+          style={{
+            maxWidth: "fit-content",
+          }}
           type="button"
         >
           {selectLabel}
         </Button>
       </Box>
-      <Box data-test-id="attribute-value">{children}</Box>
+      <Box
+        as="li"
+        alignItems="center"
+        paddingY={2}
+        display="grid"
+        gridTemplateColumns={2}
+        __gridTemplateColumns="1fr 2fr"
+        gap={5}
+      >
+        <Box></Box>
+        <Box data-test-id="attribute-value">{children}</Box>
+      </Box>
     </>
   );
 };
