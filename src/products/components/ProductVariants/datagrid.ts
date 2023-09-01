@@ -36,7 +36,7 @@ export const useChannelAdapter = ({
   listings,
 }: {
   intl: IntlShape;
-  selectedColumns: string[];
+  selectedColumns: string[] | undefined;
   listings: ChannelData[] | undefined;
 }): ColumnCategory => {
   const [channelQuery, setChannelQuery] = React.useState("");
@@ -72,7 +72,7 @@ export const useChannelAvailabilityAdapter = ({
   listings,
 }: {
   intl: IntlShape;
-  selectedColumns: string[];
+  selectedColumns: string[] | undefined;
   listings: ChannelData[];
 }): ColumnCategory => {
   const [channelQuery, setChannelQuery] = React.useState("");
@@ -103,7 +103,10 @@ export const useChannelAvailabilityAdapter = ({
   };
 };
 
-const parseAvailabilityColumns = (channels: ChannelData[], intl: IntlShape) =>
+const parseAvailabilityColumns = (
+  channels: ChannelData[] | undefined,
+  intl: IntlShape,
+) =>
   channels?.map(channel => ({
     id: `availableInChannel:${channel.id}`,
     group: channel.name,
@@ -131,7 +134,7 @@ export const useAttributesAdapter = ({
   attributes,
 }: {
   intl: IntlShape;
-  selectedColumns: string[];
+  selectedColumns: string[] | undefined;
   attributes: ProductFragment["productType"]["variantAttributes"];
 }) => {
   const supportedAttributes = attributes?.filter(attribute => {
@@ -191,8 +194,8 @@ export const useWarehouseAdapter = ({
   warehouses,
 }: {
   intl: IntlShape;
-  selectedColumns: string[];
-  warehouses: WarehouseFragment[];
+  selectedColumns: string[] | undefined;
+  warehouses: WarehouseFragment[] | undefined;
 }) => {
   const [warehouseQuery, setWarehouseQuery] = React.useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();

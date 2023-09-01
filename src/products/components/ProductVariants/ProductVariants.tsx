@@ -83,19 +83,19 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
             ]),
             ...warehouses.map(warehouse => `warehouse:${warehouse.id}`),
             ...variantAttributes
-              ?.filter(attribute =>
-                [
-                  AttributeInputTypeEnum.DROPDOWN,
-                  AttributeInputTypeEnum.PLAIN_TEXT,
-                ].includes(attribute.inputType),
+              ?.filter(
+                attribute =>
+                  attribute.inputType === AttributeInputTypeEnum.DROPDOWN ||
+                  attribute.inputType === AttributeInputTypeEnum.PLAIN_TEXT,
               )
               .map(attribute => `attribute:${attribute.id}`),
           ]
         : undefined,
     [channels, variantAttributes, warehouses],
   );
-  const [columnSettings, setColumnSettings] =
-    useStateFromProps<string[]>(initialSettings);
+  const [columnSettings, setColumnSettings] = useStateFromProps<
+    string[] | undefined
+  >(initialSettings);
 
   const handleColumnChange = React.useCallback(
     picked => {
