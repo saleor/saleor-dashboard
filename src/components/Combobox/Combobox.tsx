@@ -107,6 +107,7 @@ export const Combobox = ({
           fetchOptions("");
         }
       }}
+      size="small"
       locale={{
         loadingText: intl.formatMessage(commonMessages.loading),
       }}
