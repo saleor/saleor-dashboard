@@ -41,6 +41,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
       <Box display="flex" gap={5}>
         <Input
           width={fullWidth ? "100%" : undefined}
+          size="small"
           marginRight={3}
           disabled={disabled}
           error={!!error}
@@ -56,6 +57,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
 
         <Input
           width={fullWidth ? "100%" : undefined}
+          size="small"
           disabled={disabled}
           error={!!error}
           label={intl.formatMessage(commonMessages.time)}

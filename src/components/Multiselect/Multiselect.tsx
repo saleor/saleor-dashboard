@@ -1,26 +1,18 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
-import { DynamicMultiselect, Option } from "@saleor/macaw-ui/next";
+import {
+  DynamicMultiselect,
+  DynamicMultiselectProps,
+  Option,
+} from "@saleor/macaw-ui/next";
 import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import { toWithCustomValues } from "./utils";
 
-interface MultiselectProps {
-  disabled: boolean;
-  options: Option[];
-  name: string;
-  label: string;
-  value: Option[];
-  error?: boolean;
-  loading?: boolean;
-  helperText?: string;
-  dataTestId?: string;
+interface MultiselectProps extends DynamicMultiselectProps<Option> {
   fetchOptions: (data: string) => void;
-  onChange: (event: ChangeEvent<Option[]>) => void;
-  onBlur?: () => void;
   alwaysFetchOnFocus?: boolean;
   allowCustomValues?: boolean;
 }

@@ -144,6 +144,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                         <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                           <Input
                             width="100%"
+                            size="small"
                             aria-label={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
                             name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
                             onChange={onChange}
@@ -154,6 +155,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                           <Textarea
                             width="100%"
                             rows={1}
+                            size="small"
                             aria-label={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
                             name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
                             onChange={onChange}

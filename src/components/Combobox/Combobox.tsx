@@ -1,29 +1,19 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
-import { DynamicCombobox, Option } from "@saleor/macaw-ui/next";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import {
+  DynamicCombobox,
+  DynamicComboboxProps,
+  Option,
+} from "@saleor/macaw-ui/next";
+import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../Multiselect/messages";
 
-interface ComboboxProps {
-  disabled: boolean;
-  options: Option[];
-  name: string;
-  label: string;
-  id?: string;
+interface ComboboxProps extends DynamicComboboxProps<Option | null> {
   value: string;
   displayValue: string;
-  error?: boolean;
-  loading?: boolean;
-  helperText?: string;
-  dataTestId?: string;
   fetchOptions: (data: string) => void;
-  onChange: (event: ChangeEvent<string | null>) => void;
-  startAdornment?: (inputValue: Option | null) => ReactNode;
-  endAdornment?: (inputValue: Option | null) => ReactNode;
-  onBlur?: () => void;
   allowCustomValues?: boolean;
   alwaysFetchOnFocus?: boolean;
 }

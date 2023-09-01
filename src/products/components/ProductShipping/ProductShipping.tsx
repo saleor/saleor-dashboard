@@ -47,6 +47,7 @@ export const ProductShipping: React.FC<ProductShippingProps> = props => {
             helperText={getProductErrorMessage(formErrors.weight, intl)}
             name="weight"
             type="number"
+            size="small"
             value={data.weight}
             onChange={handleChange}
             endAdornment={<Text marginRight={2}>{weightUnit || ""}</Text>}

@@ -35,6 +35,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
       <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
       <CardContent>
         <Combobox
+          size="small"
           data-test-id="category"
           disabled={disabled}
           options={taxClasses.map(choice => ({

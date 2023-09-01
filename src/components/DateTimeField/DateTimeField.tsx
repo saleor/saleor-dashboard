@@ -33,6 +33,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     <Box display="flex" gap={0.5}>
       <Input
         width="100%"
+        size="small"
         disabled={disabled}
         error={!!error}
         helperText={getErrorMessage(error, intl)}
@@ -48,6 +49,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       />
       <Input
         width="100%"
+        size="small"
         disabled={disabled}
         error={!!error}
         helperText={getErrorMessage(error, intl)}
