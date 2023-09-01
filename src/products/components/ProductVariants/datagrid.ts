@@ -46,9 +46,11 @@ export const useChannelAdapter = ({
     (listings ?? [])?.filter(channel => channel.name.includes(channelQuery)),
   );
 
-  const selectedChannels = listings?.filter(channel =>
-    selectedColumns.includes(`channel:${channel.id}`),
-  );
+  const selectedChannels = selectedColumns
+    ? listings?.filter(channel =>
+        selectedColumns.includes(`channel:${channel.id}`),
+      )
+    : undefined;
   return {
     name: intl.formatMessage(messages.channel),
     prefix: "channel",
@@ -80,9 +82,11 @@ export const useChannelAvailabilityAdapter = ({
     (listings ?? []).filter(channel => channel.name.includes(channelQuery)),
   );
 
-  const selectedChannels = listings?.filter(channel =>
-    selectedColumns.includes(`channel:${channel.id}`),
-  );
+  const selectedChannels = selectedColumns
+    ? listings?.filter(channel =>
+        selectedColumns.includes(`channel:${channel.id}`),
+      )
+    : undefined;
 
   return {
     name: intl.formatMessage(messages.available),
@@ -149,9 +153,11 @@ export const useAttributesAdapter = ({
     ),
   );
 
-  const selectedAttributes = attributes?.filter(attribute =>
-    selectedColumns.includes(`attribute:${attribute.id}`),
-  );
+  const selectedAttributes = selectedColumns
+    ? attributes?.filter(attribute =>
+        selectedColumns.includes(`attribute:${attribute.id}`),
+      )
+    : undefined;
 
   return {
     name: intl.formatMessage(messages.attributes),
@@ -182,48 +188,38 @@ export const parseAttributeColumns = (
 export const useWarehouseAdapter = ({
   intl,
   selectedColumns,
+  warehouses,
 }: {
   intl: IntlShape;
   selectedColumns: string[];
+  warehouses: WarehouseFragment[];
 }) => {
-  const [queryAvailableWarehouses, availableWarehouses] =
-    useWarehouseListLazyQuery();
-  const [queryInitialWarehouses, initialWarehouses] =
-    useGridWarehousesLazyQuery();
+  const [warehouseQuery, setWarehouseQuery] = React.useState("");
+  const { paginate, currentPage, changeCurrentPage } = useClientPagination();
 
-  const initialWarehousesIds = selectedColumns
-    .filter(isWarehouseColumnValue)
-    .map(getWarehouseIdFromColumnValue);
-  React.useEffect(() => {
-    queryInitialWarehouses({
-      variables: {
-        ids: initialWarehousesIds,
-        hasWarehouses: initialWarehousesIds.length > 0,
-      },
-    });
-  }, []);
+  const paginatedWarehouses = paginate(
+    (warehouses ?? []).filter(warehouse =>
+      warehouse.name?.includes(warehouseQuery),
+    ),
+  );
+
+  const filteredWarehouses = selectedColumns
+    ? warehouses?.filter(warehouse =>
+        selectedColumns.includes(`warehouse:${warehouse.id}`),
+      )
+    : undefined;
 
   return {
     name: intl.formatMessage(messages.warehouses),
     prefix: "warehouse",
-    availableNodes: parseWarehousesColumns(
-      getAvailableWarehousesData({ availableWarehouses, initialWarehouses }),
-      intl,
-    ),
-    selectedNodes: parseWarehousesColumns(
-      mapEdgesToItems(initialWarehouses.data?.selectedWarehouses),
-      intl,
-    ),
-    onSearch: (query: string) =>
-      queryAvailableWarehouses({
-        variables: { filter: { search: query }, first: 10 },
-      }),
-    initialSearch: availableWarehouses.variables?.filter?.search ?? "",
-    ...getWarehousesFetchMoreProps({
-      queryAvailableWarehouses,
-      availableWarehousesData: availableWarehouses,
-      gridWarehousesData: initialWarehouses,
-    }),
+    availableNodes: parseWarehousesColumns(paginatedWarehouses.data, intl),
+    selectedNodes: parseWarehousesColumns(filteredWarehouses, intl),
+    onSearch: (query: string) => setWarehouseQuery(query),
+    initialSearch: warehouseQuery,
+    hasNextPage: paginatedWarehouses.hasNextPage,
+    hasPreviousPage: paginatedWarehouses.hasPreviousPage,
+    onNextPage: () => changeCurrentPage(currentPage + 1),
+    onPreviousPage: () => changeCurrentPage(currentPage - 1),
   };
 };
 

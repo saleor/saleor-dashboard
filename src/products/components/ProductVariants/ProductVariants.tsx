@@ -7,15 +7,17 @@ import Datagrid, {
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
+  AttributeInputTypeEnum,
   ProductDetailsVariantFragment,
   ProductFragment,
   RefreshLimitsQuery,
 } from "@dashboard/graphql";
-import useListSettings from "@dashboard/hooks/useListSettings";
+import { useFetchAllWarehouses } from "@dashboard/hooks/useFetchAllWarehouse";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import EditIcon from "@dashboard/icons/Edit";
 import { buttonMessages } from "@dashboard/intl";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
-import { ListViews } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
 // import { isLimitReached } from "@dashboard/utils/limits";
@@ -59,14 +61,47 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
 }) => {
   const intl = useIntl();
 
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.PRODUCT_DETAILS,
+  const { data: warehousesData } = useFetchAllWarehouses({
+    variables: {
+      first: 100,
+    },
+  });
+  const warehouses = mapEdgesToItems(warehousesData?.warehouses);
+
+  // Normally this should be in LS handled by useListSettings hook
+  // persistence will be added in the future
+
+  const initialSettings = React.useMemo(
+    () =>
+      channels && warehouses && variantAttributes
+        ? [
+            "name",
+            "sku",
+            ...channels.flatMap(channel => [
+              `availableInChannel:${channel.id}`,
+              `channel:${channel.id}`,
+            ]),
+            ...warehouses.map(warehouse => `warehouse:${warehouse.id}`),
+            ...variantAttributes
+              ?.filter(attribute =>
+                [
+                  AttributeInputTypeEnum.DROPDOWN,
+                  AttributeInputTypeEnum.PLAIN_TEXT,
+                ].includes(attribute.inputType),
+              )
+              .map(attribute => `attribute:${attribute.id}`),
+          ]
+        : undefined,
+    [channels, variantAttributes, warehouses],
   );
+  const [columnSettings, setColumnSettings] =
+    useStateFromProps<string[]>(initialSettings);
+
   const handleColumnChange = React.useCallback(
     picked => {
-      updateListSettings("columns", picked.filter(Boolean));
+      setColumnSettings(picked);
     },
-    [updateListSettings],
+    [setColumnSettings],
   );
 
   // const limitReached = isLimitReached(limits, "productVariants");
@@ -74,24 +109,25 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   const channelCategory = useChannelAdapter({
     intl,
     listings: channels,
-    selectedColumns: settings?.columns ?? [],
+    selectedColumns: columnSettings,
   });
 
   const availabilityCategory = useChannelAvailabilityAdapter({
     intl,
     listings: channels,
-    selectedColumns: settings?.columns ?? [],
+    selectedColumns: columnSettings,
   });
 
   const attributeCategory = useAttributesAdapter({
     intl,
-    selectedColumns: settings?.columns ?? [],
+    selectedColumns: columnSettings,
     attributes: variantAttributes,
   });
 
   const warehouseCategory = useWarehouseAdapter({
-    selectedColumns: settings?.columns ?? [],
+    selectedColumns: columnSettings,
     intl,
+    warehouses,
   });
 
   const memoizedStaticColumns = React.useMemo(
@@ -115,7 +151,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
       attributeCategory,
       warehouseCategory,
     ],
-    selectedColumns: settings.columns ?? [],
+    selectedColumns: columnSettings ?? [],
     onSave: handleColumnChange,
   });
 
