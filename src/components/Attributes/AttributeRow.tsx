@@ -17,7 +17,6 @@ import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -72,7 +71,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.FILE:
       return (
-        <BasicAttributeRow label={attribute.label}>
+        <BasicAttributeRow>
           <FileUploadField
             disabled={disabled}
             loading={loading}
@@ -89,10 +88,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.DROPDOWN:
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          id={`attribute:${attribute.label}`}
-        >
+        <BasicAttributeRow id={`attribute:${attribute.label}`}>
           <Combobox
             allowCustomValues
             alwaysFetchOnFocus
@@ -104,7 +100,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             helperText={getErrorMessage(error, intl)}
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
-            label={intl.formatMessage(attributeRowMessages.valueLabel)}
+            label={attribute.label}
             onChange={e => onChange(attribute.id, e.target.value)}
             fetchOptions={query => {
               fetchAttributeValues(query, attribute.id);
@@ -129,14 +125,13 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
     case AttributeInputTypeEnum.PLAIN_TEXT:
       return (
         <BasicAttributeRow
-          label={attribute.label}
           description={intl.formatMessage(inputTypeMessages.plainText)}
           id={`attribute:${attribute.label}`}
         >
           <Input
             disabled={disabled}
             error={!!error}
-            label={intl.formatMessage(attributeRowMessages.valueLabel)}
+            label={attribute.label}
             name={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
             type="text"
@@ -157,7 +152,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       const defaultValue = getDefaultValue(attribute.id);
       return (
         <BasicAttributeRow
-          label={attribute.label}
           description={intl.formatMessage(inputTypeMessages.richText)}
           id={`attribute:${attribute.label}`}
         >
@@ -170,7 +164,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                 name={`attribute:${attribute.label}`}
                 disabled={disabled}
                 error={!!error}
-                label={intl.formatMessage(attributeRowMessages.valueLabel)}
+                label={attribute.label}
                 helperText={getErrorMessage(error, intl)}
                 id={`attribute:${attribute.label}`}
               />
@@ -181,14 +175,11 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
     }
     case AttributeInputTypeEnum.NUMERIC:
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          id={`attribute:${attribute.label}`}
-        >
+        <BasicAttributeRow id={`attribute:${attribute.label}`}>
           <Input
             disabled={disabled}
             error={!!error}
-            label={intl.formatMessage(attributeRowMessages.valueLabel)}
+            label={attribute.label}
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
@@ -235,16 +226,13 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.DATE:
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          id={`attribute:${attribute.label}`}
-        >
+        <BasicAttributeRow id={`attribute:${attribute.label}`}>
           <Input
             width="100%"
             disabled={disabled}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
-            label={intl.formatMessage(commonMessages.date)}
+            label={attribute.label}
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
@@ -255,7 +243,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.DATE_TIME:
       return (
-        <BasicAttributeRow label={attribute.label}>
+        <BasicAttributeRow>
           <DateTimeField
             name={`attribute:${attribute.label}`}
             disabled={disabled}
@@ -267,13 +255,13 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     default:
       return (
-        <BasicAttributeRow label={attribute.label}>
+        <BasicAttributeRow>
           <Multiselect
             allowCustomValues
             alwaysFetchOnFocus
             disabled={disabled}
             name={`attribute:${attribute.label}`}
-            label={intl.formatMessage(attributeRowMessages.multipleValueLabel)}
+            label={attribute.label}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
             options={getMultiChoices(attributeValues)}

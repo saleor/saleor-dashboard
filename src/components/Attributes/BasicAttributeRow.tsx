@@ -19,11 +19,8 @@ export const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
     as="li"
     justifyContent="space-between"
     alignItems="center"
-    paddingY={6}
-    paddingX={0.5}
+    paddingY={2}
     display="grid"
-    gridTemplateColumns={2}
-    gap={5}
   >
     <Box
       data-test-id="attribute-label"
