@@ -39,6 +39,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
 
   return (
     <Input
+      size="small"
       className={className}
       disabled={disabled}
       label={label}
@@ -53,7 +54,11 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
       onChange={onChange}
       onKeyDown={onKeyDown}
       type="number"
-      endAdornment={<Text marginRight={2}>{currencySymbol || ""}</Text>}
+      endAdornment={
+        <Text variant="caption" marginRight={2}>
+          {currencySymbol || ""}
+        </Text>
+      }
       {...inputProps}
     />
   );
