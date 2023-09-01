@@ -12,6 +12,7 @@ import { messages } from "./messages";
 import { toWithCustomValues } from "./utils";
 
 interface MultiselectProps extends DynamicMultiselectProps<Option> {
+  options: Option[];
   fetchOptions: (data: string) => void;
   alwaysFetchOnFocus?: boolean;
   allowCustomValues?: boolean;
