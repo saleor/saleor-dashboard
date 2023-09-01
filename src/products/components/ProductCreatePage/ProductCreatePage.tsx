@@ -217,7 +217,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       {({
         change,
         data,
-        formErrors,
         validationErrors,
         handlers,
         submit,
@@ -284,11 +283,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     hasVariants={false}
                     onFormDataChange={change}
                     errors={errors}
-                    formErrors={formErrors}
                     stocks={data.stocks}
                     warehouses={warehouses}
                     onChange={handlers.changeStock}
-                    onChangePreorderEndDate={handlers.changePreorderEndDate}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}

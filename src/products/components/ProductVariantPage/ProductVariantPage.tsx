@@ -355,22 +355,14 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                           ...channel.value,
                         }),
                       )}
-                      onVariantChannelListingChange={handlers.changeChannels}
                       data={data}
                       disabled={loading}
                       hasVariants={true}
                       errors={errors}
-                      formErrors={formErrors}
                       stocks={data.stocks}
                       warehouses={warehouses}
                       onChange={handlers.changeStock}
                       onFormDataChange={change}
-                      onChangePreorderEndDate={handlers.changePreorderEndDate}
-                      onEndPreorderTrigger={
-                        !!variant?.preorder
-                          ? () => setIsEndPreorderModalOpened(true)
-                          : null
-                      }
                       onWarehouseStockAdd={handlers.addStock}
                       onWarehouseStockDelete={handlers.deleteStock}
                       onWarehouseConfigure={onWarehouseConfigure}
