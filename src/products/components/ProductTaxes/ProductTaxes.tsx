@@ -1,11 +1,10 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
-import { Card, CardContent } from "@material-ui/core";
-import { Combobox, sprinkles } from "@saleor/macaw-ui/next";
+import { Combobox } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -31,9 +30,11 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card className={sprinkles({ overflow: "visible" })}>
-      <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Title>
+        {intl.formatMessage(sectionNames.taxes)}
+      </DashboardCard.Title>
+      <DashboardCard.Content>
         <Combobox
           size="small"
           data-test-id="category"
@@ -51,8 +52,8 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
             });
           }}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 ProductTaxes.displayName = "ProductTaxes";
