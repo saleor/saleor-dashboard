@@ -76,7 +76,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
         <>
           {data.length > 0 && (
             <DashboardCard.Content>
-              <Text variant="caption">
+              <Text variant="caption" color="textNeutralSubdued">
                 <FormattedMessage
                   id="2+v1wX"
                   defaultMessage="{number,plural,one{{number} string} other{{number} strings}}"

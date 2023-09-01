@@ -1,30 +1,8 @@
 import FullScreenIcon from "@dashboard/icons/FullScreenIcon";
-import { Button, makeStyles, PlusSmallIcon } from "@saleor/macaw-ui";
-import clsx from "clsx";
+import { Box, Button, PlusIcon, sprinkles } from "@saleor/macaw-ui/next";
 import React, { FC, PropsWithChildren } from "react";
 
 import CardTitle from "../../CardTitle";
-
-const useStyles = makeStyles(
-  theme => ({
-    btnContainer: {
-      display: "flex",
-      flexDirection: "row-reverse",
-      gap: theme.spacing(1),
-    },
-    headerBtn: {
-      marginBottom: theme.spacing(2),
-    },
-
-    fullScreenIcon: {
-      fontSize: 14,
-    },
-    fullScreenIconClose: {
-      transform: "rotate(180deg)",
-    },
-  }),
-  { name: "Datagrid" },
-);
 
 interface ButtonFullScreenProps {
   isOpen: boolean;
@@ -36,20 +14,24 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
   onToggle,
   children,
 }) => {
-  const classes = useStyles();
-
   return (
     <Button
       data-test-id="button-exit-fullscreen"
-      className={classes.headerBtn}
-      variant="tertiary"
+      marginBottom={3}
+      variant="secondary"
       onClick={onToggle}
     >
-      <FullScreenIcon
-        className={clsx(classes.fullScreenIcon, {
-          [classes.fullScreenIconClose]: isOpen,
-        })}
-      />
+      <Box
+        as="span"
+        display="flex"
+        __transform={isOpen ? "rotate(180deg)" : undefined}
+      >
+        <FullScreenIcon
+          className={sprinkles({
+            fontSize: "buttonMedium",
+          })}
+        />
+      </Box>
       {children}
     </Button>
   );
@@ -63,16 +45,14 @@ const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({
   onAddRow,
   children,
 }) => {
-  const classes = useStyles();
-
   return (
     <Button
       data-test-id="button-add-variant"
-      className={classes.headerBtn}
-      variant="tertiary"
+      marginBottom={3}
+      variant="secondary"
       onClick={onAddRow}
     >
-      <PlusSmallIcon />
+      <PlusIcon />
       {children}
     </Button>
   );
@@ -88,12 +68,14 @@ interface GridHeader extends FC<PropsWithChildren<HeaderProps>> {
 }
 
 const Header: GridHeader = ({ title, children }) => {
-  const classes = useStyles();
-
   return (
     <CardTitle
       title={title}
-      toolbar={<div className={classes.btnContainer}>{children}</div>}
+      toolbar={
+        <Box display="flex" __flexDirection="row-reverse" gap={1}>
+          {children}
+        </Box>
+      }
     />
   );
 };

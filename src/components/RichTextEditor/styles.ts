@@ -122,7 +122,7 @@ const useStyles = makeStyles(
         transition: theme.transitions.duration.short + "ms",
         padding: theme.spacing(3, 2),
         paddingBottom: theme.spacing(),
-        paddingLeft: vars.spacing[4],
+        paddingLeft: vars.spacing[1.5],
         "&:hover": {
           border: `1px solid ${vars.colors.border.neutralHighlight}`,
         },

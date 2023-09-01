@@ -10,7 +10,6 @@ import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { Combobox } from "../Combobox";
-import { attributeRowMessages } from "./messages";
 import { AttributeRowProps } from "./types";
 
 type SwatchRowProps = Pick<
@@ -53,10 +52,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   );
 
   return (
-    <BasicAttributeRow
-      label={attribute.label}
-      id={`attribute:${attribute.label}`}
-    >
+    <BasicAttributeRow label={attribute.label}>
       <Combobox
         disabled={disabled}
         size="small"
@@ -73,7 +69,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
           ) : null
         }
         error={!!error}
-        label={intl.formatMessage(attributeRowMessages.valueLabel)}
+        label=""
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
         id={`attribute:${attribute.label}`}
