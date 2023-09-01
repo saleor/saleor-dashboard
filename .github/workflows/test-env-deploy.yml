@@ -263,18 +263,6 @@ jobs:
       - name: Move screenshots into reports dir
         if: ${{ ! cancelled() }}
         run: npm run qa:move-screenshots
-      - name: Move videos into reports dir
-        if: ${{ ! cancelled() }}
-        run: npm run qa:move-videos
-      - name: Merge report files
-        if: ${{ ! cancelled() }}
-        run: npm run qa:generate-html-report
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: mochawesome-${{ strategy.job-index }}
-          path: ./cypress/reports/mochareports
       - name: Install dependencies
         if: ${{ ! cancelled() }}
         working-directory: .github/workflows
@@ -291,6 +279,14 @@ jobs:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: report-${{ strategy.job-index }}
+          path: ./cypress/reports
+          retention-days: 5
+          if-no-files-found: ignore
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected]
     if: |
@@ -302,6 +298,20 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: npm
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+      - name: Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: NODE_OPTIONS=--max_old_space_size=4096 npm install
       - run: npm ci
         working-directory: .github/workflows
       - name: complete testmo report
@@ -314,3 +324,27 @@ jobs:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
+      - name: Download reports artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: ./cypress/reports
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: ./cypress/reports
+      - name: Create reports dir
+        continue-on-error: true
+        run: npm run qa:create-artifacts-dirs
+      - name: Merge report files
+        continue-on-error: true
+        run: npm run qa:generate-html-report
+      - name: Move artifacts screenshots into reports dir
+        continue-on-error: true
+        run: npm run qa:artifact-move-screenshots
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: combined-report
+          path: ./cypress/reports
+          retention-days: 5
+          if-no-files-found: ignore

@@ -339,12 +339,14 @@
     "change:add": "changeset add",
     "release:prepare-main": "./scripts/prepare-main-after-release.sh",
     "format:code": "prettier --ignore-unknown --write src/*",
-    "qa:combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
-    "qa:generate-mocha-report": "marge cypress/reports/mochareports/report.json --reportDir cypress/reports/mochareports",
+    "qa:combine-reports": "mochawesome-merge cypress/reports/*/mocha/*.json > cypress/reports/mochareports/report.json",
+    "qa:generate-mocha-report": "marge cypress/reports/mochareports/report.json --reportDir cypress/reports/",
     "qa:generate-html-report": "npm run qa:combine-reports && npm run qa:generate-mocha-report",
     "qa:create-artifacts-dirs": "mkdir -p cypress/reports/mochareports && mkdir -p cypress/reports/mochareports/videos",
     "qa:move-screenshots": "find cypress/reports/mochareports -type d -name \"*.js\" -exec mv {} cypress/reports/mochareports \\;",
-    "qa:move-videos": "find cypress/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;"
+    "qa:move-videos": "find cypress/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
+    "qa:artifact-move-screenshots": "find cypress/reports/*/mochareports -type d -name \"*.js\" -exec mv {} cypress/reports/mochareports \\;",
+    "qa:artifact-move-videos": "find cypress/reports/*/mochareports/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }
