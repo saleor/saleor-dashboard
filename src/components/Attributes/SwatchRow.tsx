@@ -4,12 +4,12 @@ import {
   getErrorMessage,
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
-import useDebounce from "@dashboard/hooks/useDebounce";
 import { getBySlug } from "@dashboard/misc";
-import { Box, DynamicCombobox } from "@saleor/macaw-ui/next";
-import React, { useRef, useState } from "react";
+import { Box } from "@saleor/macaw-ui/next";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
+import { Combobox } from "../Combobox";
 import { attributeRowMessages } from "./messages";
 import { AttributeRowProps } from "./types";
 
@@ -34,48 +34,36 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
-  const mounted = useRef(false);
-  const inputValue = useRef("");
-
   const value = attribute.data.values.find(getBySlug(attribute.value[0]));
 
-  const [selectedValue, setSelectedValue] = useState(
-    attribute.value[0]
-      ? {
-          label: getSingleDisplayValue(attribute, attributeValues),
-          value: attribute.value[0],
-          startAdornment: null,
-        }
-      : null,
+  const options = useMemo(
+    () =>
+      attributeValues.map(({ file, value, slug, name }) => ({
+        label: name,
+        value: slug,
+        startAdornment: (
+          <SwatchPreviewBox
+            isFile={!!file}
+            backgroundImageUrl={file?.url}
+            backgroundColor={value}
+          />
+        ),
+      })),
+    [attributeValues],
   );
-
-  const debouncedFetchAttributeValues = useRef(
-    useDebounce(async (value: string) => {
-      fetchAttributeValues(value, attribute.id);
-    }, 500),
-  ).current;
 
   return (
     <BasicAttributeRow
       label={attribute.label}
       id={`attribute:${attribute.label}`}
     >
-      <DynamicCombobox
+      <Combobox
         disabled={disabled}
-        options={attributeValues.map(({ file, value, slug, name }) => ({
-          label: name,
-          value: slug,
-          startAdornment: (
-            <SwatchPreviewBox
-              isFile={!!file}
-              backgroundImageUrl={file?.url}
-              backgroundColor={value}
-            />
-          ),
-        }))}
-        value={selectedValue}
+        options={options}
+        value={attribute.value[0]}
+        displayValue={getSingleDisplayValue(attribute, attributeValues)}
         startAdornment={() =>
-          selectedValue ? (
+          value ? (
             <SwatchPreviewBox
               isFile={!!value?.file}
               backgroundImageUrl={value?.file?.url}
@@ -88,23 +76,11 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
         id={`attribute:${attribute.label}`}
-        onChange={value => {
-          setSelectedValue(value);
-          onChange(attribute.id, value?.value);
-        }}
-        onInputValueChange={value => {
-          inputValue.current = value;
-          debouncedFetchAttributeValues(value);
-        }}
-        onFocus={() => {
-          if (!mounted.current) {
-            fetchAttributeValues("", attribute.id);
-          }
+        onChange={e => onChange(attribute.id, e.target.value)}
+        fetchOptions={query => {
+          fetchAttributeValues(query, attribute.id);
         }}
         loading={fetchMoreAttributeValues.loading}
-        locale={{
-          loadingText: "Loading...",
-        }}
       />
     </BasicAttributeRow>
   );
