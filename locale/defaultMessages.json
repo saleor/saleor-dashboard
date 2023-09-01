@@ -1520,10 +1520,6 @@
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
   },
-  "9IWg/f": {
-    "context": "button",
-    "string": "SETUP END DATE"
-  },
   "9MGrEp": {
     "string": "Is available"
   },
@@ -5651,6 +5647,10 @@
   "bj6pTd": {
     "string": "Something's missing"
   },
+  "bk2M4q": {
+    "context": "button",
+    "string": "Cancel end date"
+  },
   "bk9KUX": {
     "context": "ProductTypeDeleteWarningDialog single consent label",
     "string": "Yes, I want to delete this product type and assigned products"
@@ -7994,6 +7994,10 @@
     "context": "set balance dialog title label",
     "string": "Set balance"
   },
+  "tLXyq9": {
+    "context": "button",
+    "string": "Setup end date"
+  },
   "tQuE1q": {
     "string": "Select channels you want for {contentType} to be available on"
   },
@@ -8268,10 +8272,6 @@
   },
   "v3WWK+": {
     "string": "Status is invalid"
-  },
-  "v9ILn/": {
-    "context": "button",
-    "string": "CANCEL END DATE"
   },
   "vC8vyb": {
     "context": "enabled status option label",
