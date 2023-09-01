@@ -189,14 +189,14 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
               placeholder={descriptionPlaceholder}
               label={
                 <Box display="flex" gap={1}>
-                  <Box as="span">
+                  <span>
                     <FormattedMessage
                       id="CXTIq8"
                       defaultMessage="Search engine description"
                     />
-                  </Box>
+                  </span>
                   {description?.length > 0 && (
-                    <Box as="span">
+                    <span>
                       <FormattedMessage
                         id="ChAjJu"
                         defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
@@ -206,7 +206,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                           numberOfCharacters: description.length,
                         }}
                       />
-                    </Box>
+                    </span>
                   )}
                 </Box>
               }
