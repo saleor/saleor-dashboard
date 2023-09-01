@@ -56,7 +56,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
 
   return (
     <>
-      <Box display="flex" justifyContent="flex-end">
+      <Box display="flex" justifyContent="flex-start">
         {file.label ? (
           <Box display="flex" gap={2} alignItems="center">
             <Text variant="caption">

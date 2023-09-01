@@ -17,7 +17,6 @@ import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -234,7 +233,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             disabled={disabled}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
-            label={intl.formatMessage(commonMessages.date)}
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
