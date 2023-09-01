@@ -7827,10 +7827,6 @@
     "context": "limit voucher",
     "string": "Limit of Uses"
   },
-  "s5Imt5": {
-    "context": "button",
-    "string": "Edit website SEO"
-  },
   "s5v6m0": {
     "context": "order",
     "string": "Gift Card ordered"
@@ -7994,10 +7990,6 @@
     "context": "set balance dialog title label",
     "string": "Set balance"
   },
-  "tLXyq9": {
-    "context": "button",
-    "string": "Setup end date"
-  },
   "tQuE1q": {
     "string": "Select channels you want for {contentType} to be available on"
   },
@@ -8054,6 +8046,10 @@
   "toDL5R": {
     "context": "order status",
     "string": "Draft"
+  },
+  "tqJwfo": {
+    "context": "button",
+    "string": "Set end date"
   },
   "tsL3IW": {
     "context": "gift card history message",

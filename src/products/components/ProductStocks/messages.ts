@@ -77,8 +77,8 @@ export const messages = defineMessages({
     description: "button",
   },
   endDateSetup: {
-    id: "tLXyq9",
-    defaultMessage: "Setup end date",
+    id: "tqJwfo",
+    defaultMessage: "Set end date",
     description: "button",
   },
   preorderProductsAvailability: {
