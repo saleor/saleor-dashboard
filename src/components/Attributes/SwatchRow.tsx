@@ -10,7 +10,6 @@ import { Box, DynamicCombobox } from "@saleor/macaw-ui/next";
 import React, { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { attributeRowMessages } from "./messages";
 import { AttributeRowProps } from "./types";
 
 type SwatchRowProps = Pick<
@@ -84,7 +83,6 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
           ) : null
         }
         error={!!error}
-        label={intl.formatMessage(attributeRowMessages.valueLabel)}
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
         id={`attribute:${attribute.label}`}
