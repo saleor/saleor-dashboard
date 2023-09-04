@@ -171,9 +171,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
             description="times voucher used"
           />
         </Typography>
-        <Typography>
-          {maybe<React.ReactNode>(() => voucher.used, <Skeleton />)}
-        </Typography>
+        <Typography>{voucher?.used ?? <Skeleton />}</Typography>
       </CardContent>
     </Card>
   );
