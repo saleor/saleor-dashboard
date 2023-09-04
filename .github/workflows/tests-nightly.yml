@@ -219,8 +219,7 @@ jobs:
           retention-days: 5
           if-no-files-found: ignore
   manual-triggered-test-complete:
-    if: |
-      always() && !contains(needs.run-tests-in-parallel.result, 'skipped') && !contains(needs.run-tests-in-parallel.result, 'cancelled') && github.event_name == 'repository_dispatch'
+    if: ${{always() && github.event_name != 'repository_dispatch' && !contains(needs.run-tests-in-parallel.result, 'skipped') && !contains(needs.run-tests-in-parallel.result, 'cancelled')}}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
