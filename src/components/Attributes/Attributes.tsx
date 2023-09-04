@@ -103,7 +103,7 @@ export const Attributes: React.FC<AttributesProps> = ({
                   <Accordion.TriggerButton dataTestId="expand-icon" />
                 </Box>
               </Accordion.Trigger>
-              <Accordion.Content overflow="visible">
+              <Accordion.Content>
                 {attributes.length > 0 && (
                   <ul>
                     {attributes.map(attribute => (
