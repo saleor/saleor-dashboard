@@ -205,9 +205,11 @@ jobs:
           install: false
           browser: firefox
       - name: Create reports dir
+        continue-on-error: true
         if: ${{ ! cancelled() }}
         run: npm run qa:create-artifacts-dirs
       - name: Move screenshots into reports dir
+        continue-on-error: true
         if: ${{ ! cancelled() }}
         run: npm run qa:move-screenshots
       - name: Upload reports
