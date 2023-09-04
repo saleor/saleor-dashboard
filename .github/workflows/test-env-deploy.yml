@@ -9,16 +9,16 @@ jobs:
     outputs:
       base_URL: ${{ steps.set-domain.outputs.domain }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
 
-      - uses: rlespinasse/github-slug-action@3.1.0
+      - uses: rlespinasse/github-slug-action@v4
 
       - name: Start deployment
-        uses: bobheadxi/deployments@v0.4.2
+        uses: bobheadxi/deployments@v1
         id: deployment
         with:
           step: start
@@ -27,7 +27,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Start storybook deployment
-        uses: bobheadxi/deployments@v0.4.2
+        uses: bobheadxi/deployments@v1
         id: storybook-deployment
         with:
           step: start
@@ -36,7 +36,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
@@ -86,7 +86,7 @@ jobs:
         run: |
           echo "domain=${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -100,7 +100,7 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ steps.set-domain.outputs.domain }}/*"
 
       - name: Update deployment status
-        uses: bobheadxi/deployments@v0.4.2
+        uses: bobheadxi/deployments@v1
         if: always()
         with:
           step: finish
@@ -108,9 +108,10 @@ jobs:
           status: ${{ job.status }}
           env_url: https://${{ steps.set-domain.outputs.domain }}/
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
 
       - name: Update storybook deployment status
-        uses: bobheadxi/deployments@v0.4.2
+        uses: bobheadxi/deployments@v1
         if: always()
         with:
           step: finish
@@ -118,6 +119,7 @@ jobs:
           status: ${{ job.status }}
           env_url: https://${{ steps.set-domain.outputs.domain }}/storybook/index.html
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
+          env: storybook ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
 
   prepare-tests:
     runs-on: ubuntu-22.04
@@ -228,7 +230,7 @@ jobs:
           node-version-file: ".nvmrc"
 
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
