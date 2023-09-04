@@ -6328,6 +6328,10 @@
     "context": "sort shipping methods by zone, section header",
     "string": "Shipping By Zone"
   },
+  "h65vZI": {
+    "context": "times voucher used",
+    "string": "Used"
+  },
   "h75GAF": {
     "context": "voucher",
     "string": "Times used"

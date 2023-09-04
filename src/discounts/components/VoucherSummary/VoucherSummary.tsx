@@ -163,6 +163,17 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
             <Skeleton />,
           )}
         </Typography>
+        <FormSpacer />
+        <Typography variant="caption">
+          <FormattedMessage
+            id="h65vZI"
+            defaultMessage="Used"
+            description="times voucher used"
+          />
+        </Typography>
+        <Typography>
+          {maybe<React.ReactNode>(() => voucher.used, <Skeleton />)}
+        </Typography>
       </CardContent>
     </Card>
   );
