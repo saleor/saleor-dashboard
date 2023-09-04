@@ -177,7 +177,6 @@ jobs:
           SPLIT_INDEX: ${{ strategy.job-index }}
         with:
           install: false
-          tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ env.GREP_TAGS }}
           browser: chrome
 
       - name: Cypress run firefox
@@ -204,26 +203,7 @@ jobs:
           SPLIT_INDEX: ${{ strategy.job-index }}
         with:
           install: false
-          tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ env.GREP_TAGS }}
           browser: firefox
-      - name: Create reports dir
-        if: ${{ ! cancelled() }}
-        run: npm run qa:create-artifacts-dirs
-      - name: Move screenshots into reports dir
-        if: ${{ ! cancelled() }}
-        run: npm run qa:move-screenshots
-      - name: Install dependencies
-        if: ${{ ! cancelled() }}
-        working-directory: .github/workflows
-        run: npm ci
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: report-${{ strategy.job-index }}
-          path: ./cypress/reports
-          retention-days: 5
-          if-no-files-found: ignore
 
   manual-triggered-test-complete:
     if: |
