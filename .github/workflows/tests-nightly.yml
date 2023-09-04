@@ -204,10 +204,23 @@ jobs:
         with:
           install: false
           browser: firefox
-
+      - name: Create reports dir
+        if: ${{ ! cancelled() }}
+        run: npm run qa:create-artifacts-dirs
+      - name: Move screenshots into reports dir
+        if: ${{ ! cancelled() }}
+        run: npm run qa:move-screenshots
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: report-${{ strategy.job-index }}
+          path: ./cypress/reports
+          retention-days: 5
+          if-no-files-found: ignore
   manual-triggered-test-complete:
     if: |
-      always() && !contains(needs.run-tests-in-parallel.result, 'skipped') && !contains(needs.run-tests-in-parallel.result, 'cancelled')
+      always() && !contains(needs.run-tests-in-parallel.result, 'skipped') && !contains(needs.run-tests-in-parallel.result, 'cancelled') && github.event_name == 'repository_dispatch'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -235,6 +248,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: ./cypress/reports
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: ./cypress/reports
       - name: Create reports dir
         continue-on-error: true
         run: npm run qa:create-artifacts-dirs
