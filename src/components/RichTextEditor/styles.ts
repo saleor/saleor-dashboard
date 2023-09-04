@@ -122,7 +122,7 @@ const useStyles = makeStyles(
         transition: theme.transitions.duration.short + "ms",
         padding: theme.spacing(3, 2),
         paddingBottom: theme.spacing(),
-        paddingLeft: vars.spacing[1.5],
+        paddingLeft: vars.spacing[2],
         "&:hover": {
           border: `1px solid ${vars.colors.border.neutralHighlight}`,
         },
@@ -144,7 +144,7 @@ const useStyles = makeStyles(
         fontSize: theme.typography.body1.fontSize,
       },
       labelRoot: {
-        marginLeft: "-6px",
+        marginLeft: "-4px",
         color: `${vars.colors.foreground.textNeutralSubdued} !important`,
       },
       labelError: {
