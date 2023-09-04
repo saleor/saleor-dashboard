@@ -117,11 +117,9 @@ const useStyles = makeStyles(
         border: `1px solid ${vars.colors.border.neutralPlain}`,
         borderRadius: vars.borderRadius[3],
         fontSize: vars.fontSize.bodyMedium,
-        minHeight: 56,
         position: "relative",
         transition: theme.transitions.duration.short + "ms",
-        padding: theme.spacing(3, 2),
-        paddingBottom: theme.spacing(),
+        padding: theme.spacing(0, 2),
         paddingLeft: vars.spacing[2],
         "&:hover": {
           border: `1px solid ${vars.colors.border.neutralHighlight}`,
@@ -158,6 +156,11 @@ const useStyles = makeStyles(
       },
       rootTyped: {
         backgroundColor: vars.colors.background.surfaceNeutralPlain,
+      },
+      rootHasLabel: {
+        minHeight: 56,
+        padding: theme.spacing(3, 2),
+        paddingBottom: theme.spacing(),
       },
     };
   },

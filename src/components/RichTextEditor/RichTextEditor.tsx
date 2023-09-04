@@ -108,6 +108,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               [classes.rootActive]: isFocused,
               [classes.rootDisabled]: disabled,
               [classes.rootError]: error,
+              [classes.rootHasLabel]: label !== "",
               [classes.rootTyped]:
                 isTyped || props.defaultValue?.blocks?.length > 0,
             })}
