@@ -251,6 +251,7 @@ const parseWarehousesColumns = (
   }));
 };
 
+// Reuse when fixing #4165
 export const getWarehousesFetchMoreProps = ({
   queryAvailableWarehouses,
   availableWarehousesData,

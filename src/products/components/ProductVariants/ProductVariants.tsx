@@ -11,8 +11,8 @@ import {
   ProductDetailsVariantFragment,
   ProductFragment,
   RefreshLimitsQuery,
+  useWarehouseListQuery,
 } from "@dashboard/graphql";
-import { useFetchAllWarehouses } from "@dashboard/hooks/useFetchAllWarehouse";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import EditIcon from "@dashboard/icons/Edit";
 import { buttonMessages } from "@dashboard/intl";
@@ -61,15 +61,16 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
 }) => {
   const intl = useIntl();
 
-  const { data: warehousesData } = useFetchAllWarehouses({
+  // https://github.com/saleor/saleor-dashboard/issues/4165
+  const { data: warehousesData } = useWarehouseListQuery({
     variables: {
-      first: 100,
+      first: 50,
     },
   });
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
 
   // Normally this should be in LS handled by useListSettings hook
-  // persistence will be added in the future
+  // https://github.com/saleor/saleor-dashboard/issues/4164
 
   const initialSettings = React.useMemo(
     () =>
