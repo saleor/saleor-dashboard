@@ -159,8 +159,8 @@ const useStyles = makeStyles(
       },
       rootHasLabel: {
         minHeight: 56,
-        padding: theme.spacing(3, 2),
-        paddingBottom: theme.spacing(),
+        padding: `${vars.spacing[6]} ${vars.spacing[2]}`,
+        paddingBottom: vars.spacing[1.5],
       },
     };
   },
