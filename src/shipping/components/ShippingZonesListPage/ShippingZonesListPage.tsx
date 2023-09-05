@@ -23,10 +23,10 @@ export interface ShippingZonesListPageProps
   extends PageListProps,
     ListActions,
     UserPermissionProps {
-  defaultWeightUnit: WeightUnitsEnum;
-  shippingZones: ShippingZoneFragment[];
+  defaultWeightUnit: WeightUnitsEnum | undefined;
+  shippingZones: ShippingZoneFragment[] | undefined;
   onRemove: (id: string) => void;
-  onSubmit: (unit: WeightUnitsEnum) => SubmitPromise;
+  onSubmit: (unit: WeightUnitsEnum | undefined) => SubmitPromise;
 }
 
 const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({

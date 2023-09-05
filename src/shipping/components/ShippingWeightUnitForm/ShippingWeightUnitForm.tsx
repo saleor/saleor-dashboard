@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import Form from "@dashboard/components/Form";
@@ -12,13 +11,13 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface FormData {
-  unit: WeightUnitsEnum;
+  unit: WeightUnitsEnum | undefined;
 }
 
 export interface ShippingWeightUnitFormProps {
-  defaultWeightUnit: WeightUnitsEnum;
+  defaultWeightUnit: WeightUnitsEnum | undefined;
   disabled: boolean;
-  onSubmit: (unit: WeightUnitsEnum) => SubmitPromise;
+  onSubmit: (unit: WeightUnitsEnum | undefined) => SubmitPromise;
 }
 
 const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
@@ -43,9 +42,9 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
           <CardContent>
             <SingleSelectField
               disabled={disabled}
-              choices={Object.keys(WeightUnitsEnum).map(unit => ({
-                label: WeightUnitsEnum[unit],
-                value: WeightUnitsEnum[unit],
+              choices={Object.values(WeightUnitsEnum).map(unit => ({
+                label: unit,
+                value: unit,
               }))}
               label={intl.formatMessage({
                 id: "Rp/Okl",
