@@ -1,8 +1,6 @@
 import FullScreenIcon from "@dashboard/icons/FullScreenIcon";
-import { Box, Button, PlusIcon, sprinkles } from "@saleor/macaw-ui/next";
+import { Box, Button, PlusIcon, sprinkles, Text } from "@saleor/macaw-ui/next";
 import React, { FC, PropsWithChildren } from "react";
-
-import CardTitle from "../../CardTitle";
 
 interface ButtonFullScreenProps {
   isOpen: boolean;
@@ -69,14 +67,18 @@ interface GridHeader extends FC<PropsWithChildren<HeaderProps>> {
 
 const Header: GridHeader = ({ title, children }) => {
   return (
-    <CardTitle
-      title={title}
-      toolbar={
-        <Box display="flex" __flexDirection="row-reverse" gap={1}>
-          {children}
-        </Box>
-      }
-    />
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      paddingX={6}
+      paddingY={5}
+    >
+      <Text variant="heading">{title}</Text>
+      <Box display="flex" __flexDirection="row-reverse" gap={1}>
+        {children}
+      </Box>
+    </Box>
   );
 };
 

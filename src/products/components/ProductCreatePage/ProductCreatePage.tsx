@@ -360,7 +360,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               ) : (
                 <CannotDefineChannelsAvailabilityCard />
               )}
-              <CardSpacer />
               <ProductTaxes
                 value={data.taxClassId}
                 disabled={loading}

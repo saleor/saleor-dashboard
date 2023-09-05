@@ -73,7 +73,7 @@ export const Attributes: React.FC<AttributesProps> = ({
   return (
     <DashboardCard>
       <DashboardCard.Content>
-        <Box display="flex" flexDirection="column" gap={2}>
+        <Box display="flex" flexDirection="column" gap={1}>
           <Accordion defaultValue="attributes-accordion">
             <Accordion.Item value="attributes-accordion">
               <Accordion.Trigger
@@ -87,8 +87,8 @@ export const Attributes: React.FC<AttributesProps> = ({
                   display="flex"
                   justifyContent="space-between"
                 >
-                  <Box display="flex" flexDirection="column">
-                    <Text variant="heading" marginBottom={2}>
+                  <Box display="flex" flexDirection="column" gap={2}>
+                    <Text variant="heading">
                       {title || intl.formatMessage(messages.header)}
                     </Text>
                     <Text variant="caption" color="textNeutralSubdued">

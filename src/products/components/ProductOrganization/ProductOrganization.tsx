@@ -95,7 +95,7 @@ export const ProductOrganization: React.FC<
           description: "section header",
         })}
       </DashboardCard.Title>
-      <DashboardCard.Content gap={5} display="flex" flexDirection="column">
+      <DashboardCard.Content gap={2} display="flex" flexDirection="column">
         {canChangeType ? (
           <Combobox
             size="small"

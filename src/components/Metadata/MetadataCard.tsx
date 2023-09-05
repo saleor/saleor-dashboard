@@ -40,7 +40,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
       data-test-id="metadata-editor"
       data-test-is-private={isPrivate}
       data-test-expanded={expanded}
-      gap={1}
+      gap={0}
     >
       <DashboardCard.Title>
         <Box
