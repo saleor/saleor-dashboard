@@ -130,7 +130,7 @@ export const useGetCellContent = ({
             allowOverlay: true,
           },
         );
-      case "status":
+      case "status": {
         const orderErrors = getOrderErrors(errors, rowData.id);
         const status = getOrderLineStatus(intl, rowData, orderErrors);
 
@@ -142,6 +142,7 @@ export const useGetCellContent = ({
             allowOverlay: false,
           },
         );
+      }
       case "sku":
         return readonlyTextCell(rowData?.productSku ?? "", false);
       case "variantName":

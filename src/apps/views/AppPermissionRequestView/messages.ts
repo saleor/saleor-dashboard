@@ -21,7 +21,7 @@ export const appPermissionsRequestViewMessages = defineMessages({
   },
   requestedPermissionsHeader: {
     defaultMessage: "Requested Permissions",
-    id: 'B+Ba0R',
+    id: "B+Ba0R",
   },
   approveScenarioHelperHeader: {
     defaultMessage: "What happens if I approve?",
@@ -30,25 +30,27 @@ export const appPermissionsRequestViewMessages = defineMessages({
   approveScenarioHelperBody: {
     defaultMessage:
       "The app will have access to new permissions. From now on it will be able to use them to perform operations these permissions allow. You should ensure you trust the app before you approve.",
-    id: 'S1p0Ja',
+    id: "S1p0Ja",
   },
   permissionsDocsLink: {
     defaultMessage: "Learn more about permissions",
-    id: 'Yo4h/D'
+    id: "Yo4h/D",
   },
   denyScenarioHelperHeader: {
-    defaultMessage: "What happens if I deny?", id: 'cOki0G',
+    defaultMessage: "What happens if I deny?",
+    id: "cOki0G",
   },
   denyScenarioHelperBody: {
     defaultMessage:
-      "Nothing will change in terms of permissions. The Dashboard will redirect to the app and inform it that you denied the request.", id: 'SI3/nl',
+      "Nothing will change in terms of permissions. The Dashboard will redirect to the app and inform it that you denied the request.",
+    id: "SI3/nl",
   },
   denyButton: {
     defaultMessage: "Deny",
-    id: 'htvX+Z',
+    id: "htvX+Z",
   },
   approveButton: {
     defaultMessage: "Approve",
-    id: 'WCaf5C',
+    id: "WCaf5C",
   },
 });

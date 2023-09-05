@@ -60,7 +60,7 @@ export const useAppActions = (
         return response;
       }
       case "requestPermissions": {
-        return handlePermissionRequest(action)
+        return handlePermissionRequest(action);
       }
       default: {
         throw new Error("Unknown action type");

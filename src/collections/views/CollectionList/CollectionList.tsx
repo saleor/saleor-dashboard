@@ -93,7 +93,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     onPresetSave,
     onPresetUpdate,
     setPresetIdToDelete,
-    presetIdToDelete,
+    getPresetNameToDelete,
   } = useFilterPresets({
     params,
     reset: clearRowSelection,
@@ -264,7 +264,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={maybe(() => presets[presetIdToDelete - 1].name, "...")}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

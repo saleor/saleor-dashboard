@@ -202,6 +202,10 @@ export const UserFragmentDoc = gql`
   firstName
   lastName
   isStaff
+  metadata {
+    key
+    value
+  }
   userPermissions {
     ...UserPermission
   }
@@ -269,6 +273,7 @@ export const ChannelDetailsFragmentDoc = gql`
     markAsPaidStrategy
     deleteExpiredOrdersAfter
     allowUnpaidOrders
+    defaultTransactionFlowStrategy
   }
 }
     ${ChannelFragmentDoc}
@@ -2271,7 +2276,7 @@ export const ProductWithChannelListingsFragmentDoc = gql`
     fragment ProductWithChannelListings on Product {
   id
   name
-  thumbnail {
+  thumbnail(size: 1024) {
     url
   }
   productType {
@@ -2757,6 +2762,10 @@ export const StaffMemberDetailsFragmentDoc = gql`
   }
   avatar(size: 512) {
     url
+  }
+  metadata {
+    key
+    value
   }
 }
     ${StaffMemberFragmentDoc}`;

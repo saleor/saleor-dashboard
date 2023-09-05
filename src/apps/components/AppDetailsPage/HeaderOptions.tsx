@@ -25,7 +25,12 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
   const classes = useStyles();
 
   return (
-    <Box paddingX={6} borderBottomStyle="solid" borderColor="neutralHighlight" borderBottomWidth={1}>
+    <Box
+      paddingX={6}
+      borderBottomStyle="solid"
+      borderColor="neutralHighlight"
+      borderBottomWidth={1}
+    >
       <div className={classes.appHeaderLinks}>
         <ButtonBase
           className={classes.headerLinkContainer}

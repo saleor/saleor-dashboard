@@ -46,6 +46,7 @@ const timelineEventTypes = {
     OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED,
   ],
   note: [OrderEventsEnum.NOTE_ADDED],
+  note_updated: [OrderEventsEnum.NOTE_UPDATED],
   rawMessage: [
     OrderEventsEnum.OTHER,
     OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
@@ -60,6 +61,7 @@ export const isTimelineEventOfType = (
     | "secondaryTitle"
     | "rawMessage"
     | "note"
+    | "note_updated"
     | "linked"
     | "discount",
   eventType: OrderEventsEnum,

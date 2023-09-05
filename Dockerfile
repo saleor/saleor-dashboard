@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY scripts/patchReactVirtualized.js scripts/
 ENV CI 1
-RUN npm ci --omit=optional --legacy-peer-deps
+RUN npm ci --legacy-peer-deps
 
 COPY nginx/ nginx/
 COPY assets/ assets/
@@ -17,6 +17,7 @@ COPY *.d.ts ./
 COPY schema.graphql ./
 COPY introspection.json ./
 COPY introspection*.json ./
+COPY .featureFlags/ .featureFlags/
 
 COPY src/ src/
 

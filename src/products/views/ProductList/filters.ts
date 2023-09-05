@@ -331,7 +331,7 @@ export const parseFilterValue = (
           lte: isMulti ? value[1] || null : value[0],
         }),
       };
-    case ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes:
+    case ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes: {
       const [gte, lte] = value.map(v => parseFloat(v));
 
       return {
@@ -341,6 +341,7 @@ export const parseFilterValue = (
           lte: isMulti ? lte || undefined : gte || undefined,
         },
       };
+    }
     default:
       return { ...name, values: value };
   }

@@ -81,7 +81,7 @@ export const createGetCellContent =
         return readonlyTextCell(
           rowData?.products?.totalCount?.toString() ?? "",
         );
-      case "availability":
+      case "availability": {
         const { label, color } = !!channel
           ? getAvailablilityLabelWhenSelectedChannel(
               channel,
@@ -104,6 +104,7 @@ export const createGetCellContent =
             allowOverlay: false,
           },
         );
+      }
       default:
         return readonlyTextCell("");
     }

@@ -96,6 +96,7 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
         borderRadius: 0,
         boxSizing: "content-box",
         width: "100%",
+        paddingBottom: "1px",
       },
       root: {
         position: "relative",

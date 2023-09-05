@@ -41,8 +41,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
     handleSearchChange,
     onPresetSave,
     onPresetDelete,
-    presets,
-    presetIdToDelete,
+    getPresetNameToDelete,
     selectedRowIds,
   } = useGiftCardList();
 
@@ -155,7 +154,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
         confirmButtonState="default"
         onClose={onClose}
         onSubmit={onPresetDelete}
-        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
+        tabName={getPresetNameToDelete()}
       />
     </>
   );

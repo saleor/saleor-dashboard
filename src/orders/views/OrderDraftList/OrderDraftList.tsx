@@ -135,7 +135,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     onPresetSave,
     onPresetUpdate,
     setPresetIdToDelete,
-    presetIdToDelete,
+    getPresetNameToDelete,
   } = useFilterPresets({
     params,
     reset: clearRowSelection,
@@ -275,7 +275,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
+        tabName={getPresetNameToDelete()}
       />
       <ChannelPickerDialog
         channelsChoices={mapNodeToChoice(channels)}
