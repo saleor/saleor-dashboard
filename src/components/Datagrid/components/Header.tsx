@@ -15,7 +15,6 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
   return (
     <Button
       data-test-id="button-exit-fullscreen"
-      marginBottom={3}
       variant="secondary"
       onClick={onToggle}
     >
@@ -46,7 +45,6 @@ const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({
   return (
     <Button
       data-test-id="button-add-variant"
-      marginBottom={3}
       variant="secondary"
       onClick={onAddRow}
     >
@@ -75,7 +73,7 @@ const Header: GridHeader = ({ title, children }) => {
       paddingY={5}
     >
       <Text variant="heading">{title}</Text>
-      <Box display="flex" __flexDirection="row-reverse" gap={1}>
+      <Box display="flex" __flexDirection="row-reverse" gap={2}>
         {children}
       </Box>
     </Box>

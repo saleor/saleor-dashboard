@@ -343,7 +343,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 errors={productErrors}
                 onChange={change}
               />
-              <CardSpacer />
               <ProductMedia
                 media={media}
                 onImageDelete={onImageDelete}
@@ -352,7 +351,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 openMediaUrlModal={() => setMediaUrlModalStatus(true)}
                 getImageEditUrl={imageId => productImageUrl(productId, imageId)}
               />
-              <CardSpacer />
               {data.attributes.length > 0 && (
                 <Attributes
                   attributes={data.attributes}
@@ -372,7 +370,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   richTextGetters={attributeRichTextGetters}
                 />
               )}
-              <CardSpacer />
               <ProductVariants
                 productName={product?.name}
                 errors={variantListErrors}
@@ -403,7 +400,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     "Add search engine title and description to make this product easier to find",
                 })}
               />
-              <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
@@ -424,12 +420,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onCategoryChange={handlers.selectCategory}
                 onCollectionChange={handlers.selectCollection}
               />
-              <CardSpacer />
               <ChannelsAvailabilityCard
                 {...availabilityCommonProps}
                 channels={listings}
               />
-              <CardSpacer />
               <ProductTaxes
                 value={data.taxClassId}
                 disabled={disabled}

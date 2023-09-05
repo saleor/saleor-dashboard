@@ -71,7 +71,7 @@ export const Attributes: React.FC<AttributesProps> = ({
   const intl = useIntl();
 
   return (
-    <DashboardCard>
+    <DashboardCard paddingTop={6}>
       <DashboardCard.Content>
         <Box display="flex" flexDirection="column" gap={1}>
           <Accordion defaultValue="attributes-accordion">
@@ -81,27 +81,20 @@ export const Attributes: React.FC<AttributesProps> = ({
                 flexWrap="wrap"
                 alignItems="flex-start"
               >
-                <Box
-                  paddingTop={6}
-                  width="100%"
-                  display="flex"
-                  justifyContent="space-between"
-                >
-                  <Box display="flex" flexDirection="column" gap={2}>
-                    <Text variant="heading">
-                      {title || intl.formatMessage(messages.header)}
-                    </Text>
-                    <Text variant="caption" color="textNeutralSubdued">
-                      <FormattedMessage
-                        {...messages.attributesNumber}
-                        values={{
-                          number: attributes.length,
-                        }}
-                      />
-                    </Text>
-                  </Box>
-                  <Accordion.TriggerButton dataTestId="expand-icon" />
+                <Box display="flex" flexDirection="column" gap={2}>
+                  <Text variant="heading">
+                    {title || intl.formatMessage(messages.header)}
+                  </Text>
+                  <Text variant="caption" color="textNeutralSubdued">
+                    <FormattedMessage
+                      {...messages.attributesNumber}
+                      values={{
+                        number: attributes.length,
+                      }}
+                    />
+                  </Text>
                 </Box>
+                <Accordion.TriggerButton dataTestId="expand-icon" />
               </Accordion.Trigger>
               <Accordion.Content>
                 {attributes.length > 0 && (

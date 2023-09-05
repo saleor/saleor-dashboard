@@ -82,22 +82,17 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
   const getError = (fieldName: SeoField) => getFieldError(errors, fieldName);
 
   return (
-    <DashboardCard>
+    <DashboardCard paddingTop={6}>
       <DashboardCard.Content>
-        <Accordion defaultValue="attributes-accordion">
+        <Accordion>
           <Accordion.Item value="attributes-accordion">
             <Accordion.Trigger
               buttonDataTestId="attributes-expand"
               flexWrap="wrap"
               alignItems="flex-start"
             >
-              <Box
-                paddingTop={6}
-                width="100%"
-                display="flex"
-                justifyContent="space-between"
-              >
-                <Text variant="heading" marginBottom={5}>
+              <Box width="100%" display="flex" justifyContent="space-between">
+                <Text variant="heading">
                   <FormattedMessage
                     defaultMessage="Search Engine Preview"
                     id="TGX4T1"
