@@ -8243,10 +8243,6 @@
     "context": "OrderPayment does not require shipping",
     "string": "does not apply"
   },
-  "v+Pkm+": {
-    "context": "field is optional",
-    "string": "*Optional. Adding product to collection helps users find it."
-  },
   "v/1VA6": {
     "context": "add order note, button",
     "string": "Send"
