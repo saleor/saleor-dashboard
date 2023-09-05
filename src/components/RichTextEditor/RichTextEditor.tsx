@@ -76,8 +76,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       <Box
         as="label"
         color={error ? "textCriticalSubdued" : "textNeutralSubdued"}
-        fontWeight="bodyMedium"
-        fontSize="captionSmall"
+        fontWeight="bodySmall"
+        fontSize="captionLarge"
         position="absolute"
         htmlFor={id}
         zIndex="2"
@@ -117,7 +117,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           />
         </ReactEditorJS>
       )}
-      <FormHelperText>{helperText}</FormHelperText>
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   );
 };

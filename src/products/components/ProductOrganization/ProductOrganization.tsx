@@ -170,15 +170,7 @@ export const ProductOrganization: React.FC<
             id: "ulh3kf",
             defaultMessage: "Collections",
           })}
-          helperText={
-            getProductErrorMessage(formErrors.collections, intl) ||
-            intl.formatMessage({
-              id: "v+Pkm+",
-              defaultMessage:
-                "*Optional. Adding product to collection helps users find it.",
-              description: "field is optional",
-            })
-          }
+          helperText={getProductErrorMessage(formErrors.collections, intl)}
         />
       </DashboardCard.Content>
     </DashboardCard>
