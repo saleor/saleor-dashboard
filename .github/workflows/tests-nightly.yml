@@ -22,8 +22,6 @@ on:
         options:
           - https://automation-dashboard.staging.saleor.cloud/
           - https://master.staging.saleor.cloud/
-          - https://latest.staging.saleor.cloud/
-          - https://qa.staging.saleor.cloud/
           - Other
       otherEnvironment:
         required: false
@@ -231,7 +229,7 @@ jobs:
           node-version-file: ".nvmrc"
           cache: npm
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
@@ -243,7 +241,7 @@ jobs:
             ${{ runner.os }}-
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: NODE_OPTIONS=--max_old_space_size=4096 npm install
+        run: NODE_OPTIONS=--max_old_space_size=4096 npm ci
       - run: npm ci
         working-directory: .github/workflows
       - name: Download reports artifacts
@@ -302,10 +300,10 @@ jobs:
         id: get-environment-variables
         run: |
           node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
-          --version $VERSION \
-          --token "$TOKEN" \
-          --repo_token "$REPO_TOKEN" \
-          --project "$PROJECT"
+            --version $VERSION \
+            --token "$TOKEN" \
+            --repo_token "$REPO_TOKEN" \
+            --project "$PROJECT"
 
   run-tests-on-release:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
@@ -406,10 +404,10 @@ jobs:
           curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
           node .github/workflows/cypressTestsHelpers/approveAndMergeReleasePR.js \
-          --version $version \
-          --pull_request_number $pull_request_number \
-          --dashboard_url "$dashboard_url" \
-          $auto_release
+            --version $version \
+            --pull_request_number $pull_request_number \
+            --dashboard_url "$dashboard_url" \
+            $auto_release
 
   send-slack-notification:
     if: ${{ failure() && github.event_name == 'repository_dispatch'}}
