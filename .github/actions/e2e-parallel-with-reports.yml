@@ -1,4 +1,4 @@
-name: Trigger e2e and reports
+name: e2e-parallel-with-reports
 description: "Trigger e2e tests and create reports"
 inputs:
   apiUri:
