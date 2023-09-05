@@ -40,7 +40,10 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
     >
       <DashboardCard.Content>
         <Accordion>
-          <Accordion.Item value="metadata-accordion">
+          <Accordion.Item
+            data-test-id="metadata-item"
+            value="metadata-accordion"
+          >
             <Accordion.Trigger>
               <Box display="flex" flexDirection="column" gap={2}>
                 <Text variant="heading">{intl.formatMessage(title)}</Text>
@@ -69,7 +72,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                 )}
               </Box>
 
-              <Accordion.TriggerButton />
+              <Accordion.TriggerButton dataTestId="expand" />
             </Accordion.Trigger>
             <Accordion.Content>
               {data === undefined ? (
