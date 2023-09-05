@@ -57,6 +57,16 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                     />
                   </Text>
                 )}
+
+                {data?.length === 0 && (
+                  <Text variant="caption" color="textNeutralSubdued">
+                    <FormattedMessage
+                      id="kAPaN6"
+                      defaultMessage="Empty"
+                      description="empty metadata text"
+                    />
+                  </Text>
+                )}
               </Box>
 
               <Accordion.TriggerButton />
@@ -66,17 +76,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                 <Skeleton />
               ) : (
                 <>
-                  {data.length === 0 ? (
-                    <Text variant="caption" color="textNeutralSubdued">
-                      <FormattedMessage
-                        id="cY6H2C"
-                        defaultMessage="No metadata created for this element. Use the button below to add new metadata field."
-                        description="empty metadata text"
-                      />
-                    </Text>
-                  ) : (
-                    <MetadataCardTable data={data} onChange={onChange} />
-                  )}
+                  <MetadataCardTable data={data} onChange={onChange} />
 
                   <Button
                     marginTop={2}

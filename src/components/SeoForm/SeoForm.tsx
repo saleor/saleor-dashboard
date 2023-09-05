@@ -79,30 +79,44 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
     }
   };
 
+  const completed =
+    slug?.length > 0 && title.length > 0 && description?.length > 0;
+
   const getError = (fieldName: SeoField) => getFieldError(errors, fieldName);
 
   return (
     <DashboardCard paddingTop={6}>
       <DashboardCard.Content>
         <Accordion>
-          <Accordion.Item value="attributes-accordion">
-            <Accordion.Trigger
-              buttonDataTestId="attributes-expand"
-              flexWrap="wrap"
-              alignItems="flex-start"
-            >
-              <Box width="100%" display="flex" justifyContent="space-between">
+          <Accordion.Item value="seo-accordion">
+            <Accordion.Trigger buttonDataTestId="seo-expand">
+              <Box display="grid" gap={2}>
                 <Text variant="heading">
                   <FormattedMessage
                     defaultMessage="Search Engine Preview"
                     id="TGX4T1"
                   />
                 </Text>
-                <Accordion.TriggerButton dataTestId="expand-icon" />
+                <Text variant="caption" color="textNeutralSubdued">
+                  {completed ? (
+                    <FormattedMessage
+                      id="bGqAdR"
+                      defaultMessage="Complete"
+                      description="seo complete text"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id="y8E0iG"
+                      defaultMessage="Incomplete"
+                      description="seo incomplete text"
+                    />
+                  )}
+                </Text>
               </Box>
+              <Accordion.TriggerButton dataTestId="expand-icon" />
             </Accordion.Trigger>
             <Accordion.Content>
-              <Box display="grid" gap={2}>
+              <Box display="grid" gap={2} marginTop={4}>
                 <Box>
                   <Input
                     error={
