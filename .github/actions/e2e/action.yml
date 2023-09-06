@@ -59,18 +59,18 @@ runs:
       uses: cypress-io/github-action@v5
       with:
         API_URI: ${{inputs.apiUri}}
-        APP_MOUNT_URI: ${{ secrets.appMountUri }}
+        APP_MOUNT_URI: ${{ inputs.appMountUri }}
         CYPRESS_baseUrl: ${{inputs.baseUrl}}
-        CYPRESS_USER_NAME: ${{ secrets.userName }}
-        CYPRESS_SECOND_USER_NAME: ${{ secrets.secondUserName }}
-        CYPRESS_USER_PASSWORD: ${{ secrets.userPassword }}
-        CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.permissionsUserPassword }}
-        CYPRESS_MAILPITURL: ${{ secrets.mailpitUrl }}
+        CYPRESS_USER_NAME: ${{ inputs.userName }}
+        CYPRESS_SECOND_USER_NAME: ${{ inputs.secondUserName }}
+        CYPRESS_USER_PASSWORD: ${{ inputs.userPassword }}
+        CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ inputs.permissionsUserPassword }}
+        CYPRESS_MAILPITURL: ${{ inputs.mailpitUrl }}
         CYPRESS_grepTags: ${{ inputs.cypressGrepTags }}
         SPLIT: ${{ inputs.split }}
         SPLIT_INDEX: ${{ inputs.splitIndex}}
-        STRIPE_SECRET_KEY: ${{secrets.stripeSecretKey}}
-        STRIPE_PUBLIC_KEY: ${{secrets.stripePublicKey}}
+        STRIPE_SECRET_KEY: ${{inputs.stripeSecretKey}}
+        STRIPE_PUBLIC_KEY: ${{inputs.stripePublicKey}}
         COMMIT_INFO_MESSAGE: ${{inputs.commitInfoMessage}}
         install: ${{inputs.install}}
         browser: ${{inputs.browser}}
