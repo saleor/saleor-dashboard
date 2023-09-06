@@ -97,11 +97,8 @@ export default defineConfig(({ command, mode }) => {
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
       authToken: process.env.SENTRY_AUTH_TOKEN,
-      release: {
-        uploadLegacySourcemaps: {
-          paths: ["./build/dashboard"],
-          urlPrefix: process.env.SENTRY_URL_PREFIX,
-        }
+      sourcemaps: {
+        assets: ["./build/dashboard/*"],
       }
     }))
   }
