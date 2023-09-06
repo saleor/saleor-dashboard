@@ -60,7 +60,7 @@ runs:
       with:
         API_URI: ${{inputs.apiUri}}
         APP_MOUNT_URI: ${{ inputs.appMountUri }}
-        CYPRESS_baseUrl: ${{inputs.baseUrl}}
+        CYPRESS_baseUrl: https://${{inputs.baseUrl}}/
         CYPRESS_USER_NAME: ${{ inputs.userName }}
         CYPRESS_SECOND_USER_NAME: ${{ inputs.secondUserName }}
         CYPRESS_USER_PASSWORD: ${{ inputs.userPassword }}
