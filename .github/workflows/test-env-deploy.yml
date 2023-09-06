@@ -246,7 +246,7 @@ jobs:
 
       - name: Cypress run critical
         if: ${{ ! cancelled() }}
-        uses: ./.github/actions/e2e-parallel-with-reports
+        uses: saleor-dashboard/.github/actions/e2e-parallel-with-reports
         with:
           apiUri: ${{ steps.api_uri.outputs.custom_api_uri }}
           appMountUri: ${{ secrets.APP_MOUNT_URI }}
