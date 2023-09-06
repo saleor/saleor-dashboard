@@ -52,10 +52,15 @@ export default defineConfig(({ command, mode }) => {
     Object.entries(env).filter(([flagKey]) => flagKey.startsWith("FF_")),
   );
 
-  const sourcemap = SKIP_SOURCEMAPS ? false : true;
-
-  const enableSentry =
-    SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
+  /**
+    Temporarily disable sourcemaps & sentry due to memory issues with vite
+    Ref: https://github.com/vitejs/vite/issues/2433
+    Uncomment next lines if the problem was resolved
+  */
+  const sourcemap = false
+    // SKIP_SOURCEMAPS ? false : true;
+  const enableSentry = false
+    // SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
 
   const plugins = [
     react(),
