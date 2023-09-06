@@ -58,7 +58,10 @@ runs:
     - name: e2e with reports
       uses: cypress-io/github-action@v5
       with:
-        API_URI: https://automation-dashboard.staging.saleor.cloud/graphql/
+        install: ${{inputs.install}}
+        browser: ${{inputs.browser}}
+      env:
+        API_URI: ${{inputs.apiUrl}}
         APP_MOUNT_URI: ${{ inputs.appMountUri }}
         CYPRESS_baseUrl: https://${{inputs.baseUrl}}/
         CYPRESS_USER_NAME: ${{ inputs.userName }}
@@ -72,8 +75,6 @@ runs:
         STRIPE_SECRET_KEY: ${{inputs.stripeSecretKey}}
         STRIPE_PUBLIC_KEY: ${{inputs.stripePublicKey}}
         COMMIT_INFO_MESSAGE: ${{inputs.commitInfoMessage}}
-        install: ${{inputs.install}}
-        browser: ${{inputs.browser}}
     - name: Create reports dir
       shell: bash
       continue-on-error: true
