@@ -75,11 +75,6 @@ jobs:
           APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
-          SENTRY_ORG: saleor
-          SENTRY_PROJECT: dashboard
-          SENTRY_URL_PREFIX: "~/dashboard/static"
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: |
           npm run build
       - name: Run build storybook
