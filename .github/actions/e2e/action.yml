@@ -58,7 +58,7 @@ runs:
     - name: e2e with reports
       uses: cypress-io/github-action@v5
       with:
-        API_URI: ${{inputs.apiUrl}}
+        API_URI: https://automation-dashboard.staging.saleor.cloud/graphql/
         APP_MOUNT_URI: ${{ inputs.appMountUri }}
         CYPRESS_baseUrl: https://${{inputs.baseUrl}}/
         CYPRESS_USER_NAME: ${{ inputs.userName }}
