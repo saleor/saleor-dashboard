@@ -1,7 +1,7 @@
 name: e2e-parallel
 description: "Trigger e2e tests and create reports"
 inputs:
-  apiUri:
+  apiUrl:
     description: "API URL from PR or staging"
     required: true
   baseUrl:
@@ -58,7 +58,7 @@ runs:
     - name: e2e with reports
       uses: cypress-io/github-action@v5
       with:
-        API_URI: ${{inputs.apiUri}}
+        API_URI: ${{inputs.apiUrl}}
         APP_MOUNT_URI: ${{ inputs.appMountUri }}
         CYPRESS_baseUrl: https://${{inputs.baseUrl}}/
         CYPRESS_USER_NAME: ${{ inputs.userName }}
