@@ -108,7 +108,7 @@ export const ProductOrganization: React.FC<
             helperText={getProductErrorMessage(formErrors.productType, intl)}
             onChange={onProductTypeChange}
             fetchOptions={fetchProductTypes}
-            loading={fetchMoreProductTypes.loading}
+            fetchMore={fetchMoreProductTypes}
             name="productType"
             label={intl.formatMessage({
               id: "anK7jD",
@@ -147,7 +147,7 @@ export const ProductOrganization: React.FC<
           )}
           onChange={onCategoryChange}
           fetchOptions={fetchCategories}
-          loading={fetchMoreCategories.loading}
+          fetchMore={fetchMoreCategories}
           name="category"
           label={intl.formatMessage({
             id: "ccXLVi",
@@ -163,9 +163,9 @@ export const ProductOrganization: React.FC<
           value={collectionsInputDisplayValue}
           error={!!formErrors.collections}
           name="collections"
-          loading={fetchMoreCollections.loading}
           onChange={onCollectionChange}
           fetchOptions={fetchCollections}
+          fetchMore={fetchMoreCollections}
           label={intl.formatMessage({
             id: "ulh3kf",
             defaultMessage: "Collections",

@@ -1,5 +1,6 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { commonMessages } from "@dashboard/intl";
+import { FetchMoreProps } from "@dashboard/types";
 import {
   DynamicCombobox,
   DynamicComboboxProps,
@@ -16,6 +17,7 @@ interface ComboboxProps extends DynamicComboboxProps<Option | null> {
   fetchOptions: (data: string) => void;
   allowCustomValues?: boolean;
   alwaysFetchOnFocus?: boolean;
+  fetchMore?: FetchMoreProps;
 }
 
 export const Combobox = ({
@@ -26,6 +28,8 @@ export const Combobox = ({
   options,
   alwaysFetchOnFocus = false,
   allowCustomValues = false,
+  fetchMore,
+  loading,
   ...rest
 }: ComboboxProps) => {
   const intl = useIntl();
@@ -74,6 +78,12 @@ export const Combobox = ({
     });
   };
 
+  const handleFetchMore = () => {
+    if (fetchMore?.hasMore) {
+      fetchMore?.onFetchMore();
+    }
+  };
+
   return (
     <DynamicCombobox
       value={selectedValue}
@@ -89,6 +99,7 @@ export const Combobox = ({
         ...options,
       ]}
       onChange={handleOnChange}
+      onScrollEnd={handleFetchMore}
       onInputValueChange={value => {
         inputValue.current = value;
         debouncedFetchOptions(value);
@@ -99,6 +110,7 @@ export const Combobox = ({
           fetchOptions("");
         }
       }}
+      loading={loading || fetchMore?.loading}
       locale={{
         loadingText: intl.formatMessage(commonMessages.loading),
       }}

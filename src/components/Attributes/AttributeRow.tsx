@@ -106,8 +106,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             fetchOptions={query => {
               fetchAttributeValues(query, attribute.id);
             }}
-            loading={fetchMoreAttributeValues.loading}
             onBlur={onAttributeSelectBlur}
+            fetchMore={fetchMoreAttributeValues}
           />
         </BasicAttributeRow>
       );
@@ -268,7 +268,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                 e.target.value.map(({ value }) => value),
               );
             }}
-            loading={fetchMoreAttributeValues.loading}
+            fetchMore={fetchMoreAttributeValues}
             onBlur={onAttributeSelectBlur}
           />
         </BasicAttributeRow>

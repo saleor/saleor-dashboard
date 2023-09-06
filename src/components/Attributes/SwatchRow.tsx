@@ -77,7 +77,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
         fetchOptions={query => {
           fetchAttributeValues(query, attribute.id);
         }}
-        loading={fetchMoreAttributeValues.loading}
+        fetchMore={fetchMoreAttributeValues}
       />
     </BasicAttributeRow>
   );

@@ -1,10 +1,10 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { Combobox } from "@dashboard/components/Combobox";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
-import { Combobox } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -24,8 +24,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
     taxClasses,
     taxClassDisplayName,
     onChange,
-    // TODO: use onFetchMore when combobox will handle infity scroll
-    // onFetchMore,
+    onFetchMore,
   } = props;
   const intl = useIntl();
 
@@ -37,13 +36,14 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
       <DashboardCard.Content>
         <Combobox
           size="small"
-          data-test-id="category"
           disabled={disabled}
           options={taxClasses.map(choice => ({
             label: choice.name,
             value: choice.id,
           }))}
-          value={value ? { value, label: taxClassDisplayName } : null}
+          fetchOptions={() => {}}
+          value={value}
+          displayValue={taxClassDisplayName}
           name="taxClassId"
           label={intl.formatMessage(taxesMessages.taxClass)}
           onChange={value => {
@@ -51,6 +51,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
               target: { value: value?.value ?? null, name: "taxClassId" },
             });
           }}
+          fetchMore={onFetchMore}
         />
       </DashboardCard.Content>
     </DashboardCard>

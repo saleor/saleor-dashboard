@@ -1,5 +1,6 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { commonMessages } from "@dashboard/intl";
+import { FetchMoreProps } from "@dashboard/types";
 import {
   DynamicMultiselect,
   DynamicMultiselectProps,
@@ -16,6 +17,7 @@ interface MultiselectProps extends DynamicMultiselectProps<Option> {
   fetchOptions: (data: string) => void;
   alwaysFetchOnFocus?: boolean;
   allowCustomValues?: boolean;
+  fetchMore?: FetchMoreProps;
 }
 
 export const Multiselect = ({
@@ -26,6 +28,8 @@ export const Multiselect = ({
   value,
   alwaysFetchOnFocus = false,
   allowCustomValues = false,
+  loading,
+  fetchMore,
   ...rest
 }: MultiselectProps) => {
   const intl = useIntl();
@@ -75,6 +79,12 @@ export const Multiselect = ({
     }
   };
 
+  const handleFetchMore = () => {
+    if (fetchMore.hasMore) {
+      fetchMore.onFetchMore();
+    }
+  };
+
   return (
     <DynamicMultiselect
       options={[
@@ -101,6 +111,8 @@ export const Multiselect = ({
           fetchOptions("");
         }
       }}
+      onScrollEnd={handleFetchMore}
+      loading={loading || fetchMore?.loading}
       locale={{
         loadingText: intl.formatMessage(commonMessages.loading),
       }}
