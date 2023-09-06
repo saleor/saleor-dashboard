@@ -18,6 +18,6 @@ describe("HomeProductList / variant", () => {
     const attributesString = generateAttributesInfo(variant);
 
     // Assert
-    expect(attributesString).toBe("");
+    expect(attributesString).toBe("attr1 / attr2 / attr4");
   });
 });
