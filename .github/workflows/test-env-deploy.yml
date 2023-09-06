@@ -179,24 +179,8 @@ jobs:
     outputs:
       testmo-run-id: ${{ steps.run-tests.outputs.TESTMO_RUN_ID }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: ./.github/actions/testmo/testmo-init
         with:
-          node-version-file: ".nvmrc"
-          cache: npm
-      - name: install dependencies
-        working-directory: .github/workflows
-        run: npm ci
-      - name: create testmo run
-        working-directory: .github/workflows
-        run: |
-          ID=$(npx testmo automation:run:create \
-            --instance "$TESTMO_URL" \
-            --project-id 1 \
-            --name "Deployment tests" \
-            --source frontend-e2e-tests)
-          echo "TESTMO_RUN_ID=$ID" >> $GITHUB_OUTPUT
-        env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
         id: run-tests
@@ -259,19 +243,10 @@ jobs:
           cypressGrepTags: ${{ needs.prepare-tests.outputs.tags }}
           split: ${{ strategy.job-total }}
           splitIndex: ${{ strategy.job-index }}
-      - name: Install dependencies
-        if: ${{ ! cancelled() }}
-        working-directory: .github/workflows
-        run: npm ci
       - name: Testmo threads submit
         if: github.event.pull_request.head.repo.fork == false && !cancelled()
-        working-directory: .github/workflows
-        run: |
-          npx testmo automation:run:submit-thread \
-          --instance "$TESTMO_URL" \
-          --run-id "$TESTMO_RUN_ID" \
-          --results ../../cypress/reports/junit/*.xml
-        env:
+        uses: ./.github/actions/testmo/testmo-threads-submit
+        with:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
@@ -304,12 +279,8 @@ jobs:
       - run: npm ci
         working-directory: .github/workflows
       - name: complete testmo report
-        working-directory: .github/workflows
-        run: |
-          npx testmo automation:run:complete \
-            --instance "$TESTMO_URL" \
-            --run-id "$TESTMO_RUN_ID"
-        env:
+        uses: ./.github/actions/testmo/testmo-finish
+        with:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}

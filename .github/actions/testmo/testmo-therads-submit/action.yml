@@ -1,0 +1,33 @@
+name: submit-testmo
+description: "Submits testmo resports"
+inputs:
+  testmoUrl:
+    description: "Testmo project URL"
+    required: true
+  testmoToken:
+    description: "Testmo token"
+    required: true
+  testmoRunId:
+    description: "Parallelized job Testmo run id"
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Install dependencies
+      if: ${{ ! cancelled() }}
+      working-directory: .github/workflows
+      shell: bash
+      run: npm ci
+    - name: Testmo threads submit
+      if: github.event.pull_request.head.repo.fork == false && !cancelled()
+      working-directory: .github/workflows
+      shell: bash
+      run: |
+        npx testmo automation:run:submit-thread \
+        --instance "$TESTMO_URL" \
+        --run-id "$TESTMO_RUN_ID" \
+        --results ../../cypress/reports/junit/*.xml
+      env:
+        TESTMO_URL: ${{ inputs.testmoUrl }}
+        TESTMO_TOKEN: ${{ inputs.testmoToken }}
+        TESTMO_RUN_ID: ${{ inputs.testmoRunId}}
