@@ -9,7 +9,7 @@ jobs:
     outputs:
       base_URL: ${{ steps.set-domain.outputs.domain }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -179,7 +179,7 @@ jobs:
     outputs:
       testmo-run-id: ${{ steps.run-tests.outputs.TESTMO_RUN_ID }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
@@ -212,7 +212,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Get API_URI
         id: api_uri
@@ -244,10 +244,9 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
 
-      - uses: actions/checkout@v3
       - name: Cypress run critical
         if: ${{ ! cancelled() }}
-        uses: ./.github/actions/e2e-parallel
+        uses: ./.github/actions/e2e
         with:
           apiUri: ${{ steps.api_uri.outputs.custom_api_uri }}
           appMountUri: ${{ secrets.APP_MOUNT_URI }}
@@ -283,7 +282,7 @@ jobs:
       always() && !contains(needs.*.result, 'skipped') && !contains(needs.*.result, 'cancelled') && github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
