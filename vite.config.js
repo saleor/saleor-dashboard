@@ -7,7 +7,7 @@ import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { VitePWA } from "vite-plugin-pwa";
-import viteSentry from "vite-plugin-sentry";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 
 const copyOgImage = () => ({
   name: "copy-og-image",
@@ -93,14 +93,17 @@ export default defineConfig(({ command, mode }) => {
   if (enableSentry) {
     console.log("Enabling sentry...");
 
-    plugins.push(
-      viteSentry({
-        sourceMaps: {
-          include: ["./build/dashboard"],
+    plugins.push(sentryVitePlugin({
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      release: {
+        uploadLegacySourcemaps: {
+          paths: ["./build/dashboard"],
           urlPrefix: process.env.SENTRY_URL_PREFIX,
-        },
-      }),
-    );
+        }
+      }
+    }))
   }
 
   if (!isDev) {
