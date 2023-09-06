@@ -244,9 +244,10 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
 
+      - uses: actions/checkout@v3
       - name: Cypress run critical
         if: ${{ ! cancelled() }}
-        uses: saleor-dashboard/.github/actions/e2e-parallel-with-reports
+        uses: ./.github/actions/e2e-parallel
         with:
           apiUri: ${{ steps.api_uri.outputs.custom_api_uri }}
           appMountUri: ${{ secrets.APP_MOUNT_URI }}
