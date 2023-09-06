@@ -26,6 +26,10 @@ export const MetadataCardTable = ({
   data,
   onChange,
 }: MetadataCardTableProps) => {
+  if (!data || data.length === 0) {
+    return null;
+  }
+
   return (
     <Box __marginLeft={-24} __marginRight={-24}>
       <Table>

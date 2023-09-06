@@ -83,10 +83,8 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
 
                   <Button
                     marginTop={2}
-                    paddingLeft={6}
                     variant="secondary"
                     data-test-id="add-field"
-                    type="button"
                     onClick={() =>
                       onChange({
                         target: {
