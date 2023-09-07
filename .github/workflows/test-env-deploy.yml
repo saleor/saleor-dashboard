@@ -182,8 +182,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/testmo/testmo-init
         with:
-          TESTMO_URL: ${{ secrets.TESTMO_URL }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
         id: init-testmo
 
   cypress-run-selected:
@@ -246,9 +246,9 @@ jobs:
         if: github.event.pull_request.head.repo.fork == false && !cancelled()
         uses: ./.github/actions/testmo/testmo-threads-submit
         with:
-          TESTMO_URL: ${{ secrets.TESTMO_URL }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-          TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
 
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected]
@@ -280,9 +280,9 @@ jobs:
       - name: complete testmo report
         uses: ./.github/actions/testmo/testmo-finish
         with:
-          TESTMO_URL: ${{ secrets.TESTMO_URL }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-          TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
       - name: Download reports artifacts
         uses: actions/download-artifact@v3
         with:
