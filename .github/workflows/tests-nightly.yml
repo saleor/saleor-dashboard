@@ -192,7 +192,7 @@ jobs:
       - name: Cypress run firefox
         id: cypress-firefox
         continue-on-error: true
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result)}}
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["firefox", "all"]'), steps.get-browsers.outputs.result)}}
         uses: ./.github/actions/e2e
         with:
           apiUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
@@ -213,7 +213,7 @@ jobs:
           install: false
           browser: firefox
       - name: Testmo threads submit
-        if: !cancelled()
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result)}}
         uses: ./.github/actions/testmo/testmo-threads-submit
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
