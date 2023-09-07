@@ -2,11 +2,9 @@ import { useUser } from "@dashboard/auth";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import {
   useBulkDeleteShippingZoneMutation,
-  useDeleteShippingZoneMutation,
   useShippingZonesQuery,
   useUpdateDefaultWeightUnitMutation,
 } from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -15,19 +13,16 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
-import {
-  extractMutationErrors,
-  getById,
-  getStringOrPlaceholder,
-} from "@dashboard/misc";
+import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
+import isEqual from "lodash/isEqual";
+import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ShippingZonesListPage from "../components/ShippingZonesListPage";
@@ -48,12 +43,16 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
   const notify = useNotifier();
   const shop = useShop();
   const { user } = useUser();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
   const { updateListSettings, settings } = useListSettings(
     ListViews.SHIPPING_METHODS_LIST,
   );
+
+  const {
+    clearRowSelection,
+    selectedRowIds,
+    setClearDatagridRowSelectionCallback,
+    setSelectedRowIds,
+  } = useRowSelection(params);
 
   usePaginationReset(shippingZonesListUrl, params, settings.rowNumber);
 
@@ -77,20 +76,21 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     displayLoader: true,
     variables: queryVariables,
   });
+  const shippingZones = mapEdgesToItems(data?.shippingZones);
 
-  const [deleteShippingZone, deleteShippingZoneOpts] =
-    useDeleteShippingZoneMutation({
-      onCompleted: data => {
-        if (data.shippingZoneDelete?.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          closeModal();
-          refetch();
-        }
-      },
-    });
+  // const [deleteShippingZone, deleteShippingZoneOpts] =
+  //   useDeleteShippingZoneMutation({
+  //     onCompleted: data => {
+  //       if (data.shippingZoneDelete?.errors.length === 0) {
+  //         notify({
+  //           status: "success",
+  //           text: intl.formatMessage(commonMessages.savedChanges),
+  //         });
+  //         closeModal();
+  //         refetch();
+  //       }
+  //     },
+  //   });
 
   const [updateDefaultWeightUnit, updateDefaultWeightUnitOpts] =
     useUpdateDefaultWeightUnitMutation({
@@ -113,7 +113,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             text: intl.formatMessage(commonMessages.savedChanges),
           });
           closeModal();
-          reset();
+          clearRowSelection();
           refetch();
         }
       },
@@ -125,6 +125,29 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     queryString: params,
   });
 
+  const handleSetSelectedShippingZonesIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!shippingZones) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => shippingZones[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedRowIds);
+
+      if (!haveSaveValues) {
+        setSelectedRowIds(rowsIds);
+      }
+
+      setClearDatagridRowSelectionCallback(clearSelection);
+    },
+    [
+      shippingZones,
+      selectedRowIds,
+      setClearDatagridRowSelectionCallback,
+      setSelectedRowIds,
+    ],
+  );
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <ShippingZonesListPage
@@ -132,16 +155,16 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         settings={settings}
         disabled={
           loading ||
-          deleteShippingZoneOpts.loading ||
+          bulkDeleteShippingZoneOpts.loading ||
           updateDefaultWeightUnitOpts.loading
         }
-        shippingZones={mapEdgesToItems(data?.shippingZones)}
+        shippingZones={shippingZones}
         onUpdateListSettings={updateListSettings}
-        onRemove={id =>
-          openModal("remove", {
-            id,
-          })
-        }
+        // onRemove={id =>
+        //   openModal("remove", {
+        //     id,
+        //   })
+        // }
         onSubmit={unit =>
           extractMutationErrors(
             updateDefaultWeightUnit({
@@ -149,28 +172,12 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             }),
           )
         }
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
-        toolbar={
-          <IconButton
-            data-test-id="delete-selected-elements-icon"
-            variant="secondary"
-            color="primary"
-            onClick={() =>
-              openModal("remove-many", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
+        selectedShippingZonesIds={selectedRowIds}
+        onSelectShippingZones={handleSetSelectedShippingZonesIds}
+        onRemove={() => openModal("remove", { ids: selectedRowIds })}
         userPermissions={user?.userPermissions || []}
       />
-
-      <ActionDialog
+      {/* <ActionDialog
         open={params.action === "remove"}
         confirmButtonState={deleteShippingZoneOpts.status}
         variant="delete"
@@ -203,9 +210,9 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             }}
           />
         </DialogContentText>
-      </ActionDialog>
+      </ActionDialog> */}
       <ActionDialog
-        open={params.action === "remove-many"}
+        open={params.action === "remove"}
         confirmButtonState={bulkDeleteShippingZoneOpts.status}
         variant="delete"
         title={intl.formatMessage({

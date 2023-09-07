@@ -8,24 +8,23 @@ import {
   WeightUnitsEnum,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import {
-  ListActions,
-  PageListProps,
-  UserPermissionProps,
-} from "@dashboard/types";
+import { shippingZoneAddUrl } from "@dashboard/shipping/urls";
+import { PageListProps, UserPermissionProps } from "@dashboard/types";
+import { Button, TrashBinIcon } from "@saleor/macaw-ui/next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ShippingWeightUnitForm from "../ShippingWeightUnitForm";
 import { ShippingZoneListDatagrid } from "../ShippingZonesListDatagrid";
 
 export interface ShippingZonesListPageProps
   extends PageListProps,
-    ListActions,
     UserPermissionProps {
   defaultWeightUnit: WeightUnitsEnum | undefined;
   shippingZones: ShippingZoneFragment[] | undefined;
-  onRemove: (id: string) => void;
+  selectedShippingZonesIds: string[];
+  onSelectShippingZones: (rows: number[], clearSelection: () => void) => void;
+  onRemove: () => void;
   onSubmit: (unit: WeightUnitsEnum | undefined) => SubmitPromise;
 }
 
@@ -33,6 +32,8 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
   defaultWeightUnit,
   disabled,
   onSubmit,
+  onRemove,
+  selectedShippingZonesIds,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -46,7 +47,24 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
           defaultMessage: "Shipping",
           description: "header",
         })}
-      />
+      >
+        {selectedShippingZonesIds.length > 0 && (
+          <Button
+            data-test-id="delete-selected-elements-icon"
+            variant="secondary"
+            icon={<TrashBinIcon />}
+            onClick={onRemove}
+            marginRight={2}
+          />
+        )}
+        <Button href={shippingZoneAddUrl} data-test-id="add-shipping-zone">
+          <FormattedMessage
+            id="mIUNgR"
+            defaultMessage="Create shipping zone"
+            description="button"
+          />
+        </Button>
+      </TopNav>
       <DetailPageLayout.Content>
         <ShippingZoneListDatagrid disabled={disabled} {...listProps} />
       </DetailPageLayout.Content>

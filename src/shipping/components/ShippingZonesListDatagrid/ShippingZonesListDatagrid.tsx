@@ -4,7 +4,6 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { ShippingZoneFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
@@ -24,6 +23,10 @@ import { messages } from "./messages";
 
 interface ShippingZoneListDatagridProps extends ListProps {
   shippingZones: ShippingZoneFragment[] | undefined;
+  onSelectShippingZones: (
+    rowsIndex: number[],
+    clearSelection: () => void,
+  ) => void;
 }
 
 export const ShippingZoneListDatagrid = ({
@@ -31,15 +34,15 @@ export const ShippingZoneListDatagrid = ({
   shippingZones,
   settings,
   onUpdateListSettings,
+  onSelectShippingZones,
 }: ShippingZoneListDatagridProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
 
-  const emptyColumn = useEmptyColumn();
   const shippingZonesListStaticColumns = useMemo(
-    () => shippingZonesListStaticColumnsAdapter(intl, emptyColumn),
+    () => shippingZonesListStaticColumnsAdapter(intl),
     [intl],
   );
 
@@ -89,12 +92,13 @@ export const ShippingZoneListDatagrid = ({
       <Datagrid
         readonly
         loading={disabled}
-        rowMarkers="none"
+        rowMarkers="checkbox"
         columnSelect="single"
         hasRowHover={true}
         freezeColumns={2}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
+        onRowSelectionChange={onSelectShippingZones}
         verticalBorder={col => col > 1}
         rows={shippingZones?.length ?? 0}
         availableColumns={visibleColumns}

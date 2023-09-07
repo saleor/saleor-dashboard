@@ -12,11 +12,7 @@ import { IntlShape } from "react-intl";
 
 import { messages } from "./messages";
 
-export const shippingZonesListStaticColumnsAdapter = (
-  intl: IntlShape,
-  emptyColumn: AvailableColumn,
-) => [
-  emptyColumn,
+export const shippingZonesListStaticColumnsAdapter = (intl: IntlShape) => [
   {
     id: "name",
     title: intl.formatMessage(messages.colName),
