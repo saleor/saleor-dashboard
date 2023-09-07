@@ -41,8 +41,14 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
             value: choice.id,
           }))}
           fetchOptions={() => {}}
-          value={value}
-          displayValue={taxClassDisplayName}
+          value={
+            value
+              ? {
+                  value,
+                  label: taxClassDisplayName,
+                }
+              : null
+          }
           name="taxClassId"
           label={intl.formatMessage(taxesMessages.taxClass)}
           onChange={onChange}

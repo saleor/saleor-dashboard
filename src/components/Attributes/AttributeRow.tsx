@@ -95,8 +95,14 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             size="small"
             disabled={disabled}
             options={getSingleChoices(attributeValues)}
-            value={attribute.value[0]}
-            displayValue={getSingleDisplayValue(attribute, attributeValues)}
+            value={
+              attribute.value[0]
+                ? {
+                    value: attribute.value[0],
+                    label: getSingleDisplayValue(attribute, attributeValues),
+                  }
+                : null
+            }
             error={!!error}
             helperText={getErrorMessage(error, intl)}
             name={`attribute:${attribute.label}`}

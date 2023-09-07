@@ -56,8 +56,14 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
       <Combobox
         disabled={disabled}
         options={options}
-        value={attribute.value[0]}
-        displayValue={getSingleDisplayValue(attribute, attributeValues)}
+        value={
+          attribute.value[0]
+            ? {
+                value: attribute.value[0],
+                label: getSingleDisplayValue(attribute, attributeValues),
+              }
+            : null
+        }
         startAdornment={() =>
           value ? (
             <SwatchPreviewBox

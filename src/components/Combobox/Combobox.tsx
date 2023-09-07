@@ -16,18 +16,16 @@ type ComboboxProps = Omit<
   DynamicComboboxProps<Option | null>,
   "value" | "onChange"
 > & {
-  displayValue: string;
   fetchOptions: (data: string) => void;
   allowCustomValues?: boolean;
   alwaysFetchOnFocus?: boolean;
   fetchMore?: FetchMoreProps;
-  value: string;
+  value: Option | null;
   onChange: (event: ChangeEvent) => void;
 };
 
 export const Combobox = ({
   value,
-  displayValue,
   fetchOptions,
   onChange,
   options,
@@ -42,24 +40,12 @@ export const Combobox = ({
   const inputValue = useRef("");
   const mounted = useRef(false);
 
-  const [selectedValue, setSelectedValue] = useState(
-    value
-      ? {
-          label: displayValue,
-          value,
-        }
-      : null,
-  );
+  const [selectedValue, setSelectedValue] = useState(value);
 
   useEffect(() => {
-    setSelectedValue(
-      value
-        ? {
-            label: displayValue,
-            value,
-          }
-        : null,
-    );
+    if (value?.value !== selectedValue?.value) {
+      setSelectedValue(value);
+    }
   }, [value]);
 
   const addNewValueLabel = intl.formatMessage(messages.addNewValue, {

@@ -101,8 +101,14 @@ export const ProductOrganization: React.FC<
             disabled={disabled}
             data-test-id="product-type"
             options={productTypes}
-            displayValue={productTypeInputDisplayValue}
-            value={data.productType?.id}
+            value={
+              data.productType?.id
+                ? {
+                    value: data.productType.id,
+                    label: productTypeInputDisplayValue,
+                  }
+                : null
+            }
             error={!!formErrors.productType}
             helperText={getProductErrorMessage(formErrors.productType, intl)}
             onChange={onProductTypeChange}
@@ -136,8 +142,14 @@ export const ProductOrganization: React.FC<
           disabled={disabled}
           data-test-id="category"
           options={disabled ? [] : categories}
-          displayValue={categoryInputDisplayValue}
-          value={data.category}
+          value={
+            data.category
+              ? {
+                  value: data.category,
+                  label: categoryInputDisplayValue,
+                }
+              : null
+          }
           error={!!(formErrors.category || noCategoryError)}
           helperText={getProductErrorMessage(
             formErrors.category || noCategoryError,
