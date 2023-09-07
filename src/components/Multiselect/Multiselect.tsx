@@ -112,7 +112,7 @@ export const Multiselect = ({
         }
       }}
       onScrollEnd={handleFetchMore}
-      loading={loading || fetchMore?.loading}
+      loading={loading || fetchMore?.hasMore}
       locale={{
         loadingText: intl.formatMessage(commonMessages.loading),
       }}
