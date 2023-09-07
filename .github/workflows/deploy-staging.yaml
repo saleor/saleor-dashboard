@@ -44,7 +44,7 @@ jobs:
           set -x
           environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
           echo "ENVIRONMENT=${environment}" >> $GITHUB_ENV
-
+      
       - name: Set custom version
         if: ${{ startsWith(github.ref, 'refs/heads/') }}
         # Add commit hash to basic version number
