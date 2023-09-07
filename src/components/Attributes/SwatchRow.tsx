@@ -55,7 +55,6 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
     <BasicAttributeRow label={attribute.label}>
       <Combobox
         disabled={disabled}
-        size="small"
         options={options}
         value={attribute.value[0]}
         displayValue={getSingleDisplayValue(attribute, attributeValues)}

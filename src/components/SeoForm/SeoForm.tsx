@@ -89,7 +89,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
       <DashboardCard.Content>
         <Accordion>
           <Accordion.Item value="seo-accordion">
-            <Accordion.Trigger buttonDataTestId="seo-expand">
+            <Accordion.Trigger>
               <Box display="grid" gap={2}>
                 <Text variant="heading">
                   <FormattedMessage
@@ -113,7 +113,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                   )}
                 </Text>
               </Box>
-              <Accordion.TriggerButton dataTestId="expand-icon" />
+              <Accordion.TriggerButton dataTestId="edit-seo" />
             </Accordion.Trigger>
             <Accordion.Content>
               <Box display="grid" gap={2} marginTop={4}>

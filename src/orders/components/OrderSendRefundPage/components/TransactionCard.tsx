@@ -111,8 +111,8 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
               </Button>
               <PriceField
                 id={inputId}
-                ariaInvalid={!!submitError ? "true" : "false"}
-                ariaDescribedby={errorId}
+                aria-invalid={!!submitError ? "true" : "false"}
+                aria-describedby={errorId}
                 disabled={loading}
                 className={classes.input}
                 label={intl.formatMessage(refundPageMessages.refundAmount)}

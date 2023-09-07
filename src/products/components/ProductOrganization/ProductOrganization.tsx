@@ -98,9 +98,8 @@ export const ProductOrganization: React.FC<
       <DashboardCard.Content gap={2} display="flex" flexDirection="column">
         {canChangeType ? (
           <Combobox
-            size="small"
             disabled={disabled}
-            dataTestId="product-type"
+            data-test-id="product-type"
             options={productTypes}
             displayValue={productTypeInputDisplayValue}
             value={data.productType?.id}
@@ -135,8 +134,7 @@ export const ProductOrganization: React.FC<
 
         <Combobox
           disabled={disabled}
-          size="small"
-          dataTestId="category"
+          data-test-id="category"
           options={disabled ? [] : categories}
           displayValue={categoryInputDisplayValue}
           value={data.category}
@@ -156,10 +154,9 @@ export const ProductOrganization: React.FC<
         />
 
         <Multiselect
-          size="small"
           disabled={disabled}
           options={collections}
-          dataTestId="collections"
+          data-test-id="collections"
           value={collectionsInputDisplayValue}
           error={!!formErrors.collections}
           name="collections"

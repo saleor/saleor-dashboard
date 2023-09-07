@@ -1,4 +1,5 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
 import {
@@ -11,14 +12,18 @@ import { useIntl } from "react-intl";
 
 import { messages } from "../Multiselect/messages";
 
-interface ComboboxProps extends DynamicComboboxProps<Option | null> {
-  value: string;
+type ComboboxProps = Omit<
+  DynamicComboboxProps<Option | null>,
+  "value" | "onChange"
+> & {
   displayValue: string;
   fetchOptions: (data: string) => void;
   allowCustomValues?: boolean;
   alwaysFetchOnFocus?: boolean;
   fetchMore?: FetchMoreProps;
-}
+  value: string;
+  onChange: (event: ChangeEvent) => void;
+};
 
 export const Combobox = ({
   value,
@@ -30,6 +35,7 @@ export const Combobox = ({
   allowCustomValues = false,
   fetchMore,
   loading,
+  size = "small",
   ...rest
 }: ComboboxProps) => {
   const intl = useIntl();
@@ -114,6 +120,7 @@ export const Combobox = ({
       locale={{
         loadingText: intl.formatMessage(commonMessages.loading),
       }}
+      size={size}
       {...rest}
     />
   );

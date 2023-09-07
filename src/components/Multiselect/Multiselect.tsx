@@ -1,4 +1,5 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
 import {
@@ -12,13 +13,14 @@ import { useIntl } from "react-intl";
 import { messages } from "./messages";
 import { toWithCustomValues } from "./utils";
 
-interface MultiselectProps extends DynamicMultiselectProps<Option> {
+type MultiselectProps = Omit<DynamicMultiselectProps<Option>, "onChange"> & {
   options: Option[];
   fetchOptions: (data: string) => void;
   alwaysFetchOnFocus?: boolean;
   allowCustomValues?: boolean;
   fetchMore?: FetchMoreProps;
-}
+  onChange: (event: ChangeEvent) => void;
+};
 
 export const Multiselect = ({
   disabled,
@@ -30,6 +32,7 @@ export const Multiselect = ({
   allowCustomValues = false,
   loading,
   fetchMore,
+  size = "small",
   ...rest
 }: MultiselectProps) => {
   const intl = useIntl();
@@ -116,6 +119,7 @@ export const Multiselect = ({
       locale={{
         loadingText: intl.formatMessage(commonMessages.loading),
       }}
+      size={size}
       {...rest}
     />
   );

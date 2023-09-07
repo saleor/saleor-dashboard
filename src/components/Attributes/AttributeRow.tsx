@@ -228,7 +228,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             id={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
             type="date"
-            size="small"
             value={attribute.value[0]}
           />
         </BasicAttributeRow>
@@ -252,7 +251,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             allowCustomValues
             alwaysFetchOnFocus
             disabled={disabled}
-            size="small"
             name={`attribute:${attribute.label}`}
             label=""
             error={!!error}
