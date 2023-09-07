@@ -10,7 +10,7 @@ inputs:
 outputs:
   testmo-run-id:
     description: "Testmo run id"
-    value: ${{ steps.run-tests.outputs.TESTMO-RUN-ID }}
+    value: ${{ steps.run-tests.outputs.TESTMO_RUN_ID }}
 runs:
   using: composite
   steps:
