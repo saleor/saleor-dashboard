@@ -179,6 +179,7 @@ jobs:
     outputs:
       testmo-run-id: ${{ steps.run-tests.outputs.TESTMO_RUN_ID }}
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/testmo/testmo-init
         with:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
@@ -195,9 +196,7 @@ jobs:
       matrix: ${{ fromJson(needs.prepare-tests.outputs.containers) }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Get API_URI
         id: api_uri
         # Search for API_URI in PR description and use default if not defined

@@ -13,7 +13,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v4
     - name: Install dependencies
       if: ${{ ! cancelled() }}
       working-directory: .github/workflows
