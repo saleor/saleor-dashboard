@@ -2683,8 +2683,17 @@ export const ShippingZoneFragmentDoc = gql`
   }
   name
   description
+  priceRange {
+    start {
+      ...Money
+    }
+    stop {
+      ...Money
+    }
+  }
 }
-    ${MetadataFragmentDoc}`;
+    ${MetadataFragmentDoc}
+${MoneyFragmentDoc}`;
 export const ShippingZoneDetailsFragmentDoc = gql`
     fragment ShippingZoneDetails on ShippingZone {
   ...ShippingZone

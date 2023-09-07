@@ -17,7 +17,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import ShippingWeightUnitForm from "../ShippingWeightUnitForm";
-import ShippingZonesList from "../ShippingZonesList";
+import { ShippingZoneListDatagrid } from "../ShippingZonesListDatagrid";
 
 export interface ShippingZonesListPageProps
   extends PageListProps,
@@ -48,7 +48,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
         })}
       />
       <DetailPageLayout.Content>
-        <ShippingZonesList disabled={disabled} {...listProps} />
+        <ShippingZoneListDatagrid disabled={disabled} {...listProps} />
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>
         <RequirePermissions
