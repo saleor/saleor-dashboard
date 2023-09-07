@@ -80,8 +80,8 @@ export const Multiselect = ({
   };
 
   const handleFetchMore = () => {
-    if (fetchMore.hasMore) {
-      fetchMore.onFetchMore();
+    if (fetchMore?.hasMore) {
+      fetchMore?.onFetchMore();
     }
   };
 

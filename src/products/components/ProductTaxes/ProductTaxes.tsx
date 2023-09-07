@@ -5,6 +5,7 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
+import { Option } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -46,7 +47,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
           displayValue={taxClassDisplayName}
           name="taxClassId"
           label={intl.formatMessage(taxesMessages.taxClass)}
-          onChange={value => {
+          onChange={(value: Option) => {
             onChange({
               target: { value: value?.value ?? null, name: "taxClassId" },
             });
