@@ -110,7 +110,7 @@ export const Combobox = ({
           fetchOptions("");
         }
       }}
-      loading={loading || fetchMore?.hasMore}
+      loading={loading || fetchMore?.hasMore || fetchMore?.loading}
       locale={{
         loadingText: intl.formatMessage(commonMessages.loading),
       }}
