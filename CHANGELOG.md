@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.15.3
+
+### Patch Changes
+
+- df6480de4: Increate memory for vite sourcemaps (sentry)
+- 121c9bac3: Fix layouts for translation pages
+- 5378f0c46: Update changesets based deployments
+- 6c640d267: Fix rendering of top products on home, when attributes does not have value
+- 36a125adc: Update vite sentry library and handle legacy uploading
+- 4e029c64b: Use sentry CLI instead of vite plugin
+- 3d3be4334: Fix attribute creation when we change input type
+
 ## 3.15.2
 
 ### Patch Changes
