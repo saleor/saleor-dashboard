@@ -110,7 +110,6 @@ const parseAvailabilityColumns = (
   channels?.map(channel => ({
     id: `availableInChannel:${channel.id}`,
     group: channel.name,
-    metaGroup: null,
     title: intl.formatMessage(messages.available),
     width: 80,
   }));
