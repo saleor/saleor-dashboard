@@ -7,6 +7,10 @@ inputs:
   testmoToken:
     description: "Testmo token"
     required: true
+outputs:
+  testmo-run-id:
+    description: "Testmo run id"
+    value: ${{ steps.run-tests.outputs.TESTMO-RUN-ID }}
 runs:
   using: composite
   steps:
