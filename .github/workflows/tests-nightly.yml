@@ -183,7 +183,7 @@ jobs:
         with:
           apiUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
           appMountUri: ${{ secrets.APP_MOUNT_URI }}
-          baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          baseUrl: "${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/"
           userName: ${{ secrets.CYPRESS_USER_NAME }}
           secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
