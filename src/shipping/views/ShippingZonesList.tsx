@@ -20,7 +20,7 @@ import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { DialogContentText } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui/next";
 import isEqual from "lodash/isEqual";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -77,20 +77,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     variables: queryVariables,
   });
   const shippingZones = mapEdgesToItems(data?.shippingZones);
-
-  // const [deleteShippingZone, deleteShippingZoneOpts] =
-  //   useDeleteShippingZoneMutation({
-  //     onCompleted: data => {
-  //       if (data.shippingZoneDelete?.errors.length === 0) {
-  //         notify({
-  //           status: "success",
-  //           text: intl.formatMessage(commonMessages.savedChanges),
-  //         });
-  //         closeModal();
-  //         refetch();
-  //       }
-  //     },
-  //   });
 
   const [updateDefaultWeightUnit, updateDefaultWeightUnitOpts] =
     useUpdateDefaultWeightUnitMutation({
@@ -160,11 +146,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         }
         shippingZones={shippingZones}
         onUpdateListSettings={updateListSettings}
-        // onRemove={id =>
-        //   openModal("remove", {
-        //     id,
-        //   })
-        // }
         onSubmit={unit =>
           extractMutationErrors(
             updateDefaultWeightUnit({
@@ -177,40 +158,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         onRemove={() => openModal("remove", { ids: selectedRowIds })}
         userPermissions={user?.userPermissions || []}
       />
-      {/* <ActionDialog
-        open={params.action === "remove"}
-        confirmButtonState={deleteShippingZoneOpts.status}
-        variant="delete"
-        title={intl.formatMessage({
-          id: "k3EI/U",
-          defaultMessage: "Delete Shipping Zone",
-          description: "dialog header",
-        })}
-        onClose={closeModal}
-        onConfirm={() =>
-          deleteShippingZone({
-            variables: { id: params.id ?? "" },
-          })
-        }
-      >
-        <DialogContentText>
-          <FormattedMessage
-            id="qf/m5l"
-            defaultMessage="Are you sure you want to delete {shippingZoneName} shipping zone?"
-            values={{
-              shippingZoneName: (
-                <strong>
-                  {getStringOrPlaceholder(
-                    mapEdgesToItems(data?.shippingZones)?.find(
-                      getById(params.id ?? ""),
-                    )?.name,
-                  )}
-                </strong>
-              ),
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog> */}
       <ActionDialog
         open={params.action === "remove"}
         confirmButtonState={bulkDeleteShippingZoneOpts.status}
@@ -227,7 +174,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
           })
         }
       >
-        <DialogContentText>
+        <Text>
           <FormattedMessage
             id="C9pcQx"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
@@ -241,7 +188,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
               ),
             }}
           />
-        </DialogContentText>
+        </Text>
       </ActionDialog>
     </PaginatorContext.Provider>
   );
