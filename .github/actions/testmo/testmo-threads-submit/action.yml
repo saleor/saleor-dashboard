@@ -68,7 +68,6 @@ runs:
       run: npm run qa:artifact-move-screenshots
     - name: Upload reports
       uses: actions/upload-artifact@v3
-      shell: bash
       if: always()
       with:
         name: combined-report
