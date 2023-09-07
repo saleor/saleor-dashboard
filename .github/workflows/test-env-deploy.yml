@@ -177,7 +177,7 @@ jobs:
     if: github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-22.04
     outputs:
-      testmo-run-id: ${{ steps.init-testmo.outputs.TESTMO_RUN_ID }}
+      testmo-run-id: ${{ steps.init-testmo.outputs.testmo-run-id }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/testmo/testmo-init
