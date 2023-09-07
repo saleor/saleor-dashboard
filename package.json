@@ -333,7 +333,7 @@
     "postbuild": "node scripts/removeSourcemaps.js",
     "postinstall": "node scripts/patchReactVirtualized.js",
     "predev": "npm run build-types",
-    "release": "changeset tag && git push --follow-tags",
+    "release": "echo $npm_package_version | xargs git tag && git push --follow-tags",
     "prepare": "is-ci || husky install",
     "dep-status": "depcruise --config .dependency-cruiser.js src",
     "chromatic": "chromatic --exit-zero-on-changes",
