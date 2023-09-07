@@ -71,7 +71,7 @@ export const Multiselect = ({
     onChange({
       target: {
         value: valuesWithCustom,
-        name: rest.name,
+        name: rest.name ?? "",
       },
     });
 

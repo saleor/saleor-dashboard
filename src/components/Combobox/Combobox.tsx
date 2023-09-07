@@ -80,7 +80,7 @@ export const Combobox = ({
 
   const handleOnChange = (value: Option | null) => {
     onChange({
-      target: { value: value?.value ?? null, name: rest.name },
+      target: { value: value?.value ?? null, name: rest.name ?? "" },
     });
   };
 
@@ -93,17 +93,19 @@ export const Combobox = ({
   return (
     <DynamicCombobox
       value={selectedValue}
-      options={[
-        ...(showAddCustomValue
-          ? [
-              {
-                label: addNewValueLabel,
-                value: inputValue.current,
-              },
-            ]
-          : []),
-        ...options,
-      ]}
+      options={
+        [
+          ...(showAddCustomValue
+            ? [
+                {
+                  label: addNewValueLabel,
+                  value: inputValue.current,
+                },
+              ]
+            : []),
+          ...options,
+        ] as Option[]
+      }
       onChange={handleOnChange}
       onScrollEnd={handleFetchMore}
       onInputValueChange={value => {
