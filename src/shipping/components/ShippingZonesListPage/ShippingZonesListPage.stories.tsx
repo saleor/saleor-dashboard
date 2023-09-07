@@ -21,6 +21,8 @@ const props: ShippingZonesListPageProps = {
   onSubmit: () => undefined,
   shippingZones,
   userPermissions: adminUserPermissions,
+  selectedShippingZonesIds: [],
+  onSelectShippingZones: () => undefined,
 };
 
 export default {
