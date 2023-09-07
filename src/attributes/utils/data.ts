@@ -140,6 +140,7 @@ function getFileOrReferenceAttributeData(
 ) {
   return {
     ...getSimpleAttributeData(data, values),
+    values: [],
     availableInGrid: undefined,
     filterableInDashboard: undefined,
     filterableInStorefront: undefined,
