@@ -98,8 +98,7 @@ jobs:
         # run copies of the current job in parallel
         containers: [1, 2, 3, 4, 5, 6]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -156,68 +155,50 @@ jobs:
         id: cypress-chrome
         continue-on-error: true
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result)}}
-        uses: cypress-io/github-action@v5
-        env:
-          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
-          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
-          COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
-          CYPRESS_grepTags: ${{ env.GREP_TAGS }}
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
-          SPLIT: ${{ strategy.job-total }}
-          SPLIT_INDEX: ${{ strategy.job-index }}
+        uses: ./.github/actions/e2e
         with:
+          apiUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          appMountUri: ${{ secrets.APP_MOUNT_URI }}
+          baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          userName: ${{ secrets.CYPRESS_USER_NAME }}
+          secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          permissionsUserPassword: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          mailpitUrl: ${{ secrets.CYPRESS_MAILPITURL }}
+          stripeSecretKey: ${{ secrets.STRIPE_SECRET_KEY }}
+          stripePublicKey: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          cypressGrepTags: ${{ env.GREP_TAGS }}
+          split: ${{ strategy.job-total }}
+          splitIndex: ${{ strategy.job-index }}
+          commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           install: false
           browser: chrome
 
       - name: Cypress run firefox
         id: cypress-firefox
         continue-on-error: true
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["firefox", "all"]'), steps.get-browsers.outputs.result)}}
-        uses: cypress-io/github-action@v5
-        env:
-          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
-          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
-          COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
-          CYPRESS_grepTags: ${{ env.GREP_TAGS }}
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
-          SPLIT: ${{ strategy.job-total }}
-          SPLIT_INDEX: ${{ strategy.job-index }}
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result)}}
+        uses: ./.github/actions/e2e
         with:
+          apiUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          appMountUri: ${{ secrets.APP_MOUNT_URI }}
+          baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          userName: ${{ secrets.CYPRESS_USER_NAME }}
+          secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          permissionsUserPassword: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          mailpitUrl: ${{ secrets.CYPRESS_MAILPITURL }}
+          stripeSecretKey: ${{ secrets.STRIPE_SECRET_KEY }}
+          stripePublicKey: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          cypressGrepTags: ${{ env.GREP_TAGS }}
+          split: ${{ strategy.job-total }}
+          splitIndex: ${{ strategy.job-index }}
+          commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           install: false
           browser: firefox
-      - name: Create reports dir
-        continue-on-error: true
-        if: ${{ ! cancelled() }}
-        run: npm run qa:create-artifacts-dirs
-      - name: Move screenshots into reports dir
-        continue-on-error: true
-        if: ${{ ! cancelled() }}
-        run: npm run qa:move-screenshots
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: report-${{ strategy.job-index }}
-          path: ./cypress/reports
-          retention-days: 5
-          if-no-files-found: ignore
+
   manual-triggered-test-complete:
     needs: [run-tests-in-parallel]
     if: ${{always() && github.event_name != 'repository_dispatch' && !contains(needs.run-tests-in-parallel.result, 'skipped') && !contains(needs.run-tests-in-parallel.result, 'cancelled')}}
