@@ -170,7 +170,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         onClose={closeModal}
         onConfirm={() =>
           bulkDeleteShippingZone({
-            variables: { ids: params.ids ?? "" },
+            variables: { ids: selectedRowIds ?? "" },
           })
         }
       >
@@ -180,10 +180,10 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             defaultMessage="{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
             description="dialog content"
             values={{
-              counter: params.ids?.length,
+              counter: selectedRowIds?.length,
               displayQuantity: (
                 <strong>
-                  {getStringOrPlaceholder(params.ids?.length.toString())}
+                  {getStringOrPlaceholder(selectedRowIds?.length.toString())}
                 </strong>
               ),
             }}
