@@ -7,13 +7,13 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface FormData {
-  unit: Option | undefined;
+  unit: Option | null;
 }
 
 export interface ShippingWeightUnitFormProps {
-  defaultWeightUnit: WeightUnitsEnum | undefined;
+  defaultWeightUnit: WeightUnitsEnum | null;
   disabled: boolean;
-  onSubmit: (unit: WeightUnitsEnum | undefined) => SubmitPromise;
+  onSubmit: (unit: WeightUnitsEnum | null) => SubmitPromise;
 }
 
 const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
@@ -23,10 +23,12 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
 }) => {
   const intl = useIntl();
   const initialForm: FormData = {
-    unit: {
-      label: defaultWeightUnit,
-      value: defaultWeightUnit,
-    },
+    unit: defaultWeightUnit
+      ? {
+          label: defaultWeightUnit,
+          value: defaultWeightUnit,
+        }
+      : null,
   };
 
   return (

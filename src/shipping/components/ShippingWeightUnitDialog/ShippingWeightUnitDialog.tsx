@@ -8,10 +8,10 @@ import ShippingWeightUnitForm from "../ShippingWeightUnitForm";
 
 interface ShippingWeightUnitDialogProps {
   open: boolean;
-  onSubmit: (unit: WeightUnitsEnum) => SubmitPromise;
+  onSubmit: (unit: WeightUnitsEnum | null) => SubmitPromise;
   onClose: () => void;
   onChange: (val: boolean) => void;
-  defaultWeightUnit: WeightUnitsEnum;
+  defaultWeightUnit: WeightUnitsEnum | null;
   disabled: boolean;
 }
 

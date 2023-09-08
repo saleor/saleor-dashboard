@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   adminUserPermissions,
   listActionsProps,
@@ -18,7 +17,7 @@ const props: ShippingZonesListPageProps = {
   ...pageListProps.default,
   defaultWeightUnit: WeightUnitsEnum.KG,
   onRemove: () => undefined,
-  onSubmit: () => undefined,
+  onSubmit: async () => undefined,
   shippingZones,
   userPermissions: adminUserPermissions,
   selectedShippingZonesIds: [],
