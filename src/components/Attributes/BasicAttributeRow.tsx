@@ -1,5 +1,4 @@
 import { Box, InfoIcon, sprinkles, Text, Tooltip } from "@saleor/macaw-ui/next";
-import isString from "lodash/isString";
 import React from "react";
 
 interface BasicAttributeRowProps {
@@ -9,8 +8,8 @@ interface BasicAttributeRowProps {
   clickableLabel?: boolean;
 }
 
-const capitalize = (str: any) =>
-  isString(str) ? str.charAt(0).toUpperCase() + str.slice(1) : str;
+const capitalize = (str: BasicAttributeRowProps["label"]) =>
+  typeof str === "string" ? str.charAt(0).toUpperCase() + str.slice(1) : str;
 
 export const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
   label,
