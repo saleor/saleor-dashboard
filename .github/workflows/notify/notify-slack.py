@@ -59,7 +59,7 @@ class JobNotifier:
         self.author: str = os.environ["GITHUB_ACTOR"]
 
         # Job Status (success|failure|cancelled)
-        self.job_status: str = os.environ["JOB_STATUS"]
+        self.job_status: str = os.environ.get("JOB_STATUS", "unknown")
 
         # The kind of job (deployment, release tests, ...)
         self.job_kind: str = os.getenv("JOB_KIND", "deployment")
