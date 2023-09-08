@@ -136,11 +136,11 @@ export function fillUpShippingRate({
   }
   cy.get(SHIPPING_RATE_DETAILS.priceInput).each($priceInput => {
     cy.wrap($priceInput)
-      .clear()
+      .clear({ force: true })
       .get(SHARED_ELEMENTS.pageHeader)
       .click()
       .wrap($priceInput)
-      .clearAndType(price);
+      .clearAndType(price, { force: true });
   });
 }
 
@@ -189,16 +189,16 @@ export function saveRateAfterUpdate() {
 
 export function fillUpLimits({ max, min }) {
   cy.get(SHIPPING_RATE_DETAILS.minValueInput)
-    .type(min)
+    .type(min, { force: true })
     .get(SHIPPING_RATE_DETAILS.maxValueInput)
-    .type(max);
+    .type(max, { force: true });
 }
 
 export function fillUpDeliveryTime({ min, max }) {
   cy.get(SHIPPING_RATE_DETAILS.minDeliveryTimeInput)
-    .clearAndType(min)
+    .clearAndType(min, { force: true })
     .get(SHIPPING_RATE_DETAILS.maxDeliveryTimeInput)
-    .clearAndType(max);
+    .clearAndType(max, { force: true });
 }
 
 export const rateOptions = {
