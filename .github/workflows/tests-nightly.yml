@@ -39,7 +39,7 @@ on:
           - all
 
   schedule:
-    - cron: "00 2 * * 1-5"
+    - cron: "00 2 * * 1,3,5"
 
   repository_dispatch:
     types: [automation-tests-event]
@@ -218,56 +218,13 @@ jobs:
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
 
-  manual-triggered-test-complete:
+  manual-and-scheduled-triggered-test-complete:
     needs: [run-tests-in-parallel, testmo-report-preparation]
     if: ${{always() && github.event_name != 'repository_dispatch' && !contains(needs.run-tests-in-parallel.result, 'skipped') && !contains(needs.run-tests-in-parallel.result, 'cancelled')}}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-          cache: npm
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-      - name: Install Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: NODE_OPTIONS=--max_old_space_size=4096 npm ci
-      - run: npm ci
-        working-directory: .github/workflows
-      - name: Download reports artifacts
-        uses: actions/download-artifact@v3
-        with:
-          path: ./cypress/reports
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: ./cypress/reports
-      - name: Create reports dir
-        continue-on-error: true
-        run: npm run qa:create-artifacts-dirs
-      - name: Merge report files
-        continue-on-error: true
-        run: npm run qa:generate-html-report
-      - name: Move artifacts screenshots into reports dir
-        continue-on-error: true
-        run: npm run qa:artifact-move-screenshots
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: combined-report
-          path: ./cypress/reports
-          retention-days: 5
-          if-no-files-found: ignore
+      - uses: ./.github/actions/combineReportsFromE2E
 
   get-environment-variables:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
@@ -456,13 +413,13 @@ jobs:
       - name: Notify Slack
         env:
           JOB_DEPLOYMENT_KIND: ${{ needs.run-tests-in-parallel.outputs.environment }}
-          JOB_STATUS: "Failure"
+          JOB_STATUS: ${{ needs.run-tests-in-parallel.outputs.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_SALEOR_QA_WEBHOOK_URL }}
-          JOB_TITLE: "Full regression (nightly tests) action failed"
+          JOB_TITLE: "Full regression (nightly tests) action results"
           JOB_KIND: "Tests"
           GITHUB_RUN_ID: ${{github.run_id}}
         run: |
-          python3 .github/workflows/notify/notify-slack.py
+          python3 ./.github/workflows/notify/notify-slack.py
   test-complete:
     needs:
       [testmo-report-preparation, run-tests-in-parallel, run-tests-on-release]
