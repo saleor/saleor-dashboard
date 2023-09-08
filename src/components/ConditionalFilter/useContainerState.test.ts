@@ -13,6 +13,7 @@ describe("ConditionalFilter / useContainerState", () => {
     value: [],
     persist: () => {},
     isPersisted: () => true,
+    getTokenByName: () => undefined,
     clear: () => {},
     count: 0,
   };
