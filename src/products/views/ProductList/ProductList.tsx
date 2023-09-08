@@ -77,6 +77,19 @@ import {
 } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import { getAvailableProductKinds, getProductKindOpts } from "./utils";
+import { FilterContainer, FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { isItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
+
+const obtainChannelFromFilter = (filterContainer: FilterContainer) => {
+  const element = filterContainer
+  .filter(FilterElement.isCompatible)
+  .find(element => element.equalsValue("channel"))
+  ?.selectedValue()
+  
+  if (element && isItemOption(element)) {
+    return element.value
+  }
+}
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -88,6 +101,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { queue } = useBackgroundTask();
   const { valueProvider } = useConditionalFilterContext();
   const productListingPageFiltersFlag = useFlag("product_filters");
+
+  // @eslint-ignore-next-line
+  const channel = obtainChannelFromFilter(valueProvider.value)
 
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
