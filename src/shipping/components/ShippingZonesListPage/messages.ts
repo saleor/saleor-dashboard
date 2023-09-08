@@ -21,4 +21,9 @@ export const messages = defineMessages({
     defaultMessage: "Create shipping zone",
     description: "button",
   },
+  shippingZonesConfig: {
+    id: "u6V5I/",
+    defaultMessage: "Change default weight unit",
+    description: "shipping zones configuration",
+  },
 });

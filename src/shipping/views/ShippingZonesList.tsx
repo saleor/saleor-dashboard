@@ -163,6 +163,8 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         userPermissions={user?.userPermissions || []}
         initialSearch={params.query ?? ""}
         onSearchChange={searchHandler}
+        // TODO: Implement weight change form
+        onWeightUnitChange={() => undefined}
       />
       <ActionDialog
         open={params.action === "remove"}
