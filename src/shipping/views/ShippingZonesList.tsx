@@ -63,6 +63,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
+      ...(!!params.query && { filter: { search: params.query } }),
     }),
     [params, settings.rowNumber],
   );
@@ -134,6 +135,9 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     ],
   );
 
+  const searchHandler = (query: string) =>
+    navigate(shippingZonesListUrl({ ...params, query }));
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <ShippingZonesListPage
@@ -157,6 +161,8 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         onSelectShippingZones={handleSetSelectedShippingZonesIds}
         onRemove={() => openModal("remove", { ids: selectedRowIds })}
         userPermissions={user?.userPermissions || []}
+        initialSearch={params.query ?? ""}
+        onSearchChange={searchHandler}
       />
       <ActionDialog
         open={params.action === "remove"}

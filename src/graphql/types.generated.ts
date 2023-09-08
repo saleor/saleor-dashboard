@@ -11042,6 +11042,7 @@ export type ShippingZonesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   last?: InputMaybe<Scalars['Int']>;
   before?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<ShippingZoneFilterInput>;
 }>;
 
 
