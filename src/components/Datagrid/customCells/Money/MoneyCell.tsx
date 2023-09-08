@@ -12,7 +12,7 @@ import { usePriceField } from "../../../PriceField/usePriceField";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";
-  readonly currency: string | undefined;
+  readonly currency: string;
   readonly value: number | number[] | null;
 }
 
@@ -61,7 +61,7 @@ export const moneyCellRenderer = (
     const isRange = Array.isArray(value);
     const displayValue = isRange ? value[0] : value;
 
-    if (!displayValue) {
+    if (!displayValue || !currency) {
       return true;
     }
 
