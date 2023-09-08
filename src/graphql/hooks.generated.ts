@@ -1584,6 +1584,7 @@ export const OrderLineFragmentDoc = gql`
     }
   }
   variant {
+    ...Metadata
     id
     name
     quantityAvailable
@@ -1638,7 +1639,8 @@ export const OrderLineFragmentDoc = gql`
     url
   }
 }
-    ${StockFragmentDoc}
+    ${MetadataFragmentDoc}
+${StockFragmentDoc}
 ${TaxedMoneyFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {

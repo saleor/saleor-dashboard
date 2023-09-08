@@ -83,6 +83,7 @@ export const fragmentOrderLine = gql`
       }
     }
     variant {
+      ...Metadata
       id
       name
       quantityAvailable
