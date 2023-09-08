@@ -8,7 +8,7 @@ import { BulkAction, Dialog, Pagination, Search, SingleAction } from "../types";
 export const shippingSection = "/shipping/";
 
 export const shippingZonesListPath = shippingSection;
-export type ShippingZonesListUrlDialog = "remove";
+export type ShippingZonesListUrlDialog = "remove" | "change-weight-unit";
 export type ShippingZonesListUrlQueryParams = BulkAction &
   Dialog<ShippingZonesListUrlDialog> &
   Pagination &

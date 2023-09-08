@@ -25,6 +25,7 @@ import isEqual from "lodash/isEqual";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ShippingWeightUnitDialog } from "../components/ShippingWeightUnitDialog";
 import ShippingZonesListPage from "../components/ShippingZonesListPage";
 import {
   shippingZonesListUrl,
@@ -87,6 +88,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
           });
+          closeModal();
         }
       },
     });
@@ -163,8 +165,21 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         userPermissions={user?.userPermissions || []}
         initialSearch={params.query ?? ""}
         onSearchChange={searchHandler}
-        // TODO: Implement weight change form
-        onWeightUnitChange={() => undefined}
+        onWeightUnitChange={() => openModal("change-weight-unit")}
+      />
+      <ShippingWeightUnitDialog
+        open={params.action === "change-weight-unit"}
+        onSubmit={unit =>
+          extractMutationErrors(
+            updateDefaultWeightUnit({
+              variables: { unit },
+            }),
+          )
+        }
+        onChange={() => null}
+        disabled={updateDefaultWeightUnitOpts.loading}
+        onClose={closeModal}
+        defaultWeightUnit={shop?.defaultWeightUnit}
       />
       <ActionDialog
         open={params.action === "remove"}

@@ -1,17 +1,13 @@
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
 import Form from "@dashboard/components/Form";
-import SingleSelectField from "@dashboard/components/SingleSelectField";
 import { WeightUnitsEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { buttonMessages, sectionNames } from "@dashboard/intl";
-import { Card, CardActions, CardContent } from "@material-ui/core";
-import { vars } from "@saleor/macaw-ui/next";
+import { buttonMessages } from "@dashboard/intl";
+import { Box, Button, Combobox, Option, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface FormData {
-  unit: WeightUnitsEnum | undefined;
+  unit: Option | undefined;
 }
 
 export interface ShippingWeightUnitFormProps {
@@ -27,22 +23,31 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
 }) => {
   const intl = useIntl();
   const initialForm: FormData = {
-    unit: defaultWeightUnit,
+    unit: {
+      label: defaultWeightUnit,
+      value: defaultWeightUnit,
+    },
   };
 
   return (
     <Form
       confirmLeave
       initial={initialForm}
-      onSubmit={formData => onSubmit(formData.unit)}
+      onSubmit={formData => onSubmit(formData.unit?.value as WeightUnitsEnum)}
     >
       {({ change, data, submit }) => (
-        <Card>
-          <CardTitle title={intl.formatMessage(sectionNames.configuration)} />
-          <CardContent>
-            <SingleSelectField
+        <Box display="flex" gap={4} flexDirection="column" marginTop={4}>
+          <Box>
+            <Text variant="caption" marginBottom={4}>
+              {intl.formatMessage({
+                id: "4Kq3O6",
+                defaultMessage:
+                  "This unit will be used as default shipping weight",
+              })}
+            </Text>
+            <Combobox
               disabled={disabled}
-              choices={Object.values(WeightUnitsEnum).map(unit => ({
+              options={Object.values(WeightUnitsEnum).map(unit => ({
                 label: unit,
                 value: unit,
               }))}
@@ -50,22 +55,21 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
                 id: "Rp/Okl",
                 defaultMessage: "Shipping Weight Unit",
               })}
-              hint={intl.formatMessage({
-                id: "4Kq3O6",
-                defaultMessage:
-                  "This unit will be used as default shipping weight",
-              })}
               name={"unit" as keyof FormData}
               value={data.unit}
-              onChange={change}
+              onChange={value => change({ target: { name: "unit", value } })}
             />
-          </CardContent>
-          <CardActions style={{ paddingLeft: vars.spacing[6] }}>
-            <Button onClick={submit} data-test-id="save-unit">
-              <FormattedMessage {...buttonMessages.save} />
-            </Button>
-          </CardActions>
-        </Card>
+          </Box>
+          <Button
+            variant="primary"
+            onClick={submit}
+            disabled={disabled}
+            data-test-id="save-unit"
+            alignSelf="end"
+          >
+            <FormattedMessage {...buttonMessages.save} />
+          </Button>
+        </Box>
       )}
     </Form>
   );
