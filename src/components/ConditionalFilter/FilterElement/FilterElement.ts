@@ -168,14 +168,6 @@ export class FilterElement {
     return UrlEntry.forStatic(this.condition.selected, this.value.value);
   }
 
-  public selectedValue () {
-    return this.condition.selected.value
-  }
-
-  public equalsValue (value: string) {
-    return this.value.value === value;
-  }
-
   public equals(element: FilterElement) {
     return this.value.value === element.value.value;
   }
