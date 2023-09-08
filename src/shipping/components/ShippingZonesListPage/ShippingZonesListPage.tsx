@@ -64,9 +64,9 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
           justifyContent="space-between"
           alignItems="center"
           paddingX={6}
-          marginBottom={2}
+          marginY={2}
         >
-          <Box __width="320px" paddingTop={2}>
+          <Box __width="320px">
             <SearchInput
               initialSearch={initialSearch}
               placeholder={intl.formatMessage(messages.searchShippingZones)}
