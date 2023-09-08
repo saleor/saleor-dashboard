@@ -413,7 +413,7 @@ jobs:
       - name: Notify Slack
         env:
           JOB_DEPLOYMENT_KIND: ${{ needs.run-tests-in-parallel.outputs.environment }}
-          JOB_STATUS: ${{ needs.run-tests-in-parallel.outputs.status }}
+          JOB_STATUS: "Status"
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_SALEOR_QA_WEBHOOK_URL }}
           JOB_TITLE: "Full regression (nightly tests) action results"
           JOB_KIND: "Tests"
