@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import {
   loadingCell,
+  metadataCell,
   moneyCell,
   readonlyTextCell,
   thumbnailCell,
@@ -45,6 +46,11 @@ export const orderDetailsStaticColumnsAdapter = (
   {
     id: "total",
     title: intl.formatMessage(columnsMessages.total),
+    width: 150,
+  },
+  {
+    id: "metadata",
+    title: intl.formatMessage(columnsMessages.metadata),
     width: 150,
   },
 ];
@@ -96,6 +102,11 @@ export const createGetCellContent =
           rowData.totalPrice.gross.amount,
           rowData.totalPrice.gross.currency,
           readonyOptions,
+        );
+      case "metadata":
+        return metadataCell(
+          rowData.variant.metadata,
+          rowData.variant.privateMetadata,
         );
 
       default:

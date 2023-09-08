@@ -3,6 +3,7 @@ import { useExtraCells } from "@glideapps/glide-data-grid-cells";
 import { useMemo } from "react";
 
 import { dropdownCellRenderer } from "./DropdownCell";
+import { metadataCellRenderer } from "./MetadataCell";
 import { moneyCellRenderer } from "./Money/MoneyCell";
 import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
 import { numberCellRenderer } from "./NumberCell";
@@ -17,6 +18,7 @@ export function useCustomCellRenderers() {
       moneyCellRenderer(),
       moneyDiscountedCellRenderer(),
       numberCellRenderer(locale),
+      metadataCellRenderer(),
       dropdownCellRenderer,
       thumbnailCellRenderer,
       ...customRenderers,

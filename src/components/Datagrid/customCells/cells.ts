@@ -3,6 +3,7 @@ import {
   numberCellEmptyValue,
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { Locale } from "@dashboard/components/Locale";
+import { MetadataItemFragment } from "@dashboard/graphql";
 import { GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
 
 import {
@@ -10,6 +11,7 @@ import {
   DropdownCellContentProps,
   DropdownChoice,
 } from "./DropdownCell";
+import { MetadataCell } from "./MetadataCell";
 import { MoneyCell, MoneyDiscuntedCell } from "./Money";
 import { ThumbnailCell } from "./ThumbnailCell";
 
@@ -90,6 +92,24 @@ export function numberCell(
     },
     kind: GridCellKind.Custom,
     copyData: value !== numberCellEmptyValue ? value.toString() : "",
+  };
+}
+
+export function metadataCell(
+  metadata: MetadataItemFragment[],
+  privateMetadata: MetadataItemFragment[],
+): MetadataCell {
+  return {
+    ...common,
+    kind: GridCellKind.Custom,
+    data: {
+      kind: "metadata-cell",
+      data: {
+        metadata,
+        privateMetadata,
+      },
+    },
+    copyData: "",
   };
 }
 
