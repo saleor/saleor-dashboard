@@ -60,6 +60,7 @@ runs:
       with:
         install: ${{inputs.install}}
         browser: ${{inputs.browser}}
+        spec: cypress/e2e/navigation.js
       env:
         API_URI: ${{inputs.apiUrl}}
         APP_MOUNT_URI: ${{ inputs.appMountUri }}

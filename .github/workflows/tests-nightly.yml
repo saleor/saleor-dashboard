@@ -419,7 +419,7 @@ jobs:
           JOB_KIND: "Tests"
           GITHUB_RUN_ID: ${{github.run_id}}
         run: |
-          python3 ./.github/workflows/notify/notify-slack.py
+          python3 notify/notify-slack.py
   test-complete:
     needs:
       [testmo-report-preparation, run-tests-in-parallel, run-tests-on-release]
