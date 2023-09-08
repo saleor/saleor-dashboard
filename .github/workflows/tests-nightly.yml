@@ -97,7 +97,7 @@ jobs:
         id: init-testmo
 
   run-tests-in-parallel:
-    needs: ["revert-automation-env-to-snap"]
+    needs: [revert-automation-env-to-snap, testmo-report-preparation]
     if: ${{ always() && github.event_name != 'repository_dispatch'  }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
     runs-on: ubuntu-latest
     env:
@@ -221,7 +221,7 @@ jobs:
           testmoRunId: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
 
   manual-triggered-test-complete:
-    needs: [run-tests-in-parallel]
+    needs: [run-tests-in-parallel, testmo-report-preparation]
     if: ${{always() && github.event_name != 'repository_dispatch' && !contains(needs.run-tests-in-parallel.result, 'skipped') && !contains(needs.run-tests-in-parallel.result, 'cancelled')}}
     runs-on: ubuntu-22.04
     steps:
@@ -475,7 +475,8 @@ jobs:
         run: |
           python3 .github/workflows/notify/notify-slack.py
   test-complete:
-    needs: [testmo-report-preparation]
+    needs:
+      [testmo-report-preparation, run-tests-in-parallel, run-tests-on-release]
     if: always()
     runs-on: ubuntu-22.04
     steps:
