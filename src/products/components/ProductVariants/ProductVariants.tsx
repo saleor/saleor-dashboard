@@ -218,6 +218,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
           selectedColumns={selectedColumns}
           columnCategories={columnCategories}
           onToggle={handlers.onToggle}
+          side="left"
         />
       )}
       title={intl.formatMessage(messages.title)}
