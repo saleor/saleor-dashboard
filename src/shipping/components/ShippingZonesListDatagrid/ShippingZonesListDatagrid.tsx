@@ -95,11 +95,11 @@ export const ShippingZoneListDatagrid = ({
         rowMarkers="checkbox"
         columnSelect="single"
         hasRowHover={true}
-        freezeColumns={2}
+        freezeColumns={1}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
         onRowSelectionChange={onSelectShippingZones}
-        verticalBorder={col => col > 1}
+        verticalBorder={col => col > 0}
         rows={shippingZones?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
