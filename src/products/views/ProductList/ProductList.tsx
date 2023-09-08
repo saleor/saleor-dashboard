@@ -76,16 +76,11 @@ import {
   storageUtils,
 } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
-import { getAvailableProductKinds, getProductKindOpts } from "./utils";
-import { FilterValueProvider } from "@dashboard/components/ConditionalFilter/FilterValueProvider";
-
-const obtainChannelFromFilter = (valueProvider: FilterValueProvider) => {
-  const channelToken = valueProvider.getTokenByName("channel")
-
-  if (channelToken) {
-    return channelToken.value
-  }
-}
+import {
+  getAvailableProductKinds,
+  getProductKindOpts,
+  obtainChannelFromFilter,
+} from "./utils";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -98,8 +93,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { valueProvider } = useConditionalFilterContext();
   const productListingPageFiltersFlag = useFlag("product_filters");
 
-  // @eslint-ignore-next-line
-  const channel = obtainChannelFromFilter(valueProvider)
+  const selectedChannelSlug = obtainChannelFromFilter(valueProvider);
 
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,

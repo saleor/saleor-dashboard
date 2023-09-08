@@ -1,8 +1,4 @@
-import {
-  FilterContainer,
-  FilterElement,
-} from "@dashboard/components/ConditionalFilter/FilterElement";
-import { isItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
+import { FilterValueProvider } from "@dashboard/components/ConditionalFilter/FilterValueProvider";
 import { ProductTypeKindEnum } from "@dashboard/graphql";
 import { isInEnum } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
@@ -68,13 +64,10 @@ export const getActiveTabIndexAfterTabDelete = (
 ): string =>
   tabIndexToDelete < currentTab ? `${currentTab - 1}` : `${currentTab}`;
 
-export const obtainChannelFromFilter = (filterContainer: FilterContainer) => {
-  const element = filterContainer
-    .filter(FilterElement.isCompatible)
-    .find(element => element.equalsValue("channel"))
-    ?.selectedValue();
+export const obtainChannelFromFilter = (valueProvider: FilterValueProvider) => {
+  const channelToken = valueProvider.getTokenByName("channel");
 
-  if (element && isItemOption(element)) {
-    return element.value;
+  if (channelToken) {
+    return channelToken.value;
   }
 };
