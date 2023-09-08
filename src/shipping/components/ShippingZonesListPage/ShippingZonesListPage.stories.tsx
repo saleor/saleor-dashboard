@@ -23,6 +23,9 @@ const props: ShippingZonesListPageProps = {
   userPermissions: adminUserPermissions,
   selectedShippingZonesIds: [],
   onSelectShippingZones: () => undefined,
+  onWeightUnitChange: () => undefined,
+  initialSearch: "",
+  onSearchChange: () => undefined,
 };
 
 export default {
