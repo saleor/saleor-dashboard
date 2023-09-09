@@ -410,13 +410,23 @@ jobs:
         run: |
           npm ci
 
+          - name: Get tests results
+          id: get-tests-results
+          env:
+            tests_status: ${{ needs.run-tests-in-parallel.outputs.status }}
+            dashboard_url: ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}
+          run: |
+            node cypressTestsHelpers/getFailedTests.js \
+            --dashboard_url "$dashboard_url"
+
       - name: Notify Slack
+        if: steps.get-tests-results.outputs.testStatus == 'true'
         env:
           JOB_DEPLOYMENT_KIND: ${{ needs.run-tests-in-parallel.outputs.environment }}
+          JOB_STATUS: "Failure"
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_SALEOR_QA_WEBHOOK_URL }}
-          JOB_TITLE: "Full regression (nightly tests) action results"
+          JOB_TITLE: "A lot of tests failed, something is probably broken - ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}"
           JOB_KIND: "Tests"
-          GITHUB_RUN_ID: ${{github.run_id}}
         run: |
           python3 notify/notify-slack.py
   test-complete:
