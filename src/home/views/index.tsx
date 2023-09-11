@@ -22,7 +22,7 @@ const HomeSection = () => {
   const { data } = useHomeQuery({
     displayLoader: true,
     skip: noChannel,
-    variables: { channel: "default", datePeriod: getDatePeriod(1) },
+    variables: { channel: channel?.slug, datePeriod: getDatePeriod(1) },
   });
 
   return (
