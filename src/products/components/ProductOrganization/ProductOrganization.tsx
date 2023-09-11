@@ -1,8 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
+import { Combobox, Multiselect } from "@dashboard/components/Combobox";
 import Link from "@dashboard/components/Link";
-import { Multiselect } from "@dashboard/components/Multiselect";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorCode,

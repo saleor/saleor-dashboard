@@ -21,9 +21,8 @@ import { Box, Input, Text, Toggle } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Combobox } from "../Combobox";
+import { Combobox, Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
-import { Multiselect } from "../Multiselect";
 import { AttributeRowProps } from "./types";
 
 const AttributeRow: React.FC<AttributeRowProps> = ({

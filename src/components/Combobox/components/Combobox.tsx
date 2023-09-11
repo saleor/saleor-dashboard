@@ -1,4 +1,3 @@
-import useDebounce from "@dashboard/hooks/useDebounce";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
@@ -10,7 +9,8 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { messages } from "../Multiselect/messages";
+import { useCombbobxCustomOption } from "../hooks/useCombbobxCustomOption";
+import { useComboboxHandlers } from "../hooks/useComboboxHandlers";
 
 type ComboboxProps = Omit<
   DynamicComboboxProps<Option | null>,
@@ -37,10 +37,9 @@ export const Combobox = ({
   ...rest
 }: ComboboxProps) => {
   const intl = useIntl();
-  const inputValue = useRef("");
-  const mounted = useRef(false);
 
   const [selectedValue, setSelectedValue] = useState(value);
+  const inputValue = useRef("");
 
   useEffect(() => {
     if (value?.value !== selectedValue?.value) {
@@ -48,21 +47,18 @@ export const Combobox = ({
     }
   }, [value]);
 
-  const addNewValueLabel = intl.formatMessage(messages.addNewValue, {
-    value: inputValue.current,
+  const { handleFetchMore, handleFocus, handleInputChange } =
+    useComboboxHandlers({
+      fetchOptions,
+      alwaysFetchOnFocus,
+      fetchMore,
+    });
+
+  const { customValueOption } = useCombbobxCustomOption({
+    query: inputValue.current,
+    allowCustomValues,
+    selectedValue,
   });
-
-  const showAddCustomValue =
-    inputValue.current &&
-    allowCustomValues &&
-    selectedValue?.label.toLocaleLowerCase() !==
-      inputValue.current.toLocaleLowerCase();
-
-  const debouncedFetchOptions = useRef(
-    useDebounce(async (value: string) => {
-      fetchOptions(value);
-    }, 500),
-  ).current;
 
   const handleOnChange = (value: Option | null) => {
     onChange({
@@ -70,40 +66,17 @@ export const Combobox = ({
     });
   };
 
-  const handleFetchMore = () => {
-    if (fetchMore?.hasMore) {
-      fetchMore?.onFetchMore();
-    }
-  };
-
   return (
     <DynamicCombobox
       value={selectedValue}
-      options={
-        [
-          ...(showAddCustomValue
-            ? [
-                {
-                  label: addNewValueLabel,
-                  value: inputValue.current,
-                },
-              ]
-            : []),
-          ...options,
-        ] as Option[]
-      }
+      options={[...customValueOption, ...options] as Option[]}
       onChange={handleOnChange}
       onScrollEnd={handleFetchMore}
       onInputValueChange={value => {
         inputValue.current = value;
-        debouncedFetchOptions(value);
+        handleInputChange(value);
       }}
-      onFocus={() => {
-        if (alwaysFetchOnFocus || !mounted.current) {
-          mounted.current = true;
-          fetchOptions("");
-        }
-      }}
+      onFocus={handleFocus}
       loading={loading || fetchMore?.hasMore || fetchMore?.loading}
       locale={{
         loadingText: intl.formatMessage(commonMessages.loading),

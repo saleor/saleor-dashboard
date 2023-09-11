@@ -1,4 +1,3 @@
-import useDebounce from "@dashboard/hooks/useDebounce";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
@@ -10,8 +9,9 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { messages } from "./messages";
-import { toWithCustomValues } from "./utils";
+import { useCombbobxCustomOption } from "../hooks/useCombbobxCustomOption";
+import { useComboboxHandlers } from "../hooks/useComboboxHandlers";
+import { toWithCustomValues } from "../utils";
 
 type MultiselectProps = Omit<DynamicMultiselectProps<Option>, "onChange"> & {
   options: Option[];
@@ -37,7 +37,6 @@ export const Multiselect = ({
 }: MultiselectProps) => {
   const intl = useIntl();
   const inputValue = useRef("");
-  const mounted = useRef(false);
 
   const [selectedValues, setSelectedValues] = useState(value);
 
@@ -45,28 +44,24 @@ export const Multiselect = ({
     setSelectedValues(value);
   }, [value]);
 
-  const debouncedFetchOptions = useRef(
-    useDebounce(async (value: string) => {
-      fetchOptions(value);
-    }, 500),
-  ).current;
+  const { handleFetchMore, handleFocus, handleInputChange } =
+    useComboboxHandlers({
+      fetchOptions,
+      alwaysFetchOnFocus,
+      fetchMore,
+    });
 
-  const addNewValueLabel = intl.formatMessage(messages.addNewValue, {
-    value: inputValue.current,
+  const { customValueLabel, customValueOption } = useCombbobxCustomOption({
+    query: inputValue.current,
+    allowCustomValues,
+    selectedValue: selectedValues,
   });
-
-  const showAddNewValueOption =
-    inputValue.current &&
-    allowCustomValues &&
-    !options.find(
-      option => option.label.toLowerCase() === inputValue.current.toLowerCase(),
-    );
 
   const handleOnChange = (values: Option[]) => {
     const hasCustomValue = values.find(value =>
-      value.label.includes(addNewValueLabel),
+      value.label.includes(customValueLabel),
     );
-    const valuesWithCustom = values.map(toWithCustomValues(addNewValueLabel));
+    const valuesWithCustom = values.map(toWithCustomValues(customValueLabel));
 
     onChange({
       target: {
@@ -82,38 +77,17 @@ export const Multiselect = ({
     }
   };
 
-  const handleFetchMore = () => {
-    if (fetchMore?.hasMore) {
-      fetchMore?.onFetchMore();
-    }
-  };
-
   return (
     <DynamicMultiselect
-      options={[
-        ...(showAddNewValueOption
-          ? [
-              {
-                label: addNewValueLabel,
-                value: inputValue.current,
-              },
-            ]
-          : []),
-        ...options,
-      ]}
+      options={[...customValueOption, ...options]}
       disabled={disabled}
       onChange={handleOnChange}
       value={selectedValues}
       onInputValueChange={value => {
         inputValue.current = value;
-        debouncedFetchOptions(value);
+        handleInputChange(value);
       }}
-      onFocus={() => {
-        if (alwaysFetchOnFocus || !mounted.current) {
-          mounted.current = true;
-          fetchOptions("");
-        }
-      }}
+      onFocus={handleFocus}
       onScrollEnd={handleFetchMore}
       loading={loading || fetchMore?.hasMore || fetchMore?.loading}
       locale={{
