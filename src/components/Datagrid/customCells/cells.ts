@@ -3,15 +3,18 @@ import {
   numberCellEmptyValue,
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { Locale } from "@dashboard/components/Locale";
-import { MetadataItemFragment } from "@dashboard/graphql";
-import { GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
+import {
+  CustomCell,
+  GridCell,
+  GridCellKind,
+  TextCell,
+} from "@glideapps/glide-data-grid";
 
 import {
   DropdownCell,
   DropdownCellContentProps,
   DropdownChoice,
 } from "./DropdownCell";
-import { MetadataCell } from "./MetadataCell";
 import { MoneyCell, MoneyDiscuntedCell } from "./Money";
 import { ThumbnailCell } from "./ThumbnailCell";
 
@@ -95,21 +98,21 @@ export function numberCell(
   };
 }
 
-export function metadataCell(
-  metadata: MetadataItemFragment[],
-  privateMetadata: MetadataItemFragment[],
-): MetadataCell {
+export function buttonCell(title: string, cb: () => void): CustomCell {
   return {
-    ...common,
     kind: GridCellKind.Custom,
+    cursor: "pointer",
+    allowOverlay: true,
+    copyData: "4",
+    readonly: true,
     data: {
-      kind: "metadata-cell",
-      data: {
-        metadata,
-        privateMetadata,
-      },
+      kind: "button-cell",
+      color: "accentColor",
+      borderColor: ["accentLight", "accentColor"],
+      borderRadius: 9,
+      title,
+      onClick: cb,
     },
-    copyData: "",
   };
 }
 

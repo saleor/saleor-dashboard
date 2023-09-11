@@ -23,6 +23,7 @@ import {
   OrderCustomerChangeData,
 } from "@dashboard/orders/components/OrderCustomerChangeDialog/form";
 import OrderCustomerChangeDialog from "@dashboard/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
+import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog";
 import {
   getVariantSearchAddress,
   isAnyAddressEditModalOpen,
@@ -231,6 +232,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
+            onShowMetadata={id => openModal("view-metadata", { id })}
             order={order}
             channelUsabilityData={channelUsabilityData}
             onProductClick={id => () =>
@@ -303,6 +305,11 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         open={params.action === "customer-change"}
         onClose={closeModal}
         onConfirm={handleCustomerChangeAction}
+      />
+      <OrderMetadataDialog
+        open={params.action === "view-metadata"}
+        onClose={closeModal}
+        data={order?.lines?.find(orderLine => orderLine.id === params.id)}
       />
       <OrderAddressFields
         action={params?.action}

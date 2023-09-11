@@ -20,6 +20,7 @@ import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/compon
 import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
+import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
@@ -214,6 +215,7 @@ export const OrderUnconfirmedDetails: React.FC<
             }
             onOrderLineRemove={id => orderLineDelete.mutate({ id })}
             onShippingMethodEdit={() => openModal("edit-shipping")}
+            onShowMetadata={id => openModal("view-metadata", { id })}
             saveButtonBarState={getMutationState(
               updateMetadataOpts.called || updatePrivateMetadataOpts.called,
               updateMetadataOpts.loading || updatePrivateMetadataOpts.loading,
@@ -369,6 +371,12 @@ export const OrderUnconfirmedDetails: React.FC<
           })
         }
       />
+      <OrderMetadataDialog
+        onClose={closeModal}
+        open={params.action === "view-metadata"}
+        data={order?.lines?.find(orderLine => orderLine.id === params.id)}
+      />
+
       <OrderPaymentVoidDialog
         confirmButtonState={orderVoid.opts.status}
         errors={orderVoid.opts.data?.orderVoid.errors || []}

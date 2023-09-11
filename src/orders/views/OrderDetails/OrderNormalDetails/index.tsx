@@ -28,6 +28,7 @@ import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFul
 import OrderFulfillStockExceededDialog from "@dashboard/orders/components/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
+import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import {
   isAnyAddressEditModalOpen,
@@ -219,6 +220,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         )}
         shippingMethods={data?.order?.shippingMethods || []}
         onOrderCancel={() => openModal("cancel")}
+        onShowMetadata={id => openModal("view-metadata", { id })}
         onTransactionAction={(id, action) =>
           openModal("transaction-action", {
             type: action,
@@ -307,6 +309,11 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             transactionId: params.id,
           })
         }
+      />
+      <OrderMetadataDialog
+        open={params.action === "view-metadata"}
+        onClose={closeModal}
+        data={order?.lines?.find(orderLine => orderLine.id === params.id)}
       />
       <OrderMarkAsPaidDialog
         confirmButtonState={orderPaymentMarkAsPaid.opts.status}

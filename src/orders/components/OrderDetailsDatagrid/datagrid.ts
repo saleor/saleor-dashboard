@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import {
+  buttonCell,
   loadingCell,
-  metadataCell,
   moneyCell,
   readonlyTextCell,
   thumbnailCell,
@@ -9,6 +9,7 @@ import {
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderLineFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
 import { getDatagridRowDataIndex } from "@dashboard/misc";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { IntlShape } from "react-intl";
@@ -50,7 +51,7 @@ export const orderDetailsStaticColumnsAdapter = (
   },
   {
     id: "metadata",
-    title: intl.formatMessage(columnsMessages.metadata),
+    title: intl.formatMessage(commonMessages.metadata),
     width: 150,
   },
 ];
@@ -59,10 +60,11 @@ interface GetCellContentProps {
   columns: AvailableColumn[];
   data: OrderLineFragment[];
   loading: boolean;
+  onShowMetadata: (id: string) => void;
 }
 
 export const createGetCellContent =
-  ({ columns, data, loading }: GetCellContentProps) =>
+  ({ columns, data, loading, onShowMetadata }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     if (loading) {
       return loadingCell();
@@ -104,10 +106,9 @@ export const createGetCellContent =
           readonyOptions,
         );
       case "metadata":
-        return metadataCell(
-          rowData.variant.metadata,
-          rowData.variant.privateMetadata,
-        );
+        return buttonCell("View metadata", () => {
+          onShowMetadata(rowData.id);
+        });
 
       default:
         return readonlyTextCell("", false);
