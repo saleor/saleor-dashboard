@@ -25,6 +25,7 @@ const HomeSection = () => {
     variables: { channel: channel?.slug, datePeriod: getDatePeriod(1) },
   });
   // { gte: "2023-09-10", lte: "2023-09-10" }
+
   return (
     <HomePage
       activities={mapEdgesToItems(data?.activities)?.reverse()}
