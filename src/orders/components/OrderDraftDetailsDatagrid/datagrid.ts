@@ -167,9 +167,12 @@ export const useGetCellContent = ({
         );
 
       case "metadata":
-        return buttonCell("View metadata", () => {
-          onShowMetadata(rowData.id);
-        });
+        return buttonCell(
+          intl.formatMessage(commonMessages.viewMetadata),
+          () => {
+            onShowMetadata(rowData.id);
+          },
+        );
 
       default:
         return readonlyTextCell("", false);

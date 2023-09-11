@@ -72,6 +72,7 @@ export const OrderDetailsDatagrid = ({
       data: lines,
       loading,
       onShowMetadata,
+      intl,
     }),
     [intl, visibleColumns, loading],
   );

@@ -2191,6 +2191,9 @@
     "context": "date time attribute type",
     "string": "Date Time"
   },
+  "E/yzIO": {
+    "string": "View metadata"
+  },
   "E1C9pp": {
     "context": "transaction event type, authorization amount was changed",
     "string": "Authorization amount adjusted"
@@ -2247,10 +2250,6 @@
   },
   "ESDTC/": {
     "string": "Manage Sales Channel Availability"
-  },
-  "ETHnjq": {
-    "context": "header",
-    "string": "Private Metadata"
   },
   "EWCUdP": {
     "string": "Channels A to Z"
@@ -4737,10 +4736,6 @@
   "VZsE96": {
     "string": "Collection Name"
   },
-  "VcI+Zh": {
-    "context": "header",
-    "string": "Metadata"
-  },
   "VceXrc": {
     "context": "initial balance filter label",
     "string": "Initial balance"
@@ -5772,10 +5767,6 @@
   "cY42ht": {
     "string": "Password cannot be entirely numeric"
   },
-  "cY6H2C": {
-    "context": "empty metadata text",
-    "string": "No metadata created for this element. Use the button below to add new metadata field."
-  },
   "cZN5Jd": {
     "context": "Webhook details events",
     "string": "Events"
@@ -6728,6 +6719,10 @@
   "k9hf7F": {
     "context": "total order price",
     "string": "Total"
+  },
+  "kAPaN6": {
+    "context": "empty metadata text",
+    "string": "Empty"
   },
   "kEAjZV": {
     "context": "rich text attribute type",

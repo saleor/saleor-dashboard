@@ -60,11 +60,12 @@ interface GetCellContentProps {
   columns: AvailableColumn[];
   data: OrderLineFragment[];
   loading: boolean;
+  intl: IntlShape;
   onShowMetadata: (id: string) => void;
 }
 
 export const createGetCellContent =
-  ({ columns, data, loading, onShowMetadata }: GetCellContentProps) =>
+  ({ columns, data, loading, onShowMetadata, intl }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     if (loading) {
       return loadingCell();
@@ -106,9 +107,12 @@ export const createGetCellContent =
           readonyOptions,
         );
       case "metadata":
-        return buttonCell("View metadata", () => {
-          onShowMetadata(rowData.id);
-        });
+        return buttonCell(
+          intl.formatMessage(commonMessages.viewMetadata),
+          () => {
+            onShowMetadata(rowData.id);
+          },
+        );
 
       default:
         return readonlyTextCell("", false);
