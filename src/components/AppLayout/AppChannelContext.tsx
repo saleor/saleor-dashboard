@@ -49,11 +49,11 @@ export const AppChannelProvider: React.FC = ({ children }) => {
     ) {
       setSelectedChannel(channelData.channels[0].id);
     }
-  }, [channelData]);
+  }, [channelData, selectedChannel, setSelectedChannel]);
 
   React.useEffect(() => {
     setChannel(selectedChannel);
-  }, [selectedChannel]);
+  }, [selectedChannel, setChannel]);
 
   const availableChannels = channelData?.channels || [];
 
@@ -86,7 +86,7 @@ function useAppChannel(enablePicker = true): UseAppChannel {
     }
 
     return () => setPickerActive(false);
-  }, [enablePicker]);
+  }, [enablePicker, setPickerActive]);
 
   return data;
 }

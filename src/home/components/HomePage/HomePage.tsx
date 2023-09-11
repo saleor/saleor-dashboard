@@ -38,7 +38,6 @@ const useStyles = makeStyles(
   }),
   { name: "HomePage" },
 );
-
 export interface HomePageProps {
   activities: RelayToFlat<HomeQuery["activities"]>;
   orders: number | null;

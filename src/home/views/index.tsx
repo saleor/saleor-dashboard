@@ -17,13 +17,12 @@ import HomePage from "../components/HomePage";
 const HomeSection = () => {
   const { user } = useUser();
   const { channel } = useAppChannel();
-
   const noChannel = !channel && typeof channel !== "undefined";
 
   const { data } = useHomeQuery({
     displayLoader: true,
     skip: noChannel,
-    variables: { channel: channel?.slug, datePeriod: getDatePeriod(1) },
+    variables: { channel: "default", datePeriod: getDatePeriod(1) },
   });
 
   return (
