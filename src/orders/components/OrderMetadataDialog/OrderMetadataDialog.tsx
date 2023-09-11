@@ -36,8 +36,8 @@ export const OrderMetadataDialog = ({
             readonly={true}
             onChange={() => {}}
             data={{
-              metadata: data?.variant?.metadata,
-              privateMetadata: data?.variant?.privateMetadata,
+              metadata: data?.variant?.metadata ?? [],
+              privateMetadata: data?.variant?.privateMetadata ?? [],
             }}
           />
         </Box>
