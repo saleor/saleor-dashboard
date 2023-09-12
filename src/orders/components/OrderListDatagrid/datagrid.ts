@@ -12,9 +12,7 @@ import {
 } from "@dashboard/components/Datagrid/customCells/PillCell";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Locale } from "@dashboard/components/Locale";
 import { OrderListQuery } from "@dashboard/graphql";
-import useLocale from "@dashboard/hooks/useLocale";
 import {
   getStatusHue,
   transformOrderStatus,
@@ -25,7 +23,6 @@ import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item, TextCell } from "@glideapps/glide-data-grid";
 import { DefaultTheme, useTheme } from "@saleor/macaw-ui/next";
-import moment from "moment-timezone";
 import { IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
@@ -83,7 +80,6 @@ function getDatagridRowDataIndex(row, removeArray) {
 
 export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
   const intl = useIntl();
-  const { locale } = useLocale();
   const { theme } = useTheme();
 
   return (
@@ -104,7 +100,7 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
       case "number":
         return readonlyTextCell(rowData.number);
       case "date":
-        return getDateCellContent(locale, rowData);
+        return getDateCellContent(rowData);
       case "customer":
         return getCustomerCellContent(rowData);
       case "payment":
@@ -120,10 +116,9 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
 };
 
 export function getDateCellContent(
-  locale: Locale,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  return dateCell(moment(rowData.created).locale(locale).format("lll"));
+  return dateCell(rowData?.created);
 }
 
 export function getCustomerCellContent(
