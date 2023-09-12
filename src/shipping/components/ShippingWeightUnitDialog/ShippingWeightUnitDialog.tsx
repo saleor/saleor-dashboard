@@ -10,18 +10,16 @@ interface ShippingWeightUnitDialogProps {
   open: boolean;
   onSubmit: (unit: WeightUnitsEnum | null) => SubmitPromise;
   onClose: () => void;
-  onChange: (val: boolean) => void;
   defaultWeightUnit: WeightUnitsEnum | null;
   disabled: boolean;
 }
 
 export const ShippingWeightUnitDialog: React.FC<
   ShippingWeightUnitDialogProps
-> = ({ open, onSubmit, onClose, onChange, defaultWeightUnit, disabled }) => {
+> = ({ open, onSubmit, onClose, defaultWeightUnit, disabled }) => {
   return (
-    <Modal open={open} onChange={onChange}>
+    <Modal open={open} onChange={onClose}>
       <Modal.Content>
-        {/* TODO: Add onInteractOutside={onClose} */}
         <Box
           __left="50%"
           __maxWidth="400px"

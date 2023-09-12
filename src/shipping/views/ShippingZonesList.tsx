@@ -176,7 +176,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             }),
           )
         }
-        onChange={() => null}
         disabled={updateDefaultWeightUnitOpts.loading}
         onClose={closeModal}
         defaultWeightUnit={shop?.defaultWeightUnit}
