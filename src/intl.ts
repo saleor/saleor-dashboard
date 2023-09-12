@@ -395,6 +395,10 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Retry",
     description: "button",
   },
+  close: {
+    id: "rbrahO",
+    defaultMessage: "Close",
+  },
 });
 
 export const sectionNames = defineMessages({

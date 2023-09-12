@@ -1,13 +1,7 @@
 import { Metadata } from "@dashboard/components/Metadata";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@material-ui/core";
-import { Box, Button, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, CloseIcon, Modal, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -23,15 +17,36 @@ export const OrderMetadataDialog = ({
   data,
 }: OrderMetadataDialogProps) => {
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>
-        <Text variant="heading">
-          <FormattedMessage {...commonMessages.metadata} />:{" "}
-          {data?.productName ?? ""}
-        </Text>
-      </DialogTitle>
-      <DialogContent>
-        <Box __width={550}>
+    <Modal open={open} onChange={onClose}>
+      <Modal.Content>
+        <Box
+          backgroundColor="surfaceNeutralPlain"
+          boxShadow="modal"
+          __left="50%"
+          __top="50%"
+          position="fixed"
+          __maxHeight="90vh"
+          __width="min(850px, 90vw)"
+          overflowY="auto"
+          __transform="translate(-50%, -50%)"
+          paddingY={5}
+        >
+          <Box
+            paddingX={6}
+            marginBottom={5}
+            display="flex"
+            justifyContent="space-between"
+          >
+            <Text variant="heading" size="large">
+              <FormattedMessage {...commonMessages.metadata} />:{" "}
+              {data?.productName ?? ""}
+            </Text>
+
+            <Modal.Close>
+              <Button variant="tertiary" icon={<CloseIcon />} size="small" />
+            </Modal.Close>
+          </Box>
+
           <Metadata
             readonly={true}
             onChange={() => {}}
@@ -40,13 +55,14 @@ export const OrderMetadataDialog = ({
               privateMetadata: data?.variant?.privateMetadata ?? [],
             }}
           />
+
+          <Box paddingX={6} display="flex" justifyContent="flex-end">
+            <Button data-test-id="back" variant="secondary" onClick={onClose}>
+              <FormattedMessage {...buttonMessages.close} />
+            </Button>
+          </Box>
         </Box>
-      </DialogContent>
-      <DialogActions>
-        <Button data-test-id="back" variant="secondary" onClick={onClose}>
-          <FormattedMessage {...buttonMessages.cancel} />
-        </Button>
-      </DialogActions>
-    </Dialog>
+      </Modal.Content>
+    </Modal>
   );
 };
