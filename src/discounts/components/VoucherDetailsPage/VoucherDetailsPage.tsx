@@ -41,6 +41,7 @@ import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
+import { VoucherCodesDatagrid } from "../VoucherCodesDatagrid";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
@@ -218,6 +219,15 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 errors={errors}
                 onChange={change}
                 variant="update"
+              />
+              <VoucherCodesDatagrid
+                loading={false}
+                disabled={disabled}
+                codes={[
+                  { code: "Code 1", usage: "1", limit: "1" },
+                  { code: "Code 2", usage: "2", limit: "2" },
+                  { code: "Code 3", usage: "3", limit: "3" },
+                ]}
               />
               <VoucherTypes
                 data={data}
