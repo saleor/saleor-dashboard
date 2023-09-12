@@ -4,9 +4,16 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { SubMenu } from "@dashboard/components/SubMenu";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import { Box } from "@saleor/macaw-ui/next";
-import React, { useCallback, useMemo } from "react";
+import {
+  Box,
+  DropdownButton,
+  PlusIcon,
+  Popover,
+  Text,
+} from "@saleor/macaw-ui/next";
+import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -29,6 +36,7 @@ export const VoucherCodesDatagrid = ({
 }: VoucherCodesDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
+  const [isSubMenuOpen, setSubMenuOpen] = useState(false);
 
   const voucherCodesStaticColumns = useMemo(
     () => voucherCodesStaticColumnsAdapter(intl),
@@ -46,8 +54,46 @@ export const VoucherCodesDatagrid = ({
     [codes, visibleColumns],
   );
 
+  const handleAutoGenerateCodes = useCallback(() => {
+    setSubMenuOpen(false);
+  }, []);
+
+  const subMenuItems = useMemo(
+    () => [
+      {
+        id: "auto-generate-codes",
+        title: "Auto-generate codes",
+        description: "Generate multiple codes at once",
+        onClick: handleAutoGenerateCodes,
+      },
+    ],
+    [handleAutoGenerateCodes],
+  );
+
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        marginBottom={4}
+        paddingX={6}
+      >
+        <Text variant="heading">Voucher codes</Text>
+        <Popover open={isSubMenuOpen} onOpenChange={setSubMenuOpen}>
+          <Popover.Trigger>
+            <DropdownButton type="button">
+              <PlusIcon />
+              Add code
+            </DropdownButton>
+          </Popover.Trigger>
+          <Popover.Content align="end">
+            <Box marginTop={1}>
+              <SubMenu menuItems={subMenuItems} />
+            </Box>
+          </Popover.Content>
+        </Popover>
+      </Box>
       <Datagrid
         readonly
         loading={loading}
