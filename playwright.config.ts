@@ -1,18 +1,22 @@
-import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
 
+import {
+  defineConfig,
+  devices,
+} from "@playwright/test";
+
+dotenv.config();
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-dotenv.config();
-//dotenv.config({ path: path.resolve(__dirname, '..', 'my.env') });
+// require('dotenv').config();
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: "./tests",
+  testDir: "playwright/tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -30,33 +34,20 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
+    screenshot: "only-on-failure",
+    testIdAttribute: "data-test-id",
+    video: process.env.CI ? "retain-on-failure" : "off",
   },
-  // Folder for test artifacts such as screenshots, videos, traces, etc.
-  outputDir: "test-results",
 
-  // path to the global setup files.
-  globalSetup: require.resolve("./global-setup"),
-
-  // path to the global teardown files.
-  globalTeardown: require.resolve("./global-teardown"),
-
-  // Each test is given 30 seconds.
-  timeout: 30000,
   /* Configure projects for major browsers */
   projects: [
+    { name: "setup", testMatch: /.*\.setup\.ts/ },
+
     {
+      // if new project added make sure to add dependency as below
+      dependencies: ["setup"],
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
-    },
-
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
     },
 
     /* Test against mobile viewports. */
