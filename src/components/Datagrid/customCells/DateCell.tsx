@@ -25,6 +25,11 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
 
     const date = new Date(value);
 
+    if (!isNaN(date?.getTime())) {
+      // invalid date object
+      return true;
+    }
+
     const dateFormats = {
       full: new Intl.DateTimeFormat(locale, {
         dateStyle: "full",
