@@ -6,6 +6,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { SubMenu } from "@dashboard/components/SubMenu";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { buttonMessages } from "@dashboard/intl";
 import {
   ArrowDownIcon,
   Box,
@@ -13,6 +14,7 @@ import {
   PlusIcon,
   Popover,
   Text,
+  TrashBinIcon,
 } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
@@ -28,12 +30,14 @@ interface VoucherCodesDatagridProps {
   codes: VoucherCode[];
   loading: boolean;
   disabled?: boolean;
+  onVoucherCodeDelete: (code: string) => void;
 }
 
 export const VoucherCodesDatagrid = ({
   codes,
   loading,
   disabled,
+  onVoucherCodeDelete,
 }: VoucherCodesDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -115,7 +119,15 @@ export const VoucherCodesDatagrid = ({
         getCellContent={getCellContent}
         getCellError={() => false}
         selectionActions={() => null}
-        menuItems={() => []}
+        menuItems={index => [
+          {
+            label: intl.formatMessage(buttonMessages.delete),
+            onSelect: () => {
+              onVoucherCodeDelete(codes[index].code);
+            },
+            Icon: <TrashBinIcon />,
+          },
+        ]}
       />
 
       <Box paddingX={6}>

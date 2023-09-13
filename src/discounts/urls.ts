@@ -111,6 +111,8 @@ export type VoucherUrlDialog =
   | "unassign-collection"
   | "unassign-product"
   | "remove"
+  | "delete-codes"
+  | "generate-codes"
   | ChannelsAction;
 export type VoucherUrlQueryParams = BulkAction & Dialog<VoucherUrlDialog>;
 export type VoucherCreateUrlQueryParams = Dialog<ChannelsAction>;

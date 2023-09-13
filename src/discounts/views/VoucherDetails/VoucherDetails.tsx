@@ -14,6 +14,7 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
+import { VoucherCodesDeleteDialog } from "@dashboard/discounts/components/VoucherCodesDeleteDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
   VoucherTabItemsCount,
@@ -353,6 +354,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             ids: [productId],
           })
         }
+        onDeleteVoucherCodes={() => openModal("delete-codes")}
         activeTab={activeTab}
         tabItemsCount={tabItemsCount}
         onTabClick={changeTab}
@@ -410,6 +412,11 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
+      />
+      <VoucherCodesDeleteDialog
+        open={params.action === "delete-codes"}
+        onClose={closeModal}
+        onDelete={() => {}}
       />
       <AssignCategoriesDialog
         categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)?.filter(

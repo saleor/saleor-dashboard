@@ -105,6 +105,7 @@ export interface VoucherDetailsPageProps
   onTabClick: (index: VoucherDetailsPageTab) => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
+  onDeleteVoucherCodes: () => void;
 }
 
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
@@ -132,6 +133,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onTabClick,
   openChannelsModal,
   onRemove,
+  onDeleteVoucherCodes,
   onSubmit,
   toggle,
   toggleAll,
@@ -222,6 +224,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               />
               <VoucherCodesDatagrid
                 loading={false}
+                onVoucherCodeDelete={() => {
+                  onDeleteVoucherCodes();
+                }}
                 disabled={disabled}
                 codes={[
                   { code: "Code 1", usage: "1", limit: "1" },
