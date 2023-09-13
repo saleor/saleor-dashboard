@@ -37,7 +37,7 @@ import {
   productListUrl,
 } from "@dashboard/products/urls";
 import { getChoices } from "@dashboard/products/utils/data";
-import { Option } from "@saleor/macaw-ui/next";
+import { Box, Option } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -357,14 +357,16 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               ) : (
                 <CannotDefineChannelsAvailabilityCard />
               )}
-              <ProductTaxes
-                value={data.taxClassId}
-                disabled={loading}
-                onChange={handlers.selectTaxClass}
-                taxClassDisplayName={selectedTaxClass}
-                taxClasses={taxClasses}
-                onFetchMore={fetchMoreTaxClasses}
-              />
+              <Box paddingBottom={52}>
+                <ProductTaxes
+                  value={data.taxClassId}
+                  disabled={loading}
+                  onChange={handlers.selectTaxClass}
+                  taxClassDisplayName={selectedTaxClass}
+                  taxClasses={taxClasses}
+                  onFetchMore={fetchMoreTaxClasses}
+                />
+              </Box>
             </DetailPageLayout.RightSidebar>
             <Savebar
               onCancel={() => navigate(productListUrl())}

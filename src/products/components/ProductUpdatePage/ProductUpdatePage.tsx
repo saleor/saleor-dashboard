@@ -49,6 +49,7 @@ import { productImageUrl, productListUrl } from "@dashboard/products/urls";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -424,14 +425,16 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 {...availabilityCommonProps}
                 channels={listings}
               />
-              <ProductTaxes
-                value={data.taxClassId}
-                disabled={disabled}
-                onChange={handlers.selectTaxClass}
-                taxClassDisplayName={selectedTaxClass}
-                taxClasses={taxClasses}
-                onFetchMore={fetchMoreTaxClasses}
-              />
+              <Box paddingBottom={52}>
+                <ProductTaxes
+                  value={data.taxClassId}
+                  disabled={disabled}
+                  onChange={handlers.selectTaxClass}
+                  taxClassDisplayName={selectedTaxClass}
+                  taxClasses={taxClasses}
+                  onFetchMore={fetchMoreTaxClasses}
+                />
+              </Box>
             </DetailPageLayout.RightSidebar>
 
             <Savebar
