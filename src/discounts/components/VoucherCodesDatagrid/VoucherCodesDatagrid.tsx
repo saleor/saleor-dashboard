@@ -7,8 +7,9 @@ import {
 import { SubMenu } from "@dashboard/components/SubMenu";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import {
+  ArrowDownIcon,
   Box,
-  DropdownButton,
+  Button,
   PlusIcon,
   Popover,
   Text,
@@ -82,10 +83,15 @@ export const VoucherCodesDatagrid = ({
         <Text variant="heading">Voucher codes</Text>
         <Popover open={isSubMenuOpen} onOpenChange={setSubMenuOpen}>
           <Popover.Trigger>
-            <DropdownButton type="button">
+            <Button
+              type="button"
+              backgroundColor="interactiveNeutralDefault"
+              color="textNeutralContrasted"
+            >
               <PlusIcon />
               Add code
-            </DropdownButton>
+              <ArrowDownIcon />
+            </Button>
           </Popover.Trigger>
           <Popover.Content align="end">
             <Box marginTop={1}>
