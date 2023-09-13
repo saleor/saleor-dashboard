@@ -42,7 +42,7 @@ export const VoucherCodesDeleteDialog = ({
                 paddingBottom={6}
               >
                 <Button onClick={onClose} variant="secondary">
-                  {intl.formatMessage(buttonMessages.cancel)}
+                  {intl.formatMessage(buttonMessages.back)}
                 </Button>
                 <Button onClick={onDelete}>
                   {intl.formatMessage(buttonMessages.delete)}

@@ -15,6 +15,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
 import { VoucherCodesDeleteDialog } from "@dashboard/discounts/components/VoucherCodesDeleteDialog";
+import { VoucherCodesGenerateDialog } from "@dashboard/discounts/components/VoucherCodesGenerateDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
   VoucherTabItemsCount,
@@ -355,6 +356,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           })
         }
         onDeleteVoucherCodes={() => openModal("delete-codes")}
+        onGenerateVoucherCodes={() => openModal("generate-codes")}
         activeTab={activeTab}
         tabItemsCount={tabItemsCount}
         onTabClick={changeTab}
@@ -417,6 +419,11 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         open={params.action === "delete-codes"}
         onClose={closeModal}
         onDelete={() => {}}
+      />
+      <VoucherCodesGenerateDialog
+        open={params.action === "generate-codes"}
+        onClose={closeModal}
+        onSubmit={() => {}}
       />
       <AssignCategoriesDialog
         categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)?.filter(

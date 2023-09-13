@@ -31,12 +31,14 @@ interface VoucherCodesDatagridProps {
   loading: boolean;
   disabled?: boolean;
   onVoucherCodeDelete: (code: string) => void;
+  onGenerateVoucherCodes: () => void;
 }
 
 export const VoucherCodesDatagrid = ({
   codes,
   loading,
   disabled,
+  onGenerateVoucherCodes,
   onVoucherCodeDelete,
 }: VoucherCodesDatagridProps) => {
   const intl = useIntl();
@@ -60,6 +62,7 @@ export const VoucherCodesDatagrid = ({
   );
 
   const handleAutoGenerateCodes = useCallback(() => {
+    onGenerateVoucherCodes();
     setSubMenuOpen(false);
   }, []);
 
