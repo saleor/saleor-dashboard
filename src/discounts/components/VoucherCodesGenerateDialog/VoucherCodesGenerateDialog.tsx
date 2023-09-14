@@ -25,14 +25,28 @@ export const VoucherCodesGenerateDialog = ({
     onSubmit,
   );
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (
+      /\D/.test(e.key) &&
+      ![
+        "Backspace",
+        "ArrowDown",
+        "ArrowUp",
+        "ArrowLeft",
+        "ArrowRight",
+      ].includes(e.key)
+    ) {
+      e.preventDefault();
+    }
+  };
+
+  const handleModalClose = () => {
+    onClose();
+    reset();
+  };
+
   return (
-    <Modal
-      open={open}
-      onChange={() => {
-        onClose();
-        reset();
-      }}
-    >
+    <Modal open={open} onChange={handleModalClose}>
       <Modal.Content>
         <Box
           backgroundColor="surfaceNeutralPlain"
@@ -48,7 +62,11 @@ export const VoucherCodesGenerateDialog = ({
               <Box display="grid" gap={3} marginBottom={6} __width={390}>
                 <Input
                   name="quantity"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   label="Code quantity"
+                  onKeyDown={handleKeyDown}
                   value={data.quantity}
                   onChange={change}
                 />
@@ -65,7 +83,7 @@ export const VoucherCodesGenerateDialog = ({
                 gap={3}
                 paddingBottom={6}
               >
-                <Button onClick={onClose} variant="secondary">
+                <Button onClick={handleModalClose} variant="secondary">
                   {intl.formatMessage(buttonMessages.back)}
                 </Button>
                 <Button onClick={submit}>

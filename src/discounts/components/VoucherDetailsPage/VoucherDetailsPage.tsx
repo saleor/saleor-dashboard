@@ -227,9 +227,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               <VoucherCodesDatagrid
                 loading={false}
                 onGenerateVoucherCodes={onGenerateVoucherCodes}
-                onVoucherCodeDelete={() => {
-                  onDeleteVoucherCodes();
-                }}
+                onVoucherCodeDelete={onDeleteVoucherCodes}
                 disabled={disabled}
                 codes={[
                   { code: "Code 1", usage: "1", limit: "1" },
