@@ -22,6 +22,7 @@ export const OrderMetadataDialog = ({
         <Box
           backgroundColor="surfaceNeutralPlain"
           boxShadow="modal"
+          borderRadius={2}
           __left="50%"
           __top="50%"
           position="fixed"
@@ -29,14 +30,9 @@ export const OrderMetadataDialog = ({
           __width="min(850px, 90vw)"
           overflowY="auto"
           __transform="translate(-50%, -50%)"
-          paddingY={5}
+          paddingY={4}
         >
-          <Box
-            paddingX={6}
-            marginBottom={5}
-            display="flex"
-            justifyContent="space-between"
-          >
+          <Box paddingX={6} display="flex" justifyContent="space-between">
             <Text variant="heading" size="large">
               <FormattedMessage {...commonMessages.metadata} />:{" "}
               {data?.productName ?? ""}
