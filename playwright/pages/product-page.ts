@@ -1,8 +1,10 @@
 import * as faker from "faker";
 
+import { LOCATORS } from "@data/common-locators";
 import { MetadataSeoPage } from "@pages/metadata-seo-page";
 import { RightSideDetailsPage } from "@pages/right-side-details-section";
 import type { Locator, Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 const productName = `e2e-productName-${faker.datatype.number()}`;
 const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
@@ -115,5 +117,8 @@ export class ProductPage {
 
   async clickSaveButton() {
     await this.saveButton.click();
+  }
+  async expectSuccessBanner() {
+    await expect(this.page.locator(LOCATORS.successBanner)).toBeVisible();
   }
 }

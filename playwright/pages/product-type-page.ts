@@ -1,8 +1,7 @@
+import { LOCATORS } from "@data/common-locators";
 import { URL_LIST } from "@data/url";
-import type {
-  Locator,
-  Page,
-} from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 export class ProductTypePage {
   readonly page: Page;
@@ -50,5 +49,8 @@ export class ProductTypePage {
   }
   async goto() {
     await this.page.goto(URL_LIST.productTypesAdd);
+  }
+  async expectSuccessBanner() {
+    await expect(this.page.locator(LOCATORS.successBanner)).toBeVisible();
   }
 }
