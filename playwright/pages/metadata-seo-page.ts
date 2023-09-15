@@ -1,9 +1,6 @@
 import * as faker from "faker";
 
-import type {
-  Locator,
-  Page,
-} from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 
 const seoSlugName = `e2e-seoSlug-${faker.datatype.number()}`;
 const metaDataName = `e2e-metaDataName-${faker.datatype.number()}`;
@@ -23,8 +20,6 @@ export class MetadataSeoPage {
   readonly seoDescriptionInput: Locator;
   readonly expandMetadataButton: Locator;
   readonly metadataForm: Locator;
-
-  readonly privateMetadataForm: Locator;
   readonly addMetaButton: Locator;
   readonly addPrivateMetaButton: Locator;
   readonly metaDataNameInput: Locator;

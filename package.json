@@ -311,6 +311,7 @@
     "prebuild": "npm run build-types",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
     "check-types": "tsc --noEmit && tsc-strict",
+    "check-types-playwright": "tsc --noEmit --project playwright/tsconfig.json",
     "extract-json-messages": "formatjs extract 'src/**/*.{ts,tsx}' --out-file locale/defaultMessages.json --format scripts/formatter.js",
     "extract-messages": "npm run extract-json-messages",
     "fetch-schema": "graphql-codegen --config ./fetch-schema.yml",

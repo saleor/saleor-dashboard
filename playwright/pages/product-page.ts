@@ -2,10 +2,7 @@ import * as faker from "faker";
 
 import { MetadataSeoPage } from "@pages/metadata-seo-page";
 import { RightSideDetailsPage } from "@pages/right-side-details-section";
-import type {
-  Locator,
-  Page,
-} from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 
 const productName = `e2e-productName-${faker.datatype.number()}`;
 const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
@@ -26,7 +23,6 @@ export class ProductPage {
   readonly addVariantButton: Locator;
   readonly descriptionInput: Locator;
   readonly ratingInput: Locator;
-  readonly skuInput: Locator;
   readonly variantRow: Locator;
   readonly variantPrice: Locator;
   readonly collectionRemoveButtons: Locator;
