@@ -5,13 +5,14 @@ import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { urlList } from "../fixtures/urlList";
 
 describe("User authorization", () => {
-  it(
+  it.only(
     "should successfully log in an user",
     { tags: ["@login", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       cy.visit(urlList.homePage);
       cy.loginUser();
       cy.get(LOGIN_SELECTORS.welcomePage).should("be.visible");
+      cy.contains("unexpected error").should("not.exist");
     },
   );
 
