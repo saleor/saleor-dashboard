@@ -21,13 +21,13 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
     const { ctx, theme, rect } = args;
     const { value } = cell.data;
 
-    if (value === numberCellEmptyValue) return false;
+    if (value === numberCellEmptyValue) return;
 
     const date = new Date(value);
 
-    if (!isNaN(date?.getTime())) {
+    if (isNaN(date?.getTime())) {
       // invalid date object
-      return true;
+      return;
     }
 
     const dateFormats = {
