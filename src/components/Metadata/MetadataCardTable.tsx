@@ -83,15 +83,17 @@ export const MetadataCardTable = ({
                 />
               </TableCell>
               <TableCell>
-                <Textarea
-                  width="100%"
-                  rows={1}
-                  size="small"
-                  aria-label={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
-                  name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
-                  onChange={onChange}
-                  value={field.value}
-                />
+                <Box paddingY={3}>
+                  <Textarea
+                    width="100%"
+                    rows={1}
+                    size="small"
+                    aria-label={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
+                    name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
+                    onChange={onChange}
+                    value={field.value}
+                  />
+                </Box>
               </TableCell>
               <TableCell style={{ paddingRight: vars.spacing[6] }}>
                 <Box display="flex" justifyContent="flex-end">
