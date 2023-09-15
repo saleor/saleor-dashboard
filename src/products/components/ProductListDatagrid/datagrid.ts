@@ -71,7 +71,7 @@ export const productListStaticColumnAdapter = (
     {
       id: "date",
       title: intl.formatMessage(columnsMessages.updatedAt),
-      width: 250,
+      width: 300,
     },
     {
       id: "price",

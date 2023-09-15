@@ -42,7 +42,7 @@ export const orderListStaticColumnAdapter = (
     {
       id: "date",
       title: intl.formatMessage(columnsMessages.date),
-      width: 200,
+      width: 300,
     },
     {
       id: "customer",
