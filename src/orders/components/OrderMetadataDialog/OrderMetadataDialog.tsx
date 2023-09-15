@@ -1,7 +1,7 @@
 import { Metadata } from "@dashboard/components/Metadata";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
-import { Box, Button, CloseIcon, Modal, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, Modal, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -32,16 +32,10 @@ export const OrderMetadataDialog = ({
           __transform="translate(-50%, -50%)"
           paddingY={4}
         >
-          <Box paddingX={6} display="flex" justifyContent="space-between">
-            <Text variant="heading" size="large">
-              <FormattedMessage {...commonMessages.metadata} />:{" "}
-              {data?.productName ?? ""}
-            </Text>
-
-            <Modal.Close>
-              <Button variant="tertiary" icon={<CloseIcon />} size="small" />
-            </Modal.Close>
-          </Box>
+          <Text paddingX={6} variant="heading" size="large">
+            <FormattedMessage {...commonMessages.metadata} />:{" "}
+            {data?.productName ?? ""}
+          </Text>
 
           <Metadata
             readonly={true}
