@@ -37,42 +37,46 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
       initial={initialForm}
       onSubmit={formData => onSubmit(formData.unit?.value as WeightUnitsEnum)}
     >
-      {({ change, data, submit }) => (
-        <Box display="flex" gap={4} flexDirection="column" marginTop={4}>
-          <Box>
-            <Text variant="caption" marginBottom={4}>
-              {intl.formatMessage({
-                id: "4Kq3O6",
-                defaultMessage:
-                  "This unit will be used as default shipping weight",
-              })}
-            </Text>
-            <Combobox
-              disabled={disabled}
-              options={Object.values(WeightUnitsEnum).map(unit => ({
-                label: unit,
-                value: unit,
-              }))}
-              label={intl.formatMessage({
-                id: "Rp/Okl",
-                defaultMessage: "Shipping Weight Unit",
-              })}
-              name={"unit" as keyof FormData}
-              value={data.unit}
-              onChange={value => change({ target: { name: "unit", value } })}
-            />
+      {({ change, data, submit }) => {
+        const unitValues: string[] = Object.values(WeightUnitsEnum);
+        const hasIncorrectUnit = !unitValues.includes(data.unit?.value ?? "");
+        return (
+          <Box display="flex" gap={4} flexDirection="column" marginTop={4}>
+            <Box>
+              <Text variant="caption" marginBottom={4}>
+                {intl.formatMessage({
+                  id: "4Kq3O6",
+                  defaultMessage:
+                    "This unit will be used as default shipping weight",
+                })}
+              </Text>
+              <Combobox
+                disabled={disabled}
+                options={unitValues.map(unit => ({
+                  label: unit,
+                  value: unit,
+                }))}
+                label={intl.formatMessage({
+                  id: "Rp/Okl",
+                  defaultMessage: "Shipping Weight Unit",
+                })}
+                name={"unit" as keyof FormData}
+                value={data.unit}
+                onChange={value => change({ target: { name: "unit", value } })}
+              />
+            </Box>
+            <Button
+              variant="primary"
+              onClick={submit}
+              disabled={disabled || hasIncorrectUnit}
+              data-test-id="save-unit"
+              alignSelf="end"
+            >
+              <FormattedMessage {...buttonMessages.save} />
+            </Button>
           </Box>
-          <Button
-            variant="primary"
-            onClick={submit}
-            disabled={disabled}
-            data-test-id="save-unit"
-            alignSelf="end"
-          >
-            <FormattedMessage {...buttonMessages.save} />
-          </Button>
-        </Box>
-      )}
+        );
+      }}
     </Form>
   );
 };
