@@ -1,12 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { Combobox, Multiselect } from "@dashboard/components/Combobox";
 import Link from "@dashboard/components/Link";
-import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType,
-} from "@dashboard/components/MultiAutocompleteSelectField";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorCode,
@@ -16,7 +11,7 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Option, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,20 +23,20 @@ interface ProductType {
 
 interface ProductOrganizationProps {
   canChangeType: boolean;
-  categories?: SingleAutocompleteChoiceType[];
+  categories?: Option[];
   categoryInputDisplayValue: string;
-  collections?: MultiAutocompleteChoiceType[];
-  collectionsInputDisplayValue: MultiAutocompleteChoiceType[];
+  collections?: Option[];
+  collectionsInputDisplayValue: Option[];
   data: {
     category: string;
-    collections: string[];
+    collections: Option[];
     productType?: ProductType;
   };
   disabled: boolean;
   errors: Array<ProductErrorFragment | ProductChannelListingErrorFragment>;
   productType?: ProductType;
   productTypeInputDisplayValue?: string;
-  productTypes?: SingleAutocompleteChoiceType[];
+  productTypes?: Option[];
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   fetchMoreCategories: FetchMoreProps;
@@ -99,24 +94,30 @@ export const ProductOrganization: React.FC<
           description: "section header",
         })}
       </DashboardCard.Title>
-      <DashboardCard.Content gap={5} display="flex" flexDirection="column">
+      <DashboardCard.Content gap={2} display="flex" flexDirection="column">
         {canChangeType ? (
-          <SingleAutocompleteSelectField
-            displayValue={productTypeInputDisplayValue}
+          <Combobox
+            disabled={disabled}
+            data-test-id="product-type"
+            options={productTypes}
+            value={
+              data.productType?.id
+                ? {
+                    value: data.productType.id,
+                    label: productTypeInputDisplayValue,
+                  }
+                : null
+            }
             error={!!formErrors.productType}
             helperText={getProductErrorMessage(formErrors.productType, intl)}
+            onChange={onProductTypeChange}
+            fetchOptions={fetchProductTypes}
+            fetchMore={fetchMoreProductTypes}
             name="productType"
-            disabled={disabled}
             label={intl.formatMessage({
               id: "anK7jD",
               defaultMessage: "Product Type",
             })}
-            choices={productTypes}
-            value={data.productType?.id}
-            onChange={onProductTypeChange}
-            fetchChoices={fetchProductTypes}
-            data-test-id="product-type"
-            {...fetchMoreProductTypes}
           />
         ) : (
           <Box display="flex" flexDirection="column" gap={3}>
@@ -135,50 +136,49 @@ export const ProductOrganization: React.FC<
             </Box>
           </Box>
         )}
-        <SingleAutocompleteSelectField
-          displayValue={categoryInputDisplayValue}
+
+        <Combobox
+          disabled={disabled}
+          data-test-id="category"
+          options={disabled ? [] : categories}
+          value={
+            data.category
+              ? {
+                  value: data.category,
+                  label: categoryInputDisplayValue,
+                }
+              : null
+          }
           error={!!(formErrors.category || noCategoryError)}
           helperText={getProductErrorMessage(
             formErrors.category || noCategoryError,
             intl,
           )}
-          disabled={disabled}
+          onChange={onCategoryChange}
+          fetchOptions={fetchCategories}
+          fetchMore={fetchMoreCategories}
+          name="category"
           label={intl.formatMessage({
             id: "ccXLVi",
             defaultMessage: "Category",
           })}
-          choices={disabled ? [] : categories}
-          name="category"
-          value={data.category}
-          onChange={onCategoryChange}
-          fetchChoices={fetchCategories}
-          data-test-id="category"
-          {...fetchMoreCategories}
         />
-        <MultiAutocompleteSelectField
-          displayValues={collectionsInputDisplayValue}
+
+        <Multiselect
+          disabled={disabled}
+          options={collections}
+          data-test-id="collections"
+          value={collectionsInputDisplayValue}
           error={!!formErrors.collections}
+          name="collections"
+          onChange={onCollectionChange}
+          fetchOptions={fetchCollections}
+          fetchMore={fetchMoreCollections}
           label={intl.formatMessage({
             id: "ulh3kf",
             defaultMessage: "Collections",
           })}
-          choices={disabled ? [] : collections}
-          name="collections"
-          value={data.collections}
-          helperText={
-            getProductErrorMessage(formErrors.collections, intl) ||
-            intl.formatMessage({
-              id: "v+Pkm+",
-              defaultMessage:
-                "*Optional. Adding product to collection helps users find it.",
-              description: "field is optional",
-            })
-          }
-          onChange={onCollectionChange}
-          fetchChoices={fetchCollections}
-          data-test-id="collections"
-          testId="collection"
-          {...fetchMoreCollections}
+          helperText={getProductErrorMessage(formErrors.collections, intl)}
         />
       </DashboardCard.Content>
     </DashboardCard>

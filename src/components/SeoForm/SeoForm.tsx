@@ -6,9 +6,7 @@ import {
 } from "@dashboard/graphql";
 import { getFieldError, getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui/next";
+import { Accordion, Box, Input, Text, Textarea } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,21 +22,6 @@ const SLUG_REGEX = /^[a-zA-Z0-9\-_]+$/;
 const maxSlugLength = 255;
 const maxTitleLength = 70;
 const maxDescriptionLength = 300;
-
-const useStyles = makeStyles(
-  {
-    label: {
-      flex: 1,
-    },
-    labelContainer: {
-      "& span": {
-        paddingRight: 30,
-      },
-      display: "flex",
-    },
-  },
-  { name: "SeoForm" },
-);
 
 interface SeoFormProps {
   description?: string | null;
@@ -64,7 +47,6 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
     descriptionPlaceholder,
     disabled,
     errors = [],
-    helperText,
     loading,
     title,
     slug,
@@ -72,15 +54,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
     titlePlaceholder,
     onChange,
   } = props;
-  const classes = useStyles(props);
-
   const intl = useIntl();
-
-  const [expanded, setExpansionStatus] = React.useState(false);
-
-  const toggleExpansion = () => setExpansionStatus(!expanded);
-
-  const shouldDisplayHelperText = helperText && !expanded;
 
   const getSlugHelperMessage = () => {
     const error = !!getError(SeoField.slug);
@@ -105,139 +79,147 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
     }
   };
 
+  const completed =
+    slug?.length > 0 && title.length > 0 && description?.length > 0;
+
   const getError = (fieldName: SeoField) => getFieldError(errors, fieldName);
 
   return (
-    <DashboardCard>
-      <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <FormattedMessage
-            defaultMessage="Search Engine Preview"
-            id="TGX4T1"
-          />
-          <Button
-            variant="secondary"
-            onClick={toggleExpansion}
-            data-test-id="edit-seo"
-            type="button"
-          >
-            <FormattedMessage
-              id="s5Imt5"
-              defaultMessage="Edit website SEO"
-              description="button"
-            />
-          </Button>
-        </Box>
-      </DashboardCard.Title>
+    <DashboardCard paddingTop={6}>
       <DashboardCard.Content>
-        {shouldDisplayHelperText && <Text>{helperText}</Text>}
-        {expanded && (
-          <Box display="grid" gap={2}>
-            <Box>
-              <Input
-                error={!!getError(SeoField.slug) || slug.length > maxSlugLength}
-                name={SeoField.slug}
-                label={
-                  <Box display="flex" gap={1}>
-                    <Box as="span">
-                      <FormattedMessage defaultMessage="Slug" id="IoDlcd" />
-                    </Box>
-                    {slug?.length > 0 && (
+        <Accordion>
+          <Accordion.Item value="seo-accordion">
+            <Accordion.Trigger>
+              <Box display="grid" gap={2}>
+                <Text variant="heading">
+                  <FormattedMessage
+                    defaultMessage="Search Engine Preview"
+                    id="TGX4T1"
+                  />
+                </Text>
+                <Text variant="caption" color="textNeutralSubdued">
+                  {completed ? (
+                    <FormattedMessage
+                      id="bGqAdR"
+                      defaultMessage="Complete"
+                      description="seo complete text"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id="y8E0iG"
+                      defaultMessage="Incomplete"
+                      description="seo incomplete text"
+                    />
+                  )}
+                </Text>
+              </Box>
+              <Accordion.TriggerButton dataTestId="edit-seo" />
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <Box display="grid" gap={2} marginTop={4}>
+                <Box>
+                  <Input
+                    error={
+                      !!getError(SeoField.slug) || slug.length > maxSlugLength
+                    }
+                    name={SeoField.slug}
+                    label={
+                      <Box display="flex" gap={1}>
+                        <Box as="span">
+                          <FormattedMessage defaultMessage="Slug" id="IoDlcd" />
+                        </Box>
+                        {slug?.length > 0 && (
+                          <Box as="span">
+                            <FormattedMessage
+                              defaultMessage="({numberOfCharacters} of {maxCharacters} characters)"
+                              id="yi1HSj"
+                              values={{
+                                maxCharacters: maxSlugLength,
+                                numberOfCharacters: slug?.length,
+                              }}
+                            />
+                          </Box>
+                        )}
+                      </Box>
+                    }
+                    helperText={getSlugHelperMessage()}
+                    size="small"
+                    value={slug}
+                    onChange={handleSlugChange}
+                    disabled={loading || disabled}
+                    maxLength={maxSlugLength}
+                    placeholder={slugPlaceholder}
+                  />
+                </Box>
+                <Input
+                  size="small"
+                  error={title?.length > maxTitleLength}
+                  name={SeoField.title}
+                  value={title ?? ""}
+                  disabled={loading || disabled}
+                  onChange={onChange}
+                  maxLength={maxTitleLength}
+                  placeholder={titlePlaceholder}
+                  label={
+                    <Box display="flex" gap={1}>
                       <Box as="span">
                         <FormattedMessage
-                          defaultMessage="({numberOfCharacters} of {maxCharacters} characters)"
-                          id="yi1HSj"
-                          values={{
-                            maxCharacters: maxSlugLength,
-                            numberOfCharacters: slug?.length,
-                          }}
+                          defaultMessage="Search engine title"
+                          id="w2Cewo"
                         />
                       </Box>
-                    )}
-                  </Box>
-                }
-                helperText={getSlugHelperMessage()}
-                size="small"
-                value={slug}
-                onChange={handleSlugChange}
-                disabled={loading || disabled}
-                maxLength={maxSlugLength}
-                placeholder={slugPlaceholder}
-              />
-            </Box>
-            <Input
-              size="small"
-              error={title?.length > maxTitleLength}
-              name={SeoField.title}
-              value={title ?? ""}
-              disabled={loading || disabled}
-              onChange={onChange}
-              maxLength={maxTitleLength}
-              placeholder={titlePlaceholder}
-              label={
-                <Box display="flex" gap={1}>
-                  <Box as="span">
-                    <FormattedMessage
-                      defaultMessage="Search engine title"
-                      id="w2Cewo"
-                    />
-                  </Box>
-                  {title?.length > 0 && (
-                    <Box as="span">
-                      <FormattedMessage
-                        defaultMessage="({numberOfCharacters} of {maxCharacters} characters)"
-                        id="yi1HSj"
-                        values={{
-                          maxCharacters: maxTitleLength,
-                          numberOfCharacters: title?.length,
-                        }}
-                      />
+                      {title?.length > 0 && (
+                        <Box as="span">
+                          <FormattedMessage
+                            defaultMessage="({numberOfCharacters} of {maxCharacters} characters)"
+                            id="yi1HSj"
+                            values={{
+                              maxCharacters: maxTitleLength,
+                              numberOfCharacters: title?.length,
+                            }}
+                          />
+                        </Box>
+                      )}
                     </Box>
-                  )}
-                </Box>
-              }
-            />
-            <TextField
-              error={description?.length > maxDescriptionLength}
-              name={SeoField.description}
-              label={
-                <div className={classes.labelContainer}>
-                  <div className={classes.label}>
-                    <FormattedMessage
-                      id="CXTIq8"
-                      defaultMessage="Search engine description"
-                    />
-                  </div>
-                  {description?.length > 0 && (
-                    <span>
-                      <FormattedMessage
-                        id="ChAjJu"
-                        defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
-                        description="character limit"
-                        values={{
-                          maxCharacters: maxDescriptionLength,
-                          numberOfCharacters: description.length,
-                        }}
-                      />
-                    </span>
-                  )}
-                </div>
-              }
-              InputProps={{
-                inputProps: {
-                  maxLength: maxDescriptionLength,
-                },
-              }}
-              value={description ?? ""}
-              onChange={onChange}
-              disabled={loading || disabled}
-              fullWidth
-              multiline
-              placeholder={descriptionPlaceholder}
-              rows={10}
-            />
-          </Box>
-        )}
+                  }
+                />
+
+                <Textarea
+                  error={description?.length > maxDescriptionLength}
+                  name={SeoField.description}
+                  value={description ?? ""}
+                  disabled={loading || disabled}
+                  onChange={onChange}
+                  maxLength={maxDescriptionLength}
+                  placeholder={descriptionPlaceholder}
+                  label={
+                    <Box display="flex" gap={1}>
+                      <span>
+                        <FormattedMessage
+                          id="CXTIq8"
+                          defaultMessage="Search engine description"
+                        />
+                      </span>
+                      {description?.length > 0 && (
+                        <span>
+                          <FormattedMessage
+                            id="ChAjJu"
+                            defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
+                            description="character limit"
+                            values={{
+                              maxCharacters: maxDescriptionLength,
+                              numberOfCharacters: description.length,
+                            }}
+                          />
+                        </span>
+                      )}
+                    </Box>
+                  }
+                />
+              </Box>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion>
       </DashboardCard.Content>
     </DashboardCard>
   );
