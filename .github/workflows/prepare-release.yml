@@ -11,7 +11,7 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   prepare:
     name: Prepare release with Changesets
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       published: ${{ steps.changesets.outputs.published }}
     permissions:
@@ -40,7 +40,7 @@ jobs:
     name: Deploy and release to sandbox
     needs: changesets
     if: needs.prepare.outputs.published == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       API_URI: /graphql/
       APP_MOUNT_URI: /dashboard/
