@@ -49,7 +49,7 @@ export function createVoucher({
     cy.get(VOUCHERS_SELECTORS.requirements.minOrderValueCheckbox)
       .click()
       .get(VOUCHERS_SELECTORS.requirements.minOrderValueInput)
-      .type(minOrderValue);
+      .type(minOrderValue, { force: true });
   }
   if (minAmountOfItems) {
     cy.get(VOUCHERS_SELECTORS.requirements.minAmountOfItemsCheckbox)
