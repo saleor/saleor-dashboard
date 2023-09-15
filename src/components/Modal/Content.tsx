@@ -11,12 +11,17 @@ export const Content = ({ children, ...rest }: ContentProps) => {
       <Box
         backgroundColor="surfaceNeutralPlain"
         boxShadow="modal"
-        borderRadius={2}
+        borderRadius={4}
         position="fixed"
         __left="50%"
         __top="50%"
         __transform="translate(-50%, -50%)"
-        paddingY={4}
+        borderStyle="solid"
+        borderWidth={1}
+        borderColor="neutralPlain"
+        padding={6}
+        display="grid"
+        gap={6}
         {...rest}
       >
         {children}

@@ -6,7 +6,7 @@ export const Actions = ({
   ...rest
 }: PropsWithBox<{ children: ReactNode }>) => {
   return (
-    <Box display="flex" justifyContent="flex-end" gap={3} {...rest}>
+    <Box display="flex" justifyContent="flex-end" gap={4} {...rest}>
       {children}
     </Box>
   );
