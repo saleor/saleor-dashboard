@@ -90,6 +90,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
+
   const {
     loadMore: loadMoreCollections,
     search: searchCollection,
@@ -330,8 +331,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         categories={mapEdgesToItems(searchCategoryOpts?.data?.search) || []}
         collections={mapEdgesToItems(searchCollectionOpts?.data?.search) || []}
         attributeValues={
-          mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) ||
-          []
+          mapEdgesToItems(
+            searchAttributeValuesOpts?.data?.attribute?.choices,
+          ) ?? []
         }
         loading={loading}
         channelsErrors={channelsErrors}

@@ -14,17 +14,14 @@ import {
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import FileUploadField from "@dashboard/components/FileUploadField";
-import MultiAutocompleteSelectField from "@dashboard/components/MultiAutocompleteSelectField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { TextField } from "@material-ui/core";
-import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui/next";
+import { Box, Input, Text, Toggle } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { Combobox, Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
 import { AttributeRowProps } from "./types";
 
@@ -90,27 +87,32 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.DROPDOWN:
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          id={`attribute:${attribute.label}`}
-        >
-          <SingleAutocompleteSelectField
-            choices={getSingleChoices(attributeValues)}
+        <BasicAttributeRow label={attribute.label}>
+          <Combobox
+            allowCustomValues
+            alwaysFetchOnFocus
+            size="small"
             disabled={disabled}
-            displayValue={getSingleDisplayValue(attribute, attributeValues)}
-            emptyOption={!attribute.data.isRequired}
+            options={getSingleChoices(attributeValues)}
+            value={
+              attribute.value[0]
+                ? {
+                    value: attribute.value[0],
+                    label: getSingleDisplayValue(attribute, attributeValues),
+                  }
+                : null
+            }
             error={!!error}
             helperText={getErrorMessage(error, intl)}
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
-            label={intl.formatMessage(attributeRowMessages.valueLabel)}
-            value={attribute.value[0]}
-            onChange={event => onChange(attribute.id, event.target.value)}
-            allowCustomValues={true}
-            fetchOnFocus={true}
-            fetchChoices={value => fetchAttributeValues(value, attribute.id)}
+            label=""
+            onChange={e => onChange(attribute.id, e.target.value)}
+            fetchOptions={query => {
+              fetchAttributeValues(query, attribute.id);
+            }}
             onBlur={onAttributeSelectBlur}
-            {...fetchMoreAttributeValues}
+            fetchMore={fetchMoreAttributeValues}
           />
         </BasicAttributeRow>
       );
@@ -131,12 +133,11 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         <BasicAttributeRow
           label={attribute.label}
           description={intl.formatMessage(inputTypeMessages.plainText)}
-          id={`attribute:${attribute.label}`}
         >
           <Input
             disabled={disabled}
             error={!!error}
-            label={intl.formatMessage(attributeRowMessages.valueLabel)}
+            label=""
             name={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
             type="text"
@@ -159,7 +160,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         <BasicAttributeRow
           label={attribute.label}
           description={intl.formatMessage(inputTypeMessages.richText)}
-          id={`attribute:${attribute.label}`}
         >
           {getShouldMount(attribute.id) && (
             <Box __minWidth={210}>
@@ -170,7 +170,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                 name={`attribute:${attribute.label}`}
                 disabled={disabled}
                 error={!!error}
-                label={intl.formatMessage(attributeRowMessages.valueLabel)}
+                label=""
                 helperText={getErrorMessage(error, intl)}
                 id={`attribute:${attribute.label}`}
               />
@@ -181,14 +181,11 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
     }
     case AttributeInputTypeEnum.NUMERIC:
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          id={`attribute:${attribute.label}`}
-        >
+        <BasicAttributeRow label={attribute.label}>
           <Input
             disabled={disabled}
             error={!!error}
-            label={intl.formatMessage(attributeRowMessages.valueLabel)}
+            label=""
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
@@ -201,56 +198,42 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.BOOLEAN:
       return (
-        <Box as="li" display="flex" gap={2} alignItems="center" padding={1}>
-          <Box data-test-id="attribute-value">
-            <Box
-              display="flex"
-              gap={0.5}
-              flexDirection="column"
-              alignItems="flex-end"
-            >
-              <Checkbox
-                name={`attribute:${attribute.label}`}
-                onCheckedChange={checked => onChange(attribute.id, checked)}
-                checked={JSON.parse(attribute.value[0] ?? "false")}
-                error={!!error}
-                id={`attribute:${attribute.label}`}
-              />
-              <Text variant="caption" color="textCriticalDefault">
-                {getErrorMessage(error, intl)}
-              </Text>
+        <BasicAttributeRow label={attribute.label}>
+          <Box as="li" display="flex" gap={2} alignItems="center" padding={1}>
+            <Box data-test-id="attribute-value">
+              <Box
+                display="flex"
+                gap={0.5}
+                flexDirection="column"
+                alignItems="flex-end"
+              >
+                <Toggle
+                  name={`attribute:${attribute.label}`}
+                  onPressedChange={checked => onChange(attribute.id, checked)}
+                  pressed={JSON.parse(attribute.value[0] ?? "false")}
+                  id={`attribute:${attribute.label}`}
+                />
+                <Text variant="caption" color="textCriticalDefault">
+                  {getErrorMessage(error, intl)}
+                </Text>
+              </Box>
             </Box>
           </Box>
-          <Box
-            data-test-id="attribute-label"
-            as="label"
-            htmlFor={`attribute:${attribute.label}`}
-            display="flex"
-            gap={1}
-            cursor="pointer"
-          >
-            <Text>{attribute.label}</Text>
-          </Box>
-        </Box>
+        </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.DATE:
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          id={`attribute:${attribute.label}`}
-        >
-          <TextField
-            fullWidth
+        <BasicAttributeRow label={attribute.label}>
+          <Input
+            width="100%"
             disabled={disabled}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
-            label={intl.formatMessage(commonMessages.date)}
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
             type="date"
             value={attribute.value[0]}
-            InputLabelProps={{ shrink: true }}
           />
         </BasicAttributeRow>
       );
@@ -258,12 +241,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       return (
         <BasicAttributeRow label={attribute.label}>
           <DateTimeField
-            fullWidth
             name={`attribute:${attribute.label}`}
             disabled={disabled}
             error={error}
             value={attribute.value[0]}
-            helperText={getErrorMessage(error, intl)}
             onChange={value => onChange(attribute.id, value)}
           />
         </BasicAttributeRow>
@@ -271,21 +252,27 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
     default:
       return (
         <BasicAttributeRow label={attribute.label}>
-          <MultiAutocompleteSelectField
-            choices={getMultiChoices(attributeValues)}
-            displayValues={getMultiDisplayValue(attribute, attributeValues)}
+          <Multiselect
+            allowCustomValues
+            alwaysFetchOnFocus
             disabled={disabled}
+            name={`attribute:${attribute.label}`}
+            label=""
             error={!!error}
             helperText={getErrorMessage(error, intl)}
-            label={intl.formatMessage(attributeRowMessages.multipleValueLabel)}
-            name={`attribute:${attribute.label}`}
-            value={attribute.value}
-            onChange={event => onMultiChange(attribute.id, event.target.value)}
-            allowCustomValues={true}
-            fetchOnFocus={true}
-            fetchChoices={value => fetchAttributeValues(value, attribute.id)}
+            options={getMultiChoices(attributeValues)}
+            value={getMultiDisplayValue(attribute, attributeValues)}
+            fetchOptions={query => {
+              fetchAttributeValues(query, attribute.id);
+            }}
+            onChange={e => {
+              onMultiChange(
+                attribute.id,
+                e.target.value.map(({ value }) => value),
+              );
+            }}
+            fetchMore={fetchMoreAttributeValues}
             onBlur={onAttributeSelectBlur}
-            {...fetchMoreAttributeValues}
           />
         </BasicAttributeRow>
       );

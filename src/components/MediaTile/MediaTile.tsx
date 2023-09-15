@@ -1,6 +1,7 @@
 import { IconButton } from "@dashboard/components/IconButton";
 import { CircularProgress } from "@material-ui/core";
 import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 
@@ -23,7 +24,7 @@ const useStyles = makeStyles(
       borderRadius: theme.spacing(),
       height: 148,
       overflow: "hidden",
-      padding: theme.spacing(2),
+      padding: vars.spacing[1],
       position: "relative",
       width: 148,
     },

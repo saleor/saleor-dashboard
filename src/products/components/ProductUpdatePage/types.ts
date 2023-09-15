@@ -31,13 +31,14 @@ import {
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
+import { Option } from "@saleor/macaw-ui/next";
 
 import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
   taxClassId: string;
-  collections: string[];
+  collections: Option[];
   isAvailable: boolean;
   name: string;
   rating: number;
@@ -74,7 +75,7 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   attributes: AttributeInput[];
   attributesWithNewFileValue: FormsetData<null, File>;
   channels: ProductChannelListingUpdateInput;
-  collections: string[];
+  collections: Option[];
   description: OutputData;
   variants: DatagridChangeOpts;
 }

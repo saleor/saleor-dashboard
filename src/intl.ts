@@ -223,6 +223,10 @@ export const commonMessages = defineMessages({
     defaultMessage: "View metadata",
     id: "E/yzIO",
   },
+  loading: {
+    defaultMessage: "Loading...",
+    id: "gjBiyj",
+  },
 });
 
 export const errorMessages = defineMessages({

@@ -2355,7 +2355,7 @@ export const ProductMediaFragmentDoc = gql`
   id
   alt
   sortOrder
-  url
+  url(size: 1024)
   type
   oembedData
 }

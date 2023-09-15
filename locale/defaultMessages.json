@@ -1520,10 +1520,6 @@
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
   },
-  "9IWg/f": {
-    "context": "button",
-    "string": "SETUP END DATE"
-  },
   "9MGrEp": {
     "string": "Is available"
   },
@@ -5559,6 +5555,10 @@
   "bFhzRX": {
     "string": "No products are out of stock"
   },
+  "bGqAdR": {
+    "context": "seo complete text",
+    "string": "Complete"
+  },
   "bHdFph": {
     "context": "subsection header",
     "string": "Address"
@@ -5645,6 +5645,10 @@
   },
   "bj6pTd": {
     "string": "Something's missing"
+  },
+  "bk2M4q": {
+    "context": "button",
+    "string": "Cancel end date"
   },
   "bk9KUX": {
     "context": "ProductTypeDeleteWarningDialog single consent label",
@@ -6068,6 +6072,9 @@
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
   },
+  "fLCV/w": {
+    "string": "Add new value"
+  },
   "fLhj3a": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated"
@@ -6263,6 +6270,9 @@
   "gj3MUg": {
     "context": "gift card history message",
     "string": "Gift card was resent"
+  },
+  "gjBiyj": {
+    "string": "Loading..."
   },
   "gksZwp": {
     "context": "button",
@@ -7816,10 +7826,6 @@
     "context": "limit voucher",
     "string": "Limit of Uses"
   },
-  "s5Imt5": {
-    "context": "button",
-    "string": "Edit website SEO"
-  },
   "s5v6m0": {
     "context": "order",
     "string": "Gift Card ordered"
@@ -8040,6 +8046,10 @@
     "context": "order status",
     "string": "Draft"
   },
+  "tqJwfo": {
+    "context": "button",
+    "string": "Set end date"
+  },
   "tsL3IW": {
     "context": "gift card history message",
     "string": "Gift card was sent to customer"
@@ -8232,10 +8242,6 @@
     "context": "OrderPayment does not require shipping",
     "string": "does not apply"
   },
-  "v+Pkm+": {
-    "context": "field is optional",
-    "string": "*Optional. Adding product to collection helps users find it."
-  },
   "v/1VA6": {
     "context": "add order note, button",
     "string": "Send"
@@ -8257,10 +8263,6 @@
   },
   "v3WWK+": {
     "string": "Status is invalid"
-  },
-  "v9ILn/": {
-    "context": "button",
-    "string": "CANCEL END DATE"
   },
   "vC8vyb": {
     "context": "enabled status option label",
@@ -8641,6 +8643,10 @@
   },
   "y7mfbl": {
     "string": "Currently, there are no countries assigned to this shipping zone"
+  },
+  "y8E0iG": {
+    "context": "seo incomplete text",
+    "string": "Incomplete"
   },
   "y9cvqE": {
     "context": "button",

@@ -74,11 +74,11 @@ export function fillUpVariantDetails({
   selectAttributeWithType({ attributeType, attributeName });
   cy.get(PRICE_LIST.priceInput)
     .each(input => {
-      cy.wrap(input).type(price);
+      cy.wrap(input).type(price, { force: true });
     })
     .get(PRICE_LIST.costPriceInput)
     .each(input => {
-      cy.wrap(input).type(costPrice);
+      cy.wrap(input).type(costPrice, { force: true });
     });
   if (variantName) {
     cy.get(VARIANTS_SELECTORS.variantNameInput).type(variantName);
