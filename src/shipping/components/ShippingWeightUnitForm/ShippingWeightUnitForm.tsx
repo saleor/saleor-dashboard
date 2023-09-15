@@ -30,6 +30,10 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
         }
       : null,
   };
+  const unitValues: string[] = React.useMemo(
+    () => Object.values(WeightUnitsEnum),
+    [WeightUnitsEnum],
+  );
 
   return (
     <Form
@@ -38,7 +42,6 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
       onSubmit={formData => onSubmit(formData.unit?.value as WeightUnitsEnum)}
     >
       {({ change, data, submit }) => {
-        const unitValues: string[] = Object.values(WeightUnitsEnum);
         const hasIncorrectUnit = !unitValues.includes(data.unit?.value ?? "");
         return (
           <Box display="flex" gap={4} flexDirection="column" marginTop={4}>
