@@ -129,7 +129,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                 item ? item.label : ""
               }
               onSelect={(item: QuickSearchAction) => {
-                const shouldRemainVisible = item.onClick();
+                const shouldRemainVisible = item?.onClick();
                 if (!shouldRemainVisible) {
                   setVisibility(false);
                 }
