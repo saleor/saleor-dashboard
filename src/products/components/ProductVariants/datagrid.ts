@@ -43,7 +43,9 @@ export const useChannelAdapter = ({
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
 
   const paginatedChannels = paginate(
-    (listings ?? [])?.filter(channel => channel.name.includes(channelQuery)),
+    (listings ?? [])?.filter(channel =>
+      channel.name.toLowerCase().includes(channelQuery.toLowerCase()),
+    ),
   );
 
   const selectedChannels = selectedColumns
@@ -79,7 +81,9 @@ export const useChannelAvailabilityAdapter = ({
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
 
   const paginatedChannels = paginate(
-    (listings ?? []).filter(channel => channel.name.includes(channelQuery)),
+    (listings ?? []).filter(channel =>
+      channel.name.toLowerCase().includes(channelQuery.toLowerCase()),
+    ),
   );
 
   const selectedChannels = selectedColumns
@@ -151,7 +155,7 @@ export const useAttributesAdapter = ({
 
   const paginatedAttributes = paginate(
     (supportedAttributes ?? []).filter(attribute =>
-      attribute.name?.includes(attributeQuery),
+      attribute.name?.toLowerCase().includes(attributeQuery.toLowerCase()),
     ),
   );
 
@@ -201,7 +205,7 @@ export const useWarehouseAdapter = ({
 
   const paginatedWarehouses = paginate(
     (warehouses ?? []).filter(warehouse =>
-      warehouse.name?.includes(warehouseQuery),
+      warehouse.name?.toLowerCase().includes(warehouseQuery.toLowerCase()),
     ),
   );
 
