@@ -5,7 +5,7 @@ import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { urlList } from "../fixtures/urlList";
 
 describe("User authorization", () => {
-  it.only(
+  it(
     "should successfully log in an user",
     { tags: ["@login", "@allEnv", "@stable", "@oldRelease"] },
     () => {
