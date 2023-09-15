@@ -24,6 +24,11 @@ export class LoginPage {
     await this.signInButton.click();
   }
   async goto() {
-    await this.page.goto("/dashboard");
+    const CYPRESS_baseUrl = process.env.CYPRESS_baseUrl;
+    const loginPageUrl =
+      CYPRESS_baseUrl === "http://localhost:9000/"
+        ? "http://localhost:9000/"
+        : "/dashboard";
+    await this.page.goto(loginPageUrl);
   }
 }

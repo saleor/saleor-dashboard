@@ -48,6 +48,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
       <CardContent>
         <SingleAutocompleteSelectField
           disabled={disabled}
+          data-test-id="taxes"
           displayValue={taxClassDisplayName}
           label={intl.formatMessage(taxesMessages.taxClass)}
           name={"taxClassId" as keyof ProductCreateFormData}
