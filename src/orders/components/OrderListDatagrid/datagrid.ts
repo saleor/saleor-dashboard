@@ -1,17 +1,20 @@
 // @ts-strict-ignore
 import {
+  dateCell,
   moneyCell,
+  pillCell,
   readonlyTextCell,
-  tagsCell,
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
+import {
+  hueToPillColorDark,
+  hueToPillColorLight,
+} from "@dashboard/components/Datagrid/customCells/PillCell";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Locale } from "@dashboard/components/Locale";
 import { OrderListQuery } from "@dashboard/graphql";
-import useLocale from "@dashboard/hooks/useLocale";
 import {
-  getStatusColor,
+  getStatusHue,
   transformOrderStatus,
   transformPaymentStatus,
 } from "@dashboard/misc";
@@ -19,12 +22,7 @@ import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item, TextCell } from "@glideapps/glide-data-grid";
-import {
-  DefaultTheme,
-  ThemeTokensValues,
-  useTheme,
-} from "@saleor/macaw-ui/next";
-import moment from "moment-timezone";
+import { DefaultTheme, useTheme } from "@saleor/macaw-ui/next";
 import { IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
@@ -44,7 +42,7 @@ export const orderListStaticColumnAdapter = (
     {
       id: "date",
       title: intl.formatMessage(columnsMessages.date),
-      width: 200,
+      width: 300,
     },
     {
       id: "customer",
@@ -82,8 +80,7 @@ function getDatagridRowDataIndex(row, removeArray) {
 
 export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
   const intl = useIntl();
-  const { locale } = useLocale();
-  const { theme: currentTheme, themeValues } = useTheme();
+  const { theme } = useTheme();
 
   return (
     [column, row]: Item,
@@ -103,13 +100,13 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
       case "number":
         return readonlyTextCell(rowData.number);
       case "date":
-        return getDateCellContent(locale, rowData);
+        return getDateCellContent(rowData);
       case "customer":
         return getCustomerCellContent(rowData);
       case "payment":
-        return getPaymentCellContent(intl, themeValues, currentTheme, rowData);
+        return getPaymentCellContent(intl, theme, rowData);
       case "status":
-        return getStatusCellContent(intl, themeValues, currentTheme, rowData);
+        return getStatusCellContent(intl, theme, rowData);
       case "total":
         return getTotalCellContent(rowData);
       default:
@@ -119,10 +116,9 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
 };
 
 export function getDateCellContent(
-  locale: Locale,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  return readonlyTextCell(moment(rowData.created).locale(locale).format("lll"));
+  return dateCell(rowData?.created);
 }
 
 export function getCustomerCellContent(
@@ -141,55 +137,39 @@ export function getCustomerCellContent(
   return readonlyTextCell("-");
 }
 
-export function getPaymentCellContent(
+export function getStatusCellContent(
   intl: IntlShape,
-  theme: ThemeTokensValues,
-  currentTheme: DefaultTheme,
+  theme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
-  if (paymentStatus?.status) {
-    const statusColor = getStatusColor(paymentStatus.status, currentTheme);
+  const status = transformOrderStatus(rowData.status, intl);
+  const statusHue = getStatusHue(status.status);
 
-    return tagsCell(
-      [
-        {
-          tag: paymentStatus.localized,
-          color: statusColor.startsWith("#")
-            ? statusColor
-            : theme.colors.background[statusColor],
-        },
-      ],
-      [paymentStatus.localized],
-      { cursor: "pointer" },
-    );
+  if (status) {
+    const color =
+      theme === "defaultDark"
+        ? hueToPillColorDark(statusHue)
+        : hueToPillColorLight(statusHue);
+    return pillCell(status.localized, color);
   }
 
   return readonlyTextCell("-");
 }
 
-export function getStatusCellContent(
+export function getPaymentCellContent(
   intl: IntlShape,
-  theme: ThemeTokensValues,
-  currentTheme: DefaultTheme,
+  theme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  const status = transformOrderStatus(rowData.status, intl);
-  const statusColor = getStatusColor(status.status, currentTheme);
+  const status = transformPaymentStatus(rowData.paymentStatus, intl);
+  const statusHue = getStatusHue(status.status);
 
   if (status) {
-    return tagsCell(
-      [
-        {
-          tag: status.localized,
-          color: statusColor.startsWith("#")
-            ? statusColor
-            : theme.colors.background[statusColor],
-        },
-      ],
-      [status.localized],
-      { cursor: "pointer" },
-    );
+    const color =
+      theme === "defaultDark"
+        ? hueToPillColorDark(statusHue)
+        : hueToPillColorLight(statusHue);
+    return pillCell(status.localized, color);
   }
 
   return readonlyTextCell("-");
