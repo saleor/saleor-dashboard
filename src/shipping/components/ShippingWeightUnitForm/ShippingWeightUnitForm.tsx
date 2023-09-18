@@ -2,7 +2,7 @@ import Form from "@dashboard/components/Form";
 import { WeightUnitsEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Combobox, Option, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, Option, Select } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,8 +30,12 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
         }
       : null,
   };
-  const unitValues: string[] = React.useMemo(
-    () => Object.values(WeightUnitsEnum),
+  const unitOptions: Option[] = React.useMemo(
+    () =>
+      Object.values(WeightUnitsEnum).map(unit => ({
+        label: unit,
+        value: unit,
+      })),
     [WeightUnitsEnum],
   );
 
@@ -42,23 +46,12 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
       onSubmit={formData => onSubmit(formData.unit?.value as WeightUnitsEnum)}
     >
       {({ change, data, submit }) => {
-        const hasIncorrectUnit = !unitValues.includes(data.unit?.value ?? "");
         return (
           <Box display="flex" gap={4} flexDirection="column" marginTop={4}>
             <Box>
-              <Text variant="caption" marginBottom={4}>
-                {intl.formatMessage({
-                  id: "4Kq3O6",
-                  defaultMessage:
-                    "This unit will be used as default shipping weight",
-                })}
-              </Text>
-              <Combobox
+              <Select
                 disabled={disabled}
-                options={unitValues.map(unit => ({
-                  label: unit,
-                  value: unit,
-                }))}
+                options={unitOptions}
                 label={intl.formatMessage({
                   id: "Rp/Okl",
                   defaultMessage: "Shipping Weight Unit",
@@ -66,12 +59,17 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
                 name={"unit" as keyof FormData}
                 value={data.unit}
                 onChange={value => change({ target: { name: "unit", value } })}
+                helperText={intl.formatMessage({
+                  id: "4Kq3O6",
+                  defaultMessage:
+                    "This unit will be used as default shipping weight",
+                })}
               />
             </Box>
             <Button
               variant="primary"
               onClick={submit}
-              disabled={disabled || hasIncorrectUnit}
+              disabled={disabled}
               data-test-id="save-unit"
               alignSelf="end"
             >
