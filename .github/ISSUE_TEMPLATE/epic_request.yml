@@ -7,23 +7,23 @@ body:
   - type: textarea
     id: description
     attributes:
-      label: Description of the epic
-      description: Describe your goal, use case, or provide context.
+      label: Description of an epic
+      description: Describe overall goal, provide context, explain what goal it represents
       placeholder: |
-        Example: Users can be more productive when we allow them to bulk update multiple variants at once.
-        We can implement datagrid table that presents all variants, and when clicking in some cell, it will turn into edit mode.
+        Example: Users needs to have variant edition functionality. This is essential for managing eCommerce and needs lots of configuration for each variant.
+        We must consider its attributes, quantities, correlated channels and more. 
     validations:
       required: true
   - type: textarea
     id: additional-info
     attributes:
       label: Additional information
-      description: Attach some additional context. Links, references, UI mockups and so on.
+      description: Attach some additional context.
       placeholder: |
         Example:
-        Here are the mockups for this datagrid.
-        We consider keeping it simple and similar to the ordinary table.
-        Please look at the attached screenshots:
+        Here are the example mockups for variant edition.
+        Let's consider what options it supposed to have.
+        Please look at the attached references - it explains how marked use it.
         ...
     validations:
       required: false
