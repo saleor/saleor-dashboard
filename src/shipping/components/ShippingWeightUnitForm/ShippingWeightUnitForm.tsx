@@ -43,7 +43,11 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
     <Form
       confirmLeave
       initial={initialForm}
-      onSubmit={formData => onSubmit(formData.unit?.value as WeightUnitsEnum)}
+      onSubmit={formData => {
+        return formData.unit
+          ? onSubmit(formData.unit.value as WeightUnitsEnum)
+          : undefined;
+      }}
     >
       {({ change, data, submit }) => {
         return (
@@ -69,7 +73,7 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
             <Button
               variant="primary"
               onClick={submit}
-              disabled={disabled}
+              disabled={disabled || !data.unit}
               data-test-id="save-unit"
               alignSelf="end"
             >
