@@ -1,6 +1,7 @@
+import { DashboardModal } from "@dashboard/components/Modal";
 import { WeightUnitsEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { Box, Button, CloseIcon, Modal, Text } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -18,49 +19,30 @@ export const ShippingWeightUnitDialog: React.FC<
   ShippingWeightUnitDialogProps
 > = ({ open, onSubmit, onClose, defaultWeightUnit, disabled }) => {
   return (
-    <Modal open={open} onChange={onClose}>
-      <Modal.Content>
+    <DashboardModal open={open} onChange={onClose}>
+      <DashboardModal.Content>
         <Box
-          __left="50%"
-          __maxWidth="400px"
-          __top="50%"
-          __transform="translate(-50%, -50%)"
-          backgroundColor="surfaceNeutralPlain"
-          boxShadow="modal"
-          position="fixed"
-          padding={4}
-          borderRadius={3}
+          alignItems="center"
+          display="flex"
+          gap={3}
+          justifyContent="space-between"
         >
-          <Box
-            alignItems="center"
-            display="flex"
-            gap={3}
-            justifyContent="space-between"
-          >
-            <Text variant="body" size="large">
-              <FormattedMessage
-                description="weight config modal title"
-                defaultMessage="Default weight unit configuration"
-                id="9WmA6z"
-              />
-            </Text>
-            <Modal.Close>
-              <Button
-                icon={<CloseIcon />}
-                size="small"
-                variant="tertiary"
-                onClick={onClose}
-              />
-            </Modal.Close>
-          </Box>
-          <ShippingWeightUnitForm
-            defaultWeightUnit={defaultWeightUnit}
-            onSubmit={onSubmit}
-            disabled={disabled}
-          />
+          <DashboardModal.Title>
+            <FormattedMessage
+              description="weight config modal title"
+              defaultMessage="Default weight unit configuration"
+              id="9WmA6z"
+            />
+          </DashboardModal.Title>
+          <DashboardModal.Close onClose={onClose} />
         </Box>
-      </Modal.Content>
-    </Modal>
+        <ShippingWeightUnitForm
+          defaultWeightUnit={defaultWeightUnit}
+          onSubmit={onSubmit}
+          disabled={disabled}
+        />
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
