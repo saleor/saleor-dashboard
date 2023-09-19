@@ -60,7 +60,7 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
                   id: "Rp/Okl",
                   defaultMessage: "Shipping Weight Unit",
                 })}
-                name={"unit" as keyof FormData}
+                name={"unit" satisfies keyof FormData}
                 value={data.unit}
                 onChange={value => change({ target: { name: "unit", value } })}
                 helperText={intl.formatMessage({
