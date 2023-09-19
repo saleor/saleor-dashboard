@@ -76,7 +76,11 @@ import {
   storageUtils,
 } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
-import { getAvailableProductKinds, getProductKindOpts } from "./utils";
+import {
+  getAvailableProductKinds,
+  getProductKindOpts,
+  obtainChannelFromFilter,
+} from "./utils";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -88,6 +92,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { queue } = useBackgroundTask();
   const { valueProvider } = useConditionalFilterContext();
   const productListingPageFiltersFlag = useFlag("product_filters");
+
+  const selectedChannelSlug = obtainChannelFromFilter(valueProvider);
 
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
@@ -175,7 +181,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   });
 
   const selectedChannel = availableChannels.find(
-    channel => channel.slug === params.channel,
+    channel =>
+      channel.slug ===
+      (productListingPageFiltersFlag.enabled
+        ? selectedChannelSlug
+        : params.channel),
   );
 
   const [openModal, closeModal] = createDialogActionHandlers<

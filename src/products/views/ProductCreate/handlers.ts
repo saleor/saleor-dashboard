@@ -114,7 +114,7 @@ export function createHandler(
           updatedFileAttributes,
         }),
         category: formData.category,
-        collections: formData.collections,
+        collections: formData.collections.map(collection => collection.value),
         description: getParsedDataForJsonStringField(formData.description),
         name: formData.name,
         productType: formData.productType?.id,

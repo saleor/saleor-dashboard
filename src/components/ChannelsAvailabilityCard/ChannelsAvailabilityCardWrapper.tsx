@@ -41,7 +41,7 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
   return (
     <DashboardCard>
       <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box display="flex" justifyContent="space-between">
           <Box display={"flex"} flexDirection={"column"} gap={1}>
             <div>
               {intl.formatMessage({
@@ -51,7 +51,9 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
               })}
             </div>
             {!!channelsAvailabilityText && (
-              <Text variant={"caption"}>{channelsAvailabilityText}</Text>
+              <Text variant="caption" color="textNeutralSubdued">
+                {channelsAvailabilityText}
+              </Text>
             )}
           </Box>
           <RequirePermissions requiredPermissions={managePermissions}>

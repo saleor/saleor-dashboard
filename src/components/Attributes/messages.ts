@@ -16,4 +16,8 @@ export const attributeRowMessages = defineMessages({
     defaultMessage: "Assign references",
     description: "button label",
   },
+  addNewValue: {
+    id: "fLCV/w",
+    defaultMessage: "Add new value",
+  },
 });

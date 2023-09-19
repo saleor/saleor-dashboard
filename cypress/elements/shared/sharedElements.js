@@ -53,6 +53,9 @@ export const SHARED_ELEMENTS = {
   },
   warningDialog: '[data-test-id="warning-dialog"]',
   pageHeader: "[data-test-id='page-header']",
+  multiselect: {
+    selectedOptions: '[data-test-id*="selected-option-"]',
+  },
   multiAutocomplete: {
     selectedOptions: '[id*="selected-option-"]',
   },

@@ -81,6 +81,10 @@ export const useUrlValueProvider = (
     return value.some(p => FilterElement.isCompatible(p) && p.equals(element));
   };
 
+  const getTokenByName = (name: string) => {
+    return tokenizedUrl.asFlatArray().find(token => token.name === name)
+  }
+
   const count = value.filter(v => typeof v !== "string").length;
 
   return {
@@ -89,6 +93,7 @@ export const useUrlValueProvider = (
     persist,
     clear,
     isPersisted,
+    getTokenByName,
     count,
   };
 };
