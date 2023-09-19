@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.15.4
+
+### Patch Changes
+
+- 49a0fb20d: Fix address form keeps country state from prev address provided
+- a33266ef5: Fix blocked scroll in fullscreen datagrid
+- 1d414609d: Fix externall app crash due to feature flag provider
+- 3fa88275c: Fix prepare release workflow dependency
+- bc81e3138: Update workflow to be compatible with changesets
+
 ## 3.15.3
 
 ### Patch Changes
