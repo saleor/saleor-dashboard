@@ -1,22 +1,28 @@
 // @ts-strict-ignore
 import { LazyQueryResult, QueryLazyOptions } from "@apollo/client";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
-import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import {
+  getChannelAvailabilityLabel,
+  getChannelAvailabilityStatus,
+} from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
-  dropdownCell,
+  dateCell,
+  moneyCell,
+  pillCell,
   readonlyTextCell,
+  statusCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import {
-  DropdownChoice,
-  emptyDropdownCellValue,
-} from "@dashboard/components/Datagrid/customCells/DropdownCell";
+  hueToPillColorDark,
+  hueToPillColorLight,
+  stringToHue,
+} from "@dashboard/components/Datagrid/customCells/PillCell";
 import { ThumbnailCellProps } from "@dashboard/components/Datagrid/customCells/ThumbnailCell";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
-import { getMoneyRange } from "@dashboard/components/MoneyRange";
 import {
   AvailableColumnAttributesQuery,
   Exact,
@@ -31,7 +37,7 @@ import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
-import moment from "moment-timezone";
+import { DefaultTheme } from "@saleor/macaw-ui/next";
 import { IntlShape } from "react-intl";
 
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
@@ -65,7 +71,7 @@ export const productListStaticColumnAdapter = (
     {
       id: "date",
       title: intl.formatMessage(columnsMessages.updatedAt),
-      width: 250,
+      width: 300,
     },
     {
       id: "price",
@@ -152,16 +158,15 @@ interface GetCellContentProps {
   columns: AvailableColumn[];
   products: RelayToFlat<ProductListQuery["products"]>;
   intl: IntlShape;
-  getProductTypes: (query: string) => Promise<DropdownChoice[]>;
+  theme: DefaultTheme;
   locale: Locale;
   selectedChannelId?: string;
 }
 
 export function createGetCellContent({
   columns,
-  getProductTypes,
   intl,
-  locale,
+  theme,
   products,
   selectedChannelId,
 }: GetCellContentProps) {
@@ -186,7 +191,7 @@ export function createGetCellContent({
 
     switch (columnId) {
       case "productType":
-        return getProductTypeCellContent(change, rowData, getProductTypes);
+        return getProductTypeCellContent(theme, rowData);
       case "availability":
         return getAvailabilityCellContent(rowData, intl, channel);
 
@@ -195,9 +200,9 @@ export function createGetCellContent({
       case "name":
         return getNameCellContent(change, rowData);
       case "price":
-        return getPriceCellContent(intl, locale, channel);
+        return getPriceCellContent(channel);
       case "date":
-        return getUpdatedAtrCellContent(rowData, locale);
+        return getDateCellContent(rowData);
     }
 
     if (columnId.startsWith("attribute")) {
@@ -209,39 +214,21 @@ export function createGetCellContent({
   };
 }
 
-function getProductTypeCellContent(
-  change: { value: DropdownChoice },
+function getDateCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
-  getProductTypes: (query: string) => Promise<DropdownChoice[]>,
 ) {
-  const value = change?.value ?? getRowDataValue(rowData, change?.value);
-
-  return dropdownCell(
-    value,
-    {
-      allowCustomValues: false,
-      emptyOption: false,
-      update: (text: string) =>
-        getProductTypes(value.label !== text ? text : ""),
-    },
-    {
-      cursor: "pointer",
-    },
-  );
+  return dateCell(rowData?.updatedAt);
 }
-
-function getRowDataValue(
-  rowData?: RelayToFlat<ProductListQuery["products"]>[number],
-  changeValue?: DropdownChoice,
-): DropdownChoice {
-  if (changeValue === null || !rowData) {
-    return emptyDropdownCellValue;
-  }
-
-  return {
-    label: rowData.productType?.name,
-    value: rowData.productType?.id,
-  };
+function getProductTypeCellContent(
+  theme: DefaultTheme,
+  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+) {
+  const hue = stringToHue(rowData.productType?.name);
+  const color =
+    theme === "defaultDark"
+      ? hueToPillColorDark(hue)
+      : hueToPillColorLight(hue);
+  return pillCell(rowData.productType?.name, color);
 }
 
 function getAvailabilityCellContent(
@@ -252,18 +239,22 @@ function getAvailabilityCellContent(
   >[number]["channelListings"][number],
 ) {
   if (!!selectedChannnel) {
-    return readonlyTextCell(
+    return statusCell(
+      getChannelAvailabilityStatus(selectedChannnel),
       intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
     );
   }
 
-  return readonlyTextCell(
-    rowData?.channelListings?.length
-      ? intl.formatMessage(messages.dropdownLabel, {
-          channelCount: rowData?.channelListings?.length,
-        })
-      : intl.formatMessage(messages.noChannels),
-  );
+  if (rowData?.channelListings?.length) {
+    return statusCell(
+      "success",
+      intl.formatMessage(messages.dropdownLabel, {
+        channelCount: rowData?.channelListings?.length,
+      }),
+    );
+  } else {
+    return statusCell("error", intl.formatMessage(messages.noChannels));
+  }
 }
 
 function getDescriptionCellContent(
@@ -291,8 +282,6 @@ function getNameCellContent(
 }
 
 function getPriceCellContent(
-  intl: IntlShape,
-  locale: Locale,
   selectedChannnel?: RelayToFlat<
     ProductListQuery["products"]
   >[number]["channelListings"][number],
@@ -300,20 +289,10 @@ function getPriceCellContent(
   const from = selectedChannnel?.pricing?.priceRange?.start?.net;
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
 
-  return readonlyTextCell(getMoneyRange(locale, intl, from, to));
-}
+  const price =
+    from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
 
-function getUpdatedAtrCellContent(
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
-  locale: Locale,
-) {
-  if (!rowData) {
-    return readonlyTextCell("");
-  }
-
-  return readonlyTextCell(
-    moment(rowData.updatedAt).locale(locale).format("lll"),
-  );
+  return from ? moneyCell(price, from?.currency || "") : readonlyTextCell("–");
 }
 
 function getAttributeCellContent(

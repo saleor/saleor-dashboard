@@ -1,8 +1,10 @@
 import {
   NumberCell,
   numberCellEmptyValue,
+  NumberCellProps,
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { Locale } from "@dashboard/components/Locale";
+import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import {
   CustomCell,
   GridCell,
@@ -16,6 +18,13 @@ import {
   DropdownChoice,
 } from "./DropdownCell";
 import { MoneyCell, MoneyDiscuntedCell } from "./Money";
+import {
+  hueToPillColorLight,
+  PillCell,
+  PillColor,
+  stringToHue,
+} from "./PillCell";
+import { StatusCell } from "./StatusCell";
 import { ThumbnailCell } from "./ThumbnailCell";
 
 const common = {
@@ -86,12 +95,14 @@ export function loadingCell(): GridCell {
 
 export function numberCell(
   value: number | typeof numberCellEmptyValue,
+  options?: NumberCellProps["options"],
 ): NumberCell {
   return {
     ...common,
     data: {
       kind: "number-cell",
       value,
+      options,
     },
     kind: GridCellKind.Custom,
     copyData: value !== numberCellEmptyValue ? value.toString() : "",
@@ -117,7 +128,7 @@ export function buttonCell(title: string, cb: () => void): CustomCell {
 }
 
 export function moneyCell(
-  value: number | string | null,
+  value: number | number[] | null,
   currency: string,
   opts?: Partial<GridCell>,
 ): MoneyCell {
@@ -206,5 +217,56 @@ export function thumbnailCell(
       image,
       name,
     },
+  };
+}
+
+export function statusCell(
+  status: DotStatus,
+  value: string,
+  opts?: Partial<GridCell>,
+): StatusCell {
+  return {
+    ...common,
+    ...opts,
+    kind: GridCellKind.Custom,
+    copyData: value ?? "",
+    data: {
+      kind: "status-cell",
+      value,
+      status,
+    },
+  };
+}
+
+export function pillCell(
+  value: string,
+  color: PillColor | null,
+  opts?: Partial<GridCell>,
+): PillCell {
+  const pillColor = color;
+  const fallbackColor = hueToPillColorLight(stringToHue(value));
+  return {
+    ...common,
+    ...opts,
+    copyData: value ?? "",
+    data: {
+      kind: "auto-tags-cell",
+      value,
+      color: pillColor ?? fallbackColor,
+    },
+    kind: GridCellKind.Custom,
+  };
+}
+
+export function dateCell(value: string, opts?: Partial<GridCell>): GridCell {
+  return {
+    ...common,
+    ...opts,
+    copyData: value ?? "",
+    data: {
+      kind: "date-cell",
+      value,
+    },
+    kind: GridCellKind.Custom,
   };
 }
