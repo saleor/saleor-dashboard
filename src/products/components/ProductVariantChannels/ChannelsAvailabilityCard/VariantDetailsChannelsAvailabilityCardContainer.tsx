@@ -1,6 +1,4 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
-import { Card } from "@material-ui/core";
+import { DashboardCard } from "@dashboard/components/Card";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -15,13 +13,14 @@ const VariantDetailsChannelsAvailabilityCardContainer: React.FC<
   VariantDetailsChannelsAvailabilityCardContainerProps
 > = ({ children, cardTitle }) => (
   <>
-    <Card>
+    <DashboardCard>
       {cardTitle || (
-        <CardTitle title={<FormattedMessage {...messages.title} />} />
+        <DashboardCard.Title>
+          <FormattedMessage {...messages.title} />
+        </DashboardCard.Title>
       )}
       {children}
-    </Card>
-    <CardSpacer />
+    </DashboardCard>
   </>
 );
 

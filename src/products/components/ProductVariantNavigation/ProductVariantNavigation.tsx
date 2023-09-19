@@ -1,6 +1,5 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
@@ -13,13 +12,15 @@ import {
   ProductVariantCreateDataQuery,
   ProductVariantDetailsQuery,
 } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   productVariantAddUrl,
   productVariantEditUrl,
 } from "@dashboard/products/urls";
 import { ReorderAction } from "@dashboard/types";
-import { Card, TableCell } from "@material-ui/core";
+import { TableCell } from "@material-ui/core";
+import { Button, Text } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -54,11 +55,14 @@ const ProductVariantNavigation: React.FC<
   } = props;
 
   const classes = useStyles(props);
+  const navigate = useNavigator();
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(sectionNames.variants)} />
+    <DashboardCard>
+      <DashboardCard.Title>
+        {intl.formatMessage(sectionNames.variants)}
+      </DashboardCard.Title>
       <ResponsiveTable>
         <SortableTableBody onSortEnd={onReorder}>
           {renderCollection(variants, (variant, variantIndex) => {
@@ -87,11 +91,17 @@ const ProductVariantNavigation: React.FC<
                   thumbnail={thumbnail?.url || fallbackThumbnail}
                 />
                 <TableCell className={classes.colName}>
-                  {variant ? variant.name || variant.sku : <Skeleton />}
+                  <Text>
+                    {variant ? variant.name || variant.sku : <Skeleton />}
+                  </Text>
                   {isDefault && (
-                    <span className={classes.defaultVariant}>
+                    <Text
+                      display="block"
+                      variant="caption"
+                      color="textNeutralSubdued"
+                    >
                       {intl.formatMessage(messages.defaultVariant)}
-                    </span>
+                    </Text>
                   )}
                 </TableCell>
               </SortableTableRow>
@@ -101,7 +111,9 @@ const ProductVariantNavigation: React.FC<
             <TableRowLink className={classes.rowNew}>
               <TableCell colSpan={3}>
                 <Button
-                  href={productVariantAddUrl(productId)}
+                  size="small"
+                  variant="secondary"
+                  onClick={() => navigate(productVariantAddUrl(productId))}
                   data-test-id="button-add-variant"
                 >
                   <FormattedMessage {...messages.addVariant} />
@@ -130,7 +142,7 @@ const ProductVariantNavigation: React.FC<
           )}
         </SortableTableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 ProductVariantNavigation.displayName = "ProductVariantNavigation";

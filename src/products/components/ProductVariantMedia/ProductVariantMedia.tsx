@@ -1,11 +1,8 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Skeleton from "@dashboard/components/Skeleton";
 import { ProductMediaFragment } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -27,37 +24,6 @@ const messages = defineMessages({
   },
 });
 
-const useStyles = makeStyles(
-  theme => ({
-    gridElement: {
-      "& img": {
-        width: "100%",
-      },
-    },
-    helpText: {
-      gridColumnEnd: "span 4",
-    },
-    image: {
-      objectFit: "contain",
-      width: "100%",
-    },
-    imageContainer: {
-      background: "#ffffff",
-      border: `1px solid ${vars.colors.border.neutralPlain}`,
-      borderRadius: theme.spacing(),
-      height: theme.spacing(17.5),
-      marginBottom: theme.spacing(2),
-      padding: theme.spacing(2),
-    },
-    root: {
-      display: "grid",
-      gridColumnGap: theme.spacing(2),
-      gridTemplateColumns: "repeat(4, 1fr)",
-    },
-  }),
-  { name: "ProductVariantMedia" },
-);
-
 interface ProductVariantMediaProps {
   media?: ProductMediaFragment[];
   placeholderImage?: string;
@@ -69,21 +35,25 @@ export const ProductVariantMedia: React.FC<
   ProductVariantMediaProps
 > = props => {
   const intl = useIntl();
-  const classes = useStyles(props);
   const { disabled, media, onImageAdd } = props;
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage(messages.media)}
-        toolbar={
-          <Button variant="tertiary" disabled={disabled} onClick={onImageAdd}>
+    <DashboardCard>
+      <DashboardCard.Title>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          {intl.formatMessage(messages.media)}
+          <Button
+            size="small"
+            variant="secondary"
+            disabled={disabled}
+            onClick={onImageAdd}
+          >
             {intl.formatMessage(messages.chooseMedia)}
           </Button>
-        }
-      />
-      <CardContent>
-        <div className={classes.root}>
+        </Box>
+      </DashboardCard.Title>
+      <DashboardCard.Content>
+        <Box display="grid" gap={2} __gridTemplateColumns="repeat(4, 1fr)">
           {media === undefined || media === null ? (
             <Skeleton />
           ) : media.length > 0 ? (
@@ -94,22 +64,24 @@ export const ProductVariantMedia: React.FC<
                 const mediaUrl =
                   parsedMediaOembedData?.thumbnail_url || mediaObj.url;
                 return (
-                  <img
+                  <Box
+                    as="img"
+                    width="100%"
+                    objectFit="contain"
                     key={mediaObj.id}
-                    className={classes.image}
                     src={mediaUrl}
                     alt={mediaObj.alt}
                   />
                 );
               })
           ) : (
-            <Typography className={classes.helpText}>
+            <Text __gridColumnEnd="span 4" variant="caption" size="large">
               {intl.formatMessage(messages.selectSpecificVariant)}
-            </Typography>
+            </Text>
           )}
-        </div>
-      </CardContent>
-    </Card>
+        </Box>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 ProductVariantMedia.displayName = "ProductVariantMedia";

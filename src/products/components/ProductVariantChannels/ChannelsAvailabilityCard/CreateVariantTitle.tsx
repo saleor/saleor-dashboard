@@ -1,5 +1,5 @@
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
+import { Box, Button } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -15,18 +15,18 @@ export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
   const intl = useIntl();
 
   return (
-    <CardTitle
-      title={intl.formatMessage(messages.title)}
-      toolbar={
+    <DashboardCard.Title>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        {intl.formatMessage(messages.title)}
         <Button
-          variant="tertiary"
+          size="small"
+          variant="secondary"
           data-test-id="manage-channels-button"
-          disabled={false}
           onClick={onManageClick}
         >
           {intl.formatMessage(messages.manageButtonText)}
         </Button>
-      }
-    />
+      </Box>
+    </DashboardCard.Title>
   );
 };

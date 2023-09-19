@@ -1,5 +1,6 @@
 import { TableCell } from "@material-ui/core";
-import { DragIcon, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
+import { GripIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
 
@@ -22,7 +23,7 @@ const SortableHandle = SortableHandleHoc(() => {
 
   return (
     <TableCell className={classes.columnDrag}>
-      <DragIcon color="primary" />
+      <GripIcon />
     </TableCell>
   );
 });

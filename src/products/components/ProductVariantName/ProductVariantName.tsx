@@ -1,9 +1,9 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { Input } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -24,27 +24,27 @@ const ProductVariantName: React.FC<ProductVariantNameProps> = ({
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
+    <DashboardCard>
+      <DashboardCard.Title>
+        {intl.formatMessage({
           id: "T1f2Yl",
           defaultMessage: "Variant Name",
         })}
-      />
-      <CardContent>
-        <TextField
+      </DashboardCard.Title>
+      <DashboardCard.Content>
+        <Input
+          width="100%"
           name="variantName"
           value={value}
           label={intl.formatMessage(commonMessages.name)}
           onChange={onChange}
           error={!!formErrors.name}
-          fullWidth
           disabled={disabled}
           helperText={getProductErrorMessage(formErrors.name, intl)}
           data-test-id="variant-name"
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 
