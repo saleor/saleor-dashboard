@@ -6338,6 +6338,10 @@
     "context": "search gift card placeholder",
     "string": "Search gift cards, e.g {exampleGiftCardCode}"
   },
+  "h65vZI": {
+    "context": "times voucher used",
+    "string": "Used"
+  },
   "h75GAF": {
     "context": "voucher",
     "string": "Times used"
