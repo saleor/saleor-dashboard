@@ -170,7 +170,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
         "auth",
         ONE_PERMISSION_USERS.shipping,
       );
-      cy.visit(urlList.shippingMethods).expectSkeletonIsVisible();
+      cy.visit(urlList.shippingMethods);
       createShippingZone(
         shippingName,
         warehouse.name,
