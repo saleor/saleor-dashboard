@@ -136,7 +136,9 @@ const ProductVariantNavigation: React.FC<
                 colSpan={2}
               />
               <TableCell className={classes.colName}>
-                <FormattedMessage {...messages.newVariant} />
+                <Text>
+                  <FormattedMessage {...messages.newVariant} />
+                </Text>
               </TableCell>
             </TableRowLink>
           )}

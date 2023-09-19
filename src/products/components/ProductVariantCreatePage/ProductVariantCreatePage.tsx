@@ -180,7 +180,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
         const errors = [...apiErrors, ...validationErrors];
 
         return (
-          <DetailPageLayout>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav href={productUrl(productId)} title={header} />
             <DetailPageLayout.Content>
               <Grid variant="inverted">
