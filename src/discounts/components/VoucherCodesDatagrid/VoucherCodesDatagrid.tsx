@@ -6,6 +6,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { SubMenu } from "@dashboard/components/SubMenu";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { VoucherCodeFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import {
   ArrowDownIcon,
@@ -24,10 +25,9 @@ import {
   voucherCodesStaticColumnsAdapter,
 } from "./datagrid";
 import { messages } from "./messages";
-import { VoucherCode } from "./types";
 
 interface VoucherCodesDatagridProps {
-  codes: VoucherCode[];
+  codes: VoucherCodeFragment[];
   loading: boolean;
   disabled?: boolean;
   onVoucherCodeDelete: (code: string) => void;

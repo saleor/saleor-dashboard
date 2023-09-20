@@ -149,11 +149,28 @@ export const voucherFragment = gql`
   }
 `;
 
+export const voucherCodeFragment = gql`
+  fragment VoucherCode on VoucherCode {
+    code
+    used
+    usageLimit
+  }
+`;
+
 export const voucherDetailsFragment = gql`
   fragment VoucherDetails on Voucher {
     ...Voucher
     code
     usageLimit
+    codes(first: 20) {
+      edges {
+        node {
+          code
+          used
+          usageLimit
+        }
+      }
+    }
     used
     applyOncePerOrder
     applyOncePerCustomer

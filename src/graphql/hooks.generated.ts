@@ -519,6 +519,13 @@ export const SaleDetailsFragmentDoc = gql`
     ${SaleFragmentDoc}
 ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
+export const VoucherCodeFragmentDoc = gql`
+    fragment VoucherCode on VoucherCode {
+  code
+  used
+  usageLimit
+}
+    `;
 export const VoucherFragmentDoc = gql`
     fragment Voucher on Voucher {
   ...Metadata
@@ -555,6 +562,15 @@ export const VoucherDetailsFragmentDoc = gql`
   ...Voucher
   code
   usageLimit
+  codes(first: 20) {
+    edges {
+      node {
+        code
+        used
+        usageLimit
+      }
+    }
+  }
   used
   applyOncePerOrder
   applyOncePerCustomer

@@ -1,10 +1,10 @@
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { VoucherCodeFragment } from "@dashboard/graphql";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
-import { VoucherCode } from "./types";
 
 export const voucherCodesStaticColumnsAdapter = (intl: IntlShape) => [
   {
@@ -25,10 +25,10 @@ export const voucherCodesStaticColumnsAdapter = (intl: IntlShape) => [
 ];
 
 export const createGetCellContent =
-  (voucherCodes: VoucherCode[], columns: AvailableColumn[]) =>
+  (voucherCodes: VoucherCodeFragment[], columns: AvailableColumn[]) =>
   ([column, row]: Item): GridCell => {
     const columnId = columns[column]?.id;
-    const rowData: VoucherCode | undefined = voucherCodes[row];
+    const rowData: VoucherCodeFragment | undefined = voucherCodes[row];
 
     if (!columnId || !rowData) {
       return readonlyTextCell("");
@@ -38,9 +38,9 @@ export const createGetCellContent =
       case "code":
         return readonlyTextCell(rowData?.code ?? "");
       case "usage":
-        return readonlyTextCell(rowData?.usage ?? "");
+        return readonlyTextCell(rowData?.used?.toString() ?? "");
       case "limit":
-        return readonlyTextCell(rowData?.limit ?? "");
+        return readonlyTextCell(rowData?.usageLimit?.toString() ?? "");
       default:
         return readonlyTextCell("", false);
     }

@@ -57,6 +57,7 @@ export function createUpdateHandler(
               ? VoucherTypeEnum.SHIPPING
               : formData.type,
           usageLimit: formData.hasUsageLimit ? formData.usageLimit : null,
+          codes: [],
         },
       }).then(({ data }) => data?.voucherUpdate.errors ?? []),
 

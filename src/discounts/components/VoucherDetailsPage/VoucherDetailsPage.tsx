@@ -229,13 +229,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 onGenerateVoucherCodes={onGenerateVoucherCodes}
                 onVoucherCodeDelete={onDeleteVoucherCodes}
                 disabled={disabled}
-                codes={[
-                  { code: "Code 1", usage: "1", limit: "1" },
-                  { code: "Code 2", usage: "2", limit: "2" },
-                  { code: "Code 3", usage: "3", limit: "3" },
-                  { code: "Code 4", usage: "4", limit: "4" },
-                  { code: "Code 5", usage: "5", limit: "5" },
-                ]}
+                codes={mapEdgesToItems(voucher?.codes)}
               />
               <VoucherTypes
                 data={data}
