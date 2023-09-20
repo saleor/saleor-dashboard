@@ -98,6 +98,12 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     string[] | undefined
   >(initialSettings);
 
+  React.useEffect(() => {
+    if (columnSettings) {
+      handlers.onResetDynamicToInitial();
+    }
+  }, [columnSettings]);
+
   const handleColumnChange = React.useCallback(
     picked => {
       setColumnSettings(picked);

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
@@ -9,6 +8,7 @@ import {
   areCategoriesLoaded,
   extractSelectedNodesFromCategories,
   findDynamicColumn,
+  isValidColumn,
   mergeSelectedColumns,
   sortColumns,
 } from "./utils";
@@ -42,7 +42,7 @@ export const useColumns = ({
   onSave,
 }: UseColumnsProps) => {
   const [dynamicColumns, updateDynamicColumns] = React.useState<
-    AvailableColumn[] | null | undefined
+    AvailableColumn[] | null
   >(null);
 
   // Dynamic columns are loaded from the API, thus they need to be updated
@@ -64,7 +64,6 @@ export const useColumns = ({
       mergeSelectedColumns({ staticColumns, dynamicColumns, selectedColumns }),
     [dynamicColumns, staticColumns, selectedColumns],
   );
-
   const [recentlyAddedColumn, setRecentlyAddedColumn] = React.useState<
     string | null
   >(null);
@@ -129,7 +128,7 @@ export const useColumns = ({
     if (isDynamic) {
       const [prefix, id] = columnId.split(":");
       const hiddenColumnPrefixes =
-        columnCategories?.find(cat => cat.prefix === prefix).children ?? [];
+        columnCategories?.find(cat => cat.prefix === prefix)?.children ?? [];
 
       if (isAdded) {
         onSave([
@@ -140,10 +139,11 @@ export const useColumns = ({
         setRecentlyAddedColumn(columnId);
         updateDynamicColumns(prevDynamicColumns => [
           ...(prevDynamicColumns ?? []),
-          ...hiddenColumnPrefixes.map(prefix =>
-            findDynamicColumn(columnCategories, `${prefix}:${id}`),
-          ),
-          findDynamicColumn(columnCategories, columnId),
+          ...hiddenColumnPrefixes
+            .map(prefix =>
+              findDynamicColumn(columnCategories, `${prefix}:${id}`),
+            )
+            .filter(isValidColumn),
         ]);
       } else {
         updateDynamicColumns(prevDynamicColumns =>
@@ -156,6 +156,16 @@ export const useColumns = ({
 
   // Should be used only for special cases
   const onCustomUpdateVisible = setVisibleColumns;
+  const onResetDynamicToInitial = (customSelected?: string[]) => {
+    if (areCategoriesLoaded(columnCategories)) {
+      updateDynamicColumns(
+        sortColumns(
+          extractSelectedNodesFromCategories(columnCategories),
+          customSelected ?? selectedColumns,
+        ),
+      );
+    }
+  };
 
   return {
     handlers: {
@@ -163,6 +173,7 @@ export const useColumns = ({
       onResize,
       onToggle,
       onCustomUpdateVisible,
+      onResetDynamicToInitial,
     },
     visibleColumns,
     staticColumns,
