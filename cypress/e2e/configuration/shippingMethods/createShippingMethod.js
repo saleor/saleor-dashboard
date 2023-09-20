@@ -16,7 +16,10 @@ import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeF
 import {
   createShippingRate,
   createShippingZone,
+  getDifferentDefaultWeight,
+  openChangeDefaultWeightDialog,
   rateOptions,
+  selectDifferentDefaultWeight,
 } from "../../../support/pages/shippingMethodPage";
 
 describe("As a staff user I want to create shipping zone and rate", () => {
@@ -208,6 +211,24 @@ describe("As a staff user I want to create shipping zone and rate", () => {
           );
           expect(isShippingAvailable).to.be.false;
         });
+    },
+  );
+  it(
+    "should be able to default weight in shipping methods TC: SALEOR_4",
+    { tags: ["@shipping", "@allEnv", "@stable"] },
+    () => {
+      cy.addAliasToGraphRequest("ShopInfo");
+      cy.clearSessionData().loginUserViaRequest();
+      cy.visit(urlList.shippingMethods);
+      openChangeDefaultWeightDialog();
+      getDifferentDefaultWeight().then(unit => {
+        selectDifferentDefaultWeight(unit)
+          .waitForRequestAndCheckIfNoErrors("@ShopInfo")
+          .then(resp => {
+            expect(resp.response.body.data.shop.defaultWeightUnit).equal(unit);
+          });
+      });
+      cy.confirmationMessageShouldAppear();
     },
   );
 });
