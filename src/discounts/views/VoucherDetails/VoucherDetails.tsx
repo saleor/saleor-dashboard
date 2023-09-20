@@ -356,7 +356,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             ids: [productId],
           })
         }
-        onDeleteVoucherCodes={() => openModal("delete-codes")}
         onAutoVoucheCodesGenerate={() => openModal("generate-codes")}
         onManualVoucherCodeGenerate={() => openModal("manual-codes")}
         activeTab={activeTab}

@@ -23,7 +23,6 @@ const props: VoucherDetailsPageProps = {
   ...pageListProps.default,
   onAutoVoucheCodesGenerate: () => undefined,
   onManualVoucherCodeGenerate: () => undefined,
-  onDeleteVoucherCodes: () => undefined,
   activeTab: VoucherDetailsPageTab.products,
   tabItemsCount: {
     [VoucherDetailsPageTab.categories]:

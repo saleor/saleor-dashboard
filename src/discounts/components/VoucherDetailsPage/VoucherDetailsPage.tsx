@@ -105,7 +105,6 @@ export interface VoucherDetailsPageProps
   onTabClick: (index: VoucherDetailsPageTab) => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
-  onDeleteVoucherCodes: () => void;
   onAutoVoucheCodesGenerate: () => void;
   onManualVoucherCodeGenerate: () => void;
 }
@@ -135,7 +134,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onTabClick,
   openChannelsModal,
   onRemove,
-  onDeleteVoucherCodes,
   onAutoVoucheCodesGenerate,
   onManualVoucherCodeGenerate,
   onSubmit,
@@ -230,7 +228,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 loading={false}
                 onAutoVoucheCodesGenerate={onAutoVoucheCodesGenerate}
                 onManualVoucherCodeGenerate={onManualVoucherCodeGenerate}
-                onVoucherCodeDelete={onDeleteVoucherCodes}
                 disabled={disabled}
                 codes={mapEdgesToItems(voucher?.codes)}
               />
