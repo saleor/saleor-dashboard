@@ -106,7 +106,8 @@ export interface VoucherDetailsPageProps
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
   onDeleteVoucherCodes: () => void;
-  onGenerateVoucherCodes: () => void;
+  onAutoVoucheCodesGenerate: () => void;
+  onManualVoucherCodeGenerate: () => void;
 }
 
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
@@ -135,7 +136,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   openChannelsModal,
   onRemove,
   onDeleteVoucherCodes,
-  onGenerateVoucherCodes,
+  onAutoVoucheCodesGenerate,
+  onManualVoucherCodeGenerate,
   onSubmit,
   toggle,
   toggleAll,
@@ -226,7 +228,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               />
               <VoucherCodesDatagrid
                 loading={false}
-                onGenerateVoucherCodes={onGenerateVoucherCodes}
+                onAutoVoucheCodesGenerate={onAutoVoucheCodesGenerate}
+                onManualVoucherCodeGenerate={onManualVoucherCodeGenerate}
                 onVoucherCodeDelete={onDeleteVoucherCodes}
                 disabled={disabled}
                 codes={mapEdgesToItems(voucher?.codes)}

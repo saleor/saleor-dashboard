@@ -113,6 +113,7 @@ export type VoucherUrlDialog =
   | "remove"
   | "delete-codes"
   | "generate-codes"
+  | "manual-codes"
   | ChannelsAction;
 export type VoucherUrlQueryParams = BulkAction & Dialog<VoucherUrlDialog>;
 export type VoucherCreateUrlQueryParams = Dialog<ChannelsAction>;

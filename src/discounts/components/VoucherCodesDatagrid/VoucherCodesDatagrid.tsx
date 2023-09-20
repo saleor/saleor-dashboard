@@ -31,14 +31,16 @@ interface VoucherCodesDatagridProps {
   loading: boolean;
   disabled?: boolean;
   onVoucherCodeDelete: (code: string) => void;
-  onGenerateVoucherCodes: () => void;
+  onAutoVoucheCodesGenerate: () => void;
+  onManualVoucherCodeGenerate: () => void;
 }
 
 export const VoucherCodesDatagrid = ({
   codes,
   loading,
   disabled,
-  onGenerateVoucherCodes,
+  onAutoVoucheCodesGenerate,
+  onManualVoucherCodeGenerate,
   onVoucherCodeDelete,
 }: VoucherCodesDatagridProps) => {
   const intl = useIntl();
@@ -61,21 +63,32 @@ export const VoucherCodesDatagrid = ({
     [codes, visibleColumns],
   );
 
-  const handleAutoGenerateCodes = useCallback(() => {
-    onGenerateVoucherCodes();
+  const handleMultupleCodesGenerate = useCallback(() => {
+    onAutoVoucheCodesGenerate();
+    setSubMenuOpen(false);
+  }, []);
+
+  const handleManualCodeGenerate = useCallback(() => {
+    onManualVoucherCodeGenerate();
     setSubMenuOpen(false);
   }, []);
 
   const subMenuItems = useMemo(
     () => [
       {
+        id: "manual",
+        title: "Manual",
+        description: "Manually enter the voucher code.",
+        onClick: handleManualCodeGenerate,
+      },
+      {
         id: "auto-generate-codes",
         title: "Auto-generate codes",
         description: "Generate multiple codes at once",
-        onClick: handleAutoGenerateCodes,
+        onClick: handleMultupleCodesGenerate,
       },
     ],
-    [handleAutoGenerateCodes],
+    [handleMultupleCodesGenerate, handleManualCodeGenerate],
   );
 
   return (

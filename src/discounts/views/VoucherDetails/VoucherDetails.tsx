@@ -16,6 +16,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
 import { VoucherCodesDeleteDialog } from "@dashboard/discounts/components/VoucherCodesDeleteDialog";
 import { VoucherCodesGenerateDialog } from "@dashboard/discounts/components/VoucherCodesGenerateDialog";
+import { VoucherCodesManualDialog } from "@dashboard/discounts/components/VoucherCodesManualDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
   VoucherTabItemsCount,
@@ -356,7 +357,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           })
         }
         onDeleteVoucherCodes={() => openModal("delete-codes")}
-        onGenerateVoucherCodes={() => openModal("generate-codes")}
+        onAutoVoucheCodesGenerate={() => openModal("generate-codes")}
+        onManualVoucherCodeGenerate={() => openModal("manual-codes")}
         activeTab={activeTab}
         tabItemsCount={tabItemsCount}
         onTabClick={changeTab}
@@ -422,6 +424,11 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       />
       <VoucherCodesGenerateDialog
         open={params.action === "generate-codes"}
+        onClose={closeModal}
+        onSubmit={() => {}}
+      />
+      <VoucherCodesManualDialog
+        open={params.action === "manual-codes"}
         onClose={closeModal}
         onSubmit={() => {}}
       />

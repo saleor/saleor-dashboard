@@ -5,17 +5,17 @@ import { Box, Button, Input } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-interface VoucherCodesGenerateDialogProps {
+interface VoucherCodesManualDialogProps {
   open: boolean;
   onClose: () => void;
   onSubmit: () => void;
 }
 
-export const VoucherCodesGenerateDialog = ({
+export const VoucherCodesManualDialog = ({
   open,
   onClose,
   onSubmit,
-}: VoucherCodesGenerateDialogProps) => {
+}: VoucherCodesManualDialogProps) => {
   const intl = useIntl();
   const { change, submit, data, reset } = useForm(
     {
@@ -25,21 +25,6 @@ export const VoucherCodesGenerateDialog = ({
     onSubmit,
   );
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (
-      /\D/.test(e.key) &&
-      ![
-        "Backspace",
-        "ArrowDown",
-        "ArrowUp",
-        "ArrowLeft",
-        "ArrowRight",
-      ].includes(e.key)
-    ) {
-      e.preventDefault();
-    }
-  };
-
   const handleModalClose = () => {
     onClose();
     reset();
@@ -48,22 +33,13 @@ export const VoucherCodesGenerateDialog = ({
   return (
     <DashboardModal open={open} onChange={handleModalClose}>
       <DashboardModal.Content>
-        <DashboardModal.Title>Generate voucher codes</DashboardModal.Title>
-        <Box display="grid" gap={3} __width={390}>
+        <DashboardModal.Title>Enter Voucher Code</DashboardModal.Title>
+        <Box __width={390}>
           <Input
             name="quantity"
             type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            label="Code quantity"
-            onKeyDown={handleKeyDown}
+            label="Enter Code"
             value={data.quantity}
-            onChange={change}
-          />
-          <Input
-            name="prefix"
-            label="Code Prefix (Optional)"
-            value={data.prefix}
             onChange={change}
           />
         </Box>
