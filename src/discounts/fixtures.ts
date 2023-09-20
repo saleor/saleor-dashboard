@@ -583,6 +583,10 @@ export const sale: SaleDetailsFragment = {
 export const voucherDetails: VoucherDetailsFragment = {
   __typename: "Voucher",
   metadata: [],
+  codes: {
+    __typename: "VoucherCodeCountableConnection",
+    edges: [],
+  },
   privateMetadata: [],
   applyOncePerCustomer: false,
   applyOncePerOrder: false,
