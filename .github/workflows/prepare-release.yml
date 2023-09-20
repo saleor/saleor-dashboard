@@ -13,7 +13,7 @@ jobs:
     name: Prepare release with Changesets
     runs-on: ubuntu-22.04
     outputs:
-      published: ${{ steps.changesets.outputs.published }}
+      hasChangesets: ${{ steps.changesets.outputs.hasChangesets }}
     permissions:
       contents: write
       pull-requests: write
@@ -39,7 +39,7 @@ jobs:
   release:
     name: Deploy and release to sandbox
     needs: prepare
-    if: needs.prepare.outputs.published == 'true'
+    if: needs.prepare.outputs.hasChangesets == 'false'
     runs-on: ubuntu-22.04
     env:
       API_URI: /graphql/
