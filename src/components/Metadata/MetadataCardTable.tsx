@@ -76,7 +76,7 @@ export const MetadataCardTable = ({
         <TableBody>
           {data.map((field, fieldIndex) => (
             <TableRowLink data-test-id="field" key={fieldIndex}>
-              <TableCell style={{ paddingLeft: vars.spacing[6] }}>
+              <TableCell width="50%" style={{ paddingLeft: vars.spacing[6] }}>
                 {readonly ? (
                   <Text
                     variant="caption"
@@ -97,6 +97,7 @@ export const MetadataCardTable = ({
                 )}
               </TableCell>
               <TableCell
+                width="50%"
                 style={{
                   paddingTop: vars.spacing[2],
                   paddingBottom: vars.spacing[2],
