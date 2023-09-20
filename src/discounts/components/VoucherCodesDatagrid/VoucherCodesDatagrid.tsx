@@ -20,12 +20,14 @@ export interface VoucherCodesDatagridProps {
   codes: VoucherCodeFragment[];
   loading: boolean;
   disabled?: boolean;
+  onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
 }
 
 export const VoucherCodesDatagrid = ({
   codes,
   loading,
   disabled,
+  onSelectVoucherCodesIds,
 }: VoucherCodesDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -63,6 +65,7 @@ export const VoucherCodesDatagrid = ({
         getCellContent={getCellContent}
         getCellError={() => false}
         selectionActions={() => null}
+        onRowSelectionChange={onSelectVoucherCodesIds}
         menuItems={() => []}
       />
 

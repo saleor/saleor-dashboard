@@ -92,6 +92,8 @@ export interface VoucherDetailsPageProps
   voucher: VoucherDetailsFragment;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
+  selectedVoucherCodesIds: string[];
+  onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
   onCollectionAssign: () => void;
@@ -105,8 +107,9 @@ export interface VoucherDetailsPageProps
   onTabClick: (index: VoucherDetailsPageTab) => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
-  onAutoVoucheCodesGenerate: () => void;
-  onManualVoucherCodeGenerate: () => void;
+  onMultipleVoucheCodesGenerate: () => void;
+  onSingleVoucherCodeGenerate: () => void;
+  onDeleteVoucherCodes: () => void;
 }
 
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
@@ -134,8 +137,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onTabClick,
   openChannelsModal,
   onRemove,
-  onAutoVoucheCodesGenerate,
-  onManualVoucherCodeGenerate,
+  onMultipleVoucheCodesGenerate,
+  onSingleVoucherCodeGenerate,
+  onDeleteVoucherCodes,
   onSubmit,
   toggle,
   toggleAll,
@@ -145,6 +149,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   categoryListToolbar,
   collectionListToolbar,
   productListToolbar,
+  selectedVoucherCodesIds,
+  onSelectVoucherCodesIds,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -225,9 +231,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 variant="update"
               />
               <VoucherCodes
+                selectedCodesIds={selectedVoucherCodesIds}
+                onSelectVoucherCodesIds={onSelectVoucherCodesIds}
+                onDeleteCodes={onDeleteVoucherCodes}
                 loading={false}
-                onMultiCodesGenerate={onAutoVoucheCodesGenerate}
-                onSingleCodesGenerate={onManualVoucherCodeGenerate}
+                onMultiCodesGenerate={onMultipleVoucheCodesGenerate}
+                onSingleCodesGenerate={onSingleVoucherCodeGenerate}
                 disabled={disabled}
                 codes={mapEdgesToItems(voucher?.codes)}
               />

@@ -46,6 +46,7 @@ import useLocalPaginator, {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
@@ -55,7 +56,8 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { DialogContentText } from "@material-ui/core";
-import React, { useMemo, useState } from "react";
+import isEqual from "lodash/isEqual";
+import React, { useCallback, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
@@ -132,6 +134,37 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       ...detailsQueryInclude,
     },
   });
+
+  const {
+    selectedRowIds,
+    setClearDatagridRowSelectionCallback,
+    setSelectedRowIds,
+  } = useRowSelection();
+
+  const voucherCodes = mapEdgesToItems(data?.voucher?.codes);
+
+  const handleSetSelectedVoucherCodesIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!voucherCodes) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => voucherCodes[row].code);
+      const haveSaveValues = isEqual(rowsIds, selectedRowIds);
+
+      if (!haveSaveValues) {
+        setSelectedRowIds(rowsIds);
+      }
+
+      setClearDatagridRowSelectionCallback(clearSelection);
+    },
+    [
+      voucherCodes,
+      selectedRowIds,
+      setClearDatagridRowSelectionCallback,
+      setSelectedRowIds,
+    ],
+  );
 
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherUrlDialog,
@@ -356,8 +389,11 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             ids: [productId],
           })
         }
-        onAutoVoucheCodesGenerate={() => openModal("generate-codes")}
-        onManualVoucherCodeGenerate={() => openModal("manual-codes")}
+        onMultipleVoucheCodesGenerate={() => openModal("multiple-codes")}
+        onSingleVoucherCodeGenerate={() => openModal("single-codes")}
+        onDeleteVoucherCodes={() => openModal("delete-codes")}
+        onSelectVoucherCodesIds={handleSetSelectedVoucherCodesIds}
+        selectedVoucherCodesIds={selectedRowIds}
         activeTab={activeTab}
         tabItemsCount={tabItemsCount}
         onTabClick={changeTab}
@@ -422,12 +458,12 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onDelete={closeModal}
       />
       <VoucherCodesGenerateDialog
-        open={params.action === "generate-codes"}
+        open={params.action === "multiple-codes"}
         onClose={closeModal}
         onSubmit={closeModal}
       />
       <VoucherCodesManualDialog
-        open={params.action === "manual-codes"}
+        open={params.action === "single-codes"}
         confirmButtonTransitionState={voucherUpdateOpts.status}
         onClose={closeModal}
         onSubmit={codes =>

@@ -21,8 +21,11 @@ const channels = createChannelsDataWithDiscountPrice(
 const props: VoucherDetailsPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
-  onAutoVoucheCodesGenerate: () => undefined,
-  onManualVoucherCodeGenerate: () => undefined,
+  selectedVoucherCodesIds: [],
+  onMultipleVoucheCodesGenerate: () => undefined,
+  onSingleVoucherCodeGenerate: () => undefined,
+  onSelectVoucherCodesIds: () => undefined,
+  onDeleteVoucherCodes: () => undefined,
   activeTab: VoucherDetailsPageTab.products,
   tabItemsCount: {
     [VoucherDetailsPageTab.categories]:
