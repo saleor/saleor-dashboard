@@ -17,8 +17,6 @@ on:
         description: "Trigger release"
         required: true
         default: false
-  release:
-    types: [published]
 
 jobs:
   build:
