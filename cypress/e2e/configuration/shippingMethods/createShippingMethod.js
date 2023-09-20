@@ -214,7 +214,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
     },
   );
   it(
-    "should be able to default weight in shipping methods TC: SALEOR_4",
+    "should be able to change default weight in shipping methods TC: SALEOR_4",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       cy.addAliasToGraphRequest("ShopInfo");
