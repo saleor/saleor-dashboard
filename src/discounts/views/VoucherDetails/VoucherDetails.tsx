@@ -420,17 +420,28 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       <VoucherCodesDeleteDialog
         open={params.action === "delete-codes"}
         onClose={closeModal}
-        onDelete={() => {}}
+        onDelete={closeModal}
       />
       <VoucherCodesGenerateDialog
         open={params.action === "generate-codes"}
         onClose={closeModal}
-        onSubmit={() => {}}
+        onSubmit={closeModal}
       />
       <VoucherCodesManualDialog
         open={params.action === "manual-codes"}
+        confirmButtonTransitionState={voucherUpdateOpts.status}
         onClose={closeModal}
-        onSubmit={() => {}}
+        onSubmit={codes =>
+          voucherUpdate({
+            variables: {
+              ...paginationState,
+              id,
+              input: {
+                codes,
+              },
+            },
+          })
+        }
       />
       <AssignCategoriesDialog
         categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)?.filter(

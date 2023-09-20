@@ -25,6 +25,7 @@ import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
+  VoucherCodeFragment,
   VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
@@ -65,6 +66,7 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   onlyForStaff: boolean;
   channelListings: ChannelVoucherData[];
   code: string;
+  codes: VoucherCodeFragment[];
   discountType: DiscountTypeEnum;
   endDate: string;
   endTime: string;
@@ -182,6 +184,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     onlyForStaff: voucher?.onlyForStaff || false,
     channelListings,
     code: voucher?.code || "",
+    codes: mapEdgesToItems(voucher?.codes) ?? [],
     discountType,
     endDate: splitDateTime(voucher?.endDate ?? "").date,
     endTime: splitDateTime(voucher?.endDate ?? "").time,
