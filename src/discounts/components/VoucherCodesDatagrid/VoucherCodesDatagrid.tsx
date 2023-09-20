@@ -4,18 +4,10 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { SubMenu } from "@dashboard/components/SubMenu";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { VoucherCodeFragment } from "@dashboard/graphql";
-import {
-  ArrowDownIcon,
-  Box,
-  Button,
-  PlusIcon,
-  Popover,
-  Text,
-} from "@saleor/macaw-ui/next";
-import React, { useCallback, useMemo, useState } from "react";
+import { Box } from "@saleor/macaw-ui/next";
+import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -24,24 +16,19 @@ import {
 } from "./datagrid";
 import { messages } from "./messages";
 
-interface VoucherCodesDatagridProps {
+export interface VoucherCodesDatagridProps {
   codes: VoucherCodeFragment[];
   loading: boolean;
   disabled?: boolean;
-  onAutoVoucheCodesGenerate: () => void;
-  onManualVoucherCodeGenerate: () => void;
 }
 
 export const VoucherCodesDatagrid = ({
   codes,
   loading,
   disabled,
-  onAutoVoucheCodesGenerate,
-  onManualVoucherCodeGenerate,
 }: VoucherCodesDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
-  const [isSubMenuOpen, setSubMenuOpen] = useState(false);
 
   const voucherCodesStaticColumns = useMemo(
     () => voucherCodesStaticColumnsAdapter(intl),
@@ -59,63 +46,8 @@ export const VoucherCodesDatagrid = ({
     [codes, visibleColumns],
   );
 
-  const handleMultupleCodesGenerate = useCallback(() => {
-    onAutoVoucheCodesGenerate();
-    setSubMenuOpen(false);
-  }, []);
-
-  const handleManualCodeGenerate = useCallback(() => {
-    onManualVoucherCodeGenerate();
-    setSubMenuOpen(false);
-  }, []);
-
-  const subMenuItems = useMemo(
-    () => [
-      {
-        id: "manual",
-        title: "Manual",
-        description: "Manually enter the voucher code.",
-        onClick: handleManualCodeGenerate,
-      },
-      {
-        id: "auto-generate-codes",
-        title: "Auto-generate codes",
-        description: "Generate multiple codes at once",
-        onClick: handleMultupleCodesGenerate,
-      },
-    ],
-    [handleMultupleCodesGenerate, handleManualCodeGenerate],
-  );
-
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        marginBottom={4}
-        paddingX={6}
-      >
-        <Text variant="heading">Voucher codes</Text>
-        <Popover open={isSubMenuOpen} onOpenChange={setSubMenuOpen}>
-          <Popover.Trigger>
-            <Button
-              type="button"
-              backgroundColor="interactiveNeutralDefault"
-              color="textNeutralContrasted"
-            >
-              <PlusIcon />
-              Add code
-              <ArrowDownIcon />
-            </Button>
-          </Popover.Trigger>
-          <Popover.Content align="end">
-            <Box marginTop={1}>
-              <SubMenu menuItems={subMenuItems} />
-            </Box>
-          </Popover.Content>
-        </Popover>
-      </Box>
       <Datagrid
         readonly
         loading={loading}
