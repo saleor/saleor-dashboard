@@ -35,6 +35,14 @@ jobs:
           publish: "npm run release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Clean up
+        run: |
+          npm run release:cleanup ${{ github.ref_name }}
+      - name: Prepare clean up pull request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          base: main
+          branch: "cleanup-changesets-${{ github.ref_name }}"
 
   release:
     name: Deploy and release to sandbox

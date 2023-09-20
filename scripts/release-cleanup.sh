@@ -5,4 +5,5 @@
 set -e
 
 git fetch --all
-git diff --name-only origin/"$1" .changeset/ | xargs git rm --
+git checkout main
+git ls-tree --name-only "$1"~1 .changeset/ | grep .md | xargs git rm --ignore-unmatch --
