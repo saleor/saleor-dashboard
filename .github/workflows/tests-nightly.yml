@@ -407,17 +407,15 @@ jobs:
           node-version-file: ".nvmrc"
 
       - name: Install dependencies
+        run: npm ci
+      - name: Get tests results
+        id: get-tests-results
+        env:
+          tests_status: ${{ needs.run-tests-in-parallel.outputs.status }}
+          dashboard_url: ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}
         run: |
-          npm ci
-
-          - name: Get tests results
-          id: get-tests-results
-          env:
-            tests_status: ${{ needs.run-tests-in-parallel.outputs.status }}
-            dashboard_url: ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}
-          run: |
-            node cypressTestsHelpers/getFailedTests.js \
-            --dashboard_url "$dashboard_url"
+          node cypressTestsHelpers/getFailedTests.js \
+          --dashboard_url "$dashboard_url"
 
       - name: Notify Slack
         if: steps.get-tests-results.outputs.testStatus == 'true'
@@ -428,7 +426,8 @@ jobs:
           JOB_TITLE: "A lot of tests failed, something is probably broken - ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}"
           JOB_KIND: "Tests"
         run: |
-          python3 notify/notify-slack.py
+          python3 .github/workflows/notify/notify-slack.py
+
   test-complete:
     needs:
       [testmo-report-preparation, run-tests-in-parallel, run-tests-on-release]

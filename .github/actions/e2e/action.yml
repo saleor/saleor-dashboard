@@ -40,9 +40,6 @@ inputs:
   permissionsUserPassword:
     description: "User with limited permissions password"
     required: true
-  githubToken:
-    description: "GH token"
-    required: false
   mailpitUrl:
     description: "Mail provider URL"
     required: true
