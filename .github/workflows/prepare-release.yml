@@ -26,15 +26,6 @@ jobs:
           node-version-file: ".nvmrc"
       - name: Install Dependencies
         run: npm ci
-      - name: Clean up
-        run: |
-          npm run release:cleanup ${{ github.ref_name }}
-      - name: Prepare clean up pull request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          base: main
-          branch: "cleanup-changesets-${{ github.ref_name }}"
-          title: Cleanup against ${{ github.ref_name }}
       - name: Publishing version
         uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
         id: changesets
