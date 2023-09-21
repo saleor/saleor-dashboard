@@ -649,7 +649,7 @@
       {
         "kind": "OBJECT",
         "name": "AccountDelete",
-        "description": "Remove user account. \n\nRequires one of the following permissions: AUTHENTICATED_USER.",
+        "description": "Remove user account. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- ACCOUNT_DELETED (async): Account was deleted.",
         "fields": [
           {
             "name": "accountErrors",
@@ -753,6 +753,268 @@
             "type": {
               "kind": "UNION",
               "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "redirectUrl",
+            "description": "The URL to redirect the user after he accepts the request.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shop",
+            "description": "Shop data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Shop",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "token",
+            "description": "The token required to confirm request.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": "The user the event relates to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AccountDeleted",
+        "description": "Event sent when account is deleted.\n\nAdded in Saleor 3.15.",
+        "fields": [
+          {
+            "name": "channel",
+            "description": "The channel data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Channel",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "redirectUrl",
+            "description": "The URL to redirect the user after he accepts the request.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shop",
+            "description": "Shop data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Shop",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "token",
+            "description": "The token required to confirm request.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": "The user the event relates to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AccountEmailChanged",
+        "description": "Event sent when account email is changed.\n\nAdded in Saleor 3.15.",
+        "fields": [
+          {
+            "name": "channel",
+            "description": "The channel data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Channel",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "newEmail",
+            "description": "The new email address.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1420,7 +1682,7 @@
       {
         "kind": "OBJECT",
         "name": "AccountRequestDeletion",
-        "description": "Sends an email with the account removal link for the logged-in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for account delete request.",
+        "description": "Sends an email with the account removal link for the logged-in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for account delete request.\n- ACCOUNT_DELETE_REQUESTED (async): An account delete requested.",
         "fields": [
           {
             "name": "accountErrors",
@@ -1544,6 +1806,131 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AccountSetPasswordRequested",
+        "description": "Event sent when setting a new password is requested.\n\nAdded in Saleor 3.15.",
+        "fields": [
+          {
+            "name": "channel",
+            "description": "The channel data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Channel",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "redirectUrl",
+            "description": "The URL to redirect the user after he accepts the request.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shop",
+            "description": "Shop data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Shop",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "token",
+            "description": "The token required to confirm request.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": "The user the event relates to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -7468,177 +7855,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "AttributeBulkCreateInput",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "entityType",
-            "description": "The entity type which can be used as a reference.",
-            "type": {
-              "kind": "ENUM",
-              "name": "AttributeEntityTypeEnum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "externalReference",
-            "description": "External ID of this attribute.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "filterableInDashboard",
-            "description": "Whether the attribute can be filtered in dashboard.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "inputType",
-            "description": "The input type to use for entering attribute values in the dashboard.",
-            "type": {
-              "kind": "ENUM",
-              "name": "AttributeInputTypeEnum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "isVariantOnly",
-            "description": "Whether the attribute is for variants only.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "name",
-            "description": "Name of an attribute displayed in the interface.",
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "slug",
-            "description": "Internal representation of an attribute name.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "type",
-            "description": "The attribute type.",
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "AttributeTypeEnum",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "unit",
-            "description": "The unit of attribute values.",
-            "type": {
-              "kind": "ENUM",
-              "name": "MeasurementUnitsEnum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "valueRequired",
-            "description": "Whether the attribute requires values to be passed or not.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "values",
-            "description": "List of attribute's values.",
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "AttributeBulkCreateValueInput",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "visibleInStorefront",
-            "description": "Whether the attribute should be visible or not in storefront.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "AttributeBulkCreateResult",
         "description": null,
@@ -7678,81 +7894,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "AttributeBulkCreateValueInput",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "contentType",
-            "description": "File content type.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "externalReference",
-            "description": "External ID of this attribute value.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "fileUrl",
-            "description": "URL of the file attribute. Every time, a new value is created.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "name",
-            "description": "Name of a value displayed in the interface.",
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "value",
-            "description": "Represent value of the attribute value (e.g. color values for swatch attributes).",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -8068,6 +8209,291 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "AttributeBulkUpdate",
+        "description": "Updates attributes.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nTriggers the following webhook events:\n- ATTRIBUTE_UPDATED (async): An attribute was updated. Optionally called when new attribute value was created or deleted.\n- ATTRIBUTE_VALUE_CREATED (async): Called optionally when an attribute value was created.\n- ATTRIBUTE_VALUE_DELETED (async): Called optionally when an attribute value was deleted.",
+        "fields": [
+          {
+            "name": "count",
+            "description": "Returns how many objects were updated.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "AttributeBulkUpdateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "results",
+            "description": "List of the updated attributes.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "AttributeBulkUpdateResult",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AttributeBulkUpdateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "AttributeBulkUpdateErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "path",
+            "description": "Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "AttributeBulkUpdateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ALREADY_EXISTS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "BLANK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DUPLICATED_INPUT_ITEM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MAX_LENGTH",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UNIQUE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "AttributeBulkUpdateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "externalReference",
+            "description": "External ID of this attribute.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "fields",
+            "description": "Fields to update.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "AttributeUpdateInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": "ID of an attribute to update.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AttributeBulkUpdateResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "attribute",
+            "description": "Attribute data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Attribute",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": "List of errors occurred on update attempt.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "AttributeBulkUpdateError",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "ENUM",
         "name": "AttributeChoicesSortField",
         "description": null,
@@ -8313,7 +8739,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "AttributeCreateInput",
-        "description": null,
+        "description": "Represents an input for create of attribute.\n\nNOTE: Deprecated fields `filterableInStorefront`, `storefrontSearchPosition` and `availableInGrid` are not supported in bulk mutations: `attributeBulkCreate`, `attributeBulkUpdate`.",
         "fields": null,
         "inputFields": [
           {
@@ -9910,7 +10336,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "AttributeUpdateInput",
-        "description": null,
+        "description": "Represents an input for update of attribute.\n\nNOTE: Deprecated fields `filterableInStorefront`, `storefrontSearchPosition` and `availableInGrid` are not supported in bulk mutations: `attributeBulkCreate`, `attributeBulkUpdate`.",
         "fields": null,
         "inputFields": [
           {
@@ -11242,6 +11668,26 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "slugs",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -15056,6 +15502,22 @@
             "deprecationReason": null
           },
           {
+            "name": "checkoutSettings",
+            "description": "Channel-specific checkout settings.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires one of the following permissions: MANAGE_CHANNELS, MANAGE_CHECKOUTS.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CheckoutSettings",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "countries",
             "description": "List of shippable countries for the channel.\n\nAdded in Saleor 3.6.",
             "args": [],
@@ -15267,6 +15729,22 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "OrderSettings",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "paymentSettings",
+            "description": "Channel-specific payment settings.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires one of the following permissions: MANAGE_CHANNELS, HANDLE_PAYMENTS.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PaymentSettings",
                 "ofType": null
               }
             },
@@ -15621,6 +16099,18 @@
             "deprecationReason": null
           },
           {
+            "name": "checkoutSettings",
+            "description": "The channel checkout settings\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "CheckoutSettingsInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "currencyCode",
             "description": "Currency of the channel.",
             "type": {
@@ -15706,6 +16196,18 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "OrderSettingsInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "paymentSettings",
+            "description": "The channel payment settings\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PaymentSettingsInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -16511,7 +17013,7 @@
       {
         "kind": "OBJECT",
         "name": "ChannelUpdate",
-        "description": "Update a channel.\n\nRequires one of the following permissions: MANAGE_CHANNELS.\nRequires one of the following permissions when updating only orderSettings field: MANAGE_CHANNELS, MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- CHANNEL_UPDATED (async): A channel was updated.\n- CHANNEL_METADATA_UPDATED (async): Optionally triggered when public or private metadata is updated.",
+        "description": "Update a channel.\n\nRequires one of the following permissions: MANAGE_CHANNELS.\nRequires one of the following permissions when updating only `orderSettings` field: `MANAGE_CHANNELS`, `MANAGE_ORDERS`.\nRequires one of the following permissions when updating only `checkoutSettings` field: `MANAGE_CHANNELS`, `MANAGE_CHECKOUTS`.\nRequires one of the following permissions when updating only `paymentSettings` field: `MANAGE_CHANNELS`, `HANDLE_PAYMENTS`.\n\nTriggers the following webhook events:\n- CHANNEL_UPDATED (async): A channel was updated.\n- CHANNEL_METADATA_UPDATED (async): Optionally triggered when public or private metadata is updated.",
         "fields": [
           {
             "name": "channel",
@@ -16626,6 +17128,18 @@
             "deprecationReason": null
           },
           {
+            "name": "checkoutSettings",
+            "description": "The channel checkout settings\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "CheckoutSettingsInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "defaultCountry",
             "description": "Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.\n\nAdded in Saleor 3.1.",
             "type": {
@@ -16687,6 +17201,18 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "OrderSettingsInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "paymentSettings",
+            "description": "The channel payment settings\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PaymentSettingsInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -17377,6 +17903,26 @@
             "deprecationReason": null
           },
           {
+            "name": "problems",
+            "description": "List of problems with the checkout.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "UNION",
+                  "name": "CheckoutProblem",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "quantity",
             "description": "The number of items purchased.",
             "args": [],
@@ -17464,6 +18010,39 @@
               "kind": "SCALAR",
               "name": "DateTime",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "storedPaymentMethods",
+            "description": "List of user's stored payment methods that can be used in this checkout session. It uses the channel that the checkout was created in. When `amount` is not provided, `checkout.total` will be used as a default value.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "amount",
+                "description": "Amount that will be used to fetch stored payment methods.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "PositiveDecimal",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "StoredPaymentMethod",
+                  "ofType": null
+                }
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -17598,7 +18177,7 @@
           },
           {
             "name": "user",
-            "description": "The user assigned to the checkout.",
+            "description": "The user assigned to the checkout. Requires one of the following permissions: MANAGE_USERS, HANDLE_PAYMENTS, OWNER.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -17893,7 +18472,7 @@
       {
         "kind": "OBJECT",
         "name": "CheckoutComplete",
-        "description": "Completes the checkout. As a result a new order is created and a payment charge is made. This action requires a successful payment before it can be performed. In case additional confirmation step as 3D secure is required confirmationNeeded flag will be set to True and no order created until payment is confirmed with second call of this mutation.\n\nTriggers the following webhook events:\n- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.\n- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.\n- CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.\n- ORDER_CREATED (async): Triggered when order is created.\n- NOTIFY_USER (async): A notification for order placement.\n- NOTIFY_USER (async): A staff notification for order placement.\n- ORDER_UPDATED (async): Triggered when order received the update after placement.\n- ORDER_PAID (async): Triggered when newly created order is paid.\n- ORDER_FULLY_PAID (async): Triggered when newly created order is fully paid.\n- ORDER_CONFIRMED (async): Optionally triggered when newly created order are automatically marked as confirmed.",
+        "description": "Completes the checkout. As a result a new order is created. The mutation allows to create the unpaid order when setting `orderSettings.allowUnpaidOrders` for given `Channel` is set to `true`. When `orderSettings.allowUnpaidOrders` is set to `false`, checkout can be completed only when attached `Payment`/`TransactionItem`s fully cover the checkout's total. When processing the checkout with `Payment`, in case of required additional confirmation step like 3D secure, the `confirmationNeeded` flag will be set to True and no order will be created until payment is confirmed with second call of this mutation.\n\nTriggers the following webhook events:\n- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.\n- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.\n- CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.\n- ORDER_CREATED (async): Triggered when order is created.\n- NOTIFY_USER (async): A notification for order placement.\n- NOTIFY_USER (async): A staff notification for order placement.\n- ORDER_UPDATED (async): Triggered when order received the update after placement.\n- ORDER_PAID (async): Triggered when newly created order is paid.\n- ORDER_FULLY_PAID (async): Triggered when newly created order is fully paid.\n- ORDER_CONFIRMED (async): Optionally triggered when newly created order are automatically marked as confirmed.",
         "fields": [
           {
             "name": "checkoutErrors",
@@ -19763,6 +20342,26 @@
             "deprecationReason": null
           },
           {
+            "name": "problems",
+            "description": "List of problems with the checkout line.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "UNION",
+                  "name": "CheckoutLineProblem",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "quantity",
             "description": "The quantity of product variant assigned to the checkout line.",
             "args": [],
@@ -20152,6 +20751,109 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "UNION",
+        "name": "CheckoutLineProblem",
+        "description": "Represents an problem in the checkout line.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "CheckoutLineProblemInsufficientStock",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CheckoutLineProblemVariantNotAvailable",
+            "ofType": null
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CheckoutLineProblemInsufficientStock",
+        "description": "Indicates insufficient stock for a given checkout line.Placing the order will not be possible until solving this problem.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "availableQuantity",
+            "description": "Available quantity of a variant.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "line",
+            "description": "The line that has variant with insufficient stock.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CheckoutLine",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "variant",
+            "description": "The variant with insufficient stock.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ProductVariant",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CheckoutLineProblemVariantNotAvailable",
+        "description": "The variant assigned to the checkout line is not available.Placing the order will not be possible until solving this problem.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "line",
+            "description": "The line that has variant that is not available.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CheckoutLine",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -20564,6 +21266,27 @@
         "possibleTypes": null
       },
       {
+        "kind": "UNION",
+        "name": "CheckoutProblem",
+        "description": "Represents an problem in the checkout.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "CheckoutLineProblemInsufficientStock",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CheckoutLineProblemVariantNotAvailable",
+            "ofType": null
+          }
+        ]
+      },
+      {
         "kind": "OBJECT",
         "name": "CheckoutRemovePromoCode",
         "description": "Remove a gift card or a voucher from a checkout.\n\nTriggers the following webhook events:\n- CHECKOUT_UPDATED (async): A checkout was updated.",
@@ -20631,6 +21354,56 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CheckoutSettings",
+        "description": "Represents the channel-specific checkout settings.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "useLegacyErrorFlow",
+            "description": "Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.\n\nAdded in Saleor 3.15.This field will be removed in Saleor 4.0.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "CheckoutSettingsInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "useLegacyErrorFlow",
+            "description": "Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one. \n\nAdded in Saleor 3.15.\n\nDEPRECATED: this field will be removed in Saleor 4.0.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -24083,7 +24856,7 @@
       {
         "kind": "OBJECT",
         "name": "ConfirmEmailChange",
-        "description": "Confirm the email change of the logged-in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- CUSTOMER_UPDATED (async): A customer account was updated.\n- NOTIFY_USER (async): A notification that account email change was confirmed.",
+        "description": "Confirm the email change of the logged-in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- CUSTOMER_UPDATED (async): A customer account was updated.\n- NOTIFY_USER (async): A notification that account email change was confirmed.\n- ACCOUNT_EMAIL_CHANGED (async): An account email was changed.",
         "fields": [
           {
             "name": "accountErrors",
@@ -26365,7 +27138,7 @@
       {
         "kind": "OBJECT",
         "name": "CustomerCreate",
-        "description": "Creates a new customer. \n\nRequires one of the following permissions: MANAGE_USERS.\n\nTriggers the following webhook events:\n- CUSTOMER_CREATED (async): A new customer account was created.\n- CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.\n- NOTIFY_USER (async): A notification for setting the password.",
+        "description": "Creates a new customer. \n\nRequires one of the following permissions: MANAGE_USERS.\n\nTriggers the following webhook events:\n- CUSTOMER_CREATED (async): A new customer account was created.\n- CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.\n- NOTIFY_USER (async): A notification for setting the password.\n- ACCOUNT_SET_PASSWORD_REQUESTED (async): Setting a new password for the account is requested.",
         "fields": [
           {
             "name": "accountErrors",
@@ -30230,6 +31003,21 @@
           },
           {
             "kind": "OBJECT",
+            "name": "AccountDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "AccountEmailChanged",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "AccountSetPasswordRequested",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "AddressCreated",
             "ofType": null
           },
@@ -30435,12 +31223,22 @@
           },
           {
             "kind": "OBJECT",
+            "name": "FulfillmentTrackingNumberUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "GiftCardCreated",
             "ofType": null
           },
           {
             "kind": "OBJECT",
             "name": "GiftCardDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "GiftCardExportCompleted",
             "ofType": null
           },
           {
@@ -30476,6 +31274,11 @@
           {
             "kind": "OBJECT",
             "name": "InvoiceSent",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ListStoredPaymentMethods",
             "ofType": null
           },
           {
@@ -30625,7 +31428,22 @@
           },
           {
             "kind": "OBJECT",
+            "name": "PaymentGatewayInitializeTokenizationSession",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "PaymentListGateways",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "PaymentMethodInitializeTokenizationSession",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "PaymentMethodProcessTokenizationSession",
             "ofType": null
           },
           {
@@ -30666,6 +31484,11 @@
           {
             "kind": "OBJECT",
             "name": "ProductDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ProductExportCompleted",
             "ofType": null
           },
           {
@@ -30805,7 +31628,17 @@
           },
           {
             "kind": "OBJECT",
+            "name": "StaffSetPasswordRequested",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "StaffUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "StoredPaymentMethodDeleteRequested",
             "ofType": null
           },
           {
@@ -32291,7 +33124,7 @@
       {
         "kind": "OBJECT",
         "name": "ExportGiftCards",
-        "description": "Export gift cards to csv file.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for the exported file.",
+        "description": "Export gift cards to csv file.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for the exported file.\n- GIFT_CARD_EXPORT_COMPLETED (async): A notification for the exported file.",
         "fields": [
           {
             "name": "errors",
@@ -32504,7 +33337,7 @@
       {
         "kind": "OBJECT",
         "name": "ExportProducts",
-        "description": "Export products to csv file. \n\nRequires one of the following permissions: MANAGE_PRODUCTS.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for the exported file.",
+        "description": "Export products to csv file. \n\nRequires one of the following permissions: MANAGE_PRODUCTS.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for the exported file.\n- PRODUCT_EXPORT_COMPLETED (async): A notification for the exported file.",
         "fields": [
           {
             "name": "errors",
@@ -33830,7 +34663,7 @@
       {
         "kind": "OBJECT",
         "name": "FulfillmentApprove",
-        "description": "Approve existing fulfillment.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+        "description": "Approve existing fulfillment.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- FULFILLMENT_APPROVED (async): Fulfillment is approved.",
         "fields": [
           {
             "name": "errors",
@@ -33947,6 +34780,22 @@
               "kind": "UNION",
               "name": "IssuingPrincipal",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "notifyCustomer",
+            "description": "If true, send a notification to the customer.\n\nAdded in Saleor 3.16.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -34231,6 +35080,22 @@
               "kind": "UNION",
               "name": "IssuingPrincipal",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "notifyCustomer",
+            "description": "If true, the app should send a notification to the customer.\n\nAdded in Saleor 3.16.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -34678,8 +35543,97 @@
       },
       {
         "kind": "OBJECT",
+        "name": "FulfillmentTrackingNumberUpdated",
+        "description": "Event sent when the tracking number is updated.\n\nAdded in Saleor 3.16.",
+        "fields": [
+          {
+            "name": "fulfillment",
+            "description": "The fulfillment the event relates to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Fulfillment",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "order",
+            "description": "The order the fulfillment belongs to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "FulfillmentUpdateTracking",
-        "description": "Updates a fulfillment for an order. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+        "description": "Updates a fulfillment for an order. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- FULFILLMENT_TRACKING_NUMBER_UPDATED (async): Fulfillment tracking number is updated.",
         "fields": [
           {
             "name": "errors",
@@ -34874,7 +35828,7 @@
           },
           {
             "name": "code",
-            "description": "Gift card code. Can be fetched by a staff member with MANAGE_GIFT_CARD when gift card wasn't yet used and by the gift card owner.",
+            "description": "Gift card code. It can be fetched both by a staff member with 'MANAGE_GIFT_CARD' when gift card hasn't been used yet or a user who bought or issued the gift card.\n\nRequires one of the following permissions: MANAGE_GIFT_CARD, OWNER.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -36988,6 +37942,83 @@
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "GiftCardExportCompleted",
+        "description": "Event sent when gift card export is completed.\n\nAdded in Saleor 3.16.",
+        "fields": [
+          {
+            "name": "export",
+            "description": "The export file for gift cards.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ExportFile",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -44888,6 +45919,103 @@
       },
       {
         "kind": "OBJECT",
+        "name": "ListStoredPaymentMethods",
+        "description": "List payment methods stored for the user by payment gateway.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "channel",
+            "description": "Channel in context which was used to fetch the list of payment methods.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Channel",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": "The user for which the app should return a list of payment methods.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "Manifest",
         "description": "The manifest definition.",
         "fields": [
@@ -49040,7 +50168,7 @@
           },
           {
             "name": "accountDelete",
-            "description": "Remove user account. \n\nRequires one of the following permissions: AUTHENTICATED_USER.",
+            "description": "Remove user account. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- ACCOUNT_DELETED (async): Account was deleted.",
             "args": [
               {
                 "name": "token",
@@ -49098,7 +50226,7 @@
           },
           {
             "name": "accountRequestDeletion",
-            "description": "Sends an email with the account removal link for the logged-in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for account delete request.",
+            "description": "Sends an email with the account removal link for the logged-in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for account delete request.\n- ACCOUNT_DELETE_REQUESTED (async): An account delete requested.",
             "args": [
               {
                 "name": "channel",
@@ -49867,7 +50995,7 @@
             "args": [
               {
                 "name": "attributes",
-                "description": "Input list of products to create.",
+                "description": "Input list of attributes to create.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -49879,7 +51007,7 @@
                       "name": null,
                       "ofType": {
                         "kind": "INPUT_OBJECT",
-                        "name": "AttributeBulkCreateInput",
+                        "name": "AttributeCreateInput",
                         "ofType": null
                       }
                     }
@@ -49991,6 +51119,55 @@
             "type": {
               "kind": "OBJECT",
               "name": "AttributeBulkTranslate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "attributeBulkUpdate",
+            "description": "Updates attributes.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nTriggers the following webhook events:\n- ATTRIBUTE_UPDATED (async): An attribute was updated. Optionally called when new attribute value was created or deleted.\n- ATTRIBUTE_VALUE_CREATED (async): Called optionally when an attribute value was created.\n- ATTRIBUTE_VALUE_DELETED (async): Called optionally when an attribute value was deleted.",
+            "args": [
+              {
+                "name": "attributes",
+                "description": "Input list of attributes to update.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "AttributeBulkUpdateInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "errorPolicy",
+                "description": "Policies of error handling. DEFAULT: REJECT_EVERYTHING",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ErrorPolicyEnum",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AttributeBulkUpdate",
               "ofType": null
             },
             "isDeprecated": false,
@@ -50907,7 +52084,7 @@
           },
           {
             "name": "channelUpdate",
-            "description": "Update a channel.\n\nRequires one of the following permissions: MANAGE_CHANNELS.\nRequires one of the following permissions when updating only orderSettings field: MANAGE_CHANNELS, MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- CHANNEL_UPDATED (async): A channel was updated.\n- CHANNEL_METADATA_UPDATED (async): Optionally triggered when public or private metadata is updated.",
+            "description": "Update a channel.\n\nRequires one of the following permissions: MANAGE_CHANNELS.\nRequires one of the following permissions when updating only `orderSettings` field: `MANAGE_CHANNELS`, `MANAGE_ORDERS`.\nRequires one of the following permissions when updating only `checkoutSettings` field: `MANAGE_CHANNELS`, `MANAGE_CHECKOUTS`.\nRequires one of the following permissions when updating only `paymentSettings` field: `MANAGE_CHANNELS`, `HANDLE_PAYMENTS`.\n\nTriggers the following webhook events:\n- CHANNEL_UPDATED (async): A channel was updated.\n- CHANNEL_METADATA_UPDATED (async): Optionally triggered when public or private metadata is updated.",
             "args": [
               {
                 "name": "id",
@@ -51094,7 +52271,7 @@
           },
           {
             "name": "checkoutComplete",
-            "description": "Completes the checkout. As a result a new order is created and a payment charge is made. This action requires a successful payment before it can be performed. In case additional confirmation step as 3D secure is required confirmationNeeded flag will be set to True and no order created until payment is confirmed with second call of this mutation.\n\nTriggers the following webhook events:\n- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.\n- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.\n- CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.\n- ORDER_CREATED (async): Triggered when order is created.\n- NOTIFY_USER (async): A notification for order placement.\n- NOTIFY_USER (async): A staff notification for order placement.\n- ORDER_UPDATED (async): Triggered when order received the update after placement.\n- ORDER_PAID (async): Triggered when newly created order is paid.\n- ORDER_FULLY_PAID (async): Triggered when newly created order is fully paid.\n- ORDER_CONFIRMED (async): Optionally triggered when newly created order are automatically marked as confirmed.",
+            "description": "Completes the checkout. As a result a new order is created. The mutation allows to create the unpaid order when setting `orderSettings.allowUnpaidOrders` for given `Channel` is set to `true`. When `orderSettings.allowUnpaidOrders` is set to `false`, checkout can be completed only when attached `Payment`/`TransactionItem`s fully cover the checkout's total. When processing the checkout with `Payment`, in case of required additional confirmation step like 3D secure, the `confirmationNeeded` flag will be set to True and no order will be created until payment is confirmed with second call of this mutation.\n\nTriggers the following webhook events:\n- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.\n- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.\n- CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.\n- ORDER_CREATED (async): Triggered when order is created.\n- NOTIFY_USER (async): A notification for order placement.\n- NOTIFY_USER (async): A staff notification for order placement.\n- ORDER_UPDATED (async): Triggered when order received the update after placement.\n- ORDER_PAID (async): Triggered when newly created order is paid.\n- ORDER_FULLY_PAID (async): Triggered when newly created order is fully paid.\n- ORDER_CONFIRMED (async): Optionally triggered when newly created order are automatically marked as confirmed.",
             "args": [
               {
                 "name": "checkoutId",
@@ -52540,7 +53717,7 @@
           },
           {
             "name": "confirmEmailChange",
-            "description": "Confirm the email change of the logged-in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- CUSTOMER_UPDATED (async): A customer account was updated.\n- NOTIFY_USER (async): A notification that account email change was confirmed.",
+            "description": "Confirm the email change of the logged-in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- CUSTOMER_UPDATED (async): A customer account was updated.\n- NOTIFY_USER (async): A notification that account email change was confirmed.\n- ACCOUNT_EMAIL_CHANGED (async): An account email was changed.",
             "args": [
               {
                 "name": "channel",
@@ -52696,7 +53873,7 @@
           },
           {
             "name": "customerCreate",
-            "description": "Creates a new customer. \n\nRequires one of the following permissions: MANAGE_USERS.\n\nTriggers the following webhook events:\n- CUSTOMER_CREATED (async): A new customer account was created.\n- CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.\n- NOTIFY_USER (async): A notification for setting the password.",
+            "description": "Creates a new customer. \n\nRequires one of the following permissions: MANAGE_USERS.\n\nTriggers the following webhook events:\n- CUSTOMER_CREATED (async): A new customer account was created.\n- CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.\n- NOTIFY_USER (async): A notification for setting the password.\n- ACCOUNT_SET_PASSWORD_REQUESTED (async): Setting a new password for the account is requested.",
             "args": [
               {
                 "name": "input",
@@ -53349,7 +54526,7 @@
           },
           {
             "name": "exportGiftCards",
-            "description": "Export gift cards to csv file.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for the exported file.",
+            "description": "Export gift cards to csv file.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for the exported file.\n- GIFT_CARD_EXPORT_COMPLETED (async): A notification for the exported file.",
             "args": [
               {
                 "name": "input",
@@ -53378,7 +54555,7 @@
           },
           {
             "name": "exportProducts",
-            "description": "Export products to csv file. \n\nRequires one of the following permissions: MANAGE_PRODUCTS.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for the exported file.",
+            "description": "Export products to csv file. \n\nRequires one of the following permissions: MANAGE_PRODUCTS.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for the exported file.\n- PRODUCT_EXPORT_COMPLETED (async): A notification for the exported file.",
             "args": [
               {
                 "name": "input",
@@ -53549,8 +54726,8 @@
               "name": "ExternalNotificationTrigger",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0."
           },
           {
             "name": "externalObtainAccessTokens",
@@ -55180,7 +56357,7 @@
           },
           {
             "name": "orderFulfill",
-            "description": "Creates new fulfillments for an order. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+            "description": "Creates new fulfillments for an order. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- FULFILLMENT_CREATED (async): A new fulfillment is created.\n- ORDER_FULFILLED (async): Order is fulfilled.\n- FULFILLMENT_TRACKING_NUMBER_UPDATED (async): Sent when fulfillment tracking number is updated.\n- FULFILLMENT_APPROVED (async): A fulfillment is approved.",
             "args": [
               {
                 "name": "input",
@@ -55221,7 +56398,7 @@
           },
           {
             "name": "orderFulfillmentApprove",
-            "description": "Approve existing fulfillment.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+            "description": "Approve existing fulfillment.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- FULFILLMENT_APPROVED (async): Fulfillment is approved.",
             "args": [
               {
                 "name": "allowStockToBeExceeded",
@@ -55409,7 +56586,7 @@
           },
           {
             "name": "orderFulfillmentUpdateTracking",
-            "description": "Updates a fulfillment for an order. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+            "description": "Updates a fulfillment for an order. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- FULFILLMENT_TRACKING_NUMBER_UPDATED (async): Fulfillment tracking number is updated.",
             "args": [
               {
                 "name": "id",
@@ -56866,6 +58043,63 @@
             "deprecationReason": null
           },
           {
+            "name": "paymentGatewayInitializeTokenization",
+            "description": "Initializes payment gateway for tokenizing payment method session.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION (sync): The customer requested to initialize payment gateway for tokenization.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel related to tokenization request.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "data",
+                "description": "The data that will be passed to the payment gateway.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "JSON",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "id",
+                "description": "The identifier of the payment gateway app to initialize tokenization.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PaymentGatewayInitializeTokenization",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "paymentInitialize",
             "description": "Initializes payment process when it is required by gateway.",
             "args": [
@@ -56913,6 +58147,136 @@
             "type": {
               "kind": "OBJECT",
               "name": "PaymentInitialize",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "paymentMethodInitializeTokenization",
+            "description": "Tokenize payment method.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION (sync): The customer requested to tokenize payment method.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel related to tokenization request.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "data",
+                "description": "The data that will be passed to the payment gateway.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "JSON",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "id",
+                "description": "The identifier of the payment gateway app to initialize payment method tokenization.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "paymentFlowToSupport",
+                "description": "The payment flow that the tokenized payment method should support.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "TokenizedPaymentFlowEnum",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PaymentMethodInitializeTokenization",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "paymentMethodProcessTokenization",
+            "description": "Tokenize payment method.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION (sync): The customer continues payment method tokenization.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel related to tokenization request.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "data",
+                "description": "The data that will be passed to the payment gateway.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "JSON",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "id",
+                "description": "The identifier of the payment gateway app to process payment method tokenization.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PaymentMethodProcessTokenization",
               "ofType": null
             },
             "isDeprecated": false,
@@ -59004,7 +60368,7 @@
           },
           {
             "name": "requestEmailChange",
-            "description": "Request email change of the logged in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for account email change.",
+            "description": "Request email change of the logged in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for account email change.\n- ACCOUNT_CHANGE_EMAIL_REQUESTED (async): An account email change was requested.",
             "args": [
               {
                 "name": "channel",
@@ -59077,7 +60441,7 @@
           },
           {
             "name": "requestPasswordReset",
-            "description": "Sends an email with the account password modification link.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for password reset.",
+            "description": "Sends an email with the account password modification link.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for password reset.\n- ACCOUNT_SET_PASSWORD_REQUESTED (async): Setting a new password for the account is requested.\n- STAFF_SET_PASSWORD_REQUESTED (async): Setting a new password for the staff account is requested.",
             "args": [
               {
                 "name": "channel",
@@ -60233,7 +61597,7 @@
           },
           {
             "name": "staffCreate",
-            "description": "Creates a new staff user. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.\n\nTriggers the following webhook events:\n- STAFF_CREATED (async): A new staff account was created.\n- NOTIFY_USER (async): A notification for setting the password.",
+            "description": "Creates a new staff user. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.\n\nTriggers the following webhook events:\n- STAFF_CREATED (async): A new staff account was created.\n- NOTIFY_USER (async): A notification for setting the password.\n- STAFF_SET_PASSWORD_REQUESTED (async): Setting a new password for the staff account is requested.",
             "args": [
               {
                 "name": "input",
@@ -60481,6 +61845,51 @@
             "type": {
               "kind": "OBJECT",
               "name": "StockBulkUpdate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "storedPaymentMethodRequestDelete",
+            "description": "Request to delete a stored payment method on payment provider side.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- STORED_PAYMENT_METHOD_DELETE_REQUESTED (sync): The customer requested to delete a payment method.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel related to delete request.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "id",
+                "description": "The ID of the payment method.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "StoredPaymentMethodRequestDelete",
               "ofType": null
             },
             "isDeprecated": false,
@@ -61115,6 +62524,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "customerIpAddress",
+                "description": "The customer's IP address. If not provided Saleor will try to determine the customer's IP address on its own. The customer's IP address will be passed to the payment app. The IP should be in ipv4 or ipv6 format. The field can be used only by an app that has `HANDLE_PAYMENTS` permission.\n\nAdded in Saleor 3.16.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "id",
                 "description": "The ID of the checkout or order.",
                 "type": {
@@ -61159,6 +62580,18 @@
             "name": "transactionProcess",
             "description": "Processes a transaction session. It triggers the webhook `TRANSACTION_PROCESS_SESSION`, to the assigned `paymentGateways`. \n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "args": [
+              {
+                "name": "customerIpAddress",
+                "description": "The customer's IP address. If not provided Saleor will try to determine the customer's IP address on its own. The customer's IP address will be passed to the payment app. The IP should be in ipv4 or ipv6 format. The field can be used only by an app that has `HANDLE_PAYMENTS` permission.\n\nAdded in Saleor 3.16.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
               {
                 "name": "data",
                 "description": "The data that will be passed to the payment gateway.",
@@ -61515,16 +62948,24 @@
             "description": "Updates given warehouse. \n\nRequires one of the following permissions: MANAGE_PRODUCTS.",
             "args": [
               {
+                "name": "externalReference",
+                "description": "External reference of a warehouse.\n\nAdded in Saleor 3.16.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "id",
                 "description": "ID of a warehouse to update.",
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -64490,7 +65931,7 @@
           },
           {
             "name": "user",
-            "description": "User who placed the order. This field is set only for orders placed by authenticated users. Can be fetched for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_USERS, MANAGE_ORDERS, OWNER.",
+            "description": "User who placed the order. This field is set only for orders placed by authenticated users. Can be fetched for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_USERS, MANAGE_ORDERS, HANDLE_PAYMENTS, OWNER.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -69530,7 +70971,7 @@
       {
         "kind": "OBJECT",
         "name": "OrderFulfill",
-        "description": "Creates new fulfillments for an order. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+        "description": "Creates new fulfillments for an order. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- FULFILLMENT_CREATED (async): A new fulfillment is created.\n- ORDER_FULFILLED (async): Order is fulfilled.\n- FULFILLMENT_TRACKING_NUMBER_UPDATED (async): Sent when fulfillment tracking number is updated.\n- FULFILLMENT_APPROVED (async): A fulfillment is approved.",
         "fields": [
           {
             "name": "errors",
@@ -73331,7 +74772,7 @@
           },
           {
             "name": "defaultTransactionFlowStrategy",
-            "description": "Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.This preview feature field will be removed in Saleor 3.17. Use `PaymentSettings.defaultTransactionFlowStrategy` instead.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -73471,7 +74912,7 @@
         "inputFields": [
           {
             "name": "allowUnpaidOrders",
-            "description": "Determine if it is possible to place unpdaid order by calling `checkoutComplete` mutation.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "Determine if it is possible to place unpaid order by calling `checkoutComplete` mutation.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -73507,7 +74948,7 @@
           },
           {
             "name": "defaultTransactionFlowStrategy",
-            "description": "Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nDEPRECATED: this preview feature field will be removed in Saleor 3.17. Use `PaymentSettingsInput.defaultTransactionFlowStrategy` instead.",
             "type": {
               "kind": "ENUM",
               "name": "TransactionFlowStrategyEnum",
@@ -74315,7 +75756,7 @@
           },
           {
             "name": "created",
-            "description": null,
+            "description": "Date and time at which page was created.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -74331,7 +75772,7 @@
           },
           {
             "name": "id",
-            "description": null,
+            "description": "ID of the page.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -74347,7 +75788,7 @@
           },
           {
             "name": "isPublished",
-            "description": null,
+            "description": "Determines if the page is published.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -74449,7 +75890,7 @@
           },
           {
             "name": "pageType",
-            "description": null,
+            "description": "Determines the type of page",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -74575,7 +76016,7 @@
           },
           {
             "name": "seoDescription",
-            "description": null,
+            "description": "Description of the page for SEO.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -74587,7 +76028,7 @@
           },
           {
             "name": "seoTitle",
-            "description": null,
+            "description": "Title of the page for SEO.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -74599,7 +76040,7 @@
           },
           {
             "name": "slug",
-            "description": null,
+            "description": "Slug of the page.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -74615,7 +76056,7 @@
           },
           {
             "name": "title",
-            "description": null,
+            "description": "Title of the page.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -76621,7 +78062,7 @@
           },
           {
             "name": "id",
-            "description": null,
+            "description": "ID of the page type.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -76723,7 +78164,7 @@
           },
           {
             "name": "name",
-            "description": null,
+            "description": "Name of the page type.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -76825,7 +78266,7 @@
           },
           {
             "name": "slug",
-            "description": null,
+            "description": "Slug of the page type.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -78093,7 +79534,7 @@
           },
           {
             "name": "checkout",
-            "description": null,
+            "description": "Checkout associated with a payment.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -78105,7 +79546,7 @@
           },
           {
             "name": "created",
-            "description": null,
+            "description": "Date and time at which payment was created.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -78145,7 +79586,7 @@
           },
           {
             "name": "gateway",
-            "description": null,
+            "description": "Payment gateway used for payment.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -78161,7 +79602,7 @@
           },
           {
             "name": "id",
-            "description": null,
+            "description": "ID of the payment.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -78177,7 +79618,7 @@
           },
           {
             "name": "isActive",
-            "description": null,
+            "description": "Determines if the payment is active or not.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -78279,7 +79720,7 @@
           },
           {
             "name": "modified",
-            "description": null,
+            "description": "Date and time at which payment was modified.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -78295,7 +79736,7 @@
           },
           {
             "name": "order",
-            "description": null,
+            "description": "Order associated with a payment.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -78307,7 +79748,7 @@
           },
           {
             "name": "paymentMethodType",
-            "description": null,
+            "description": "Type of method used for payment.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -78409,7 +79850,7 @@
           },
           {
             "name": "token",
-            "description": null,
+            "description": "Unique token associated with a payment.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -79581,7 +81022,7 @@
           },
           {
             "name": "gatewayConfigs",
-            "description": null,
+            "description": "List of payment gateway configurations.",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -79704,7 +81145,7 @@
           },
           {
             "name": "data",
-            "description": "Payment gateway data in JSON format, recieved from storefront.",
+            "description": "Payment gateway data in JSON format, received from storefront.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -79760,6 +81201,299 @@
               "ofType": {
                 "kind": "UNION",
                 "name": "OrderOrCheckout",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PaymentGatewayInitializeTokenization",
+        "description": "Initializes payment gateway for tokenizing payment method session.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION (sync): The customer requested to initialize payment gateway for tokenization.",
+        "fields": [
+          {
+            "name": "data",
+            "description": "A data returned by payment app.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "JSON",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PaymentGatewayInitializeTokenizationError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "result",
+            "description": "A status of the payment gateway initialization.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "PaymentGatewayInitializeTokenizationResult",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PaymentGatewayInitializeTokenizationError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "PaymentGatewayInitializeTokenizationErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "PaymentGatewayInitializeTokenizationErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CHANNEL_INACTIVE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GATEWAY_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "PaymentGatewayInitializeTokenizationResult",
+        "description": "Result of initialize payment gateway for tokenization of payment method.\n\n    The result of initialize payment gateway for tokenization of payment method.\n    SUCCESSFULLY_INITIALIZED - The payment gateway was successfully initialized.\n    FAILED_TO_INITIALIZE - The payment gateway was not initialized.\n    FAILED_TO_DELIVER - The request to initialize payment gateway was not delivered.\n    ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "FAILED_TO_DELIVER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FAILED_TO_INITIALIZE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SUCCESSFULLY_INITIALIZED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PaymentGatewayInitializeTokenizationSession",
+        "description": "Event sent to initialize a new session in payment gateway to store the payment method. \n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "channel",
+            "description": "Channel related to the requested action.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Channel",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": "Payment gateway data in JSON format, received from storefront.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "JSON",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": "The user related to the requested action.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "User",
                 "ofType": null
               }
             },
@@ -79860,7 +81594,7 @@
           },
           {
             "name": "initializedPayment",
-            "description": null,
+            "description": "Payment that was initialized.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -80129,6 +81863,682 @@
       },
       {
         "kind": "OBJECT",
+        "name": "PaymentMethodInitializeTokenization",
+        "description": "Tokenize payment method.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION (sync): The customer requested to tokenize payment method.",
+        "fields": [
+          {
+            "name": "data",
+            "description": "A data returned by the payment app.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "JSON",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PaymentMethodInitializeTokenizationError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": "The identifier of the payment method.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "result",
+            "description": "A status of the payment method tokenization.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "PaymentMethodTokenizationResult",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PaymentMethodInitializeTokenizationError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "PaymentMethodInitializeTokenizationErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "PaymentMethodInitializeTokenizationErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CHANNEL_INACTIVE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GATEWAY_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PaymentMethodInitializeTokenizationSession",
+        "description": "Event sent when user requests a tokenization of payment method.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "channel",
+            "description": "Channel related to the requested action.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Channel",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": "Payment gateway data in JSON format, received from storefront.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "JSON",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "paymentFlowToSupport",
+            "description": "The payment flow that the tokenized payment method should support.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TokenizedPaymentFlowEnum",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": "The user related to the requested action.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PaymentMethodProcessTokenization",
+        "description": "Tokenize payment method.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION (sync): The customer continues payment method tokenization.",
+        "fields": [
+          {
+            "name": "data",
+            "description": "A data returned by the payment app.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "JSON",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PaymentMethodProcessTokenizationError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": "The identifier of the payment method.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "result",
+            "description": "A status of the payment method tokenization.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "PaymentMethodTokenizationResult",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PaymentMethodProcessTokenizationError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "PaymentMethodProcessTokenizationErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "PaymentMethodProcessTokenizationErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CHANNEL_INACTIVE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GATEWAY_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PaymentMethodProcessTokenizationSession",
+        "description": "Event sent when user continues a tokenization of payment method.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "channel",
+            "description": "Channel related to the requested action.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Channel",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": "Payment gateway data in JSON format, received from storefront.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "JSON",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": "The ID returned by app from `PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION` webhook.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": "The user related to the requested action.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PaymentMethodRequestDeleteError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "StoredPaymentMethodRequestDeleteErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "PaymentMethodTokenizationResult",
+        "description": "Result of tokenization of payment method.\n\n    SUCCESSFULLY_TOKENIZED - The payment method was successfully tokenized.\n    ADDITIONAL_ACTION_REQUIRED - The additional action is required to tokenize payment\n    method.\n    PENDING - The payment method is pending tokenization.\n    FAILED_TO_TOKENIZE - The payment method was not tokenized.\n    FAILED_TO_DELIVER - The request to tokenize payment method was not delivered.\n    ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ADDITIONAL_ACTION_REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FAILED_TO_DELIVER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FAILED_TO_TOKENIZE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PENDING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SUCCESSFULLY_TOKENIZED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "PaymentProcessEvent",
         "description": "Process payment.\n\nAdded in Saleor 3.6.",
         "fields": [
@@ -80349,6 +82759,56 @@
             "ofType": null
           }
         ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PaymentSettings",
+        "description": "Represents the channel-specific payment settings.",
+        "fields": [
+          {
+            "name": "defaultTransactionFlowStrategy",
+            "description": "Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TransactionFlowStrategyEnum",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "PaymentSettingsInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "defaultTransactionFlowStrategy",
+            "description": "Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "ENUM",
+              "name": "TransactionFlowStrategyEnum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -86401,6 +88861,83 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "ProductExportCompleted",
+        "description": "Event sent when product export is completed.\n\nAdded in Saleor 3.16.",
+        "fields": [
+          {
+            "name": "export",
+            "description": "The export file for products.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ExportFile",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "ENUM",
         "name": "ProductFieldEnum",
         "description": null,
@@ -91268,7 +93805,7 @@
           },
           {
             "name": "trackInventory",
-            "description": "Whether the inventory of the variant is tracked.",
+            "description": "Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. If the field is not provided, `Shop.trackInventoryByDefault` will be used.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -91753,7 +94290,7 @@
           },
           {
             "name": "trackInventory",
-            "description": "Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item.",
+            "description": "Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. If the field is not provided, `Shop.trackInventoryByDefault` will be used.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -92643,7 +95180,7 @@
           },
           {
             "name": "trackInventory",
-            "description": "Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item.",
+            "description": "Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. If the field is not provided, `Shop.trackInventoryByDefault` will be used.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -93321,7 +95858,7 @@
           },
           {
             "name": "trackInventory",
-            "description": "Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item.",
+            "description": "Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. If the field is not provided, `Shop.trackInventoryByDefault` will be used.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -93814,7 +96351,7 @@
           },
           {
             "name": "trackInventory",
-            "description": "Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item.",
+            "description": "Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. If the field is not provided, `Shop.trackInventoryByDefault` will be used.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -100622,7 +103159,7 @@
       {
         "kind": "OBJECT",
         "name": "RequestEmailChange",
-        "description": "Request email change of the logged in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for account email change.",
+        "description": "Request email change of the logged in user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for account email change.\n- ACCOUNT_CHANGE_EMAIL_REQUESTED (async): An account email change was requested.",
         "fields": [
           {
             "name": "accountErrors",
@@ -100693,7 +103230,7 @@
       {
         "kind": "OBJECT",
         "name": "RequestPasswordReset",
-        "description": "Sends an email with the account password modification link.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for password reset.",
+        "description": "Sends an email with the account password modification link.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for password reset.\n- ACCOUNT_SET_PASSWORD_REQUESTED (async): Setting a new password for the account is requested.\n- STAFF_SET_PASSWORD_REQUESTED (async): Setting a new password for the staff account is requested.",
         "fields": [
           {
             "name": "accountErrors",
@@ -108510,7 +111047,7 @@
           },
           {
             "name": "trackInventoryByDefault",
-            "description": "Enable inventory tracking.",
+            "description": "This field is used as a default value for `ProductVariant.trackInventory`.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -109247,7 +111784,7 @@
           },
           {
             "name": "trackInventoryByDefault",
-            "description": "Enable inventory tracking.",
+            "description": "This field is used as a default value for `ProductVariant.trackInventory`.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -109633,7 +112170,7 @@
       {
         "kind": "OBJECT",
         "name": "StaffCreate",
-        "description": "Creates a new staff user. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.\n\nTriggers the following webhook events:\n- STAFF_CREATED (async): A new staff account was created.\n- NOTIFY_USER (async): A notification for setting the password.",
+        "description": "Creates a new staff user. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.\n\nTriggers the following webhook events:\n- STAFF_CREATED (async): A new staff account was created.\n- NOTIFY_USER (async): A notification for setting the password.\n- STAFF_SET_PASSWORD_REQUESTED (async): Setting a new password for the staff account is requested.",
         "fields": [
           {
             "name": "errors",
@@ -110541,6 +113078,131 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "StaffSetPasswordRequested",
+        "description": "Event sent when setting a new password for staff is requested.\n\nAdded in Saleor 3.15.",
+        "fields": [
+          {
+            "name": "channel",
+            "description": "The channel data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Channel",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "redirectUrl",
+            "description": "The URL to redirect the user after he accepts the request.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shop",
+            "description": "Shop data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Shop",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "token",
+            "description": "The token required to confirm request.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": "The user the event relates to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -111744,6 +114406,371 @@
           {
             "name": "ON_SESSION",
             "description": "On session storage type. The payment is stored only to be reused when the customer is present in the checkout flow.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "StoredPaymentMethod",
+        "description": "Represents a payment method stored for user (tokenized) in payment gateway.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "creditCardInfo",
+            "description": "Stored credit card details if available.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CreditCard",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "data",
+            "description": "JSON data returned by Payment Provider app for this payment method.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "JSON",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "gateway",
+            "description": "Payment gateway that stores this payment method.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PaymentGateway",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": "Stored payment method ID.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": "Payment method name. Example: last 4 digits of credit card, obfuscated email, etc.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "paymentMethodId",
+            "description": "ID of stored payment method used to make payment actions. Note: method ID is unique only within the payment gateway.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "supportedPaymentFlows",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "TokenizedPaymentFlowEnum",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "Type of the payment method. Example: credit card, wallet, etc.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "StoredPaymentMethodDeleteRequested",
+        "description": "Event sent when user requests to delete a payment method.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "channel",
+            "description": "Channel related to the requested delete action.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Channel",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "paymentMethodId",
+            "description": "The ID of the payment method that should be deleted by the payment gateway.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": "The user for which the app should proceed with payment method delete request.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "StoredPaymentMethodRequestDelete",
+        "description": "Request to delete a stored payment method on payment provider side.\n\nAdded in Saleor 3.16.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: AUTHENTICATED_USER.\n\nTriggers the following webhook events:\n- STORED_PAYMENT_METHOD_DELETE_REQUESTED (sync): The customer requested to delete a payment method.",
+        "fields": [
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PaymentMethodRequestDeleteError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "result",
+            "description": "The result of deleting a stored payment method.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "StoredPaymentMethodRequestDeleteResult",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "StoredPaymentMethodRequestDeleteErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CHANNEL_INACTIVE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GATEWAY_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "StoredPaymentMethodRequestDeleteResult",
+        "description": "Result of deleting a stored payment method.\n\n    This enum is used to determine the result of deleting a stored payment method.\n    SUCCESSFULLY_DELETED - The stored payment method was successfully deleted.\n    FAILED_TO_DELETE - The stored payment method was not deleted.\n    FAILED_TO_DELIVER - The request to delete the stored payment method was not\n    delivered.\n    ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "FAILED_TO_DELETE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FAILED_TO_DELIVER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SUCCESSFULLY_DELETED",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -115129,6 +118156,23 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "TokenizedPaymentFlowEnum",
+        "description": "Represents possible tokenized payment flows that can be used to process payment.\n\n    The following flows are possible:\n    INTERACTIVE - Payment method can be used for 1 click checkout - it's prefilled in\n    checkout form (might require additional authentication from user)\n    ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "INTERACTIVE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "Transaction",
         "description": "An object representing a single payment.",
@@ -115147,7 +118191,7 @@
           },
           {
             "name": "created",
-            "description": null,
+            "description": "Date and time which transaction was created.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115163,7 +118207,7 @@
           },
           {
             "name": "error",
-            "description": null,
+            "description": "Error associated with transaction, if any.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -115175,7 +118219,7 @@
           },
           {
             "name": "gatewayResponse",
-            "description": null,
+            "description": "Response returned by payment gateway.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115191,7 +118235,7 @@
           },
           {
             "name": "id",
-            "description": null,
+            "description": "ID of the transaction.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115207,7 +118251,7 @@
           },
           {
             "name": "isSuccess",
-            "description": null,
+            "description": "Determines if the transaction was successful.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115223,7 +118267,7 @@
           },
           {
             "name": "kind",
-            "description": null,
+            "description": "Determines the type of transaction.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115239,7 +118283,7 @@
           },
           {
             "name": "payment",
-            "description": null,
+            "description": "Determines the payment associated with a transaction.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115255,7 +118299,7 @@
           },
           {
             "name": "token",
-            "description": null,
+            "description": "Unique token associated with a transaction.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115310,6 +118354,22 @@
               "kind": "SCALAR",
               "name": "PositiveDecimal",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "currency",
+            "description": "Currency code.\n\nAdded in Saleor 3.16.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -115870,7 +118930,7 @@
           },
           {
             "name": "createdAt",
-            "description": null,
+            "description": "Date and time at which a transaction event was created.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -116497,8 +119557,20 @@
             "deprecationReason": null
           },
           {
+            "name": "customerIpAddress",
+            "description": "The customer's IP address. If not provided as a parameter in the mutation, Saleor will try to determine the customer's IP address on its own.\n\nAdded in Saleor 3.16.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "data",
-            "description": "Payment gateway data in JSON format, recieved from storefront.",
+            "description": "Payment gateway data in JSON format, received from storefront.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -116743,7 +119815,7 @@
           },
           {
             "name": "createdAt",
-            "description": null,
+            "description": "Date and time at which payment transaction was created.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -116929,7 +120001,7 @@
           },
           {
             "name": "modifiedAt",
-            "description": null,
+            "description": "Date and time at which payment transaction was modified.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -117520,8 +120592,20 @@
             "deprecationReason": null
           },
           {
+            "name": "customerIpAddress",
+            "description": "The customer's IP address. If not provided as a parameter in the mutation, Saleor will try to determine the customer's IP address on its own.\n\nAdded in Saleor 3.16.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "data",
-            "description": "Payment gateway data in JSON format, recieved from storefront.",
+            "description": "Payment gateway data in JSON format, received from storefront.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -120053,8 +123137,45 @@
             "deprecationReason": null
           },
           {
+            "name": "storedPaymentMethods",
+            "description": "Returns a list of user's stored payment methods that can be used in provided channel. The field returns a list of stored payment methods by payment apps. When `amount` is not provided, 0 will be used as default value.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "StoredPaymentMethod",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "storedPaymentSources",
-            "description": "List of stored payment sources.",
+            "description": "List of stored payment sources. The field returns a list of payment sources stored for payment plugins.",
             "args": [
               {
                 "name": "channel",
@@ -125145,6 +128266,26 @@
             "deprecationReason": null
           },
           {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "search",
             "description": null,
             "type": {
@@ -126533,6 +129674,12 @@
             "deprecationReason": null
           },
           {
+            "name": "INVALID_NOTIFY_WITH_SUBSCRIPTION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "MISSING_EVENT",
             "description": null,
             "isDeprecated": false,
@@ -126716,7 +129863,7 @@
         "enumValues": [
           {
             "name": "ACCOUNT_CHANGE_EMAIL_REQUESTED",
-            "description": "Account email change is requested.",
+            "description": "An account email change is requested.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -126728,13 +129875,31 @@
           },
           {
             "name": "ACCOUNT_CONFIRMED",
-            "description": "An account is confirmed.\n\nAdded in Saleor 3.15.",
+            "description": "An account is confirmed.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_DELETED",
+            "description": "An account is deleted.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "ACCOUNT_DELETE_REQUESTED",
             "description": "An account delete is requested.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_EMAIL_CHANGED",
+            "description": "An account email was changed",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_SET_PASSWORD_REQUESTED",
+            "description": "Setting a new password for the account is requested.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -126854,7 +130019,7 @@
           },
           {
             "name": "CHANNEL_METADATA_UPDATED",
-            "description": "A channel metadata is updated.\n\nAdded in Saleor 3.15.",
+            "description": "A channel metadata is updated.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -126985,6 +130150,12 @@
             "deprecationReason": null
           },
           {
+            "name": "FULFILLMENT_TRACKING_NUMBER_UPDATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "GIFT_CARD_CREATED",
             "description": "A new gift card created.",
             "isDeprecated": false,
@@ -126993,6 +130164,12 @@
           {
             "name": "GIFT_CARD_DELETED",
             "description": "A gift card is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GIFT_CARD_EXPORT_COMPLETED",
+            "description": "A gift card export is completed.\n\nAdded in Saleor 3.16.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -127076,7 +130253,7 @@
           },
           {
             "name": "NOTIFY_USER",
-            "description": "User notification triggered.",
+            "description": "User notification triggered.\n\nDEPRECATED: this value will be removed in Saleor 4.0. See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/docs/next/upgrade-guides/notify-user-deprecation",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -127221,6 +130398,12 @@
           {
             "name": "PRODUCT_DELETED",
             "description": "A product is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PRODUCT_EXPORT_COMPLETED",
+            "description": "A product export is completed.\n\nAdded in Saleor 3.16.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -127381,6 +130564,12 @@
             "deprecationReason": null
           },
           {
+            "name": "STAFF_SET_PASSWORD_REQUESTED",
+            "description": "Setting a new password for the staff account is requested.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "STAFF_UPDATED",
             "description": "A staff user is updated.",
             "isDeprecated": false,
@@ -127471,7 +130660,7 @@
         "enumValues": [
           {
             "name": "ACCOUNT_CHANGE_EMAIL_REQUESTED",
-            "description": "Account email change is requested.",
+            "description": "An account email change is requested.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -127483,13 +130672,31 @@
           },
           {
             "name": "ACCOUNT_CONFIRMED",
-            "description": "An account is confirmed.\n\nAdded in Saleor 3.15.",
+            "description": "An account is confirmed.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_DELETED",
+            "description": "An account is deleted.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "ACCOUNT_DELETE_REQUESTED",
             "description": "An account delete is requested.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_EMAIL_CHANGED",
+            "description": "An account email was changed",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_SET_PASSWORD_REQUESTED",
+            "description": "Setting a new password for the account is requested.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -127609,7 +130816,7 @@
           },
           {
             "name": "CHANNEL_METADATA_UPDATED",
-            "description": "A channel metadata is updated.\n\nAdded in Saleor 3.15.",
+            "description": "A channel metadata is updated.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -127752,6 +130959,12 @@
             "deprecationReason": null
           },
           {
+            "name": "FULFILLMENT_TRACKING_NUMBER_UPDATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "GIFT_CARD_CREATED",
             "description": "A new gift card created.",
             "isDeprecated": false,
@@ -127760,6 +130973,12 @@
           {
             "name": "GIFT_CARD_DELETED",
             "description": "A gift card is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GIFT_CARD_EXPORT_COMPLETED",
+            "description": "A gift card export is completed.\n\nAdded in Saleor 3.16.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -127806,6 +131025,12 @@
             "deprecationReason": null
           },
           {
+            "name": "LIST_STORED_PAYMENT_METHODS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "MENU_CREATED",
             "description": "A new menu created.",
             "isDeprecated": false,
@@ -127843,7 +131068,7 @@
           },
           {
             "name": "NOTIFY_USER",
-            "description": "User notification triggered.",
+            "description": "User notification triggered.\n\nDEPRECATED: this value will be removed in Saleor 4.0. See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/docs/next/upgrade-guides/notify-user-deprecation",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -127998,8 +131223,26 @@
             "deprecationReason": null
           },
           {
+            "name": "PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "PAYMENT_LIST_GATEWAYS",
             "description": "Listing available payment gateways.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -128048,6 +131291,12 @@
           {
             "name": "PRODUCT_DELETED",
             "description": "A product is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PRODUCT_EXPORT_COMPLETED",
+            "description": "A product export is completed.\n\nAdded in Saleor 3.16.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -128214,8 +131463,20 @@
             "deprecationReason": null
           },
           {
+            "name": "STAFF_SET_PASSWORD_REQUESTED",
+            "description": "Setting a new password for the staff account is requested.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "STAFF_UPDATED",
             "description": "A staff user is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "STORED_PAYMENT_METHOD_DELETE_REQUESTED",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -128345,6 +131606,12 @@
             "deprecationReason": null
           },
           {
+            "name": "LIST_STORED_PAYMENT_METHODS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ORDER_CALCULATE_TAXES",
             "description": "Event called for order tax calculation.\n\nAdded in Saleor 3.6.",
             "isDeprecated": false,
@@ -128381,8 +131648,26 @@
             "deprecationReason": null
           },
           {
+            "name": "PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "PAYMENT_LIST_GATEWAYS",
             "description": "Listing available payment gateways.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -128407,6 +131692,12 @@
           {
             "name": "SHIPPING_LIST_METHODS_FOR_CHECKOUT",
             "description": "Fetch external shipping methods for checkout.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "STORED_PAYMENT_METHOD_DELETE_REQUESTED",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -128470,7 +131761,25 @@
             "deprecationReason": null
           },
           {
+            "name": "ACCOUNT_DELETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ACCOUNT_DELETE_REQUESTED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_EMAIL_CHANGED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_SET_PASSWORD_REQUESTED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -128716,6 +132025,12 @@
             "deprecationReason": null
           },
           {
+            "name": "FULFILLMENT_TRACKING_NUMBER_UPDATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "GIFT_CARD_CREATED",
             "description": null,
             "isDeprecated": false,
@@ -128723,6 +132038,12 @@
           },
           {
             "name": "GIFT_CARD_DELETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GIFT_CARD_EXPORT_COMPLETED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -128956,6 +132277,12 @@
             "deprecationReason": null
           },
           {
+            "name": "PRODUCT_EXPORT_COMPLETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "PRODUCT_MEDIA_CREATED",
             "description": null,
             "isDeprecated": false,
@@ -129107,6 +132434,12 @@
           },
           {
             "name": "STAFF_DELETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "STAFF_SET_PASSWORD_REQUESTED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -130685,7 +134018,10 @@
         "name": "deprecated",
         "description": "Marks an element of a GraphQL schema as no longer supported.",
         "isRepeatable": false,
-        "locations": ["ENUM_VALUE", "FIELD_DEFINITION"],
+        "locations": [
+          "ENUM_VALUE",
+          "FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "reason",
@@ -130735,7 +134071,11 @@
         "name": "include",
         "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -130759,7 +134099,11 @@
         "name": "skip",
         "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -130783,7 +134127,12 @@
         "name": "webhookEventsInfo",
         "description": "Webhook events triggered by a specific location.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FIELD_DEFINITION", "INPUT_OBJECT", "OBJECT"],
+        "locations": [
+          "FIELD",
+          "FIELD_DEFINITION",
+          "INPUT_OBJECT",
+          "OBJECT"
+        ],
         "args": [
           {
             "name": "asyncEvents",
