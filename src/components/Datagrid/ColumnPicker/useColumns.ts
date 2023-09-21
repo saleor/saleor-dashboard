@@ -137,14 +137,15 @@ export const useColumns = ({
           columnId,
         ]);
         setRecentlyAddedColumn(columnId);
-        updateDynamicColumns(prevDynamicColumns => [
-          ...(prevDynamicColumns ?? []),
-          ...hiddenColumnPrefixes
-            .map(prefix =>
+        updateDynamicColumns(prevDynamicColumns =>
+          [
+            ...(prevDynamicColumns ?? []),
+            ...hiddenColumnPrefixes.map(prefix =>
               findDynamicColumn(columnCategories, `${prefix}:${id}`),
-            )
-            .filter(isValidColumn),
-        ]);
+            ),
+            findDynamicColumn(columnCategories, columnId),
+          ].filter(isValidColumn),
+        );
       } else {
         updateDynamicColumns(prevDynamicColumns =>
           (prevDynamicColumns ?? []).filter(column => !column.id.includes(id)),
