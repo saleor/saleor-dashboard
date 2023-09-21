@@ -41,7 +41,9 @@ import {
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
+import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
+  useLocalPaginationState,
   useSectionLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -53,6 +55,7 @@ import { commonMessages, sectionNames } from "@dashboard/intl";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
+import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -136,13 +139,29 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     },
   });
 
+  const {
+    settings: voucherCodesSettings,
+    updateListSettings: updateVoucherCodesListSettings,
+  } = useListSettings(ListViews.VOUCHER_CODDES_LIST);
+
+  const [voucherCodesPaginationState, setVoucherCodesPaginationState] =
+    useLocalPaginationState(voucherCodesSettings.rowNumber);
+  const voucherCodesPaginate = useLocalPaginator(
+    setVoucherCodesPaginationState,
+  );
+
   const { data: voucherCodesData, loading: voucherCodesLoading } =
     useVoucherCodesQuery({
       variables: {
         id,
-        first: 10,
+        ...voucherCodesPaginationState,
       },
     });
+
+  const voucherCodesPagination = voucherCodesPaginate(
+    voucherCodesData?.voucher?.codes?.pageInfo,
+    paginationState,
+  );
 
   const {
     selectedRowIds,
@@ -354,7 +373,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       <VoucherDetailsPage
         voucher={data?.voucher}
         voucherCodes={voucherCodes}
+        voucherCodesPagination={voucherCodesPagination}
         voucherCodesLoading={voucherCodesLoading}
+        voucherCodesSettings={voucherCodesSettings}
+        onVoucherCodesSettingsChange={updateVoucherCodesListSettings}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
         disabled={

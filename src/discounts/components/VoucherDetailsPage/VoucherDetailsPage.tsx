@@ -113,6 +113,9 @@ export interface VoucherDetailsPageProps
   onMultipleVoucheCodesGenerate: () => void;
   onSingleVoucherCodeGenerate: () => void;
   onDeleteVoucherCodes: () => void;
+  voucherCodesPagination: any;
+  onVoucherCodesSettingsChange: any;
+  voucherCodesSettings: any;
 }
 
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
@@ -156,6 +159,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onSelectVoucherCodesIds,
   voucherCodes,
   voucherCodesLoading,
+  voucherCodesPagination,
+  onVoucherCodesSettingsChange,
+  voucherCodesSettings,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -244,6 +250,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 onSingleCodesGenerate={onSingleVoucherCodeGenerate}
                 disabled={disabled}
                 codes={voucherCodes}
+                voucherCodesPagination={voucherCodesPagination}
+                onSettingsChange={onVoucherCodesSettingsChange}
+                settings={voucherCodesSettings}
               />
               <VoucherTypes
                 data={data}

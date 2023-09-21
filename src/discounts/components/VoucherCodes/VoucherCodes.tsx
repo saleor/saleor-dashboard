@@ -1,4 +1,5 @@
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -18,6 +19,9 @@ interface VoucherCodesProps
   selectedCodesIds: string[];
   onDeleteCodes: () => void;
   onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
+  voucherCodesPagination: any;
+  onSettingsChange: any;
+  settings: any;
 }
 
 export const VoucherCodes = ({
@@ -25,10 +29,13 @@ export const VoucherCodes = ({
   onMultiCodesGenerate,
   onSingleCodesGenerate,
   onDeleteCodes,
+  voucherCodesPagination,
   ...datagridProps
 }: VoucherCodesProps) => {
+  const { pageInfo, ...paginationValues } = voucherCodesPagination;
+
   return (
-    <Box>
+    <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -53,6 +60,6 @@ export const VoucherCodes = ({
       </Box>
 
       <VoucherCodesDatagrid {...datagridProps} />
-    </Box>
+    </PaginatorContext.Provider>
   );
 };

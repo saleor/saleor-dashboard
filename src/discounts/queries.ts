@@ -112,6 +112,9 @@ export const voucherCodes = gql`
             ...VoucherCode
           }
         }
+        pageInfo {
+          ...PageInfo
+        }
       }
     }
   }

@@ -57,6 +57,7 @@ export interface AppListViewSettings {
   [ListViews.STAFF_MEMBERS_LIST]: ListSettings;
   [ListViews.PERMISSION_GROUP_LIST]: ListSettings;
   [ListViews.VOUCHER_LIST]: ListSettings;
+  [ListViews.VOUCHER_CODDES_LIST]: ListSettings;
   [ListViews.WAREHOUSE_LIST]: ListSettings;
   [ListViews.WEBHOOK_LIST]: ListSettings;
   [ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST]: ListSettings;
@@ -135,6 +136,9 @@ export const defaultListSettings: AppListViewSettings = {
   [ListViews.VOUCHER_LIST]: {
     rowNumber: PAGINATE_BY,
     columns: ["code", "min-spent", "start-date", "end-date", "value", "limit"],
+  },
+  [ListViews.VOUCHER_CODDES_LIST]: {
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.WAREHOUSE_LIST]: {
     rowNumber: PAGINATE_BY,

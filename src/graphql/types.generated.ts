@@ -9207,7 +9207,7 @@ export type VoucherCodesQueryVariables = Exact<{
 }>;
 
 
-export type VoucherCodesQuery = { __typename: 'Query', voucher: { __typename: 'Voucher', codes: { __typename: 'VoucherCodeCountableConnection', edges: Array<{ __typename: 'VoucherCodeCountableEdge', node: { __typename: 'VoucherCode', code: string | null, used: number | null, usageLimit: number | null } }> } | null } | null };
+export type VoucherCodesQuery = { __typename: 'Query', voucher: { __typename: 'Voucher', codes: { __typename: 'VoucherCodeCountableConnection', edges: Array<{ __typename: 'VoucherCodeCountableEdge', node: { __typename: 'VoucherCode', code: string | null, used: number | null, usageLimit: number | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
 
 export type FileUploadMutationVariables = Exact<{
   file: Scalars['Upload'];

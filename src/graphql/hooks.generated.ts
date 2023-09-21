@@ -7856,10 +7856,14 @@ export const VoucherCodesDocument = gql`
           ...VoucherCode
         }
       }
+      pageInfo {
+        ...PageInfo
+      }
     }
   }
 }
-    ${VoucherCodeFragmentDoc}`;
+    ${VoucherCodeFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useVoucherCodesQuery__

@@ -21,6 +21,8 @@ export interface VoucherCodesDatagridProps {
   loading: boolean;
   disabled?: boolean;
   onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
+  settings: any;
+  onSettingsChange: any;
 }
 
 export const VoucherCodesDatagrid = ({
@@ -28,6 +30,8 @@ export const VoucherCodesDatagrid = ({
   loading,
   disabled,
   onSelectVoucherCodesIds,
+  onSettingsChange,
+  settings,
 }: VoucherCodesDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -72,9 +76,9 @@ export const VoucherCodesDatagrid = ({
       <Box paddingX={6}>
         <TablePaginationWithContext
           component="div"
-          settings={{ rowNumber: 10 }}
+          settings={settings}
           disabled={disabled}
-          onUpdateListSettings={() => {}}
+          onUpdateListSettings={onSettingsChange}
         />
       </Box>
     </DatagridChangeStateContext.Provider>
