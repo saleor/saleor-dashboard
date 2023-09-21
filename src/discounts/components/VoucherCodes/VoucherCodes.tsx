@@ -1,4 +1,6 @@
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { UseListSettings } from "@dashboard/hooks/useListSettings";
+import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
@@ -19,9 +21,9 @@ interface VoucherCodesProps
   selectedCodesIds: string[];
   onDeleteCodes: () => void;
   onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
-  voucherCodesPagination: any;
-  onSettingsChange: any;
-  settings: any;
+  voucherCodesPagination: LocalPagination;
+  onSettingsChange: UseListSettings["updateListSettings"];
+  settings: UseListSettings["settings"];
 }
 
 export const VoucherCodes = ({

@@ -29,6 +29,8 @@ import {
   VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
+import { UseListSettings } from "@dashboard/hooks/useListSettings";
+import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -113,9 +115,9 @@ export interface VoucherDetailsPageProps
   onMultipleVoucheCodesGenerate: () => void;
   onSingleVoucherCodeGenerate: () => void;
   onDeleteVoucherCodes: () => void;
-  voucherCodesPagination: any;
-  onVoucherCodesSettingsChange: any;
-  voucherCodesSettings: any;
+  voucherCodesPagination: LocalPagination;
+  onVoucherCodesSettingsChange: UseListSettings["updateListSettings"];
+  voucherCodesSettings: UseListSettings["settings"];
 }
 
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);

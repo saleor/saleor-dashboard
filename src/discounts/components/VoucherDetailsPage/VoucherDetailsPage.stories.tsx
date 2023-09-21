@@ -21,7 +21,22 @@ const channels = createChannelsDataWithDiscountPrice(
 const props: VoucherDetailsPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
+  voucherCodes: [],
+  onVoucherCodesSettingsChange: () => undefined,
   selectedVoucherCodesIds: [],
+  voucherCodesLoading: false,
+  voucherCodesPagination: {
+    loadNextPage: () => undefined,
+    loadPreviousPage: () => undefined,
+    paginatorType: "click",
+    pageInfo: {
+      endCursor: "",
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: "",
+    },
+  },
+  voucherCodesSettings: undefined,
   onMultipleVoucheCodesGenerate: () => undefined,
   onSingleVoucherCodeGenerate: () => undefined,
   onSelectVoucherCodesIds: () => undefined,
