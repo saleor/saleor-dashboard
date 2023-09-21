@@ -43,6 +43,7 @@ jobs:
         with:
           base: main
           branch: "cleanup-changesets-${{ github.ref_name }}"
+          title: Cleanup against ${{ github.ref_name }}
 
   release:
     name: Deploy and release to sandbox
