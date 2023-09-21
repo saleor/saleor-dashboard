@@ -10,6 +10,7 @@ COPY assets/ assets/
 COPY locale/ locale/
 COPY scripts/removeSourcemaps.js scripts/
 COPY scripts/build-types.js scripts/
+COPY scripts/sentry.sh scripts/
 COPY vite.config.js ./
 COPY tsconfig.json ./
 COPY sw.js ./
