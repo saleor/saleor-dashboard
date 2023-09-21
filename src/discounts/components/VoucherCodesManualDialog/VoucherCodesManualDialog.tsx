@@ -4,7 +4,7 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { VoucherInput } from "@dashboard/graphql";
-import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
+import useForm from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui/next";
 import React from "react";
@@ -24,6 +24,11 @@ interface FormData {
   usageLimit: string;
 }
 
+const intialData: FormData = {
+  code: "",
+  usageLimit: "",
+};
+
 export const VoucherCodesManualDialog = ({
   open,
   confirmButtonTransitionState,
@@ -31,22 +36,20 @@ export const VoucherCodesManualDialog = ({
   onSubmit,
 }: VoucherCodesManualDialogProps) => {
   const intl = useIntl();
-  const intialData: FormData = {
-    code: "",
-    usageLimit: "",
-  };
 
-  const handleSubmit = async ({
-    code,
-    usageLimit,
-  }: FormData): SubmitPromise => {
-    await onSubmit([{ code, usageLimit: Number(usageLimit) }]);
-    onClose();
-  };
-
-  const { data, change, submit, reset } = useForm(intialData, handleSubmit);
+  const { data, change, submit, reset } = useForm(
+    intialData,
+    ({ code, usageLimit }: FormData) =>
+      onSubmit([{ code, usageLimit: Number(usageLimit) }]),
+  );
 
   const handleModalClose = () => {
+    onClose();
+    reset();
+  };
+
+  const handleSubmit = async () => {
+    await submit();
     onClose();
     reset();
   };
@@ -82,7 +85,7 @@ export const VoucherCodesManualDialog = ({
           </Button>
           <ConfirmButton
             transitionState={confirmButtonTransitionState}
-            onClick={submit}
+            onClick={handleSubmit}
           >
             {intl.formatMessage(buttonMessages.confirm)}
           </ConfirmButton>
