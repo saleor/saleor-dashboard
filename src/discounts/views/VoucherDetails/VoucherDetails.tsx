@@ -150,13 +150,16 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     setVoucherCodesPaginationState,
   );
 
-  const { data: voucherCodesData, loading: voucherCodesLoading } =
-    useVoucherCodesQuery({
-      variables: {
-        id,
-        ...voucherCodesPaginationState,
-      },
-    });
+  const {
+    data: voucherCodesData,
+    loading: voucherCodesLoading,
+    refetch: voucherCodesRefetch,
+  } = useVoucherCodesQuery({
+    variables: {
+      id,
+      ...voucherCodesPaginationState,
+    },
+  });
 
   const voucherCodesPagination = voucherCodesPaginate(
     voucherCodesData?.voucher?.codes?.pageInfo,
@@ -245,6 +248,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       if (data.voucherUpdate.errors.length === 0) {
         closeModal();
         notifySaved();
+        voucherCodesRefetch();
       }
     },
   });
