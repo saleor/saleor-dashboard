@@ -4,16 +4,24 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { VoucherInput } from "@dashboard/graphql";
+import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui/next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { messages } from "./messages";
 
 interface VoucherCodesManualDialogProps {
   open: boolean;
   confirmButtonTransitionState: ConfirmButtonTransitionState;
   onClose: () => void;
   onSubmit: (codes: VoucherInput["codes"]) => void;
+}
+
+interface FormData {
+  code: string;
+  usageLimit: string;
 }
 
 export const VoucherCodesManualDialog = ({
@@ -23,47 +31,49 @@ export const VoucherCodesManualDialog = ({
   onSubmit,
 }: VoucherCodesManualDialogProps) => {
   const intl = useIntl();
-
-  const [quantity, setQuantity] = React.useState("");
-  const [usage, setUsage] = React.useState("");
-
-  const reset = () => {
-    setQuantity("");
-    setUsage("");
+  const intialData: FormData = {
+    code: "",
+    usageLimit: "",
   };
+
+  const handleSubmit = async ({
+    code,
+    usageLimit,
+  }: FormData): SubmitPromise => {
+    await onSubmit([{ code, usageLimit: Number(usageLimit) }]);
+    onClose();
+  };
+
+  const { data, change, submit, reset } = useForm(intialData, handleSubmit);
 
   const handleModalClose = () => {
     onClose();
     reset();
   };
 
-  const handleSubmit = () => {
-    onClose();
-    onSubmit([{ code: quantity, usageLimit: Number(usage) }]);
-    reset();
-  };
-
   return (
     <DashboardModal open={open} onChange={handleModalClose}>
       <DashboardModal.Content>
-        <DashboardModal.Title>Enter Voucher Code</DashboardModal.Title>
+        <DashboardModal.Title>
+          <FormattedMessage defaultMessage="Enter Voucher Code" id="giVGCH" />
+        </DashboardModal.Title>
         <Box display="grid" gap={3} __width={390}>
           <Input
-            name="quantity"
+            name="code"
             type="text"
             size="small"
-            label="Enter Code"
-            value={quantity}
-            onChange={e => setQuantity(e.target.value)}
+            label={intl.formatMessage(messages.enterCode)}
+            value={data.code}
+            onChange={change}
           />
 
           <Input
-            name="usage"
-            type="text"
+            name="usageLimit"
+            type="number"
             size="small"
-            label="Enter Usage"
-            value={usage}
-            onChange={e => setUsage(e.target.value)}
+            label={intl.formatMessage(messages.enterUsage)}
+            value={data.usageLimit}
+            onChange={change}
           />
         </Box>
         <DashboardModal.Actions>
@@ -72,7 +82,7 @@ export const VoucherCodesManualDialog = ({
           </Button>
           <ConfirmButton
             transitionState={confirmButtonTransitionState}
-            onClick={handleSubmit}
+            onClick={submit}
           >
             {intl.formatMessage(buttonMessages.confirm)}
           </ConfirmButton>

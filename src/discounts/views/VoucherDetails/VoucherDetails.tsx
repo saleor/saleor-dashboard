@@ -469,7 +469,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onSubmit={codes =>
           voucherUpdate({
             variables: {
-              ...paginationState,
               id,
               input: {
                 codes,
