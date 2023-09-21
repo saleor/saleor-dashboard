@@ -684,6 +684,10 @@
     "context": "window title",
     "string": "Install App"
   },
+  "2fgaAQ": {
+    "context": "search input placeholder",
+    "string": "Search shipping zones..."
+  },
   "2gsiR1": {
     "string": "No warehouses found"
   },
@@ -1516,10 +1520,6 @@
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
   },
-  "9IWg/f": {
-    "context": "button",
-    "string": "SETUP END DATE"
-  },
   "9MGrEp": {
     "string": "Is available"
   },
@@ -1566,6 +1566,10 @@
   "9WhNiN": {
     "context": "Pending authorization transaction amount, data display header",
     "string": "Pending auth"
+  },
+  "9WmA6z": {
+    "context": "weight config modal title",
+    "string": "Default weight unit configuration"
   },
   "9Y5i/8": {
     "context": "number of webhook headers in model",
@@ -1949,6 +1953,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
   },
+  "CFG1Ix": {
+    "context": "shipping zone",
+    "string": "Price range"
+  },
   "CFT171": {
     "context": "card header title",
     "string": "Country list"
@@ -2244,10 +2252,6 @@
   "ESDTC/": {
     "string": "Manage Sales Channel Availability"
   },
-  "ETHnjq": {
-    "context": "header",
-    "string": "Private Metadata"
-  },
   "EWCUdP": {
     "string": "Channels A to Z"
   },
@@ -2313,6 +2317,10 @@
   },
   "Ev6SEF": {
     "string": "New Password"
+  },
+  "EwoyVr": {
+    "context": "bulk remove button label",
+    "string": "Delete shipping zones"
   },
   "F0AXNs": {
     "context": "invoice create date prefix",
@@ -4729,10 +4737,6 @@
   "VZsE96": {
     "string": "Collection Name"
   },
-  "VcI+Zh": {
-    "context": "header",
-    "string": "Metadata"
-  },
   "VceXrc": {
     "context": "initial balance filter label",
     "string": "Initial balance"
@@ -5560,6 +5564,10 @@
   "bFhzRX": {
     "string": "No products are out of stock"
   },
+  "bGqAdR": {
+    "context": "seo complete text",
+    "string": "Complete"
+  },
   "bHdFph": {
     "context": "subsection header",
     "string": "Address"
@@ -5646,6 +5654,10 @@
   },
   "bj6pTd": {
     "string": "Something's missing"
+  },
+  "bk2M4q": {
+    "context": "button",
+    "string": "Cancel end date"
   },
   "bk9KUX": {
     "context": "ProductTypeDeleteWarningDialog single consent label",
@@ -5767,10 +5779,6 @@
   },
   "cY42ht": {
     "string": "Password cannot be entirely numeric"
-  },
-  "cY6H2C": {
-    "context": "empty metadata text",
-    "string": "No metadata created for this element. Use the button below to add new metadata field."
   },
   "cZN5Jd": {
     "context": "Webhook details events",
@@ -6069,6 +6077,9 @@
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
   },
+  "fLCV/w": {
+    "string": "Add new value"
+  },
   "fLhj3a": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated"
@@ -6265,6 +6276,9 @@
     "context": "gift card history message",
     "string": "Gift card was resent"
   },
+  "gjBiyj": {
+    "string": "Loading..."
+  },
   "gksZwp": {
     "context": "button",
     "string": "Create product type"
@@ -6316,9 +6330,9 @@
     "context": "search gift card placeholder",
     "string": "Search gift cards, e.g {exampleGiftCardCode}"
   },
-  "h5r9+x": {
-    "context": "sort shipping methods by zone, section header",
-    "string": "Shipping By Zone"
+  "h65vZI": {
+    "context": "times voucher used",
+    "string": "Used"
   },
   "h75GAF": {
     "context": "voucher",
@@ -6720,6 +6734,10 @@
   "k9hf7F": {
     "context": "total order price",
     "string": "Total"
+  },
+  "kAPaN6": {
+    "context": "empty metadata text",
+    "string": "Empty"
   },
   "kEAjZV": {
     "context": "rich text attribute type",
@@ -7621,9 +7639,6 @@
     "context": "order history message",
     "string": "Invoice was sent to customer by {sentBy}"
   },
-  "qf/m5l": {
-    "string": "Are you sure you want to delete {shippingZoneName} shipping zone?"
-  },
   "qkRuT0": {
     "context": "attribute type",
     "string": "Product Attribute"
@@ -7808,10 +7823,6 @@
   "s51tHd": {
     "context": "limit voucher",
     "string": "Limit of Uses"
-  },
-  "s5Imt5": {
-    "context": "button",
-    "string": "Edit website SEO"
   },
   "s5v6m0": {
     "context": "order",
@@ -8033,6 +8044,10 @@
     "context": "order status",
     "string": "Draft"
   },
+  "tqJwfo": {
+    "context": "button",
+    "string": "Set end date"
+  },
   "tsL3IW": {
     "context": "gift card history message",
     "string": "Gift card was sent to customer"
@@ -8084,6 +8099,10 @@
   "u3sYPH": {
     "context": "independent of any particular day, eg. 11:35",
     "string": "Time"
+  },
+  "u6V5I/": {
+    "context": "shipping zones configuration",
+    "string": "Change default weight unit"
   },
   "u9/vj9": {
     "context": "webhook input label",
@@ -8225,10 +8244,6 @@
     "context": "OrderPayment does not require shipping",
     "string": "does not apply"
   },
-  "v+Pkm+": {
-    "context": "field is optional",
-    "string": "*Optional. Adding product to collection helps users find it."
-  },
   "v/1VA6": {
     "context": "add order note, button",
     "string": "Send"
@@ -8250,10 +8265,6 @@
   },
   "v3WWK+": {
     "string": "Status is invalid"
-  },
-  "v9ILn/": {
-    "context": "button",
-    "string": "CANCEL END DATE"
   },
   "vC8vyb": {
     "context": "enabled status option label",
@@ -8634,6 +8645,10 @@
   },
   "y7mfbl": {
     "string": "Currently, there are no countries assigned to this shipping zone"
+  },
+  "y8E0iG": {
+    "context": "seo incomplete text",
+    "string": "Incomplete"
   },
   "y9cvqE": {
     "context": "button",

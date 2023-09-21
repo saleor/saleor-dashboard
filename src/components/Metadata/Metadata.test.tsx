@@ -24,14 +24,14 @@ describe("Metadata editor", () => {
     // Arrange
     render(<Component />);
     const user = userEvent.setup();
-    const isExpandedAttribute = "data-test-expanded";
-    const editor = screen.getAllByTestId("metadata-editor")[0];
+    const isExpandedAttribute = "data-state";
+    const editor = screen.getAllByTestId("metadata-item")[0];
     // Assert
-    expect(editor).toHaveAttribute(isExpandedAttribute, "false");
+    expect(editor).toHaveAttribute(isExpandedAttribute, "closed");
     // Act
     await user.click(getFirstExpandIcon());
     // Assert
-    expect(editor).toHaveAttribute(isExpandedAttribute, "true");
+    expect(editor).toHaveAttribute(isExpandedAttribute, "open");
   });
 
   xit("can edit field name", async () => {

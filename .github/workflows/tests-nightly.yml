@@ -5,49 +5,46 @@ on:
   workflow_dispatch:
     inputs:
       tags:
-        required: true 
-        description: 'Select tests to run'
-        default: '@allEnv'
+        required: true
+        description: "Select tests to run"
+        default: "@allEnv"
         type: choice
         options:
-        - '@allEnv'
-        - '@critical'
-        - '@stable'
-        - '@oldRelease'
+          - "@allEnv"
+          - "@critical"
+          - "@stable"
+          - "@oldRelease"
       environment:
-        required: true 
-        description: 'Environment to run tests against'
-        default: 'https://automation-dashboard.staging.saleor.cloud/'
+        required: true
+        description: "Environment to run tests against"
+        default: "https://automation-dashboard.staging.saleor.cloud/"
         type: choice
         options:
-        - https://automation-dashboard.staging.saleor.cloud/
-        - https://master.staging.saleor.cloud/
-        - https://latest.staging.saleor.cloud/
-        - https://qa.staging.saleor.cloud/
-        - Other
+          - https://automation-dashboard.staging.saleor.cloud/
+          - https://master.staging.saleor.cloud/
+          - Other
       otherEnvironment:
         required: false
         description: 'Type env if "Other" option is selected'
         type: string
-        default: 'https://vXX.staging.saleor.cloud/' 
+        default: "https://vXX.staging.saleor.cloud/"
       browser:
-        required: true 
-        description: 'Browser'
-        default: 'chrome'
+        required: true
+        description: "Browser"
+        default: "chrome"
         type: choice
         options:
-        - chrome
-        - firefox
-        - all
+          - chrome
+          - firefox
+          - all
 
   schedule:
-    - cron: '00 2 * * 1-5'
+    - cron: "00 2 * * 1-5"
 
   repository_dispatch:
     types: [automation-tests-event]
 
 jobs:
-
   revert-automation-env-to-snap:
     if: ${{ github.event.inputs.environment == null && github.event_name != 'repository_dispatch' }}
     runs-on: ubuntu-latest
@@ -66,7 +63,7 @@ jobs:
         run: |
           cd .github/workflows
           npm ci
-      
+
       - name: clean automation environment
         id: clean-automation-environment
         run: |
@@ -86,7 +83,7 @@ jobs:
           MSG_MINIMAL: true
 
   run-tests-in-parallel:
-    needs: ['revert-automation-env-to-snap']
+    needs: ["revert-automation-env-to-snap"]
     if: ${{ always() && github.event_name != 'repository_dispatch'  }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
     runs-on: ubuntu-latest
     env:
@@ -99,7 +96,7 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        containers: [1, 2, 3, 4, 5, 6]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -117,15 +114,15 @@ jobs:
       - name: Get env
         id: get-env-uri
         env:
-          DEFAULT_ENV_URI: 'https://automation-dashboard.staging.saleor.cloud/'
-          TYPED_ENV_URI: ''
+          DEFAULT_ENV_URI: "https://automation-dashboard.staging.saleor.cloud/"
+          TYPED_ENV_URI: ""
         run: |
           echo "ENV_URI=${{ steps.get-typed-env-uri.outputs.ENV_URI || github.event.inputs.environment || env.DEFAULT_ENV_URI }}" >> $GITHUB_OUTPUT
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - name: Get browsers
         id: get-browsers
@@ -148,7 +145,6 @@ jobs:
                 return 'chrome'
             }
 
-
       - name: Cypress install
         id: cypress-install
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch'}}
@@ -169,21 +165,18 @@ jobs:
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
           COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           CYPRESS_grepTags: ${{ env.GREP_TAGS }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
         with:
           install: false
-          parallel: true
-          group: 'UI - Chrome'
-          record: true
-          tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ env.GREP_TAGS }}
           browser: chrome
-        
+
       - name: Cypress run firefox
         id: cypress-firefox
         continue-on-error: true
@@ -204,13 +197,77 @@ jobs:
           CYPRESS_grepTags: ${{ env.GREP_TAGS }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
         with:
           install: false
-          parallel: true
-          group: 'UI - Firefox'
-          record: true
-          tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ env.GREP_TAGS }}
           browser: firefox
+      - name: Create reports dir
+        continue-on-error: true
+        if: ${{ ! cancelled() }}
+        run: npm run qa:create-artifacts-dirs
+      - name: Move screenshots into reports dir
+        continue-on-error: true
+        if: ${{ ! cancelled() }}
+        run: npm run qa:move-screenshots
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: report-${{ strategy.job-index }}
+          path: ./cypress/reports
+          retention-days: 5
+          if-no-files-found: ignore
+  manual-triggered-test-complete:
+    needs: [run-tests-in-parallel]
+    if: ${{always() && github.event_name != 'repository_dispatch' && !contains(needs.run-tests-in-parallel.result, 'skipped') && !contains(needs.run-tests-in-parallel.result, 'cancelled')}}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+      - name: Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: NODE_OPTIONS=--max_old_space_size=4096 npm ci
+      - run: npm ci
+        working-directory: .github/workflows
+      - name: Download reports artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: ./cypress/reports
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: ./cypress/reports
+      - name: Create reports dir
+        continue-on-error: true
+        run: npm run qa:create-artifacts-dirs
+      - name: Merge report files
+        continue-on-error: true
+        run: npm run qa:generate-html-report
+      - name: Move artifacts screenshots into reports dir
+        continue-on-error: true
+        run: npm run qa:artifact-move-screenshots
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: combined-report
+          path: ./cypress/reports
+          retention-days: 5
+          if-no-files-found: ignore
 
   get-environment-variables:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
@@ -232,28 +289,28 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
-          
+          node-version-file: ".nvmrc"
+
       - name: Install dependencies
         run: |
-              cd .github/workflows
-              npm ci
+          cd .github/workflows
+          npm ci
 
       - name: get environment variables
         id: get-environment-variables
         run: |
-              node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
-              --version $VERSION \
-              --token "$TOKEN" \
-              --repo_token "$REPO_TOKEN" \
-              --project "$PROJECT"
+          node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
+            --version $VERSION \
+            --token "$TOKEN" \
+            --repo_token "$REPO_TOKEN" \
+            --project "$PROJECT"
 
   run-tests-on-release:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
     needs: get-environment-variables
     runs-on: ubuntu-latest
     env:
-        NODE_OPTIONS: "--max_old_space_size=4096"
+      NODE_OPTIONS: "--max_old_space_size=4096"
     outputs:
       status: ${{ steps.cypress.outcome }}
       dashboard_url: ${{ steps.cypress.outputs.dashboardUrl }}
@@ -264,7 +321,6 @@ jobs:
         # run copies of the current job in parallel
         containers: [1, 2, 3, 4, 5, 6, 7, 8, 9]
     steps:
-
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -314,42 +370,40 @@ jobs:
         with:
           install: false
           parallel: true
-          group: 'UI - Chrome'
+          group: "UI - Chrome"
           record: true
           tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, ${{ needs.get-environment-variables.outputs.url }}
-
 
   add-review-and-merge-patch:
     if: ${{ always() && (needs.run-tests-on-release.outputs.status == 'success' || needs.run-tests-on-release.outputs.status == 'failure') }}
     runs-on: ubuntu-latest
     needs: [run-tests-on-release]
     steps:
-
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - name: Install dependencies
         run: |
-              cd .github/workflows
-              npm ci
+          cd .github/workflows
+          npm ci
 
       - name: Add review and merge if patch DASHBOARD
-        env: 
-         tests_status: ${{ needs.run-tests-on-release.outputs.status }}
-         version: ${{ github.event.client_payload.version }}
-         pull_request_number: ${{ github.event.client_payload.pullRequestNumber }}
-         dashboard_url: ${{ needs.run-tests-on-release.outputs.dashboard_url }}
-         auto_release: ${{ (github.event.client_payload.autoRelease && '--auto_release') || '' }}
+        env:
+          tests_status: ${{ needs.run-tests-on-release.outputs.status }}
+          version: ${{ github.event.client_payload.version }}
+          pull_request_number: ${{ github.event.client_payload.pullRequestNumber }}
+          dashboard_url: ${{ needs.run-tests-on-release.outputs.dashboard_url }}
+          auto_release: ${{ (github.event.client_payload.autoRelease && '--auto_release') || '' }}
         run: |
-            export GITHUB_TOKEN=$( \
-            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
-            )
-            node .github/workflows/cypressTestsHelpers/approveAndMergeReleasePR.js \
+          export GITHUB_TOKEN=$( \
+          curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+          )
+          node .github/workflows/cypressTestsHelpers/approveAndMergeReleasePR.js \
             --version $version \
             --pull_request_number $pull_request_number \
             --dashboard_url "$dashboard_url" \
@@ -358,28 +412,32 @@ jobs:
   send-slack-notification:
     if: ${{ failure() && github.event_name == 'repository_dispatch'}}
     runs-on: ubuntu-latest
-    needs: [get-environment-variables, run-tests-on-release, add-review-and-merge-patch]
+    needs:
+      [
+        get-environment-variables,
+        run-tests-on-release,
+        add-review-and-merge-patch,
+      ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+
       - name: Notify Slack
         env:
           JOB_DEPLOYMENT_KIND: staging
-          JOB_STATUS: 'Failure'
+          JOB_STATUS: "Failure"
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASES_WEBHOOK_URL }}
           JOB_TITLE: "Test release workflow - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}"
           JOB_KIND: "release tests"
         run: |
           python3 ./.github/workflows/notify/notify-slack.py
 
-
   send-slack-notification-scheduled-and-manually:
     if: ${{always() && github.event_name != 'repository_dispatch'}}
     defaults:
       run:
-       shell: bash
-       working-directory: .github/workflows
+        shell: bash
+        working-directory: .github/workflows
     runs-on: ubuntu-latest
     needs: [run-tests-in-parallel]
     steps:
@@ -389,27 +447,26 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - name: Install dependencies
         run: |
-              npm ci
+          npm ci
 
       - name: Get tests results
         id: get-tests-results
-        env: 
-         tests_status: ${{ needs.run-tests-in-parallel.outputs.status }}
-         dashboard_url: ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}
+        env:
+          tests_status: ${{ needs.run-tests-in-parallel.outputs.status }}
+          dashboard_url: ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}
         run: |
-            node cypressTestsHelpers/getFailedTests.js \
-            --dashboard_url "$dashboard_url"
-
+          node cypressTestsHelpers/getFailedTests.js \
+          --dashboard_url "$dashboard_url"
 
       - name: Notify Slack
         if: steps.get-tests-results.outputs.testStatus == 'true'
         env:
           JOB_DEPLOYMENT_KIND: ${{ needs.run-tests-in-parallel.outputs.environment }}
-          JOB_STATUS: 'Failure'
+          JOB_STATUS: "Failure"
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_SALEOR_QA_WEBHOOK_URL }}
           JOB_TITLE: "A lot of tests failed, something is probably broken - ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}"
           JOB_KIND: "Tests"

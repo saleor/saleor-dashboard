@@ -205,7 +205,11 @@ export function getProductUpdatePageFormData(
     category: maybe(() => product.category.id, ""),
     taxClassId: product?.taxClass?.id,
     collections: maybe(
-      () => product.collections.map(collection => collection.id),
+      () =>
+        product.collections.map(collection => ({
+          label: collection.name,
+          value: collection.id,
+        })),
       [],
     ),
     isAvailable: !!product?.isAvailable,

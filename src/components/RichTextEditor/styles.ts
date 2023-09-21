@@ -114,16 +114,13 @@ const useStyles = makeStyles(
         },
       },
       root: {
-        border: "1px solid transparent",
+        border: `1px solid ${vars.colors.border.neutralPlain}`,
         borderRadius: vars.borderRadius[3],
         fontSize: vars.fontSize.bodyMedium,
-        backgroundColor: vars.colors.background.surfaceNeutralHighlight,
-        minHeight: 56,
         position: "relative",
         transition: theme.transitions.duration.short + "ms",
-        padding: theme.spacing(3, 2),
-        paddingBottom: theme.spacing(),
-        paddingLeft: vars.spacing[4],
+        padding: theme.spacing(0, 2),
+        paddingLeft: vars.spacing[2],
         "&:hover": {
           border: `1px solid ${vars.colors.border.neutralHighlight}`,
         },
@@ -145,7 +142,7 @@ const useStyles = makeStyles(
         fontSize: theme.typography.body1.fontSize,
       },
       labelRoot: {
-        marginLeft: "-6px",
+        marginLeft: "-4px",
         color: `${vars.colors.foreground.textNeutralSubdued} !important`,
       },
       labelError: {
@@ -159,6 +156,11 @@ const useStyles = makeStyles(
       },
       rootTyped: {
         backgroundColor: vars.colors.background.surfaceNeutralPlain,
+      },
+      rootHasLabel: {
+        minHeight: 56,
+        padding: `${vars.spacing[6]} ${vars.spacing[2]}`,
+        paddingBottom: vars.spacing[1.5],
       },
     };
   },

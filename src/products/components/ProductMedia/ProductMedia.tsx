@@ -212,9 +212,9 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
                     preview={imagesToUpload}
                     onSortEnd={onImageReorder}
                     className={sprinkles({
-                      display: "grid",
+                      display: "flex",
                       gap: 5,
-                      gridTemplateColumns: { mobile: 2, tablet: 3, desktop: 4 },
+                      flexWrap: "wrap",
                       opacity: isDragActive ? "0.2" : "1",
                     })}
                     onDelete={onImageDelete}

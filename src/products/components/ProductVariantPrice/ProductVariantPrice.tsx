@@ -21,12 +21,12 @@ import {
 } from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Text, vars } from "@saleor/macaw-ui/next";
+import { sprinkles, Text, vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 interface ProductVariantPriceProps {
-  ProductVariantChannelListings?: ChannelData[];
+  productVariantChannelListings?: ChannelData[];
   errors: Array<ProductErrorFragment | ProductChannelListingErrorFragment>;
   loading?: boolean;
   disabled?: boolean;
@@ -45,7 +45,7 @@ export const ProductVariantPrice: React.FC<
   const {
     disabled = false,
     errors = [],
-    ProductVariantChannelListings = [],
+    productVariantChannelListings = [],
     loading,
     onChange,
     disabledMessage,
@@ -56,7 +56,7 @@ export const ProductVariantPrice: React.FC<
   ) as ProductChannelListingErrorFragment[];
   const apiErrors = getFormChannelErrors(["price", "costPrice"], channelErrors);
 
-  if (disabled || !ProductVariantChannelListings.length) {
+  if (disabled || !productVariantChannelListings.length) {
     return (
       <DashboardCard>
         <DashboardCard.Title>
@@ -125,7 +125,7 @@ export const ProductVariantPrice: React.FC<
         </TableHead>
         <TableBody>
           {renderCollection(
-            ProductVariantChannelListings,
+            productVariantChannelListings,
             (listing, index) => {
               const fieldName = `${listing.id}-channel-price`;
               const formErrors = getFormErrors([fieldName], errors);
@@ -147,6 +147,9 @@ export const ProductVariantPrice: React.FC<
                   <TableCell>
                     {listing ? (
                       <PriceField
+                        className={sprinkles({
+                          marginY: 2,
+                        })}
                         error={!!priceError}
                         label={intl.formatMessage({
                           id: "b1zuN9",
@@ -175,6 +178,9 @@ export const ProductVariantPrice: React.FC<
                   <TableCell>
                     {listing ? (
                       <PriceField
+                        className={sprinkles({
+                          marginY: 2,
+                        })}
                         error={!!costPriceError}
                         label={intl.formatMessage({
                           id: "KQSONM",

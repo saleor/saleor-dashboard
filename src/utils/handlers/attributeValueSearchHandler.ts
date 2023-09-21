@@ -40,7 +40,7 @@ function useAttributeValueSearchHandler(
   });
 
   const handleSearch = (query: string, id: string | null) => {
-    if (query !== state.query) {
+    if (query === "" || query !== state.query) {
       search(query);
     }
     if (id !== state.id || query !== state.query) {

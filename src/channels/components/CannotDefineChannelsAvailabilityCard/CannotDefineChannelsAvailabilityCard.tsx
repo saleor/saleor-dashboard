@@ -1,8 +1,7 @@
-import { Card, CardContent } from "@material-ui/core";
+import { DashboardCard } from "@dashboard/components/Card";
+import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { defineMessages, FormattedMessage } from "react-intl";
-
-import CardTitle from "../../../components/CardTitle";
 
 const messages = defineMessages({
   title: {
@@ -19,12 +18,16 @@ const messages = defineMessages({
 });
 
 const CannotDefineChannelsAvailabilityCard: React.FC = () => (
-  <Card>
-    <CardTitle title={<FormattedMessage {...messages.title} />} />
-    <CardContent>
-      <FormattedMessage {...messages.subtitle} />
-    </CardContent>
-  </Card>
+  <DashboardCard gap={2}>
+    <DashboardCard.Title>
+      <FormattedMessage {...messages.title} />
+    </DashboardCard.Title>
+    <DashboardCard.Content>
+      <Text variant="caption" color="textNeutralSubdued">
+        <FormattedMessage {...messages.subtitle} />
+      </Text>
+    </DashboardCard.Content>
+  </DashboardCard>
 );
 
 export default CannotDefineChannelsAvailabilityCard;

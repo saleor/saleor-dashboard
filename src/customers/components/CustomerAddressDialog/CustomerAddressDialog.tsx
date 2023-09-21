@@ -95,7 +95,13 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
       fullWidth
       maxWidth="sm"
     >
-      <Form initial={initialForm} onSubmit={handleSubmit}>
+      <Form
+        initial={initialForm}
+        onSubmit={data => {
+          setCountryDisplayName("");
+          handleSubmit(data);
+        }}
+      >
         {({ change, set, data }) => {
           const countrySelect = createSingleAutocompleteSelectHandler(
             change,

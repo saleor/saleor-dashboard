@@ -8,6 +8,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
 import { HomeProductListItem } from "./HomeProductListItem";
+import { generateAttributesInfo } from "./variant";
 
 interface HomeProductListProps {
   testId?: string;
@@ -62,9 +63,7 @@ export const HomeProductList = ({
                       <Text size="small">{variant.product.name}</Text>
 
                       <Text size="small" color="textNeutralSubdued">
-                        {variant.attributes
-                          .map(attribute => attribute.values[0].name)
-                          .join(" / ")}
+                        {generateAttributesInfo(variant)}
                       </Text>
 
                       <Text size="small" color="textNeutralSubdued">
