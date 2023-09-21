@@ -102,6 +102,7 @@ export interface DatagridProps {
   rowHeight?: number | ((index: number) => number);
   actionButtonPosition?: "left" | "right";
   recentlyAddedColumn?: string | null; // Enables scroll to recently added column
+  onClearRecentlyAddedColumn?: () => void;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -134,6 +135,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onRowSelectionChange,
   actionButtonPosition = "left",
   recentlyAddedColumn,
+  onClearRecentlyAddedColumn,
   rowHeight = cellHeight,
   ...datagridProps
 }): ReactElement => {
@@ -179,6 +181,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
       const datagridScroll = editor.current.scrollTo;
       datagridScroll(columnIndex, 0, "horizontal", 0, 0, { hAlign: "start" });
+
+      // This is required to disable scroll whenever availableColumns
+      // change (e.g. columns resized, reordered, removed)
+      if (typeof onClearRecentlyAddedColumn === "function") {
+        onClearRecentlyAddedColumn();
+      }
     }
   }, [recentlyAddedColumn, availableColumns, editor]);
 

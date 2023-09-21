@@ -155,6 +155,8 @@ export const useColumns = ({
     }
   };
 
+  const onClearRecentlyAddedColumn = () => setRecentlyAddedColumn(null);
+
   // Should be used only for special cases
   const onCustomUpdateVisible = setVisibleColumns;
   const onResetDynamicToInitial = (customSelected?: string[]) => {
@@ -173,6 +175,7 @@ export const useColumns = ({
       onMove,
       onResize,
       onToggle,
+      onClearRecentlyAddedColumn,
       onCustomUpdateVisible,
       onResetDynamicToInitial,
     },
