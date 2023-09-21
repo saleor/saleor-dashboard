@@ -4,4 +4,5 @@ export const MESSAGES = {
   invalidEmailAddress: "Enter a valid email address.",
   slugMustBeUnique: "Slug must be unique",
   noGiftCardsFound: "No gift cards found",
+  noShippingZonesFound: "No shipping zones found",
 };

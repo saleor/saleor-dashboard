@@ -10,6 +10,14 @@ export const shippingZoneFragment = gql`
     }
     name
     description
+    priceRange {
+      start {
+        ...Money
+      }
+      stop {
+        ...Money
+      }
+    }
   }
 `;
 

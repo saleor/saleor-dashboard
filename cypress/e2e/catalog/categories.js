@@ -3,27 +3,18 @@
 
 import faker from "faker";
 
-import {
-  CATEGORIES_LIST_SELECTORS,
-} from "../../elements/catalog/categories/categories-list";
-import {
-  CATEGORY_DETAILS_SELECTORS,
-} from "../../elements/catalog/categories/category-details";
+import { CATEGORIES_LIST_SELECTORS } from "../../elements/catalog/categories/categories-list";
+import { CATEGORY_DETAILS_SELECTORS } from "../../elements/catalog/categories/category-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import {
-  categoryDetailsUrl,
-  urlList,
-} from "../../fixtures/urlList";
+import { categoryDetailsUrl, urlList } from "../../fixtures/urlList";
 import {
   createCategory as createCategoryRequest,
   getCategory,
 } from "../../support/api/requests/Category";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import {
-  ensureCanvasStatic,
-} from "../../support/customCommands/sharedElementsOperations/canvas";
+import { ensureCanvasStatic } from "../../support/customCommands/sharedElementsOperations/canvas";
 import {
   createCategory,
   updateCategory,
