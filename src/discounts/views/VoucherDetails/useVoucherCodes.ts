@@ -52,11 +52,11 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
         return;
       }
 
-      const rowsIds = rows.map(row => voucherCodes[row].code);
+      const rowsIds = rows.map(row => voucherCodes[row].code).filter(Boolean);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
-        setSelectedRowIds(rowsIds);
+        setSelectedRowIds(rowsIds as string[]);
       }
 
       setClearDatagridRowSelectionCallback(clearSelection);
