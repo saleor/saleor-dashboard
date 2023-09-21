@@ -122,6 +122,7 @@ export const defaultListSettings: AppListViewSettings = {
     columns: ["name", "startDate", "endDate", "value"],
   },
   [ListViews.SHIPPING_METHODS_LIST]: {
+    columns: ["name", "countries"],
     rowNumber: PAGINATE_BY,
   },
   [ListViews.STAFF_MEMBERS_LIST]: {

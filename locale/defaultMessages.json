@@ -688,6 +688,10 @@
     "context": "window title",
     "string": "Install App"
   },
+  "2fgaAQ": {
+    "context": "search input placeholder",
+    "string": "Search shipping zones..."
+  },
   "2gsiR1": {
     "string": "No warehouses found"
   },
@@ -1567,6 +1571,10 @@
     "context": "Pending authorization transaction amount, data display header",
     "string": "Pending auth"
   },
+  "9WmA6z": {
+    "context": "weight config modal title",
+    "string": "Default weight unit configuration"
+  },
   "9Y5i/8": {
     "context": "number of webhook headers in model",
     "string": "{number,plural,one{{number} header} other{{number} custom request headers}}"
@@ -1949,6 +1957,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
   },
+  "CFG1Ix": {
+    "context": "shipping zone",
+    "string": "Price range"
+  },
   "CFT171": {
     "context": "card header title",
     "string": "Country list"
@@ -2309,6 +2321,10 @@
   },
   "Ev6SEF": {
     "string": "New Password"
+  },
+  "EwoyVr": {
+    "context": "bulk remove button label",
+    "string": "Delete shipping zones"
   },
   "F0AXNs": {
     "context": "invoice create date prefix",
@@ -6322,10 +6338,6 @@
     "context": "search gift card placeholder",
     "string": "Search gift cards, e.g {exampleGiftCardCode}"
   },
-  "h5r9+x": {
-    "context": "sort shipping methods by zone, section header",
-    "string": "Shipping By Zone"
-  },
   "h65vZI": {
     "context": "times voucher used",
     "string": "Used"
@@ -7639,9 +7651,6 @@
     "context": "order history message",
     "string": "Invoice was sent to customer by {sentBy}"
   },
-  "qf/m5l": {
-    "string": "Are you sure you want to delete {shippingZoneName} shipping zone?"
-  },
   "qkRuT0": {
     "context": "attribute type",
     "string": "Product Attribute"
@@ -8102,6 +8111,10 @@
   "u3sYPH": {
     "context": "independent of any particular day, eg. 11:35",
     "string": "Time"
+  },
+  "u6V5I/": {
+    "context": "shipping zones configuration",
+    "string": "Change default weight unit"
   },
   "u9/vj9": {
     "context": "webhook input label",
