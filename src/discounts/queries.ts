@@ -96,3 +96,23 @@ export const voucherDetails = gql`
     }
   }
 `;
+
+export const voucherCodes = gql`
+  query VoucherCodes(
+    $id: ID!
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+  ) {
+    voucher(id: $id) {
+      codes(first: $first, last: $last, before: $before, after: $after) {
+        edges {
+          node {
+            ...VoucherCode
+          }
+        }
+      }
+    }
+  }
+`;

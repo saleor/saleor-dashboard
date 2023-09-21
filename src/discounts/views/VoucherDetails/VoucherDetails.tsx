@@ -33,6 +33,7 @@ import {
   useVoucherCataloguesAddMutation,
   useVoucherCataloguesRemoveMutation,
   useVoucherChannelListingUpdateMutation,
+  useVoucherCodesQuery,
   useVoucherDeleteMutation,
   useVoucherDetailsQuery,
   useVoucherUpdateMutation,
@@ -135,13 +136,21 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     },
   });
 
+  const { data: voucherCodesData, loading: voucherCodesLoading } =
+    useVoucherCodesQuery({
+      variables: {
+        id,
+        first: 10,
+      },
+    });
+
   const {
     selectedRowIds,
     setClearDatagridRowSelectionCallback,
     setSelectedRowIds,
   } = useRowSelection();
 
-  const voucherCodes = mapEdgesToItems(data?.voucher?.codes);
+  const voucherCodes = mapEdgesToItems(voucherCodesData?.voucher?.codes);
 
   const handleSetSelectedVoucherCodesIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
@@ -344,6 +353,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       )}
       <VoucherDetailsPage
         voucher={data?.voucher}
+        voucherCodes={voucherCodes}
+        voucherCodesLoading={voucherCodesLoading}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
         disabled={

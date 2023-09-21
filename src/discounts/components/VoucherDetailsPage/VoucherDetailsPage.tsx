@@ -25,6 +25,7 @@ import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
+  VoucherCodeFragment,
   VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
@@ -93,6 +94,8 @@ export interface VoucherDetailsPageProps
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   selectedVoucherCodesIds: string[];
+  voucherCodes: VoucherCodeFragment[];
+  voucherCodesLoading: boolean;
   onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
@@ -151,6 +154,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   productListToolbar,
   selectedVoucherCodesIds,
   onSelectVoucherCodesIds,
+  voucherCodes,
+  voucherCodesLoading,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -234,11 +239,11 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 selectedCodesIds={selectedVoucherCodesIds}
                 onSelectVoucherCodesIds={onSelectVoucherCodesIds}
                 onDeleteCodes={onDeleteVoucherCodes}
-                loading={false}
+                loading={voucherCodesLoading}
                 onMultiCodesGenerate={onMultipleVoucheCodesGenerate}
                 onSingleCodesGenerate={onSingleVoucherCodeGenerate}
                 disabled={disabled}
-                codes={mapEdgesToItems(voucher?.codes)}
+                codes={voucherCodes}
               />
               <VoucherTypes
                 data={data}

@@ -162,15 +162,6 @@ export const voucherDetailsFragment = gql`
     ...Voucher
     code
     usageLimit
-    codes(first: 20) {
-      edges {
-        node {
-          code
-          used
-          usageLimit
-        }
-      }
-    }
     used
     applyOncePerOrder
     applyOncePerCustomer

@@ -562,15 +562,6 @@ export const VoucherDetailsFragmentDoc = gql`
   ...Voucher
   code
   usageLimit
-  codes(first: 20) {
-    edges {
-      node {
-        code
-        used
-        usageLimit
-      }
-    }
-  }
   used
   applyOncePerOrder
   applyOncePerCustomer
@@ -7856,6 +7847,51 @@ export function useVoucherDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type VoucherDetailsQueryHookResult = ReturnType<typeof useVoucherDetailsQuery>;
 export type VoucherDetailsLazyQueryHookResult = ReturnType<typeof useVoucherDetailsLazyQuery>;
 export type VoucherDetailsQueryResult = Apollo.QueryResult<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>;
+export const VoucherCodesDocument = gql`
+    query VoucherCodes($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+  voucher(id: $id) {
+    codes(first: $first, last: $last, before: $before, after: $after) {
+      edges {
+        node {
+          ...VoucherCode
+        }
+      }
+    }
+  }
+}
+    ${VoucherCodeFragmentDoc}`;
+
+/**
+ * __useVoucherCodesQuery__
+ *
+ * To run a query within a React component, call `useVoucherCodesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVoucherCodesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVoucherCodesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *   },
+ * });
+ */
+export function useVoucherCodesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>(VoucherCodesDocument, options);
+      }
+export function useVoucherCodesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>(VoucherCodesDocument, options);
+        }
+export type VoucherCodesQueryHookResult = ReturnType<typeof useVoucherCodesQuery>;
+export type VoucherCodesLazyQueryHookResult = ReturnType<typeof useVoucherCodesLazyQuery>;
+export type VoucherCodesQueryResult = Apollo.QueryResult<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {
