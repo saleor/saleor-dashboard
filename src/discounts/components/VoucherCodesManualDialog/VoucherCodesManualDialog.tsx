@@ -73,6 +73,11 @@ export const VoucherCodesManualDialog = ({
           <Input
             name="usageLimit"
             type="number"
+            onKeyDown={e => {
+              if ([",", "."].includes(e.key)) {
+                e.preventDefault();
+              }
+            }}
             size="small"
             label={intl.formatMessage(messages.enterUsage)}
             value={data.usageLimit}
