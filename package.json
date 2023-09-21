@@ -344,7 +344,6 @@
     "chromatic": "chromatic --exit-zero-on-changes",
     "change:add": "changeset add",
     "release:cleanup": "./scripts/release-cleanup.sh",
-    "release:set-dev-version": "npm version preminor --preid dev --git-tag-version false",
     "format:code": "prettier --ignore-unknown --write src/*",
     "qa:combine-reports": "mochawesome-merge cypress/reports/*/mocha/*.json > cypress/reports/mochareports/report.json",
     "qa:generate-mocha-report": "marge cypress/reports/mochareports/report.json --reportDir cypress/reports/",
