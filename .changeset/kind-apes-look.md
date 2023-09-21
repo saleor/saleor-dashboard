@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": patch
+"saleor-dashboard": minor
 ---
 
 Ability to add products to unconfirmed orders
