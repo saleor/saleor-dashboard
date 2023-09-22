@@ -1,8 +1,11 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import {
   MoneyFragment,
   OrderDetailsFragment,
+  PermissionEnum,
   useOrderDiscountAddMutation,
   useOrderDiscountDeleteMutation,
   useOrderDiscountUpdateMutation,
@@ -42,6 +45,10 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
+  const user = useUser();
+  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
+    PermissionEnum.MANAGE_STAFF,
+  ]);
 
   const { id: orderId } = order;
 
@@ -76,6 +83,7 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
       variables: {
         orderId,
         input: getParsedDiscountData(data),
+        isStaffUser,
       },
     });
 
@@ -85,12 +93,15 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
       variables: {
         discountId: orderDiscount?.id,
         input: getParsedDiscountData(data),
+        isStaffUser,
       },
     });
 
   const removeOrderDiscount = () =>
     orderDiscount &&
-    orderDiscountRemove({ variables: { discountId: orderDiscount.id } });
+    orderDiscountRemove({
+      variables: { discountId: orderDiscount.id, isStaffUser },
+    });
 
   const orderDiscountAction = orderDiscount
     ? updateOrderDiscount

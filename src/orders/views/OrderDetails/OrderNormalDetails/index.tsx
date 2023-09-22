@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CreateManualTransactionCaptureMutation,
@@ -12,6 +14,7 @@ import {
   OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
+  PermissionEnum,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
@@ -130,6 +133,10 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const order = data?.order;
   const shop = data?.shop;
   const navigate = useNavigator();
+  const user = useUser();
+  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
+    PermissionEnum.MANAGE_STAFF,
+  ]);
 
   const { data: warehousesData } = useWarehouseListQuery({
     displayLoader: true,
@@ -153,6 +160,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
     orderUpdate.mutate({
       id,
       input: data,
+      isStaffUser,
     });
 
   const intl = useIntl();
@@ -366,6 +374,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           return orderFulfillmentApprove.mutate({
             id: params.id,
             notifyCustomer,
+            isStaffUser,
           });
         }}
         onClose={closeModal}
@@ -385,6 +394,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             id: params.id,
             notifyCustomer: currentApproval?.notifyCustomer,
             allowStockToBeExceeded: true,
+            isStaffUser,
           });
         }}
       />
@@ -399,6 +409,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           orderFulfillmentCancel.mutate({
             id: params.id,
             input: variables,
+            isStaffUser,
           })
         }
         onClose={closeModal}

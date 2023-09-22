@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -11,6 +13,7 @@ import {
   OrderDraftUpdateMutationVariables,
   OrderLineUpdateMutation,
   OrderLineUpdateMutationVariables,
+  PermissionEnum,
   StockAvailability,
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
@@ -101,6 +104,10 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 }) => {
   const order = data.order;
   const navigate = useNavigator();
+  const user = useUser();
+  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
+    PermissionEnum.MANAGE_STAFF,
+  ]);
 
   const { data: channelUsabilityData } = useChannelUsabilityDataQuery({
     variables: {
@@ -158,6 +165,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         user,
         userEmail,
       },
+      isStaffUser,
     });
 
     if (result?.data?.draftOrderUpdate?.errors?.length) {
@@ -182,10 +190,13 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     orderDraftUpdate.mutate({
       id,
       input: data,
+      isStaffUser,
     });
 
   const handleOrderDraftCancel = async () => {
-    const errors = await extractMutationErrors(orderDraftCancel.mutate({ id }));
+    const errors = await extractMutationErrors(
+      orderDraftCancel.mutate({ id, isStaffUser }),
+    );
     if (!errors.length) {
       navigate(orderDraftListUrl());
     }
@@ -229,7 +240,9 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             fetchUsers={searchUsers}
             usersLoading={users.loading}
             onCustomerEdit={handleCustomerChange}
-            onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
+            onDraftFinalize={() =>
+              orderDraftFinalize.mutate({ id, isStaffUser })
+            }
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
             onShowMetadata={id => openModal("view-metadata", { id })}
@@ -240,11 +253,14 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             onBillingAddressEdit={() => openModal("edit-billing-address")}
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
             onShippingMethodEdit={() => openModal("edit-shipping")}
-            onOrderLineRemove={id => orderLineDelete.mutate({ id })}
+            onOrderLineRemove={id =>
+              orderLineDelete.mutate({ id, isStaffUser })
+            }
             onOrderLineChange={(id, data) =>
               orderLineUpdate.mutate({
                 id,
                 input: data,
+                isStaffUser,
               })
             }
             saveButtonBarState="default"
@@ -297,6 +313,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                 quantity: 1,
                 variantId: variant.id,
               })),
+              isStaffUser,
             }),
           )
         }

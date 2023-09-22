@@ -83,7 +83,6 @@ export const fragmentOrderLine = gql`
       }
     }
     variant {
-      ...Metadata
       id
       name
       quantityAvailable
@@ -96,6 +95,12 @@ export const fragmentOrderLine = gql`
       product {
         id
         isAvailableForPurchase
+      }
+      metadata {
+        ...MetadataItem
+      }
+      privateMetadata @include(if: $isStaffUser) {
+        ...MetadataItem
       }
     }
     productName
