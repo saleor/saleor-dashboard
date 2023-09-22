@@ -159,6 +159,27 @@ Cypress.Commands.add(
       });
   },
 );
+Cypress.Commands.add(
+  "deleteFirstRecordFromGridListAndValidate",
+  (expectedName, deleteRequestName, listRequestName) => {
+    ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
+    cy.get(SHARED_ELEMENTS.firstRowDataGrid)
+      .invoke("text")
+      .then(firstOnListName => {
+        expect(expectedName).to.eq(firstOnListName);
+        cy.clickGridCell(0, 0);
+        cy.get(CATEGORY_DETAILS_SELECTORS.deleteCategoriesButton)
+          .click()
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors(`@${deleteRequestName}`)
+          .waitForRequestAndCheckIfNoErrors(`@${listRequestName}`);
+        cy.contains(SHARED_ELEMENTS.dataGridTable, firstOnListName).should(
+          "not.exist",
+        );
+      });
+  },
+);
 
 Cypress.on(
   "uncaught:exception",

@@ -96,7 +96,6 @@ const useStyles = makeStyles(
       fontWeight: 500,
       marginBottom: theme.spacing(),
       marginTop: theme.spacing(2),
-      textTransform: "uppercase",
     },
     grid: {
       gridRowGap: 0,

@@ -4623,7 +4623,9 @@ type Checkout implements Node & ObjectWithMetadata {
   """
   updatedAt: DateTime!
 
-  """The user assigned to the checkout."""
+  """
+  The user assigned to the checkout. Requires one of the following permissions: MANAGE_USERS, HANDLE_PAYMENTS, OWNER.
+  """
   user: User
 
   """The code of voucher assigned to the checkout."""
@@ -13281,7 +13283,7 @@ type Mutation {
 
     """The ID of notification plugin."""
     pluginId: String
-  ): ExternalNotificationTrigger
+  ): ExternalNotificationTrigger @deprecated(reason: "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0.")
 
   """Obtain external access tokens for user by custom plugin."""
   externalObtainAccessTokens(
@@ -14396,6 +14398,29 @@ type Mutation {
     paymentGateways: [PaymentGatewayToInitialize!]
   ): PaymentGatewayInitialize
 
+  """
+  Initializes payment gateway for tokenizing payment method session.
+  
+  Added in Saleor 3.16.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION (sync): The customer requested to initialize payment gateway for tokenization.
+  """
+  paymentGatewayInitializeTokenization(
+    """Slug of a channel related to tokenization request."""
+    channel: String!
+
+    """The data that will be passed to the payment gateway."""
+    data: JSON
+
+    """The identifier of the payment gateway app to initialize tokenization."""
+    id: String!
+  ): PaymentGatewayInitializeTokenization
+
   """Initializes payment process when it is required by gateway."""
   paymentInitialize(
     """Slug of a channel for which the data should be returned."""
@@ -14407,6 +14432,59 @@ type Mutation {
     """Client-side generated data required to initialize the payment."""
     paymentData: JSONString
   ): PaymentInitialize
+
+  """
+  Tokenize payment method.
+  
+  Added in Saleor 3.16.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION (sync): The customer requested to tokenize payment method.
+  """
+  paymentMethodInitializeTokenization(
+    """Slug of a channel related to tokenization request."""
+    channel: String!
+
+    """The data that will be passed to the payment gateway."""
+    data: JSON
+
+    """
+    The identifier of the payment gateway app to initialize payment method tokenization.
+    """
+    id: String!
+
+    """The payment flow that the tokenized payment method should support."""
+    paymentFlowToSupport: TokenizedPaymentFlowEnum!
+  ): PaymentMethodInitializeTokenization
+
+  """
+  Tokenize payment method.
+  
+  Added in Saleor 3.16.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION (sync): The customer continues payment method tokenization.
+  """
+  paymentMethodProcessTokenization(
+    """Slug of a channel related to tokenization request."""
+    channel: String!
+
+    """The data that will be passed to the payment gateway."""
+    data: JSON
+
+    """
+    The identifier of the payment gateway app to process payment method tokenization.
+    """
+    id: String!
+  ): PaymentMethodProcessTokenization
 
   """
   Refunds the captured payment amount. 
@@ -16605,7 +16683,7 @@ type Order implements Node & ObjectWithMetadata {
   updatedAt: DateTime!
 
   """
-  User who placed the order. This field is set only for orders placed by authenticated users. Can be fetched for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_USERS, MANAGE_ORDERS, OWNER.
+  User who placed the order. This field is set only for orders placed by authenticated users. Can be fetched for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_USERS, MANAGE_ORDERS, HANDLE_PAYMENTS, OWNER.
   """
   user: User
 
@@ -20175,7 +20253,7 @@ type PaymentGatewayInitializeSession implements Event {
   """Amount requested for initializing the payment gateway."""
   amount: PositiveDecimal
 
-  """Payment gateway data in JSON format, recieved from storefront."""
+  """Payment gateway data in JSON format, received from storefront."""
   data: JSON
 
   """Time of the event."""
@@ -20189,6 +20267,94 @@ type PaymentGatewayInitializeSession implements Event {
 
   """Checkout or order"""
   sourceObject: OrderOrCheckout!
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+"""
+Initializes payment gateway for tokenizing payment method session.
+
+Added in Saleor 3.16.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION (sync): The customer requested to initialize payment gateway for tokenization.
+"""
+type PaymentGatewayInitializeTokenization {
+  """A data returned by payment app."""
+  data: JSON
+  errors: [PaymentGatewayInitializeTokenizationError!]!
+
+  """A status of the payment gateway initialization."""
+  result: PaymentGatewayInitializeTokenizationResult!
+}
+
+type PaymentGatewayInitializeTokenizationError {
+  """The error code."""
+  code: PaymentGatewayInitializeTokenizationErrorCode!
+
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+}
+
+"""An enumeration."""
+enum PaymentGatewayInitializeTokenizationErrorCode {
+  CHANNEL_INACTIVE
+  GATEWAY_ERROR
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+}
+
+"""
+Result of initialize payment gateway for tokenization of payment method.
+
+    The result of initialize payment gateway for tokenization of payment method.
+    SUCCESSFULLY_INITIALIZED - The payment gateway was successfully initialized.
+    FAILED_TO_INITIALIZE - The payment gateway was not initialized.
+    FAILED_TO_DELIVER - The request to initialize payment gateway was not delivered.
+    
+"""
+enum PaymentGatewayInitializeTokenizationResult {
+  FAILED_TO_DELIVER
+  FAILED_TO_INITIALIZE
+  SUCCESSFULLY_INITIALIZED
+}
+
+"""
+Event sent to initialize a new session in payment gateway to store the payment method. 
+
+Added in Saleor 3.16.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PaymentGatewayInitializeTokenizationSession implements Event {
+  """Channel related to the requested action."""
+  channel: Channel!
+
+  """Payment gateway data in JSON format, received from storefront."""
+  data: JSON
+
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The user related to the requested action."""
+  user: User!
 
   """Saleor version that triggered the event."""
   version: String
@@ -20292,6 +20458,198 @@ type PaymentMethodRequestDeleteError {
 
   """The error message."""
   message: String
+}
+
+"""
+Tokenize payment method.
+
+Added in Saleor 3.16.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION (sync): The customer requested to tokenize payment method.
+"""
+type PaymentMethodInitializeTokenization {
+  """A data returned by the payment app."""
+  data: JSON
+  errors: [PaymentMethodInitializeTokenizationError!]!
+
+  """The identifier of the payment method."""
+  id: String
+
+  """A status of the payment method tokenization."""
+  result: PaymentMethodTokenizationResult!
+}
+
+type PaymentMethodInitializeTokenizationError {
+  """The error code."""
+  code: PaymentMethodInitializeTokenizationErrorCode!
+
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+}
+
+"""An enumeration."""
+enum PaymentMethodInitializeTokenizationErrorCode {
+  CHANNEL_INACTIVE
+  GATEWAY_ERROR
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+}
+
+"""
+Event sent when user requests a tokenization of payment method.
+
+Added in Saleor 3.16.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PaymentMethodInitializeTokenizationSession implements Event {
+  """Channel related to the requested action."""
+  channel: Channel!
+
+  """Payment gateway data in JSON format, received from storefront."""
+  data: JSON
+
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The payment flow that the tokenized payment method should support."""
+  paymentFlowToSupport: TokenizedPaymentFlowEnum!
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The user related to the requested action."""
+  user: User!
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+"""
+Tokenize payment method.
+
+Added in Saleor 3.16.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION (sync): The customer continues payment method tokenization.
+"""
+type PaymentMethodProcessTokenization {
+  """A data returned by the payment app."""
+  data: JSON
+  errors: [PaymentMethodProcessTokenizationError!]!
+
+  """The identifier of the payment method."""
+  id: String
+
+  """A status of the payment method tokenization."""
+  result: PaymentMethodTokenizationResult!
+}
+
+type PaymentMethodProcessTokenizationError {
+  """The error code."""
+  code: PaymentMethodProcessTokenizationErrorCode!
+
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+}
+
+"""An enumeration."""
+enum PaymentMethodProcessTokenizationErrorCode {
+  CHANNEL_INACTIVE
+  GATEWAY_ERROR
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+}
+
+"""
+Event sent when user continues a tokenization of payment method.
+
+Added in Saleor 3.16.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PaymentMethodProcessTokenizationSession implements Event {
+  """Channel related to the requested action."""
+  channel: Channel!
+
+  """Payment gateway data in JSON format, received from storefront."""
+  data: JSON
+
+  """
+  The ID returned by app from `PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION` webhook.
+  """
+  id: String!
+
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The user related to the requested action."""
+  user: User!
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+type PaymentMethodRequestDeleteError {
+  """The error code."""
+  code: StoredPaymentMethodRequestDeleteErrorCode!
+
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+}
+
+"""
+Result of tokenization of payment method.
+
+    SUCCESSFULLY_TOKENIZED - The payment method was successfully tokenized.
+    ADDITIONAL_ACTION_REQUIRED - The additional action is required to tokenize payment
+    method.
+    PENDING - The payment method is pending tokenization.
+    FAILED_TO_TOKENIZE - The payment method was not tokenized.
+    FAILED_TO_DELIVER - The request to tokenize payment method was not delivered.
+    
+"""
+enum PaymentMethodTokenizationResult {
+  ADDITIONAL_ACTION_REQUIRED
+  FAILED_TO_DELIVER
+  FAILED_TO_TOKENIZE
+  PENDING
+  SUCCESSFULLY_TOKENIZED
 }
 
 """
@@ -32446,7 +32804,11 @@ enum WebhookEventTypeAsyncEnum {
   """A menu is updated."""
   MENU_UPDATED
 
-  """User notification triggered."""
+  """
+  User notification triggered.
+  
+  DEPRECATED: this value will be removed in Saleor 4.0. See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/docs/next/upgrade-guides/notify-user-deprecation
+  """
   NOTIFY_USER
 
   """An observability event is created."""
@@ -32965,7 +33327,11 @@ enum WebhookEventTypeEnum {
   """A menu is updated."""
   MENU_UPDATED
 
-  """User notification triggered."""
+  """
+  User notification triggered.
+  
+  DEPRECATED: this value will be removed in Saleor 4.0. See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/docs/next/upgrade-guides/notify-user-deprecation
+  """
   NOTIFY_USER
 
   """An observability event is created."""
@@ -33076,9 +33442,12 @@ enum WebhookEventTypeEnum {
   """Confirm payment."""
   PAYMENT_CONFIRM
   PAYMENT_GATEWAY_INITIALIZE_SESSION
+  PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION
 
   """Listing available payment gateways."""
   PAYMENT_LIST_GATEWAYS
+  PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION
+  PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION
 
   """Process payment."""
   PAYMENT_PROCESS
@@ -33341,9 +33710,12 @@ enum WebhookEventTypeSyncEnum {
   """Confirm payment."""
   PAYMENT_CONFIRM
   PAYMENT_GATEWAY_INITIALIZE_SESSION
+  PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION
 
   """Listing available payment gateways."""
   PAYMENT_LIST_GATEWAYS
+  PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION
+  PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION
 
   """Process payment."""
   PAYMENT_PROCESS

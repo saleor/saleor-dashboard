@@ -88,6 +88,13 @@ const mapToMenuItem = ({ label, id, open }: Extension) => ({
 export const mapToMenuItems = (extensions: ExtensionWithParams[]) =>
   extensions.map(mapToMenuItem);
 
+export const mapToMenuItemsForOrderListActions = (
+  extensions: ExtensionWithParams[],
+) =>
+  extensions.map(extension =>
+    mapToMenuItem({ ...extension, open: () => extension.open({}) }),
+  );
+
 export const mapToMenuItemsForProductOverviewActions = (
   extensions: ExtensionWithParams[],
   productIds: string[],
