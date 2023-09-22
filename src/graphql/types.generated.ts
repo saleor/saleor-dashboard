@@ -4666,17 +4666,6 @@ export type PaymentInput = {
   token?: InputMaybe<Scalars['String']>;
 };
 
-export type PaymentSettingsInput = {
-  /**
-   * Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.
-   *
-   * Added in Saleor 3.16.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
-  defaultTransactionFlowStrategy?: InputMaybe<TransactionFlowStrategyEnum>;
-};
-
 /** An enumeration. */
 export enum PaymentMethodInitializeTokenizationErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
