@@ -331,6 +331,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           orderPaymentMarkAsPaid.mutate({
             id,
             transactionReference,
+            isStaffUser,
           })
         }
         open={params.action === "mark-paid"}

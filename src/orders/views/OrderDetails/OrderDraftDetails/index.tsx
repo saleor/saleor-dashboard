@@ -291,6 +291,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             input: {
               shippingMethod: variables.shippingMethod,
             },
+            isStaffUser,
           })
         }
       />
