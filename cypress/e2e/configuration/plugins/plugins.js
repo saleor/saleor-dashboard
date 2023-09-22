@@ -3,9 +3,7 @@
 
 import faker from "faker";
 
-import {
-  PLUGINS_DETAILS_SELECTORS,
-} from "../../../elements/plugins/pluginDetails";
+import { PLUGINS_DETAILS_SELECTORS } from "../../../elements/plugins/pluginDetails";
 import { PLUGINS_LIST_SELECTORS } from "../../../elements/plugins/pluginsList";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { urlList } from "../../../fixtures/urlList";
