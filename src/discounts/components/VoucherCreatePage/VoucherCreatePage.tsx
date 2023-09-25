@@ -33,8 +33,10 @@ import VoucherRequirements from "../VoucherRequirements";
 import VoucherTypes from "../VoucherTypes";
 import VoucherValue from "../VoucherValue";
 
-export interface FormData extends VoucherDetailsPageFormData {
+export interface VoucherCreatePageFormData extends VoucherDetailsPageFormData {
   value: number;
+  usageLimit: number;
+  used: number;
 }
 
 export interface VoucherCreatePageProps {
@@ -45,7 +47,7 @@ export interface VoucherCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
-  onSubmit: (data: FormData) => SubmitPromise;
+  onSubmit: (data: VoucherCreatePageFormData) => SubmitPromise;
 }
 
 const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
@@ -64,7 +66,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   const { makeChangeHandler: makeMetadataChangeHandler } =
     useMetadataChangeTrigger();
 
-  const initialForm: FormData = {
+  const initialForm: VoucherCreatePageFormData = {
     applyOncePerCustomer: false,
     applyOncePerOrder: false,
     onlyForStaff: false,
@@ -87,7 +89,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     privateMetadata: [],
   };
 
-  const checkIfSaveIsDisabled = (data: FormData) =>
+  const checkIfSaveIsDisabled = (data: VoucherCreatePageFormData) =>
     (data.discountType.toString() !== "SHIPPING" &&
       data.channelListings?.some(
         channel =>
