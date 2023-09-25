@@ -82,7 +82,7 @@ jobs:
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
 
-          version=$(cat package.json | jq .version | xargs)
+          version=$(cat package.json | jq -r .version)
           payload=$(jq --null-input --arg version "$version" '{
             "event_type": "open-release-pull-request",
             "client_payload": {
