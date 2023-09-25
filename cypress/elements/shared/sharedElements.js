@@ -23,6 +23,7 @@ export const SHARED_ELEMENTS = {
   gridStaticStatusButton: '[data-test-id="stat-col-status"]',
   gridStaticTotalButton: '[data-test-id="stat-col-total"]',
   gridStaticProductButton: '[data-test-id="stat-col-product"]',
+  gridStaticMetadataButton: '[data-test-id="stat-col-metadata"]',
   dynamicColumnSearchInput: '[data-test-id="search-columns"]',
   selectedDynamicColumnNameSelector: '[data-test-id^="column-name-"]',
   removeSelectedDynamicColumnButton:

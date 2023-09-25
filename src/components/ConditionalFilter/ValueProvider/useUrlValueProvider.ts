@@ -82,8 +82,8 @@ export const useUrlValueProvider = (
   };
 
   const getTokenByName = (name: string) => {
-    return tokenizedUrl.asFlatArray().find(token => token.name === name)
-  }
+    return tokenizedUrl.asFlatArray().find(token => token.name === name);
+  };
 
   const count = value.filter(v => typeof v !== "string").length;
 
