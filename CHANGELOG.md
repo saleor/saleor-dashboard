@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.16.1
+
+### Patch Changes
+
+- 60b06c782: Use version from package.json to trigger deployment
+- 3a49aa086: Fix empty date filter on order list
+- 9383bec19: Fix check title length in SeoForm component
+
 ## 3.16.0
 
 ### Minor Changes
