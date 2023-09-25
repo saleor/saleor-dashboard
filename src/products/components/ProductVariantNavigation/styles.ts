@@ -1,5 +1,6 @@
 import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -32,6 +33,9 @@ export const useStyles = makeStyles(
       "&:hover": {
         backgroundColor: "unset !important",
       },
+    },
+    rowNewCell: {
+      paddingLeft: `${vars.spacing[5]} !important`,
     },
   }),
   { name: "ProductVariantNavigation" },

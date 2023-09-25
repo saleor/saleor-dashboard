@@ -109,7 +109,7 @@ const ProductVariantNavigation: React.FC<
           })}
           {!isCreate ? (
             <TableRowLink className={classes.rowNew}>
-              <TableCell colSpan={3}>
+              <TableCell colSpan={3} className={classes.rowNewCell}>
                 <Button
                   size="small"
                   variant="secondary"
