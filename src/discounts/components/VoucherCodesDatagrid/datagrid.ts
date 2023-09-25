@@ -1,3 +1,4 @@
+import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { VoucherCodeFragment } from "@dashboard/graphql";
@@ -36,11 +37,17 @@ export const createGetCellContent =
 
     switch (columnId) {
       case "code":
-        return readonlyTextCell(rowData?.code ?? "");
+        return readonlyTextCell(rowData?.code ?? "", false);
       case "usage":
-        return readonlyTextCell(rowData?.used?.toString() ?? "");
+        return readonlyTextCell(
+          rowData?.used?.toString() ?? PLACEHOLDER,
+          false,
+        );
       case "limit":
-        return readonlyTextCell(rowData?.usageLimit?.toString() ?? "");
+        return readonlyTextCell(
+          rowData?.usageLimit?.toString() ?? PLACEHOLDER,
+          false,
+        );
       default:
         return readonlyTextCell("", false);
     }
