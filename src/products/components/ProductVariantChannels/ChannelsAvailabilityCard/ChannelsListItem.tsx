@@ -40,13 +40,18 @@ export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({
   return (
     <React.Fragment key={id}>
       <Divider />
-      <DashboardCard.Content paddingY={1}>
-        <Text data-test-id={`channels-variant-availability-item-title-${id}`}>
+      <DashboardCard.Content paddingY={6}>
+        <Text
+          as="p"
+          variant="body"
+          size="small"
+          data-test-id={`channels-variant-availability-item-title-${id}`}
+        >
           {name}
         </Text>
-        {"  - "}
         <Text
-          variant="caption"
+          variant="bodyStrong"
+          size="small"
           data-test-id={`channels-variant-availability-item-subtitle-${id}`}
         >
           {getItemSubtitle(id)}
