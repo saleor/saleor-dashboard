@@ -151,10 +151,6 @@ export const ProductVariantPrice: React.FC<
                           marginY: 2,
                         })}
                         error={!!priceError}
-                        label={intl.formatMessage({
-                          id: "b1zuN9",
-                          defaultMessage: "Price",
-                        })}
                         name={fieldName}
                         value={listing.price || ""}
                         currencySymbol={listing.currency}
@@ -182,11 +178,6 @@ export const ProductVariantPrice: React.FC<
                           marginY: 2,
                         })}
                         error={!!costPriceError}
-                        label={intl.formatMessage({
-                          id: "KQSONM",
-                          defaultMessage: "Cost",
-                          description: "tabel column header",
-                        })}
                         name={`${listing.id}-channel-costPrice`}
                         value={listing.costPrice || ""}
                         currencySymbol={listing.currency}

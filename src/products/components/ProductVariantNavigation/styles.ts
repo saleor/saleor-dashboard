@@ -6,6 +6,7 @@ export const useStyles = makeStyles(
   theme => ({
     colAvatar: {
       width: 64,
+      paddingRight: 0,
     },
     colName: {
       paddingLeft: 0,
@@ -35,7 +36,11 @@ export const useStyles = makeStyles(
       },
     },
     rowNewCell: {
+      border: "none",
       paddingLeft: `${vars.spacing[5]} !important`,
+    },
+    newAvatart: {
+      paddingRight: vars.spacing[3],
     },
   }),
   { name: "ProductVariantNavigation" },

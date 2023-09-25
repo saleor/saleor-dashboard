@@ -13,6 +13,7 @@ export interface AvatarProps {
   avatarProps?: string;
   children?: React.ReactNode | React.ReactNode[];
   badge?: React.ReactNode;
+  className?: string;
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -22,12 +23,13 @@ const Avatar: React.FC<AvatarProps> = ({
   thumbnail,
   avatarProps,
   badge,
+  className,
 }) => {
   const classes = useAvatarStyles();
 
   return (
     <div
-      className={clsx(classes.content, {
+      className={clsx(classes.content, className, {
         [classes.alignRight]: alignRight,
       })}
     >

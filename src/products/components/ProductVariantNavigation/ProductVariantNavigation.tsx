@@ -111,7 +111,6 @@ const ProductVariantNavigation: React.FC<
             <TableRowLink className={classes.rowNew}>
               <TableCell colSpan={3} className={classes.rowNewCell}>
                 <Button
-                  size="small"
                   variant="secondary"
                   onClick={() => navigate(productVariantAddUrl(productId))}
                   data-test-id="button-add-variant"
@@ -132,6 +131,7 @@ const ProductVariantNavigation: React.FC<
                     [classes.firstVariant]: variants?.length === 0,
                   },
                 )}
+                avatarClassName={classes.newAvatart}
                 thumbnail={null}
                 colSpan={2}
               />

@@ -19,7 +19,6 @@ export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
       <Box display="flex" justifyContent="space-between" alignItems="center">
         {intl.formatMessage(messages.title)}
         <Button
-          size="small"
           variant="secondary"
           data-test-id="manage-channels-button"
           onClick={onManageClick}

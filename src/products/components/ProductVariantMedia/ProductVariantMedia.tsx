@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import MediaTile from "@dashboard/components/MediaTile";
 import Skeleton from "@dashboard/components/Skeleton";
 import { ProductMediaFragment } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui/next";
@@ -42,35 +43,24 @@ export const ProductVariantMedia: React.FC<
       <DashboardCard.Title>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {intl.formatMessage(messages.media)}
-          <Button
-            size="small"
-            variant="secondary"
-            disabled={disabled}
-            onClick={onImageAdd}
-          >
+          <Button variant="secondary" disabled={disabled} onClick={onImageAdd}>
             {intl.formatMessage(messages.chooseMedia)}
           </Button>
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <Box display="grid" gap={2} __gridTemplateColumns="repeat(4, 1fr)">
+        <Box display="flex" flexWrap="wrap" gap={5}>
           {media === undefined || media === null ? (
             <Skeleton />
           ) : media.length > 0 ? (
             media
               .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1))
               .map(mediaObj => {
-                const parsedMediaOembedData = JSON.parse(mediaObj?.oembedData);
-                const mediaUrl =
-                  parsedMediaOembedData?.thumbnail_url || mediaObj.url;
                 return (
-                  <Box
-                    as="img"
-                    width="100%"
-                    objectFit="contain"
+                  <MediaTile
                     key={mediaObj.id}
-                    src={mediaUrl}
-                    alt={mediaObj.alt}
+                    disableOverlay
+                    media={mediaObj}
                   />
                 );
               })

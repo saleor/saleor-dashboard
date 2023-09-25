@@ -18,7 +18,6 @@ import {
   Input,
   List,
   PlusIcon,
-  sprinkles,
   Text,
   TrashBinIcon,
   vars,
@@ -118,7 +117,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           />
         </Box>
 
-        <Box paddingY={2}>
+        <Box paddingTop={5}>
           <Box>
             <Checkbox
               checked={data.trackInventory}
@@ -142,7 +141,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           <Box display="grid" gap={2} marginTop={5}>
             <Box display="flex" flexDirection="column">
               <Text variant="heading" size="small">
-                <FormattedMessage {...messages.quantity} />
+                <FormattedMessage {...messages.stock} />
               </Text>
               {!productVariantChannelListings?.length && (
                 <Text variant="caption" color="textNeutralSubdued">
@@ -178,7 +177,8 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           </Box>
         </Box>
         {productVariantChannelListings?.length > 0 &&
-          warehouses?.length > 0 && (
+          warehouses?.length > 0 &&
+          stocks?.length > 0 && (
             <Table>
               <TableHead>
                 <TableRowLink>
@@ -241,62 +241,54 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                     </TableRowLink>
                   );
                 })}
-                {warehousesToAssign.length > 0 && (
-                  <Dropdown>
-                    <Dropdown.Trigger>
-                      <TableRowLink
-                        className={sprinkles({ cursor: "pointer" })}
-                      >
-                        <TableCell
-                          colSpan={3}
-                          style={{ paddingLeft: vars.spacing[6] }}
-                        >
-                          <Text>
-                            <FormattedMessage {...messages.assignWarehouse} />
-                          </Text>
-                        </TableCell>
-                        <TableCell style={{ paddingRight: vars.spacing[6] }}>
-                          <Button
-                            type="button"
-                            icon={<PlusIcon />}
-                            variant="secondary"
-                          />
-                        </TableCell>
-                      </TableRowLink>
-                    </Dropdown.Trigger>
-
-                    <Dropdown.Content align="end">
-                      <Box>
-                        <List
-                          id="warehouse-list"
-                          padding={2}
-                          borderRadius={4}
-                          boxShadow="overlay"
-                          backgroundColor="surfaceNeutralPlain"
-                          __maxHeight={400}
-                          overflowY="auto"
-                        >
-                          {warehousesToAssign.map(warehouse => (
-                            <Dropdown.Item key={warehouse.id}>
-                              <List.Item
-                                paddingX={1.5}
-                                paddingY={2}
-                                borderRadius={4}
-                                onClick={() =>
-                                  handleWarehouseStockAdd(warehouse.id)
-                                }
-                              >
-                                <Text>{warehouse.name}</Text>
-                              </List.Item>
-                            </Dropdown.Item>
-                          ))}
-                        </List>
-                      </Box>
-                    </Dropdown.Content>
-                  </Dropdown>
-                )}
               </TableBody>
             </Table>
+          )}
+
+        {productVariantChannelListings?.length > 0 &&
+          warehouses?.length > 0 &&
+          warehousesToAssign.length > 0 && (
+            <Dropdown>
+              <Dropdown.Trigger>
+                <Button
+                  type="button"
+                  icon={<PlusIcon />}
+                  variant="secondary"
+                  marginTop={5}
+                >
+                  <Text>
+                    <FormattedMessage {...messages.assignWarehouse} />
+                  </Text>
+                </Button>
+              </Dropdown.Trigger>
+
+              <Dropdown.Content align="end">
+                <Box>
+                  <List
+                    id="warehouse-list"
+                    padding={2}
+                    borderRadius={4}
+                    boxShadow="overlay"
+                    backgroundColor="surfaceNeutralPlain"
+                    __maxHeight={400}
+                    overflowY="auto"
+                  >
+                    {warehousesToAssign.map(warehouse => (
+                      <Dropdown.Item key={warehouse.id}>
+                        <List.Item
+                          paddingX={1.5}
+                          paddingY={2}
+                          borderRadius={4}
+                          onClick={() => handleWarehouseStockAdd(warehouse.id)}
+                        >
+                          <Text>{warehouse.name}</Text>
+                        </List.Item>
+                      </Dropdown.Item>
+                    ))}
+                  </List>
+                </Box>
+              </Dropdown.Content>
+            </Dropdown>
           )}
       </DashboardCard.Content>
     </DashboardCard>

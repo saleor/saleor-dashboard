@@ -3181,10 +3181,6 @@
   "KN7zKn": {
     "string": "Error"
   },
-  "KQSONM": {
-    "context": "tabel column header",
-    "string": "Cost"
-  },
   "KRqgfo": {
     "string": "User is out of your permissions scope"
   },
@@ -3463,6 +3459,10 @@
   "MpR4zK": {
     "context": "customer details, header",
     "string": "{fullName} Details"
+  },
+  "MwfSVA": {
+    "context": "input helper text",
+    "string": "Customers can not add quantities to a single cart above the limit when value is provided."
   },
   "MxhVZv": {
     "string": "Are you sure you want to delete collection's image?"
@@ -7151,10 +7151,6 @@
     "context": "WarehousesSection select field add text",
     "string": "Add New Warehouse"
   },
-  "n3+6w5": {
-    "context": "input helper text",
-    "string": "Your customer won't be allowed to buy bigger quantity per checkout than shown here."
-  },
   "n5vskv": {
     "context": "customer's address book, header",
     "string": "{fullName}'s Address Book"
@@ -8397,6 +8393,9 @@
   },
   "vprU7C": {
     "string": "Select visible order channels"
+  },
+  "vuKrlW": {
+    "string": "Stock"
   },
   "vwMO04": {
     "context": "draft order",
