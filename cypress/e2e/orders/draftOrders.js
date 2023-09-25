@@ -156,6 +156,7 @@ describe("Draft orders", () => {
           .should("contain.text", "Quantity")
           .should("contain.text", "Price")
           .should("contain.text", "Total")
+          .should("contain.text", "Metadata")
           .should("contain.text", "Status");
         // switching off all but one static columns
         cy.get(SHARED_ELEMENTS.gridStaticSkuButton).click();
@@ -164,6 +165,7 @@ describe("Draft orders", () => {
         cy.get(SHARED_ELEMENTS.gridStaticPriceButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticTotalButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticStatusButton).click();
+        cy.get(SHARED_ELEMENTS.gridStaticMetadataButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticProductButton).should(
           "have.attr",
           "data-state",
@@ -175,7 +177,7 @@ describe("Draft orders", () => {
           .should("have.length", 2)
           .last()
           .should("have.text", "Product");
-        //next line hides picker
+        // next line hides picker
         cy.get(SHARED_ELEMENTS.pageHeader).click({ force: true });
         cy.get(SHARED_ELEMENTS.dynamicColumnContainer).should("not.exist");
       });

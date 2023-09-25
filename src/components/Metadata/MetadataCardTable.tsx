@@ -20,11 +20,13 @@ import { nameInputPrefix, nameSeparator, valueInputPrefix } from "./utils";
 interface MetadataCardTableProps {
   data: MetadataInput[];
   onChange: FormChange;
+  readonly?: boolean;
 }
 
 export const MetadataCardTable = ({
   data,
   onChange,
+  readonly = false,
 }: MetadataCardTableProps) => {
   if (!data || data.length === 0) {
     return null;
@@ -53,38 +55,65 @@ export const MetadataCardTable = ({
                 />
               </Text>
             </TableCell>
-            <TableCell
-              style={{
-                textAlign: "end",
-                paddingRight: vars.spacing[6],
-              }}
-            >
-              <Text variant="caption" color="textNeutralSubdued">
-                <FormattedMessage
-                  id="nEixpu"
-                  defaultMessage="Actions"
-                  description="table action"
-                />
-              </Text>
-            </TableCell>
+            {!readonly && (
+              <TableCell
+                style={{
+                  textAlign: "end",
+                  paddingRight: vars.spacing[6],
+                }}
+              >
+                <Text variant="caption" color="textNeutralSubdued">
+                  <FormattedMessage
+                    id="nEixpu"
+                    defaultMessage="Actions"
+                    description="table action"
+                  />
+                </Text>
+              </TableCell>
+            )}
           </TableRowLink>
         </TableHead>
         <TableBody>
           {data.map((field, fieldIndex) => (
             <TableRowLink data-test-id="field" key={fieldIndex}>
-              <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-                <Input
-                  width="100%"
-                  size="small"
-                  aria-label={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
-                  name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
-                  onChange={onChange}
-                  value={field.key}
-                />
+              <TableCell width="50%" style={{ paddingLeft: vars.spacing[6] }}>
+                {readonly ? (
+                  <Text
+                    variant="caption"
+                    size="large"
+                    color="textNeutralSubdued"
+                  >
+                    {field.key}
+                  </Text>
+                ) : (
+                  <Input
+                    width="100%"
+                    size="small"
+                    aria-label={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
+                    name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
+                    onChange={onChange}
+                    value={field.key}
+                  />
+                )}
               </TableCell>
-              <TableCell>
-                <Box paddingY={3}>
+              <TableCell
+                width="50%"
+                style={{
+                  paddingTop: vars.spacing[2],
+                  paddingBottom: vars.spacing[2],
+                }}
+              >
+                {readonly ? (
+                  <Text
+                    variant="caption"
+                    size="large"
+                    color="textNeutralSubdued"
+                  >
+                    {field.value}
+                  </Text>
+                ) : (
                   <Textarea
+                    disabled={readonly}
                     width="100%"
                     rows={1}
                     size="small"
@@ -93,26 +122,30 @@ export const MetadataCardTable = ({
                     onChange={onChange}
                     value={field.value}
                   />
-                </Box>
+                )}
               </TableCell>
-              <TableCell style={{ paddingRight: vars.spacing[6] }}>
-                <Box display="flex" justifyContent="flex-end">
-                  <Button
-                    variant="secondary"
-                    data-test-id={"delete-field-" + fieldIndex}
-                    onClick={() =>
-                      onChange({
-                        target: {
-                          name: EventDataAction.delete,
-                          value: fieldIndex,
-                        },
-                      })
-                    }
-                    type="button"
-                    icon={<TrashBinIcon />}
-                  />
-                </Box>
-              </TableCell>
+              {!readonly && (
+                <TableCell style={{ paddingRight: vars.spacing[6] }}>
+                  <Box display="flex" justifyContent="flex-end">
+                    {!readonly && (
+                      <Button
+                        variant="secondary"
+                        data-test-id={"delete-field-" + fieldIndex}
+                        onClick={() =>
+                          onChange({
+                            target: {
+                              name: EventDataAction.delete,
+                              value: fieldIndex,
+                            },
+                          })
+                        }
+                        type="button"
+                        icon={<TrashBinIcon />}
+                      />
+                    )}
+                  </Box>
+                </TableCell>
+              )}
             </TableRowLink>
           ))}
         </TableBody>

@@ -1,7 +1,7 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Accordion, Box, Button, Skeleton, Text } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -12,14 +12,20 @@ export interface MetadataCardProps {
   data: MetadataInput[];
   isPrivate: boolean;
   onChange: FormChange;
+  readonly?: boolean;
 }
 
 export const MetadataCard: React.FC<MetadataCardProps> = ({
   data,
   isPrivate,
   onChange,
+  readonly = false,
 }) => {
   const intl = useIntl();
+  const [expanded, setExpanded] = useState(
+    readonly ? "metadata-accordion" : undefined,
+  );
+
   const title = isPrivate
     ? {
         id: "ETHnjq",
@@ -39,7 +45,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
       data-test-is-private={isPrivate}
     >
       <DashboardCard.Content>
-        <Accordion>
+        <Accordion value={expanded} onValueChange={setExpanded}>
           <Accordion.Item
             data-test-id="metadata-item"
             value="metadata-accordion"
@@ -79,27 +85,33 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                 <Skeleton />
               ) : (
                 <>
-                  <MetadataCardTable data={data} onChange={onChange} />
+                  <MetadataCardTable
+                    readonly={readonly}
+                    data={data}
+                    onChange={onChange}
+                  />
 
-                  <Button
-                    marginTop={2}
-                    variant="secondary"
-                    data-test-id="add-field"
-                    onClick={() =>
-                      onChange({
-                        target: {
-                          name: EventDataAction.add,
-                          value: null,
-                        },
-                      })
-                    }
-                  >
-                    <FormattedMessage
-                      id="GiDxS4"
-                      defaultMessage="Add Field"
-                      description="add metadata field,button"
-                    />
-                  </Button>
+                  {!readonly && (
+                    <Button
+                      marginTop={2}
+                      variant="secondary"
+                      data-test-id="add-field"
+                      onClick={() =>
+                        onChange({
+                          target: {
+                            name: EventDataAction.add,
+                            value: null,
+                          },
+                        })
+                      }
+                    >
+                      <FormattedMessage
+                        id="GiDxS4"
+                        defaultMessage="Add Field"
+                        description="add metadata field,button"
+                      />
+                    </Button>
+                  )}
                 </>
               )}
             </Accordion.Content>

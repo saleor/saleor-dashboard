@@ -5,7 +5,12 @@ import {
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { Locale } from "@dashboard/components/Locale";
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
-import { GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
+import {
+  CustomCell,
+  GridCell,
+  GridCellKind,
+  TextCell,
+} from "@glideapps/glide-data-grid";
 
 import {
   DropdownCell,
@@ -101,6 +106,24 @@ export function numberCell(
     },
     kind: GridCellKind.Custom,
     copyData: value !== numberCellEmptyValue ? value.toString() : "",
+  };
+}
+
+export function buttonCell(title: string, cb: () => void): CustomCell {
+  return {
+    kind: GridCellKind.Custom,
+    cursor: "pointer",
+    allowOverlay: true,
+    copyData: "4",
+    readonly: true,
+    data: {
+      kind: "button-cell",
+      color: "accentColor",
+      borderColor: ["accentLight", "accentColor"],
+      borderRadius: 9,
+      title,
+      onClick: cb,
+    },
   };
 }
 
