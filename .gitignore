@@ -1,7 +1,7 @@
 *.py[cod]
 .*
-!.gitattributes
 !.babelrc
+!.gitattributes
 !.circleci
 !.codeclimate.yml
 !.coveragerc
