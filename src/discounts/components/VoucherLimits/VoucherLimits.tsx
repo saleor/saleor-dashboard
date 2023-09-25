@@ -8,18 +8,17 @@ import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { VoucherCreatePageFormData } from "../VoucherCreatePage";
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 import messages from "./messages";
 import { useStyles } from "./styles";
 
 interface VoucherLimitsProps {
-  data: VoucherCreatePageFormData;
+  data: VoucherDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   initialUsageLimit: number;
   onChange: (event: React.ChangeEvent<any>) => void;
-  setData: (data: Partial<VoucherCreatePageFormData>) => void;
+  setData: (data: Partial<VoucherDetailsPageFormData>) => void;
   isNewVoucher: boolean;
 }
 

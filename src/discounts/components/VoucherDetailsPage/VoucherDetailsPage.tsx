@@ -46,6 +46,7 @@ import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
 import { VoucherCodes } from "../VoucherCodes";
 import VoucherInfo from "../VoucherInfo";
+import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
 import VoucherSummary from "../VoucherSummary";
 import VoucherTypes from "../VoucherTypes";
@@ -77,6 +78,8 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   startDate: string;
   startTime: string;
   type: VoucherTypeEnum;
+  usageLimit: number;
+  used: number;
 }
 
 export interface VoucherDetailsPageProps
@@ -207,13 +210,15 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     startDate: splitDateTime(voucher?.startDate ?? "").date,
     startTime: splitDateTime(voucher?.startDate ?? "").time,
     type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
+    usageLimit: voucher?.usageLimit ?? 1,
+    used: voucher?.used ?? 0,
     metadata: voucher?.metadata.map(mapMetadataItemToInput),
     privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
   };
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, submit, triggerChange }) => {
+      {({ change, data, submit, triggerChange, set }) => {
         const handleDiscountTypeChange =
           createDiscountTypeChangeHandler(change);
         const handleChannelChange = createChannelsChangeHandler(
@@ -369,6 +374,15 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 errors={errors}
                 onChange={change}
                 onChannelChange={handleChannelChange}
+              />
+              <VoucherLimits
+                data={data}
+                initialUsageLimit={initialForm.usageLimit}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+                setData={set}
+                isNewVoucher={false}
               />
               <DiscountDates
                 data={data}
