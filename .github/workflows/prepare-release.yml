@@ -83,7 +83,7 @@ jobs:
           )
 
           version=$(cat package.json | jq .version | xargs)
-          payload=$(jq --null-input --arg version $version '{
+          payload=$(jq --null-input --arg version "$version" '{
             "event_type": "open-release-pull-request",
             "client_payload": {
               "project": "DASHBOARD",
