@@ -5,7 +5,7 @@ import { test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
-test("TC: SALEOR_3 Create basic product type @basic-regression @product-type", async ({
+test("TC: SALEOR_3 Create basic product with variants @basic-regression @product-type", async ({
   page,
 }) => {
   const productListPage = new ProductListPage(page);

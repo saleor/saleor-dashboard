@@ -1,20 +1,17 @@
-import {
-  APIResponse,
-  request,
-} from "@playwright/test";
+import { APIResponse, request } from "@playwright/test";
 
 const URL = process.env.API_URI || "";
-interface DATA {
+interface Data {
   query: string;
 }
 
-interface USER {
+interface User {
   email: string;
   password: string;
 }
 export class GraphQLService {
   async example(
-    user: USER,
+    user: User,
     authorization: string = "auth",
   ): Promise<APIResponse> {
     const headers = { Authorization: `Bearer ${authorization}` };
@@ -34,7 +31,7 @@ export class GraphQLService {
           }
         }
       }`;
-    const data: DATA = {
+    const data: Data = {
       query: query,
     };
     const loginResponse = await api.post(URL, { data, headers });
