@@ -80,7 +80,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
   };
 
   const completed =
-    slug?.length > 0 && title.length > 0 && description?.length > 0;
+    slug?.length > 0 && title?.length > 0 && description?.length > 0;
 
   const getError = (fieldName: SeoField) => getFieldError(errors, fieldName);
 
