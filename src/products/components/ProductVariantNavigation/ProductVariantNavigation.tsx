@@ -77,9 +77,11 @@ const ProductVariantNavigation: React.FC<
                 key={variant ? variant.id : "skeleton"}
                 index={variantIndex || 0}
                 display="block"
-                borderLeftStyle={isActive ? "solid" : "none"}
+                borderLeftStyle="solid"
                 __borderLeftWidth={2}
-                __borderColor={vars.colors.background.highlightDim}
+                __borderColor={
+                  isActive ? vars.colors.background.highlightDim : "transparent"
+                }
               >
                 <Box
                   maxWidth="100%"
