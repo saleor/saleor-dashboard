@@ -635,6 +635,10 @@
     "context": "button",
     "string": "Choose media"
   },
+  "2JBvj0": {
+    "context": "export products to csv file, button",
+    "string": "Export products"
+  },
   "2MKBk2": {
     "context": "window title",
     "string": "Fulfill Order #{orderNumber}"
@@ -7359,10 +7363,6 @@
   "oLMXDv": {
     "context": "order status",
     "string": "Ready to fulfill"
-  },
-  "oOFrUd": {
-    "context": "export products to csv file, button",
-    "string": "export products"
   },
   "oQ27V4": {
     "context": "order history message",
