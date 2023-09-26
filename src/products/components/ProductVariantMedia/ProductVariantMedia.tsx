@@ -43,7 +43,11 @@ export const ProductVariantMedia: React.FC<
       <DashboardCard.Title>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {intl.formatMessage(messages.media)}
-          <Button variant="secondary" disabled={disabled} onClick={onImageAdd}>
+          <Button
+            variant="secondary"
+            disabled={disabled || !media.length}
+            onClick={onImageAdd}
+          >
             {intl.formatMessage(messages.chooseMedia)}
           </Button>
         </Box>
