@@ -82,6 +82,7 @@ const ProductVariantNavigation: React.FC<
                 __borderColor={vars.colors.background.highlightDim}
               >
                 <Box
+                  maxWidth="100%"
                   paddingX={5}
                   paddingY={3}
                   borderBottomWidth={1}
@@ -103,13 +104,14 @@ const ProductVariantNavigation: React.FC<
                       borderStyle="solid"
                       borderWidth={1}
                       padding={1}
+                      flexShrink="0"
                       src={thumbnail.url}
                     />
                   ) : (
                     <ImagePlaceholder />
                   )}
                   <Box>
-                    <Text>
+                    <Text wordBreak="break-word">
                       {variant ? variant.name || variant.sku : <Skeleton />}
                     </Text>
                     {isDefault && (

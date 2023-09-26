@@ -14,6 +14,7 @@ export const ImagePlaceholder = () => {
       borderColor="neutralHighlight"
       borderStyle="solid"
       borderWidth={1}
+      flexShrink="0"
     >
       <ImageIcon />
     </Box>
