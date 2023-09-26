@@ -53,8 +53,3 @@ export interface GiftCardCreateCommonFormData {
   balanceCurrency: string;
   expiryDate: string;
 }
-
-export interface GiftCardBulkCreateFormData
-  extends GiftCardCreateCommonFormData {
-  cardsAmount: number;
-}
