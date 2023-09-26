@@ -7,6 +7,14 @@
       }
       const result: PossibleTypesResultData = {
   "possibleTypes": {
+    "CheckoutLineProblem": [
+      "CheckoutLineProblemInsufficientStock",
+      "CheckoutLineProblemVariantNotAvailable"
+    ],
+    "CheckoutProblem": [
+      "CheckoutLineProblemInsufficientStock",
+      "CheckoutLineProblemVariantNotAvailable"
+    ],
     "DeliveryMethod": [
       "ShippingMethod",
       "Warehouse"
@@ -16,6 +24,9 @@
       "AccountConfirmationRequested",
       "AccountConfirmed",
       "AccountDeleteRequested",
+      "AccountDeleted",
+      "AccountEmailChanged",
+      "AccountSetPasswordRequested",
       "AddressCreated",
       "AddressDeleted",
       "AddressUpdated",
@@ -57,8 +68,10 @@
       "FulfillmentCanceled",
       "FulfillmentCreated",
       "FulfillmentMetadataUpdated",
+      "FulfillmentTrackingNumberUpdated",
       "GiftCardCreated",
       "GiftCardDeleted",
+      "GiftCardExportCompleted",
       "GiftCardMetadataUpdated",
       "GiftCardSent",
       "GiftCardStatusChanged",
@@ -66,6 +79,7 @@
       "InvoiceDeleted",
       "InvoiceRequested",
       "InvoiceSent",
+      "ListStoredPaymentMethods",
       "MenuCreated",
       "MenuDeleted",
       "MenuItemCreated",
@@ -95,7 +109,10 @@
       "PaymentCaptureEvent",
       "PaymentConfirmEvent",
       "PaymentGatewayInitializeSession",
+      "PaymentGatewayInitializeTokenizationSession",
       "PaymentListGateways",
+      "PaymentMethodInitializeTokenizationSession",
+      "PaymentMethodProcessTokenizationSession",
       "PaymentProcessEvent",
       "PaymentRefundEvent",
       "PaymentVoidEvent",
@@ -104,6 +121,7 @@
       "PermissionGroupUpdated",
       "ProductCreated",
       "ProductDeleted",
+      "ProductExportCompleted",
       "ProductMediaCreated",
       "ProductMediaDeleted",
       "ProductMediaUpdated",
@@ -131,7 +149,9 @@
       "ShopMetadataUpdated",
       "StaffCreated",
       "StaffDeleted",
+      "StaffSetPasswordRequested",
       "StaffUpdated",
+      "StoredPaymentMethodDeleteRequested",
       "ThumbnailCreated",
       "TransactionCancelationRequested",
       "TransactionChargeRequested",

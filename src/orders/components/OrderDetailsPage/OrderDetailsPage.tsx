@@ -69,6 +69,7 @@ export interface OrderDetailsPageProps {
   onBillingAddressEdit: () => any;
   onFulfillmentApprove: (id: string) => any;
   onFulfillmentCancel: (id: string) => any;
+  onShowMetadata: (id: string) => void;
   onFulfillmentTrackingNumberUpdate: (id: string) => any;
   onOrderFulfill: () => any;
   onProductClick?: (id: string) => any;
@@ -121,6 +122,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onShippingMethodEdit,
     onTransactionAction,
     onAddManualTransaction,
+    onShowMetadata,
     onMarkAsPaid,
     onSubmit,
     channelUsabilityData,
@@ -232,6 +234,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   lines={unfulfilled}
                   onFulfill={onOrderFulfill}
                   loading={loading}
+                  onShowMetadata={onShowMetadata}
                 />
               ) : (
                 <>
@@ -240,6 +243,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     channelUsabilityData={channelUsabilityData}
                     errors={errors}
                     loading={loading}
+                    onShowMetadata={onShowMetadata}
                     onOrderLineAdd={onOrderLineAdd}
                     onOrderLineChange={onOrderLineChange}
                     onOrderLineRemove={onOrderLineRemove}
@@ -255,6 +259,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   fulfillment={fulfillment}
                   fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
                   order={order}
+                  onShowMetadata={onShowMetadata}
                   onOrderFulfillmentCancel={() =>
                     onFulfillmentCancel(fulfillment.id)
                   }

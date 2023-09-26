@@ -171,7 +171,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
       {({
         change,
         data,
-        formErrors,
         validationErrors,
         handlers,
         submit,
@@ -271,7 +270,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   <CardSpacer />
                   <ProductVariantPrice
                     disabled={!product}
-                    ProductVariantChannelListings={data.channelListings.map(
+                    productVariantChannelListings={data.channelListings.map(
                       channel => ({
                         ...channel.data,
                         ...channel.value,
@@ -287,12 +286,10 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                     disabled={disabled}
                     hasVariants={true}
                     onFormDataChange={change}
-                    formErrors={formErrors}
                     errors={errors}
                     stocks={data.stocks}
                     warehouses={warehouses}
                     onChange={handlers.changeStock}
-                    onChangePreorderEndDate={handlers.changePreorderEndDate}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   CustomCell,
   CustomRenderer,
@@ -11,9 +10,12 @@ import React from "react";
 import { Locale } from "../../Locale";
 
 export const numberCellEmptyValue = Symbol("number-cell-empty-value");
-interface NumberCellProps {
+export interface NumberCellProps {
   readonly kind: "number-cell";
   readonly value: number | typeof numberCellEmptyValue;
+  readonly options?: {
+    format: "number" | "percent";
+  };
 }
 
 export type NumberCell = CustomCell<NumberCellProps>;
@@ -31,7 +33,9 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
         ...cell,
         data: {
           ...cell.data,
-          value: event.target.value ? parseFloat(event.target.value) : null,
+          value: event.target.value
+            ? parseFloat(event.target.value)
+            : numberCellEmptyValue,
         },
       })
     }
@@ -47,9 +51,12 @@ export const numberCellRenderer = (
   isMatch: (c): c is NumberCell => (c.data as any).kind === "number-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
-    const { value } = cell.data;
-    const formatted =
+    const { value, options } = cell.data;
+    let formatted =
       value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
+    if (options?.format === "percent") {
+      formatted += "%";
+    }
     ctx.fillStyle = theme.textDark;
     ctx.textAlign = "right";
     ctx.fillText(

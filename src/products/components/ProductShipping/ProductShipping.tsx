@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
-import { InputAdornment, TextField } from "@material-ui/core";
+import { Box, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -35,28 +35,24 @@ export const ProductShipping: React.FC<ProductShippingProps> = props => {
         })}
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <TextField
-          disabled={disabled}
-          label={intl.formatMessage({
-            id: "SUbxSK",
-            defaultMessage: "Weight",
-            description: "product weight",
-          })}
-          error={!!formErrors.weight}
-          helperText={getProductErrorMessage(formErrors.weight, intl)}
-          name="weight"
-          type="number"
-          value={data.weight}
-          onChange={handleChange}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">{weightUnit || ""}</InputAdornment>
-            ),
-            inputProps: {
-              min: 0,
-            },
-          }}
-        />
+        <Box __width="25%">
+          <Input
+            disabled={disabled}
+            label={intl.formatMessage({
+              id: "SUbxSK",
+              defaultMessage: "Weight",
+              description: "product weight",
+            })}
+            error={!!formErrors.weight}
+            helperText={getProductErrorMessage(formErrors.weight, intl)}
+            name="weight"
+            type="number"
+            size="small"
+            value={data.weight}
+            onChange={handleChange}
+            endAdornment={<Text marginRight={2}>{weightUnit || ""}</Text>}
+          />
+        </Box>
       </DashboardCard.Content>
     </DashboardCard>
   );

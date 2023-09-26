@@ -16,6 +16,7 @@ interface OrderUnfulfilledProductsCardProps {
   lines: OrderLineFragment[];
   onFulfill: () => void;
   loading: boolean;
+  onShowMetadata: (id: string) => void;
 }
 
 const OrderUnfulfilledProductsCard: React.FC<
@@ -23,6 +24,7 @@ const OrderUnfulfilledProductsCard: React.FC<
 > = ({
   showFulfillmentAction,
   notAllowedToFulfillUnpaid,
+  onShowMetadata,
   lines,
   onFulfill,
   loading,
@@ -43,7 +45,11 @@ const OrderUnfulfilledProductsCard: React.FC<
           className={classes.cardTitle}
         />
         <CardContent>
-          <OrderDetailsDatagrid lines={lines} loading={loading} />
+          <OrderDetailsDatagrid
+            lines={lines}
+            loading={loading}
+            onShowMetadata={onShowMetadata}
+          />
           {showFulfillmentAction && (
             <CardActions className={classes.actions}>
               <Button

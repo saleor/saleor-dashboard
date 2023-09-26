@@ -101,7 +101,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     onPresetDelete,
     onPresetSave,
     onPresetUpdate,
-    presetIdToDelete,
+    getPresetNameToDelete,
     selectedPreset,
     presets,
     setPresetIdToDelete,
@@ -178,14 +178,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     ],
   );
 
-  const getFilterPresetDeleteName = () => {
-    if (!presetIdToDelete || !presets[presetIdToDelete - 1]) {
-      return "...";
-    }
-
-    return presets[presetIdToDelete - 1].name;
-  };
-
   const onSaleBulkDelete = async () => {
     await saleBulkDelete({
       variables: {
@@ -261,7 +253,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={getFilterPresetDeleteName()}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

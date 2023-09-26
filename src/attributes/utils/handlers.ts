@@ -41,10 +41,16 @@ export function createAttributeMultiChangeHandler(
   attributes: FormsetData<AttributeInputData, string[]>,
   triggerChange: () => void,
 ): FormsetChange<string> {
-  return (attributeId: string, value: string) => {
+  return (attributeId: string, value: string | string[]) => {
     const attribute = attributes.find(
       attribute => attribute.id === attributeId,
     );
+
+    if (Array.isArray(value)) {
+      triggerChange();
+      changeAttributeData(attributeId, value);
+      return;
+    }
 
     const newAttributeValues = toggle(
       value,

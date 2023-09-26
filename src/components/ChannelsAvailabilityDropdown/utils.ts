@@ -4,6 +4,7 @@ import { PillColor } from "@saleor/macaw-ui";
 import { MessageDescriptor } from "react-intl";
 
 import { Pill } from "../ChannelsAvailabilityMenuContent";
+import { DotStatus } from "../StatusDot/StatusDot";
 import { channelStatusMessages } from "./messages";
 
 export type CollectionChannels = Pick<
@@ -52,6 +53,17 @@ export const getChannelAvailabilityLabel = (
     return channelStatusMessages.scheduled;
   }
   return channelStatusMessages.unpublished;
+};
+export const getChannelAvailabilityStatus = (
+  channelData: CollectionChannels,
+): DotStatus => {
+  if (isActive(channelData)) {
+    return "success";
+  }
+  if (isScheduled(channelData)) {
+    return "warning";
+  }
+  return "error";
 };
 
 export const mapChannelsToPills = (channelData: CollectionChannels[]): Pill[] =>

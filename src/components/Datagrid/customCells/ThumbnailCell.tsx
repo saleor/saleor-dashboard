@@ -23,7 +23,7 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
     const { ctx, rect, theme, imageLoader, col, row } = args;
     const { image, name } = cell.data;
 
-    const xPad = 7;
+    const xPad = 5;
     const size = rect.height - xPad * 2;
 
     const drawX = rect.x + xPad;
@@ -54,7 +54,7 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
       ctx.fillStyle = theme.textDark;
       ctx.fillText(
         name,
-        drawX + size + xPad,
+        drawX + size + 10,
         rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
       );
     }

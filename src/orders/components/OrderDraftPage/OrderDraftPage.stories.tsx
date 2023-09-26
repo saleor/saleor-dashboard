@@ -51,6 +51,7 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   onCustomerEdit: () => undefined,
   onDraftFinalize: () => undefined,
   onDraftRemove: () => undefined,
+  onShowMetadata: () => undefined,
   onNoteAdd: undefined,
   onOrderLineAdd: () => undefined,
   onOrderLineChange: () => undefined,

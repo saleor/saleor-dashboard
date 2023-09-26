@@ -34,10 +34,14 @@ export const useUrlValueProvider = (
 
   const activeTab = params.get("activeTab");
   const query = params.get("query");
+  const before = params.get("before");
+  const after = params.get("after");
   params.delete("asc");
   params.delete("sort");
   params.delete("activeTab");
   params.delete("query");
+  params.delete("before");
+  params.delete("after");
 
   const tokenizedUrl = new TokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
@@ -59,6 +63,8 @@ export const useUrlValueProvider = (
         ...prepareStructure(filterValue),
         ...{ activeTab: activeTab || undefined },
         ...{ query: query || undefined },
+        ...{ before: before || undefined },
+        ...{ after: after || undefined },
       }),
     });
     setValue(filterValue);
@@ -75,6 +81,10 @@ export const useUrlValueProvider = (
     return value.some(p => FilterElement.isCompatible(p) && p.equals(element));
   };
 
+  const getTokenByName = (name: string) => {
+    return tokenizedUrl.asFlatArray().find(token => token.name === name);
+  };
+
   const count = value.filter(v => typeof v !== "string").length;
 
   return {
@@ -83,6 +93,7 @@ export const useUrlValueProvider = (
     persist,
     clear,
     isPersisted,
+    getTokenByName,
     count,
   };
 };

@@ -17,6 +17,7 @@ export const RightSidebar: React.FC<DetailPageLayoutRightSidebarProps> = ({
     borderLeftWidth={1}
     gridColumn={"8"}
     gridRow={{ mobile: "6", tablet: "full", desktop: "full" }}
+    paddingBottom={6}
   >
     {children}
   </Box>

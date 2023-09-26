@@ -5,25 +5,21 @@ import faker from "faker";
 
 import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import {
-  updateChannelWarehouses,
-} from "../../../support/api/requests/Channels";
+import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
 import { createCheckout } from "../../../support/api/requests/Checkout";
 import { createVariant } from "../../../support/api/requests/Product";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import {
-  createWaitingForCaptureOrder,
-} from "../../../support/api/utils/ordersUtils";
-import * as productsUtils
-  from "../../../support/api/utils/products/productsUtils";
-import {
-  isShippingAvailableInCheckout,
-} from "../../../support/api/utils/storeFront/checkoutUtils";
+import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
 import {
   createShippingRate,
   createShippingZone,
+  getDifferentDefaultWeight,
+  openChangeDefaultWeightDialog,
   rateOptions,
+  selectDifferentDefaultWeight,
 } from "../../../support/pages/shippingMethodPage";
 
 describe("As a staff user I want to create shipping zone and rate", () => {
@@ -127,7 +123,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
         "auth",
         ONE_PERMISSION_USERS.shipping,
       );
-      cy.visit(urlList.shippingMethods).expectSkeletonIsVisible();
+      cy.visit(urlList.shippingMethods);
       createShippingZone(
         shippingName,
         warehouse.name,
@@ -177,7 +173,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
         "auth",
         ONE_PERMISSION_USERS.shipping,
       );
-      cy.visit(urlList.shippingMethods).expectSkeletonIsVisible();
+      cy.visit(urlList.shippingMethods);
       createShippingZone(
         shippingName,
         warehouse.name,
@@ -215,6 +211,24 @@ describe("As a staff user I want to create shipping zone and rate", () => {
           );
           expect(isShippingAvailable).to.be.false;
         });
+    },
+  );
+  it(
+    "should be able to change default weight in shipping methods TC: SALEOR_4",
+    { tags: ["@shipping", "@allEnv", "@stable"] },
+    () => {
+      cy.addAliasToGraphRequest("ShopInfo");
+      cy.clearSessionData().loginUserViaRequest();
+      cy.visit(urlList.shippingMethods);
+      openChangeDefaultWeightDialog();
+      getDifferentDefaultWeight().then(unit => {
+        selectDifferentDefaultWeight(unit)
+          .waitForRequestAndCheckIfNoErrors("@ShopInfo")
+          .then(resp => {
+            expect(resp.response.body.data.shop.defaultWeightUnit).equal(unit);
+          });
+      });
+      cy.confirmationMessageShouldAppear();
     },
   );
 });

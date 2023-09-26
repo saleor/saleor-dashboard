@@ -162,7 +162,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         })}
                         name={`maxValue:${channel.name}`}
                         value={channel.maxValue}
-                        InputProps={{ inputProps: { min: channel.minValue } }}
+                        minValue={channel.minValue}
                         onChange={e =>
                           onChannelsChange(channel.id, {
                             ...channel,

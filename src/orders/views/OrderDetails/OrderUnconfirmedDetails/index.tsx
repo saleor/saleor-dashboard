@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -13,6 +15,7 @@ import {
   OrderUpdateMutationVariables,
   StockAvailability,
   useChannelUsabilityDataQuery,
+  PermissionEnum,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
@@ -22,6 +25,7 @@ import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/compon
 import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
+import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
@@ -129,6 +133,10 @@ export const OrderUnconfirmedDetails: React.FC<
   const order = data.order;
   const shop = data.shop;
   const navigate = useNavigator();
+  const user = useUser();
+  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
+    PermissionEnum.MANAGE_STAFF,
+  ]);
 
   const {
     loadMore,
@@ -170,6 +178,7 @@ export const OrderUnconfirmedDetails: React.FC<
     orderUpdate.mutate({
       id,
       input: data,
+      isStaffUser,
     });
 
   const intl = useIntl();
@@ -223,8 +232,11 @@ export const OrderUnconfirmedDetails: React.FC<
                 input: data,
               })
             }
-            onOrderLineRemove={id => orderLineDelete.mutate({ id })}
+            onOrderLineRemove={id =>
+              orderLineDelete.mutate({ id, isStaffUser })
+            }
             onShippingMethodEdit={() => openModal("edit-shipping")}
+            onShowMetadata={id => openModal("view-metadata", { id })}
             saveButtonBarState={getMutationState(
               updateMetadataOpts.called || updatePrivateMetadataOpts.called,
               updateMetadataOpts.loading || updatePrivateMetadataOpts.loading,
@@ -381,6 +393,12 @@ export const OrderUnconfirmedDetails: React.FC<
           })
         }
       />
+      <OrderMetadataDialog
+        onClose={closeModal}
+        open={params.action === "view-metadata"}
+        data={order?.lines?.find(orderLine => orderLine.id === params.id)}
+      />
+
       <OrderPaymentVoidDialog
         confirmButtonState={orderVoid.opts.status}
         errors={orderVoid.opts.data?.orderVoid.errors || []}
@@ -412,6 +430,7 @@ export const OrderUnconfirmedDetails: React.FC<
           orderFulfillmentApprove.mutate({
             id: params.id,
             notifyCustomer,
+            isStaffUser,
           })
         }
         onClose={closeModal}
@@ -427,6 +446,7 @@ export const OrderUnconfirmedDetails: React.FC<
           orderFulfillmentCancel.mutate({
             id: params.id,
             input: variables,
+            isStaffUser,
           })
         }
         onClose={closeModal}

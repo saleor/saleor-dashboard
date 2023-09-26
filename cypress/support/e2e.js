@@ -16,6 +16,7 @@ import "./customCommands/softAssertions";
 import "./customCommands/user";
 
 import { commandTimings } from "cypress-timings";
+import addContext from "mochawesome/addContext";
 
 import {
   BUTTON_SELECTORS,
@@ -23,9 +24,7 @@ import {
   SHARED_ELEMENTS,
 } from "../elements";
 import { urlList } from "../fixtures/urlList";
-import {
-  ensureCanvasStatic,
-} from "../support/customCommands/sharedElementsOperations/canvas";
+import { ensureCanvasStatic } from "../support/customCommands/sharedElementsOperations/canvas";
 import cypressGrep from "../support/cypress-grep/support";
 
 commandTimings();
@@ -160,6 +159,27 @@ Cypress.Commands.add(
       });
   },
 );
+Cypress.Commands.add(
+  "deleteFirstRecordFromGridListAndValidate",
+  (expectedName, deleteRequestName, listRequestName) => {
+    ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
+    cy.get(SHARED_ELEMENTS.firstRowDataGrid)
+      .invoke("text")
+      .then(firstOnListName => {
+        expect(expectedName).to.eq(firstOnListName);
+        cy.clickGridCell(0, 0);
+        cy.get(CATEGORY_DETAILS_SELECTORS.deleteCategoriesButton)
+          .click()
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors(`@${deleteRequestName}`)
+          .waitForRequestAndCheckIfNoErrors(`@${listRequestName}`);
+        cy.contains(SHARED_ELEMENTS.dataGridTable, firstOnListName).should(
+          "not.exist",
+        );
+      });
+  },
+);
 
 Cypress.on(
   "uncaught:exception",
@@ -168,3 +188,18 @@ Cypress.on(
     // failing the test
     false,
 );
+
+const titleToFileName = title => title.replace(/[:\/]/g, "");
+
+Cypress.on("test:after:run", (test, runnable) => {
+  if (test.state === "failed") {
+    let parent = runnable.parent;
+    let filename = "";
+    while (parent && parent.title) {
+      filename = `${titleToFileName(parent.title)} -- ${filename}`;
+      parent = parent.parent;
+    }
+    filename += `${titleToFileName(test.title)} (failed).png`;
+    addContext({ test }, `mochareports/${Cypress.spec.name}/${filename}`);
+  }
+});

@@ -126,9 +126,8 @@ export const useFilterPresets = <
   const getPresetNameToDelete = (): string => {
     const presetIndex = presetIdToDelete ? presetIdToDelete - 1 : 0;
     const preset = presets?.[presetIndex];
-    const tabName = preset?.name ?? "...";
 
-    return tabName;
+    return preset?.name ?? "...";
   };
 
   return {
@@ -143,15 +142,4 @@ export const useFilterPresets = <
     onPresetUpdate,
     hasPresetsChanged,
   };
-};
-
-export const getPresetNameToDelete = (
-  presets: GetFilterTabsOutput<string>,
-  presetIdToDelete: number | null,
-): string => {
-  const presetIndex = presetIdToDelete ? presetIdToDelete - 1 : 0;
-  const preset = presets?.[presetIndex];
-  const tabName = preset?.name ?? "...";
-
-  return tabName;
 };

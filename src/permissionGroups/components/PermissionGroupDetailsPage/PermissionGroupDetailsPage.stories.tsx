@@ -22,6 +22,7 @@ const props: PermissonGroupDetailsPageProps = {
   members: users,
   onAssign: () => undefined,
   onSort: () => undefined,
+  onDelete: () => undefined,
   onSubmit: () => new Promise(resolve => resolve(undefined)),
   onUnassign: () => undefined,
   permissionGroup,

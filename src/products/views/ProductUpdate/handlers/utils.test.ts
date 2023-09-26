@@ -131,7 +131,7 @@ describe("getCreateVariantInput", () => {
             value: 3223,
           },
           column:
-            "stock:V2FyZWhvdXNlOmQ0YzI0ODQxLTg2MDgtNGFiNC04MDkzLWUxNmQ4NWNlYjdkYQ==",
+            "warehouse:V2FyZWhvdXNlOmQ0YzI0ODQxLTg2MDgtNGFiNC04MDkzLWUxNmQ4NWNlYjdkYQ==",
           row: 1,
         },
         {
@@ -263,7 +263,7 @@ describe("getBulkVariantUpdateInputs", () => {
             kind: "number-cell",
             value: 2344,
           },
-          column: `stock:${variants[2].stocks[0].warehouse.id}`,
+          column: `warehouse:${variants[2].stocks[0].warehouse.id}`,
           row: 2,
         },
         {

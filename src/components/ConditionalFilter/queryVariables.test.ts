@@ -8,9 +8,7 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
   it("should return empty variables for empty filters", () => {
     // Arrange
     const filters: FilterContainer = [];
-    const expectedOutput = {
-      attributes: [],
-    };
+    const expectedOutput = {};
     // Act
     const result = createProductQueryVariables(filters);
     // Assert

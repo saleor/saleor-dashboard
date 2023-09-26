@@ -6,7 +6,6 @@ import { fetchMoreProps, limits } from "@dashboard/fixtures";
 import * as _useNavigator from "@dashboard/hooks/useNavigator";
 import { product as productFixture } from "@dashboard/products/fixtures";
 import { taxClasses } from "@dashboard/taxes/fixtures";
-import { warehouseList } from "@dashboard/warehouses/fixtures";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -82,7 +81,6 @@ const props: ProductUpdatePageProps = {
   taxClasses,
   fetchMoreTaxClasses: undefined,
   variants: product.variants,
-  warehouses: warehouseList,
   attributeValues: [],
 };
 
