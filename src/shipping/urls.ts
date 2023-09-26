@@ -3,15 +3,16 @@ import { ShippingMethodTypeEnum } from "@dashboard/graphql";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination, SingleAction } from "../types";
+import { BulkAction, Dialog, Pagination, Search, SingleAction } from "../types";
 
 export const shippingSection = "/shipping/";
 
 export const shippingZonesListPath = shippingSection;
-export type ShippingZonesListUrlDialog = "remove" | "remove-many";
+export type ShippingZonesListUrlDialog = "remove" | "change-weight-unit";
 export type ShippingZonesListUrlQueryParams = BulkAction &
   Dialog<ShippingZonesListUrlDialog> &
   Pagination &
+  Search &
   SingleAction;
 export const shippingZonesListUrl = (
   params?: ShippingZonesListUrlQueryParams,

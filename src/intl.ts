@@ -215,6 +215,18 @@ export const commonMessages = defineMessages({
     defaultMessage: "Product",
     id: "x/ZVlU",
   },
+  metadata: {
+    defaultMessage: "Metadata",
+    id: "8Q504V",
+  },
+  viewMetadata: {
+    defaultMessage: "View metadata",
+    id: "E/yzIO",
+  },
+  loading: {
+    defaultMessage: "Loading...",
+    id: "gjBiyj",
+  },
 });
 
 export const errorMessages = defineMessages({
@@ -386,6 +398,10 @@ export const buttonMessages = defineMessages({
     id: "KMxiiF",
     defaultMessage: "Retry",
     description: "button",
+  },
+  close: {
+    id: "rbrahO",
+    defaultMessage: "Close",
   },
 });
 

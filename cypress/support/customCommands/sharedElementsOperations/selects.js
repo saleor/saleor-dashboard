@@ -41,15 +41,30 @@ Cypress.Commands.add("createNewOption", (selectSelector, newOption) => {
     .click({ force: true });
 });
 
+Cypress.Commands.add("fillNewMultiSelect", (selectSelector, option) => {
+  cy.fillAutocompleteSelect(selectSelector, option, true).then(
+    returnedOption => {
+      cy.get(SHARED_ELEMENTS.header)
+        .first()
+        .click({ force: true })
+        .get(SHARED_ELEMENTS.multiselect.selectedOptions)
+        .should("be.visible");
+      return cy.wrap(returnedOption);
+    },
+  );
+});
+
 Cypress.Commands.add("fillMultiSelect", (selectSelector, option) => {
-  cy.fillAutocompleteSelect(selectSelector, option).then(returnedOption => {
-    cy.get(SHARED_ELEMENTS.header)
-      .first()
-      .click({ force: true })
-      .get(SHARED_ELEMENTS.multiAutocomplete.selectedOptions)
-      .should("be.visible");
-    return cy.wrap(returnedOption);
-  });
+  cy.fillAutocompleteSelect(selectSelector, option, true).then(
+    returnedOption => {
+      cy.get(SHARED_ELEMENTS.header)
+        .first()
+        .click({ force: true })
+        .get(SHARED_ELEMENTS.multiAutocomplete.selectedOptions)
+        .should("be.visible");
+      return cy.wrap(returnedOption);
+    },
+  );
 });
 
 Cypress.Commands.add("fillBaseSelect", (selectSelector, value) => {
@@ -60,46 +75,50 @@ Cypress.Commands.add("fillBaseSelect", (selectSelector, value) => {
     .click();
 });
 
-Cypress.Commands.add("fillAutocompleteSelect", (selectSelector, option) => {
-  let selectedOption = option;
-  cy.get(selectSelector)
-    .click()
-    .get(BUTTON_SELECTORS.selectOption)
-    .should("be.visible");
-  if (option) {
-    cy.get(BUTTON_SELECTORS.selectOption)
-      .first()
-      .then(detachedOption => {
-        cy.get(selectSelector).then(select => {
-          if (select.find("input").length > 0) {
-            cy.get(selectSelector)
-              .find("input")
-              .clear()
-              .type(option, { delay: 10 });
-          } else {
-            cy.get(selectSelector).clear().type(option, { delay: 10 });
-          }
-        });
-        cy.wrap(detachedOption).should(det => {
-          Cypress.dom.isDetached(det);
-        });
-        cy.contains(BUTTON_SELECTORS.selectOption, option)
-          .should("be.visible")
-          .click({ force: true })
-          .then(() => selectedOption);
-      });
-  } else {
-    cy.get(BUTTON_SELECTORS.selectOption)
-      .wait(1000)
-      .first()
-      .invoke("text")
-      .then(text => {
-        selectedOption = text;
-      });
-    return cy
+Cypress.Commands.add(
+  "fillAutocompleteSelect",
+  (selectSelector, option, isForce = false) => {
+    let selectedOption = option;
+    console.log("isForce", isForce);
+    cy.get(selectSelector)
+      .click(isForce ? { force: true } : undefined)
       .get(BUTTON_SELECTORS.selectOption)
-      .first()
-      .click()
-      .then(() => selectedOption);
-  }
-});
+      .should("be.visible");
+    if (option) {
+      cy.get(BUTTON_SELECTORS.selectOption)
+        .first()
+        .then(detachedOption => {
+          cy.get(selectSelector).then(select => {
+            if (select.find("input").length > 0) {
+              cy.get(selectSelector)
+                .find("input")
+                .clear()
+                .type(option, { delay: 10 });
+            } else {
+              cy.get(selectSelector).clear().type(option, { delay: 10 });
+            }
+          });
+          cy.wrap(detachedOption).should(det => {
+            Cypress.dom.isDetached(det);
+          });
+          cy.contains(BUTTON_SELECTORS.selectOption, option)
+            .should("be.visible")
+            .click({ force: true })
+            .then(() => selectedOption);
+        });
+    } else {
+      cy.get(BUTTON_SELECTORS.selectOption)
+        .wait(1000)
+        .first()
+        .invoke("text")
+        .then(text => {
+          selectedOption = text;
+        });
+      return cy
+        .get(BUTTON_SELECTORS.selectOption)
+        .first()
+        .click()
+        .then(() => selectedOption);
+    }
+  },
+);

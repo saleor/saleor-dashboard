@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const orderCancelMutation = gql`
-  mutation OrderCancel($id: ID!) {
+  mutation OrderCancel($id: ID!, $isStaffUser: Boolean!) {
     orderCancel(id: $id) {
       errors {
         ...OrderError
@@ -15,7 +15,11 @@ export const orderCancelMutation = gql`
 
 // Discounts
 export const orderDiscountAddMutation = gql`
-  mutation OrderDiscountAdd($input: OrderDiscountCommonInput!, $orderId: ID!) {
+  mutation OrderDiscountAdd(
+    $input: OrderDiscountCommonInput!
+    $orderId: ID!
+    $isStaffUser: Boolean!
+  ) {
     orderDiscountAdd(input: $input, orderId: $orderId) {
       errors {
         ...OrderError
@@ -28,7 +32,7 @@ export const orderDiscountAddMutation = gql`
 `;
 
 export const orderDiscountDeleteMutation = gql`
-  mutation OrderDiscountDelete($discountId: ID!) {
+  mutation OrderDiscountDelete($discountId: ID!, $isStaffUser: Boolean!) {
     orderDiscountDelete(discountId: $discountId) {
       errors {
         ...OrderError
@@ -41,7 +45,7 @@ export const orderDiscountDeleteMutation = gql`
 `;
 
 export const orderLineDiscountRemoveMutation = gql`
-  mutation OrderLineDiscountRemove($orderLineId: ID!) {
+  mutation OrderLineDiscountRemove($orderLineId: ID!, $isStaffUser: Boolean!) {
     orderLineDiscountRemove(orderLineId: $orderLineId) {
       errors {
         ...OrderError
@@ -57,6 +61,7 @@ export const orderLineDiscountUpdateMutation = gql`
   mutation OrderLineDiscountUpdate(
     $input: OrderDiscountCommonInput!
     $orderLineId: ID!
+    $isStaffUser: Boolean!
   ) {
     orderLineDiscountUpdate(input: $input, orderLineId: $orderLineId) {
       errors {
@@ -73,6 +78,7 @@ export const orderDiscountUpdateMutation = gql`
   mutation OrderDiscountUpdate(
     $input: OrderDiscountCommonInput!
     $discountId: ID!
+    $isStaffUser: Boolean!
   ) {
     orderDiscountUpdate(input: $input, discountId: $discountId) {
       errors {
@@ -88,7 +94,7 @@ export const orderDiscountUpdateMutation = gql`
 // -----
 
 export const orderDraftCancelMutation = gql`
-  mutation OrderDraftCancel($id: ID!) {
+  mutation OrderDraftCancel($id: ID!, $isStaffUser: Boolean!) {
     draftOrderDelete(id: $id) {
       errors {
         ...OrderError
@@ -111,7 +117,7 @@ export const orderDraftBulkCancelMutation = gql`
 `;
 
 export const orderConfirmMutation = gql`
-  mutation OrderConfirm($id: ID!) {
+  mutation OrderConfirm($id: ID!, $isStaffUser: Boolean!) {
     orderConfirm(id: $id) {
       errors {
         ...OrderError
@@ -124,7 +130,7 @@ export const orderConfirmMutation = gql`
 `;
 
 export const orderDraftFinalizeMutation = gql`
-  mutation OrderDraftFinalize($id: ID!) {
+  mutation OrderDraftFinalize($id: ID!, $isStaffUser: Boolean!) {
     draftOrderComplete(id: $id) {
       errors {
         ...OrderError
@@ -156,7 +162,11 @@ export const orderReturnCreateMutation = gql`
 `;
 
 export const orderRefundMutation = gql`
-  mutation OrderRefund($id: ID!, $amount: PositiveDecimal!) {
+  mutation OrderRefund(
+    $id: ID!
+    $amount: PositiveDecimal!
+    $isStaffUser: Boolean!
+  ) {
     orderRefund(id: $id, amount: $amount) {
       errors {
         ...OrderError
@@ -172,6 +182,7 @@ export const orderFulfillmentRefundProductsMutation = gql`
   mutation OrderFulfillmentRefundProducts(
     $input: OrderRefundProductsInput!
     $order: ID!
+    $isStaffUser: Boolean!
   ) {
     orderFulfillmentRefundProducts(input: $input, order: $order) {
       errors {
@@ -188,7 +199,7 @@ export const orderFulfillmentRefundProductsMutation = gql`
 `;
 
 export const orderVoidMutation = gql`
-  mutation OrderVoid($id: ID!) {
+  mutation OrderVoid($id: ID!, $isStaffUser: Boolean!) {
     orderVoid(id: $id) {
       errors {
         ...OrderError
@@ -201,7 +212,11 @@ export const orderVoidMutation = gql`
 `;
 
 export const orderMarkAsPaidMutation = gql`
-  mutation OrderMarkAsPaid($id: ID!, $transactionReference: String) {
+  mutation OrderMarkAsPaid(
+    $id: ID!
+    $transactionReference: String
+    $isStaffUser: Boolean!
+  ) {
     orderMarkAsPaid(id: $id, transactionReference: $transactionReference) {
       errors {
         ...OrderError
@@ -214,7 +229,11 @@ export const orderMarkAsPaidMutation = gql`
 `;
 
 export const orderCaptureMutation = gql`
-  mutation OrderCapture($id: ID!, $amount: PositiveDecimal!) {
+  mutation OrderCapture(
+    $id: ID!
+    $amount: PositiveDecimal!
+    $isStaffUser: Boolean!
+  ) {
     orderCapture(id: $id, amount: $amount) {
       errors {
         ...OrderError
@@ -230,6 +249,7 @@ export const orderFulfillmentUpdateTrackingMutation = gql`
   mutation OrderFulfillmentUpdateTracking(
     $id: ID!
     $input: FulfillmentUpdateTrackingInput!
+    $isStaffUser: Boolean!
   ) {
     orderFulfillmentUpdateTracking(id: $id, input: $input) {
       errors {
@@ -247,6 +267,7 @@ export const orderFulfillmentApproveMutation = gql`
     $id: ID!
     $notifyCustomer: Boolean!
     $allowStockToBeExceeded: Boolean
+    $isStaffUser: Boolean!
   ) {
     orderFulfillmentApprove(
       id: $id
@@ -264,7 +285,11 @@ export const orderFulfillmentApproveMutation = gql`
 `;
 
 export const orderFulfillmentCancelMutation = gql`
-  mutation OrderFulfillmentCancel($id: ID!, $input: FulfillmentCancelInput!) {
+  mutation OrderFulfillmentCancel(
+    $id: ID!
+    $input: FulfillmentCancelInput!
+    $isStaffUser: Boolean!
+  ) {
     orderFulfillmentCancel(id: $id, input: $input) {
       errors {
         ...OrderError
@@ -293,7 +318,11 @@ export const orderAddNoteMutation = gql`
 `;
 
 export const orderUpdateMutation = gql`
-  mutation OrderUpdate($id: ID!, $input: OrderUpdateInput!) {
+  mutation OrderUpdate(
+    $id: ID!
+    $input: OrderUpdateInput!
+    $isStaffUser: Boolean!
+  ) {
     orderUpdate(id: $id, input: $input) {
       errors {
         ...OrderError
@@ -306,7 +335,11 @@ export const orderUpdateMutation = gql`
 `;
 
 export const orderDraftUpdateMutation = gql`
-  mutation OrderDraftUpdate($id: ID!, $input: DraftOrderInput!) {
+  mutation OrderDraftUpdate(
+    $id: ID!
+    $input: DraftOrderInput!
+    $isStaffUser: Boolean!
+  ) {
     draftOrderUpdate(id: $id, input: $input) {
       errors {
         ...OrderError
@@ -322,6 +355,7 @@ export const orderShippingMethodUpdateMutation = gql`
   mutation OrderShippingMethodUpdate(
     $id: ID!
     $input: OrderUpdateShippingInput!
+    $isStaffUser: Boolean!
   ) {
     orderUpdateShipping(order: $id, input: $input) {
       errors {
@@ -378,7 +412,7 @@ export const orderDraftCreateMutation = gql`
 `;
 
 export const orderLineDeleteMutation = gql`
-  mutation OrderLineDelete($id: ID!) {
+  mutation OrderLineDelete($id: ID!, $isStaffUser: Boolean!) {
     orderLineDelete(id: $id) {
       errors {
         ...OrderError
@@ -394,7 +428,11 @@ export const orderLineDeleteMutation = gql`
 `;
 
 export const orderLinesAddMutation = gql`
-  mutation OrderLinesAdd($id: ID!, $input: [OrderLineCreateInput!]!) {
+  mutation OrderLinesAdd(
+    $id: ID!
+    $isStaffUser: Boolean!
+    $input: [OrderLineCreateInput!]!
+  ) {
     orderLinesCreate(id: $id, input: $input) {
       errors {
         ...OrderError
@@ -410,7 +448,11 @@ export const orderLinesAddMutation = gql`
 `;
 
 export const orderLineUpdateMutation = gql`
-  mutation OrderLineUpdate($id: ID!, $input: OrderLineInput!) {
+  mutation OrderLineUpdate(
+    $id: ID!
+    $isStaffUser: Boolean!
+    $input: OrderLineInput!
+  ) {
     orderLineUpdate(id: $id, input: $input) {
       errors {
         ...OrderError
@@ -423,7 +465,11 @@ export const orderLineUpdateMutation = gql`
 `;
 
 export const fulfillOrder = gql`
-  mutation FulfillOrder($orderId: ID!, $input: OrderFulfillInput!) {
+  mutation FulfillOrder(
+    $orderId: ID!
+    $input: OrderFulfillInput!
+    $isStaffUser: Boolean!
+  ) {
     orderFulfill(order: $orderId, input: $input) {
       errors {
         ...OrderError

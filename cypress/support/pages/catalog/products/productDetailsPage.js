@@ -109,7 +109,7 @@ export function fillUpProductOrganization({
 }) {
   const organization = {};
   return cy
-    .fillAutocompleteSelect(PRODUCT_DETAILS.productTypeInput, productType)
+    .fillAutocompleteSelect(PRODUCT_DETAILS.productTypeInput, productType, true)
     .then(selected => {
       organization.productType = selected;
       fillUpCollectionAndCategory({ category, collection });
@@ -124,10 +124,10 @@ export function fillUpProductOrganization({
 export function fillUpCollectionAndCategory({ category, collection }) {
   const organization = {};
   return cy
-    .fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category)
+    .fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category, true)
     .then(selected => {
       organization.category = selected;
-      cy.fillMultiSelect(PRODUCT_DETAILS.collectionInput, collection);
+      cy.fillNewMultiSelect(PRODUCT_DETAILS.collectionInput, collection);
     })
     .then(selected => {
       organization.collection = selected;

@@ -6,5 +6,5 @@ export const getTileStatus = (
   productChannelListings: ProductFragment["channelListings"],
 ): StatusDotProps["status"] =>
   productChannelListings.some(channel => channel.isPublished)
-    ? "default"
+    ? "success"
     : "error";

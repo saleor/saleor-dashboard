@@ -64,7 +64,7 @@ export function getError(
     return false;
   }
 
-  const columnId = availableColumns[column].id;
+  const columnId = availableColumns[column]?.id;
   const variantId = variants[row + removed.filter(r => r <= row).length]?.id;
 
   if (!variantId) {
@@ -113,8 +113,7 @@ export function getData({
   if (column === -1) {
     return textCell("");
   }
-
-  const columnId = availableColumns[column].id;
+  const columnId = availableColumns[column]?.id;
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
   const dataRow = added.includes(row)
     ? undefined

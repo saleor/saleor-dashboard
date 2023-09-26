@@ -9,6 +9,11 @@ const messages = defineMessages({
     defaultMessage: "SKU",
     id: "k4brJy",
   },
+  channel: {
+    defaultMessage: "Channels",
+    id: "Vze3qI",
+    description: "column category descriptor",
+  },
   margin: {
     defaultMessage: "Margin",
     id: "Us9cA1",

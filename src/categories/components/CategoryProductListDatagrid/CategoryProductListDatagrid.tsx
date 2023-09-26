@@ -1,6 +1,6 @@
 // @ts-strict-ignore
+import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
-import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
@@ -40,8 +40,11 @@ export const CategoryProductListDatagrid = ({
     [products, availableColumns],
   );
 
-  const { columns, onColumnMoved, onColumnResize } =
-    useColumnsDefault(availableColumns);
+  const { visibleColumns, handlers } = useColumns({
+    staticColumns: availableColumns,
+    selectedColumns: ["name"],
+    onSave: () => null,
+  });
 
   const handleRowAnchor = useCallback(
     ([, row]: Item) => productUrl(products[row].id),
@@ -57,7 +60,7 @@ export const CategoryProductListDatagrid = ({
         loading={disabled}
         verticalBorder={false}
         rowMarkers="checkbox"
-        availableColumns={columns}
+        availableColumns={visibleColumns}
         rows={products?.length ?? 0}
         getCellContent={getCellContent}
         getCellError={() => false}
@@ -68,8 +71,8 @@ export const CategoryProductListDatagrid = ({
         rowAnchor={handleRowAnchor}
         menuItems={() => []}
         selectionActions={() => selectionActionButton}
-        onColumnResize={onColumnResize}
-        onColumnMoved={onColumnMoved}
+        onColumnResize={handlers.onResize}
+        onColumnMoved={handlers.onMove}
         onRowSelectionChange={onSelectProductsIds}
       />
 

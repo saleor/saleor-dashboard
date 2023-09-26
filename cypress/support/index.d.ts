@@ -39,10 +39,12 @@ declare namespace Cypress {
     fillAutocompleteSelect(
       selectSelector: string,
       option?: string,
+      isForce?: boolean,
     ): Chainable<any>;
     addAliasToGraphRequest(alias: string): Chainable<any>;
     sendRequestWithQuery(query: string): Chainable<any>;
     fillMultiSelect(selectSelector: string, option: string): Chainable<any>;
+    fillNewMultiSelect(selectSelector: string, option: string): Chainable<any>;
     createNewOption(selectSelector: string, newOption: string): Chainable<any>;
     findElementsAndMakeActionOnTable({
       elementsGraphqlAlias: string,

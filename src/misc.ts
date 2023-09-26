@@ -142,7 +142,7 @@ export const transformOrderStatus = (
     case OrderStatus.PARTIALLY_FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
-        status: StatusType.WARNING,
+        status: StatusType.INFO,
       };
     case OrderStatus.UNFULFILLED:
       return {
@@ -162,7 +162,7 @@ export const transformOrderStatus = (
     case OrderStatus.UNCONFIRMED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unconfirmed),
-        status: StatusType.INFO,
+        status: StatusType.ERROR,
       };
     case OrderStatus.PARTIALLY_RETURNED:
       return {
@@ -587,6 +587,29 @@ export const getStatusColor = (
       return "surfaceBrandSubdued";
     default:
       return "surfaceBrandSubdued";
+  }
+};
+
+export const getStatusHue = (
+  status: "error" | "warning" | "info" | "success" | "generic",
+): number => {
+  const red = 0;
+  const blue = 236;
+  const green = 145;
+  const yellow = 71;
+  switch (status) {
+    case "error":
+      return red;
+    case "info":
+      return blue;
+    case "success":
+      return green;
+    case "warning":
+      return yellow;
+    case "generic":
+      return yellow;
+    default:
+      return blue;
   }
 };
 

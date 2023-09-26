@@ -78,7 +78,9 @@ export function typeRefundReason(refundReasonDescription) {
     .type(`reason_${refundReasonDescription}`);
 }
 export function typeRefundTotalAmount(amount) {
-  return cy.get(ORDER_TRANSACTION_CREATE.transactAmountInput).type(amount);
+  return cy
+    .get(ORDER_TRANSACTION_CREATE.transactAmountInput)
+    .type(amount, { force: true });
 }
 export function typeTransactionReference(reference) {
   return cy.get(ORDERS_SELECTORS.transactionReferenceInput).type(reference);
