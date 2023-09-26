@@ -202,6 +202,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   />
                   <CardSpacer />
                   <ProductDetailsChannelsAvailabilityCard
+                    disabled={disabled}
                     product={product}
                     onManageClick={toggleManageChannels}
                   />
