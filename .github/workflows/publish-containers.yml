@@ -33,14 +33,14 @@ jobs:
           CURRENT_TAG=${GITHUB_REF#refs/tags/}
 
           if [ "$LATEST_VERSION" = "$CURRENT_TAG" ]; then
-            VERSION_TAG=latest
+            TAGS=${{ steps.image.outputs.image_name }}:${CURRENT_TAG},${{ steps.image.outputs.image_name }}:latest
           else
-            VERSION_TAG=$CURRENT_TAG
+            TAGS=${{ steps.image.outputs.image_name }}:${CURRENT_TAG}
           fi
 
           echo "
           DASHBOARD_VERSION=${CURRENT_TAG}
-          CONTAINER_TAGS=${{ steps.image.outputs.image_name }}:${VERSION_TAG}
+          CONTAINER_TAGS=${TAGS}
           " >> "${GITHUB_ENV}"
 
       - name: Set up Docker QEMU
