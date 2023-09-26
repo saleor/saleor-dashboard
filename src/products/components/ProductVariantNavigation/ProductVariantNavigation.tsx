@@ -134,7 +134,7 @@ const ProductVariantNavigation: React.FC<
         {!isCreate ? (
           <Button
             marginTop={4}
-            marginLeft={5}
+            marginLeft={6}
             variant="secondary"
             onClick={() => navigate(productVariantAddUrl(productId))}
             data-test-id="button-add-variant"
