@@ -1,3 +1,4 @@
+import { FilterValueProvider } from "@dashboard/components/ConditionalFilter/FilterValueProvider";
 import { ProductTypeKindEnum } from "@dashboard/graphql";
 import { isInEnum } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
@@ -62,3 +63,11 @@ export const getActiveTabIndexAfterTabDelete = (
   tabIndexToDelete: number,
 ): string =>
   tabIndexToDelete < currentTab ? `${currentTab - 1}` : `${currentTab}`;
+
+export const obtainChannelFromFilter = (valueProvider: FilterValueProvider) => {
+  const channelToken = valueProvider.getTokenByName("channel");
+
+  if (channelToken) {
+    return channelToken.value;
+  }
+};

@@ -4,9 +4,8 @@
 import faker from "faker";
 
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
-import {
-  SHIPPING_ZONE_DETAILS,
-} from "../../../elements/shipping/shipping-zone-details";
+import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
+import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
 import {
@@ -15,10 +14,6 @@ import {
 } from "../../../support/api/requests/ShippingMethod";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { selectChannelInHeader } from "../../../support/pages/channelsPage";
-import {
-  enterAndSelectShippings,
-  enterShippingZone,
-} from "../../../support/pages/shippingZones";
 
 describe("As a staff user I want have different shipping method prices for each channel", () => {
   const startsWith = "ChannelShippingMethod";
@@ -74,7 +69,7 @@ describe("As a staff user I want have different shipping method prices for each 
             "auth",
             ONE_PERMISSION_USERS.shipping,
           );
-          enterAndSelectShippings(shippingZone.id, enterShippingZone);
+          cy.visit(`${urlList.shippingMethods}${shippingZone.id}`);
           selectChannelInHeader(defaultChannel.name);
           cy.waitForProgressBarToNotBeVisible()
             .get(SHARED_ELEMENTS.skeleton)

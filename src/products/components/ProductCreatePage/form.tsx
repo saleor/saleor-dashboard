@@ -60,13 +60,14 @@ import {
 } from "@dashboard/products/utils/validation";
 import { PRODUCT_CREATE_FORM_ID } from "@dashboard/products/views/ProductCreate/consts";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
-import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
+import createMultiselectChangeHandler from "@dashboard/utils/handlers/multiselectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
+import { Option } from "@saleor/macaw-ui/next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -76,7 +77,7 @@ import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 export interface ProductCreateFormData extends MetadataFormData {
   category: string;
   channelListings: ChannelData[];
-  collections: string[];
+  collections: Option[];
   description: OutputData;
   isAvailable: boolean;
   name: string;
@@ -228,7 +229,7 @@ function useProductCreateForm(
 
   const {
     triggerChange,
-    toggleValue,
+    toggleValues,
     handleChange,
     data: formData,
     formId,
@@ -256,11 +257,9 @@ function useProductCreateForm(
   const { makeChangeHandler: makeMetadataChangeHandler } =
     useMetadataChangeTrigger();
 
-  const handleCollectionSelect = createMultiAutocompleteSelectHandler(
-    toggleValue,
+  const handleCollectionSelect = createMultiselectChangeHandler(
+    toggleValues,
     opts.setSelectedCollections,
-    opts.selectedCollections,
-    opts.collections,
   );
   const handleCategorySelect = createSingleAutocompleteSelectHandler(
     handleChange,

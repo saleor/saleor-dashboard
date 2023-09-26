@@ -96,6 +96,12 @@ export const fragmentOrderLine = gql`
         id
         isAvailableForPurchase
       }
+      metadata {
+        ...MetadataItem
+      }
+      privateMetadata @include(if: $isStaffUser) {
+        ...MetadataItem
+      }
     }
     productName
     productSku

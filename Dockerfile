@@ -8,8 +8,7 @@ RUN npm ci --legacy-peer-deps
 COPY nginx/ nginx/
 COPY assets/ assets/
 COPY locale/ locale/
-COPY scripts/removeSourcemaps.js scripts/
-COPY scripts/build-types.js scripts/
+COPY scripts/ scripts/
 COPY vite.config.js ./
 COPY tsconfig.json ./
 COPY sw.js ./

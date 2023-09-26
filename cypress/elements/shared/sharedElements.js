@@ -23,6 +23,7 @@ export const SHARED_ELEMENTS = {
   gridStaticStatusButton: '[data-test-id="stat-col-status"]',
   gridStaticTotalButton: '[data-test-id="stat-col-total"]',
   gridStaticProductButton: '[data-test-id="stat-col-product"]',
+  gridStaticMetadataButton: '[data-test-id="stat-col-metadata"]',
   dynamicColumnSearchInput: '[data-test-id="search-columns"]',
   selectedDynamicColumnNameSelector: '[data-test-id^="column-name-"]',
   removeSelectedDynamicColumnButton:
@@ -53,6 +54,9 @@ export const SHARED_ELEMENTS = {
   },
   warningDialog: '[data-test-id="warning-dialog"]',
   pageHeader: "[data-test-id='page-header']",
+  multiselect: {
+    selectedOptions: '[data-test-id*="selected-option-"]',
+  },
   multiAutocomplete: {
     selectedOptions: '[id*="selected-option-"]',
   },

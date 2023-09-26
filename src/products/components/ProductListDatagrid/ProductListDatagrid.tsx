@@ -19,7 +19,6 @@ import {
 import useLocale from "@dashboard/hooks/useLocale";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
-import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
 import {
   ChannelProps,
   ListProps,
@@ -29,7 +28,7 @@ import {
 } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, useTheme } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -91,7 +90,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   rowAnchor,
 }) => {
   const intl = useIntl();
-  const searchProductType = useSearchProductTypes();
+  const { theme } = useTheme();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
   const productsLength = getProductRowsLength(disabled, products, disabled);
@@ -239,18 +238,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         columns: visibleColumns,
         products,
         intl,
-        getProductTypes: searchProductType,
+        theme,
         locale,
         selectedChannelId,
       }),
-    [
-      visibleColumns,
-      products,
-      intl,
-      searchProductType,
-      locale,
-      selectedChannelId,
-    ],
+    [visibleColumns, products, intl, locale, selectedChannelId],
   );
 
   return (

@@ -330,9 +330,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: ./cypress/reports
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: ./cypress/reports
       - name: Create reports dir
         continue-on-error: true
         run: npm run qa:create-artifacts-dirs

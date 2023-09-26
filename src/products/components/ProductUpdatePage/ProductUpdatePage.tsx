@@ -36,7 +36,6 @@ import {
   SearchPagesQuery,
   SearchProductsQuery,
   TaxClassBaseFragment,
-  WarehouseFragment,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -49,6 +48,7 @@ import { productImageUrl, productListUrl } from "@dashboard/products/urls";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -87,7 +87,6 @@ export interface ProductUpdatePageProps {
   product: ProductFragment;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
-  warehouses: WarehouseFragment[];
   taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
@@ -141,7 +140,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   product,
   saveButtonBarState,
   variants,
-  warehouses,
   taxClasses,
   fetchMoreTaxClasses,
   referencePages = [],
@@ -260,7 +258,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxClass={setSelectedTaxClass}
       taxClasses={taxClassesChoices}
-      warehouses={warehouses}
       hasVariants={hasVariants}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
@@ -302,7 +299,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           openModal: () => setChannelPickerOpen(true),
         };
 
-        const listings = data.channels.updateChannels.map<ChannelData>(
+        const listings = data.channels.updateChannels?.map<ChannelData>(
           listing => {
             const channel = channels?.find(ac => ac.id === listing.channelId);
 
@@ -343,7 +340,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 errors={productErrors}
                 onChange={change}
               />
-              <CardSpacer />
               <ProductMedia
                 media={media}
                 onImageDelete={onImageDelete}
@@ -352,7 +348,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 openMediaUrlModal={() => setMediaUrlModalStatus(true)}
                 getImageEditUrl={imageId => productImageUrl(productId, imageId)}
               />
-              <CardSpacer />
               {data.attributes.length > 0 && (
                 <Attributes
                   attributes={data.attributes}
@@ -372,7 +367,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   richTextGetters={attributeRichTextGetters}
                 />
               )}
-              <CardSpacer />
               <ProductVariants
                 productName={product?.name}
                 errors={variantListErrors}
@@ -380,7 +374,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 limits={limits}
                 variants={variants}
                 variantAttributes={product?.productType.variantAttributes}
-                warehouses={warehouses}
                 onAttributeValuesSearch={onAttributeValuesSearch}
                 onChange={handlers.changeVariants}
                 onRowClick={onVariantShow}
@@ -403,7 +396,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     "Add search engine title and description to make this product easier to find",
                 })}
               />
-              <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
@@ -424,20 +416,20 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onCategoryChange={handlers.selectCategory}
                 onCollectionChange={handlers.selectCollection}
               />
-              <CardSpacer />
               <ChannelsAvailabilityCard
                 {...availabilityCommonProps}
-                channels={listings}
+                channels={listings ?? []}
               />
-              <CardSpacer />
-              <ProductTaxes
-                value={data.taxClassId}
-                disabled={disabled}
-                onChange={handlers.selectTaxClass}
-                taxClassDisplayName={selectedTaxClass}
-                taxClasses={taxClasses}
-                onFetchMore={fetchMoreTaxClasses}
-              />
+              <Box paddingBottom={52}>
+                <ProductTaxes
+                  value={data.taxClassId}
+                  disabled={disabled}
+                  onChange={handlers.selectTaxClass}
+                  taxClassDisplayName={selectedTaxClass}
+                  taxClasses={taxClasses}
+                  onFetchMore={fetchMoreTaxClasses}
+                />
+              </Box>
             </DetailPageLayout.RightSidebar>
 
             <Savebar

@@ -34,41 +34,43 @@ export const ColumnPickerDynamicColumns = ({
         data-test-id="open-dynamic-search"
       />
     </Box>
-    {dynamicColumns?.map(column => (
-      <Box
-        display="flex"
-        alignItems="center"
-        gap={2}
-        padding={1}
-        key={column.id}
-      >
-        <Button
-          onClick={() => onToggle(column.id)}
-          data-test-id={`remove-dynamic-col-button-${column.title}`}
-          variant="tertiary"
-          size="small"
-          icon={<RemoveIcon color="iconNeutralPlain" />}
-          __width="20px"
-          __height="20px"
-        />
-        <Text
-          variant="body"
-          size="small"
-          color="textNeutralSubdued"
-          whiteSpace="nowrap"
+    {dynamicColumns
+      ?.filter(column => !!column.metaGroup)
+      .map(column => (
+        <Box
+          display="flex"
+          alignItems="center"
+          gap={2}
+          padding={1}
+          key={column.id}
         >
-          {`${column.metaGroup} /`}
-        </Text>
-        <Text
-          variant="body"
-          size="small"
-          color="textNeutralDefault"
-          ellipsis
-          data-test-id={`column-name-${column.title}`}
-        >
-          {column.title}
-        </Text>
-      </Box>
-    ))}
+          <Button
+            onClick={() => onToggle(column.id)}
+            data-test-id={`remove-dynamic-col-button-${column.title}`}
+            variant="tertiary"
+            size="small"
+            icon={<RemoveIcon color="iconNeutralPlain" />}
+            __width="20px"
+            __height="20px"
+          />
+          <Text
+            variant="body"
+            size="small"
+            color="textNeutralSubdued"
+            whiteSpace="nowrap"
+          >
+            {`${column.metaGroup} /`}
+          </Text>
+          <Text
+            variant="body"
+            size="small"
+            color="textNeutralDefault"
+            ellipsis
+            data-test-id={`column-name-${column.title}`}
+          >
+            {column.pickerTitle ?? column.title}
+          </Text>
+        </Box>
+      ))}
   </Box>
 );

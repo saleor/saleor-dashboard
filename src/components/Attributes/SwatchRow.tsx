@@ -4,14 +4,12 @@ import {
   getErrorMessage,
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
-import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import { getBySlug } from "@dashboard/misc";
-import { InputAdornment } from "@material-ui/core";
-import React from "react";
+import { Box } from "@saleor/macaw-ui/next";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { useStyles } from "./styles";
+import { Combobox } from "../Combobox";
 import { AttributeRowProps } from "./types";
 
 type SwatchRowProps = Pick<
@@ -34,62 +32,86 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   error,
   onChange,
 }) => {
-  const classes = useStyles();
   const intl = useIntl();
   const value = attribute.data.values.find(getBySlug(attribute.value[0]));
 
+  const options = useMemo(
+    () =>
+      attributeValues.map(({ file, value, slug, name }) => ({
+        label: name,
+        value: slug,
+        startAdornment: (
+          <SwatchPreviewBox
+            isFile={!!file}
+            backgroundImageUrl={file?.url}
+            backgroundColor={value}
+          />
+        ),
+      })),
+    [attributeValues],
+  );
+
   return (
-    <BasicAttributeRow
-      label={attribute.label}
-      id={`attribute:${attribute.label}`}
-    >
-      <SingleAutocompleteSelectField
-        fetchOnFocus
-        allowCustomValues={false}
-        choices={attributeValues.map(({ file, value, slug, name }) => ({
-          label: (
-            <>
-              <div
-                className={classes.swatchPreview}
-                style={
-                  file
-                    ? { backgroundImage: `url(${file.url})` }
-                    : { backgroundColor: value }
-                }
-              />
-              <HorizontalSpacer />
-              {name}
-            </>
-          ),
-          value: slug,
-        }))}
+    <BasicAttributeRow label={attribute.label}>
+      <Combobox
         disabled={disabled}
-        displayValue={getSingleDisplayValue(attribute, attributeValues)}
-        emptyOption={!attribute.data.isRequired}
+        options={options}
+        value={
+          attribute.value[0]
+            ? {
+                value: attribute.value[0],
+                label: getSingleDisplayValue(attribute, attributeValues),
+              }
+            : null
+        }
+        startAdornment={() =>
+          value ? (
+            <SwatchPreviewBox
+              isFile={!!value?.file}
+              backgroundImageUrl={value?.file?.url}
+              backgroundColor={value?.value}
+            />
+          ) : null
+        }
         error={!!error}
+        label=""
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
         id={`attribute:${attribute.label}`}
-        value={attribute.value[0]}
-        onChange={event => onChange(attribute.id, event.target.value)}
-        fetchChoices={value => fetchAttributeValues(value, attribute.id)}
-        InputProps={{
-          classes: { input: classes.swatchInput },
-          startAdornment: (
-            <InputAdornment position="start">
-              <div
-                className={classes.swatchPreview}
-                style={
-                  value?.file
-                    ? { backgroundImage: `url(${value.file.url})` }
-                    : { backgroundColor: value?.value }
-                }
-              />
-            </InputAdornment>
-          ),
+        onChange={e => onChange(attribute.id, e.target.value)}
+        fetchOptions={query => {
+          fetchAttributeValues(query, attribute.id);
         }}
-        {...fetchMoreAttributeValues}
+        fetchMore={fetchMoreAttributeValues}
       />
     </BasicAttributeRow>
+  );
+};
+
+const SwatchPreviewBox = ({
+  isFile,
+  backgroundColor,
+  backgroundImageUrl,
+}: {
+  isFile: boolean;
+  backgroundImageUrl?: string;
+  backgroundColor?: string;
+}) => {
+  return (
+    <Box
+      width={8}
+      height={8}
+      borderRadius={2}
+      marginRight={2}
+      style={{
+        ...(isFile
+          ? {
+              backgroundImage: `url(${backgroundImageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }
+          : { backgroundColor }),
+      }}
+    />
   );
 };

@@ -75,73 +75,75 @@ const TranslationsCollectionsPage: React.FC<
           }
         />
       </TopNav>
-      <TranslationFields
-        activeField={activeField}
-        disabled={disabled}
-        initialState={true}
-        title={intl.formatMessage(commonMessages.generalInformations)}
-        fields={[
-          {
-            displayName: intl.formatMessage({
-              id: "VZsE96",
-              defaultMessage: "Collection Name",
-            }),
-            name: TranslationInputFieldName.name,
-            translation: data?.translation?.name || null,
-            type: "short" as "short",
-            value: data?.collection?.name,
-          },
-          {
-            displayName: intl.formatMessage(commonMessages.description),
-            name: TranslationInputFieldName.description,
-            translation: data?.translation?.description || null,
-            type: "rich" as "rich",
-            value: data?.collection?.description,
-          },
-        ]}
-        saveButtonState={saveButtonState}
-        richTextResetKey={languageCode}
-        onEdit={onEdit}
-        onDiscard={onDiscard}
-        onSubmit={onSubmit}
-      />
-      <CardSpacer />
-      <TranslationFields
-        activeField={activeField}
-        disabled={disabled}
-        initialState={true}
-        title={intl.formatMessage({
-          id: "TGX4T1",
-          defaultMessage: "Search Engine Preview",
-        })}
-        fields={[
-          {
-            displayName: intl.formatMessage({
-              id: "HlEpii",
-              defaultMessage: "Search Engine Title",
-            }),
-            name: TranslationInputFieldName.seoTitle,
-            translation: data?.translation?.seoTitle || null,
-            type: "short" as "short",
-            value: data?.collection?.seoTitle,
-          },
-          {
-            displayName: intl.formatMessage({
-              id: "US3IPU",
-              defaultMessage: "Search Engine Description",
-            }),
-            name: TranslationInputFieldName.seoDescription,
-            translation: data?.translation?.seoDescription || null,
-            type: "long" as "long",
-            value: data?.collection?.seoDescription,
-          },
-        ]}
-        saveButtonState={saveButtonState}
-        richTextResetKey={languageCode}
-        onEdit={onEdit}
-        onDiscard={onDiscard}
-        onSubmit={onSubmit}
-      />
+      <DetailPageLayout.Content>
+        <TranslationFields
+          activeField={activeField}
+          disabled={disabled}
+          initialState={true}
+          title={intl.formatMessage(commonMessages.generalInformations)}
+          fields={[
+            {
+              displayName: intl.formatMessage({
+                id: "VZsE96",
+                defaultMessage: "Collection Name",
+              }),
+              name: TranslationInputFieldName.name,
+              translation: data?.translation?.name || null,
+              type: "short" as "short",
+              value: data?.collection?.name,
+            },
+            {
+              displayName: intl.formatMessage(commonMessages.description),
+              name: TranslationInputFieldName.description,
+              translation: data?.translation?.description || null,
+              type: "rich" as "rich",
+              value: data?.collection?.description,
+            },
+          ]}
+          saveButtonState={saveButtonState}
+          richTextResetKey={languageCode}
+          onEdit={onEdit}
+          onDiscard={onDiscard}
+          onSubmit={onSubmit}
+        />
+        <CardSpacer />
+        <TranslationFields
+          activeField={activeField}
+          disabled={disabled}
+          initialState={true}
+          title={intl.formatMessage({
+            id: "TGX4T1",
+            defaultMessage: "Search Engine Preview",
+          })}
+          fields={[
+            {
+              displayName: intl.formatMessage({
+                id: "HlEpii",
+                defaultMessage: "Search Engine Title",
+              }),
+              name: TranslationInputFieldName.seoTitle,
+              translation: data?.translation?.seoTitle || null,
+              type: "short" as "short",
+              value: data?.collection?.seoTitle,
+            },
+            {
+              displayName: intl.formatMessage({
+                id: "US3IPU",
+                defaultMessage: "Search Engine Description",
+              }),
+              name: TranslationInputFieldName.seoDescription,
+              translation: data?.translation?.seoDescription || null,
+              type: "long" as "long",
+              value: data?.collection?.seoDescription,
+            },
+          ]}
+          saveButtonState={saveButtonState}
+          richTextResetKey={languageCode}
+          onEdit={onEdit}
+          onDiscard={onDiscard}
+          onSubmit={onSubmit}
+        />
+      </DetailPageLayout.Content>
     </DetailPageLayout>
   );
 };

@@ -16,7 +16,7 @@ export const getColumnChannel = makeGetColumnData(/^channel:(.*)/);
 export const getColumnChannelAvailability = makeGetColumnData(
   /^availableInChannel:(.*)/,
 );
-export const getColumnStock = makeGetColumnData(/^stock:(.*)/);
+export const getColumnStock = makeGetColumnData(/^warehouse:(.*)/);
 
 export const getColumnName = (column: string) => {
   const splited = column.split(":");

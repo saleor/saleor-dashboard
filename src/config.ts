@@ -63,6 +63,7 @@ export interface AppListViewSettings {
   [ListViews.GIFT_CARD_LIST]: ListSettings;
   [ListViews.ORDER_DETAILS_LIST]: ListSettings;
   [ListViews.ORDER_DRAFT_DETAILS_LIST]: ListSettings;
+  [ListViews.PRODUCT_DETAILS]: ListSettings;
 }
 
 export const defaultListSettings: AppListViewSettings = {
@@ -122,6 +123,7 @@ export const defaultListSettings: AppListViewSettings = {
     columns: ["name", "startDate", "endDate", "value"],
   },
   [ListViews.SHIPPING_METHODS_LIST]: {
+    columns: ["name", "countries"],
     rowNumber: PAGINATE_BY,
   },
   [ListViews.STAFF_MEMBERS_LIST]: {
@@ -151,7 +153,15 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.ORDER_DETAILS_LIST]: {
     rowNumber: PAGINATE_BY,
-    columns: ["product", "sku", "variantName", "quantity", "price", "total"],
+    columns: [
+      "product",
+      "sku",
+      "variantName",
+      "quantity",
+      "price",
+      "total",
+      "metadata",
+    ],
   },
   [ListViews.ORDER_DRAFT_DETAILS_LIST]: {
     rowNumber: PAGINATE_BY,
@@ -163,7 +173,12 @@ export const defaultListSettings: AppListViewSettings = {
       "quantity",
       "price",
       "total",
+      "metadata",
     ],
+  },
+  [ListViews.PRODUCT_DETAILS]: {
+    rowNumber: PAGINATE_BY,
+    columns: ["name", "sku"],
   },
 };
 

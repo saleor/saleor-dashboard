@@ -61,7 +61,7 @@ export const ColumnPickerAvailableNodes = ({
             color="textNeutralSubdued"
             ellipsis
           >
-            {node.title}
+            {node.pickerTitle ?? node.title}
           </Text>
         </Checkbox>
       </Box>

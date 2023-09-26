@@ -122,11 +122,7 @@ export const RefundCard = ({
             name={"amount" as keyof OrderGrantRefundFormData}
             currencySymbol={currency}
             value={form.data.amount}
-            InputProps={{
-              inputProps: {
-                "data-test-id": "amountInput",
-              },
-            }}
+            data-test-id="amountInput"
           />
         </div>
         <div className={classes.submitLine}>
