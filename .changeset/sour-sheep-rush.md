@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Tag docker container as latest when the new latest releae was published
+Tag docker container as latest when the published GitHub release is marked as "latest"
