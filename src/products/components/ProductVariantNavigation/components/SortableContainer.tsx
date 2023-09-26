@@ -6,9 +6,9 @@ import {
 } from "react-sortable-hoc";
 
 export const SortableContainer = SortableContainerHOC<BoxProps>(
-  ({ children, ...props }) => <Box {...props}>{children}</Box>,
+  ({ children, ...props }: BoxProps) => <Box {...props}>{children}</Box>,
 );
 
 export const SortableElement = SortableElementHOC<BoxProps>(
-  ({ children, ...props }) => <Box {...props}>{children}</Box>,
+  ({ children, ...props }: BoxProps) => <Box {...props}>{children}</Box>,
 );
