@@ -1,7 +1,9 @@
 // @ts-strict-ignore
-import { handleNestedMutationErrors } from "@dashboard/auth";
+import { handleNestedMutationErrors, useUser } from "@dashboard/auth";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
+  PermissionEnum,
   useFulfillOrderMutation,
   useOrderFulfillDataQuery,
   useOrderFulfillSettingsQuery,
@@ -31,6 +33,10 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const user = useUser();
+  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
+    PermissionEnum.MANAGE_STAFF,
+  ]);
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderFulfillUrlDialog,
@@ -113,6 +119,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
                 allowStockToBeExceeded: formData.allowStockToBeExceeded,
               },
               orderId,
+              isStaffUser,
             },
           });
 

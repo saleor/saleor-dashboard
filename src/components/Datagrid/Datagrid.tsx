@@ -34,7 +34,6 @@ import React, {
 import { FormattedMessage } from "react-intl";
 
 import { CardMenuItem } from "../CardMenu";
-import { ColumnPickerProps } from "../ColumnPicker";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { Header } from "./components/Header";
 import { RowActions } from "./components/RowActions";
@@ -55,10 +54,7 @@ import useStyles, {
   useFullScreenStyles,
 } from "./styles";
 import { AvailableColumn } from "./types";
-import {
-  getDefultColumnPickerProps,
-  preventRowClickOnSelectionCheckbox,
-} from "./utils";
+import { preventRowClickOnSelectionCheckbox } from "./utils";
 
 export interface GetCellContentOpts {
   changes: MutableRefObject<DatagridChange[]>;
@@ -90,9 +86,7 @@ export interface DatagridProps {
   ) => ReactNode;
   onChange?: OnDatagridChange;
   onHeaderClicked?: (colIndex: number, event: HeaderClickedEventArgs) => void;
-  renderColumnPicker?: (
-    defaultProps: Partial<ColumnPickerProps>,
-  ) => ReactElement;
+  renderColumnPicker?: () => ReactElement;
   onRowClick?: (item: Item) => void;
   onColumnMoved?: (startIndex: number, endIndex: number) => void;
   onColumnResize?: (column: GridColumn, newSize: number) => void;
@@ -108,6 +102,7 @@ export interface DatagridProps {
   rowHeight?: number | ((index: number) => number);
   actionButtonPosition?: "left" | "right";
   recentlyAddedColumn?: string | null; // Enables scroll to recently added column
+  onClearRecentlyAddedColumn?: () => void;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -140,6 +135,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onRowSelectionChange,
   actionButtonPosition = "left",
   recentlyAddedColumn,
+  onClearRecentlyAddedColumn,
   rowHeight = cellHeight,
   ...datagridProps
 }): ReactElement => {
@@ -153,10 +149,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const navigate = useNavigator();
 
   const { scrolledToRight, scroller } = useScrollRight();
-
-  const defualtColumnPickerProps = getDefultColumnPickerProps(
-    classes.ghostIcon,
-  );
 
   const fullScreenClasses = useFullScreenStyles(classes);
   const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
@@ -189,6 +181,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
       const datagridScroll = editor.current.scrollTo;
       datagridScroll(columnIndex, 0, "horizontal", 0, 0, { hAlign: "start" });
+
+      // This is required to disable scroll whenever availableColumns
+      // change (e.g. columns resized, reordered, removed)
+      if (typeof onClearRecentlyAddedColumn === "function") {
+        onClearRecentlyAddedColumn();
+      }
     }
   }, [recentlyAddedColumn, availableColumns, editor]);
 
@@ -553,9 +551,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                           [classes.columnPickerBackground]: !hasMenuItem,
                         })}
                       >
-                        {renderColumnPicker
-                          ? renderColumnPicker(defualtColumnPickerProps)
-                          : null}
+                        {renderColumnPicker ? renderColumnPicker() : null}
                       </div>
                       {hasColumnGroups && (
                         <div

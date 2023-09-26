@@ -1,6 +1,9 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import {
   OrderDetailsDocument,
+  PermissionEnum,
   useCreateManualTransactionRefundMutation,
   useOrderDetailsQuery,
 } from "@dashboard/graphql";
@@ -25,11 +28,16 @@ const messages = defineMessages({
 const OrderSendRefund: React.FC<OrderSendRefund> = ({ orderId }) => {
   const intl = useIntl();
   const notify = useNotifier();
+  const user = useUser();
+  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
+    PermissionEnum.MANAGE_STAFF,
+  ]);
 
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId,
+      isStaffUser,
     },
   });
 

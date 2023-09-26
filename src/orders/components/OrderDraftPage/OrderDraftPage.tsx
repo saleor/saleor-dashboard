@@ -50,6 +50,7 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   onShippingAddressEdit: () => void;
   onShippingMethodEdit: () => void;
   onProfileView: () => void;
+  onShowMetadata: (id: string) => void;
 }
 
 const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
@@ -70,6 +71,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     onShippingAddressEdit,
     onShippingMethodEdit,
     onProfileView,
+    onShowMetadata,
     order,
     channelUsabilityData,
     users,
@@ -126,6 +128,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           onOrderLineChange={onOrderLineChange}
           onOrderLineRemove={onOrderLineRemove}
           onShippingMethodEdit={onShippingMethodEdit}
+          onShowMetadata={onShowMetadata}
         />
         <OrderHistory
           history={order?.events}

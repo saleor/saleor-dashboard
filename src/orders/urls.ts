@@ -125,7 +125,8 @@ export type OrderUrlDialog =
   | "void"
   | "transaction-action"
   | "invoice-send"
-  | "add-manual-transaction";
+  | "add-manual-transaction"
+  | "view-metadata";
 
 export interface TransactionAction {
   action: "transaction-action";

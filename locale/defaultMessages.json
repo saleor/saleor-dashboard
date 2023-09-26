@@ -476,10 +476,6 @@
     "context": "dialog header",
     "string": "Change customer shipping address"
   },
-  "142MJn": {
-    "context": "select visible columns button",
-    "string": "Columns"
-  },
   "15PiOX": {
     "context": "button title",
     "string": "Unassign"
@@ -2199,6 +2195,9 @@
     "context": "date time attribute type",
     "string": "Date Time"
   },
+  "E/yzIO": {
+    "string": "View metadata"
+  },
   "E1C9pp": {
     "context": "transaction event type, authorization amount was changed",
     "string": "Authorization amount adjusted"
@@ -2848,10 +2847,6 @@
   },
   "IH47ID": {
     "string": "Use button above to add new product variants"
-  },
-  "IHtOda": {
-    "context": "input label",
-    "string": "Selected columns"
   },
   "IKvOK+": {
     "context": "Amount error message",
@@ -4789,6 +4784,10 @@
   "VyzsWZ": {
     "string": "Default Billing Address"
   },
+  "Vze3qI": {
+    "context": "column category descriptor",
+    "string": "Channels"
+  },
   "W/Es0H": {
     "string": "Order successfully cancelled"
   },
@@ -5897,10 +5896,6 @@
   },
   "dPYqy0": {
     "string": "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
-  },
-  "dS+SOT": {
-    "context": "header",
-    "string": "Column settings"
   },
   "dS8Adx": {
     "context": "product",
@@ -7415,10 +7410,6 @@
   "osPBn1": {
     "context": "currency filter label",
     "string": "Currency"
-  },
-  "p+HM56": {
-    "context": "header",
-    "string": "Customize list"
   },
   "p+UDec": {
     "context": "payment status",

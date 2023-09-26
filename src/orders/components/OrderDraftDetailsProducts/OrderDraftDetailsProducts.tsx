@@ -23,6 +23,7 @@ interface OrderDraftDetailsProductsProps {
   loading: boolean;
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
+  onShowMetadata: (id: string) => void;
 }
 
 const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = ({
@@ -31,6 +32,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = ({
   loading,
   onOrderLineChange,
   onOrderLineRemove,
+  onShowMetadata,
 }) => {
   const classes = useStyles();
 
@@ -48,6 +50,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = ({
       onOrderLineRemove={onOrderLineRemove}
       onOrderLineChange={onOrderLineChange}
       errors={formErrors}
+      onShowMetadata={onShowMetadata}
     />
   );
 };

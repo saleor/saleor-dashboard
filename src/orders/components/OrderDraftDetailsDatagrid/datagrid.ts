@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import {
+  buttonCell,
   moneyCell,
   moneyDiscountedCell,
   numberCell,
@@ -11,6 +12,7 @@ import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
+import { commonMessages } from "@dashboard/intl";
 import {
   getDatagridRowDataIndex,
   getStatusColor,
@@ -61,6 +63,11 @@ export const orderDraftDetailsStaticColumnsAdapter = (
     width: 150,
   },
   {
+    id: "metadata",
+    title: intl.formatMessage(commonMessages.metadata),
+    width: 150,
+  },
+  {
     id: "status",
     title: intl.formatMessage(columnsMessages.status),
     width: 250,
@@ -71,12 +78,14 @@ interface GetCellContentProps {
   columns: AvailableColumn[];
   lines: OrderDetailsFragment["lines"];
   errors: OrderErrorFragment[];
+  onShowMetadata: (id: string) => void;
 }
 
 export const useGetCellContent = ({
   columns,
   lines,
   errors,
+  onShowMetadata,
 }: GetCellContentProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
@@ -154,6 +163,14 @@ export const useGetCellContent = ({
           {
             readonly: true,
             allowOverlay: false,
+          },
+        );
+
+      case "metadata":
+        return buttonCell(
+          intl.formatMessage(commonMessages.viewMetadata),
+          () => {
+            onShowMetadata(rowData.id);
           },
         );
 

@@ -28,6 +28,7 @@ interface OrderDraftDetailsProps {
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
   onShippingMethodEdit: () => void;
+  onShowMetadata: (id: string) => void;
 }
 
 const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
@@ -39,6 +40,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   onOrderLineChange,
   onOrderLineRemove,
   onShippingMethodEdit,
+  onShowMetadata,
 }) => {
   const intl = useIntl();
 
@@ -76,6 +78,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         loading={loading}
         onOrderLineChange={onOrderLineChange}
         onOrderLineRemove={onOrderLineRemove}
+        onShowMetadata={onShowMetadata}
       />
       {maybe(() => order.lines.length) !== 0 && (
         <CardContent>
