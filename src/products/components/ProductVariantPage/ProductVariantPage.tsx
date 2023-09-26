@@ -259,6 +259,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     <CardSpacer />
                     <VariantDetailsChannelsAvailabilityCard
                       variant={variant}
+                      disabled={loading}
                       onManageClick={toggleManageChannels}
                     />
                     {nonSelectionAttributes.length > 0 && (

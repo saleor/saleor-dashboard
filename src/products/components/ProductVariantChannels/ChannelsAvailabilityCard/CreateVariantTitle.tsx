@@ -7,10 +7,12 @@ import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./..
 
 interface CreateVariantTitleProps {
   onManageClick: () => void;
+  disabled: boolean;
 }
 
 export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
   onManageClick,
+  disabled,
 }) => {
   const intl = useIntl();
 
@@ -20,6 +22,7 @@ export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
         {intl.formatMessage(messages.title)}
         <Button
           variant="secondary"
+          disabled={disabled}
           data-test-id="manage-channels-button"
           onClick={onManageClick}
         >
