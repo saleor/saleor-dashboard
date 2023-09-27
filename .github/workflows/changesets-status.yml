@@ -14,5 +14,5 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Check changesets status
-        run: npx @changesets/cli status --since origin/main
+        run: npx @changesets/cli@2.26.2 status --since origin/main
 
