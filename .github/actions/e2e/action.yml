@@ -60,7 +60,7 @@ runs:
       env:
         API_URI: ${{inputs.apiUrl}}
         APP_MOUNT_URI: ${{ inputs.appMountUri }}
-        CYPRESS_baseUrl: ${{inputs.baseUrl}}
+        BASE_URL: ${{inputs.baseUrl}}
         CYPRESS_USER_NAME: ${{ inputs.userName }}
         CYPRESS_SECOND_USER_NAME: ${{ inputs.secondUserName }}
         CYPRESS_USER_PASSWORD: ${{ inputs.userPassword }}
