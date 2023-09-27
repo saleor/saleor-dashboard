@@ -8,8 +8,18 @@ import { useIntl } from "react-intl";
 interface VoucherCodesGenerateDialogProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit: (data: GenerateMultipleVoucherCodeFormData) => void;
 }
+
+export interface GenerateMultipleVoucherCodeFormData {
+  quantity: string;
+  prefix: string;
+}
+
+const initialData: GenerateMultipleVoucherCodeFormData = {
+  quantity: "",
+  prefix: "",
+};
 
 export const VoucherCodesGenerateDialog = ({
   open,
@@ -17,13 +27,7 @@ export const VoucherCodesGenerateDialog = ({
   onSubmit,
 }: VoucherCodesGenerateDialogProps) => {
   const intl = useIntl();
-  const { change, submit, data, reset } = useForm(
-    {
-      quantity: "",
-      prefix: "",
-    },
-    onSubmit,
-  );
+  const { change, submit, data, reset } = useForm(initialData, onSubmit);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (

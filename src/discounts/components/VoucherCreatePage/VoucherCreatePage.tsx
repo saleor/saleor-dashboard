@@ -26,11 +26,15 @@ import { Box } from "@saleor/macaw-ui/next";
 import isEqual from "lodash/isEqual";
 import React from "react";
 import { useIntl } from "react-intl";
+import { v4 as uuidv4 } from "uuid";
 
 import { DiscountTypeEnum, RequirementsPicker } from "../../types";
 import { VoucherCodes } from "../VoucherCodes";
 import { VoucherCodesDeleteDialog } from "../VoucherCodesDeleteDialog";
-import { VoucherCodesGenerateDialog } from "../VoucherCodesGenerateDialog";
+import {
+  GenerateMultipleVoucherCodeFormData,
+  VoucherCodesGenerateDialog,
+} from "../VoucherCodesGenerateDialog";
 import { VoucherCodesManualDialog } from "../VoucherCodesManualDialog";
 import VoucherDates from "../VoucherDates";
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
@@ -122,6 +126,12 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     clearRowSelection,
   } = useRowSelection();
 
+  const generateMultipleIds = (quantity: string, prefix?: string) => {
+    return Array.from({ length: Number(quantity) }).map(() => ({
+      code: prefix ? `${prefix}-${uuidv4()}` : uuidv4(),
+    }));
+  };
+
   return (
     <Form
       confirmLeave
@@ -158,6 +168,17 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           setClearDatagridRowSelectionCallback(clearSelection);
         };
 
+        const handleGenerateMultipeCodes = ({
+          quantity,
+          prefix,
+        }: GenerateMultipleVoucherCodeFormData) => {
+          onModalClose();
+          clearRowSelection();
+          set({
+            codes: [...data.codes, ...generateMultipleIds(quantity, prefix)],
+          });
+        };
+
         return (
           <DetailPageLayout>
             <TopNav
@@ -176,7 +197,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 onChange={event => handleDiscountTypeChange(data, event)}
                 variant="create"
               />
-              <Box marginTop={5}>
+              <Box marginTop={8}>
                 <VoucherCodes
                   codes={data.codes}
                   loading={false}
@@ -264,7 +285,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             <VoucherCodesGenerateDialog
               open={isModalOpen("multiple-codes")}
               onClose={onModalClose}
-              onSubmit={() => {}}
+              onSubmit={handleGenerateMultipeCodes}
             />
             <VoucherCodesDeleteDialog
               onClose={onModalClose}
