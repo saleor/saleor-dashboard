@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -6,26 +5,26 @@ import Money from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Skeleton from "@dashboard/components/Skeleton";
 import { HomeQuery, PermissionEnum } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { Activities, ProductTopToday } from "@dashboard/home/types";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import HomeActivityCard from "../HomeActivityCard";
-import HomeAnalyticsCard from "../HomeAnalyticsCard";
-import HomeHeader from "../HomeHeader";
-import HomeNotificationTable from "../HomeNotificationTable/HomeNotificationTable";
-import HomeProductListCard from "../HomeProductListCard";
+import { HomeActivityCard } from "../HomeActivityCard";
+import { HomeAnalyticsCard } from "../HomeAnalyticsCard";
+import { HomeHeader } from "../HomeHeader";
+import { HomeNotificationList } from "../HomeNotificationList";
+import { HomeProductList } from "../HomeProductList";
 import { homePageMessages } from "./messages";
 
 export interface HomePageProps {
-  activities: RelayToFlat<HomeQuery["activities"]>;
+  activities: Activities;
   orders: number | null;
   ordersToCapture: number | null;
   ordersToFulfill: number | null;
   productsOutOfStock: number;
-  sales: HomeQuery["salesToday"]["gross"];
-  topProducts: RelayToFlat<HomeQuery["productTopToday"]> | null;
+  sales: NonNullable<HomeQuery["salesToday"]>["gross"];
+  topProducts: ProductTopToday | null;
   userName: string;
   createNewChannelHref: string;
   ordersToFulfillHref: string;
@@ -93,13 +92,13 @@ const HomePage: React.FC<HomePageProps> = props => {
               </HomeAnalyticsCard>
             </Box>
           </RequirePermissions>
-          <HomeNotificationTable
+          <HomeNotificationList
             createNewChannelHref={createNewChannelHref}
             ordersToFulfillHref={ordersToFulfillHref}
             ordersToCaptureHref={ordersToCaptureHref}
             productsOutOfStockHref={productsOutOfStockHref}
-            ordersToCapture={ordersToCapture}
-            ordersToFulfill={ordersToFulfill}
+            ordersToCapture={ordersToCapture ?? 0}
+            ordersToFulfill={ordersToFulfill ?? 0}
             productsOutOfStock={productsOutOfStock}
             noChannel={noChannel}
           />
@@ -111,7 +110,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                 PermissionEnum.MANAGE_PRODUCTS,
               ]}
             >
-              <HomeProductListCard
+              <HomeProductList
                 testId="top-products"
                 topProducts={topProducts}
               />

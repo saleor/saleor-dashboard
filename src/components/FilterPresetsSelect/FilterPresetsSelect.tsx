@@ -48,6 +48,7 @@ export const FilterPresetsSelect = ({
   const intl = useIntl();
   const showUpdateButton =
     presetsChanged && savedPresets.length > 0 && activePreset;
+
   const showSaveButton = presetsChanged;
 
   const getLabel = () => {
@@ -158,6 +159,7 @@ export const FilterPresetsSelect = ({
                   onRemove={() => {
                     onRemove(index + 1);
                   }}
+                  key={`filter-preset-${index}`}
                 >
                   {preset}
                 </FilterPresetItem>

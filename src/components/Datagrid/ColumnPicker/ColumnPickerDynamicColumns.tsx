@@ -1,4 +1,4 @@
-import { Box, Button, PlusIcon, Text, Toggle } from "@saleor/macaw-ui/next";
+import { Box, Button, PlusIcon, RemoveIcon, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -6,17 +6,15 @@ import { AvailableColumn } from "../types";
 import messages from "./messages";
 
 export interface ColumnPickerDynamicColumnsProps {
-  dynamicColumns: AvailableColumn[] | undefined;
+  dynamicColumns?: AvailableColumn[] | null | undefined;
   setExpanded: (value: React.SetStateAction<boolean>) => void;
-  handleToggle: (id: string) => void;
-  selectedColumns: string[];
+  onToggle: (id: string) => void;
 }
 
 export const ColumnPickerDynamicColumns = ({
   dynamicColumns,
   setExpanded,
-  handleToggle,
-  selectedColumns,
+  onToggle,
 }: ColumnPickerDynamicColumnsProps) => (
   <Box data-test-id="dynamic-col-container">
     <Box
@@ -36,13 +34,25 @@ export const ColumnPickerDynamicColumns = ({
         data-test-id="open-dynamic-search"
       />
     </Box>
-    {dynamicColumns?.map(column => (
-      <Box padding={1} key={column.id}>
-        <Toggle
-          onPressedChange={() => handleToggle(column.id)}
-          pressed={selectedColumns.includes(column.id)}
-          data-test-id={`dynamic-col-${column.id}`}
+    {dynamicColumns
+      ?.filter(column => !!column.metaGroup)
+      .map(column => (
+        <Box
+          display="flex"
+          alignItems="center"
+          gap={2}
+          padding={1}
+          key={column.id}
         >
+          <Button
+            onClick={() => onToggle(column.id)}
+            data-test-id={`remove-dynamic-col-button-${column.title}`}
+            variant="tertiary"
+            size="small"
+            icon={<RemoveIcon color="iconNeutralPlain" />}
+            __width="20px"
+            __height="20px"
+          />
           <Text
             variant="body"
             size="small"
@@ -51,11 +61,16 @@ export const ColumnPickerDynamicColumns = ({
           >
             {`${column.metaGroup} /`}
           </Text>
-          <Text variant="body" size="small" color="textNeutralDefault" ellipsis>
-            {column.title}
+          <Text
+            variant="body"
+            size="small"
+            color="textNeutralDefault"
+            ellipsis
+            data-test-id={`column-name-${column.title}`}
+          >
+            {column.pickerTitle ?? column.title}
           </Text>
-        </Toggle>
-      </Box>
-    ))}
+        </Box>
+      ))}
   </Box>
 );

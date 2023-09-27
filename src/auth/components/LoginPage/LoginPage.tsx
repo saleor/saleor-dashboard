@@ -152,8 +152,8 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               <FormSpacer />
               <Typography>
                 <FormattedMessage
-                  id="ENBELI"
-                  defaultMessage="or login using"
+                  id="aFU0vm"
+                  defaultMessage="or continue with"
                   description="description"
                 />
               </Typography>

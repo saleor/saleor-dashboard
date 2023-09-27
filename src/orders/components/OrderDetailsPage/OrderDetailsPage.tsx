@@ -64,27 +64,31 @@ export interface OrderDetailsPageProps {
   ) => void;
   onOrderLineRemove?: (id: string) => void;
   onShippingMethodEdit?: () => void;
-  onBillingAddressEdit();
-  onFulfillmentApprove(id: string);
-  onFulfillmentCancel(id: string);
-  onFulfillmentTrackingNumberUpdate(id: string);
-  onOrderFulfill();
-  onProductClick?(id: string);
-  onPaymentCapture();
-  onMarkAsPaid();
-  onPaymentRefund();
-  onPaymentVoid();
-  onShippingAddressEdit();
-  onOrderCancel();
-  onNoteAdd(data: HistoryFormData);
-  onProfileView();
-  onOrderReturn();
-  onInvoiceClick(invoiceId: string);
-  onInvoiceGenerate();
-  onInvoiceSend(invoiceId: string);
-  onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
-  onAddManualTransaction();
-  onSubmit(data: MetadataIdSchema): SubmitPromise;
+  onBillingAddressEdit: () => any;
+  onFulfillmentApprove: (id: string) => any;
+  onFulfillmentCancel: (id: string) => any;
+  onShowMetadata: (id: string) => void;
+  onFulfillmentTrackingNumberUpdate: (id: string) => any;
+  onOrderFulfill: () => any;
+  onProductClick?: (id: string) => any;
+  onPaymentCapture: () => any;
+  onMarkAsPaid: () => any;
+  onPaymentRefund: () => any;
+  onPaymentVoid: () => any;
+  onShippingAddressEdit: () => any;
+  onOrderCancel: () => any;
+  onNoteAdd: (data: HistoryFormData) => any;
+  onProfileView: () => any;
+  onOrderReturn: () => any;
+  onInvoiceClick: (invoiceId: string) => any;
+  onInvoiceGenerate: () => any;
+  onInvoiceSend: (invoiceId: string) => any;
+  onTransactionAction: (
+    transactionId: string,
+    actionType: TransactionActionEnum,
+  ) => any;
+  onAddManualTransaction: () => any;
+  onSubmit: (data: MetadataIdSchema) => SubmitPromise;
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
@@ -116,6 +120,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onShippingMethodEdit,
     onTransactionAction,
     onAddManualTransaction,
+    onShowMetadata,
     onMarkAsPaid,
     onSubmit,
   } = props;
@@ -226,6 +231,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   lines={unfulfilled}
                   onFulfill={onOrderFulfill}
                   loading={loading}
+                  onShowMetadata={onShowMetadata}
                 />
               ) : (
                 <>
@@ -233,6 +239,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     order={order}
                     errors={errors}
                     loading={loading}
+                    onShowMetadata={onShowMetadata}
                     onOrderLineAdd={onOrderLineAdd}
                     onOrderLineChange={onOrderLineChange}
                     onOrderLineRemove={onOrderLineRemove}
@@ -248,6 +255,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   fulfillment={fulfillment}
                   fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
                   order={order}
+                  onShowMetadata={onShowMetadata}
                   onOrderFulfillmentCancel={() =>
                     onFulfillmentCancel(fulfillment.id)
                   }

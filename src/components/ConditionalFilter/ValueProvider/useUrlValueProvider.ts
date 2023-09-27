@@ -1,14 +1,16 @@
-// @ts-strict-ignore
-
 import { stringify } from "qs";
+import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
-import { useInitialAPIState } from "../API/getInitalAPIState";
+import { InitialAPIState } from "../API";
+import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
-import { FilterContainer } from "../useFilterContainer";
-import { useTokenArray } from "./TokenArray";
+import { TokenArray } from "./TokenArray";
+import { UrlEntry } from "./UrlToken";
 
-const prepareStructure = filterValue =>
+type Structure = Array<string | UrlEntry | Structure>;
+
+const prepareStructure = (filterValue: FilterContainer): Structure =>
   filterValue.map(f => {
     if (typeof f === "string") {
       return f;
@@ -21,31 +23,77 @@ const prepareStructure = filterValue =>
     return f.asUrlEntry();
   });
 
-/*
-  exampple url: http://localhost:9000/dashboard/products/?0%5Bs2.category%5D%5B0%5D=accessories&0%5Bs2.category%5D%5B1%5D=groceries&1=o&2%5Ba2.abv%5D%5B0%5D=QXR0cmlidXRlVmFsdWU6Njg%3D&3=a&4%5Bs2.collection%5D%5B0%5D=featured-products&5=a&6%5Bs2.producttype%5D%5B0%5D=beer&7=a&8%5B0%5D%5Bs2.category%5D%5B0%5D=apparel&8%5B1%5D=o&8%5B2%5D%5Ba2.bottle-size%5D%5B0%5D=QXR0cmlidXRlVmFsdWU6NDY%3D&8%5B2%5D%5Ba2.bottle-size%5D%5B1%5D=QXR0cmlidXRlVmFsdWU6NDc%3D&asc=true&sort=name
-*/
-export const useUrlValueProvider = (): FilterValueProvider => {
+export const useUrlValueProvider = (
+  initialState: InitialAPIState,
+  locationSearch: string,
+): FilterValueProvider => {
   const router = useRouter();
-  const params = new URLSearchParams(router.location.search);
+  const params = new URLSearchParams(locationSearch);
+  const { data, loading, fetchQueries } = initialState;
+  const [value, setValue] = useState<FilterContainer>([]);
+
+  const activeTab = params.get("activeTab");
+  const query = params.get("query");
+  const before = params.get("before");
+  const after = params.get("after");
   params.delete("asc");
   params.delete("sort");
+  params.delete("activeTab");
+  params.delete("query");
+  params.delete("before");
+  params.delete("after");
 
-  const tokenizedUrl = useTokenArray(params.toString());
+  const tokenizedUrl = new TokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
-  const { data, loading } = useInitialAPIState(fetchingParams);
-  const value = loading ? [] : tokenizedUrl.asFilterValuesFromResponse(data);
 
+  useEffect(() => {
+    fetchQueries(fetchingParams);
+  }, [locationSearch]);
+
+  useEffect(() => {
+    if (loading) return;
+
+    setValue(tokenizedUrl.asFilterValuesFromResponse(data));
+  }, [data, loading]);
 
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
       pathname: router.location.pathname,
-      search: stringify(prepareStructure(filterValue)),
+      search: stringify({
+        ...prepareStructure(filterValue),
+        ...{ activeTab: activeTab || undefined },
+        ...{ query: query || undefined },
+        ...{ before: before || undefined },
+        ...{ after: after || undefined },
+      }),
     });
+    setValue(filterValue);
   };
+
+  const clear = () => {
+    router.history.replace({
+      pathname: router.location.pathname,
+    });
+    setValue([]);
+  };
+
+  const isPersisted = (element: FilterElement) => {
+    return value.some(p => FilterElement.isCompatible(p) && p.equals(element));
+  };
+
+  const getTokenByName = (name: string) => {
+    return tokenizedUrl.asFlatArray().find(token => token.name === name);
+  };
+
+  const count = value.filter(v => typeof v !== "string").length;
 
   return {
     value,
     loading,
     persist,
+    clear,
+    isPersisted,
+    getTokenByName,
+    count,
   };
 };

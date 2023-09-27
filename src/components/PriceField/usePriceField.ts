@@ -5,12 +5,16 @@ import { useMemo } from "react";
 import { SEPARATOR_CHARACTERS } from "./consts";
 import { findPriceSeparator, getCurrencyDecimalPoints } from "./utils";
 
-export function usePriceField(currency: string, onChange: FormChange) {
+export function usePriceField(
+  currency: string | undefined,
+  onChange: FormChange,
+) {
   const minValue = 0;
 
-  const maxDecimalLength = useMemo(() => getCurrencyDecimalPoints(currency), [
-    currency,
-  ]);
+  const maxDecimalLength = useMemo(
+    () => getCurrencyDecimalPoints(currency),
+    [currency],
+  );
 
   const handleChange: FormChange = e => {
     let value = e.target.value;

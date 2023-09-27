@@ -1,12 +1,16 @@
 /// <reference types="cypress"/>
 /// <reference types="../../support"/>
 
-import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
+import {
+  PRODUCT_DETAILS,
+} from "../../elements/catalog/products/product-details";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { demoProductsNames } from "../../fixtures/products";
 import { productDetailsUrl } from "../../fixtures/urlList";
 import { getFirstProducts } from "../../support/api/requests/Product";
-import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/collectionsUtils";
+import {
+  deleteCollectionsStartsWith,
+} from "../../support/api/utils/catalog/collectionsUtils";
 import {
   createNewProductWithNewDataAndDefaultChannel,
   deleteProductsStartsWith,
@@ -14,7 +18,7 @@ import {
 
 describe("Tests for images", () => {
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

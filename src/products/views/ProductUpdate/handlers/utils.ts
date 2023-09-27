@@ -46,7 +46,7 @@ export function getProductUpdateVariables(
         updatedFileAttributes,
       }),
       category: data.category,
-      collections: data.collections,
+      collections: data.collections.map(collection => collection.value),
       description: getParsedDataForJsonStringField(data.description),
       name: data.name,
       rating: data.rating,
@@ -79,29 +79,42 @@ export function getProductChannelsUpdateVariables(
 
   const dataUpdated = new Map<string, ProductChannelListingAddInput>();
   data.channels.updateChannels
-    .map(listing =>
-      pick(
+    .map(listing => {
+      const fielsToPick = [
+        "channelId",
+        "isAvailableForPurchase",
+        "isPublished",
+        "visibleInListings",
+      ] as Array<keyof ProductChannelListingAddInput>;
+
+      if (!listing.isAvailableForPurchase) {
+        fielsToPick.push("availableForPurchaseAt", "availableForPurchaseDate");
+      }
+
+      if (!listing.isPublished) {
+        fielsToPick.push("publicationDate", "publishedAt");
+      }
+
+      return pick(
         listing,
         // Filtering it here so we send only fields defined in input schema
-        [
-          "availableForPurchaseAt",
-          "availableForPurchaseDate",
-          "channelId",
-          "isAvailableForPurchase",
-          "isPublished",
-          "publicationDate",
-          "publishedAt",
-          "visibleInListings",
-        ] as Array<keyof ProductChannelListingAddInput>,
-      ),
-    )
+        fielsToPick,
+      );
+    })
     .forEach(listing => dataUpdated.set(listing.channelId, listing));
 
   const updateChannels = channels
     .filter(channelId => dataUpdated.has(channelId))
-    .map(channelId => ({
-      ...dataUpdated.get(channelId),
-    }));
+    .map(channelId => {
+      const data = dataUpdated.get(channelId);
+      return {
+        ...data,
+        isAvailableForPurchase:
+          data.availableForPurchaseDate !== null
+            ? true
+            : data.isAvailableForPurchase,
+      };
+    });
 
   return {
     id: product.id,
@@ -128,9 +141,12 @@ export function getBulkVariantUpdateInputs(
 
 const createToUpdateInput =
   (data: DatagridChangeOpts) =>
-  (variant, variantIndex): ProductVariantBulkUpdateInput => ({
+  (
+    variant: ProductFragment["variants"][number],
+    variantIndex: number,
+  ): ProductVariantBulkUpdateInput => ({
     id: variant.id,
-    attributes: getAttributeData(data.updates, variantIndex, data.removed),
+    attributes: getVariantAttributesForUpdate(data, variantIndex, variant),
     sku: getSkuData(data.updates, variantIndex, data.removed),
     name: getNameData(data.updates, variantIndex, data.removed),
     stocks: getVaraintUpdateStockData(
@@ -141,6 +157,31 @@ const createToUpdateInput =
     ),
     channelListings: getUpdateVariantChannelInputs(data, variantIndex, variant),
   });
+
+const getVariantAttributesForUpdate = (
+  data: DatagridChangeOpts,
+  variantIndex: number,
+  variant: ProductFragment["variants"][number],
+) => {
+  const updatedAttributes = getAttributeData(
+    data.updates,
+    variantIndex,
+    data.removed,
+  );
+  // Re-send current values for all not-updated attributes, in case some of them were required
+  const notUpdatedAttributes: ReturnType<typeof getAttributeData> =
+    variant.attributes
+      .filter(attribute =>
+        updatedAttributes.find(
+          updatedAttribute => updatedAttribute.id !== attribute.attribute.id,
+        ),
+      )
+      .map(attribute => ({
+        id: attribute.attribute.id,
+        values: attribute.values.map(({ name }) => name),
+      }));
+  return [...updatedAttributes, ...notUpdatedAttributes];
+};
 
 const byAvailability = (variant: ProductVariantBulkUpdateInput): boolean =>
   variant.name !== undefined ||

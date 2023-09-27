@@ -2,15 +2,35 @@ import { gql } from "@apollo/client";
 
 export const initialDynamicLeftOperands = gql`
   query _GetDynamicLeftOperands($first: Int!, $query: String!) {
-    attributes(first: $first, filter: { type: PRODUCT_TYPE, search: $query }) {
+    attributes(
+      first: $first
+      search: $query
+      where: {
+        type: { eq: PRODUCT_TYPE }
+        inputType: {
+          oneOf: [
+            DROPDOWN
+            MULTISELECT
+            BOOLEAN
+            NUMERIC
+            DATE
+            DATE_TIME
+            SWATCH
+          ]
+        }
+      }
+    ) {
       edges {
         node {
           id
           name
           slug
           inputType
+          __typename
         }
+        __typename
       }
+      __typename
     }
   }
 `;
@@ -18,14 +38,14 @@ export const initialDynamicLeftOperands = gql`
 export const initialDynamicOperands = gql`
   query _GetChannelOperands {
     channels {
-      id
+      id: slug
       name
       slug
     }
   }
 
   query _SearchCollectionsOperands($first: Int!, $collectionsSlugs: [String!]) {
-    search: collections(first: $first, filter: { slugs: $collectionsSlugs }) {
+    collections(first: $first, filter: { slugs: $collectionsSlugs }) {
       edges {
         node {
           id
@@ -41,7 +61,7 @@ export const initialDynamicOperands = gql`
     $first: Int!
     $categoriesSlugs: [String!]
   ) {
-    search: categories(
+    categories(
       after: $after
       first: $first
       filter: { slugs: $categoriesSlugs }
@@ -61,7 +81,7 @@ export const initialDynamicOperands = gql`
     $first: Int!
     $productTypesSlugs: [String!]
   ) {
-    search: productTypes(
+    productTypes(
       after: $after
       first: $first
       filter: { slugs: $productTypesSlugs }
@@ -81,7 +101,7 @@ export const initialDynamicOperands = gql`
     $choicesIds: [ID!]
     $first: Int!
   ) {
-    search: attributes(first: $first, filter: { slugs: $attributesSlugs }) {
+    attributes(first: $first, filter: { slugs: $attributesSlugs }) {
       edges {
         node {
           id
@@ -94,6 +114,7 @@ export const initialDynamicOperands = gql`
                 slug: id
                 id
                 name
+                originalSlug: slug
               }
             }
           }
@@ -112,6 +133,7 @@ export const dynamicOperandsQueries = gql`
             slug: id
             id
             name
+            originalSlug: slug
           }
         }
       }

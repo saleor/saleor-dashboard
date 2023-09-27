@@ -1,4 +1,5 @@
-import { UserFragment } from "@dashboard/graphql";
+import { ApolloQueryResult } from "@apollo/client";
+import { UserDetailsQuery, UserFragment } from "@dashboard/graphql";
 import {
   GetExternalAccessTokenData,
   GetExternalAuthUrlData,
@@ -26,7 +27,8 @@ export const UserContextError = {
   unknownLoginError: "unknownLoginError",
 } as const;
 
-export type UserContextError = typeof UserContextError[keyof typeof UserContextError];
+export type UserContextError =
+  (typeof UserContextError)[keyof typeof UserContextError];
 
 export interface UserContext {
   login: (username: string, password: string) => Promise<LoginData>;
@@ -43,4 +45,5 @@ export interface UserContext {
   authenticating: boolean;
   authenticated: boolean;
   errors: UserContextError[];
+  refetchUser: () => Promise<ApolloQueryResult<UserDetailsQuery>>;
 }

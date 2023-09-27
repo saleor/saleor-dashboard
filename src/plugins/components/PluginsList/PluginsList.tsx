@@ -5,13 +5,20 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { renderCollection } from "@dashboard/misc";
+import { getPluginsWithAppReplacementsIds } from "@dashboard/plugins/plugins-with-app-replacements";
 import { PluginListUrlSortField, pluginUrl } from "@dashboard/plugins/urls";
 import { ListProps, SortPage } from "@dashboard/types";
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import {
+  TableBody,
+  TableCell,
+  TableFooter,
+  Typography,
+} from "@material-ui/core";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { pluginsMiscMessages } from "./messages";
 import PluginChannelAvailabilityCell from "./PluginChannelAvailabilityCell";
 import PluginChannelConfigurationCell from "./PluginChannelConfigurationCell";
 import PluginListTableHead from "./PluginListTableHead";
@@ -25,6 +32,10 @@ export const useStyles = makeStyles(
   { name: "PluginsList" },
 );
 
+const pluginsWithAppReplacements = getPluginsWithAppReplacementsIds();
+const hasAppReplacement = (pluginId: string) =>
+  pluginsWithAppReplacements.includes(pluginId);
+
 export interface PluginListProps
   extends ListProps,
     SortPage<PluginListUrlSortField> {
@@ -34,14 +45,8 @@ export interface PluginListProps
 const totalColSpan = 10;
 
 const PluginList: React.FC<PluginListProps> = props => {
-  const {
-    settings,
-    plugins,
-    disabled,
-    sort,
-    onSort,
-    onUpdateListSettings,
-  } = props;
+  const { settings, plugins, disabled, sort, onSort, onUpdateListSettings } =
+    props;
   const classes = useStyles(props);
   const navigate = useNavigator();
   const intl = useIntl();
@@ -62,8 +67,16 @@ const PluginList: React.FC<PluginListProps> = props => {
       <TableBody>
         {renderCollection(
           plugins,
-          plugin =>
-            plugin ? (
+          plugin => {
+            const hasReplacement = plugin && hasAppReplacement(plugin.id);
+            const activeChannelConfigurations =
+              plugin?.channelConfigurations?.filter(c => c.active);
+            const isActive =
+              plugin?.globalConfiguration?.active ||
+              (activeChannelConfigurations &&
+                activeChannelConfigurations.length > 0);
+
+            return plugin ? (
               <TableRowLink
                 data-test-id="plugin"
                 hover={!!plugin}
@@ -73,7 +86,16 @@ const PluginList: React.FC<PluginListProps> = props => {
                 onClick={() => plugin && navigate(pluginUrl(plugin.id))}
                 key={plugin ? plugin.id : "skeleton"}
               >
-                <TableCell colSpan={5}>{plugin.name}</TableCell>
+                <TableCell colSpan={5}>
+                  <Typography>{plugin.name}</Typography>
+                  {hasReplacement && isActive && (
+                    <Typography variant="caption" color="error">
+                      {intl.formatMessage(
+                        pluginsMiscMessages.appReplacementMessage,
+                      )}
+                    </Typography>
+                  )}
+                </TableCell>
                 <PluginChannelConfigurationCell plugin={plugin} />
                 <PluginChannelAvailabilityCell plugin={plugin} />
                 <TableCell align="right">
@@ -86,7 +108,8 @@ const PluginList: React.FC<PluginListProps> = props => {
                   <Skeleton />
                 </TableCell>
               </TableRowLink>
-            ),
+            );
+          },
           () => (
             <TableRowLink>
               <TableCell colSpan={totalColSpan}>

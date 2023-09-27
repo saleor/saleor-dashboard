@@ -1,12 +1,8 @@
-// @ts-strict-ignore
-
 import { parse, ParsedQs } from "qs";
-import { useRef } from "react";
 
 import { InitialStateResponse } from "../../API/InitialStateResponse";
-import { FilterElement } from "../../FilterElement";
-import { FilterContainer } from "../../useFilterContainer";
-import { UrlToken } from "../UrlToken";
+import { FilterContainer, FilterElement } from "../../FilterElement";
+import { UrlEntry, UrlToken } from "../UrlToken";
 import {
   emptyFetchingParams,
   FetchingParams,
@@ -38,7 +34,7 @@ const mapToTokens = (urlEntries: Array<ParsedQs | string>): TokenArray =>
       return mapToTokens(entry);
     }
 
-    return UrlToken.fromUrlEntry(entry);
+    return UrlToken.fromUrlEntry(UrlEntry.fromQs(entry));
   }) as TokenArray;
 
 const tokenizeUrl = (urlParams: string) => {
@@ -50,7 +46,7 @@ const tokenizeUrl = (urlParams: string) => {
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
   response: InitialStateResponse,
-) =>
+): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
       return el;
@@ -91,16 +87,15 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
       }
 
       return FilterElement.fromUrlToken(el, response);
+    }).map((element, _, container) => {
+      if (
+        FilterElement.isCompatible(element) &&
+        !element.constraint?.existIn(container)
+      ) {
+        element.clearConstraint();
+      }
+
+      return element;
     });
   }
 }
-
-export const useTokenArray = (url: string) => {
-  const instance = useRef<TokenArray>(null);
-
-  if (!instance.current) {
-    instance.current = new TokenArray(url);
-  }
-
-  return instance.current;
-};

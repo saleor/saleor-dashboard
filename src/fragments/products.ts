@@ -46,7 +46,7 @@ export const fragmentProductMedia = gql`
     id
     alt
     sortOrder
-    url
+    url(size: 1024)
     type
     oembedData
   }
@@ -102,7 +102,7 @@ export const productFragment = gql`
   fragment ProductWithChannelListings on Product {
     id
     name
-    thumbnail {
+    thumbnail(size: 1024) {
       url
     }
     productType {

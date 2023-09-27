@@ -40,6 +40,7 @@ export function getGiftCards(first) {
         node{
           displayCode
           id
+          code
           isActive
           expiryDate
           tags{
@@ -158,4 +159,18 @@ export function deleteGiftCard(giftCardId) {
     }
   }`;
   return cy.sendRequestWithQuery(mutation);
+}
+export function ensureGiftCardIsCreated(giftCardId, retries = 0) {
+  return getGiftCards(100, giftCardId).then(giftCardsListResponse => {
+    if (JSON.stringify(giftCardsListResponse).includes(giftCardId)) {
+      return;
+    } else if (retries > 4) {
+      throw new Error(
+        `Gift card with id: ${giftCardId} should be on list but could not find it. Retried for ${retries} times`,
+      );
+    } else {
+      cy.wait(5000);
+      ensureGiftCardIsAdded(giftCardId, retries + 1);
+    }
+  });
 }

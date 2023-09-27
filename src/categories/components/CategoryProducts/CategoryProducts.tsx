@@ -1,91 +1,82 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { DashboardCard } from "@dashboard/components/Card";
 import { InternalLink } from "@dashboard/components/InternalLink";
 import { CategoryDetailsQuery } from "@dashboard/graphql";
 import { productAddUrl, productListUrl } from "@dashboard/products/urls";
-import { Card } from "@material-ui/core";
+import { RelayToFlat } from "@dashboard/types";
+import { Box, Button } from "@saleor/macaw-ui/next";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
-import { ListActions, PageListProps, RelayToFlat } from "../../../types";
-import CategoryProductList from "../CategoryProductList";
-import { useStyles } from "./styles";
+import { CategoryProductListDatagrid } from "../CategoryProductListDatagrid";
 
-interface CategoryProductsProps extends PageListProps, ListActions {
-  products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
-  categoryName: string;
+interface CategoryProductsProps {
+  category: CategoryDetailsQuery["category"];
   categoryId: string;
+  products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
+  disabled: boolean;
+  onProductsDelete: () => void;
+  onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;
 }
 
-export const CategoryProducts: React.FC<CategoryProductsProps> = ({
+export const CategoryProducts = ({
+  category,
+  categoryId,
   products,
   disabled,
-  categoryId,
-  categoryName,
-  isChecked,
-  selected,
-  toggle,
-  toggleAll,
-  toolbar,
-}) => {
-  const intl = useIntl();
-  const classes = useStyles();
+  onProductsDelete,
+  onSelectProductsIds,
+}: CategoryProductsProps) => (
+  <DashboardCard>
+    <DashboardCard.Title>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <FormattedMessage
+          id="+43JV5"
+          defaultMessage="Products in {categoryName}"
+          description="header"
+          values={{ categoryName: category?.name }}
+        />
 
-  return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage(
-          {
-            id: "+43JV5",
-            defaultMessage: "Products in {categoryName}",
-            description: "header",
-          },
-          { categoryName },
-        )}
-        toolbar={
-          <div className={classes.toolbar}>
-            <InternalLink
-              to={productListUrl({
-                categories: [categoryId],
-              })}
-            >
-              <Button variant="tertiary" data-test-id="view-products">
-                <FormattedMessage
-                  id="z8jo8h"
-                  defaultMessage="View products"
-                  description="button"
-                />
-              </Button>
-            </InternalLink>
-            <HorizontalSpacer />
-            <Button
-              variant="tertiary"
-              href={productAddUrl()}
-              data-test-id="add-products"
-            >
+        <Box display="flex" gap={4}>
+          <InternalLink
+            to={productListUrl({
+              categories: [categoryId],
+            })}
+          >
+            <Button variant="secondary" data-test-id="view-products">
+              <FormattedMessage
+                id="z8jo8h"
+                defaultMessage="View products"
+                description="button"
+              />
+            </Button>
+          </InternalLink>
+
+          <InternalLink to={productAddUrl()}>
+            <Button variant="secondary" data-test-id="add-products">
               <FormattedMessage
                 id="x/pIZ9"
                 defaultMessage="Add product"
                 description="button"
               />
             </Button>
-          </div>
-        }
-      />
-      <CategoryProductList
-        products={products}
-        disabled={disabled}
-        selected={selected}
-        isChecked={isChecked}
-        toggle={toggle}
-        toggleAll={toggleAll}
-        toolbar={toolbar}
-      />
-    </Card>
-  );
-};
+          </InternalLink>
+        </Box>
+      </Box>
+    </DashboardCard.Title>
 
-CategoryProducts.displayName = "CategoryProducts";
-export default CategoryProducts;
+    <CategoryProductListDatagrid
+      products={products}
+      disabled={disabled}
+      onSelectProductsIds={onSelectProductsIds}
+      selectionActionButton={
+        <Box paddingRight={5}>
+          <BulkDeleteButton onClick={onProductsDelete}>
+            <FormattedMessage defaultMessage="Delete products" id="uwk5e9" />
+          </BulkDeleteButton>
+        </Box>
+      }
+    />
+  </DashboardCard>
+);

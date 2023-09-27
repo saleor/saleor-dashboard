@@ -7,6 +7,7 @@ import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import {
+  checkIfCredentialsExist,
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
   saveCredentials,
@@ -109,7 +110,10 @@ export function useAuthProvider({
       } as RequestExternalLogoutInput),
     });
 
-    if (isCredentialsManagementAPISupported) {
+    // Clear credentials from browser's credential manager only when exist.
+    // Chrome 115 crash when calling preventSilentAccess() when no credentials exist.
+    const hasCredentials = await checkIfCredentialsExist();
+    if (isCredentialsManagementAPISupported && !!hasCredentials) {
       navigator.credentials.preventSilentAccess();
     }
 
@@ -241,6 +245,7 @@ export function useAuthProvider({
     authenticating: authenticating && !errors.length,
     authenticated: authenticated && !!user?.isStaff && !errors.length,
     user: userDetails.data?.me,
+    refetchUser: userDetails.refetch,
     errors,
   };
 }

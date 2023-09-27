@@ -8,21 +8,22 @@ const mockedColumns: AvailableColumn[] = [
     id: "name",
     title: "Name",
     width: 200,
-    metaGroup: "Product",
-    hasMenu: false,
     icon: "arrowUp",
   },
   {
     id: "description",
     title: "Description",
     width: 100,
-    metaGroup: "Sales Information",
-    hasMenu: false,
     icon: "arrowUp",
   },
 ];
 
-const mockedSelectedColumns = ["name", "attribute:QXR0cmlidXRlOjE0"];
+// dynamic - color and ABV
+const mockedSelectedColumns = [
+  "name",
+  "attribute:QXR0cmlidXRlOjE0",
+  "attribute:QXR0cmlidXRlOjIx",
+];
 
 const mockedCategories: ColumnCategory[] = [
   {
@@ -68,26 +69,8 @@ const mockedCategories: ColumnCategory[] = [
         width: 200,
       },
       {
-        id: "attribute:QXR0cmlidXRlOjE1",
-        title: "Bottle Size",
-        metaGroup: "Attributes",
-        width: 200,
-      },
-      {
         id: "attribute:QXR0cmlidXRlOjE0",
         title: "Color",
-        metaGroup: "Attributes",
-        width: 200,
-      },
-      {
-        id: "attribute:QXR0cmlidXRlOjUwOQ==",
-        title: "storage size ",
-        metaGroup: "Attributes",
-        width: 200,
-      },
-      {
-        id: "attribute:QXR0cmlidXRlOjI5",
-        title: "Tag",
         metaGroup: "Attributes",
         width: 200,
       },
@@ -100,21 +83,11 @@ const mockedCategories: ColumnCategory[] = [
   },
 ];
 
-const mockedColumnPickerSettings = [
-  "attribute:QXR0cmlidXRlOjIx",
-  "attribute:QXR0cmlidXRlOjE1",
-  "attribute:QXR0cmlidXRlOjUwOQ==",
-  "attribute:QXR0cmlidXRlOjI5",
-  "attribute:QXR0cmlidXRlOjE0",
-];
-
 const expectedVisibleColumns = [
   {
     id: "name",
     title: "Name",
     width: 200,
-    metaGroup: "Product",
-    hasMenu: false,
     icon: "arrowUp",
   },
   {
@@ -123,43 +96,29 @@ const expectedVisibleColumns = [
     metaGroup: "Attributes",
     width: 200,
   },
-];
-
-// In order of mockedColumnPickerSettings
-const expectedDynamicColumns = [
   {
     id: "attribute:QXR0cmlidXRlOjIx",
     title: "ABV",
     metaGroup: "Attributes",
     width: 200,
   },
-  {
-    id: "attribute:QXR0cmlidXRlOjE1",
-    title: "Bottle Size",
-    metaGroup: "Attributes",
-    width: 200,
-  },
-  {
-    id: "attribute:QXR0cmlidXRlOjUwOQ==",
-    title: "storage size ",
-    metaGroup: "Attributes",
-    width: 200,
-  },
-  {
-    id: "attribute:QXR0cmlidXRlOjI5",
-    title: "Tag",
-    metaGroup: "Attributes",
-    width: 200,
-  },
+];
+
+const expectedDynamicColumns = [
   {
     id: "attribute:QXR0cmlidXRlOjE0",
     title: "Color",
     metaGroup: "Attributes",
     width: 200,
   },
+  {
+    id: "attribute:QXR0cmlidXRlOjIx",
+    title: "ABV",
+    metaGroup: "Attributes",
+    width: 200,
+  },
 ];
 
-const setDynamicColumnSettings = jest.fn();
 const onSave = jest.fn();
 
 describe("useColumns", () => {
@@ -174,8 +133,6 @@ describe("useColumns", () => {
         selectedColumns: mockedSelectedColumns,
         columnCategories: mockedCategories,
         onSave,
-        columnPickerSettings: mockedColumnPickerSettings,
-        setDynamicColumnSettings,
       }),
     );
     // Assert
@@ -184,9 +141,6 @@ describe("useColumns", () => {
     expect(result.current.dynamicColumns).toEqual(expectedDynamicColumns);
     expect(result.current.selectedColumns).toEqual(mockedSelectedColumns);
     expect(result.current.columnCategories).toEqual(mockedCategories);
-    expect(result.current.columnPickerSettings).toEqual(
-      mockedColumnPickerSettings,
-    );
   });
   it("should update visible column info when resized", () => {
     // Arrange
@@ -196,8 +150,6 @@ describe("useColumns", () => {
         selectedColumns: mockedSelectedColumns,
         columnCategories: mockedCategories,
         onSave,
-        columnPickerSettings: mockedColumnPickerSettings,
-        setDynamicColumnSettings,
       }),
     );
 
@@ -217,8 +169,6 @@ describe("useColumns", () => {
         selectedColumns: mockedSelectedColumns,
         columnCategories: mockedCategories,
         onSave,
-        columnPickerSettings: mockedColumnPickerSettings,
-        setDynamicColumnSettings,
       }),
     );
 
@@ -226,11 +176,28 @@ describe("useColumns", () => {
     act(() => result.current.handlers.onMove(1, 0));
 
     // Assert
-    expect(result.current.visibleColumns).toEqual(
-      expectedVisibleColumns.reverse(),
-    );
+    expect(result.current.visibleColumns).toEqual([
+      {
+        id: "attribute:QXR0cmlidXRlOjE0",
+        title: "Color",
+        metaGroup: "Attributes",
+        width: 200,
+      },
+      {
+        id: "name",
+        title: "Name",
+        width: 200,
+        icon: "arrowUp",
+      },
+      {
+        id: "attribute:QXR0cmlidXRlOjIx",
+        title: "ABV",
+        metaGroup: "Attributes",
+        width: 200,
+      },
+    ]);
   });
-  it("should call onSave when column is changed", () => {
+  it("should call onSave when column is toggled", () => {
     // Arrange
     const { result } = renderHook(() =>
       useColumns({
@@ -238,13 +205,11 @@ describe("useColumns", () => {
         selectedColumns: mockedSelectedColumns,
         columnCategories: mockedCategories,
         onSave,
-        columnPickerSettings: mockedColumnPickerSettings,
-        setDynamicColumnSettings,
       }),
     );
 
     // Act
-    act(() => result.current.handlers.onChange(["name"]));
+    act(() => result.current.handlers.onToggle("name"));
 
     // Assert
     expect(onSave).toHaveBeenCalledTimes(1);
@@ -257,23 +222,15 @@ describe("useColumns", () => {
         selectedColumns: mockedSelectedColumns,
         columnCategories: mockedCategories,
         onSave,
-        columnPickerSettings: mockedColumnPickerSettings,
-        setDynamicColumnSettings,
       }),
     );
 
     // Act
-    act(() =>
-      result.current.handlers.onChange([
-        "name",
-        "attribute:QXR0cmlidXRlOjE0",
-        "attribute:QXR0cmlidXRlOjIx",
-      ]),
-    );
+    act(() => result.current.handlers.onToggle("attribute:QXR0cmlidXRlOjI3"));
 
     // Assert
     expect(result.current.recentlyAddedColumn).toEqual(
-      "attribute:QXR0cmlidXRlOjIx",
+      "attribute:QXR0cmlidXRlOjI3",
     );
   });
   it("should update dynamic columns when new column is picked", () => {
@@ -284,21 +241,14 @@ describe("useColumns", () => {
         selectedColumns: mockedSelectedColumns,
         columnCategories: mockedCategories,
         onSave,
-        columnPickerSettings: mockedColumnPickerSettings,
-        setDynamicColumnSettings,
       }),
     );
 
     // Act
-    act(() =>
-      result.current.handlers.onDynamicColumnSelect([
-        ...mockedColumnPickerSettings,
-        "attribute:QXR0cmlidXRlOjI3",
-      ]),
-    );
+    act(() => result.current.handlers.onToggle("attribute:QXR0cmlidXRlOjI3"));
 
     // Assert
-    expect(setDynamicColumnSettings).toHaveBeenCalledTimes(1);
+    expect(onSave).toHaveBeenCalledTimes(1);
     expect(result.current.dynamicColumns).toEqual([
       ...expectedDynamicColumns,
       {
@@ -317,42 +267,20 @@ describe("useColumns", () => {
         selectedColumns: mockedSelectedColumns,
         columnCategories: mockedCategories,
         onSave,
-        columnPickerSettings: mockedColumnPickerSettings,
-        setDynamicColumnSettings,
       }),
     );
 
     // Act
     act(() =>
-      result.current.handlers.onDynamicColumnSelect([
+      result.current.handlers.onToggle(
+        // ABV - which is already selected
         "attribute:QXR0cmlidXRlOjIx",
-        "attribute:QXR0cmlidXRlOjE1",
-        "attribute:QXR0cmlidXRlOjI5",
-        "attribute:QXR0cmlidXRlOjE0",
-      ]),
+      ),
     );
 
     // Assert
-    expect(setDynamicColumnSettings).toHaveBeenCalledTimes(1);
+    expect(onSave).toHaveBeenCalledTimes(1);
     expect(result.current.dynamicColumns).toEqual([
-      {
-        id: "attribute:QXR0cmlidXRlOjIx",
-        title: "ABV",
-        metaGroup: "Attributes",
-        width: 200,
-      },
-      {
-        id: "attribute:QXR0cmlidXRlOjE1",
-        title: "Bottle Size",
-        metaGroup: "Attributes",
-        width: 200,
-      },
-      {
-        id: "attribute:QXR0cmlidXRlOjI5",
-        title: "Tag",
-        metaGroup: "Attributes",
-        width: 200,
-      },
       {
         id: "attribute:QXR0cmlidXRlOjE0",
         title: "Color",

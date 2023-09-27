@@ -1,10 +1,8 @@
 name: Publish container image
 
 on:
-  push:
-    tags:
-      # Matches stable and pre-releases
-      - "[0-9]+.[0-9]+.[0-9]+*"
+  release:
+    types: [published]
 
 jobs:
   docker:
@@ -28,12 +26,21 @@ jobs:
       # Pre-releases, alphas, etc. as :snapshot
       - name: Output image tags from git tag events
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          # Remove everything else than the tagged version
-          DASHBOARD_VERSION=${GITHUB_REF#refs/tags/}
+          LATEST_VERSION=$(gh api repos/saleor/saleor-dashboard/releases/latest | jq -r .tag_name)
+          CURRENT_TAG=${GITHUB_REF#refs/tags/}
+
+          if [ "$LATEST_VERSION" = "$CURRENT_TAG" ]; then
+            TAGS=${{ steps.image.outputs.image_name }}:${CURRENT_TAG},${{ steps.image.outputs.image_name }}:latest
+          else
+            TAGS=${{ steps.image.outputs.image_name }}:${CURRENT_TAG}
+          fi
+
           echo "
-          DASHBOARD_VERSION=${DASHBOARD_VERSION}
-          CONTAINER_TAGS=${{ steps.image.outputs.image_name }}:${DASHBOARD_VERSION}
+          DASHBOARD_VERSION=${CURRENT_TAG}
+          CONTAINER_TAGS=${TAGS}
           " >> "${GITHUB_ENV}"
 
       - name: Set up Docker QEMU

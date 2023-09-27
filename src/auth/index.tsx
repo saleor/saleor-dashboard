@@ -31,6 +31,7 @@ export const UserContext = React.createContext<Context>({
   authenticating: false,
   authenticated: false,
   errors: [],
+  refetchUser: undefined,
 });
 
 const AuthRouter: React.FC = () => (

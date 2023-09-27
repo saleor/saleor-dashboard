@@ -14,7 +14,7 @@ export const PRODUCT_DETAILS = {
   skuInput: "[name='sku']",
   variantRow: "[data-test-id='product-variant-row']",
   variantPrice: '[data-test-id="price"]',
-  collectionRemoveButtons: '[data-test-id="collection-remove"]',
+  collectionRemoveButtons: '[data-test-id*="selected-option"] span:last-child',
   addWarehouseButton: '[data-test-id="add-warehouse"]',
   warehouseOption: "[role='menuitem']",
   stockInput: '[data-test-id="stock-input"]',
@@ -28,4 +28,5 @@ export const PRODUCT_DETAILS = {
   editVariant: '[data-test-id="row-action-button"]',
   firstRowDataGrid: "[data-testid='glide-cell-1-0']",
   dataGridTable: "[data-testid='data-grid-canvas']",
+  productUpdateFormSection: "[data-test-id='product-update-form']",
 };

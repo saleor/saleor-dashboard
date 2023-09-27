@@ -8,7 +8,7 @@ import { ensureCanvasStatic } from "../../../support/customCommands/sharedElemen
 
 describe("As an admin I should be able to manage products table", () => {
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.visit(urlList.products);
   });
 
@@ -39,7 +39,9 @@ describe("As an admin I should be able to manage products table", () => {
         .get(PAGINATION.nextPagePaginationButton)
         .should("not.be.disabled");
       ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
-        cy.assertCanvasRowsNumber(PRODUCTS_LIST.dataGridTable, 21);
+        cy.get(PRODUCTS_LIST.dataGridTable)
+          .find("tr")
+          .should("have.length.above", 10);
       });
     },
   );

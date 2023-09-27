@@ -142,7 +142,7 @@ export const transformOrderStatus = (
     case OrderStatus.PARTIALLY_FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
-        status: StatusType.WARNING,
+        status: StatusType.INFO,
       };
     case OrderStatus.UNFULFILLED:
       return {
@@ -162,7 +162,7 @@ export const transformOrderStatus = (
     case OrderStatus.UNCONFIRMED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unconfirmed),
-        status: StatusType.INFO,
+        status: StatusType.ERROR,
       };
     case OrderStatus.PARTIALLY_RETURNED:
       return {
@@ -468,7 +468,7 @@ export function transformFormToAddressInput<T>(
 }
 
 export function getStringOrPlaceholder(
-  s: string | undefined,
+  s: string | undefined | null,
   placeholder?: string,
 ): string {
   return s || placeholder || "...";
@@ -563,8 +563,8 @@ export const getByUnmatchingId =
 export const findById = <T extends Node>(id: string, list?: T[]) =>
   list?.find(getById(id));
 
-const COLOR_WARNING = "#FBE5AC";
-const COLOR_WARNING_DARK = "#3E2F0A";
+export const COLOR_WARNING = "#FBE5AC";
+export const COLOR_WARNING_DARK = "#3E2F0A";
 type CustomWarningColor = typeof COLOR_WARNING | typeof COLOR_WARNING_DARK;
 
 export const getStatusColor = (
@@ -587,6 +587,29 @@ export const getStatusColor = (
       return "surfaceBrandSubdued";
     default:
       return "surfaceBrandSubdued";
+  }
+};
+
+export const getStatusHue = (
+  status: "error" | "warning" | "info" | "success" | "generic",
+): number => {
+  const red = 0;
+  const blue = 236;
+  const green = 145;
+  const yellow = 71;
+  switch (status) {
+    case "error":
+      return red;
+    case "info":
+      return blue;
+    case "success":
+      return green;
+    case "warning":
+      return yellow;
+    case "generic":
+      return yellow;
+    default:
+      return blue;
   }
 };
 

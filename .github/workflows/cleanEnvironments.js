@@ -1,37 +1,63 @@
 const { Command } = require("commander");
 const fetch = require("node-fetch");
+const core = require("@actions/core");
 
 const program = new Command();
+
+const pathToCloudAPI = "https://staging-cloud.saleor.io/platform/api/";
+
+const snapshotName = "snapshot-automation-tests";
+
+let sendWarningOnSlack = "false";
+let warningMessage = "";
 
 program
   .name("cleanEnvironments")
   .description("Clean environments")
   .option("--token <token>", "token fo login to cloud")
-  .option("--snapshot <snapshot>", "snapshot to revert to")
+  .option(
+    "--environments_to_clean_regex <environments_to_clean_regex>",
+    "Regex for environment which need cleaning",
+  )
   .action(async options => {
     const token = options.token;
-    const snapshot = options.snapshot;
-    const environmentsToClean = await getEnvironmentsForReleaseTesting(token);
+    const environmentsToCleanRegex = new RegExp(
+      options.environments_to_clean_regex,
+    );
+    const environmentsToClean = await getEnvironmentsToClean(
+      token,
+      environmentsToCleanRegex,
+    );
+    const snapshotsForRestore = await getSnapshotsForRestore(token);
+    const sortedSnapshotList = sortSnapshots(snapshotsForRestore);
     environmentsToClean.forEach(environment => {
-      cleanEnvironment(environment, snapshot, token);
+      const latestSnapshot = getLatestSnapshotForEnvironment(
+        environment.service.version,
+        sortedSnapshotList,
+      );
+      if (latestSnapshot) {
+        cleanEnvironment(environment, latestSnapshot, token);
+      } else {
+        sendWarningOnSlack = "true";
+        warningMessage += `Snapshot compatible with environment ${environment.domain} does not exist, please create snapshot on cloud staging.\n`;
+      }
     });
+    core.setOutput("sendWarningOnSlack", sendWarningOnSlack);
+    core.setOutput("warningMessage", warningMessage);
   })
   .parse();
 
-async function getEnvironmentsForReleaseTesting(token) {
+async function getEnvironmentsToClean(token, environmentsToCleanRegex) {
   const environments = await getEnvironments(token);
   const environmentsForReleaseTesting = environments.filter(environment => {
-    return (
-      environment.domain.match(/^v\d*.staging/) ||
-      environment.domain == "master.staging.saleor.cloud"
-    );
+    return environment.domain.match(environmentsToCleanRegex)
   });
   return environmentsForReleaseTesting;
 }
 
 async function getEnvironments(token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/`,
+    `${pathToCloudAPI}organizations/saleor/environments/`,
     {
       method: "GET",
       headers: {
@@ -46,10 +72,10 @@ async function getEnvironments(token) {
 
 async function cleanEnvironment(environment, snapshot, token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/${environment.key}/restore/`,
+    `${pathToCloudAPI}organizations/saleor/environments/${environment.key}/restore/`,
     {
       method: "PUT",
-      body: JSON.stringify({ restore_from: snapshot }),
+      body: JSON.stringify({ restore_from: snapshot.key }),
       headers: {
         Authorization: `Token ${token}`,
         Accept: "application/json",
@@ -63,15 +89,79 @@ async function cleanEnvironment(environment, snapshot, token) {
       ? responseInJson.non_field_errors
       : responseInJson.__all__
   ) {
-    console.warn(
-      `${environment.name}: ${
-        responseInJson.non_field_errors
-          ? responseInJson.non_field_errors
-          : responseInJson.__all__
-      }`,
-    );
+    const warning = responseInJson.non_field_errors
+      ? responseInJson.non_field_errors
+      : responseInJson.__all__;
+    console.warn(`${environment.name}: ${warning}`);
+    sendWarningOnSlack = "true";
+    warningMessage += `Could not revert snapshot on ${environment.domain}: ${warning}.\n`;
   } else {
     await waitUntilTaskInProgress(responseInJson.task_id, environment.name);
+  }
+}
+
+async function getSnapshotsForRestore(token) {
+  const snapshotsResponse = await fetch(
+    `${pathToCloudAPI}organizations/saleor/backups/`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Token ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    },
+  );
+  const allSnapshots = await snapshotsResponse.json();
+  return allSnapshots.filter(snapshot => {
+    return snapshot.name.includes(snapshotName);
+  });
+}
+
+function sortSnapshots(snapshotList) {
+  // This function is used to sort snapshots by their version
+  // It returns sorted list of snapshots in descending order
+
+  return snapshotList.sort(function (a, b) {
+    return compareVersions(a.saleor_version, b.saleor_version);
+  });
+}
+
+function compareVersions(versionA, versionB) {
+  // Convert version from string to array eg. from "3.5.7" to [3, 5, 7]
+  // Where 3 is main version, 5 is major version and 7 is patch version
+
+  const versionASplittedToArray = versionA.split(/\D/);
+  const versionBSplittedToArray = versionB.split(/\D/);
+  const mainVersionNumberA = versionASplittedToArray[0];
+  const mainVersionNumberB = versionBSplittedToArray[0];
+  const majorVersionNumberA = versionASplittedToArray[1];
+  const majorVersionNumberB = versionBSplittedToArray[1];
+  const patchVersionNumberA = versionASplittedToArray[2];
+  const patchVersionNumberB = versionBSplittedToArray[2];
+
+  //Compare two versions
+  if (mainVersionNumberA !== mainVersionNumberB) {
+    return mainVersionNumberB - mainVersionNumberA;
+  } else if (majorVersionNumberA !== majorVersionNumberB) {
+    return majorVersionNumberB - majorVersionNumberA;
+  } else if (patchVersionNumberA !== patchVersionNumberB) {
+    return patchVersionNumberB - patchVersionNumberA;
+  } else return 0;
+}
+
+function getLatestSnapshotForEnvironment(environmentVersion, snapshotList) {
+  const compatibleSnapshots = snapshotList.filter(snapshot => {
+    return compareVersions(environmentVersion, snapshot.saleor_version) <= 0;
+  });
+  if (compatibleSnapshots.length > 0) {
+    const latestSnapshot = compatibleSnapshots[0];
+    return latestSnapshot;
+  } else {
+    console.warn(
+      `Could not find snapshot for environment on version: ${environmentVersion}. Environment won't be cleaned`,
+    );
+    return null;
   }
 }
 
@@ -82,7 +172,7 @@ async function waitUntilTaskInProgress(taskId, environment) {
 
   while (true) {
     const response = await fetch(
-      `https://staging-cloud.saleor.io/api/service/task-status/${taskId}/`,
+      `${pathToCloudAPI}service/task-status/${taskId}/`,
       {
         method: "GET",
         headers: {

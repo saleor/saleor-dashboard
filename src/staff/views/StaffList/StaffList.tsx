@@ -1,15 +1,13 @@
-// @ts-strict-ignore
 import { newPasswordUrl } from "@dashboard/auth/urls";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useStaffListQuery,
   useStaffMemberAddMutation,
 } from "@dashboard/graphql";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -19,7 +17,6 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { commonMessages } from "@dashboard/intl";
-import { getStringOrPlaceholder } from "@dashboard/misc";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -43,14 +40,10 @@ import {
   staffMemberDetailsUrl,
 } from "../../urls";
 import {
-  deleteFilterTab,
-  getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
-  getFiltersCurrentTab,
-  getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
+  storageUtils,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -89,27 +82,39 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
 
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
     onCompleted: data => {
-      if (data.staffCreate.errors.length === 0) {
+      if (data?.staffCreate?.errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate(staffMemberDetailsUrl(data.staffCreate.user.id));
+        navigate(staffMemberDetailsUrl(data?.staffCreate?.user?.id ?? ""));
       }
     },
   });
 
   const paginationValues = usePaginator({
-    pageInfo: staffQueryData?.staffUsers.pageInfo,
+    pageInfo: staffQueryData?.staffUsers?.pageInfo,
     paginationState,
     queryString: params,
   });
 
   const handleSort = createSortHandler(navigate, staffListUrl, params);
 
-  const tabs = getFilterTabs();
-
-  const currentTab = getFiltersCurrentTab(params, tabs);
+  const {
+    hasPresetsChanged,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    selectedPreset,
+    presets,
+    getPresetNameToDelete,
+    setPresetIdToDelete,
+  } = useFilterPresets({
+    getUrl: staffListUrl,
+    params,
+    storageUtils,
+  });
 
   const [changeFilters, resetFilters, handleSearchChange] =
     createFilterHandlers({
@@ -117,31 +122,13 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
       getFilterQueryParam,
       navigate,
       params,
+      keepActiveTab: true,
     });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     StaffListUrlDialog,
     StaffListUrlQueryParams
   >(navigate, staffListUrl, params);
-
-  const handleTabChange = (tab: number) => {
-    navigate(
-      staffListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
-    );
-  };
-
-  const handleTabDelete = () => {
-    deleteFilterTab(currentTab);
-    navigate(staffListUrl());
-  };
-
-  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
-    handleTabChange(tabs.length + 1);
-  };
 
   const {
     loadMore: loadMorePermissionGroups,
@@ -171,55 +158,65 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <StaffListPage
-        currentTab={currentTab}
         filterOpts={getFilterOpts(params)}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
-        onAll={resetFilters}
-        onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
-        onTabSave={() => openModal("save-search")}
-        tabs={tabs.map(tab => tab.name)}
+        onFilterPresetsAll={resetFilters}
+        onFilterPresetDelete={id => {
+          setPresetIdToDelete(id);
+          openModal("delete-search");
+        }}
+        selectedFilterPreset={selectedPreset}
+        onFilterPresetChange={onPresetChange}
+        onFilterPresetUpdate={onPresetUpdate}
+        hasPresetsChanged={hasPresetsChanged}
+        onFilterPresetPresetSave={() => openModal("save-search")}
+        filterPresets={presets.map(preset => preset.name)}
         disabled={loading || addStaffMemberData.loading || limitOpts.loading}
-        limits={limitOpts.data?.shop.limits}
+        limits={limitOpts.data?.shop?.limits}
         settings={settings}
         sort={getSortParams(params)}
-        staffMembers={mapEdgesToItems(staffQueryData?.staffUsers)}
+        staffMembers={mapEdgesToItems(staffQueryData?.staffUsers) ?? []}
         onAdd={() => openModal("add")}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
       />
+
       <StaffAddMemberDialog
-        availablePermissionGroups={mapEdgesToItems(
-          searchPermissionGroupsOpts?.data?.search,
-        )}
+        availablePermissionGroups={
+          mapEdgesToItems(searchPermissionGroupsOpts?.data?.search) ?? []
+        }
         confirmButtonState={addStaffMemberData.status}
         initialSearch=""
         disabled={loading}
-        errors={addStaffMemberData.data?.staffCreate.errors || []}
+        errors={addStaffMemberData.data?.staffCreate?.errors || []}
         open={params.action === "add"}
         onClose={closeModal}
         onConfirm={handleStaffMemberAdd}
         fetchMorePermissionGroups={{
-          hasMore: searchPermissionGroupsOpts.data?.search.pageInfo.hasNextPage,
+          hasMore:
+            searchPermissionGroupsOpts.data?.search?.pageInfo?.hasNextPage ??
+            false,
           loading: searchPermissionGroupsOpts.loading,
           onFetchMore: loadMorePermissionGroups,
         }}
         onSearchChange={searchPermissionGroups}
       />
+
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabSave}
+        onSubmit={onPresetSave}
       />
+
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabDelete}
-        tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
+        onSubmit={onPresetDelete}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

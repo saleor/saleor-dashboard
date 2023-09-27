@@ -2,12 +2,11 @@
 import { voucherList } from "@dashboard/discounts/fixtures";
 import { VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import {
-  filterPageProps,
+  filterPresetsProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps,
 } from "@dashboard/fixtures";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
 import { Meta, StoryObj } from "@storybook/react";
@@ -20,8 +19,11 @@ const props: VoucherListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
-  ...tabPageProps,
-  ...filterPageProps,
+  ...filterPresetsProps,
+  onSelectVouchersIds: () => undefined,
+  selectedVouchersIds: [],
+  onVoucherDelete: () => undefined,
+  onFilterChange: () => undefined,
   filterOpts: {
     channel: {
       active: false,
@@ -62,6 +64,10 @@ const props: VoucherListPageProps = {
     sort: VoucherListUrlSortField.code,
   },
   vouchers: voucherList,
+  settings: {
+    rowNumber: 20,
+    columns: ["code", "min-spent", "start-date", "end-date", "value", "limit"],
+  },
 };
 
 const meta: Meta<typeof VoucherListPage> = {
@@ -85,6 +91,7 @@ export const Loading: Story = {
   args: {
     ...props,
     vouchers: undefined,
+    disabled: true,
   },
   parameters: {
     chromatic: { diffThreshold: 0.85 },

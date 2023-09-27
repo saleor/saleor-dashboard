@@ -1,3 +1,4 @@
+import { useUser } from "@dashboard/auth";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React, { PropsWithChildren } from "react";
 
@@ -20,13 +21,14 @@ export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
   isAlignToRight = true,
   children,
 }) => {
-  const { availableChannels, channel, isPickerActive, setChannel } =
-    useAppChannel(false);
+  const { channel, isPickerActive, setChannel } = useAppChannel(false);
+  const user = useUser();
+  const channels = user?.user?.accessibleChannels ?? [];
 
   return (
     <TopNavWrapper withoutBorder={withoutBorder}>
       {href && <TopNavLink to={href} />}
-      <Box __flex={isAlignToRight ? 1 : 0}>
+      <Box __flex={isAlignToRight ? 1 : 0} __minWidth="max-content">
         <Text variant="title" size="small">
           {title}
         </Text>
@@ -34,11 +36,12 @@ export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
       <Box
         display="flex"
         flexWrap="nowrap"
+        height="100%"
         __flex={isAlignToRight ? "initial" : 1}
       >
-        {isPickerActive && (
+        {isPickerActive && channels.length > 0 && (
           <AppChannelSelect
-            channels={availableChannels}
+            channels={channels}
             selectedChannelId={channel?.id}
             onChannelSelect={setChannel}
           />

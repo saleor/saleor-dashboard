@@ -3,15 +3,16 @@ import { ShippingMethodTypeEnum } from "@dashboard/graphql";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination, SingleAction } from "../types";
+import { BulkAction, Dialog, Pagination, Search, SingleAction } from "../types";
 
 export const shippingSection = "/shipping/";
 
 export const shippingZonesListPath = shippingSection;
-export type ShippingZonesListUrlDialog = "remove" | "remove-many";
+export type ShippingZonesListUrlDialog = "remove" | "change-weight-unit";
 export type ShippingZonesListUrlQueryParams = BulkAction &
   Dialog<ShippingZonesListUrlDialog> &
   Pagination &
+  Search &
   SingleAction;
 export const shippingZonesListUrl = (
   params?: ShippingZonesListUrlQueryParams,
@@ -51,13 +52,12 @@ export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> &
   SingleAction &
   BulkAction;
 export type ShippingRateCreateUrlDialog = ZipCodeRangeActions | ChannelsAction;
-export type ShippingRateCreateUrlQueryParams = Dialog<
-  ShippingRateCreateUrlDialog
-> &
-  SingleAction &
-  Partial<{
-    type: ShippingMethodTypeEnum;
-  }>;
+export type ShippingRateCreateUrlQueryParams =
+  Dialog<ShippingRateCreateUrlDialog> &
+    SingleAction &
+    Partial<{
+      type: ShippingMethodTypeEnum;
+    }>;
 
 export const shippingRateCreatePath = (id: string) =>
   urlJoin(shippingZonePath(id), "add");

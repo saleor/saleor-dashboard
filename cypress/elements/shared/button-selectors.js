@@ -8,7 +8,7 @@ export const BUTTON_SELECTORS = {
   selectOption: "[data-test-id*='select-option']",
   notSelectedOption: ":not([aria-selected])",
   deleteButton: '[data-test-id="button-bar-delete"]',
-  deleteProductsButton: '[data-test-id="delete-products-button"]',
+  deleteProductsButton: '[data-test-id="bulk-delete-button"]',
   deleteItemsButton: '[data-test-id="button-delete-items"]',
   confirmDeleteButton: '[data-test-id="confirm-delete"]',
   expandIcon: '[data-test-id="expand-icon"]',
@@ -21,4 +21,5 @@ export const BUTTON_SELECTORS = {
     '[data-test-id = "delete-selected-elements-icon"]',
   dialogBackButton: '[data-test-id="back"]',
   expandMetadataButton: '[data-test-id="expand"]',
+  bulkDeleteButton: '[data-test-id="bulk-delete-button"]',
 };

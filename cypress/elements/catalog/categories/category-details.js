@@ -6,4 +6,5 @@ export const CATEGORY_DETAILS_SELECTORS = {
   productsTab: '[data-test-id="products-tab"]',
   addProducts: '[data-test-id="add-products"]',
   productRow: '[data-test-id="product-row"]',
+  deleteCategoriesButton: '[data-test-id="bulk-delete-button"]',
 };

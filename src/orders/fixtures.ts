@@ -111,10 +111,9 @@ export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [
 export const orderTransactions: TransactionItemFragment[] = [
   {
     id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-    type: "mollie-creditcard",
+    name: "mollie-creditcard",
     pspReference: "ord_3d41ih",
     actions: [],
-    status: "Paid",
     externalUrl: null,
     events: [
       {
@@ -145,10 +144,9 @@ export const orderTransactions: TransactionItemFragment[] = [
   },
   {
     id: "VHJhbnNhY3Rpb25JdGVtOjI=",
-    type: "test",
+    name: "test",
     pspReference: "123",
     externalUrl: null,
-    status: "Partially refunded",
     actions: [],
     events: [
       {
@@ -1293,6 +1291,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               name: "XS",
               quantityAvailable: 10,
               preorder: null,
+              metadata: [],
+              privateMetadata: [],
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1420,6 +1420,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               name: "XS",
               quantityAvailable: 10,
               preorder: null,
+              metadata: [],
+              privateMetadata: [],
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1553,6 +1555,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         name: "Soft",
         quantityAvailable: 10,
         preorder: null,
+        metadata: [],
+        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1663,6 +1667,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         name: "XXL",
         quantityAvailable: 10,
         preorder: null,
+        metadata: [],
+        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1938,6 +1944,8 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         name: "Hard",
         quantityAvailable: 10,
         preorder: null,
+        metadata: [],
+        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2048,6 +2056,8 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         name: "15-1337",
         quantityAvailable: 10,
         preorder: null,
+        metadata: [],
+        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2633,10 +2643,9 @@ export const transactions: Record<
   preauthorized: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
-      actions: [TransactionActionEnum.VOID, TransactionActionEnum.CHARGE],
-      status: "Authorized",
+      actions: [TransactionActionEnum.CANCEL, TransactionActionEnum.CHARGE],
       externalUrl: null,
       events: [
         {
@@ -2669,9 +2678,8 @@ export const transactions: Record<
   pendingCharge: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
-      status: "Pending charge",
       externalUrl: null,
       actions: [],
       events: [
@@ -2720,10 +2728,9 @@ export const transactions: Record<
   chargeSuccess: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.REFUND],
-      status: "Fully paid",
       externalUrl: null,
       events: [
         {
@@ -2786,10 +2793,9 @@ export const transactions: Record<
   chargePartial: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.REFUND],
-      status: "Partially charged",
       externalUrl: null,
       events: [
         {
@@ -2852,10 +2858,9 @@ export const transactions: Record<
   chargeFail: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.CHARGE],
-      status: "Failed",
       externalUrl: null,
       events: [
         {
@@ -2918,10 +2923,9 @@ export const transactions: Record<
   refundRequested: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
-      status: "Pending refund",
       externalUrl: null,
       events: [
         {
@@ -2999,10 +3003,9 @@ export const transactions: Record<
   refundCompleted: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
-      status: "Refund completed",
       externalUrl: null,
       events: [
         {
@@ -3095,10 +3098,9 @@ export const transactions: Record<
   refundPartial: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
-      type: "Mollie",
+      name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
-      status: "Partially charged",
       externalUrl: null,
       events: [
         {

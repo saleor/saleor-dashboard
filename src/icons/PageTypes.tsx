@@ -1,7 +1,7 @@
 import { createSvgIcon, SvgIconProps } from "@material-ui/core";
 import React from "react";
 
-const PageTypes = createSvgIcon(
+const PageTypesIcons = createSvgIcon(
   <path
     fillRule="evenodd"
     clipRule="evenodd"
@@ -11,6 +11,6 @@ const PageTypes = createSvgIcon(
   "PageTypes",
 );
 
-export default (props: SvgIconProps) => (
-  <PageTypes {...props} viewBox="0 0 24 25" />
-);
+export default function PageTypes(props: SvgIconProps) {
+  return <PageTypesIcons {...props} viewBox="0 0 24 25" />;
+}

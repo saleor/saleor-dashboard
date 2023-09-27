@@ -24,6 +24,7 @@ import {
   getMailActivationLinkForUserAndSubject,
   inviteStaffMemberWithFirstPermission,
 } from "../support/api/utils/";
+import { ensureCanvasStatic } from "../support/customCommands/sharedElementsOperations/canvas";
 import {
   expectMainMenuAvailableSections,
   expectWelcomeMessageIncludes,
@@ -42,7 +43,7 @@ describe("Staff members", () => {
   let user;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     activatePlugin({ id: "mirumee.notifications.admin_email" });
     inviteStaffMemberWithFirstPermission({ email })
       .then(({ user: userResp }) => {
@@ -58,7 +59,7 @@ describe("Staff members", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(
@@ -68,10 +69,11 @@ describe("Staff members", () => {
       const firstName = faker.name.firstName();
       const emailInvite = `${startsWith}${firstName}@example.com`;
 
-      cy.visit(urlList.staffMembers)
-        .expectSkeletonIsVisible()
-        .get(STAFF_MEMBERS_LIST_SELECTORS.inviteStaffMemberButton)
-        .click({ force: true });
+      cy.visit(urlList.staffMembers);
+      ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
+      cy.get(STAFF_MEMBERS_LIST_SELECTORS.inviteStaffMemberButton).click({
+        force: true,
+      });
       fillUpUserDetailsAndAddFirstPermission(firstName, lastName, emailInvite);
       getMailActivationLinkForUser(emailInvite).then(urlLink => {
         cy.clearSessionData().visit(urlLink);
@@ -181,10 +183,11 @@ describe("Staff members", () => {
     () => {
       const firstName = faker.name.firstName();
       const emailInvite = TEST_ADMIN_USER.email;
-      cy.visit(urlList.staffMembers)
-        .expectSkeletonIsVisible()
-        .get(STAFF_MEMBERS_LIST_SELECTORS.inviteStaffMemberButton)
-        .click({ force: true });
+      cy.visit(urlList.staffMembers);
+      ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
+      cy.get(STAFF_MEMBERS_LIST_SELECTORS.inviteStaffMemberButton).click({
+        force: true,
+      });
       fillUpOnlyUserDetails(firstName, lastName, emailInvite);
       cy.get(INVITE_STAFF_MEMBER_FORM_SELECTORS.emailValidationMessage).should(
         "be.visible",

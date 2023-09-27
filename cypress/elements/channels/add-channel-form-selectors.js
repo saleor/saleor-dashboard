@@ -15,4 +15,5 @@ export const ADD_CHANNEL_FORM_SELECTORS = {
   warehouseAutocompleteSelect:
     "[data-test-id='warehouse-auto-complete-select']",
   countryAutocompleteInput: '[data-test-id="country-select-input"]',
+  generalInformationSection: '[data-test-id="general-information"]',
 };

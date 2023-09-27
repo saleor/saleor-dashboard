@@ -3,12 +3,18 @@
 
 import faker from "faker";
 
-import { ATTRIBUTES_DETAILS } from "../../../elements/attribute/attributes_details";
+import {
+  ATTRIBUTES_DETAILS,
+} from "../../../elements/attribute/attributes_details";
 import { ATTRIBUTES_LIST } from "../../../elements/attribute/attributes_list";
 import { urlList } from "../../../fixtures/urlList";
 import { getAttribute } from "../../../support/api/requests/Attribute";
-import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
-import { createAttributeWithInputType } from "../../../support/pages/attributesPage";
+import {
+  expectCorrectDataInAttribute,
+} from "../../../support/api/utils/attributes/checkAttributeData";
+import {
+  createAttributeWithInputType,
+} from "../../../support/pages/attributesPage";
 
 describe("As an admin I want to create content attribute", () => {
   const startsWith = "AttrCont" + Date.now();
@@ -42,13 +48,8 @@ describe("As an admin I want to create content attribute", () => {
     { unitSystem: "without selecting unit", testCase: "SALEOR_0521" },
   ];
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
+    cy.loginUserViaRequest()
       .visit(urlList.attributes)
       .get(ATTRIBUTES_LIST.createAttributeButton)
       .click()

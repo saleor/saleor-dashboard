@@ -5,7 +5,7 @@ import { useMemo } from "react";
 
 export const cellHeight = 40;
 
-const useStyles = makeStyles(
+const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
   () => {
     const rowActionSelected = {
       background: vars.colors.background.plain,
@@ -16,6 +16,8 @@ const useStyles = makeStyles(
     return {
       actionBtnBar: {
         position: "absolute",
+        left: props => (props.actionButtonPosition === "left" ? 0 : "auto"),
+        right: props => (props.actionButtonPosition === "right" ? 0 : "auto"),
         zIndex: 1,
         background: vars.colors.background.plain,
         borderRadius: vars.borderRadius[4],
@@ -89,10 +91,7 @@ const useStyles = makeStyles(
       datagrid: {
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
-          scrollbarWidth: "none",
-        },
-        "& .dvn-scroller::-webkit-scrollbar": {
-          display: "none",
+          overflowY: "hidden",
         },
         borderRadius: 0,
         boxSizing: "content-box",
@@ -184,6 +183,9 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
       },
       [`& .${props.datagrid}`]: {
         height: "100%",
+        "& .dvn-scroller": {
+          overflowY: "scroll",
+        },
       },
     }),
   }),
@@ -212,14 +214,14 @@ export function useDatagridTheme(
       bgBubbleSelected: themeValues.colors.background.plain,
       borderColor: themeValues.colors.border.neutralHighlight,
       fontFamily: "'Inter var', sans-serif",
-      baseFontStyle: themeValues.fontSize.bodySmall,
-      headerFontStyle: themeValues.fontSize.bodySmall,
+      baseFontStyle: `${themeValues.fontWeight.bodyEmpMedium} ${themeValues.fontSize.bodySmall}`,
+      headerFontStyle: `${themeValues.fontWeight.bodyStrongSmall} ${themeValues.fontSize.bodyStrongSmall}`,
       editorFontSize: themeValues.fontSize.bodySmall,
       textMedium: themeValues.colors.foreground.iconNeutralPlain,
       textGroupHeader: themeValues.colors.foreground.iconNeutralDefault,
       textBubble: themeValues.colors.background.interactiveNeutralDefault,
       textDark: themeValues.colors.foreground.iconNeutralDefault,
-      textLight: themeValues.colors.foreground.iconNeutralDefault,
+      textLight: themeValues.colors.foreground.textNeutralSubdued,
       textHeader: themeValues.colors.foreground.iconNeutralDefault,
       textHeaderSelected: themeValues.colors.background.plain,
       cellHorizontalPadding: 8,

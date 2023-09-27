@@ -11,7 +11,7 @@ import {
 import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { FetchMoreProps } from "@dashboard/types";
 import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
-import { Accordion, Box, Divider, Text } from "@saleor/macaw-ui/next";
+import { Accordion, Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -71,31 +71,36 @@ export const Attributes: React.FC<AttributesProps> = ({
   const intl = useIntl();
 
   return (
-    <DashboardCard>
-      <DashboardCard.Title>
-        {title || intl.formatMessage(messages.header)}
-      </DashboardCard.Title>
+    <DashboardCard paddingTop={6}>
       <DashboardCard.Content>
-        <Box display="flex" flexDirection="column" gap={2}>
+        <Box display="flex" flexDirection="column" gap={1}>
           <Accordion defaultValue="attributes-accordion">
             <Accordion.Item value="attributes-accordion">
-              <Accordion.Trigger buttonDataTestId="attributes-expand">
-                <Text variant="caption" color="textNeutralSubdued">
-                  <FormattedMessage
-                    {...messages.attributesNumber}
-                    values={{
-                      number: attributes.length,
-                    }}
-                  />
-                </Text>
+              <Accordion.Trigger
+                buttonDataTestId="attributes-expand"
+                flexWrap="wrap"
+                alignItems="flex-start"
+              >
+                <Box display="flex" flexDirection="column" gap={2}>
+                  <Text variant="heading">
+                    {title || intl.formatMessage(messages.header)}
+                  </Text>
+                  <Text variant="caption" color="textNeutralSubdued">
+                    <FormattedMessage
+                      {...messages.attributesNumber}
+                      values={{
+                        number: attributes.length,
+                      }}
+                    />
+                  </Text>
+                </Box>
+                <Accordion.TriggerButton dataTestId="expand-icon" />
               </Accordion.Trigger>
               <Accordion.Content>
                 {attributes.length > 0 && (
                   <ul>
-                    <Divider />
-                    {attributes.map((attribute, attributeIndex) => (
+                    {attributes.map(attribute => (
                       <React.Fragment key={attribute.id}>
-                        {attributeIndex > 0 && <Divider />}
                         <AttributeListItem
                           attribute={attribute}
                           errors={errors}

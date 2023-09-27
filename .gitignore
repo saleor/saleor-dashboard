@@ -35,7 +35,7 @@ dist/
 # data
 /docs/_build/
 /media/
-/node_modules/
+node_modules/
 /static/
 /videos/
 /screenshots/
@@ -47,9 +47,14 @@ webpack-bundle.json
 /templates/templated_email/compiled/*
 !/templates/templated_email/compiled/.gitkeep
 cypress/reports
-
+cypress/TestResults
+mochawesome.json
 # Exported results file
 django-queries-results.html
 
 !.env.template
 !.dependency-cruiser.js
+!.featureFlags
+/test-results/
+/playwright-report/
+/playwright/.cache/

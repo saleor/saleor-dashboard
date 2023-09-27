@@ -1,6 +1,8 @@
 import CardMenu, { CardMenuItem } from "@dashboard/components/CardMenu";
-import { bulkEnableDisableSectionMessages } from "@dashboard/giftCards/GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
-import { giftCardsListTableMessages } from "@dashboard/giftCards/GiftCardsList/messages";
+import {
+  bulkEnableDisableSectionMessages,
+  giftCardsListTableMessages,
+} from "@dashboard/giftCards/GiftCardsList/messages";
 import useGiftCardActivateToggle from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivateToggle";
 import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { CustomerGiftCardFragment } from "@dashboard/graphql";
@@ -18,9 +20,9 @@ interface CustomerGiftCardsCardListItemProps {
   giftCard: ExtendedGiftCard<CustomerGiftCardFragment>;
 }
 
-const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps> = ({
-  giftCard,
-}) => {
+const CustomerGiftCardsCardListItem: React.FC<
+  CustomerGiftCardsCardListItemProps
+> = ({ giftCard }) => {
   const intl = useIntl();
   const classes = useListWrapperStyles();
   const [openDeleteGiftCard, setOpenDeleteGiftCard] = useState(false);

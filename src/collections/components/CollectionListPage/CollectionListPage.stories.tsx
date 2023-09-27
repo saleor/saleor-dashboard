@@ -22,6 +22,10 @@ const props: CollectionListPageProps = {
   ...pageListProps.default,
   ...filterPageProps,
   ...sortPageProps,
+  settings: {
+    ...pageListProps.default.settings,
+    columns: ["name", "productCount", "availability"],
+  },
   sort: {
     ...sortPageProps.sort,
     sort: CollectionListUrlSortField.name,
@@ -30,6 +34,15 @@ const props: CollectionListPageProps = {
   collections,
   selectedChannelId: "123",
   filterOpts: collectionListFilterOpts,
+  selectedCollectionIds: [],
+  hasPresetsChanged: () => false,
+  onAll: () => undefined,
+  onCollectionsDelete: () => undefined,
+  onFilterChange: () => undefined,
+  loading: false,
+  onSort: () => undefined,
+  onTabUpdate: () => undefined,
+  onSelectCollectionIds: () => undefined,
 };
 
 const meta: Meta<typeof CollectionListPage> = {

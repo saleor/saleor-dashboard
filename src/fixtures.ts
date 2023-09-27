@@ -1,5 +1,7 @@
 // @ts-strict-ignore
 import {
+  AllocationStrategyEnum,
+  ChannelFragment,
   PermissionEnum,
   ShopInfoQuery,
   ShopLimitFragment,
@@ -10,6 +12,7 @@ import { PaginatorContextValues } from "./hooks/usePaginator";
 import {
   FetchMoreProps,
   FilterPageProps,
+  FilterPresetsProps,
   ListActions,
   SearchPageProps,
   SortPage,
@@ -305,6 +308,17 @@ export const tabPageProps: TabPageProps = {
   tabs: ["Tab X"],
 };
 
+export const filterPresetsProps: FilterPresetsProps = {
+  selectedFilterPreset: 0,
+  onFilterPresetsAll: () => undefined,
+  onFilterPresetChange: () => undefined,
+  onFilterPresetDelete: () => undefined,
+  onFilterPresetPresetSave: () => undefined,
+  onFilterPresetUpdate: () => undefined,
+  hasPresetsChanged: () => false,
+  filterPresets: ["Tab X"],
+};
+
 export const paginatorContextValues: PaginatorContextValues = {
   endCursor: "",
   startCursor: "",
@@ -342,6 +356,43 @@ export const sortPageProps: SortPage<string> = {
     asc: true,
   },
 };
+
+export const channels: ChannelFragment[] = [
+  {
+    id: "Q2hhbm5lbDoyMjQ0",
+    isActive: true,
+    name: "Channel-PLN",
+    slug: "channel-pln",
+    currencyCode: "PLN",
+    defaultCountry: {
+      code: "US",
+      country: "United States of America",
+      __typename: "CountryDisplay",
+    },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      __typename: "StockSettings",
+    },
+    __typename: "Channel",
+  },
+  {
+    id: "Q2hhbm5lbDoyMjQz",
+    isActive: true,
+    name: "Channel-USD",
+    slug: "default-channel",
+    currencyCode: "USD",
+    defaultCountry: {
+      code: "US",
+      country: "United States of America",
+      __typename: "CountryDisplay",
+    },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      __typename: "StockSettings",
+    },
+    __typename: "Channel",
+  },
+];
 
 export const permissions: ShopInfoQuery["shop"]["permissions"] = [
   {

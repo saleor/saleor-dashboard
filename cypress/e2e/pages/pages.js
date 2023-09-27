@@ -3,37 +3,38 @@
 
 import faker from "faker";
 
-import { PAGE_DETAILS_SELECTORS } from "../../elements/pages/page-details";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { pageDetailsUrl } from "../../fixtures/urlList";
-import { createAttribute } from "../../support/api/requests/Attribute";
+import { BUTTON_SELECTORS, PAGE_DETAILS_SELECTORS } from "../../elements";
+import { pageDetailsUrl, urlList } from "../../fixtures/urlList";
 import {
-  createPage as createPageRequest,
-  getPage,
-} from "../../support/api/requests/Page";
-import { createPageType } from "../../support/api/requests/PageType";
-import { attributesTypes, createPage } from "../../support/pages/pagesPage";
+  attributeRequests,
+  pageRequests,
+  pageTypeRequests,
+} from "../../support/api/requests";
+import { pageDetailsPage, pagesPage } from "../../support/pages";
 
 describe("Tests for pages", () => {
   const startsWith = `Pages`;
   const name = `${startsWith}${faker.datatype.number()}`;
   let attribute;
   let pageType;
+  let pageTypeId;
 
-  const attributeValuesOnPage = {
-    NUMERIC: 1,
-    RICH_TEXT: faker.lorem.sentence(),
-    DROPDOWN: "value",
-    MULTISELECT: "value",
-    BOOLEAN: true,
-  };
+
+  const attributes = [
+    { key: "DROPDOWN", value: "value",  TC: "SALEOR_2203" },
+    { key: "MULTISELECT", value: "value", TC: "SALEOR_2204" },
+    { key: "RICH_TEXT", value: faker.lorem.sentence(), TC: "SALEOR_2205" },
+    { key: "BOOLEAN", value: true, TC: "SALEOR_2206" },
+    { key: "NUMERIC", value: 1, TC: "SALEOR_2207" },
+  ];
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    createAttribute({ name, type: "PAGE_TYPE" })
+    cy.loginUserViaRequest();
+    attributeRequests
+      .createAttribute({ name, type: "PAGE_TYPE" })
       .then(attributeResp => {
         attribute = attributeResp;
-        createPageType({ name, attributeId: attribute.id });
+        pageTypeRequests.createPageType({ name, attributeId: attribute.id });
       })
       .then(({ pageType: pageTypeResp }) => {
         pageType = pageTypeResp;
@@ -42,41 +43,46 @@ describe("Tests for pages", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(
-    "should create not published page",
+    "should create not published page. TC: SALEOR_2201",
     { tags: ["@pages", "@allEnv", "@stable"] },
     () => {
-      const randomName = `${startsWith}${faker.datatype.number()}`;
-
-      createPage({ pageName: randomName, pageTypeName: name })
-        .then(page => {
-          getPage(page.id);
-        })
-        .then(page => {
-          expect(page.title).to.eq(randomName);
+      cy.addAliasToGraphRequest("PageType");
+      const pageName = `${startsWith}${faker.datatype.number()}`;
+      cy.visit(urlList.pages);
+      pagesPage.openCreatePageDialog();
+      pagesPage.selectPageTypeOnIndex(0);
+      cy.clickSubmitButton();
+      cy.waitForRequestAndCheckIfNoErrors("@PageType");
+      pageDetailsPage.typePageName(pageName).should("have.value", pageName);
+      cy.get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox).click();
+      pagesPage.savePage().then(page => {
+        pageRequests.getPage(page.id).then(page => {
+          expect(page.title).to.eq(pageName);
           expect(page.isPublished).to.be.false;
-          expect(page.attributes[0].attribute.id).to.eq(attribute.id);
-          getPage(page.id, "token").should("be.null");
+          pageRequests.getPage(page.id, "token").should("be.null");
         });
+      });
     },
   );
 
   it(
-    "should create published page",
+    "should create published page. TC: SALEOR_2202",
     { tags: ["@pages", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
 
-      createPage({
-        pageName: randomName,
-        pageTypeName: name,
-        isPublished: true,
-      })
+      pagesPage
+        .createPage({
+          pageName: randomName,
+          pageTypeName: name,
+          isPublished: true,
+        })
         .then(page => {
-          getPage(page.id, "token");
+          pageRequests.getPage(page.id, "token");
         })
         .then(page => {
           expect(page.title).to.eq(randomName);
@@ -86,74 +92,93 @@ describe("Tests for pages", () => {
     },
   );
 
-  Object.keys(attributesTypes).forEach(attributeType => {
+  attributes.forEach(attributeType => {
     it(
-      `should create page with ${attributeType} attribute`,
-      { tags: ["@pages", "@allEnv", "@stable"] },
+      `should create page with ${attributeType.key} attribute TC: ${attributeType.TC}`,
+      { tags: ["@attribute", "@pages", "@allEnv"] },
       () => {
-        const randomName = `AAA-${startsWith}${faker.datatype.number()}`;
-        const attributeValues = [attributeValuesOnPage[attributeType]];
-        createAttribute({
-          name: randomName,
-          type: "PAGE_TYPE",
-          inputType: attributeType,
-          attributeValues,
-        }).then(attributeResp => {
-          attribute = attributeResp;
-          createPageType({ name: randomName, attributeId: attribute.id });
-        });
-        createPage({
-          pageName: randomName,
-          pageTypeName: randomName,
-          attributeType,
-          attributeValue: attributeValuesOnPage[attributeType],
-        })
-          .then(page => {
-            getPage(page.id);
+        const randomName = `${startsWith}${faker.datatype.number()}`;
+        const attributeKey = attributeType.key
+        const attributeValue =  attributeType.value
+        attributeRequests
+          .createAttribute({
+            name: randomName,
+            type: "PAGE_TYPE",
+            inputType: attributeKey,
+            attributeValues: [attributeValue]
           })
-          .then(page => {
-            expect(page.attributes[0].values[0].inputType).to.eq(attributeType);
-            if (attributeType !== "BOOLEAN") {
-              expect(page.attributes[0].values[0].name).to.eq(
-                attributeValuesOnPage[attributeType].toString(),
-              );
-            } else {
-              expect(page.attributes[0].values[0].name).to.includes(
-                "Yes".toString(),
-              );
-            }
+          .then(attributeResp => {
+            attribute = attributeResp;
+            pageTypeRequests
+              .createPageType({
+                name: randomName,
+                attributeId: attribute.id,
+              })
+              .then(createPageResponse => {
+                pageTypeId = createPageResponse.pageType.id;
+                cy.visit(`${urlList.addPageType}${pageTypeId}`);
+                pagesPage
+                  .createPageWithAttribute({
+                    pageName: randomName,
+                    pageTypeName: randomName,
+                    attributeType: attributeKey,
+                    attributeValue: attributeValue,
+                  })
+                  .then(page => {
+                    pageRequests.getPage(page.id);
+                  })
+                  .then(page => {
+                    expect(page.attributes[0].values[0].inputType).to.eq(
+                      attributeKey,
+                    );
+                    if (attributeKey === "BOOLEAN") {
+                      expect(page.attributes[0].values[0].name).to.includes(
+                        "Yes".toString(),
+                      );
+                    } else {
+                      expect(page.attributes[0].values[0].name).to.eq(
+                        attributeValue.toString(),
+                      );
+                    }
+                  });
+              });
           });
       },
     );
   });
 
-  it("should delete page", { tags: ["@pages", "@allEnv", "@stable"] }, () => {
+  it("should delete page TC: SALEOR_2209", 
+  { tags: ["@pages", "@allEnv", "@stable"] }, () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
 
-    createPageRequest({
-      pageTypeId: pageType.id,
-      title: randomName,
-    }).then(({ page }) => {
-      cy.visit(pageDetailsUrl(page.id))
-        .get(BUTTON_SELECTORS.deleteButton)
-        .click()
-        .addAliasToGraphRequest("PageRemove")
-        .get(BUTTON_SELECTORS.submit)
-        .click()
-        .waitForRequestAndCheckIfNoErrors("@PageRemove");
-      getPage(page.id).should("be.null");
-    });
+    pageRequests
+      .createPage({
+        pageTypeId: pageType.id,
+        title: randomName,
+      })
+      .then(({ page }) => {
+        cy.visit(pageDetailsUrl(page.id))
+          .get(BUTTON_SELECTORS.deleteButton)
+          .click()
+          .addAliasToGraphRequest("PageRemove")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@PageRemove");
+        pageRequests.getPage(page.id).should("be.null");
+      });
   });
 
-  it("should update page", { tags: ["@pages", "@allEnv", "@stable"] }, () => {
+  it("should update page TC: SALEOR_2208", 
+  { tags: ["@pages", "@allEnv", "@stable"] }, () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
     const updatedName = `${startsWith}${faker.datatype.number()}`;
 
-    createPageRequest({
-      pageTypeId: pageType.id,
-      title: randomName,
-      isPublished: true,
-    })
+    pageRequests
+      .createPage({
+        pageTypeId: pageType.id,
+        title: randomName,
+        isPublished: true,
+      })
       .then(({ page }) => {
         cy.visit(pageDetailsUrl(page.id))
           .get(PAGE_DETAILS_SELECTORS.nameInput)
@@ -165,7 +190,7 @@ describe("Tests for pages", () => {
           .get(BUTTON_SELECTORS.confirm)
           .click()
           .waitForRequestAndCheckIfNoErrors("@PageUpdate");
-        getPage(page.id);
+        pageRequests.getPage(page.id);
       })
       .then(page => {
         expect(page.title).to.eq(updatedName);

@@ -11,9 +11,13 @@ import {
   createTypeProduct,
   getProductType,
 } from "../../../support/api/requests/ProductType";
-import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
+import {
+  getProductDetails,
+} from "../../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import { createProductInChannel } from "../../../support/api/utils/products/productsUtils";
+import {
+  createProductInChannel,
+} from "../../../support/api/utils/products/productsUtils";
 
 describe("As an admin I want to manage product types", () => {
   const startsWith = "delProdType" + faker.datatype.number();
@@ -22,7 +26,7 @@ describe("As an admin I want to manage product types", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
     createCategory({ name: startsWith }).then(resp => (category = resp));
     getDefaultChannel().then(resp => {
@@ -32,7 +36,7 @@ describe("As an admin I want to manage product types", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

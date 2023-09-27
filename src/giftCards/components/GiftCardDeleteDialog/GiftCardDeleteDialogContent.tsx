@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog, {
   ActionDialogProps,
 } from "@dashboard/components/ActionDialog";
@@ -34,10 +33,10 @@ export interface GiftCardDeleteDialogContentProps<
     Partial<
       Pick<
         GiftCardsListConsumerProps,
-        "listElements" | "selectedItemsCount" | "giftCards" | "loading"
+        "selectedRowIds" | "giftCards" | "loading"
       >
     > {
-  id?: string;
+  ids?: string[];
   giftCard?: TGiftCard;
   singleDeletion: boolean;
 }
@@ -45,14 +44,13 @@ export interface GiftCardDeleteDialogContentProps<
 function GiftCardDeleteDialogContent<
   TGiftCard extends DeleteDialogContentGiftCard,
 >({
-  id,
+  ids,
   open,
   onClose,
   onConfirm,
   confirmButtonState,
   singleDeletion,
-  selectedItemsCount: listSelectedItemsCount,
-  listElements,
+  selectedRowIds,
   giftCards,
   giftCard,
   loading,
@@ -62,7 +60,7 @@ function GiftCardDeleteDialogContent<
 
   const [isConsentChecked, setConsentChecked] = useState(false);
 
-  const selectedItemsCount = listSelectedItemsCount || SINGLE;
+  const selectedItemsCount = selectedRowIds?.length || SINGLE;
 
   useEffect(() => {
     if (!open) {
@@ -75,17 +73,17 @@ function GiftCardDeleteDialogContent<
       return false;
     }
 
-    return listElements?.some(hasSelectedGiftCardBalance);
+    return selectedRowIds?.some(hasSelectedGiftCardBalance);
   };
 
   const hasSelectedGiftCardBalance = (id: string) => {
     const card = giftCards?.find(getById(id)) || giftCard;
 
-    return card?.currentBalance?.amount > 0;
+    return (card?.currentBalance?.amount ?? 0) > 0;
   };
 
   const deletingCardsWithBalance = singleDeletion
-    ? hasSelectedGiftCardBalance(id)
+    ? hasSelectedGiftCardBalance(ids?.[0] ?? "")
     : hasSelectedAnyGiftCardsWithBalance();
 
   const submitEnabled = deletingCardsWithBalance ? isConsentChecked : true;

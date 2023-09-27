@@ -30,6 +30,7 @@ export const FilterPresetItem = ({
         onClick={onSelect}
         onMouseOver={() => setHasHover(true)}
         onMouseLeave={() => setHasHover(false)}
+        data-test-id="preset"
       >
         <Text ellipsis variant={isActive ? "bodyStrong" : "body"}>
           {children}
@@ -47,6 +48,7 @@ export const FilterPresetItem = ({
             alignItems="center"
           >
             <RemoveIcon
+              data-test-id="preset-delete-button"
               color={{
                 default: "iconNeutralSubdued",
                 hover: "iconNeutralPlain",

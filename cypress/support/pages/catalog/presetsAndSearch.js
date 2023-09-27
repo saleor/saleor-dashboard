@@ -28,3 +28,18 @@ export function confirmGridRowsContainsText(name) {
 export function confirmActivePresetName(name) {
   return cy.get(PRESETS.activePresetName).should("contain.text", name);
 }
+export function clickDeletePresetButton() {
+  return cy.get(PRESETS.presetDeleteButton).click();
+}
+export function clickShowSavedPresetsButton() {
+  cy.get(PRESETS.activePresetName).click();
+}
+export function clickSavedPresetContain(presetName) {
+  cy.get(PRESETS.savedPreset).contains(presetName).click();
+}
+export function hoverSavedPresetContain(presetName) {
+  cy.get(PRESETS.savedPreset).contains(presetName).trigger("mouseover");
+}
+export function clickUpdatePresetButton() {
+  cy.get(PRESETS.updatePresetButton).click();
+}

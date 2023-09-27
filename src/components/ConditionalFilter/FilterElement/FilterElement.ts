@@ -1,47 +1,89 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
-import { LeftOperand } from "./../useLeftOperands";
-import { CONDITIONS, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
+import { RowType, STATIC_OPTIONS } from "../constants";
+import { LeftOperand } from "../LeftOperandsProvider";
+import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
-import { ConditionItem, ConditionOptions } from "./ConditionOptions";
-import { ConditionOption, ConditionSelected } from "./ConditionSelected";
+import {
+  ConditionItem,
+  ConditionOptions,
+  StaticElementName,
+} from "./ConditionOptions";
+import { ConditionSelected } from "./ConditionSelected";
+import { ConditionValue, ItemOption } from "./ConditionValue";
+import { Constraint } from "./Constraint";
 
-interface ExpressionValue {
-  value: string;
-  label: string;
-  type: string;
+export class ExpressionValue {
+  constructor(
+    public value: string,
+    public label: string,
+    public type: string,
+  ) {}
+
+  public setLabel(label: string) {
+    this.label = label;
+  }
+
+  public isEmpty() {
+    return this.value.length === 0 || this.label.length === 0;
+  }
+
+  public static fromSlug(slug: string) {
+    const option = STATIC_OPTIONS.find(o => o.slug === slug);
+
+    if (!option) return ExpressionValue.emptyStatic();
+
+    return new ExpressionValue(option.slug, option.label, option.type);
+  }
+
+  public static fromLeftOperand(leftOperand: LeftOperand) {
+    return new ExpressionValue(
+      leftOperand.slug,
+      leftOperand.label,
+      leftOperand.type,
+    );
+  }
+
+  public static fromUrlToken(token: UrlToken) {
+    const option = STATIC_OPTIONS.find(o => o.slug === token.name);
+
+    if (!option) {
+      return new ExpressionValue(token.name, token.name, token.name);
+    }
+
+    return new ExpressionValue(token.name, option.label, token.name);
+  }
+
+  public static forAttribute(
+    attributeName: string,
+    response: InitialStateResponse,
+  ) {
+    const attribute = response.attributeByName(attributeName);
+
+    return new ExpressionValue(
+      attributeName,
+      attribute.label,
+      attribute.inputType,
+    );
+  }
+
+  public static emptyStatic() {
+    return new ExpressionValue("", "", TokenType.STATIC);
+  }
 }
 
-const createStaticEntry = (rawEntry: ConditionOption) => {
-  if (typeof rawEntry === "string") {
-    return rawEntry;
-  }
-
-  if (Array.isArray(rawEntry)) {
-    return rawEntry.map(el => (typeof el === "string" ? el : el.slug));
-  }
-
-  return rawEntry.slug;
-};
-
-const createAttributeEntry = (rawEntry: ConditionOption) => {
-  if (typeof rawEntry === "string") {
-    return rawEntry;
-  }
-
-  if (Array.isArray(rawEntry)) {
-    return rawEntry.map(el => (typeof el === "string" ? el : el.slug));
-  }
-
-  return rawEntry.slug;
-};
-
 export class FilterElement {
-  private constructor(
+  public constructor(
     public value: ExpressionValue,
     public condition: Condition,
     public loading: boolean,
-  ) {}
+    public constraint?: Constraint,
+  ) {
+    const newConstraint = Constraint.fromSlug(this.value.value);
+
+    if (newConstraint) {
+      this.constraint = newConstraint;
+    }
+  }
 
   public enableLoading() {
     this.loading = true;
@@ -56,11 +98,7 @@ export class FilterElement {
   }
 
   public updateLeftOperator(leftOperand: LeftOperand) {
-    this.value = {
-      value: leftOperand.slug,
-      label: leftOperand.label,
-      type: leftOperand.type,
-    };
+    this.value = ExpressionValue.fromLeftOperand(leftOperand);
     this.condition = Condition.emptyFromLeftOperand(leftOperand);
   }
 
@@ -73,11 +111,11 @@ export class FilterElement {
       ConditionSelected.fromConditionItem(conditionValue);
   }
 
-  public updateRightOperator(value: ConditionOption) {
+  public updateRightOperator(value: ConditionValue) {
     this.condition.selected.setValue(value);
   }
 
-  public updateRightOptions(options: ConditionOption[]) {
+  public updateRightOptions(options: ItemOption[]) {
     this.condition.selected.setOptions(options);
   }
 
@@ -91,7 +129,7 @@ export class FilterElement {
   }
 
   public isEmpty() {
-    return this.value.type === "e";
+    return this.value.isEmpty() || this.condition.isEmpty();
   }
 
   public isStatic() {
@@ -102,51 +140,59 @@ export class FilterElement {
     return ConditionOptions.isAttributeInputType(this.value.type);
   }
 
-  public isCollection() {
-    return this.value.value === "collection";
+  public rowType(): RowType | null {
+    if (this.isStatic()) {
+      return this.value.value as RowType;
+    }
+
+    if (this.isAttribute()) {
+      return "attribute";
+    }
+
+    return null;
   }
 
-  public isCategory() {
-    return this.value.value === "category";
+  public setConstraint(constraint: Constraint) {
+    this.constraint = constraint;
   }
 
-  public isProductType() {
-    return this.value.value === "producttype";
-  }
-
-  public isChannel() {
-    return this.value.value === "channel";
+  public clearConstraint() {
+    this.constraint = undefined;
   }
 
   public asUrlEntry(): UrlEntry {
-    const { conditionValue } = this.condition.selected;
-    const conditionIndex = CONDITIONS.findIndex(
-      el => conditionValue && el === conditionValue.label,
-    );
-
     if (this.isAttribute()) {
-      return {
-        [`a${conditionIndex}.${this.value.value}`]: createAttributeEntry(
-          this.condition.selected.value,
-        ),
-      };
+      return UrlEntry.forAttribute(this.condition.selected, this.value.value);
     }
 
-    return {
-      [`s${conditionIndex}.${this.value.value}`]: createStaticEntry(
-        this.condition.selected.value,
-      ),
-    };
+    return UrlEntry.forStatic(this.condition.selected, this.value.value);
   }
 
-  public static fromValueEntry(valueEntry: any) {
-    return new FilterElement(valueEntry.value, valueEntry.condition, false);
+  public equals(element: FilterElement) {
+    return this.value.value === element.value.value;
+  }
+
+  public static isCompatible(element: unknown): element is FilterElement {
+    return (
+      typeof element === "object" &&
+      !Array.isArray(element) &&
+      element !== null &&
+      "value" in element
+    );
   }
 
   public static createEmpty() {
     return new FilterElement(
-      { value: "", label: "", type: "s" },
+      ExpressionValue.emptyStatic(),
       Condition.createEmpty(),
+      false,
+    );
+  }
+
+  public static createStaticBySlug(slug: StaticElementName) {
+    return new FilterElement(
+      ExpressionValue.fromSlug(slug),
+      Condition.emptyFromSlug(slug),
       false,
     );
   }
@@ -154,26 +200,27 @@ export class FilterElement {
   public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
     if (token.isStatic()) {
       return new FilterElement(
-        { value: token.name, label: token.name, type: token.name },
+        ExpressionValue.fromUrlToken(token),
         Condition.fromUrlToken(token, response),
         false,
       );
     }
 
     if (token.isAttribute()) {
-      const attribute = response.attributeByName(token.name);
-
       return new FilterElement(
-        {
-          value: token.name,
-          label: attribute.label,
-          type: attribute.inputType,
-        },
+        ExpressionValue.forAttribute(token.name, response),
         Condition.fromUrlToken(token, response),
         false,
       );
     }
-
-    return null;
+    return FilterElement.createEmpty();
   }
 }
+
+export const hasEmptyRows = (container: FilterContainer) => {
+  return container
+    .filter(FilterElement.isCompatible)
+    .some((e: FilterElement) => e.isEmpty());
+};
+
+export type FilterContainer = Array<string | FilterElement | FilterContainer>;

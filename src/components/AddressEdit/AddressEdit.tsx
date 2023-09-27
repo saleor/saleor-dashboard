@@ -32,8 +32,8 @@ interface AddressEditProps {
   data: AddressTypeInput;
   disabled?: boolean;
   errors: Array<AccountErrorFragment | OrderErrorFragment>;
-  onChange(event: React.ChangeEvent<any>);
-  onCountryChange(event: React.ChangeEvent<any>);
+  onChange: (event: React.ChangeEvent<any>) => any;
+  onCountryChange: (event: React.ChangeEvent<any>) => any;
 }
 
 const PossibleFormFields = {

@@ -16,7 +16,10 @@ import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeF
 import {
   createShippingRate,
   createShippingZone,
+  getDifferentDefaultWeight,
+  openChangeDefaultWeightDialog,
   rateOptions,
+  selectDifferentDefaultWeight,
 } from "../../../support/pages/shippingMethodPage";
 
 describe("As a staff user I want to create shipping zone and rate", () => {
@@ -37,7 +40,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
     const productTypeSlug = `${faker.lorem.slug()}slug`;
     const productSlug = `${faker.lorem.slug()}slug`;
     const warehouseSlug = `${faker.lorem.slug()}slug`;
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -108,7 +111,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(
@@ -120,7 +123,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
         "auth",
         ONE_PERMISSION_USERS.shipping,
       );
-      cy.visit(urlList.shippingMethods).expectSkeletonIsVisible();
+      cy.visit(urlList.shippingMethods);
       createShippingZone(
         shippingName,
         warehouse.name,
@@ -170,7 +173,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
         "auth",
         ONE_PERMISSION_USERS.shipping,
       );
-      cy.visit(urlList.shippingMethods).expectSkeletonIsVisible();
+      cy.visit(urlList.shippingMethods);
       createShippingZone(
         shippingName,
         warehouse.name,
@@ -208,6 +211,24 @@ describe("As a staff user I want to create shipping zone and rate", () => {
           );
           expect(isShippingAvailable).to.be.false;
         });
+    },
+  );
+  it(
+    "should be able to change default weight in shipping methods TC: SALEOR_4",
+    { tags: ["@shipping", "@allEnv", "@stable"] },
+    () => {
+      cy.addAliasToGraphRequest("ShopInfo");
+      cy.clearSessionData().loginUserViaRequest();
+      cy.visit(urlList.shippingMethods);
+      openChangeDefaultWeightDialog();
+      getDifferentDefaultWeight().then(unit => {
+        selectDifferentDefaultWeight(unit)
+          .waitForRequestAndCheckIfNoErrors("@ShopInfo")
+          .then(resp => {
+            expect(resp.response.body.data.shop.defaultWeightUnit).equal(unit);
+          });
+      });
+      cy.confirmationMessageShouldAppear();
     },
   );
 });

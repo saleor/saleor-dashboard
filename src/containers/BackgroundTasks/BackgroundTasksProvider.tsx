@@ -28,29 +28,20 @@ export function useBackgroundTasks(
   React.useEffect(() => {
     const intervalId = setInterval(() => {
       const queue = async () => {
-        try {
-          await Promise.all(
-            tasks.current.map(async task => {
-              if (task.status === TaskStatus.PENDING) {
-                let status: TaskStatus;
+        await Promise.all(
+          tasks.current.map(async task => {
+            if (task.status === TaskStatus.PENDING) {
+              const status = await handleTask(task);
 
-                try {
-                  status = await handleTask(task);
-                } catch (error) {
-                  throw error;
-                }
-                if (status !== TaskStatus.PENDING) {
-                  const taskIndex = tasks.current.findIndex(
-                    t => t.id === task.id,
-                  );
-                  tasks.current[taskIndex].status = status;
-                }
+              if (status !== TaskStatus.PENDING) {
+                const taskIndex = tasks.current.findIndex(
+                  t => t.id === task.id,
+                );
+                tasks.current[taskIndex].status = status;
               }
-            }),
-          );
-        } catch (error) {
-          throw error;
-        }
+            }
+          }),
+        );
       };
 
       queue();

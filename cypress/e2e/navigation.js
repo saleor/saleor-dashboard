@@ -18,7 +18,6 @@ import {
   PERMISSION_GROUP_LIST_SELECTORS,
   PLUGINS_LIST_SELECTORS,
   PRODUCT_TYPES_LIST_SELECTORS,
-  SALES_SELECTORS,
   SHIPPING_ZONES_LIST_SELECTORS,
   STAFF_MEMBERS_LIST_SELECTORS,
   VOUCHERS_SELECTORS,
@@ -35,9 +34,6 @@ import {
 } from "../support/pages/mainMenuPage";
 
 describe("As a staff user I want to navigate through shop using different permissions", () => {
-  beforeEach(() => {
-    cy.clearSessionData();
-  });
   it(
     `should be able to navigate through shop as a staff member using DISCOUNTS permission. TC: SALEOR_3405a - sales list`,
     { tags: ["@allEnv", "@navigation", "@stable", "@oldRelease", "@critical"] },
@@ -46,7 +42,6 @@ describe("As a staff user I want to navigate through shop using different permis
       cy.addAliasToGraphRequest("SaleList")
         .clickOnElement(MENU_SELECTORS.MENU.discounts)
         .waitForRequestAndCheckIfNoErrors("@SaleList");
-      cy.checkIfElementIsVisible(SALES_SELECTORS.createSaleButton);
     },
   );
   it(

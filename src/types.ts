@@ -30,6 +30,8 @@ export enum ListViews {
   DRAFT_LIST = "DRAFT_LIST",
   NAVIGATION_LIST = "NAVIGATION_LIST",
   ORDER_LIST = "ORDER_LIST",
+  ORDER_DETAILS_LIST = "ORDER_DETAILS_LIST",
+  ORDER_DRAFT_DETAILS_LIST = "ORDER_DRAFT_DETAILS_LIST",
   PAGES_LIST = "PAGES_LIST",
   PAGE_TYPES_LIST = "PAGE_TYPES_LIST",
   PLUGINS_LIST = "PLUGIN_LIST",
@@ -43,7 +45,9 @@ export enum ListViews {
   WAREHOUSE_LIST = "WAREHOUSE_LIST",
   WEBHOOK_LIST = "WEBHOOK_LIST",
   TRANSLATION_ATTRIBUTE_VALUE_LIST = "TRANSLATION_ATTRIBUTE_VALUE_LIST",
-  GIFT_CARD_LIST = " GIFT_CARD_LIST",
+  GIFT_CARD_LIST = "GIFT_CARD_LIST",
+  // Not strictly a list view, but there's a list of variants
+  PRODUCT_DETAILS = "PRODUCT_DETAILS",
 }
 
 export interface ListProps<TColumns extends string = string> {
@@ -79,7 +83,7 @@ export interface SortPage<TSortKey extends string> {
 
 export interface ListActionsWithoutToolbar {
   toggle: (id: string) => void;
-  toggleAll: (items: React.ReactNodeArray, selected: number) => void;
+  toggleAll: (items: Node[], selected: number) => void;
   isChecked: (id: string) => boolean;
   selected: number;
 }
@@ -107,14 +111,34 @@ export interface FilterPageProps<TKeys extends string, TOpts extends {}>
   filterOpts: TOpts;
 }
 
+export interface FilterPagePropsWithPresets<
+  TKeys extends string,
+  TOpts extends {},
+> extends FilterProps<TKeys>,
+    SearchPageProps,
+    FilterPresetsProps {
+  filterOpts: TOpts;
+}
+
 export interface FilterProps<TKeys extends string> {
   currencySymbol?: string;
   onFilterChange: (filter: IFilter<TKeys>) => void;
   onFilterAttributeFocus?: (id?: string) => void;
 }
 
+export interface FilterPresetsProps {
+  selectedFilterPreset: number | undefined;
+  filterPresets: string[];
+  onFilterPresetsAll: () => void;
+  onFilterPresetChange: (id: number) => void;
+  onFilterPresetUpdate: (name: string) => void;
+  onFilterPresetDelete: (id: number) => void;
+  onFilterPresetPresetSave: () => void;
+  hasPresetsChanged: () => boolean;
+}
+
 export interface TabPageProps {
-  currentTab: number;
+  currentTab: number | undefined;
   tabs: string[];
   onAll: () => void;
   onTabChange: (tab: number) => void;

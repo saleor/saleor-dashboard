@@ -21,7 +21,7 @@ describe("Warehouses in checkout", () => {
     "should not be possible to buy product for country not listed in warehouse",
     { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },
     () => {
-      cy.clearSessionData().loginUserViaRequest();
+      cy.loginUserViaRequest();
       const name = `${startsWith}${faker.datatype.number()}`;
       cy.fixture("addresses")
         .then(addresses => {

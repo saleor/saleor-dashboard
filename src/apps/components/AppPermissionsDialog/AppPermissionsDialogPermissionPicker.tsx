@@ -10,10 +10,16 @@ const messages = AppPermissionsDialogMessages.permissionsPicker;
 interface AppPermissionsDialogPermissionPickerProps {
   allPermissions: AppPermission[];
   selected: PermissionEnum[];
-  onSubmit(): void;
-  onChange(codes: PermissionEnum[]): void;
-  onClose(): void;
+  onSubmit: () => void;
+  onChange: (codes: PermissionEnum[]) => void;
+  onClose: () => void;
 }
+
+/**
+ * Approximate height that clips list and makes it scrollable.
+ * This makes it avaialble on small devices, including horizontal ipad air
+ */
+const LIST_MAX_HEIGHT = "50vh";
 
 export const AppPermissionsDialogPermissionPicker = ({
   onSubmit,
@@ -39,35 +45,37 @@ export const AppPermissionsDialogPermissionPicker = ({
         onChange(values);
       }}
     >
-      <List>
-        {allPermissions.map(perm => {
-          const isAssigned = Boolean(selected.find(p => p === perm.code));
+      <Box overflow={"scroll"} __maxHeight={LIST_MAX_HEIGHT}>
+        <List>
+          {allPermissions.map(perm => {
+            const isAssigned = Boolean(selected.find(p => p === perm.code));
 
-          return (
-            <List.Item
-              key={perm.code}
-              paddingY={1}
-              paddingX={2}
-              display={"flex"}
-              alignItems={"center"}
-              as={"label"}
-              backgroundColor={
-                isAssigned ? "decorativeSurfaceSubdued3" : undefined
-              }
-            >
-              <Checkbox
-                name={perm.code}
-                defaultChecked={isAssigned}
-                marginRight={4}
-              />
-              <Text variant={isAssigned ? "bodyStrong" : "body"}>
-                {perm.name}
-              </Text>
-            </List.Item>
-          );
-        })}
-      </List>
-      <Box display={"flex"} justifyContent={"flex-end"} gap={2}>
+            return (
+              <List.Item
+                key={perm.code}
+                paddingY={1}
+                paddingX={2}
+                display={"flex"}
+                alignItems={"center"}
+                as={"label"}
+                backgroundColor={
+                  isAssigned ? "decorativeSurfaceSubdued3" : undefined
+                }
+              >
+                <Checkbox
+                  name={perm.code}
+                  defaultChecked={isAssigned}
+                  marginRight={4}
+                />
+                <Text variant={isAssigned ? "bodyStrong" : "body"}>
+                  {perm.name}
+                </Text>
+              </List.Item>
+            );
+          })}
+        </List>
+      </Box>
+      <Box display={"flex"} justifyContent={"flex-end"} gap={2} marginTop={2}>
         <Button onClick={onClose} type={"button"} variant={"tertiary"}>
           {intl.formatMessage(messages.closeButton)}
         </Button>

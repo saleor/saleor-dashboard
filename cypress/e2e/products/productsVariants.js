@@ -3,7 +3,9 @@
 
 import faker from "faker";
 
-import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
+import {
+  PRODUCT_DETAILS,
+} from "../../elements/catalog/products/product-details";
 import { urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createChannel } from "../../support/api/requests/Channels";
@@ -12,8 +14,9 @@ import {
   updateChannelInProduct,
 } from "../../support/api/requests/Product";
 import * as productUtils from "../../support/api/utils/products/productsUtils";
-import { getProductVariants } from "../../support/api/utils/storeFront/storeFrontProductUtils";
-import { updateTaxConfigurationForChannel } from "../../support/api/utils/taxesUtils";
+import {
+  getProductVariants,
+} from "../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   addVariantToDataGrid,
   enterVariantEditPage,
@@ -37,9 +40,8 @@ describe("As an admin I should be able to create variant", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
-    updateTaxConfigurationForChannel({ pricesEnteredWithTax: true });
     productUtils
       .createShippingProductTypeAttributeAndCategory(name, attributeValues)
       .then(resp => {
@@ -53,10 +55,6 @@ describe("As an admin I should be able to create variant", () => {
       })
       .then(resp => {
         newChannel = resp;
-        updateTaxConfigurationForChannel({
-          channelSlug: newChannel.slug,
-          pricesEnteredWithTax: true,
-        });
       });
     cy.checkIfDataAreNotNull({
       defaultChannel,
@@ -69,10 +67,7 @@ describe("As an admin I should be able to create variant", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(

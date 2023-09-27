@@ -1,35 +1,18 @@
+import { AVAILABLE_FLAGS as GENERATED_FLAGS } from "./../../.featureFlags/generated";
 import { FlagValue } from "./FlagContent";
 
-interface FlagDefinition {
+export interface FlagDefinition {
   name: string;
   displayName: string;
-  description: string;
+  component: () => JSX.Element;
+  visible: boolean;
   content: {
     enabled: boolean;
     payload?: string;
   };
 }
 
-const AVAILABLE_FLAGS = [
-  /*
-  Before use any flag pleease an entry within this array,
-  so the TS will infer the types, example: 
-
-  {
-    name: "flag1",
-    displayName: "Flag 1",
-    description: "some description",
-    content: { enabled: false, value: "default" },
-  } as const,
-  */
-
-  {
-    name: "product_filters",
-    displayName: "Product filters",
-    description: "New filters on product listing page",
-    content: { enabled: false, payload: "" },
-  } as const,
-] satisfies FlagDefinition[];
+export const AVAILABLE_FLAGS = GENERATED_FLAGS;
 
 type TypedEntry = (typeof AVAILABLE_FLAGS)[number];
 type GeneralEntry = TypedEntry extends never ? FlagDefinition : TypedEntry;
@@ -58,3 +41,14 @@ export const asFlagInfoArray = (list: GeneralFlagList) =>
     ...el,
     content: list[el.name],
   }));
+
+export const flagInfoToFlagList = (flagInfos: FlagDefinition[]): FlagList => {
+  return flagInfos.reduce((prev, curr) => {
+    prev[curr.name as Name] = new FlagValue(
+      curr.content.enabled,
+      curr.content.payload,
+    );
+
+    return prev;
+  }, {} as FlagList);
+};

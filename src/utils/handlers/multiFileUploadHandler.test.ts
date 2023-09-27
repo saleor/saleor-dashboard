@@ -25,7 +25,7 @@ describe("Multiple file upload handler", () => {
       return promise;
     }, cbs);
 
-    handle((testFiles as unknown) as FileList).then(() => {
+    handle(testFiles as unknown as FileList).then(() => {
       expect(cbs.onAfterUpload).toBeCalledTimes(testFiles.length);
       expect(cbs.onBeforeUpload).toBeCalledTimes(testFiles.length);
       expect(cbs.onCompleted).toBeCalledTimes(1);
@@ -48,7 +48,7 @@ describe("Multiple file upload handler", () => {
     const handle = createMultiFileUploadHandler((_, fileIndex) => {
       const promise = new Promise<void>((resolve, reject) => {
         if (fileIndex === 2) {
-          reject();
+          reject(new Error("mock error"));
         } else {
           resolve();
         }
@@ -56,7 +56,7 @@ describe("Multiple file upload handler", () => {
       return promise;
     }, cbs);
 
-    handle((testFiles as unknown) as FileList).then(() => {
+    handle(testFiles as unknown as FileList).then(() => {
       expect(cbs.onAfterUpload).toBeCalledTimes(testFiles.length - 1);
       expect(cbs.onBeforeUpload).toBeCalledTimes(testFiles.length);
       expect(cbs.onCompleted).toBeCalledTimes(1);

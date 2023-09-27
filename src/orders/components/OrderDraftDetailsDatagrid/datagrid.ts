@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import {
+  buttonCell,
   moneyCell,
   moneyDiscountedCell,
   numberCell,
@@ -8,10 +9,10 @@ import {
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
+import { commonMessages } from "@dashboard/intl";
 import {
   getDatagridRowDataIndex,
   getStatusColor,
@@ -21,73 +22,70 @@ import { useOrderLineDiscountContext } from "@dashboard/products/components/Orde
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { DefaultTheme, useTheme } from "@saleor/macaw-ui/next";
-import { useMemo } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { lineAlertMessages } from "../OrderDraftDetailsProducts/messages";
 import { columnsMessages } from "./messages";
 
-export const useColumns = () => {
-  const emptyColumn = useEmptyColumn();
-  const intl = useIntl();
-
-  const availableColumns = useMemo(
-    () => [
-      emptyColumn,
-      {
-        id: "product",
-        title: intl.formatMessage(columnsMessages.product),
-        width: 300,
-      },
-      {
-        id: "sku",
-        title: "SKU",
-        width: 150,
-      },
-      {
-        id: "variantName",
-        title: intl.formatMessage(columnsMessages.variantName),
-        width: 150,
-      },
-      {
-        id: "quantity",
-        title: intl.formatMessage(columnsMessages.quantity),
-        width: 80,
-      },
-      {
-        id: "price",
-        title: intl.formatMessage(columnsMessages.price),
-        width: 150,
-      },
-      {
-        id: "total",
-        title: intl.formatMessage(columnsMessages.total),
-        width: 150,
-      },
-      {
-        id: "status",
-        title: "Status",
-        width: 250,
-      },
-    ],
-    [emptyColumn, intl],
-  );
-
-  return {
-    availableColumns,
-  };
-};
+export const orderDraftDetailsStaticColumnsAdapter = (
+  emptyColumn: AvailableColumn,
+  intl: IntlShape,
+) => [
+  emptyColumn,
+  {
+    id: "product",
+    title: intl.formatMessage(columnsMessages.product),
+    width: 300,
+  },
+  {
+    id: "sku",
+    title: "SKU",
+    width: 150,
+  },
+  {
+    id: "variantName",
+    title: intl.formatMessage(columnsMessages.variantName),
+    width: 150,
+  },
+  {
+    id: "quantity",
+    title: intl.formatMessage(columnsMessages.quantity),
+    width: 80,
+  },
+  {
+    id: "price",
+    title: intl.formatMessage(columnsMessages.price),
+    width: 150,
+  },
+  {
+    id: "total",
+    title: intl.formatMessage(columnsMessages.total),
+    width: 150,
+  },
+  {
+    id: "metadata",
+    title: intl.formatMessage(commonMessages.metadata),
+    width: 150,
+  },
+  {
+    id: "status",
+    title: intl.formatMessage(columnsMessages.status),
+    width: 250,
+  },
+];
 
 interface GetCellContentProps {
   columns: AvailableColumn[];
   lines: OrderDetailsFragment["lines"];
   errors: OrderErrorFragment[];
+  onShowMetadata: (id: string) => void;
 }
 
 export const useGetCellContent = ({
   columns,
   lines,
   errors,
+  onShowMetadata,
 }: GetCellContentProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
@@ -102,13 +100,13 @@ export const useGetCellContent = ({
       return readonlyTextCell("", false);
     }
 
-    const columnId = columns[column].id;
+    const columnId = columns[column]?.id;
     const change = changes.current[getChangeIndex(columnId, row)]?.data;
     const rowData = added.includes(row)
       ? undefined
       : lines[getDatagridRowDataIndex(row, removed)];
 
-    if (!rowData) {
+    if (!rowData || !columnId) {
       return readonlyTextCell("", false);
     }
 
@@ -141,7 +139,7 @@ export const useGetCellContent = ({
             allowOverlay: true,
           },
         );
-      case "status":
+      case "status": {
         const orderErrors = getOrderErrors(errors, rowData.id);
         const status = getOrderLineStatus(intl, rowData, orderErrors);
 
@@ -153,6 +151,7 @@ export const useGetCellContent = ({
             allowOverlay: false,
           },
         );
+      }
       case "sku":
         return readonlyTextCell(rowData?.productSku ?? "", false);
       case "variantName":
@@ -164,6 +163,14 @@ export const useGetCellContent = ({
           {
             readonly: true,
             allowOverlay: false,
+          },
+        );
+
+      case "metadata":
+        return buttonCell(
+          intl.formatMessage(commonMessages.viewMetadata),
+          () => {
+            onShowMetadata(rowData.id);
           },
         );
 

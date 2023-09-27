@@ -7,11 +7,26 @@
       }
       const result: PossibleTypesResultData = {
   "possibleTypes": {
+    "CheckoutLineProblem": [
+      "CheckoutLineProblemInsufficientStock",
+      "CheckoutLineProblemVariantNotAvailable"
+    ],
+    "CheckoutProblem": [
+      "CheckoutLineProblemInsufficientStock",
+      "CheckoutLineProblemVariantNotAvailable"
+    ],
     "DeliveryMethod": [
-      "Warehouse",
-      "ShippingMethod"
+      "ShippingMethod",
+      "Warehouse"
     ],
     "Event": [
+      "AccountChangeEmailRequested",
+      "AccountConfirmationRequested",
+      "AccountConfirmed",
+      "AccountDeleteRequested",
+      "AccountDeleted",
+      "AccountEmailChanged",
+      "AccountSetPasswordRequested",
       "AddressCreated",
       "AddressDeleted",
       "AddressUpdated",
@@ -31,6 +46,7 @@
       "CategoryUpdated",
       "ChannelCreated",
       "ChannelDeleted",
+      "ChannelMetadataUpdated",
       "ChannelStatusChanged",
       "ChannelUpdated",
       "CheckoutCreated",
@@ -52,8 +68,10 @@
       "FulfillmentCanceled",
       "FulfillmentCreated",
       "FulfillmentMetadataUpdated",
+      "FulfillmentTrackingNumberUpdated",
       "GiftCardCreated",
       "GiftCardDeleted",
+      "GiftCardExportCompleted",
       "GiftCardMetadataUpdated",
       "GiftCardSent",
       "GiftCardStatusChanged",
@@ -61,6 +79,7 @@
       "InvoiceDeleted",
       "InvoiceRequested",
       "InvoiceSent",
+      "ListStoredPaymentMethods",
       "MenuCreated",
       "MenuDeleted",
       "MenuItemCreated",
@@ -90,7 +109,10 @@
       "PaymentCaptureEvent",
       "PaymentConfirmEvent",
       "PaymentGatewayInitializeSession",
+      "PaymentGatewayInitializeTokenizationSession",
       "PaymentListGateways",
+      "PaymentMethodInitializeTokenizationSession",
+      "PaymentMethodProcessTokenizationSession",
       "PaymentProcessEvent",
       "PaymentRefundEvent",
       "PaymentVoidEvent",
@@ -99,6 +121,7 @@
       "PermissionGroupUpdated",
       "ProductCreated",
       "ProductDeleted",
+      "ProductExportCompleted",
       "ProductMediaCreated",
       "ProductMediaDeleted",
       "ProductMediaUpdated",
@@ -123,11 +146,13 @@
       "ShippingZoneDeleted",
       "ShippingZoneMetadataUpdated",
       "ShippingZoneUpdated",
+      "ShopMetadataUpdated",
       "StaffCreated",
       "StaffDeleted",
+      "StaffSetPasswordRequested",
       "StaffUpdated",
+      "StoredPaymentMethodDeleteRequested",
       "ThumbnailCreated",
-      "TransactionActionRequest",
       "TransactionCancelationRequested",
       "TransactionChargeRequested",
       "TransactionInitializeSession",
@@ -246,6 +271,7 @@
       "App",
       "Attribute",
       "Category",
+      "Channel",
       "Checkout",
       "CheckoutLine",
       "Collection",
@@ -268,6 +294,7 @@
       "ShippingMethod",
       "ShippingMethodType",
       "ShippingZone",
+      "Shop",
       "TaxClass",
       "TaxConfiguration",
       "TransactionItem",
@@ -288,48 +315,48 @@
       "Order"
     ],
     "TranslatableItem": [
-      "ProductTranslatableContent",
-      "CollectionTranslatableContent",
-      "CategoryTranslatableContent",
       "AttributeTranslatableContent",
       "AttributeValueTranslatableContent",
-      "ProductVariantTranslatableContent",
+      "CategoryTranslatableContent",
+      "CollectionTranslatableContent",
+      "MenuItemTranslatableContent",
       "PageTranslatableContent",
-      "ShippingMethodTranslatableContent",
+      "ProductTranslatableContent",
+      "ProductVariantTranslatableContent",
       "SaleTranslatableContent",
-      "VoucherTranslatableContent",
-      "MenuItemTranslatableContent"
+      "ShippingMethodTranslatableContent",
+      "VoucherTranslatableContent"
     ],
     "TranslationTypes": [
-      "ProductTranslation",
-      "CollectionTranslation",
-      "CategoryTranslation",
       "AttributeTranslation",
       "AttributeValueTranslation",
-      "ProductVariantTranslation",
+      "CategoryTranslation",
+      "CollectionTranslation",
+      "MenuItemTranslation",
       "PageTranslation",
-      "ShippingMethodTranslation",
+      "ProductTranslation",
+      "ProductVariantTranslation",
       "SaleTranslation",
-      "VoucherTranslation",
-      "MenuItemTranslation"
+      "ShippingMethodTranslation",
+      "VoucherTranslation"
     ],
     "UserOrApp": [
-      "User",
-      "App"
+      "App",
+      "User"
     ],
     "_Entity": [
-      "App",
       "Address",
-      "User",
-      "Group",
-      "ProductVariant",
-      "Product",
-      "ProductType",
-      "ProductMedia",
+      "App",
       "Category",
       "Collection",
+      "Group",
       "Order",
-      "PageType"
+      "PageType",
+      "Product",
+      "ProductMedia",
+      "ProductType",
+      "ProductVariant",
+      "User"
     ]
   }
 };

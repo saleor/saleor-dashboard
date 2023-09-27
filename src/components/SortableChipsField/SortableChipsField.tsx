@@ -1,6 +1,6 @@
 import { ReorderAction, ReorderEvent } from "@dashboard/types";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { SortableContainerProps } from "react-sortable-hoc";
 
@@ -48,14 +48,8 @@ export interface SortableChipsFieldProps extends SortableContainerProps {
 }
 
 const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
-  const {
-    loading,
-    values,
-    error,
-    helperText,
-    onValueDelete,
-    onValueReorder,
-  } = props;
+  const { loading, values, error, helperText, onValueDelete, onValueReorder } =
+    props;
   const classes = useStyles(props);
 
   const handleSortStart = () => {
@@ -91,9 +85,9 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
           ))
         )}
         {error && (
-          <Typography variant="caption" className={classes.errorText}>
+          <Text variant="caption" color="textCriticalDefault">
             {helperText}
-          </Typography>
+          </Text>
         )}
       </div>
     </SortableContainer>

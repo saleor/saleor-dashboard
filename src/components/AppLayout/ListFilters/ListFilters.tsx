@@ -6,6 +6,7 @@ import React, { ReactNode } from "react";
 
 import { ExpressionFilters } from "./components/ExpressionFilters";
 import { FiltersSelect } from "./components/FiltersSelect";
+import { LegacyFiltersPresetsAlert } from "./components/LegacyFiltersPresetsAlert";
 import SearchInput from "./components/SearchInput";
 
 export interface ListFiltersProps<TKeys extends string = string>
@@ -17,7 +18,7 @@ export interface ListFiltersProps<TKeys extends string = string>
   actions?: ReactNode;
 }
 
-export const ListFilters = ({
+export const ListFilters = <TFilterKeys extends string = string>({
   currencySymbol,
   filterStructure,
   initialSearch,
@@ -27,16 +28,17 @@ export const ListFilters = ({
   onFilterAttributeFocus,
   errorMessages,
   actions,
-}: ListFiltersProps) => {
+}: ListFiltersProps<TFilterKeys>) => {
   const isProductPage = window.location.pathname.includes("/products");
   const productListingPageFiltersFlag = useFlag("product_filters");
   const filtersEnabled = isProductPage && productListingPageFiltersFlag.enabled;
 
   return (
     <>
+      {filtersEnabled && <LegacyFiltersPresetsAlert />}
       <Box
         display="grid"
-        gridTemplateColumns={2}
+        __gridTemplateColumns="auto 1fr"
         gap={4}
         paddingBottom={2}
         paddingX={6}
@@ -45,7 +47,7 @@ export const ListFilters = ({
           {filtersEnabled ? (
             <ExpressionFilters />
           ) : (
-            <FiltersSelect
+            <FiltersSelect<TFilterKeys>
               errorMessages={errorMessages}
               menu={filterStructure}
               currencySymbol={currencySymbol}

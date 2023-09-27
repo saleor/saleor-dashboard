@@ -32,8 +32,8 @@ export type SaleListUrlFilters = Filters<SaleListUrlFiltersEnum> &
 export type SaleListUrlDialog = "remove" | TabActionDialog;
 export enum SaleListUrlSortField {
   name = "name",
-  endDate = "end-date",
-  startDate = "start-date",
+  endDate = "endDate",
+  startDate = "startDate",
   type = "type",
   value = "value",
 }

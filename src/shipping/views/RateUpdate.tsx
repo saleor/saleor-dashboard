@@ -61,7 +61,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-const FORM_ID = Symbol();
+const FORM_ID = Symbol("shipping-zone-rates-details-form-id");
 
 export interface RateUpdateProps {
   id: string;

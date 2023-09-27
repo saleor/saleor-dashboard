@@ -15,21 +15,23 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
   useSectionLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages, errorMessages } from "@dashboard/intl";
+import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React, { useState } from "react";
+import isEqual from "lodash/isEqual";
+import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
@@ -64,12 +66,25 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
   const intl = useIntl();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
+
+  const {
+    clearRowSelection: clearProductRowSelection,
+    selectedRowIds: selectedProductRowIds,
+    setClearDatagridRowSelectionCallback:
+      setClearProductDatagridRowSelectionCallback,
+    setSelectedRowIds: setSelectedProductRowIds,
+  } = useRowSelection();
+
+  const {
+    clearRowSelection: clearCategryRowSelection,
+    selectedRowIds: selectedCategoryRowIds,
+    setClearDatagridRowSelectionCallback:
+      setClearCategoryDatagridRowSelectionCallback,
+    setSelectedRowIds: setSelectedCategoryRowIds,
+  } = useRowSelection();
 
   const [activeTab, setActiveTab] = useState<CategoryPageTab>(
     CategoryPageTab.categories,
@@ -80,9 +95,13 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   );
   const paginate = useLocalPaginator(setPaginationState);
   const changeTab = (tab: CategoryPageTab) => {
-    reset();
+    clearProductRowSelection();
+    clearCategryRowSelection();
     setActiveTab(tab);
   };
+
+  const { settings, updateListSettings } =
+    useListSettings<ListViews.CATEGORY_LIST>(ListViews.CATEGORY_LIST);
 
   const { data, loading, refetch } = useCategoryDetailsQuery({
     displayLoader: true,
@@ -90,6 +109,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   });
 
   const category = data?.category;
+  const subcategories = mapEdgesToItems(data?.category?.children);
+  const products = mapEdgesToItems(data?.category?.products);
 
   const handleCategoryDelete = (data: CategoryDeleteMutation) => {
     if (data.categoryDelete.errors.length === 0) {
@@ -100,6 +121,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           defaultMessage: "Category deleted",
         }),
       });
+      clearProductRowSelection();
       navigate(categoryListUrl());
     }
   };
@@ -109,6 +131,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   });
 
   const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
+    clearProductRowSelection();
     if (data.categoryUpdate.errors.length > 0) {
       const backgroundImageError = data.categoryUpdate.errors.find(
         error => error.field === ("backgroundImage" as keyof CategoryInput),
@@ -133,13 +156,13 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   });
 
   const handleBulkCategoryDelete = (data: CategoryBulkDeleteMutation) => {
+    clearCategryRowSelection();
     if (data.categoryBulkDelete.errors.length === 0) {
       closeModal();
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      reset();
     }
   };
 
@@ -151,6 +174,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const [productBulkDelete, productBulkDeleteOpts] =
     useProductBulkDeleteMutation({
       onCompleted: data => {
+        clearProductRowSelection();
         if (data.productBulkDelete.errors.length === 0) {
           closeModal();
           notify({
@@ -158,7 +182,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             text: intl.formatMessage(commonMessages.savedChanges),
           });
           refetch();
-          reset();
         }
       },
     });
@@ -194,6 +217,52 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       }),
     );
 
+  const handleSetSelectedCategoryIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!subcategories) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => subcategories[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedCategoryRowIds);
+
+      if (!haveSaveValues) {
+        setSelectedCategoryRowIds(rowsIds);
+      }
+
+      setClearCategoryDatagridRowSelectionCallback(clearSelection);
+    },
+    [
+      selectedCategoryRowIds,
+      setClearCategoryDatagridRowSelectionCallback,
+      setSelectedCategoryRowIds,
+      subcategories,
+    ],
+  );
+
+  const handleSetSelectedPrductIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!products) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => products[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedProductRowIds);
+
+      if (!haveSaveValues) {
+        setSelectedProductRowIds(rowsIds);
+      }
+
+      setClearProductDatagridRowSelectionCallback(clearSelection);
+    },
+    [
+      products,
+      selectedProductRowIds,
+      setClearProductDatagridRowSelectionCallback,
+      setSelectedProductRowIds,
+    ],
+  );
+
   const handleSubmit = createMetadataUpdateHandler(
     data?.category,
     handleUpdate,
@@ -210,6 +279,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       <WindowTitle title={maybe(() => data.category.name)} />
       <CategoryUpdatePage
         categoryId={id}
+        settings={settings}
+        onUpdateListSettings={updateListSettings}
         changeTab={changeTab}
         currentTab={activeTab}
         category={maybe(() => data.category)}
@@ -238,41 +309,19 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           })
         }
         onSubmit={handleSubmit}
-        products={mapEdgesToItems(data?.category?.products)}
+        products={products}
         saveButtonBarState={updateResult.status}
-        subcategories={mapEdgesToItems(data?.category?.children)}
-        subcategoryListToolbar={
-          <IconButton
-            data-test-id="delete-icon"
-            variant="secondary"
-            color="primary"
-            onClick={() =>
-              openModal("delete-categories", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        productListToolbar={
-          <IconButton
-            data-test-id="delete-icon"
-            color="primary"
-            onClick={() =>
-              openModal("delete-products", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
+        subcategories={subcategories}
+        onSelectCategoriesIds={handleSetSelectedCategoryIds}
+        onSelectProductsIds={handleSetSelectedPrductIds}
+        onCategoriesDelete={() => {
+          openModal("delete-categories");
+        }}
+        onProductsDelete={() => {
+          openModal("delete-products");
+        }}
       />
+
       <ActionDialog
         confirmButtonState={deleteResult.status}
         onClose={closeModal}
@@ -303,16 +352,14 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           />
         </DialogContentText>
       </ActionDialog>
+
       <ActionDialog
-        open={
-          params.action === "delete-categories" &&
-          maybe(() => params.ids.length > 0)
-        }
+        open={params.action === "delete-categories"}
         confirmButtonState={categoryBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={() =>
           categoryBulkDelete({
-            variables: { ids: params.ids },
+            variables: { ids: selectedCategoryRowIds },
           }).then(() => refetch())
         }
         title={intl.formatMessage({
@@ -327,9 +374,9 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             id="Pp/7T7"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
             values={{
-              counter: maybe(() => params.ids.length),
+              counter: maybe(() => selectedCategoryRowIds.length),
               displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
+                <strong>{maybe(() => selectedCategoryRowIds.length)}</strong>
               ),
             }}
           />
@@ -341,13 +388,14 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           />
         </DialogContentText>
       </ActionDialog>
+
       <ActionDialog
         open={params.action === "delete-products"}
         confirmButtonState={productBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={() =>
           productBulkDelete({
-            variables: { ids: params.ids },
+            variables: { ids: selectedProductRowIds },
           }).then(() => refetch())
         }
         title={intl.formatMessage({
@@ -362,9 +410,9 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             id="7l5Bh9"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             values={{
-              counter: maybe(() => params.ids.length),
+              counter: maybe(() => selectedProductRowIds.length),
               displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
+                <strong>{maybe(() => selectedProductRowIds.length)}</strong>
               ),
             }}
           />

@@ -61,14 +61,11 @@ const props: ProductListPageProps = {
   products,
   selectedChannelId: "123",
   selectedProductIds: ["123"],
-  setBulkDeleteButtonRef: () => undefined,
   clearRowSelection: () => undefined,
   settings: {
     ...pageListProps.default.settings,
     columns: ["availability", "productType", "price"],
   },
-  columnPickerSettings: [],
-  setDynamicColumnSettings: () => undefined,
 };
 
 const meta: Meta<typeof ProductListPage> = {

@@ -52,18 +52,18 @@ describe("As an admin I should be able to create product", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createAttribute({ name }).then(attributeResp => {
       attribute = attributeResp;
       cy.checkIfDataAreNotNull({ attribute });
     });
   });
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(
-    "should be able to create product with variants as an admin. SALEOR_2701",
+    "should be able to create product with variants as an admin. SALEOR_2701 - migration in progress - to delete when done",
     { tags: ["@products", "@allEnv", "@critical", "@stable", "@oldRelease"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;

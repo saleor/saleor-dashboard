@@ -1,25 +1,22 @@
 // @ts-strict-ignore
-import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
-import FilterBar from "@dashboard/components/FilterBar";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
-import { sectionNames } from "@dashboard/intl";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
 import {
-  FilterPageProps,
-  ListActions,
+  FilterPagePropsWithPresets,
   PageListProps,
   RelayToFlat,
   SortPage,
-  TabPageProps,
 } from "@dashboard/types";
-import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
+import { isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Box } from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
-import OrderDraftList from "../OrderDraftList";
+import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid";
+import { OrderDraftListHeader } from "../OrderDraftListHeader/OrderDraftListHeader";
 import OrderLimitReached from "../OrderLimitReached";
 import {
   createFilterStructure,
@@ -29,90 +26,103 @@ import {
 
 export interface OrderDraftListPageProps
   extends PageListProps,
-    ListActions,
-    FilterPageProps<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
-    SortPage<OrderDraftListUrlSortField>,
-    TabPageProps {
+    FilterPagePropsWithPresets<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
+    SortPage<OrderDraftListUrlSortField> {
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
+  selectedOrderDraftIds: string[];
+  hasPresetsChanged: () => boolean;
   onAdd: () => void;
+  onDraftOrdersDelete: () => void;
+  onSelectOrderDraftIds: (ids: number[], clearSelection: () => void) => void;
 }
 
 const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
-  currentTab,
+  selectedFilterPreset,
   disabled,
   filterOpts,
   initialSearch,
   limits,
   onAdd,
-  onAll,
+  onFilterPresetsAll,
   onFilterChange,
   onSearchChange,
-  onTabChange,
-  onTabDelete,
-  onTabSave,
-  tabs,
+  onFilterPresetChange,
+  onFilterPresetDelete,
+  onFilterPresetUpdate,
+  onFilterPresetPresetSave,
+  filterPresets,
+  hasPresetsChanged,
+  onDraftOrdersDelete,
+  onFilterAttributeFocus,
+  currencySymbol,
+  selectedOrderDraftIds,
   ...listProps
 }) => {
   const intl = useIntl();
-  const structure = createFilterStructure(intl, filterOpts);
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
+  const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
 
   return (
     <>
-      <TopNav title={intl.formatMessage(sectionNames.draftOrders)}>
-        <Button
-          variant="primary"
-          disabled={disabled || limitsReached}
-          onClick={onAdd}
-          data-test-id="create-draft-order-button"
-        >
-          <FormattedMessage
-            id="LshEVn"
-            defaultMessage="Create order"
-            description="button"
-          />
-        </Button>
-        {hasLimits(limits, "orders") && (
-          <LimitsInfo
-            text={intl.formatMessage(
-              {
-                id: "w2eTzO",
-                defaultMessage: "{count}/{max} orders",
-                description: "placed orders counter",
-              },
-              {
-                count: limits.currentUsage.orders,
-                max: limits.allowedUsage.orders,
-              },
-            )}
-          />
-        )}
-      </TopNav>
+      <OrderDraftListHeader
+        disabled={disabled}
+        selectedFilterPreset={selectedFilterPreset}
+        hasPresetsChanged={hasPresetsChanged}
+        isFilterPresetOpen={isFilterPresetOpen}
+        setFilterPresetOpen={setFilterPresetOpen}
+        limits={limits}
+        onAdd={onAdd}
+        onFilterPresetsAll={onFilterPresetsAll}
+        onFilterPresetDelete={onFilterPresetDelete}
+        onFilterPresetChange={onFilterPresetChange}
+        onFilterPresetPresetSave={onFilterPresetPresetSave}
+        onFilterPresetUpdate={onFilterPresetUpdate}
+        filterPresets={filterPresets}
+      />
+
       {limitsReached && <OrderLimitReached />}
+
       <Card>
-        <FilterBar
-          allTabLabel={intl.formatMessage({
-            id: "7a1S4K",
-            defaultMessage: "All Drafts",
-            description: "tab name",
-          })}
-          currentTab={currentTab}
-          filterStructure={structure}
-          initialSearch={initialSearch}
-          searchPlaceholder={intl.formatMessage({
-            id: "NJEe12",
-            defaultMessage: "Search Draft",
-          })}
-          tabs={tabs}
-          onAll={onAll}
-          onFilterChange={onFilterChange}
-          onSearchChange={onSearchChange}
-          onTabChange={onTabChange}
-          onTabDelete={onTabDelete}
-          onTabSave={onTabSave}
+        <Box
+          display="flex"
+          flexDirection="column"
+          width="100%"
+          alignItems="stretch"
+          justifyContent="space-between"
+        >
+          <ListFilters
+            currencySymbol={currencySymbol}
+            initialSearch={initialSearch}
+            onFilterChange={onFilterChange}
+            onFilterAttributeFocus={onFilterAttributeFocus}
+            onSearchChange={onSearchChange}
+            filterStructure={filterStructure}
+            searchPlaceholder={intl.formatMessage({
+              id: "IzECoP",
+              defaultMessage: "Search draft orders...",
+            })}
+            actions={
+              <Box display="flex" gap={4}>
+                {selectedOrderDraftIds.length > 0 && (
+                  <BulkDeleteButton onClick={onDraftOrdersDelete}>
+                    {intl.formatMessage({
+                      id: "+b/qJ9",
+                      defaultMessage: "Delete draft orders",
+                    })}
+                  </BulkDeleteButton>
+                )}
+              </Box>
+            }
+          />
+        </Box>
+
+        <OrderDraftListDatagrid
+          disabled={disabled}
+          hasRowHover={!isFilterPresetOpen}
+          {...listProps}
         />
-        <OrderDraftList disabled={disabled} {...listProps} />
       </Card>
     </>
   );

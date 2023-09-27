@@ -4,10 +4,23 @@ import {
   getActiveTabIndexAfterTabDelete,
   getNextUniqueTabName,
 } from "@dashboard/products/views/ProductList/utils";
-import { StorageUtils } from "@dashboard/utils/filters";
+import { GetFilterTabsOutput, StorageUtils } from "@dashboard/utils/filters";
 import { prepareQs } from "@dashboard/utils/filters/qs";
 import { stringify } from "qs";
 import { useState } from "react";
+
+export interface UseFilterPresets {
+  presetIdToDelete: number | null;
+  setPresetIdToDelete: React.Dispatch<React.SetStateAction<number | null>>;
+  presets: GetFilterTabsOutput<string>;
+  selectedPreset: number | undefined;
+  onPresetChange: (index: number) => void;
+  onPresetDelete: () => void;
+  onPresetSave: (data: SaveFilterTabDialogFormData) => void;
+  onPresetUpdate: (tabName: string) => void;
+  getPresetNameToDelete: () => string;
+  hasPresetsChanged: () => boolean;
+}
 
 export const useFilterPresets = <
   T extends { activeTab?: string; action?: string },
@@ -18,10 +31,10 @@ export const useFilterPresets = <
   getUrl,
 }: {
   params: T;
-  reset: () => void;
+  reset?: () => void;
   getUrl: () => string;
   storageUtils: StorageUtils<string>;
-}) => {
+}): UseFilterPresets => {
   const navigate = useNavigator();
   const baseUrl = getUrl();
   const [presetIdToDelete, setPresetIdToDelete] = useState<number | null>(null);
@@ -34,7 +47,7 @@ export const useFilterPresets = <
       : undefined;
 
   const onPresetChange = (index: number) => {
-    reset();
+    reset?.();
     const currentPresets = storageUtils.getFilterTabs();
     const qs = new URLSearchParams(currentPresets[index - 1]?.data ?? "");
     qs.append("activeTab", index.toString());
@@ -52,7 +65,7 @@ export const useFilterPresets = <
     }
 
     storageUtils.deleteFilterTab(presetIdToDelete);
-    reset();
+    reset?.();
 
     // When deleting the current tab, navigate to the All products
     if (presetIdToDelete === selectedPreset || !selectedPreset) {
@@ -94,7 +107,7 @@ export const useFilterPresets = <
     onPresetChange(presets.findIndex(tab => tab.name === tabName) + 1);
   };
 
-  const hasPresetsChange = () => {
+  const hasPresetsChanged = () => {
     const { parsedQs } = prepareQs(location.search);
 
     if (!selectedPreset) {
@@ -110,15 +123,23 @@ export const useFilterPresets = <
     );
   };
 
+  const getPresetNameToDelete = (): string => {
+    const presetIndex = presetIdToDelete ? presetIdToDelete - 1 : 0;
+    const preset = presets?.[presetIndex];
+
+    return preset?.name ?? "...";
+  };
+
   return {
     presetIdToDelete,
     setPresetIdToDelete,
+    getPresetNameToDelete,
     presets,
     selectedPreset,
     onPresetChange,
     onPresetDelete,
     onPresetSave,
     onPresetUpdate,
-    hasPresetsChange,
+    hasPresetsChanged,
   };
 };

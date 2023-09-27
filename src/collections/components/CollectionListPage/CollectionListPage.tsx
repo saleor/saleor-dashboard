@@ -1,24 +1,25 @@
 // @ts-strict-ignore
-import { collectionAddUrl } from "@dashboard/collections/urls";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
-import { getByName } from "@dashboard/components/Filter/utils";
-import FilterBar from "@dashboard/components/FilterBar";
-import { ListPageLayout } from "@dashboard/components/Layouts";
-import { sectionNames } from "@dashboard/intl";
+import { Collections } from "@dashboard/collections/types";
 import {
-  FilterPageProps,
-  PageListProps,
-  SearchPageProps,
-  TabPageProps,
-} from "@dashboard/types";
+  collectionAddUrl,
+  CollectionListUrlSortField,
+  collectionUrl,
+} from "@dashboard/collections/urls";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { getByName } from "@dashboard/components/Filter/utils";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import React from "react";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import CollectionList, {
-  CollectionListProps,
-} from "../CollectionList/CollectionList";
+import { CollectionListDatagrid } from "../CollectionListDatagrid";
 import {
   CollectionFilterKeys,
   CollectionListFilterOpts,
@@ -26,10 +27,21 @@ import {
 } from "./filters";
 export interface CollectionListPageProps
   extends PageListProps,
-    SearchPageProps,
-    TabPageProps,
-    FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>,
-    CollectionListProps {}
+    Omit<
+      FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>,
+      "onTabDelete"
+    >,
+    SortPage<CollectionListUrlSortField> {
+  onTabUpdate: (tabName: string) => void;
+  selectedChannelId: string;
+  collections: Collections;
+  loading: boolean;
+  selectedCollectionIds: string[];
+  hasPresetsChanged: () => boolean;
+  onSelectCollectionIds: (rows: number[], clearSelection: () => void) => void;
+  onCollectionsDelete: () => void;
+  onTabDelete: (id: number) => void;
+}
 
 const CollectionListPage: React.FC<CollectionListPageProps> = ({
   currentTab,
@@ -40,61 +52,113 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   onTabChange,
   onTabDelete,
   onTabSave,
+  onTabUpdate,
   selectedChannelId,
   tabs,
   filterOpts,
   onFilterChange,
   onFilterAttributeFocus,
+  hasPresetsChanged,
+  currencySymbol,
+  selectedCollectionIds,
+  onCollectionsDelete,
   ...listProps
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const filterDependency = filterStructure.find(getByName("channel"));
 
   return (
     <ListPageLayout>
-      <TopNav title={intl.formatMessage(sectionNames.collections)}>
-        <Button
-          disabled={disabled}
-          variant="primary"
-          href={collectionAddUrl()}
-          data-test-id="create-collection"
+      <TopNav
+        withoutBorder
+        isAlignToRight={false}
+        title={intl.formatMessage(sectionNames.collections)}
+      >
+        <Box
+          __flex={1}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          <FormattedMessage
-            id="jyaAlB"
-            defaultMessage="Create collection"
-            description="button"
-          />
-        </Button>
+          <Box display="flex">
+            <Box marginX={3} display="flex" alignItems="center">
+              <ChevronRightIcon />
+            </Box>
+
+            <FilterPresetsSelect
+              presetsChanged={hasPresetsChanged()}
+              onSelect={onTabChange}
+              onRemove={onTabDelete}
+              onUpdate={onTabUpdate}
+              savedPresets={tabs}
+              activePreset={currentTab}
+              onSelectAll={onAll}
+              onSave={onTabSave}
+              isOpen={isFilterPresetOpen}
+              onOpenChange={setFilterPresetOpen}
+              selectAllLabel={intl.formatMessage({
+                id: "G4g5Ii",
+                defaultMessage: "All Collections",
+                description: "tab name",
+              })}
+            />
+          </Box>
+          <Box>
+            <Button
+              disabled={disabled}
+              variant="primary"
+              onClick={() => navigate(collectionAddUrl())}
+              data-test-id="create-collection"
+            >
+              <FormattedMessage
+                id="jyaAlB"
+                defaultMessage="Create collection"
+                description="button"
+              />
+            </Button>
+          </Box>
+        </Box>
       </TopNav>
+
       <Card>
-        <FilterBar
-          allTabLabel={intl.formatMessage({
-            id: "G4g5Ii",
-            defaultMessage: "All Collections",
-            description: "tab name",
-          })}
-          currentTab={currentTab}
-          filterStructure={filterStructure}
+        <ListFilters
+          currencySymbol={currencySymbol}
           initialSearch={initialSearch}
-          onAll={onAll}
           onFilterChange={onFilterChange}
           onFilterAttributeFocus={onFilterAttributeFocus}
           onSearchChange={onSearchChange}
-          onTabChange={onTabChange}
-          onTabDelete={onTabDelete}
-          onTabSave={onTabSave}
+          filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
-            id: "s97tLq",
-            defaultMessage: "Search Collections",
+            id: "eRqx44",
+            defaultMessage: "Search collections...",
           })}
-          tabs={tabs}
+          actions={
+            <Box display="flex" gap={4}>
+              {selectedCollectionIds.length > 0 && (
+                <BulkDeleteButton onClick={onCollectionsDelete}>
+                  <FormattedMessage
+                    defaultMessage="Delete collections"
+                    id="FTYkgw"
+                  />
+                </BulkDeleteButton>
+              )}
+            </Box>
+          }
         />
-        <CollectionList
+
+        <CollectionListDatagrid
           disabled={disabled}
           selectedChannelId={selectedChannelId}
           filterDependency={filterDependency}
+          onRowClick={id => {
+            navigate(collectionUrl(id));
+          }}
+          hasRowHover={!isFilterPresetOpen}
+          rowAnchor={collectionUrl}
           {...listProps}
         />
       </Card>

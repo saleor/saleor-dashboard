@@ -13,7 +13,7 @@ export function canBeSorted(
     case CollectionListUrlSortField.name:
     case CollectionListUrlSortField.productCount:
       return true;
-    case CollectionListUrlSortField.available:
+    case CollectionListUrlSortField.availability:
       return isChannelSelected;
     default:
       return false;
@@ -26,7 +26,7 @@ export function getSortQueryField(
   switch (sort) {
     case CollectionListUrlSortField.name:
       return CollectionSortField.NAME;
-    case CollectionListUrlSortField.available:
+    case CollectionListUrlSortField.availability:
       return CollectionSortField.AVAILABILITY;
     case CollectionListUrlSortField.productCount:
       return CollectionSortField.PRODUCT_COUNT;

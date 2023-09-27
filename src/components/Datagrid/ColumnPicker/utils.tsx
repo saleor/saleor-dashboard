@@ -1,5 +1,4 @@
 import { ArrowLeftIcon, CloseIcon } from "@saleor/macaw-ui/next";
-import uniqBy from "lodash/uniqBy";
 import React, { Dispatch, SetStateAction } from "react";
 
 import { AvailableColumn } from "../types";
@@ -58,23 +57,27 @@ export const isLastEnabledColumn = (
 export const sortColumns = (
   columns: AvailableColumn[] | undefined,
   order: string[],
-) => columns?.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
-
-export const filterSelectedColumns = (
-  columns: AvailableColumn[] | undefined,
-  selected: string[],
-) => columns?.filter(column => selected.includes(column.id));
+) => columns?.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id)) ?? null;
 
 export const areCategoriesLoaded = (categories: ColumnCategory[] | undefined) =>
   categories?.every(category => Array.isArray(category.selectedNodes));
 
 export const extractSelectedNodesFromCategories = (
   categories: ColumnCategory[] | undefined,
-) => categories?.flatMap(category => category.selectedNodes);
+) =>
+  categories?.flatMap(category => category.selectedNodes).filter(isValidColumn);
 
-export const extractAvailableNodesFromCategories = (
+export const isValidColumn = (
+  column: AvailableColumn | undefined,
+): column is AvailableColumn => !!column;
+
+export const findDynamicColumn = (
   categories: ColumnCategory[] | undefined,
-) => categories?.flatMap(category => category.availableNodes);
+  columnId: string,
+) =>
+  categories
+    ?.flatMap(category => category.availableNodes)
+    .find(column => column?.id === columnId);
 
 export const mergeSelectedColumns = ({
   staticColumns,
@@ -82,14 +85,10 @@ export const mergeSelectedColumns = ({
   selectedColumns,
 }: {
   staticColumns: AvailableColumn[];
-  dynamicColumns: AvailableColumn[];
+  dynamicColumns: AvailableColumn[] | null;
   selectedColumns: string[];
-}) =>
-  [...staticColumns, ...(dynamicColumns ?? [])].filter(
+}) => {
+  return [...staticColumns, ...(dynamicColumns ?? [])].filter(
     column => selectedColumns.includes(column.id) || column.id === "empty",
   );
-
-export const mergeCurrentDynamicColumnsWithCandidates = (
-  dynamicColumns: AvailableColumn[] | undefined,
-  candidates: AvailableColumn[],
-) => uniqBy([...(dynamicColumns ?? []), ...candidates], "id");
+};

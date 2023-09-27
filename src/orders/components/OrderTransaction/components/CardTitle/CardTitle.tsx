@@ -3,6 +3,7 @@ import {
   TransactionActionEnum,
   TransactionItemFragment,
 } from "@dashboard/graphql";
+import { capitalize } from "@dashboard/misc";
 import { FakeTransaction } from "@dashboard/orders/types";
 import { IconButton } from "@material-ui/core";
 import { Button, LinkIcon } from "@saleor/macaw-ui";
@@ -47,6 +48,7 @@ export const CardTitle: React.FC<CardTitleProps> = ({
     authorizedAmount,
   } = transaction;
 
+  const title = capitalize(transaction.name || "Transaction");
   return (
     <DefaultCardTitle
       className={className}
@@ -61,22 +63,10 @@ export const CardTitle: React.FC<CardTitleProps> = ({
                 <LinkIcon />
               </IconButton>
             )}
-            {transaction.type}
+            {title}
           </TransactionLink>
 
           <div className={classes.dataDisplay}>
-            {showActions &&
-              transaction.actions
-                .filter(action => action !== TransactionActionEnum.REFUND)
-                .map(action => (
-                  <Button
-                    variant="tertiary"
-                    onClick={() => onTransactionAction(transaction.id, action)}
-                  >
-                    <FormattedMessage {...mapActionToMessage[action]} />
-                  </Button>
-                ))}
-
             {cancelPendingAmount.amount > 0 && (
               <MoneyDisplay
                 label={intl.formatMessage(messages.cancelPending)}
@@ -132,6 +122,22 @@ export const CardTitle: React.FC<CardTitleProps> = ({
                 money={authorizedAmount}
               />
             )}
+
+            {showActions &&
+              transaction.actions
+                .filter(action => action !== TransactionActionEnum.REFUND)
+                .map(action => (
+                  <div key={`translation-action-${action}`}>
+                    <Button
+                      variant="tertiary"
+                      onClick={() =>
+                        onTransactionAction(transaction.id, action)
+                      }
+                    >
+                      <FormattedMessage {...mapActionToMessage[action]} />
+                    </Button>
+                  </div>
+                ))}
           </div>
         </div>
       }

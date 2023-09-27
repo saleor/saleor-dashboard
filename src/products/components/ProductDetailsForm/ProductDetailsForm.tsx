@@ -20,7 +20,7 @@ interface ProductDetailsFormProps {
   disabled?: boolean;
   errors: ProductErrorFragment[];
 
-  onChange(event: any);
+  onChange: (event: any) => any;
 }
 
 export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
@@ -39,7 +39,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
       <DashboardCard.Title>
         {intl.formatMessage(commonMessages.generalInformations)}
       </DashboardCard.Title>
-      <DashboardCard.Content display="grid" gap={2} paddingX={5}>
+      <DashboardCard.Content display="grid" gap={2}>
         <Input
           label={intl.formatMessage({
             id: "6AMFki",
