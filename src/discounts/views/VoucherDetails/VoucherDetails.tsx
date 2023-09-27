@@ -456,7 +456,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             variables: {
               id,
               input: {
-                codes,
+                codes: [],
               },
             },
           })

@@ -10,7 +10,7 @@ import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler,
 } from "@dashboard/discounts/handlers";
-import { voucherListUrl } from "@dashboard/discounts/urls";
+import { voucherListUrl, VoucherUrlDialog } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
 import {
   DiscountErrorFragment,
@@ -19,12 +19,19 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { validatePrice } from "@dashboard/products/utils/validation";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { Box } from "@saleor/macaw-ui/next";
+import isEqual from "lodash/isEqual";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { DiscountTypeEnum, RequirementsPicker } from "../../types";
+import { VoucherCodes } from "../VoucherCodes";
+import { VoucherCodesDeleteDialog } from "../VoucherCodesDeleteDialog";
+import { VoucherCodesGenerateDialog } from "../VoucherCodesGenerateDialog";
+import { VoucherCodesManualDialog } from "../VoucherCodesManualDialog";
 import VoucherDates from "../VoucherDates";
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 import VoucherInfo from "../VoucherInfo";
@@ -46,6 +53,11 @@ export interface VoucherCreatePageProps {
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
   onSubmit: (data: FormData) => SubmitPromise;
+  onMultipleVoucheCodesGenerate: () => void;
+  onSingleVoucherCodeGenerate: () => void;
+  onModalClose: () => void;
+  isModalOpen: (modalName: VoucherUrlDialog) => boolean;
+  onVoucherCodesDelete: () => void;
 }
 
 const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
@@ -57,6 +69,11 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   onChannelsChange,
   onSubmit,
   openChannelsModal,
+  onMultipleVoucheCodesGenerate,
+  onSingleVoucherCodeGenerate,
+  onModalClose,
+  isModalOpen,
+  onVoucherCodesDelete,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -69,7 +86,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     applyOncePerOrder: false,
     onlyForStaff: false,
     channelListings,
-    code: "",
+    name: "",
     discountType: DiscountTypeEnum.VALUE_FIXED,
     endDate: "",
     endTime: "",
@@ -80,8 +97,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     startDate: "",
     startTime: "",
     type: VoucherTypeEnum.ENTIRE_ORDER,
+    used: 1,
     usageLimit: 1,
-    used: 0,
+    codes: [],
     value: 0,
     metadata: [],
     privateMetadata: [],
@@ -96,6 +114,13 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             validatePrice(channel.minSpent)),
       )) ||
     disabled;
+
+  const {
+    selectedRowIds,
+    setClearDatagridRowSelectionCallback,
+    setSelectedRowIds,
+    clearRowSelection,
+  } = useRowSelection();
 
   return (
     <Form
@@ -115,6 +140,24 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
         );
         const changeMetadata = makeMetadataChangeHandler(change);
 
+        const handleSetSelectedVoucherCodesIds = (
+          rows: number[],
+          clearSelection: () => void,
+        ) => {
+          if (!data.codes) {
+            return;
+          }
+
+          const rowsIds = rows.map(row => data.codes[row].code).filter(Boolean);
+          const haveSaveValues = isEqual(rowsIds, selectedRowIds);
+
+          if (!haveSaveValues) {
+            setSelectedRowIds(rowsIds as string[]);
+          }
+
+          setClearDatagridRowSelectionCallback(clearSelection);
+        };
+
         return (
           <DetailPageLayout>
             <TopNav
@@ -133,6 +176,20 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 onChange={event => handleDiscountTypeChange(data, event)}
                 variant="create"
               />
+              <Box marginTop={5}>
+                <VoucherCodes
+                  codes={data.codes}
+                  loading={false}
+                  onDeleteCodes={onVoucherCodesDelete}
+                  onMultiCodesGenerate={onMultipleVoucheCodesGenerate}
+                  onSelectVoucherCodesIds={handleSetSelectedVoucherCodesIds}
+                  onSettingsChange={() => {}}
+                  onSingleCodesGenerate={onSingleVoucherCodeGenerate}
+                  selectedCodesIds={selectedRowIds}
+                  settings={{ rowNumber: 10 }}
+                  voucherCodesPagination={{} as any}
+                />
+              </Box>
               <VoucherTypes
                 data={data}
                 disabled={disabled}
@@ -192,6 +249,35 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               onCancel={() => navigate(voucherListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
+            />
+
+            <VoucherCodesManualDialog
+              open={isModalOpen("single-codes")}
+              confirmButtonTransitionState="default"
+              onClose={onModalClose}
+              onSubmit={code => {
+                set({
+                  codes: [...data.codes, { code }],
+                });
+              }}
+            />
+            <VoucherCodesGenerateDialog
+              open={isModalOpen("multiple-codes")}
+              onClose={onModalClose}
+              onSubmit={() => {}}
+            />
+            <VoucherCodesDeleteDialog
+              onClose={onModalClose}
+              open={isModalOpen("delete-codes")}
+              onDelete={() => {
+                onModalClose();
+                clearRowSelection();
+                set({
+                  codes: data.codes.filter(
+                    ({ code }) => !selectedRowIds.includes(code),
+                  ),
+                });
+              }}
             />
           </DetailPageLayout>
         );

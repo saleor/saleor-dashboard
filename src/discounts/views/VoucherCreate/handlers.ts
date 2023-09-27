@@ -31,10 +31,11 @@ export function createHandler(
   return async (formData: VoucherDetailsPageFormData) => {
     const response = await voucherCreate({
       input: {
+        name: formData.name,
         applyOncePerCustomer: formData.applyOncePerCustomer,
         applyOncePerOrder: formData.applyOncePerOrder,
         onlyForStaff: formData.onlyForStaff,
-        code: formData.code,
+        codes: formData.codes.map(code => ({ code, usageLimit: 0 })),
         discountValueType:
           formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
             ? DiscountValueTypeEnum.PERCENTAGE

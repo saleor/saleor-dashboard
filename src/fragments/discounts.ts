@@ -122,6 +122,7 @@ export const voucherFragment = gql`
     ...Metadata
     id
     code
+    name
     startDate
     endDate
     usageLimit
@@ -153,7 +154,6 @@ export const voucherCodeFragment = gql`
   fragment VoucherCode on VoucherCode {
     code
     used
-    usageLimit
   }
 `;
 

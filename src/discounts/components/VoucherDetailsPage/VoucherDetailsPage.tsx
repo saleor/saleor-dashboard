@@ -45,6 +45,7 @@ import DiscountCollections from "../DiscountCollections";
 import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
 import { VoucherCodes } from "../VoucherCodes";
+import { VoucherCode } from "../VoucherCodesDatagrid/types";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
@@ -67,7 +68,7 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   applyOncePerOrder: boolean;
   onlyForStaff: boolean;
   channelListings: ChannelVoucherData[];
-  code: string;
+  name: string;
   discountType: DiscountTypeEnum;
   endDate: string;
   endTime: string;
@@ -78,6 +79,7 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   startDate: string;
   startTime: string;
   type: VoucherTypeEnum;
+  codes: VoucherCode[];
   usageLimit: number;
   used: number;
 }
@@ -198,8 +200,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     applyOncePerOrder: voucher?.applyOncePerOrder || false,
     onlyForStaff: voucher?.onlyForStaff || false,
     channelListings,
-    code: voucher?.code || "",
+    name: voucher?.name || "",
     discountType,
+    codes: voucherCodes,
     endDate: splitDateTime(voucher?.endDate ?? "").date,
     endTime: splitDateTime(voucher?.endDate ?? "").time,
     hasEndDate: !!voucher?.endDate,

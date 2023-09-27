@@ -5,7 +5,6 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import { VoucherCodeFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -15,9 +14,10 @@ import {
   voucherCodesStaticColumnsAdapter,
 } from "./datagrid";
 import { messages } from "./messages";
+import { VoucherCode } from "./types";
 
 export interface VoucherCodesDatagridProps {
-  codes: VoucherCodeFragment[];
+  codes: VoucherCode[];
   loading: boolean;
   disabled?: boolean;
   onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;

@@ -3,7 +3,6 @@ import {
   ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { VoucherInput } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui/next";
@@ -16,17 +15,15 @@ interface VoucherCodesManualDialogProps {
   open: boolean;
   confirmButtonTransitionState: ConfirmButtonTransitionState;
   onClose: () => void;
-  onSubmit: (codes: VoucherInput["codes"]) => void;
+  onSubmit: (code: string) => void;
 }
 
 interface FormData {
   code: string;
-  usageLimit: string;
 }
 
 const intialData: FormData = {
   code: "",
-  usageLimit: "",
 };
 
 export const VoucherCodesManualDialog = ({
@@ -39,8 +36,7 @@ export const VoucherCodesManualDialog = ({
 
   const { data, change, submit, reset } = useForm(
     intialData,
-    ({ code, usageLimit }: FormData) =>
-      onSubmit([{ code, usageLimit: Number(usageLimit) }]),
+    ({ code }: FormData) => onSubmit(code),
   );
 
   const handleModalClose = () => {
@@ -67,20 +63,6 @@ export const VoucherCodesManualDialog = ({
             size="small"
             label={intl.formatMessage(messages.enterCode)}
             value={data.code}
-            onChange={change}
-          />
-
-          <Input
-            name="usageLimit"
-            type="number"
-            onKeyDown={e => {
-              if ([",", "."].includes(e.key)) {
-                e.preventDefault();
-              }
-            }}
-            size="small"
-            label={intl.formatMessage(messages.enterUsage)}
-            value={data.usageLimit}
             onChange={change}
           />
         </Box>

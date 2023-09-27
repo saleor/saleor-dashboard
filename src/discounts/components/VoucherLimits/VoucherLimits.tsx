@@ -96,35 +96,6 @@ const VoucherLimits = ({
               </div>
             </Grid>
           ))}
-        {isNewVoucher && (
-          <ControlledCheckbox
-            testId="has-usage-limit"
-            checked={data.hasUsageLimit}
-            label={intl.formatMessage(messages.hasUsageLimit)}
-            name={"hasUsageLimit" as keyof VoucherDetailsPageFormData}
-            onChange={evt => {
-              onChange(evt);
-              setData({ usageLimit: initialUsageLimit });
-            }}
-          />
-        )}
-        {data.hasUsageLimit && isNewVoucher && (
-          <TextField
-            data-test-id="usage-limit"
-            disabled={disabled}
-            error={!!formErrors.usageLimit || data.usageLimit <= 0}
-            helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
-            label={intl.formatMessage(messages.usageLimit)}
-            name={"usageLimit" as keyof VoucherDetailsPageFormData}
-            value={data.usageLimit}
-            onChange={onChange}
-            type="number"
-            fullWidth
-            inputProps={{
-              min: 1,
-            }}
-          />
-        )}
         <ControlledCheckbox
           testId="apply-once-per-customer"
           checked={data.applyOncePerCustomer}

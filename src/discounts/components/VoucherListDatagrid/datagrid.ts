@@ -83,7 +83,7 @@ export const createGetCellContent =
 
     switch (columnId) {
       case "code":
-        return readonlyTextCell(rowData?.code ?? PLACEHOLDER);
+        return readonlyTextCell(rowData?.name ?? rowData?.code ?? PLACEHOLDER);
       case "min-spent":
         return rowData?.code && hasChannelsLoaded
           ? moneyCell(
