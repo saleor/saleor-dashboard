@@ -3,9 +3,7 @@
 
 import faker from "faker";
 
-import {
-  CUSTOMER_DETAILS_SELECTORS,
-} from "../elements/customers/customer-details";
+import { CUSTOMER_DETAILS_SELECTORS } from "../elements/customers/customer-details";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { customerDetailsUrl } from "../fixtures/urlList";
 import {
@@ -29,28 +27,32 @@ describe("Tests for customer registration", () => {
     });
   });
 
-  it("should register customer TC: SALEOR_1212", { tags: ["@customer", "@allEnv"] }, () => {
-    const email = `${startsWith}${faker.datatype.number()}@example.com`;
-    customerRegistration({ email, channel: defaultChannel.slug });
-    const registrationLinkRegex = /\[(\s*http[^\]]*)\]/;
-    getMailActivationLinkForUser(email, registrationLinkRegex)
-      .then(urlLink => {
-        const tokenRegex = /token=(.*)/;
-        const token = urlLink.match(tokenRegex)[1];
-        cy.clearSessionData();
-        confirmAccount(email, token);
-      })
-      .then(() => {
-        cy.loginUserViaRequest("token", {
-          email,
-          password: Cypress.env("USER_PASSWORD"),
-        }).its("body.data.tokenCreate");
-      })
-      .then(({ errors, token }) => {
-        expect(errors.length).to.eq(0);
-        expect(token).to.be.ok;
-      });
-  });
+  it(
+    "should register customer TC: SALEOR_1212",
+    { tags: ["@customer", "@allEnv"] },
+    () => {
+      const email = `${startsWith}${faker.datatype.number()}@example.com`;
+      customerRegistration({ email, channel: defaultChannel.slug });
+      const registrationLinkRegex = /\[(\s*http[^\]]*)\]/;
+      getMailActivationLinkForUser(email, registrationLinkRegex)
+        .then(urlLink => {
+          const tokenRegex = /token=(.*)/;
+          const token = urlLink.match(tokenRegex)[1];
+          cy.clearSessionData();
+          confirmAccount(email, token);
+        })
+        .then(() => {
+          cy.loginUserViaRequest("token", {
+            email,
+            password: Cypress.env("USER_PASSWORD"),
+          }).its("body.data.tokenCreate");
+        })
+        .then(({ errors, token }) => {
+          expect(errors.length).to.eq(0);
+          expect(token).to.be.ok;
+        });
+    },
+  );
 
   it(
     "shouldn't register customer with duplicated email TC: SALEOR_1213",
@@ -81,6 +83,17 @@ describe("Tests for customer registration", () => {
             .get(BUTTON_SELECTORS.confirm)
             .click()
             .confirmationMessageShouldDisappear()
+            .then(() => {
+              const registrationLinkRegex = /\[(\s*http[^\]]*)\]/;
+              getMailActivationLinkForUser(email, registrationLinkRegex).then(
+                urlLink => {
+                  const tokenRegex = /token=(.*)/;
+                  const token = urlLink.match(tokenRegex)[1];
+                  cy.clearSessionData();
+                  confirmAccount(email, token);
+                },
+              );
+            })
             .clearSessionData()
             .loginUserViaRequest("token", {
               email,
