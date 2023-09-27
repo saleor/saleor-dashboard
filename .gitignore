@@ -55,3 +55,6 @@ django-queries-results.html
 !.env.template
 !.dependency-cruiser.js
 !.featureFlags
+/test-results/
+/playwright-report/
+/playwright/.cache/

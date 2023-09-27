@@ -3,9 +3,7 @@
 
 import faker from "faker";
 
-import {
-  PRODUCT_DETAILS,
-} from "../../elements/catalog/products/product-details";
+import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
 import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { urlList } from "../../fixtures/urlList";
@@ -65,7 +63,7 @@ describe("As an admin I should be able to create product", () => {
   });
 
   it(
-    "should be able to create product with variants as an admin. SALEOR_2701",
+    "should be able to create product with variants as an admin. SALEOR_2701 - migration in progress - to delete when done",
     { tags: ["@products", "@allEnv", "@critical", "@stable", "@oldRelease"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;

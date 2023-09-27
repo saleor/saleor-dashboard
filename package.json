@@ -124,6 +124,7 @@
     "@graphql-codegen/typescript-apollo-client-helpers": "^2.1.10",
     "@graphql-codegen/typescript-operations": "^2.2.4",
     "@graphql-codegen/typescript-react-apollo": "^3.2.5",
+    "@playwright/test": "^1.37.1",
     "@saleor/app-sdk": "0.43.0",
     "@sentry/cli": "^2.20.6",
     "@swc/jest": "^0.2.26",
@@ -315,6 +316,7 @@
     "prebuild": "npm run build-types",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
     "check-types": "tsc --noEmit && tsc-strict",
+    "check-types-playwright": "tsc --noEmit --project playwright/tsconfig.json",
     "extract-json-messages": "formatjs extract 'src/**/*.{ts,tsx}' --out-file locale/defaultMessages.json --format scripts/formatter.js",
     "extract-messages": "npm run extract-json-messages",
     "fetch-schema": "graphql-codegen --config ./fetch-schema.yml",
@@ -352,7 +354,9 @@
     "qa:move-screenshots": "find cypress/reports/mochareports -type d -name \"*.js\" -exec mv {} cypress/reports/mochareports \\;",
     "qa:move-videos": "find cypress/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
     "qa:artifact-move-screenshots": "find cypress/reports/*/mochareports -type d -name \"*.js\" -exec mv {} cypress/reports/mochareports \\;",
-    "qa:artifact-move-videos": "find cypress/reports/*/mochareports/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;"
+    "qa:artifact-move-videos": "find cypress/reports/*/mochareports/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
+    "qa:basic-regression": "npx playwright test --grep @basic-regression",
+    "qa:full-regression": "npx playwright test"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }
