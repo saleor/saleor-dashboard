@@ -131,6 +131,7 @@ export function getDiff(
         };
       }
     }
+    return undefined;
   });
 
   return diff.filter(d => !!d);
