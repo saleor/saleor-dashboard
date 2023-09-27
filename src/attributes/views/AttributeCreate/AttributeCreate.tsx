@@ -108,7 +108,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   React.useEffect(() => setValueErrors([]), [params.action]);
 
   const handleValueDelete = () => {
-    if (id) {
+    if (id !== undefined) {
       const newValues = remove(values[id], values, areValuesEqual);
       setValues(newValues);
     }
@@ -119,7 +119,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     if (isSelected(input, values, areValuesEqual)) {
       setValueErrors([attributeValueAlreadyExistsError]);
     } else {
-      if (id) {
+      if (id !== undefined) {
         setValues(updateAtIndex(input, values, id));
       }
       closeModal();
