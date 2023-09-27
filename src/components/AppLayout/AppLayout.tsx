@@ -35,7 +35,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
   const params = extractQueryParams(useLocation().search);
 
-  useDevModeKeyTrigger(({ shift }) => {
+  useDevModeKeyTrigger((_err, { shift }) => {
     if (shift) {
       setDevModeContent(DevModeQuery);
       const variables = JSON.stringify(

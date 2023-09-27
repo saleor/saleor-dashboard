@@ -150,6 +150,7 @@ export const OrderDraftDetailsDatagrid = ({
           if (column === "quantity" && data.value !== "") {
             return onOrderLineChange(orderId, { quantity: data.value });
           }
+          return undefined;
         }),
       );
 
