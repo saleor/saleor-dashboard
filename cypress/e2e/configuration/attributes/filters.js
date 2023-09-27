@@ -7,12 +7,8 @@ import {
 } from "../../../elements/shared/sharedElements";
 import { updateAttribute } from "../../../support/api/requests/Attribute";
 import { createProduct } from "../../../support/api/requests/Product";
-import {
-  createTypeAttributeAndCategoryForProduct,
-} from "../../../support/api/utils/products/productsUtils";
-import {
-  enterAttributeAndChanegeIsFilterableInDashbord,
-} from "../../../support/pages/attributesPage";
+import { createTypeAttributeAndCategoryForProduct } from "../../../support/api/utils/products/productsUtils";
+import { enterAttributeAndChanegeIsFilterableInDashbord } from "../../../support/pages/attributesPage";
 import {
   enterProductListPage,
   selectAttributeFilter,

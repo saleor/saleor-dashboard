@@ -7,15 +7,9 @@ import { addVariantUrl } from "../../../fixtures/urlList";
 import { createCategory } from "../../../support/api/requests/Category";
 import { getVariant } from "../../../support/api/requests/Product";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import {
-  createProductInChannelWithoutVariants,
-} from "../../../support/api/utils/products/productsUtils";
-import {
-  createProductTypeWithNewVariantSelectionAttribute,
-} from "../../../support/api/utils/productTypeUtils";
-import {
-  fillUpVariantDetails,
-} from "../../../support/pages/catalog/products/VariantsPage";
+import { createProductInChannelWithoutVariants } from "../../../support/api/utils/products/productsUtils";
+import { createProductTypeWithNewVariantSelectionAttribute } from "../../../support/api/utils/productTypeUtils";
+import { fillUpVariantDetails } from "../../../support/pages/catalog/products/VariantsPage";
 
 describe("As an admin I want to use attributes in variant selection", () => {
   const startsWith = "VarSel" + Date.now();

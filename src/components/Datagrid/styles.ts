@@ -182,6 +182,9 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
       },
       [`& .${props.datagrid}`]: {
         height: "100%",
+        "& .dvn-scroller": {
+          overflowY: "scroll",
+        },
       },
     }),
   }),

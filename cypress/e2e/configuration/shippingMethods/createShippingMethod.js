@@ -12,14 +12,9 @@ import { createCheckout } from "../../../support/api/requests/Checkout";
 import { createVariant } from "../../../support/api/requests/Product";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import {
-  createWaitingForCaptureOrder,
-} from "../../../support/api/utils/ordersUtils";
-import * as productsUtils
-  from "../../../support/api/utils/products/productsUtils";
-import {
-  isShippingAvailableInCheckout,
-} from "../../../support/api/utils/storeFront/checkoutUtils";
+import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
 import {
   createShippingRate,
   createShippingZone,

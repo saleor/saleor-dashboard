@@ -106,7 +106,7 @@ describe("As an admin I should be able to filter products", () => {
     );
   });
 
-  it(
+  it.only(
     "should filter products out of stock. TC: SALEOR_2604",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {

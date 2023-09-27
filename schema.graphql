@@ -274,15 +274,6 @@ input AccountInput {
   """Shipping address of the customer."""
   defaultShippingAddress: AddressInput
 
-  """Given name."""
-  firstName: String
-
-  """User language code."""
-  languageCode: LanguageCodeEnum
-
-  """Family name."""
-  lastName: String
-
   """
   Fields required to update the user metadata.
   
@@ -774,7 +765,6 @@ Determine the allocation strategy for the channel.
     within the channel
 
     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
-    
 """
 enum AllocationStrategyEnum {
   PRIORITIZE_HIGH_STOCK
@@ -829,88 +819,14 @@ type App implements Node & ObjectWithMetadata {
   """
   extensions: [AppExtension!]!
 
-  """Homepage of the app."""
-  homepageUrl: String
-
-  """The ID of the app."""
-  id: ID!
-
-  """Determine if app will be set active or not."""
-  isActive: Boolean
-
   """
-  URL to manifest used during app's installation.
+  App's brand data.
   
-  Added in Saleor 3.5.
-  """
-  manifestUrl: String
-
-  """List of public metadata items. Can be accessed without permissions."""
-  metadata: [MetadataItem!]!
-
-  """
-  A single key from public metadata.
+  Added in Saleor 3.14.
   
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  
-  Added in Saleor 3.3.
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
-  metafield(key: String!): String
-
-  """
-  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
-  
-  Added in Saleor 3.3.
-  """
-  metafields(keys: [String!]): Metadata
-
-  """Name of the app."""
-  name: String
-
-  """List of the app's permissions."""
-  permissions: [Permission!]
-
-  """List of private metadata items. Requires staff permissions to access."""
-  privateMetadata: [MetadataItem!]!
-
-  """
-  A single key from private metadata. Requires staff permissions to access.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  
-  Added in Saleor 3.3.
-  """
-  privateMetafield(key: String!): String
-
-  """
-  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
-  
-  Added in Saleor 3.3.
-  """
-  privateMetafields(keys: [String!]): Metadata
-
-  """Support page for the app."""
-  supportUrl: String
-
-  """
-  Last 4 characters of the tokens.
-  
-  Requires one of the following permissions: MANAGE_APPS, OWNER.
-  """
-  tokens: [AppToken!]
-
-  """Type of the app."""
-  type: AppTypeEnum
-
-  """Version number of the app."""
-  version: String
-
-  """
-  List of webhooks assigned to this app.
-  
-  Requires one of the following permissions: MANAGE_APPS, OWNER.
-  """
-  webhooks: [Webhook!]
+  brand: AppBrand
 }
 
 """
@@ -974,6 +890,56 @@ type AppBrandLogo {
     Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
     """
     size: Int
+  ): String!
+}
+
+"""
+Represents the app's brand data.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type AppBrand {
+  """
+  App's logos details.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  logo: AppBrandLogo!
+}
+
+"""
+Represents the app's brand logo data.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type AppBrandLogo {
+  """
+  URL to the default logo image.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  default(
+    """
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    """
+    size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: IconThumbnailFormatEnum = ORIGINAL
   ): String!
 }
 
@@ -1180,7 +1146,6 @@ All available ways of opening an app extension.
 
     POPUP - app's extension will be mounted as a popup window
     APP_PAGE - redirect to app's page
-    
 """
 enum AppExtensionTargetEnum {
   APP_PAGE
@@ -1262,12 +1227,17 @@ type AppInstallation implements Job & Node {
 
   """Job message."""
   message: String
+  appName: String!
+  manifestUrl: String!
 
-  """Job status."""
-  status: JobStatusEnum!
-
-  """Date time of job last update in ISO 8601 format."""
-  updatedAt: DateTime!
+  """
+  App's brand data.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  brand: AppBrand
 }
 
 """
@@ -1339,6 +1309,56 @@ type AppManifestBrandLogo {
     Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
     """
     size: Int
+  ): String!
+}
+
+"""
+Represents the app's manifest brand data.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type AppManifestBrand {
+  """
+  App's logos details.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  logo: AppManifestBrandLogo!
+}
+
+"""
+Represents the app's manifest brand data.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type AppManifestBrandLogo {
+  """
+  Data URL with a base64 encoded logo image.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  default(
+    """
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    """
+    size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: IconThumbnailFormatEnum = ORIGINAL
   ): String!
 }
 
@@ -1906,31 +1926,31 @@ Requires one of the following permissions: MANAGE_TRANSLATIONS.
 type AttributeBulkTranslate {
   """Returns how many translations were created/updated."""
   count: Int!
-  errors: [AttributeBulkTranslateError!]!
 
   """List of the translations."""
   results: [AttributeBulkTranslateResult!]!
+  errors: [AttributeBulkTranslateError!]!
 }
 
 type AttributeBulkTranslateError {
-  """The error code."""
-  code: AttributeTranslateErrorCode!
-
-  """The error message."""
-  message: String
-
   """
   Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
   """
   path: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: AttributeTranslateErrorCode!
 }
 
 input AttributeBulkTranslateInput {
-  """External reference of an attribute."""
-  externalReference: String
-
   """Attribute ID."""
   id: ID
+
+  """External reference of an attribute."""
+  externalReference: String
 
   """Translation language code."""
   languageCode: LanguageCodeEnum!
@@ -1940,11 +1960,11 @@ input AttributeBulkTranslateInput {
 }
 
 type AttributeBulkTranslateResult {
-  """List of errors occurred on translation attempt."""
-  errors: [AttributeBulkTranslateError!]
-
   """Attribute translation data."""
   translation: AttributeTranslation
+
+  """List of errors occurred on translation attempt."""
+  errors: [AttributeBulkTranslateError!]
 }
 
 enum AttributeChoicesSortField {
@@ -2311,6 +2331,14 @@ enum AttributeTranslateErrorCode {
   REQUIRED
 }
 
+"""An enumeration."""
+enum AttributeTranslateErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+}
+
 type AttributeTranslation implements Node {
   """The ID of the attribute translation."""
   id: ID!
@@ -2518,31 +2546,31 @@ Requires one of the following permissions: MANAGE_TRANSLATIONS.
 type AttributeValueBulkTranslate {
   """Returns how many translations were created/updated."""
   count: Int!
-  errors: [AttributeValueBulkTranslateError!]!
 
   """List of the translations."""
   results: [AttributeValueBulkTranslateResult!]!
+  errors: [AttributeValueBulkTranslateError!]!
 }
 
 type AttributeValueBulkTranslateError {
-  """The error code."""
-  code: AttributeValueTranslateErrorCode!
-
-  """The error message."""
-  message: String
-
   """
   Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
   """
   path: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: AttributeValueTranslateErrorCode!
 }
 
 input AttributeValueBulkTranslateInput {
-  """External reference of an attribute value."""
-  externalReference: String
-
   """Attribute value ID."""
   id: ID
+
+  """External reference of an attribute value."""
+  externalReference: String
 
   """Translation language code."""
   languageCode: LanguageCodeEnum!
@@ -2552,11 +2580,11 @@ input AttributeValueBulkTranslateInput {
 }
 
 type AttributeValueBulkTranslateResult {
-  """List of errors occurred on translation attempt."""
-  errors: [AttributeValueBulkTranslateError!]
-
   """Attribute value translation data."""
   translation: AttributeValueTranslation
+
+  """List of errors occurred on translation attempt."""
+  errors: [AttributeValueBulkTranslateError!]
 }
 
 type AttributeValueCountableConnection {
@@ -2713,6 +2741,18 @@ input AttributeValueInput {
   dateTime: DateTime
 
   """
+  External ID of this attribute.
+  
+  Added in Saleor 3.14.
+  """
+  externalReference: String
+
+  """
+  The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. This field will be removed in Saleor 4.0.
+  """
+  values: [String!]
+
+  """
   Attribute value ID or external reference.
   
   Added in Saleor 3.9.
@@ -2720,7 +2760,7 @@ input AttributeValueInput {
   dropdown: AttributeValueSelectableTypeInput
 
   """
-  External ID of this attribute.
+  Attribute value ID or external reference.
   
   Added in Saleor 3.14.
   """
@@ -2789,6 +2829,13 @@ input AttributeValueSelectableTypeInput {
   id: ID
 
   """
+  External reference of an attribute value.
+  
+  Added in Saleor 3.14.
+  """
+  externalReference: String
+
+  """
   The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
   """
   value: String
@@ -2837,6 +2884,14 @@ type AttributeValueTranslate {
   attributeValue: AttributeValue
   errors: [TranslationError!]!
   translationErrors: [TranslationError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
+}
+
+"""An enumeration."""
+enum AttributeValueTranslateErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
 }
 
 """An enumeration."""
@@ -2996,9 +3051,14 @@ input BulkAttributeValueInput {
   boolean: Boolean
 
   """
-  File content type.
+  External ID of this attribute.
   
-  Added in Saleor 3.12.
+  Added in Saleor 3.14.
+  """
+  externalReference: String
+
+  """
+  The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.This field will be removed in Saleor 4.0.
   """
   contentType: String
 
@@ -3331,14 +3391,13 @@ type Category implements Node & ObjectWithMetadata {
     filter: ProductFilterInput
 
     """
-    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    Filtering options for products.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
     """
-    first: Int
-
-    """
-    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    last: Int
+    where: ProductWhereInput
 
     """
     Sort products.
@@ -3363,8 +3422,29 @@ type Category implements Node & ObjectWithMetadata {
   """SEO title of category."""
   seoTitle: String
 
-  """Slug of the category."""
-  slug: String!
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): CategoryCountableConnection
+  backgroundImage(
+    """
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    """
+    size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used.
+    
+    Added in Saleor 3.6.
+    """
+    format: ThumbnailFormatEnum = ORIGINAL
+  ): Image
 
   """Returns translated category fields for the given language code."""
   translation(
@@ -4463,7 +4543,6 @@ Determine a current authorize status for checkout.
     NONE - the funds are not authorized
     PARTIAL - the cover funds don't cover fully the checkout's total
     FULL - the cover funds covers the checkout's total
-    
 """
 enum CheckoutAuthorizeStatusEnum {
   FULL
@@ -4499,7 +4578,6 @@ Determine the current charge status for the checkout.
     PARTIAL - the funds that are charged don't cover the checkout's total
     FULL - the funds that are charged fully cover the checkout's total
     OVERCHARGED - the charged funds are bigger than checkout's total
-    
 """
 enum CheckoutChargeStatusEnum {
   FULL
@@ -4634,6 +4712,68 @@ enum CheckoutCreateFromOrderUnavailableVariantErrorCode {
   PRODUCT_UNAVAILABLE_FOR_PURCHASE
   QUANTITY_GREATER_THAN_LIMIT
   UNAVAILABLE_VARIANT_IN_CHANNEL
+}
+
+"""
+Create new checkout from existing order.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type CheckoutCreateFromOrder {
+  """Variants that were not attached to the checkout."""
+  unavailableVariants: [CheckoutCreateFromOrderUnavailableVariant!]
+
+  """Created checkout."""
+  checkout: Checkout
+  errors: [CheckoutCreateFromOrderError!]!
+}
+
+type CheckoutCreateFromOrderError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: CheckoutCreateFromOrderErrorCode!
+}
+
+"""An enumeration."""
+enum CheckoutCreateFromOrderErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  ORDER_NOT_FOUND
+  CHANNEL_INACTIVE
+  TAX_ERROR
+}
+
+type CheckoutCreateFromOrderUnavailableVariant {
+  """The error message."""
+  message: String!
+
+  """The error code."""
+  code: CheckoutCreateFromOrderUnavailableVariantErrorCode!
+
+  """Variant ID that is unavailable."""
+  variantId: ID!
+
+  """Order line ID that is unavailable."""
+  lineId: ID!
+}
+
+"""An enumeration."""
+enum CheckoutCreateFromOrderUnavailableVariantErrorCode {
+  NOT_FOUND
+  PRODUCT_UNAVAILABLE_FOR_PURCHASE
+  UNAVAILABLE_VARIANT_IN_CHANNEL
+  PRODUCT_NOT_PUBLISHED
+  QUANTITY_GREATER_THAN_LIMIT
+  INSUFFICIENT_STOCK
 }
 
 input CheckoutCreateInput {
@@ -5310,8 +5450,20 @@ type Collection implements Node & ObjectWithMetadata {
 
   """List of products in this collection."""
   products(
-    """Return the elements in the list that come after the specified cursor."""
-    after: String
+    """Filtering options for products."""
+    filter: ProductFilterInput
+
+    """
+    Filtering options for products.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: ProductWhereInput
+
+    """Sort products."""
+    sortBy: ProductOrder
 
     """Return the elements in the list that come before the specified cursor."""
     before: String
@@ -5339,17 +5491,8 @@ type Collection implements Node & ObjectWithMetadata {
     
     Note: this API is currently in Feature Preview and can be subject to changes at later point.
     """
-    where: ProductWhereInput
-  ): ProductCountableConnection
-
-  """SEO description of the collection."""
-  seoDescription: String
-
-  """SEO title of the collection."""
-  seoTitle: String
-
-  """Slug of the collection."""
-  slug: String!
+    format: ThumbnailFormatEnum = ORIGINAL
+  ): Image
 
   """Returns translated collection fields for the given language code."""
   translation(
@@ -6502,6 +6645,29 @@ input CustomerInput {
 
   """The unique email address of the user."""
   email: String
+
+  """User account is active."""
+  isActive: Boolean
+
+  """A note about the user."""
+  note: String
+
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the user private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
+
+  """User language code."""
+  languageCode: LanguageCodeEnum
 
   """
   External ID of the customer.
@@ -8096,6 +8262,13 @@ type GiftCard implements Node & ObjectWithMetadata {
   createdBy: User
 
   """
+  The customer who used a gift card.
+  
+  Added in Saleor 3.1.
+  """
+  usedBy: User @deprecated(reason: "This field will be removed in Saleor 4.0.")
+
+  """
   Email address of the user who bought or issued gift card.
   
   Added in Saleor 3.1.
@@ -8105,8 +8278,14 @@ type GiftCard implements Node & ObjectWithMetadata {
   createdByEmail: String
   currentBalance: Money!
 
-  """Code in format which allows displaying in a user interface."""
-  displayCode: String!
+  """
+  Email address of the customer who used a gift card.
+  
+  Added in Saleor 3.1.
+  """
+  usedByEmail: String @deprecated(reason: "This field will be removed in Saleor 4.0.")
+  lastUsedOn: DateTime
+  expiryDate: Date
 
   """End date of gift card."""
   endDate: DateTime @deprecated(reason: "This field will be removed in Saleor 4.0. Use `expiryDate` field instead.")
@@ -8943,6 +9122,21 @@ input GlobalIDFilterInput {
   oneOf: [ID!]
 }
 
+"""
+Define the filtering options for foreign key fields.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+input GlobalIDFilterInput {
+  """The value equal to."""
+  eq: ID
+
+  """The value included in."""
+  oneOf: [ID!]
+}
+
 """Represents permission group data."""
 type Group implements Node {
   """
@@ -8983,6 +9177,32 @@ type Group implements Node {
   Requires one of the following permissions: MANAGE_STAFF.
   """
   users: [User!]
+
+  """List of group permissions"""
+  permissions: [Permission!]
+
+  """
+  True, if the currently authenticated user has rights to manage a group.
+  """
+  userCanManage: Boolean!
+
+  """
+  List of channels the group has access to.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  accessibleChannels: [Channel!]
+
+  """
+  Determine if the group have restricted access to channels.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  restrictedAccessToChannels: Boolean!
 }
 
 type GroupCountableConnection {
@@ -9001,6 +9221,12 @@ type GroupCountableEdge {
 
   """The item at the end of the edge."""
   node: Group!
+}
+
+"""Thumbnail formats for icon images."""
+enum IconThumbnailFormatEnum {
+  ORIGINAL
+  WEBP
 }
 
 """Thumbnail formats for icon images."""
@@ -9129,6 +9355,20 @@ input InvoiceCreateInput {
 
   """URL of an invoice to download."""
   url: String!
+
+  """
+  Fields required to update the invoice metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the invoice private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 """
@@ -10230,17 +10470,16 @@ type Manifest {
   """
   Endpoint used during process of app installation, [see installing an app.](https://docs.saleor.io/docs/3.x/developer/extending/apps/installing-apps#installing-an-app)
   """
-  tokenTargetUrl: String
-
-  """The version of the manifest for the app."""
-  version: String!
+  author: String
 
   """
-  List of the app's webhooks.
+  App's brand data.
   
-  Added in Saleor 3.5.
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
-  webhooks: [AppManifestWebhook!]!
+  brand: AppManifestBrand
 }
 
 """Metadata for the Margin class."""
@@ -10260,8 +10499,6 @@ Determine the mark as paid strategy for the channel.
 
     PAYMENT_FLOW - new orders marked as paid will receive a
     `Payment` object, that will cover the `order.total`.
-
-    
 """
 enum MarkAsPaidStrategyEnum {
   PAYMENT_FLOW
@@ -11309,7 +11546,7 @@ type Mutation {
   """
   Delete failed installation. 
   
-  Requires one of the following permissions: MANAGE_APPS.
+  Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
   """
   appDeleteFailedInstallation(
     """ID of failed installation to delete."""
@@ -15211,10 +15448,796 @@ type Mutation {
     taxExemption: Boolean!
   ): TaxExemptionManage
 
-  """Create JWT token."""
-  tokenCreate(
+  """
+  Updates stocks for a given variant and warehouse.
+  
+  Added in Saleor 3.13.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  stockBulkUpdate(
+    """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
+    errorPolicy: ErrorPolicyEnum
+
+    """Input list of stocks to update."""
+    stocks: [StockBulkUpdateInput!]!
+  ): StockBulkUpdate
+
+  """
+  Creates a new staff notification recipient. 
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  staffNotificationRecipientCreate(
+    """Fields required to create a staff notification recipient."""
+    input: StaffNotificationRecipientInput!
+  ): StaffNotificationRecipientCreate
+
+  """
+  Updates a staff notification recipient. 
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  staffNotificationRecipientUpdate(
+    """ID of a staff notification recipient to update."""
+    id: ID!
+
+    """Fields required to update a staff notification recipient."""
+    input: StaffNotificationRecipientInput!
+  ): StaffNotificationRecipientUpdate
+
+  """
+  Delete staff notification recipient. 
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  staffNotificationRecipientDelete(
+    """ID of a staff notification recipient to delete."""
+    id: ID!
+  ): StaffNotificationRecipientDelete
+
+  """
+  Updates site domain of the shop. 
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  shopDomainUpdate(
+    """Fields required to update site."""
+    input: SiteDomainInput
+  ): ShopDomainUpdate
+
+  """
+  Updates shop settings. 
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  shopSettingsUpdate(
+    """Fields required to update shop settings."""
+    input: ShopSettingsInput!
+  ): ShopSettingsUpdate
+
+  """
+  Fetch tax rates. 
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  shopFetchTaxRates: ShopFetchTaxRates @deprecated(reason: "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0.")
+
+  """
+  Creates/updates translations for shop settings. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  shopSettingsTranslate(
+    """Fields required to update shop settings translations."""
+    input: ShopSettingsTranslationInput!
+
+    """Translation language code."""
+    languageCode: LanguageCodeEnum!
+  ): ShopSettingsTranslate
+
+  """
+  Update the shop's address. If the `null` value is passed, the currently selected address will be deleted. 
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  shopAddressUpdate(
+    """Fields required to update shop address."""
+    input: AddressInput
+  ): ShopAddressUpdate
+
+  """
+  Update shop order settings across all channels. Returns `orderSettings` for the first `channel` in alphabetical order.  
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderSettingsUpdate(
+    """Fields required to update shop order settings."""
+    input: OrderSettingsUpdateInput!
+  ): OrderSettingsUpdate @deprecated(reason: "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead.")
+
+  """
+  Update gift card settings. 
+  
+  Requires one of the following permissions: MANAGE_GIFT_CARD.
+  """
+  giftCardSettingsUpdate(
+    """Fields required to update gift card settings."""
+    input: GiftCardSettingsUpdateInput!
+  ): GiftCardSettingsUpdate
+
+  """
+  Manage shipping method's availability in channels. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingMethodChannelListingUpdate(
+    """ID of a shipping method to update."""
+    id: ID!
+
+    """Fields required to update shipping method channel listings."""
+    input: ShippingMethodChannelListingInput!
+  ): ShippingMethodChannelListingUpdate
+
+  """
+  Creates a new shipping price. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingPriceCreate(
+    """Fields required to create a shipping price."""
+    input: ShippingPriceInput!
+  ): ShippingPriceCreate
+
+  """
+  Deletes a shipping price. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingPriceDelete(
+    """ID of a shipping price to delete."""
+    id: ID!
+  ): ShippingPriceDelete
+
+  """
+  Deletes shipping prices. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingPriceBulkDelete(
+    """List of shipping price IDs to delete."""
+    ids: [ID!]!
+  ): ShippingPriceBulkDelete
+
+  """
+  Updates a new shipping price. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingPriceUpdate(
+    """ID of a shipping price to update."""
+    id: ID!
+
+    """Fields required to update a shipping price."""
+    input: ShippingPriceInput!
+  ): ShippingPriceUpdate
+
+  """
+  Creates/updates translations for a shipping method. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  shippingPriceTranslate(
+    """ShippingMethodType ID or ShippingMethodTranslatableContent ID."""
+    id: ID!
+    input: ShippingPriceTranslationInput!
+
+    """Translation language code."""
+    languageCode: LanguageCodeEnum!
+  ): ShippingPriceTranslate
+
+  """
+  Exclude products from shipping price. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingPriceExcludeProducts(
+    """ID of a shipping price."""
+    id: ID!
+
+    """Exclude products input."""
+    input: ShippingPriceExcludeProductsInput!
+  ): ShippingPriceExcludeProducts
+
+  """
+  Remove product from excluded list for shipping price. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingPriceRemoveProductFromExclude(
+    """ID of a shipping price."""
+    id: ID!
+
+    """List of products which will be removed from excluded list."""
+    products: [ID!]!
+  ): ShippingPriceRemoveProductFromExclude
+
+  """
+  Creates a new shipping zone. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingZoneCreate(
+    """Fields required to create a shipping zone."""
+    input: ShippingZoneCreateInput!
+  ): ShippingZoneCreate
+
+  """
+  Deletes a shipping zone. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingZoneDelete(
+    """ID of a shipping zone to delete."""
+    id: ID!
+  ): ShippingZoneDelete
+
+  """
+  Deletes shipping zones. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingZoneBulkDelete(
+    """List of shipping zone IDs to delete."""
+    ids: [ID!]!
+  ): ShippingZoneBulkDelete
+
+  """
+  Updates a new shipping zone. 
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingZoneUpdate(
+    """ID of a shipping zone to update."""
+    id: ID!
+
+    """Fields required to update a shipping zone."""
+    input: ShippingZoneUpdateInput!
+  ): ShippingZoneUpdate
+
+  """
+  Assign attributes to a given product type. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  productAttributeAssign(
+    """The operations to perform."""
+    operations: [ProductAttributeAssignInput!]!
+
+    """ID of the product type to assign the attributes into."""
+    productTypeId: ID!
+  ): ProductAttributeAssign
+
+  """
+  Update attributes assigned to product variant for given product type.
+  
+  Added in Saleor 3.1. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  productAttributeAssignmentUpdate(
+    """The operations to perform."""
+    operations: [ProductAttributeAssignmentUpdateInput!]!
+
+    """ID of the product type to assign the attributes into."""
+    productTypeId: ID!
+  ): ProductAttributeAssignmentUpdate
+
+  """
+  Un-assign attributes from a given product type. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  productAttributeUnassign(
+    """The IDs of the attributes to unassign."""
+    attributeIds: [ID!]!
+
+    """ID of the product type from which the attributes should be unassigned."""
+    productTypeId: ID!
+  ): ProductAttributeUnassign
+
+  """
+  Creates a new category. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  categoryCreate(
+    """Fields required to create a category."""
+    input: CategoryInput!
+
     """
-    The audience that will be included to JWT tokens with prefix `custom:`.
+    ID of the parent category. If empty, category will be top level category.
+    """
+    parent: ID
+  ): CategoryCreate
+
+  """
+  Deletes a category. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  categoryDelete(
+    """ID of a category to delete."""
+    id: ID!
+  ): CategoryDelete
+
+  """
+  Deletes categories. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  categoryBulkDelete(
+    """List of category IDs to delete."""
+    ids: [ID!]!
+  ): CategoryBulkDelete
+
+  """
+  Updates a category. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  categoryUpdate(
+    """ID of a category to update."""
+    id: ID!
+
+    """Fields required to update a category."""
+    input: CategoryInput!
+  ): CategoryUpdate
+
+  """
+  Creates/updates translations for a category. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  categoryTranslate(
+    """Category ID or CategoryTranslatableContent ID."""
+    id: ID!
+    input: TranslationInput!
+
+    """Translation language code."""
+    languageCode: LanguageCodeEnum!
+  ): CategoryTranslate
+
+  """
+  Adds products to a collection. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  collectionAddProducts(
+    """ID of a collection."""
+    collectionId: ID!
+
+    """List of product IDs."""
+    products: [ID!]!
+  ): CollectionAddProducts
+
+  """
+  Creates a new collection. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  collectionCreate(
+    """Fields required to create a collection."""
+    input: CollectionCreateInput!
+  ): CollectionCreate
+
+  """
+  Deletes a collection. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  collectionDelete(
+    """ID of a collection to delete."""
+    id: ID!
+  ): CollectionDelete
+
+  """
+  Reorder the products of a collection. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  collectionReorderProducts(
+    """ID of a collection."""
+    collectionId: ID!
+
+    """The collection products position operations."""
+    moves: [MoveProductInput!]!
+  ): CollectionReorderProducts
+
+  """
+  Deletes collections. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  collectionBulkDelete(
+    """List of collection IDs to delete."""
+    ids: [ID!]!
+  ): CollectionBulkDelete
+
+  """
+  Remove products from a collection. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  collectionRemoveProducts(
+    """ID of a collection."""
+    collectionId: ID!
+
+    """List of product IDs."""
+    products: [ID!]!
+  ): CollectionRemoveProducts
+
+  """
+  Updates a collection. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  collectionUpdate(
+    """ID of a collection to update."""
+    id: ID!
+
+    """Fields required to update a collection."""
+    input: CollectionInput!
+  ): CollectionUpdate
+
+  """
+  Creates/updates translations for a collection. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  collectionTranslate(
+    """Collection ID or CollectionTranslatableContent ID."""
+    id: ID!
+    input: TranslationInput!
+
+    """Translation language code."""
+    languageCode: LanguageCodeEnum!
+  ): CollectionTranslate
+
+  """
+  Manage collection's availability in channels. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  collectionChannelListingUpdate(
+    """ID of a collection to update."""
+    id: ID!
+
+    """Fields required to create or update collection channel listings."""
+    input: CollectionChannelListingUpdateInput!
+  ): CollectionChannelListingUpdate
+
+  """
+  Creates a new product. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productCreate(
+    """Fields required to create a product."""
+    input: ProductCreateInput!
+  ): ProductCreate
+
+  """
+  Deletes a product. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productDelete(
+    """
+    External ID of a product to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of a product to delete."""
+    id: ID
+  ): ProductDelete
+
+  """
+  Creates products.
+  
+  Added in Saleor 3.13.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productBulkCreate(
+    """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
+    errorPolicy: ErrorPolicyEnum
+
+    """Input list of products to create."""
+    products: [ProductBulkCreateInput!]!
+  ): ProductBulkCreate
+
+  """
+  Deletes products. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productBulkDelete(
+    """List of product IDs to delete."""
+    ids: [ID!]!
+  ): ProductBulkDelete
+
+  """
+  Updates an existing product. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productUpdate(
+    """
+    External ID of a product to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of a product to update."""
+    id: ID
+
+    """Fields required to update a product."""
+    input: ProductInput!
+  ): ProductUpdate
+
+  """
+  Creates/updates translations for a product. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  productTranslate(
+    """Product ID or ProductTranslatableContent ID."""
+    id: ID!
+    input: TranslationInput!
+
+    """Translation language code."""
+    languageCode: LanguageCodeEnum!
+  ): ProductTranslate
+
+  """
+  Manage product's availability in channels. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productChannelListingUpdate(
+    """ID of a product to update."""
+    id: ID!
+
+    """Fields required to create or update product channel listings."""
+    input: ProductChannelListingUpdateInput!
+  ): ProductChannelListingUpdate
+
+  """
+  Create a media object (image or video URL) associated with product. For image, this mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productMediaCreate(
+    """Fields required to create a product media."""
+    input: ProductMediaCreateInput!
+  ): ProductMediaCreate
+
+  """
+  Reorder the variants of a product. Mutation updates updated_at on product and triggers PRODUCT_UPDATED webhook. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productVariantReorder(
+    """The list of variant reordering operations."""
+    moves: [ReorderInput!]!
+
+    """Id of product that variants order will be altered."""
+    productId: ID!
+  ): ProductVariantReorder
+
+  """
+  Deletes a product media. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productMediaDelete(
+    """ID of a product media to delete."""
+    id: ID!
+  ): ProductMediaDelete
+
+  """
+  Deletes product media. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productMediaBulkDelete(
+    """List of product media IDs to delete."""
+    ids: [ID!]!
+  ): ProductMediaBulkDelete
+
+  """
+  Changes ordering of the product media. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productMediaReorder(
+    """IDs of a product media in the desired order."""
+    mediaIds: [ID!]!
+
+    """ID of product that media order will be altered."""
+    productId: ID!
+  ): ProductMediaReorder
+
+  """
+  Updates a product media. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productMediaUpdate(
+    """ID of a product media to update."""
+    id: ID!
+
+    """Fields required to update a product media."""
+    input: ProductMediaUpdateInput!
+  ): ProductMediaUpdate
+
+  """
+  Creates a new product type. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  productTypeCreate(
+    """Fields required to create a product type."""
+    input: ProductTypeInput!
+  ): ProductTypeCreate
+
+  """
+  Deletes a product type. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  productTypeDelete(
+    """ID of a product type to delete."""
+    id: ID!
+  ): ProductTypeDelete
+
+  """
+  Deletes product types. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  productTypeBulkDelete(
+    """List of product type IDs to delete."""
+    ids: [ID!]!
+  ): ProductTypeBulkDelete
+
+  """
+  Updates an existing product type. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  productTypeUpdate(
+    """ID of a product type to update."""
+    id: ID!
+
+    """Fields required to update a product type."""
+    input: ProductTypeInput!
+  ): ProductTypeUpdate
+
+  """
+  Reorder the attributes of a product type. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  productTypeReorderAttributes(
+    """The list of attribute reordering operations."""
+    moves: [ReorderInput!]!
+
+    """ID of a product type."""
+    productTypeId: ID!
+
+    """The attribute type to reorder."""
+    type: ProductAttributeType!
+  ): ProductTypeReorderAttributes
+
+  """
+  Reorder product attribute values. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productReorderAttributeValues(
+    """ID of an attribute."""
+    attributeId: ID!
+
+    """The list of reordering operations for given attribute values."""
+    moves: [ReorderInput!]!
+
+    """ID of a product."""
+    productId: ID!
+  ): ProductReorderAttributeValues
+
+  """
+  Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  digitalContentCreate(
+    """Fields required to create a digital content."""
+    input: DigitalContentUploadInput!
+
+    """ID of a product variant to upload digital content."""
+    variantId: ID!
+  ): DigitalContentCreate
+
+  """
+  Remove digital content assigned to given variant. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  digitalContentDelete(
+    """ID of a product variant with digital content to remove."""
+    variantId: ID!
+  ): DigitalContentDelete
+
+  """
+  Update digital content. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  digitalContentUpdate(
+    """Fields required to update a digital content."""
+    input: DigitalContentInput!
+
+    """ID of a product variant with digital content to update."""
+    variantId: ID!
+  ): DigitalContentUpdate
+
+  """
+  Generate new URL to digital content. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  digitalContentUrlCreate(
+    """Fields required to create a new url."""
+    input: DigitalContentUrlCreateInput!
+  ): DigitalContentUrlCreate
+
+  """
+  Creates a new variant for a product. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productVariantCreate(
+    """Fields required to create a product variant."""
+    input: ProductVariantCreateInput!
+  ): ProductVariantCreate
+
+  """
+  Deletes a product variant. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productVariantDelete(
+    """
+    External ID of a product variant to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of a product variant to delete."""
+    id: ID
+
+    """
+    SKU of a product variant to delete.
     
     Added in Saleor 3.8.
     """
@@ -15272,6 +16295,48 @@ type Mutation {
     """Data that defines a transaction event."""
     transactionEvent: TransactionEventInput
   ): TransactionCreate
+
+  """
+  Update transaction.
+  
+  Added in Saleor 3.4.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires the following permissions: OWNER and HANDLE_PAYMENTS for apps, HANDLE_PAYMENTS for staff users. Staff user cannot update a transaction that is owned by the app.
+  """
+  transactionUpdate(
+    """The ID of the transaction."""
+    id: ID!
+
+    """Input data required to create a new transaction object."""
+    transaction: TransactionUpdateInput
+
+    """Data that defines a transaction transaction."""
+    transactionEvent: TransactionEventInput
+  ): TransactionUpdate
+
+  """
+  Request an action for payment transaction.
+  
+  Added in Saleor 3.4.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: HANDLE_PAYMENTS.
+  """
+  transactionRequestAction(
+    """Determines the action type."""
+    actionType: TransactionActionEnum!
+
+    """
+    Transaction request amount. If empty for refund or capture, maximal possible amount will be used.
+    """
+    amount: PositiveDecimal
+
+    """The ID of the transaction."""
+    id: ID!
+  ): TransactionRequestAction
 
   """
   Report the event for the transaction.
@@ -15420,9 +16485,214 @@ type Mutation {
     """ID of a warehouse to update."""
     id: ID!
 
-    """List of shipping zone IDs."""
-    shippingZoneIds: [ID!]!
-  ): WarehouseShippingZoneUnassign
+    """Fields required to add order lines."""
+    input: [OrderLineCreateInput!]!
+  ): OrderLinesCreate
+
+  """
+  Deletes an order line from an order. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderLineDelete(
+    """ID of the order line to delete."""
+    id: ID!
+  ): OrderLineDelete
+
+  """
+  Updates an order line of an order. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderLineUpdate(
+    """ID of the order line to update."""
+    id: ID!
+
+    """Fields required to update an order line."""
+    input: OrderLineInput!
+  ): OrderLineUpdate
+
+  """
+  Adds discount to the order. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderDiscountAdd(
+    """Fields required to create a discount for the order."""
+    input: OrderDiscountCommonInput!
+
+    """ID of an order to discount."""
+    orderId: ID!
+  ): OrderDiscountAdd
+
+  """
+  Update discount for the order. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderDiscountUpdate(
+    """ID of a discount to update."""
+    discountId: ID!
+
+    """Fields required to update a discount for the order."""
+    input: OrderDiscountCommonInput!
+  ): OrderDiscountUpdate
+
+  """
+  Remove discount from the order. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderDiscountDelete(
+    """ID of a discount to remove."""
+    discountId: ID!
+  ): OrderDiscountDelete
+
+  """
+  Update discount for the order line. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderLineDiscountUpdate(
+    """Fields required to update price for the order line."""
+    input: OrderDiscountCommonInput!
+
+    """ID of a order line to update price"""
+    orderLineId: ID!
+  ): OrderLineDiscountUpdate
+
+  """
+  Remove discount applied to the order line. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderLineDiscountRemove(
+    """ID of a order line to remove its discount"""
+    orderLineId: ID!
+  ): OrderLineDiscountRemove
+
+  """
+  Mark order as manually paid. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderMarkAsPaid(
+    """ID of the order to mark paid."""
+    id: ID!
+
+    """The external transaction reference."""
+    transactionReference: String
+  ): OrderMarkAsPaid
+
+  """
+  Refund an order. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderRefund(
+    """Amount of money to refund."""
+    amount: PositiveDecimal!
+
+    """ID of the order to refund."""
+    id: ID!
+  ): OrderRefund
+
+  """
+  Updates an order. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderUpdate(
+    """
+    External ID of an order to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of an order to update."""
+    id: ID
+
+    """Fields required to update an order."""
+    input: OrderUpdateInput!
+  ): OrderUpdate
+
+  """
+  Updates a shipping method of the order. Requires shipping method ID to update, when null is passed then currently assigned shipping method is removed. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderUpdateShipping(
+    """ID of the order to update a shipping method."""
+    order: ID!
+
+    """Fields required to change shipping method of the order."""
+    input: OrderUpdateShippingInput!
+  ): OrderUpdateShipping
+
+  """
+  Void an order. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderVoid(
+    """ID of the order to void."""
+    id: ID!
+  ): OrderVoid
+
+  """
+  Cancels orders. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderBulkCancel(
+    """List of orders IDs to cancel."""
+    ids: [ID!]!
+  ): OrderBulkCancel
+
+  """
+  Creates multiple orders.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS_IMPORT.
+  """
+  orderBulkCreate(
+    """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
+    errorPolicy: ErrorPolicyEnum
+
+    """Input list of orders to create. Orders limit: 50."""
+    orders: [OrderBulkCreateInput!]!
+
+    """
+    Determine how stock should be updated, while processing the order. DEFAULT: UPDATE - Only do update, if there is enough stocks.
+    """
+    stockUpdatePolicy: StockUpdatePolicyEnum
+  ): OrderBulkCreate
+
+  """
+  Delete metadata of an object. To use it, you need to have access to the modified object.
+  """
+  deleteMetadata(
+    """ID or token (for Order and Checkout) of an object to update."""
+    id: ID!
+
+    """Metadata keys to delete."""
+    keys: [String!]!
+  ): DeleteMetadata
+
+  """
+  Delete object's private metadata. To use it, you need to be an authenticated staff user or an app and have access to the modified object.
+  """
+  deletePrivateMetadata(
+    """ID or token (for Order and Checkout) of an object to update."""
+    id: ID!
+
+    """Metadata keys to delete."""
+    keys: [String!]!
+  ): DeletePrivateMetadata
 
   """
   Updates metadata of an object. To use it, you need to have access to the modified object.
@@ -15647,15 +16917,1279 @@ type Mutation {
   
   Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
   """
-  webhookDelete(
-    """ID of a webhook to delete."""
+  exportGiftCards(
+    """Fields required to export gift cards data."""
+    input: ExportGiftCardsInput!
+  ): ExportGiftCards
+
+  """
+  Upload a file. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
+  """
+  fileUpload(
+    """Represents a file in a multipart request."""
+    file: Upload!
+  ): FileUpload
+
+  """Adds a gift card or a voucher to a checkout."""
+  checkoutAddPromoCode(
+    """
+    The ID of the checkout.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """Gift card code or voucher code."""
+    promoCode: String!
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutAddPromoCode
+
+  """Update billing address in the existing checkout."""
+  checkoutBillingAddressUpdate(
+    """The billing address of the checkout."""
+    billingAddress: AddressInput!
+
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+
+    """
+    The rules for changing validation for received billing address data.
+    
+    Added in Saleor 3.5.
+    """
+    validationRules: CheckoutAddressValidationRules
+  ): CheckoutBillingAddressUpdate
+
+  """
+  Completes the checkout. As a result a new order is created and a payment charge is made. This action requires a successful payment before it can be performed. In case additional confirmation step as 3D secure is required confirmationNeeded flag will be set to True and no order created until payment is confirmed with second call of this mutation.
+  """
+  checkoutComplete(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """
+    Fields required to update the checkout metadata.
+    
+    Added in Saleor 3.8.
+    """
+    metadata: [MetadataInput!]
+
+    """Client-side generated data required to finalize the payment."""
+    paymentData: JSONString
+
+    """
+    URL of a view where users should be redirected to see the order details. URL in RFC 1808 format.
+    """
+    redirectUrl: String
+
+    """
+    Determines whether to store the payment source for future usage. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use checkoutPaymentCreate for this action.
+    """
+    storeSource: Boolean = false
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutComplete
+
+  """Create a new checkout."""
+  checkoutCreate(
+    """Fields required to create checkout."""
+    input: CheckoutCreateInput!
+  ): CheckoutCreate
+
+  """
+  Create new checkout from existing order.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  checkoutCreateFromOrder(
+    """ID of a order that will be used to create the checkout."""
+    id: ID!
+  ): CheckoutCreateFromOrder
+
+  """
+  Sets the customer as the owner of the checkout. 
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_USER.
+  """
+  checkoutCustomerAttach(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    ID of customer to attach to checkout. Requires IMPERSONATE_USER permission when customerId is different than the logged-in user.
+    """
+    customerId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutCustomerAttach
+
+  """
+  Removes the user assigned as the owner of the checkout. 
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_USER.
+  """
+  checkoutCustomerDetach(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutCustomerDetach
+
+  """Updates email address in the existing checkout object."""
+  checkoutEmailUpdate(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """email."""
+    email: String!
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutEmailUpdate
+
+  """Deletes a CheckoutLine."""
+  checkoutLineDelete(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """ID of the checkout line to delete."""
+    lineId: ID
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutLineDelete @deprecated(reason: "This field will be removed in Saleor 4.0. Use `checkoutLinesDelete` instead.")
+
+  """Deletes checkout lines."""
+  checkoutLinesDelete(
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """A list of checkout lines."""
+    linesIds: [ID!]!
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutLinesDelete
+
+  """
+  Adds a checkout line to the existing checkout.If line was already in checkout, its quantity will be increased.
+  """
+  checkoutLinesAdd(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """
+    A list of checkout lines, each containing information about an item in the checkout.
+    """
+    lines: [CheckoutLineInput!]!
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutLinesAdd
+
+  """Updates checkout line in the existing checkout."""
+  checkoutLinesUpdate(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """
+    A list of checkout lines, each containing information about an item in the checkout.
+    """
+    lines: [CheckoutLineUpdateInput!]!
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutLinesUpdate
+
+  """Remove a gift card or a voucher from a checkout."""
+  checkoutRemovePromoCode(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """Gift card code or voucher code."""
+    promoCode: String
+
+    """Gift card or voucher ID."""
+    promoCodeId: ID
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutRemovePromoCode
+
+  """Create a new payment for given checkout."""
+  checkoutPaymentCreate(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """Data required to create a new payment."""
+    input: PaymentInput!
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutPaymentCreate
+
+  """Update shipping address in the existing checkout."""
+  checkoutShippingAddressUpdate(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """The mailing address to where the checkout will be shipped."""
+    shippingAddress: AddressInput!
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+
+    """
+    The rules for changing validation for received shipping address data.
+    
+    Added in Saleor 3.5.
+    """
+    validationRules: CheckoutAddressValidationRules
+  ): CheckoutShippingAddressUpdate
+
+  """Updates the shipping method of the checkout."""
+  checkoutShippingMethodUpdate(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """Shipping method."""
+    shippingMethodId: ID!
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutShippingMethodUpdate @deprecated(reason: "This field will be removed in Saleor 4.0. Use `checkoutDeliveryMethodUpdate` instead.")
+
+  """
+  Updates the delivery method (shipping method or pick up point) of the checkout.
+  
+  Added in Saleor 3.1.
+  """
+  checkoutDeliveryMethodUpdate(
+    """Delivery Method ID (`Warehouse` ID or `ShippingMethod` ID)."""
+    deliveryMethodId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutDeliveryMethodUpdate
+
+  """Update language code in the existing checkout."""
+  checkoutLanguageCodeUpdate(
+    """
+    The ID of the checkout. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    checkoutId: ID
+
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """New language code."""
+    languageCode: LanguageCodeEnum!
+
+    """
+    Checkout token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): CheckoutLanguageCodeUpdate
+
+  """
+  Create new order from existing checkout. Requires the following permissions: AUTHENTICATED_APP and HANDLE_CHECKOUTS.
+  
+  Added in Saleor 3.2.
+  """
+  orderCreateFromCheckout(
+    """ID of a checkout that will be converted to an order."""
     id: ID!
   ): WebhookDelete
 
   """
   Performs a dry run of a webhook event. Supports a single event (the first, if multiple provided in the `query`). Requires permission relevant to processed event.
   
-  Added in Saleor 3.11.
+  Requires one of the following permissions: MANAGE_CHANNELS.
+  """
+  channelCreate(
+    """Fields required to create channel."""
+    input: ChannelCreateInput!
+  ): ChannelCreate
+
+  """
+  Update a channel.
+  
+  Requires one of the following permissions: MANAGE_CHANNELS.
+  Requires one of the following permissions when updating only orderSettings field: MANAGE_CHANNELS, MANAGE_ORDERS.
+  """
+  channelUpdate(
+    """ID of a channel to update."""
+    id: ID!
+
+    """Fields required to update a channel."""
+    input: ChannelUpdateInput!
+  ): ChannelUpdate
+
+  """
+  Delete a channel. Orders associated with the deleted channel will be moved to the target channel. Checkouts, product availability, and pricing will be removed. 
+  
+  Requires one of the following permissions: MANAGE_CHANNELS.
+  """
+  channelDelete(
+    """ID of a channel to delete."""
+    id: ID!
+
+    """Fields required to delete a channel."""
+    input: ChannelDeleteInput
+  ): ChannelDelete
+
+  """
+  Activate a channel. 
+  
+  Requires one of the following permissions: MANAGE_CHANNELS.
+  """
+  channelActivate(
+    """ID of the channel to activate."""
+    id: ID!
+  ): ChannelActivate
+
+  """
+  Deactivate a channel. 
+  
+  Requires one of the following permissions: MANAGE_CHANNELS.
+  """
+  channelDeactivate(
+    """ID of the channel to deactivate."""
+    id: ID!
+  ): ChannelDeactivate
+
+  """
+  Reorder the warehouses of a channel.
+  
+  Added in Saleor 3.7. 
+  
+  Requires one of the following permissions: MANAGE_CHANNELS.
+  """
+  channelReorderWarehouses(
+    """ID of a channel."""
+    channelId: ID!
+
+    """The list of reordering operations for the given channel warehouses."""
+    moves: [ReorderInput!]!
+  ): ChannelReorderWarehouses
+
+  """Creates an attribute."""
+  attributeCreate(
+    """Fields required to create an attribute."""
+    input: AttributeCreateInput!
+  ): AttributeCreate
+
+  """
+  Deletes an attribute. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  attributeDelete(
+    """
+    External ID of an attribute to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of an attribute to delete."""
+    id: ID
+  ): AttributeDelete
+
+  """
+  Updates attribute. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  attributeUpdate(
+    """
+    External ID of an attribute to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of an attribute to update."""
+    id: ID
+
+    """Fields required to update an attribute."""
+    input: AttributeUpdateInput!
+  ): AttributeUpdate
+
+  """
+  Creates/updates translations for an attribute. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  attributeTranslate(
+    """Attribute ID or AttributeTranslatableContent ID."""
+    id: ID!
+    input: NameTranslationInput!
+
+    """Translation language code."""
+    languageCode: LanguageCodeEnum!
+  ): AttributeTranslate
+
+  """
+  Creates/updates translations for attributes.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  attributeBulkTranslate(
+    """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
+    errorPolicy: ErrorPolicyEnum
+
+    """List of attributes translations."""
+    translations: [AttributeBulkTranslateInput!]!
+  ): AttributeBulkTranslate
+
+  """
+  Deletes attributes. 
+  
+  Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+  """
+  attributeBulkDelete(
+    """List of attribute IDs to delete."""
+    ids: [ID!]!
+  ): AttributeBulkDelete
+
+  """
+  Deletes values of attributes. 
+  
+  Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+  """
+  attributeValueBulkDelete(
+    """List of attribute value IDs to delete."""
+    ids: [ID!]!
+  ): AttributeValueBulkDelete
+
+  """
+  Creates a value for an attribute. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  attributeValueCreate(
+    """Attribute to which value will be assigned."""
+    attribute: ID!
+
+    """Fields required to create an AttributeValue."""
+    input: AttributeValueCreateInput!
+  ): AttributeValueCreate
+
+  """
+  Deletes a value of an attribute. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  attributeValueDelete(
+    """
+    External ID of a value to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of a value to delete."""
+    id: ID
+  ): AttributeValueDelete
+
+  """
+  Updates value of an attribute. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  attributeValueUpdate(
+    """
+    External ID of an AttributeValue to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of an AttributeValue to update."""
+    id: ID
+
+    """Fields required to update an AttributeValue."""
+    input: AttributeValueUpdateInput!
+  ): AttributeValueUpdate
+
+  """
+  Creates/updates translations for attributes values.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  attributeValueBulkTranslate(
+    """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
+    errorPolicy: ErrorPolicyEnum
+
+    """List of attribute values translations."""
+    translations: [AttributeValueBulkTranslateInput!]!
+  ): AttributeValueBulkTranslate
+
+  """
+  Creates/updates translations for an attribute value. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  attributeValueTranslate(
+    """AttributeValue ID or AttributeValueTranslatableContent ID."""
+    id: ID!
+    input: AttributeValueTranslationInput!
+
+    """Translation language code."""
+    languageCode: LanguageCodeEnum!
+  ): AttributeValueTranslate
+
+  """
+  Reorder the values of an attribute. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  attributeReorderValues(
+    """ID of an attribute."""
+    attributeId: ID!
+
+    """The list of reordering operations for given attribute values."""
+    moves: [ReorderInput!]!
+  ): AttributeReorderValues
+
+  """
+  Creates a new app. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.
+  """
+  appCreate(
+    """Fields required to create a new app."""
+    input: AppInput!
+  ): AppCreate
+
+  """
+  Updates an existing app. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  appUpdate(
+    """ID of an app to update."""
+    id: ID!
+
+    """Fields required to update an existing app."""
+    input: AppInput!
+  ): AppUpdate
+
+  """
+  Deletes an app. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  appDelete(
+    """ID of an app to delete."""
+    id: ID!
+  ): AppDelete
+
+  """
+  Creates a new token. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  appTokenCreate(
+    """Fields required to create a new auth token."""
+    input: AppTokenInput!
+  ): AppTokenCreate
+
+  """
+  Deletes an authentication token assigned to app. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  appTokenDelete(
+    """ID of an auth token to delete."""
+    id: ID!
+  ): AppTokenDelete
+
+  """Verify provided app token."""
+  appTokenVerify(
+    """App token to verify."""
+    token: String!
+  ): AppTokenVerify
+
+  """
+  Install new app by using app manifest. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.
+  """
+  appInstall(
+    """Fields required to install a new app."""
+    input: AppInstallInput!
+  ): AppInstall
+
+  """
+  Retry failed installation of new app. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  appRetryInstall(
+    """Determine if app will be set active or not."""
+    activateAfterInstallation: Boolean = true
+
+    """ID of failed installation."""
+    id: ID!
+  ): AppRetryInstall
+
+  """
+  Delete failed installation. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  appDeleteFailedInstallation(
+    """ID of failed installation to delete."""
+    id: ID!
+  ): AppDeleteFailedInstallation
+
+  """
+  Fetch and validate manifest. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  appFetchManifest(manifestUrl: String!): AppFetchManifest
+
+  """
+  Activate the app. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  appActivate(
+    """ID of app to activate."""
+    id: ID!
+  ): AppActivate
+
+  """
+  Deactivate the app. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  appDeactivate(
+    """ID of app to deactivate."""
+    id: ID!
+  ): AppDeactivate
+
+  """Create JWT token."""
+  tokenCreate(
+    """
+    The audience that will be included to JWT tokens with prefix `custom:`.
+    
+    Added in Saleor 3.8.
+    """
+    audience: String
+
+    """Email of a user."""
+    email: String!
+
+    """Password of a user."""
+    password: String!
+  ): CreateToken
+
+  """
+  Refresh JWT token. Mutation tries to take refreshToken from the input. If it fails it will try to take `refreshToken` from the http-only cookie `refreshToken`. `csrfToken` is required when `refreshToken` is provided as a cookie.
+  """
+  tokenRefresh(
+    """
+    CSRF token required to refresh token. This argument is required when `refreshToken` is provided as a cookie.
+    """
+    csrfToken: String
+
+    """Refresh token."""
+    refreshToken: String
+  ): RefreshToken
+
+  """Verify JWT token."""
+  tokenVerify(
+    """JWT token to validate."""
+    token: String!
+  ): VerifyToken
+
+  """
+  Deactivate all JWT tokens of the currently authenticated user. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  """
+  tokensDeactivateAll: DeactivateAllUserTokens
+
+  """Prepare external authentication URL for user by custom plugin."""
+  externalAuthenticationUrl(
+    """The data required by plugin to create external authentication url."""
+    input: JSONString!
+
+    """The ID of the authentication plugin."""
+    pluginId: String!
+  ): ExternalAuthenticationUrl
+
+  """Obtain external access tokens for user by custom plugin."""
+  externalObtainAccessTokens(
+    """The data required by plugin to create authentication data."""
+    input: JSONString!
+
+    """The ID of the authentication plugin."""
+    pluginId: String!
+  ): ExternalObtainAccessTokens
+
+  """Refresh user's access by custom plugin."""
+  externalRefresh(
+    """The data required by plugin to proceed the refresh process."""
+    input: JSONString!
+
+    """The ID of the authentication plugin."""
+    pluginId: String!
+  ): ExternalRefresh
+
+  """Logout user by custom plugin."""
+  externalLogout(
+    """The data required by plugin to proceed the logout process."""
+    input: JSONString!
+
+    """The ID of the authentication plugin."""
+    pluginId: String!
+  ): ExternalLogout
+
+  """Verify external authentication data by plugin."""
+  externalVerify(
+    """The data required by plugin to proceed the verification."""
+    input: JSONString!
+
+    """The ID of the authentication plugin."""
+    pluginId: String!
+  ): ExternalVerify
+
+  """Sends an email with the account password modification link."""
+  requestPasswordReset(
+    """
+    Slug of a channel which will be used for notify user. Optional when only one channel exists.
+    """
+    channel: String
+
+    """Email of the user that will be used for password recovery."""
+    email: String!
+
+    """
+    URL of a view where users should be redirected to reset the password. URL in RFC 1808 format.
+    """
+    redirectUrl: String!
+  ): RequestPasswordReset
+
+  """Confirm user account with token sent by email during registration."""
+  confirmAccount(
+    """E-mail of the user performing account confirmation."""
+    email: String!
+
+    """A one-time token required to confirm the account."""
+    token: String!
+  ): ConfirmAccount
+
+  """
+  Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+  """
+  setPassword(
+    """Email of a user."""
+    email: String!
+
+    """Password of a user."""
+    password: String!
+
+    """A one-time token required to set the password."""
+    token: String!
+  ): SetPassword
+
+  """
+  Change the password of the logged in user. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  """
+  passwordChange(
+    """New user password."""
+    newPassword: String!
+
+    """Current user password."""
+    oldPassword: String
+  ): PasswordChange
+
+  """
+  Request email change of the logged in user. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  """
+  requestEmailChange(
+    """
+    Slug of a channel which will be used to notify users. Optional when only one channel exists.
+    """
+    channel: String
+
+    """New user email."""
+    newEmail: String!
+
+    """User password."""
+    password: String!
+
+    """
+    URL of a view where users should be redirected to update the email address. URL in RFC 1808 format.
+    """
+    redirectUrl: String!
+  ): RequestEmailChange
+
+  """
+  Confirm the email change of the logged-in user. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  """
+  confirmEmailChange(
+    """
+    Slug of a channel which will be used to notify users. Optional when only one channel exists.
+    """
+    channel: String
+
+    """A one-time token required to change the email."""
+    token: String!
+  ): ConfirmEmailChange
+
+  """
+  Create a new address for the customer. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  """
+  accountAddressCreate(
+    """Fields required to create address."""
+    input: AddressInput!
+
+    """
+    A type of address. If provided, the new address will be automatically assigned as the customer's default address of that type.
+    """
+    type: AddressTypeEnum
+  ): AccountAddressCreate
+
+  """
+  Updates an address of the logged-in user. Requires one of the following permissions: MANAGE_USERS, IS_OWNER.
+  """
+  accountAddressUpdate(
+    """ID of the address to update."""
+    id: ID!
+
+    """Fields required to update the address."""
+    input: AddressInput!
+  ): AccountAddressUpdate
+
+  """
+  Delete an address of the logged-in user. Requires one of the following permissions: MANAGE_USERS, IS_OWNER.
+  """
+  accountAddressDelete(
+    """ID of the address to delete."""
+    id: ID!
+  ): AccountAddressDelete
+
+  """
+  Sets a default address for the authenticated user. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  """
+  accountSetDefaultAddress(
+    """ID of the address to set as default."""
+    id: ID!
+
+    """The type of address."""
+    type: AddressTypeEnum!
+  ): AccountSetDefaultAddress
+
+  """Register a new user."""
+  accountRegister(
+    """Fields required to create a user."""
+    input: AccountRegisterInput!
+  ): AccountRegister
+
+  """
+  Updates the account of the logged-in user. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  """
+  accountUpdate(
+    """Fields required to update the account of the logged-in user."""
+    input: AccountInput!
+  ): AccountUpdate
+
+  """
+  Sends an email with the account removal link for the logged-in user. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  """
+  accountRequestDeletion(
+    """
+    Slug of a channel which will be used to notify users. Optional when only one channel exists.
+    """
+    channel: String
+
+    """
+    URL of a view where users should be redirected to delete their account. URL in RFC 1808 format.
+    """
+    redirectUrl: String!
+  ): AccountRequestDeletion
+
+  """
+  Remove user account. 
+  
+  Requires one of the following permissions: AUTHENTICATED_USER.
+  """
+  accountDelete(
+    """
+    A one-time token required to remove account. Sent by email using AccountRequestDeletion mutation.
+    """
+    token: String!
+  ): AccountDelete
+
+  """
+  Creates user address. 
+  
+  Requires one of the following permissions: MANAGE_USERS.
+  """
+  addressCreate(
+    """Fields required to create address."""
+    input: AddressInput!
+
+    """ID of a user to create address for."""
+    userId: ID!
+  ): AddressCreate
+
+  """
+  Updates an address. 
+  
+  Requires one of the following permissions: MANAGE_USERS.
+  """
+  addressUpdate(
+    """ID of the address to update."""
+    id: ID!
+
+    """Fields required to update the address."""
+    input: AddressInput!
+  ): AddressUpdate
+
+  """
+  Deletes an address. 
+  
+  Requires one of the following permissions: MANAGE_USERS.
+  """
+  addressDelete(
+    """ID of the address to delete."""
+    id: ID!
+  ): AddressDelete
+
+  """
+  Sets a default address for the given user. 
+  
+  Requires one of the following permissions: MANAGE_USERS.
+  """
+  addressSetDefault(
+    """ID of the address."""
+    addressId: ID!
+
+    """The type of address."""
+    type: AddressTypeEnum!
+
+    """ID of the user to change the address for."""
+    userId: ID!
+  ): AddressSetDefault
+
+  """
+  Creates a new customer. 
+  
+  Requires one of the following permissions: MANAGE_USERS.
+  """
+  customerCreate(
+    """Fields required to create a customer."""
+    input: UserCreateInput!
+  ): CustomerCreate
+
+  """
+  Updates an existing customer. 
+  
+  Requires one of the following permissions: MANAGE_USERS.
+  """
+  customerUpdate(
+    """
+    External ID of a customer to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of a customer to update."""
+    id: ID
+
+    """Fields required to update a customer."""
+    input: CustomerInput!
+  ): CustomerUpdate
+
+  """
+  Deletes a customer. 
+  
+  Requires one of the following permissions: MANAGE_USERS.
+  """
+  customerDelete(
+    """
+    External ID of a customer to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of a customer to delete."""
+    id: ID
+  ): CustomerDelete
+
+  """
+  Deletes customers. 
+  
+  Requires one of the following permissions: MANAGE_USERS.
+  """
+  customerBulkDelete(
+    """List of user IDs to delete."""
+    ids: [ID!]!
+  ): CustomerBulkDelete
+
+  """
+  Updates customers.
+  
+  Added in Saleor 3.13.
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point. 
   
@@ -15801,6 +18335,57 @@ type Order implements Node & ObjectWithMetadata {
   collectionPointName: String
   created: DateTime!
   customerNote: String!
+  weight: Weight!
+  redirectUrl: String
+
+  """The sum of line prices not including shipping."""
+  subtotal: TaxedMoney!
+
+  """User-friendly order status."""
+  statusDisplay: String!
+
+  """
+  Informs whether a draft order can be finalized(turned into a regular order).
+  """
+  canFinalize: Boolean!
+
+  """Amount authorized for the order."""
+  totalAuthorized: Money!
+
+  """Amount captured for the order."""
+  totalCaptured: Money! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `totalCharged` instead.")
+
+  """
+  Amount charged for the order.
+  
+  Added in Saleor 3.13.
+  """
+  totalCharged: Money!
+
+  """
+  Amount canceled for the order.
+  
+  Added in Saleor 3.13.
+  """
+  totalCanceled: Money!
+
+  """
+  List of events associated with the order.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  events: [OrderEvent!]!
+
+  """The difference between the paid and the order total amount."""
+  totalBalance: Money!
+
+  """
+  Email address of the customer. The full data can be access for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.
+  """
+  userEmail: String
+
+  """Returns True, if order requires shipping."""
+  isShippingRequired: Boolean!
 
   """
   The delivery method selected for this order.
@@ -16187,7 +18772,6 @@ Determine a current authorize status for order.
     `order.total`-`order.totalGrantedRefund`
     FULL - the funds that are authorized and charged fully cover the
     `order.total`-`order.totalGrantedRefund`
-    
 """
 enum OrderAuthorizeStatusEnum {
   FULL
@@ -16544,6 +19128,345 @@ type OrderBulkCreated implements Event {
 }
 
 """
+Creates multiple orders.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_ORDERS_IMPORT.
+"""
+type OrderBulkCreate {
+  """Returns how many objects were created."""
+  count: Int!
+
+  """List of the created orders."""
+  results: [OrderBulkCreateResult!]!
+  errors: [OrderBulkCreateError!]!
+}
+
+input OrderBulkCreateDeliveryMethodInput {
+  """The ID of the warehouse."""
+  warehouseId: ID
+
+  """The name of the warehouse."""
+  warehouseName: String
+
+  """The ID of the shipping method."""
+  shippingMethodId: ID
+
+  """The name of the shipping method."""
+  shippingMethodName: String
+
+  """The price of the shipping."""
+  shippingPrice: TaxedMoneyInput
+
+  """Tax rate of the shipping."""
+  shippingTaxRate: PositiveDecimal
+
+  """The ID of the tax class."""
+  shippingTaxClassId: ID
+
+  """The name of the tax class."""
+  shippingTaxClassName: String
+
+  """Metadata of the tax class."""
+  shippingTaxClassMetadata: [MetadataInput!]
+
+  """Private metadata of the tax class."""
+  shippingTaxClassPrivateMetadata: [MetadataInput!]
+}
+
+type OrderBulkCreateError {
+  """
+  Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  path: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: OrderBulkCreateErrorCode
+}
+
+"""An enumeration."""
+enum OrderBulkCreateErrorCode {
+  GRAPHQL_ERROR
+  REQUIRED
+  INVALID
+  NOT_FOUND
+  UNIQUE
+  BULK_LIMIT
+  TOO_MANY_IDENTIFIERS
+  FUTURE_DATE
+  INVALID_QUANTITY
+  PRICE_ERROR
+  NOTE_LENGTH
+  INSUFFICIENT_STOCK
+  NON_EXISTING_STOCK
+  NO_RELATED_ORDER_LINE
+  NEGATIVE_INDEX
+  ORDER_LINE_FULFILLMENT_LINE_MISMATCH
+  METADATA_KEY_REQUIRED
+  INCORRECT_CURRENCY
+}
+
+input OrderBulkCreateFulfillmentInput {
+  """Fulfillment's tracking code."""
+  trackingCode: String
+
+  """List of items informing how to fulfill the order."""
+  lines: [OrderBulkCreateFulfillmentLineInput!]
+}
+
+input OrderBulkCreateFulfillmentLineInput {
+  """The ID of the product variant."""
+  variantId: ID
+
+  """The SKU of the product variant."""
+  variantSku: String
+
+  """The external ID of the product variant."""
+  variantExternalReference: String
+
+  """The number of line items to be fulfilled from given warehouse."""
+  quantity: Int!
+
+  """ID of the warehouse from which the item will be fulfilled."""
+  warehouse: ID!
+
+  """0-based index of order line, which the fulfillment line refers to."""
+  orderLineIndex: Int!
+}
+
+input OrderBulkCreateInput {
+  """External ID of the order."""
+  externalReference: String
+
+  """Slug of the channel associated with the order."""
+  channel: String!
+
+  """The date, when the order was inserted to Saleor database."""
+  createdAt: DateTime!
+
+  """Status of the order."""
+  status: OrderStatus
+
+  """Customer associated with the order."""
+  user: OrderBulkCreateUserInput!
+
+  """Tracking ID of the customer."""
+  trackingClientId: String
+
+  """Billing address of the customer."""
+  billingAddress: AddressInput!
+
+  """Shipping address of the customer."""
+  shippingAddress: AddressInput
+
+  """Currency code."""
+  currency: String!
+
+  """Metadata of the order."""
+  metadata: [MetadataInput!]
+
+  """Private metadata of the order."""
+  privateMetadata: [MetadataInput!]
+
+  """Note about customer."""
+  customerNote: String
+
+  """Notes related to the order."""
+  notes: [OrderBulkCreateNoteInput!]
+
+  """Order language code."""
+  languageCode: LanguageCodeEnum!
+
+  """
+  Determines whether checkout prices should include taxes, when displayed in a storefront.
+  """
+  displayGrossPrices: Boolean
+
+  """Weight of the order in kg."""
+  weight: WeightScalar
+
+  """
+  URL of a view, where users should be redirected to see the order details.
+  """
+  redirectUrl: String
+
+  """List of order lines."""
+  lines: [OrderBulkCreateOrderLineInput!]!
+
+  """The delivery method selected for this order."""
+  deliveryMethod: OrderBulkCreateDeliveryMethodInput
+
+  """List of gift card codes associated with the order."""
+  giftCards: [String!]
+
+  """Code of a voucher associated with the order."""
+  voucher: String
+
+  """List of discounts."""
+  discounts: [OrderDiscountCommonInput!]
+
+  """Fulfillments of the order."""
+  fulfillments: [OrderBulkCreateFulfillmentInput!]
+
+  """Transactions related to the order."""
+  transactions: [TransactionCreateInput!]
+
+  """Invoices related to the order."""
+  invoices: [OrderBulkCreateInvoiceInput!]
+}
+
+input OrderBulkCreateInvoiceInput {
+  """The date, when the invoice was created."""
+  createdAt: DateTime!
+
+  """Invoice number."""
+  number: String
+
+  """URL of the invoice to download."""
+  url: String
+
+  """Metadata of the invoice."""
+  metadata: [MetadataInput!]
+
+  """Private metadata of the invoice."""
+  privateMetadata: [MetadataInput!]
+}
+
+input OrderBulkCreateNoteInput {
+  """Note message. Max characters: 255."""
+  message: String!
+
+  """The date associated with the message."""
+  date: DateTime
+
+  """The user ID associated with the message."""
+  userId: ID
+
+  """The user email associated with the message."""
+  userEmail: ID
+
+  """The user external ID associated with the message."""
+  userExternalReference: ID
+
+  """The app ID associated with the message."""
+  appId: ID
+}
+
+input OrderBulkCreateOrderLineInput {
+  """The ID of the product variant."""
+  variantId: ID
+
+  """The SKU of the product variant."""
+  variantSku: String
+
+  """The external ID of the product variant."""
+  variantExternalReference: String
+
+  """The name of the product variant."""
+  variantName: String
+
+  """The name of the product."""
+  productName: String
+
+  """Translation of the product variant name."""
+  translatedVariantName: String
+
+  """Translation of the product name."""
+  translatedProductName: String
+
+  """The date, when the order line was created."""
+  createdAt: DateTime!
+
+  """Determines whether shipping of the order line items is required."""
+  isShippingRequired: Boolean!
+
+  """Gift card flag."""
+  isGiftCard: Boolean!
+
+  """Number of items in the order line"""
+  quantity: Int!
+
+  """Price of the order line."""
+  totalPrice: TaxedMoneyInput!
+
+  """Price of the order line excluding applied discount."""
+  undiscountedTotalPrice: TaxedMoneyInput!
+
+  """The ID of the warehouse, where the line will be allocated."""
+  warehouse: ID!
+
+  """Metadata of the order line."""
+  metadata: [MetadataInput!]
+
+  """Private metadata of the order line."""
+  privateMetadata: [MetadataInput!]
+
+  """Tax rate of the order line."""
+  taxRate: PositiveDecimal
+
+  """The ID of the tax class."""
+  taxClassId: ID
+
+  """The name of the tax class."""
+  taxClassName: String
+
+  """Metadata of the tax class."""
+  taxClassMetadata: [MetadataInput!]
+
+  """Private metadata of the tax class."""
+  taxClassPrivateMetadata: [MetadataInput!]
+}
+
+type OrderBulkCreateResult {
+  """Order data."""
+  order: Order
+
+  """List of errors occurred on create attempt."""
+  errors: [OrderBulkCreateError!]
+}
+
+input OrderBulkCreateUserInput {
+  """Customer ID associated with the order."""
+  id: ID
+
+  """Customer email associated with the order."""
+  email: String
+
+  """Customer external ID associated with the order."""
+  externalReference: String
+}
+
+"""
+Event sent when orders are imported.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderBulkCreated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The orders the event relates to."""
+  orders: [Order!]
+}
+
+"""
 Cancel an order. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
@@ -16610,7 +19533,6 @@ Determine the current charge status for the order.
     `order.total`-`order.totalGrantedRefund`
     OVERCHARGED - the charged funds are bigger than the
     `order.total`-`order.totalGrantedRefund`
-    
 """
 enum OrderChargeStatusEnum {
   FULL
@@ -16831,6 +19753,8 @@ type OrderDiscountDelete {
 
 """An enumeration."""
 enum OrderDiscountType {
+  SALE
+  VOUCHER
   MANUAL
   SALE
   VOUCHER
@@ -16989,8 +19913,8 @@ type OrderEvent implements Node {
   """Define if shipping costs were included to the refund."""
   shippingCostsIncluded: Boolean
 
-  """The transaction reference of captured payment."""
-  transactionReference: String
+  """The status of payment's transaction."""
+  status: TransactionStatus @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `TransactionEvent` to track the status of `TransactionItem`.")
 
   """Order event type."""
   type: OrderEventsEnum
@@ -17070,7 +19994,7 @@ enum OrderEventsEmailsEnum {
   TRACKING_UPDATED
 }
 
-"""The different order event types. """
+"""The different order event types."""
 enum OrderEventsEnum {
   ADDED_PRODUCTS
   CANCELED
@@ -17080,7 +20004,28 @@ enum OrderEventsEnum {
   EMAIL_SENT
   EXPIRED
   EXTERNAL_SERVICE_NOTIFICATION
-  FULFILLMENT_AWAITS_APPROVAL
+  PAYMENT_REFUNDED
+  PAYMENT_VOIDED
+  PAYMENT_FAILED
+  TRANSACTION_EVENT
+  TRANSACTION_CHARGE_REQUESTED
+
+  """
+  This field will be removed in Saleor 3.15 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED` instead.
+  """
+  TRANSACTION_CAPTURE_REQUESTED
+  TRANSACTION_REFUND_REQUESTED
+
+  """
+  This field will be removed in Saleor 3.15 (Preview Feature). Use `TRANSACTION_CANCEL_REQUESTED` instead.
+  """
+  TRANSACTION_VOID_REQUESTED
+  TRANSACTION_CANCEL_REQUESTED
+  TRANSACTION_MARK_AS_PAID_FAILED
+  INVOICE_REQUESTED
+  INVOICE_GENERATED
+  INVOICE_UPDATED
+  INVOICE_SENT
   FULFILLMENT_CANCELED
   FULFILLMENT_FULFILLED_ITEMS
   FULFILLMENT_REFUNDED
@@ -17312,6 +20257,30 @@ type OrderFullyRefunded implements Event {
 
   """Saleor version that triggered the event."""
   version: String
+}
+
+"""
+The order is fully refunded.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderFullyRefunded implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The order the event relates to."""
+  order: Order
 }
 
 """
@@ -17686,6 +20655,57 @@ type OrderLine implements Node & ObjectWithMetadata {
   productVariantId: String
   quantity: Int!
   quantityFulfilled: Int!
+  unitDiscountReason: String
+  taxRate: Float!
+  digitalContentUrl: DigitalContentUrl
+  thumbnail(
+    """
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    """
+    size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used.
+    
+    Added in Saleor 3.6.
+    """
+    format: ThumbnailFormatEnum = ORIGINAL
+  ): Image
+
+  """Price of the single item in the order line."""
+  unitPrice: TaxedMoney!
+
+  """
+  Price of the single item in the order line without applied an order line discount.
+  """
+  undiscountedUnitPrice: TaxedMoney!
+
+  """The discount applied to the single order line."""
+  unitDiscount: Money!
+
+  """Value of the discount. Can store fixed value or percent value"""
+  unitDiscountValue: PositiveDecimal!
+
+  """Price of the order line."""
+  totalPrice: TaxedMoney!
+
+  """
+  A purchased product variant. Note: this field may be null if the variant has been removed from stock at all. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
+  """
+  variant: ProductVariant
+
+  """Product name in the customer's language"""
+  translatedProductName: String!
+
+  """Variant name in the customer's language"""
+  translatedVariantName: String!
+
+  """
+  List of allocations across warehouses.
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS.
+  """
+  allocations: [Allocation!]
 
   """
   A quantity of items remaining to be fulfilled.
@@ -17788,12 +20808,6 @@ input OrderLineCreateInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   price: PositiveDecimal
-
-  """Number of variant items ordered."""
-  quantity: Int!
-
-  """Product variant ID."""
-  variantId: ID!
 }
 
 """
@@ -18004,6 +21018,31 @@ enum OrderOriginEnum {
   CHECKOUT
   DRAFT
   REISSUE
+  BULK_CREATE
+}
+
+"""
+Payment has been made. The order may be partially or fully paid.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderPaid implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The order the event relates to."""
+  order: Order
 }
 
 """
@@ -18097,6 +21136,30 @@ type OrderRefunded implements Event {
 
   """Saleor version that triggered the event."""
   version: String
+}
+
+"""
+The order received a refund. The order may be partially or fully refunded.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderRefunded implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The order the event relates to."""
+  order: Order
 }
 
 input OrderReturnFulfillmentLineInput {
@@ -18198,6 +21261,24 @@ type OrderSettings {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   markAsPaidStrategy: MarkAsPaidStrategyEnum!
+
+  """
+  Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.
+  
+  Added in Saleor 3.13.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  defaultTransactionFlowStrategy: TransactionFlowStrategyEnum!
+
+  """
+  The time in days after expired orders will be deleted.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  deleteExpiredOrdersAfter: Day!
 }
 
 type OrderSettingsError {
@@ -18264,6 +21345,15 @@ input OrderSettingsInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   expireOrdersAfter: Minute
+
+  """
+  The time in days after expired orders will be deleted.Allowed range is from 1 to 120.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  deleteExpiredOrdersAfter: Day
 
   """
   Determine what strategy will be used to mark the order as paid. Based on the chosen option, the proper object will be created and attached to the order when it's manually marked as paid.
@@ -19713,7 +22803,7 @@ input PaymentInput {
   
   Added in Saleor 3.1.
   """
-  storePaymentMethod: StorePaymentMethodEnum
+  storePaymentMethod: StorePaymentMethodEnum = NONE
 
   """
   Client-side generated payment token, representing customer's billing data in a secure manner.
@@ -19925,6 +23015,15 @@ input PermissionGroupCreateInput {
   """List of users to assign to this group."""
   addUsers: [ID!]
 
+  """
+  List of channels to assign to this group.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addChannels: [ID!]
+
   """Group name."""
   name: String!
 
@@ -20016,10 +23115,15 @@ type PermissionGroupError {
 
   """List of user IDs which causes the error."""
   users: [ID!]
+
+  """List of chnnels IDs which causes the error."""
+  channels: [ID!]
 }
 
 """An enumeration."""
 enum PermissionGroupErrorCode {
+  REQUIRED
+  UNIQUE
   ASSIGN_NON_STAFF_MEMBER
   CANNOT_REMOVE_FROM_LAST_GROUP
   DUPLICATED_INPUT_ITEM
@@ -20027,8 +23131,7 @@ enum PermissionGroupErrorCode {
   OUT_OF_SCOPE_CHANNEL
   OUT_OF_SCOPE_PERMISSION
   OUT_OF_SCOPE_USER
-  REQUIRED
-  UNIQUE
+  OUT_OF_SCOPE_CHANNEL
 }
 
 input PermissionGroupFilterInput {
@@ -20080,6 +23183,15 @@ input PermissionGroupUpdateInput {
   """List of users to assign to this group."""
   addUsers: [ID!]
 
+  """
+  List of channels to assign to this group.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addChannels: [ID!]
+
   """Group name."""
   name: String
 
@@ -20097,6 +23209,15 @@ input PermissionGroupUpdateInput {
 
   """List of users to unassign from this group."""
   removeUsers: [ID!]
+
+  """
+  List of channels to unassign from this group.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  removeChannels: [ID!]
 
   """
   Determine if the group has restricted access to channels.
@@ -20317,6 +23438,119 @@ input PriceRangeInput {
 
 """Represents an individual item for sale in the storefront."""
 type Product implements Node & ObjectWithMetadata {
+  id: ID!
+
+  """List of private metadata items. Requires staff permissions to access."""
+  privateMetadata: [MetadataItem!]!
+
+  """
+  A single key from private metadata. Requires staff permissions to access.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  
+  Added in Saleor 3.3.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  privateMetafield(key: String!): String
+
+  """
+  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
+  
+  Added in Saleor 3.3.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  privateMetafields(keys: [String!]): Metadata
+
+  """List of public metadata items. Can be accessed without permissions."""
+  metadata: [MetadataItem!]!
+
+  """
+  A single key from public metadata.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  
+  Added in Saleor 3.3.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  metafield(key: String!): String
+
+  """
+  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
+  
+  Added in Saleor 3.3.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  metafields(keys: [String!]): Metadata
+  seoTitle: String
+  seoDescription: String
+  name: String!
+
+  """
+  Description of the product.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  description: JSONString
+  productType: ProductType!
+  slug: String!
+  category: Category
+  created: DateTime!
+  updatedAt: DateTime!
+  chargeTaxes: Boolean! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` field to determine whether tax collection is enabled.")
+  weight: Weight
+  defaultVariant: ProductVariant
+  rating: Float
+
+  """
+  Channel given to retrieve this product. Also used by federation gateway to resolve this object in a federated query.
+  """
+  channel: String
+
+  """
+  Description of the product.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  descriptionJson: JSONString @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `description` field instead.")
+  thumbnail(
+    """
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    """
+    size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used.
+    
+    Added in Saleor 3.6.
+    """
+    format: ThumbnailFormatEnum = ORIGINAL
+  ): Image
+
+  """
+  Lists the storefront product's pricing, the current price and discounts, only meant for displaying.
+  """
+  pricing(
+    """
+    Destination address used to find warehouses where stock availability for this product is checked. If address is empty, uses `Shop.companyAddress` or fallbacks to server's `settings.DEFAULT_COUNTRY` configuration.
+    """
+    address: AddressInput
+  ): ProductPricingInfo
+
+  """Whether the product is in stock and visible or not."""
+  isAvailable(
+    """
+    Destination address used to find warehouses where stock availability for this product is checked. If address is empty, uses `Shop.companyAddress` or fallbacks to server's `settings.DEFAULT_COUNTRY` configuration.
+    """
+    address: AddressInput
+  ): Boolean
+
+  """A type of tax. Assigned by enabled tax gateway"""
+  taxType: TaxType @deprecated(reason: "This field will be removed in Saleor 4.0. Use `taxClass` field instead.")
+
   """
   Get a single attribute attached to product by attribute slug.
   
@@ -21333,12 +24567,7 @@ type ProductImage {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum
-
-    """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
-    """
-    size: Int
+    format: ThumbnailFormatEnum = ORIGINAL
   ): String!
 }
 
@@ -21446,31 +24675,13 @@ type ProductMedia implements Node & ObjectWithMetadata {
   """
   metafields(keys: [String!]): Metadata
 
-  """The oEmbed data of the media."""
-  oembedData: JSONString!
-
-  """
-  List of private metadata items. Requires staff permissions to access.
-  
-  Added in Saleor 3.12.
-  """
-  privateMetadata: [MetadataItem!]!
-
-  """
-  A single key from private metadata. Requires staff permissions to access.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  
-  Added in Saleor 3.12.
-  """
-  privateMetafield(key: String!): String
-
-  """
-  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
-  
-  Added in Saleor 3.12.
-  """
-  privateMetafields(keys: [String!]): Metadata
+    """
+    The format of the image. When not provided, format of the original image will be used.
+    
+    Added in Saleor 3.6.
+    """
+    format: ThumbnailFormatEnum = ORIGINAL
+  ): String!
 
   """
   Product id the media refers to.
@@ -22567,6 +25778,24 @@ type ProductVariantBulkDelete {
 }
 
 type ProductVariantBulkError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: ProductVariantBulkErrorCode!
+
+  """
+  Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  
+  Added in Saleor 3.14.
+  """
+  path: String
+
   """List of attributes IDs which causes the error."""
   attributes: [ID!]
 
@@ -23430,6 +26659,74 @@ input ProductWhereInput {
 
   """Filter by when was the most recent update."""
   updatedAt: DateTimeRangeInput
+}
+
+input ProductWhereInput {
+  metadata: [MetadataFilter!]
+  ids: [ID!]
+
+  """Filter by product name."""
+  name: StringFilterInput
+
+  """Filter by product slug."""
+  slug: StringFilterInput
+
+  """Filter by product type."""
+  productType: GlobalIDFilterInput
+
+  """Filter by product category."""
+  category: GlobalIDFilterInput
+
+  """Filter by collection."""
+  collection: GlobalIDFilterInput
+
+  """Filter by availability for purchase."""
+  isAvailable: Boolean
+
+  """Filter by public visibility."""
+  isPublished: Boolean
+
+  """Filter by visibility on the channel."""
+  isVisibleInListing: Boolean
+
+  """Filter by the publication date."""
+  publishedFrom: DateTime
+
+  """Filter by the date of availability for purchase."""
+  availableFrom: DateTime
+
+  """Filter by product with category assigned."""
+  hasCategory: Boolean
+
+  """Filter by product variant price."""
+  price: DecimalFilterInput
+
+  """Filter by the lowest variant price after discounts."""
+  minimalPrice: DecimalFilterInput
+
+  """Filter by attributes associated with the product."""
+  attributes: [AttributeInput!]
+
+  """Filter by variants having specific stock status."""
+  stockAvailability: StockAvailability
+
+  """Filter by stock of the product variant."""
+  stocks: ProductStockFilterInput
+
+  """Filter on whether product is a gift card or not."""
+  giftCard: Boolean
+
+  """Filter by product with preordered variants."""
+  hasPreorderedVariants: Boolean
+
+  """Filter by when was the most recent update."""
+  updatedAt: DateTimeRangeInput
+
+  """List of conditions that must be met."""
+  AND: [ProductWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [ProductWhereInput!]
 }
 
 input PublishableChannelListingInput {
@@ -25064,6 +28361,1552 @@ type Query {
     """Name of the requested event type."""
     eventType: WebhookSampleEventTypeEnum!
   ): JSONString
+
+  """
+  Look up a warehouse by ID.
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS, MANAGE_SHIPPING.
+  """
+  warehouse(
+    """ID of a warehouse."""
+    id: ID
+
+    """
+    External ID of a warehouse. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+  ): Warehouse
+
+  """
+  List of warehouses.
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS, MANAGE_SHIPPING.
+  """
+  warehouses(
+    filter: WarehouseFilterInput
+    sortBy: WarehouseSortingInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): WarehouseCountableConnection
+
+  """
+  Returns a list of all translatable items of a given kind.
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  translations(
+    """Kind of objects to retrieve."""
+    kind: TranslatableKinds!
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): TranslatableItemConnection
+
+  """
+  Lookup a translatable item by ID.
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  translation(
+    """ID of the object to retrieve."""
+    id: ID!
+
+    """Kind of the object to retrieve."""
+    kind: TranslatableKinds!
+  ): TranslatableItem
+
+  """
+  Look up a tax configuration.
+  
+  Added in Saleor 3.9.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  """
+  taxConfiguration(
+    """ID of a tax configuration."""
+    id: ID!
+  ): TaxConfiguration
+
+  """
+  List of tax configurations.
+  
+  Added in Saleor 3.9.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  """
+  taxConfigurations(
+    """Filtering options for tax configurations."""
+    filter: TaxConfigurationFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): TaxConfigurationCountableConnection
+
+  """
+  Look up a tax class.
+  
+  Added in Saleor 3.9.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  """
+  taxClass(
+    """ID of a tax class."""
+    id: ID!
+  ): TaxClass
+
+  """
+  List of tax classes.
+  
+  Added in Saleor 3.9.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  """
+  taxClasses(
+    """Sort tax classes."""
+    sortBy: TaxClassSortingInput
+
+    """Filtering options for tax classes."""
+    filter: TaxClassFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): TaxClassCountableConnection
+
+  """
+  Tax class rates grouped by country.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  """
+  taxCountryConfiguration(
+    """Country for which to return tax class rates."""
+    countryCode: CountryCode!
+  ): TaxCountryConfiguration
+
+  """
+  \n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  """
+  taxCountryConfigurations: [TaxCountryConfiguration!]
+
+  """
+  Look up a stock by ID
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  stock(
+    """ID of an warehouse"""
+    id: ID!
+  ): Stock
+
+  """
+  List of stocks.
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  stocks(
+    filter: StockFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): StockCountableConnection
+
+  """Return information about the shop."""
+  shop: Shop!
+
+  """
+  Order related settings from site settings. Returns `orderSettings` for the first `channel` in alphabetical order.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderSettings: OrderSettings @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `channel` query to fetch the `orderSettings` field instead.")
+
+  """
+  Gift card related settings from site settings.
+  
+  Requires one of the following permissions: MANAGE_GIFT_CARD.
+  """
+  giftCardSettings: GiftCardSettings!
+
+  """
+  Look up a shipping zone by ID.
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingZone(
+    """ID of the shipping zone."""
+    id: ID!
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ShippingZone
+
+  """
+  List of the shop's shipping zones.
+  
+  Requires one of the following permissions: MANAGE_SHIPPING.
+  """
+  shippingZones(
+    """Filtering options for shipping zones."""
+    filter: ShippingZoneFilterInput
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): ShippingZoneCountableConnection
+
+  """
+  Look up digital content by ID.
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  digitalContent(
+    """ID of the digital content."""
+    id: ID!
+  ): DigitalContent
+
+  """
+  List of digital content.
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  digitalContents(
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): DigitalContentCountableConnection
+
+  """List of the shop's categories."""
+  categories(
+    """Filtering options for categories."""
+    filter: CategoryFilterInput
+
+    """Sort categories."""
+    sortBy: CategorySortingInput
+
+    """Filter categories by the nesting level in the category tree."""
+    level: Int
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): CategoryCountableConnection
+
+  """Look up a category by ID or slug."""
+  category(
+    """ID of the category."""
+    id: ID
+
+    """Slug of the category"""
+    slug: String
+  ): Category
+
+  """
+  Look up a collection by ID. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
+  """
+  collection(
+    """ID of the collection."""
+    id: ID
+
+    """Slug of the category"""
+    slug: String
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): Collection
+
+  """
+  List of the shop's collections. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
+  """
+  collections(
+    """Filtering options for collections."""
+    filter: CollectionFilterInput
+
+    """Sort collections."""
+    sortBy: CollectionSortingInput
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): CollectionCountableConnection
+
+  """
+  Look up a product by ID. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
+  """
+  product(
+    """ID of the product."""
+    id: ID
+
+    """Slug of the product."""
+    slug: String
+
+    """
+    External ID of the product. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): Product
+
+  """
+  List of the shop's products. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
+  """
+  products(
+    """Filtering options for products."""
+    filter: ProductFilterInput
+
+    """
+    Where filtering options.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: ProductWhereInput
+
+    """Sort products."""
+    sortBy: ProductOrder
+
+    """
+    Search products.
+    
+    Added in Saleor 3.14.
+    """
+    search: String
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): ProductCountableConnection
+
+  """Look up a product type by ID."""
+  productType(
+    """ID of the product type."""
+    id: ID!
+  ): ProductType
+
+  """List of the shop's product types."""
+  productTypes(
+    """Filtering options for product types."""
+    filter: ProductTypeFilterInput
+
+    """Sort product types."""
+    sortBy: ProductTypeSortingInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): ProductTypeCountableConnection
+
+  """
+  Look up a product variant by ID or SKU. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
+  """
+  productVariant(
+    """ID of the product variant."""
+    id: ID
+
+    """SKU of the product variant."""
+    sku: String
+
+    """
+    External ID of the product. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ProductVariant
+
+  """
+  List of product variants. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
+  """
+  productVariants(
+    """Filter product variants by given IDs."""
+    ids: [ID!]
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Filtering options for product variant."""
+    filter: ProductVariantFilterInput
+
+    """Sort products variants."""
+    sortBy: ProductVariantSortingInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): ProductVariantCountableConnection
+
+  """
+  List of top selling products.
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  reportProductSales(
+    """Span of time."""
+    period: ReportingPeriod!
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String!
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): ProductVariantCountableConnection
+
+  """
+  Look up a payment by ID.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  payment(
+    """ID of the payment."""
+    id: ID!
+  ): Payment
+
+  """
+  List of payments.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  payments(
+    """Filtering options for payments."""
+    filter: PaymentFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): PaymentCountableConnection
+
+  """
+  Look up a transaction by ID.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: HANDLE_PAYMENTS.
+  """
+  transaction(
+    """ID of a transaction."""
+    id: ID!
+  ): TransactionItem
+
+  """Look up a page by ID or slug."""
+  page(
+    """ID of the page."""
+    id: ID
+
+    """The slug of the page."""
+    slug: String
+  ): Page
+
+  """List of the shop's pages."""
+  pages(
+    """Sort pages."""
+    sortBy: PageSortingInput
+
+    """Filtering options for pages."""
+    filter: PageFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): PageCountableConnection
+
+  """Look up a page type by ID."""
+  pageType(
+    """ID of the page type."""
+    id: ID!
+  ): PageType
+
+  """List of the page types."""
+  pageTypes(
+    """Sort page types."""
+    sortBy: PageTypeSortingInput
+
+    """Filtering options for page types."""
+    filter: PageTypeFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): PageTypeCountableConnection
+
+  """
+  List of activity events to display on homepage (at the moment it only contains order-events).
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  homepageEvents(
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): OrderEventCountableConnection
+
+  """Look up an order by ID or external reference."""
+  order(
+    """ID of an order."""
+    id: ID
+
+    """
+    External ID of an order. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+  ): Order
+
+  """
+  List of orders.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orders(
+    """Sort orders."""
+    sortBy: OrderSortingInput
+
+    """Filtering options for orders."""
+    filter: OrderFilterInput
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): OrderCountableConnection
+
+  """
+  List of draft orders.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  draftOrders(
+    """Sort draft orders."""
+    sortBy: OrderSortingInput
+
+    """Filtering options for draft orders."""
+    filter: OrderDraftFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): OrderCountableConnection
+
+  """
+  Return the total sales amount from a specific period.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  ordersTotal(
+    """A period of time."""
+    period: ReportingPeriod
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): TaxedMoney
+
+  """Look up an order by token."""
+  orderByToken(
+    """The order's token."""
+    token: UUID!
+  ): Order @deprecated(reason: "This field will be removed in Saleor 4.0.")
+
+  """Look up a navigation menu by ID or name."""
+  menu(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """ID of the menu."""
+    id: ID
+
+    """The menu's name."""
+    name: String
+
+    """The menu's slug."""
+    slug: String
+  ): Menu
+
+  """List of the storefront's menus."""
+  menus(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Sort menus."""
+    sortBy: MenuSortingInput
+
+    """
+    Filtering options for menus. 
+    
+    `slug`: This field will be removed in Saleor 4.0. Use `slugs` instead.
+    """
+    filter: MenuFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): MenuCountableConnection
+
+  """Look up a menu item by ID."""
+  menuItem(
+    """ID of the menu item."""
+    id: ID!
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): MenuItem
+
+  """List of the storefronts's menu items."""
+  menuItems(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Sort menus items."""
+    sortBy: MenuItemSortingInput
+
+    """Filtering options for menu items."""
+    filter: MenuItemFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): MenuItemCountableConnection
+
+  """
+  Look up a gift card by ID.
+  
+  Requires one of the following permissions: MANAGE_GIFT_CARD.
+  """
+  giftCard(
+    """ID of the gift card."""
+    id: ID!
+  ): GiftCard
+
+  """
+  List of gift cards.
+  
+  Requires one of the following permissions: MANAGE_GIFT_CARD.
+  """
+  giftCards(
+    """
+    Sort gift cards.
+    
+    Added in Saleor 3.1.
+    """
+    sortBy: GiftCardSortingInput
+
+    """
+    Filtering options for gift cards.
+    
+    Added in Saleor 3.1.
+    """
+    filter: GiftCardFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): GiftCardCountableConnection
+
+  """
+  List of gift card currencies.
+  
+  Added in Saleor 3.1.
+  
+  Requires one of the following permissions: MANAGE_GIFT_CARD.
+  """
+  giftCardCurrencies: [String!]!
+
+  """
+  List of gift card tags.
+  
+  Added in Saleor 3.1.
+  
+  Requires one of the following permissions: MANAGE_GIFT_CARD.
+  """
+  giftCardTags(
+    """Filtering options for gift card tags."""
+    filter: GiftCardTagFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): GiftCardTagCountableConnection
+
+  """
+  Look up a plugin by ID.
+  
+  Requires one of the following permissions: MANAGE_PLUGINS.
+  """
+  plugin(
+    """ID of the plugin."""
+    id: ID!
+  ): Plugin
+
+  """
+  List of plugins.
+  
+  Requires one of the following permissions: MANAGE_PLUGINS.
+  """
+  plugins(
+    """Filtering options for plugins."""
+    filter: PluginFilterInput
+
+    """Sort plugins."""
+    sortBy: PluginSortingInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): PluginCountableConnection
+
+  """
+  Look up a sale by ID.
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  """
+  sale(
+    """ID of the sale."""
+    id: ID!
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): Sale
+
+  """
+  List of the shop's sales.
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  """
+  sales(
+    """Filtering options for sales."""
+    filter: SaleFilterInput
+
+    """Sort sales."""
+    sortBy: SaleSortingInput
+
+    """
+    Search sales by name, value or type. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `filter.search` input instead.
+    """
+    query: String
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): SaleCountableConnection
+
+  """
+  Look up a voucher by ID.
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  """
+  voucher(
+    """ID of the voucher."""
+    id: ID!
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): Voucher
+
+  """
+  List of the shop's vouchers.
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  """
+  vouchers(
+    """Filtering options for vouchers."""
+    filter: VoucherFilterInput
+
+    """Sort voucher."""
+    sortBy: VoucherSortingInput
+
+    """
+    Search vouchers by name or code. 
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `filter.search` input instead.
+    """
+    query: String
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): VoucherCountableConnection
+
+  """
+  Look up a export file by ID.
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  exportFile(
+    """ID of the export file job."""
+    id: ID!
+  ): ExportFile
+
+  """
+  List of export files.
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  exportFiles(
+    """Filtering options for export files."""
+    filter: ExportFileFilterInput
+
+    """Sort export files."""
+    sortBy: ExportFileSortingInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): ExportFileCountableConnection
+
+  """List of all tax rates available from tax gateway."""
+  taxTypes: [TaxType!]
+
+  """Look up a checkout by token and slug of channel."""
+  checkout(
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.4.
+    """
+    id: ID
+
+    """
+    The checkout's token.
+    
+    DEPRECATED: this field will be removed in Saleor 4.0. Use `id` instead.
+    """
+    token: UUID
+  ): Checkout
+
+  """
+  List of checkouts.
+  
+  Requires one of the following permissions: MANAGE_CHECKOUTS.
+  """
+  checkouts(
+    """
+    Sort checkouts.
+    
+    Added in Saleor 3.1.
+    """
+    sortBy: CheckoutSortingInput
+
+    """
+    Filtering options for checkouts.
+    
+    Added in Saleor 3.1.
+    """
+    filter: CheckoutFilterInput
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): CheckoutCountableConnection
+
+  """
+  List of checkout lines.
+  
+  Requires one of the following permissions: MANAGE_CHECKOUTS.
+  """
+  checkoutLines(
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): CheckoutLineCountableConnection
+
+  """Look up a channel by ID or slug."""
+  channel(
+    """ID of the channel."""
+    id: ID
+
+    """
+    Slug of the channel.
+    
+    Added in Saleor 3.6.
+    """
+    slug: String
+  ): Channel
+
+  """
+  List of all channels.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
+  """
+  channels: [Channel!]
+
+  """List of the shop's attributes."""
+  attributes(
+    """Filtering options for attributes."""
+    filter: AttributeFilterInput
+
+    """
+    Filtering options for attributes.
+    
+    Added in Saleor 3.11.
+    """
+    where: AttributeWhereInput
+
+    """
+    Search attributes.
+    
+    Added in Saleor 3.11.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    search: String
+
+    """Sorting options for attributes."""
+    sortBy: AttributeSortingInput
+
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): AttributeCountableConnection
+
+  """Look up an attribute by ID, slug or external reference."""
+  attribute(
+    """ID of the attribute."""
+    id: ID
+
+    """Slug of the attribute."""
+    slug: String
+
+    """
+    External ID of the attribute. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+  ): Attribute
+
+  """
+  List of all apps installations
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  appsInstallations: [AppInstallation!]!
+
+  """
+  List of the apps.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, MANAGE_APPS.
+  """
+  apps(
+    """Filtering options for apps."""
+    filter: AppFilterInput
+
+    """Sort apps."""
+    sortBy: AppSortingInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): AppCountableConnection
+
+  """
+  Look up an app by ID. If ID is not provided, return the currently authenticated app.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER AUTHENTICATED_APP. The authenticated app has access to its resources. Fetching different apps requires MANAGE_APPS permission.
+  """
+  app(
+    """ID of the app."""
+    id: ID
+  ): App
+
+  """
+  List of all extensions.
+  
+  Added in Saleor 3.1.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  """
+  appExtensions(
+    """Filtering options for apps extensions."""
+    filter: AppExtensionFilterInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): AppExtensionCountableConnection
+
+  """
+  Look up an app extension by ID.
+  
+  Added in Saleor 3.1.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  """
+  appExtension(
+    """ID of the app extension."""
+    id: ID!
+  ): AppExtension
+
+  """Returns address validation rules."""
+  addressValidationRules(
+    """Two-letter ISO 3166-1 country code."""
+    countryCode: CountryCode!
+
+    """Designation of a region, province or state."""
+    countryArea: String
+
+    """City or a town name."""
+    city: String
+
+    """Sublocality like a district."""
+    cityArea: String
+  ): AddressValidationData
+
+  """
+  Look up an address by ID.
+  
+  Requires one of the following permissions: MANAGE_USERS, OWNER.
+  """
+  address(
+    """ID of an address."""
+    id: ID!
+  ): Address
+
+  """
+  List of the shop's customers.
+  
+  Requires one of the following permissions: MANAGE_ORDERS, MANAGE_USERS.
+  """
+  customers(
+    """Filtering options for customers."""
+    filter: CustomerFilterInput
+
+    """Sort customers."""
+    sortBy: UserSortingInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): UserCountableConnection
+
+  """
+  List of permission groups.
+  
+  Requires one of the following permissions: MANAGE_STAFF.
+  """
+  permissionGroups(
+    """Filtering options for permission groups."""
+    filter: PermissionGroupFilterInput
+
+    """Sort permission groups."""
+    sortBy: PermissionGroupSortingInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): GroupCountableConnection
+
+  """
+  Look up permission group by ID.
+  
+  Requires one of the following permissions: MANAGE_STAFF.
+  """
+  permissionGroup(
+    """ID of the group."""
+    id: ID!
+  ): Group
+
+  """Return the currently authenticated user."""
+  me: User
+
+  """
+  List of the shop's staff users.
+  
+  Requires one of the following permissions: MANAGE_STAFF.
+  """
+  staffUsers(
+    """Filtering options for staff users."""
+    filter: StaffUserInput
+
+    """Sort staff users."""
+    sortBy: UserSortingInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): UserCountableConnection
+
+  """
+  Look up a user by ID or email address.
+  
+  Requires one of the following permissions: MANAGE_STAFF, MANAGE_USERS, MANAGE_ORDERS.
+  """
+  user(
+    """ID of the user."""
+    id: ID
+
+    """Email address of the user."""
+    email: String
+
+    """
+    External ID of the user. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+  ): User
+  _entities(representations: [_Any]): [_Entity]
+  _service: _Service
 }
 
 """Represents a reduced VAT rate for a particular type of goods."""
@@ -26943,14 +31786,21 @@ type Shop implements ObjectWithMetadata {
   """
   staffNotificationRecipients: [StaffNotificationRecipient!]
 
-  """Enable inventory tracking."""
-  trackInventoryByDefault: Boolean
+  """
+  Determines if account confirmation by email is enabled.
+  
+  Added in Saleor 3.14.
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  enableAccountConfirmationByEmail: Boolean
 
-  """Returns translated shop fields for the given language code."""
-  translation(
-    """A language code to return the translation for shop."""
-    languageCode: LanguageCodeEnum!
-  ): ShopTranslation
+  """
+  Resource limitations and current usage if any set for a shop
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+  """
+  limits: LimitInfo!
 
   """
   Saleor API version.
@@ -27157,8 +32007,40 @@ input ShopSettingsInput {
   """
   reserveStockDurationAuthenticatedUser: Int
 
-  """Enable inventory tracking."""
-  trackInventoryByDefault: Boolean
+  """
+  Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50.
+  
+  Added in Saleor 3.1.
+  """
+  limitQuantityPerCheckout: Int
+
+  """
+  Enable automatic account confirmation by email.
+  
+  Added in Saleor 3.14.
+  """
+  enableAccountConfirmationByEmail: Boolean
+
+  """
+  Include taxes in prices. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+  """
+  includeTaxesInPrices: Boolean
+
+  """
+  Display prices with tax in store. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+  """
+  displayGrossPrices: Boolean
+
+  """
+  Charge taxes on shipping. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
+  """
+  chargeTaxesOnShipping: Boolean
 }
 
 """
@@ -27275,11 +32157,21 @@ input StaffCreateInput {
   note: String
 
   """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
   Fields required to update the user private metadata.
   
   Added in Saleor 3.14.
   """
   privateMetadata: [MetadataInput!]
+
+  """List of permission group IDs to which user should be assigned."""
+  addGroups: [ID!]
 
   """
   URL of a view where users should be redirected to set the password. URL in RFC 1808 format.
@@ -27482,11 +32374,21 @@ input StaffUpdateInput {
   note: String
 
   """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
   Fields required to update the user private metadata.
   
   Added in Saleor 3.14.
   """
   privateMetadata: [MetadataInput!]
+
+  """List of permission group IDs to which user should be assigned."""
+  addGroups: [ID!]
 
   """List of permission group IDs from which user should be unassigned."""
   removeGroups: [ID!]
@@ -27715,6 +32617,19 @@ enum StockUpdatePolicyEnum {
   FORCE
   SKIP
   UPDATE
+}
+
+"""
+Determine how stocks should be updated, while processing an order.
+
+    SKIP - stocks are not checked and not updated.
+    UPDATE - only do update, if there is enough stock.
+    FORCE - force update, if there is not enough stock.
+"""
+enum StockUpdatePolicyEnum {
+  SKIP
+  UPDATE
+  FORCE
 }
 
 """Enum representing the type of a payment storage in a gateway."""
@@ -28532,7 +33447,6 @@ Represents possible actions on payment transaction.
     CHARGE - Represents the charge action.
     REFUND - Represents a refund action.
     CANCEL - Represents a cancel action. Added in Saleor 3.12.
-    
 """
 enum TransactionActionEnum {
   CANCEL
@@ -28632,8 +33546,66 @@ enum TransactionCreateErrorCode {
 }
 
 input TransactionCreateInput {
+  """
+  Status of the transaction.
+  
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.
+  """
+  status: String
+
+  """
+  Payment type used for this transaction.
+  
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `name` and `message` instead.
+  """
+  type: String
+
+  """
+  Payment name of the transaction.
+  
+  Added in Saleor 3.13.
+  """
+  name: String
+
+  """
+  The message of the transaction.
+  
+  Added in Saleor 3.13.
+  """
+  message: String
+
+  """
+  Reference of the transaction. 
+  
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.
+  """
+  reference: String
+
+  """
+  PSP Reference of the transaction. 
+  
+  Added in Saleor 3.13.
+  """
+  pspReference: String
+
+  """List of all possible actions for the transaction"""
+  availableActions: [TransactionActionEnum!]
+
   """Amount authorized by this transaction."""
   amountAuthorized: MoneyInput
+
+  """Amount charged by this transaction."""
+  amountCharged: MoneyInput
+
+  """Amount refunded by this transaction."""
+  amountRefunded: MoneyInput
+
+  """
+  Amount voided by this transaction.
+  
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `amountCanceled` instead.
+  """
+  amountVoided: MoneyInput
 
   """
   Amount canceled by this transaction.
@@ -28688,6 +33660,16 @@ input TransactionCreateInput {
 
 """Represents transaction's event."""
 type TransactionEvent implements Node {
+  """The ID of the object."""
+  id: ID!
+  createdAt: DateTime!
+
+  """Status of transaction's event."""
+  status: TransactionStatus @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). Use `type` instead.")
+
+  """Reference of transaction's event."""
+  reference: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `pspReference` instead.")
+
   """
   The amount related to this event.
   
@@ -28696,22 +33678,8 @@ type TransactionEvent implements Node {
   amount: Money!
   createdAt: DateTime!
 
-  """
-  User or App that created the transaction event.
-  
-  Added in Saleor 3.13.
-  """
-  createdBy: UserOrApp
-
-  """
-  The url that will allow to redirect user to payment provider page with transaction details.
-  
-  Added in Saleor 3.13.
-  """
-  externalUrl: String!
-
-  """The ID of the object."""
-  id: ID!
+  """Name of the transaction's event."""
+  name: String @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). Use `message` instead.")
 
   """
   Message related to the transaction's event.
@@ -28739,9 +33707,16 @@ input TransactionEventInput {
   """
   The message related to the event.
   
-  Added in Saleor 3.13.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Status will be calculated by Saleor.
   """
-  message: String
+  status: TransactionStatus
+
+  """
+  Reference of the transaction. 
+  
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.
+  """
+  reference: String
 
   """
   PSP Reference related to this action.
@@ -28749,6 +33724,20 @@ input TransactionEventInput {
   Added in Saleor 3.13.
   """
   pspReference: String
+
+  """
+  Name of the transaction.
+  
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `message` instead. `name` field will be added to `message`.
+  """
+  name: String
+
+  """
+  The message related to the event.
+  
+  Added in Saleor 3.13.
+  """
+  message: String
 }
 
 """
@@ -28822,7 +33811,6 @@ Represents possible event types.
     CANCEL_FAILURE - represents failure cancel.
     CANCEL_REQUEST - represents cancel request.
     INFO - represents info event.
-    
 """
 enum TransactionEventTypeEnum {
   AUTHORIZATION_ACTION_REQUIRED
@@ -28850,7 +33838,6 @@ Determine the transaction flow strategy.
 
     AUTHORIZATION - the processed transaction should be only authorized
     CHARGE - the processed transaction should be charged.
-    
 """
 enum TransactionFlowStrategyEnum {
   AUTHORIZATION
@@ -29028,6 +34015,64 @@ type TransactionItem implements Node & ObjectWithMetadata {
   modifiedAt: DateTime!
 
   """
+  List of actions that can be performed in the current state of a payment.
+  """
+  actions: [TransactionActionEnum!]!
+
+  """Total amount authorized for this payment."""
+  authorizedAmount: Money!
+
+  """
+  Total amount of ongoing authorization requests for the transaction.
+  
+  Added in Saleor 3.13.
+  """
+  authorizePendingAmount: Money!
+
+  """Total amount refunded for this payment."""
+  refundedAmount: Money!
+
+  """
+  Total amount of ongoing refund requests for the transaction.
+  
+  Added in Saleor 3.13.
+  """
+  refundPendingAmount: Money!
+
+  """Total amount voided for this payment."""
+  voidedAmount: Money! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `canceledAmount` instead.")
+
+  """
+  Total amount canceled for this payment.
+  
+  Added in Saleor 3.13.
+  """
+  canceledAmount: Money!
+
+  """
+  Total amount of ongoing cancel requests for the transaction.
+  
+  Added in Saleor 3.13.
+  """
+  cancelPendingAmount: Money!
+
+  """Total amount charged for this payment."""
+  chargedAmount: Money!
+
+  """
+  Total amount of ongoing charge requests for the transaction.
+  
+  Added in Saleor 3.13.
+  """
+  chargePendingAmount: Money!
+
+  """Status of transaction."""
+  status: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.")
+
+  """Type of transaction."""
+  type: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). Use `name` or `message` instead.")
+
+  """
   Name of the transaction.
   
   Added in Saleor 3.13.
@@ -29041,24 +34086,8 @@ type TransactionItem implements Node & ObjectWithMetadata {
   """
   order: Order
 
-  """List of private metadata items. Requires staff permissions to access."""
-  privateMetadata: [MetadataItem!]!
-
-  """
-  A single key from private metadata. Requires staff permissions to access.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  
-  Added in Saleor 3.3.
-  """
-  privateMetafield(key: String!): String
-
-  """
-  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
-  
-  Added in Saleor 3.3.
-  """
-  privateMetafields(keys: [String!]): Metadata
+  """Reference of transaction."""
+  reference: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `pspReference` instead.")
 
   """
   PSP reference of transaction.
@@ -29276,11 +34305,10 @@ enum TransactionRequestActionErrorCode {
 """
 Request a refund for payment transaction based on granted refund.
 
-Added in Saleor 3.15.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point. 
-
-Requires one of the following permissions: HANDLE_PAYMENTS.
+    The following statuses are possible:
+    SUCCESS - Represents a sucess action.
+    FAILURE - Represents a failure action.
+    PENDING - Represents a pending action.
 """
 type TransactionRequestRefundForGrantedRefund {
   errors: [TransactionRequestRefundForGrantedRefundError!]!
@@ -29346,8 +34374,66 @@ enum TransactionUpdateErrorCode {
 }
 
 input TransactionUpdateInput {
+  """
+  Status of the transaction.
+  
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.
+  """
+  status: String
+
+  """
+  Payment type used for this transaction.
+  
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `name` and `message` instead.
+  """
+  type: String
+
+  """
+  Payment name of the transaction.
+  
+  Added in Saleor 3.13.
+  """
+  name: String
+
+  """
+  The message of the transaction.
+  
+  Added in Saleor 3.13.
+  """
+  message: String
+
+  """
+  Reference of the transaction. 
+  
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.
+  """
+  reference: String
+
+  """
+  PSP Reference of the transaction. 
+  
+  Added in Saleor 3.13.
+  """
+  pspReference: String
+
+  """List of all possible actions for the transaction"""
+  availableActions: [TransactionActionEnum!]
+
   """Amount authorized by this transaction."""
   amountAuthorized: MoneyInput
+
+  """Amount charged by this transaction."""
+  amountCharged: MoneyInput
+
+  """Amount refunded by this transaction."""
+  amountRefunded: MoneyInput
+
+  """
+  Amount voided by this transaction.
+  
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `amountCanceled` instead.
+  """
+  amountVoided: MoneyInput
 
   """
   Amount canceled by this transaction.
@@ -29535,6 +34621,20 @@ input UpdateInvoiceInput {
 
   """URL of an invoice to download."""
   url: String
+
+  """
+  Fields required to update the invoice metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the invoice private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 """
@@ -29774,8 +34874,39 @@ type User implements Node & ObjectWithMetadata {
   """List of user's permission groups."""
   permissionGroups: [Group!]
 
-  """List of private metadata items. Requires staff permissions to access."""
-  privateMetadata: [MetadataItem!]!
+  """List of user's permission groups which user can manage."""
+  editableGroups: [Group!]
+
+  """
+  List of channels the user has access to. The sum of channels from all user groups. If at least one group has `restrictedAccessToChannels` set to False - all channels are returned.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  accessibleChannels: [Channel!]
+
+  """
+  Determine if user have restricted access to channels. False if at least one user group has `restrictedAccessToChannels` set to False.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  restrictedAccessToChannels: Boolean!
+  avatar(
+    """
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    """
+    size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used.
+    
+    Added in Saleor 3.6.
+    """
+    format: ThumbnailFormatEnum = ORIGINAL
+  ): Image
 
   """
   A single key from private metadata. Requires staff permissions to access.
@@ -29886,6 +35017,29 @@ input UserCreateInput {
 
   """The unique email address of the user."""
   email: String
+
+  """User account is active."""
+  isActive: Boolean
+
+  """A note about the user."""
+  note: String
+
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the user private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
+
+  """User language code."""
+  languageCode: LanguageCodeEnum
 
   """
   External ID of the customer.
@@ -31555,8 +36709,43 @@ enum WebhookEventTypeAsyncEnum {
   """
   ORDER_CONFIRMED
 
-  """A new order is placed."""
-  ORDER_CREATED
+  """
+  Payment has been made. The order may be partially or fully paid.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_PAID
+
+  """Payment is made and an order is fully paid."""
+  ORDER_FULLY_PAID
+
+  """
+  The order received a refund. The order may be partially or fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_REFUNDED
+
+  """
+  The order is fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_FULLY_REFUNDED
+
+  """
+  An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED.
+  """
+  ORDER_UPDATED
+
+  """An order is cancelled."""
+  ORDER_CANCELLED
 
   """An order is expired."""
   ORDER_EXPIRED
@@ -31582,6 +36771,54 @@ enum WebhookEventTypeAsyncEnum {
   Added in Saleor 3.8.
   """
   ORDER_METADATA_UPDATED
+
+  """
+  Orders are imported.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_BULK_CREATED
+
+  """A draft order is created."""
+  DRAFT_ORDER_CREATED
+
+  """A draft order is updated."""
+  DRAFT_ORDER_UPDATED
+
+  """A draft order is deleted."""
+  DRAFT_ORDER_DELETED
+
+  """A sale is created."""
+  SALE_CREATED
+
+  """A sale is updated."""
+  SALE_UPDATED
+
+  """A sale is deleted."""
+  SALE_DELETED
+
+  """A sale is activated or deactivated."""
+  SALE_TOGGLE
+
+  """An invoice for order requested."""
+  INVOICE_REQUESTED
+
+  """An invoice is deleted."""
+  INVOICE_DELETED
+
+  """Invoice has been sent."""
+  INVOICE_SENT
+
+  """A new customer account is created."""
+  CUSTOMER_CREATED
+
+  """A customer account is updated."""
+  CUSTOMER_UPDATED
+
+  """A customer account is deleted."""
+  CUSTOMER_DELETED
 
   """
   Payment has been made. The order may be partially or fully paid.
@@ -32061,8 +37298,43 @@ enum WebhookEventTypeEnum {
   """
   ORDER_CONFIRMED
 
-  """A new order is placed."""
-  ORDER_CREATED
+  """
+  Payment has been made. The order may be partially or fully paid.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_PAID
+
+  """Payment is made and an order is fully paid."""
+  ORDER_FULLY_PAID
+
+  """
+  The order received a refund. The order may be partially or fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_REFUNDED
+
+  """
+  The order is fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_FULLY_REFUNDED
+
+  """
+  An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED.
+  """
+  ORDER_UPDATED
+
+  """An order is cancelled."""
+  ORDER_CANCELLED
 
   """An order is expired."""
   ORDER_EXPIRED
@@ -32091,6 +37363,54 @@ enum WebhookEventTypeEnum {
   Added in Saleor 3.8.
   """
   ORDER_METADATA_UPDATED
+
+  """
+  Orders are imported.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_BULK_CREATED
+
+  """A draft order is created."""
+  DRAFT_ORDER_CREATED
+
+  """A draft order is updated."""
+  DRAFT_ORDER_UPDATED
+
+  """A draft order is deleted."""
+  DRAFT_ORDER_DELETED
+
+  """A sale is created."""
+  SALE_CREATED
+
+  """A sale is updated."""
+  SALE_UPDATED
+
+  """A sale is deleted."""
+  SALE_DELETED
+
+  """A sale is activated or deactivated."""
+  SALE_TOGGLE
+
+  """An invoice for order requested."""
+  INVOICE_REQUESTED
+
+  """An invoice is deleted."""
+  INVOICE_DELETED
+
+  """Invoice has been sent."""
+  INVOICE_SENT
+
+  """A new customer account is created."""
+  CUSTOMER_CREATED
+
+  """A customer account is updated."""
+  CUSTOMER_UPDATED
+
+  """A customer account is deleted."""
+  CUSTOMER_DELETED
 
   """
   Payment has been made. The order may be partially or fully paid.
@@ -32467,7 +37787,62 @@ enum WebhookSampleEventTypeEnum {
   CHANNEL_DELETED
   CHANNEL_METADATA_UPDATED
   CHANNEL_STATUS_CHANGED
-  CHANNEL_UPDATED
+  GIFT_CARD_CREATED
+  GIFT_CARD_UPDATED
+  GIFT_CARD_DELETED
+  GIFT_CARD_SENT
+  GIFT_CARD_STATUS_CHANGED
+  GIFT_CARD_METADATA_UPDATED
+  MENU_CREATED
+  MENU_UPDATED
+  MENU_DELETED
+  MENU_ITEM_CREATED
+  MENU_ITEM_UPDATED
+  MENU_ITEM_DELETED
+  ORDER_CREATED
+  ORDER_CONFIRMED
+  ORDER_PAID
+  ORDER_FULLY_PAID
+  ORDER_REFUNDED
+  ORDER_FULLY_REFUNDED
+  ORDER_UPDATED
+  ORDER_CANCELLED
+  ORDER_EXPIRED
+  ORDER_FULFILLED
+  ORDER_METADATA_UPDATED
+  ORDER_BULK_CREATED
+  DRAFT_ORDER_CREATED
+  DRAFT_ORDER_UPDATED
+  DRAFT_ORDER_DELETED
+  SALE_CREATED
+  SALE_UPDATED
+  SALE_DELETED
+  SALE_TOGGLE
+  INVOICE_REQUESTED
+  INVOICE_DELETED
+  INVOICE_SENT
+  CUSTOMER_CREATED
+  CUSTOMER_UPDATED
+  CUSTOMER_DELETED
+  CUSTOMER_METADATA_UPDATED
+  COLLECTION_CREATED
+  COLLECTION_UPDATED
+  COLLECTION_DELETED
+  COLLECTION_METADATA_UPDATED
+  PRODUCT_CREATED
+  PRODUCT_UPDATED
+  PRODUCT_DELETED
+  PRODUCT_MEDIA_CREATED
+  PRODUCT_MEDIA_UPDATED
+  PRODUCT_MEDIA_DELETED
+  PRODUCT_METADATA_UPDATED
+  PRODUCT_VARIANT_CREATED
+  PRODUCT_VARIANT_UPDATED
+  PRODUCT_VARIANT_DELETED
+  PRODUCT_VARIANT_OUT_OF_STOCK
+  PRODUCT_VARIANT_BACK_IN_STOCK
+  PRODUCT_VARIANT_STOCK_UPDATED
+  PRODUCT_VARIANT_METADATA_UPDATED
   CHECKOUT_CREATED
   CHECKOUT_FULLY_PAID
   CHECKOUT_METADATA_UPDATED

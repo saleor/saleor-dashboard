@@ -22,9 +22,6 @@ import {
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
-  ensureCanvasStatic,
-} from "../../support/customCommands/sharedElementsOperations/canvas";
-import {
   createCategory,
   updateCategory,
 } from "../../support/pages/catalog/categoriesPage";

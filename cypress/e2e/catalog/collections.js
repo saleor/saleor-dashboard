@@ -4,10 +4,8 @@
 import faker from "faker";
 
 import { BUTTON_SELECTORS } from "../../elements";
-import {
-  collectionDetailsUrl,
-  urlList,
-} from "../../fixtures/urlList";
+import { collectionRow } from "../../elements/catalog/collection-selectors";
+import { collectionDetailsUrl, urlList } from "../../fixtures/urlList";
 import { createChannel } from "../../support/api/requests/Channels";
 import {
   addChannelToCollection,

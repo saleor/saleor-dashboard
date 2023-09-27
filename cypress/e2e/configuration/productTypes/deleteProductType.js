@@ -15,9 +15,7 @@ import {
   getProductDetails,
 } from "../../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import {
-  createProductInChannel,
-} from "../../../support/api/utils/products/productsUtils";
+import { createProductInChannel } from "../../../support/api/utils/products/productsUtils";
 
 describe("As an admin I want to manage product types", () => {
   const startsWith = "delProdType" + faker.datatype.number();

@@ -95,22 +95,16 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     setClearDatagridRowSelectionCallback,
   } = useRowSelection(params);
 
-  const {
-    hasPresetsChanged,
-    onPresetChange,
-    onPresetDelete,
-    onPresetSave,
-    onPresetUpdate,
-    selectedPreset,
-    presets,
-    getPresetNameToDelete,
-    setPresetIdToDelete,
-  } = useFilterPresets({
-    getUrl: voucherListUrl,
-    params,
-    storageUtils,
-    reset: clearRowSelection,
-  });
+  const currentTab = getFiltersCurrentTab(params, tabs);
+
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: reset,
+      createUrl: voucherListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const [changeFilters, resetFilters, handleSearchChange] =
     createFilterHandlers({
@@ -147,10 +141,17 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
           });
-          clearRowSelection();
+          reset();
           closeModal();
           refetch();
         }
+      },
+    });
+
+  const onVoucherBulkDelete = () =>
+    voucherBulkDelete({
+      variables: {
+        ids: params.ids,
       },
     });
 

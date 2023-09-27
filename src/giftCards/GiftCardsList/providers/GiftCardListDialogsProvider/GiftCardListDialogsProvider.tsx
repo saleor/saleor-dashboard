@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import GiftCardListPageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import GiftCardBulkCreateDialog from "@dashboard/giftCards/GiftCardBulkCreateDialog";
 import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog";
@@ -31,19 +32,10 @@ export interface GiftCardListDialogsConsumerProps {
 }
 
 export const GiftCardListDialogsContext =
-  createContext<GiftCardListDialogsConsumerProps | null>(null);
+  createContext<GiftCardListDialogsConsumerProps>(null);
 
 export const useGiftCardListDialogs = () => {
   const context = useContext(GiftCardListDialogsContext);
-
-  if (!context) {
-    throw new Error(
-      "You are trying to use GiftCardListDialogsContext outside of its provider",
-    );
-  }
-
-  return context;
-};
 
 const GiftCardListDialogsProvider: React.FC<
   GiftCardListDialogsProviderProps

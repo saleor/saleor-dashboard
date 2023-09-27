@@ -28,14 +28,8 @@ import {
   createShippingZoneWithoutWarehouse,
   getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
-import {
-  createWarehouse as createWarehouseViaApi,
-} from "../../../support/api/requests/Warehouse";
-import {
-  createChannelByView,
-  setChannelRequiredFields,
-  typeExpirationDays,
-} from "../../../support/pages/channelsPage";
+import { createWarehouse as createWarehouseViaApi } from "../../../support/api/requests/Warehouse";
+import { createChannelByView } from "../../../support/pages/channelsPage";
 
 describe("Channels", () => {
   const channelStartsWith = `CyChannels`;

@@ -1,4 +1,4 @@
-import { getDescriptionValue } from "./datagrid";
+import { getDescriptionValue } from "./utils";
 
 describe("getDescriptionValue", () => {
   it("should return description value", () => {

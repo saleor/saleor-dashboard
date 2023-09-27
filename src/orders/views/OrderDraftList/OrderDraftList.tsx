@@ -81,7 +81,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
             }),
           });
           refetch();
-          clearRowSelection();
+          reset();
           closeModal();
         }
       },
@@ -107,14 +107,17 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     },
   });
 
+  const tabs = getFilterTabs();
+
+  const currentTab = getFiltersCurrentTab(params, tabs);
+
   const [changeFilters, resetFilters, handleSearchChange] =
     createFilterHandlers({
-      cleanupFn: clearRowSelection,
+      cleanupFn: reset,
       createUrl: orderDraftListUrl,
       getFilterQueryParam,
       navigate,
       params,
-      keepActiveTab: true,
     });
 
   const [openModal, closeModal] = createDialogActionHandlers<

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   ChannelShippingZones,
   ChannelWarehouses,
@@ -192,37 +193,59 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             value={data.defaultCountry}
             onChange={onDefaultCountryChange}
           />
-        </Box>
-        <Box paddingX={6}>
-          <Input
-            name="deleteExpiredOrdersAfter"
-            data-test-id="delete-expired-order-input"
-            value={data.deleteExpiredOrdersAfter}
-            error={!!formErrors.deleteExpiredOrdersAfter}
-            type="number"
-            label="TTL"
-            onChange={onChange}
-            min={0}
-            max={120}
-            // TODO: Should be removed after single autocomplete
-            // select is migrated to macaw inputs
-            __height={12.5}
-          />
-        </Box>
-        <Box paddingX={6} marginTop={4}>
-          <Checkbox
-            data-test-id="order-settings-mark-as-paid"
-            disabled={disabled}
-            checked={
-              data.markAsPaidStrategy ===
-              MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-            }
-            onCheckedChange={onMarkAsPaidStrategyChange}
-            name="markAsPaidStrategy"
-          >
-            <Text>
-              <FormattedMessage {...messages.markAsPaid} />
-            </Text>
+          <FormSpacer />
+          <Box display="flex" gap={1.5} alignItems="center">
+            <ControlledSwitch
+              data-test-id="order-settings-mark-as-paid"
+              disabled={disabled}
+              checked={
+                data.markAsPaidStrategy ===
+                MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+              }
+              onChange={onMarkAsPaidStrategyChange}
+              name="markAsPaidStrategy"
+              label={
+                <span>
+                  <FormattedMessage
+                    defaultMessage='"Mark as paid" feature creates a'
+                    id="MDOw8D"
+                  />{" "}
+                  <Link
+                    href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
+                    target="_blank"
+                    rel="noopener noreferer"
+                  >
+                    <FormattedMessage
+                      defaultMessage="Transaction"
+                      id="1+ROfp"
+                    />
+                  </Link>{" "}
+                  <FormattedMessage
+                    defaultMessage="- used by Payment Apps"
+                    id="Fqe4aB"
+                  />
+                </span>
+              }
+              secondLabel={
+                <span>
+                  <FormattedMessage
+                    defaultMessage="If left unchecked it creates a"
+                    id="hHv0ih"
+                  />{" "}
+                  <Link
+                    href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
+                    target="_blank"
+                    rel="noopener noreferer"
+                  >
+                    <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
+                  </Link>{" "}
+                  <FormattedMessage
+                    defaultMessage="- used by Payment Plugins"
+                    id="50lR2F"
+                  />
+                </span>
+              }
+            />
             <PreviewPill />
           </Checkbox>
           <Box display="flex" flexDirection="column" paddingLeft={4}>

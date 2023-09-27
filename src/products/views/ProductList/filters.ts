@@ -1,6 +1,4 @@
 // @ts-strict-ignore
-import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
-import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { FlagValue } from "@dashboard/featureFlags/FlagContent";
 import {

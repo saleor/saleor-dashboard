@@ -3,9 +3,9 @@
 
 import faker from "faker";
 
-import {
-  GIFT_CARD_UPDATE,
-} from "../../../elements/catalog/giftCard/giftCardUpdate";
+import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList";
+import { GIFT_CARD_UPDATE } from "../../../elements/catalog/giftCard/giftCardUpdate";
+import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { MESSAGES } from "../../../fixtures";
 import {

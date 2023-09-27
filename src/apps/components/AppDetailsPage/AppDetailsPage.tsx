@@ -29,33 +29,23 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   }
 
   return (
-    <ErrorBoundary
-      onError={errorTracker.captureException}
-      fallbackRender={() => (
-        <Box padding={4}>
-          <Text>Error, please refresh the page</Text>
-        </Box>
-      )}
-    >
+    <>
       <Header
         data={data}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
       />
-      <AboutCard margin={6} aboutApp={data?.aboutApp} loading={loading} />
-      <PermissionsCard
-        appId={data.id}
-        margin={6}
-        permissions={data?.permissions}
-        loading={loading}
-      />
+      <AboutCard aboutApp={data?.aboutApp} loading={loading} />
+      <CardSpacer />
+      <PermissionsCard permissions={data?.permissions} loading={loading} />
+      <CardSpacer />
       <DataPrivacyCard
-        margin={6}
         dataPrivacyUrl={data?.dataPrivacyUrl}
         loading={loading}
       />
-    </ErrorBoundary>
+      <CardSpacer />
+    </>
   );
 };
 

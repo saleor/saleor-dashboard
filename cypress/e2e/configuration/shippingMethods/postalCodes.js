@@ -18,9 +18,7 @@ import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
 } from "../../../support/api/utils/products/productsUtils";
-import {
-  isShippingAvailableInCheckout,
-} from "../../../support/api/utils/storeFront/checkoutUtils";
+import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
 import {
   createRateWithPostalCode,
   postalCodesOptions,

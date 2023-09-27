@@ -7,12 +7,9 @@ import { urlList } from "../../../fixtures/urlList";
 import { createChannel } from "../../../support/api/requests/Channels";
 import { updateChannelInProduct } from "../../../support/api/requests/Product";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import * as productsUtils
-  from "../../../support/api/utils/products/productsUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { createShipping } from "../../../support/api/utils/shippingUtils";
-import {
-  getProductPrice,
-} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import { getProductPrice } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,

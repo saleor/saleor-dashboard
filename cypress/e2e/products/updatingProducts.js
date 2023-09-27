@@ -11,9 +11,7 @@ import { productDetailsUrl } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createCategory } from "../../support/api/requests/Category";
 import { createCollection } from "../../support/api/requests/Collections";
-import {
-  getProductDetails,
-} from "../../support/api/requests/storeFront/ProductDetails";
+import { getProductDetails } from "../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   expectCorrectProductInformation,

@@ -113,7 +113,8 @@ export type PageListUrlQueryParams = Pagination &
   ActiveTab &
   Search;
 
-export const storageUtils = createFilterTabUtils<string>(PAGES_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<PageListUrlFilters>(PAGES_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<PageListUrlQueryParams, PageListUrlFilters>(

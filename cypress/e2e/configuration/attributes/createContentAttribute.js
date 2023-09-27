@@ -9,12 +9,8 @@ import {
 import { ATTRIBUTES_LIST } from "../../../elements/attribute/attributes_list";
 import { urlList } from "../../../fixtures/urlList";
 import { getAttribute } from "../../../support/api/requests/Attribute";
-import {
-  expectCorrectDataInAttribute,
-} from "../../../support/api/utils/attributes/checkAttributeData";
-import {
-  createAttributeWithInputType,
-} from "../../../support/pages/attributesPage";
+import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
+import { createAttributeWithInputType } from "../../../support/pages/attributesPage";
 
 describe("As an admin I want to create content attribute", () => {
   const startsWith = "AttrCont" + Date.now();

@@ -121,7 +121,8 @@ export function getFilterQueryParam(
   }
 }
 
-export const storageUtils = createFilterTabUtils<string>(SALE_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<SaleListUrlFilters>(SALE_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<SaleListUrlQueryParams, SaleListUrlFilters>({

@@ -337,7 +337,8 @@ export function createFilterStructure(
   ];
 }
 
-export const storageUtils = createFilterTabUtils<string>(GIFT_CARD_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<GiftCardListUrlFilters>(GIFT_CARD_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<GiftCardListUrlQueryParams, GiftCardListUrlFilters>(

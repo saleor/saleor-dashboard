@@ -8,10 +8,7 @@ import {
   PRODUCT_DETAILS,
   PRODUCTS_LIST,
 } from "../../../elements/";
-import {
-  ONE_PERMISSION_USERS,
-  urlList,
-} from "../../../fixtures/";
+import { ONE_PERMISSION_USERS, urlList } from "../../../fixtures/";
 import {
   productsRequests,
   productsTypeRequests,

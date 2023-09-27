@@ -1,4 +1,5 @@
-import { AppPermissionsDialog } from "@dashboard/apps/components/AppPermissionsDialog";
+// @ts-strict-ignore
+import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui/next";

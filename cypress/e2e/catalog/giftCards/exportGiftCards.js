@@ -10,10 +10,8 @@ import {
   activatePlugin,
   updatePlugin,
 } from "../../../support/api/requests/Plugins";
-import {
-  getMailWithGiftCardExportWithAttachment,
-} from "../../../support/api/utils/users";
-import { giftCardsPage } from "../../../support/pages";
+import { getMailWithGiftCardExportWithAttachment } from "../../../support/api/utils/users";
+import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCardPage";
 
 describe("As an admin I want to export gift card", () => {
   const startsWith = "updateGCard";

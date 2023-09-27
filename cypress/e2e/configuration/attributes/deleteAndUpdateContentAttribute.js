@@ -9,9 +9,7 @@ import {
   createAttribute,
   getAttribute,
 } from "../../../support/api/requests/Attribute";
-import {
-  fillUpAttributeNameAndCode,
-} from "../../../support/pages/attributesPage";
+import { fillUpAttributeNameAndCode } from "../../../support/pages/attributesPage";
 
 describe("As an admin I want to delete and update content attribute", () => {
   const startsWith = "AttrContDel" + Date.now();

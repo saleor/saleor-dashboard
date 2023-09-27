@@ -11,8 +11,7 @@ import {
   createSaleInChannel,
   getVariantWithSaleStatus,
 } from "../../../support/api/utils/discounts/salesUtils";
-import * as productsUtils
-  from "../../../support/api/utils/products/productsUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { createShipping } from "../../../support/api/utils/shippingUtils";
 import {
   getDefaultTaxClass,

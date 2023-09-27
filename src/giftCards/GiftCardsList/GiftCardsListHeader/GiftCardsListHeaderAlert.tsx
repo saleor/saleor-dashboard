@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useGiftCardProductsCountQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { Alert } from "@saleor/macaw-ui";

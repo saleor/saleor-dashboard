@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog, {
   ActionDialogProps,
 } from "@dashboard/components/ActionDialog";

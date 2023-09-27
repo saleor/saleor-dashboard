@@ -19,8 +19,8 @@ import {
   addPayment,
   purchaseProductWithPromoCode,
 } from "../../../support/api/utils/ordersUtils";
-import * as productsUtils
-  from "../../../support/api/utils/products/productsUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
 import {
   updateTaxConfigurationForChannel,
 } from "../../../support/api/utils/taxesUtils";

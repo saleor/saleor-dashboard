@@ -13,9 +13,7 @@ import {
   addStripePaymentAndGetConfirmationData,
   getShippingMethodIdFromCheckout,
 } from "../../../support/api/utils/ordersUtils";
-import {
-  createProductWithShipping,
-} from "../../../support/api/utils/products/productsUtils";
+import { createProductWithShipping } from "../../../support/api/utils/products/productsUtils";
 
 describe("Stripe payments", () => {
   const startsWith = "Stripe-" + faker.datatype.number();

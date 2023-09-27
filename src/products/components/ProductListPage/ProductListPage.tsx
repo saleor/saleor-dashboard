@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { LazyQueryResult } from "@apollo/client/react";
 import {
   extensionMountPoints,
   mapToMenuItems,
@@ -265,14 +264,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             })}
             actions={
               <Box display="flex" gap={4}>
-                {selectedProductIds.length > 0 && (
-                  <BulkDeleteButton onClick={onProductsDelete}>
-                    <FormattedMessage
-                      defaultMessage="Delete products"
-                      id="uwk5e9"
-                    />
-                  </BulkDeleteButton>
-                )}
+                <ProductListDeleteButton
+                  ref={setBulkDeleteButtonRef}
+                  onClick={onProductsDelete}
+                  show={selectedProductIds.length > 0}
+                />
                 <ProductListViewSwitch
                   defaultValue={storedProductListViewType}
                   setProductListViewType={props => {

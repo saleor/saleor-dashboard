@@ -1,4 +1,4 @@
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { getByName } from "@dashboard/components/Filter/utils";

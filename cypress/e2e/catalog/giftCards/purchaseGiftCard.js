@@ -2,11 +2,8 @@
 import faker from "faker";
 
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import {
-  createWaitingForCaptureOrder,
-} from "../../../support/api/utils/ordersUtils";
-import * as productsUtils
-  from "../../../support/api/utils/products/productsUtils";
+import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { createShipping } from "../../../support/api/utils/shippingUtils";
 
 describe("As a customer I should be able to purchase gift card as a product", () => {

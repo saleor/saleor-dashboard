@@ -1,6 +1,5 @@
 // @ts-strict-ignore
-import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
-import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
+import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeOpts,
@@ -9,16 +8,14 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
-import useListSettings from "@dashboard/hooks/useListSettings";
 import { productUrl } from "@dashboard/products/urls";
-import { ListViews } from "@dashboard/types";
 import {
   Box,
   ExternalLinkIcon,
   sprinkles,
   TrashBinIcon,
 } from "@saleor/macaw-ui/next";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 

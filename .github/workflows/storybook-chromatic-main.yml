@@ -1,16 +1,12 @@
 name: QA
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
-    types: [closed]
+      - "main"
 
 jobs:
-  if_merged:
-    permissions:
-      pull-requests: read
-    if: github.event.pull_request.merged == true
+  chromatic-storybook-main:
     runs-on: ubuntu-latest
     outputs:
       labels: ${{ steps.get_labels.outputs.labels }}

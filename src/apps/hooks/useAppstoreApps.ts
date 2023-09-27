@@ -6,7 +6,9 @@ interface State {
   error?: Error;
 }
 
-type Cache = Record<string, AppstoreApi.SaleorApp[]>;
+interface Cache {
+  [url: string]: AppstoreApi.SaleorApp[];
+}
 
 // discriminated union type
 type Action =

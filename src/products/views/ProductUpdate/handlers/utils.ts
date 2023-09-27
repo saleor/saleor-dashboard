@@ -79,29 +79,42 @@ export function getProductChannelsUpdateVariables(
 
   const dataUpdated = new Map<string, ProductChannelListingAddInput>();
   data.channels.updateChannels
-    .map(listing =>
-      pick(
+    .map(listing => {
+      const fielsToPick = [
+        "channelId",
+        "isAvailableForPurchase",
+        "isPublished",
+        "visibleInListings",
+      ] as Array<keyof ProductChannelListingAddInput>;
+
+      if (!listing.isAvailableForPurchase) {
+        fielsToPick.push("availableForPurchaseAt", "availableForPurchaseDate");
+      }
+
+      if (!listing.isPublished) {
+        fielsToPick.push("publicationDate", "publishedAt");
+      }
+
+      return pick(
         listing,
         // Filtering it here so we send only fields defined in input schema
-        [
-          "availableForPurchaseAt",
-          "availableForPurchaseDate",
-          "channelId",
-          "isAvailableForPurchase",
-          "isPublished",
-          "publicationDate",
-          "publishedAt",
-          "visibleInListings",
-        ] as Array<keyof ProductChannelListingAddInput>,
-      ),
-    )
+        fielsToPick,
+      );
+    })
     .forEach(listing => dataUpdated.set(listing.channelId, listing));
 
   const updateChannels = channels
     .filter(channelId => dataUpdated.has(channelId))
-    .map(channelId => ({
-      ...dataUpdated.get(channelId),
-    }));
+    .map(channelId => {
+      const data = dataUpdated.get(channelId);
+      return {
+        ...data,
+        isAvailableForPurchase:
+          data.availableForPurchaseDate !== null
+            ? true
+            : data.isAvailableForPurchase,
+      };
+    });
 
   return {
     id: product.id,

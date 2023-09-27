@@ -1,5 +1,4 @@
 export * from "./AppInstallView";
+export * from "./AppView";
 export * from "./AppListView";
 export * from "./AppManageView";
-export * from "./AppPermissionRequestView";
-export * from "./AppView";

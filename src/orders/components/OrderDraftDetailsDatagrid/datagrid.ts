@@ -25,47 +25,56 @@ import { IntlShape, useIntl } from "react-intl";
 import { lineAlertMessages } from "../OrderDraftDetailsProducts/messages";
 import { columnsMessages } from "./messages";
 
-export const orderDraftDetailsStaticColumnsAdapter = (
-  emptyColumn: AvailableColumn,
-  intl: IntlShape,
-) => [
-  emptyColumn,
-  {
-    id: "product",
-    title: intl.formatMessage(columnsMessages.product),
-    width: 300,
-  },
-  {
-    id: "sku",
-    title: "SKU",
-    width: 150,
-  },
-  {
-    id: "variantName",
-    title: intl.formatMessage(columnsMessages.variantName),
-    width: 150,
-  },
-  {
-    id: "quantity",
-    title: intl.formatMessage(columnsMessages.quantity),
-    width: 80,
-  },
-  {
-    id: "price",
-    title: intl.formatMessage(columnsMessages.price),
-    width: 150,
-  },
-  {
-    id: "total",
-    title: intl.formatMessage(columnsMessages.total),
-    width: 150,
-  },
-  {
-    id: "status",
-    title: intl.formatMessage(columnsMessages.status),
-    width: 250,
-  },
-];
+export const useColumns = () => {
+  const emptyColumn = useEmptyColumn();
+  const intl = useIntl();
+
+  const availableColumns = useMemo(
+    () => [
+      emptyColumn,
+      {
+        id: "product",
+        title: intl.formatMessage(columnsMessages.product),
+        width: 300,
+      },
+      {
+        id: "sku",
+        title: "SKU",
+        width: 150,
+      },
+      {
+        id: "variantName",
+        title: intl.formatMessage(columnsMessages.variantName),
+        width: 150,
+      },
+      {
+        id: "quantity",
+        title: intl.formatMessage(columnsMessages.quantity),
+        width: 80,
+      },
+      {
+        id: "price",
+        title: intl.formatMessage(columnsMessages.price),
+        width: 150,
+      },
+      {
+        id: "total",
+        title: intl.formatMessage(columnsMessages.total),
+        width: 150,
+      },
+      {
+        id: "status",
+        title: "Status",
+        width: 250,
+      },
+    ],
+    [emptyColumn, intl],
+  );
+
+  return {
+    availableColumns,
+  };
+};
 
 interface GetCellContentProps {
   columns: AvailableColumn[];
