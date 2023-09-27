@@ -96,7 +96,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const id = params.id
+  const id: number | undefined = params.id
     ? parseInt(params.id, 10) + pageInfo.startCursor
     : undefined;
 
@@ -254,14 +254,16 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
               <AttributeValueDeleteDialog
                 attributeName=""
                 open={params.action === "remove-value"}
-                name={getStringOrPlaceholder(id ? values[id]?.name : "")}
+                name={getStringOrPlaceholder(
+                  id !== undefined ? values[id]?.name : "",
+                )}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onConfirm={handleValueDelete}
               />
               <AttributeValueEditDialog
                 inputType={data.inputType}
-                attributeValue={id ? values[id] : null}
+                attributeValue={id !== undefined ? values[id] : null}
                 confirmButtonState="default"
                 disabled={false}
                 errors={valueErrors}
