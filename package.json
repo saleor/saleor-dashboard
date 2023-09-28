@@ -345,6 +345,7 @@
     "dep-status": "depcruise --config .dependency-cruiser.js src",
     "chromatic": "chromatic --exit-zero-on-changes",
     "change:add": "changeset add",
+    "change:status": "changeset status",
     "release:cleanup": "./scripts/release-cleanup.sh",
     "format:code": "prettier --ignore-unknown --write src/*",
     "qa:combine-reports": "mochawesome-merge cypress/reports/*/mocha/*.json > cypress/reports/mochareports/report.json",
