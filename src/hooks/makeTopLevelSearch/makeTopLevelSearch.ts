@@ -4,10 +4,10 @@ import { DocumentNode } from "graphql";
 
 import makeSearch, { SearchVariables, UseSearchHook } from "../makeSearch";
 
-export interface SearchData {
+export interface SearchData<T = any> {
   search: {
     edges: Array<{
-      node: any;
+      node: T;
     }>;
     pageInfo: PageInfoFragment;
   };
