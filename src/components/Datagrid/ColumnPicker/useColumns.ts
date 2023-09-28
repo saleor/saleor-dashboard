@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
@@ -9,6 +8,7 @@ import {
   areCategoriesLoaded,
   extractSelectedNodesFromCategories,
   findDynamicColumn,
+  isValidColumn,
   mergeSelectedColumns,
   sortColumns,
 } from "./utils";
@@ -16,6 +16,8 @@ import {
 export interface ColumnCategory {
   name: string;
   prefix: string;
+  children?: string[];
+  hidden?: boolean;
   availableNodes: AvailableColumn[] | undefined;
   selectedNodes: AvailableColumn[] | undefined;
   initialSearch?: string;
@@ -40,7 +42,7 @@ export const useColumns = ({
   onSave,
 }: UseColumnsProps) => {
   const [dynamicColumns, updateDynamicColumns] = React.useState<
-    AvailableColumn[] | null | undefined
+    AvailableColumn[] | null
   >(null);
 
   // Dynamic columns are loaded from the API, thus they need to be updated
@@ -62,7 +64,6 @@ export const useColumns = ({
       mergeSelectedColumns({ staticColumns, dynamicColumns, selectedColumns }),
     [dynamicColumns, staticColumns, selectedColumns],
   );
-
   const [recentlyAddedColumn, setRecentlyAddedColumn] = React.useState<
     string | null
   >(null);
@@ -116,35 +117,67 @@ export const useColumns = ({
   const onToggle = (columnId: string) => {
     const isAdded = !selectedColumns.includes(columnId);
     const isDynamic = columnId.includes(":");
-    if (isAdded) {
-      onSave([...selectedColumns, columnId]);
-      setRecentlyAddedColumn(columnId);
-    } else {
-      onSave(selectedColumns.filter(id => id !== columnId));
+    if (!isDynamic) {
+      if (isAdded) {
+        onSave([...selectedColumns, columnId]);
+        setRecentlyAddedColumn(columnId);
+      } else {
+        onSave(selectedColumns.filter(id => id !== columnId));
+      }
     }
     if (isDynamic) {
+      const [prefix, id] = columnId.split(":");
+      const hiddenColumnPrefixes =
+        columnCategories?.find(cat => cat.prefix === prefix)?.children ?? [];
+
       if (isAdded) {
-        updateDynamicColumns(prevDynamicColumns => [
-          ...(prevDynamicColumns ?? []),
-          findDynamicColumn(columnCategories, columnId),
+        onSave([
+          ...selectedColumns,
+          ...hiddenColumnPrefixes.map(prefix => `${prefix}:${id}`),
+          columnId,
         ]);
+        setRecentlyAddedColumn(columnId);
+        updateDynamicColumns(prevDynamicColumns =>
+          [
+            ...(prevDynamicColumns ?? []),
+            ...hiddenColumnPrefixes.map(prefix =>
+              findDynamicColumn(columnCategories, `${prefix}:${id}`),
+            ),
+            findDynamicColumn(columnCategories, columnId),
+          ].filter(isValidColumn),
+        );
       } else {
         updateDynamicColumns(prevDynamicColumns =>
-          (prevDynamicColumns ?? []).filter(column => column.id !== columnId),
+          (prevDynamicColumns ?? []).filter(column => !column.id.includes(id)),
         );
+        onSave(selectedColumns.filter(currentId => !currentId.includes(id)));
       }
     }
   };
 
+  const onClearRecentlyAddedColumn = () => setRecentlyAddedColumn(null);
+
   // Should be used only for special cases
   const onCustomUpdateVisible = setVisibleColumns;
+  const onResetDynamicToInitial = (customSelected?: string[]) => {
+    if (areCategoriesLoaded(columnCategories)) {
+      updateDynamicColumns(
+        sortColumns(
+          extractSelectedNodesFromCategories(columnCategories),
+          customSelected ?? selectedColumns,
+        ),
+      );
+    }
+  };
 
   return {
     handlers: {
       onMove,
       onResize,
       onToggle,
+      onClearRecentlyAddedColumn,
       onCustomUpdateVisible,
+      onResetDynamicToInitial,
     },
     visibleColumns,
     staticColumns,

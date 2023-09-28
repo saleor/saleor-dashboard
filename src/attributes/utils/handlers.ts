@@ -347,5 +347,6 @@ export const handleDeleteMultipleAttributeValues = async (
           firstValues: 20,
         });
       }
+      return undefined;
     }),
   );

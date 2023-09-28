@@ -97,10 +97,7 @@
     "@typescript-eslint/prefer-optional-chain": "off",
     "@typescript-eslint/restrict-plus-operands": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
-    "react-refresh/only-export-components": "off",
-    "array-callback-return": "off",
-    "import/export": "off",
-    "n/no-callback-literal": "warn"
+    "react-refresh/only-export-components": "warn"
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }

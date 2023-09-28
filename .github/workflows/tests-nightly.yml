@@ -39,7 +39,7 @@ on:
           - all
 
   schedule:
-    - cron: "00 2 * * 1-5"
+    - cron: "00 2 * * 1,3,5"
 
   repository_dispatch:
     types: [automation-tests-event]
@@ -47,12 +47,12 @@ on:
 jobs:
   revert-automation-env-to-snap:
     if: ${{ github.event.inputs.environment == null && github.event_name != 'repository_dispatch' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -82,10 +82,24 @@ jobs:
           SLACK_MESSAGE: "https://github.com/saleor/saleor-dashboard/actions/workflows/tests-nightly.yml"
           MSG_MINIMAL: true
 
-  run-tests-in-parallel:
+  testmo-report-preparation:
     needs: ["revert-automation-env-to-snap"]
-    if: ${{ always() && github.event_name != 'repository_dispatch'  }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
-    runs-on: ubuntu-latest
+    if: ${{ always() && github.event_name != 'repository_dispatch'  }}
+    runs-on: ubuntu-22.04
+    outputs:
+      testmo-run-id: ${{ steps.init-testmo.outputs.testmo-run-id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/testmo/testmo-init
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+        id: init-testmo
+
+  run-tests-in-parallel:
+    needs: [revert-automation-env-to-snap, testmo-report-preparation]
+    if: ${{ always() && github.event_name != 'repository_dispatch' && ! cancelled() }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
+    runs-on: ubuntu-22.04
     env:
       GREP_TAGS: ${{ github.event.inputs.tags || '@allEnv'}}
     outputs:
@@ -98,8 +112,7 @@ jobs:
         # run copies of the current job in parallel
         containers: [1, 2, 3, 4, 5, 6]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -154,124 +167,68 @@ jobs:
 
       - name: Cypress run chrome
         id: cypress-chrome
-        continue-on-error: true
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result)}}
-        uses: cypress-io/github-action@v5
-        env:
-          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
-          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
-          COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
-          CYPRESS_grepTags: ${{ env.GREP_TAGS }}
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
-          SPLIT: ${{ strategy.job-total }}
-          SPLIT_INDEX: ${{ strategy.job-index }}
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result) && ! cancelled() }}
+        uses: ./.github/actions/e2e
         with:
+          apiUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          appMountUri: ${{ secrets.APP_MOUNT_URI }}
+          baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          userName: ${{ secrets.CYPRESS_USER_NAME }}
+          secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          permissionsUserPassword: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          mailpitUrl: ${{ secrets.CYPRESS_MAILPITURL }}
+          stripeSecretKey: ${{ secrets.STRIPE_SECRET_KEY }}
+          stripePublicKey: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          cypressGrepTags: ${{ env.GREP_TAGS }}
+          split: ${{ strategy.job-total }}
+          splitIndex: ${{ strategy.job-index }}
+          commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           install: false
           browser: chrome
 
       - name: Cypress run firefox
         id: cypress-firefox
-        continue-on-error: true
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["firefox", "all"]'), steps.get-browsers.outputs.result)}}
-        uses: cypress-io/github-action@v5
-        env:
-          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
-          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
-          COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
-          CYPRESS_grepTags: ${{ env.GREP_TAGS }}
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
-          SPLIT: ${{ strategy.job-total }}
-          SPLIT_INDEX: ${{ strategy.job-index }}
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["firefox", "all"]'), steps.get-browsers.outputs.result) && ! cancelled() }}
+        uses: ./.github/actions/e2e
         with:
+          apiUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          appMountUri: ${{ secrets.APP_MOUNT_URI }}
+          baseUrl: "${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/"
+          userName: ${{ secrets.CYPRESS_USER_NAME }}
+          secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          permissionsUserPassword: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          mailpitUrl: ${{ secrets.CYPRESS_MAILPITURL }}
+          stripeSecretKey: ${{ secrets.STRIPE_SECRET_KEY }}
+          stripePublicKey: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          cypressGrepTags: ${{ env.GREP_TAGS }}
+          split: ${{ strategy.job-total }}
+          splitIndex: ${{ strategy.job-index }}
+          commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           install: false
           browser: firefox
-      - name: Create reports dir
-        continue-on-error: true
-        if: ${{ ! cancelled() }}
-        run: npm run qa:create-artifacts-dirs
-      - name: Move screenshots into reports dir
-        continue-on-error: true
-        if: ${{ ! cancelled() }}
-        run: npm run qa:move-screenshots
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        if: always()
+      - name: Testmo threads submit
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result) && ! cancelled() }}
+        uses: ./.github/actions/testmo/testmo-threads-submit
         with:
-          name: report-${{ strategy.job-index }}
-          path: ./cypress/reports
-          retention-days: 5
-          if-no-files-found: ignore
-  manual-triggered-test-complete:
-    needs: [run-tests-in-parallel]
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
+
+  manual-and-scheduled-triggered-test-complete:
+    needs: [run-tests-in-parallel, testmo-report-preparation]
     if: ${{always() && github.event_name != 'repository_dispatch' && !contains(needs.run-tests-in-parallel.result, 'skipped') && !contains(needs.run-tests-in-parallel.result, 'cancelled')}}
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-          cache: npm
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-      - name: Install Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: NODE_OPTIONS=--max_old_space_size=4096 npm ci
-      - run: npm ci
-        working-directory: .github/workflows
-      - name: Download reports artifacts
-        uses: actions/download-artifact@v3
-        with:
-          path: ./cypress/reports
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: ./cypress/reports
-      - name: Create reports dir
-        continue-on-error: true
-        run: npm run qa:create-artifacts-dirs
-      - name: Merge report files
-        continue-on-error: true
-        run: npm run qa:generate-html-report
-      - name: Move artifacts screenshots into reports dir
-        continue-on-error: true
-        run: npm run qa:artifact-move-screenshots
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: combined-report
-          path: ./cypress/reports
-          retention-days: 5
-          if-no-files-found: ignore
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/combineReportsFromE2E
 
   get-environment-variables:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 30
     outputs:
       url: ${{ steps.get-environment-variables.outputs.url }}
@@ -284,7 +241,7 @@ jobs:
       PROJECT: ${{github.event.client_payload.project}}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -308,7 +265,7 @@ jobs:
   run-tests-on-release:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
     needs: get-environment-variables
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       NODE_OPTIONS: "--max_old_space_size=4096"
     outputs:
@@ -322,7 +279,7 @@ jobs:
         containers: [1, 2, 3, 4, 5, 6, 7, 8, 9]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ needs.get-environment-variables.outputs.branch }}
 
@@ -355,7 +312,7 @@ jobs:
         env:
           API_URI: ${{ needs.get-environment-variables.outputs.url }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ needs.get-environment-variables.outputs.url }}dashboard/
+          BASE_URL: ${{ needs.get-environment-variables.outputs.url }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
@@ -376,11 +333,11 @@ jobs:
 
   add-review-and-merge-patch:
     if: ${{ always() && (needs.run-tests-on-release.outputs.status == 'success' || needs.run-tests-on-release.outputs.status == 'failure') }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [run-tests-on-release]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -411,7 +368,7 @@ jobs:
 
   send-slack-notification:
     if: ${{ failure() && github.event_name == 'repository_dispatch'}}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs:
       [
         get-environment-variables,
@@ -420,7 +377,7 @@ jobs:
       ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Notify Slack
         env:
@@ -438,11 +395,11 @@ jobs:
       run:
         shell: bash
         working-directory: .github/workflows
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [run-tests-in-parallel]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -450,9 +407,7 @@ jobs:
           node-version-file: ".nvmrc"
 
       - name: Install dependencies
-        run: |
-          npm ci
-
+        run: npm ci
       - name: Get tests results
         id: get-tests-results
         env:
@@ -472,3 +427,19 @@ jobs:
           JOB_KIND: "Tests"
         run: |
           python3 .github/workflows/notify/notify-slack.py
+
+  test-complete:
+    needs:
+      [testmo-report-preparation, run-tests-in-parallel, run-tests-on-release]
+    if: always()
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+        working-directory: .github/workflows
+      - name: complete testmo report
+        uses: ./.github/actions/testmo/testmo-finish
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}

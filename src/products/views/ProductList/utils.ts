@@ -32,6 +32,8 @@ export const getProductKindOpts = (
           ...kind,
           label: intl.formatMessage(messages.normalLabel),
         };
+      default:
+        return kind;
     }
   });
 

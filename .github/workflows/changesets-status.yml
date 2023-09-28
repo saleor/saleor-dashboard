@@ -1,0 +1,18 @@
+name: Changesets
+
+on: [pull_request]
+
+jobs:
+  status:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+      - name: Check changesets status
+        run: npx @changesets/cli@2.26.2 status --since origin/main
+

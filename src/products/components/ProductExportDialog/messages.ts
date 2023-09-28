@@ -8,8 +8,8 @@ export const productExportDialogMessages = defineMessages({
     description: "export products to csv file, dialog header",
   },
   confirmButtonLabel: {
-    id: "oOFrUd",
-    defaultMessage: "export products",
+    id: "2JBvj0",
+    defaultMessage: "Export products",
     description: "export products to csv file, button",
   },
   productsLabel: {

@@ -15,7 +15,6 @@ import {
   ProductFragment,
   SearchPagesQuery,
   SearchProductsQuery,
-  SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import {
   CommonUseFormResultWithHandlers,
@@ -128,7 +127,6 @@ export interface UseProductUpdateFormOpts
   >;
   setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
   selectedCollections: MultiAutocompleteChoiceType[];
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   hasVariants: boolean;
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;

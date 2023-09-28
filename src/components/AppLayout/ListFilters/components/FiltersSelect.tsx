@@ -91,7 +91,7 @@ export const FiltersSelect = <TFilterKeys extends string = string>({
           })}
           style={{
             width: "376px",
-            height: "450px",
+            maxHeight: "450px",
           }}
           open={isFilterMenuOpened}
           anchorEl={anchor.current}

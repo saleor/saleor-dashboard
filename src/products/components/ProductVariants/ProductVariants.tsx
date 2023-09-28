@@ -1,10 +1,9 @@
-// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
-import ColumnPicker from "@dashboard/components/ColumnPicker";
+import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
+import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid, {
   GetCellContentOpts,
 } from "@dashboard/components/Datagrid/Datagrid";
-import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
@@ -12,19 +11,28 @@ import {
   ProductDetailsVariantFragment,
   ProductFragment,
   RefreshLimitsQuery,
-  WarehouseFragment,
+  useWarehouseListQuery,
 } from "@dashboard/graphql";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import EditIcon from "@dashboard/icons/Edit";
 import { buttonMessages } from "@dashboard/intl";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
 // import { isLimitReached } from "@dashboard/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import {
+  useAttributesAdapter,
+  useChannelAdapter,
+  useChannelAvailabilityAdapter,
+  useWarehouseAdapter,
+  variantsStaticColumnsAdapter,
+} from "./datagrid";
 import messages from "./messages";
-import { getColumnData, getData, getError } from "./utils";
+import { getData, getError } from "./utils";
 
 interface ProductVariantsProps {
   channels: ChannelData[];
@@ -32,7 +40,6 @@ interface ProductVariantsProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   variantAttributes: ProductFragment["productType"]["variantAttributes"];
   variants: ProductDetailsVariantFragment[];
-  warehouses: WarehouseFragment[];
   productName: string;
   onAttributeValuesSearch: (
     id: string,
@@ -46,7 +53,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   channels,
   errors,
   variants,
-  warehouses,
   variantAttributes,
   productName,
   onAttributeValuesSearch,
@@ -54,49 +60,112 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   onRowClick,
 }) => {
   const intl = useIntl();
-  // const limitReached = isLimitReached(limits, "productVariants");
 
-  const variantDefaultColumns = React.useMemo(
+  // https://github.com/saleor/saleor-dashboard/issues/4165
+  const { data: warehousesData } = useWarehouseListQuery({
+    variables: {
+      first: 50,
+    },
+  });
+  const warehouses = mapEdgesToItems(warehousesData?.warehouses);
+
+  // Normally this should be in LS handled by useListSettings hook
+  // https://github.com/saleor/saleor-dashboard/issues/4164
+
+  const initialSettings = React.useMemo(
     () =>
-      variantAttributes && warehouses && channels
+      channels && warehouses && variantAttributes
         ? [
             "name",
             "sku",
-            ...channels?.flatMap(channel => [
+            ...channels.flatMap(channel => [
               `availableInChannel:${channel.id}`,
               `channel:${channel.id}`,
             ]),
-            ...warehouses?.map(warehouse => `stock:${warehouse.id}`),
+            ...warehouses.map(warehouse => `warehouse:${warehouse.id}`),
             ...variantAttributes
-              .filter(attribute =>
-                [
-                  AttributeInputTypeEnum.DROPDOWN,
-                  AttributeInputTypeEnum.PLAIN_TEXT,
-                ].includes(attribute.inputType),
+              ?.filter(
+                attribute =>
+                  attribute.inputType === AttributeInputTypeEnum.DROPDOWN ||
+                  attribute.inputType === AttributeInputTypeEnum.PLAIN_TEXT,
               )
               .map(attribute => `attribute:${attribute.id}`),
-          ].map(c =>
-            getColumnData(c, channels, warehouses, variantAttributes, intl),
-          )
-        : [],
-    [variantAttributes, warehouses, channels, intl],
+          ]
+        : undefined,
+    [channels, variantAttributes, warehouses],
+  );
+  const [columnSettings, setColumnSettings] = useStateFromProps<
+    string[] | undefined
+  >(initialSettings);
+
+  React.useEffect(() => {
+    if (columnSettings) {
+      handlers.onResetDynamicToInitial();
+    }
+  }, [columnSettings]);
+
+  const handleColumnChange = React.useCallback(
+    picked => {
+      setColumnSettings(picked);
+    },
+    [setColumnSettings],
+  );
+
+  // const limitReached = isLimitReached(limits, "productVariants");
+
+  const channelCategory = useChannelAdapter({
+    intl,
+    listings: channels,
+    selectedColumns: columnSettings,
+  });
+
+  const availabilityCategory = useChannelAvailabilityAdapter({
+    intl,
+    listings: channels,
+    selectedColumns: columnSettings,
+  });
+
+  const attributeCategory = useAttributesAdapter({
+    intl,
+    selectedColumns: columnSettings,
+    attributes: variantAttributes,
+  });
+
+  const warehouseCategory = useWarehouseAdapter({
+    selectedColumns: columnSettings,
+    intl,
+    warehouses,
+  });
+
+  const memoizedStaticColumns = React.useMemo(
+    () => variantsStaticColumnsAdapter(intl),
+    [intl],
   );
 
   const {
-    availableColumnsChoices,
-    columnChoices,
-    columns,
-    defaultColumns,
-    onColumnMoved,
-    onColumnResize,
-    onColumnsChange,
-    picker,
-  } = useColumnsDefault(variantDefaultColumns);
+    handlers,
+    columnCategories,
+    visibleColumns,
+    staticColumns,
+    dynamicColumns,
+    selectedColumns,
+    recentlyAddedColumn,
+  } = useColumns({
+    staticColumns: memoizedStaticColumns,
+    columnCategories: [
+      channelCategory,
+      availabilityCategory,
+      attributeCategory,
+      warehouseCategory,
+    ],
+    selectedColumns: columnSettings ?? [],
+    onSave: handleColumnChange,
+  });
 
   const getCellContent = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getData({
-        availableColumns: columns,
+        availableColumns: visibleColumns,
         column,
         row,
         channels,
@@ -104,13 +173,13 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [channels, columns, onAttributeValuesSearch, variants],
+    [channels, visibleColumns, onAttributeValuesSearch, variants],
   );
 
   const getCellError = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getError(errors, {
-        availableColumns: columns,
+        availableColumns: visibleColumns,
         column,
         row,
         channels,
@@ -118,7 +187,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [errors, columns, channels, variants, onAttributeValuesSearch],
+    [errors, visibleColumns, channels, variants, onAttributeValuesSearch],
   );
 
   return (
@@ -129,7 +198,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         description: "button",
       })}
       fillHandle={true}
-      availableColumns={columns}
+      availableColumns={visibleColumns}
       emptyText={intl.formatMessage(messages.empty)}
       getCellContent={getCellContent}
       getCellError={getCellError}
@@ -146,20 +215,16 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
           <FormattedMessage {...buttonMessages.delete} />
         </Button>
       )}
-      onColumnResize={onColumnResize}
-      onColumnMoved={onColumnMoved}
-      renderColumnPicker={defaultProps => (
+      onColumnResize={handlers.onResize}
+      onColumnMoved={handlers.onMove}
+      renderColumnPicker={() => (
         <ColumnPicker
-          {...defaultProps}
-          availableColumns={availableColumnsChoices}
-          initialColumns={columnChoices}
-          defaultColumns={defaultColumns}
-          onSave={onColumnsChange}
-          hasMore={false}
-          loading={false}
-          onFetchMore={() => undefined}
-          onQueryChange={picker.setQuery}
-          query={picker.query}
+          staticColumns={staticColumns}
+          dynamicColumns={dynamicColumns}
+          selectedColumns={selectedColumns}
+          columnCategories={columnCategories}
+          onToggle={handlers.onToggle}
+          side="left"
         />
       )}
       title={intl.formatMessage(messages.title)}
@@ -167,6 +232,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         name: productName,
       })}
       onChange={onChange}
+      recentlyAddedColumn={recentlyAddedColumn}
     />
   );
 };

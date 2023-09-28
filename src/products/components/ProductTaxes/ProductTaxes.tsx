@@ -5,6 +5,7 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -34,26 +35,28 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
         {intl.formatMessage(sectionNames.taxes)}
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <Combobox
-          disabled={disabled}
-          options={taxClasses.map(choice => ({
-            label: choice.name,
-            value: choice.id,
-          }))}
-          fetchOptions={() => {}}
-          value={
-            value
-              ? {
-                  value,
-                  label: taxClassDisplayName,
-                }
-              : null
-          }
-          name="taxClassId"
-          label={intl.formatMessage(taxesMessages.taxClass)}
-          onChange={onChange}
-          fetchMore={onFetchMore}
-        />
+        <Box data-test-id="taxes">
+          <Combobox
+            disabled={disabled}
+            options={taxClasses.map(choice => ({
+              label: choice.name,
+              value: choice.id,
+            }))}
+            fetchOptions={() => {}}
+            value={
+              value
+                ? {
+                    value,
+                    label: taxClassDisplayName,
+                  }
+                : null
+            }
+            name="taxClassId"
+            label={intl.formatMessage(taxesMessages.taxClass)}
+            onChange={onChange}
+            fetchMore={onFetchMore}
+          />
+        </Box>
       </DashboardCard.Content>
     </DashboardCard>
   );
