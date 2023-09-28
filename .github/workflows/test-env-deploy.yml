@@ -9,7 +9,7 @@ jobs:
     outputs:
       base_URL: ${{ steps.set-domain.outputs.domain }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -177,29 +177,14 @@ jobs:
     if: github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-22.04
     outputs:
-      testmo-run-id: ${{ steps.run-tests.outputs.TESTMO_RUN_ID }}
+      testmo-run-id: ${{ steps.init-testmo.outputs.testmo-run-id }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/testmo/testmo-init
         with:
-          node-version-file: ".nvmrc"
-          cache: npm
-      - name: install dependencies
-        working-directory: .github/workflows
-        run: npm ci
-      - name: create testmo run
-        working-directory: .github/workflows
-        run: |
-          ID=$(npx testmo automation:run:create \
-            --instance "$TESTMO_URL" \
-            --project-id 1 \
-            --name "Deployment tests" \
-            --source frontend-e2e-tests)
-          echo "TESTMO_RUN_ID=$ID" >> $GITHUB_OUTPUT
-        env:
-          TESTMO_URL: ${{ secrets.TESTMO_URL }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-        id: run-tests
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+        id: init-testmo
 
   cypress-run-selected:
     runs-on: ubuntu-22.04
@@ -207,13 +192,11 @@ jobs:
     container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
-      max-parallel: 10
+      max-parallel: 6
       matrix: ${{ fromJson(needs.prepare-tests.outputs.containers) }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v4
       - name: Get API_URI
         id: api_uri
         # Search for API_URI in PR description and use default if not defined
@@ -246,104 +229,39 @@ jobs:
 
       - name: Cypress run critical
         if: ${{ ! cancelled() }}
-        uses: cypress-io/github-action@v5
-        env:
-          API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: https://${{needs.deploy.outputs.base_URL}}/
-          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
-          CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
-          SPLIT: ${{ strategy.job-total }}
-          SPLIT_INDEX: ${{ strategy.job-index }}
-      - name: Create reports dir
-        if: ${{ ! cancelled() }}
-        run: npm run qa:create-artifacts-dirs
-      - name: Move screenshots into reports dir
-        if: ${{ ! cancelled() }}
-        run: npm run qa:move-screenshots
-      - name: Install dependencies
-        if: ${{ ! cancelled() }}
-        working-directory: .github/workflows
-        run: npm ci
+        uses: ./.github/actions/e2e
+        with:
+          apiUrl: "${{ steps.api_uri.outputs.custom_api_uri }}"
+          appMountUri: ${{ secrets.APP_MOUNT_URI }}
+          baseUrl: "https://${{needs.deploy.outputs.base_URL}}/"
+          userName: ${{ secrets.CYPRESS_USER_NAME }}
+          secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          permissionsUserPassword: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          mailpitUrl: ${{ secrets.CYPRESS_MAILPITURL }}
+          cypressGrepTags: ${{ needs.prepare-tests.outputs.tags }}
+          split: ${{ strategy.job-total }}
+          splitIndex: ${{ strategy.job-index }}
       - name: Testmo threads submit
         if: github.event.pull_request.head.repo.fork == false && !cancelled()
-        working-directory: .github/workflows
-        run: |
-          npx testmo automation:run:submit-thread \
-          --instance "$TESTMO_URL" \
-          --run-id "$TESTMO_RUN_ID" \
-          --results ../../cypress/reports/junit/*.xml
-        env:
-          TESTMO_URL: ${{ secrets.TESTMO_URL }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-          TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        if: always()
+        uses: ./.github/actions/testmo/testmo-threads-submit
         with:
-          name: report-${{ strategy.job-index }}
-          path: ./cypress/reports
-          retention-days: 5
-          if-no-files-found: ignore
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
+
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected]
     if: |
       always() && !contains(needs.*.result, 'skipped') && !contains(needs.*.result, 'cancelled') && github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-          cache: npm
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-      - name: Install Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: NODE_OPTIONS=--max_old_space_size=4096 npm install
+      - uses: actions/checkout@v4
       - run: npm ci
         working-directory: .github/workflows
       - name: complete testmo report
-        working-directory: .github/workflows
-        run: |
-          npx testmo automation:run:complete \
-            --instance "$TESTMO_URL" \
-            --run-id "$TESTMO_RUN_ID"
-        env:
-          TESTMO_URL: ${{ secrets.TESTMO_URL }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-          TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
-      - name: Download reports artifacts
-        uses: actions/download-artifact@v3
+        uses: ./.github/actions/testmo/testmo-finish
         with:
-          path: ./cypress/reports
-      - name: Create reports dir
-        continue-on-error: true
-        run: npm run qa:create-artifacts-dirs
-      - name: Merge report files
-        continue-on-error: true
-        run: npm run qa:generate-html-report
-      - name: Move artifacts screenshots into reports dir
-        continue-on-error: true
-        run: npm run qa:artifact-move-screenshots
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: combined-report
-          path: ./cypress/reports
-          retention-days: 5
-          if-no-files-found: ignore
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}

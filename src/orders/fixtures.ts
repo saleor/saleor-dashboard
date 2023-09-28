@@ -1291,6 +1291,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               name: "XS",
               quantityAvailable: 10,
               preorder: null,
+              metadata: [],
+              privateMetadata: [],
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1418,6 +1420,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               name: "XS",
               quantityAvailable: 10,
               preorder: null,
+              metadata: [],
+              privateMetadata: [],
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1551,6 +1555,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         name: "Soft",
         quantityAvailable: 10,
         preorder: null,
+        metadata: [],
+        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1661,6 +1667,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         name: "XXL",
         quantityAvailable: 10,
         preorder: null,
+        metadata: [],
+        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1936,6 +1944,8 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         name: "Hard",
         quantityAvailable: 10,
         preorder: null,
+        metadata: [],
+        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2046,6 +2056,8 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         name: "15-1337",
         quantityAvailable: 10,
         preorder: null,
+        metadata: [],
+        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",

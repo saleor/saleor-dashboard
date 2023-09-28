@@ -28,6 +28,7 @@ module.exports = defineConfig({
       numTestsKeptInMemory: 10,
       experimentalMemoryManagement: true,
     },
+    baseUrl: process.env.BASE_URL,
     async setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
       config = await require("./cypress/plugins/index.js")(on, config);

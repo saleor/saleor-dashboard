@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.16.0-dev",
+  "version": "3.17.0-dev",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
@@ -125,6 +125,7 @@
     "@graphql-codegen/typescript-apollo-client-helpers": "^2.1.10",
     "@graphql-codegen/typescript-operations": "^2.2.4",
     "@graphql-codegen/typescript-react-apollo": "^3.2.5",
+    "@playwright/test": "^1.37.1",
     "@saleor/app-sdk": "0.43.0",
     "@sentry/cli": "^2.20.6",
     "@swc/jest": "^0.2.26",
@@ -198,7 +199,7 @@
     "start-server-and-test": "^1.11.0",
     "typescript": "^5.0.4",
     "typescript-strict-plugin": "^2.1.0",
-    "vite": "^3.2.4",
+    "vite": "^3.2.7",
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-pwa": "^0.13.3",
     "workbox-cacheable-response": "^6.1.2",
@@ -316,7 +317,9 @@
     "build-flags": "node scripts/build-flags.js",
     "prebuild": "npm run build-types",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
-    "check-types": "tsc --noEmit && tsc-strict",
+    "check-types:src": "tsc --noEmit && tsc-strict",
+    "check-types:playwright": "tsc --noEmit --project playwright/tsconfig.json",
+    "check-types": "npm run check-types:src && npm run check-types:playwright",
     "extract-json-messages": "formatjs extract 'src/**/*.{ts,tsx}' --out-file locale/defaultMessages.json --format scripts/formatter.js",
     "extract-messages": "npm run extract-json-messages",
     "fetch-schema": "graphql-codegen --config ./fetch-schema.yml",
@@ -345,6 +348,7 @@
     "dep-status": "depcruise --config .dependency-cruiser.js src",
     "chromatic": "chromatic --exit-zero-on-changes",
     "change:add": "changeset add",
+    "change:status": "changeset status",
     "release:cleanup": "./scripts/release-cleanup.sh",
     "format:code": "prettier --ignore-unknown --write src/*",
     "qa:combine-reports": "mochawesome-merge cypress/reports/*/mocha/*.json > cypress/reports/mochareports/report.json",
@@ -354,7 +358,9 @@
     "qa:move-screenshots": "find cypress/reports/mochareports -type d -name \"*.js\" -exec mv {} cypress/reports/mochareports \\;",
     "qa:move-videos": "find cypress/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
     "qa:artifact-move-screenshots": "find cypress/reports/*/mochareports -type d -name \"*.js\" -exec mv {} cypress/reports/mochareports \\;",
-    "qa:artifact-move-videos": "find cypress/reports/*/mochareports/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;"
+    "qa:artifact-move-videos": "find cypress/reports/*/mochareports/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
+    "qa:basic-regression": "npx playwright test --grep @basic-regression",
+    "qa:full-regression": "npx playwright test"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }

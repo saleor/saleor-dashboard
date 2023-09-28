@@ -25,11 +25,13 @@ import { messages } from "./messages";
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
   loading: boolean;
+  onShowMetadata: (id: string) => void;
 }
 
 export const OrderDetailsDatagrid = ({
   lines,
   loading,
+  onShowMetadata,
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -69,6 +71,8 @@ export const OrderDetailsDatagrid = ({
       columns: visibleColumns,
       data: lines,
       loading,
+      onShowMetadata,
+      intl,
     }),
     [intl, visibleColumns, loading],
   );

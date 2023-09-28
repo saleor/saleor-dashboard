@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Introduce epic template
+Fix various tiny ESLint rules

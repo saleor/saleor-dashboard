@@ -22,6 +22,7 @@ interface OrderFulfilledProductsCardProps {
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
   dataTestId?: string;
+  onShowMetadata: (id: string) => void;
 }
 
 const statusesToMergeLines = [
@@ -45,6 +46,7 @@ const OrderFulfilledProductsCard: React.FC<
     onOrderFulfillmentApprove,
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
+    onShowMetadata,
     dataTestId,
   } = props;
   const classes = useStyles(props);
@@ -98,7 +100,11 @@ const OrderFulfilledProductsCard: React.FC<
         }
       />
       <CardContent>
-        <OrderDetailsDatagrid lines={getLines()} loading={false} />
+        <OrderDetailsDatagrid
+          lines={getLines()}
+          loading={false}
+          onShowMetadata={onShowMetadata}
+        />
         <ExtraInfoLines fulfillment={fulfillment} />
       </CardContent>
       {props.children}

@@ -35,6 +35,7 @@ interface OrderDraftDetailsDatagridProps {
   errors: OrderErrorFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
+  onShowMetadata: (id: string) => void;
 }
 
 export const OrderDraftDetailsDatagrid = ({
@@ -42,6 +43,7 @@ export const OrderDraftDetailsDatagrid = ({
   errors,
   onOrderLineChange,
   onOrderLineRemove,
+  onShowMetadata,
 }: OrderDraftDetailsDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -82,6 +84,7 @@ export const OrderDraftDetailsDatagrid = ({
     columns: visibleColumns,
     lines,
     errors,
+    onShowMetadata,
   });
 
   const getMenuItems = useCallback(
@@ -147,6 +150,7 @@ export const OrderDraftDetailsDatagrid = ({
           if (column === "quantity" && data.value !== "") {
             return onOrderLineChange(orderId, { quantity: data.value });
           }
+          return undefined;
         }),
       );
 

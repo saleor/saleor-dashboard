@@ -96,7 +96,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const id = params.id
+  const id: number | undefined = params.id
     ? parseInt(params.id, 10) + pageInfo.startCursor
     : undefined;
 
@@ -108,7 +108,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   React.useEffect(() => setValueErrors([]), [params.action]);
 
   const handleValueDelete = () => {
-    if (id) {
+    if (id !== undefined) {
       const newValues = remove(values[id], values, areValuesEqual);
       setValues(newValues);
     }
@@ -119,7 +119,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     if (isSelected(input, values, areValuesEqual)) {
       setValueErrors([attributeValueAlreadyExistsError]);
     } else {
-      if (id) {
+      if (id !== undefined) {
         setValues(updateAtIndex(input, values, id));
       }
       closeModal();
@@ -254,14 +254,16 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
               <AttributeValueDeleteDialog
                 attributeName=""
                 open={params.action === "remove-value"}
-                name={getStringOrPlaceholder(id ? values[id]?.name : "")}
+                name={getStringOrPlaceholder(
+                  id !== undefined ? values[id]?.name : "",
+                )}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onConfirm={handleValueDelete}
               />
               <AttributeValueEditDialog
                 inputType={data.inputType}
-                attributeValue={id ? values[id] : null}
+                attributeValue={id !== undefined ? values[id] : null}
                 confirmButtonState="default"
                 disabled={false}
                 errors={valueErrors}

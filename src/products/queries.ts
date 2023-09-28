@@ -305,6 +305,29 @@ export const availableColumnAttribues = gql`
   }
 `;
 
+export const gridWarehouses = gql`
+  query GridWarehouses($ids: [ID!]!, $hasWarehouses: Boolean!) {
+    availableWarehouses: warehouses(first: 10) {
+      edges {
+        node {
+          ...Warehouse
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+    selectedWarehouses: warehouses(first: 100, filter: { ids: $ids })
+      @include(if: $hasWarehouses) {
+      edges {
+        node {
+          ...Warehouse
+        }
+      }
+    }
+  }
+`;
+
 export const defaultGraphiQLQuery = `query ProductDetails($id: ID!) {
   product(id: $id) {
     id

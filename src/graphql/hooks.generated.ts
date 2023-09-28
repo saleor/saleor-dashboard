@@ -1604,6 +1604,12 @@ export const OrderLineFragmentDoc = gql`
       id
       isAvailableForPurchase
     }
+    metadata {
+      ...MetadataItem
+    }
+    privateMetadata @include(if: $isStaffUser) {
+      ...MetadataItem
+    }
   }
   productName
   productSku
@@ -1646,6 +1652,7 @@ export const OrderLineFragmentDoc = gql`
   }
 }
     ${StockFragmentDoc}
+${MetadataItemFragmentDoc}
 ${TaxedMoneyFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
@@ -9198,7 +9205,7 @@ export type MenuDetailsQueryHookResult = ReturnType<typeof useMenuDetailsQuery>;
 export type MenuDetailsLazyQueryHookResult = ReturnType<typeof useMenuDetailsLazyQuery>;
 export type MenuDetailsQueryResult = Apollo.QueryResult<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>;
 export const OrderCancelDocument = gql`
-    mutation OrderCancel($id: ID!) {
+    mutation OrderCancel($id: ID!, $isStaffUser: Boolean!) {
   orderCancel(id: $id) {
     errors {
       ...OrderError
@@ -9226,6 +9233,7 @@ export type OrderCancelMutationFn = Apollo.MutationFunction<Types.OrderCancelMut
  * const [orderCancelMutation, { data, loading, error }] = useOrderCancelMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9237,7 +9245,7 @@ export type OrderCancelMutationHookResult = ReturnType<typeof useOrderCancelMuta
 export type OrderCancelMutationResult = Apollo.MutationResult<Types.OrderCancelMutation>;
 export type OrderCancelMutationOptions = Apollo.BaseMutationOptions<Types.OrderCancelMutation, Types.OrderCancelMutationVariables>;
 export const OrderDiscountAddDocument = gql`
-    mutation OrderDiscountAdd($input: OrderDiscountCommonInput!, $orderId: ID!) {
+    mutation OrderDiscountAdd($input: OrderDiscountCommonInput!, $orderId: ID!, $isStaffUser: Boolean!) {
   orderDiscountAdd(input: $input, orderId: $orderId) {
     errors {
       ...OrderError
@@ -9266,6 +9274,7 @@ export type OrderDiscountAddMutationFn = Apollo.MutationFunction<Types.OrderDisc
  *   variables: {
  *      input: // value for 'input'
  *      orderId: // value for 'orderId'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9277,7 +9286,7 @@ export type OrderDiscountAddMutationHookResult = ReturnType<typeof useOrderDisco
 export type OrderDiscountAddMutationResult = Apollo.MutationResult<Types.OrderDiscountAddMutation>;
 export type OrderDiscountAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderDiscountAddMutation, Types.OrderDiscountAddMutationVariables>;
 export const OrderDiscountDeleteDocument = gql`
-    mutation OrderDiscountDelete($discountId: ID!) {
+    mutation OrderDiscountDelete($discountId: ID!, $isStaffUser: Boolean!) {
   orderDiscountDelete(discountId: $discountId) {
     errors {
       ...OrderError
@@ -9305,6 +9314,7 @@ export type OrderDiscountDeleteMutationFn = Apollo.MutationFunction<Types.OrderD
  * const [orderDiscountDeleteMutation, { data, loading, error }] = useOrderDiscountDeleteMutation({
  *   variables: {
  *      discountId: // value for 'discountId'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9316,7 +9326,7 @@ export type OrderDiscountDeleteMutationHookResult = ReturnType<typeof useOrderDi
 export type OrderDiscountDeleteMutationResult = Apollo.MutationResult<Types.OrderDiscountDeleteMutation>;
 export type OrderDiscountDeleteMutationOptions = Apollo.BaseMutationOptions<Types.OrderDiscountDeleteMutation, Types.OrderDiscountDeleteMutationVariables>;
 export const OrderLineDiscountRemoveDocument = gql`
-    mutation OrderLineDiscountRemove($orderLineId: ID!) {
+    mutation OrderLineDiscountRemove($orderLineId: ID!, $isStaffUser: Boolean!) {
   orderLineDiscountRemove(orderLineId: $orderLineId) {
     errors {
       ...OrderError
@@ -9344,6 +9354,7 @@ export type OrderLineDiscountRemoveMutationFn = Apollo.MutationFunction<Types.Or
  * const [orderLineDiscountRemoveMutation, { data, loading, error }] = useOrderLineDiscountRemoveMutation({
  *   variables: {
  *      orderLineId: // value for 'orderLineId'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9355,7 +9366,7 @@ export type OrderLineDiscountRemoveMutationHookResult = ReturnType<typeof useOrd
 export type OrderLineDiscountRemoveMutationResult = Apollo.MutationResult<Types.OrderLineDiscountRemoveMutation>;
 export type OrderLineDiscountRemoveMutationOptions = Apollo.BaseMutationOptions<Types.OrderLineDiscountRemoveMutation, Types.OrderLineDiscountRemoveMutationVariables>;
 export const OrderLineDiscountUpdateDocument = gql`
-    mutation OrderLineDiscountUpdate($input: OrderDiscountCommonInput!, $orderLineId: ID!) {
+    mutation OrderLineDiscountUpdate($input: OrderDiscountCommonInput!, $orderLineId: ID!, $isStaffUser: Boolean!) {
   orderLineDiscountUpdate(input: $input, orderLineId: $orderLineId) {
     errors {
       ...OrderError
@@ -9384,6 +9395,7 @@ export type OrderLineDiscountUpdateMutationFn = Apollo.MutationFunction<Types.Or
  *   variables: {
  *      input: // value for 'input'
  *      orderLineId: // value for 'orderLineId'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9395,7 +9407,7 @@ export type OrderLineDiscountUpdateMutationHookResult = ReturnType<typeof useOrd
 export type OrderLineDiscountUpdateMutationResult = Apollo.MutationResult<Types.OrderLineDiscountUpdateMutation>;
 export type OrderLineDiscountUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderLineDiscountUpdateMutation, Types.OrderLineDiscountUpdateMutationVariables>;
 export const OrderDiscountUpdateDocument = gql`
-    mutation OrderDiscountUpdate($input: OrderDiscountCommonInput!, $discountId: ID!) {
+    mutation OrderDiscountUpdate($input: OrderDiscountCommonInput!, $discountId: ID!, $isStaffUser: Boolean!) {
   orderDiscountUpdate(input: $input, discountId: $discountId) {
     errors {
       ...OrderError
@@ -9424,6 +9436,7 @@ export type OrderDiscountUpdateMutationFn = Apollo.MutationFunction<Types.OrderD
  *   variables: {
  *      input: // value for 'input'
  *      discountId: // value for 'discountId'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9435,7 +9448,7 @@ export type OrderDiscountUpdateMutationHookResult = ReturnType<typeof useOrderDi
 export type OrderDiscountUpdateMutationResult = Apollo.MutationResult<Types.OrderDiscountUpdateMutation>;
 export type OrderDiscountUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderDiscountUpdateMutation, Types.OrderDiscountUpdateMutationVariables>;
 export const OrderDraftCancelDocument = gql`
-    mutation OrderDraftCancel($id: ID!) {
+    mutation OrderDraftCancel($id: ID!, $isStaffUser: Boolean!) {
   draftOrderDelete(id: $id) {
     errors {
       ...OrderError
@@ -9463,6 +9476,7 @@ export type OrderDraftCancelMutationFn = Apollo.MutationFunction<Types.OrderDraf
  * const [orderDraftCancelMutation, { data, loading, error }] = useOrderDraftCancelMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9509,7 +9523,7 @@ export type OrderDraftBulkCancelMutationHookResult = ReturnType<typeof useOrderD
 export type OrderDraftBulkCancelMutationResult = Apollo.MutationResult<Types.OrderDraftBulkCancelMutation>;
 export type OrderDraftBulkCancelMutationOptions = Apollo.BaseMutationOptions<Types.OrderDraftBulkCancelMutation, Types.OrderDraftBulkCancelMutationVariables>;
 export const OrderConfirmDocument = gql`
-    mutation OrderConfirm($id: ID!) {
+    mutation OrderConfirm($id: ID!, $isStaffUser: Boolean!) {
   orderConfirm(id: $id) {
     errors {
       ...OrderError
@@ -9537,6 +9551,7 @@ export type OrderConfirmMutationFn = Apollo.MutationFunction<Types.OrderConfirmM
  * const [orderConfirmMutation, { data, loading, error }] = useOrderConfirmMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9548,7 +9563,7 @@ export type OrderConfirmMutationHookResult = ReturnType<typeof useOrderConfirmMu
 export type OrderConfirmMutationResult = Apollo.MutationResult<Types.OrderConfirmMutation>;
 export type OrderConfirmMutationOptions = Apollo.BaseMutationOptions<Types.OrderConfirmMutation, Types.OrderConfirmMutationVariables>;
 export const OrderDraftFinalizeDocument = gql`
-    mutation OrderDraftFinalize($id: ID!) {
+    mutation OrderDraftFinalize($id: ID!, $isStaffUser: Boolean!) {
   draftOrderComplete(id: $id) {
     errors {
       ...OrderError
@@ -9576,6 +9591,7 @@ export type OrderDraftFinalizeMutationFn = Apollo.MutationFunction<Types.OrderDr
  * const [orderDraftFinalizeMutation, { data, loading, error }] = useOrderDraftFinalizeMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9629,7 +9645,7 @@ export type FulfillmentReturnProductsMutationHookResult = ReturnType<typeof useF
 export type FulfillmentReturnProductsMutationResult = Apollo.MutationResult<Types.FulfillmentReturnProductsMutation>;
 export type FulfillmentReturnProductsMutationOptions = Apollo.BaseMutationOptions<Types.FulfillmentReturnProductsMutation, Types.FulfillmentReturnProductsMutationVariables>;
 export const OrderRefundDocument = gql`
-    mutation OrderRefund($id: ID!, $amount: PositiveDecimal!) {
+    mutation OrderRefund($id: ID!, $amount: PositiveDecimal!, $isStaffUser: Boolean!) {
   orderRefund(id: $id, amount: $amount) {
     errors {
       ...OrderError
@@ -9658,6 +9674,7 @@ export type OrderRefundMutationFn = Apollo.MutationFunction<Types.OrderRefundMut
  *   variables: {
  *      id: // value for 'id'
  *      amount: // value for 'amount'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9669,7 +9686,7 @@ export type OrderRefundMutationHookResult = ReturnType<typeof useOrderRefundMuta
 export type OrderRefundMutationResult = Apollo.MutationResult<Types.OrderRefundMutation>;
 export type OrderRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderRefundMutation, Types.OrderRefundMutationVariables>;
 export const OrderFulfillmentRefundProductsDocument = gql`
-    mutation OrderFulfillmentRefundProducts($input: OrderRefundProductsInput!, $order: ID!) {
+    mutation OrderFulfillmentRefundProducts($input: OrderRefundProductsInput!, $order: ID!, $isStaffUser: Boolean!) {
   orderFulfillmentRefundProducts(input: $input, order: $order) {
     errors {
       ...OrderError
@@ -9702,6 +9719,7 @@ export type OrderFulfillmentRefundProductsMutationFn = Apollo.MutationFunction<T
  *   variables: {
  *      input: // value for 'input'
  *      order: // value for 'order'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9713,7 +9731,7 @@ export type OrderFulfillmentRefundProductsMutationHookResult = ReturnType<typeof
 export type OrderFulfillmentRefundProductsMutationResult = Apollo.MutationResult<Types.OrderFulfillmentRefundProductsMutation>;
 export type OrderFulfillmentRefundProductsMutationOptions = Apollo.BaseMutationOptions<Types.OrderFulfillmentRefundProductsMutation, Types.OrderFulfillmentRefundProductsMutationVariables>;
 export const OrderVoidDocument = gql`
-    mutation OrderVoid($id: ID!) {
+    mutation OrderVoid($id: ID!, $isStaffUser: Boolean!) {
   orderVoid(id: $id) {
     errors {
       ...OrderError
@@ -9741,6 +9759,7 @@ export type OrderVoidMutationFn = Apollo.MutationFunction<Types.OrderVoidMutatio
  * const [orderVoidMutation, { data, loading, error }] = useOrderVoidMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9752,7 +9771,7 @@ export type OrderVoidMutationHookResult = ReturnType<typeof useOrderVoidMutation
 export type OrderVoidMutationResult = Apollo.MutationResult<Types.OrderVoidMutation>;
 export type OrderVoidMutationOptions = Apollo.BaseMutationOptions<Types.OrderVoidMutation, Types.OrderVoidMutationVariables>;
 export const OrderMarkAsPaidDocument = gql`
-    mutation OrderMarkAsPaid($id: ID!, $transactionReference: String) {
+    mutation OrderMarkAsPaid($id: ID!, $transactionReference: String, $isStaffUser: Boolean!) {
   orderMarkAsPaid(id: $id, transactionReference: $transactionReference) {
     errors {
       ...OrderError
@@ -9781,6 +9800,7 @@ export type OrderMarkAsPaidMutationFn = Apollo.MutationFunction<Types.OrderMarkA
  *   variables: {
  *      id: // value for 'id'
  *      transactionReference: // value for 'transactionReference'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9792,7 +9812,7 @@ export type OrderMarkAsPaidMutationHookResult = ReturnType<typeof useOrderMarkAs
 export type OrderMarkAsPaidMutationResult = Apollo.MutationResult<Types.OrderMarkAsPaidMutation>;
 export type OrderMarkAsPaidMutationOptions = Apollo.BaseMutationOptions<Types.OrderMarkAsPaidMutation, Types.OrderMarkAsPaidMutationVariables>;
 export const OrderCaptureDocument = gql`
-    mutation OrderCapture($id: ID!, $amount: PositiveDecimal!) {
+    mutation OrderCapture($id: ID!, $amount: PositiveDecimal!, $isStaffUser: Boolean!) {
   orderCapture(id: $id, amount: $amount) {
     errors {
       ...OrderError
@@ -9821,6 +9841,7 @@ export type OrderCaptureMutationFn = Apollo.MutationFunction<Types.OrderCaptureM
  *   variables: {
  *      id: // value for 'id'
  *      amount: // value for 'amount'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9832,7 +9853,7 @@ export type OrderCaptureMutationHookResult = ReturnType<typeof useOrderCaptureMu
 export type OrderCaptureMutationResult = Apollo.MutationResult<Types.OrderCaptureMutation>;
 export type OrderCaptureMutationOptions = Apollo.BaseMutationOptions<Types.OrderCaptureMutation, Types.OrderCaptureMutationVariables>;
 export const OrderFulfillmentUpdateTrackingDocument = gql`
-    mutation OrderFulfillmentUpdateTracking($id: ID!, $input: FulfillmentUpdateTrackingInput!) {
+    mutation OrderFulfillmentUpdateTracking($id: ID!, $input: FulfillmentUpdateTrackingInput!, $isStaffUser: Boolean!) {
   orderFulfillmentUpdateTracking(id: $id, input: $input) {
     errors {
       ...OrderError
@@ -9861,6 +9882,7 @@ export type OrderFulfillmentUpdateTrackingMutationFn = Apollo.MutationFunction<T
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9872,7 +9894,7 @@ export type OrderFulfillmentUpdateTrackingMutationHookResult = ReturnType<typeof
 export type OrderFulfillmentUpdateTrackingMutationResult = Apollo.MutationResult<Types.OrderFulfillmentUpdateTrackingMutation>;
 export type OrderFulfillmentUpdateTrackingMutationOptions = Apollo.BaseMutationOptions<Types.OrderFulfillmentUpdateTrackingMutation, Types.OrderFulfillmentUpdateTrackingMutationVariables>;
 export const OrderFulfillmentApproveDocument = gql`
-    mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!, $allowStockToBeExceeded: Boolean) {
+    mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!, $allowStockToBeExceeded: Boolean, $isStaffUser: Boolean!) {
   orderFulfillmentApprove(
     id: $id
     notifyCustomer: $notifyCustomer
@@ -9906,6 +9928,7 @@ export type OrderFulfillmentApproveMutationFn = Apollo.MutationFunction<Types.Or
  *      id: // value for 'id'
  *      notifyCustomer: // value for 'notifyCustomer'
  *      allowStockToBeExceeded: // value for 'allowStockToBeExceeded'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -9917,7 +9940,7 @@ export type OrderFulfillmentApproveMutationHookResult = ReturnType<typeof useOrd
 export type OrderFulfillmentApproveMutationResult = Apollo.MutationResult<Types.OrderFulfillmentApproveMutation>;
 export type OrderFulfillmentApproveMutationOptions = Apollo.BaseMutationOptions<Types.OrderFulfillmentApproveMutation, Types.OrderFulfillmentApproveMutationVariables>;
 export const OrderFulfillmentCancelDocument = gql`
-    mutation OrderFulfillmentCancel($id: ID!, $input: FulfillmentCancelInput!) {
+    mutation OrderFulfillmentCancel($id: ID!, $input: FulfillmentCancelInput!, $isStaffUser: Boolean!) {
   orderFulfillmentCancel(id: $id, input: $input) {
     errors {
       ...OrderError
@@ -9946,6 +9969,7 @@ export type OrderFulfillmentCancelMutationFn = Apollo.MutationFunction<Types.Ord
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -10000,7 +10024,7 @@ export type OrderAddNoteMutationHookResult = ReturnType<typeof useOrderAddNoteMu
 export type OrderAddNoteMutationResult = Apollo.MutationResult<Types.OrderAddNoteMutation>;
 export type OrderAddNoteMutationOptions = Apollo.BaseMutationOptions<Types.OrderAddNoteMutation, Types.OrderAddNoteMutationVariables>;
 export const OrderUpdateDocument = gql`
-    mutation OrderUpdate($id: ID!, $input: OrderUpdateInput!) {
+    mutation OrderUpdate($id: ID!, $input: OrderUpdateInput!, $isStaffUser: Boolean!) {
   orderUpdate(id: $id, input: $input) {
     errors {
       ...OrderError
@@ -10029,6 +10053,7 @@ export type OrderUpdateMutationFn = Apollo.MutationFunction<Types.OrderUpdateMut
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -10040,7 +10065,7 @@ export type OrderUpdateMutationHookResult = ReturnType<typeof useOrderUpdateMuta
 export type OrderUpdateMutationResult = Apollo.MutationResult<Types.OrderUpdateMutation>;
 export type OrderUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderUpdateMutation, Types.OrderUpdateMutationVariables>;
 export const OrderDraftUpdateDocument = gql`
-    mutation OrderDraftUpdate($id: ID!, $input: DraftOrderInput!) {
+    mutation OrderDraftUpdate($id: ID!, $input: DraftOrderInput!, $isStaffUser: Boolean!) {
   draftOrderUpdate(id: $id, input: $input) {
     errors {
       ...OrderError
@@ -10069,6 +10094,7 @@ export type OrderDraftUpdateMutationFn = Apollo.MutationFunction<Types.OrderDraf
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -10080,7 +10106,7 @@ export type OrderDraftUpdateMutationHookResult = ReturnType<typeof useOrderDraft
 export type OrderDraftUpdateMutationResult = Apollo.MutationResult<Types.OrderDraftUpdateMutation>;
 export type OrderDraftUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderDraftUpdateMutation, Types.OrderDraftUpdateMutationVariables>;
 export const OrderShippingMethodUpdateDocument = gql`
-    mutation OrderShippingMethodUpdate($id: ID!, $input: OrderUpdateShippingInput!) {
+    mutation OrderShippingMethodUpdate($id: ID!, $input: OrderUpdateShippingInput!, $isStaffUser: Boolean!) {
   orderUpdateShipping(order: $id, input: $input) {
     errors {
       ...OrderError
@@ -10139,6 +10165,7 @@ export type OrderShippingMethodUpdateMutationFn = Apollo.MutationFunction<Types.
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -10188,7 +10215,7 @@ export type OrderDraftCreateMutationHookResult = ReturnType<typeof useOrderDraft
 export type OrderDraftCreateMutationResult = Apollo.MutationResult<Types.OrderDraftCreateMutation>;
 export type OrderDraftCreateMutationOptions = Apollo.BaseMutationOptions<Types.OrderDraftCreateMutation, Types.OrderDraftCreateMutationVariables>;
 export const OrderLineDeleteDocument = gql`
-    mutation OrderLineDelete($id: ID!) {
+    mutation OrderLineDelete($id: ID!, $isStaffUser: Boolean!) {
   orderLineDelete(id: $id) {
     errors {
       ...OrderError
@@ -10219,6 +10246,7 @@ export type OrderLineDeleteMutationFn = Apollo.MutationFunction<Types.OrderLineD
  * const [orderLineDeleteMutation, { data, loading, error }] = useOrderLineDeleteMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -10230,7 +10258,7 @@ export type OrderLineDeleteMutationHookResult = ReturnType<typeof useOrderLineDe
 export type OrderLineDeleteMutationResult = Apollo.MutationResult<Types.OrderLineDeleteMutation>;
 export type OrderLineDeleteMutationOptions = Apollo.BaseMutationOptions<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>;
 export const OrderLinesAddDocument = gql`
-    mutation OrderLinesAdd($id: ID!, $input: [OrderLineCreateInput!]!) {
+    mutation OrderLinesAdd($id: ID!, $isStaffUser: Boolean!, $input: [OrderLineCreateInput!]!) {
   orderLinesCreate(id: $id, input: $input) {
     errors {
       ...OrderError
@@ -10261,6 +10289,7 @@ export type OrderLinesAddMutationFn = Apollo.MutationFunction<Types.OrderLinesAd
  * const [orderLinesAddMutation, { data, loading, error }] = useOrderLinesAddMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      isStaffUser: // value for 'isStaffUser'
  *      input: // value for 'input'
  *   },
  * });
@@ -10273,7 +10302,7 @@ export type OrderLinesAddMutationHookResult = ReturnType<typeof useOrderLinesAdd
 export type OrderLinesAddMutationResult = Apollo.MutationResult<Types.OrderLinesAddMutation>;
 export type OrderLinesAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>;
 export const OrderLineUpdateDocument = gql`
-    mutation OrderLineUpdate($id: ID!, $input: OrderLineInput!) {
+    mutation OrderLineUpdate($id: ID!, $isStaffUser: Boolean!, $input: OrderLineInput!) {
   orderLineUpdate(id: $id, input: $input) {
     errors {
       ...OrderError
@@ -10301,6 +10330,7 @@ export type OrderLineUpdateMutationFn = Apollo.MutationFunction<Types.OrderLineU
  * const [orderLineUpdateMutation, { data, loading, error }] = useOrderLineUpdateMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      isStaffUser: // value for 'isStaffUser'
  *      input: // value for 'input'
  *   },
  * });
@@ -10313,7 +10343,7 @@ export type OrderLineUpdateMutationHookResult = ReturnType<typeof useOrderLineUp
 export type OrderLineUpdateMutationResult = Apollo.MutationResult<Types.OrderLineUpdateMutation>;
 export type OrderLineUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderLineUpdateMutation, Types.OrderLineUpdateMutationVariables>;
 export const FulfillOrderDocument = gql`
-    mutation FulfillOrder($orderId: ID!, $input: OrderFulfillInput!) {
+    mutation FulfillOrder($orderId: ID!, $input: OrderFulfillInput!, $isStaffUser: Boolean!) {
   orderFulfill(order: $orderId, input: $input) {
     errors {
       ...OrderError
@@ -10343,6 +10373,7 @@ export type FulfillOrderMutationFn = Apollo.MutationFunction<Types.FulfillOrderM
  *   variables: {
  *      orderId: // value for 'orderId'
  *      input: // value for 'input'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -10884,7 +10915,7 @@ export type OrderDraftListQueryHookResult = ReturnType<typeof useOrderDraftListQ
 export type OrderDraftListLazyQueryHookResult = ReturnType<typeof useOrderDraftListLazyQuery>;
 export type OrderDraftListQueryResult = Apollo.QueryResult<Types.OrderDraftListQuery, Types.OrderDraftListQueryVariables>;
 export const OrderDetailsDocument = gql`
-    query OrderDetails($id: ID!) {
+    query OrderDetails($id: ID!, $isStaffUser: Boolean!) {
   order(id: $id) {
     ...OrderDetails
   }
@@ -10917,6 +10948,7 @@ ${PaymentGatewayFragmentDoc}`;
  * const { data, loading, error } = useOrderDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      isStaffUser: // value for 'isStaffUser'
  *   },
  * });
  */
@@ -14489,6 +14521,57 @@ export function useAvailableColumnAttributesLazyQuery(baseOptions?: ApolloReactH
 export type AvailableColumnAttributesQueryHookResult = ReturnType<typeof useAvailableColumnAttributesQuery>;
 export type AvailableColumnAttributesLazyQueryHookResult = ReturnType<typeof useAvailableColumnAttributesLazyQuery>;
 export type AvailableColumnAttributesQueryResult = Apollo.QueryResult<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>;
+export const GridWarehousesDocument = gql`
+    query GridWarehouses($ids: [ID!]!, $hasWarehouses: Boolean!) {
+  availableWarehouses: warehouses(first: 10) {
+    edges {
+      node {
+        ...Warehouse
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+  selectedWarehouses: warehouses(first: 100, filter: {ids: $ids}) @include(if: $hasWarehouses) {
+    edges {
+      node {
+        ...Warehouse
+      }
+    }
+  }
+}
+    ${WarehouseFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useGridWarehousesQuery__
+ *
+ * To run a query within a React component, call `useGridWarehousesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGridWarehousesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGridWarehousesQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      hasWarehouses: // value for 'hasWarehouses'
+ *   },
+ * });
+ */
+export function useGridWarehousesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>(GridWarehousesDocument, options);
+      }
+export function useGridWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>(GridWarehousesDocument, options);
+        }
+export type GridWarehousesQueryHookResult = ReturnType<typeof useGridWarehousesQuery>;
+export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehousesLazyQuery>;
+export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
 export const SearchAttributesDocument = gql`
     query SearchAttributes($after: String, $first: Int!, $query: String!) {
   search: attributes(after: $after, first: $first, filter: {search: $query}) {

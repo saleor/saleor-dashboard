@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Popover,
+  PopoverContentProps,
   sprinkles,
   TableEditIcon,
   Text,
@@ -23,6 +24,8 @@ export interface ColumnPickerProps {
   selectedColumns: string[];
   columnCategories?: ColumnCategory[];
   onToggle: (columnId: string) => void;
+  side?: PopoverContentProps["side"];
+  align?: PopoverContentProps["align"];
 }
 
 export const ColumnPicker = ({
@@ -31,6 +34,8 @@ export const ColumnPicker = ({
   columnCategories,
   dynamicColumns,
   onToggle,
+  side,
+  align,
 }: ColumnPickerProps) => {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -60,7 +65,11 @@ export const ColumnPicker = ({
           }
         />
       </Popover.Trigger>
-      <Popover.Content className={sprinkles({ margin: 1.5 })} align="end">
+      <Popover.Content
+        className={sprinkles({ margin: 1.5 })}
+        align={align}
+        side={side}
+      >
         <Box
           display="grid"
           gridTemplateColumns={expanded ? 2 : 1}
@@ -76,7 +85,7 @@ export const ColumnPicker = ({
           )}
           <Box
             __width="320px"
-            __maxHeight="70vh"
+            __maxHeight="50vh"
             __minHeight={expanded ? "502px" : undefined}
             backgroundColor="plain"
             padding={4}

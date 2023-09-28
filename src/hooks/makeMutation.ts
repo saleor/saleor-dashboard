@@ -80,7 +80,7 @@ export function useMutation<TData, TVariables>(
               text: intl.formatMessage(commonMessages.sessionExpired),
             });
           } else if (!hasError(err, GqlErrors.LimitReachedException)) {
-            err.graphQLErrors.map(graphQLError => {
+            err.graphQLErrors.forEach(graphQLError => {
               notify({
                 status: "error",
                 apiMessage: graphQLError.message,

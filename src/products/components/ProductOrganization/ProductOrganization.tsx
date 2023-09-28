@@ -137,33 +137,33 @@ export const ProductOrganization: React.FC<
           </Box>
         )}
 
-        <Combobox
-          disabled={disabled}
-          data-test-id="category"
-          options={disabled ? [] : categories}
-          value={
-            data.category
-              ? {
-                  value: data.category,
-                  label: categoryInputDisplayValue,
-                }
-              : null
-          }
-          error={!!(formErrors.category || noCategoryError)}
-          helperText={getProductErrorMessage(
-            formErrors.category || noCategoryError,
-            intl,
-          )}
-          onChange={onCategoryChange}
-          fetchOptions={fetchCategories}
-          fetchMore={fetchMoreCategories}
-          name="category"
-          label={intl.formatMessage({
-            id: "ccXLVi",
-            defaultMessage: "Category",
-          })}
-        />
-
+        <Box data-test-id="category">
+          <Combobox
+            disabled={disabled}
+            options={disabled ? [] : categories}
+            value={
+              data.category
+                ? {
+                    value: data.category,
+                    label: categoryInputDisplayValue,
+                  }
+                : null
+            }
+            error={!!(formErrors.category || noCategoryError)}
+            helperText={getProductErrorMessage(
+              formErrors.category || noCategoryError,
+              intl,
+            )}
+            onChange={onCategoryChange}
+            fetchOptions={fetchCategories}
+            fetchMore={fetchMoreCategories}
+            name="category"
+            label={intl.formatMessage({
+              id: "ccXLVi",
+              defaultMessage: "Category",
+            })}
+          />
+        </Box>
         <Multiselect
           disabled={disabled}
           options={collections}

@@ -57,21 +57,26 @@ export const isLastEnabledColumn = (
 export const sortColumns = (
   columns: AvailableColumn[] | undefined,
   order: string[],
-) => columns?.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+) => columns?.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id)) ?? null;
 
 export const areCategoriesLoaded = (categories: ColumnCategory[] | undefined) =>
   categories?.every(category => Array.isArray(category.selectedNodes));
 
 export const extractSelectedNodesFromCategories = (
   categories: ColumnCategory[] | undefined,
-) => categories?.flatMap(category => category.selectedNodes);
+) =>
+  categories?.flatMap(category => category.selectedNodes).filter(isValidColumn);
+
+export const isValidColumn = (
+  column: AvailableColumn | undefined,
+): column is AvailableColumn => !!column;
 
 export const findDynamicColumn = (
-  categories: ColumnCategory[],
+  categories: ColumnCategory[] | undefined,
   columnId: string,
 ) =>
   categories
-    .flatMap(category => category.availableNodes)
+    ?.flatMap(category => category.availableNodes)
     .find(column => column?.id === columnId);
 
 export const mergeSelectedColumns = ({
@@ -80,9 +85,10 @@ export const mergeSelectedColumns = ({
   selectedColumns,
 }: {
   staticColumns: AvailableColumn[];
-  dynamicColumns: AvailableColumn[];
+  dynamicColumns: AvailableColumn[] | null;
   selectedColumns: string[];
-}) =>
-  [...staticColumns, ...(dynamicColumns ?? [])].filter(
+}) => {
+  return [...staticColumns, ...(dynamicColumns ?? [])].filter(
     column => selectedColumns.includes(column.id) || column.id === "empty",
   );
+};

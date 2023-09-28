@@ -26,6 +26,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onInvoiceClick: () => undefined,
   onInvoiceGenerate: () => undefined,
   onInvoiceSend: () => undefined,
+  onShowMetadata: () => undefined,
   onNoteAdd: undefined,
   onOrderCancel: undefined,
   onOrderFulfill: undefined,

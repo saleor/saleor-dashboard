@@ -541,6 +541,8 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           name: "Milk 1",
           quantityAvailable: 50,
+          metadata: [],
+          privateMetadata: [],
           preorder: null,
           __typename: "ProductVariant",
           product: {
@@ -652,6 +654,8 @@ describe("Get the total value of all replaced products", () => {
           name: "Milk 1",
           quantityAvailable: 50,
           preorder: null,
+          metadata: [],
+          privateMetadata: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -762,6 +766,8 @@ describe("Get the total value of all replaced products", () => {
           name: "Milk 2",
           quantityAvailable: 50,
           preorder: null,
+          metadata: [],
+          privateMetadata: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -878,6 +884,8 @@ describe("Get the total value of all replaced products", () => {
             name: "Milk 1",
             quantityAvailable: 50,
             preorder: null,
+            metadata: [],
+            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -993,6 +1001,8 @@ describe("Get the total value of all replaced products", () => {
             name: "Milk 1",
             quantityAvailable: 50,
             preorder: null,
+            metadata: [],
+            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1108,6 +1118,8 @@ describe("Get the total value of all replaced products", () => {
             name: "Milk 2",
             quantityAvailable: 50,
             preorder: null,
+            metadata: [],
+            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1223,6 +1235,8 @@ describe("Get the total value of all replaced products", () => {
             name: "Milk 3",
             quantityAvailable: 50,
             preorder: null,
+            metadata: [],
+            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1338,6 +1352,8 @@ describe("Get the total value of all replaced products", () => {
             name: "Milk 3",
             quantityAvailable: 50,
             preorder: null,
+            metadata: [],
+            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1587,6 +1603,8 @@ describe("Get the total value of all selected products", () => {
           name: "Digital Book",
           quantityAvailable: 50,
           preorder: null,
+          metadata: [],
+          privateMetadata: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -1697,6 +1715,8 @@ describe("Get the total value of all selected products", () => {
           name: "Digital Book",
           quantityAvailable: 50,
           preorder: null,
+          metadata: [],
+          privateMetadata: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -1807,6 +1827,8 @@ describe("Get the total value of all selected products", () => {
           name: "Digital Book",
           quantityAvailable: 50,
           preorder: null,
+          metadata: [],
+          privateMetadata: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -1923,6 +1945,8 @@ describe("Get the total value of all selected products", () => {
             name: "Digital Book",
             quantityAvailable: 50,
             preorder: null,
+            metadata: [],
+            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2037,6 +2061,8 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Digital Book",
             quantityAvailable: 50,
+            metadata: [],
+            privateMetadata: [],
             preorder: null,
             stocks: [
               {
@@ -2153,6 +2179,8 @@ describe("Get the total value of all selected products", () => {
             name: "Digital Book",
             quantityAvailable: 50,
             preorder: null,
+            metadata: [],
+            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2396,6 +2424,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             name: "Saleor Demo Product",
             quantityAvailable: 50,
             preorder: null,
+            metadata: [],
+            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2511,6 +2541,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             name: "Saleor Demo Product",
             quantityAvailable: 50,
             preorder: null,
+            metadata: [],
+            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2626,6 +2658,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             name: "Saleor Demo Product",
             quantityAvailable: 50,
             preorder: null,
+            metadata: [],
+            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",

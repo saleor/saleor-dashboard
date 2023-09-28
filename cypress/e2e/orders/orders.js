@@ -9,11 +9,7 @@ import {
   ORDERS_SELECTORS,
   SHARED_ELEMENTS,
 } from "../../elements/";
-import {
-  MESSAGES,
-  ONE_PERMISSION_USERS,
-  urlList,
-} from "../../fixtures";
+import { MESSAGES, ONE_PERMISSION_USERS, urlList } from "../../fixtures";
 import {
   createCustomer,
   getOrder,
@@ -32,9 +28,7 @@ import {
   productsUtils,
   updateTaxConfigurationForChannel,
 } from "../../support/api/utils/";
-import {
-  ensureCanvasStatic,
-} from "../../support/customCommands/sharedElementsOperations/canvas";
+import { ensureCanvasStatic } from "../../support/customCommands/sharedElementsOperations/canvas";
 import {
   addNewProductToOrder,
   addPrivateMetadataFieldFulfillmentOrder,
@@ -599,13 +593,15 @@ describe("Orders", () => {
           .should("contain.text", "Variant")
           .should("contain.text", "Quantity")
           .should("contain.text", "Price")
-          .should("contain.text", "Total");
+          .should("contain.text", "Total")
+          .should("contain.text", "Metadata");
         // switching off all but one static columns
         cy.get(SHARED_ELEMENTS.gridStaticSkuButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticVariantNameButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticQuantityButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticPriceButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticTotalButton).click();
+        cy.get(SHARED_ELEMENTS.gridStaticMetadataButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticProductButton).should(
           "have.attr",
           "data-state",
@@ -615,7 +611,7 @@ describe("Orders", () => {
           .find("th")
           .should("have.length", 1)
           .should("have.text", "Product");
-        //next line hides picker
+        // next line hides picker
         cy.get(SHARED_ELEMENTS.pageHeader).click({ force: true });
         cy.get(SHARED_ELEMENTS.dynamicColumnContainer).should("not.exist");
       });
