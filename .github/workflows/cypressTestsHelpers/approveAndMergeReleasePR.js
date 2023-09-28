@@ -81,12 +81,7 @@ program
         requestBody = `New bugs found, results at: ${options.dashboard_url}. List of issues to check: `;
         for (const newBug of failedNewTests) {
           if (!newBug.url) {
-            const issueUrl = await createIssue(
-              newBug,
-              options.version,
-              octokit,
-            );
-            requestBody += `\n${newBug.title} - ${issueUrl}`;
+            requestBody += `\n${newBug.title}`;
           } else {
             requestBody += `\n${newBug.title} - ${newBug.url}`;
           }
@@ -175,17 +170,4 @@ function isIssueAKnownBugForReleaseVersion(issue, releaseVersion) {
 function getFormattedVersion(version) {
   const regex = /^\d+\.\d+\./;
   return version.match(regex)[0].replace(/\./g, "");
-}
-
-async function createIssue(newBug, version, octokit) {
-  const issue = await octokit.request("POST /repos/{owner}/{repo}/issues", {
-    owner,
-    repo: "saleor-dashboard",
-    title: `Cypress test fail: ${newBug.title}`,
-    body: `**Known bug for versions:**\nv${getFormattedVersion(
-      version,
-    )}: false\n**Additional Info:**\nSpec: ${newBug.spec}`,
-    labels: ["tests"],
-  });
-  return issue.data.html_url;
 }
