@@ -13,7 +13,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   const {
     settings: voucherCodesSettings,
     updateListSettings: updateVoucherCodesListSettings,
-  } = useListSettings(ListViews.VOUCHER_CODDES_LIST);
+  } = useListSettings(ListViews.VOUCHER_CODES);
 
   const [voucherCodesPaginationState, setVoucherCodesPaginationState] =
     useLocalPaginationState(voucherCodesSettings.rowNumber);

@@ -1,8 +1,9 @@
-import { PAGINATE_BY } from "@dashboard/config";
-import { UseListSettings } from "@dashboard/hooks/useListSettings";
+import useListSettings, {
+  UseListSettings,
+} from "@dashboard/hooks/useListSettings";
 import useLocalPageInfo from "@dashboard/hooks/useLocalPageInfo";
 import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
-import { useState } from "react";
+import { ListViews } from "@dashboard/types";
 
 import { VoucherCode } from "../../VoucherCodesDatagrid/types";
 
@@ -16,20 +17,17 @@ export interface UseVoucherCodesPagination {
 export const useVoucherCodesPagination = (
   voucherCodes: VoucherCode[],
 ): UseVoucherCodesPagination => {
-  const [codesPaginatedBy, setCodesPaginatedBy] = useState(PAGINATE_BY);
+  const { settings, updateListSettings } = useListSettings(
+    ListViews.VOUCHER_CODES,
+  );
+
   const { loadNextPage, loadPreviousPage, pageInfo, pageValues } =
-    useLocalPageInfo(voucherCodes, codesPaginatedBy);
+    useLocalPageInfo(voucherCodes, settings.rowNumber);
 
   return {
     paginatedCodes: pageValues,
-    settings: {
-      rowNumber: codesPaginatedBy,
-    },
-    onSettingsChange: (key, value) => {
-      if (key === "rowNumber") {
-        setCodesPaginatedBy(value as number);
-      }
-    },
+    settings,
+    onSettingsChange: updateListSettings,
     pagination: {
       loadNextPage,
       loadPreviousPage,
