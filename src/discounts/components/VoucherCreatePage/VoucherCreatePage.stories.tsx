@@ -13,6 +13,11 @@ const channels = createVoucherChannels(channelsList);
 
 const props: VoucherCreatePageProps = {
   allChannelsCount: channels.length,
+  onMultipleVoucheCodesGenerate: () => undefined,
+  onSingleVoucherCodeGenerate: () => undefined,
+  onModalClose: () => undefined,
+  isModalOpen: () => false,
+  onVoucherCodesDelete: () => undefined,
   channelListings: channels,
   disabled: false,
   errors: [],

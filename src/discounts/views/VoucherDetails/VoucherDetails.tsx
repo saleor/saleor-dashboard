@@ -451,7 +451,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         open={params.action === "single-codes"}
         confirmButtonTransitionState={voucherUpdateOpts.status}
         onClose={closeModal}
-        onSubmit={codes =>
+        onSubmit={() =>
           voucherUpdate({
             variables: {
               id,

@@ -135,6 +135,7 @@ export const saleList: SaleFragment[] = [
 export const voucherList: VoucherFragment[] = [
   {
     __typename: "Voucher" as "Voucher",
+    name: "Free shipping",
     metadata: [],
     privateMetadata: [],
     channelListings: [
@@ -174,6 +175,7 @@ export const voucherList: VoucherFragment[] = [
   },
   {
     __typename: "Voucher" as "Voucher",
+    name: "Free 2019",
     metadata: [],
     privateMetadata: [],
     channelListings: [
@@ -582,6 +584,7 @@ export const sale: SaleDetailsFragment = {
 
 export const voucherDetails: VoucherDetailsFragment = {
   __typename: "Voucher",
+  name: "VFree2020",
   metadata: [],
   privateMetadata: [],
   applyOncePerCustomer: false,

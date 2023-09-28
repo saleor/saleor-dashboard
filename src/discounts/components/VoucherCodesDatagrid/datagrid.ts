@@ -11,7 +11,7 @@ export const voucherCodesStaticColumnsAdapter = (intl: IntlShape) => [
   {
     id: "code",
     title: intl.formatMessage(columnsMessages.code),
-    width: 300,
+    width: 400,
   },
   {
     id: "usage",
