@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { Accordion } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -14,12 +15,16 @@ const VariantDetailsChannelsAvailabilityCardContainer: React.FC<
 > = ({ children, cardTitle }) => (
   <>
     <DashboardCard>
-      {cardTitle || (
-        <DashboardCard.Title>
-          <FormattedMessage {...messages.title} />
-        </DashboardCard.Title>
-      )}
-      {children}
+      <Accordion>
+        <Accordion.Item value="channelListItem">
+          {cardTitle || (
+            <DashboardCard.Title>
+              <FormattedMessage {...messages.title} />
+            </DashboardCard.Title>
+          )}
+          <Accordion.Content>{children}</Accordion.Content>
+        </Accordion.Item>
+      </Accordion>
     </DashboardCard>
   </>
 );

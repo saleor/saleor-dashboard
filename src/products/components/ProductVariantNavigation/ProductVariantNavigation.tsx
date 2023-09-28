@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { Divider } from "@dashboard/components/Divider";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   ProductVariantCreateDataQuery,
@@ -58,6 +59,7 @@ const ProductVariantNavigation: React.FC<
         {intl.formatMessage(sectionNames.variants)}
       </DashboardCard.Title>
       <SortableContainer onSortEnd={onReorder}>
+        {variants?.length > 0 && <Divider />}
         {renderCollection(variants, (variant, variantIndex) => {
           const isDefault = variant && variant.id === defaultVariantId;
           const isActive = variant && variant.id === current;
@@ -87,9 +89,6 @@ const ProductVariantNavigation: React.FC<
                   maxWidth="100%"
                   paddingX={5}
                   paddingY={3}
-                  borderBottomWidth={1}
-                  borderBottomStyle="solid"
-                  borderColor="neutralPlain"
                   display="flex"
                   alignItems="center"
                   gap={5}
@@ -127,6 +126,7 @@ const ProductVariantNavigation: React.FC<
                     )}
                   </Box>
                 </Box>
+                <Divider />
               </SortableElement>
             </Link>
           );

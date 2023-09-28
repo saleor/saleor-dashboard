@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { Divider } from "@dashboard/components/Divider";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
-import { Divider } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -43,14 +43,13 @@ export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({
       <DashboardCard.Content paddingY={6}>
         <Text
           as="p"
-          variant="body"
+          variant="bodyStrong"
           size="small"
           data-test-id={`channels-variant-availability-item-title-${id}`}
         >
           {name}
         </Text>
         <Text
-          variant="bodyStrong"
           size="small"
           data-test-id={`channels-variant-availability-item-subtitle-${id}`}
         >

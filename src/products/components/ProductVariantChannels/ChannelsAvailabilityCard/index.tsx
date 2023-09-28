@@ -44,10 +44,14 @@ export const VariantDetailsChannelsAvailabilityCard: React.FC<
     {({ channels }) => (
       <AvailabilityCard
         items={channels}
-        availabilityCount={getAvailabilityCountForVariant(variant)}
         productChannelListings={variant.product.channelListings}
       >
-        <CreateVariantTitle onManageClick={onManageClick} disabled={disabled} />
+        <CreateVariantTitle
+          onManageClick={onManageClick}
+          disabled={disabled}
+          availabilityCount={getAvailabilityCountForVariant(variant)}
+          isEmpty={channels.length === 0}
+        />
       </AvailabilityCard>
     )}
   </Wrapper>
@@ -60,10 +64,14 @@ export const ProductDetailsChannelsAvailabilityCard: React.FC<
     {({ channels }) => (
       <AvailabilityCard
         items={channels}
-        availabilityCount={getAvailabilityCountForProduct(product)}
         productChannelListings={product.channelListings}
       >
-        <CreateVariantTitle onManageClick={onManageClick} disabled={disabled} />
+        <CreateVariantTitle
+          onManageClick={onManageClick}
+          disabled={disabled}
+          availabilityCount={getAvailabilityCountForProduct(product)}
+          isEmpty={channels.length === 0}
+        />
       </AvailabilityCard>
     )}
   </Wrapper>
