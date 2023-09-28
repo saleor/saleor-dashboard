@@ -87,8 +87,8 @@ export const createInitialStateFromData = (
                 [node.slug ?? ""]: {
                   choices:
                     node.inputType === "BOOLEAN"
-                    ? createBooleanOptions()
-                    : createOptionsFromAPI(node.choices?.edges ?? []),
+                      ? createBooleanOptions()
+                      : createOptionsFromAPI(node.choices?.edges ?? []),
                   slug: node?.slug,
                   value: node?.id,
                   label: node?.name,

@@ -1,4 +1,4 @@
-import {AppInstallErrorPage} from "@dashboard/apps/components/AppInstallErrorPage";
+import { AppInstallErrorPage } from "@dashboard/apps/components/AppInstallErrorPage";
 import AppInstallPage from "@dashboard/apps/components/AppInstallPage";
 import {
   AppInstallUrlQueryParams,
