@@ -25,7 +25,7 @@ describe("useSearchCache", () => {
   });
 
   it("adds items to the cache when data is provided", () => {
-    const { result, rerender } = renderHook(() => useSearchCache(undefined));
+    const { result, rerender } = renderHook(() => useSearchCache(data));
 
     rerender({ currentData: data });
     expect(result.current).toEqual([
