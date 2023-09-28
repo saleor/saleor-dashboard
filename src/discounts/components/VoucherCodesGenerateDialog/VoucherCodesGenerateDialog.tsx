@@ -2,8 +2,10 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import useForm from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
+
+import { messages } from "./messages";
 
 interface VoucherCodesGenerateDialogProps {
   open: boolean;
@@ -20,6 +22,8 @@ const initialData: GenerateMultipleVoucherCodeFormData = {
   quantity: "",
   prefix: "",
 };
+
+const MAX_VOUCHER_CODES = 50;
 
 export const VoucherCodesGenerateDialog = ({
   open,
@@ -44,6 +48,17 @@ export const VoucherCodesGenerateDialog = ({
     }
   };
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.currentTarget.value);
+
+    if (Number.isNaN(value) || value > MAX_VOUCHER_CODES) {
+      e.preventDefault();
+      return;
+    }
+
+    change(e);
+  };
+
   const handleModalClose = () => {
     onClose();
     reset();
@@ -52,21 +67,25 @@ export const VoucherCodesGenerateDialog = ({
   return (
     <DashboardModal open={open} onChange={handleModalClose}>
       <DashboardModal.Content>
-        <DashboardModal.Title>Generate voucher codes</DashboardModal.Title>
+        <DashboardModal.Title>
+          {intl.formatMessage(messages.title)}
+        </DashboardModal.Title>
         <Box display="grid" gap={3} __width={390}>
           <Input
             name="quantity"
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
-            label="Code quantity"
+            label={intl.formatMessage(messages.codeQuantity, {
+              maxCodes: MAX_VOUCHER_CODES,
+            })}
             onKeyDown={handleKeyDown}
             value={data.quantity}
-            onChange={change}
+            onChange={handleChange}
           />
           <Input
             name="prefix"
-            label="Code Prefix (Optional)"
+            label={intl.formatMessage(messages.codePrefix)}
             value={data.prefix}
             onChange={change}
           />
