@@ -17,7 +17,6 @@ import {
   Dropdown,
   Input,
   List,
-  PlusIcon,
   Text,
   TrashBinIcon,
   vars,
@@ -250,15 +249,8 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           warehousesToAssign.length > 0 && (
             <Dropdown>
               <Dropdown.Trigger>
-                <Button
-                  type="button"
-                  icon={<PlusIcon />}
-                  variant="secondary"
-                  marginTop={5}
-                >
-                  <Text>
-                    <FormattedMessage {...messages.assignWarehouse} />
-                  </Text>
+                <Button type="button" variant="secondary" marginTop={5}>
+                  <FormattedMessage {...messages.assignWarehouse} />
                 </Button>
               </Dropdown.Trigger>
 
