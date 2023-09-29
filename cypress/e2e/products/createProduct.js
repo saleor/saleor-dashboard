@@ -101,7 +101,7 @@ describe("As an admin I should be able to create product", () => {
   );
 
   it(
-    "should be able to create product without variants as an admin. SALEOR_2702",
+    "should be able to create product without variants as an admin. SALEOR_2702 - migration in progress - to delete when done",
     { tags: ["@products", "@allEnv", "@critical", "@stable", "@oldRelease"] },
     () => {
       const prices = { sellingPrice: 6, costPrice: 3 };
