@@ -196,8 +196,6 @@ jobs:
           apiUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
           appMountUri: ${{ secrets.APP_MOUNT_URI }}
           baseUrl: "${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/"
-          ## backward compatibility requires CYPRESS_baseUrl as env var name - can be removed when version lower than 3.17 are no longer supported
-          CYPRESS_baseUrl: "${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/"
           userName: ${{ secrets.CYPRESS_USER_NAME }}
           secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
