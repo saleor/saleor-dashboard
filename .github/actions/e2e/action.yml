@@ -4,10 +4,6 @@ inputs:
   apiUrl:
     description: "API URL from PR or staging"
     required: true
-  ## backward compatibility requires CYPRESS_baseUrl as env var name - can be removed when version lower than 3.17 are no longer supported
-  CYPRESS_baseUrl:
-    description: "FE URL from PR or staging"
-    required: false
   baseUrl:
     description: "FE URL from PR or staging"
     required: true
@@ -65,8 +61,6 @@ runs:
         API_URI: ${{inputs.apiUrl}}
         APP_MOUNT_URI: ${{ inputs.appMountUri }}
         BASE_URL: ${{inputs.baseUrl}}
-        ## backward compatibility requires CYPRESS_baseUrl as env var name - can be removed when version lower than 3.17 are no longer supported
-        CYPRESS_baseUrl: ${{inputs.CYPRESS_baseUrl}}
         CYPRESS_USER_NAME: ${{ inputs.userName }}
         CYPRESS_SECOND_USER_NAME: ${{ inputs.secondUserName }}
         CYPRESS_USER_PASSWORD: ${{ inputs.userPassword }}
