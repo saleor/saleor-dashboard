@@ -139,7 +139,10 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
                 if (fetchOnFocus) {
                   fetchChoices(inputValue);
                 }
-                input.current.select();
+
+                if (input.current) {
+                  input.current.select();
+                }
               };
 
               const handleToggleMenu = () => {
