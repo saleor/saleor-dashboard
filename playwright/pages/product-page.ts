@@ -1,6 +1,7 @@
 import * as faker from "faker";
 
 import { LOCATORS } from "@data/common-locators";
+import { ChannelSelectDialog } from "@dialogs/channel-select-dialog";
 import { MetadataSeoPage } from "@pages/metadata-seo-page";
 import { RightSideDetailsPage } from "@pages/right-side-details-section";
 import type { Locator, Page } from "@playwright/test";
@@ -8,7 +9,6 @@ import { expect } from "@playwright/test";
 
 const productName = `e2e-productName-${faker.datatype.number()}`;
 const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
-const productRating = `9`;
 
 export class ProductPage {
   readonly page: Page;
@@ -42,11 +42,14 @@ export class ProductPage {
   readonly saveButton: Locator;
   readonly firstRowDataGrid: Locator;
   readonly productUpdateFormSection: Locator;
+  readonly manageChannelsButton: Locator;
   metadataSeoPage: MetadataSeoPage;
   rightSideDetailsPage: RightSideDetailsPage;
+  channelSelectDialog: ChannelSelectDialog;
 
   constructor(page: Page) {
     this.page = page;
+    this.channelSelectDialog = new ChannelSelectDialog(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
     this.productNameInput = page.locator("[name='name']");
@@ -75,6 +78,9 @@ export class ProductPage {
     this.visibleRadioBtn = page.locator("[name='isPublished']");
     this.channelAvailabilityItem = page.locator(
       "[data-test-id*='channel-availability-item']",
+    );
+    this.manageChannelsButton = page.getByTestId(
+      "channels-availability-manage-button",
     );
     this.addVariantButton = page.locator(
       "[data-test-id*='button-add-variant']",
@@ -111,8 +117,24 @@ export class ProductPage {
   async typeProductDescription(description = productDescription) {
     await this.descriptionInput.type(description);
   }
-  async typeProductRating(rating = productRating) {
+  async typeProductRating(rating = "9") {
     await this.ratingInput.fill(rating);
+  }
+  async typeSellingPriceForChannel(
+    channelName: string,
+    sellingPriceValue = "50",
+  ) {
+    const channel = this.page.locator(
+      `[data-test-id="Channel-${channelName}"]`,
+    );
+    await channel.locator(this.sellingPriceInput).fill(sellingPriceValue);
+  }
+
+  async typeCostPrice(channelName: string, costPriceValue = "40") {
+    const channel = this.page.locator(
+      `[data-test-id="Channel-${channelName}"]`,
+    );
+    await channel.locator(this.costPriceInput).fill(costPriceValue);
   }
 
   async clickSaveButton() {
@@ -120,5 +142,11 @@ export class ProductPage {
   }
   async expectSuccessBanner() {
     await expect(this.page.locator(LOCATORS.successBanner)).toBeVisible();
+  }
+  async selectOneChannelAsAvailable() {
+    await this.manageChannelsButton.click();
+    await this.channelSelectDialog.clickAllChannelsCheckbox();
+    await this.channelSelectDialog.selectFirstChannel();
+    await this.channelSelectDialog.clickConfirmButton();
   }
 }
