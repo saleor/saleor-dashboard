@@ -43,6 +43,7 @@ export const VoucherCodes = ({
         justifyContent="space-between"
         alignItems="center"
         marginBottom={4}
+        marginTop={8}
         paddingX={6}
       >
         <Text variant="heading">

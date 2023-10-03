@@ -64,6 +64,12 @@ export const VoucherCodesGenerateDialog = ({
     reset();
   };
 
+  const handleSubmit = async () => {
+    await submit();
+    onClose();
+    reset();
+  };
+
   return (
     <DashboardModal open={open} onChange={handleModalClose}>
       <DashboardModal.Content>
@@ -94,7 +100,7 @@ export const VoucherCodesGenerateDialog = ({
           <Button onClick={handleModalClose} variant="secondary">
             {intl.formatMessage(buttonMessages.back)}
           </Button>
-          <Button onClick={submit}>
+          <Button onClick={handleSubmit}>
             {intl.formatMessage(buttonMessages.confirm)}
           </Button>
         </DashboardModal.Actions>

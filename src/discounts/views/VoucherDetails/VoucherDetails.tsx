@@ -143,6 +143,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     voucherCodesRefetch,
     handleSetSelectedVoucherCodesIds,
     updateVoucherCodesListSettings,
+    handleAddVoucherCode,
+    handleGenerateMultipeCodes,
   } = useVoucherCodes({ id });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -445,22 +447,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       <VoucherCodesGenerateDialog
         open={params.action === "multiple-codes"}
         onClose={closeModal}
-        onSubmit={closeModal}
+        onSubmit={handleGenerateMultipeCodes}
       />
       <VoucherCodesManualDialog
         open={params.action === "single-codes"}
         confirmButtonTransitionState={voucherUpdateOpts.status}
         onClose={closeModal}
-        onSubmit={() =>
-          voucherUpdate({
-            variables: {
-              id,
-              input: {
-                codes: [],
-              },
-            },
-          })
-        }
+        onSubmit={handleAddVoucherCode}
       />
       <AssignCategoriesDialog
         categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)?.filter(

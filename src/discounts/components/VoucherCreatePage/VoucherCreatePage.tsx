@@ -16,7 +16,6 @@ import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { validatePrice } from "@dashboard/products/utils/validation";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -144,20 +143,18 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             onChange={event => handleDiscountTypeChange(data, event)}
             variant="create"
           />
-          <Box marginTop={8}>
-            <VoucherCodes
-              codes={paginatedCodes}
-              loading={false}
-              onDeleteCodes={onVoucherCodesDelete}
-              onMultiCodesGenerate={onMultipleVoucheCodesGenerate}
-              onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
-              onSettingsChange={onSettingsChange}
-              onSingleCodesGenerate={onSingleVoucherCodeGenerate}
-              selectedCodesIds={selectedRowIds}
-              settings={settings}
-              voucherCodesPagination={pagination}
-            />
-          </Box>
+          <VoucherCodes
+            codes={paginatedCodes}
+            loading={false}
+            onDeleteCodes={onVoucherCodesDelete}
+            onMultiCodesGenerate={onMultipleVoucheCodesGenerate}
+            onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
+            onSettingsChange={onSettingsChange}
+            onSingleCodesGenerate={onSingleVoucherCodeGenerate}
+            selectedCodesIds={selectedRowIds}
+            settings={settings}
+            voucherCodesPagination={pagination}
+          />
           <VoucherTypes
             data={data}
             disabled={disabled}
