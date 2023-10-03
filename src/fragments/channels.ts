@@ -36,6 +36,8 @@ export const channelDetailsFragment = gql`
       markAsPaidStrategy
       deleteExpiredOrdersAfter
       allowUnpaidOrders
+    }
+    paymentSettings {
       defaultTransactionFlowStrategy
     }
   }
