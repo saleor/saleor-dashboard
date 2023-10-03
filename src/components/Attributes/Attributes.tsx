@@ -79,7 +79,7 @@ export const Attributes: React.FC<AttributesProps> = ({
         <Box display="flex" flexDirection="column" gap={2}>
           <Accordion defaultValue="attributes-accordion">
             <Accordion.Item value="attributes-accordion">
-              <Accordion.Trigger buttonDataTestId="attributes-expand">
+              <Accordion.Trigger data-testid="attributes-expand">
                 <Text variant="caption" color="textNeutralSubdued">
                   <FormattedMessage
                     {...messages.attributesNumber}

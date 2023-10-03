@@ -124,14 +124,15 @@ export const ProductOrganization: React.FC<
               <Text variant="bodyEmp">
                 <FormattedMessage id="anK7jD" defaultMessage="Product Type" />
               </Text>
-              <Text variant="caption">
-                <Link
-                  href={productTypeUrl(productType?.id) ?? ""}
-                  disabled={!productType?.id}
-                >
-                  {productType?.name ?? "..."}
-                </Link>
-              </Text>
+              {productType?.id ? (
+                <Text variant="caption">
+                  <Link href={productTypeUrl(productType?.id) ?? ""}>
+                    {productType?.name ?? "..."}
+                  </Link>
+                </Text>
+              ) : (
+                <Text variant="caption">{productType?.name ?? "..."}</Text>
+              )}
             </Box>
           </Box>
         )}

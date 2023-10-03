@@ -19,3 +19,5 @@ declare interface Window {
     IS_CLOUD_INSTANCE?: string;
   };
 }
+
+declare module "@editorjs/paragraph" {}
