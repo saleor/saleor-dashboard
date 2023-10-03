@@ -313,7 +313,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       </>
                     )}
                     <ProductVariantMedia
-                      disabled={loading}
+                      disabled={loading || productMedia.length === 0}
                       media={media}
                       placeholderImage={placeholderImage}
                       onImageAdd={toggleModal}
