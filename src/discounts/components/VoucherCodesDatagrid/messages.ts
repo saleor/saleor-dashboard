@@ -9,9 +9,9 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Usage",
     id: "wbsq7O",
   },
-  limit: {
-    defaultMessage: "Limit",
-    id: "YH6meO",
+  status: {
+    defaultMessage: "Status",
+    id: "tzMNF3",
   },
 });
 

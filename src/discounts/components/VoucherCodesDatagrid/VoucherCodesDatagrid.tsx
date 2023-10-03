@@ -43,7 +43,7 @@ export const VoucherCodesDatagrid = ({
 
   const { handlers, visibleColumns } = useColumns({
     staticColumns: voucherCodesStaticColumns,
-    selectedColumns: ["code", "usage", "limit"],
+    selectedColumns: ["code", "usage", "status"],
     onSave: () => {},
   });
 

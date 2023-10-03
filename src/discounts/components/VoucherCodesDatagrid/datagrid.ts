@@ -18,6 +18,11 @@ export const voucherCodesStaticColumnsAdapter = (intl: IntlShape) => [
     title: intl.formatMessage(columnsMessages.usage),
     width: 150,
   },
+  {
+    id: "status",
+    title: intl.formatMessage(columnsMessages.status),
+    width: 150,
+  },
 ];
 
 export const createGetCellContent =
@@ -38,6 +43,8 @@ export const createGetCellContent =
           rowData?.used?.toString() ?? PLACEHOLDER,
           false,
         );
+      case "status":
+        return readonlyTextCell(rowData?.status ?? "Active", false);
       default:
         return readonlyTextCell("", false);
     }
