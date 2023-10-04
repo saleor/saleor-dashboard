@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import "@formatjs/intl-datetimeformat/polyfill";
 import "@saleor/macaw-ui/next/style";
 import "./index.css";
 
