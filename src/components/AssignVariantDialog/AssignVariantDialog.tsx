@@ -27,6 +27,7 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { Container } from "../AssignContainerDialog";
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
@@ -48,7 +49,7 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;
   onFetch: (value: string) => void;
-  onSubmit: (data: string[]) => void;
+  onSubmit: (data: Container[]) => void;
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
@@ -87,7 +88,8 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
       )
     : [];
 
-  const handleSubmit = () => onSubmit(variants.map(variant => variant.id));
+  const handleSubmit = () =>
+    onSubmit(variants.map(variant => ({ name: variant.name, id: variant.id })));
 
   return (
     <Dialog

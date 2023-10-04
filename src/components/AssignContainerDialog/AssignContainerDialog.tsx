@@ -28,7 +28,7 @@ export interface AssignContainerDialogFormData {
 }
 
 type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
-interface Container extends Node {
+export interface Container extends Node {
   name: string;
 }
 export interface AssignContainerDialogProps
@@ -39,23 +39,23 @@ export interface AssignContainerDialogProps
   loading: boolean;
   labels: Labels;
   onFetch: (value: string) => void;
-  onSubmit: (data: string[]) => void;
+  onSubmit: (data: Container[]) => void;
 }
 
 function handleContainerAssign(
-  containerId: string,
+  container: Container,
   isSelected: boolean,
-  selectedContainers: string[],
-  setSelectedContainers: (data: string[]) => void,
+  selectedContainers: Container[],
+  setSelectedContainers: (data: Container[]) => void,
 ) {
   if (isSelected) {
     setSelectedContainers(
       selectedContainers.filter(
-        selectedContainer => selectedContainer !== containerId,
+        selectedContainer => selectedContainer.id !== container.id,
       ),
     );
   } else {
-    setSelectedContainers([...selectedContainers, containerId]);
+    setSelectedContainers([...selectedContainers, container]);
   }
 }
 
@@ -78,9 +78,9 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
   const scrollableDialogClasses = useScrollableDialogStyle({});
 
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [selectedContainers, setSelectedContainers] = React.useState<string[]>(
-    [],
-  );
+  const [selectedContainers, setSelectedContainers] = React.useState<
+    Container[]
+  >([]);
 
   const handleSubmit = () => onSubmit(selectedContainers);
 
@@ -127,7 +127,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
             <TableBody>
               {containers?.map(container => {
                 const isSelected = !!selectedContainers.find(
-                  selectedContainer => selectedContainer === container.id,
+                  selectedContainer => selectedContainer.id === container.id,
                 );
 
                 return (
@@ -140,7 +140,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
                         checked={isSelected}
                         onChange={() =>
                           handleContainerAssign(
-                            container.id,
+                            container,
                             isSelected,
                             selectedContainers,
                             setSelectedContainers,
