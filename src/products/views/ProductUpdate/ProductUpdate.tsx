@@ -17,7 +17,6 @@ import {
   useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
 } from "@dashboard/graphql";
-import { useSearchCache } from "@dashboard/hooks/makeTopLevelSearch/useSearchCache";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -264,9 +263,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     loadMoreProducts,
   );
 
-  const cachedProductReferences = useSearchCache(searchProductsOpts.data);
-  const cachedPageReferences = useSearchCache(searchPagesOpts.data);
-
   const fetchMoreAttributeValues = {
     hasMore:
       !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
@@ -336,8 +332,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
-        cachedReferenceProducts={cachedProductReferences}
-        cachedReferencePages={cachedPageReferences}
       />
       <ActionDialog
         open={params.action === "remove"}

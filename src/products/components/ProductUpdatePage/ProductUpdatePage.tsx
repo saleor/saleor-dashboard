@@ -22,7 +22,6 @@ import Savebar from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
-  AttributeFragment,
   ChannelFragment,
   PermissionEnum,
   ProductChannelListingErrorFragment,
@@ -92,13 +91,10 @@ export interface ProductUpdatePageProps {
   fetchMoreTaxClasses: FetchMoreProps;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
-  cachedReferencePages?: RelayToFlat<SearchPagesQuery["search"]>;
-  cachedReferenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   assignReferencesAttributeId?: string;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
-  cachedAttributes?: AttributeFragment[];
   isSimpleProduct: boolean;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
@@ -148,8 +144,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreTaxClasses,
   referencePages = [],
   referenceProducts = [],
-  cachedReferencePages,
-  cachedReferenceProducts,
   onDelete,
   onImageDelete,
   onImageReorder,
@@ -269,8 +263,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       setSelectedTaxClass={setSelectedTaxClass}
       taxClasses={taxClassesChoices}
       hasVariants={hasVariants}
-      referencePages={cachedReferencePages}
-      referenceProducts={cachedReferenceProducts}
+      referencePages={referencePages}
+      referenceProducts={referenceProducts}
       fetchReferencePages={fetchReferencePages}
       fetchMoreReferencePages={fetchMoreReferencePages}
       fetchReferenceProducts={fetchReferenceProducts}
