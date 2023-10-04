@@ -5,6 +5,7 @@ import { generateMultipleIds } from "@dashboard/discounts/components/VoucherCrea
 import { useVoucherCodesQuery } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
+  LocalPagination,
   useLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
@@ -20,7 +21,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   } = useListSettings(ListViews.VOUCHER_CODES);
 
   const [addedVoucherCodes, setAddedVoucherCodes] = useState<VoucherCode[]>([]);
-  const [serverPagination, setServerPagination] = useState(true);
+  const [isServerPagination, setIsServerPagination] = useState(true);
 
   const handleAddVoucherCode = (code: string) => [
     setAddedVoucherCodes(codes => [...codes, { code }]),
@@ -34,15 +35,31 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
       ...codes,
       ...generateMultipleIds(quantity, prefix),
     ]);
-    setServerPagination(false);
+    setIsServerPagination(false);
   };
 
-  const [voucherCodesPaginationState, setVoucherCodesPaginationState] =
-    useLocalPaginationState(voucherCodesSettings.rowNumber);
+  const [
+    serverVoucherCodesPaginationState,
+    setServerVoucherCodesPaginationState,
+  ] = useLocalPaginationState(voucherCodesSettings.rowNumber);
 
-  const voucherCodesPaginate = useLocalPaginator(
-    setVoucherCodesPaginationState,
+  const serverVoucherCodesPaginate = useLocalPaginator(
+    setServerVoucherCodesPaginationState,
   );
+
+  const {
+    paginatedCodes: clientVoucherCodes,
+    pagination: clientVoucherCodesPagination,
+    onSettingsChange,
+  } = useVoucherCodesPagination(addedVoucherCodes);
+
+  const hasClientPaginationNextPage =
+    clientVoucherCodesPagination?.pageInfo?.hasNextPage;
+  const hasClientPaginationPrevPage =
+    clientVoucherCodesPagination.pageInfo?.hasPreviousPage;
+
+  const freeSlotsInClientPagianationPage =
+    voucherCodesSettings.rowNumber - clientVoucherCodes.length;
 
   const {
     data: voucherCodesData,
@@ -51,14 +68,25 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   } = useVoucherCodesQuery({
     variables: {
       id,
-      ...voucherCodesPaginationState,
+      ...(isServerPagination && serverVoucherCodesPaginationState),
+      first:
+        !isServerPagination &&
+        !hasClientPaginationNextPage &&
+        freeSlotsInClientPagianationPage > 0
+          ? freeSlotsInClientPagianationPage
+          : serverVoucherCodesPaginationState.first,
     },
   });
 
-  let voucherCodesPagination = voucherCodesPaginate(
+  const serverVoucherCodesPagination = serverVoucherCodesPaginate(
     voucherCodesData?.voucher?.codes?.pageInfo,
-    voucherCodesPaginationState,
+    serverVoucherCodesPaginationState,
   );
+
+  const hasServerPaginationNextPage =
+    serverVoucherCodesPagination?.pageInfo?.hasNextPage;
+  const hasServerPaginationPrevPage =
+    serverVoucherCodesPagination?.pageInfo?.hasPreviousPage;
 
   const {
     selectedRowIds,
@@ -69,19 +97,25 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   const serverVoucherCodes =
     mapEdgesToItems(voucherCodesData?.voucher?.codes) ?? [];
 
-  const { paginatedCodes, pagination: clientPagination } =
-    useVoucherCodesPagination(addedVoucherCodes);
-
   let voucherCodes = [];
 
-  if (serverPagination) {
+  if (isServerPagination) {
     voucherCodes = serverVoucherCodes;
   } else {
-    voucherCodes = paginatedCodes;
+    voucherCodes = [
+      ...clientVoucherCodes,
+      ...(!hasClientPaginationNextPage && freeSlotsInClientPagianationPage > 0
+        ? [...serverVoucherCodes]
+        : []),
+    ];
   }
 
-  if (!serverPagination) {
-    voucherCodesPagination = clientPagination;
+  let voucherCodesPagination: LocalPagination;
+
+  if (!isServerPagination) {
+    voucherCodesPagination = clientVoucherCodesPagination;
+  } else {
+    voucherCodesPagination = serverVoucherCodesPagination;
   }
 
   const handleSetSelectedVoucherCodesIds = useCallback(
@@ -107,55 +141,49 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     ],
   );
 
-  const finalPagination = serverPagination
-    ? voucherCodesPagination
-    : clientPagination;
-
   return {
     voucherCodes,
     voucherCodesLoading,
     voucherCodesPagination: {
-      ...finalPagination,
+      ...voucherCodesPagination,
       pageInfo: {
-        ...finalPagination.pageInfo,
-        hasNextPage: serverPagination
-          ? voucherCodesPagination?.pageInfo?.hasNextPage
-          : clientPagination?.pageInfo?.hasNextPage ||
-            voucherCodesData?.voucher?.codes?.edges.length > 0,
-        hasPreviousPage: !serverPagination
-          ? clientPagination.pageInfo?.hasPreviousPage
-          : voucherCodesPagination?.pageInfo?.hasPreviousPage ||
-            addedVoucherCodes.length > 0,
+        ...voucherCodesPagination.pageInfo,
+        hasNextPage: isServerPagination
+          ? hasServerPaginationNextPage
+          : hasClientPaginationNextPage || serverVoucherCodes.length > 0,
+        hasPreviousPage: !isServerPagination
+          ? clientVoucherCodesPagination.pageInfo?.hasPreviousPage
+          : hasClientPaginationPrevPage || addedVoucherCodes.length > 0,
       },
       loadNextPage: () => {
-        if (serverPagination) {
+        if (isServerPagination) {
           voucherCodesPagination.loadNextPage();
         } else {
           if (voucherCodes.length < voucherCodesSettings.rowNumber) {
-            setServerPagination(true);
+            setIsServerPagination(true);
           } else {
-            clientPagination.loadNextPage();
+            clientVoucherCodesPagination.loadNextPage();
           }
         }
       },
       loadPreviousPage: () => {
-        if (serverPagination) {
-          if (
-            !voucherCodesPagination?.pageInfo?.hasPreviousPage &&
-            addedVoucherCodes.length > 0
-          ) {
-            setServerPagination(false);
+        if (isServerPagination) {
+          if (!hasServerPaginationPrevPage && addedVoucherCodes.length > 0) {
+            setIsServerPagination(false);
           } else {
             voucherCodesPagination.loadPreviousPage();
           }
         } else {
-          clientPagination.loadPreviousPage();
+          clientVoucherCodesPagination.loadPreviousPage();
         }
       },
     },
     voucherCodesRefetch,
     voucherCodesSettings,
-    updateVoucherCodesListSettings,
+    updateVoucherCodesListSettings: (key: any, value: any) => {
+      updateVoucherCodesListSettings(key, value);
+      onSettingsChange(key, value);
+    },
     selectedVoucherCodesIds: selectedRowIds,
     handleSetSelectedVoucherCodesIds,
     handleAddVoucherCode,
