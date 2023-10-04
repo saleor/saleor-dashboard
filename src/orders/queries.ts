@@ -98,9 +98,29 @@ export const orderDraftListQuery = gql`
 `;
 
 export const orderDetailsQuery = gql`
-  query OrderDetails($id: ID!, $isStaffUser: Boolean!) {
+  query OrderDetails($id: ID!) {
     order(id: $id) {
       ...OrderDetails
+    }
+    shop {
+      countries {
+        code
+        country
+      }
+      defaultWeightUnit
+      fulfillmentAllowUnpaid
+      fulfillmentAutoApprove
+      availablePaymentGateways {
+        ...PaymentGateway
+      }
+    }
+  }
+`;
+
+export const orderDetailsWithMetadataQuery = gql`
+  query OrderDetailsWithMetadata($id: ID!, $isStaffUser: Boolean!) {
+    order(id: $id) {
+      ...OrderDetailsWithMetadata
     }
     shop {
       countries {

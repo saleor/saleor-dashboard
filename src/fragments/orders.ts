@@ -96,12 +96,6 @@ export const fragmentOrderLine = gql`
         id
         isAvailableForPurchase
       }
-      metadata {
-        ...MetadataItem
-      }
-      privateMetadata @include(if: $isStaffUser) {
-        ...MetadataItem
-      }
     }
     productName
     productSku
@@ -145,6 +139,20 @@ export const fragmentOrderLine = gql`
   }
 `;
 
+export const fragmentOrderLineWithMetadata = gql`
+  fragment OrderLineWithMetadata on OrderLine {
+    ...OrderLine
+    variant {
+      metadata {
+        ...MetadataItem
+      }
+      privateMetadata @include(if: $isStaffUser) {
+        ...MetadataItem
+      }
+    }
+  }
+`;
+
 export const fragmentRefundOrderLine = gql`
   fragment RefundOrderLine on OrderLine {
     id
@@ -178,6 +186,17 @@ export const fulfillmentFragment = gql`
     warehouse {
       id
       name
+    }
+  }
+`;
+
+export const fulfillmentFragmentWithMetadata = gql`
+  fragment FulfillmentWithMetadata on Fulfillment {
+    ...Fulfillment
+    lines {
+      orderLine {
+        ...OrderLineWithMetadata
+      }
     }
   }
 `;
@@ -361,6 +380,18 @@ export const fragmentOrderDetails = gql`
       }
     }
     isPaid
+  }
+`;
+
+export const fragmentOrderDetailsWithMetadata = gql`
+  fragment OrderDetailsWithMetadata on Order {
+    ...OrderDetails
+    fulfillments {
+      ...FulfillmentWithMetadata
+    }
+    lines {
+      ...OrderLineWithMetadata
+    }
   }
 `;
 
