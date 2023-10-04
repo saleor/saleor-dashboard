@@ -117,6 +117,26 @@ export const orderDetailsQuery = gql`
   }
 `;
 
+export const orderDetailsWithMetadataQuery = gql`
+  query OrderDetailsWithMetadata($id: ID!, $isStaffUser: Boolean!) {
+    order(id: $id) {
+      ...OrderDetailsWithMetadata
+    }
+    shop {
+      countries {
+        code
+        country
+      }
+      defaultWeightUnit
+      fulfillmentAllowUnpaid
+      fulfillmentAutoApprove
+      availablePaymentGateways {
+        ...PaymentGateway
+      }
+    }
+  }
+`;
+
 export const orderDetailsGrantedRefund = gql`
   query OrderDetailsGrantRefund($id: ID!) {
     order(id: $id) {

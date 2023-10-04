@@ -1,14 +1,17 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
+import { useUser } from "@dashboard/auth";
 import { MetadataIdSchema } from "@dashboard/components/Metadata";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
   OrderDetailsDocument,
   OrderStatus,
+  PermissionEnum,
   useOrderConfirmMutation,
-  useOrderDetailsQuery,
+  useOrderDetailsWithMetadataQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
@@ -45,6 +48,12 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
 
   const { queue } = useBackgroundTask();
   const intl = useIntl();
+
+  const user = useUser();
+  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
+    PermissionEnum.MANAGE_STAFF,
+  ]);
+
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata, updatePrivateMetadataOpts] =
     useUpdatePrivateMetadataMutation({});
@@ -71,9 +80,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     },
   });
 
-  const { data, loading } = useOrderDetailsQuery({
+  const { data, loading } = useOrderDetailsWithMetadataQuery({
     displayLoader: true,
-    variables: { id },
+    variables: { id, isStaffUser },
   });
 
   const order = data?.order;

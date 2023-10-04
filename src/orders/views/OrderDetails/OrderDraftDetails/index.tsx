@@ -2,7 +2,7 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
-  OrderDetailsQueryResult,
+  OrderDetailsWithMetadataQueryResult,
   OrderDraftCancelMutation,
   OrderDraftCancelMutationVariables,
   OrderDraftFinalizeMutation,
@@ -58,7 +58,7 @@ interface OrderDraftDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   loading: any;
-  data: OrderDetailsQueryResult["data"];
+  data: OrderDetailsWithMetadataQueryResult["data"];
   orderAddNote: any;
   orderLineUpdate: PartialMutationProviderOutput<
     OrderLineUpdateMutation,
