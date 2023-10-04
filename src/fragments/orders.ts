@@ -99,7 +99,7 @@ export const fragmentOrderLine = gql`
       metadata {
         ...MetadataItem
       }
-      privateMetadata @include(if: $isStaffUser) {
+      privateMetadata {
         ...MetadataItem
       }
     }

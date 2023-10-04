@@ -98,7 +98,7 @@ export const orderDraftListQuery = gql`
 `;
 
 export const orderDetailsQuery = gql`
-  query OrderDetails($id: ID!, $isStaffUser: Boolean!) {
+  query OrderDetails($id: ID!) {
     order(id: $id) {
       ...OrderDetails
     }

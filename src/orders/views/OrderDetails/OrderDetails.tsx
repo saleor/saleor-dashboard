@@ -1,15 +1,12 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
-import { useUser } from "@dashboard/auth";
 import { MetadataIdSchema } from "@dashboard/components/Metadata";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
   OrderDetailsDocument,
   OrderStatus,
-  PermissionEnum,
   useOrderConfirmMutation,
   useOrderDetailsQuery,
   useUpdateMetadataMutation,
@@ -52,7 +49,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const [updatePrivateMetadata, updatePrivateMetadataOpts] =
     useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
-  const user = useUser();
   const apolloClient = useApolloClient();
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -75,13 +71,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     },
   });
 
-  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
-    PermissionEnum.MANAGE_STAFF,
-  ]);
-
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
-    variables: { id, isStaffUser },
+    variables: { id },
   });
 
   const order = data?.order;
@@ -95,7 +87,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
 
   const handleSubmit = async (data: MetadataIdSchema) => {
     if (order?.status === OrderStatus.UNCONFIRMED) {
-      await orderConfirm({ variables: { id: order?.id, isStaffUser } });
+      await orderConfirm({ variables: { id: order?.id } });
     }
 
     const initial = createOrderMetadataIdSchema(order);
