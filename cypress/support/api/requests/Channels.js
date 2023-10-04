@@ -110,6 +110,8 @@ export function updateChannelOrderSettings({
           automaticallyFulfillNonShippableGiftCard
           expireOrdersAfter
           markAsPaidStrategy
+        }
+        paymentSettings {
           defaultTransactionFlowStrategy
         }
       }

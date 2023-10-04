@@ -53,8 +53,11 @@ export const channelsList: ChannelDetailsFragment[] = [
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
       __typename: "OrderSettings",
+    },
+    paymentSettings: {
+      __typename: "PaymentSettings",
+      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
   },
   {
@@ -88,10 +91,13 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
+    },
+    paymentSettings: {
+      __typename: "PaymentSettings",
+      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
   },
   {
@@ -125,10 +131,13 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
+    },
+    paymentSettings: {
+      __typename: "PaymentSettings",
+      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
   },
   {
@@ -162,10 +171,13 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
+    },
+    paymentSettings: {
+      __typename: "PaymentSettings",
+      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
   },
   {
@@ -199,10 +211,13 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
+    },
+    paymentSettings: {
+      __typename: "PaymentSettings",
+      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
   },
   {
@@ -236,10 +251,13 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
+    },
+    paymentSettings: {
+      __typename: "PaymentSettings",
+      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
   },
   {
@@ -273,10 +291,13 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
+    },
+    paymentSettings: {
+      __typename: "PaymentSettings",
+      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
   },
 ];
@@ -312,10 +333,13 @@ export const channel: ChannelDetailsFragment = {
   ],
   orderSettings: {
     markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
-    defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     deleteExpiredOrdersAfter: 60,
     allowUnpaidOrders: false,
     __typename: "OrderSettings",
+  },
+  paymentSettings: {
+    __typename: "PaymentSettings",
+    defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
   },
 };
 

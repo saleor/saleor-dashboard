@@ -140,7 +140,10 @@ export const ProductVariantPrice: React.FC<
               );
 
               return (
-                <TableRowLink key={listing?.id || `skeleton-${index}`}>
+                <TableRowLink
+                  key={listing?.id || `skeleton-${index}`}
+                  data-test-id={listing?.name}
+                >
                   <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                     <Text>{listing?.name || <Skeleton />}</Text>
                   </TableCell>

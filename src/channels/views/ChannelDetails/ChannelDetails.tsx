@@ -134,11 +134,13 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
           stockSettings: {
             allocationStrategy,
           },
+          paymentSettings: {
+            defaultTransactionFlowStrategy,
+          },
           orderSettings: {
             markAsPaidStrategy,
             deleteExpiredOrdersAfter,
             allowUnpaidOrders,
-            defaultTransactionFlowStrategy,
           },
         },
       },
