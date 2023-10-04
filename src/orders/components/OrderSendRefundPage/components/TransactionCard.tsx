@@ -57,7 +57,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   const id = useId();
 
   const user = useUser();
-  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
+  const isStaffUser = hasPermissions(user?.user?.userPermissions ?? [], [
     PermissionEnum.MANAGE_STAFF,
   ]);
 
