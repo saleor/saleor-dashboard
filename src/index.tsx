@@ -1,5 +1,6 @@
 // @ts-strict-ignore
-import "@formatjs/intl-datetimeformat/polyfill";
+import "@formatjs/intl-numberformat/polyfill";
+import "@formatjs/intl-numberformat/locale-data/en";
 import "@saleor/macaw-ui/next/style";
 import "./index.css";
 
