@@ -6,10 +6,10 @@ import { EditorCore, Props as ReactEditorJSProps } from "@react-editor-js/core";
 import { Box } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
-import { createReactEditorJS } from "react-editor-js";
 
 import { tools } from "./consts";
 import { useHasRendered } from "./hooks";
+import { ReactEditorJS } from "./ReactEditorJS";
 import useStyles from "./styles";
 
 export type EditorJsProps = Omit<ReactEditorJSProps, "factory">;
@@ -28,8 +28,6 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   // onChange with value shouldn't be used due to issues with React and EditorJS integration
   onChange?: () => void;
 }
-
-const ReactEditorJS = createReactEditorJS();
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
   id: defaultId,

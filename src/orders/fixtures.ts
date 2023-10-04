@@ -10,6 +10,7 @@ import {
   OrderAction,
   OrderDetailsFragment,
   OrderDetailsQuery,
+  OrderDetailsWithMetadataFragment,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   OrderFulfillLineFragment,
@@ -914,7 +915,9 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
 
 export const ORDER_AMOUNT = 234.93;
 
-export const order = (placeholder: string): OrderDetailsFragment => ({
+export const order = (
+  placeholder: string,
+): OrderDetailsWithMetadataFragment => ({
   __typename: "Order",
   giftCards: [],
   actions: [
@@ -1810,7 +1813,9 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
   transactions: orderTransactions,
 });
 
-export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
+export const draftOrder = (
+  placeholder: string,
+): OrderDetailsWithMetadataFragment => ({
   __typename: "Order" as "Order",
   giftCards: [],
   actions: [OrderAction.CAPTURE],

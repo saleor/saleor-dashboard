@@ -2,7 +2,8 @@
 import {
   FulfillmentStatus,
   OrderDetailsFragment,
-  OrderLineFragment,
+  OrderDetailsWithMetadataFragment,
+  OrderLineWithMetadataFragment,
   OrderRefundDataQuery,
   OrderStatus,
   PaymentChargeStatusEnum,
@@ -521,7 +522,7 @@ describe("Get get all fulfillment lines price sum", () => {
 
 describe("Get the total value of all replaced products", () => {
   it("sums up correctly", () => {
-    const unfulfilledLines: OrderLineFragment[] = [
+    const unfulfilledLines: OrderLineWithMetadataFragment[] = [
       {
         id: "1",
         isShippingRequired: false,
@@ -860,593 +861,594 @@ describe("Get the total value of all replaced products", () => {
       },
     ];
 
-    const fulfilledLines: OrderDetailsFragment["fulfillments"][0]["lines"] = [
-      {
-        id: "4",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ1",
-          isShippingRequired: false,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
-            name: "Milk 1",
-            quantityAvailable: 50,
-            preorder: null,
-            metadata: [],
-            privateMetadata: [],
-            stocks: [
+    const fulfilledLines: OrderDetailsWithMetadataFragment["fulfillments"][0]["lines"] =
+      [
+        {
+          id: "4",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ1",
+            isShippingRequired: false,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+              name: "Milk 1",
+              quantityAvailable: 50,
+              preorder: null,
+              metadata: [],
+              privateMetadata: [],
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "Lake Tunes",
-          productSku: "lake-tunes-mp3",
-          quantity: 20,
-          quantityFulfilled: 6,
-          quantityToFulfill: 14,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 1594.2,
+            productName: "Lake Tunes",
+            productSku: "lake-tunes-mp3",
+            quantity: 20,
+            quantityFulfilled: 6,
+            quantityToFulfill: 14,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 1594.2,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 1594.2,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 1594.2,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-      {
-        id: "5",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ1",
-          isShippingRequired: false,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
-            name: "Milk 1",
-            quantityAvailable: 50,
-            preorder: null,
-            metadata: [],
-            privateMetadata: [],
-            stocks: [
+        {
+          id: "5",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ1",
+            isShippingRequired: false,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+              name: "Milk 1",
+              quantityAvailable: 50,
+              preorder: null,
+              metadata: [],
+              privateMetadata: [],
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "Lake Tunes",
-          productSku: "lake-tunes-mp3",
-          quantity: 25,
-          quantityFulfilled: 8,
-          quantityToFulfill: 17,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 1992.75,
+            productName: "Lake Tunes",
+            productSku: "lake-tunes-mp3",
+            quantity: 25,
+            quantityFulfilled: 8,
+            quantityToFulfill: 17,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 1992.75,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 1992.75,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 1992.75,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-      {
-        id: "6",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ3",
-          isShippingRequired: true,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
-            name: "Milk 2",
-            quantityAvailable: 50,
-            preorder: null,
-            metadata: [],
-            privateMetadata: [],
-            stocks: [
+        {
+          id: "6",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ3",
+            isShippingRequired: true,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
+              name: "Milk 2",
+              quantityAvailable: 50,
+              preorder: null,
+              metadata: [],
+              privateMetadata: [],
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "T-shirt",
-          productSku: "29810068",
-          quantity: 10,
-          quantityFulfilled: 3,
-          quantityToFulfill: 7,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 797.1,
+            productName: "T-shirt",
+            productSku: "29810068",
+            quantity: 10,
+            quantityFulfilled: 3,
+            quantityToFulfill: 7,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 797.1,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 797.1,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 797.1,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 2.5,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 2.5,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 2.5,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 2.5,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-      {
-        id: "7",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ1",
-          isShippingRequired: false,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
-            name: "Milk 3",
-            quantityAvailable: 50,
-            preorder: null,
-            metadata: [],
-            privateMetadata: [],
-            stocks: [
+        {
+          id: "7",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ1",
+            isShippingRequired: false,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+              name: "Milk 3",
+              quantityAvailable: 50,
+              preorder: null,
+              metadata: [],
+              privateMetadata: [],
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "Lake Tunes",
-          productSku: "lake-tunes-mp3",
-          quantity: 20,
-          quantityFulfilled: 6,
-          quantityToFulfill: 14,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 1594.2,
+            productName: "Lake Tunes",
+            productSku: "lake-tunes-mp3",
+            quantity: 20,
+            quantityFulfilled: 6,
+            quantityToFulfill: 14,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 1594.2,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 1594.2,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 1594.2,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-      {
-        id: "8",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ1",
-          isShippingRequired: false,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
-            name: "Milk 3",
-            quantityAvailable: 50,
-            preorder: null,
-            metadata: [],
-            privateMetadata: [],
-            stocks: [
+        {
+          id: "8",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ1",
+            isShippingRequired: false,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+              name: "Milk 3",
+              quantityAvailable: 50,
+              preorder: null,
+              metadata: [],
+              privateMetadata: [],
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "Lake Tunes",
-          productSku: "lake-tunes-mp3",
-          quantity: 25,
-          quantityFulfilled: 8,
-          quantityToFulfill: 17,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 1992.75,
+            productName: "Lake Tunes",
+            productSku: "lake-tunes-mp3",
+            quantity: 25,
+            quantityFulfilled: 8,
+            quantityToFulfill: 17,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 1992.75,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 1992.75,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 1992.75,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-    ];
+      ];
 
     const unfulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
@@ -1582,7 +1584,7 @@ describe("Get the total value of all replaced products", () => {
 
 describe("Get the total value of all selected products", () => {
   it("sums up correctly", () => {
-    const unfulfilledLines: OrderLineFragment[] = [
+    const unfulfilledLines: OrderLineWithMetadataFragment[] = [
       {
         id: "1",
         isShippingRequired: false,
@@ -1921,359 +1923,360 @@ describe("Get the total value of all selected products", () => {
       },
     ];
 
-    const fulfilledLines: OrderDetailsFragment["fulfillments"][0]["lines"] = [
-      {
-        id: "4",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ1",
-          isShippingRequired: false,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
-            name: "Digital Book",
-            quantityAvailable: 50,
-            preorder: null,
-            metadata: [],
-            privateMetadata: [],
-            stocks: [
+    const fulfilledLines: OrderDetailsWithMetadataFragment["fulfillments"][0]["lines"] =
+      [
+        {
+          id: "4",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ1",
+            isShippingRequired: false,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+              name: "Digital Book",
+              quantityAvailable: 50,
+              preorder: null,
+              metadata: [],
+              privateMetadata: [],
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "Lake Tunes",
-          productSku: "lake-tunes-mp3",
-          quantity: 20,
-          quantityFulfilled: 6,
-          quantityToFulfill: 14,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 1594.2,
+            productName: "Lake Tunes",
+            productSku: "lake-tunes-mp3",
+            quantity: 20,
+            quantityFulfilled: 6,
+            quantityToFulfill: 14,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 1594.2,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 1594.2,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 1594.2,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-      {
-        id: "5",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ1",
-          isShippingRequired: false,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
-            name: "Digital Book",
-            quantityAvailable: 50,
-            metadata: [],
-            privateMetadata: [],
-            preorder: null,
-            stocks: [
+        {
+          id: "5",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ1",
+            isShippingRequired: false,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+              name: "Digital Book",
+              quantityAvailable: 50,
+              metadata: [],
+              privateMetadata: [],
+              preorder: null,
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "Lake Tunes",
-          productSku: "lake-tunes-mp3",
-          quantity: 25,
-          quantityFulfilled: 8,
-          quantityToFulfill: 17,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 1992.75,
+            productName: "Lake Tunes",
+            productSku: "lake-tunes-mp3",
+            quantity: 25,
+            quantityFulfilled: 8,
+            quantityToFulfill: 17,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 1992.75,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 1992.75,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 1992.75,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-      {
-        id: "6",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ3",
-          isShippingRequired: true,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
-            name: "Digital Book",
-            quantityAvailable: 50,
-            preorder: null,
-            metadata: [],
-            privateMetadata: [],
-            stocks: [
+        {
+          id: "6",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ3",
+            isShippingRequired: true,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
+              name: "Digital Book",
+              quantityAvailable: 50,
+              preorder: null,
+              metadata: [],
+              privateMetadata: [],
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "T-shirt",
-          productSku: "29810068",
-          quantity: 10,
-          quantityFulfilled: 3,
-          quantityToFulfill: 7,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 797.1,
+            productName: "T-shirt",
+            productSku: "29810068",
+            quantity: 10,
+            quantityFulfilled: 3,
+            quantityToFulfill: 7,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 797.1,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 797.1,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 797.1,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 2.5,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 2.5,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 2.5,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 2.5,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-    ];
+      ];
 
     const unfulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
@@ -2400,359 +2403,360 @@ describe("Get the total value of all selected products", () => {
 
 describe("Merge repeated order lines of fulfillment lines", () => {
   it("is able to merge repeated order lines and sum their quantities", () => {
-    const lines: OrderDetailsFragment["fulfillments"][0]["lines"] = [
-      {
-        id: "RnVsZmlsbG1lbnRMaW5lOjMx",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ1",
-          isShippingRequired: false,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
-            name: "Saleor Demo Product",
-            quantityAvailable: 50,
-            preorder: null,
-            metadata: [],
-            privateMetadata: [],
-            stocks: [
+    const lines: OrderDetailsWithMetadataFragment["fulfillments"][0]["lines"] =
+      [
+        {
+          id: "RnVsZmlsbG1lbnRMaW5lOjMx",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ1",
+            isShippingRequired: false,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+              name: "Saleor Demo Product",
+              quantityAvailable: 50,
+              preorder: null,
+              metadata: [],
+              privateMetadata: [],
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "Lake Tunes",
-          productSku: "lake-tunes-mp3",
-          quantity: 2,
-          quantityFulfilled: 2,
-          quantityToFulfill: 0,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 159.42,
+            productName: "Lake Tunes",
+            productSku: "lake-tunes-mp3",
+            quantity: 2,
+            quantityFulfilled: 2,
+            quantityToFulfill: 0,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 159.42,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-      {
-        id: "RnVsZmlsbG1lbnRMaW5lOjMy",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ1",
-          isShippingRequired: false,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
-            name: "Saleor Demo Product",
-            quantityAvailable: 50,
-            preorder: null,
-            metadata: [],
-            privateMetadata: [],
-            stocks: [
+        {
+          id: "RnVsZmlsbG1lbnRMaW5lOjMy",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ1",
+            isShippingRequired: false,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+              name: "Saleor Demo Product",
+              quantityAvailable: 50,
+              preorder: null,
+              metadata: [],
+              privateMetadata: [],
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "Lake Tunes",
-          productSku: "lake-tunes-mp3",
-          quantity: 2,
-          quantityFulfilled: 2,
-          quantityToFulfill: 0,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 159.42,
+            productName: "Lake Tunes",
+            productSku: "lake-tunes-mp3",
+            quantity: 2,
+            quantityFulfilled: 2,
+            quantityToFulfill: 0,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 159.42,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 9.99,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 9.99,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-      {
-        id: "RnVsZmlsbG1lbnRMaW5lOjMz",
-        quantity: 1,
-        orderLine: {
-          id: "T3JkZXJMaW5lOjQ3",
-          isShippingRequired: true,
-          allocations: [
-            {
-              id: "allocation_test_id",
-              warehouse: {
-                name: "US Warehouse",
-                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
-                __typename: "Warehouse",
-              },
-              quantity: 1,
-              __typename: "Allocation",
-            },
-          ],
-          variant: {
-            id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
-            name: "Saleor Demo Product",
-            quantityAvailable: 50,
-            preorder: null,
-            metadata: [],
-            privateMetadata: [],
-            stocks: [
+        {
+          id: "RnVsZmlsbG1lbnRMaW5lOjMz",
+          quantity: 1,
+          orderLine: {
+            id: "T3JkZXJMaW5lOjQ3",
+            isShippingRequired: true,
+            allocations: [
               {
-                id: "stock_test_id1",
+                id: "allocation_test_id",
                 warehouse: {
-                  name: "warehouse_stock1",
-                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  name: "US Warehouse",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
-              },
-              {
-                id: "stock_test_id2",
-                warehouse: {
-                  name: "warehouse_stock2",
-                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
-                  __typename: "Warehouse",
-                },
-                quantity: 166,
-                quantityAllocated: 0,
-                __typename: "Stock",
+                quantity: 1,
+                __typename: "Allocation",
               },
             ],
-            __typename: "ProductVariant",
-            product: {
-              __typename: "Product",
-              id: "UHJvZHVjdDo1",
-              isAvailableForPurchase: true,
+            variant: {
+              id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
+              name: "Saleor Demo Product",
+              quantityAvailable: 50,
+              preorder: null,
+              metadata: [],
+              privateMetadata: [],
+              stocks: [
+                {
+                  id: "stock_test_id1",
+                  warehouse: {
+                    name: "warehouse_stock1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+                {
+                  id: "stock_test_id2",
+                  warehouse: {
+                    name: "warehouse_stock2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock",
+                },
+              ],
+              __typename: "ProductVariant",
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                isAvailableForPurchase: true,
+              },
             },
-          },
-          productName: "T-shirt",
-          productSku: "29810068",
-          quantity: 3,
-          quantityFulfilled: 1,
-          quantityToFulfill: 2,
-          totalPrice: {
-            __typename: "TaxedMoney",
-            gross: {
-              __typename: "Money",
-              amount: 239.13,
+            productName: "T-shirt",
+            productSku: "29810068",
+            quantity: 3,
+            quantityFulfilled: 1,
+            quantityToFulfill: 2,
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 239.13,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 239.13,
+                currency: "USD",
+              },
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
               currency: "USD",
+              gross: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 79.71,
+                currency: "USD",
+              },
             },
-            net: {
-              __typename: "Money",
-              amount: 239.13,
-              currency: "USD",
-            },
-          },
-          undiscountedUnitPrice: {
-            __typename: "TaxedMoney",
-            currency: "USD",
-            gross: {
+            unitDiscount: {
               __typename: "Money",
               amount: 79.71,
               currency: "USD",
             },
-            net: {
-              __typename: "Money",
-              amount: 79.71,
-              currency: "USD",
+            unitDiscountReason: null,
+            unitDiscountType: null,
+            unitDiscountValue: 0,
+            unitPrice: {
+              gross: {
+                amount: 2.5,
+                currency: "USD",
+                __typename: "Money",
+              },
+              net: {
+                amount: 2.5,
+                currency: "USD",
+                __typename: "Money",
+              },
+              __typename: "TaxedMoney",
             },
-          },
-          unitDiscount: {
-            __typename: "Money",
-            amount: 79.71,
-            currency: "USD",
-          },
-          unitDiscountReason: null,
-          unitDiscountType: null,
-          unitDiscountValue: 0,
-          unitPrice: {
-            gross: {
-              amount: 2.5,
-              currency: "USD",
-              __typename: "Money",
+            thumbnail: {
+              url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+              __typename: "Image",
             },
-            net: {
-              amount: 2.5,
-              currency: "USD",
-              __typename: "Money",
-            },
-            __typename: "TaxedMoney",
+            __typename: "OrderLine",
           },
-          thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
-            __typename: "Image",
-          },
-          __typename: "OrderLine",
+          __typename: "FulfillmentLine",
         },
-        __typename: "FulfillmentLine",
-      },
-    ];
+      ];
 
     const mergedLines = mergeRepeatedOrderLines(lines);
 

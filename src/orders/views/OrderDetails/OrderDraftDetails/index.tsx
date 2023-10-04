@@ -1,10 +1,8 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
-  OrderDetailsQueryResult,
+  OrderDetailsWithMetadataQueryResult,
   OrderDraftCancelMutation,
   OrderDraftCancelMutationVariables,
   OrderDraftFinalizeMutation,
@@ -13,7 +11,6 @@ import {
   OrderDraftUpdateMutationVariables,
   OrderLineUpdateMutation,
   OrderLineUpdateMutationVariables,
-  PermissionEnum,
   StockAvailability,
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
@@ -61,7 +58,7 @@ interface OrderDraftDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   loading: any;
-  data: OrderDetailsQueryResult["data"];
+  data: OrderDetailsWithMetadataQueryResult["data"];
   orderAddNote: any;
   orderLineUpdate: PartialMutationProviderOutput<
     OrderLineUpdateMutation,
@@ -104,10 +101,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 }) => {
   const order = data.order;
   const navigate = useNavigator();
-  const user = useUser();
-  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
-    PermissionEnum.MANAGE_STAFF,
-  ]);
 
   const { data: channelUsabilityData } = useChannelUsabilityDataQuery({
     variables: {
@@ -165,7 +158,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         user,
         userEmail,
       },
-      isStaffUser,
     });
 
     if (result?.data?.draftOrderUpdate?.errors?.length) {
@@ -190,13 +182,10 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     orderDraftUpdate.mutate({
       id,
       input: data,
-      isStaffUser,
     });
 
   const handleOrderDraftCancel = async () => {
-    const errors = await extractMutationErrors(
-      orderDraftCancel.mutate({ id, isStaffUser }),
-    );
+    const errors = await extractMutationErrors(orderDraftCancel.mutate({ id }));
     if (!errors.length) {
       navigate(orderDraftListUrl());
     }
@@ -240,9 +229,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             fetchUsers={searchUsers}
             usersLoading={users.loading}
             onCustomerEdit={handleCustomerChange}
-            onDraftFinalize={() =>
-              orderDraftFinalize.mutate({ id, isStaffUser })
-            }
+            onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
             onShowMetadata={id => openModal("view-metadata", { id })}
@@ -253,14 +240,11 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             onBillingAddressEdit={() => openModal("edit-billing-address")}
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
             onShippingMethodEdit={() => openModal("edit-shipping")}
-            onOrderLineRemove={id =>
-              orderLineDelete.mutate({ id, isStaffUser })
-            }
+            onOrderLineRemove={id => orderLineDelete.mutate({ id })}
             onOrderLineChange={(id, data) =>
               orderLineUpdate.mutate({
                 id,
                 input: data,
-                isStaffUser,
               })
             }
             saveButtonBarState="default"
@@ -291,7 +275,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             input: {
               shippingMethod: variables.shippingMethod,
             },
-            isStaffUser,
           })
         }
       />
@@ -314,7 +297,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                 quantity: 1,
                 variantId: variant.id,
               })),
-              isStaffUser,
             }),
           )
         }

@@ -1,7 +1,4 @@
-import type {
-  Locator,
-  Page,
-} from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 
 export class RightSideDetailsPage {
   readonly page: Page;
@@ -49,6 +46,10 @@ export class RightSideDetailsPage {
     this.availableChannel = page.locator(
       "[data-test-id*='channel-availability-item']",
     );
+  }
+
+  async openChannelsDialog() {
+    await this.manageChannelsButton.click();
   }
 
   async selectFirstCategory() {

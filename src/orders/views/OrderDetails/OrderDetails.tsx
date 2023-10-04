@@ -7,11 +7,11 @@ import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
-  OrderDetailsDocument,
+  OrderDetailsWithMetadataDocument,
   OrderStatus,
   PermissionEnum,
   useOrderConfirmMutation,
-  useOrderDetailsQuery,
+  useOrderDetailsWithMetadataQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
@@ -48,11 +48,16 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
 
   const { queue } = useBackgroundTask();
   const intl = useIntl();
+
+  const user = useUser();
+  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
+    PermissionEnum.MANAGE_STAFF,
+  ]);
+
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata, updatePrivateMetadataOpts] =
     useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
-  const user = useUser();
   const apolloClient = useApolloClient();
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -75,11 +80,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     },
   });
 
-  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
-    PermissionEnum.MANAGE_STAFF,
-  ]);
-
-  const { data, loading } = useOrderDetailsQuery({
+  const { data, loading } = useOrderDetailsWithMetadataQuery({
     displayLoader: true,
     variables: { id, isStaffUser },
   });
@@ -95,7 +96,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
 
   const handleSubmit = async (data: MetadataIdSchema) => {
     if (order?.status === OrderStatus.UNCONFIRMED) {
-      await orderConfirm({ variables: { id: order?.id, isStaffUser } });
+      await orderConfirm({ variables: { id: order?.id } });
     }
 
     const initial = createOrderMetadataIdSchema(order);
@@ -166,7 +167,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
           onTransactionActionSend={orderMessages.handleTransactionAction}
           onManualTransactionAdded={async data => {
             await apolloClient.refetchQueries({
-              include: [OrderDetailsDocument],
+              include: [OrderDetailsWithMetadataDocument],
             });
             orderMessages.handleAddManualTransaction(data);
           }}
