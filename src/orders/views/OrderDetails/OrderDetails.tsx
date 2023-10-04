@@ -7,7 +7,7 @@ import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
-  OrderDetailsDocument,
+  OrderDetailsWithMetadataDocument,
   OrderStatus,
   PermissionEnum,
   useOrderConfirmMutation,
@@ -167,7 +167,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
           onTransactionActionSend={orderMessages.handleTransactionAction}
           onManualTransactionAdded={async data => {
             await apolloClient.refetchQueries({
-              include: [OrderDetailsDocument],
+              include: [OrderDetailsWithMetadataDocument],
             });
             orderMessages.handleAddManualTransaction(data);
           }}
