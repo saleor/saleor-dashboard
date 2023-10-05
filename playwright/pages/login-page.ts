@@ -1,7 +1,4 @@
-import type {
-  Locator,
-  Page,
-} from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 
 export class LoginPage {
   readonly page: Page;
@@ -24,9 +21,9 @@ export class LoginPage {
     await this.signInButton.click();
   }
   async goto() {
-    const CYPRESS_baseUrl = process.env.CYPRESS_baseUrl;
+    const BASE_URL = process.env.BASE_URL;
     const loginPageUrl =
-      CYPRESS_baseUrl === "http://localhost:9000/"
+      BASE_URL === "http://localhost:9000/"
         ? "http://localhost:9000/"
         : "/dashboard";
     await this.page.goto(loginPageUrl);

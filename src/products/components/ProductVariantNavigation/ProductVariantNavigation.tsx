@@ -1,32 +1,30 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { DashboardCard } from "@dashboard/components/Card";
+import { Divider } from "@dashboard/components/Divider";
 import Skeleton from "@dashboard/components/Skeleton";
-import {
-  SortableTableBody,
-  SortableTableRow,
-} from "@dashboard/components/SortableTable";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   ProductVariantCreateDataQuery,
   ProductVariantDetailsQuery,
 } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   productVariantAddUrl,
   productVariantEditUrl,
 } from "@dashboard/products/urls";
 import { ReorderAction } from "@dashboard/types";
-import { Card, TableCell } from "@material-ui/core";
-import clsx from "clsx";
+import { Box, Button, GripIcon, Text, vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { renderCollection } from "../../../misc";
+import { ImagePlaceholder } from "./components/ImagePlaceholder";
+import {
+  SortableContainer,
+  SortableElement,
+} from "./components/SortableContainer";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 
 interface ProductVariantNavigationProps {
   current?: string;
@@ -46,91 +44,125 @@ const ProductVariantNavigation: React.FC<
   const {
     current,
     defaultVariantId,
-    fallbackThumbnail,
     productId,
     isCreate,
     variants,
     onReorder,
   } = props;
 
-  const classes = useStyles(props);
+  const navigate = useNavigator();
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(sectionNames.variants)} />
-      <ResponsiveTable>
-        <SortableTableBody onSortEnd={onReorder}>
-          {renderCollection(variants, (variant, variantIndex) => {
-            const isDefault = variant && variant.id === defaultVariantId;
-            const isActive = variant && variant.id === current;
-            const thumbnail = variant?.media?.filter(
-              mediaObj => mediaObj.type === "IMAGE",
-            )[0];
+    <DashboardCard>
+      <DashboardCard.Title>
+        {intl.formatMessage(sectionNames.variants)}
+      </DashboardCard.Title>
+      <SortableContainer onSortEnd={onReorder}>
+        {variants?.length > 0 && <Divider />}
+        {renderCollection(variants, (variant, variantIndex) => {
+          const isDefault = variant && variant.id === defaultVariantId;
+          const isActive = variant && variant.id === current;
+          const thumbnail = variant?.media?.filter(
+            mediaObj => mediaObj.type === "IMAGE",
+          )[0];
 
-            return (
-              <SortableTableRow
-                hover={!!variant}
+          return (
+            <Link
+              to={
+                variant
+                  ? productVariantEditUrl(productId, variant.id)
+                  : undefined
+              }
+            >
+              <SortableElement
                 key={variant ? variant.id : "skeleton"}
                 index={variantIndex || 0}
-                className={clsx(classes.link, {
-                  [classes.rowActive]: isActive,
-                })}
-                href={
-                  variant
-                    ? productVariantEditUrl(productId, variant.id)
-                    : undefined
+                display="block"
+                borderLeftStyle="solid"
+                __borderLeftWidth={2}
+                __borderColor={
+                  isActive ? vars.colors.background.highlightDim : "transparent"
                 }
               >
-                <TableCellAvatar
-                  className={classes.colAvatar}
-                  thumbnail={thumbnail?.url || fallbackThumbnail}
-                />
-                <TableCell className={classes.colName}>
-                  {variant ? variant.name || variant.sku : <Skeleton />}
-                  {isDefault && (
-                    <span className={classes.defaultVariant}>
-                      {intl.formatMessage(messages.defaultVariant)}
-                    </span>
-                  )}
-                </TableCell>
-              </SortableTableRow>
-            );
-          })}
-          {!isCreate ? (
-            <TableRowLink className={classes.rowNew}>
-              <TableCell colSpan={3}>
-                <Button
-                  href={productVariantAddUrl(productId)}
-                  data-test-id="button-add-variant"
+                <Box
+                  maxWidth="100%"
+                  paddingX={5}
+                  paddingY={3}
+                  display="flex"
+                  alignItems="center"
+                  gap={5}
                 >
-                  <FormattedMessage {...messages.addVariant} />
-                </Button>
-              </TableCell>
-            </TableRowLink>
-          ) : (
-            <TableRowLink>
-              <TableCellAvatar
-                alignRight
-                className={clsx(
-                  classes.colAvatar,
-                  classes.rowActive,
-                  classes.noHandle,
-                  {
-                    [classes.firstVariant]: variants?.length === 0,
-                  },
-                )}
-                thumbnail={null}
-                colSpan={2}
-              />
-              <TableCell className={classes.colName}>
-                <FormattedMessage {...messages.newVariant} />
-              </TableCell>
-            </TableRowLink>
-          )}
-        </SortableTableBody>
-      </ResponsiveTable>
-    </Card>
+                  <GripIcon />
+                  {thumbnail?.url ? (
+                    <Box
+                      as="img"
+                      width={10}
+                      height={10}
+                      objectFit="cover"
+                      borderRadius={2}
+                      borderColor="neutralHighlight"
+                      borderStyle="solid"
+                      borderWidth={1}
+                      padding={1}
+                      flexShrink="0"
+                      src={thumbnail.url}
+                    />
+                  ) : (
+                    <ImagePlaceholder />
+                  )}
+                  <Box>
+                    <Text wordBreak="break-word">
+                      {variant ? variant.name || variant.sku : <Skeleton />}
+                    </Text>
+                    {isDefault && (
+                      <Text
+                        display="block"
+                        variant="caption"
+                        color="textNeutralSubdued"
+                      >
+                        {intl.formatMessage(messages.defaultVariant)}
+                      </Text>
+                    )}
+                  </Box>
+                </Box>
+                <Divider />
+              </SortableElement>
+            </Link>
+          );
+        })}
+        {!isCreate ? (
+          <Button
+            marginTop={4}
+            marginLeft={6}
+            variant="secondary"
+            onClick={() => navigate(productVariantAddUrl(productId))}
+            data-test-id="button-add-variant"
+          >
+            <FormattedMessage {...messages.addVariant} />
+          </Button>
+        ) : (
+          <Box
+            paddingX={5}
+            paddingY={3}
+            display="flex"
+            alignItems="center"
+            gap={5}
+            borderLeftStyle="solid"
+            __borderLeftWidth={2}
+            __borderColor={vars.colors.background.highlightDim}
+          >
+            <Box opacity="0">
+              <GripIcon />
+            </Box>
+            <ImagePlaceholder />
+            <Text>
+              <FormattedMessage {...messages.newVariant} />
+            </Text>
+          </Box>
+        )}
+      </SortableContainer>
+    </DashboardCard>
   );
 };
 ProductVariantNavigation.displayName = "ProductVariantNavigation";

@@ -51,6 +51,13 @@ When you're finished with the changes, create a pull request, also known as a PR
 - **We expect you to write unit tests** for the new code you create. Please use _Arrange-Act-Assert_ comments to divide test blocks
 - Try to respect **SOLID** rules.
 
+### Changesets
+Remember to add changeset file by running `npm run change:add` command.
+The prompt will ask you what kind of change you have made. Please pick the one according to the following guide:
+- `minor` - any breaking changes, UI updates, new features, anything that changes behavior of the app, and can be considered as minor change
+- `patch` - all bugfixes, insignificant UI updates (color of a button, margins, paddings, borders etc.), text typos, translation amends, CI scripts
+
+
 ### Continuous Integration
 
 We run a series of automated checks on your PR to ensure that it meets our standards. If you are not sure why your PR is failing, please reach out to us. Common problems include:

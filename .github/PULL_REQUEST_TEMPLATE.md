@@ -14,7 +14,7 @@ greatly reduce the amount of work needed to review your work. -->
 3. [ ] Attributes `data-test-id` are added for new elements
 4. [ ] The changes are tested in Chrome/Firefox/Safari browsers and in light/dark mode
 5. [ ] Your code works with the latest stable version of the core
-6. [ ] I added changesets and [read good practices](../.changeset/README.md)
+6. [ ] I added changesets file (instructions in [contribution guide](https://github.com/saleor/saleor-dashboard/blob/main/.github/CONTRIBUTING.md)
 
 ### Test environment config
 

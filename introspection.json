@@ -14113,6 +14113,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "updatedAt",
+            "description": "The date and time when the category was last updated.\n\nAdded in Saleor 3.17.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -14681,6 +14697,18 @@
                   "ofType": null
                 }
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updatedAt",
+            "description": "Filter by when was the most recent update. \n\nAdded in Saleor 3.17.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DateTimeRangeInput",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -61449,7 +61477,7 @@
           },
           {
             "name": "shopDomainUpdate",
-            "description": "Updates site domain of the shop. \n\nRequires one of the following permissions: MANAGE_SETTINGS.",
+            "description": "Updates site domain of the shop.\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `PUBLIC_URL` environment variable instead. \n\nRequires one of the following permissions: MANAGE_SETTINGS.",
             "args": [
               {
                 "name": "input",
@@ -61469,8 +61497,8 @@
               "name": "ShopDomainUpdate",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `PUBLIC_URL` environment variable instead."
           },
           {
             "name": "shopFetchTaxRates",
@@ -72983,6 +73011,22 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "undiscountedTotalPrice",
+            "description": "Price of the order line without discounts.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TaxedMoney",
                 "ofType": null
               }
             },
@@ -111188,7 +111232,7 @@
       {
         "kind": "OBJECT",
         "name": "ShopDomainUpdate",
-        "description": "Updates site domain of the shop. \n\nRequires one of the following permissions: MANAGE_SETTINGS.",
+        "description": "Updates site domain of the shop.\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `PUBLIC_URL` environment variable instead. \n\nRequires one of the following permissions: MANAGE_SETTINGS.",
         "fields": [
           {
             "name": "errors",

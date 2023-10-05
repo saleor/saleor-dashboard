@@ -17,8 +17,6 @@ import {
   Dropdown,
   Input,
   List,
-  PlusIcon,
-  sprinkles,
   Text,
   TrashBinIcon,
   vars,
@@ -118,29 +116,31 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           />
         </Box>
 
-        <Box paddingY={2} display="grid" gap={2}>
-          <Checkbox
-            checked={data.trackInventory}
-            name="trackInventory"
-            disabled={disabled}
-            onCheckedChange={value =>
-              onFormDataChange({ target: { name: "trackInventory", value } })
-            }
-          >
-            <Box display="flex" flexDirection="column">
-              <Text>
-                <FormattedMessage {...messages.trackInventory} />
-              </Text>
-              <Text variant="caption" color="textNeutralSubdued">
-                <FormattedMessage {...messages.trackInventoryDescription} />
-              </Text>
-            </Box>
-          </Checkbox>
+        <Box paddingTop={5}>
+          <Box>
+            <Checkbox
+              checked={data.trackInventory}
+              name="trackInventory"
+              disabled={disabled}
+              onCheckedChange={value =>
+                onFormDataChange({ target: { name: "trackInventory", value } })
+              }
+            >
+              <Box display="flex" flexDirection="column">
+                <Text>
+                  <FormattedMessage {...messages.trackInventory} />
+                </Text>
+              </Box>
+            </Checkbox>
 
-          <Box display="grid" gap={2}>
+            <Text marginLeft={5} variant="caption" color="textNeutralSubdued">
+              <FormattedMessage {...messages.trackInventoryDescription} />
+            </Text>
+          </Box>
+          <Box display="grid" gap={2} marginTop={5}>
             <Box display="flex" flexDirection="column">
-              <Text>
-                <FormattedMessage {...messages.quantity} />
+              <Text variant="heading" size="small">
+                <FormattedMessage {...messages.stock} />
               </Text>
               {!productVariantChannelListings?.length && (
                 <Text variant="caption" color="textNeutralSubdued">
@@ -175,124 +175,114 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
             )}
           </Box>
         </Box>
-      </DashboardCard.Content>
-      {productVariantChannelListings?.length > 0 && warehouses?.length > 0 && (
-        <Table>
-          <TableHead>
-            <TableRowLink>
-              <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-                <Text variant="caption" color="textNeutralSubdued">
-                  <FormattedMessage {...messages.warehouseName} />
-                </Text>
-              </TableCell>
-              <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-                <Text variant="caption" color="textNeutralSubdued">
-                  <FormattedMessage {...messages.allocated} />
-                </Text>
-              </TableCell>
-              <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-                <Text variant="caption" color="textNeutralSubdued">
-                  <FormattedMessage {...messages.quantity} />
-                </Text>
-              </TableCell>
-              <TableCell />
-            </TableRowLink>
-          </TableHead>
-          <TableBody>
-            {renderCollection(stocks, (stock, index) => {
-              const handleQuantityChange = createNonNegativeValueChangeHandler(
-                event => onChange(stock.id, event.target.value),
-              );
-
-              return (
-                <TableRowLink key={stock.id}>
+        {productVariantChannelListings?.length > 0 &&
+          warehouses?.length > 0 &&
+          stocks?.length > 0 && (
+            <Table>
+              <TableHead>
+                <TableRowLink>
                   <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-                    <Text>{stock.label}</Text>
+                    <Text variant="caption" color="textNeutralSubdued">
+                      <FormattedMessage {...messages.warehouseName} />
+                    </Text>
                   </TableCell>
-                  <TableCell>
-                    <Text>{stock.data?.quantityAllocated || 0}</Text>
+                  <TableCell style={{ width: 100, verticalAlign: "middle" }}>
+                    <Text variant="caption" color="textNeutralSubdued">
+                      <FormattedMessage {...messages.allocated} />
+                    </Text>
                   </TableCell>
-                  <TableCell>
-                    <Input
-                      data-test-id="stock-input"
-                      disabled={disabled}
-                      onChange={handleQuantityChange}
-                      value={stock.value}
-                      size="small"
-                      type="number"
-                      min={0}
-                      ref={input =>
-                        stocks.length === index + 1 &&
-                        handleStockInputFocus(input)
-                      }
-                    />
+                  <TableCell style={{ width: 200, verticalAlign: "middle" }}>
+                    <Text variant="caption" color="textNeutralSubdued">
+                      <FormattedMessage {...messages.quantity} />
+                    </Text>
                   </TableCell>
-                  <TableCell>
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      icon={<TrashBinIcon />}
-                      onClick={() => onWarehouseStockDelete(stock.id)}
-                    />
-                  </TableCell>
+                  <TableCell />
                 </TableRowLink>
-              );
-            })}
-            {warehousesToAssign.length > 0 && (
-              <Dropdown>
-                <Dropdown.Trigger>
-                  <TableRowLink className={sprinkles({ cursor: "pointer" })}>
-                    <TableCell
-                      colSpan={3}
-                      style={{ paddingLeft: vars.spacing[6] }}
-                    >
-                      <Text>
-                        <FormattedMessage {...messages.assignWarehouse} />
-                      </Text>
-                    </TableCell>
-                    <TableCell style={{ paddingRight: vars.spacing[6] }}>
-                      <Button
-                        type="button"
-                        icon={<PlusIcon />}
-                        variant="secondary"
-                      />
-                    </TableCell>
-                  </TableRowLink>
-                </Dropdown.Trigger>
+              </TableHead>
+              <TableBody>
+                {renderCollection(stocks, (stock, index) => {
+                  const handleQuantityChange =
+                    createNonNegativeValueChangeHandler(event =>
+                      onChange(stock.id, event.target.value),
+                    );
 
-                <Dropdown.Content align="end">
-                  <Box>
-                    <List
-                      id="warehouse-list"
-                      padding={2}
-                      borderRadius={4}
-                      boxShadow="overlay"
-                      backgroundColor="surfaceNeutralPlain"
-                      __maxHeight={400}
-                      overflowY="auto"
-                    >
-                      {warehousesToAssign.map(warehouse => (
-                        <Dropdown.Item key={warehouse.id}>
-                          <List.Item
-                            paddingX={1.5}
-                            paddingY={2}
-                            borderRadius={4}
-                            onClick={() =>
-                              handleWarehouseStockAdd(warehouse.id)
-                            }
-                          >
-                            <Text>{warehouse.name}</Text>
-                          </List.Item>
-                        </Dropdown.Item>
-                      ))}
-                    </List>
-                  </Box>
-                </Dropdown.Content>
-              </Dropdown>
-            )}
-          </TableBody>
-        </Table>
-      )}
+                  return (
+                    <TableRowLink key={stock.id}>
+                      <TableCell style={{ paddingLeft: vars.spacing[6] }}>
+                        <Text>{stock.label}</Text>
+                      </TableCell>
+                      <TableCell>
+                        <Text>{stock.data?.quantityAllocated || 0}</Text>
+                      </TableCell>
+                      <TableCell>
+                        <Input
+                          data-test-id="stock-input"
+                          disabled={disabled}
+                          onChange={handleQuantityChange}
+                          value={stock.value}
+                          size="small"
+                          type="number"
+                          min={0}
+                          ref={input =>
+                            stocks.length === index + 1 &&
+                            handleStockInputFocus(input)
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          icon={<TrashBinIcon />}
+                          onClick={() => onWarehouseStockDelete(stock.id)}
+                        />
+                      </TableCell>
+                    </TableRowLink>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          )}
+
+        {productVariantChannelListings?.length > 0 &&
+          warehouses?.length > 0 &&
+          warehousesToAssign.length > 0 && (
+            <Dropdown>
+              <Dropdown.Trigger>
+                <Button type="button" variant="secondary" marginTop={5}>
+                  <FormattedMessage {...messages.assignWarehouse} />
+                </Button>
+              </Dropdown.Trigger>
+
+              <Dropdown.Content align="end">
+                <Box>
+                  <List
+                    id="warehouse-list"
+                    padding={2}
+                    borderRadius={4}
+                    boxShadow="overlay"
+                    backgroundColor="surfaceNeutralPlain"
+                    __maxHeight={400}
+                    overflowY="auto"
+                  >
+                    {warehousesToAssign.map(warehouse => (
+                      <Dropdown.Item key={warehouse.id}>
+                        <List.Item
+                          paddingX={1.5}
+                          paddingY={2}
+                          borderRadius={4}
+                          onClick={() => handleWarehouseStockAdd(warehouse.id)}
+                        >
+                          <Text>{warehouse.name}</Text>
+                        </List.Item>
+                      </Dropdown.Item>
+                    ))}
+                  </List>
+                </Box>
+              </Dropdown.Content>
+            </Dropdown>
+          )}
+      </DashboardCard.Content>
     </DashboardCard>
   );
 };

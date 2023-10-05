@@ -3500,6 +3500,13 @@ type Category implements Node & ObjectWithMetadata {
     """A language code to return the translation for category."""
     languageCode: LanguageCodeEnum!
   ): CategoryTranslation
+
+  """
+  The date and time when the category was last updated.
+  
+  Added in Saleor 3.17.
+  """
+  updatedAt: DateTime!
 }
 
 """
@@ -3603,6 +3610,13 @@ input CategoryFilterInput {
   metadata: [MetadataFilter!]
   search: String
   slugs: [String!]
+
+  """
+  Filter by when was the most recent update. 
+  
+  Added in Saleor 3.17.
+  """
+  updatedAt: DateTimeRangeInput
 }
 
 input CategoryInput {
@@ -15484,14 +15498,16 @@ type Mutation {
   ): ShopAddressUpdate
 
   """
-  Updates site domain of the shop. 
+  Updates site domain of the shop.
+  
+  DEPRECATED: this mutation will be removed in Saleor 4.0. Use `PUBLIC_URL` environment variable instead. 
   
   Requires one of the following permissions: MANAGE_SETTINGS.
   """
   shopDomainUpdate(
     """Fields required to update site."""
     input: SiteDomainInput
-  ): ShopDomainUpdate
+  ): ShopDomainUpdate @deprecated(reason: "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `PUBLIC_URL` environment variable instead.")
 
   """
   Fetch tax rates. 
@@ -18313,6 +18329,9 @@ type OrderLine implements Node & ObjectWithMetadata {
 
   """Variant name in the customer's language"""
   translatedVariantName: String!
+
+  """Price of the order line without discounts."""
+  undiscountedTotalPrice: TaxedMoney!
 
   """
   Price of the single item in the order line without applied an order line discount.
@@ -27919,7 +27938,9 @@ type ShopAddressUpdate {
 }
 
 """
-Updates site domain of the shop. 
+Updates site domain of the shop.
+
+DEPRECATED: this mutation will be removed in Saleor 4.0. Use `PUBLIC_URL` environment variable instead. 
 
 Requires one of the following permissions: MANAGE_SETTINGS.
 """
