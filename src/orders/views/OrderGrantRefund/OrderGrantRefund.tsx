@@ -45,13 +45,14 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
     },
   });
 
-  const handleSubmit = async ({ amount, reason }: OrderGrantRefundFormData) => {
+  const handleSubmit = async ({ amount, reason, lines }: OrderGrantRefundFormData) => {
     extractMutationErrors(
       grantRefund({
         variables: {
           orderId,
           amount,
           reason,
+          lines
         },
       }),
     );

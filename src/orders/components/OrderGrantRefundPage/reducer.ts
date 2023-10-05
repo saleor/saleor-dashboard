@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { exhaustiveCheck } from "@dashboard/utils/ts";
 import { wasOrderLineReturned } from "./utils";
@@ -7,6 +6,7 @@ export interface ReducerOrderLine {
   selectedQuantity: number;
   availableQuantity: number;
   unitPrice: number;
+  refundReason?: string;
 }
 
 export interface GrantRefundState {
@@ -45,6 +45,7 @@ export const getGrantRefundReducerInitialState = (
         availableQuantity: line.quantity,
         unitPrice: line.unitPrice.gross.amount,
         selectedQuantity: 0,
+        refundReason: "",
       },
     ]);
 
@@ -90,6 +91,7 @@ export function grantRefundReducer(
       newLines.set(action.lineId, {
         ...line,
         selectedQuantity: action.amount,
+        
       });
 
       return {

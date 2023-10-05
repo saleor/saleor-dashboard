@@ -6,11 +6,17 @@ import React from "react";
 export interface OrderGrantRefundFormData {
   amount: string;
   reason: string;
+  lines: Array<{
+    id: string;
+    quantity: number;
+    reason: string;
+  }>;
 }
 
 const defaultInitialData: OrderGrantRefundFormData = {
   amount: "",
   reason: "",
+  lines: [],
 };
 
 interface GrantRefundFormHookProps {
