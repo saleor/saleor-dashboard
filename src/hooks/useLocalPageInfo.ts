@@ -17,10 +17,8 @@ function useLocalPageInfo<T>(values: T[], paginateBy: number) {
   const maxPage = getMaxPage(values.length, paginateBy);
 
   useEffect(() => {
-    if (page > maxPage) {
-      setPage(maxPage);
-    }
-  }, [values.length, paginateBy]);
+    setPage(0);
+  }, [paginateBy]);
 
   const hasPreviousPage = page > 0;
   const hasNextPage = page < maxPage;
