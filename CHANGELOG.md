@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.15.5
+
+### Patch Changes
+
+- f8ce7932b: Use version from package.json to trigger deployment
+
 ## 3.15.4
 
 ### Patch Changes
