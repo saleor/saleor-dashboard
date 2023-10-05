@@ -641,10 +641,12 @@ export const fragmentOrderDetailsGrantRefund = gql`
   fragment OrderDetailsGrantRefund on Order {
     grantedRefunds {
       lines {
+        quantity
         id
         reason
         orderLine {
           id
+          quantity
         }
       }
     }

@@ -27,7 +27,7 @@ export const getFulfilmentSubtitle = (
   fulfillment: OrderDetailsGrantRefundFragment["fulfillments"][0],
 ) => `#${order.number}-${fulfillment.fulfillmentOrder}`;
 
-export const wasOrderLineReturned = <TOrderLine extends { id: string }>(
+export const wasOrderLineReturned = <TOrderLine extends { id: string; amount: number }>(
   line: TOrderLine,
   grantedRefunds: OrderDetailsGrantRefundFragment["grantedRefunds"],
 ) => {
@@ -35,7 +35,7 @@ export const wasOrderLineReturned = <TOrderLine extends { id: string }>(
     .map(grantedRefund => grantedRefund.lines)
     .flat()
     .filter(Boolean)
-    .map(line => line!.orderLine.id);
+    .map(line => line!.orderLine.);
 
   return grantedRefundLines.includes(line.id);
 };
