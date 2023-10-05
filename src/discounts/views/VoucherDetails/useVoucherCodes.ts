@@ -66,15 +66,16 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     loading: voucherCodesLoading,
     refetch: voucherCodesRefetch,
   } = useVoucherCodesQuery({
+    skip: !isServerPagination && hasClientPaginationNextPage,
     variables: {
       id,
-      ...(isServerPagination && serverVoucherCodesPaginationState),
       first:
         !isServerPagination &&
         !hasClientPaginationNextPage &&
         freeSlotsInClientPagianationPage > 0
           ? freeSlotsInClientPagianationPage
-          : serverVoucherCodesPaginationState.first,
+          : undefined,
+      ...(isServerPagination && serverVoucherCodesPaginationState),
     },
   });
 
@@ -98,10 +99,19 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     voucherCodesData?.voucher?.codes,
   ) ?? []) as VoucherCode[];
 
+  const freeSlotsInServerPagianationPage =
+    voucherCodesSettings.rowNumber - serverVoucherCodes.length;
+
   let voucherCodes: VoucherCode[] = [];
 
   if (isServerPagination) {
-    voucherCodes = serverVoucherCodes;
+    voucherCodes = [
+      ...(freeSlotsInServerPagianationPage > 0 &&
+      !serverVoucherCodesPagination.pageInfo?.hasPreviousPage
+        ? addedVoucherCodes.slice(-freeSlotsInServerPagianationPage)
+        : []),
+      ...serverVoucherCodes,
+    ];
   } else {
     voucherCodes = [
       ...clientVoucherCodes,
@@ -151,31 +161,33 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
         ...voucherCodesPagination.pageInfo,
         hasNextPage: isServerPagination
           ? hasServerPaginationNextPage
-          : hasClientPaginationNextPage || serverVoucherCodes.length > 0,
+          : hasClientPaginationNextPage || hasServerPaginationNextPage,
         hasPreviousPage: !isServerPagination
-          ? clientVoucherCodesPagination.pageInfo?.hasPreviousPage
-          : hasClientPaginationPrevPage || addedVoucherCodes.length > 0,
+          ? hasClientPaginationPrevPage
+          : hasServerPaginationPrevPage || hasClientPaginationPrevPage,
       },
       loadNextPage: () => {
         if (isServerPagination) {
           voucherCodesPagination.loadNextPage();
         } else {
-          if (voucherCodes.length < voucherCodesSettings.rowNumber) {
+          if (clientVoucherCodes.length < voucherCodesSettings.rowNumber) {
             setIsServerPagination(true);
+            serverVoucherCodesPagination.loadNextPage();
           } else {
             clientVoucherCodesPagination.loadNextPage();
           }
         }
       },
       loadPreviousPage: () => {
-        if (isServerPagination) {
+        if (!isServerPagination) {
+          clientVoucherCodesPagination.loadPreviousPage();
+        } else {
           if (!hasServerPaginationPrevPage && addedVoucherCodes.length > 0) {
+            clientVoucherCodesPagination.loadPreviousPage();
             setIsServerPagination(false);
           } else {
             voucherCodesPagination.loadPreviousPage();
           }
-        } else {
-          clientVoucherCodesPagination.loadPreviousPage();
         }
       },
     },
