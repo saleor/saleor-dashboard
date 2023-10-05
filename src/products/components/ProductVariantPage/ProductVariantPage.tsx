@@ -259,6 +259,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     <CardSpacer />
                     <VariantDetailsChannelsAvailabilityCard
                       variant={variant}
+                      disabled={loading}
                       onManageClick={toggleManageChannels}
                     />
                     {nonSelectionAttributes.length > 0 && (
@@ -312,7 +313,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       </>
                     )}
                     <ProductVariantMedia
-                      disabled={loading}
+                      disabled={loading || productMedia.length === 0}
                       media={media}
                       placeholderImage={placeholderImage}
                       onImageAdd={toggleModal}

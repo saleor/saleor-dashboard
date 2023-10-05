@@ -13,11 +13,13 @@ import { CreateVariantTitle } from "./CreateVariantTitle";
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;
   onManageClick?: () => void;
+  disabled: boolean;
 }
 
 interface ProductDetailsChannelsAvailabilityCardProps {
   product: Product;
   onManageClick?: () => void;
+  disabled: boolean;
 }
 
 interface WrapperProps {
@@ -37,15 +39,19 @@ const Wrapper: React.FC<WrapperProps> = ({ item, children }) => {
 
 export const VariantDetailsChannelsAvailabilityCard: React.FC<
   VariantDetailsChannelsAvailabilityCardProps
-> = ({ variant, onManageClick }) => (
+> = ({ variant, onManageClick, disabled }) => (
   <Wrapper item={variant}>
     {({ channels }) => (
       <AvailabilityCard
         items={channels}
-        availabilityCount={getAvailabilityCountForVariant(variant)}
         productChannelListings={variant.product.channelListings}
       >
-        <CreateVariantTitle onManageClick={onManageClick} />
+        <CreateVariantTitle
+          onManageClick={onManageClick}
+          disabled={disabled}
+          availabilityCount={getAvailabilityCountForVariant(variant)}
+          isEmpty={channels.length === 0}
+        />
       </AvailabilityCard>
     )}
   </Wrapper>
@@ -53,15 +59,19 @@ export const VariantDetailsChannelsAvailabilityCard: React.FC<
 
 export const ProductDetailsChannelsAvailabilityCard: React.FC<
   ProductDetailsChannelsAvailabilityCardProps
-> = ({ product, onManageClick }) => (
+> = ({ product, onManageClick, disabled }) => (
   <Wrapper item={product}>
     {({ channels }) => (
       <AvailabilityCard
         items={channels}
-        availabilityCount={getAvailabilityCountForProduct(product)}
         productChannelListings={product.channelListings}
       >
-        <CreateVariantTitle onManageClick={onManageClick} />
+        <CreateVariantTitle
+          onManageClick={onManageClick}
+          disabled={disabled}
+          availabilityCount={getAvailabilityCountForProduct(product)}
+          isEmpty={channels.length === 0}
+        />
       </AvailabilityCard>
     )}
   </Wrapper>

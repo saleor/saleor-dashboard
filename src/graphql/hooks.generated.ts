@@ -2589,7 +2589,7 @@ export const ProductVariantFragmentDoc = gql`
       sku
       media {
         id
-        url
+        url(size: 200)
         type
         oembedData
       }

@@ -11,6 +11,10 @@ export const messages = defineMessages({
     defaultMessage: "SKU (Stock Keeping Unit)",
     description: "input label",
   },
+  stock: {
+    id: "vuKrlW",
+    defaultMessage: "Stock",
+  },
   variantInPreorder: {
     id: "eAFU/E",
     defaultMessage: "Variant currently in preorder",

@@ -50,7 +50,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const intl = useIntl();
 
   const user = useUser();
-  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
+  const isStaffUser = hasPermissions(user?.user?.userPermissions ?? [], [
     PermissionEnum.MANAGE_STAFF,
   ]);
 

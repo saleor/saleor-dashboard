@@ -1,4 +1,4 @@
-import CardMenu from "@dashboard/components/CardMenu";
+import { Box, Button } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -12,20 +12,19 @@ const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
   const intl = useIntl();
 
   return (
-    <CardMenu
-      menuItems={[
-        {
-          label: intl.formatMessage({
-            id: "SZH0fw",
-            defaultMessage: "Set as default",
-            description: "set variant as default, button",
-          }),
-          onSelect: onSetDefaultVariant,
-          testId: "setDefault",
-        },
-      ]}
-      data-test-id="menu"
-    />
+    <Box display="flex" alignItems="center" height="100%">
+      <Button
+        variant="secondary"
+        onClick={onSetDefaultVariant}
+        data-test-id="setDefault"
+      >
+        {intl.formatMessage({
+          id: "SZH0fw",
+          defaultMessage: "Set as default",
+          description: "set variant as default, button",
+        })}
+      </Button>
+    </Box>
   );
 };
 
