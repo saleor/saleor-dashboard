@@ -94,10 +94,11 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     setSelectedRowIds,
   } = useRowSelection();
 
-  const serverVoucherCodes =
-    mapEdgesToItems(voucherCodesData?.voucher?.codes) ?? [];
+  const serverVoucherCodes = (mapEdgesToItems(
+    voucherCodesData?.voucher?.codes,
+  ) ?? []) as VoucherCode[];
 
-  let voucherCodes = [];
+  let voucherCodes: VoucherCode[] = [];
 
   if (isServerPagination) {
     voucherCodes = serverVoucherCodes;

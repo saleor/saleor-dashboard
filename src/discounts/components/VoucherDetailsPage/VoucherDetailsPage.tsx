@@ -25,7 +25,6 @@ import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
-  VoucherCodeFragment,
   VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
@@ -98,7 +97,7 @@ export interface VoucherDetailsPageProps
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   selectedVoucherCodesIds: string[];
-  voucherCodes: VoucherCodeFragment[];
+  voucherCodes: VoucherCode[];
   voucherCodesLoading: boolean;
   onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
   onCategoryAssign: () => void;
