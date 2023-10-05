@@ -100,6 +100,7 @@ describe("As an admin I should be able to filter products", () => {
       { tags: ["@productsList", "@allEnv", "@stable"] },
       () => {
         cy.addAliasToGraphRequest("ProductList");
+        filterProductsWithNewFilters();
         selectFilterOption(filterBy.type, name);
         cy.get(SHARED_ELEMENTS.dataGridTable).contains(name).should("exist");
       },

@@ -91,17 +91,20 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
         <_ExperimentalFilters.AddRowButton
           variant="tertiary"
           disabled={value.length > MAX_VALUE_ITEMS}
+          data-test-id="add-filter-button"
         >
           {translations.addFilter}
         </_ExperimentalFilters.AddRowButton>
         <Box display="flex" gap={3}>
           <_ExperimentalFilters.ClearButton
+            data-test-id="reset-all-filters-button"
             onClick={onCancel}
             variant="tertiary"
           >
             {translations.clearFilters}
           </_ExperimentalFilters.ClearButton>
           <_ExperimentalFilters.ConfirmButton
+            data-test-id="save-filters-button"
             onClick={() => onConfirm(value)}
             disabled={hasEmptyRows}
           >

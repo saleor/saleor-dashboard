@@ -54,6 +54,19 @@ export function selectFilterOption(filter, optionName) {
     .click();
   submitFilters();
 }
+export function filterProductsWithNewFilters(filter, optionName) {
+  cy.get('[data-test-id="filters-button"]').click();
+  cy.get('[data-test-id="add-filter-button"]').click();
+  selectFilterBy(filter)
+    .get(PRODUCTS_LIST.filters.filterField[filter])
+    .find(PRODUCTS_LIST.filters.filterBySearchInput)
+    .type(optionName);
+  cy.get(PRODUCTS_LIST.filters.filterField[filter])
+    .contains(PRODUCTS_LIST.filters.filterOption, optionName)
+    .find(BUTTON_SELECTORS.checkbox)
+    .click();
+  submitFilters();
+}
 
 export function selectAttributeFilter(attributeSlug, attributeValue) {
   selectFilterByAttribute(attributeSlug);
