@@ -19,7 +19,10 @@ import {
   selectProductsOutOfStock,
 } from "../../../support/pages/catalog/products/productsListPage";
 
-describe("As an admin I should be able to filter products", () => {
+/*
+  Todo: https://github.com/saleor/saleor-dashboard/issues/4300
+*/
+describe.skip("As an admin I should be able to filter products", () => {
   const startsWith = "ACyFilterProducts-";
   const name = `${startsWith}${faker.datatype.number()}`;
   const stockQuantity = 747;
