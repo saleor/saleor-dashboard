@@ -290,18 +290,6 @@ export const shop: (placeholderImage: string) => HomeQuery = (
       },
     ],
   },
-  ordersToCapture: {
-    __typename: "OrderCountableConnection",
-    totalCount: 0,
-  },
-  ordersToFulfill: {
-    __typename: "OrderCountableConnection",
-    totalCount: 1,
-  },
-  ordersToday: {
-    __typename: "OrderCountableConnection",
-    totalCount: 1,
-  },
   productTopToday: {
     __typename: "ProductVariantCountableConnection",
     edges: [
