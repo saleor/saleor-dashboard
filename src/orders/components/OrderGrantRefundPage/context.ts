@@ -21,6 +21,8 @@ export const GrantRefundContext = createContext<GrantRefundContext | null>(
 export const useGrantRefundContext = () => {
   const context = useContext(GrantRefundContext);
 
+  console.log(context);
+
   if (context === null) {
     throw new Error("useGrantRefundContext used outside of context provider");
   }

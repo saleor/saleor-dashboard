@@ -10232,6 +10232,7 @@ export type OrderGrantRefundAddMutationVariables = Exact<{
   orderId: Scalars['ID'];
   amount: Scalars['Decimal'];
   reason?: InputMaybe<Scalars['String']>;
+  lines: Array<OrderGrantRefundCreateLineInput> | OrderGrantRefundCreateLineInput;
 }>;
 
 

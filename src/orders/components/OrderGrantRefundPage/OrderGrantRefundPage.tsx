@@ -24,8 +24,8 @@ import {
 import { useStyles } from "./styles";
 import {
   calculateTotalPrice,
-  filterLinesByNotYetRefunded,
   getFulfilmentSubtitle,
+  wasOrderLineReturned,
 } from "./utils";
 
 export interface OrderGrantRefundPageProps {
@@ -126,12 +126,6 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 lines={unfulfilledLines}
               />
               {order?.fulfillments?.map?.(fulfillment => {
-                const linesNetYetRefunded = filterLinesByNotYetRefunded(
-                  fulfillment.lines,
-                  order.grantedRefunds,
-                );
-                
-
                 return (
                   <ProductsCard
                     key={fulfillment.id}
@@ -146,13 +140,18 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                         {getFulfilmentSubtitle(order, fulfillment)}
                       </Typography>
                     }
-                    lines={fulfillment.lines.map(
-                      ({ orderLine, id, quantity }) => ({
+                    lines={fulfillment.lines
+                      .filter(line => {
+                        return !wasOrderLineReturned(
+                          line.orderLine,
+                          order.grantedRefunds,
+                        );
+                      })
+                      .map(({ orderLine, id, quantity }) => ({
                         ...orderLine,
                         id,
                         quantity,
-                      }),
-                    )}
+                      }))}
                   />
                 );
               })}

@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { exhaustiveCheck } from "@dashboard/utils/ts";
+import { wasOrderLineReturned } from "./utils";
 
 export interface ReducerOrderLine {
   selectedQuantity: number;
@@ -48,7 +49,11 @@ export const getGrantRefundReducerInitialState = (
     ]);
 
   const fulfilmentLines = order.fulfillments
-    .flatMap(fulfilment => fulfilment.lines)
+    .flatMap(fulfilment =>
+      fulfilment.lines.filter(line => {
+        return !wasOrderLineReturned(line, order.grantedRefunds);
+      }),
+    )
     .map<GrantRefundLineKeyValue>(line => [
       line.id,
       {
