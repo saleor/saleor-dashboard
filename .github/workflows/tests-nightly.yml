@@ -313,6 +313,8 @@ jobs:
           API_URI: ${{ needs.get-environment-variables.outputs.url }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           BASE_URL: ${{ needs.get-environment-variables.outputs.url }}dashboard/
+          ## backward compatibility requires CYPRESS_baseUrl as env var name - can be removed when version lower than 3.17 are no longer supported
+          CYPRESS_baseUrl: ${{ needs.get-environment-variables.outputs.url }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}

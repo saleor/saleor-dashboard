@@ -65,29 +65,29 @@ export const moneyCellRenderer = (
       return true;
     }
 
+    const codeFormatter = new Intl.NumberFormat(locale, {
+      style: "currency",
+      currencyDisplay: "code",
+      currency,
+    });
+
+    const symbolFormatter = new Intl.NumberFormat(locale, {
+      style: "currency",
+      currencyDisplay: "symbol",
+      currency,
+    });
+
+    if (!("formatRangeToParts" in codeFormatter)) {
+      return true;
+    }
+
     const format = isRange
-      ? new Intl.NumberFormat(locale, {
-          style: "currency",
-          currencyDisplay: "code",
-          currency,
-        }).formatRangeToParts(value[0], value[1])
-      : new Intl.NumberFormat(locale, {
-          style: "currency",
-          currencyDisplay: "code",
-          currency,
-        }).formatToParts(displayValue);
+      ? codeFormatter.formatRangeToParts(value[0], value[1])
+      : codeFormatter.formatToParts(displayValue);
 
     const shortFormat = isRange
-      ? new Intl.NumberFormat(locale, {
-          style: "currency",
-          currencyDisplay: "symbol",
-          currency,
-        }).formatRangeToParts(value[0], value[1])
-      : new Intl.NumberFormat(locale, {
-          style: "currency",
-          currencyDisplay: "symbol",
-          currency,
-        }).formatToParts(displayValue);
+      ? symbolFormatter.formatRangeToParts(value[0], value[1])
+      : symbolFormatter.formatToParts(displayValue);
 
     // TODO: replace with macaw-ui theme font weight values
     ctx.font = `550 ${theme.baseFontStyle} ${theme.fontFamily}`;

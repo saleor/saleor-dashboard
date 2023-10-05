@@ -10,10 +10,11 @@ interface TableCellAvatarProps
   extends TableCellProps,
     Omit<AvatarProps, "children"> {
   className?: string;
+  avatarClassName?: string;
 }
 
 const TableCellAvatar: React.FC<TableCellAvatarProps> = props => {
-  const { className, ...rest } = props;
+  const { className, avatarClassName, ...rest } = props;
 
   const classes = useStyles(props);
 
@@ -23,7 +24,7 @@ const TableCellAvatar: React.FC<TableCellAvatarProps> = props => {
       data-test-id="table-cell-avatar"
       {...rest}
     >
-      <Avatar {...rest} />
+      <Avatar className={avatarClassName} {...rest} />
     </TableCell>
   );
 };

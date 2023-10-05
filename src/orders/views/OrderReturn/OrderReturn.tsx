@@ -1,9 +1,6 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import {
   OrderErrorCode,
-  PermissionEnum,
   useFulfillmentReturnProductsMutation,
   useOrderDetailsQuery,
 } from "@dashboard/graphql";
@@ -29,16 +26,11 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const user = useUser();
-  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
-    PermissionEnum.MANAGE_STAFF,
-  ]);
 
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId,
-      isStaffUser,
     },
   });
 

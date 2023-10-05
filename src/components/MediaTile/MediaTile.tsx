@@ -39,8 +39,13 @@ const useStyles = makeStyles(
       top: 0,
       width: 148,
     },
+    disableOverlay: {
+      "&$mediaOverlay": {
+        display: "none !important",
+      },
+    },
     mediaOverlayShadow: {
-      "&mediaOverlay": {
+      $mediaOverlay: {
         alignItems: "center",
         display: "flex",
         justifyContent: "center",
@@ -76,6 +81,7 @@ interface MediaTileBaseProps {
     type?: string;
     oembedData?: string;
   };
+  disableOverlay?: boolean;
   loading?: boolean;
   onDelete?: () => void;
   onEdit?: (event: React.ChangeEvent<any>) => void;
@@ -94,7 +100,14 @@ export type MediaTileProps = MediaTileBaseProps &
   );
 
 const MediaTile: React.FC<MediaTileProps> = props => {
-  const { loading, onDelete, onEdit, editHref, media } = props;
+  const {
+    loading,
+    onDelete,
+    onEdit,
+    editHref,
+    media,
+    disableOverlay = false,
+  } = props;
   const classes = useStyles(props);
   const parsedMediaOembedData = media?.oembedData
     ? JSON.parse(media.oembedData)
@@ -106,6 +119,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
       <div
         className={clsx(classes.mediaOverlay, {
           [classes.mediaOverlayShadow]: loading,
+          [classes.disableOverlay]: disableOverlay,
         })}
       >
         {loading ? (

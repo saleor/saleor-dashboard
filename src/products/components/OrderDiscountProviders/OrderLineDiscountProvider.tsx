@@ -1,11 +1,8 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import {
   MoneyFragment,
   OrderDetailsFragment,
-  PermissionEnum,
   useOrderLineDiscountRemoveMutation,
   useOrderLineDiscountUpdateMutation,
 } from "@dashboard/graphql";
@@ -64,10 +61,6 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
-  const user = useUser();
-  const isStaffUser = hasPermissions(user?.user?.userPermissions, [
-    PermissionEnum.MANAGE_STAFF,
-  ]);
 
   const { isDialogOpen, openDialog, closeDialog } = useDiscountDialog();
   const [currentLineId, setCurrentLineId] = useState<string | null>(null);
@@ -105,12 +98,11 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
         variables: {
           orderLineId,
           input: getParsedDiscountData(input),
-          isStaffUser,
         },
       });
 
   const removeOrderLineDiscount = (orderLineId: string) => () =>
-    orderLineDiscountRemove({ variables: { orderLineId, isStaffUser } });
+    orderLineDiscountRemove({ variables: { orderLineId } });
 
   const isOrderLineDialogOpen = (orderLineId: string) =>
     isDialogOpen && currentLineId === orderLineId;
