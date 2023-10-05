@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.16.2
+
+### Patch Changes
+
+- c63251156: Fix various tiny ESLint rules
+- b65f34662: Fix blank space in legacy filter popper
+- db43c9172: Tag docker container as latest when the published GitHub release is marked as "latest"
+- dd06acadf: Fix editing/deleting attribute values when creating new dropdown attribute
+
 ## 3.16.1
 
 ### Patch Changes
