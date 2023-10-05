@@ -22,7 +22,11 @@ import {
   grantRefundReducer,
 } from "./reducer";
 import { useStyles } from "./styles";
-import { calculateTotalPrice, getFulfilmentSubtitle } from "./utils";
+import {
+  calculateTotalPrice,
+  filterLinesByNotYetRefunded,
+  getFulfilmentSubtitle,
+} from "./utils";
 
 export interface OrderGrantRefundPageProps {
   order: OrderDetailsGrantRefundFragment;
@@ -121,29 +125,37 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 }
                 lines={unfulfilledLines}
               />
-              {order?.fulfillments?.map?.(fulfillment => (
-                <ProductsCard
-                  key={fulfillment.id}
-                  title={intl.formatMessage(
-                    getOrderTitleMessage(fulfillment.status),
-                  )}
-                  subtitle={
-                    <Typography
-                      variant="body1"
-                      className={classes.fulfilmentNumber}
-                    >
-                      {getFulfilmentSubtitle(order, fulfillment)}
-                    </Typography>
-                  }
-                  lines={fulfillment.lines.map(
-                    ({ orderLine, id, quantity }) => ({
-                      ...orderLine,
-                      id,
-                      quantity,
-                    }),
-                  )}
-                />
-              ))}
+              {order?.fulfillments?.map?.(fulfillment => {
+                const linesNetYetRefunded = filterLinesByNotYetRefunded(
+                  fulfillment.lines,
+                  order.grantedRefunds,
+                );
+                
+
+                return (
+                  <ProductsCard
+                    key={fulfillment.id}
+                    title={intl.formatMessage(
+                      getOrderTitleMessage(fulfillment.status),
+                    )}
+                    subtitle={
+                      <Typography
+                        variant="body1"
+                        className={classes.fulfilmentNumber}
+                      >
+                        {getFulfilmentSubtitle(order, fulfillment)}
+                      </Typography>
+                    }
+                    lines={fulfillment.lines.map(
+                      ({ orderLine, id, quantity }) => ({
+                        ...orderLine,
+                        id,
+                        quantity,
+                      }),
+                    )}
+                  />
+                );
+              })}
 
               <Card>
                 <CardContent>

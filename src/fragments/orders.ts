@@ -639,6 +639,15 @@ export const grantRefundFulfillment = gql`
 
 export const fragmentOrderDetailsGrantRefund = gql`
   fragment OrderDetailsGrantRefund on Order {
+    grantedRefunds {
+      lines {
+        id
+        reason
+        orderLine {
+          id
+        }
+      }
+    }
     id
     number
     lines {

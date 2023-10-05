@@ -1,5 +1,6 @@
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import currency from "currency.js";
+import diff from "lodash/difference";
 
 import { GrantRefundState } from "./reducer";
 
@@ -26,3 +27,20 @@ export const getFulfilmentSubtitle = (
   order: OrderDetailsGrantRefundFragment,
   fulfillment: OrderDetailsGrantRefundFragment["fulfillments"][0],
 ) => `#${order.number}-${fulfillment.fulfillmentOrder}`;
+
+export const filterLinesByNotYetRefunded = (
+  lines: OrderDetailsGrantRefundFragment["fulfillments"][0]["lines"],
+  grantedRefunds: OrderDetailsGrantRefundFragment["grantedRefunds"],
+) => {
+  const grantedRefundLines = grantedRefunds
+    .map(grantedRefund => grantedRefund.lines)
+    .flat()
+    .filter(Boolean)
+    .map(line => line!.orderLine.id);
+
+  return lines?.filter(line => {
+    if (!line?.orderLine) return false;
+
+    return !grantedRefundLines.includes(line.orderLine.id);
+  });
+};
