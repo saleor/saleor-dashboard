@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
@@ -30,7 +29,6 @@ export const ChannelCreateView = () => {
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-  const { refetchUser } = useUser();
 
   const handleError = (error: ChannelErrorFragment) => {
     notify({
@@ -65,7 +63,6 @@ export const ChannelCreateView = () => {
   const saveChannel = useSaveChannel({
     createChannel,
     reorderChannelWarehouses,
-    refetchUser,
   });
 
   const handleSubmit = async ({
