@@ -40,6 +40,7 @@ export const RowComponent = ({
       alignItems="start"
     >
       <DynamicCombobox
+        data-test-id={`left-${index}`}
         value={item.value}
         options={leftOptions}
         loading={item.loading}
@@ -67,6 +68,7 @@ export const RowComponent = ({
       />
 
       <Select
+        data-test-id={`condition-${index}`}
         value={item.condition.selected.conditionValue}
         options={item.condition.options}
         disabled={constrain.disableCondition}
