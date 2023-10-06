@@ -43,6 +43,7 @@ export const RightOperator = ({
   if (isTextInput(selected)) {
     return (
       <Input
+        data-test-id={`right-${index}`}
         value={selected.value}
         onChange={e => {
           emitter.changeRightOperator(index, e.target.value);
@@ -63,6 +64,7 @@ export const RightOperator = ({
   if (isNumberInput(selected)) {
     return (
       <Input
+        data-test-id={`right-${index}`}
         type="number"
         value={selected.value}
         onChange={e => {
@@ -84,6 +86,7 @@ export const RightOperator = ({
   if (isMultiselect(selected)) {
     return (
       <DynamicMultiselect
+        data-test-id={`right-${index}`}
         value={selected.value}
         options={selected.options ?? []}
         loading={selected.loading}
@@ -107,6 +110,7 @@ export const RightOperator = ({
   if (isCombobox(selected)) {
     return (
       <DynamicCombobox
+        data-test-id={`right-${index}`}
         value={selected.value}
         options={selected.options ?? []}
         loading={selected.loading}
@@ -133,6 +137,7 @@ export const RightOperator = ({
   if (isSelect(selected)) {
     return (
       <Select
+        data-test-id={`right-${index}`}
         value={selected.value}
         options={selected.options ?? []}
         onChange={value => emitter.changeRightOperator(index, value)}
@@ -153,6 +158,7 @@ export const RightOperator = ({
     return (
       <RangeInputWrapper>
         <RangeInput
+          data-test-id={`right-${index}`}
           value={selected.value}
           onChange={value => {
             emitter.changeRightOperator(index, value);
@@ -170,6 +176,7 @@ export const RightOperator = ({
   if (isDate(selected)) {
     return (
       <Input
+        data-test-id={`right-${index}`}
         type="date"
         value={selected.value}
         onChange={e => {
@@ -185,6 +192,7 @@ export const RightOperator = ({
   if (isDateTime(selected)) {
     return (
       <Input
+        data-test-id={`right-${index}`}
         type="datetime-local"
         value={selected.value}
         onChange={e => {
@@ -201,6 +209,7 @@ export const RightOperator = ({
     return (
       <RangeInputWrapper>
         <RangeInput
+          data-test-id={`right-${index}`}
           value={selected.value}
           onChange={value => {
             emitter.changeRightOperator(index, value);
@@ -219,6 +228,7 @@ export const RightOperator = ({
     return (
       <RangeInputWrapper>
         <RangeInput
+          data-test-id={`right-${index}`}
           value={selected.value}
           onChange={value => {
             emitter.changeRightOperator(index, value);
@@ -233,5 +243,7 @@ export const RightOperator = ({
     );
   }
 
-  return <Input disabled value={selected.value} />;
+  return (
+    <Input disabled value={selected.value} data-test-id={`right-${index}`} />
+  );
 };
