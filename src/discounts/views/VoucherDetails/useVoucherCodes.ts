@@ -24,7 +24,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   const [isServerPagination, setIsServerPagination] = useState(true);
 
   const handleAddVoucherCode = (code: string) => [
-    setAddedVoucherCodes(codes => [...codes, { code }]),
+    setAddedVoucherCodes(codes => [...codes, { code, status: "Draft" }]),
   ];
 
   const handleGenerateMultipeCodes = ({

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useVoucherCodes should return correct data 1`] = `
+Object {
+  "handleAddVoucherCode": [Function],
+  "handleGenerateMultipeCodes": [Function],
+  "handleSetSelectedVoucherCodesIds": [Function],
+  "selectedVoucherCodesIds": Array [],
+  "updateVoucherCodesListSettings": [Function],
+  "voucherCodes": Array [
+    Object {
+      "code": "code 1",
+      "used": 0,
+    },
+    Object {
+      "code": "code 2",
+      "used": 0,
+    },
+  ],
+  "voucherCodesLoading": false,
+  "voucherCodesPagination": Object {
+    "loadNextPage": [Function],
+    "loadPreviousPage": [Function],
+    "pageInfo": Object {
+      "endCursor": "curson",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor",
+    },
+    "paginatorType": "click",
+  },
+  "voucherCodesRefetch": [MockFunction],
+  "voucherCodesSettings": Object {
+    "rowNumber": 20,
+  },
+}
+`;
