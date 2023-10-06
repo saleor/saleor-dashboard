@@ -1,15 +1,11 @@
-import {
-  _ExperimentalFilters,
-  Box,
-  FilterEvent,
-  Row,
-} from "@saleor/macaw-ui/next";
+import { Box, FilterEvent, Row } from "@saleor/macaw-ui/next";
 import React, { FC } from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
 import { LeftOperand } from "./LeftOperandsProvider";
 import { useFiltersAreaTranslations } from "./messages";
+import { Filters } from "./UI";
 import { useFilterContainer } from "./useFilterContainer";
 import { useTranslate } from "./useTranslate";
 import { ErrorEntry } from "./Validation";
@@ -80,35 +76,32 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
   };
 
   return (
-    <_ExperimentalFilters
+    <Filters
       leftOptions={translateOperandOptions(leftOperandsProvider.operands)}
       value={translateSelectedOperands(value) as Array<string | Row>}
       onChange={handleStateChange}
       error={errors}
       locale={translations.locale}
     >
-      <_ExperimentalFilters.Footer>
-        <_ExperimentalFilters.AddRowButton
+      <Filters.Footer>
+        <Filters.AddRowButton
           variant="tertiary"
           disabled={value.length > MAX_VALUE_ITEMS}
         >
           {translations.addFilter}
-        </_ExperimentalFilters.AddRowButton>
+        </Filters.AddRowButton>
         <Box display="flex" gap={3}>
-          <_ExperimentalFilters.ClearButton
-            onClick={onCancel}
-            variant="tertiary"
-          >
+          <Filters.ClearButton onClick={onCancel} variant="tertiary">
             {translations.clearFilters}
-          </_ExperimentalFilters.ClearButton>
-          <_ExperimentalFilters.ConfirmButton
+          </Filters.ClearButton>
+          <Filters.ConfirmButton
             onClick={() => onConfirm(value)}
             disabled={hasEmptyRows}
           >
             {translations.saveFilters}
-          </_ExperimentalFilters.ConfirmButton>
+          </Filters.ConfirmButton>
         </Box>
-      </_ExperimentalFilters.Footer>
-    </_ExperimentalFilters>
+      </Filters.Footer>
+    </Filters>
   );
 };
