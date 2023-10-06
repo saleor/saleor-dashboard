@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix various tiny ESLint rules
+Set data-test-id for filters

@@ -1,7 +1,7 @@
 ---
 name: product_filters
 displayName: Products filtering
-enabled: false
+enabled: true
 payload: "default"
 visible: true
 ---
