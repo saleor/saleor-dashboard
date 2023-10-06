@@ -14,7 +14,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import currencyCodes from "currency-codes";
 import React from "react";
@@ -22,9 +21,9 @@ import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { channelPath } from "../../urls";
-import { calculateItemsOrderMoves } from "../ChannelDetails/handlers";
 import { useShippingZones } from "../ChannelDetails/useShippingZones";
 import { useWarehouses } from "../ChannelDetails/useWarehouses";
+import { useSaveChannel } from "./useSaveChannel";
 
 export const ChannelCreateView = () => {
   const navigate = useNavigator();
@@ -63,6 +62,12 @@ export const ChannelCreateView = () => {
       },
     });
 
+  const saveChannel = useSaveChannel({
+    createChannel,
+    reorderChannelWarehouses,
+    refetchUser,
+  });
+
   const handleSubmit = async ({
     shippingZonesIdsToAdd,
     warehousesIdsToAdd,
@@ -93,32 +98,7 @@ export const ChannelCreateView = () => {
       },
     };
 
-    const createChannelMutation = createChannel({
-      variables: {
-        input,
-      },
-    });
-
-    const result = await createChannelMutation;
-    const errors = await extractMutationErrors(createChannelMutation);
-
-    if (!errors?.length) {
-      const moves = calculateItemsOrderMoves(
-        result.data?.channelCreate.channel?.warehouses,
-        warehousesToDisplay,
-      );
-
-      await reorderChannelWarehouses({
-        variables: {
-          channelId: result.data?.channelCreate.channel?.id,
-          moves,
-        },
-      });
-
-      await refetchUser();
-    }
-
-    return errors;
+    return saveChannel(input, warehousesToDisplay);
   };
 
   const {
