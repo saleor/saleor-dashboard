@@ -1,6 +1,7 @@
 import * as faker from "faker";
 
 import { LOCATORS } from "@data/common-locators";
+import { URL_LIST } from "@data/url";
 import { ChannelSelectDialog } from "@dialogs/channel-select-dialog";
 import { MetadataSeoPage } from "@pages/metadata-seo-page";
 import { RightSideDetailsPage } from "@pages/right-side-details-section";
@@ -16,6 +17,9 @@ export class ProductPage {
   readonly productNameInput: Locator;
   readonly productTypeInput: Locator;
   readonly categoryInput: Locator;
+  readonly productsNames: Locator;
+  readonly createProductButton: Locator;
+  readonly searchProducts: Locator;
   readonly categoryItem: Locator;
   readonly collectionInput: Locator;
   readonly autocompleteDropdown: Locator;
@@ -41,6 +45,7 @@ export class ProductPage {
   readonly editVariant: Locator;
   readonly saveButton: Locator;
   readonly firstRowDataGrid: Locator;
+  readonly addProductButton: Locator;
   readonly productUpdateFormSection: Locator;
   readonly manageChannelsButton: Locator;
   metadataSeoPage: MetadataSeoPage;
@@ -52,7 +57,11 @@ export class ProductPage {
     this.channelSelectDialog = new ChannelSelectDialog(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
+    this.productsNames = page.getByTestId("name");
+    this.createProductButton = page.getByTestId("add-product");
+    this.searchProducts = page.locator("[placeholder='Search Products...']");
     this.productNameInput = page.locator("[name='name']");
+    this.addProductButton = page.getByTestId("add-product");
     this.productTypeInput = page.getByTestId("product-type");
     this.saveButton = page.getByTestId("button-bar-confirm");
     this.categoryInput = page.getByTestId("category");
@@ -148,5 +157,13 @@ export class ProductPage {
     await this.channelSelectDialog.clickAllChannelsCheckbox();
     await this.channelSelectDialog.selectFirstChannel();
     await this.channelSelectDialog.clickConfirmButton();
+  }
+
+  async clickCreateProductButton() {
+    await this.createProductButton.click();
+  }
+
+  async gotoProductListPage() {
+    await this.page.goto(URL_LIST.products);
   }
 }

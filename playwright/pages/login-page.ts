@@ -11,6 +11,13 @@ export class LoginPage {
     this.passwordInput = page.getByTestId("password");
     this.signInButton = page.getByTestId("submit");
   }
+
+  async setupLogin(userEmail: string, userPassword: string) {
+    await this.goto();
+    await this.typeEmail(userEmail);
+    await this.typePassword(userPassword);
+    await this.clickSignInButton();
+  }
   async typeEmail(email: string) {
     await this.emailInput.type(email);
   }

@@ -1,8 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
 
 export class DiscountsPage {
-  public page: Page;
-  public createDiscountButton: Locator;
+  readonly page: Page;
+  readonly createDiscountButton: Locator;
 
   constructor(page: Page) {
     this.page = page;

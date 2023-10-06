@@ -1,11 +1,11 @@
 import type { Locator, Page } from "@playwright/test";
 
-export class VouchersPage {
+export class WebhooksEventsPage {
   readonly page: Page;
-  readonly createVoucherButton: Locator;
+  readonly createAppButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.createVoucherButton = page.getByTestId("create-voucher");
+    this.createAppButton = page.getByTestId("create-app");
   }
 }
