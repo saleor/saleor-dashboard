@@ -1,4 +1,5 @@
 import { useUser } from "@dashboard/auth";
+import { ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { ChannelCreateInput } from "@dashboard/graphql";
 
 import { useSaveChannel } from "./useSaveChannel";
@@ -26,7 +27,7 @@ describe("ChannelCreate", () => {
     } as unknown as Parameters<typeof useSaveChannel>[number];
     (useUser as jest.Mock).mockReturnValue({ refetchUser: jest.fn() });
     const input = {} as ChannelCreateInput;
-    const warehousesToDisplay = [];
+    const warehousesToDisplay = [] as ChannelWarehouses;
 
     const save = useSaveChannel(config);
 
