@@ -4,18 +4,21 @@ on: [pull_request]
 jobs:
   changeset_present:
     runs-on: ubuntu-22.04
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
-      - id: files
-        name: Get changed files
-        uses: jitterbit/get-changed-files@v1
-        with:
-          format: csv
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Extract branch name
+        id: extract_branch
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
       - name: Changeset file lookup  
         run: |
-          if [[ "${{ steps.files.outputs.added_modified }}" =~ \.changeset\/.*.md ]]; then
+          pr_branch="${{steps.extract_branch.outputs.branch }}"
+          files=$(gh pr diff $pr_branch --name-only)
+          if [[ $files =~ \.changeset\/.*.md ]]; then
             echo "Changesets found!"
           else
             echo "There is no changeset file in your pull request."
             exit 1
           fi
-
