@@ -1,5 +1,6 @@
 import { MutationFunction } from "@apollo/client";
 import { useUser } from "@dashboard/auth";
+import { ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import {
   ChannelCreateInput,
   ChannelCreateMutation,
@@ -23,7 +24,6 @@ interface SaveChannelConfig {
       moves: ReorderInput | ReorderInput[];
     }>
   >;
-  refetchUser;
 }
 
 export const useSaveChannel = ({
@@ -32,7 +32,10 @@ export const useSaveChannel = ({
 }: SaveChannelConfig) => {
   const { refetchUser } = useUser();
 
-  return async (input: ChannelCreateInput, warehousesToDisplay) => {
+  return async (
+    input: ChannelCreateInput,
+    warehousesToDisplay: ChannelWarehouses,
+  ) => {
     const createChannelMutation = createChannel({
       variables: {
         input,
@@ -44,16 +47,16 @@ export const useSaveChannel = ({
 
     if (!errors?.length) {
       const moves = calculateItemsOrderMoves(
-        result.data?.channelCreate.channel?.warehouses,
+        result.data?.channelCreate?.channel?.warehouses || [],
         warehousesToDisplay,
       );
 
-      await reorderChannelWarehouses({
-        variables: {
-          channelId: result.data?.channelCreate.channel?.id,
-          moves,
-        },
-      });
+      const channelId = result.data?.channelCreate?.channel?.id;
+      if (channelId) {
+        await reorderChannelWarehouses({
+          variables: { channelId, moves },
+        });
+      }
 
       await refetchUser();
     }
