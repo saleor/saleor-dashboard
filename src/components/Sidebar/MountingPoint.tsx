@@ -13,7 +13,7 @@ export const MountingPoint = () => {
     <Box display="flex" gap={3} paddingX={4} paddingY={5} alignItems="center">
       <Avatar.Store src={logo} scheme="decorative2" size="small" />
       <Text variant="bodyStrong" size="small">
-        Saleor Dashboard
+        Wellstand ES Dashboard
       </Text>
     </Box>
   );

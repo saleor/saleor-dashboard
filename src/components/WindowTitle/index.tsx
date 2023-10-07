@@ -10,6 +10,6 @@ export const WindowTitle: React.FC<WindowTitleProps> = ({ title }) => {
   const shop = useShop();
 
   return shop === undefined || !title ? null : (
-    <Helmet title={`${title} | ${shop.name}`} />
+    <Helmet title={`${title} | Wellstand ES`} />
   );
 };
