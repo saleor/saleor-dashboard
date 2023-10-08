@@ -67,17 +67,9 @@ function useFormset<TData = {}, TValue = any, TMetadata = any>(
   }
 
   const setItemMetedata = (id: string, metadata: TMetadata) => {
-    setData(data => {
-      const itemIndex = data.findIndex(item => item.id === id);
-      return [
-        ...data.slice(0, itemIndex),
-        {
-          ...data[itemIndex],
-          metadata,
-        },
-        ...data.slice(itemIndex + 1),
-      ];
-    });
+    setData(data =>
+      data.map(item => (item.id === id ? { ...item, metadata } : item)),
+    );
   };
 
   return {
