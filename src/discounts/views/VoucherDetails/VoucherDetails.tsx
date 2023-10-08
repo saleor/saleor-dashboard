@@ -429,7 +429,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
               ...detailsQueryInclude,
               id,
               input: {
-                categories,
+                categories: categories.map(category => category.id),
               },
             },
           })
@@ -453,7 +453,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
               ...detailsQueryInclude,
               id,
               input: {
-                collections,
+                collections: collections.map(collection => collection.id),
               },
             },
           })
@@ -494,7 +494,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
               ...detailsQueryInclude,
               id,
               input: {
-                products,
+                products: products.map(product => product.id),
               },
             },
           })
