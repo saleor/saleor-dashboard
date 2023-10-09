@@ -33,6 +33,8 @@ function useLocalPageInfo<T>(values: T[], paginateBy: number) {
   const loadPreviousPage = () => setPage(page - 1);
   const loadNextPage = () => setPage(page + 1);
 
+  const resetPage = () => setPage(0);
+
   return {
     pageInfo: {
       hasNextPage,
@@ -41,6 +43,7 @@ function useLocalPageInfo<T>(values: T[], paginateBy: number) {
       startCursor,
     },
     pageValues,
+    resetPage,
     loadNextPage,
     loadPreviousPage,
     loadPage: setPage,

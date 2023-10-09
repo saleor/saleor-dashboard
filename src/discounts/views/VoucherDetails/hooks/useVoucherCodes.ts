@@ -16,7 +16,6 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   const [isServerPagination, setIsServerPagination] = useState(true);
 
   const {
-    addedVoucherCodes,
     clientVoucherCodes,
     clientVoucherCodesPagination,
     freeSlotsInClientPagianationPage,
@@ -39,21 +38,17 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     voucherCodesRefetch,
   } = useVoucherCodesServer({
     id,
-    skipFetch: !isServerPagination && hasClientPaginationNextPage,
     settings: voucherCodesSettings,
     isServerPagination,
     paginationState: {
       first:
-        !isServerPagination &&
-        !hasClientPaginationNextPage &&
-        freeSlotsInClientPagianationPage > 0
+        !isServerPagination && freeSlotsInClientPagianationPage > 0
           ? freeSlotsInClientPagianationPage
-          : undefined,
+          : voucherCodesSettings.rowNumber,
     },
   });
 
   const voucherCodes = getVoucherCodesToDisplay({
-    addedVoucherCodes,
     clientVoucherCodes,
     freeSlotsInClientPagianationPage,
     hasClientPaginationNextPage,
@@ -71,31 +66,52 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     useVoucherCodesRowSelection(voucherCodes);
 
   const handleLoadNextPage = () => {
-    if (isServerPagination) {
-      voucherCodesPagination.loadNextPage();
-    } else {
-      // Switch to server pagination
-      if (clientVoucherCodes.length < voucherCodesSettings.rowNumber) {
-        setIsServerPagination(true);
-        serverVoucherCodesPagination.loadNextPage();
-      } else {
-        clientVoucherCodesPagination.loadNextPage();
-      }
+    if (!hasClientPaginationNextPage) {
+      setIsServerPagination(true);
     }
+
+    if (isServerPagination) {
+      serverVoucherCodesPagination.loadNextPage();
+    } else if (!isServerPagination && freeSlotsInClientPagianationPage > 0) {
+      serverVoucherCodesPagination.loadNextPage();
+    }
+
+    clientVoucherCodesPagination.loadNextPage();
   };
 
   const handleLoadPrevousPage = () => {
-    if (!isServerPagination) {
-      clientVoucherCodesPagination.loadPreviousPage();
-    } else {
-      // Switch to client pagination
-      if (!hasServerPaginationPrevPage && addedVoucherCodes.length > 0) {
-        clientVoucherCodesPagination.loadPreviousPage();
-        setIsServerPagination(false);
-      } else {
-        voucherCodesPagination.loadPreviousPage();
-      }
+    if (!hasServerPaginationPrevPage) {
+      setIsServerPagination(false);
     }
+
+    if (isServerPagination && hasServerPaginationPrevPage) {
+      serverVoucherCodesPagination.loadPreviousPage();
+    }
+
+    clientVoucherCodesPagination.loadPreviousPage();
+  };
+
+  const calculateHasNextPage = () => {
+    // In case when client voucher codes takes all slots
+    // on page and there are some server voucher codes to display
+    if (
+      !isServerPagination &&
+      !hasClientPaginationNextPage &&
+      freeSlotsInClientPagianationPage === 0 &&
+      serverVoucherCodes.length > 0
+    ) {
+      return true;
+    }
+
+    return hasClientPaginationNextPage || hasServerPaginationNextPage;
+  };
+
+  const calculateHasPrevPage = () => {
+    if (isServerPagination) {
+      return hasServerPaginationPrevPage || hasClientPaginationPrevPage;
+    }
+
+    return hasClientPaginationPrevPage;
   };
 
   return {
@@ -105,12 +121,8 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
       ...voucherCodesPagination,
       pageInfo: {
         ...voucherCodesPagination.pageInfo,
-        hasNextPage: isServerPagination
-          ? hasServerPaginationNextPage
-          : hasClientPaginationNextPage || hasServerPaginationNextPage,
-        hasPreviousPage: !isServerPagination
-          ? hasClientPaginationPrevPage
-          : hasServerPaginationPrevPage || hasClientPaginationPrevPage,
+        hasNextPage: calculateHasNextPage(),
+        hasPreviousPage: calculateHasPrevPage(),
       },
       loadNextPage: handleLoadNextPage,
       loadPreviousPage: handleLoadPrevousPage,

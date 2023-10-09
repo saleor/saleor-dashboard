@@ -2,19 +2,36 @@ import { VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagri
 import { GenerateMultipleVoucherCodeFormData } from "@dashboard/discounts/components/VoucherCodesGenerateDialog";
 import { useVoucherCodesPagination } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useVoucherCodesPagination";
 import { generateMultipleIds } from "@dashboard/discounts/components/VoucherCreatePage/utils";
+import { UseListSettings } from "@dashboard/hooks/useListSettings";
 import { ListSettings } from "@dashboard/types";
 import { useState } from "react";
 
+interface UseVoucherCodesClient {
+  hasClientPaginationNextPage: boolean;
+  hasClientPaginationPrevPage: boolean;
+  addedVoucherCodes: VoucherCode[];
+  clientVoucherCodes: VoucherCode[];
+  clientVoucherCodesPagination: any;
+  freeSlotsInClientPagianationPage: number;
+  onSettingsChange: UseListSettings["updateListSettings"];
+  handleAddVoucherCode: (code: string) => void;
+  handleGenerateMultipeCodes: ({
+    quantity,
+    prefix,
+  }: GenerateMultipleVoucherCodeFormData) => void;
+}
+
 export const useVoucherCodesClient = (
   settings: ListSettings,
-  resetPagination: () => void,
-) => {
+  switchToClientPagination: () => void,
+): UseVoucherCodesClient => {
   const [addedVoucherCodes, setAddedVoucherCodes] = useState<VoucherCode[]>([]);
 
   const {
     paginatedCodes: clientVoucherCodes,
     pagination: clientVoucherCodesPagination,
     onSettingsChange,
+    resetPage,
   } = useVoucherCodesPagination(addedVoucherCodes);
 
   const hasClientPaginationNextPage =
@@ -25,9 +42,11 @@ export const useVoucherCodesClient = (
   const freeSlotsInClientPagianationPage =
     settings.rowNumber - clientVoucherCodes.length;
 
-  const handleAddVoucherCode = (code: string) => [
-    setAddedVoucherCodes(codes => [{ code, status: "Draft" }, ...codes]),
-  ];
+  const handleAddVoucherCode = (code: string) => {
+    setAddedVoucherCodes(codes => [{ code, status: "Draft" }, ...codes]);
+    switchToClientPagination();
+    resetPage();
+  };
 
   const handleGenerateMultipeCodes = ({
     quantity,
@@ -37,7 +56,8 @@ export const useVoucherCodesClient = (
       ...generateMultipleIds(quantity, prefix),
       ...codes,
     ]);
-    resetPagination();
+    switchToClientPagination();
+    resetPage();
   };
 
   return {

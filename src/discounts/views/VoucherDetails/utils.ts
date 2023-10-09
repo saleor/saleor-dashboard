@@ -6,7 +6,6 @@ export const getVoucherCodesToDisplay = ({
   isServerPagination,
   freeSlotsInServerPagianationPage,
   hasServerPaginationPrevPage,
-  addedVoucherCodes,
   hasClientPaginationNextPage,
   freeSlotsInClientPagianationPage,
 }: {
@@ -15,19 +14,21 @@ export const getVoucherCodesToDisplay = ({
   serverVoucherCodes: VoucherCode[];
   freeSlotsInServerPagianationPage: number;
   hasServerPaginationPrevPage: boolean;
-  addedVoucherCodes: VoucherCode[];
   hasClientPaginationNextPage: boolean;
   freeSlotsInClientPagianationPage: number;
 }) => {
   if (isServerPagination) {
+    // Fill missing slots using client voucher codes when there are no more server voucher codes
+    // Happend when user is on navigating back and reach begining of server pagination
     return [
       ...(freeSlotsInServerPagianationPage > 0 && !hasServerPaginationPrevPage
-        ? addedVoucherCodes.slice(-freeSlotsInServerPagianationPage)
+        ? clientVoucherCodes
         : []),
       ...serverVoucherCodes,
     ];
   }
 
+  // Fill missing slots in clinet navigation with server voucher codes
   return [
     ...clientVoucherCodes,
     ...(!hasClientPaginationNextPage && freeSlotsInClientPagianationPage > 0

@@ -28,7 +28,6 @@ interface VoucherCodesServer {
 
 export const useVoucherCodesServer = ({
   settings,
-  skipFetch,
   id,
   isServerPagination,
   paginationState = {},
@@ -47,11 +46,11 @@ export const useVoucherCodesServer = ({
     loading: voucherCodesLoading,
     refetch: voucherCodesRefetch,
   } = useVoucherCodesQuery({
-    skip: skipFetch,
     variables: {
       id,
-      ...paginationState,
-      ...(isServerPagination && serverVoucherCodesPaginationState),
+      ...(!isServerPagination
+        ? paginationState
+        : serverVoucherCodesPaginationState),
     },
   });
 

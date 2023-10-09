@@ -12,6 +12,7 @@ export interface UseVoucherCodesPagination {
   paginatedCodes: VoucherCode[];
   onSettingsChange: UseListSettings["updateListSettings"];
   settings: UseListSettings["settings"];
+  resetPage: () => void;
 }
 
 export const useVoucherCodesPagination = (
@@ -21,13 +22,14 @@ export const useVoucherCodesPagination = (
     ListViews.VOUCHER_CODES,
   );
 
-  const { loadNextPage, loadPreviousPage, pageInfo, pageValues } =
+  const { loadNextPage, loadPreviousPage, pageInfo, pageValues, resetPage } =
     useLocalPageInfo(voucherCodes, settings.rowNumber);
 
   return {
     paginatedCodes: pageValues,
     settings,
     onSettingsChange: updateListSettings,
+    resetPage,
     pagination: {
       loadNextPage,
       loadPreviousPage,
