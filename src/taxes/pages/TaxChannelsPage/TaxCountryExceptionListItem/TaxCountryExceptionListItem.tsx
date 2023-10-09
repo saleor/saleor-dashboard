@@ -9,12 +9,8 @@ import {
 } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Divider } from "@material-ui/core";
-import {
-  DeleteIcon,
-  IconButton,
-  ListItem,
-  ListItemCell,
-} from "@saleor/macaw-ui";
+import { ListItem, ListItemCell } from "@saleor/macaw-ui";
+import { Button, TrashBinIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { useStyles } from "../styles";
@@ -60,9 +56,12 @@ export const TaxCountryExceptionListItem: React.FC<
           />
         </ListItemCell>
         <ListItemCell>
-          <IconButton onClick={onDelete} variant="secondary">
-            <DeleteIcon />
-          </IconButton>
+          <Button
+            size="small"
+            onClick={onDelete}
+            variant="secondary"
+            icon={<TrashBinIcon />}
+          />
         </ListItemCell>
       </ListItem>
       {divider && <Divider />}
