@@ -120,7 +120,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
 
         return (
           <DetailPageLayout gridTemplateColumns={1}>
-            <TopNav title={<TaxPageTitle />} />
+            <TopNav title={<TaxPageTitle />} href={configurationMenuUrl} />
             <DetailPageLayout.Content>
               <Box padding={6}>
                 <PageTabs value="tax-classes" onChange={handleTabChange}>

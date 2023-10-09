@@ -6,15 +6,8 @@ import { taxesMessages } from "@dashboard/taxes/messages";
 import { taxClassesListUrl } from "@dashboard/taxes/urls";
 import { isLastElement } from "@dashboard/taxes/utils/utils";
 import { Card, CardContent, Divider } from "@material-ui/core";
-import {
-  Button,
-  DeleteIcon,
-  IconButton,
-  List,
-  ListHeader,
-  ListItem,
-  ListItemCell,
-} from "@saleor/macaw-ui";
+import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
+import { Button, TrashBinIcon } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -77,16 +70,15 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
                     <div className={classes.spaceBetween}>
                       {taxClass.name}
                       {taxClass.id !== "new" && (
-                        <IconButton
-                          variant="secondary"
+                        <Button
+                          icon={<TrashBinIcon />}
+                          variant="tertiary"
                           onClick={event => {
                             event.stopPropagation();
                             event.preventDefault();
                             onTaxClassDelete(taxClass.id);
                           }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
+                        />
                       )}
                     </div>
                   </ListItemCell>
