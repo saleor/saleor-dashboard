@@ -60,8 +60,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { createUpdateHandler } from "./handlers";
+import { useVoucherCodes } from "./hooks/useVoucherCodes";
 import { VOUCHER_UPDATE_FORM_ID } from "./types";
-import { useVoucherCodes } from "./useVoucherCodes";
 
 interface VoucherDetailsProps {
   id: string;
