@@ -20,4 +20,16 @@ export const messages = defineMessages({
     defaultMessage: "No voucher codes found",
     id: "KkufwD",
   },
+  draft: {
+    id: "W6nwjo",
+    defaultMessage: "Draft",
+  },
+  active: {
+    id: "3a5wL8",
+    defaultMessage: "Active",
+  },
+  inactive: {
+    id: "6Tps09",
+    defaultMessage: "Inactive",
+  },
 });

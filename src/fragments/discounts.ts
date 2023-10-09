@@ -154,6 +154,7 @@ export const voucherCodeFragment = gql`
   fragment VoucherCode on VoucherCode {
     code
     used
+    isActive
   }
 `;
 

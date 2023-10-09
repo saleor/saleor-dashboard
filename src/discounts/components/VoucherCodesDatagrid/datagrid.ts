@@ -4,7 +4,7 @@ import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { IntlShape } from "react-intl";
 
-import { columnsMessages } from "./messages";
+import { columnsMessages, messages } from "./messages";
 import { VoucherCode } from "./types";
 
 export const voucherCodesStaticColumnsAdapter = (intl: IntlShape) => [
@@ -26,7 +26,7 @@ export const voucherCodesStaticColumnsAdapter = (intl: IntlShape) => [
 ];
 
 export const createGetCellContent =
-  (voucherCodes: VoucherCode[], columns: AvailableColumn[]) =>
+  (voucherCodes: VoucherCode[], columns: AvailableColumn[], intl: IntlShape) =>
   ([column, row]: Item): GridCell => {
     const columnId = columns[column]?.id;
     const rowData: VoucherCode | undefined = voucherCodes[row];
@@ -44,8 +44,18 @@ export const createGetCellContent =
           false,
         );
       case "status":
-        return readonlyTextCell(rowData?.status ?? "Active", false);
+        return readonlyTextCell(getStatus(rowData?.isActive, intl), false);
       default:
         return readonlyTextCell("", false);
     }
   };
+
+function getStatus(isActive: boolean | undefined, intl: IntlShape) {
+  if (isActive === undefined) {
+    return intl.formatMessage(messages.draft);
+  }
+
+  return isActive
+    ? intl.formatMessage(messages.active)
+    : intl.formatMessage(messages.inactive);
+}

@@ -48,7 +48,7 @@ export const VoucherCodesDatagrid = ({
   });
 
   const getCellContent = useCallback(
-    createGetCellContent(codes, visibleColumns),
+    createGetCellContent(codes, visibleColumns, intl),
     [codes, visibleColumns],
   );
 
