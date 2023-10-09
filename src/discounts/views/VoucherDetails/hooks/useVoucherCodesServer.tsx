@@ -60,9 +60,9 @@ export const useVoucherCodesServer = ({
   );
 
   const hasServerPaginationNextPage =
-    serverVoucherCodesPagination?.pageInfo?.hasNextPage;
+    serverVoucherCodesPagination?.pageInfo?.hasNextPage ?? false;
   const hasServerPaginationPrevPage =
-    serverVoucherCodesPagination?.pageInfo?.hasPreviousPage;
+    serverVoucherCodesPagination?.pageInfo?.hasPreviousPage ?? false;
 
   const serverVoucherCodes = (mapEdgesToItems(
     voucherCodesData?.voucher?.codes,

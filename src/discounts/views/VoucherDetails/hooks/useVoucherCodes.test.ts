@@ -220,7 +220,7 @@ describe("useVoucherCodes", () => {
 
     // Assert
     expect(result.current.voucherCodesPagination.pageInfo.hasNextPage).toBe(
-      undefined,
+      false,
     );
     expect(result.current.voucherCodesPagination.pageInfo.hasPreviousPage).toBe(
       true,
@@ -258,7 +258,7 @@ describe("useVoucherCodes", () => {
 
     // Assert
     expect(result.current.voucherCodesPagination.pageInfo.hasNextPage).toBe(
-      undefined,
+      false,
     );
     expect(result.current.voucherCodesPagination.pageInfo.hasPreviousPage).toBe(
       false,

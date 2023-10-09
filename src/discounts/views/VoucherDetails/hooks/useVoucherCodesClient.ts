@@ -35,9 +35,9 @@ export const useVoucherCodesClient = (
   } = useVoucherCodesPagination(addedVoucherCodes);
 
   const hasClientPaginationNextPage =
-    clientVoucherCodesPagination?.pageInfo?.hasNextPage;
+    clientVoucherCodesPagination?.pageInfo?.hasNextPage ?? false;
   const hasClientPaginationPrevPage =
-    clientVoucherCodesPagination.pageInfo?.hasPreviousPage;
+    clientVoucherCodesPagination.pageInfo?.hasPreviousPage ?? false;
 
   const freeSlotsInClientPagianationPage =
     settings.rowNumber - clientVoucherCodes.length;
