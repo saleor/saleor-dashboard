@@ -94,7 +94,7 @@ export const CategoryListDatagrid = ({
         loading={disabled}
         columnSelect={sort !== undefined ? "single" : undefined}
         verticalBorder={col => col > 0}
-        rowMarkers="checkbox"
+        rowMarkers="checkbox-visible"
         availableColumns={visibleColumns}
         rows={categories?.length ?? 0}
         getCellContent={getCellContent}
