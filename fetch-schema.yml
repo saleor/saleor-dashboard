@@ -1,4 +1,4 @@
-schema: ${API_URI}
+schema: https://multiple-codes-for-voucher-feature.api.saleor.rocks/graphql/
 generates:
   ./introspection.json:
     plugins:
