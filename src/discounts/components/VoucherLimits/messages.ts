@@ -31,4 +31,8 @@ export default defineMessages({
     defaultMessage: "Limit to staff only",
     description: "limit voucher",
   },
+  singleUse: {
+    defaultMessage: "Limit to voucher code use once",
+    id: "ZCSOaS",
+  },
 });

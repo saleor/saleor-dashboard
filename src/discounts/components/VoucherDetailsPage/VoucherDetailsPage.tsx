@@ -81,6 +81,7 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   codes: VoucherCode[];
   usageLimit: number;
   used: number;
+  singleUse: boolean;
 }
 
 export interface VoucherDetailsPageProps
@@ -214,6 +215,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
     usageLimit: voucher?.usageLimit ?? 1,
     used: voucher?.used ?? 0,
+    singleUse: voucher?.singleUse ?? false,
     metadata: voucher?.metadata.map(mapMetadataItemToInput),
     privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
   };

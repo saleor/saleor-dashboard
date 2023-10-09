@@ -167,6 +167,7 @@ export const voucherDetailsFragment = gql`
     applyOncePerOrder
     applyOncePerCustomer
     onlyForStaff
+    singleUse
     productsCount: products {
       totalCount
     }

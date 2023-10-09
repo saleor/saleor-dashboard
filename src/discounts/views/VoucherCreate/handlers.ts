@@ -55,6 +55,7 @@ export function createHandler(
             ? VoucherTypeEnum.SHIPPING
             : formData.type,
         usageLimit: formData.hasUsageLimit ? formData.usageLimit : null,
+        singleUse: formData.singleUse,
       },
     });
 

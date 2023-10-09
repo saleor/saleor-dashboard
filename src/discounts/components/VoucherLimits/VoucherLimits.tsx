@@ -110,6 +110,14 @@ const VoucherLimits = ({
           name={"onlyForStaff" as keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
+
+        <ControlledCheckbox
+          testId="single-use"
+          checked={data.singleUse}
+          label={intl.formatMessage(messages.singleUse)}
+          name={"singleUse" as keyof VoucherDetailsPageFormData}
+          onChange={onChange}
+        />
       </CardContent>
     </Card>
   );

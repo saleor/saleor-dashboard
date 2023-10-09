@@ -24,6 +24,7 @@ export const initialForm: FormData = {
   type: VoucherTypeEnum.ENTIRE_ORDER,
   used: 1,
   usageLimit: 1,
+  singleUse: false,
   codes: [],
   value: 0,
   metadata: [],

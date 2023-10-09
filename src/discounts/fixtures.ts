@@ -589,6 +589,7 @@ export const voucherDetails: VoucherDetailsFragment = {
   privateMetadata: [],
   applyOncePerCustomer: false,
   applyOncePerOrder: false,
+  singleUse: false,
   onlyForStaff: false,
   categoriesCount: {
     __typename: "CategoryCountableConnection",
