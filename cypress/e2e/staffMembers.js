@@ -207,9 +207,11 @@ describe("Staff members", () => {
         .get(SHARED_ELEMENTS.searchInput)
         .type(`${email} {enter}`)
         .waitForRequestAndCheckIfNoErrors("@StaffList");
-      cy.get(STAFF_MEMBERS_LIST_SELECTORS.usersEmails)
-        .should("contain.text", email.toLowerCase())
-        .click();
+      cy.get(SHARED_ELEMENTS.dataGridTable)
+        .contains(email.toLowerCase())
+        .should("exist");
+      // selects first row
+      cy.clickGridCell(0, 0);
       cy.get(STAFF_MEMBER_DETAILS_SELECTORS.staffEmail)
         .click()
         .clear()
