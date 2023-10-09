@@ -26,7 +26,7 @@ export const useVoucherCodesClient = (
     settings.rowNumber - clientVoucherCodes.length;
 
   const handleAddVoucherCode = (code: string) => [
-    setAddedVoucherCodes(codes => [...codes, { code, status: "Draft" }]),
+    setAddedVoucherCodes(codes => [{ code, status: "Draft" }, ...codes]),
   ];
 
   const handleGenerateMultipeCodes = ({
@@ -34,8 +34,8 @@ export const useVoucherCodesClient = (
     prefix,
   }: GenerateMultipleVoucherCodeFormData) => {
     setAddedVoucherCodes(codes => [
-      ...codes,
       ...generateMultipleIds(quantity, prefix),
+      ...codes,
     ]);
     resetPagination();
   };
