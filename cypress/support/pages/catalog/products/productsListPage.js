@@ -55,17 +55,17 @@ export function selectFilterOption(filter, optionName) {
   submitFilters();
 }
 export function filterProductsWithNewFilters(filter, optionName) {
-  cy.get('[data-test-id="filters-button"]').click();
-  cy.get('[data-test-id="add-filter-button"]').click();
-  selectFilterBy(filter)
-    .get(PRODUCTS_LIST.filters.filterField[filter])
-    .find(PRODUCTS_LIST.filters.filterBySearchInput)
-    .type(optionName);
-  cy.get(PRODUCTS_LIST.filters.filterField[filter])
-    .contains(PRODUCTS_LIST.filters.filterOption, optionName)
-    .find(BUTTON_SELECTORS.checkbox)
-    .click();
-  submitFilters();
+  cy.get(PRODUCTS_LIST.newFilters.showFiltersButton).click();
+  cy.get(PRODUCTS_LIST.newFilters.addFilterButton).click();
+  cy.get(PRODUCTS_LIST.newFilters.leftInput).click();
+  cy.get(PRODUCTS_LIST.newFilters.dropDownOptions).contains(filter).click();
+  cy.get(PRODUCTS_LIST.newFilters.rightInput)
+    .click()
+    .invoke("attr", "aria-expanded")
+    .should("eq", "true");
+  cy.get(PRODUCTS_LIST.newFilters.rightInput).type(optionName);
+  cy.get(PRODUCTS_LIST.newFilters.dropDownOptions).contains(optionName).click();
+  cy.get(PRODUCTS_LIST.newFilters.saveFiltersButton).click();
 }
 
 export function selectAttributeFilter(attributeSlug, attributeValue) {

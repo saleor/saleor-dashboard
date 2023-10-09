@@ -1,4 +1,12 @@
 export const PRODUCTS_LIST = {
+  newFilters: {
+    saveFiltersButton: "[data-test-id='save-filters-button']",
+    rightInput: "[data-test-id='right-0']",
+    dropDownOptions: "[data-test-id='select-option']",
+    leftInput: "[data-test-id='left-0']",
+    showFiltersButton: "[data-test-id='filters-button']",
+    addFilterButton: "[data-test-id='add-filter-button']",
+  },
   productsList: "[data-test-id^='id-']",
   dataGridTable: "[data-testid='data-grid-canvas']",
   productsNames: "[data-test-id='name']",
