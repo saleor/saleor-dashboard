@@ -24,7 +24,6 @@ import { taxesMessages } from "@dashboard/taxes/messages";
 import { isLastElement } from "@dashboard/taxes/utils/utils";
 import { Card, CardContent, Divider } from "@material-ui/core";
 import {
-  Button,
   List,
   ListHeader,
   ListItem,
@@ -32,7 +31,7 @@ import {
   PageTab,
   PageTabs,
 } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Button } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -162,7 +161,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
         return (
           <DetailPageLayout gridTemplateColumns={1}>
-            <TopNav title={<TaxPageTitle />} />
+            <TopNav title={<TaxPageTitle />} href={configurationMenuUrl} />
             <DetailPageLayout.Content>
               <Box padding={6}>
                 <PageTabs value="channels" onChange={handleTabChange}>

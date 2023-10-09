@@ -93,7 +93,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
 
         return (
           <DetailPageLayout gridTemplateColumns={1}>
-            <TopNav title={<TaxPageTitle />} />
+            <TopNav title={<TaxPageTitle />} href={configurationMenuUrl} />
             <DetailPageLayout.Content>
               <Box padding={6}>
                 <PageTabs value="countries" onChange={handleTabChange}>

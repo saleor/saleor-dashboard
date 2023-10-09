@@ -15,7 +15,8 @@ import {
   Radio,
   TextField,
 } from "@material-ui/core";
-import { Button, DialogHeader, SearchIcon } from "@saleor/macaw-ui";
+import { DialogHeader, SearchIcon } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
