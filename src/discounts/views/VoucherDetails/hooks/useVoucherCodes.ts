@@ -22,6 +22,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     freeSlotsInClientPagianationPage,
     handleAddVoucherCode,
     handleGenerateMultipeCodes,
+    handleDeleteAddedVoucherCodes,
     hasClientPaginationNextPage,
     hasClientPaginationPrevPage,
     onSettingsChange,
@@ -63,8 +64,16 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     ? serverVoucherCodesPagination
     : clientVoucherCodesPagination;
 
-  const { selectedVoucherCodesIds, handleSetSelectedVoucherCodesIds } =
-    useVoucherCodesRowSelection(voucherCodes);
+  const {
+    selectedVoucherCodesIds,
+    handleSetSelectedVoucherCodesIds,
+    clearRowSelection,
+  } = useVoucherCodesRowSelection(voucherCodes);
+
+  const handleDeleteVoucherCodes = () => {
+    clearRowSelection();
+    handleDeleteAddedVoucherCodes(selectedVoucherCodesIds);
+  };
 
   const handleLoadNextPage = () => {
     if (!hasClientPaginationNextPage) {
@@ -139,5 +148,6 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     handleSetSelectedVoucherCodesIds,
     handleAddVoucherCode,
     handleGenerateMultipeCodes,
+    handleDeleteVoucherCodes,
   };
 };

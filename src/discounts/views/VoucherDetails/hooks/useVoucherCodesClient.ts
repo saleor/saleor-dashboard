@@ -14,6 +14,7 @@ interface UseVoucherCodesClient {
   clientVoucherCodesPagination: any;
   freeSlotsInClientPagianationPage: number;
   onSettingsChange: UseListSettings["updateListSettings"];
+  handleDeleteAddedVoucherCodes: (idsToDelete: string[]) => void;
   handleAddVoucherCode: (code: string) => void;
   handleGenerateMultipeCodes: ({
     quantity,
@@ -60,6 +61,12 @@ export const useVoucherCodesClient = (
     resetPage();
   };
 
+  const handleDeleteAddedVoucherCodes = (idsToDelete: string[]) => {
+    setAddedVoucherCodes(codes =>
+      codes.filter(({ code }) => !idsToDelete.includes(code)),
+    );
+  };
+
   return {
     addedVoucherCodes,
     clientVoucherCodes,
@@ -70,5 +77,6 @@ export const useVoucherCodesClient = (
     freeSlotsInClientPagianationPage,
     handleAddVoucherCode,
     handleGenerateMultipeCodes,
+    handleDeleteAddedVoucherCodes,
   };
 };

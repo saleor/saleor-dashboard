@@ -5,6 +5,7 @@ import { useCallback } from "react";
 
 interface VoucherCodesRowSelection {
   selectedVoucherCodesIds: string[];
+  clearRowSelection: () => void;
   handleSetSelectedVoucherCodesIds: (
     rows: number[],
     clearSelection: () => void,
@@ -17,6 +18,7 @@ export const useVoucherCodesRowSelection = (
   const {
     selectedRowIds,
     setClearDatagridRowSelectionCallback,
+    clearRowSelection,
     setSelectedRowIds,
   } = useRowSelection();
 
@@ -46,5 +48,6 @@ export const useVoucherCodesRowSelection = (
   return {
     selectedVoucherCodesIds: selectedRowIds,
     handleSetSelectedVoucherCodesIds,
+    clearRowSelection,
   };
 };

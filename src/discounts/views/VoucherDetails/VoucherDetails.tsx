@@ -146,6 +146,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     updateVoucherCodesListSettings,
     handleAddVoucherCode,
     handleGenerateMultipeCodes,
+    handleDeleteVoucherCodes,
   } = useVoucherCodes({ id });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -444,7 +445,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       <VoucherCodesDeleteDialog
         open={params.action === "delete-codes"}
         onClose={closeModal}
-        onDelete={closeModal}
+        onDelete={() => {
+          handleDeleteVoucherCodes();
+          closeModal();
+        }}
       />
       <VoucherCodesGenerateDialog
         open={params.action === "multiple-codes"}
