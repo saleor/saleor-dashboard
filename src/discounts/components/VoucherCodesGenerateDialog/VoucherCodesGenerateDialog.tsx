@@ -42,6 +42,7 @@ export const VoucherCodesGenerateDialog = ({
         "ArrowUp",
         "ArrowLeft",
         "ArrowRight",
+        "Tab",
       ].includes(e.key)
     ) {
       e.preventDefault();
@@ -95,6 +96,7 @@ export const VoucherCodesGenerateDialog = ({
             value={data.prefix}
             onChange={change}
           />
+          <input type="submit" hidden />
         </Box>
         <DashboardModal.Actions>
           <Button onClick={handleModalClose} variant="secondary">
