@@ -214,6 +214,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productUrl(id, {
+        ...params,
         action: "assign-attribute-value",
         id: attribute.id,
       }),
