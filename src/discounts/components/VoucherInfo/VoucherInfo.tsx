@@ -1,12 +1,14 @@
-import { DashboardCard } from "@dashboard/components/Card";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Input } from "@saleor/macaw-ui/next";
+import { Card, CardContent, TextField } from "@material-ui/core";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import { generateCode } from "../../../misc";
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherInfoProps {
@@ -26,29 +28,48 @@ const VoucherInfo = ({
 }: VoucherInfoProps) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["name"], errors);
+  const formErrors = getFormErrors(["code"], errors);
+
+  const onGenerateCode = () =>
+    onChange({
+      target: {
+        name: "code",
+        value: generateCode(10),
+      },
+    });
 
   return (
-    <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage(commonMessages.generalInformations)}
-      </DashboardCard.Title>
-      <DashboardCard.Content>
-        <Input
-          size="small"
+    <Card>
+      <CardTitle
+        title={intl.formatMessage(commonMessages.generalInformations)}
+        toolbar={
+          variant === "create" && (
+            <Button onClick={onGenerateCode} data-test-id="generate-code">
+              <FormattedMessage
+                id="mSLr9d"
+                defaultMessage="Generate Code"
+                description="voucher code, button"
+              />
+            </Button>
+          )
+        }
+      />
+      <CardContent>
+        <TextField
           disabled={variant === "update" || disabled}
-          error={!!formErrors.name}
-          helperText={getDiscountErrorMessage(formErrors.name, intl)}
-          name={"name" as keyof VoucherDetailsPageFormData}
+          error={!!formErrors.code}
+          fullWidth
+          helperText={getDiscountErrorMessage(formErrors.code, intl)}
+          name={"code" as keyof VoucherDetailsPageFormData}
           label={intl.formatMessage({
-            id: "sfErC+",
-            defaultMessage: "Voucher Name",
+            id: "jvKNMP",
+            defaultMessage: "Discount Code",
           })}
-          value={data.name}
+          value={data.code}
           onChange={onChange}
         />
-      </DashboardCard.Content>
-    </DashboardCard>
+      </CardContent>
+    </Card>
   );
 };
 export default VoucherInfo;

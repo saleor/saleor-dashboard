@@ -31,11 +31,10 @@ export function createHandler(
   return async (formData: VoucherDetailsPageFormData) => {
     const response = await voucherCreate({
       input: {
-        name: formData.name,
         applyOncePerCustomer: formData.applyOncePerCustomer,
         applyOncePerOrder: formData.applyOncePerOrder,
         onlyForStaff: formData.onlyForStaff,
-        codes: formData.codes.map(({ code }) => ({ code })),
+        code: formData.code,
         discountValueType:
           formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
             ? DiscountValueTypeEnum.PERCENTAGE
@@ -55,7 +54,6 @@ export function createHandler(
             ? VoucherTypeEnum.SHIPPING
             : formData.type,
         usageLimit: formData.hasUsageLimit ? formData.usageLimit : null,
-        singleUse: formData.singleUse,
       },
     });
 

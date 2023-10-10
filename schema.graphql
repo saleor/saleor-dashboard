@@ -7314,9 +7314,6 @@ type DiscountError {
 
   """List of products IDs which causes the error."""
   products: [ID!]
-
-  """List of voucher codes which causes the error."""
-  voucherCodes: [String!]
 }
 
 """An enumeration."""
@@ -16413,21 +16410,6 @@ type Mutation {
     """Fields required to update voucher channel listings."""
     input: VoucherChannelListingInput!
   ): VoucherChannelListingUpdate
-
-  """
-  Deletes voucher codes.
-  
-  Added in Saleor 3.18. 
-  
-  Requires one of the following permissions: MANAGE_DISCOUNTS.
-  
-  Triggers the following webhook events:
-  - VOUCHER_UPDATED (async): A voucher was updated.
-  """
-  voucherCodeBulkDelete(
-    """List of voucher codes IDs to delete."""
-    ids: [ID!]!
-  ): VoucherCodeBulkDelete
 
   """
   Creates a new voucher. 
@@ -31122,7 +31104,7 @@ type Transaction implements Node {
   """Total amount of the transaction."""
   amount: Money
 
-  """Date and time which transaction was created."""
+  """Date and time at which transaction was created."""
   created: DateTime!
 
   """Error associated with transaction, if any."""
@@ -32789,31 +32771,8 @@ type Voucher implements Node & ObjectWithMetadata {
   """
   channelListings: [VoucherChannelListing!]
 
-  """The code of the voucher.This field will be removed in Saleor 4.0."""
-  code: String
-
-  """
-  List of codes available for this voucher.
-  
-  Added in Saleor 3.18.
-  """
-  codes(
-    """Return the elements in the list that come after the specified cursor."""
-    after: String
-
-    """Return the elements in the list that come before the specified cursor."""
-    before: String
-
-    """
-    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    first: Int
-
-    """
-    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    last: Int
-  ): VoucherCodeCountableConnection
+  """The code of the voucher."""
+  code: String!
 
   """
   List of collections this voucher applies to.
@@ -32929,13 +32888,6 @@ type Voucher implements Node & ObjectWithMetadata {
     last: Int
   ): ProductCountableConnection
 
-  """
-  Determine if the voucher is limited to a single use or unlimited use.
-  
-  Added in Saleor 3.18.
-  """
-  singleUse: Boolean!
-
   """The start date and time of voucher."""
   startDate: DateTime!
 
@@ -32951,7 +32903,7 @@ type Voucher implements Node & ObjectWithMetadata {
   """The number of times a voucher can be used."""
   usageLimit: Int
 
-  """Usage count of the voucher.This field will be removed in Saleor 4.0."""
+  """Usage count of the voucher."""
   used: Int!
 
   """
@@ -33062,92 +33014,6 @@ type VoucherChannelListingUpdate {
 
   """An updated voucher instance."""
   voucher: Voucher
-}
-
-"""
-Represents voucher code.
-
-Added in Saleor 3.18.
-"""
-type VoucherCode {
-  """Code to use the voucher."""
-  code: String
-
-  """The ID of the voucher code."""
-  id: ID!
-
-  """Whether a code is active or not."""
-  isActive: Boolean
-
-  """Number of times a code has been used."""
-  used: Int
-}
-
-"""
-Deletes voucher codes.
-
-Added in Saleor 3.18. 
-
-Requires one of the following permissions: MANAGE_DISCOUNTS.
-
-Triggers the following webhook events:
-- VOUCHER_UPDATED (async): A voucher was updated.
-"""
-type VoucherCodeBulkDelete {
-  """Returns how many codes were deleted."""
-  count: Int!
-  errors: [VoucherCodeBulkDeleteError!]!
-}
-
-type VoucherCodeBulkDeleteError {
-  """The error code."""
-  code: VoucherCodeBulkDeleteErrorCode!
-
-  """The error message."""
-  message: String
-
-  """
-  Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
-  """
-  path: String
-
-  """List of voucher codes which causes the error."""
-  voucherCodes: [ID!]
-}
-
-"""An enumeration."""
-enum VoucherCodeBulkDeleteErrorCode {
-  GRAPHQL_ERROR
-  INVALID
-  NOT_FOUND
-}
-
-type VoucherCodeCountableConnection {
-  edges: [VoucherCodeCountableEdge!]!
-
-  """Pagination data for this connection."""
-  pageInfo: PageInfo!
-
-  """A total count of items in the collection."""
-  totalCount: Int
-}
-
-type VoucherCodeCountableEdge {
-  """A cursor for use in pagination."""
-  cursor: String!
-
-  """The item at the end of the edge."""
-  node: VoucherCode!
-}
-
-"""
-Represents voucher code data.
-
-Added in Saleor 3.18.
-"""
-input VoucherCodeInput {
-  """Code to use the voucher."""
-  code: String
 }
 
 type VoucherCountableConnection {
@@ -33272,15 +33138,8 @@ input VoucherInput {
   """Categories discounted by the voucher."""
   categories: [ID!]
 
-  """Code to use the voucher.This field will be removed in Saleor 4.0."""
+  """Code to use the voucher."""
   code: String
-
-  """
-  Codes to use the voucher.
-  
-  Added in Saleor 3.18.
-  """
-  codes: [VoucherCodeInput!]
 
   """Collections discounted by the voucher."""
   collections: [ID!]
@@ -33305,13 +33164,6 @@ input VoucherInput {
 
   """Products discounted by the voucher."""
   products: [ID!]
-
-  """
-  When set to 'True', each voucher is limited to a single use; otherwise, usage remains unrestricted.
-  
-  Added in Saleor 3.18.
-  """
-  singleUse: Boolean
 
   """Start date of the voucher in ISO 8601 format."""
   startDate: DateTime
@@ -33372,11 +33224,7 @@ type VoucherRemoveCatalogues {
 }
 
 enum VoucherSortField {
-  """
-  Sort vouchers by code.
-  
-  DEPRECATED: this field will be removed in Saleor 4.0.
-  """
+  """Sort vouchers by code."""
   CODE
 
   """Sort vouchers by end date."""
@@ -33388,13 +33236,6 @@ enum VoucherSortField {
   This option requires a channel filter to work as the values can vary between channels.
   """
   MINIMUM_SPENT_AMOUNT
-
-  """
-  Sort vouchers by name.
-  
-  Added in Saleor 3.18.
-  """
-  NAME
 
   """Sort vouchers by start date."""
   START_DATE

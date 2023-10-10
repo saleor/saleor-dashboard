@@ -11,6 +11,7 @@ import {
 } from "@dashboard/discounts/handlers";
 import { voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
+import { useFlag } from "@dashboard/featureFlags";
 import { DiscountErrorFragment, PermissionEnum } from "@dashboard/graphql";
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -62,6 +63,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
+  const voucherCodesFlag = useFlag("voucher_codes");
+
   const { makeChangeHandler: makeMetadataChangeHandler } =
     useMetadataChangeTrigger();
 
@@ -112,7 +115,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     });
   };
 
-  const handleGenerateCustomCode = code => {
+  const handleGenerateCustomCode = (code: string) => {
     set({
       codes: [{ code }, ...data.codes],
     });
@@ -140,18 +143,20 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             onChange={event => handleDiscountTypeChange(data, event)}
             variant="create"
           />
-          <VoucherCodes
-            codes={paginatedCodes}
-            loading={false}
-            onDeleteCodes={handleDeleteVoucherCodes}
-            onMultiCodesGenerate={handleGenerateMultipeCodes}
-            onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
-            onSettingsChange={onSettingsChange}
-            onCustomCodeGenerate={handleGenerateCustomCode}
-            selectedCodesIds={selectedRowIds}
-            settings={settings}
-            voucherCodesPagination={pagination}
-          />
+          {voucherCodesFlag.enabled && (
+            <VoucherCodes
+              codes={paginatedCodes}
+              loading={false}
+              onDeleteCodes={handleDeleteVoucherCodes}
+              onMultiCodesGenerate={handleGenerateMultipeCodes}
+              onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
+              onSettingsChange={onSettingsChange}
+              onCustomCodeGenerate={handleGenerateCustomCode}
+              selectedCodesIds={selectedRowIds}
+              settings={settings}
+              voucherCodesPagination={pagination}
+            />
+          )}
           <VoucherTypes
             data={data}
             disabled={disabled}
