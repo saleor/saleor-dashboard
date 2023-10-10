@@ -5,7 +5,6 @@ dotenv.config();
 
 const config: CodegenConfig = {
   schema: process.env.API_URI,
-  // documents: ['src/**/*.tsx'],
   generates: {
     './introspection.json': {
       plugins: ['introspection']
