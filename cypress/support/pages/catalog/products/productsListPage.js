@@ -54,6 +54,19 @@ export function selectFilterOption(filter, optionName) {
     .click();
   submitFilters();
 }
+export function filterProductsWithNewFilters(filter, optionName) {
+  cy.get(PRODUCTS_LIST.newFilters.showFiltersButton).click();
+  cy.get(PRODUCTS_LIST.newFilters.addFilterButton).click();
+  cy.get(PRODUCTS_LIST.newFilters.leftInput).click();
+  cy.get(PRODUCTS_LIST.newFilters.dropDownOptions).contains(filter).click();
+  cy.get(PRODUCTS_LIST.newFilters.rightInput)
+    .click()
+    .invoke("attr", "aria-expanded")
+    .should("eq", "true");
+  cy.get(PRODUCTS_LIST.newFilters.rightInput).type(optionName);
+  cy.get(PRODUCTS_LIST.newFilters.dropDownOptions).contains(optionName).click();
+  cy.get(PRODUCTS_LIST.newFilters.saveFiltersButton).click();
+}
 
 export function selectAttributeFilter(attributeSlug, attributeValue) {
   selectFilterByAttribute(attributeSlug);

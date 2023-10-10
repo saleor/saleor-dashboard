@@ -1,8 +1,0 @@
-schema: https://multiple-codes-for-voucher-feature.api.saleor.rocks/graphql/
-generates:
-  ./introspection.json:
-    plugins:
-      - introspection
-  ./schema.graphql:
-    plugins:
-      - schema-ast
