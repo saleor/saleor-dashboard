@@ -27,6 +27,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     hasClientPaginationPrevPage,
     onSettingsChange,
   } = useVoucherCodesClient(voucherCodesSettings, () => {
+    clearRowSelection();
     setIsServerPagination(false);
   });
 
@@ -76,6 +77,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   };
 
   const handleLoadNextPage = () => {
+    clearRowSelection();
     if (!hasClientPaginationNextPage) {
       setIsServerPagination(true);
     }
@@ -90,6 +92,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   };
 
   const handleLoadPrevousPage = () => {
+    clearRowSelection();
     if (!hasServerPaginationPrevPage) {
       setIsServerPagination(false);
     }

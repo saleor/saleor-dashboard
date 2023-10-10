@@ -28,7 +28,7 @@ export const useVoucherCodesRowSelection = (
         return;
       }
 
-      const rowsIds = rows.map(row => voucherCodes[row].code).filter(Boolean);
+      const rowsIds = rows.map(row => voucherCodes[row]?.code).filter(Boolean);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
