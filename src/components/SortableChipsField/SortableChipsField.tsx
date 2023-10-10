@@ -4,7 +4,6 @@ import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { SortableContainerProps } from "react-sortable-hoc";
 
-import Skeleton from "../Skeleton";
 import DraggableChip from "../SortableChip";
 import SortableContainer from "./SortableContainer";
 
@@ -71,19 +70,17 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
       helperClass={classes.chipHelper}
     >
       <div>
-        {loading ? (
-          <Skeleton />
-        ) : (
-          values.map((value, valueIndex) => (
-            <DraggableChip
-              className={classes.chip}
-              key={valueIndex}
-              index={valueIndex}
-              label={value.label}
-              onClose={() => onValueDelete(value.value)}
-            />
-          ))
-        )}
+        {values.map((value, valueIndex) => (
+          <DraggableChip
+            className={classes.chip}
+            loading={loading}
+            disabled={loading}
+            key={valueIndex}
+            index={valueIndex}
+            label={value.label}
+            onClose={() => onValueDelete(value.value)}
+          />
+        ))}
         {error && (
           <Text variant="caption" color="textCriticalDefault">
             {helperText}
