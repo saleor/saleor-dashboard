@@ -57,7 +57,7 @@ export const VoucherCodesDatagrid = ({
       <Datagrid
         readonly
         loading={loading}
-        rowMarkers="checkbox"
+        rowMarkers="checkbox-visible"
         columnSelect="single"
         hasRowHover={false}
         onColumnMoved={handlers.onMove}
