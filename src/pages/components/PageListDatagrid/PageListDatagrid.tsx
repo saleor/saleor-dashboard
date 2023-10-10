@@ -116,7 +116,7 @@ export const PageListDatagrid = ({
       <Datagrid
         readonly
         loading={loading}
-        rowMarkers="checkbox"
+        rowMarkers="checkbox-visible"
         columnSelect="single"
         hasRowHover={hasRowHover}
         onColumnMoved={handlers.onMove}
