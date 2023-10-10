@@ -6729,6 +6729,9 @@
     "context": "dialog header",
     "string": "Assign product"
   },
+  "jvKNMP": {
+    "string": "Discount Code"
+  },
   "jvo0vs": {
     "string": "Save"
   },
@@ -7114,6 +7117,10 @@
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
+  },
+  "mSLr9d": {
+    "context": "voucher code, button",
+    "string": "Generate Code"
   },
   "mTEqYL": {
     "context": "NoChannels content",
