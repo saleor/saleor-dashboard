@@ -140,6 +140,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     voucherCodesPagination,
     voucherCodesSettings,
     selectedVoucherCodesIds,
+    addedVoucherCodes,
     voucherCodesRefetch,
     handleSetSelectedVoucherCodesIds,
     updateVoucherCodesListSettings,
@@ -327,6 +328,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       <VoucherDetailsPage
         voucher={data?.voucher}
         voucherCodes={voucherCodes}
+        addedVoucherCodes={addedVoucherCodes}
         voucherCodesPagination={voucherCodesPagination}
         voucherCodesLoading={voucherCodesLoading}
         voucherCodesSettings={voucherCodesSettings}

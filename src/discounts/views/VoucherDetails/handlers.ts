@@ -58,9 +58,7 @@ export function createUpdateHandler(
               : formData.type,
           usageLimit: formData.hasUsageLimit ? formData.usageLimit : null,
           singleUse: formData.singleUse,
-          // TODO: implement updating codes
-          codes: [],
-          // codes: formData.codes.map(({ code }) => ({ code })),
+          codes: formData.codes.map(({ code }) => ({ code })),
         },
       }).then(({ data }) => data?.voucherUpdate.errors ?? []),
 

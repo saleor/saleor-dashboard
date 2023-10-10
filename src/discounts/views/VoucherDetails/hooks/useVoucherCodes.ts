@@ -16,6 +16,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   const [isServerPagination, setIsServerPagination] = useState(true);
 
   const {
+    addedVoucherCodes,
     clientVoucherCodes,
     clientVoucherCodesPagination,
     freeSlotsInClientPagianationPage,
@@ -116,6 +117,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
 
   return {
     voucherCodes,
+    addedVoucherCodes,
     voucherCodesLoading,
     voucherCodesPagination: {
       ...voucherCodesPagination,

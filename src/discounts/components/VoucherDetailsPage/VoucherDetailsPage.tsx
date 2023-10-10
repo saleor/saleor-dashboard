@@ -99,6 +99,7 @@ export interface VoucherDetailsPageProps
   channelListings: ChannelVoucherData[];
   selectedVoucherCodesIds: string[];
   voucherCodes: VoucherCode[];
+  addedVoucherCodes: VoucherCode[];
   voucherCodesLoading: boolean;
   onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
   onCategoryAssign: () => void;
@@ -162,6 +163,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   selectedVoucherCodesIds,
   onSelectVoucherCodesIds,
   voucherCodes,
+  addedVoucherCodes,
   voucherCodesLoading,
   voucherCodesPagination,
   onVoucherCodesSettingsChange,
@@ -202,7 +204,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     channelListings,
     name: voucher?.name || "",
     discountType,
-    codes: voucherCodes,
+    codes: addedVoucherCodes,
     endDate: splitDateTime(voucher?.endDate ?? "").date,
     endTime: splitDateTime(voucher?.endDate ?? "").time,
     hasEndDate: !!voucher?.endDate,
