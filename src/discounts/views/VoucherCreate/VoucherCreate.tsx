@@ -131,11 +131,6 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         saveButtonBarState={voucherCreateOpts.status}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        onMultipleVoucheCodesGenerate={() => openModal("multiple-codes")}
-        onSingleVoucherCodeGenerate={() => openModal("single-codes")}
-        onVoucherCodesDelete={() => openModal("delete-codes")}
-        onModalClose={closeModal}
-        isModalOpen={modalName => params.action === modalName}
       />
     </>
   );

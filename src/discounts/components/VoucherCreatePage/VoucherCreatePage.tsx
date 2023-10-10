@@ -9,7 +9,7 @@ import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler,
 } from "@dashboard/discounts/handlers";
-import { voucherListUrl, VoucherUrlDialog } from "@dashboard/discounts/urls";
+import { voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
 import { DiscountErrorFragment, PermissionEnum } from "@dashboard/graphql";
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -21,12 +21,7 @@ import { useIntl } from "react-intl";
 
 import { RequirementsPicker } from "../../types";
 import { VoucherCodes } from "../VoucherCodes";
-import { VoucherCodesDeleteDialog } from "../VoucherCodesDeleteDialog";
-import {
-  GenerateMultipleVoucherCodeFormData,
-  VoucherCodesGenerateDialog,
-} from "../VoucherCodesGenerateDialog";
-import { VoucherCodesManualDialog } from "../VoucherCodesManualDialog";
+import { GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
 import VoucherDates from "../VoucherDates";
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 import VoucherInfo from "../VoucherInfo";
@@ -52,11 +47,6 @@ export interface VoucherCreatePageProps {
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
   onSubmit: (data: FormData) => SubmitPromise;
-  onMultipleVoucheCodesGenerate: () => void;
-  onSingleVoucherCodeGenerate: () => void;
-  onModalClose: () => void;
-  isModalOpen: (modalName: VoucherUrlDialog) => boolean;
-  onVoucherCodesDelete: () => void;
 }
 
 const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
@@ -68,11 +58,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   onChannelsChange,
   onSubmit,
   openChannelsModal,
-  onMultipleVoucheCodesGenerate,
-  onSingleVoucherCodeGenerate,
-  onModalClose,
-  isModalOpen,
-  onVoucherCodesDelete,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -114,10 +99,22 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     quantity,
     prefix,
   }: GenerateMultipleVoucherCodeFormData) => {
-    onModalClose();
     clearRowSelection();
     set({
       codes: [...generateMultipleIds(quantity, prefix), ...data.codes],
+    });
+  };
+
+  const handleDeleteVoucherCodes = () => {
+    clearRowSelection();
+    set({
+      codes: data.codes.filter(({ code }) => !selectedRowIds.includes(code)),
+    });
+  };
+
+  const handleGenerateCustomCode = code => {
+    set({
+      codes: [{ code }, ...data.codes],
     });
   };
 
@@ -146,11 +143,11 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           <VoucherCodes
             codes={paginatedCodes}
             loading={false}
-            onDeleteCodes={onVoucherCodesDelete}
-            onMultiCodesGenerate={onMultipleVoucheCodesGenerate}
+            onDeleteCodes={handleDeleteVoucherCodes}
+            onMultiCodesGenerate={handleGenerateMultipeCodes}
             onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
             onSettingsChange={onSettingsChange}
-            onSingleCodesGenerate={onSingleVoucherCodeGenerate}
+            onCustomCodeGenerate={handleGenerateCustomCode}
             selectedCodesIds={selectedRowIds}
             settings={settings}
             voucherCodesPagination={pagination}
@@ -212,35 +209,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           onCancel={() => navigate(voucherListUrl())}
           onSubmit={submit}
           state={saveButtonBarState}
-        />
-
-        <VoucherCodesManualDialog
-          open={isModalOpen("single-codes")}
-          confirmButtonTransitionState="default"
-          onClose={onModalClose}
-          onSubmit={code => {
-            set({
-              codes: [{ code }, ...data.codes],
-            });
-          }}
-        />
-        <VoucherCodesGenerateDialog
-          open={isModalOpen("multiple-codes")}
-          onClose={onModalClose}
-          onSubmit={handleGenerateMultipeCodes}
-        />
-        <VoucherCodesDeleteDialog
-          onClose={onModalClose}
-          open={isModalOpen("delete-codes")}
-          onDelete={() => {
-            onModalClose();
-            clearRowSelection();
-            set({
-              codes: data.codes.filter(
-                ({ code }) => !selectedRowIds.includes(code),
-              ),
-            });
-          }}
         />
       </DetailPageLayout>
     </form>

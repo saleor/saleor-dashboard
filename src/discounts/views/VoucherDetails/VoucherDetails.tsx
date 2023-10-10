@@ -14,9 +14,6 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
-import { VoucherCodesDeleteDialog } from "@dashboard/discounts/components/VoucherCodesDeleteDialog";
-import { VoucherCodesGenerateDialog } from "@dashboard/discounts/components/VoucherCodesGenerateDialog";
-import { VoucherCodesManualDialog } from "@dashboard/discounts/components/VoucherCodesManualDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
   VoucherTabItemsCount,
@@ -333,10 +330,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         voucherCodesPagination={voucherCodesPagination}
         voucherCodesLoading={voucherCodesLoading}
         voucherCodesSettings={voucherCodesSettings}
+        onDeleteVoucherCodes={handleDeleteVoucherCodes}
+        onMultipleVoucheCodesGenerate={handleGenerateMultipeCodes}
+        onCustomVoucherCodeGenerate={handleAddVoucherCode}
         onVoucherCodesSettingsChange={updateVoucherCodesListSettings}
-        onMultipleVoucheCodesGenerate={() => openModal("multiple-codes")}
-        onSingleVoucherCodeGenerate={() => openModal("single-codes")}
-        onDeleteVoucherCodes={() => openModal("delete-codes")}
         onSelectVoucherCodesIds={handleSetSelectedVoucherCodesIds}
         selectedVoucherCodesIds={selectedVoucherCodesIds}
         allChannelsCount={allChannels?.length}
@@ -441,25 +438,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
-      />
-      <VoucherCodesDeleteDialog
-        open={params.action === "delete-codes"}
-        onClose={closeModal}
-        onDelete={() => {
-          handleDeleteVoucherCodes();
-          closeModal();
-        }}
-      />
-      <VoucherCodesGenerateDialog
-        open={params.action === "multiple-codes"}
-        onClose={closeModal}
-        onSubmit={handleGenerateMultipeCodes}
-      />
-      <VoucherCodesManualDialog
-        open={params.action === "single-codes"}
-        confirmButtonTransitionState={voucherUpdateOpts.status}
-        onClose={closeModal}
-        onSubmit={handleAddVoucherCode}
       />
       <AssignCategoriesDialog
         categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)?.filter(

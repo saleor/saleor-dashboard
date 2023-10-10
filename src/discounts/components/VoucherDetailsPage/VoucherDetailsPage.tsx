@@ -45,6 +45,7 @@ import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
 import { VoucherCodes } from "../VoucherCodes";
 import { VoucherCode } from "../VoucherCodesDatagrid/types";
+import { GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
@@ -115,11 +116,13 @@ export interface VoucherDetailsPageProps
   onTabClick: (index: VoucherDetailsPageTab) => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
-  onMultipleVoucheCodesGenerate: () => void;
-  onSingleVoucherCodeGenerate: () => void;
+  onMultipleVoucheCodesGenerate: (
+    data: GenerateMultipleVoucherCodeFormData,
+  ) => void;
+  onCustomVoucherCodeGenerate: (code: string) => void;
   onDeleteVoucherCodes: () => void;
-  voucherCodesPagination: LocalPagination;
   onVoucherCodesSettingsChange: UseListSettings["updateListSettings"];
+  voucherCodesPagination: LocalPagination;
   voucherCodesSettings: UseListSettings["settings"];
 }
 
@@ -149,7 +152,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   openChannelsModal,
   onRemove,
   onMultipleVoucheCodesGenerate,
-  onSingleVoucherCodeGenerate,
+  onCustomVoucherCodeGenerate,
   onDeleteVoucherCodes,
   onSubmit,
   toggle,
@@ -255,7 +258,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 onDeleteCodes={onDeleteVoucherCodes}
                 loading={voucherCodesLoading}
                 onMultiCodesGenerate={onMultipleVoucheCodesGenerate}
-                onSingleCodesGenerate={onSingleVoucherCodeGenerate}
+                onCustomCodeGenerate={onCustomVoucherCodeGenerate}
                 disabled={disabled}
                 codes={voucherCodes}
                 voucherCodesPagination={voucherCodesPagination}
