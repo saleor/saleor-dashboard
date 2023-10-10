@@ -117,7 +117,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     onModalClose();
     clearRowSelection();
     set({
-      codes: [...data.codes, ...generateMultipleIds(quantity, prefix)],
+      codes: [...generateMultipleIds(quantity, prefix), ...data.codes],
     });
   };
 
@@ -220,7 +220,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           onClose={onModalClose}
           onSubmit={code => {
             set({
-              codes: [...data.codes, { code }],
+              codes: [{ code }, ...data.codes],
             });
           }}
         />
