@@ -39,7 +39,7 @@ const props: VoucherDetailsPageProps = {
   },
   voucherCodesSettings: undefined,
   onMultipleVoucheCodesGenerate: () => undefined,
-  onSingleVoucherCodeGenerate: () => undefined,
+  onCustomVoucherCodeGenerate: () => undefined,
   onSelectVoucherCodesIds: () => undefined,
   onDeleteVoucherCodes: () => undefined,
   activeTab: VoucherDetailsPageTab.products,

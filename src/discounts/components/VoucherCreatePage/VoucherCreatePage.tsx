@@ -112,7 +112,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     });
   };
 
-  const handleGenerateCustomCode = code => {
+  const handleGenerateCustomCode = (code: string) => {
     set({
       codes: [{ code }, ...data.codes],
     });
