@@ -542,6 +542,9 @@
     "context": "header",
     "string": "Translation ShippingMethod \"{shippingMethodName}\" - {languageCode}"
   },
+  "1UQ9Qy": {
+    "string": "Code Prefix (Optional)"
+  },
   "1Uj0Wd": {
     "context": "order draft total price",
     "string": "Total"
@@ -1222,6 +1225,9 @@
   "6SL46U": {
     "string": "by {author}"
   },
+  "6Tps09": {
+    "string": "Inactive"
+  },
   "6WRFp2": {
     "context": "order history message",
     "string": "Note was added to the order"
@@ -1274,6 +1280,9 @@
   "6xC/Ls": {
     "context": "informations about product seo, header",
     "string": "SEO Information"
+  },
+  "6xNl6V": {
+    "string": "Add code"
   },
   "6y+k8V": {
     "context": "product field",
@@ -1393,6 +1402,9 @@
   "7yKZvp": {
     "context": "section header",
     "string": "User Status"
+  },
+  "83egc7": {
+    "string": "Manually enter the voucher code."
   },
   "86pLaG": {
     "context": "WarehouseSettings public stock label",
@@ -2122,6 +2134,9 @@
   "DJFPzq": {
     "context": "button",
     "string": "Confirm"
+  },
+  "DJatYh": {
+    "string": "Generate multiple codes at once"
   },
   "DK+8PB": {
     "string": "This channel has already been created"
@@ -3199,6 +3214,9 @@
     "context": "order",
     "string": "Paid with Gift Card"
   },
+  "KkufwD": {
+    "string": "No voucher codes found"
+  },
   "KmPicj": {
     "string": "Note successfully added"
   },
@@ -3352,6 +3370,9 @@
   "M1uijW": {
     "context": "collection",
     "string": "Not Published"
+  },
+  "M59JhX": {
+    "string": "Manual"
   },
   "M6s/9e": {
     "context": "unassign country, dialog header",
@@ -4248,6 +4269,9 @@
     "context": "Payment card title",
     "string": "Payment status"
   },
+  "SGdcJD": {
+    "string": "Enter code"
+  },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
   },
@@ -4530,6 +4554,9 @@
     "context": "searchbar placeholder",
     "string": "Country"
   },
+  "UJ97Lb": {
+    "string": "Delete codes"
+  },
   "UJnqdm": {
     "context": "dialog header",
     "string": "Unassign Attribute From Product Type"
@@ -4809,6 +4836,9 @@
   "W5hb5H": {
     "context": "warehouse input",
     "string": "Warehouse"
+  },
+  "W6nwjo": {
+    "string": "Draft"
   },
   "W8i2Ez": {
     "context": "product field",
@@ -5289,6 +5319,9 @@
     "context": "Taxes section title",
     "string": "Countries"
   },
+  "ZCSOaS": {
+    "string": "Limit to voucher code use once"
+  },
   "ZDJEat": {
     "context": "button",
     "string": "Load More"
@@ -5523,6 +5556,9 @@
   "avj76v": {
     "context": "ChannelsSection subtitle",
     "string": "Assign channels to this shipping zone so we know which orders will be supported"
+  },
+  "awNXI/": {
+    "string": "Auto-generate codes"
   },
   "axFFaD": {
     "context": "range input label",
@@ -6279,6 +6315,9 @@
     "context": "sale end date",
     "string": "Ends"
   },
+  "giVGCH": {
+    "string": "Enter Voucher Code"
+  },
   "gj3MUg": {
     "context": "gift card history message",
     "string": "Gift card was resent"
@@ -6336,6 +6375,9 @@
   "h2hEKV": {
     "context": "search gift card placeholder",
     "string": "Search gift cards, e.g {exampleGiftCardCode}"
+  },
+  "h2vipu": {
+    "string": "Code"
   },
   "h65vZI": {
     "context": "times voucher used",
@@ -6687,9 +6729,6 @@
     "context": "dialog header",
     "string": "Assign product"
   },
-  "jvKNMP": {
-    "string": "Discount Code"
-  },
   "jvo0vs": {
     "string": "Save"
   },
@@ -6808,6 +6847,9 @@
   "kVKTwC": {
     "context": "order expiration card title",
     "string": "Order expiration"
+  },
+  "kVL3LM": {
+    "string": "Voucher codes"
   },
   "kVOslW": {
     "context": "reason for discount label",
@@ -7072,10 +7114,6 @@
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
-  },
-  "mSLr9d": {
-    "context": "voucher code, button",
-    "string": "Generate Code"
   },
   "mTEqYL": {
     "context": "NoChannels content",
@@ -7610,6 +7648,9 @@
     "context": "User registration",
     "string": "User registration"
   },
+  "qPSWmL": {
+    "string": "Enter usage"
+  },
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
@@ -7637,6 +7678,9 @@
   "qddy2Z": {
     "context": "order history message",
     "string": "Invoice was sent to customer by {sentBy}"
+  },
+  "qgQeVW": {
+    "string": "Generate Voucher Codes"
   },
   "qkRuT0": {
     "context": "attribute type",
@@ -8306,6 +8350,9 @@
     "context": "button",
     "string": "Discard"
   },
+  "vTPu1s": {
+    "string": "Code Quantity (max {maxCodes})"
+  },
   "vTgRTZ": {
     "context": "limit voucher",
     "string": "Limit to one use per customer"
@@ -8473,6 +8520,9 @@
   },
   "wWTUrM": {
     "string": "No activities found"
+  },
+  "wbsq7O": {
+    "string": "Usage"
   },
   "wgA48T": {
     "context": "country selection",
