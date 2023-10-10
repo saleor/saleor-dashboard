@@ -22,6 +22,7 @@ const props: VoucherDetailsPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
   voucherCodes: [],
+  addedVoucherCodes: [],
   onVoucherCodesSettingsChange: () => undefined,
   selectedVoucherCodesIds: [],
   voucherCodesLoading: false,
