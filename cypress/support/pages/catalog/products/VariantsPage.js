@@ -164,17 +164,18 @@ export function selectOptionsAttribute(attributeName) {
 }
 
 export function selectBooleanAttributeToTrue() {
-  cy.get(VARIANTS_SELECTORS.attributeSelector).click();
+  cy.get(VARIANTS_SELECTORS.attributeSelector).first().click();
 }
 
 export function selectDateAttribute() {
   cy.get(VARIANTS_SELECTORS.attributeSelector)
+    .first()
     .find("input")
     .type(formatDate(new Date()));
 }
 
 export function selectNumericAttribute(numeric) {
-  cy.get(VARIANTS_SELECTORS.attributeSelector).type(numeric);
+  cy.get(VARIANTS_SELECTORS.attributeSelector).first().type(numeric);
 }
 
 export function selectAttributeWithType({ attributeType, attributeName }) {
