@@ -6,6 +6,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { AppListItemFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, Typography } from "@material-ui/core";
@@ -30,6 +31,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles();
+  const navigate = useNavigator();
 
   return (
     <ListPageLayout>
@@ -38,8 +40,8 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
         href={configurationMenuUrl}
       >
         <Button
-          variant="secondary"
-          href={CustomAppUrls.appAddUrl}
+          variant="primary"
+          onClick={() => navigate(CustomAppUrls.appAddUrl)}
           data-test-id="create-app"
         >
           <FormattedMessage
