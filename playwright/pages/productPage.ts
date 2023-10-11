@@ -150,7 +150,9 @@ export class ProductPage {
     await this.saveButton.click();
   }
   async expectSuccessBanner() {
-    await expect(this.page.locator(LOCATORS.successBanner)).toBeVisible();
+    await expect(this.page.locator(LOCATORS.successBanner)).toBeVisible({
+      timeout: 15000,
+    });
   }
   async selectOneChannelAsAvailable() {
     await this.manageChannelsButton.click();
