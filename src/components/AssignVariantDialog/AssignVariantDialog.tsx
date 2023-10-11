@@ -33,11 +33,12 @@ import Checkbox from "../Checkbox";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 import {
+  getCompositeLabel,
   handleProductAssign,
   handleVariantAssign,
   hasAllVariantsSelected,
   isVariantSelected,
-  SearchVariant,
+  VariantWithProductLabel,
 } from "./utils";
 
 export interface AssignVariantDialogFormData {
@@ -71,7 +72,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
 
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [variants, setVariants] = React.useState<SearchVariant[]>([]);
+  const [variants, setVariants] = React.useState<VariantWithProductLabel[]>([]);
 
   const productChoices =
     products?.filter(product => product?.variants?.length > 0) || [];
@@ -89,7 +90,12 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
     : [];
 
   const handleSubmit = () =>
-    onSubmit(variants.map(variant => ({ name: variant.name, id: variant.id })));
+    onSubmit(
+      variants.map(variant => ({
+        name: getCompositeLabel(variant),
+        id: variant.id,
+      })),
+    );
 
   return (
     <Dialog
@@ -186,6 +192,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                               onChange={() =>
                                 handleVariantAssign(
                                   variant,
+                                  product,
                                   variantIndex,
                                   productIndex,
                                   variants,
