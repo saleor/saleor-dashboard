@@ -25,6 +25,7 @@ import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
 import { move, toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
+import uniqBy from "lodash/uniqBy";
 
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
@@ -75,12 +76,17 @@ export function createAttributeReferenceChangeHandler(
   };
 }
 
+const mergeReferencesMetadata = (
+  prev: AttributeValuesMetadata[],
+  next: AttributeValuesMetadata[],
+) => uniqBy([...(prev ?? []), ...(next ?? [])], "value");
+
 export function createAttributeReferenceMetadataHandler(
   changeAttributeMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>,
   triggerChange: () => void,
 ): FormsetMetadataChange<AttributeValuesMetadata[]> {
   return (attributeId: string, values: AttributeValuesMetadata[]) => {
-    changeAttributeMetadata(attributeId, values);
+    changeAttributeMetadata(attributeId, values, mergeReferencesMetadata);
     triggerChange();
   };
 }

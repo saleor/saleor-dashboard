@@ -17,6 +17,7 @@ export type FormsetData<TData = {}, TValue = any, TMetadata = any> = Array<
 export type FormsetMetadataChange<TMetadata = any> = (
   id: string,
   metadata: TMetadata,
+  merge?: (prev: TMetadata, next: TMetadata) => TMetadata,
 ) => void;
 export interface UseFormsetOutput<TData = {}, TValue = any, TMetadata = any> {
   add: (data: FormsetAtomicData<TData, TValue, TMetadata>) => void;
@@ -66,9 +67,20 @@ function useFormset<TData = {}, TValue = any, TMetadata = any>(
     });
   }
 
-  const setItemMetedata = (id: string, metadata: TMetadata) => {
+  const setItemMetadata: FormsetMetadataChange = (
+    id: string,
+    metadata: TMetadata,
+    merge?: (prev, next) => TMetadata,
+  ) => {
     setData(data =>
-      data.map(item => (item.id === id ? { ...item, metadata } : item)),
+      data.map(item =>
+        item.id === id
+          ? {
+              ...item,
+              metadata: merge ? merge(item.metadata, metadata) : metadata,
+            }
+          : item,
+      ),
     );
   };
 
@@ -76,7 +88,7 @@ function useFormset<TData = {}, TValue = any, TMetadata = any>(
     add: addItem,
     change: setItemValue,
     data,
-    setMetadata: setItemMetedata,
+    setMetadata: setItemMetadata,
     get: getItem,
     remove: removeItem,
     set: setData,
