@@ -2398,6 +2398,9 @@ input AttributeSortingInput {
   field: AttributeSortField!
 }
 
+"""
+Represents attribute's original translatable fields and related translations.
+"""
 type AttributeTranslatableContent implements Node {
   """Custom attribute of a product."""
   attribute: Attribute @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
@@ -2434,6 +2437,7 @@ enum AttributeTranslateErrorCode {
   REQUIRED
 }
 
+"""Represents attribute translations."""
 type AttributeTranslation implements Node {
   """The ID of the attribute translation."""
   id: ID!
@@ -2923,6 +2927,9 @@ input AttributeValueSelectableTypeInput {
   value: String
 }
 
+"""
+Represents attribute value's original translatable fields and related translations.
+"""
 type AttributeValueTranslatableContent implements Node {
   """
   Associated attribute that can be translated.
@@ -2976,6 +2983,7 @@ enum AttributeValueTranslateErrorCode {
   REQUIRED
 }
 
+"""Represents attribute value translations."""
 type AttributeValueTranslation implements Node {
   """The ID of the attribute value translation."""
   id: ID!
@@ -3316,6 +3324,26 @@ input CatalogueInput {
   Added in Saleor 3.1.
   """
   variants: [ID!]
+}
+
+input CataloguePredicateInput {
+  """List of conditions that must be met."""
+  AND: [CataloguePredicateInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [CataloguePredicateInput!]
+
+  """Defines the category conditions to be met."""
+  categoryPredicate: CategoryWhereInput
+
+  """Defines the collection conditions to be met."""
+  collectionPredicate: CollectionWhereInput
+
+  """Defines the product conditions to be met."""
+  productPredicate: ProductWhereInput
+
+  """Defines the product variant conditions to be met."""
+  variantPredicate: ProductVariantWhereInput
 }
 
 """
@@ -3683,6 +3711,9 @@ input CategorySortingInput {
   field: CategorySortField!
 }
 
+"""
+Represents category original translatable fields and related translations.
+"""
 type CategoryTranslatableContent implements Node {
   """Represents a single category of products."""
   category: Category @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
@@ -3731,6 +3762,7 @@ type CategoryTranslate {
   translationErrors: [TranslationError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
 }
 
+"""Represents category translations."""
 type CategoryTranslation implements Node {
   """
   Translated description of the category.
@@ -6084,6 +6116,9 @@ input CollectionSortingInput {
   field: CollectionSortField!
 }
 
+"""
+Represents collection's original translatable fields and related translations.
+"""
 type CollectionTranslatableContent implements Node {
   """Represents a collection of products."""
   collection: Collection @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
@@ -6132,6 +6167,7 @@ type CollectionTranslate {
   translationErrors: [TranslationError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
 }
 
+"""Represents collection translations."""
 type CollectionTranslation implements Node {
   """
   Translated description of the collection.
@@ -6939,6 +6975,24 @@ value as specified by
 [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
 """
 scalar DateTime
+
+"""
+Define the filtering options for date time fields.
+
+Added in Saleor 3.11.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+input DateTimeFilterInput {
+  """The value equal to."""
+  eq: DateTime
+
+  """The value included in."""
+  oneOf: [DateTime!]
+
+  """The value in range."""
+  range: DateTimeRangeInput
+}
 
 input DateTimeRangeInput {
   """Start date."""
@@ -9415,7 +9469,7 @@ type Invoice implements Job & Node & ObjectWithMetadata {
   createdAt: DateTime!
 
   """URL to view an invoice."""
-  externalUrl: String
+  externalUrl: String @deprecated(reason: "This field will be removed in Saleor 4.0. Use `url` field.This field will be removed in 4.0")
 
   """The ID of the object."""
   id: ID!
@@ -9477,7 +9531,9 @@ type Invoice implements Job & Node & ObjectWithMetadata {
   """Date and time at which invoice was updated."""
   updatedAt: DateTime!
 
-  """URL to download an invoice."""
+  """
+  URL to view/download an invoice. This can be an internal URL if the Invoicing Plugin was used or an external URL if it has been provided.
+  """
   url: String
 }
 
@@ -11244,6 +11300,9 @@ input MenuItemSortingInput {
   field: MenuItemsSortField!
 }
 
+"""
+Represents menu item's original translatable fields and related translations.
+"""
 type MenuItemTranslatableContent implements Node {
   """The ID of the menu item translatable content."""
   id: ID!
@@ -11274,6 +11333,7 @@ type MenuItemTranslate {
   translationErrors: [TranslationError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
 }
 
+"""Represents menu item translations."""
 type MenuItemTranslation implements Node {
   """The ID of the menu item translation."""
   id: ID!
@@ -11958,6 +12018,8 @@ type Mutation {
   attributeTranslate(
     """Attribute ID or AttributeTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update attribute translations."""
     input: NameTranslationInput!
 
     """Translation language code."""
@@ -12064,6 +12126,8 @@ type Mutation {
   attributeValueTranslate(
     """AttributeValue ID or AttributeValueTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update attribute value translations."""
     input: AttributeValueTranslationInput!
 
     """Translation language code."""
@@ -12137,6 +12201,8 @@ type Mutation {
   categoryTranslate(
     """Category ID or CategoryTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update category translations."""
     input: TranslationInput!
 
     """Translation language code."""
@@ -12908,6 +12974,8 @@ type Mutation {
   collectionTranslate(
     """Collection ID or CollectionTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update collection translations."""
     input: TranslationInput!
 
     """Translation language code."""
@@ -13691,6 +13759,8 @@ type Mutation {
   menuItemTranslate(
     """MenuItem ID or MenuItemTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update menu item translations."""
     input: NameTranslationInput!
 
     """Translation language code."""
@@ -14282,6 +14352,8 @@ type Mutation {
   pageTranslate(
     """Page ID or PageTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update page translations."""
     input: PageTranslationInput!
 
     """Translation language code."""
@@ -14787,6 +14859,8 @@ type Mutation {
   productTranslate(
     """Product ID or ProductTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update product translations."""
     input: TranslationInput!
 
     """Translation language code."""
@@ -15115,6 +15189,8 @@ type Mutation {
   productVariantTranslate(
     """ProductVariant ID or ProductVariantTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update product variant translations."""
     input: NameTranslationInput!
 
     """Translation language code."""
@@ -15147,6 +15223,170 @@ type Mutation {
     """
     sku: String
   ): ProductVariantUpdate
+
+  """
+  Deletes promotions.
+  
+  Added in Saleor 3.17.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - PROMOTION_DELETED (async): A promotion was deleted.
+  """
+  promotionBulkDelete(
+    """List of promotion IDs to delete."""
+    ids: [ID!]!
+  ): PromotionBulkDelete
+
+  """
+  Creates a new promotion.
+  
+  Added in Saleor 3.17.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - PROMOTION_CREATED (async): A promotion was created.
+  - PROMOTION_STARTED (async): Optionally called if promotion was started.
+  """
+  promotionCreate(
+    """Fields requires to create a promotion."""
+    input: PromotionCreateInput!
+  ): PromotionCreate
+
+  """
+  Deletes a promotion.
+  
+  Added in Saleor 3.17.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - PROMOTION_DELETED (async): A promotion was deleted.
+  """
+  promotionDelete(
+    """The ID of the promotion to remove."""
+    id: ID!
+  ): PromotionDelete
+
+  """
+  Creates a new promotion rule.
+  
+  Added in Saleor 3.17.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - PROMOTION_RULE_CREATED (async): A promotion rule was created.
+  """
+  promotionRuleCreate(
+    """Fields required to create a promotion rule."""
+    input: PromotionRuleCreateInput!
+  ): PromotionRuleCreate
+
+  """
+  Deletes a promotion rule.
+  
+  Added in Saleor 3.17.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - PROMOTION_RULE_DELETED (async): A promotion rule was deleted.
+  """
+  promotionRuleDelete(
+    """The ID of the promotion to remove."""
+    id: ID!
+  ): PromotionRuleDelete
+
+  """
+  Creates/updates translations for a promotion rule.
+  
+  Added in Saleor 3.17. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  promotionRuleTranslate(
+    """PromotionRule ID or PromotionRuleTranslatableContent ID."""
+    id: ID!
+
+    """Fields required to update promotion rule translations."""
+    input: PromotionRuleTranslationInput!
+
+    """Translation language code."""
+    languageCode: LanguageCodeEnum!
+  ): PromotionRuleTranslate
+
+  """
+  Updates an existing promotion rule.
+  
+  Added in Saleor 3.17.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - PROMOTION_RULE_UPDATED (async): A promotion rule was updated.
+  """
+  promotionRuleUpdate(
+    """ID of the promotion rule to update."""
+    id: ID!
+
+    """Fields required to create a promotion rule."""
+    input: PromotionRuleUpdateInput!
+  ): PromotionRuleUpdate
+
+  """
+  Creates/updates translations for a promotion.
+  
+  Added in Saleor 3.17. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  promotionTranslate(
+    """Promotion ID or PromotionTranslatableContent ID."""
+    id: ID!
+
+    """Fields required to update promotion translations."""
+    input: PromotionTranslationInput!
+
+    """Translation language code."""
+    languageCode: LanguageCodeEnum!
+  ): PromotionTranslate
+
+  """
+  Updates an existing promotion.
+  
+  Added in Saleor 3.17.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - PROMOTION_UPDATED (async): A promotion was updated.
+  - PROMOTION_STARTED (async): Optionally called if promotion was started.
+  - PROMOTION_ENDED (async): Optionally called if promotion was ended.
+  """
+  promotionUpdate(
+    """ID of the promotion to update."""
+    id: ID!
+
+    """Fields required to update a promotion."""
+    input: PromotionUpdateInput!
+  ): PromotionUpdate
 
   """
   Request email change of the logged in user. 
@@ -15212,7 +15452,9 @@ type Mutation {
   ): SaleBulkDelete
 
   """
-  Adds products, categories, collections to a voucher. 
+  Adds products, categories, collections to a sale.
+  
+  DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionRuleCreate` mutation instead. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   
@@ -15228,7 +15470,9 @@ type Mutation {
   ): SaleAddCatalogues
 
   """
-  Removes products, categories, collections from a sale. 
+  Removes products, categories, collections from a sale.
+  
+  DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionRuleUpdate` or `promotionRuleDelete` mutations instead. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   
@@ -15244,7 +15488,9 @@ type Mutation {
   ): SaleRemoveCatalogues
 
   """
-  Manage sale's availability in channels. 
+  Manage sale's availability in channels.
+  
+  DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionRuleCreate` or `promotionRuleUpdate` mutations instead. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   """
@@ -15257,7 +15503,9 @@ type Mutation {
   ): SaleChannelListingUpdate
 
   """
-  Creates a new sale. 
+  Creates a new sale.
+  
+  DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionCreate` mutation instead. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   
@@ -15270,7 +15518,9 @@ type Mutation {
   ): SaleCreate
 
   """
-  Deletes a sale. 
+  Deletes a sale.
+  
+  DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionDelete` mutation instead. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   
@@ -15283,13 +15533,17 @@ type Mutation {
   ): SaleDelete
 
   """
-  Creates/updates translations for a sale. 
+  Creates/updates translations for a sale.
+  
+  DEPRECATED: this mutation will be removed in Saleor 4.0. Use `PromotionTranslate` mutation instead. 
   
   Requires one of the following permissions: MANAGE_TRANSLATIONS.
   """
   saleTranslate(
     """Sale ID or SaleTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update sale translations."""
     input: NameTranslationInput!
 
     """Translation language code."""
@@ -15297,7 +15551,9 @@ type Mutation {
   ): SaleTranslate
 
   """
-  Updates a sale. 
+  Updates a sale.
+  
+  DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionUpdate` mutation instead. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   
@@ -15425,6 +15681,8 @@ type Mutation {
   shippingPriceTranslate(
     """ShippingMethodType ID or ShippingMethodTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update shipping price translations."""
     input: ShippingPriceTranslationInput!
 
     """Translation language code."""
@@ -16187,6 +16445,8 @@ type Mutation {
   voucherTranslate(
     """Voucher ID or VoucherTranslatableContent ID."""
     id: ID!
+
+    """Fields required to update voucher translations."""
     input: NameTranslationInput!
 
     """Translation language code."""
@@ -17409,6 +17669,7 @@ type OrderDiscountDelete {
 """An enumeration."""
 enum OrderDiscountType {
   MANUAL
+  PROMOTION
   SALE
   VOUCHER
 }
@@ -19467,6 +19728,9 @@ input PageSortingInput {
   field: PageSortField!
 }
 
+"""
+Represents page's original translatable fields and related translations.
+"""
 type PageTranslatableContent implements Node {
   """List of page content attribute values that can be translated."""
   attributeValues: [AttributeValueTranslatableContent!]!
@@ -19520,6 +19784,7 @@ type PageTranslate {
   translationErrors: [TranslationError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
 }
 
+"""Represents page translations."""
 type PageTranslation implements Node {
   """
   Translated content of the page.
@@ -22780,6 +23045,9 @@ input ProductStockFilterInput {
   warehouseIds: [ID!]
 }
 
+"""
+Represents product's original translatable fields and related translations.
+"""
 type ProductTranslatableContent implements Node {
   """List of product attribute values that can be translated."""
   attributeValues: [AttributeValueTranslatableContent!]!
@@ -22839,6 +23107,7 @@ enum ProductTranslateErrorCode {
   REQUIRED
 }
 
+"""Represents product translations."""
 type ProductTranslation implements Node {
   """
   Translated description of the product.
@@ -24228,6 +24497,9 @@ input ProductVariantStocksUpdateInput {
   update: [StockUpdateInput!]
 }
 
+"""
+Represents product variant's original translatable fields and related translations.
+"""
 type ProductVariantTranslatableContent implements Node {
   """List of product variant attribute values that can be translated."""
   attributeValues: [AttributeValueTranslatableContent!]!
@@ -24267,6 +24539,7 @@ enum ProductVariantTranslateErrorCode {
   REQUIRED
 }
 
+"""Represents product variant translations."""
 type ProductVariantTranslation implements Node {
   """The ID of the product variant translation."""
   id: ID!
@@ -24388,7 +24661,1106 @@ input ProductWhereInput {
   stocks: ProductStockFilterInput
 
   """Filter by when was the most recent update."""
-  updatedAt: DateTimeRangeInput
+  updatedAt: DateTimeFilterInput
+}
+
+"""
+Represents the promotion that allow creating discounts based on given conditions, and is visible to all the customers.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type Promotion implements Node & ObjectWithMetadata {
+  """Date time of promotion creation."""
+  createdAt: DateTime!
+
+  """Description of the promotion."""
+  description: JSON
+
+  """End date of the promotion."""
+  endDate: DateTime
+
+  """The list of events associated with the promotion."""
+  events: [PromotionEvent!]
+  id: ID!
+
+  """List of public metadata items. Can be accessed without permissions."""
+  metadata: [MetadataItem!]!
+
+  """
+  A single key from public metadata.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  
+  Added in Saleor 3.3.
+  """
+  metafield(key: String!): String
+
+  """
+  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
+  
+  Added in Saleor 3.3.
+  """
+  metafields(keys: [String!]): Metadata
+
+  """Name of the promotion."""
+  name: String!
+
+  """List of private metadata items. Requires staff permissions to access."""
+  privateMetadata: [MetadataItem!]!
+
+  """
+  A single key from private metadata. Requires staff permissions to access.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  
+  Added in Saleor 3.3.
+  """
+  privateMetafield(key: String!): String
+
+  """
+  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
+  
+  Added in Saleor 3.3.
+  """
+  privateMetafields(keys: [String!]): Metadata
+
+  """The list of promotion rules."""
+  rules: [PromotionRule!]
+
+  """Start date of the promotion."""
+  startDate: DateTime!
+
+  """Returns translated promotion fields for the given language code."""
+  translation(
+    """A language code to return the translation for promotion."""
+    languageCode: LanguageCodeEnum!
+  ): PromotionTranslation
+
+  """Date time of last update of promotion."""
+  updatedAt: DateTime!
+}
+
+"""
+Deletes promotions.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- PROMOTION_DELETED (async): A promotion was deleted.
+"""
+type PromotionBulkDelete {
+  """Returns how many objects were affected."""
+  count: Int!
+  errors: [DiscountError!]!
+}
+
+type PromotionCountableConnection {
+  edges: [PromotionCountableEdge!]!
+
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """A total count of items in the collection."""
+  totalCount: Int
+}
+
+type PromotionCountableEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: Promotion!
+}
+
+"""
+Creates a new promotion.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- PROMOTION_CREATED (async): A promotion was created.
+- PROMOTION_STARTED (async): Optionally called if promotion was started.
+"""
+type PromotionCreate {
+  errors: [PromotionCreateError!]!
+  promotion: Promotion
+}
+
+type PromotionCreateError {
+  """The error code."""
+  code: PromotionCreateErrorCode!
+
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """Index of an input list item that caused the error."""
+  index: Int
+
+  """The error message."""
+  message: String
+}
+
+"""An enumeration."""
+enum PromotionCreateErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  INVALID_PRECISION
+  MULTIPLE_CURRENCIES_NOT_ALLOWED
+  NOT_FOUND
+  REQUIRED
+}
+
+input PromotionCreateInput {
+  """Promotion description."""
+  description: JSON
+
+  """The end date of the promotion in ISO 8601 format."""
+  endDate: DateTime
+
+  """Promotion name."""
+  name: String!
+
+  """List of promotion rules."""
+  rules: [PromotionRuleInput!]
+
+  """The start date of the promotion in ISO 8601 format."""
+  startDate: DateTime
+}
+
+"""
+Event sent when new promotion is created.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionCreated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The promotion the event relates to."""
+  promotion: Promotion
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+"""
+History log of the promotion created event.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionCreatedEvent implements Node & PromotionEventInterface {
+  """
+  User or App that created the promotion event. 
+  
+  Requires one of the following permissions: MANAGE_STAFF, MANAGE_APPS, OWNER.
+  """
+  createdBy: UserOrApp
+
+  """Date when event happened."""
+  date: DateTime!
+  id: ID!
+
+  """Promotion event type."""
+  type: PromotionEventsEnum!
+}
+
+"""
+Deletes a promotion.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- PROMOTION_DELETED (async): A promotion was deleted.
+"""
+type PromotionDelete {
+  errors: [PromotionDeleteError!]!
+  promotion: Promotion
+}
+
+type PromotionDeleteError {
+  """The error code."""
+  code: PromotionDeleteErrorCode!
+
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+}
+
+"""An enumeration."""
+enum PromotionDeleteErrorCode {
+  GRAPHQL_ERROR
+  NOT_FOUND
+}
+
+"""
+Event sent when promotion is deleted.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionDeleted implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The promotion the event relates to."""
+  promotion: Promotion
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+"""
+The event informs about the end of the promotion.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionEnded implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The promotion the event relates to."""
+  promotion: Promotion
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+"""
+History log of the promotion ended event.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionEndedEvent implements Node & PromotionEventInterface {
+  """
+  User or App that created the promotion event. 
+  
+  Requires one of the following permissions: MANAGE_STAFF, MANAGE_APPS, OWNER.
+  """
+  createdBy: UserOrApp
+
+  """Date when event happened."""
+  date: DateTime!
+  id: ID!
+
+  """Promotion event type."""
+  type: PromotionEventsEnum!
+}
+
+union PromotionEvent = PromotionCreatedEvent | PromotionEndedEvent | PromotionRuleCreatedEvent | PromotionRuleDeletedEvent | PromotionRuleUpdatedEvent | PromotionStartedEvent | PromotionUpdatedEvent
+
+interface PromotionEventInterface {
+  """
+  User or App that created the promotion event. 
+  
+  Requires one of the following permissions: MANAGE_STAFF, MANAGE_APPS, OWNER.
+  """
+  createdBy: UserOrApp
+
+  """Date when event happened."""
+  date: DateTime!
+  id: ID!
+
+  """Promotion event type."""
+  type: PromotionEventsEnum!
+}
+
+"""An enumeration."""
+enum PromotionEventsEnum {
+  PROMOTION_CREATED
+  PROMOTION_ENDED
+  PROMOTION_STARTED
+  PROMOTION_UPDATED
+  RULE_CREATED
+  RULE_DELETED
+  RULE_UPDATED
+}
+
+"""
+Represents the promotion rule that specifies the conditions that must be met to apply the promotion discount.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionRule implements Node {
+  """The catalogue predicate that must be met to apply the rule reward."""
+  cataloguePredicate: JSON
+
+  """
+  List of channels where the rule applies.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
+  """
+  channels: [Channel!]
+
+  """Description of the promotion rule."""
+  description: JSON
+  id: ID!
+
+  """Name of the promotion rule."""
+  name: String
+
+  """Promotion to which the rule belongs."""
+  promotion: Promotion
+
+  """
+  The reward value of the promotion rule. Defines the discount value applied when the rule conditions are met.
+  """
+  rewardValue: PositiveDecimal
+
+  """The type of reward value of the promotion rule."""
+  rewardValueType: RewardValueTypeEnum
+
+  """Returns translated promotion rule fields for the given language code."""
+  translation(
+    """A language code to return the translation for promotion rule."""
+    languageCode: LanguageCodeEnum!
+  ): PromotionRuleTranslation
+}
+
+"""
+Creates a new promotion rule.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- PROMOTION_RULE_CREATED (async): A promotion rule was created.
+"""
+type PromotionRuleCreate {
+  errors: [PromotionRuleCreateError!]!
+  promotionRule: PromotionRule
+}
+
+type PromotionRuleCreateError {
+  """The error code."""
+  code: PromotionRuleCreateErrorCode!
+
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+}
+
+"""An enumeration."""
+enum PromotionRuleCreateErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  INVALID_PRECISION
+  MULTIPLE_CURRENCIES_NOT_ALLOWED
+  NOT_FOUND
+  REQUIRED
+}
+
+input PromotionRuleCreateInput {
+  """
+  Defines the conditions on the catalogue level that must be met for the reward to be applied.
+  """
+  cataloguePredicate: CataloguePredicateInput
+
+  """List of channel ids to which the rule should apply to."""
+  channels: [ID!]
+
+  """Promotion rule description."""
+  description: JSON
+
+  """Promotion rule name."""
+  name: String
+
+  """The ID of the promotion that rule belongs to."""
+  promotion: ID!
+
+  """
+  Defines the discount value. Required when catalogue predicate is provided.
+  """
+  rewardValue: PositiveDecimal
+
+  """
+  Defines the promotion rule reward value type. Must be provided together with reward value.
+  """
+  rewardValueType: RewardValueTypeEnum
+}
+
+"""
+Event sent when new promotion rule is created.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionRuleCreated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The promotion rule the event relates to."""
+  promotionRule: PromotionRule
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+"""
+History log of the promotion rule created event.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionRuleCreatedEvent implements Node & PromotionEventInterface & PromotionRuleEventInterface {
+  """
+  User or App that created the promotion event. 
+  
+  Requires one of the following permissions: MANAGE_STAFF, MANAGE_APPS, OWNER.
+  """
+  createdBy: UserOrApp
+
+  """Date when event happened."""
+  date: DateTime!
+  id: ID!
+
+  """The rule ID associated with the promotion event."""
+  ruleId: String
+
+  """Promotion event type."""
+  type: PromotionEventsEnum!
+}
+
+"""
+Deletes a promotion rule.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- PROMOTION_RULE_DELETED (async): A promotion rule was deleted.
+"""
+type PromotionRuleDelete {
+  errors: [PromotionRuleDeleteError!]!
+  promotionRule: PromotionRule
+}
+
+type PromotionRuleDeleteError {
+  """The error code."""
+  code: PromotionRuleDeleteErrorCode!
+
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+}
+
+"""An enumeration."""
+enum PromotionRuleDeleteErrorCode {
+  GRAPHQL_ERROR
+  NOT_FOUND
+}
+
+"""
+Event sent when new promotion rule is deleted.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionRuleDeleted implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The promotion rule the event relates to."""
+  promotionRule: PromotionRule
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+"""
+History log of the promotion rule created event.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionRuleDeletedEvent implements Node & PromotionEventInterface & PromotionRuleEventInterface {
+  """
+  User or App that created the promotion event. 
+  
+  Requires one of the following permissions: MANAGE_STAFF, MANAGE_APPS, OWNER.
+  """
+  createdBy: UserOrApp
+
+  """Date when event happened."""
+  date: DateTime!
+  id: ID!
+
+  """The rule ID associated with the promotion event."""
+  ruleId: String
+
+  """Promotion event type."""
+  type: PromotionEventsEnum!
+}
+
+"""
+History log of the promotion event related to rule.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+interface PromotionRuleEventInterface {
+  """The rule ID associated with the promotion event."""
+  ruleId: String
+}
+
+input PromotionRuleInput {
+  """
+  Defines the conditions on the catalogue level that must be met for the reward to be applied.
+  """
+  cataloguePredicate: CataloguePredicateInput
+
+  """List of channel ids to which the rule should apply to."""
+  channels: [ID!]
+
+  """Promotion rule description."""
+  description: JSON
+
+  """Promotion rule name."""
+  name: String
+
+  """
+  Defines the discount value. Required when catalogue predicate is provided.
+  """
+  rewardValue: PositiveDecimal
+
+  """
+  Defines the promotion rule reward value type. Must be provided together with reward value.
+  """
+  rewardValueType: RewardValueTypeEnum
+}
+
+"""
+Represents promotion rule's original translatable fields and related translations.
+
+Added in Saleor 3.17.
+"""
+type PromotionRuleTranslatableContent implements Node {
+  """
+  Description of the promotion rule.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  description: JSONString
+
+  """ID of the promotion rule translatable content."""
+  id: ID!
+
+  """Name of the promotion rule."""
+  name: String
+
+  """Returns translated promotion rule fields for the given language code."""
+  translation(
+    """A language code to return the translation for promotion rule."""
+    languageCode: LanguageCodeEnum!
+  ): PromotionRuleTranslation
+}
+
+"""
+Creates/updates translations for a promotion rule.
+
+Added in Saleor 3.17. 
+
+Requires one of the following permissions: MANAGE_TRANSLATIONS.
+"""
+type PromotionRuleTranslate {
+  errors: [TranslationError!]!
+  promotionRule: PromotionRule
+}
+
+"""
+Represents promotion rule translations.
+
+Added in Saleor 3.17.
+"""
+type PromotionRuleTranslation implements Node {
+  """
+  Translated description of the promotion rule.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  description: JSONString
+
+  """ID of the promotion rule translation."""
+  id: ID!
+
+  """Translation language."""
+  language: LanguageDisplay!
+
+  """Translated name of the promotion rule."""
+  name: String
+}
+
+input PromotionRuleTranslationInput {
+  """
+  Translated promotion description.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  description: JSON
+  name: String
+}
+
+"""
+Updates an existing promotion rule.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- PROMOTION_RULE_UPDATED (async): A promotion rule was updated.
+"""
+type PromotionRuleUpdate {
+  errors: [PromotionRuleUpdateError!]!
+  promotionRule: PromotionRule
+}
+
+type PromotionRuleUpdateError {
+  """List of channel IDs which causes the error."""
+  channels: [ID!]
+
+  """The error code."""
+  code: PromotionRuleUpdateErrorCode!
+
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+}
+
+"""An enumeration."""
+enum PromotionRuleUpdateErrorCode {
+  DUPLICATED_INPUT_ITEM
+  GRAPHQL_ERROR
+  INVALID
+  INVALID_PRECISION
+  MISSING_CHANNELS
+  MULTIPLE_CURRENCIES_NOT_ALLOWED
+  NOT_FOUND
+}
+
+input PromotionRuleUpdateInput {
+  """List of channel ids to remove."""
+  addChannels: [ID!]
+
+  """
+  Defines the conditions on the catalogue level that must be met for the reward to be applied.
+  """
+  cataloguePredicate: CataloguePredicateInput
+
+  """Promotion rule description."""
+  description: JSON
+
+  """Promotion rule name."""
+  name: String
+
+  """List of channel ids to remove."""
+  removeChannels: [ID!]
+
+  """
+  Defines the discount value. Required when catalogue predicate is provided.
+  """
+  rewardValue: PositiveDecimal
+
+  """
+  Defines the promotion rule reward value type. Must be provided together with reward value.
+  """
+  rewardValueType: RewardValueTypeEnum
+}
+
+"""
+Event sent when new promotion rule is updated.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionRuleUpdated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The promotion rule the event relates to."""
+  promotionRule: PromotionRule
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+"""
+History log of the promotion rule created event.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionRuleUpdatedEvent implements Node & PromotionEventInterface & PromotionRuleEventInterface {
+  """
+  User or App that created the promotion event. 
+  
+  Requires one of the following permissions: MANAGE_STAFF, MANAGE_APPS, OWNER.
+  """
+  createdBy: UserOrApp
+
+  """Date when event happened."""
+  date: DateTime!
+  id: ID!
+
+  """The rule ID associated with the promotion event."""
+  ruleId: String
+
+  """Promotion event type."""
+  type: PromotionEventsEnum!
+}
+
+enum PromotionSortField {
+  """Sort promotions by created at."""
+  CREATED_AT
+
+  """Sort promotions by end date."""
+  END_DATE
+
+  """Sort promotions by name."""
+  NAME
+
+  """Sort promotions by start date."""
+  START_DATE
+}
+
+input PromotionSortingInput {
+  """Specifies the direction in which to sort promotions."""
+  direction: OrderDirection!
+
+  """Sort promotions by the selected field."""
+  field: PromotionSortField!
+}
+
+"""
+The event informs about the start of the promotion.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionStarted implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The promotion the event relates to."""
+  promotion: Promotion
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+"""
+History log of the promotion started event.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionStartedEvent implements Node & PromotionEventInterface {
+  """
+  User or App that created the promotion event. 
+  
+  Requires one of the following permissions: MANAGE_STAFF, MANAGE_APPS, OWNER.
+  """
+  createdBy: UserOrApp
+
+  """Date when event happened."""
+  date: DateTime!
+  id: ID!
+
+  """Promotion event type."""
+  type: PromotionEventsEnum!
+}
+
+"""
+Represents promotion's original translatable fields and related translations.
+
+Added in Saleor 3.17.
+"""
+type PromotionTranslatableContent implements Node {
+  """
+  Description of the promotion.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  description: JSONString
+
+  """ID of the promotion translatable content."""
+  id: ID!
+
+  """Name of the promotion."""
+  name: String!
+
+  """Returns translated promotion fields for the given language code."""
+  translation(
+    """A language code to return the translation for promotion."""
+    languageCode: LanguageCodeEnum!
+  ): PromotionTranslation
+}
+
+"""
+Creates/updates translations for a promotion.
+
+Added in Saleor 3.17. 
+
+Requires one of the following permissions: MANAGE_TRANSLATIONS.
+"""
+type PromotionTranslate {
+  errors: [TranslationError!]!
+  promotion: Promotion
+}
+
+"""
+Represents promotion translations.
+
+Added in Saleor 3.17.
+"""
+type PromotionTranslation implements Node {
+  """
+  Translated description of the promotion.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  description: JSONString
+
+  """ID of the promotion translation."""
+  id: ID!
+
+  """Translation language."""
+  language: LanguageDisplay!
+
+  """Translated name of the promotion."""
+  name: String
+}
+
+input PromotionTranslationInput {
+  """
+  Translated promotion description.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  description: JSON
+  name: String
+}
+
+"""
+Updates an existing promotion.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- PROMOTION_UPDATED (async): A promotion was updated.
+- PROMOTION_STARTED (async): Optionally called if promotion was started.
+- PROMOTION_ENDED (async): Optionally called if promotion was ended.
+"""
+type PromotionUpdate {
+  errors: [PromotionUpdateError!]!
+  promotion: Promotion
+}
+
+type PromotionUpdateError {
+  """The error code."""
+  code: PromotionUpdateErrorCode!
+
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+}
+
+"""An enumeration."""
+enum PromotionUpdateErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+}
+
+input PromotionUpdateInput {
+  """Promotion description."""
+  description: JSON
+
+  """The end date of the promotion in ISO 8601 format."""
+  endDate: DateTime
+
+  """Promotion name."""
+  name: String
+
+  """The start date of the promotion in ISO 8601 format."""
+  startDate: DateTime
+}
+
+"""
+Event sent when promotion is updated.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionUpdated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The promotion the event relates to."""
+  promotion: Promotion
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
+"""
+History log of the promotion updated event.
+
+Added in Saleor 3.17.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PromotionUpdatedEvent implements Node & PromotionEventInterface {
+  """
+  User or App that created the promotion event. 
+  
+  Requires one of the following permissions: MANAGE_STAFF, MANAGE_APPS, OWNER.
+  """
+  createdBy: UserOrApp
+
+  """Date when event happened."""
+  date: DateTime!
+  id: ID!
+
+  """Promotion event type."""
+  type: PromotionEventsEnum!
+}
+
+input PromotionWhereInput {
+  """List of conditions that must be met."""
+  AND: [PromotionWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [PromotionWhereInput!]
+
+  """Filter promotions by end date."""
+  endDate: DateTimeFilterInput
+  ids: [ID!]
+  isOldSale: Boolean
+  metadata: [MetadataFilter!]
+
+  """Filter by promotion name."""
+  name: StringFilterInput
+
+  """Filter promotions by start date."""
+  startDate: DateTimeFilterInput
 }
 
 input PublishableChannelListingInput {
@@ -25543,6 +26915,53 @@ type Query {
   ): ProductCountableConnection
 
   """
+  Look up a promotion by ID.
+  
+  Added in Saleor 3.17.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  """
+  promotion(
+    """ID of the promotion."""
+    id: ID!
+  ): Promotion
+
+  """
+  List of the promotions.
+  
+  Added in Saleor 3.17.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  """
+  promotions(
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+
+    """Sort promotions."""
+    sortBy: PromotionSortingInput
+
+    """Where filtering options."""
+    where: PromotionWhereInput
+  ): PromotionCountableConnection
+
+  """
   List of top selling products.
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -25582,7 +27001,7 @@ type Query {
 
     """ID of the sale."""
     id: ID!
-  ): Sale
+  ): Sale @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `promotion` query instead.")
 
   """
   List of the shop's sales.
@@ -25621,7 +27040,7 @@ type Query {
 
     """Sort sales."""
     sortBy: SaleSortingInput
-  ): SaleCountableConnection
+  ): SaleCountableConnection @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `promotions` query instead.")
 
   """
   Look up a shipping zone by ID.
@@ -26093,8 +27512,16 @@ type RequestPasswordReset {
   errors: [AccountError!]!
 }
 
+"""An enumeration."""
+enum RewardValueTypeEnum {
+  FIXED
+  PERCENTAGE
+}
+
 """
 Sales allow creating discounts for categories, collections or products and are visible to all the customers.
+
+DEPRECATED: this type will be removed in Saleor 4.0. Use `Promotion` type instead.
 """
 type Sale implements Node & ObjectWithMetadata {
   """List of categories this sale applies to."""
@@ -26267,7 +27694,9 @@ type Sale implements Node & ObjectWithMetadata {
 }
 
 """
-Adds products, categories, collections to a voucher. 
+Adds products, categories, collections to a sale.
+
+DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionRuleCreate` mutation instead. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
 
@@ -26297,7 +27726,11 @@ type SaleBulkDelete {
   errors: [DiscountError!]!
 }
 
-"""Represents sale channel listing."""
+"""
+Represents sale channel listing.
+
+DEPRECATED: this type will be removed in Saleor 4.0. Use `PromotionRule` type instead.
+"""
 type SaleChannelListing implements Node {
   """The channel in which the sale is available."""
   channel: Channel!
@@ -26329,7 +27762,9 @@ input SaleChannelListingInput {
 }
 
 """
-Manage sale's availability in channels. 
+Manage sale's availability in channels.
+
+DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionRuleCreate` or `promotionRuleUpdate` mutations instead. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
 """
@@ -26360,7 +27795,9 @@ type SaleCountableEdge {
 }
 
 """
-Creates a new sale. 
+Creates a new sale.
+
+DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionCreate` mutation instead. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
 
@@ -26377,6 +27814,8 @@ type SaleCreate {
 Event sent when new sale is created.
 
 Added in Saleor 3.2.
+
+DEPRECATED: this event will be removed in Saleor 4.0. Use `PromotionCreated` event instead.
 """
 type SaleCreated implements Event {
   """Time of the event."""
@@ -26399,7 +27838,9 @@ type SaleCreated implements Event {
 }
 
 """
-Deletes a sale. 
+Deletes a sale.
+
+DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionDelete` mutation instead. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
 
@@ -26416,6 +27857,8 @@ type SaleDelete {
 Event sent when sale is deleted.
 
 Added in Saleor 3.2.
+
+DEPRECATED: this event will be removed in Saleor 4.0. Use `PromotionDeleted` event instead.
 """
 type SaleDeleted implements Event {
   """Time of the event."""
@@ -26474,7 +27917,9 @@ input SaleInput {
 }
 
 """
-Removes products, categories, collections from a sale. 
+Removes products, categories, collections from a sale.
+
+DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionRuleUpdate` or `promotionRuleDelete` mutations instead. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
 
@@ -26535,6 +27980,8 @@ input SaleSortingInput {
 The event informs about the start or end of the sale.
 
 Added in Saleor 3.5.
+
+DEPRECATED: this event will be removed in Saleor 4.0. Use `PromotionStarted` and `PromotionEnded` events instead.
 """
 type SaleToggle implements Event {
   """Time of the event."""
@@ -26560,6 +28007,11 @@ type SaleToggle implements Event {
   version: String
 }
 
+"""
+Represents sale's original translatable fields and related translations.
+
+DEPRECATED: this type will be removed in Saleor 4.0. Use `PromotionTranslatableContent` instead.
+"""
 type SaleTranslatableContent implements Node {
   """The ID of the sale translatable content."""
   id: ID!
@@ -26582,7 +28034,9 @@ type SaleTranslatableContent implements Node {
 }
 
 """
-Creates/updates translations for a sale. 
+Creates/updates translations for a sale.
+
+DEPRECATED: this mutation will be removed in Saleor 4.0. Use `PromotionTranslate` mutation instead. 
 
 Requires one of the following permissions: MANAGE_TRANSLATIONS.
 """
@@ -26592,6 +28046,11 @@ type SaleTranslate {
   translationErrors: [TranslationError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
 }
 
+"""
+Represents sale translations.
+
+DEPRECATED: this type will be removed in Saleor 4.0. Use `PromotionTranslation` instead.
+"""
 type SaleTranslation implements Node {
   """The ID of the sale translation."""
   id: ID!
@@ -26609,7 +28068,9 @@ enum SaleType {
 }
 
 """
-Updates a sale. 
+Updates a sale.
+
+DEPRECATED: this mutation will be removed in Saleor 4.0. Use `promotionUpdate` mutation instead. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
 
@@ -26627,6 +28088,8 @@ type SaleUpdate {
 Event sent when sale is updated.
 
 Added in Saleor 3.2.
+
+DEPRECATED: this event will be removed in Saleor 4.0. Use `PromotionUpdated` event instead.
 """
 type SaleUpdated implements Event {
   """Time of the event."""
@@ -26935,6 +28398,9 @@ type ShippingMethodPostalCodeRule implements Node {
   start: String
 }
 
+"""
+Represents shipping method's original translatable fields and related translations.
+"""
 type ShippingMethodTranslatableContent implements Node {
   """
   Shipping method description to translate.
@@ -26963,6 +28429,7 @@ type ShippingMethodTranslatableContent implements Node {
   ): ShippingMethodTranslation
 }
 
+"""Represents shipping method translations."""
 type ShippingMethodTranslation implements Node {
   """
   Translated description of the shipping method.
@@ -28163,6 +29630,7 @@ type ShopSettingsUpdate {
   shopErrors: [ShopError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
 }
 
+"""Represents shop translations."""
 type ShopTranslation implements Node {
   """Translated description of sale."""
   description: String!
@@ -30571,7 +32039,7 @@ input TransactionUpdateInput {
   pspReference: String
 }
 
-union TranslatableItem = AttributeTranslatableContent | AttributeValueTranslatableContent | CategoryTranslatableContent | CollectionTranslatableContent | MenuItemTranslatableContent | PageTranslatableContent | ProductTranslatableContent | ProductVariantTranslatableContent | SaleTranslatableContent | ShippingMethodTranslatableContent | VoucherTranslatableContent
+union TranslatableItem = AttributeTranslatableContent | AttributeValueTranslatableContent | CategoryTranslatableContent | CollectionTranslatableContent | MenuItemTranslatableContent | PageTranslatableContent | ProductTranslatableContent | ProductVariantTranslatableContent | PromotionRuleTranslatableContent | PromotionTranslatableContent | SaleTranslatableContent | ShippingMethodTranslatableContent | VoucherTranslatableContent
 
 type TranslatableItemConnection {
   edges: [TranslatableItemEdge!]!
@@ -30599,6 +32067,8 @@ enum TranslatableKinds {
   MENU_ITEM
   PAGE
   PRODUCT
+  PROMOTION
+  PROMOTION_RULE
   SALE
   SHIPPING_METHOD
   VARIANT
@@ -30660,7 +32130,7 @@ input TranslationInput {
   seoTitle: String
 }
 
-union TranslationTypes = AttributeTranslation | AttributeValueTranslation | CategoryTranslation | CollectionTranslation | MenuItemTranslation | PageTranslation | ProductTranslation | ProductVariantTranslation | SaleTranslation | ShippingMethodTranslation | VoucherTranslation
+union TranslationTypes = AttributeTranslation | AttributeValueTranslation | CategoryTranslation | CollectionTranslation | MenuItemTranslation | PageTranslation | ProductTranslation | ProductVariantTranslation | PromotionRuleTranslation | PromotionTranslation | SaleTranslation | ShippingMethodTranslation | VoucherTranslation
 
 """
 Event sent when translation is updated.
@@ -31799,6 +33269,9 @@ input VoucherSortingInput {
   field: VoucherSortField!
 }
 
+"""
+Represents voucher's original translatable fields and related translations.
+"""
 type VoucherTranslatableContent implements Node {
   """The ID of the voucher translatable content."""
   id: ID!
@@ -31831,6 +33304,7 @@ type VoucherTranslate {
   voucher: Voucher
 }
 
+"""Represents voucher translations."""
 type VoucherTranslation implements Node {
   """The ID of the voucher translation."""
   id: ID!
@@ -32902,6 +34376,30 @@ enum WebhookEventTypeAsyncEnum {
   """A product variant is updated."""
   PRODUCT_VARIANT_UPDATED
 
+  """A promotion is created."""
+  PROMOTION_CREATED
+
+  """A promotion is deleted."""
+  PROMOTION_DELETED
+
+  """A promotion is deactivated."""
+  PROMOTION_ENDED
+
+  """A promotion rule is created."""
+  PROMOTION_RULE_CREATED
+
+  """A promotion rule is deleted."""
+  PROMOTION_RULE_DELETED
+
+  """A promotion rule is updated."""
+  PROMOTION_RULE_UPDATED
+
+  """A promotion is activated."""
+  PROMOTION_STARTED
+
+  """A promotion is updated."""
+  PROMOTION_UPDATED
+
   """A sale is created."""
   SALE_CREATED
 
@@ -33460,6 +34958,30 @@ enum WebhookEventTypeEnum {
   """A product variant is updated."""
   PRODUCT_VARIANT_UPDATED
 
+  """A promotion is created."""
+  PROMOTION_CREATED
+
+  """A promotion is deleted."""
+  PROMOTION_DELETED
+
+  """A promotion is deactivated."""
+  PROMOTION_ENDED
+
+  """A promotion rule is created."""
+  PROMOTION_RULE_CREATED
+
+  """A promotion rule is deleted."""
+  PROMOTION_RULE_DELETED
+
+  """A promotion rule is updated."""
+  PROMOTION_RULE_UPDATED
+
+  """A promotion is activated."""
+  PROMOTION_STARTED
+
+  """A promotion is updated."""
+  PROMOTION_UPDATED
+
   """A sale is created."""
   SALE_CREATED
 
@@ -33788,6 +35310,14 @@ enum WebhookSampleEventTypeEnum {
   PRODUCT_VARIANT_OUT_OF_STOCK
   PRODUCT_VARIANT_STOCK_UPDATED
   PRODUCT_VARIANT_UPDATED
+  PROMOTION_CREATED
+  PROMOTION_DELETED
+  PROMOTION_ENDED
+  PROMOTION_RULE_CREATED
+  PROMOTION_RULE_DELETED
+  PROMOTION_RULE_UPDATED
+  PROMOTION_STARTED
+  PROMOTION_UPDATED
   SALE_CREATED
   SALE_DELETED
   SALE_TOGGLE
