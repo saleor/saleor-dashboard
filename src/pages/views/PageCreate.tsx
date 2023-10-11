@@ -228,7 +228,9 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(pageCreateUrl())}
+        onCloseDialog={() =>
+          navigate(pageCreateUrl({ ...params, action: undefined }))
+        }
         selectedPageType={selectedPageType?.pageType}
         onSelectPageType={handleSelectPageTypeId}
         onAttributeSelectBlur={searchAttributeReset}
