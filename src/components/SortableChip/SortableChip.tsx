@@ -60,22 +60,32 @@ const SortableChip = SortableElement((props: SortableChipProps) => {
   };
 
   return (
-    <div className={clsx(classes.root, loading && classes.disabled, className)}>
+    <div
+      className={clsx(classes.root, className, {
+        [classes.disabled]: loading,
+      })}
+    >
       <div className={classes.content}>
         <SortableHandle
-          className={clsx(classes.sortableHandle, loading && classes.disabled)}
+          className={clsx(classes.sortableHandle, {
+            [classes.disabled]: loading,
+          })}
           data-test-id="button-drag-handle"
         />
         <Typography data-test-id="chip-label">{label}</Typography>
         {onClose && (
           <button
-            className={clsx(classes.closeButton, loading && classes.disabled)}
+            className={clsx(classes.closeButton, {
+              [classes.disabled]: loading,
+            })}
             onClick={handleClose}
             data-test-id="button-close"
             disabled={loading}
           >
             <CloseIcon
-              className={clsx(classes.closeIcon, loading && classes.disabled)}
+              className={clsx(classes.closeIcon, {
+                [classes.disabled]: loading,
+              })}
             />
           </button>
         )}
