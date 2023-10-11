@@ -12,9 +12,9 @@ export const messages = defineMessages({
     description: "input label",
   },
   checkoutLimitsDescription: {
-    id: "n3+6w5",
+    id: "MwfSVA",
     defaultMessage:
-      "Your customer won't be allowed to buy bigger quantity per checkout than shown here.",
+      "Customers can not add quantities to a single cart above the limit when value is provided.",
     description: "input helper text",
   },
 });

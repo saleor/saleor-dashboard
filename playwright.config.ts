@@ -18,7 +18,7 @@ export default defineConfig({
   // },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: process.env.CYPRESS_baseUrl,
+    baseURL: process.env.BASE_URL,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     testIdAttribute: "data-test-id",

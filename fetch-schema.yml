@@ -1,8 +1,0 @@
-schema: ${API_URI}
-generates:
-  ./introspection.json:
-    plugins:
-      - introspection
-  ./schema.graphql:
-    plugins:
-      - schema-ast

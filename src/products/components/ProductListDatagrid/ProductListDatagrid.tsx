@@ -251,7 +251,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         <Datagrid
           readonly
           loading={loading}
-          rowMarkers="checkbox"
+          rowMarkers="checkbox-visible"
           columnSelect="single"
           hasRowHover={hasRowHover}
           onColumnMoved={handlers.onMove}

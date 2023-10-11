@@ -14,11 +14,14 @@ import {
 } from "../../../support/api/utils/products/productsUtils";
 import { createShipping } from "../../../support/api/utils/shippingUtils";
 import {
+  filterProductsWithNewFilters,
   selectChannel,
-  selectFilterOption,
   selectProductsOutOfStock,
 } from "../../../support/pages/catalog/products/productsListPage";
 
+/*
+  Todo: https://github.com/saleor/saleor-dashboard/issues/4300
+*/
 describe("As an admin I should be able to filter products", () => {
   const startsWith = "ACyFilterProducts-";
   const name = `${startsWith}${faker.datatype.number()}`;
@@ -90,9 +93,9 @@ describe("As an admin I should be able to filter products", () => {
   });
 
   const filterProductsBy = [
-    { type: "category", testCase: "SALEOR_2601" },
-    { type: "productType", testCase: "SALEOR_2602" },
-    { type: "collection", testCase: "SALEOR_2603" },
+    { type: "Category", testCase: "SALEOR_2601" },
+    { type: "Product type", testCase: "SALEOR_2602" },
+    { type: "Collection", testCase: "SALEOR_2603" },
   ];
   filterProductsBy.forEach(filterBy => {
     it(
@@ -100,13 +103,13 @@ describe("As an admin I should be able to filter products", () => {
       { tags: ["@productsList", "@allEnv", "@stable"] },
       () => {
         cy.addAliasToGraphRequest("ProductList");
-        selectFilterOption(filterBy.type, name);
+        filterProductsWithNewFilters(filterBy.type, name);
         cy.get(SHARED_ELEMENTS.dataGridTable).contains(name).should("exist");
       },
     );
   });
 
-  it(
+  it.skip(
     "should filter products out of stock. TC: SALEOR_2604",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {

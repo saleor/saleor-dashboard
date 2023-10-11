@@ -5,17 +5,17 @@ on:
     inputs:
       spec:
         required: false
-        description: 'Spec to run. Leave empty if you prefer to filter tests using grep'
+        description: "Spec to run. Leave empty if you prefer to filter tests using grep"
       grep:
         required: false
-        description: 'Run all tests which titles contain text. Leave empty if you prefer to filter tests using spec.'
+        description: "Run all tests which titles contain text. Leave empty if you prefer to filter tests using spec."
       dashboard_url:
         required: true
-        default: 'https://automation-dashboard.staging.saleor.cloud/dashboard'
+        default: "https://automation-dashboard.staging.saleor.cloud/dashboard"
         description: "Dashboard url"
       API_url:
         required: true
-        default: 'https://automation-dashboard.staging.saleor.cloud/graphql/'
+        default: "https://automation-dashboard.staging.saleor.cloud/graphql/"
         description: "API url"
       repeat:
         required: true
@@ -23,7 +23,6 @@ on:
         description: "How many times run tests"
 
 jobs:
-
   run-tests:
     if: ${{ github.event.inputs.spec }} || ${{ github.event.inputs.grep }} ## Do not run if spec or grep not provided
     runs-on: ubuntu-latest
@@ -35,10 +34,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-          
+
       - name: Package
         run: npm ci
-          
+
       - name: Install cypress-repeat
         run: npm i -D cypress-repeat
 
@@ -48,7 +47,7 @@ jobs:
         env:
           API_URI: ${{ github.event.inputs.API_url}}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ github.event.inputs.dashboard_url}}
+          BASE_URL: ${{ github.event.inputs.dashboard_url}}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
@@ -62,7 +61,7 @@ jobs:
           STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
         with:
           parallel: true
-          group: 'UI - Chrome'
+          group: "UI - Chrome"
           record: true
           tag: Repeat
           spec: ${{ github.event.inputs.spec }}

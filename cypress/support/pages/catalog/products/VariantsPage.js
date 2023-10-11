@@ -71,7 +71,13 @@ export function fillUpVariantDetails({
   price,
   variantName,
 }) {
+  if (variantName) {
+    cy.get(VARIANTS_SELECTORS.variantNameInput).type(variantName, {
+      force: true,
+    });
+  }
   selectAttributeWithType({ attributeType, attributeName });
+
   cy.get(PRICE_LIST.priceInput)
     .each(input => {
       cy.wrap(input).type(price, { force: true });
@@ -80,9 +86,6 @@ export function fillUpVariantDetails({
     .each(input => {
       cy.wrap(input).type(costPrice, { force: true });
     });
-  if (variantName) {
-    cy.get(VARIANTS_SELECTORS.variantNameInput).type(variantName);
-  }
   if (sku) {
     cy.get(VARIANTS_SELECTORS.skuTextField).click({ force: true }).type(sku);
   }
@@ -161,17 +164,18 @@ export function selectOptionsAttribute(attributeName) {
 }
 
 export function selectBooleanAttributeToTrue() {
-  cy.get(VARIANTS_SELECTORS.attributeSelector).click();
+  cy.get(VARIANTS_SELECTORS.attributeSelector).first().click();
 }
 
 export function selectDateAttribute() {
   cy.get(VARIANTS_SELECTORS.attributeSelector)
+    .first()
     .find("input")
     .type(formatDate(new Date()));
 }
 
 export function selectNumericAttribute(numeric) {
-  cy.get(VARIANTS_SELECTORS.attributeSelector).type(numeric);
+  cy.get(VARIANTS_SELECTORS.attributeSelector).first().type(numeric);
 }
 
 export function selectAttributeWithType({ attributeType, attributeName }) {

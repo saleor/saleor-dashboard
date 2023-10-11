@@ -12,7 +12,8 @@
     "paths": {
       "@pages/*": ["./pages/*"],
       "@api/*": ["./api/*"],
-      "@data/*": ["./data/*"]
+      "@data/*": ["./data/*"],
+      "@dialogs/*": ["./pages/dialogs/*"]
     }
   }
 }

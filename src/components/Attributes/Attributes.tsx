@@ -82,7 +82,7 @@ export const Attributes: React.FC<AttributesProps> = ({
           <Accordion defaultValue="attributes-accordion">
             <Accordion.Item value="attributes-accordion">
               <Accordion.Trigger
-                buttonDataTestId="attributes-expand"
+                data-testid="attributes-expand"
                 flexWrap="wrap"
                 alignItems="flex-start"
               >

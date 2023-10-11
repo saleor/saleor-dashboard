@@ -21,16 +21,24 @@ const useStyles = makeStyles<{
 // Main purpose of this component is to override default Pill component
 // from macaw-ui to add custom styles
 // TODO: migrate to Pill component from new macaw-ui when it will be ready
-export const Pill = ({ color, ...props }: PillProps) => {
-  const { theme: currentTheme } = useTheme();
-  const backgroundColor = getStatusColor(color, currentTheme);
-  const classes = useStyles({
-    color: backgroundColor.startsWith("#")
-      ? backgroundColor
-      : vars.colors.background[backgroundColor],
-  });
+export const Pill = React.forwardRef<HTMLDivElement, PillProps>(
+  ({ color, ...props }, ref) => {
+    const { theme: currentTheme } = useTheme();
+    const backgroundColor = getStatusColor(color, currentTheme);
+    const classes = useStyles({
+      color: backgroundColor.startsWith("#")
+        ? backgroundColor
+        : vars.colors.background[backgroundColor],
+    });
 
-  return (
-    <MacawuiPill {...props} className={clsx(classes.pill, props.className)} />
-  );
-};
+    return (
+      <MacawuiPill
+        {...props}
+        ref={ref}
+        className={clsx(classes.pill, props.className)}
+      />
+    );
+  },
+);
+
+Pill.displayName = "Pill";

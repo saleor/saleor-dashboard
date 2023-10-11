@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix various tiny ESLint rules
+Fix webhook create button

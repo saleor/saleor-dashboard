@@ -130,7 +130,7 @@ export function createHandler(
     };
 
     const result = await productCreate(productVariables);
-    const productErrors = result.data.productCreate.errors || [];
+    const productErrors = result?.data?.productCreate?.errors ?? [];
 
     errors = [...errors, ...productErrors];
 

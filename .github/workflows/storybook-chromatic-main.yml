@@ -22,7 +22,7 @@ jobs:
   chromatic-storybook-main:
     runs-on: ubuntu-latest
     needs: if_merged
-    if: ${{ contains(needs.if_merged.outputs.labels, ' run chromatic ') }}
+    if: ${{ contains(needs.if_merged.outputs.labels, ' run-chromatic ') }}
     steps:
       - uses: actions/checkout@v3
         with:

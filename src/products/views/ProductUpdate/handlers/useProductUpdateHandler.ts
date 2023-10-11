@@ -201,7 +201,7 @@ export function useProductUpdateHandler(
       ...errors,
       ...mergeFileUploadErrors(uploadFilesResult),
       ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
-      ...updateProductResult.data.productUpdate.errors,
+      ...(updateProductResult?.data?.productUpdate?.errors ?? []),
     ];
 
     setVariantListErrors(variantErrors);

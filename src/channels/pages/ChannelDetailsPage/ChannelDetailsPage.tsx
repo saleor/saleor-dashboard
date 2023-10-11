@@ -109,8 +109,13 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
 
   const countryChoices = mapCountriesToChoices(countries || []);
 
-  const { defaultCountry, stockSettings, orderSettings, ...formData } =
-    channel || ({} as ChannelDetailsFragment);
+  const {
+    defaultCountry,
+    stockSettings,
+    orderSettings,
+    paymentSettings,
+    ...formData
+  } = channel || ({} as ChannelDetailsFragment);
   const initialStockSettings: StockSettingsInput = {
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
@@ -132,7 +137,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy:
-      orderSettings?.defaultTransactionFlowStrategy,
+      paymentSettings?.defaultTransactionFlowStrategy,
   };
 
   const getFilteredShippingZonesChoices = (
