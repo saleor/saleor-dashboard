@@ -1,6 +1,6 @@
 import { URL_LIST } from "@data/url";
-import { BasePage } from "@pages/base-page";
-import { MainMenuPage } from "@pages/main-menu-page";
+import { BasePage } from "@pages/basePage";
+import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/translations.json" });

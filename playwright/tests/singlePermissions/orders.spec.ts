@@ -1,8 +1,8 @@
 import { URL_LIST } from "@data/url";
-import { BasePage } from "@pages/base-page";
-import { DraftsPage } from "@pages/drafts-page";
-import { MainMenuPage } from "@pages/main-menu-page";
-import { OrdersPage } from "@pages/orders-page";
+import { BasePage } from "@pages/basePage";
+import { DraftsPage } from "@pages/draftsPage";
+import { MainMenuPage } from "@pages/mainMenuPage";
+import { OrdersPage } from "@pages/ordersPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/orders.json" });

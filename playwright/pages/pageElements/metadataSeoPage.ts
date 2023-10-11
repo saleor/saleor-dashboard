@@ -2,7 +2,6 @@ import * as faker from "faker";
 
 import type { Locator, Page } from "@playwright/test";
 
-const seoSlugName = `e2e-seoSlug-${faker.datatype.number()}`;
 const metaDataName = `e2e-metaDataName-${faker.datatype.number()}`;
 const metaDataValue = `e2e-metaDataValue-${faker.datatype.number()}`;
 const privateMetaDataName = `e2e-privateMetaDataName-${faker.datatype.number()}`;
@@ -12,7 +11,7 @@ const seoDescriptionText = `e2e-seoSlugDescription-${faker.datatype.number()}`;
 
 export class MetadataSeoPage {
   readonly page: Page;
-
+  readonly seoSlugName: string;
   readonly productNameInput: Locator;
   readonly editSeoSettings: Locator;
   readonly slugInput: Locator;
@@ -34,6 +33,7 @@ export class MetadataSeoPage {
 
   constructor(page: Page) {
     this.page = page;
+    this.seoSlugName = `e2e-seoSlug-${Math.random().toString().substring(2)}`;
     this.productNameInput = page.locator("[name='name']");
     this.editSeoSettings = page.getByTestId("edit-seo");
     this.slugInput = page.locator("[name='slug']");
@@ -83,7 +83,7 @@ export class MetadataSeoPage {
   }
 
   async fillSeoSection(
-    seoSlug = seoSlugName,
+    seoSlug = this.seoSlugName,
     seoTitleEngine = seoEngineTitle,
     seoDescription = seoDescriptionText,
   ) {

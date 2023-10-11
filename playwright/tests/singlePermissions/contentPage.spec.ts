@@ -1,9 +1,9 @@
 import { URL_LIST } from "@data/url";
-import { BasePage } from "@pages/base-page";
-import { ConfigurationPage } from "@pages/configuration-page";
-import { ContentPage } from "@pages/content-page";
-import { MainMenuPage } from "@pages/main-menu-page";
-import { PageTypesPage } from "@pages/page-types-page";
+import { BasePage } from "@pages/basePage";
+import { ConfigurationPage } from "@pages/configurationPage";
+import { ContentPage } from "@pages/contentPage";
+import { MainMenuPage } from "@pages/mainMenuPage";
+import { PageTypesPage } from "@pages/pageTypesPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/content.json" });

@@ -1,9 +1,9 @@
 import { URL_LIST } from "@data/url";
-import { BasePage } from "@pages/base-page";
-import { ConfigurationPage } from "@pages/configuration-page";
-import { MainMenuPage } from "@pages/main-menu-page";
-import { PermissionGroupsPage } from "@pages/permission-groups-page";
-import { StaffMembersPage } from "@pages/staff-members-page";
+import { BasePage } from "@pages/basePage";
+import { ConfigurationPage } from "@pages/configurationPage";
+import { MainMenuPage } from "@pages/mainMenuPage";
+import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
+import { StaffMembersPage } from "@pages/staffMembersPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/staff-member.json" });

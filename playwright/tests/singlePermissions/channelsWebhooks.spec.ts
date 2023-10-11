@@ -1,8 +1,8 @@
 import { URL_LIST } from "@data/url";
-import { ChannelPage } from "@pages/channels-page";
-import { ConfigurationPage } from "@pages/configuration-page";
-import { MainMenuPage } from "@pages/main-menu-page";
-import { WebhooksEventsPage } from "@pages/webhooks-events-page";
+import { ChannelPage } from "@pages/channelsPage";
+import { ConfigurationPage } from "@pages/configurationPage";
+import { MainMenuPage } from "@pages/mainMenuPage";
+import { WebhooksEventsPage } from "@pages/webhooksEventsPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/channels-webhooks.json" });

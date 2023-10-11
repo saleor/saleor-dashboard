@@ -1,8 +1,8 @@
 import { URL_LIST } from "@data/url";
-import { BasePage } from "@pages/base-page";
-import { DiscountsPage } from "@pages/discounts-page";
-import { MainMenuPage } from "@pages/main-menu-page";
-import { VouchersPage } from "@pages/vouchers-page";
+import { BasePage } from "@pages/basePage";
+import { DiscountsPage } from "@pages/discountsPage";
+import { MainMenuPage } from "@pages/mainMenuPage";
+import { VouchersPage } from "@pages/vouchersPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/discount.json" });

@@ -1,10 +1,10 @@
 import * as faker from "faker";
 
-import { LOCATORS } from "@data/common-locators";
+import { LOCATORS } from "@data/commonLocators";
 import { URL_LIST } from "@data/url";
-import { ChannelSelectDialog } from "@dialogs/channel-select-dialog";
-import { MetadataSeoPage } from "@pages/metadata-seo-page";
-import { RightSideDetailsPage } from "@pages/right-side-details-section";
+import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
+import { MetadataSeoPage } from "@pages/pageElements/metadataSeoPage";
+import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 

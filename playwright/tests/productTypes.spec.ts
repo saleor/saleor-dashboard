@@ -1,6 +1,6 @@
 import * as faker from "faker";
 
-import { ProductTypePage } from "@pages/product-type-page";
+import { ProductTypePage } from "@pages/productTypePage";
 import { test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });

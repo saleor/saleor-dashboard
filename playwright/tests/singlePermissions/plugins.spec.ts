@@ -1,7 +1,7 @@
 import { URL_LIST } from "@data/url";
-import { ConfigurationPage } from "@pages/configuration-page";
-import { MainMenuPage } from "@pages/main-menu-page";
-import { PluginsPage } from "@pages/plugins-page";
+import { ConfigurationPage } from "@pages/configurationPage";
+import { MainMenuPage } from "@pages/mainMenuPage";
+import { PluginsPage } from "@pages/pluginsPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/plugins.json" });

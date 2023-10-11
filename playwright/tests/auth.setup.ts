@@ -1,6 +1,6 @@
-import { USER_PERMISSION } from "@data/user-permissions";
-import { HomePage } from "@pages/home-page";
-import { LoginPage } from "@pages/login-page";
+import { USER_PERMISSION } from "@data/userPermissions";
+import { HomePage } from "@pages/homePage";
+import { LoginPage } from "@pages/loginPage";
 import { expect, test as setup } from "@playwright/test";
 
 const adminFile = "playwright/.auth/admin.json";

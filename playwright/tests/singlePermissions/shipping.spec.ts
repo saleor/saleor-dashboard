@@ -1,7 +1,7 @@
 import { URL_LIST } from "@data/url";
-import { ConfigurationPage } from "@pages/configuration-page";
-import { MainMenuPage } from "@pages/main-menu-page";
-import { ShippingMethodsPage } from "@pages/shipping-methods-page";
+import { ConfigurationPage } from "@pages/configurationPage";
+import { MainMenuPage } from "@pages/mainMenuPage";
+import { ShippingMethodsPage } from "@pages/shippingMethodsPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/shipping.json" });

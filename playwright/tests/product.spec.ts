@@ -1,7 +1,7 @@
-import { PRODUCTS } from "@data/test-data";
-import { BasePage } from "@pages/base-page";
-import { ProductCreateDialog } from "@pages/dialogs/product-create-dialog";
-import { ProductPage } from "@pages/product-page";
+import { PRODUCTS } from "@data/testData";
+import { BasePage } from "@pages/basePage";
+import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
+import { ProductPage } from "@pages/productPage";
 import { test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
