@@ -3,6 +3,7 @@ import { GenerateMultipleVoucherCodeFormData } from "@dashboard/discounts/compon
 import { useVoucherCodesPagination } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useVoucherCodesPagination";
 import { generateMultipleIds } from "@dashboard/discounts/components/VoucherCreatePage/utils";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
+import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import { ListSettings } from "@dashboard/types";
 import { useState } from "react";
 
@@ -11,12 +12,12 @@ interface UseVoucherCodesClient {
   hasClientPaginationPrevPage: boolean;
   addedVoucherCodes: VoucherCode[];
   clientVoucherCodes: VoucherCode[];
-  clientVoucherCodesPagination: any;
+  clientVoucherCodesPagination: LocalPagination;
   freeSlotsInClientPagianationPage: number;
   onSettingsChange: UseListSettings["updateListSettings"];
   handleDeleteAddedVoucherCodes: (idsToDelete: string[]) => void;
   handleAddVoucherCode: (code: string) => void;
-  handleGenerateMultipeCodes: ({
+  handleGenerateMultipleCodes: ({
     quantity,
     prefix,
   }: GenerateMultipleVoucherCodeFormData) => void;
@@ -49,7 +50,7 @@ export const useVoucherCodesClient = (
     resetPage();
   };
 
-  const handleGenerateMultipeCodes = ({
+  const handleGenerateMultipleCodes = ({
     quantity,
     prefix,
   }: GenerateMultipleVoucherCodeFormData) => {
@@ -76,7 +77,7 @@ export const useVoucherCodesClient = (
     hasClientPaginationPrevPage,
     freeSlotsInClientPagianationPage,
     handleAddVoucherCode,
-    handleGenerateMultipeCodes,
+    handleGenerateMultipleCodes,
     handleDeleteAddedVoucherCodes,
   };
 };

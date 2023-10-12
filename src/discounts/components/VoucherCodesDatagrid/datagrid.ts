@@ -1,6 +1,10 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
-import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
+import {
+  readonlyTextCell,
+  statusCell,
+} from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { IntlShape } from "react-intl";
 
@@ -44,13 +48,23 @@ export const createGetCellContent =
           false,
         );
       case "status":
-        return readonlyTextCell(getStatus(rowData?.isActive, intl), false);
+        return statusCell(
+          getStatus(rowData?.isActive),
+          getStatusMessage(rowData?.isActive, intl),
+        );
       default:
         return readonlyTextCell("", false);
     }
   };
 
-function getStatus(isActive: boolean | undefined, intl: IntlShape) {
+function getStatus(isActive: boolean | undefined): DotStatus {
+  if (isActive === undefined) {
+    return "warning";
+  }
+  return isActive ? "success" : "error";
+}
+
+function getStatusMessage(isActive: boolean | undefined, intl: IntlShape) {
   if (isActive === undefined) {
     return intl.formatMessage(messages.draft);
   }

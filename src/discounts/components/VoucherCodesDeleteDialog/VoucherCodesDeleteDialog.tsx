@@ -1,8 +1,8 @@
-import { DashboardCard } from "@dashboard/components/Card";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Modal, Text } from "@saleor/macaw-ui/next";
+import { Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface VoucherCodesDeleteDialogProps {
   open: boolean;
@@ -17,41 +17,35 @@ export const VoucherCodesDeleteDialog = ({
 }: VoucherCodesDeleteDialogProps) => {
   const intl = useIntl();
 
+  const handleSubmit = async () => {
+    onDelete();
+    onClose();
+  };
+
   return (
-    <Modal open={open} onChange={onClose}>
-      <Modal.Content>
-        <Box
-          backgroundColor="surfaceNeutralPlain"
-          boxShadow="modal"
-          __left="50%"
-          __top="50%"
-          position="fixed"
-          __maxWidth="400px"
-          __transform="translate(-50%, -50%)"
-        >
-          <DashboardCard>
-            <DashboardCard.Title>Delete voucher code</DashboardCard.Title>
-            <DashboardCard.Content>
-              <Text as="p" marginBottom={6}>
-                Are you sure you want to delete this voucher code?
-              </Text>
-              <Box
-                display="flex"
-                justifyContent="flex-end"
-                gap={3}
-                paddingBottom={6}
-              >
-                <Button onClick={onClose} variant="secondary">
-                  {intl.formatMessage(buttonMessages.back)}
-                </Button>
-                <Button onClick={onDelete}>
-                  {intl.formatMessage(buttonMessages.delete)}
-                </Button>
-              </Box>
-            </DashboardCard.Content>
-          </DashboardCard>
-        </Box>
-      </Modal.Content>
-    </Modal>
+    <DashboardModal open={open} onChange={onClose}>
+      <DashboardModal.Content>
+        <DashboardModal.Title>
+          <FormattedMessage id="iL/zeh" defaultMessage="Delete voucher code" />
+        </DashboardModal.Title>
+
+        <Text as="p">
+          <FormattedMessage
+            id="989O5D"
+            defaultMessage="Are you sure you want to delete this voucher code?"
+          />
+        </Text>
+
+        <DashboardModal.Actions>
+          <Button onClick={onClose} variant="secondary">
+            {intl.formatMessage(buttonMessages.back)}
+          </Button>
+
+          <Button onClick={handleSubmit}>
+            {intl.formatMessage(buttonMessages.delete)}
+          </Button>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };

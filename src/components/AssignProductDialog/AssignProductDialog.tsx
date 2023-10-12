@@ -26,6 +26,7 @@ import React, { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { Container } from "../AssignContainerDialog";
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
@@ -42,7 +43,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
-  onSubmit: (data: string[]) => void;
+  onSubmit: (data: Container[]) => void;
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
@@ -93,7 +94,12 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       .filter(key => productsDict[key])
       .map(key => key);
 
-    onSubmit(selectedProductsAsArray);
+    onSubmit(
+      selectedProductsAsArray.map(id => ({
+        id,
+        name: products.find(product => product.id === id)?.name,
+      })),
+    );
   };
 
   const handleChange = productId => {

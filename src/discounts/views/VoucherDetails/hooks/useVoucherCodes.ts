@@ -21,7 +21,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     clientVoucherCodesPagination,
     freeSlotsInClientPagianationPage,
     handleAddVoucherCode,
-    handleGenerateMultipeCodes,
+    handleGenerateMultipleCodes,
     handleDeleteAddedVoucherCodes,
     hasClientPaginationNextPage,
     hasClientPaginationPrevPage,
@@ -150,7 +150,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     selectedVoucherCodesIds,
     handleSetSelectedVoucherCodesIds,
     handleAddVoucherCode,
-    handleGenerateMultipeCodes,
+    handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,
   };
 };

@@ -76,6 +76,17 @@ export function getReferenceDisplayValue(
       return definedAttributeReference;
     }
 
+    // If value has not been yet assigned and data
+    // is no longer available, use metadata
+    if (attribute.metadata) {
+      return {
+        label: attribute.metadata.find(
+          metadata => metadata.value === attributeValue,
+        )?.label,
+        value: attributeValue,
+      };
+    }
+
     return {
       label: attributeValue,
       value: attributeValue,

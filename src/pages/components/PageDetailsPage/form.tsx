@@ -11,6 +11,7 @@ import {
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
   createAttributeReferenceChangeHandler,
+  createAttributeReferenceMetadataHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
@@ -33,6 +34,7 @@ import useForm, {
 import useFormset, {
   FormsetChange,
   FormsetData,
+  FormsetMetadataChange,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import {
@@ -41,6 +43,7 @@ import {
 } from "@dashboard/pages/utils/data";
 import { createPageTypeSelectHandler } from "@dashboard/pages/utils/handlers";
 import { validatePageCreateData } from "@dashboard/pages/utils/validation";
+import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import getPublicationData from "@dashboard/utils/data/getPublicationData";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -78,6 +81,9 @@ export interface PageUpdateHandlers {
   selectAttribute: FormsetChange<string>;
   selectAttributeMulti: FormsetChange<string>;
   selectAttributeReference: FormsetChange<string[]>;
+  selectAttributeReferenceMetadata: FormsetMetadataChange<
+    AttributeValuesMetadata[]
+  >;
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   fetchReferences: (value: string) => void;
@@ -203,6 +209,10 @@ function usePageForm(
     attributes.change,
     triggerChange,
   );
+  const handleAttributeMetadataChange = createAttributeReferenceMetadataHandler(
+    attributes.setMetadata,
+    triggerChange,
+  );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
@@ -316,6 +326,7 @@ function usePageForm(
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMulti: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
+      selectAttributeReferenceMetadata: handleAttributeMetadataChange,
       selectPageType: handlePageTypeSelect,
     },
     submit,

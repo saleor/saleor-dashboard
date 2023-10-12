@@ -142,7 +142,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     handleSetSelectedVoucherCodesIds,
     updateVoucherCodesListSettings,
     handleAddVoucherCode,
-    handleGenerateMultipeCodes,
+    handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,
   } = useVoucherCodes({ id });
 
@@ -331,7 +331,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         voucherCodesLoading={voucherCodesLoading}
         voucherCodesSettings={voucherCodesSettings}
         onDeleteVoucherCodes={handleDeleteVoucherCodes}
-        onMultipleVoucheCodesGenerate={handleGenerateMultipeCodes}
+        onMultipleVoucheCodesGenerate={handleGenerateMultipleCodes}
         onCustomVoucherCodeGenerate={handleAddVoucherCode}
         onVoucherCodesSettingsChange={updateVoucherCodesListSettings}
         onSelectVoucherCodesIds={handleSetSelectedVoucherCodesIds}
@@ -457,7 +457,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
               ...detailsQueryInclude,
               id,
               input: {
-                categories,
+                categories: categories.map(category => category.id),
               },
             },
           })
@@ -481,7 +481,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
               ...detailsQueryInclude,
               id,
               input: {
-                collections,
+                collections: collections.map(collection => collection.id),
               },
             },
           })
@@ -522,7 +522,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
               ...detailsQueryInclude,
               id,
               input: {
-                products,
+                products: products.map(product => product.id),
               },
             },
           })

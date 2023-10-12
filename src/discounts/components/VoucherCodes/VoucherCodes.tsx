@@ -17,8 +17,9 @@ import {
   VoucherCodesGenerateDialog,
 } from "../VoucherCodesGenerateDialog";
 import { VoucherCodesManualDialog } from "../VoucherCodesManualDialog";
+import { VoucherCodesUrlDialog } from "./types";
 
-export interface VoucherCodesProps extends VoucherCodesDatagridProps {
+interface VoucherCodesProps extends VoucherCodesDatagridProps {
   selectedCodesIds: string[];
   voucherCodesPagination: LocalPagination;
   settings: UseListSettings["settings"];
@@ -38,9 +39,9 @@ export const VoucherCodes = ({
   ...datagridProps
 }: VoucherCodesProps) => {
   const { pageInfo, ...paginationValues } = voucherCodesPagination;
-  const [openModal, setOpenModal] = useState<
-    "single-codes" | "multiple-codes" | "delete-codes" | null
-  >(null);
+  const [openModal, setOpenModal] = useState<VoucherCodesUrlDialog | null>(
+    null,
+  );
 
   const closeModal = () => {
     setOpenModal(null);
@@ -90,10 +91,7 @@ export const VoucherCodes = ({
       <VoucherCodesDeleteDialog
         onClose={closeModal}
         open={openModal === "delete-codes"}
-        onDelete={() => {
-          closeModal();
-          onDeleteCodes();
-        }}
+        onDelete={onDeleteCodes}
       />
     </>
   );

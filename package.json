@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.17.0-dev",
+  "version": "3.18.0-dev",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
-    "@saleor/macaw-ui": "0.8.0-pre.135",
+    "@saleor/macaw-ui": "0.8.0-pre.136",
     "@saleor/sdk": "0.6.0",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
@@ -125,7 +125,7 @@
     "@graphql-codegen/typescript-apollo-client-helpers": "^2.1.10",
     "@graphql-codegen/typescript-operations": "^2.2.4",
     "@graphql-codegen/typescript-react-apollo": "^3.2.5",
-    "@playwright/test": "^1.37.1",
+    "@playwright/test": "^1.38.1",
     "@saleor/app-sdk": "0.43.0",
     "@sentry/cli": "^2.20.6",
     "@swc/jest": "^0.2.26",
@@ -137,6 +137,7 @@
     "@types/is-ci": "^3.0.0",
     "@types/jscodeshift": "^0.11.3",
     "@types/lodash-es": "^4.17.3",
+    "@types/node": "^20.8.0",
     "@types/react": "^17.0.50",
     "@types/react-dom": "^17.0.17",
     "@types/react-dropzone": "^4.2.2",
