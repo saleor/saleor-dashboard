@@ -24,6 +24,7 @@ const initialData: GenerateMultipleVoucherCodeFormData = {
 };
 
 const MAX_VOUCHER_CODES = 50;
+const numberRegexp = /\d+/;
 
 export const VoucherCodesGenerateDialog = ({
   open,
@@ -33,26 +34,15 @@ export const VoucherCodesGenerateDialog = ({
   const intl = useIntl();
   const { change, submit, data, reset } = useForm(initialData, onSubmit);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (
-      /\D/.test(e.key) &&
-      ![
-        "Backspace",
-        "ArrowDown",
-        "ArrowUp",
-        "ArrowLeft",
-        "ArrowRight",
-        "Tab",
-      ].includes(e.key)
-    ) {
-      e.preventDefault();
-    }
-  };
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.currentTarget.value);
+    const value = e.currentTarget.value;
 
-    if (Number.isNaN(value) || value > MAX_VOUCHER_CODES) {
+    if (!numberRegexp.test(value) && value !== "") {
+      e.preventDefault();
+      return;
+    }
+
+    if (Number(value) > MAX_VOUCHER_CODES) {
       e.preventDefault();
       return;
     }
@@ -86,7 +76,7 @@ export const VoucherCodesGenerateDialog = ({
             label={intl.formatMessage(messages.codeQuantity, {
               maxCodes: MAX_VOUCHER_CODES,
             })}
-            onKeyDown={handleKeyDown}
+            // onKeyDown={handleKeyDown}
             value={data.quantity}
             onChange={handleChange}
           />
