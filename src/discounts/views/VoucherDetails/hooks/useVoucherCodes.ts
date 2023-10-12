@@ -1,5 +1,5 @@
 import useListSettings from "@dashboard/hooks/useListSettings";
-import { ListViews } from "@dashboard/types";
+import { ListSettings, ListViews } from "@dashboard/types";
 
 import { useVoucherCodesClient } from "./useVoucherCodesClient";
 import { useVoucherCodesRowSelection } from "./useVoucherCodesRowSelection";
@@ -15,7 +15,7 @@ export const useVoucherCodes = () => {
     clientVoucherCodes,
     clientVoucherCodesPagination,
     handleAddVoucherCode,
-    handleGenerateMultipeCodes,
+    handleGenerateMultipleCodes,
     handleDeleteAddedVoucherCodes,
     onSettingsChange,
   } = useVoucherCodesClient(voucherCodesSettings, () => {
@@ -33,20 +33,25 @@ export const useVoucherCodes = () => {
     handleDeleteAddedVoucherCodes(selectedVoucherCodesIds);
   };
 
+  const handleUpdateVoucherCodesListSettings = (
+    key: keyof ListSettings<ListViews.VOUCHER_CODES>,
+    value: number | string[],
+  ) => {
+    updateVoucherCodesListSettings(key, value);
+    onSettingsChange(key, value);
+  };
+
   return {
     voucherCodes: clientVoucherCodes,
     addedVoucherCodes,
     voucherCodesLoading: false,
     voucherCodesPagination: clientVoucherCodesPagination,
     voucherCodesSettings,
-    updateVoucherCodesListSettings: (key: any, value: any) => {
-      updateVoucherCodesListSettings(key, value);
-      onSettingsChange(key, value);
-    },
+    updateVoucherCodesListSettings: handleUpdateVoucherCodesListSettings,
     selectedVoucherCodesIds,
     handleSetSelectedVoucherCodesIds,
     handleAddVoucherCode,
-    handleGenerateMultipeCodes,
+    handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,
   };
 };

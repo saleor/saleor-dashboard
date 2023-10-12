@@ -118,7 +118,7 @@ const VoucherLimits = ({
             testId="single-use"
             checked={data.singleUse}
             label={intl.formatMessage(messages.singleUse)}
-            name={"singleUse" as keyof VoucherDetailsPageFormData}
+            name={"singleUse" satisfies keyof VoucherDetailsPageFormData}
             onChange={onChange}
           />
         )}

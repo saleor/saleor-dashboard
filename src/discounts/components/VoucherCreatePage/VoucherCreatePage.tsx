@@ -98,7 +98,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   );
   const changeMetadata = makeMetadataChangeHandler(change);
 
-  const handleGenerateMultipeCodes = ({
+  const handleGenerateMultipleCodes = ({
     quantity,
     prefix,
   }: GenerateMultipleVoucherCodeFormData) => {
@@ -146,9 +146,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           {voucherCodesFlag.enabled && (
             <VoucherCodes
               codes={paginatedCodes}
-              loading={false}
               onDeleteCodes={handleDeleteVoucherCodes}
-              onMultiCodesGenerate={handleGenerateMultipeCodes}
+              onMultiCodesGenerate={handleGenerateMultipleCodes}
               onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
               onSettingsChange={onSettingsChange}
               onCustomCodeGenerate={handleGenerateCustomCode}

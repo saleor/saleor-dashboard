@@ -96,7 +96,6 @@ export const VoucherCodesGenerateDialog = ({
             value={data.prefix}
             onChange={change}
           />
-          <input type="submit" hidden />
         </Box>
         <DashboardModal.Actions>
           <Button onClick={handleModalClose} variant="secondary">

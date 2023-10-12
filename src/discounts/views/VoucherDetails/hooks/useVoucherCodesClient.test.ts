@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useVoucherCodesClient } from "./useVoucherCodesClient";
 
-jest.mock("uuid", () => ({ v4: () => "123456789" }));
+jest.mock("uuid", () => ({ v4: () => "68276b31-3b41-4004-acd6-bad8c36d524f" }));
 
 describe("useVoucherCodesClient", () => {
   it("should add voucher code manually", () => {
@@ -46,7 +46,7 @@ describe("useVoucherCodesClient", () => {
 
     // Act
     act(() => {
-      result.current.handleGenerateMultipeCodes({
+      result.current.handleGenerateMultipleCodes({
         quantity: "10",
         prefix: "prefix",
       });
@@ -55,16 +55,16 @@ describe("useVoucherCodesClient", () => {
     // Assert
     expect(switchToClientPagination).toHaveBeenCalled();
     expect(result.current.addedVoucherCodes).toEqual([
-      { code: "prefix-123456789", status: "Draft" },
-      { code: "prefix-123456789", status: "Draft" },
-      { code: "prefix-123456789", status: "Draft" },
-      { code: "prefix-123456789", status: "Draft" },
-      { code: "prefix-123456789", status: "Draft" },
-      { code: "prefix-123456789", status: "Draft" },
-      { code: "prefix-123456789", status: "Draft" },
-      { code: "prefix-123456789", status: "Draft" },
-      { code: "prefix-123456789", status: "Draft" },
-      { code: "prefix-123456789", status: "Draft" },
+      { code: "prefix-68276b31-3b41-4004-acd6-bad8c36d524f", status: "Draft" },
+      { code: "prefix-68276b31-3b41-4004-acd6-bad8c36d524f", status: "Draft" },
+      { code: "prefix-68276b31-3b41-4004-acd6-bad8c36d524f", status: "Draft" },
+      { code: "prefix-68276b31-3b41-4004-acd6-bad8c36d524f", status: "Draft" },
+      { code: "prefix-68276b31-3b41-4004-acd6-bad8c36d524f", status: "Draft" },
+      { code: "prefix-68276b31-3b41-4004-acd6-bad8c36d524f", status: "Draft" },
+      { code: "prefix-68276b31-3b41-4004-acd6-bad8c36d524f", status: "Draft" },
+      { code: "prefix-68276b31-3b41-4004-acd6-bad8c36d524f", status: "Draft" },
+      { code: "prefix-68276b31-3b41-4004-acd6-bad8c36d524f", status: "Draft" },
+      { code: "prefix-68276b31-3b41-4004-acd6-bad8c36d524f", status: "Draft" },
     ]);
   });
 });

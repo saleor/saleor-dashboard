@@ -5,6 +5,7 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { UseListSettings } from "@dashboard/hooks/useListSettings";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -18,16 +19,16 @@ import { VoucherCode } from "./types";
 
 export interface VoucherCodesDatagridProps {
   codes: VoucherCode[];
-  loading: boolean;
+  loading?: boolean;
   disabled?: boolean;
   onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
-  settings: any;
-  onSettingsChange: any;
+  settings: UseListSettings["settings"];
+  onSettingsChange: UseListSettings["updateListSettings"];
 }
 
 export const VoucherCodesDatagrid = ({
   codes,
-  loading,
+  loading = false,
   disabled,
   onSelectVoucherCodesIds,
   onSettingsChange,

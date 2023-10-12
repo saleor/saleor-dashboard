@@ -141,7 +141,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     handleSetSelectedVoucherCodesIds,
     updateVoucherCodesListSettings,
     handleAddVoucherCode,
-    handleGenerateMultipeCodes,
+    handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,
   } = useVoucherCodes();
 
@@ -329,7 +329,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         voucherCodesLoading={voucherCodesLoading}
         voucherCodesSettings={voucherCodesSettings}
         onDeleteVoucherCodes={handleDeleteVoucherCodes}
-        onMultipleVoucheCodesGenerate={handleGenerateMultipeCodes}
+        onMultipleVoucheCodesGenerate={handleGenerateMultipleCodes}
         onCustomVoucherCodeGenerate={handleAddVoucherCode}
         onVoucherCodesSettingsChange={updateVoucherCodesListSettings}
         onSelectVoucherCodesIds={handleSetSelectedVoucherCodesIds}

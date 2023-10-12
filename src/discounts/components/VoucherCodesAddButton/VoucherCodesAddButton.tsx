@@ -1,4 +1,4 @@
-import { SubMenu } from "@dashboard/components/SubMenu";
+import { MenuItem, SubMenu } from "@dashboard/components/SubMenu";
 import {
   ArrowDownIcon,
   Box,
@@ -33,7 +33,7 @@ export const VoucherCodesAddButton = ({
     setSubMenuOpen(false);
   }, []);
 
-  const subMenuItems = useMemo(
+  const subMenuItems = useMemo<MenuItem[]>(
     () => [
       {
         id: "manual",
