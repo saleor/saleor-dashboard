@@ -7232,16 +7232,6 @@ export enum VoucherCodeBulkDeleteErrorCode {
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/**
- * Represents voucher code data.
- *
- * Added in Saleor 3.18.
- */
-export type VoucherCodeInput = {
-  /** Code to use the voucher. */
-  code?: InputMaybe<Scalars['String']>;
-};
-
 export enum VoucherDiscountType {
   FIXED = 'FIXED',
   PERCENTAGE = 'PERCENTAGE',
@@ -7259,6 +7249,14 @@ export type VoucherFilterInput = {
 };
 
 export type VoucherInput = {
+  /**
+   * List of codes to add.
+   *
+   * Added in Saleor 3.18.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  addCodes?: InputMaybe<Array<Scalars['String']>>;
   /** Voucher should be applied once per customer. */
   applyOncePerCustomer?: InputMaybe<Scalars['Boolean']>;
   /** Voucher should be applied to the cheapest item or entire order. */
@@ -7267,12 +7265,6 @@ export type VoucherInput = {
   categories?: InputMaybe<Array<Scalars['ID']>>;
   /** Code to use the voucher.This field will be removed in Saleor 4.0. */
   code?: InputMaybe<Scalars['String']>;
-  /**
-   * Codes to use the voucher.
-   *
-   * Added in Saleor 3.18.
-   */
-  codes?: InputMaybe<Array<VoucherCodeInput>>;
   /** Collections discounted by the voucher. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
   /** Country codes that can be used with the shipping voucher. */

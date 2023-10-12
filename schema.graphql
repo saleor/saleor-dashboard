@@ -18557,6 +18557,13 @@ type OrderLine implements Node & ObjectWithMetadata {
   quantityToFulfill: Int!
 
   """
+  Denormalized sale ID, set when order line is created for a product variant that is on sale.
+  
+  Added in Saleor 3.14.
+  """
+  saleId: ID
+
+  """
   Denormalized tax class of the product in this order line.
   
   Added in Saleor 3.9.
@@ -18635,6 +18642,13 @@ type OrderLine implements Node & ObjectWithMetadata {
   """
   variant: ProductVariant
   variantName: String!
+
+  """
+  Voucher code that was used for this order line.
+  
+  Added in Saleor 3.14.
+  """
+  voucherCode: String
 }
 
 input OrderLineCreateInput {
@@ -20246,6 +20260,13 @@ type Payment implements Node & ObjectWithMetadata {
   """Order associated with a payment."""
   order: Order
 
+  """
+  Informs whether this is a partial payment.
+  
+  Added in Saleor 3.14.
+  """
+  partial: Boolean!
+
   """Type of method used for payment."""
   paymentMethodType: String!
 
@@ -20267,6 +20288,13 @@ type Payment implements Node & ObjectWithMetadata {
   Added in Saleor 3.3.
   """
   privateMetafields(keys: [String!]): Metadata
+
+  """
+  PSP reference of the payment.
+  
+  Added in Saleor 3.14.
+  """
+  pspReference: String
 
   """Unique token associated with a payment."""
   token: String!
@@ -33073,6 +33101,9 @@ type VoucherCode {
   """Code to use the voucher."""
   code: String
 
+  """Date time of code creation."""
+  createdAt: DateTime!
+
   """The ID of the voucher code."""
   id: ID!
 
@@ -33138,16 +33169,6 @@ type VoucherCodeCountableEdge {
 
   """The item at the end of the edge."""
   node: VoucherCode!
-}
-
-"""
-Represents voucher code data.
-
-Added in Saleor 3.18.
-"""
-input VoucherCodeInput {
-  """Code to use the voucher."""
-  code: String
 }
 
 type VoucherCountableConnection {
@@ -33263,6 +33284,15 @@ input VoucherFilterInput {
 }
 
 input VoucherInput {
+  """
+  List of codes to add.
+  
+  Added in Saleor 3.18.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addCodes: [String!]
+
   """Voucher should be applied once per customer."""
   applyOncePerCustomer: Boolean
 
@@ -33274,13 +33304,6 @@ input VoucherInput {
 
   """Code to use the voucher.This field will be removed in Saleor 4.0."""
   code: String
-
-  """
-  Codes to use the voucher.
-  
-  Added in Saleor 3.18.
-  """
-  codes: [VoucherCodeInput!]
 
   """Collections discounted by the voucher."""
   collections: [ID!]
