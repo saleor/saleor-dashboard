@@ -414,7 +414,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
               ...detailsQueryInclude,
               id,
               input: {
-                variants,
+                variants: variants.map(variant => variant.id),
               },
             },
           })
@@ -438,7 +438,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
               ...detailsQueryInclude,
               id,
               input: {
-                products,
+                products: products.map(product => product.id),
               },
             },
           })
@@ -465,7 +465,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
               ...detailsQueryInclude,
               id,
               input: {
-                categories,
+                categories: categories.map(category => category.id),
               },
             },
           })
@@ -489,7 +489,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
               ...detailsQueryInclude,
               id,
               input: {
-                collections,
+                collections: collections.map(collection => collection.id),
               },
             },
           })

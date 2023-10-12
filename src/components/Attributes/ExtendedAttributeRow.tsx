@@ -32,6 +32,7 @@ const ExtendedAttributeRow: React.FC<ExtendedAttributeRowProps> = props => {
             maxWidth: "fit-content",
           }}
           type="button"
+          justifySelf="end"
         >
           {selectLabel}
         </Button>
@@ -45,7 +46,7 @@ const ExtendedAttributeRow: React.FC<ExtendedAttributeRowProps> = props => {
         __gridTemplateColumns="1fr 2fr"
         gap={5}
       >
-        <Box></Box>
+        <Box />
         <Box data-test-id="attribute-value">{children}</Box>
       </Box>
     </>
