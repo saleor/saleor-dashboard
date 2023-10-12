@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Set data-test-id for filters
+Fix webhook create button
