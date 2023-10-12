@@ -15,7 +15,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         run: |
-          files=$(gh pr diff $PR_BRANCH --name-only)
+          files=$(gh pr diff "$PR_BRANCH" --name-only)
           if [[ $files =~ \.changeset\/.*.md ]]; then
             echo "Changesets found!"
           else
