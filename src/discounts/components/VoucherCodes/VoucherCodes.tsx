@@ -18,7 +18,7 @@ import {
 } from "../VoucherCodesGenerateDialog";
 import { VoucherCodesManualDialog } from "../VoucherCodesManualDialog";
 
-interface VoucherCodesProps extends VoucherCodesDatagridProps {
+export interface VoucherCodesProps extends VoucherCodesDatagridProps {
   selectedCodesIds: string[];
   voucherCodesPagination: LocalPagination;
   settings: UseListSettings["settings"];
