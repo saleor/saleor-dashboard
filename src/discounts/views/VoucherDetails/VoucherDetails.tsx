@@ -57,6 +57,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { createUpdateHandler } from "./handlers";
+import { useVoucherCodes } from "./hooks/useVoucherCodes";
 import { VOUCHER_UPDATE_FORM_ID } from "./types";
 
 interface VoucherDetailsProps {
@@ -129,6 +130,20 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       ...detailsQueryInclude,
     },
   });
+
+  const {
+    voucherCodes,
+    voucherCodesLoading,
+    voucherCodesPagination,
+    voucherCodesSettings,
+    selectedVoucherCodesIds,
+    addedVoucherCodes,
+    handleSetSelectedVoucherCodesIds,
+    updateVoucherCodesListSettings,
+    handleAddVoucherCode,
+    handleGenerateMultipleCodes,
+    handleDeleteVoucherCodes,
+  } = useVoucherCodes();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherUrlDialog,
@@ -308,6 +323,17 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       )}
       <VoucherDetailsPage
         voucher={data?.voucher}
+        voucherCodes={voucherCodes}
+        addedVoucherCodes={addedVoucherCodes}
+        voucherCodesPagination={voucherCodesPagination}
+        voucherCodesLoading={voucherCodesLoading}
+        voucherCodesSettings={voucherCodesSettings}
+        onDeleteVoucherCodes={handleDeleteVoucherCodes}
+        onMultipleVoucheCodesGenerate={handleGenerateMultipleCodes}
+        onCustomVoucherCodeGenerate={handleAddVoucherCode}
+        onVoucherCodesSettingsChange={updateVoucherCodesListSettings}
+        onSelectVoucherCodesIds={handleSetSelectedVoucherCodesIds}
+        selectedVoucherCodesIds={selectedVoucherCodesIds}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
         disabled={

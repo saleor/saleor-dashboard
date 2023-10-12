@@ -31104,7 +31104,7 @@ type Transaction implements Node {
   """Total amount of the transaction."""
   amount: Money
 
-  """Date and time which transaction was created."""
+  """Date and time at which transaction was created."""
   created: DateTime!
 
   """Error associated with transaction, if any."""

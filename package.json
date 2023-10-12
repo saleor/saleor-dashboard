@@ -95,7 +95,8 @@
     "slugify": "^1.4.6",
     "tslib": "^2.4.1",
     "url-join": "^4.0.1",
-    "use-react-router": "^1.0.7"
+    "use-react-router": "^1.0.7",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -146,6 +147,7 @@
     "@types/react-sortable-hoc": "^0.7.1",
     "@types/react-sortable-tree": "^0.3.15",
     "@types/url-join": "^4.0.1",
+    "@types/uuid": "^9.0.4",
     "@types/webappsec-credential-management": "^0.5.1",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.41.0",

@@ -526,6 +526,7 @@ export const VoucherFragmentDoc = gql`
   ...Metadata
   id
   code
+  name
   startDate
   endDate
   usageLimit

@@ -17,10 +17,8 @@ function useLocalPageInfo<T>(values: T[], paginateBy: number) {
   const maxPage = getMaxPage(values.length, paginateBy);
 
   useEffect(() => {
-    if (page > maxPage) {
-      setPage(maxPage);
-    }
-  }, [values.length, paginateBy]);
+    setPage(0);
+  }, [paginateBy]);
 
   const hasPreviousPage = page > 0;
   const hasNextPage = page < maxPage;
@@ -35,6 +33,8 @@ function useLocalPageInfo<T>(values: T[], paginateBy: number) {
   const loadPreviousPage = () => setPage(page - 1);
   const loadNextPage = () => setPage(page + 1);
 
+  const resetPage = () => setPage(0);
+
   return {
     pageInfo: {
       hasNextPage,
@@ -43,6 +43,7 @@ function useLocalPageInfo<T>(values: T[], paginateBy: number) {
       startCursor,
     },
     pageValues,
+    resetPage,
     loadNextPage,
     loadPreviousPage,
     loadPage: setPage,
