@@ -108,7 +108,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
               </TableCell>
             </TableRowLink>
           </TableHead>
-          <TableBody>
+          <TableBody data-test-id="channel-list">
             {renderCollection(
               channelsList,
               channel => (
@@ -129,6 +129,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                         <IconButton
                           variant="secondary"
                           color="primary"
+                          data-test-id="delete-channel"
                           onClick={
                             channel
                               ? stopPropagation(() => onRemove(channel.id))

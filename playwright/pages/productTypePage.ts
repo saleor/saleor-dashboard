@@ -1,4 +1,4 @@
-import { LOCATORS } from "@data/common-locators";
+import { LOCATORS } from "@data/commonLocators";
 import { URL_LIST } from "@data/url";
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
@@ -14,9 +14,11 @@ export class ProductTypePage {
   readonly variantSelectionCheckbox: Locator;
   readonly saveButton: Locator;
   readonly notificationSuccess: Locator;
+  readonly addProductTypeButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.addProductTypeButton = page.getByTestId("add-product-type");
     this.notificationSuccess = page.getByTestId("notification-message");
     this.nameInput = page.locator("[name='name']");
     this.isShippingRequired = page.locator("[name='isShippingRequired']");
@@ -47,10 +49,18 @@ export class ProductTypePage {
   async selectGiftCardButton() {
     await this.giftCardKindCheckbox.click();
   }
-  async goto() {
+  async gotoAddProductTypePage() {
     await this.page.goto(URL_LIST.productTypesAdd);
   }
   async expectSuccessBanner() {
     await expect(this.page.locator(LOCATORS.successBanner)).toBeVisible();
+  }
+
+  async gotoProductTypeListPage() {
+    await this.page.goto(URL_LIST.productTypes);
+  }
+
+  async clickCreateProductTypeButton() {
+    await this.addProductTypeButton.click();
   }
 }
