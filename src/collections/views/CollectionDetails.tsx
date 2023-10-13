@@ -5,6 +5,7 @@ import {
 } from "@dashboard/channels/utils";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { Container } from "@dashboard/components/AssignContainerDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog";
 import { Button } from "@dashboard/components/Button";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
@@ -242,16 +243,18 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     variables => updatePrivateMetadata({ variables }),
   );
 
-  const handleAssignationChange = async products => {
+  const handleAssignationChange = async (products: Container[]) => {
+    const productIds = products.map(product => product.id);
+
     const toUnassignIds = Object.keys(assignedProductDict).filter(
-      s => assignedProductDict[s] && !products.includes(s),
+      s => assignedProductDict[s] && !productIds.includes(s),
     );
 
     const baseVariables = { ...paginationState, collectionId: id };
 
-    if (products.length > 0) {
+    if (productIds.length > 0) {
       await assignProduct({
-        variables: { ...baseVariables, productIds: products },
+        variables: { ...baseVariables, productIds },
       });
     }
 
