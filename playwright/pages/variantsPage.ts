@@ -2,6 +2,7 @@ import type { Locator, Page } from "@playwright/test";
 
 import { BasePage } from "./basePage";
 import { ChannelSelectDialog } from "./dialogs/channelSelectDialog";
+import { MetadataSeoPage } from "./pageElements/metadataSeoPage";
 
 export class VariantsPage {
   readonly page: Page;
@@ -23,12 +24,16 @@ export class VariantsPage {
   readonly priceFieldInput: Locator;
   readonly variantsList: Locator;
   readonly variantsNames: Locator;
+  readonly checkoutLimitInput: Locator;
+  readonly shippingWeightInput: Locator;
   channelSelectDialog: ChannelSelectDialog;
+  metadataSeoPage: MetadataSeoPage;
   basePage: BasePage;
 
   constructor(page: Page) {
     this.page = page;
     this.basePage = new BasePage(page);
+    this.metadataSeoPage = new MetadataSeoPage(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
     this.variantNameInput = page.getByTestId("variant-name-input");
     this.skuTextField = page.getByTestId("sku");
@@ -42,7 +47,9 @@ export class VariantsPage {
     this.warehouseOption = page.getByRole("menuitem");
     this.saveButton = page.getByTestId("button-bar-confirm");
     this.stockInput = page.getByTestId("stock-input");
+    this.shippingWeightInput = page.locator("[name='weight']");
     this.priceFieldInput = page.getByTestId("price-field");
+    this.checkoutLimitInput = page.getByTestId("checkout-limit-input");
     this.assignWarehouseButton = page.getByTestId("assign-warehouse-button");
     this.booleanAttributeCheckbox = page.locator(
       "[name*='attribute'][type='checkbox']",
@@ -54,6 +61,12 @@ export class VariantsPage {
 
   async typeVariantName(variantName = "XXL beverage") {
     await this.variantNameInput.fill(variantName);
+  }
+  async typeShippingWeight(weight = "150") {
+    await this.shippingWeightInput.fill(weight);
+  }
+  async typeCheckoutLimit(checkoutLimit = "10") {
+    await this.checkoutLimitInput.fill(checkoutLimit);
   }
   async typeSellingPriceInChannel(
     channelName: string,
@@ -94,5 +107,23 @@ export class VariantsPage {
   }
   async expectSuccessBanner() {
     await this.basePage.expectSuccessBanner();
+  }
+  async selectFirstAttributeValue() {
+    await this.attributeSelector.click();
+    await this.attributeOption.first().click();
+  }
+  async selectWarehouse(warehouse = "Oceania") {
+    await this.clickAssignWarehouseButton();
+    await this.warehouseOption.locator(`text=${warehouse}`).click();
+  }
+  async typeQuantityInStock(warehouse = "Oceania", quantity = "10") {
+    const quantityInput = await this.page
+      .getByTestId(warehouse)
+      .locator(this.stockInput);
+    await quantityInput.clear();
+    await quantityInput.fill(quantity);
+  }
+  async addAllMetaData() {
+    await this.metadataSeoPage.expandAndAddAllMetadata();
   }
 }

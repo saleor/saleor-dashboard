@@ -37,6 +37,7 @@ const ProductVariantCheckoutSettings: React.FC<
       </DashboardCard.Title>
       <DashboardCard.Content>
         <Input
+          data-test-id="checkout-limit-input"
           width="100%"
           disabled={disabled}
           error={!!formErrors.quantityLimitPerCustomer}

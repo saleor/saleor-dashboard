@@ -207,7 +207,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                     );
 
                   return (
-                    <TableRowLink key={stock.id}>
+                    <TableRowLink data-test-id={stock.label} key={stock.id}>
                       <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                         <Text>{stock.label}</Text>
                       </TableCell>
