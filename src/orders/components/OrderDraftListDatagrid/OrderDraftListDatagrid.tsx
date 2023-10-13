@@ -106,7 +106,7 @@ export const OrderDraftListDatagrid = ({
     <DatagridChangeStateContext.Provider value={datagridState}>
       <Datagrid
         readonly
-        rowMarkers="checkbox"
+        rowMarkers="checkbox-visible"
         columnSelect="single"
         freezeColumns={1}
         hasRowHover={hasRowHover}

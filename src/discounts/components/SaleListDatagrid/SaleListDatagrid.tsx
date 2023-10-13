@@ -134,7 +134,7 @@ export const SaleListDatagrid = ({
       <Datagrid
         readonly
         loading={disabled}
-        rowMarkers="checkbox"
+        rowMarkers="checkbox-visible"
         columnSelect="single"
         hasRowHover={hasRowHover}
         onColumnMoved={handlers.onMove}

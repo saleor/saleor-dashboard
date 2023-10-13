@@ -26,7 +26,9 @@ import {
   FormsetAtomicData,
   FormsetChange,
   FormsetData,
+  FormsetMetadataChange,
 } from "@dashboard/hooks/useFormset";
+import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
@@ -93,6 +95,9 @@ export interface ProductUpdateHandlers
     > {
   changeChannels: (id: string, data: ChannelOpts) => void;
   selectAttributeReference: FormsetChange<string[]>;
+  selectAttributeReferenceMetadata: FormsetMetadataChange<
+    AttributeValuesMetadata[]
+  >;
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;

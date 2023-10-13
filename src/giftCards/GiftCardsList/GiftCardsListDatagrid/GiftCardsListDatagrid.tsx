@@ -169,7 +169,7 @@ export const GiftCardsListDatagrid = () => {
       <Datagrid
         readonly
         loading={loading}
-        rowMarkers="checkbox"
+        rowMarkers="checkbox-visible"
         columnSelect="single"
         hasRowHover={true}
         onColumnMoved={handlers.onMove}

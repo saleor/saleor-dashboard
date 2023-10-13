@@ -88,13 +88,20 @@ export function useSectionLocalPaginationState(
   ];
 }
 
+export interface LocalPagination {
+  loadNextPage: () => void;
+  loadPreviousPage: () => void;
+  paginatorType: "click";
+  pageInfo?: PageInfo;
+}
+
 function useLocalPaginator(
   setPaginationState: (paginationState: PaginationState) => void,
 ) {
   function paginate(
     pageInfo: PageInfo | undefined,
     paginationState: PaginationState,
-  ) {
+  ): LocalPagination {
     const loadNextPage = () =>
       setPaginationState({
         ...paginationState,

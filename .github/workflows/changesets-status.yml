@@ -1,18 +1,24 @@
 name: Changesets
 
 on: [pull_request]
-
 jobs:
-  status:
+  changeset_present:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-      - name: Check changesets status
-        run: npx @changesets/cli@2.26.2 status --since origin/main
-
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Extract branch name
+        id: extract_branch
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      - name: Changeset file lookup  
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+        run: |
+          files=$(gh pr diff "$PR_BRANCH" --name-only)
+          if [[ $files =~ \.changeset\/.*.md ]]; then
+            echo "Changesets found!"
+          else
+            echo "There is no changeset file in your pull request."
+            exit 1
+          fi

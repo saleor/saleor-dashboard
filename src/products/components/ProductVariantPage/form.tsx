@@ -10,6 +10,7 @@ import {
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
   createAttributeReferenceChangeHandler,
+  createAttributeReferenceMetadataHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
@@ -37,10 +38,12 @@ import useForm, {
 import useFormset, {
   FormsetChange,
   FormsetData,
+  FormsetMetadataChange,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { errorMessages } from "@dashboard/intl";
 import {
+  AttributeValuesMetadata,
   getAttributeInputFromVariant,
   getStockInputFromVariant,
 } from "@dashboard/products/utils/data";
@@ -133,6 +136,9 @@ export interface ProductVariantUpdateHandlers
   updateChannels: (selectedChannelsIds: string[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
+  selectAttributeReferenceMetadata: FormsetMetadataChange<
+    AttributeValuesMetadata[]
+  >;
 }
 
 export interface UseProductVariantUpdateFormResult
@@ -246,6 +252,10 @@ function useProductVariantUpdateForm(
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
     attributes.change,
+    triggerChange,
+  );
+  const handleAttributeMetadataChange = createAttributeReferenceMetadataHandler(
+    attributes.setMetadata,
     triggerChange,
   );
   const handleFetchReferences = createFetchReferencesHandler(
@@ -443,6 +453,7 @@ function useProductVariantUpdateForm(
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
+      selectAttributeReferenceMetadata: handleAttributeMetadataChange,
     },
     submit,
     isSaveDisabled,

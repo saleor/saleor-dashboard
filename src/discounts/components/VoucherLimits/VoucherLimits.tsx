@@ -1,6 +1,7 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import { Grid } from "@dashboard/components/Grid";
+import { useFlag } from "@dashboard/featureFlags";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
@@ -33,6 +34,8 @@ const VoucherLimits = ({
 }: VoucherLimitsProps) => {
   const intl = useIntl();
   const classes = useStyles();
+
+  const voucherCodesFlag = useFlag("voucher_codes");
 
   const formErrors = getFormErrors(["usageLimit"], errors);
 
@@ -110,6 +113,15 @@ const VoucherLimits = ({
           name={"onlyForStaff" as keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
+        {voucherCodesFlag.enabled && (
+          <ControlledCheckbox
+            testId="single-use"
+            checked={data.singleUse}
+            label={intl.formatMessage(messages.singleUse)}
+            name={"singleUse" satisfies keyof VoucherDetailsPageFormData}
+            onChange={onChange}
+          />
+        )}
       </CardContent>
     </Card>
   );

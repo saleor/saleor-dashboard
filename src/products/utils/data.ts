@@ -61,10 +61,24 @@ export function getAttributeInputFromProduct(
       id: attribute.attribute.id,
       label: attribute.attribute.name,
       value: getSelectedAttributeValues(attribute),
+      metadata: getReferenceAttributeValuesLabels(attribute),
     })) ?? []
   );
 }
-
+export interface AttributeValuesMetadata {
+  value: string;
+  label: string;
+}
+const getReferenceAttributeValuesLabels = (
+  attribute: ProductFragment["attributes"][0],
+): AttributeValuesMetadata[] => {
+  return attribute.values.map(value => {
+    return {
+      label: value.name,
+      value: value.reference,
+    };
+  });
+};
 export function getAttributeInputFromProductType(
   productType: ProductType,
 ): AttributeInput[] {

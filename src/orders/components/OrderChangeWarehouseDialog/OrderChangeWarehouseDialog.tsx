@@ -151,7 +151,7 @@ export const OrderChangeWarehouseDialog: React.FC<
         </DialogContent>
       </ScrollShadow>
 
-      <DialogTable ref={setAnchor}>
+      <DialogTable css ref={setAnchor}>
         {filteredWarehouses ? (
           <RadioGroup
             value={selectedWarehouseId}

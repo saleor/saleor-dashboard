@@ -135,7 +135,7 @@ export const VoucherListDatagrid = ({
       <Datagrid
         readonly
         loading={disabled}
-        rowMarkers="checkbox"
+        rowMarkers="checkbox-visible"
         columnSelect="single"
         hasRowHover={true}
         onColumnMoved={handlers.onMove}
