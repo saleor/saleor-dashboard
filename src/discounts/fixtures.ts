@@ -157,7 +157,6 @@ export const voucherList: VoucherFragment[] = [
         },
       },
     ],
-    code: "FREE2019",
     countries: [
       {
         __typename: "CountryDisplay",
@@ -197,7 +196,6 @@ export const voucherList: VoucherFragment[] = [
         },
       },
     ],
-    code: "FREE2020",
     countries: [],
     type: "ENTIRE_ORDER" as VoucherTypeEnum,
     discountValueType: "FIXED" as DiscountValueTypeEnum,
@@ -633,7 +631,6 @@ export const voucherDetails: VoucherDetailsFragment = {
       },
     },
   ],
-  code: "DISCOUNT",
   collections: {
     __typename: "CollectionCountableConnection",
     edges: [],
