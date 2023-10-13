@@ -646,7 +646,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             description="dialog content"
             values={{
               voucherCode: (
-                <strong>{maybe(() => data.voucher.code, "...")}</strong>
+                <strong>{maybe(() => data.voucher.name, "...")}</strong>
               ),
             }}
           />

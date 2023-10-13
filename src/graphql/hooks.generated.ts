@@ -532,7 +532,6 @@ export const VoucherFragmentDoc = gql`
     fragment Voucher on Voucher {
   ...Metadata
   id
-  code
   name
   startDate
   endDate
@@ -563,7 +562,6 @@ export const VoucherFragmentDoc = gql`
 export const VoucherDetailsFragmentDoc = gql`
     fragment VoucherDetails on Voucher {
   ...Voucher
-  code
   usageLimit
   used
   applyOncePerOrder
