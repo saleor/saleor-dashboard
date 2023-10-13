@@ -19,10 +19,13 @@ import {
   FormsetAtomicData,
   FormsetChange,
   FormsetData,
+  FormsetMetadataChange,
 } from "@dashboard/hooks/useFormset";
+import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
 import { move, toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
+import uniqBy from "lodash/uniqBy";
 
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
@@ -69,6 +72,21 @@ export function createAttributeReferenceChangeHandler(
 ): FormsetChange<string[]> {
   return (attributeId: string, values: string[]) => {
     changeAttributeData(attributeId, values);
+    triggerChange();
+  };
+}
+
+const mergeReferencesMetadata = (
+  prev: AttributeValuesMetadata[],
+  next: AttributeValuesMetadata[],
+) => uniqBy([...(prev ?? []), ...(next ?? [])], "value");
+
+export function createAttributeReferenceMetadataHandler(
+  changeAttributeMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>,
+  triggerChange: () => void,
+): FormsetMetadataChange<AttributeValuesMetadata[]> {
+  return (attributeId: string, values: AttributeValuesMetadata[]) => {
+    changeAttributeMetadata(attributeId, values, mergeReferencesMetadata);
     triggerChange();
   };
 }

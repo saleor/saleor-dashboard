@@ -21,6 +21,7 @@ import {
   RequirementsPicker,
 } from "@dashboard/discounts/types";
 import { voucherListUrl } from "@dashboard/discounts/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
@@ -28,6 +29,8 @@ import {
   VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
+import { UseListSettings } from "@dashboard/hooks/useListSettings";
+import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -41,6 +44,9 @@ import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
+import { VoucherCodes } from "../VoucherCodes";
+import { VoucherCode } from "../VoucherCodesDatagrid/types";
+import { GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
@@ -74,8 +80,10 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   startDate: string;
   startTime: string;
   type: VoucherTypeEnum;
+  codes: VoucherCode[];
   usageLimit: number;
   used: number;
+  singleUse: boolean;
 }
 
 export interface VoucherDetailsPageProps
@@ -91,6 +99,11 @@ export interface VoucherDetailsPageProps
   voucher: VoucherDetailsFragment;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
+  selectedVoucherCodesIds: string[];
+  voucherCodes: VoucherCode[];
+  addedVoucherCodes: VoucherCode[];
+  voucherCodesLoading: boolean;
+  onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
   onCollectionAssign: () => void;
@@ -104,6 +117,14 @@ export interface VoucherDetailsPageProps
   onTabClick: (index: VoucherDetailsPageTab) => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
+  onMultipleVoucheCodesGenerate: (
+    data: GenerateMultipleVoucherCodeFormData,
+  ) => void;
+  onCustomVoucherCodeGenerate: (code: string) => void;
+  onDeleteVoucherCodes: () => void;
+  onVoucherCodesSettingsChange: UseListSettings["updateListSettings"];
+  voucherCodesPagination: LocalPagination;
+  voucherCodesSettings: UseListSettings["settings"];
 }
 
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
@@ -131,6 +152,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onTabClick,
   openChannelsModal,
   onRemove,
+  onMultipleVoucheCodesGenerate,
+  onCustomVoucherCodeGenerate,
+  onDeleteVoucherCodes,
   onSubmit,
   toggle,
   toggleAll,
@@ -140,9 +164,18 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   categoryListToolbar,
   collectionListToolbar,
   productListToolbar,
+  selectedVoucherCodesIds,
+  onSelectVoucherCodesIds,
+  voucherCodes,
+  addedVoucherCodes,
+  voucherCodesLoading,
+  voucherCodesPagination,
+  onVoucherCodesSettingsChange,
+  voucherCodesSettings,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const voucherCodesFlag = useFlag("voucher_codes");
 
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>(
     [],
@@ -176,6 +209,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     channelListings,
     code: voucher?.code || "",
     discountType,
+    codes: addedVoucherCodes,
     endDate: splitDateTime(voucher?.endDate ?? "").date,
     endTime: splitDateTime(voucher?.endDate ?? "").time,
     hasEndDate: !!voucher?.endDate,
@@ -188,6 +222,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
     usageLimit: voucher?.usageLimit ?? 1,
     used: voucher?.used ?? 0,
+    singleUse: false,
     metadata: voucher?.metadata.map(mapMetadataItemToInput),
     privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
   };
@@ -210,7 +245,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={voucherListUrl()} title={voucher?.code} />
+            <TopNav href={voucherListUrl()} title={voucher?.name} />
             <DetailPageLayout.Content>
               <VoucherInfo
                 data={data}
@@ -219,6 +254,22 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 onChange={change}
                 variant="update"
               />
+              {voucherCodesFlag.enabled && (
+                <VoucherCodes
+                  selectedCodesIds={selectedVoucherCodesIds}
+                  onSelectVoucherCodesIds={onSelectVoucherCodesIds}
+                  onDeleteCodes={onDeleteVoucherCodes}
+                  loading={voucherCodesLoading}
+                  onMultiCodesGenerate={onMultipleVoucheCodesGenerate}
+                  onCustomCodeGenerate={onCustomVoucherCodeGenerate}
+                  disabled={disabled}
+                  codes={voucherCodes}
+                  voucherCodesPagination={voucherCodesPagination}
+                  onSettingsChange={onVoucherCodesSettingsChange}
+                  settings={voucherCodesSettings}
+                />
+              )}
+
               <VoucherTypes
                 data={data}
                 disabled={disabled}

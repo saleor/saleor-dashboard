@@ -45,7 +45,7 @@ export const ListFilters = <TFilterKeys extends string = string>({
       >
         <Box display="flex" alignItems="center" gap={4}>
           {filtersEnabled ? (
-            <ExpressionFilters />
+            <ExpressionFilters data-test-id="filters-button" />
           ) : (
             <FiltersSelect<TFilterKeys>
               errorMessages={errorMessages}

@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { ChannelsAction } from "@dashboard/channels/urls";
 import {
   ChannelVoucherData,
   createSortedVoucherData,
@@ -27,6 +26,7 @@ import {
   voucherAddUrl,
   VoucherCreateUrlQueryParams,
   voucherUrl,
+  VoucherUrlDialog,
 } from "../../urls";
 import { createHandler } from "./handlers";
 import { VOUCHER_CREATE_FORM_ID } from "./types";
@@ -43,7 +43,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
-    ChannelsAction,
+    VoucherUrlDialog,
     VoucherCreateUrlQueryParams
   >(navigate, params => voucherAddUrl(params), params);
 

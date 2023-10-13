@@ -113,7 +113,7 @@ export type VoucherUrlDialog =
   | "remove"
   | ChannelsAction;
 export type VoucherUrlQueryParams = BulkAction & Dialog<VoucherUrlDialog>;
-export type VoucherCreateUrlQueryParams = Dialog<ChannelsAction>;
+export type VoucherCreateUrlQueryParams = Dialog<VoucherUrlDialog>;
 export const voucherUrl = (id: string, params?: VoucherUrlQueryParams) =>
   voucherPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 export const voucherAddPath = urlJoin(voucherSection, "add");

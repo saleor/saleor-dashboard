@@ -11,6 +11,7 @@ export interface SortableChipProps extends SortableElementProps {
   className?: string;
   label: React.ReactNode;
   onClose?: () => void;
+  loading?: boolean;
 }
 
 const useStyles = makeStyles(
@@ -39,12 +40,15 @@ const useStyles = makeStyles(
     sortableHandle: {
       marginRight: theme.spacing(1),
     },
+    disabled: {
+      cursor: "not-allowed",
+    },
   }),
   { name: "SortableChip" },
 );
 
 const SortableChip = SortableElement((props: SortableChipProps) => {
-  const { className, label, onClose } = props;
+  const { className, label, onClose, loading } = props;
 
   const classes = useStyles(props);
 
@@ -56,20 +60,33 @@ const SortableChip = SortableElement((props: SortableChipProps) => {
   };
 
   return (
-    <div className={clsx(classes.root, className)}>
+    <div
+      className={clsx(classes.root, className, {
+        [classes.disabled]: loading,
+      })}
+    >
       <div className={classes.content}>
         <SortableHandle
-          className={classes.sortableHandle}
+          className={clsx(classes.sortableHandle, {
+            [classes.disabled]: loading,
+          })}
           data-test-id="button-drag-handle"
         />
         <Typography data-test-id="chip-label">{label}</Typography>
         {onClose && (
           <button
-            className={classes.closeButton}
+            className={clsx(classes.closeButton, {
+              [classes.disabled]: loading,
+            })}
             onClick={handleClose}
             data-test-id="button-close"
+            disabled={loading}
           >
-            <CloseIcon className={classes.closeIcon} />
+            <CloseIcon
+              className={clsx(classes.closeIcon, {
+                [classes.disabled]: loading,
+              })}
+            />
           </button>
         )}
       </div>

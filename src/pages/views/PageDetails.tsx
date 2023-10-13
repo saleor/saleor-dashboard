@@ -112,6 +112,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       pageUrl(id, {
+        ...params,
         action: "assign-attribute-value",
         id: attribute.id,
       }),

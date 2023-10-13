@@ -52,7 +52,7 @@ import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getChoices } from "../../utils/data";
+import { AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
 import ProductTaxes from "../ProductTaxes";
@@ -198,7 +198,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (
-    attributeValues: string[],
+    attributeValues: AttributeValuesMetadata[],
     data: ProductUpdateData,
     handlers: ProductUpdateHandlers,
   ) => {
@@ -206,9 +206,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       assignReferencesAttributeId,
       mergeAttributeValues(
         assignReferencesAttributeId,
-        attributeValues,
+        attributeValues.map(({ value }) => value),
         data.attributes,
       ),
+    );
+    handlers.selectAttributeReferenceMetadata(
+      assignReferencesAttributeId,
+      attributeValues,
     );
     onCloseDialog();
   };
@@ -453,7 +457,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onClose={onCloseDialog}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(
-                    attributeValues,
+                    attributeValues.map(container => ({
+                      value: container.id,
+                      label: container.name,
+                    })),
                     data,
                     handlers,
                   )
