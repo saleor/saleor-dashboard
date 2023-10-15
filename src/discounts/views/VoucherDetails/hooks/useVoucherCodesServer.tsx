@@ -24,11 +24,13 @@ interface VoucherCodesServer {
   hasServerPaginationPrevPage: boolean;
   freeSlotsInServerPagianationPage: number;
   serverVoucherCodes: VoucherCode[];
+  restartServerPagination: () => void;
 }
 
 export const useVoucherCodesServer = ({
   settings,
   id,
+  skipFetch,
   isServerPagination,
   paginationState = {},
 }: UseVoucherCodesServerProps): VoucherCodesServer => {
@@ -41,11 +43,16 @@ export const useVoucherCodesServer = ({
     setServerVoucherCodesPaginationState,
   );
 
+  const restartServerPagination = () => {
+    setServerVoucherCodesPaginationState({});
+  };
+
   const {
     data: voucherCodesData,
     loading: voucherCodesLoading,
     refetch: voucherCodesRefetch,
   } = useVoucherCodesQuery({
+    skip: skipFetch,
     variables: {
       id,
       ...(!isServerPagination
@@ -78,6 +85,7 @@ export const useVoucherCodesServer = ({
     serverVoucherCodesPagination,
     hasServerPaginationNextPage,
     hasServerPaginationPrevPage,
+    restartServerPagination,
     freeSlotsInServerPagianationPage,
   };
 };
