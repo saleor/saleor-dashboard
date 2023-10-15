@@ -24,7 +24,6 @@ const initialData: GenerateMultipleVoucherCodeFormData = {
 };
 
 const MAX_VOUCHER_CODES = 50;
-const numberRegexp = /\d+/;
 
 export const VoucherCodesGenerateDialog = ({
   open,
@@ -37,12 +36,7 @@ export const VoucherCodesGenerateDialog = ({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
 
-    if (!numberRegexp.test(value) && value !== "") {
-      e.preventDefault();
-      return;
-    }
-
-    if (Number(value) > MAX_VOUCHER_CODES) {
+    if (Number.isNaN(Number(value)) || Number(value) > MAX_VOUCHER_CODES) {
       e.preventDefault();
       return;
     }
