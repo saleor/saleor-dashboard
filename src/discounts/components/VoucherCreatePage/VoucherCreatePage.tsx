@@ -32,7 +32,7 @@ import VoucherValue from "../VoucherValue";
 import { initialForm } from "./const";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
-import { generateMultipleIds } from "./utils";
+import { generateMultipleIds, voucherCodeExists } from "./utils";
 
 export interface FormData extends VoucherDetailsPageFormData {
   value: number;
@@ -113,6 +113,10 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   };
 
   const handleGenerateCustomCode = (code: string) => {
+    if (voucherCodeExists(code, data.codes)) {
+      throw new Error("Code already exists");
+    }
+
     set({
       codes: [{ code }, ...data.codes],
     });

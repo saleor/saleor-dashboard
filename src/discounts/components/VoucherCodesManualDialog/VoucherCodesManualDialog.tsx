@@ -6,7 +6,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import useForm from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -33,6 +33,7 @@ export const VoucherCodesManualDialog = ({
   onSubmit,
 }: VoucherCodesManualDialogProps) => {
   const intl = useIntl();
+  const [error, setError] = useState("");
 
   const { data, change, submit, reset } = useForm(
     intialData,
@@ -45,9 +46,17 @@ export const VoucherCodesManualDialog = ({
   };
 
   const handleSubmit = async () => {
-    await submit();
-    onClose();
-    reset();
+    try {
+      await submit();
+      onClose();
+      reset();
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        if (e.message === "Code already exists") {
+          setError(intl.formatMessage(messages.codeExists));
+        }
+      }
+    }
   };
 
   return (
@@ -63,7 +72,12 @@ export const VoucherCodesManualDialog = ({
             size="small"
             label={intl.formatMessage(messages.enterCode)}
             value={data.code}
-            onChange={change}
+            error={!!error}
+            helperText={error}
+            onChange={e => {
+              change(e);
+              setError("");
+            }}
           />
         </Box>
         <DashboardModal.Actions>
