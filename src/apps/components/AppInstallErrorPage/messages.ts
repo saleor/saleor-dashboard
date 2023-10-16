@@ -13,8 +13,8 @@ export default defineMessages({
     id: "4yRwN+",
   },
   backButton: {
-    defaultMessage: "Back to homepage",
+    defaultMessage: "Back to apps list",
     description: "button",
-    id: "906uUr",
+    id: "7J1ZKs",
   },
 });
