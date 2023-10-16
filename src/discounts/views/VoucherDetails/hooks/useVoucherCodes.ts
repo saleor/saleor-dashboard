@@ -23,6 +23,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     handleAddVoucherCode,
     handleGenerateMultipleCodes,
     handleDeleteAddedVoucherCodes,
+    handleClearAddedVoucherCodes,
     hasClientPaginationNextPage,
     hasClientPaginationPrevPage,
     onSettingsChange,
@@ -177,5 +178,6 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     handleAddVoucherCode,
     handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,
+    handleClearAddedVoucherCodes,
   };
 };

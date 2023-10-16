@@ -17,6 +17,7 @@ interface UseVoucherCodesClient {
   onSettingsChange: UseListSettings["updateListSettings"];
   handleDeleteAddedVoucherCodes: (idsToDelete: string[]) => void;
   handleAddVoucherCode: (code: string) => void;
+  handleClearAddedVoucherCodes: () => void;
   handleGenerateMultipleCodes: ({
     quantity,
     prefix,
@@ -68,6 +69,10 @@ export const useVoucherCodesClient = (
     );
   };
 
+  const handleClearAddedVoucherCodes = () => {
+    setAddedVoucherCodes([]);
+  };
+
   return {
     addedVoucherCodes,
     clientVoucherCodes,
@@ -79,5 +84,6 @@ export const useVoucherCodesClient = (
     handleAddVoucherCode,
     handleGenerateMultipleCodes,
     handleDeleteAddedVoucherCodes,
+    handleClearAddedVoucherCodes,
   };
 };
