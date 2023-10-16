@@ -20,7 +20,7 @@ export interface NumberCellProps {
 
 export type NumberCell = CustomCell<NumberCellProps>;
 
-const onlyDigitsRegExp = /^\d+$/;
+const onlyDigitsRegExp = /^[0-9]+[.,]?[0-9]+$/;
 
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
