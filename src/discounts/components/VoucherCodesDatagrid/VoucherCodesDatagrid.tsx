@@ -57,7 +57,6 @@ export const VoucherCodesDatagrid = ({
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
-        readonly
         loading={loading}
         rowMarkers="checkbox-visible"
         columnSelect="single"
