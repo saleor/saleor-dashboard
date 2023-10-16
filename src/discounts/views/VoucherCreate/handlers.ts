@@ -35,7 +35,7 @@ export function createHandler(
         applyOncePerCustomer: formData.applyOncePerCustomer,
         applyOncePerOrder: formData.applyOncePerOrder,
         onlyForStaff: formData.onlyForStaff,
-        addCodes: formData.codes.map(({ code }) => code),
+        addCodes: formData.codes.map(({ code }) => code).reverse(),
         discountValueType:
           formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
             ? DiscountValueTypeEnum.PERCENTAGE
