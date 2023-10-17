@@ -1,10 +1,11 @@
-import { LOCATORS } from "@data/commonLocators";
 import { URL_LIST } from "@data/url";
 import type { Locator, Page } from "@playwright/test";
-import { expect } from "@playwright/test";
+
+import { BasePage } from "./basePage";
 
 export class ProductTypePage {
   readonly page: Page;
+  basePage: BasePage;
   readonly nameInput: Locator;
   readonly isShippingRequired: Locator;
   readonly assignProductAttributeButton: Locator;
@@ -18,6 +19,7 @@ export class ProductTypePage {
 
   constructor(page: Page) {
     this.page = page;
+    this.basePage = new BasePage(page);
     this.addProductTypeButton = page.getByTestId("add-product-type");
     this.notificationSuccess = page.getByTestId("notification-message");
     this.nameInput = page.locator("[name='name']");
@@ -53,7 +55,7 @@ export class ProductTypePage {
     await this.page.goto(URL_LIST.productTypesAdd);
   }
   async expectSuccessBanner() {
-    await expect(this.page.locator(LOCATORS.successBanner)).toBeVisible();
+    await this.basePage.expectSuccessBanner();
   }
 
   async gotoProductTypeListPage() {

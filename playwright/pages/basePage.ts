@@ -1,3 +1,4 @@
+import { LOCATORS } from "@data/commonLocators";
 import { URL_LIST } from "@data/url";
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
@@ -18,9 +19,18 @@ export class BasePage {
     );
     await expect(this.pageHeader).toBeVisible({ timeout: 10000 });
   }
+  async gotoExistingProductPage(productId: string) {
+    await this.page.goto(`${URL_LIST.products}${productId}`);
+    await expect(this.pageHeader).toBeVisible({ timeout: 10000 });
+  }
   async expectGridToBeAttached() {
     await expect(this.gridCanvas).toBeAttached({
       timeout: 10000,
+    });
+  }
+  async expectSuccessBanner() {
+    await expect(this.page.locator(LOCATORS.successBanner)).toBeVisible({
+      timeout: 15000,
     });
   }
 }
