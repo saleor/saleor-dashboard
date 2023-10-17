@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-Create basic order
+Migrated Create basic order test to playwright
