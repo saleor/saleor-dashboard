@@ -259,6 +259,11 @@ function useProductUpdateForm(
           ),
     );
     datagrid.setRemoved([]);
+    variants.current = {
+      added: [],
+      removed: [],
+      updates: [],
+    };
 
     return result;
   }, [datagrid, handleFormSubmit, getSubmitData]);
