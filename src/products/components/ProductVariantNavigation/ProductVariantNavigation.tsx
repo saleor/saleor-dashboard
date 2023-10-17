@@ -58,7 +58,7 @@ const ProductVariantNavigation: React.FC<
       <DashboardCard.Title>
         {intl.formatMessage(sectionNames.variants)}
       </DashboardCard.Title>
-      <SortableContainer onSortEnd={onReorder}>
+      <SortableContainer onSortEnd={onReorder} data-test-id="variants-list">
         {variants?.length > 0 && <Divider />}
         {renderCollection(variants, (variant, variantIndex) => {
           const isDefault = variant && variant.id === defaultVariantId;
@@ -112,7 +112,7 @@ const ProductVariantNavigation: React.FC<
                     <ImagePlaceholder />
                   )}
                   <Box>
-                    <Text wordBreak="break-word">
+                    <Text wordBreak="break-word" data-test-id="variant-name">
                       {variant ? variant.name || variant.sku : <Skeleton />}
                     </Text>
                     {isDefault && (
