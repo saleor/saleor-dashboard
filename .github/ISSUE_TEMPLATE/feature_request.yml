@@ -1,7 +1,7 @@
 name: Feature request
 description: Publish a new feature request
 title: "[Feature]: "
-labels: ["feature"]
+labels: ["feature", "backlog"]
 
 body:
   - type: textarea
