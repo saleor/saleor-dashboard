@@ -18,11 +18,11 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({
 }) => {
   const intl = useIntl();
 
-  const handleLoaleChange = async (locale: Locale) => {
+  const handleLocaleChange = async (locale: Locale) => {
     await onLocaleChange(locale);
 
     /*
-      Workaround, after changing languawe we reload the page.
+      Workaround, after changing language we reload the page.
       saleor-sdk causes the error related to wrong cache management.
       Migration to auth-sdk can solve it.
       Ref: https://github.com/saleor/saleor-dashboard/issues/4340
@@ -57,7 +57,7 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({
           })}
           name="locale"
           value={locale}
-          onChange={event => handleLoaleChange(event.target.value)}
+          onChange={event => handleLocaleChange(event.target.value)}
         />
         <FormSpacer />
         <Typography>
