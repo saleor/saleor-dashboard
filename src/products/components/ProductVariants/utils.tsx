@@ -149,7 +149,7 @@ export function getData({
 
     if (!available) {
       return {
-        ...numberCell(numberCellEmptyValue),
+        ...numberCell(numberCellEmptyValue, { hasFloatingPoint: true }),
         readonly: false,
         allowOverlay: false,
       };
