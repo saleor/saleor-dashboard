@@ -3,9 +3,7 @@
 
 import faker from "faker";
 
-import {
-  PRODUCT_DETAILS,
-} from "../../elements/catalog/products/product-details";
+import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
 import { urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createChannel } from "../../support/api/requests/Channels";
@@ -14,9 +12,7 @@ import {
   updateChannelInProduct,
 } from "../../support/api/requests/Product";
 import * as productUtils from "../../support/api/utils/products/productsUtils";
-import {
-  getProductVariants,
-} from "../../support/api/utils/storeFront/storeFrontProductUtils";
+import { getProductVariants } from "../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   addVariantToDataGrid,
   enterVariantEditPage,
@@ -158,7 +154,7 @@ describe("As an admin I should be able to create variant", () => {
   );
 
   it(
-    "should be able to create several variants visible for the customers. TC: SALEOR_2902",
+    "should be able to create several variants visible for the customers. TC: SALEOR_2902 - migration in progress - to delete when done",
     { tags: ["@variants", "@allEnv", "@critical", "@stable", "@oldRelease"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
