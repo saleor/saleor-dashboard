@@ -33,7 +33,7 @@ import {
   expectMainMenuSectionsToBeVisible,
 } from "../support/pages/mainMenuPage";
 
-describe("As a staff user I want to navigate through shop using different permissions", () => {
+describe("As a staff user I want to navigate through shop using different permissions - migration in progress - to delete when done", () => {
   it(
     `should be able to navigate through shop as a staff member using DISCOUNTS permission. TC: SALEOR_3405a - sales list`,
     { tags: ["@allEnv", "@navigation", "@stable", "@oldRelease", "@critical"] },

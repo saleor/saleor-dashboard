@@ -146,7 +146,7 @@ describe("Orders", () => {
   });
 
   it(
-    "should create order with selected channel. TC: SALEOR_2104",
+    "should create order with selected channel. TC: SALEOR_2104 - migration in progress - to delete when done",
     { tags: ["@orders", "@allEnv", "@stable", "@oldRelease", "@critical"] },
     () => {
       cy.visit(urlList.orders).get(ORDERS_SELECTORS.createOrderButton).click();
