@@ -15,7 +15,7 @@ jobs:
         id: retrieve_instance
         run: |
           echo "Getting instance"...
-          echo "POOL_INSTANCE=https://pr-testing-1.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://pr-testing-2.staging.saleor.cloud" >> $GITHUB_OUTPUT
       - name: Run tests
         env:
           API_URI: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/graphql/"
