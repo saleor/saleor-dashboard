@@ -1,12 +1,12 @@
 import * as faker from "faker";
 
-import { LOCATORS } from "@data/commonLocators";
 import { URL_LIST } from "@data/url";
 import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
 import { MetadataSeoPage } from "@pages/pageElements/metadataSeoPage";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import type { Locator, Page } from "@playwright/test";
-import { expect } from "@playwright/test";
+
+import { BasePage } from "./basePage";
 
 const productName = `e2e-productName-${faker.datatype.number()}`;
 const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
@@ -42,7 +42,7 @@ export class ProductPage {
   readonly uploadSavedImagesButton: Locator;
   readonly uploadMediaUrlButton: Locator;
   readonly saveUploadUrlButton: Locator;
-  readonly editVariant: Locator;
+  readonly editVariantButton: Locator;
   readonly saveButton: Locator;
   readonly firstRowDataGrid: Locator;
   readonly addProductButton: Locator;
@@ -50,10 +50,12 @@ export class ProductPage {
   readonly manageChannelsButton: Locator;
   metadataSeoPage: MetadataSeoPage;
   rightSideDetailsPage: RightSideDetailsPage;
+  basePage: BasePage;
   channelSelectDialog: ChannelSelectDialog;
 
   constructor(page: Page) {
     this.page = page;
+    this.basePage = new BasePage(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
@@ -81,7 +83,7 @@ export class ProductPage {
     this.uploadSavedImagesButton = page.getByTestId("upload-images");
     this.uploadMediaUrlButton = page.getByTestId("upload-media-url");
     this.saveUploadUrlButton = page.getByTestId("upload-url-button");
-    this.editVariant = page.getByTestId("row-action-button");
+    this.editVariantButton = page.getByTestId("row-action-button");
     this.productUpdateFormSection = page.getByTestId("product-update-form");
     this.firstCategoryItem = page.locator("#downshift-0-item-0");
     this.visibleRadioBtn = page.locator("[name='isPublished']");
@@ -150,9 +152,7 @@ export class ProductPage {
     await this.saveButton.click();
   }
   async expectSuccessBanner() {
-    await expect(this.page.locator(LOCATORS.successBanner)).toBeVisible({
-      timeout: 15000,
-    });
+    await this.basePage.expectSuccessBanner();
   }
   async selectOneChannelAsAvailable() {
     await this.manageChannelsButton.click();
@@ -163,6 +163,9 @@ export class ProductPage {
 
   async clickCreateProductButton() {
     await this.createProductButton.click();
+  }
+  async clickFirstEditVariantButton() {
+    await this.editVariantButton.first().click();
   }
 
   async gotoProductListPage() {

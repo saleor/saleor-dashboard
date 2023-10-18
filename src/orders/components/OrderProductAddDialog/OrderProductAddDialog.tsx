@@ -282,10 +282,11 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
         )}
       </DialogContent>
       <DialogActions>
-        <BackButton onClick={onClose} />
+        <BackButton onClick={onClose} data-test-id="back-button" />
         <ConfirmButton
           transitionState={confirmButtonState}
           type="submit"
+          data-test-id="confirm-button"
           onClick={handleSubmit}
           disabled={variants.length === 0}
         >
