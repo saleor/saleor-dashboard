@@ -233,8 +233,8 @@ function useProductUpdateForm(
     const result = await handleFormSubmit(await getSubmitData());
     await refetch();
 
-    datagrid.setAdded(prevAdded =>
-      prevAdded.filter((_, index) =>
+    handleVariantChange({
+      added: datagrid.added.filter((_, index) =>
         result.some(
           error =>
             error.__typename === "DatagridError" &&
@@ -242,23 +242,23 @@ function useProductUpdateForm(
             error.index === index,
         ),
       ),
-    );
-    datagrid.changes.current = datagrid.changes.current.filter(change =>
-      datagrid.added.includes(change.row)
-        ? result.some(
-            error =>
-              error.__typename === "DatagridError" &&
-              error.type === "create" &&
-              error.index === datagrid.added.findIndex(r => r === change.row),
-          )
-        : result.some(
-            error =>
-              error.__typename === "DatagridError" &&
-              error.type !== "create" &&
-              error.variantId === product.variants[change.row].id,
-          ),
-    );
-    datagrid.setRemoved([]);
+      removed: [],
+      updates: datagrid.changes.current.filter(change =>
+        datagrid.added.includes(change.row)
+          ? result.some(
+              error =>
+                error.__typename === "DatagridError" &&
+                error.type === "create" &&
+                error.index === datagrid.added.findIndex(r => r === change.row),
+            )
+          : result.some(
+              error =>
+                error.__typename === "DatagridError" &&
+                error.type !== "create" &&
+                error.variantId === product.variants[change.row].id,
+            ),
+      ),
+    });
 
     return result;
   }, [datagrid, handleFormSubmit, getSubmitData]);
