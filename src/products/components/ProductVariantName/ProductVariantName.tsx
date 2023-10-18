@@ -41,7 +41,7 @@ const ProductVariantName: React.FC<ProductVariantNameProps> = ({
           error={!!formErrors.name}
           disabled={disabled}
           helperText={getProductErrorMessage(formErrors.name, intl)}
-          data-test-id="variant-name"
+          data-test-id="variant-name-input"
         />
       </DashboardCard.Content>
     </DashboardCard>
