@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix product update page test
+Remove flaky product update page test
