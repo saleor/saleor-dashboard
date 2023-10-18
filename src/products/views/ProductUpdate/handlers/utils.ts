@@ -5,12 +5,14 @@ import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  AttributeInputTypeEnum,
   FileUploadMutation,
   ProductChannelListingAddInput,
   ProductChannelListingUpdateInput,
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
   ProductVariantBulkUpdateInput,
+  VariantAttributeFragment,
 } from "@dashboard/graphql";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
@@ -18,7 +20,11 @@ import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc"
 import pick from "lodash/pick";
 import uniq from "lodash/uniq";
 
-import { getAttributeData } from "./data/attributes";
+import {
+  getAttributeData,
+  getAttributeInput,
+  snakeToCamel,
+} from "./data/attributes";
 import {
   getUpdateVariantChannelInputs,
   getVariantChannelsInputs,
@@ -61,9 +67,18 @@ export function getProductUpdateVariables(
   };
 }
 
-export function getCreateVariantInput(data: DatagridChangeOpts, index: number) {
+export function getCreateVariantInput(
+  data: DatagridChangeOpts,
+  index: number,
+  variantsAttributes: VariantAttributeFragment[],
+) {
   return {
-    attributes: getAttributeData(data.updates, index, data.removed),
+    attributes: getAttributeData(
+      data.updates,
+      index,
+      data.removed,
+      variantsAttributes,
+    ),
     sku: getSkuData(data.updates, index, data.removed),
     name: getNameData(data.updates, index, data.removed),
     channelListings: getVariantChannelsInputs(data, index),
@@ -134,19 +149,25 @@ export function hasProductChannelsUpdate(
 export function getBulkVariantUpdateInputs(
   variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
+  variantsAttributes: VariantAttributeFragment[],
 ): ProductVariantBulkUpdateInput[] {
-  const toUpdateInput = createToUpdateInput(data);
+  const toUpdateInput = createToUpdateInput(data, variantsAttributes);
   return variants.map(toUpdateInput).filter(byAvailability);
 }
 
 const createToUpdateInput =
-  (data: DatagridChangeOpts) =>
+  (data: DatagridChangeOpts, variantsAttributes: VariantAttributeFragment[]) =>
   (
     variant: ProductFragment["variants"][number],
     variantIndex: number,
   ): ProductVariantBulkUpdateInput => ({
     id: variant.id,
-    attributes: getVariantAttributesForUpdate(data, variantIndex, variant),
+    attributes: getVariantAttributesForUpdate(
+      data,
+      variantIndex,
+      variant,
+      variantsAttributes,
+    ),
     sku: getSkuData(data.updates, variantIndex, data.removed),
     name: getNameData(data.updates, variantIndex, data.removed),
     stocks: getVaraintUpdateStockData(
@@ -162,24 +183,40 @@ const getVariantAttributesForUpdate = (
   data: DatagridChangeOpts,
   variantIndex: number,
   variant: ProductFragment["variants"][number],
+  variantsAttributes: VariantAttributeFragment[],
 ) => {
   const updatedAttributes = getAttributeData(
     data.updates,
     variantIndex,
     data.removed,
+    variantsAttributes,
   );
+
   // Re-send current values for all not-updated attributes, in case some of them were required
   const notUpdatedAttributes: ReturnType<typeof getAttributeData> =
     variant.attributes
-      .filter(attribute =>
-        updatedAttributes.find(
-          updatedAttribute => updatedAttribute.id !== attribute.attribute.id,
-        ),
-      )
-      .map(attribute => ({
-        id: attribute.attribute.id,
-        values: attribute.values.map(({ name }) => name),
-      }));
+      .filter(attribute => {
+        return !updatedAttributes.find(
+          updatedAttribute => updatedAttribute.id === attribute.attribute.id,
+        );
+      })
+      .map(attribute => {
+        const variant = variantsAttributes.find(
+          variant => variant.id === attribute.attribute.id,
+        );
+
+        const variantType = snakeToCamel(
+          variant.inputType.toLocaleUpperCase(),
+        ) as AttributeInputTypeEnum;
+
+        return {
+          id: attribute.attribute.id,
+          ...getAttributeInput(
+            variantType,
+            attribute.values.map(({ name }) => name),
+          ),
+        };
+      });
   return [...updatedAttributes, ...notUpdatedAttributes];
 };
 
