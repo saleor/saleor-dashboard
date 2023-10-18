@@ -31,3 +31,4 @@ jobs:
           API_URI: ${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}
         run: |
           echo "Running tests on: $API_URI"
+          npx playwright test
