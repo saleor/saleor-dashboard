@@ -35,6 +35,6 @@ async function run() {
 
   await markAsBusy(firstFree.name)
 
-  process.stdout.write(firstFree)
+  process.stdout.write(JSON.stringify(firstFree))
 }
 run();
