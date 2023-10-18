@@ -35,6 +35,6 @@ async function run() {
 
   await markAsBusy(firstFree.name)
 
-  console.log("result:", firstFree);
+  process.stdout.write(firstFree)
 }
 run();
