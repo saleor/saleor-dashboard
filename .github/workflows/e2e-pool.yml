@@ -1,0 +1,33 @@
+name: E2E pool
+
+on: [pull_request]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+
+      - name: Install deps
+        run: npm ci
+      - name: Retrieve instance
+        id: retrieve_instance
+        run: |
+          echo "Getting instance"...
+          echo "POOL_INSTANCE=https://pr-testing-1.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+      - name: Run tests
+        env:
+          API_URI: ${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}
+        run: |
+          echo "Running tests on: $API_URI"
