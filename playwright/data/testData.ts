@@ -5,7 +5,7 @@ export const PRODUCTS = {
   },
   productToAddVariants: {
     id: "UHJvZHVjdDo3Mjk%3D",
-    name: "Product that not contain any variant yet",
+    name: "Product that does not contain any variant yet",
   },
   productWithOneVariant: {
     id: "UHJvZHVjdDo3MzM%3D",

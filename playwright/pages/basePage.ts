@@ -7,11 +7,13 @@ export class BasePage {
   readonly page: Page;
   readonly pageHeader: Locator;
   readonly gridCanvas: Locator;
+  readonly successBanner: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.pageHeader = page.getByTestId("page-header");
     this.gridCanvas = page.locator('[data-testid="data-grid-canvas"]');
+    this.successBanner = page.locator(LOCATORS.successBanner);
   }
   async gotoCreateProductPage(productTypeId: string) {
     await this.page.goto(
@@ -28,9 +30,14 @@ export class BasePage {
       timeout: 10000,
     });
   }
+  async expectSuccessBannerMessage(msg: string) {
+    await this.successBanner
+      .locator(`text=${msg}`)
+      .waitFor({ state: "visible", timeout: 10000 });
+  }
   async expectSuccessBanner() {
-    await expect(this.page.locator(LOCATORS.successBanner)).toBeVisible({
-      timeout: 15000,
-    });
+    await this.successBanner
+      .first()
+      .waitFor({ state: "visible", timeout: 15000 });
   }
 }
