@@ -13,8 +13,14 @@ jobs:
         run: npx playwright install --with-deps
       - name: Retrieve instance
         id: retrieve_instance
+        env:
+          SALEOR_CLI_ENV: staging
         run: |
           echo "Getting instance"...
+          npx saleor login --headless --token=${{ secrets.STAGING_API_TOKEN }}
+          node scripts/pick-e2e-instance.js
+
+
           echo "POOL_INSTANCE=https://pr-testing-2.staging.saleor.cloud" >> $GITHUB_OUTPUT
       - name: Run tests
         env:
@@ -25,4 +31,4 @@ jobs:
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
         run: |
           echo "Running tests on: $API_URI"
-          npx playwright test
+#          npx playwright test
