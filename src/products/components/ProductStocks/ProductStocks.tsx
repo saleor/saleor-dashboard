@@ -207,7 +207,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                     );
 
                   return (
-                    <TableRowLink key={stock.id}>
+                    <TableRowLink data-test-id={stock.label} key={stock.id}>
                       <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                         <Text>{stock.label}</Text>
                       </TableCell>
@@ -249,7 +249,12 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           warehousesToAssign.length > 0 && (
             <Dropdown>
               <Dropdown.Trigger>
-                <Button type="button" variant="secondary" marginTop={5}>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  marginTop={5}
+                  data-test-id="assign-warehouse-button"
+                >
                   <FormattedMessage {...messages.assignWarehouse} />
                 </Button>
               </Dropdown.Trigger>
