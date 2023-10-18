@@ -1,5 +1,5 @@
 export const VARIANTS_SELECTORS = {
-  variantNameInput: '[data-test-id="variant-name"]',
+  variantNameInput: '[data-test-id="variant-name-input"]',
   skuTextField: '[data-test-id="sku"]',
   attributeOption: "[data-test-id='select-option']",
   attributeSelector: "[data-test-id='attribute-value']",
