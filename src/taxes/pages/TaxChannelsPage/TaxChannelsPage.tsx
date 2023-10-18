@@ -103,6 +103,11 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
         taxCalculationStrategy: config.taxCalculationStrategy,
         displayGrossPrices: config.displayGrossPrices,
       }));
+    const parsedRemove: TaxConfigurationUpdateInput["removeCountriesConfiguration"] =
+      removeCountriesConfiguration.filter(
+        configId =>
+          !parsedUpdate.some(config => config.countryCode === configId),
+      );
     onSubmit({
       chargeTaxes: data.chargeTaxes,
       taxCalculationStrategy: data.chargeTaxes
@@ -111,7 +116,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
       displayGrossPrices: data.displayGrossPrices,
       pricesEnteredWithTax: data.pricesEnteredWithTax,
       updateCountriesConfiguration: parsedUpdate,
-      removeCountriesConfiguration,
+      removeCountriesConfiguration: parsedRemove,
     });
   };
 
