@@ -19,10 +19,7 @@ jobs:
           echo "Getting instance"...
           npx saleor login --headless --token=${{ secrets.STAGING_API_TOKEN }}
           DOMAIN=$(node scripts/pick-e2e-instance.js | jq .domain)
-
-          echo "test: $DOMAIN"
-
-          echo "POOL_INSTANCE=https://pr-testing-2.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=$DOMAIN" >> $GITHUB_OUTPUT
       - name: Run tests
         env:
           API_URI: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/graphql/"
