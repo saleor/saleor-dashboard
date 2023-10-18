@@ -1,5 +1,5 @@
 const util = require("node:util");
-const execFile = util.promisify(require("node:child_process").exec);
+const exec = util.promisify(require("node:child_process").exec);
 
 const toStateList = ({ name, domain }) => {
   return {
@@ -19,12 +19,12 @@ const obtainPrInstances = (envList) => {
 const takeFirstFree = (prInstances) => prInstances.find(({ busy }) => !busy)
 
 const markAsBusy = async (name) => {
-  await execFile(`npx saleor env update ${name} --name=${name}-BUSY`);
+  await exec(`npx saleor env update ${name} --name=${name}-BUSY`);
 }
 
 async function run() {
 
-  const result = await execFile("npx saleor env list --json", { serialization: "json" });
+  const result = await exec("npx saleor env list --json", { serialization: "json" });
   const envList = result.stdout.replace('\x1B[?25l\x1B[?25h', '')
   const prInstances = obtainPrInstances(envList)
   const firstFree = takeFirstFree(prInstances)
