@@ -15,10 +15,11 @@ jobs:
         id: retrieve_instance
         run: |
           echo "Getting instance"...
-          echo "POOL_INSTANCE=https://pr-testing-1.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://pr-testing-1.staging.saleor.cloud/" >> $GITHUB_OUTPUT
       - name: Run tests
         env:
-          API_URI: ${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}
+          API_URI: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/graphql/"
+          BASE_URL: ${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}
         run: |
           echo "Running tests on: $API_URI"
           npx playwright test
