@@ -7,6 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
@@ -30,7 +33,7 @@ jobs:
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
         run: |
           echo "Running tests on: $API_URI"
-#          npx playwright test
+          npx playwright test
       - name: Release instance
         if: always()
         run: node scripts/release-e2e-instance.js ${{ steps.retrieve_instance.outputs.POOL_NAME }}
