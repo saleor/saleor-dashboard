@@ -33,7 +33,7 @@ jobs:
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
         run: |
           echo "Running tests on: $API_URI"
-          npx playwright test
+          npx playwright test -g "TC: SALEOR_5 Create basic product without variants @basic-regression @product"
       - name: Release instance
         if: always()
         run: node scripts/release-e2e-instance.js ${{ steps.retrieve_instance.outputs.POOL_NAME }}
