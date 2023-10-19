@@ -163,6 +163,12 @@ jobs:
     needs: [deploy, run-tests]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
       - name: Tear down
         env:
           SALEOR_CLI_ENV: staging
