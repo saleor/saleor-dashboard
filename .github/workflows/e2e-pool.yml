@@ -151,14 +151,6 @@ jobs:
           echo "Base url $BASE_URL"
           npx playwright test --shard ${{ matrix.shard }}
       
-      - name: Release instance
-        if: always()
-        env:
-          SALEOR_CLI_ENV: staging
-        run: |
-          npx saleor login --headless --token=${{ secrets.STAGING_API_TOKEN }}
-          node scripts/release-e2e-instance.js ${{ needs.deploy.outputs.POOL_NAME }}
-      
       - name: Upload blob report to GitHub Actions Artifacts
         uses: actions/upload-artifact@v3
         if: always()
@@ -166,6 +158,18 @@ jobs:
           name: all-blob-reports
           path: blob-report
           retention-days: 1
+
+  release-instance: 
+    if: always()
+    needs: [deploy, run-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tear down
+        env:
+          SALEOR_CLI_ENV: staging
+        run: |
+          npx saleor login --headless --token=${{ secrets.STAGING_API_TOKEN }}
+          node scripts/release-e2e-instance.js ${{ needs.deploy.outputs.POOL_NAME }}
 
   merge-reports:
     if: always()
