@@ -27,7 +27,7 @@ jobs:
       - name: Run tests
         env:
           API_URI: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/graphql/"
-          BASE_URL: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/dashboard"
+          BASE_URL: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/dashboard/"
           E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
