@@ -90,9 +90,7 @@ const OrderCustomerAddressEdit: React.FC<
         control={
           <Radio
             color="primary"
-            data-test-id={
-              addressInputOption + AddressInputOptionEnum.CUSTOMER_ADDRESS
-            }
+            data-test-id={AddressInputOptionEnum.CUSTOMER_ADDRESS}
           />
         }
         label={intl.formatMessage(addressEditMessages.customerAddress)}
@@ -117,9 +115,7 @@ const OrderCustomerAddressEdit: React.FC<
         control={
           <Radio
             color="primary"
-            data-test-id={
-              addressInputOption + AddressInputOptionEnum.NEW_ADDRESS
-            }
+            data-test-id={AddressInputOptionEnum.NEW_ADDRESS}
           />
         }
         label={intl.formatMessage(addressEditMessages.newAddress)}

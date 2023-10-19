@@ -26,7 +26,8 @@ function makeTopLevelSearch<
       result.loadMore(
         (prev, next) => {
           if (
-            prev.search.pageInfo.endCursor === next.search.pageInfo.endCursor
+            prev.search?.pageInfo?.endCursor ===
+            next.search?.pageInfo?.endCursor
           ) {
             return prev;
           }

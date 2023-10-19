@@ -17,6 +17,7 @@ exemptLabels:
   - bug
   - blocker
   - backlog
+  - feature
 
 # Set to true to ignore issues in a project (defaults to false)
 exemptProjects: false

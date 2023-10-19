@@ -151,6 +151,7 @@ const OrderShippingMethodEditDialog: React.FC<
             <DialogActions>
               <BackButton onClick={onClose} />
               <ConfirmButton
+                data-test-id="confirm-button"
                 transitionState={confirmButtonState}
                 type="submit"
                 disabled={!data.shippingMethod}

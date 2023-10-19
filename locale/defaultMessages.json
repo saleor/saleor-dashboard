@@ -1318,6 +1318,10 @@
     "context": "attribute value deleted",
     "string": "Value deleted"
   },
+  "7J1ZKs": {
+    "context": "button",
+    "string": "Back to apps list"
+  },
   "7JAAul": {
     "context": "product field",
     "string": "Export Product Weight"
@@ -1496,10 +1500,6 @@
   "8xsKUv": {
     "context": "service accounts section name",
     "string": "Service Accounts"
-  },
-  "906uUr": {
-    "context": "button",
-    "string": "Back to homepage"
   },
   "945a4a": {
     "context": "column header",
