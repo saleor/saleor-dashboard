@@ -153,6 +153,8 @@ jobs:
       
       - name: Release instance
         if: always()
+        env:
+          SALEOR_CLI_ENV: staging
         run: |
           npx saleor login --headless --token=${{ secrets.STAGING_API_TOKEN }}
           node scripts/release-e2e-instance.js ${{ needs.deploy.outputs.POOL_NAME }}
