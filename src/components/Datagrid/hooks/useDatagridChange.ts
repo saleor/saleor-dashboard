@@ -24,6 +24,7 @@ export interface DatagridChangeOpts {
   added: number[];
   removed: number[];
   updates: DatagridChange[];
+  currentUpdate?: DatagridChange;
 }
 export type OnDatagridChange = (
   opts: DatagridChangeOpts,
@@ -81,13 +82,24 @@ function useDatagridChange(
   );
 
   const notify = useCallback(
-    (updates: DatagridChange[], added: number[], removed: number[]) => {
+    ({
+      added,
+      currentUpdate,
+      removed,
+      updates,
+    }: {
+      updates: DatagridChange[];
+      added: number[];
+      removed: number[];
+      currentUpdate: DatagridChange;
+    }) => {
       if (onChange) {
         onChange(
           {
             updates,
             removed,
             added,
+            currentUpdate,
           },
           setMarkCellsDirty,
         );
@@ -105,7 +117,12 @@ function useDatagridChange(
         existingIndex === -1
           ? [...changes.current, update]
           : updateAtIndex(update, changes.current, existingIndex);
-      notify(changes.current, added, removed);
+      notify({
+        updates: changes.current,
+        added,
+        removed,
+        currentUpdate: update,
+      });
     },
     [availableColumns, notify, added, removed],
   );
@@ -132,7 +149,12 @@ function useDatagridChange(
         }));
       setAdded(newAdded);
 
-      notify(changes.current, newAdded, newRemoved);
+      notify({
+        updates: changes.current,
+        added: newAdded,
+        removed: newRemoved,
+        currentUpdate: undefined,
+      });
     },
     [added, removed, notify],
   );
@@ -140,7 +162,12 @@ function useDatagridChange(
   const onRowAdded = useCallback(() => {
     const newAdded = [...added, rows - removed.length + added.length];
     setAdded(newAdded);
-    notify(changes.current, newAdded, removed);
+    notify({
+      updates: changes.current,
+      added: newAdded,
+      removed,
+      currentUpdate: undefined,
+    });
   }, [added, notify, removed, rows]);
 
   return {
