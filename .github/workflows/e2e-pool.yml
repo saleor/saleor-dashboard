@@ -63,7 +63,7 @@ jobs:
           npx saleor login --headless --token=${{ secrets.STAGING_API_TOKEN }}
           NAME=$(node scripts/pick-e2e-instance.js | jq -r .name)
           echo "POOL_NAME=$NAME" >> $GITHUB_OUTPUT
-          echo "POOL_INSTANCE=https://$NAME.staging.saleor.cloud" >> $GITHUB_OUTPUT        
+          echo "POOL_INSTANCE=https://$NAME.staging.saleor.cloud" >> $GITHUB_OUTPUT
       - name: Build dashbaord
         env:
           API_URI: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/graphql/"
@@ -80,22 +80,22 @@ jobs:
         id: set-domain
         run: |
           echo "domain=${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
-      
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      
+
       - name: Deploy to S3
         run: |
           aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ steps.set-domain.outputs.domain }}
           aws s3 sync ./build/storybook s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ steps.set-domain.outputs.domain }}/storybook
-      
+
       - name: Invalidate cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ steps.set-domain.outputs.domain }}/*"
-      
+
       - name: Update deployment status
         uses: bobheadxi/deployments@v1
         if: always()
@@ -106,7 +106,7 @@ jobs:
           env_url: https://${{ steps.set-domain.outputs.domain }}/
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
-      
+
       - name: Update storybook deployment status
         uses: bobheadxi/deployments@v1
         if: always()
@@ -117,8 +117,7 @@ jobs:
           env_url: https://${{ steps.set-domain.outputs.domain }}/storybook/index.html
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
           env: storybook ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
-  
-  
+
   run-tests:
     runs-on: ubuntu-latest
     needs: deploy
@@ -128,21 +127,21 @@ jobs:
         shard: [1/2, 2/2]
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      
+
       - name: Run tests
         env:
           API_URI: "${{ needs.deploy.outputs.POOL_INSTANCE }}/graphql/"
-          BASE_URL: "https://${{ needs.deploy.outputs.BASE_URL }}/dashboard/"
+          BASE_URL: "https://${{ needs.deploy.outputs.BASE_URL }}"
           E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
@@ -150,7 +149,7 @@ jobs:
           echo "Running tests on: $API_URI"
           echo "Base url $BASE_URL"
           npx playwright test --shard ${{ matrix.shard }}
-      
+
       - name: Upload blob report to GitHub Actions Artifacts
         uses: actions/upload-artifact@v3
         if: always()
@@ -159,7 +158,7 @@ jobs:
           path: blob-report
           retention-days: 1
 
-  release-instance: 
+  release-instance:
     if: always()
     needs: [deploy, run-tests]
     runs-on: ubuntu-latest
