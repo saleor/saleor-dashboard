@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1/4, 2/4]
+        shard: [1/2, 2/2]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
