@@ -142,7 +142,7 @@ jobs:
       - name: Run tests
         env:
           API_URI: "${{ needs.deploy.outputs.POOL_INSTANCE }}/graphql/"
-          BASE_URL: "${{ needs.deploy.outputs.DOMAIN }}/dashboard/"
+          BASE_URL: "https://${{ needs.deploy.outputs.BASE_URL }}/dashboard/"
           E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
@@ -153,7 +153,9 @@ jobs:
       
       - name: Release instance
         if: always()
-        run: node scripts/release-e2e-instance.js ${{ needs.deploy.outputs.POOL_NAME }}
+        run: |
+          npx saleor login --headless --token=${{ secrets.STAGING_API_TOKEN }}
+          node scripts/release-e2e-instance.js ${{ needs.deploy.outputs.POOL_NAME }}
       
       - name: Upload blob report to GitHub Actions Artifacts
         uses: actions/upload-artifact@v3
