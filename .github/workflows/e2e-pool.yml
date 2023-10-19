@@ -27,12 +27,13 @@ jobs:
       - name: Run tests
         env:
           API_URI: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/graphql/"
-          BASE_URL: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/dashboard"
+          BASE_URL: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}"
           E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
         run: |
           echo "Running tests on: $API_URI"
+          echo "Base url $BASE_URL"
           npx playwright test -g "TC: SALEOR_5 Create basic product without variants @basic-regression @product"
       - name: Release instance
         if: always()
