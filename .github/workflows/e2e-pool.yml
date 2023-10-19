@@ -37,3 +37,9 @@ jobs:
       - name: Release instance
         if: always()
         run: node scripts/release-e2e-instance.js ${{ steps.retrieve_instance.outputs.POOL_NAME }}
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
