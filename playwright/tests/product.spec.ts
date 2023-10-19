@@ -28,7 +28,6 @@ test("TC: SALEOR_3 Create basic product with variants @basic-regression @product
 test("TC: SALEOR_5 Create basic product without variants @basic-regression @product", async ({
   page,
 }) => {
-  console.log("test ci logs");
   const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
 
