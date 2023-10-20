@@ -173,8 +173,7 @@ export const productDetailsVariant = gql`
         name
       }
       values {
-        id
-        name
+        ...AttributeValueDetails
       }
     }
     media {

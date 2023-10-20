@@ -2445,8 +2445,7 @@ export const ProductDetailsVariantFragmentDoc = gql`
       name
     }
     values {
-      id
-      name
+      ...AttributeValueDetails
     }
   }
   media {
@@ -2464,7 +2463,8 @@ export const ProductDetailsVariantFragmentDoc = gql`
   }
   quantityLimitPerCustomer
 }
-    ${StockFragmentDoc}
+    ${AttributeValueDetailsFragmentDoc}
+${StockFragmentDoc}
 ${PreorderFragmentDoc}
 ${ChannelListingProductVariantFragmentDoc}`;
 export const WeightFragmentDoc = gql`
