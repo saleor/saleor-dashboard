@@ -211,10 +211,7 @@ const getVariantAttributesForUpdate = (
 
         return {
           id: attribute.attribute.id,
-          ...getAttributeInput(
-            variantType,
-            attribute.values.map(({ name }) => name),
-          ),
+          ...getAttributeInput(variantType, attribute.values),
         };
       });
   return [...updatedAttributes, ...notUpdatedAttributes];

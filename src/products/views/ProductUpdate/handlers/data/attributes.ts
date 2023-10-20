@@ -1,6 +1,7 @@
 import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   AttributeInputTypeEnum,
+  AttributeValueDetailsFragment,
   AttributeValueInput,
   BulkAttributeValueInput,
   VariantAttributeFragment,
@@ -78,38 +79,40 @@ export const getDatagridAttributeInput = (
 
 export const getAttributeInput = (
   inputType: AttributeInputTypeEnum,
-  values: string[] = [],
+  values: AttributeValueDetailsFragment[],
 ): BulkAttributeValueInput => {
   if (inputType === AttributeInputTypeEnum.FILE) {
     return {
-      file: values[0],
+      file: values[0]?.file?.url ?? null,
     };
   }
 
   if (inputType === AttributeInputTypeEnum.NUMERIC) {
     return {
-      numeric: values[0],
+      numeric: values[0]?.name ?? null,
     };
   }
 
   if (inputType === AttributeInputTypeEnum.DROPDOWN) {
     return {
       dropdown: {
-        value: values[0],
+        id: values[0]?.id,
+        value: values[0]?.id ? undefined : values[0]?.name ?? null,
       },
     };
   }
 
   if (inputType === AttributeInputTypeEnum.MULTISELECT) {
     return {
-      multiselect: values.map(value => ({ value })),
+      multiselect: values.map(({ id }) => ({ id })),
     };
   }
 
   if (inputType === AttributeInputTypeEnum.SWATCH) {
     return {
       swatch: {
-        value: values[0],
+        id: values[0]?.id,
+        value: values[0]?.id ? undefined : values[0]?.name ?? null,
       },
     };
   }
@@ -117,7 +120,7 @@ export const getAttributeInput = (
   if (inputType === AttributeInputTypeEnum.BOOLEAN) {
     let booleanValue: boolean;
 
-    const value = values[0] || "";
+    const value = values[0]?.name || "";
 
     if (value.includes("true") || value.includes("false")) {
       booleanValue = value === "true";
@@ -134,34 +137,34 @@ export const getAttributeInput = (
 
   if (inputType === AttributeInputTypeEnum.PLAIN_TEXT) {
     return {
-      plainText: values[0],
+      plainText: values[0]?.name ?? null,
     };
   }
   if (inputType === AttributeInputTypeEnum.RICH_TEXT) {
     return {
-      richText: values,
+      richText: values[0]?.richText ?? null,
     };
   }
 
   if (inputType === AttributeInputTypeEnum.REFERENCE) {
     return {
-      references: values,
+      references: values.map(({ reference }) => reference),
     };
   }
 
   if (inputType === AttributeInputTypeEnum.DATE) {
     return {
-      date: values[0] || null,
+      date: values[0]?.date ?? null,
     };
   }
 
   if (inputType === AttributeInputTypeEnum.DATE_TIME) {
     return {
-      dateTime: values[0] || null,
+      dateTime: values[0]?.dateTime ?? null,
     };
   }
 
   return {
-    values,
+    values: values.map(({ name }) => name),
   };
 };
