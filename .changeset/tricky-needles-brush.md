@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix webhook create button
+Fix language switcher
