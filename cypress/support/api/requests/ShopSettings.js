@@ -54,30 +54,3 @@ export function updateShopAddress(address) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
-
-export function getShopInfo() {
-  const query = `query{
-    shop{
-      name
-      version
-      domain{
-        host
-      }
-      description
-      companyAddress{
-        companyName
-        streetAddress1
-        streetAddress2
-        city
-        cityArea
-        postalCode
-        country{
-          code
-        }
-        countryArea
-        phone
-      }
-    }
-  }`;
-  return cy.sendRequestWithQuery(query).its("body.data.shop");
-}
