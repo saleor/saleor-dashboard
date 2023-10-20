@@ -17,7 +17,7 @@ import {
   ExternalLinkIcon,
   sprinkles,
   TrashBinIcon,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";

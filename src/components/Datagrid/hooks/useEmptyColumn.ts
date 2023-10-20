@@ -1,4 +1,4 @@
-import { useTheme } from "@saleor/macaw-ui/next";
+import { useTheme } from "@saleor/macaw-ui-next";
 
 import { AvailableColumn } from "../types";
 

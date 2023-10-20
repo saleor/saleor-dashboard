@@ -4,7 +4,7 @@ import { ProductListColumns } from "@dashboard/config";
 import { ProductListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress } from "@material-ui/core";
-import { Box, Text, vars } from "@saleor/macaw-ui/next";
+import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 

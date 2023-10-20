@@ -1,7 +1,7 @@
 import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
 import { ListProps } from "@dashboard/types";
 import { Skeleton } from "@material-ui/lab";
-import { List } from "@saleor/macaw-ui/next";
+import { List } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import InstalledAppListRow from "../InstalledAppListRow";

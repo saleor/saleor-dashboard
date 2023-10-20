@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import "@saleor/macaw-ui/next/style";
+import "@saleor/macaw-ui-next/style";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";

@@ -1,4 +1,4 @@
-import { Box, Text, Toggle } from "@saleor/macaw-ui/next";
+import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { AvailableColumn } from "../types";

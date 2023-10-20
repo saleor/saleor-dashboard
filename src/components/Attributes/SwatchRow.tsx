@@ -5,7 +5,7 @@ import {
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import { getBySlug } from "@dashboard/misc";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 

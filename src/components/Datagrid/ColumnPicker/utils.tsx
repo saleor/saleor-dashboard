@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, CloseIcon } from "@saleor/macaw-ui/next";
+import { ArrowLeftIcon, CloseIcon } from "@saleor/macaw-ui-next";
 import React, { Dispatch, SetStateAction } from "react";
 
 import { AvailableColumn } from "../types";

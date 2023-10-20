@@ -1,4 +1,4 @@
-import { Box, Dropdown, List, RemoveIcon, Text } from "@saleor/macaw-ui/next";
+import { Box, Dropdown, List, RemoveIcon, Text } from "@saleor/macaw-ui-next";
 import React, { MouseEvent } from "react";
 
 interface FilterPresetItemProps {

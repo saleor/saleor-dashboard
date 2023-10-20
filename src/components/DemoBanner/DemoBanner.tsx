@@ -1,5 +1,5 @@
 import ExternalLink from "@dashboard/components/ExternalLink";
-import { OrdersIcon } from "@saleor/macaw-ui/next";
+import { OrdersIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";

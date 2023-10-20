@@ -1,7 +1,7 @@
 import { dateCellRenderer } from "@dashboard/components/Datagrid/customCells/DateCell";
 import useLocale from "@dashboard/hooks/useLocale";
 import { useExtraCells } from "@glideapps/glide-data-grid-cells";
-import { useTheme } from "@saleor/macaw-ui/next";
+import { useTheme } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 
 import { dropdownCellRenderer } from "./DropdownCell";
