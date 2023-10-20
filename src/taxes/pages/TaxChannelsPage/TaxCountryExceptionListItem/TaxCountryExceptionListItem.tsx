@@ -10,7 +10,7 @@ import {
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Divider } from "@material-ui/core";
 import { ListItem, ListItemCell } from "@saleor/macaw-ui";
-import { Button, TrashBinIcon } from "@saleor/macaw-ui/next";
+import { Button, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { useStyles } from "../styles";

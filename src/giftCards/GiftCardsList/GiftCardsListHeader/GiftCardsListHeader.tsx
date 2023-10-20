@@ -2,7 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

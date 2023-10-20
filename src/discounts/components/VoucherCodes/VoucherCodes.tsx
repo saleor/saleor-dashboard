@@ -2,7 +2,7 @@ import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
 import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 

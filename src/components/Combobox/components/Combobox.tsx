@@ -5,7 +5,7 @@ import {
   DynamicCombobox,
   DynamicComboboxProps,
   Option,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 

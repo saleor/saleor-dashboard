@@ -13,7 +13,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { CategoryFragment } from "@dashboard/graphql";
 import { PageListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 

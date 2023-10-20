@@ -51,7 +51,7 @@ import {
 } from "./types";
 import { prepareVariantChangeData } from "./utils";
 
-function useProductUpdateForm(
+export function useProductUpdateForm(
   product: ProductFragment,
   onSubmit: (data: ProductUpdateSubmitData) => SubmitResult,
   disabled: boolean,
@@ -259,6 +259,11 @@ function useProductUpdateForm(
           ),
     );
     datagrid.setRemoved([]);
+    variants.current = {
+      added: [],
+      removed: [],
+      updates: [],
+    };
 
     return result;
   }, [datagrid, handleFormSubmit, getSubmitData]);

@@ -9,7 +9,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@material-ui/core";
-import { Button, Input, Text } from "@saleor/macaw-ui/next";
+import { Button, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

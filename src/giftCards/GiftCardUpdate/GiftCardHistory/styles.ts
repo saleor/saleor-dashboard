@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { vars } from "@saleor/macaw-ui-next";
 
 const useStyles = makeStyles(
   {

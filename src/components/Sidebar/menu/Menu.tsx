@@ -1,4 +1,4 @@
-import { Box, List } from "@saleor/macaw-ui/next";
+import { Box, List } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { MenuItem } from "./Item";

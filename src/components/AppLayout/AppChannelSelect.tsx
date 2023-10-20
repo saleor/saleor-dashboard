@@ -2,7 +2,7 @@ import { ChannelFragment } from "@dashboard/graphql";
 import { ChannelProps } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { vars } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import SingleSelectField from "../SingleSelectField";

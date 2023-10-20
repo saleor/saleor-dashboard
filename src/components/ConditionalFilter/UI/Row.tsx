@@ -4,7 +4,7 @@ import {
   DynamicCombobox,
   RemoveIcon,
   Select,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { getItemConstraint } from "./constrains";

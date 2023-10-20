@@ -1,4 +1,4 @@
-import { RangeValue } from "@saleor/macaw-ui/next";
+import { RangeValue } from "@saleor/macaw-ui-next";
 
 import {
   ConditionBlurData,

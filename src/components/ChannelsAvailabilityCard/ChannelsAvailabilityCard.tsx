@@ -3,7 +3,7 @@ import { Channel as ChannelList, ChannelData } from "@dashboard/channels/utils";
 import { PermissionEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { RequireOnlyOne } from "@dashboard/misc";
-import { Box, Divider, Text } from "@saleor/macaw-ui/next";
+import { Box, Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
