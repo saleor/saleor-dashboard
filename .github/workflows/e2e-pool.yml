@@ -2,6 +2,10 @@ name: Testing
 
 on: [pull_request]
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
