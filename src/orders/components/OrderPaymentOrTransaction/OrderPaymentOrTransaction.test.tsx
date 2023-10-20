@@ -30,7 +30,7 @@ jest.mock("@saleor/macaw-ui", () => ({
   ResponsiveTable: jest.fn(() => <></>),
 }));
 
-jest.mock("@saleor/macaw-ui/next", () => ({
+jest.mock("@saleor/macaw-ui-next", () => ({
   useTheme: jest.fn(() => () => ({})),
   Divider: jest.fn(() => <></>),
   vars: {

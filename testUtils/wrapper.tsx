@@ -3,7 +3,7 @@ import { Provider as DateProvider } from "@dashboard/components/Date/DateContext
 import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
 import { TimezoneProvider } from "@dashboard/components/Timezone";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
-import { ThemeProvider } from "@saleor/macaw-ui/next";
+import { ThemeProvider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { IntlProvider } from "react-intl";
 

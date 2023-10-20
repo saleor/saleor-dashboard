@@ -28,7 +28,7 @@ import {
 } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box, useTheme } from "@saleor/macaw-ui/next";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 

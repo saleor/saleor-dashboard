@@ -1,4 +1,4 @@
-import { Box, Divider } from "@saleor/macaw-ui/next";
+import { Box, Divider } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 
 import { FilterContext } from "./context";

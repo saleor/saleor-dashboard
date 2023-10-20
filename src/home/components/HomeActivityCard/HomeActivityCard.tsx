@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
 import Skeleton from "@dashboard/components/Skeleton";
 import { Activities } from "@dashboard/home/types";
-import { Box, List, Text, useTheme } from "@saleor/macaw-ui/next";
+import { Box, List, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

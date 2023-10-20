@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { commonMessages } from "@dashboard/intl";
 import { DateTime, joinDateTime, splitDateTime } from "@dashboard/misc";
-import { Box, Input, sprinkles } from "@saleor/macaw-ui/next";
+import { Box, Input, sprinkles } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

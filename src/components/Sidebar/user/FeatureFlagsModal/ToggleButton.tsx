@@ -1,5 +1,5 @@
 import { Name } from "@dashboard/featureFlags/availableFlags";
-import { Button, Spinner } from "@saleor/macaw-ui/next";
+import { Button, Spinner } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 
 import { usePersistence } from "./usePersistence";

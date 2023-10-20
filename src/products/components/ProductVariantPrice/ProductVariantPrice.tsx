@@ -21,7 +21,7 @@ import {
 } from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { sprinkles, Text, vars } from "@saleor/macaw-ui/next";
+import { sprinkles, Text, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 

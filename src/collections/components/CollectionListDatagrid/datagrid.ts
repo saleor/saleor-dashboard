@@ -16,7 +16,7 @@ import { getStatusColor } from "@dashboard/misc";
 import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui/next";
+import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";

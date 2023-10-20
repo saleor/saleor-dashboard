@@ -20,7 +20,7 @@ import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Text } from "@saleor/macaw-ui/next";
+import { Text } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -1,4 +1,4 @@
-import { Box, FilterEvent, Row } from "@saleor/macaw-ui/next";
+import { Box, FilterEvent, Row } from "@saleor/macaw-ui-next";
 import React, { FC } from "react";
 
 import { useConditionalFilterContext } from "./context";

@@ -10,7 +10,7 @@ import {
   orderSendRefundUrl,
 } from "@dashboard/orders/urls";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { Divider } from "@saleor/macaw-ui/next";
+import { Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,5 +1,5 @@
 import { AppPermissionFragment } from "@dashboard/graphql";
-import { Box, InfoIcon, Tooltip } from "@saleor/macaw-ui/next";
+import { Box, InfoIcon, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
