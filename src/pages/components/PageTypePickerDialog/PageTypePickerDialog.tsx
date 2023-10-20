@@ -10,7 +10,7 @@ import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
-import { Button } from "@saleor/macaw-ui/next";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -60,7 +60,7 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
           onChange={e => setChoice(e.target.value)}
           fetchOptions={fetchPageTypes}
           data-test-id="dialog-page-type"
-          {...fetchMorePageTypes}
+          fetchMore={fetchMorePageTypes}
         />
 
         <DashboardModal.Actions>
