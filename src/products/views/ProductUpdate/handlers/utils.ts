@@ -5,7 +5,6 @@ import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
-  AttributeInputTypeEnum,
   FileUploadMutation,
   ProductChannelListingAddInput,
   ProductChannelListingUpdateInput,
@@ -23,7 +22,7 @@ import uniq from "lodash/uniq";
 import {
   getAttributeData,
   getAttributeInput,
-  snakeToCamel,
+  getAttributeType,
 } from "./data/attributes";
 import {
   getUpdateVariantChannelInputs,
@@ -70,14 +69,14 @@ export function getProductUpdateVariables(
 export function getCreateVariantInput(
   data: DatagridChangeOpts,
   index: number,
-  variantsAttributes: VariantAttributeFragment[],
+  variantAttributes: VariantAttributeFragment[],
 ) {
   return {
     attributes: getAttributeData(
       data.updates,
       index,
       data.removed,
-      variantsAttributes,
+      variantAttributes,
     ),
     sku: getSkuData(data.updates, index, data.removed),
     name: getNameData(data.updates, index, data.removed),
@@ -196,22 +195,26 @@ const getVariantAttributesForUpdate = (
   const notUpdatedAttributes: ReturnType<typeof getAttributeData> =
     variant.attributes
       .filter(attribute => {
-        return !updatedAttributes.find(
-          updatedAttribute => updatedAttribute.id === attribute.attribute.id,
+        return updatedAttributes.find(
+          updatedAttribute => updatedAttribute.id !== attribute.attribute.id,
         );
+        // return !updatedAttributes.find(
+        //   updatedAttribute => updatedAttribute.id === attribute.attribute.id,
+        // );
       })
       .map(attribute => {
-        const variant = variantsAttributes.find(
-          variant => variant.id === attribute.attribute.id,
+        const attributeType = getAttributeType(
+          variantsAttributes,
+          attribute.attribute.id,
         );
 
-        const variantType = snakeToCamel(
-          variant.inputType.toLocaleUpperCase(),
-        ) as AttributeInputTypeEnum;
+        if (!attributeType) {
+          return undefined;
+        }
 
         return {
           id: attribute.attribute.id,
-          ...getAttributeInput(variantType, attribute.values),
+          ...getAttributeInput(attributeType, attribute.values),
         };
       });
   return [...updatedAttributes, ...notUpdatedAttributes];

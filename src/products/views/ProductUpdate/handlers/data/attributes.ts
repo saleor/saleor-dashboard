@@ -10,58 +10,60 @@ import {
   getColumnAttribute,
   isCurrentRow,
 } from "@dashboard/products/utils/datagrid";
+import { nonNullable } from "@dashboard/utils/ts";
 
 export function getAttributeData(
   data: DatagridChange[],
   currentIndex: number,
   removedIds: number[],
-  variantsAttributes: VariantAttributeFragment[],
+  variantAttributes: VariantAttributeFragment[],
 ) {
   return data
     .filter(change => isCurrentRow(change.row, currentIndex, removedIds))
     .filter(byHavingAnyAttribute)
-    .map(toAttributeData(variantsAttributes));
+    .map(toAttributeData(variantAttributes));
 }
 
 function byHavingAnyAttribute(change: DatagridChange): boolean {
   return !!getColumnAttribute(change.column);
 }
 
-function toAttributeData(variantsAttributes: VariantAttributeFragment[]) {
-  return (change: DatagridChange): AttributeValueInput => {
+function toAttributeData(variantAttributes: VariantAttributeFragment[]) {
+  return (change: DatagridChange): AttributeValueInput | undefined => {
     const attributeId = getColumnAttribute(change.column);
-
-    const attributeVariant = variantsAttributes.find(
-      variant => variant.id === attributeId,
+    const attributeType = getAttributeType(
+      variantAttributes,
+      attributeId ?? "",
     );
-    if (!attributeVariant) {
+
+    if (!attributeType) {
       return undefined;
     }
 
-    const attributeVariantType = snakeToCamel(
-      attributeVariant.inputType.toLocaleUpperCase(),
-    ) as AttributeInputTypeEnum;
-
     return {
       id: attributeId,
-      ...getDatagridAttributeInput(
-        attributeVariantType,
-        change.data.value.value,
-      ),
+      ...getDatagridAttributeInput(attributeType, change.data.value.value),
     };
   };
 }
-export function snakeToCamel(str: string): string {
-  return str.replace(/([-_][a-z])/g, group =>
-    group.toUpperCase().replace("-", "").replace("_", ""),
-  );
+
+export function getAttributeType(
+  source: VariantAttributeFragment[],
+  attributeId: string,
+): AttributeInputTypeEnum | undefined | null {
+  const attributeVariant = source.find(attr => attr.id === attributeId);
+  if (!attributeVariant) {
+    return undefined;
+  }
+
+  return attributeVariant?.inputType;
 }
 
-// Datagrid only support PLAIN_TEXT and DROPDOWN atribut types
-export const getDatagridAttributeInput = (
+// Datagrid only support PLAIN_TEXT and DROPDOWN attribute types
+export function getDatagridAttributeInput(
   inputType: AttributeInputTypeEnum,
   value: string = "",
-): BulkAttributeValueInput => {
+): BulkAttributeValueInput {
   if (inputType === AttributeInputTypeEnum.DROPDOWN) {
     return {
       dropdown: {
@@ -75,12 +77,17 @@ export const getDatagridAttributeInput = (
       plainText: value,
     };
   }
-};
 
-export const getAttributeInput = (
+  return {
+    values: [value],
+  };
+}
+
+// ProductUpdateForm supports all attribute types
+export function getAttributeInput(
   inputType: AttributeInputTypeEnum,
   values: AttributeValueDetailsFragment[],
-): BulkAttributeValueInput => {
+): BulkAttributeValueInput {
   if (inputType === AttributeInputTypeEnum.FILE) {
     return {
       file: values[0]?.file?.url ?? null,
@@ -89,16 +96,13 @@ export const getAttributeInput = (
 
   if (inputType === AttributeInputTypeEnum.NUMERIC) {
     return {
-      numeric: values[0]?.name ?? null,
+      numeric: getAttributeValueOrNull(values[0], "name"),
     };
   }
 
   if (inputType === AttributeInputTypeEnum.DROPDOWN) {
     return {
-      dropdown: {
-        id: values[0]?.id,
-        value: values[0]?.id ? undefined : values[0]?.name ?? null,
-      },
+      dropdown: getAttributeValueWithId(values[0]),
     };
   }
 
@@ -110,61 +114,88 @@ export const getAttributeInput = (
 
   if (inputType === AttributeInputTypeEnum.SWATCH) {
     return {
-      swatch: {
-        id: values[0]?.id,
-        value: values[0]?.id ? undefined : values[0]?.name ?? null,
-      },
+      swatch: getAttributeValueWithId(values[0]),
     };
   }
 
   if (inputType === AttributeInputTypeEnum.BOOLEAN) {
-    let booleanValue: boolean;
-
-    const value = values[0]?.name || "";
-
-    if (value.includes("true") || value.includes("false")) {
-      booleanValue = value === "true";
-    }
-
-    if (value.includes("Yes") || value.includes("No")) {
-      booleanValue = value.includes("Yes");
-    }
-
     return {
-      boolean: booleanValue || false,
+      boolean: getBooleanValue(values[0]),
     };
   }
 
   if (inputType === AttributeInputTypeEnum.PLAIN_TEXT) {
     return {
-      plainText: values[0]?.name ?? null,
+      plainText: getAttributeValueOrNull(values[0], "name"),
     };
   }
+
   if (inputType === AttributeInputTypeEnum.RICH_TEXT) {
     return {
-      richText: values[0]?.richText ?? null,
+      richText: getAttributeValueOrNull(values[0], "richText"),
     };
   }
 
   if (inputType === AttributeInputTypeEnum.REFERENCE) {
     return {
-      references: values.map(({ reference }) => reference),
+      references: values.map(({ reference }) => reference).filter(nonNullable),
     };
   }
 
   if (inputType === AttributeInputTypeEnum.DATE) {
     return {
-      date: values[0]?.date ?? null,
+      date: getAttributeValueOrNull(values[0], "date"),
     };
   }
 
   if (inputType === AttributeInputTypeEnum.DATE_TIME) {
     return {
-      dateTime: values[0]?.dateTime ?? null,
+      dateTime: getAttributeValueOrNull(values[0], "dateTime"),
     };
   }
 
   return {
-    values: values.map(({ name }) => name),
+    values: values.map(({ name }) => name).filter(nonNullable),
   };
-};
+}
+
+function getAttributeValueWithId(
+  value: AttributeValueDetailsFragment | undefined,
+): BulkAttributeValueInput["swatch"] {
+  if (value?.id) {
+    return {
+      id: value.id,
+    };
+  }
+
+  return {
+    value: value?.name ?? null,
+  };
+}
+
+function getAttributeValueOrNull(
+  value: AttributeValueDetailsFragment | undefined,
+  field: keyof AttributeValueDetailsFragment,
+): string | null {
+  if (value?.[field]) {
+    return value[field];
+  }
+
+  return null;
+}
+
+function getBooleanValue(
+  value: AttributeValueDetailsFragment | undefined,
+): boolean {
+  const booleanValue = getAttributeValueOrNull(value, "name") || "";
+
+  if (booleanValue.includes("true") || booleanValue.includes("false")) {
+    return booleanValue === "true";
+  }
+
+  if (booleanValue.includes("Yes") || booleanValue.includes("No")) {
+    return booleanValue.includes("Yes");
+  }
+
+  return false;
+}
