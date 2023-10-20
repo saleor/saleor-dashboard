@@ -10,7 +10,7 @@ import {
   DropdownButton,
   Popover,
   Text,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 

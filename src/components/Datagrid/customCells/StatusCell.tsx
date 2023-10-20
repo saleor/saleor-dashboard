@@ -7,7 +7,7 @@ import {
   CustomRenderer,
   GridCellKind,
 } from "@glideapps/glide-data-grid";
-import { ThemeTokensValues } from "@saleor/macaw-ui/next";
+import { ThemeTokensValues } from "@saleor/macaw-ui-next";
 
 interface StatusCellProps {
   readonly status: DotStatus;

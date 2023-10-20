@@ -1,6 +1,6 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import { List } from "@saleor/macaw-ui/next";
+import { List } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

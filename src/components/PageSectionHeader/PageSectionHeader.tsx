@@ -1,6 +1,6 @@
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { Typography } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface PageSectionHeaderProps {

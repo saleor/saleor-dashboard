@@ -1,5 +1,5 @@
 import { buttonMessages } from "@dashboard/intl";
-import { Button, ButtonProps } from "@saleor/macaw-ui/next";
+import { Button, ButtonProps } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 

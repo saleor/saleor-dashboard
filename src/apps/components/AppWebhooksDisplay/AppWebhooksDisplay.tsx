@@ -11,7 +11,7 @@ import {
   Skeleton,
   Text,
   ThemeTokensValues,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

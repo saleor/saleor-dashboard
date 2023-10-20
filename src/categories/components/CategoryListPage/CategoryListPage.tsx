@@ -17,7 +17,7 @@ import {
   TabPageProps,
 } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import { Box, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -2,7 +2,7 @@ import { Metadata } from "@dashboard/components/Metadata";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderLineWithMetadataFragment } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
-import { Button } from "@saleor/macaw-ui/next";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

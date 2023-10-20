@@ -1,5 +1,5 @@
 import Debounce from "@dashboard/components/Debounce";
-import { SearchInput } from "@saleor/macaw-ui/next";
+import { SearchInput } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
