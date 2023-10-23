@@ -186,7 +186,7 @@ jobs:
           splitIndex: ${{ strategy.job-index }}
           commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           install: false
-          browser: electron
+          browser: chrome
 
       - name: Cypress run firefox
         id: cypress-firefox
@@ -332,7 +332,6 @@ jobs:
           group: "UI - Chrome"
           record: true
           tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, ${{ needs.get-environment-variables.outputs.url }}
-          browser: electron
 
   add-review-and-merge-patch:
     if: ${{ always() && (needs.run-tests-on-release.outputs.status == 'success' || needs.run-tests-on-release.outputs.status == 'failure') }}
