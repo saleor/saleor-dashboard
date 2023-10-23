@@ -7,44 +7,71 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  create_instance:
+  prepare_variables:
     runs-on: ubuntu-22.04
-    if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }}
+    outputs:
+      POOL_NAME: ${{ steps.generate.outputs.POOL_NAME }}
+      POOL_INSTANCE: ${{ steps.generate.outputs.POOL_INSTANCE }}
+      BASE_URL: ${{ steps.generate.outputs.BASE_URL }}
+      API_URI: ${{ steps.generate.outputs.API_URI }}
+
+    steps:
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Generate
+        id: generate
+        run: |
+          echo "BASE_URL=${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+          echo "API_URI=https://${{ env.GITHUB_HEAD_REF_SLUG_URL }}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=${{ env.GITHUB_HEAD_REF_SLUG_URL }}" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://${{ env.GITHUB_HEAD_REF_SLUG_URL }}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+
+  prepare_instance:
+    runs-on: ubuntu-22.04
+    needs: prepare_names
     steps:
       - uses: actions/checkout@v4
 
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v4
 
-      - name: Reload snapshot
+      - name: Write config file
+        id: write-config-file
         env:
-          SALEOR_CLI_ENV: staging
-        run: |
-          echo "Create instance"
-
-
-  clean_instance:
-    runs-on: ubuntu-22.04
-    if: ${{ github.event_name == 'pull_request' && github.event.action != 'opened' }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
+          ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+        run: echo '{"token":"Token ${{ env.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
 
       - name: Reload snapshot
+        if: ${{ github.event_name == 'pull_request' && github.event.action != 'opened' }}
         env:
           SALEOR_CLI_ENV: staging
+          BACKUP_ID: ${{ secrets.BACKUP_ID }}
+          INSTANCE_NAME: ${{ needs.prepare_names.outputs.POOL_NAME }}
         run: |
-          echo "Reload snapshot"
+          npx saleor backup restore ${{ env.BACKUP_ID }} --environment="${{ env.INSTANCE_NAME }}" --skip-webhooks-update
+
+      - name: Create new instance
+        if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }}
+        env:
+          SALEOR_CLI_ENV: staging
+          BACKUP_ID: ${{ secrets.BACKUP_ID }}
+          INSTANCE_NAME: ${{ needs.prepare_names.outputs.POOL_NAME }}
+        run: |
+          npx saleor env create "${{ env.INSTANCE_NAME }}" \
+            --project=project-for-pr-testing \
+            --database=snapshot \
+            --restore-from=${{ env.BACKUP_ID }}  \
+            --saleor=saleor-master-staging \
+            --domain="${{ env.INSTANCE_NAME }}" \
+            --skip-restrict \
+            --skip-webhooks-update
+
 
   deploy:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-22.04
-    outputs:
-      POOL_NAME: ${{ steps.retrieve_instance.outputs.POOL_NAME }}
-      POOL_INSTANCE: ${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}
-      BASE_URL: ${{ steps.set-domain.outputs.domain }}
+    needs: prepare_names
     steps:
       - uses: actions/checkout@v4
 
@@ -53,16 +80,13 @@ jobs:
         with:
           node-version-file: ".nvmrc"
 
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
-
       - name: Start deployment
         uses: bobheadxi/deployments@v1
         id: deployment
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          env: ${{ needs.prepare_names.outputs.POOL_NAME }}
           ref: ${{ github.head_ref }}
 
       - name: Start storybook deployment
@@ -71,7 +95,7 @@ jobs:
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: storybook ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          env: storybook ${{ needs.prepare_names.outputs.POOL_NAME }}
           ref: ${{ github.head_ref }}
 
       - name: Cache node modules
@@ -88,14 +112,6 @@ jobs:
 
       - name: Install deps
         run: npm ci
-
-      
-      - name: Set domain
-        id: set-domain
-        run: |
-          echo "BASE_URL=${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
-          echo "POOL_NAME=${{ env.GITHUB_HEAD_REF_SLUG_URL }}" >> $GITHUB_OUTPUT
-          echo "POOL_INSTANCE=https://${{ env.GITHUB_HEAD_REF_SLUG_URL }}.staging.saleor.cloud" >> $GITHUB_OUTPUT
 
       - name: Build dashbaord
         env:
@@ -118,11 +134,11 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ steps.set-domain.outputs.BASE_URL }}
-          aws s3 sync ./build/storybook s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ steps.set-domain.outputs.BASE_URL }}/storybook
+          aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ needs.prepare_names.outputs.BASE_URL  }}
+          aws s3 sync ./build/storybook s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ needs.prepare_names.outputs.BASE_URL  }}/storybook
 
       - name: Invalidate cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ steps.set-domain.outputs.BASE_URL }}/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ needs.prepare_names.outputs.BASE_URL  }}/*"
 
       - name: Update deployment status
         uses: bobheadxi/deployments@v1
@@ -131,7 +147,7 @@ jobs:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
-          env_url: https://${{ steps.set-domain.outputs.BASE_URL }}/
+          env_url: needs.prepare_names.outputs.BASE_URL
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
 
@@ -142,13 +158,13 @@ jobs:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
-          env_url: https://${{ steps.set-domain.outputs.BASE_URL }}/storybook/index.html
+          env_url: https://${{ needs.prepare_names.outputs.BASE_URL }}/storybook/index.html
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
-          env: storybook ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          env: storybook ${{ needs.prepare_names.outputs.POOL_NAME }}
 
   run-tests:
     runs-on: ubuntu-latest
-    needs: [deploy, clean_instance]
+    needs: [prepare_names, deploy, clean_instance]
     strategy:
       fail-fast: false
       matrix:
@@ -168,8 +184,8 @@ jobs:
 
       - name: Run tests
         env:
-          API_URI: "${{ needs.deploy.outputs.POOL_INSTANCE }}/graphql/"
-          BASE_URL: "https://${{ needs.deploy.outputs.BASE_URL }}"
+          API_URI: ${{ needs.prepare_names.outputs.API_URI }}
+          BASE_URL: ${{ needs.prepare_names.outputs.BASE_URL }}
           E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}

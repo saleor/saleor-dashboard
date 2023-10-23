@@ -1,11 +1,11 @@
-name: Instance
+name: Testing
 
 on:
   pull_request:
     types: [closed]
 
 jobs:
-  remove_env:
+  remove_instance:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -18,9 +18,14 @@ jobs:
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v4
 
+      - name: Write config file
+        id: write-config-file
+        env:
+          ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+        run: echo '{"token":"Token ${{ env.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
+
       - name: Instance creation
         id: create_instance
         env:
           SALEOR_CLI_ENV: staging
-        run: |
-          echo "Create instance ${{ env.GITHUB_HEAD_REF_SLUG_URL }}"
+        run: npx saleor env remove "${{ env.GITHUB_HEAD_REF_SLUG_URL }}"
