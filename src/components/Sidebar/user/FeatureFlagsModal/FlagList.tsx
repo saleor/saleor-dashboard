@@ -1,6 +1,6 @@
 import { Name } from "@dashboard/featureFlags/availableFlags";
 import { useFlagsInfo } from "@dashboard/featureFlags/useFlagsInfo";
-import { List, Text } from "@saleor/macaw-ui/next";
+import { List, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface FlagListProps {

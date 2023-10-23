@@ -9,7 +9,7 @@ import {
 import useFilter from "@dashboard/components/Filter/useFilter";
 import { extractInvalidFilters } from "@dashboard/components/Filter/utils";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
-import { DropdownButton, sprinkles } from "@saleor/macaw-ui/next";
+import { DropdownButton, sprinkles } from "@saleor/macaw-ui-next";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 

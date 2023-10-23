@@ -10,7 +10,7 @@ import {
   Textarea,
   TrashBinIcon,
   vars,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

@@ -13,7 +13,7 @@ import {
   productVariantEditUrl,
 } from "@dashboard/products/urls";
 import { ReorderAction } from "@dashboard/types";
-import { Box, Button, GripIcon, Text, vars } from "@saleor/macaw-ui/next";
+import { Box, Button, GripIcon, Text, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";

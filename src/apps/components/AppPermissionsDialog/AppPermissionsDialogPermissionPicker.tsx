@@ -1,7 +1,7 @@
 import { AppPermissionsDialogMessages } from "@dashboard/apps/components/AppPermissionsDialog/messages";
 import { AppPermission } from "@dashboard/apps/components/AppPermissionsDialog/types";
 import { PermissionEnum } from "@dashboard/graphql";
-import { Box, Button, Checkbox, List, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, Checkbox, List, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

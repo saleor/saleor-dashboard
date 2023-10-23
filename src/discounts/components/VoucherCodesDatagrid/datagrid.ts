@@ -7,7 +7,7 @@ import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { getStatusColor } from "@dashboard/misc";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { ThemeTokensValues } from "@saleor/macaw-ui/next";
+import { ThemeTokensValues } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages, messages } from "./messages";

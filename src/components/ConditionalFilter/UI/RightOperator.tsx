@@ -4,7 +4,7 @@ import {
   Input,
   RangeInput,
   Select,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { FilterEventEmitter } from "./EventEmitter";

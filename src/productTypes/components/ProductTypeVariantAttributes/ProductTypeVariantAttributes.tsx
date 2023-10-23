@@ -21,7 +21,7 @@ import { ListActions, ReorderAction } from "@dashboard/types";
 import { Card, CardContent, TableCell } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Tooltip } from "@saleor/macaw-ui/next";
+import { Tooltip } from "@saleor/macaw-ui-next";
 import capitalize from "lodash/capitalize";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

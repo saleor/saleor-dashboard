@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text, TextProps } from "@saleor/macaw-ui/next";
+import { Text, TextProps } from "@saleor/macaw-ui-next";
 import React, { HTMLAttributes } from "react";
 
 const useStyles = makeStyles(

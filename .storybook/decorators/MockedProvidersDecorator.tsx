@@ -1,7 +1,7 @@
-import "@saleor/macaw-ui/next/style";
+import "@saleor/macaw-ui-next/style";
 
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
-import { ThemeProvider } from "@saleor/macaw-ui/next";
+import { ThemeProvider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";

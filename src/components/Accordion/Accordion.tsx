@@ -4,7 +4,7 @@ import {
   Divider,
   sprinkles,
   Text,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 
 export interface AccordionProps {

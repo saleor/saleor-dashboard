@@ -2,7 +2,7 @@ import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
 import { ProductTopToday } from "@dashboard/home/types";
 import { productVariantEditUrl } from "@dashboard/products/urls";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

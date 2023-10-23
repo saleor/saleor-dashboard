@@ -6,7 +6,7 @@ import {
   resolveInstallationOfAppstoreApp,
 } from "@dashboard/apps/utils";
 import { AppInstallationFragment } from "@dashboard/graphql";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
