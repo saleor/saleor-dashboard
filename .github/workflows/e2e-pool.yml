@@ -164,7 +164,7 @@ jobs:
 
   run-tests:
     runs-on: ubuntu-latest
-    needs: [prepare_variables, deploy, clean_instance]
+    needs: [prepare_variables, deploy, prepare_instance]
     strategy:
       fail-fast: false
       matrix:
