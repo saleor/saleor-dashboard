@@ -22,7 +22,7 @@ jobs:
         id: write-config-file
         env:
           ACCESS_TOKEN: ${{ secrets.STAGING_TOKEN }}
-        run: echo '{"token":"Token ${{ env.STAGING_TOKEN }}","telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
+        run: echo '{"token":"Token ${{ env.ACCESS_TOKEN }}","telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
 
       - name: Instance creation
         id: create_instance
