@@ -43,7 +43,7 @@ jobs:
         run: echo '{"token":"Token ${{ env.STAGING_TOKEN }}","telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
 
       - name: Reload snapshot
-        if: ${{ github.event_name == 'pull_request' && github.event.action != 'opened' }}
+        if: ${{ github.event_name == 'pull_request' && github.event.action != 'opened' && github.event.action != 'closed' }}
         env:
           SALEOR_CLI_ENV: staging
           BACKUP_ID: ${{ secrets.BACKUP_ID }}
