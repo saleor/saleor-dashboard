@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Combobox } from "@dashboard/components/Combobox";
 import {
   ConfirmButton,
@@ -19,7 +18,7 @@ import { messages } from "./messages";
 export interface PageTypePickerDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  pageTypes?: SingleAutocompleteChoiceType[];
+  pageTypes: SingleAutocompleteChoiceType[];
   fetchPageTypes: (data: string) => void;
   fetchMorePageTypes: FetchMoreProps;
   onClose: () => void;
@@ -40,7 +39,7 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
 
   useModalDialogOpen(open, {
     onClose: () => {
-      setChoice("");
+      setChoice(null);
       fetchPageTypes("");
     },
   });
@@ -70,7 +69,7 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
 
           <ConfirmButton
             transitionState={confirmButtonState}
-            onClick={() => onConfirm(choice)}
+            onClick={() => (choice ? onConfirm(choice) : null)}
             disabled={!choice}
           >
             {intl.formatMessage(buttonMessages.confirm)}
