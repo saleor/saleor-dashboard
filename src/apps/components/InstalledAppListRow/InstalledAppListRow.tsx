@@ -3,7 +3,7 @@ import { InstalledApp } from "@dashboard/apps/types";
 import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import { isAppInTunnel } from "@dashboard/apps/utils";
 import Link from "@dashboard/components/Link";
-import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui/next";
+import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";

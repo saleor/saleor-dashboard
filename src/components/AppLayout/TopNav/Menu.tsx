@@ -5,7 +5,7 @@ import {
   Dropdown,
   List,
   Text,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface TopNavMenuItem {

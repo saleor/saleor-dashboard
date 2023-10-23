@@ -3,7 +3,7 @@ import PreviewPill from "@dashboard/components/PreviewPill";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Input } from "@saleor/macaw-ui/next";
+import { Input } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

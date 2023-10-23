@@ -3,7 +3,7 @@ import {
   Button,
   ChevronLeftIcon,
   ChevronRightIcon,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React from "react";
 
 export interface ColumnPickerPagination {

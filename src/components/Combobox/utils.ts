@@ -1,4 +1,4 @@
-import { Option } from "@saleor/macaw-ui/next";
+import { Option } from "@saleor/macaw-ui-next";
 
 export const toWithCustomValues =
   (addNewValueLabel: string) => (value: Option) => {

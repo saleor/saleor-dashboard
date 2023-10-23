@@ -64,7 +64,7 @@ We run a series of automated checks on your PR to ensure that it meets our stand
 
 - Translations messages check is failing - run `npm run extract-messages` to update them
 - UI tests are pending - reach out to maintainers to approve them
-- MacawUI migration check is failing - we are on the way to migrate to new MacawUI components, use imports from `@saleor/macaw-ui/next` instead of `@saleor/macaw-ui` in your changes
+- MacawUI migration check is failing - we are on the way to migrate to new MacawUI components, use imports from `@saleor/macaw-ui-next` instead of `@saleor/macaw-ui` in your changes
 
 ### Your PR is merged!
 

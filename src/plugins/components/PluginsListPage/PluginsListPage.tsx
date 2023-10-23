@@ -15,7 +15,7 @@ import {
   TabPageProps,
 } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

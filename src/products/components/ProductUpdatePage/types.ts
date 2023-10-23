@@ -32,7 +32,7 @@ import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
-import { Option } from "@saleor/macaw-ui/next";
+import { Option } from "@saleor/macaw-ui-next";
 
 import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 

@@ -1,7 +1,7 @@
 import { Collection } from "@dashboard/collections/types";
 import { CollectionChannels } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import { COLOR_WARNING } from "@dashboard/misc";
-import { ThemeTokensValues } from "@saleor/macaw-ui/next";
+import { ThemeTokensValues } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import {

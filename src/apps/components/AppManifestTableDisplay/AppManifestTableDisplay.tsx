@@ -1,7 +1,7 @@
 import { appsMessages } from "@dashboard/apps/messages";
 import { Typography } from "@material-ui/core";
 import { CopyIcon } from "@saleor/macaw-ui";
-import { Tooltip } from "@saleor/macaw-ui/next";
+import { Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
