@@ -308,7 +308,7 @@ jobs:
       - name: Cypress run - automatically
         id: cypress
         continue-on-error: true
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         env:
           API_URI: ${{ needs.get-environment-variables.outputs.url }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
