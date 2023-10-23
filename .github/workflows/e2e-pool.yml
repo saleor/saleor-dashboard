@@ -7,6 +7,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  create_instance:
+    runs-on: ubuntu-22.04
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Reload snapshot
+        env:
+          SALEOR_CLI_ENV: staging
+        run: |
+          echo "Create instance"
+
+
   clean_instance:
     runs-on: ubuntu-22.04
     if: ${{ github.event_name == 'pull_request' && github.event.action != 'opened' }}
@@ -17,7 +33,6 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Reload snapshot
-        id: create_instance
         env:
           SALEOR_CLI_ENV: staging
         run: |
