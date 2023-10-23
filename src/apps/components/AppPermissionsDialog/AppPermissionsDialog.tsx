@@ -11,7 +11,7 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 

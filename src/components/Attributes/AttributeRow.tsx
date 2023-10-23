@@ -17,7 +17,7 @@ import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, Input, Text, Toggle } from "@saleor/macaw-ui/next";
+import { Box, Input, Text, Toggle } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

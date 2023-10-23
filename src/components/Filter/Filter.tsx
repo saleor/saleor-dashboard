@@ -2,7 +2,7 @@
 import { ClickAwayListener, Grow, Popper, Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { Button, makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";

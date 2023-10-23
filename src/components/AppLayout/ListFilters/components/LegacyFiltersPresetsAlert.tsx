@@ -1,7 +1,7 @@
 import { TokenType } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
 import { getStatusColor } from "@dashboard/misc";
 import { storageUtils } from "@dashboard/products/views/ProductList/filters";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

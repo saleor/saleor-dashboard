@@ -12,7 +12,7 @@ import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import useGiftCardTagsSearch from "@dashboard/searches/useGiftCardTagsSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import compact from "lodash/compact";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

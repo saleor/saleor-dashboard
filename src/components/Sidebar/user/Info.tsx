@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { getUserInitials, getUserName } from "@dashboard/misc";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { UserControls } from "./Controls";

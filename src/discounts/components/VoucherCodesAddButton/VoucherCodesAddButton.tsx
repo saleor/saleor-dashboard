@@ -5,7 +5,7 @@ import {
   Button,
   PlusIcon,
   Popover,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -4,7 +4,7 @@ import {
   useTheme as useGraphiQLTheme,
 } from "@graphiql/react";
 import { makeStyles } from "@saleor/macaw-ui";
-import { useTheme, vars } from "@saleor/macaw-ui/next";
+import { useTheme, vars } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
 
 export const useStyles = makeStyles(

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
-import { Accordion, Text } from "@saleor/macaw-ui/next";
+import { Accordion, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { Messages } from "../types";

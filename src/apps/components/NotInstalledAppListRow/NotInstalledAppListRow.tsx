@@ -17,7 +17,7 @@ import {
   Tooltip,
   TrashBinIcon,
   WarningIcon,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

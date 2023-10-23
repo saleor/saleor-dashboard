@@ -22,7 +22,7 @@ import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item, TextCell } from "@glideapps/glide-data-grid";
-import { DefaultTheme, useTheme } from "@saleor/macaw-ui/next";
+import { DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
 import { IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";

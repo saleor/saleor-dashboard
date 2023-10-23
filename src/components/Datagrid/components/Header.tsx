@@ -1,5 +1,5 @@
 import FullScreenIcon from "@dashboard/icons/FullScreenIcon";
-import { Box, Button, PlusIcon, sprinkles, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, PlusIcon, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React, { FC, PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {

@@ -2,7 +2,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Divider } from "@dashboard/components/Divider";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
-import { Text } from "@saleor/macaw-ui/next";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

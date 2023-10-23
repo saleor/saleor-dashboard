@@ -9,7 +9,7 @@ import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
 import { Card, CardContent, TextField } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
-import { Box, Tooltip } from "@saleor/macaw-ui/next";
+import { Box, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
