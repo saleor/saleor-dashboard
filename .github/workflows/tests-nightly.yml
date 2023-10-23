@@ -186,7 +186,7 @@ jobs:
           splitIndex: ${{ strategy.job-index }}
           commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           install: false
-          browser: chrome
+          browser: electron
 
       - name: Cypress run firefox
         id: cypress-firefox
