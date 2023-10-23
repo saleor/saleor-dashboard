@@ -96,6 +96,7 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
         initialData={{
           reason: grantedRefund.reason,
           amount: grantedRefund.amount.amount.toString(),
+          lines: [],
         }}
       />
     </>

@@ -62,13 +62,19 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     }
   }, [order]);
 
+  const lines = [];
+  state.lines.forEach((line, id) => {
+    lines.push({ id, quantity: line.selectedQuantity });
+  });
+
   const { set, change, data, submit, setIsDirty } = useGrantRefundForm({
     onSubmit,
     initialData,
+    lines,
   });
 
-  const amount = parseFloat(data.amount);
-  const submitDisabled = Number.isNaN(amount) || amount <= 0;
+  // const amount = parseFloat(data.amount);
+  const submitDisabled = false;
 
   const totalSelectedPrice = calculateTotalPrice(state, order);
 

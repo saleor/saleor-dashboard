@@ -10501,7 +10501,7 @@ export type OrderTransactionRequestActionMutation = { __typename: 'Mutation', tr
 
 export type OrderGrantRefundAddMutationVariables = Exact<{
   orderId: Scalars['ID'];
-  amount: Scalars['Decimal'];
+  amount?: InputMaybe<Scalars['Decimal']>;
   reason?: InputMaybe<Scalars['String']>;
   orderLines?: InputMaybe<Array<OrderGrantRefundCreateLineInput> | OrderGrantRefundCreateLineInput>;
 }>;
