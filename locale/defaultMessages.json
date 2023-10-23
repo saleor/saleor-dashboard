@@ -5922,6 +5922,9 @@
     "context": "search box placeholder",
     "string": "Search by country name"
   },
+  "dHAwu8": {
+    "string": "Code already exists"
+  },
   "dJQxHt": {
     "context": "delete category",
     "string": "Are you sure you want to delete {categoryName}?"
