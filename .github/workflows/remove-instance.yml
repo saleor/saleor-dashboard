@@ -21,8 +21,8 @@ jobs:
       - name: Write config file
         id: write-config-file
         env:
-          ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
-        run: echo '{"token":"Token ${{ env.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
+          ACCESS_TOKEN: ${{ secrets.STAGING_TOKEN }}
+        run: echo '{"token":"Token ${{ env.STAGING_TOKEN }}","telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
 
       - name: Instance creation
         id: create_instance
