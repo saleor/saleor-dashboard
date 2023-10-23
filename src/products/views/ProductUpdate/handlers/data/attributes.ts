@@ -52,10 +52,6 @@ export function getAttributeType(
   attributeId: string,
 ): AttributeInputTypeEnum | undefined | null {
   const attributeVariant = source.find(attr => attr.id === attributeId);
-  if (!attributeVariant) {
-    return undefined;
-  }
-
   return attributeVariant?.inputType;
 }
 
