@@ -1,4 +1,4 @@
-import { Accordion, Box, sprinkles, Text } from "@saleor/macaw-ui/next";
+import { Accordion, Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import TimelineEventHeader, { TitleElement } from "./TimelineEventHeader";

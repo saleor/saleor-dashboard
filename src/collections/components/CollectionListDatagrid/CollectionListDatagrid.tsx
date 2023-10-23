@@ -12,7 +12,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box, useTheme } from "@saleor/macaw-ui/next";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 

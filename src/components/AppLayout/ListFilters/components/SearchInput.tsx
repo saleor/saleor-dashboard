@@ -1,6 +1,6 @@
 import Debounce from "@dashboard/components/Debounce";
 import { SearchPageProps } from "@dashboard/types";
-import { Box, SearchInput as MacawSearchInput } from "@saleor/macaw-ui/next";
+import { Box, SearchInput as MacawSearchInput } from "@saleor/macaw-ui-next";
 import React from "react";
 
 export interface SearchInputProps extends SearchPageProps {

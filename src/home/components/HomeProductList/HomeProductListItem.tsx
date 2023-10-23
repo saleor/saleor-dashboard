@@ -1,4 +1,4 @@
-import { Box, List, sprinkles } from "@saleor/macaw-ui/next";
+import { Box, List, sprinkles } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 

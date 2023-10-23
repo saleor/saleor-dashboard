@@ -1,5 +1,5 @@
 import { PermissionEnum } from "@dashboard/graphql";
-import { Sprinkles } from "@saleor/macaw-ui/next";
+import { Sprinkles } from "@saleor/macaw-ui-next";
 
 export interface SidebarMenuItem {
   label?: string;

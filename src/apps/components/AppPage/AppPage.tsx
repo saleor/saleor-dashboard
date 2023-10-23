@@ -7,7 +7,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { APP_VERSION } from "@dashboard/config";
 import { AppQuery } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { AppFrame } from "../AppFrame";

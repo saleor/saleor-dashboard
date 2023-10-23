@@ -32,7 +32,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui/next";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";

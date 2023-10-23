@@ -1,4 +1,4 @@
-import { Box, Modal, PropsWithBox } from "@saleor/macaw-ui/next";
+import { Box, Modal, PropsWithBox } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 
 type ContentProps = PropsWithBox<{

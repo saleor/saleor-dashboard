@@ -1,7 +1,7 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { WeightUnitsEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

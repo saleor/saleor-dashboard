@@ -9,7 +9,7 @@ import { PageListUrlSortField } from "@dashboard/pages/urls";
 import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { ThemeTokensValues } from "@saleor/macaw-ui/next";
+import { ThemeTokensValues } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages, messages } from "./messages";

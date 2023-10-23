@@ -1,4 +1,4 @@
-import { Box, InfoIcon, sprinkles, Text, Tooltip } from "@saleor/macaw-ui/next";
+import { Box, InfoIcon, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface BasicAttributeRowProps {

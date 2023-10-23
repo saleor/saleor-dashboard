@@ -1,4 +1,4 @@
-import { Box, ThemeTokensValues } from "@saleor/macaw-ui/next";
+import { Box, ThemeTokensValues } from "@saleor/macaw-ui-next";
 import React from "react";
 
 export type DotStatus = "success" | "error" | "warning";

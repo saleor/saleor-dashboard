@@ -1,7 +1,7 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Skeleton } from "@material-ui/lab";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import chunk from "lodash/chunk";
 import React from "react";
 

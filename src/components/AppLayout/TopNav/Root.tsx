@@ -1,5 +1,5 @@
 import { useUser } from "@dashboard/auth";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React, { PropsWithChildren } from "react";
 
 import useAppChannel from "../AppChannelContext";

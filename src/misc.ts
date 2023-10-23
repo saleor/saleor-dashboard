@@ -9,7 +9,7 @@ import {
 } from "@dashboard/graphql";
 import { Node, SlugNode } from "@dashboard/types";
 import { ThemeType } from "@saleor/macaw-ui";
-import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui/next";
+import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui-next";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";

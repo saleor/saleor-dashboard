@@ -5,7 +5,7 @@ import {
 import { DashboardModal } from "@dashboard/components/Modal";
 import useForm from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Input } from "@saleor/macaw-ui/next";
+import { Box, Button, Input } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

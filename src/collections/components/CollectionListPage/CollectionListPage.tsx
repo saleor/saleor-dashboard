@@ -15,7 +15,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

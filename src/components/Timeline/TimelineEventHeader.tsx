@@ -1,5 +1,5 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui/next";
+import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 
 import { DateTime } from "../Date";

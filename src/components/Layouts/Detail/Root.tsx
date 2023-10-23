@@ -2,7 +2,7 @@ import {
   borderHeight,
   savebarHeight,
 } from "@dashboard/components/AppLayout/consts";
-import { Box, Sprinkles } from "@saleor/macaw-ui/next";
+import { Box, Sprinkles } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 
 interface DetailPageLayoutProps {

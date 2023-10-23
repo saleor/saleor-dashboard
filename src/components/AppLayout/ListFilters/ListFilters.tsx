@@ -1,7 +1,7 @@
 import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
 import { useFlag } from "@dashboard/featureFlags";
 import { FilterProps, SearchPageProps } from "@dashboard/types";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 
 import { ExpressionFilters } from "./components/ExpressionFilters";
