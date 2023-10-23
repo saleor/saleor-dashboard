@@ -10509,8 +10509,11 @@ export type OrderTransactionRequestActionMutationHookResult = ReturnType<typeof 
 export type OrderTransactionRequestActionMutationResult = Apollo.MutationResult<Types.OrderTransactionRequestActionMutation>;
 export type OrderTransactionRequestActionMutationOptions = Apollo.BaseMutationOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>;
 export const OrderGrantRefundAddDocument = gql`
-    mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal!, $reason: String) {
-  orderGrantRefundCreate(id: $orderId, input: {amount: $amount, reason: $reason}) {
+    mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal!, $reason: String, $orderLines: [OrderGrantRefundCreateLineInput!]) {
+  orderGrantRefundCreate(
+    id: $orderId
+    input: {amount: $amount, reason: $reason, lines: $orderLines}
+  ) {
     errors {
       ...OrderGrantRefundCreateError
     }
@@ -10535,6 +10538,7 @@ export type OrderGrantRefundAddMutationFn = Apollo.MutationFunction<Types.OrderG
  *      orderId: // value for 'orderId'
  *      amount: // value for 'amount'
  *      reason: // value for 'reason'
+ *      orderLines: // value for 'orderLines'
  *   },
  * });
  */
