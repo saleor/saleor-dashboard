@@ -31,10 +31,10 @@ on:
       browser:
         required: true
         description: "Browser"
-        default: "chrome"
+        default: "electron"
         type: choice
         options:
-          - chrome
+          - electron
           - firefox
           - all
 
@@ -165,8 +165,8 @@ jobs:
         with:
           runTests: false
 
-      - name: Cypress run chrome
-        id: cypress-chrome
+      - name: Cypress run electron
+        id: cypress-electron
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result) && ! cancelled() }}
         uses: ./.github/actions/e2e
         with:
@@ -329,7 +329,7 @@ jobs:
         with:
           install: false
           parallel: true
-          group: "UI - Chrome"
+          group: "UI - Electron"
           record: true
           tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, ${{ needs.get-environment-variables.outputs.url }}
 
