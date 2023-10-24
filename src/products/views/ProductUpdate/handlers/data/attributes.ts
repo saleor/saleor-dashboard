@@ -10,7 +10,8 @@ import {
   getColumnAttribute,
   isCurrentRow,
 } from "@dashboard/products/utils/datagrid";
-import { nonNullable } from "@dashboard/utils/ts";
+
+import { byAttributeName } from "../utils";
 
 export function getAttributeData(
   data: DatagridChange[],
@@ -134,7 +135,9 @@ export function getAttributeInput(
 
   if (inputType === AttributeInputTypeEnum.REFERENCE) {
     return {
-      references: values.map(({ reference }) => reference).filter(nonNullable),
+      references: values
+        .map(({ reference }) => reference)
+        .filter(byAttributeName),
     };
   }
 
@@ -151,7 +154,7 @@ export function getAttributeInput(
   }
 
   return {
-    values: values.map(({ name }) => name).filter(nonNullable),
+    values: values.map(({ name }) => name).filter(byAttributeName),
   };
 }
 

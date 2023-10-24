@@ -246,3 +246,7 @@ export function inferProductChannelsAfterUpdate(
     ...updatedChannelsIds,
   ]);
 }
+
+export function byAttributeName(x: string | null | undefined): x is string {
+  return typeof x === "string" && x.length > 0;
+}
