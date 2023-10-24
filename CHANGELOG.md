@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.17.2
+
+### Patch Changes
+
+- 5025ac306: Change e2e default browser to electron
+
 ## 3.17.1
 
 ### Patch Changes
