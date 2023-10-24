@@ -579,5 +579,11 @@ export const orderGrantRefundUpdateErrorFragment = gql`
       code
       lineId
     }
+    removeLines {
+      field
+      message
+      code
+      lineId
+    }
   }
 `;

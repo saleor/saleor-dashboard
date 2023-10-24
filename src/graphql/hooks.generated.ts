@@ -1132,6 +1132,12 @@ export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
     code
     lineId
   }
+  removeLines {
+    field
+    message
+    code
+    lineId
+  }
 }
     `;
 export const GiftCardsSettingsFragmentDoc = gql`

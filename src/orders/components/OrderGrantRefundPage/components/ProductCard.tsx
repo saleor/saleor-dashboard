@@ -23,7 +23,7 @@ import { useProductsCardStyles } from "../styles";
 interface ProductsCardProps {
   title: React.ReactNode;
   subtitle?: React.ReactNode;
-  lines: OrderLineGrantRefundFragment[];
+  lines: Array<OrderLineGrantRefundFragment & { selectedQuantity?: number }>;
 }
 
 export const ProductsCard: React.FC<ProductsCardProps> = ({
@@ -50,6 +50,20 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
         amount: value,
       });
     };
+
+  const getQuantityValue = (
+    line: OrderLineGrantRefundFragment & { selectedQuantity?: number },
+  ) => {
+    if (state.lines.has(line.id)) {
+      return state.lines.get(line.id).selectedQuantity;
+    }
+
+    if (line.selectedQuantity) {
+      return line.selectedQuantity;
+    }
+
+    return 0;
+  };
 
   const handleSetMaxQuanity = () => {
     dispatch({
@@ -119,7 +133,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                       style: { textAlign: "right" },
                     }}
                     fullWidth
-                    value={state.lines.get(line.id)?.selectedQuantity}
+                    value={getQuantityValue(line)}
                     onChange={getHandleAmountChange(line)}
                     InputProps={{
                       endAdornment: line?.quantity && (

@@ -55,7 +55,28 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
     reason,
     lines,
   }: OrderGrantRefundFormData) => {
-    extractMutationErrors(
+    const grantedRefundLinesToDelete = lines
+      .map(line =>
+        grantedRefund.lines.find(
+          grandLine => grandLine.orderLine.id === line.id,
+        ),
+      )
+      .filter(Boolean)
+      .map(line => line.id);
+
+    await extractMutationErrors(
+      grantRefund({
+        variables: {
+          refundId: grantRefundId,
+          amount: amount || undefined,
+          reason,
+          addLines: [],
+          removeLines: grantedRefundLinesToDelete,
+        },
+      }),
+    );
+
+    await extractMutationErrors(
       grantRefund({
         variables: {
           refundId: grantRefundId,

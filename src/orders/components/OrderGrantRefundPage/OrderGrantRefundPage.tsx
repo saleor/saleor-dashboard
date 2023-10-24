@@ -16,11 +16,7 @@ import { ProductsCard, RefundCard } from "./components";
 import { GrantRefundContext } from "./context";
 import { OrderGrantRefundFormData, useGrantRefundForm } from "./form";
 import { grantRefundPageMessages } from "./messages";
-import {
-  getGrantRefundReducerInitialState,
-  grantRefundDefaultState,
-  grantRefundReducer,
-} from "./reducer";
+import { grantRefundDefaultState, grantRefundReducer } from "./reducer";
 import { useStyles } from "./styles";
 import {
   calculateTotalPrice,
@@ -48,23 +44,20 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const unfulfilledLines = (order?.lines ?? []).filter(
-    line => line.quantityToFulfill > 0,
-  );
+  const unfulfilledLines = (order?.lines ?? [])
+    .filter(line => line.quantityToFulfill > 0)
+    .map(line => ({
+      ...line,
+      selectedQuantity:
+        initialData.lines.find(
+          initLine => (initLine as any).orderLine.id === line.id,
+        )?.quantity ?? 0,
+    }));
 
   const [state, dispatch] = React.useReducer(
     grantRefundReducer,
     grantRefundDefaultState,
   );
-
-  React.useEffect(() => {
-    if (order?.id) {
-      dispatch({
-        type: "initState",
-        state: getGrantRefundReducerInitialState(order, initialData?.lines),
-      });
-    }
-  }, [order]);
 
   const lines = prepareLineData(state.lines);
   const { set, change, data, submit, setIsDirty } = useGrantRefundForm({
@@ -144,11 +137,16 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                     </Typography>
                   }
                   lines={fulfillment.lines.map(
-                    ({ orderLine, id, quantity }) => ({
-                      ...orderLine,
-                      id,
-                      quantity,
-                    }),
+                    ({ orderLine, id, quantity }) => {
+                      return {
+                        ...orderLine,
+                        id,
+                        quantity,
+                        selectedQuantity:
+                          initialData.lines.find(line => line.id === id)
+                            ?.quantity ?? 0,
+                      };
+                    },
                   )}
                 />
               ))}
