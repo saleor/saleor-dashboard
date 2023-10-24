@@ -61,7 +61,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     if (order?.id) {
       dispatch({
         type: "initState",
-        state: getGrantRefundReducerInitialState(order),
+        state: getGrantRefundReducerInitialState(order, initialData?.lines),
       });
     }
   }, [order]);

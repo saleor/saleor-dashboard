@@ -1,5 +1,8 @@
 // @ts-strict-ignore
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import {
+  OrderDetailsGrantRefundFragment,
+  OrderGrantRefundCreateLineInput,
+} from "@dashboard/graphql";
 import { exhaustiveCheck } from "@dashboard/utils/ts";
 
 export interface ReducerOrderLine {
@@ -35,26 +38,27 @@ export type GrantRefundAction =
 
 export const getGrantRefundReducerInitialState = (
   order: OrderDetailsGrantRefundFragment,
+  lines?: OrderGrantRefundCreateLineInput[],
 ): GrantRefundState => {
   const unfulfilledLines = order?.lines
     .filter(line => line.quantityToFulfill > 0)
-    .map<GrantRefundLineKeyValue>(line => [
+    .map<GrantRefundLineKeyValue>((line, index) => [
       line.id,
       {
         availableQuantity: line.quantity,
         unitPrice: line.unitPrice.gross.amount,
-        selectedQuantity: 0,
+        selectedQuantity: lines?.[index]?.quantity || 0,
       },
     ]);
 
   const fulfilmentLines = order.fulfillments
     .flatMap(fulfilment => fulfilment.lines)
-    .map<GrantRefundLineKeyValue>(line => [
+    .map<GrantRefundLineKeyValue>((line, index) => [
       line.id,
       {
         availableQuantity: line.quantity,
         unitPrice: line.orderLine.unitPrice.gross.amount,
-        selectedQuantity: 0,
+        selectedQuantity: lines?.[index]?.quantity || 0,
       },
     ]);
 

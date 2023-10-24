@@ -528,12 +528,19 @@ export const orderGrantRefundAddMutation = gql`
 export const orderGrantRefundEditMutation = gql`
   mutation OrderGrantRefundEdit(
     $refundId: ID!
-    $amount: Decimal!
+    $amount: Decimal
     $reason: String
+    $addLines: [OrderGrantRefundUpdateLineAddInput!]
+    $removeLines: [ID!]
   ) {
     orderGrantRefundUpdate(
       id: $refundId
-      input: { amount: $amount, reason: $reason }
+      input: {
+        amount: $amount
+        reason: $reason
+        addLines: $addLines
+        removeLines: $removeLines
+      }
     ) {
       errors {
         ...OrderGrantRefundUpdateError

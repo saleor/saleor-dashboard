@@ -1126,6 +1126,12 @@ export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
   field
   message
   code
+  addLines {
+    field
+    message
+    code
+    lineId
+  }
 }
     `;
 export const GiftCardsSettingsFragmentDoc = gql`
@@ -10550,8 +10556,11 @@ export type OrderGrantRefundAddMutationHookResult = ReturnType<typeof useOrderGr
 export type OrderGrantRefundAddMutationResult = Apollo.MutationResult<Types.OrderGrantRefundAddMutation>;
 export type OrderGrantRefundAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>;
 export const OrderGrantRefundEditDocument = gql`
-    mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal!, $reason: String) {
-  orderGrantRefundUpdate(id: $refundId, input: {amount: $amount, reason: $reason}) {
+    mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal, $reason: String, $addLines: [OrderGrantRefundUpdateLineAddInput!], $removeLines: [ID!]) {
+  orderGrantRefundUpdate(
+    id: $refundId
+    input: {amount: $amount, reason: $reason, addLines: $addLines, removeLines: $removeLines}
+  ) {
     errors {
       ...OrderGrantRefundUpdateError
     }
@@ -10576,6 +10585,8 @@ export type OrderGrantRefundEditMutationFn = Apollo.MutationFunction<Types.Order
  *      refundId: // value for 'refundId'
  *      amount: // value for 'amount'
  *      reason: // value for 'reason'
+ *      addLines: // value for 'addLines'
+ *      removeLines: // value for 'removeLines'
  *   },
  * });
  */

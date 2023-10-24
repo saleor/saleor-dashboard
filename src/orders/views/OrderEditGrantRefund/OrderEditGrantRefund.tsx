@@ -50,13 +50,23 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
     },
   });
 
-  const handleSubmit = async ({ amount, reason }: OrderGrantRefundFormData) => {
+  const handleSubmit = async ({
+    amount,
+    reason,
+    lines,
+  }: OrderGrantRefundFormData) => {
     extractMutationErrors(
       grantRefund({
         variables: {
           refundId: grantRefundId,
-          amount,
+          amount: amount || undefined,
           reason,
+          addLines: lines.map(line => ({
+            id: line.id,
+            quantity: line.quantity,
+            reason: line.reason ?? "",
+          })),
+          removeLines: [],
         },
       }),
     );
@@ -96,7 +106,7 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
         initialData={{
           reason: grantedRefund.reason,
           amount: grantedRefund.amount.amount.toString(),
-          lines: [],
+          lines: grantedRefund.lines,
         }}
       />
     </>
