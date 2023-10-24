@@ -32,6 +32,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
       </DashboardCard.Title>
       <DashboardCard.Content>
         <TextField
+          data-test-id="warehouse-name-input"
           disabled={disabled}
           error={!!formErrors.name}
           fullWidth
