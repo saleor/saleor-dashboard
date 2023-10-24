@@ -16,10 +16,15 @@ const defaultInitialData: OrderGrantRefundFormData = {
   lines: [],
 };
 
+export interface Line {
+  id: string;
+  quantity: number;
+}
+
 interface GrantRefundFormHookProps {
   onSubmit: (data: OrderGrantRefundFormData) => void;
   initialData?: OrderGrantRefundFormData;
-  lines: Array<{ id: string; quantity: number }>;
+  lines: Line[];
 }
 
 export const useGrantRefundForm = ({

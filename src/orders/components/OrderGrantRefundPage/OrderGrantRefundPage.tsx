@@ -22,7 +22,11 @@ import {
   grantRefundReducer,
 } from "./reducer";
 import { useStyles } from "./styles";
-import { calculateTotalPrice, getFulfilmentSubtitle } from "./utils";
+import {
+  calculateTotalPrice,
+  getFulfilmentSubtitle,
+  prepareLineData,
+} from "./utils";
 
 export interface OrderGrantRefundPageProps {
   order: OrderDetailsGrantRefundFragment;
@@ -62,19 +66,17 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     }
   }, [order]);
 
-  const lines = [];
-  state.lines.forEach((line, id) => {
-    lines.push({ id, quantity: line.selectedQuantity });
-  });
-
+  const lines = prepareLineData(state.lines);
   const { set, change, data, submit, setIsDirty } = useGrantRefundForm({
     onSubmit,
     initialData,
     lines,
   });
 
-  // const amount = parseFloat(data.amount);
-  const submitDisabled = false;
+  const amount = parseFloat(data.amount);
+  const isAmount = Number.isNaN(amount) || amount <= 0;
+  const hasSelectedLines = lines.some(line => line.quantity > 0);
+  const submitDisabled = hasSelectedLines ? false : isAmount;
 
   const totalSelectedPrice = calculateTotalPrice(state, order);
 

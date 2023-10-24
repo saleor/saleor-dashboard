@@ -55,8 +55,8 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
         variables: {
           orderId,
           amount: amount || undefined,
-          reason: reason || undefined,
-          orderLines: lines,
+          reason,
+          lines,
         },
       }),
     );

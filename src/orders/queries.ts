@@ -155,6 +155,14 @@ export const orderDetailsGrantedRefundEdit = gql`
         amount {
           ...Money
         }
+        shippingCostsIncluded
+        lines {
+          id
+          quantity
+          orderLine {
+            ...OrderLine
+          }
+        }
       }
     }
   }

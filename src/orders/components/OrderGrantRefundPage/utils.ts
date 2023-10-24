@@ -1,7 +1,8 @@
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import currency from "currency.js";
 
-import { GrantRefundState } from "./reducer";
+import { Line } from "./form";
+import { GrantRefundState, ReducerOrderLine } from "./reducer";
 
 export const calculateTotalPrice = (
   state: GrantRefundState,
@@ -26,3 +27,9 @@ export const getFulfilmentSubtitle = (
   order: OrderDetailsGrantRefundFragment,
   fulfillment: OrderDetailsGrantRefundFragment["fulfillments"][0],
 ) => `#${order.number}-${fulfillment.fulfillmentOrder}`;
+
+export const prepareLineData = (lines: Map<string, ReducerOrderLine>): Line[] =>
+  Array.from(lines.entries()).map(([id, line]) => ({
+    id,
+    quantity: line.selectedQuantity,
+  }));

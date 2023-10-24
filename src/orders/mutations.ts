@@ -512,11 +512,11 @@ export const orderGrantRefundAddMutation = gql`
     $orderId: ID!
     $amount: Decimal
     $reason: String
-    $orderLines: [OrderGrantRefundCreateLineInput!]
+    $lines: [OrderGrantRefundCreateLineInput!]
   ) {
     orderGrantRefundCreate(
       id: $orderId
-      input: { amount: $amount, reason: $reason, lines: $orderLines }
+      input: { amount: $amount, reason: $reason, lines: $lines }
     ) {
       errors {
         ...OrderGrantRefundCreateError
