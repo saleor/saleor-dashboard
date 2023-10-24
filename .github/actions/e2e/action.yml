@@ -53,7 +53,7 @@ runs:
   using: "composite"
   steps:
     - name: e2e with reports
-      uses: cypress-io/github-action@v5
+      uses: cypress-io/github-action@v6
       with:
         install: ${{inputs.install}}
         browser: ${{inputs.browser}}
