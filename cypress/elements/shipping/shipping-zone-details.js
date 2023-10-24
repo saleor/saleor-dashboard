@@ -6,7 +6,7 @@ export const SHIPPING_ZONE_DETAILS = {
   tableRow: "[class*='MuiTableRow']",
   addPriceRateButton: "[data-test-id='add-price-rate']",
   addWeightRateButton: "[data-test-id='add-weight-rate']",
-  nameInput: "[name='name']",
+  nameInput: "[data-test-id='shipping-zone-name']",
   shippingRatePriceTableCell: "[data-test-id='shipping-rate-price']",
   autocompleteContentDialog:
     "[data-test-id='multi-autocomplete-select-content']",

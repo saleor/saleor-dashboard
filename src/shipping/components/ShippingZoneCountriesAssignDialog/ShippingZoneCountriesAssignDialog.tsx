@@ -113,6 +113,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                 <FormSpacer />
                 <TextField
                   name="query"
+                  data-test-id="search-country-input"
                   value={data.query}
                   onChange={event => change(event)}
                   label={intl.formatMessage(messages.searchCountriesLabel)}
@@ -133,6 +134,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                     <ResponsiveTable className={classes.table}>
                       <TableBody>
                         <TableRowLink
+                          data-test-id="rest-of-the-world-row"
                           className={classes.clickableRow}
                           onClick={() =>
                             handleRestOfTheWorldChange(
@@ -179,6 +181,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
 
                       return (
                         <TableRowLink
+                          data-test-id="country-row"
                           className={classes.clickableRow}
                           onClick={() =>
                             handleCountryChange(country.code, !isChecked)
@@ -201,10 +204,11 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                 </ResponsiveTable>
               </DialogContent>
               <DialogActions>
-                <BackButton onClick={onClose} />
+                <BackButton onClick={onClose} data-test-id="back-button" />
                 <ConfirmButton
                   transitionState={confirmButtonState}
                   type="submit"
+                  data-test-id="assign-and-save-button"
                 >
                   <FormattedMessage {...messages.assignCountriesButton} />
                 </ConfirmButton>
