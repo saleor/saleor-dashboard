@@ -13,6 +13,8 @@ module.exports = defineConfig({
   viewportHeight: 660,
   screenshotsFolder: "cypress/reports/mochareports",
   screenshotOnRunFailure: true,
+  experimentalMemoryManagement: true,
+  numTestsKeptInMemory: 0,
   retries: {
     runMode: 2,
     openMode: 0,
@@ -25,8 +27,6 @@ module.exports = defineConfig({
     env: {
       grepFilterSpecs: true,
       grepOmitFiltered: true,
-      numTestsKeptInMemory: 10,
-      experimentalMemoryManagement: true,
     },
     baseUrl: process.env.BASE_URL,
     async setupNodeEvents(on, config) {
