@@ -7511,6 +7511,9 @@
     "context": "status",
     "string": "Deactivated"
   },
+  "pNP2pn": {
+    "string": "Shipping has been already refunded"
+  },
   "pOUOnw": {
     "context": "tab name",
     "string": "All vouchers"

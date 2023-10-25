@@ -90,6 +90,17 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
 
   const totalSelectedPrice = calculateTotalPrice(state, order);
 
+  const hasShipingRefunded = () => {
+    if (initialData?.grantRefundId) {
+      return order?.grantedRefunds?.some(
+        refund =>
+          refund.shippingCostsIncluded &&
+          refund.id !== initialData.grantRefundId,
+      );
+    }
+
+    return order?.grantedRefunds?.some(refund => refund.shippingCostsIncluded);
+  };
   const handleSubmit = (e: React.FormEvent<any>) => {
     e.stopPropagation();
     e.preventDefault();
@@ -202,6 +213,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
               submitState={submitState}
               isEdit={isEdit}
               submitDisabled={submitDisabled}
+              hasShipingRefunded={hasShipingRefunded()}
             />
           </DetailPageLayout.RightSidebar>
         </GrantRefundContext.Provider>

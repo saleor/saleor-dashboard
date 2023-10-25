@@ -12,7 +12,7 @@ import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -27,6 +27,7 @@ interface RefundCardProps {
   submitState: ConfirmButtonTransitionState;
   isEdit: boolean;
   submitDisabled: boolean;
+  hasShipingRefunded: boolean;
 }
 
 export const RefundCard = ({
@@ -35,6 +36,7 @@ export const RefundCard = ({
   submitState,
   isEdit,
   submitDisabled,
+  hasShipingRefunded,
 }: RefundCardProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
@@ -56,30 +58,41 @@ export const RefundCard = ({
           <FormattedMessage {...grantRefundPageMessages.refundSubtitle} />
         </Typography>
         {order ? (
-          <div className={classes.shippingCostLine}>
-            <Checkbox
-              id={`checkbox-${id}`}
-              checked={state.refundShipping}
-              onChange={() => dispatch({ type: "toggleRefundShipping" })}
-              data-test-id="refundShippingCheckbox"
-            />
-            <label htmlFor={`checkbox-${id}`}>
-              {!currency ? (
-                <Skeleton />
-              ) : (
+          <>
+            <div className={classes.shippingCostLine}>
+              <Checkbox
+                id={`checkbox-${id}`}
+                checked={state.refundShipping}
+                onChange={() => dispatch({ type: "toggleRefundShipping" })}
+                data-test-id="refundShippingCheckbox"
+                disabled={hasShipingRefunded}
+              />
+              <label htmlFor={`checkbox-${id}`}>
+                {!currency ? (
+                  <Skeleton />
+                ) : (
+                  <FormattedMessage
+                    {...grantRefundPageMessages.refundShipment}
+                    values={{
+                      currency,
+                      amount: formatMoneyAmount(
+                        order?.shippingPrice?.gross,
+                        locale,
+                      ),
+                    }}
+                  />
+                )}
+              </label>
+            </div>
+            {hasShipingRefunded && (
+              <Text variant="caption" color="textNeutralDisabled">
                 <FormattedMessage
-                  {...grantRefundPageMessages.refundShipment}
-                  values={{
-                    currency,
-                    amount: formatMoneyAmount(
-                      order?.shippingPrice?.gross,
-                      locale,
-                    ),
-                  }}
+                  defaultMessage="Shipping has been already refunded"
+                  id="pNP2pn"
                 />
-              )}
-            </label>
-          </div>
+              </Text>
+            )}
+          </>
         ) : (
           <div className={classes.shippingCostLineLoading}>
             <Skeleton />
