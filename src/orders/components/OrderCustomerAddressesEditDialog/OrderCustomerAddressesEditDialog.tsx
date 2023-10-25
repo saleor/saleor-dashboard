@@ -79,7 +79,7 @@ const OrderCustomerAddressesEditDialog: React.FC<
   OrderCustomerAddressesEditDialogProps
 > = props => {
   const {
-    open,
+    open: defaultOpen,
     variant,
     loading,
     confirmButtonState,
@@ -93,6 +93,8 @@ const OrderCustomerAddressesEditDialog: React.FC<
     orderShippingAddress,
     orderBillingAddress,
   } = props;
+
+  const open = !loading && defaultOpen;
 
   const classes = useStyles(props);
   const intl = useIntl();
