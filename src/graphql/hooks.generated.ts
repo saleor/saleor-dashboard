@@ -1119,6 +1119,12 @@ export const OrderGrantRefundCreateErrorFragmentDoc = gql`
   field
   message
   code
+  lines {
+    field
+    message
+    code
+    lineId
+  }
 }
     `;
 export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
@@ -10990,6 +10996,15 @@ export const OrderDetailsGrantRefundDocument = gql`
     query OrderDetailsGrantRefund($id: ID!) {
   order(id: $id) {
     ...OrderDetailsGrantRefund
+    grantedRefunds {
+      lines {
+        id
+        quantity
+        orderLine {
+          id
+        }
+      }
+    }
   }
 }
     ${OrderDetailsGrantRefundFragmentDoc}`;
