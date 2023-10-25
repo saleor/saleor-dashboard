@@ -64,11 +64,16 @@ jobs:
           cd .github/workflows
           npm ci
 
+      - name: Write config file
+        id: write-config-file
+        env:
+          ACCESS_TOKEN: ${{ secrets.STAGING_TOKEN }}
+        run: echo '{"token":"Token ${{ env.ACCESS_TOKEN }}","telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
+
       - name: clean automation environment
         id: clean-automation-environment
         run: |
           node .github/workflows/cleanEnvironments.js \
-          --token "$TOKEN" \
           --environments_to_clean_regex "automation-dashboard.staging.saleor.cloud"
 
       - name: Notify Slack

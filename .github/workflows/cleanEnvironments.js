@@ -1,10 +1,9 @@
 const { Command } = require("commander");
-const fetch = require("node-fetch");
 const core = require("@actions/core");
+const util = require("node:util");
+const exec = util.promisify(require("node:child_process").exec);
 
 const program = new Command();
-
-const pathToCloudAPI = "https://staging-cloud.saleor.io/platform/api/";
 
 const snapshotName = "snapshot-automation-tests";
 
@@ -14,21 +13,21 @@ let warningMessage = "";
 program
   .name("cleanEnvironments")
   .description("Clean environments")
-  .option("--token <token>", "token fo login to cloud")
   .option(
     "--environments_to_clean_regex <environments_to_clean_regex>",
     "Regex for environment which need cleaning",
   )
   .action(async options => {
-    const token = options.token;
     const environmentsToCleanRegex = new RegExp(
       options.environments_to_clean_regex,
     );
+    const environments = await getEnvironments();
     const environmentsToClean = await getEnvironmentsToClean(
-      token,
+      environments,
       environmentsToCleanRegex,
     );
-    const snapshotsForRestore = await getSnapshotsForRestore(token);
+    const snapshotsForRestore = await getSnapshotsForRestore(environments);
+    console.log(snapshotsForRestore);
     const sortedSnapshotList = sortSnapshots(snapshotsForRestore);
     environmentsToClean.forEach(environment => {
       const latestSnapshot = getLatestSnapshotForEnvironment(
@@ -36,7 +35,7 @@ program
         sortedSnapshotList,
       );
       if (latestSnapshot) {
-        cleanEnvironment(environment, latestSnapshot, token);
+        cleanEnvironment(environment, latestSnapshot);
       } else {
         sendWarningOnSlack = "true";
         warningMessage += `Snapshot compatible with environment ${environment.domain} does not exist, please create snapshot on cloud staging.\n`;
@@ -47,73 +46,61 @@ program
   })
   .parse();
 
-async function getEnvironmentsToClean(token, environmentsToCleanRegex) {
-  const environments = await getEnvironments(token);
-  const environmentsForReleaseTesting = environments.filter(environment => {
-    return environment.domain.match(environmentsToCleanRegex)
+async function getEnvironmentsToClean(
+  allEnvironments,
+  environmentsToCleanRegex,
+) {
+  const environmentsForReleaseTesting = allEnvironments.filter(environment => {
+    return environment.domain.match(environmentsToCleanRegex);
   });
   return environmentsForReleaseTesting;
 }
 
-async function getEnvironments(token) {
-  const response = await fetch(
-    `${pathToCloudAPI}organizations/saleor/environments/`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    },
-  );
-  return await response.json();
+async function getEnvironments() {
+  const result = await exec("npx saleor env list --json", {
+    serialization: "json",
+  });
+  const envList = result.stdout.replace("\x1B[?25l\x1B[?25h", "");
+  return JSON.parse(envList);
 }
 
-async function cleanEnvironment(environment, snapshot, token) {
-  const response = await fetch(
-    `${pathToCloudAPI}organizations/saleor/environments/${environment.key}/restore/`,
+async function cleanEnvironment(environment, snapshot) {
+  console.log(`Restoring snapshot for environment ${environment.domain}`);
+  const result = await exec(
+    `npx saleor backup restore ${snapshot.key} --environment="${environment.key}" --skip-webhooks-update`,
     {
-      method: "PUT",
-      body: JSON.stringify({ restore_from: snapshot.key }),
-      headers: {
-        Authorization: `Token ${token}`,
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
+      serialization: "json",
     },
   );
-  const responseInJson = await response.json();
-  if (
-    responseInJson.non_field_errors
-      ? responseInJson.non_field_errors
-      : responseInJson.__all__
-  ) {
-    const warning = responseInJson.non_field_errors
-      ? responseInJson.non_field_errors
-      : responseInJson.__all__;
+  const response = result.stderr.replace("\x1B[?25l\x1B[?25h", "");
+
+  if (!response.includes("Restore finished")) {
+    const warning = response;
     console.warn(`${environment.name}: ${warning}`);
     sendWarningOnSlack = "true";
     warningMessage += `Could not revert snapshot on ${environment.domain}: ${warning}.\n`;
-  } else {
-    await waitUntilTaskInProgress(responseInJson.task_id, environment.name);
-  }
+  } 
 }
 
-async function getSnapshotsForRestore(token) {
-  const snapshotsResponse = await fetch(
-    `${pathToCloudAPI}organizations/saleor/backups/`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    },
+async function getSnapshotsForRestore(allEnvironments) {
+  let allBackups = [];
+  await Promise.all(
+    allEnvironments.map(async environment => {
+      const result = await exec(
+        `npx saleor backup list --json --organization="saleor" --environment="${environment.key}"`,
+        {
+          serialization: "json",
+        },
+      );
+      const backupListForSingleEnv = result.stdout.replace(
+        "\x1B[?25l\x1B[?25h",
+        "",
+      );
+      allBackups = allBackups.concat(JSON.parse(backupListForSingleEnv));
+      return allBackups;
+    }),
   );
-  const allSnapshots = await snapshotsResponse.json();
-  return allSnapshots.filter(snapshot => {
+  return allBackups.filter(snapshot => {
     return snapshot.name.includes(snapshotName);
   });
 }
@@ -162,42 +149,5 @@ function getLatestSnapshotForEnvironment(environmentVersion, snapshotList) {
       `Could not find snapshot for environment on version: ${environmentVersion}. Environment won't be cleaned`,
     );
     return null;
-  }
-}
-
-async function waitUntilTaskInProgress(taskId, environment) {
-  const throwErrorAfterTimeout = setTimeout(function () {
-    throw new Error("Environment didn't upgrade after 30 minutes");
-  }, 120000);
-
-  while (true) {
-    const response = await fetch(
-      `${pathToCloudAPI}service/task-status/${taskId}/`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-      },
-    );
-    const responseInJson = await response.json();
-    switch (responseInJson.status) {
-      case "PENDING":
-      case "IN_PROGRESS":
-        await new Promise(resolve => setTimeout(resolve, 10000));
-        break;
-      case "SUCCEEDED":
-        console.log(
-          `${environment}: Job ended with status - ${responseInJson.status} - ${responseInJson.job_name}`,
-        );
-        clearTimeout(throwErrorAfterTimeout);
-        return responseInJson.status;
-      default:
-        clearTimeout(throwErrorAfterTimeout);
-        throw console.warn(
-          `${environment}: Job ended with status - ${responseInJson.status} - ${responseInJson.job_name}`,
-        );
-    }
   }
 }
