@@ -49,7 +49,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     .map(line => ({
       ...line,
       selectedQuantity:
-        initialData.lines.find(
+        initialData?.lines?.find(
           initLine => (initLine as any).orderLine.id === line.id,
         )?.quantity ?? 0,
     }));

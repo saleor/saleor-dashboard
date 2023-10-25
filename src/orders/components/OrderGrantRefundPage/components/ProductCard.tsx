@@ -48,6 +48,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
         type: "setQuantity",
         lineId: line.id,
         amount: value,
+        unitPrice: line.unitPrice.gross.amount,
       });
     };
 
@@ -68,7 +69,11 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
   const handleSetMaxQuanity = () => {
     dispatch({
       type: "setMaxQuantity",
-      lineIds: lines.map(line => line.id),
+      lines: lines.map(line => ({
+        id: line.id,
+        quantity: line.quantity,
+        unitPrice: line.unitPrice.gross.amount,
+      })),
     });
   };
 

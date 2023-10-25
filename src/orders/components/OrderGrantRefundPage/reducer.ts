@@ -19,10 +19,11 @@ export type GrantRefundAction =
       type: "setQuantity";
       lineId: string;
       amount: number;
+      unitPrice: number;
     }
   | {
       type: "setMaxQuantity";
-      lineIds: string[];
+      lines: Array<{ id: string; quantity: number; unitPrice: number }>;
     }
   | {
       type: "toggleRefundShipping";
@@ -53,6 +54,7 @@ export function grantRefundReducer(
 
       newLines.set(action.lineId, {
         ...line,
+        unitPrice: action.unitPrice,
         selectedQuantity: action.amount,
       });
 
@@ -64,12 +66,12 @@ export function grantRefundReducer(
     case "setMaxQuantity": {
       const newLines = new Map(state.lines);
 
-      action.lineIds.forEach(lineId => {
-        const line = state.lines.get(lineId);
-
-        newLines.set(lineId, {
-          ...line,
-          selectedQuantity: line.availableQuantity,
+      action.lines.forEach(line => {
+        const currentLine = state.lines.get(line.id);
+        newLines.set(line.id, {
+          ...currentLine,
+          unitPrice: line.unitPrice,
+          selectedQuantity: line.quantity,
         });
       });
 
