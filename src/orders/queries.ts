@@ -141,15 +141,6 @@ export const orderDetailsGrantedRefund = gql`
   query OrderDetailsGrantRefund($id: ID!) {
     order(id: $id) {
       ...OrderDetailsGrantRefund
-      grantedRefunds {
-        lines {
-          id
-          quantity
-          orderLine {
-            id
-          }
-        }
-      }
     }
   }
 `;
@@ -158,21 +149,6 @@ export const orderDetailsGrantedRefundEdit = gql`
   query OrderDetailsGrantRefundEdit($id: ID!) {
     order(id: $id) {
       ...OrderDetailsGrantRefund
-      grantedRefunds {
-        id
-        reason
-        amount {
-          ...Money
-        }
-        shippingCostsIncluded
-        lines {
-          id
-          quantity
-          orderLine {
-            ...OrderLine
-          }
-        }
-      }
     }
   }
 `;

@@ -657,5 +657,20 @@ export const fragmentOrderDetailsGrantRefund = gql`
         ...Money
       }
     }
+    grantedRefunds {
+      id
+      reason
+      amount {
+        ...Money
+      }
+      shippingCostsIncluded
+      lines {
+        id
+        quantity
+        orderLine {
+          ...OrderLine
+        }
+      }
+    }
   }
 `;

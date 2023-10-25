@@ -2028,10 +2028,26 @@ export const OrderDetailsGrantRefundFragmentDoc = gql`
       ...Money
     }
   }
+  grantedRefunds {
+    id
+    reason
+    amount {
+      ...Money
+    }
+    shippingCostsIncluded
+    lines {
+      id
+      quantity
+      orderLine {
+        ...OrderLine
+      }
+    }
+  }
 }
     ${OrderLineGrantRefundFragmentDoc}
 ${OrderFulfillmentGrantRefundFragmentDoc}
-${MoneyFragmentDoc}`;
+${MoneyFragmentDoc}
+${OrderLineFragmentDoc}`;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -10996,15 +11012,6 @@ export const OrderDetailsGrantRefundDocument = gql`
     query OrderDetailsGrantRefund($id: ID!) {
   order(id: $id) {
     ...OrderDetailsGrantRefund
-    grantedRefunds {
-      lines {
-        id
-        quantity
-        orderLine {
-          id
-        }
-      }
-    }
   }
 }
     ${OrderDetailsGrantRefundFragmentDoc}`;
@@ -11040,26 +11047,9 @@ export const OrderDetailsGrantRefundEditDocument = gql`
     query OrderDetailsGrantRefundEdit($id: ID!) {
   order(id: $id) {
     ...OrderDetailsGrantRefund
-    grantedRefunds {
-      id
-      reason
-      amount {
-        ...Money
-      }
-      shippingCostsIncluded
-      lines {
-        id
-        quantity
-        orderLine {
-          ...OrderLine
-        }
-      }
-    }
   }
 }
-    ${OrderDetailsGrantRefundFragmentDoc}
-${MoneyFragmentDoc}
-${OrderLineFragmentDoc}`;
+    ${OrderDetailsGrantRefundFragmentDoc}`;
 
 /**
  * __useOrderDetailsGrantRefundEditQuery__

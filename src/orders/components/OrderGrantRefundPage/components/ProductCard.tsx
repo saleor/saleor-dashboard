@@ -23,7 +23,12 @@ import { useProductsCardStyles } from "../styles";
 interface ProductsCardProps {
   title: React.ReactNode;
   subtitle?: React.ReactNode;
-  lines: Array<OrderLineGrantRefundFragment & { selectedQuantity?: number }>;
+  lines: Array<
+    OrderLineGrantRefundFragment & {
+      selectedQuantity?: number;
+      availableQuantity: number;
+    }
+  >;
 }
 
 export const ProductsCard: React.FC<ProductsCardProps> = ({
@@ -71,7 +76,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
       type: "setMaxQuantity",
       lines: lines.map(line => ({
         id: line.id,
-        quantity: line.quantity,
+        quantity: line.availableQuantity,
         unitPrice: line.unitPrice.gross.amount,
       })),
     });
@@ -143,7 +148,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                     InputProps={{
                       endAdornment: line?.quantity && (
                         <div className={classes.remainingQuantity}>
-                          / {line?.quantity}
+                          / {line?.availableQuantity}
                         </div>
                       ),
                     }}

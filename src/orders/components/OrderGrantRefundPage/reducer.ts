@@ -3,7 +3,6 @@ import { exhaustiveCheck } from "@dashboard/utils/ts";
 
 export interface ReducerOrderLine {
   selectedQuantity: number;
-  availableQuantity: number;
   unitPrice: number;
 }
 
@@ -23,7 +22,11 @@ export type GrantRefundAction =
     }
   | {
       type: "setMaxQuantity";
-      lines: Array<{ id: string; quantity: number; unitPrice: number }>;
+      lines: Array<{
+        id: string;
+        quantity: number;
+        unitPrice: number;
+      }>;
     }
   | {
       type: "toggleRefundShipping";

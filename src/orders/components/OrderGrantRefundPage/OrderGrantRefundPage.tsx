@@ -21,6 +21,7 @@ import { useStyles } from "./styles";
 import {
   calculateTotalPrice,
   getFulfilmentSubtitle,
+  getLineAvailableQuantity,
   prepareLineData,
 } from "./utils";
 
@@ -30,7 +31,7 @@ export interface OrderGrantRefundPageProps {
   submitState: ConfirmButtonTransitionState;
   onSubmit: (data: OrderGrantRefundFormData) => void;
   isEdit?: boolean;
-  initialData?: OrderGrantRefundFormData;
+  initialData?: OrderGrantRefundFormData & { grantRefundId?: string };
 }
 
 const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
@@ -48,6 +49,12 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     .filter(line => line.quantityToFulfill > 0)
     .map(line => ({
       ...line,
+      availableQuantity: getLineAvailableQuantity(
+        line.id,
+        line.quantity,
+        order?.grantedRefunds,
+        initialData?.grantRefundId,
+      ),
       selectedQuantity:
         initialData?.lines?.find(
           initLine => (initLine as any).orderLine.id === line.id,
@@ -68,7 +75,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
 
   const amount = parseFloat(data.amount);
   const isAmount = Number.isNaN(amount) || amount <= 0;
-  const hasSelectedLines = lines.some(line => line.quantity > 0);
+  const hasSelectedLines = lines.length > 0;
   const submitDisabled = hasSelectedLines ? false : isAmount;
 
   const totalSelectedPrice = calculateTotalPrice(state, order);
@@ -142,6 +149,11 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                         ...orderLine,
                         id,
                         quantity,
+                        availableQuantity: getLineAvailableQuantity(
+                          id,
+                          quantity,
+                          order?.grantedRefunds,
+                        ),
                         selectedQuantity:
                           initialData.lines.find(line => line.id === id)
                             ?.quantity ?? 0,

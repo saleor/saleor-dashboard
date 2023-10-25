@@ -33,3 +33,26 @@ export const prepareLineData = (lines: Map<string, ReducerOrderLine>): Line[] =>
     id,
     quantity: line.selectedQuantity,
   }));
+
+export const getLineAvailableQuantity = (
+  lineId: string,
+  lineQuntity: number,
+  grantRefunds: OrderDetailsGrantRefundFragment["grantedRefunds"],
+  grandRefundId?: string,
+) => {
+  let refundedQuantity = 0;
+
+  grantRefunds.forEach(refund => {
+    if (grandRefundId && refund.id === grandRefundId) {
+      return;
+    }
+
+    refund.lines.forEach(line => {
+      if (line.orderLine.id === lineId) {
+        refundedQuantity += line.quantity;
+      }
+    });
+  });
+
+  return lineQuntity - refundedQuantity;
+};
