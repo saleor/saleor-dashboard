@@ -27,7 +27,4 @@ export const isCurrentRow = (
   datagridChangeIndex: number,
   variantIndex: number,
   datagridRemovedRowsIds: number[],
-) =>
-  datagridChangeIndex ===
-  variantIndex +
-    datagridRemovedRowsIds.filter(index => index <= variantIndex).length;
+) => datagridChangeIndex === variantIndex;

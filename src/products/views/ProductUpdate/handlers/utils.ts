@@ -136,7 +136,10 @@ export function getBulkVariantUpdateInputs(
   data: DatagridChangeOpts,
 ): ProductVariantBulkUpdateInput[] {
   const toUpdateInput = createToUpdateInput(data);
-  return variants.map(toUpdateInput).filter(byAvailability);
+  return variants
+    .map(toUpdateInput)
+    .filter((_, index) => !data.added.includes(index))
+    .filter(byAvailability);
 }
 
 const createToUpdateInput =
