@@ -15,6 +15,8 @@ export class ShippingMethodsPage {
   readonly shippingZoneDescriptionField: Locator;
   readonly saveButton: Locator;
   readonly assignCountryButton: Locator;
+  readonly addPriceRateButton: Locator;
+  readonly addWeightRateButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -22,12 +24,21 @@ export class ShippingMethodsPage {
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
     this.assignCountriesDialog = new AssignCountriesDialog(page);
     this.assignCountryButton = page.getByTestId("assign-country");
+    this.addPriceRateButton = page.getByTestId("add-price-rate");
+    this.addWeightRateButton = page.getByTestId("add-weight-rate");
     this.createShippingZoneButton = page.getByTestId("add-shipping-zone");
     this.shippingZoneNameInput = page.getByTestId("shipping-zone-name");
     this.shippingZoneDescriptionField = page
       .getByTestId("shipping-zone-description")
       .locator("textarea");
     this.saveButton = page.getByTestId("button-bar-confirm");
+  }
+
+  async clickAddWeightRateButton() {
+    await this.addWeightRateButton.click();
+  }
+  async clickAddPriceRateButton() {
+    await this.addPriceRateButton.click();
   }
 
   async clickAssignCountryButton() {
@@ -52,6 +63,13 @@ export class ShippingMethodsPage {
   async gotoListView() {
     await this.page.goto(URL_LIST.shippingMethods);
     await this.createShippingZoneButton.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
+  }
+  async gotoShippingMethod(shippingMethodId: string) {
+    await this.page.goto(`${URL_LIST.shippingMethods}${shippingMethodId}`);
+    await this.shippingZoneNameInput.waitFor({
       state: "visible",
       timeout: 10000,
     });

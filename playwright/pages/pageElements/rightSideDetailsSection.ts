@@ -90,6 +90,10 @@ export class RightSideDetailsPage {
     await this.taxInput.click();
     await this.taxSelectOption.first().click();
   }
+  async selectTaxIndex(taxIndexOnList: number) {
+    await this.taxInput.click();
+    await this.taxSelectOption.nth(taxIndexOnList).click();
+  }
   async selectFirstCollection() {
     await this.collectionInput.click();
     await this.selectOption.first().click();

@@ -234,6 +234,7 @@ const ShippingMethodProductsAddDialog: React.FC<
       <DialogActions>
         <BackButton onClick={handleClose} />
         <ConfirmButton
+          data-test-id="assign-and-save-button"
           transitionState={confirmButtonState}
           type="submit"
           disabled={loading || !selectedProducts?.length}

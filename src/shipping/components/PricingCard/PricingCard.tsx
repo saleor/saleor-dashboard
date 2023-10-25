@@ -84,12 +84,13 @@ export const PricingCard: React.FC<PricingCardProps> = ({
               const error = getFormChannelError(formErrors.price, channel.id);
 
               return (
-                <TableRowLink key={channel.id}>
+                <TableRowLink key={channel.id} data-test-id={channel.name}>
                   <TableCell>
                     <Typography>{channel.name}</Typography>
                   </TableCell>
                   <TableCell>
                     <PriceField
+                      data-test-id="price-input"
                       disabled={disabled}
                       error={!!error}
                       label={intl.formatMessage({

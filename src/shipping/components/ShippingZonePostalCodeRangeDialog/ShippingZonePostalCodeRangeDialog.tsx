@@ -67,6 +67,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<
               </Typography>
               <Grid variant="uniform">
                 <TextField
+                  data-test-id="zip-code-starts-with-input"
                   label={intl.formatMessage({
                     id: "1T1fP8",
                     defaultMessage: "Postal codes (start)",
@@ -77,6 +78,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<
                   onChange={change}
                 />
                 <TextField
+                  data-test-id="zip-code-ends-with-input"
                   label={intl.formatMessage({
                     id: "axFFaD",
                     defaultMessage: "Postal codes (end)",
