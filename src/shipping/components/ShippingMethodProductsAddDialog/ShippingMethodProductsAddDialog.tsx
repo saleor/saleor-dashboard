@@ -161,7 +161,7 @@ const ShippingMethodProductsAddDialog: React.FC<
         </div>
         <div>
           <InfiniteScroll
-            dataLength={products?.length}
+            dataLength={products?.length ?? 0}
             next={onFetchMore}
             hasMore={hasMore}
             scrollThreshold="100px"

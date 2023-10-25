@@ -47,8 +47,6 @@ test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes 
   await shippingRatesPage.clickSaveButton();
   await shippingRatesPage.basePage.expectSuccessBanner();
 
-  // TODO check why without wait dashboard crashes
-  await page.waitForTimeout(3000);
   await shippingRatesPage.addFirstAvailableExcludedProduct();
   await shippingRatesPage.basePage.expectSuccessBanner();
   await shippingRatesPage.excludedProductsRows.waitFor({ state: "visible" });
@@ -79,8 +77,6 @@ test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes
   await shippingRatesPage.clickSaveButton();
   await shippingRatesPage.basePage.expectSuccessBanner();
 
-  // TODO check why without wait dashboard crashes
-  await page.waitForTimeout(3000);
   await shippingRatesPage.addFirstAvailableExcludedProduct();
   await shippingRatesPage.basePage.expectSuccessBanner();
   await shippingRatesPage.excludedProductsRows.waitFor({ state: "visible" });
