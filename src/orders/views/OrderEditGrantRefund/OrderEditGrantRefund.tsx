@@ -128,13 +128,7 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
         submitState={grantRefundOptions.status}
         onSubmit={handleSubmit}
         isEdit
-        initialData={{
-          grantRefundId,
-          reason: grantedRefund.reason,
-          amount: grantedRefund.amount.amount.toString(),
-          grantRefundForShipping: grantedRefund.shippingCostsIncluded,
-          lines: grantedRefund.lines,
-        }}
+        initialData={grantedRefund}
       />
     </>
   );

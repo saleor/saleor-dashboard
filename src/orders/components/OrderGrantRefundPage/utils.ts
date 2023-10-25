@@ -1,4 +1,7 @@
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import {
+  OrderDetailsGrantedRefundFragment,
+  OrderDetailsGrantRefundFragment,
+} from "@dashboard/graphql";
 import currency from "currency.js";
 
 import { Line } from "./form";
@@ -55,4 +58,20 @@ export const getLineAvailableQuantity = (
   });
 
   return lineQuntity - refundedQuantity;
+};
+
+export const getGrantedRefundData = (
+  grantedRefund: OrderDetailsGrantedRefundFragment,
+) => {
+  if (!grantedRefund) {
+    return undefined;
+  }
+
+  return {
+    grantRefundId: grantedRefund.id,
+    reason: grantedRefund.reason,
+    amount: grantedRefund.amount.amount.toString(),
+    grantRefundForShipping: grantedRefund.shippingCostsIncluded,
+    lines: grantedRefund.lines,
+  };
 };

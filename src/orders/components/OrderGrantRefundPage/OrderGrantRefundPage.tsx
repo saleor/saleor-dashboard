@@ -4,7 +4,10 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Skeleton from "@dashboard/components/Skeleton";
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import {
+  OrderDetailsGrantedRefundFragment,
+  OrderDetailsGrantRefundFragment,
+} from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
@@ -21,6 +24,7 @@ import { useStyles } from "./styles";
 import {
   calculateTotalPrice,
   getFulfilmentSubtitle,
+  getGrantedRefundData,
   getLineAvailableQuantity,
   prepareLineData,
 } from "./utils";
@@ -31,7 +35,7 @@ export interface OrderGrantRefundPageProps {
   submitState: ConfirmButtonTransitionState;
   onSubmit: (data: OrderGrantRefundFormData) => void;
   isEdit?: boolean;
-  initialData?: OrderGrantRefundFormData & { grantRefundId?: string };
+  initialData?: OrderDetailsGrantedRefundFragment;
 }
 
 const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
@@ -45,6 +49,8 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
+  const grantedRefund = getGrantedRefundData(initialData);
+
   const unfulfilledLines = (order?.lines ?? [])
     .filter(line => line.quantityToFulfill > 0)
     .map(line => ({
@@ -53,7 +59,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
         line.id,
         line.quantity,
         order?.grantedRefunds,
-        initialData?.grantRefundId,
+        grantedRefund?.grantRefundId,
       ),
       selectedQuantity:
         initialData?.lines?.find(
@@ -70,7 +76,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     if (initialData) {
       dispatch({
         type: "setRefundShipping",
-        refundShipping: initialData.grantRefundForShipping,
+        refundShipping: grantedRefund.grantRefundForShipping,
       });
     }
   }, []);
@@ -78,7 +84,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   const lines = prepareLineData(state.lines);
   const { set, change, data, submit, setIsDirty } = useGrantRefundForm({
     onSubmit,
-    initialData,
+    grantedRefund,
     lines,
     grantRefundForShipping: state.refundShipping,
   });
@@ -91,11 +97,11 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   const totalSelectedPrice = calculateTotalPrice(state, order);
 
   const hasShipingRefunded = () => {
-    if (initialData?.grantRefundId) {
+    if (grantedRefund?.grantRefundId) {
       return order?.grantedRefunds?.some(
         refund =>
           refund.shippingCostsIncluded &&
-          refund.id !== initialData.grantRefundId,
+          refund.id !== grantedRefund.grantRefundId,
       );
     }
 
@@ -176,7 +182,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                           order?.grantedRefunds,
                         ),
                         selectedQuantity:
-                          initialData.lines.find(line => line.id === id)
+                          grantedRefund.lines.find(line => line.id === id)
                             ?.quantity ?? 0,
                       };
                     },

@@ -25,19 +25,19 @@ export interface Line {
 
 interface GrantRefundFormHookProps {
   onSubmit: (data: OrderGrantRefundFormData) => void;
-  initialData?: OrderGrantRefundFormData;
+  grantedRefund?: OrderGrantRefundFormData;
   lines: Line[];
   grantRefundForShipping: boolean;
 }
 
 export const useGrantRefundForm = ({
   onSubmit,
-  initialData,
+  grantedRefund,
   lines,
   grantRefundForShipping,
 }: GrantRefundFormHookProps) => {
   const { set, change, data, formId } = useForm(
-    initialData ?? defaultInitialData,
+    grantedRefund ?? defaultInitialData,
     undefined,
     {
       confirmLeave: true,
