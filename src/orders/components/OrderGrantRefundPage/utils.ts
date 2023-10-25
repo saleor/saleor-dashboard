@@ -47,7 +47,7 @@ export const getLineAvailableQuantity = (
       return;
     }
 
-    refund.lines.forEach(line => {
+    refund?.lines?.forEach(line => {
       if (line.orderLine.id === lineId) {
         refundedQuantity += line.quantity;
       }
