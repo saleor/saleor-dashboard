@@ -10543,10 +10543,10 @@ export type OrderTransactionRequestActionMutationHookResult = ReturnType<typeof 
 export type OrderTransactionRequestActionMutationResult = Apollo.MutationResult<Types.OrderTransactionRequestActionMutation>;
 export type OrderTransactionRequestActionMutationOptions = Apollo.BaseMutationOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>;
 export const OrderGrantRefundAddDocument = gql`
-    mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal, $reason: String, $lines: [OrderGrantRefundCreateLineInput!]) {
+    mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal, $reason: String, $lines: [OrderGrantRefundCreateLineInput!], $grantRefundForShipping: Boolean) {
   orderGrantRefundCreate(
     id: $orderId
-    input: {amount: $amount, reason: $reason, lines: $lines}
+    input: {amount: $amount, reason: $reason, lines: $lines, grantRefundForShipping: $grantRefundForShipping}
   ) {
     errors {
       ...OrderGrantRefundCreateError
@@ -10573,6 +10573,7 @@ export type OrderGrantRefundAddMutationFn = Apollo.MutationFunction<Types.OrderG
  *      amount: // value for 'amount'
  *      reason: // value for 'reason'
  *      lines: // value for 'lines'
+ *      grantRefundForShipping: // value for 'grantRefundForShipping'
  *   },
  * });
  */
@@ -10584,10 +10585,10 @@ export type OrderGrantRefundAddMutationHookResult = ReturnType<typeof useOrderGr
 export type OrderGrantRefundAddMutationResult = Apollo.MutationResult<Types.OrderGrantRefundAddMutation>;
 export type OrderGrantRefundAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>;
 export const OrderGrantRefundEditDocument = gql`
-    mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal, $reason: String, $addLines: [OrderGrantRefundUpdateLineAddInput!], $removeLines: [ID!]) {
+    mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal, $reason: String, $addLines: [OrderGrantRefundUpdateLineAddInput!], $removeLines: [ID!], $grantRefundForShipping: Boolean) {
   orderGrantRefundUpdate(
     id: $refundId
-    input: {amount: $amount, reason: $reason, addLines: $addLines, removeLines: $removeLines}
+    input: {amount: $amount, reason: $reason, addLines: $addLines, removeLines: $removeLines, grantRefundForShipping: $grantRefundForShipping}
   ) {
     errors {
       ...OrderGrantRefundUpdateError
@@ -10615,6 +10616,7 @@ export type OrderGrantRefundEditMutationFn = Apollo.MutationFunction<Types.Order
  *      reason: // value for 'reason'
  *      addLines: // value for 'addLines'
  *      removeLines: // value for 'removeLines'
+ *      grantRefundForShipping: // value for 'grantRefundForShipping'
  *   },
  * });
  */

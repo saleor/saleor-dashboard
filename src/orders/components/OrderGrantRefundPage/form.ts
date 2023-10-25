@@ -8,12 +8,14 @@ export interface OrderGrantRefundFormData {
   amount: string;
   reason: string;
   lines: OrderGrantRefundCreateLineInput[];
+  grantRefundForShipping: boolean;
 }
 
 const defaultInitialData: OrderGrantRefundFormData = {
   amount: "",
   reason: "",
   lines: [],
+  grantRefundForShipping: false,
 };
 
 export interface Line {
@@ -25,12 +27,14 @@ interface GrantRefundFormHookProps {
   onSubmit: (data: OrderGrantRefundFormData) => void;
   initialData?: OrderGrantRefundFormData;
   lines: Line[];
+  grantRefundForShipping: boolean;
 }
 
 export const useGrantRefundForm = ({
   onSubmit,
   initialData,
   lines,
+  grantRefundForShipping,
 }: GrantRefundFormHookProps) => {
   const { set, change, data, formId } = useForm(
     initialData ?? defaultInitialData,
@@ -53,6 +57,7 @@ export const useGrantRefundForm = ({
     handleFormSubmit({
       ...data,
       lines,
+      grantRefundForShipping,
     });
 
   React.useEffect(() => setExitDialogSubmitRef(submit), [submit]);

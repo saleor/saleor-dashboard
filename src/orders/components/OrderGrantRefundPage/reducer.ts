@@ -30,6 +30,10 @@ export type GrantRefundAction =
     }
   | {
       type: "toggleRefundShipping";
+    }
+  | {
+      type: "setRefundShipping";
+      refundShipping: boolean;
     };
 
 export const grantRefundDefaultState: GrantRefundState = {
@@ -87,6 +91,12 @@ export function grantRefundReducer(
       return {
         ...state,
         refundShipping: !state.refundShipping,
+      };
+    }
+    case "setRefundShipping": {
+      return {
+        ...state,
+        refundShipping: action.refundShipping,
       };
     }
 

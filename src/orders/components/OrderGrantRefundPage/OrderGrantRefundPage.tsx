@@ -66,11 +66,21 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     grantRefundDefaultState,
   );
 
+  React.useEffect(() => {
+    if (initialData) {
+      dispatch({
+        type: "setRefundShipping",
+        refundShipping: initialData.grantRefundForShipping,
+      });
+    }
+  }, []);
+
   const lines = prepareLineData(state.lines);
   const { set, change, data, submit, setIsDirty } = useGrantRefundForm({
     onSubmit,
     initialData,
     lines,
+    grantRefundForShipping: state.refundShipping,
   });
 
   const amount = parseFloat(data.amount);

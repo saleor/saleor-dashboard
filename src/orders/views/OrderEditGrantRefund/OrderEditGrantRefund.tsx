@@ -54,6 +54,7 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
     amount,
     reason,
     lines,
+    grantRefundForShipping,
   }: OrderGrantRefundFormData) => {
     const grantedRefundLinesToDelete = lines
       .map(line =>
@@ -64,17 +65,19 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
       .filter(Boolean)
       .map(line => line.id);
 
-    await extractMutationErrors(
-      grantRefund({
-        variables: {
-          refundId: grantRefundId,
-          amount: amount || undefined,
-          reason,
-          addLines: [],
-          removeLines: grantedRefundLinesToDelete,
-        },
-      }),
-    );
+    if (grantedRefundLinesToDelete.length > 0) {
+      await extractMutationErrors(
+        grantRefund({
+          variables: {
+            refundId: grantRefundId,
+            amount: amount || undefined,
+            reason,
+            addLines: [],
+            removeLines: grantedRefundLinesToDelete,
+          },
+        }),
+      );
+    }
 
     await extractMutationErrors(
       grantRefund({
@@ -82,6 +85,7 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
           refundId: grantRefundId,
           amount: amount || undefined,
           reason,
+          grantRefundForShipping,
           addLines: lines.map(line => ({
             id: line.id,
             quantity: line.quantity,
@@ -128,6 +132,7 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
           grantRefundId,
           reason: grantedRefund.reason,
           amount: grantedRefund.amount.amount.toString(),
+          grantRefundForShipping: grantedRefund.shippingCostsIncluded,
           lines: grantedRefund.lines,
         }}
       />

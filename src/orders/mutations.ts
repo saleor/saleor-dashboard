@@ -513,10 +513,16 @@ export const orderGrantRefundAddMutation = gql`
     $amount: Decimal
     $reason: String
     $lines: [OrderGrantRefundCreateLineInput!]
+    $grantRefundForShipping: Boolean
   ) {
     orderGrantRefundCreate(
       id: $orderId
-      input: { amount: $amount, reason: $reason, lines: $lines }
+      input: {
+        amount: $amount
+        reason: $reason
+        lines: $lines
+        grantRefundForShipping: $grantRefundForShipping
+      }
     ) {
       errors {
         ...OrderGrantRefundCreateError
@@ -532,6 +538,7 @@ export const orderGrantRefundEditMutation = gql`
     $reason: String
     $addLines: [OrderGrantRefundUpdateLineAddInput!]
     $removeLines: [ID!]
+    $grantRefundForShipping: Boolean
   ) {
     orderGrantRefundUpdate(
       id: $refundId
@@ -540,6 +547,7 @@ export const orderGrantRefundEditMutation = gql`
         reason: $reason
         addLines: $addLines
         removeLines: $removeLines
+        grantRefundForShipping: $grantRefundForShipping
       }
     ) {
       errors {

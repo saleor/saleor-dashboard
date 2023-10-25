@@ -59,7 +59,7 @@ export const RefundCard = ({
           <div className={classes.shippingCostLine}>
             <Checkbox
               id={`checkbox-${id}`}
-              value={state.refundShipping}
+              checked={state.refundShipping}
               onChange={() => dispatch({ type: "toggleRefundShipping" })}
               data-test-id="refundShippingCheckbox"
             />

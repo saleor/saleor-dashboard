@@ -49,6 +49,7 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
     amount,
     reason,
     lines,
+    grantRefundForShipping,
   }: OrderGrantRefundFormData) => {
     extractMutationErrors(
       grantRefund({
@@ -57,6 +58,7 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
           amount: amount || undefined,
           reason,
           lines,
+          grantRefundForShipping,
         },
       }),
     );
