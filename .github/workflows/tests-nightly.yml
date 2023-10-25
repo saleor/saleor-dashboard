@@ -31,10 +31,10 @@ on:
       browser:
         required: true
         description: "Browser"
-        default: "chrome"
+        default: "electron"
         type: choice
         options:
-          - chrome
+          - electron
           - firefox
           - all
 
@@ -161,12 +161,12 @@ jobs:
       - name: Cypress install
         id: cypress-install
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch'}}
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           runTests: false
 
-      - name: Cypress run chrome
-        id: cypress-chrome
+      - name: Cypress run electron
+        id: cypress-electron
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result) && ! cancelled() }}
         uses: ./.github/actions/e2e
         with:
@@ -186,7 +186,7 @@ jobs:
           splitIndex: ${{ strategy.job-index }}
           commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           install: false
-          browser: chrome
+          browser: electron
 
       - name: Cypress run firefox
         id: cypress-firefox
@@ -308,7 +308,7 @@ jobs:
       - name: Cypress run - automatically
         id: cypress
         continue-on-error: true
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         env:
           API_URI: ${{ needs.get-environment-variables.outputs.url }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
@@ -329,7 +329,7 @@ jobs:
         with:
           install: false
           parallel: true
-          group: "UI - Chrome"
+          group: "UI - Electron"
           record: true
           tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, ${{ needs.get-environment-variables.outputs.url }}
 
