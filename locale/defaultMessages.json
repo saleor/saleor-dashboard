@@ -2811,6 +2811,10 @@
     "context": "search",
     "string": "No results"
   },
+  "HnZCl7": {
+    "context": "search input placeholder",
+    "string": "Search tax countries"
+  },
   "HqRNN8": {
     "string": "Support"
   },

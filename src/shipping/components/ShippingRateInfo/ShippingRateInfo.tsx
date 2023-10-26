@@ -94,6 +94,7 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
           helperText={getShippingErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage(messages.name)}
           name="name"
+          data-test-id="shipping-rate-name-input"
           value={data.name}
           onChange={onChange}
         />
@@ -118,6 +119,7 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
         <CardSpacer />
         <div className={classes.deliveryTimeFields}>
           <TextField
+            data-test-id="min-delivery-time-input"
             disabled={disabled}
             error={!!formErrors.minDays}
             fullWidth
@@ -134,6 +136,7 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
             onChange={onChange}
           />
           <TextField
+            data-test-id="max-delivery-time-input"
             disabled={disabled}
             error={!!formErrors.maxDays}
             fullWidth
