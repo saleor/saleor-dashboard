@@ -1,11 +1,10 @@
 // @ts-strict-ignore
-import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderLineGrantRefundFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Spinner, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -78,7 +77,11 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
   };
 
   if (loading) {
-    return <Skeleton />;
+    return (
+      <Box textAlign="center">
+        <Spinner />
+      </Box>
+    );
   }
 
   return (
@@ -119,9 +122,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                 >
                   <div className={classes.productName}>
                     <span>{line?.productName}</span>
-                    <span className={classes.productVariantName}>
-                      {line.variantName}
-                    </span>
+                    <span>{line.variantName}</span>
                   </div>
                 </TableCellAvatar>
                 <TableCell className={classes.colQuantity}>
@@ -139,9 +140,13 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                     onChange={getHandleAmountChange(line)}
                     endAdornment={
                       line?.quantity && (
-                        <div className={classes.remainingQuantity}>
+                        <Box
+                          fontSize="bodySmall"
+                          whiteSpace="nowrap"
+                          color="textNeutralSubdued"
+                        >
                           / {line?.availableQuantity}
-                        </div>
+                        </Box>
                       )
                     }
                   />
