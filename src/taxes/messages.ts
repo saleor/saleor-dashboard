@@ -96,6 +96,11 @@ export const taxesMessages = defineMessages({
     defaultMessage: "Search tax classes",
     description: "search input placeholder",
   },
+  searchTaxCountries: {
+    id: "HnZCl7",
+    defaultMessage: "Search tax countries",
+    description: "search input placeholder",
+  },
   taxNameHeader: {
     id: "qbcNjQ",
     defaultMessage: "Tax name",

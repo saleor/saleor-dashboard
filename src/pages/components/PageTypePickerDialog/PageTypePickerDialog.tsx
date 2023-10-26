@@ -68,6 +68,7 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
           </Button>
 
           <ConfirmButton
+            data-test-id="confirm-button"
             transitionState={confirmButtonState}
             onClick={() => (choice ? onConfirm(choice) : null)}
             disabled={!choice}
