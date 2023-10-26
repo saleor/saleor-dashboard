@@ -54,6 +54,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
       />
       <CardContent>
         <ControlledCheckbox
+          data-test-id="order-weight-checkbox"
           name="orderValueRestricted"
           label={
             <>
@@ -80,6 +81,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
             <VerticalSpacer spacing={2} />
             <div className={classes.grid}>
               <TextField
+                data-test-id="min-order-weight-input"
                 disabled={disabled}
                 helperText={getShippingWeightRateErrorMessage(
                   formErrors.minimumOrderWeight,
@@ -109,6 +111,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                 onChange={onChange}
               />
               <TextField
+                data-test-id="max-order-weight-input"
                 disabled={disabled}
                 helperText={getShippingWeightRateErrorMessage(
                   formErrors.maximumOrderWeight,

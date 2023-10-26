@@ -61,6 +61,7 @@ const ChannelsSection: React.FC<ChannelsSectionProps> = ({
         placeholder={intl.formatMessage(messages.selectFieldPlaceholder)}
         value={selectedChannels}
         testId="channels"
+        data-test-id="select-channel-for-shipping-method"
       />
     </>
   );

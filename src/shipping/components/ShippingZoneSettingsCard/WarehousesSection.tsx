@@ -62,6 +62,7 @@ const WarehousesSection: React.FC<WarehousesSectionProps> = ({
           onClick: onAdd,
         }}
         testId="warehouses"
+        data-test-id="select-warehouse-for-shipping-method"
         choices={choices}
         displayValues={displayValues}
         fetchChoices={onSearchChange}
