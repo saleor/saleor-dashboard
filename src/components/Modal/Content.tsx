@@ -3,11 +3,16 @@ import React, { ReactNode } from "react";
 
 type ContentProps = PropsWithBox<{
   children: ReactNode;
+  disableAutofocus?: boolean;
 }>;
 
-export const Content = ({ children, ...rest }: ContentProps) => {
+export const Content = ({
+  children,
+  disableAutofocus,
+  ...rest
+}: ContentProps) => {
   return (
-    <Modal.Content>
+    <Modal.Content disableAutofocus={disableAutofocus}>
       <Box
         backgroundColor="surfaceNeutralPlain"
         boxShadow="modal"
