@@ -59,7 +59,7 @@ export class RightSideDetailsPage {
     await this.selectWarehouseShippingMethodButton.click();
   }
 
-  async typeAndSelectSingleWarehouseShippingPage(warehouse = "Europ") {
+  async typeAndSelectSingleWarehouseShippingPage(warehouse = "Europe") {
     await this.selectWarehouseShippingMethodButton
       .locator("input")
       .fill(warehouse);
