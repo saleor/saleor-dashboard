@@ -7,6 +7,7 @@ export class AddProductsDialog {
   readonly productRowCheckbox: Locator;
   readonly backButton: Locator;
   readonly confirmButton: Locator;
+  readonly assignAndSaveButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -15,6 +16,7 @@ export class AddProductsDialog {
     this.backButton = page.getByTestId("back-button");
     this.confirmButton = page.getByTestId("confirm-button");
     this.productRowCheckbox = page.getByTestId("checkbox");
+    this.assignAndSaveButton = page.getByTestId("assign-and-save-button");
   }
 
   async clickConfirmButton() {
