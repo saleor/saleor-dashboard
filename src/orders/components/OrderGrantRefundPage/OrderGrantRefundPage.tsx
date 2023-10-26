@@ -6,14 +6,16 @@ import {
   ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { formatMoneyAmount } from "@dashboard/components/Money";
 import PriceField from "@dashboard/components/PriceField";
 import {
   OrderDetailsGrantedRefundFragment,
   OrderDetailsGrantRefundFragment,
 } from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Box, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
+import React, { useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getOrderTitleMessage } from "../OrderCardTitle/utils";
@@ -22,12 +24,18 @@ import { ShippingIncluded } from "./components/ShippingInluded";
 import { GrantRefundContext } from "./context";
 import { OrderGrantRefundFormData, useGrantRefundForm } from "./form";
 import { grantRefundPageMessages } from "./messages";
-import { grantRefundDefaultState, grantRefundReducer } from "./reducer";
 import {
+  getGrantRefundReducerInitialState,
+  grantRefundDefaultState,
+  grantRefundReducer,
+} from "./reducer";
+import {
+  calculateCanRefundShipping,
+  calculateRefundAmountValue,
   calculateTotalPrice,
   getFulfilmentSubtitle,
   getGrantedRefundData,
-  getLineAvailableQuantity,
+  isSubmitButtonDisabled,
   prepareLineData,
 } from "./utils";
 
@@ -49,66 +57,75 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   initialData,
 }) => {
   const intl = useIntl();
-  const grantedRefund = getGrantedRefundData(initialData);
+  const { locale } = useLocale();
+  const grantedRefund = useMemo(
+    () => getGrantedRefundData(initialData),
+    [initialData],
+  );
 
-  const unfulfilledLines = (order?.lines ?? [])
-    .filter(line => line.quantityToFulfill > 0)
-    .map(line => ({
-      ...line,
-      availableQuantity: getLineAvailableQuantity(
-        line.id,
-        line.quantity,
-        order?.grantedRefunds,
-        grantedRefund?.grantRefundId,
-      ),
-      selectedQuantity:
-        initialData?.lines?.find(
-          initLine => (initLine as any).orderLine.id === line.id,
-        )?.quantity ?? 0,
-    }));
-
+  const unfulfilledLines = (order?.lines ?? []).filter(
+    line => line.quantityToFulfill > 0,
+  );
   const [state, dispatch] = React.useReducer(
     grantRefundReducer,
     grantRefundDefaultState,
   );
 
-  React.useEffect(() => {
-    if (initialData) {
+  useEffect(() => {
+    if (grantedRefund) {
       dispatch({
         type: "setRefundShipping",
         refundShipping: grantedRefund.grantRefundForShipping,
       });
     }
-  }, []);
+  }, [grantedRefund]);
+
+  useEffect(() => {
+    if (order?.id) {
+      dispatch({
+        type: "initState",
+        state: getGrantRefundReducerInitialState(order, initialData),
+      });
+    }
+  }, [order, initialData]);
 
   const lines = prepareLineData(state.lines);
-  const { set, change, data, submit, setIsDirty } = useGrantRefundForm({
-    onSubmit,
+  const { set, change, data, submit, setIsDirty, isAmountDirty } =
+    useGrantRefundForm({
+      onSubmit,
+      grantedRefund,
+      lines,
+      // Send grantRefundForShipping only when it's different than the one
+      grantRefundForShipping:
+        grantedRefund?.grantRefundForShipping === state.refundShipping
+          ? undefined
+          : state.refundShipping,
+    });
+
+  const canRefundShipping = calculateCanRefundShipping(
     grantedRefund,
-    lines,
-    grantRefundForShipping: state.refundShipping,
+    order?.grantedRefunds,
+  );
+  const totalSelectedPrice = calculateTotalPrice(state, order);
+  const amountValue = calculateRefundAmountValue({
+    isAmountInputDirty: isAmountDirty,
+    refundAmount: Number(data.amount),
+    totalCalulatedPrice: totalSelectedPrice,
   });
 
   const amount = parseFloat(data.amount);
-  const isAmount = Number.isNaN(amount) || amount <= 0;
-  const hasSelectedLines = lines.length > 0;
-  const submitDisabled = hasSelectedLines ? false : isAmount;
+  const isAmountEmptyOrNaN = Number.isNaN(amount) || amount <= 0;
+  const submitDisabled = isSubmitButtonDisabled({
+    linesLength: lines.length,
+    canShippingBeRefunded: canRefundShipping,
+    isAmountDirty,
+    isAmountValueValid: !isAmountEmptyOrNaN,
+    shippingRefundValueDifferent:
+      state.refundShipping !== grantedRefund?.grantRefundForShipping,
+  });
 
   const currency = order?.total?.gross?.currency ?? "";
 
-  const totalSelectedPrice = calculateTotalPrice(state, order);
-
-  const hasShipingRefunded = () => {
-    if (grantedRefund?.grantRefundId) {
-      return order?.grantedRefunds?.some(
-        refund =>
-          refund.shippingCostsIncluded &&
-          refund.id !== grantedRefund.grantRefundId,
-      );
-    }
-
-    return order?.grantedRefunds?.some(refund => refund.shippingCostsIncluded);
-  };
   const handleSubmit = (e: React.FormEvent<any>) => {
     e.stopPropagation();
     e.preventDefault();
@@ -150,56 +167,52 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                   <FormattedMessage {...grantRefundPageMessages.pageSubtitle} />
                 </Text>
 
-                <ProductsCard
-                  loading={loading}
-                  title={
-                    <FormattedMessage
-                      {...grantRefundPageMessages.unfulfilledProducts}
+                {loading ? (
+                  <Skeleton />
+                ) : (
+                  <>
+                    <ProductsCard
+                      title={
+                        <FormattedMessage
+                          {...grantRefundPageMessages.unfulfilledProducts}
+                        />
+                      }
+                      lines={unfulfilledLines}
                     />
-                  }
-                  lines={unfulfilledLines}
-                />
 
-                {order?.fulfillments?.map?.(fulfillment => (
-                  <ProductsCard
-                    loading={loading}
-                    key={fulfillment.id}
-                    title={intl.formatMessage(
-                      getOrderTitleMessage(fulfillment.status),
-                    )}
-                    subtitle={
-                      <Text
-                        variant="body"
-                        display="inline-block"
-                        marginLeft={1}
-                      >
-                        {getFulfilmentSubtitle(order, fulfillment)}
-                      </Text>
-                    }
-                    lines={fulfillment.lines.map(
-                      ({ orderLine, id, quantity }) => {
-                        return {
-                          ...orderLine,
-                          id,
-                          quantity,
-                          availableQuantity: getLineAvailableQuantity(
-                            id,
-                            quantity,
-                            order?.grantedRefunds,
-                          ),
-                          selectedQuantity:
-                            grantedRefund.lines.find(line => line.id === id)
-                              ?.quantity ?? 0,
-                        };
-                      },
-                    )}
-                  />
-                ))}
+                    {order?.fulfillments?.map?.(fulfillment => (
+                      <ProductsCard
+                        key={fulfillment.id}
+                        title={intl.formatMessage(
+                          getOrderTitleMessage(fulfillment.status),
+                        )}
+                        subtitle={
+                          <Text
+                            variant="body"
+                            display="inline-block"
+                            marginLeft={1}
+                          >
+                            {getFulfilmentSubtitle(order, fulfillment)}
+                          </Text>
+                        }
+                        lines={fulfillment.lines.map(
+                          ({ orderLine, id, quantity }) => {
+                            return {
+                              ...orderLine,
+                              id,
+                              quantity,
+                            };
+                          },
+                        )}
+                      />
+                    ))}
+                  </>
+                )}
 
                 <ShippingIncluded
                   currency={currency}
                   amount={order?.shippingPrice?.gross}
-                  hasShipingRefunded={hasShipingRefunded()}
+                  canRefundShipping={canRefundShipping}
                 />
 
                 <Box display="flex" gap={3}>
@@ -226,7 +239,17 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                     disabled={loading}
                     name={"amount" as keyof OrderGrantRefundFormData}
                     currencySymbol={currency}
-                    value={data.amount}
+                    value={
+                      isAmountDirty
+                        ? amountValue.toString()
+                        : formatMoneyAmount(
+                            {
+                              amount: amountValue,
+                              currency,
+                            },
+                            locale,
+                          )
+                    }
                     data-test-id="amountInput"
                   />
                 </Box>

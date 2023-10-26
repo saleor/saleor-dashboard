@@ -102,7 +102,7 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
       <OrderGrantRefundPage
         order={undefined}
         loading={true}
-        submitState="loading"
+        submitState="default"
         onSubmit={() => undefined}
         isEdit
       />

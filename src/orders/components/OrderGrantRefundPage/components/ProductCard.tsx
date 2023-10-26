@@ -4,7 +4,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderLineGrantRefundFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Input, Spinner, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -13,22 +13,15 @@ import { grantRefundPageMessages, productCardMessages } from "../messages";
 import { useProductsCardStyles } from "../styles";
 
 interface ProductsCardProps {
-  loading: boolean;
   title: React.ReactNode;
   subtitle?: React.ReactNode;
-  lines: Array<
-    OrderLineGrantRefundFragment & {
-      selectedQuantity?: number;
-      availableQuantity: number;
-    }
-  >;
+  lines: OrderLineGrantRefundFragment[];
 }
 
 export const ProductsCard: React.FC<ProductsCardProps> = ({
   title,
   subtitle,
   lines,
-  loading,
 }) => {
   const classes = useProductsCardStyles();
   const { dispatch, state } = useGrantRefundContext();
@@ -51,38 +44,16 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
       });
     };
 
-  const getQuantityValue = (
-    line: OrderLineGrantRefundFragment & { selectedQuantity?: number },
-  ) => {
-    if (state.lines.has(line.id)) {
-      return state.lines.get(line.id).selectedQuantity;
-    }
-
-    if (line.selectedQuantity) {
-      return line.selectedQuantity;
-    }
-
-    return 0;
-  };
-
   const handleSetMaxQuanity = () => {
     dispatch({
       type: "setMaxQuantity",
       lines: lines.map(line => ({
         id: line.id,
-        quantity: line.availableQuantity,
+        quantity: state.lines.get(line.id)?.availableQuantity ?? 0,
         unitPrice: line.unitPrice.gross.amount,
       })),
     });
   };
-
-  if (loading) {
-    return (
-      <Box textAlign="center">
-        <Spinner />
-      </Box>
-    );
-  }
 
   return (
     <>
@@ -114,45 +85,49 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
         <TableBody>
           {renderCollection(
             lines,
-            line => (
-              <TableRowLink key={line?.id}>
-                <TableCellAvatar
-                  thumbnail={line?.thumbnail?.url}
-                  className={classes.colProduct}
-                >
-                  <div className={classes.productName}>
-                    <span>{line?.productName}</span>
-                    <span>{line.variantName}</span>
-                  </div>
-                </TableCellAvatar>
-                <TableCell className={classes.colQuantity}>
-                  {line.quantity}
-                </TableCell>
-                <TableCell className={classes.colQuantityInput}>
-                  <Input
-                    size="small"
-                    textAlign="right"
-                    type="number"
-                    max={(line?.quantity).toString()}
-                    min={0}
-                    data-test-id={"quantityInput" + line?.id}
-                    value={getQuantityValue(line)}
-                    onChange={getHandleAmountChange(line)}
-                    endAdornment={
-                      line?.quantity && (
-                        <Box
-                          fontSize="bodySmall"
-                          whiteSpace="nowrap"
-                          color="textNeutralSubdued"
-                        >
-                          / {line?.availableQuantity}
-                        </Box>
-                      )
-                    }
-                  />
-                </TableCell>
-              </TableRowLink>
-            ),
+            line => {
+              const stateLine = state.lines.get(line.id);
+
+              return (
+                <TableRowLink key={line?.id}>
+                  <TableCellAvatar
+                    thumbnail={line?.thumbnail?.url}
+                    className={classes.colProduct}
+                  >
+                    <div className={classes.productName}>
+                      <span>{line?.productName}</span>
+                      <span>{line.variantName}</span>
+                    </div>
+                  </TableCellAvatar>
+                  <TableCell className={classes.colQuantity}>
+                    {line.quantity}
+                  </TableCell>
+                  <TableCell className={classes.colQuantityInput}>
+                    <Input
+                      size="small"
+                      textAlign="right"
+                      type="number"
+                      max={stateLine?.availableQuantity}
+                      min={0}
+                      data-test-id={"quantityInput" + line?.id}
+                      value={stateLine?.selectedQuantity ?? 0}
+                      onChange={getHandleAmountChange(line)}
+                      endAdornment={
+                        line?.quantity && (
+                          <Box
+                            fontSize="bodySmall"
+                            whiteSpace="nowrap"
+                            color="textNeutralSubdued"
+                          >
+                            / {stateLine?.availableQuantity}
+                          </Box>
+                        )
+                      }
+                    />
+                  </TableCell>
+                </TableRowLink>
+              );
+            },
             () => (
               <TableRowLink>
                 <TableCell colSpan={3}>

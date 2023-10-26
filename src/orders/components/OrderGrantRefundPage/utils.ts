@@ -1,6 +1,7 @@
 import {
   OrderDetailsGrantedRefundFragment,
   OrderDetailsGrantRefundFragment,
+  OrderGrantRefundCreateLineInput,
 } from "@dashboard/graphql";
 import currency from "currency.js";
 
@@ -32,10 +33,12 @@ export const getFulfilmentSubtitle = (
 ) => `#${order.number}-${fulfillment.fulfillmentOrder}`;
 
 export const prepareLineData = (lines: Map<string, ReducerOrderLine>): Line[] =>
-  Array.from(lines.entries()).map(([id, line]) => ({
-    id,
-    quantity: line.selectedQuantity,
-  }));
+  Array.from(lines.entries())
+    .filter(([_, line]) => line.isDirty)
+    .map(([id, line]) => ({
+      id,
+      quantity: line.selectedQuantity,
+    }));
 
 export const getLineAvailableQuantity = (
   lineId: string,
@@ -60,18 +63,95 @@ export const getLineAvailableQuantity = (
   return lineQuntity - refundedQuantity;
 };
 
+export interface OrderGrantRefundData {
+  amount: string;
+  reason: string;
+  lines: OrderGrantRefundCreateLineInput[];
+  grantRefundForShipping: boolean;
+  grantRefundId: string;
+}
+
 export const getGrantedRefundData = (
-  grantedRefund: OrderDetailsGrantedRefundFragment,
-) => {
+  grantedRefund?: OrderDetailsGrantedRefundFragment,
+): OrderGrantRefundData | undefined => {
   if (!grantedRefund) {
     return undefined;
   }
 
   return {
     grantRefundId: grantedRefund.id,
-    reason: grantedRefund.reason,
+    reason: grantedRefund?.reason ?? "",
     amount: grantedRefund.amount.amount.toString(),
     grantRefundForShipping: grantedRefund.shippingCostsIncluded,
-    lines: grantedRefund.lines,
+    lines: grantedRefund?.lines ?? [],
   };
+};
+
+export const calculateCanRefundShipping = (
+  editedGrantedRefund?: OrderGrantRefundData,
+  grantedRefunds?: OrderDetailsGrantedRefundFragment[],
+) => {
+  if (editedGrantedRefund) {
+    if (editedGrantedRefund.grantRefundForShipping) {
+      return true;
+    }
+    return !grantedRefunds?.some(
+      refund =>
+        refund.shippingCostsIncluded &&
+        refund.id !== editedGrantedRefund.grantRefundId,
+    );
+  }
+  return !grantedRefunds?.some(refund => refund.shippingCostsIncluded);
+};
+
+export const calculateRefundAmountValue = ({
+  isAmountInputDirty,
+  totalCalulatedPrice,
+  refundAmount,
+}: {
+  isAmountInputDirty: boolean;
+  totalCalulatedPrice: number;
+  refundAmount: number;
+}) => {
+  if (!isAmountInputDirty && refundAmount) {
+    return refundAmount;
+  }
+
+  if (refundAmount && refundAmount !== totalCalulatedPrice) {
+    return refundAmount;
+  }
+
+  return totalCalulatedPrice ?? 0;
+};
+
+export const isSubmitButtonDisabled = ({
+  linesLength,
+  canShippingBeRefunded,
+  shippingRefundValueDifferent,
+  isAmountDirty,
+  isAmountValueValid,
+}: {
+  linesLength: number;
+  canShippingBeRefunded: boolean;
+  shippingRefundValueDifferent: boolean;
+  isAmountDirty: boolean;
+  isAmountValueValid: boolean;
+}) => {
+  if (linesLength > 0) {
+    return false;
+  }
+
+  if (shippingRefundValueDifferent && canShippingBeRefunded) {
+    return false;
+  }
+
+  if (isAmountValueValid && !isAmountDirty) {
+    return true;
+  }
+
+  if (!isAmountValueValid) {
+    return true;
+  }
+
+  return false;
 };

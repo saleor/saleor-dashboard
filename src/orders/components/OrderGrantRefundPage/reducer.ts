@@ -1,9 +1,17 @@
 // @ts-strict-ignore
+import {
+  OrderDetailsGrantedRefundFragment,
+  OrderDetailsGrantRefundFragment,
+} from "@dashboard/graphql";
 import { exhaustiveCheck } from "@dashboard/utils/ts";
+
+import { getLineAvailableQuantity } from "./utils";
 
 export interface ReducerOrderLine {
   selectedQuantity: number;
+  availableQuantity: number;
   unitPrice: number;
+  isDirty: boolean;
 }
 
 export interface GrantRefundState {
@@ -29,12 +37,66 @@ export type GrantRefundAction =
       }>;
     }
   | {
+      type: "initState";
+      state: GrantRefundState;
+    }
+  | {
       type: "toggleRefundShipping";
     }
   | {
       type: "setRefundShipping";
       refundShipping: boolean;
     };
+
+export const getGrantRefundReducerInitialState = (
+  order: OrderDetailsGrantRefundFragment,
+  grantedRefund?: OrderDetailsGrantedRefundFragment,
+): GrantRefundState => {
+  const unfulfilledLines = order?.lines
+    .filter(line => line.quantityToFulfill > 0)
+    .map<GrantRefundLineKeyValue>(line => [
+      line.id,
+      {
+        isDirty: false,
+        availableQuantity: getLineAvailableQuantity(
+          line.id,
+          line.quantity,
+          order?.grantedRefunds,
+          grantedRefund?.id,
+        ),
+        unitPrice: line.unitPrice.gross.amount,
+        selectedQuantity:
+          grantedRefund?.lines?.find(
+            initLine => (initLine as any).orderLine.id === line.id,
+          )?.quantity ?? 0,
+      },
+    ]);
+
+  const fulfilmentLines = order.fulfillments
+    .flatMap(fulfilment => fulfilment.lines)
+    .map<GrantRefundLineKeyValue>(line => [
+      line.id,
+      {
+        isDirty: false,
+        availableQuantity: getLineAvailableQuantity(
+          line.id,
+          line.quantity,
+          order?.grantedRefunds,
+          grantedRefund?.id,
+        ),
+        unitPrice: line.orderLine.unitPrice.gross.amount,
+        selectedQuantity:
+          grantedRefund?.lines?.find(
+            initLine => (initLine as any).orderLine.id === line.id,
+          )?.quantity ?? 0,
+      },
+    ]);
+
+  return {
+    lines: new Map([...unfulfilledLines, ...fulfilmentLines]),
+    refundShipping: grantedRefund?.shippingCostsIncluded ?? false,
+  };
+};
 
 export const grantRefundDefaultState: GrantRefundState = {
   lines: new Map(),
@@ -50,17 +112,9 @@ export function grantRefundReducer(
       const line = state.lines.get(action.lineId);
       const newLines = new Map(state.lines);
 
-      if (action.amount === 0) {
-        newLines.delete(action.lineId);
-
-        return {
-          ...state,
-          lines: newLines,
-        };
-      }
-
       newLines.set(action.lineId, {
         ...line,
+        isDirty: action.amount !== 0,
         unitPrice: action.unitPrice,
         selectedQuantity: action.amount,
       });
@@ -77,6 +131,7 @@ export function grantRefundReducer(
         const currentLine = state.lines.get(line.id);
         newLines.set(line.id, {
           ...currentLine,
+          isDirty: line.quantity > 0,
           unitPrice: line.unitPrice,
           selectedQuantity: line.quantity,
         });
@@ -86,6 +141,9 @@ export function grantRefundReducer(
         ...state,
         lines: newLines,
       };
+    }
+    case "initState": {
+      return action.state;
     }
     case "toggleRefundShipping": {
       return {

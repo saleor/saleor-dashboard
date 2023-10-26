@@ -1,6 +1,6 @@
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { OrderGrantRefundCreateLineInput } from "@dashboard/graphql";
-import useForm from "@dashboard/hooks/useForm";
+import useForm, { FormChange } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import React from "react";
 
@@ -36,6 +36,7 @@ export const useGrantRefundForm = ({
   lines,
   grantRefundForShipping,
 }: GrantRefundFormHookProps) => {
+  const [isAmountDirty, setIsAmountDirty] = React.useState(false);
   const { set, change, data, formId } = useForm(
     grantedRefund ?? defaultInitialData,
     undefined,
@@ -62,5 +63,10 @@ export const useGrantRefundForm = ({
 
   React.useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  return { set, change, data, submit, setIsDirty };
+  const handleChange: FormChange = e => {
+    if (["amount", "reason"].includes(e.target.name)) setIsAmountDirty(true);
+    change(e);
+  };
+
+  return { set, change: handleChange, data, submit, setIsDirty, isAmountDirty };
 };

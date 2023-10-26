@@ -12,13 +12,13 @@ import { grantRefundPageMessages } from "../messages";
 interface ShippingIncludedProps {
   currency: string;
   amount: IMoney;
-  hasShipingRefunded: boolean;
+  canRefundShipping: boolean;
 }
 
 export const ShippingIncluded = ({
   currency,
   amount,
-  hasShipingRefunded,
+  canRefundShipping,
 }: ShippingIncludedProps) => {
   const id = useId();
   const { locale } = useLocale();
@@ -31,7 +31,7 @@ export const ShippingIncluded = ({
         pressed={state.refundShipping}
         onPressedChange={() => dispatch({ type: "toggleRefundShipping" })}
         data-test-id="refundShippingCheckbox"
-        disabled={hasShipingRefunded}
+        disabled={!currency || !canRefundShipping}
       >
         {!currency ? (
           <Skeleton />
@@ -46,7 +46,7 @@ export const ShippingIncluded = ({
         )}
       </Toggle>
 
-      {hasShipingRefunded && (
+      {!canRefundShipping && (
         <Text variant="caption" color="textNeutralDisabled">
           <FormattedMessage
             defaultMessage="Shipping has been already refunded"
