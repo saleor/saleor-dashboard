@@ -203,7 +203,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                                 variant="outlined"
                                 onChange={e => setQuery(e.target.value)}
                                 placeholder={intl.formatMessage(
-                                  taxesMessages.searchTaxClasses,
+                                  taxesMessages.searchTaxCountries,
                                 )}
                                 fullWidth
                                 InputProps={{
