@@ -50,7 +50,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
   );
 
   return (
-    <Card>
+    <Card data-test-id="order-value">
       <CardTitle
         title={intl.formatMessage({
           id: "yatGsm",
@@ -61,6 +61,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
       <div className={classes.content}>
         <div className={classes.subheader}>
           <ControlledCheckbox
+            data-test-id="order-value-checkbox"
             name="orderValueRestricted"
             label={
               <>
@@ -132,6 +133,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                     </TableCell>
                     <TableCell className={classes.price}>
                       <PriceField
+                        data-test-id="min-value-price-input"
                         disabled={disabled}
                         error={!!minError}
                         label={intl.formatMessage({
@@ -154,6 +156,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                     </TableCell>
                     <TableCell className={classes.price}>
                       <PriceField
+                        data-test-id="max-value-price-input"
                         disabled={disabled}
                         error={!!maxError}
                         label={intl.formatMessage({
