@@ -1,18 +1,11 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderLineGrantRefundFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
-import {
-  Card,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TextField,
-} from "@material-ui/core";
+import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
+import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -21,6 +14,7 @@ import { grantRefundPageMessages, productCardMessages } from "../messages";
 import { useProductsCardStyles } from "../styles";
 
 interface ProductsCardProps {
+  loading: boolean;
   title: React.ReactNode;
   subtitle?: React.ReactNode;
   lines: Array<
@@ -35,6 +29,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
   title,
   subtitle,
   lines,
+  loading,
 }) => {
   const classes = useProductsCardStyles();
   const { dispatch, state } = useGrantRefundContext();
@@ -82,25 +77,25 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
     });
   };
 
+  if (loading) {
+    return <Skeleton />;
+  }
+
   return (
-    <Card>
-      <CardTitle
-        title={
-          <>
-            {title}
-            {subtitle}
-          </>
-        }
-        toolbar={
-          <Button
-            variant="secondary"
-            onClick={handleSetMaxQuanity}
-            data-test-id="setMaxQuantityButton"
-          >
-            <FormattedMessage {...grantRefundPageMessages.setMaxQuantity} />
-          </Button>
-        }
-      ></CardTitle>
+    <>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Text variant="heading">
+          {title}
+          {subtitle}
+        </Text>
+        <Button
+          variant="secondary"
+          onClick={handleSetMaxQuanity}
+          data-test-id="setMaxQuantityButton"
+        >
+          <FormattedMessage {...grantRefundPageMessages.setMaxQuantity} />
+        </Button>
+      </Box>
       <Table>
         <TableHead>
           <TableCell className={classes.colProduct}>
@@ -133,25 +128,22 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                   {line.quantity}
                 </TableCell>
                 <TableCell className={classes.colQuantityInput}>
-                  <TextField
+                  <Input
+                    size="small"
+                    textAlign="right"
                     type="number"
-                    inputProps={{
-                      className: classes.quantityInnerInput,
-                      "data-test-id": "quantityInput" + line?.id,
-                      max: (line?.quantity).toString(),
-                      min: 0,
-                      style: { textAlign: "right" },
-                    }}
-                    fullWidth
+                    max={(line?.quantity).toString()}
+                    min={0}
+                    data-test-id={"quantityInput" + line?.id}
                     value={getQuantityValue(line)}
                     onChange={getHandleAmountChange(line)}
-                    InputProps={{
-                      endAdornment: line?.quantity && (
+                    endAdornment={
+                      line?.quantity && (
                         <div className={classes.remainingQuantity}>
                           / {line?.availableQuantity}
                         </div>
-                      ),
-                    }}
+                      )
+                    }
                   />
                 </TableCell>
               </TableRowLink>
@@ -169,6 +161,6 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
           )}
         </TableBody>
       </Table>
-    </Card>
+    </>
   );
 };

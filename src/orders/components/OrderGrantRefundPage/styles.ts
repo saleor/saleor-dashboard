@@ -21,56 +21,8 @@ export const useStyles = makeStyles(
   { name: "OrderGrantRefund" },
 );
 
-export const useRefundCardStyles = makeStyles(
-  theme => ({
-    cardContent: {
-      display: "flex",
-      flexDirection: "column",
-      gap: theme.spacing(1.5),
-    },
-    refundCardHeader: {
-      paddingBottom: theme.spacing(1),
-    },
-    suggestedValue: {
-      display: "flex",
-      alignItems: "baseline",
-      gap: theme.spacing(1),
-      flexWrap: "wrap",
-    },
-    totalMoney: {
-      fontWeight: 600,
-    },
-    applyButton: {
-      height: "auto",
-      padding: 0,
-    },
-    shippingCostLine: {
-      display: "flex",
-      gap: theme.spacing(1),
-      "& .MuiCheckbox-root": {
-        padding: 0,
-      },
-    },
-    submitLine: {
-      display: "flex",
-      "& button": {
-        // when line overflows
-        marginLeft: "auto",
-      },
-    },
-    shippingCostLineLoading: {
-      height: "21px",
-    },
-  }),
-  { name: "RefundCard" },
-);
-
 export const useProductsCardStyles = makeStyles(
   theme => {
-    const inputPadding = {
-      paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2),
-    };
     return {
       colProduct: {
         width: "auto",
@@ -92,11 +44,7 @@ export const useProductsCardStyles = makeStyles(
         textAlign: "right",
         width: `${75 + 32 + 32}px`,
       },
-      quantityInnerInput: {
-        ...inputPadding,
-      },
       remainingQuantity: {
-        ...inputPadding,
         color: theme.palette.text.secondary,
         whiteSpace: "nowrap",
       },
