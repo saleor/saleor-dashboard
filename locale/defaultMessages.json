@@ -1863,7 +1863,7 @@
   },
   "BXMSl4": {
     "context": "currency channel",
-    "string": "There is no available channel to move order information to. Please create a channel with same currency so that information can be moved to it."
+    "string": "To delete {channelSlug} you have to create a chanel with currency: {currency} to be able to move all existing orders."
   },
   "BXkF8Z": {
     "context": "header",
@@ -3501,7 +3501,7 @@
   },
   "Mz0cx+": {
     "context": "delete channel",
-    "string": "Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?"
+    "string": "All channel settings information such as shipping, product listings, warehouse assignments, etc, will be lost."
   },
   "N2SbNc": {
     "string": "{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
@@ -4047,7 +4047,7 @@
   },
   "QZoU0r": {
     "context": "dialog header",
-    "string": "Delete Channel"
+    "string": "Delete Channel: {channelSlug}"
   },
   "Qb2XN5": {
     "string": "\"Mark as paid\" feature creates a {link} - used by Payment Apps"
@@ -4333,7 +4333,7 @@
   },
   "SZJhvK": {
     "context": "dialog header",
-    "string": "Select Channel"
+    "string": "Select destination channel:"
   },
   "SZt9kC": {
     "context": "export filtered items to csv file",
@@ -7975,7 +7975,7 @@
   },
   "sidKce": {
     "context": "delete channel",
-    "string": "All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:."
+    "string": "To delete channel channel that you wish to move existing orders to. {br} Note: Only channels with matching currency are available."
   },
   "sjRXXz": {
     "string": "Order #{orderId} was placed from draft by {userEmail}"

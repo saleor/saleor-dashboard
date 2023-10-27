@@ -14,37 +14,39 @@ import { useStyles } from "../styles";
 
 const messages = defineMessages({
   deleteChannel: {
-    id: "QZoU0r",
-    defaultMessage: "Delete Channel",
+    id: "LATHyi",
+    defaultMessage: "Delete Channel: {channelSlug} ",
     description: "dialog header",
   },
   deletingAllProductData: {
-    id: "Mz0cx+",
+    id: "GCho9N",
     defaultMessage:
-      "Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?",
+      "All channel settings information such as shipping, product listings, warehouse assignments, etc, will be lost.",
     description: "delete channel",
   },
   needToBeMoved: {
-    id: "sidKce",
+    id: "stRNn/",
     defaultMessage:
-      "All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:.",
+      "To delete channel channel that you wish to move existing orders to. {br} Note: Only channels with matching currency are available.",
     description: "delete channel",
   },
   noAvailableChannel: {
-    id: "BXMSl4",
+    id: "Ge+dUe",
     defaultMessage:
-      "There is no available channel to move order information to. Please create a channel with same currency so that information can be moved to it.",
+      "To delete {channelSlug} you have to create a chanel with currency: {currency} to be able to move all existing orders.",
     description: "currency channel",
   },
   selectChannel: {
-    id: "SZJhvK",
-    defaultMessage: "Select Channel",
+    id: "GP0zGO",
+    defaultMessage: "Select destination channel:",
     description: "dialog header",
   },
 });
 
 export interface ChannelDeleteDialogProps {
   channelsChoices: Choices;
+  channelSlug: string;
+  currency: string;
   hasOrders: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
@@ -55,10 +57,12 @@ export interface ChannelDeleteDialogProps {
 
 const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
   channelsChoices = [],
+  channelSlug,
   hasOrders,
   confirmButtonState,
   open,
   onBack,
+  currency,
   onClose,
   onConfirm,
 }) => {
@@ -75,21 +79,26 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}
+      backButtonText={
+        canBeDeleted
+          ? buttonMessages.cancel.defaultMessage
+          : buttonMessages.ok.defaultMessage
+      }
       open={open}
       onClose={onClose}
       onConfirm={() => (canBeDeleted ? onConfirm(choice) : onBack())}
-      title={intl.formatMessage(messages.deleteChannel)}
+      title={intl.formatMessage(messages.deleteChannel, { channelSlug })}
       confirmButtonLabel={intl.formatMessage(
-        canBeDeleted ? buttonMessages.delete : buttonMessages.ok,
+        canBeDeleted ? buttonMessages.delete : buttonMessages.cancel,
       )}
-      variant={canBeDeleted ? "delete" : "default"}
+      variant={canBeDeleted ? "delete" : "info"}
     >
       <div>
         {hasOrders ? (
           hasChannels ? (
             <>
               <Typography>
-                {intl.formatMessage(messages.needToBeMoved)}
+                {intl.formatMessage(messages.needToBeMoved, { br: <br /> })}
               </Typography>
               <div className={classes.select}>
                 <SingleSelectField
@@ -106,7 +115,10 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
             </>
           ) : (
             <Typography>
-              {intl.formatMessage(messages.noAvailableChannel)}
+              {intl.formatMessage(messages.noAvailableChannel, {
+                channelSlug: <strong>{channelSlug}</strong>,
+                currency: <strong>{currency}</strong>,
+              })}
             </Typography>
           )
         ) : (

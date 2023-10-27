@@ -104,7 +104,9 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
 
       {!!selectedChannel && (
         <ChannelDeleteDialog
+          currency={selectedChannel.currencyCode}
           channelsChoices={channelsChoices}
+          channelSlug={selectedChannel?.slug}
           hasOrders={selectedChannel.hasOrders}
           open={params.action === "remove"}
           confirmButtonState={deleteChannelOpts.status}
