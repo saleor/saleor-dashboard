@@ -131,13 +131,13 @@ export const isSubmitButtonDisabled = ({
   linesLength,
   canShippingBeRefunded,
   shippingRefundValueDifferent,
-  isAmountDirty,
+  isFormDirty,
   isAmountValueValid,
 }: {
   linesLength: number;
   canShippingBeRefunded: boolean;
   shippingRefundValueDifferent: boolean;
-  isAmountDirty: boolean;
+  isFormDirty: boolean;
   isAmountValueValid: boolean;
 }) => {
   if (linesLength > 0) {
@@ -148,7 +148,7 @@ export const isSubmitButtonDisabled = ({
     return false;
   }
 
-  if (isAmountValueValid && !isAmountDirty) {
+  if (isAmountValueValid && !isFormDirty) {
     return true;
   }
 

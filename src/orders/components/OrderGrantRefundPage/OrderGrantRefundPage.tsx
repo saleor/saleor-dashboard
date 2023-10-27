@@ -90,7 +90,11 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   }, [order, initialData]);
 
   const lines = prepareLineData(state.lines);
-  const { set, change, data, submit, setIsDirty, isAmountDirty } =
+  const hasQuntityOrShippingChanged =
+    lines.length > 0 ||
+    grantedRefund?.grantRefundForShipping !== state.refundShipping;
+
+  const { set, change, data, submit, setIsDirty, isFormDirty } =
     useGrantRefundForm({
       onSubmit,
       grantedRefund,
@@ -108,10 +112,8 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   );
   const totalSelectedPrice = calculateTotalPrice(state, order);
   const amountValue = calculateRefundAmountValue({
-    linesOrShippingDirty:
-      lines.length > 0 ||
-      grantedRefund?.grantRefundForShipping !== state.refundShipping,
-    isAmountInputDirty: isAmountDirty,
+    linesOrShippingDirty: hasQuntityOrShippingChanged,
+    isAmountInputDirty: isFormDirty.amount,
     refundAmount: Number(data.amount),
     totalCalulatedPrice: totalSelectedPrice,
   });
@@ -121,7 +123,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   const submitDisabled = isSubmitButtonDisabled({
     linesLength: lines.length,
     canShippingBeRefunded: canRefundShipping,
-    isAmountDirty,
+    isFormDirty: isFormDirty.amount || isFormDirty.reason,
     isAmountValueValid: !isAmountEmptyOrNaN,
     shippingRefundValueDifferent:
       state.refundShipping !== grantedRefund?.grantRefundForShipping,
@@ -243,7 +245,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                     name={"amount" as keyof OrderGrantRefundFormData}
                     currencySymbol={currency}
                     value={
-                      isAmountDirty
+                      isFormDirty
                         ? amountValue.toString()
                         : formatMoneyAmount(
                             {

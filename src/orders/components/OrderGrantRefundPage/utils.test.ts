@@ -185,7 +185,7 @@ describe("OrderGrantRefundPage utils", () => {
       const linesLength = 1;
       const canShippingBeRefunded = false;
       const shippingRefundValueDifferent = false;
-      const isAmountDirty = false;
+      const isFormDirty = false;
       const isAmountValueValid = true;
 
       // Act
@@ -193,7 +193,7 @@ describe("OrderGrantRefundPage utils", () => {
         linesLength,
         canShippingBeRefunded,
         shippingRefundValueDifferent,
-        isAmountDirty,
+        isFormDirty,
         isAmountValueValid,
       });
 
@@ -206,7 +206,7 @@ describe("OrderGrantRefundPage utils", () => {
       const linesLength = 0;
       const canShippingBeRefunded = true;
       const shippingRefundValueDifferent = true;
-      const isAmountDirty = false;
+      const isFormDirty = false;
       const isAmountValueValid = true;
 
       // Act
@@ -214,7 +214,7 @@ describe("OrderGrantRefundPage utils", () => {
         linesLength,
         canShippingBeRefunded,
         shippingRefundValueDifferent,
-        isAmountDirty,
+        isFormDirty,
         isAmountValueValid,
       });
 
@@ -227,7 +227,7 @@ describe("OrderGrantRefundPage utils", () => {
       const linesLength = 0;
       const canShippingBeRefunded = false;
       const shippingRefundValueDifferent = false;
-      const isAmountDirty = false;
+      const isFormDirty = false;
       const isAmountValueValid = true;
 
       // Act
@@ -235,7 +235,7 @@ describe("OrderGrantRefundPage utils", () => {
         linesLength,
         canShippingBeRefunded,
         shippingRefundValueDifferent,
-        isAmountDirty,
+        isFormDirty,
         isAmountValueValid,
       });
 
@@ -248,7 +248,7 @@ describe("OrderGrantRefundPage utils", () => {
       const linesLength = 0;
       const canShippingBeRefunded = false;
       const shippingRefundValueDifferent = false;
-      const isAmountDirty = false;
+      const isFormDirty = false;
       const isAmountValueValid = true;
 
       // Act
@@ -256,7 +256,7 @@ describe("OrderGrantRefundPage utils", () => {
         linesLength,
         canShippingBeRefunded,
         shippingRefundValueDifferent,
-        isAmountDirty,
+        isFormDirty,
         isAmountValueValid,
       });
 

@@ -70,9 +70,6 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
         grantRefund({
           variables: {
             refundId: grantRefundId,
-            amount: amount || undefined,
-            reason,
-            addLines: [],
             removeLines: grantedRefundLinesToDelete,
           },
         }),
@@ -83,7 +80,7 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
       grantRefund({
         variables: {
           refundId: grantRefundId,
-          amount: amount || undefined,
+          amount,
           reason,
           grantRefundForShipping,
           addLines: lines.map(line => ({

@@ -5,7 +5,7 @@ import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import React from "react";
 
 export interface OrderGrantRefundFormData {
-  amount: string;
+  amount: string | undefined;
   reason: string;
   lines: OrderGrantRefundCreateLineInput[];
   grantRefundForShipping: boolean;
@@ -36,7 +36,11 @@ export const useGrantRefundForm = ({
   lines,
   grantRefundForShipping,
 }: GrantRefundFormHookProps) => {
-  const [isAmountDirty, setIsAmountDirty] = React.useState(false);
+  const [isFormDirty, setIsFormDirty] = React.useState({
+    amount: false,
+    reason: false,
+  });
+
   const { set, change, data, formId } = useForm(
     grantedRefund ?? defaultInitialData,
     undefined,
@@ -57,6 +61,8 @@ export const useGrantRefundForm = ({
   const submit = () =>
     handleFormSubmit({
       ...data,
+      //
+      amount: !isFormDirty.amount ? undefined : data.amount,
       lines,
       grantRefundForShipping,
     });
@@ -64,9 +70,19 @@ export const useGrantRefundForm = ({
   React.useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const handleChange: FormChange = e => {
-    if (["amount", "reason"].includes(e.target.name)) setIsAmountDirty(true);
+    if (e.target.name === "amount")
+      setIsFormDirty({ ...isFormDirty, amount: true });
+    if (e.target.name === "reason")
+      setIsFormDirty({ ...isFormDirty, reason: true });
     change(e);
   };
 
-  return { set, change: handleChange, data, submit, setIsDirty, isAmountDirty };
+  return {
+    set,
+    change: handleChange,
+    data,
+    submit,
+    setIsDirty,
+    isFormDirty,
+  };
 };
