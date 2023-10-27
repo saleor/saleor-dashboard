@@ -58,10 +58,24 @@ export const useGrantRefundForm = ({
     onSubmit,
   });
 
+  const getAmountValue = () => {
+    // When editing always return the amount value
+    if (grantedRefund) {
+      return data.amount;
+    }
+
+    // When creating and user doesn not provide values and there are lines do not return the amount value
+    if (!isFormDirty.amount && lines.length > 0) {
+      return undefined;
+    }
+
+    return data.amount;
+  };
+
   const submit = () =>
     handleFormSubmit({
       ...data,
-      amount: !isFormDirty.amount && lines.length > 0 ? undefined : data.amount,
+      amount: getAmountValue(),
       lines,
       grantRefundForShipping,
     });
