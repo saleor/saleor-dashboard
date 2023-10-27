@@ -1,18 +1,17 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import PriceField from "@dashboard/components/PriceField";
+import Savebar from "@dashboard/components/Savebar";
 import {
   OrderDetailsGrantedRefundFragment,
   OrderDetailsGrantRefundFragment,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo } from "react";
@@ -57,6 +56,8 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
 }) => {
   const intl = useIntl();
   const { locale } = useLocale();
+  const navigate = useNavigator();
+
   const grantedRefund = useMemo(
     () => getGrantedRefundData(initialData),
     [initialData],
@@ -243,30 +244,22 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                     data-test-id="amountInput"
                   />
                 </Box>
-
-                <ConfirmButton
-                  marginLeft="auto"
-                  disabled={loading}
-                  transitionState={submitState}
-                  variant="primary"
-                  type="submit"
-                  data-test-id="grantRefundButton"
-                >
-                  {isEdit ? (
-                    <FormattedMessage
-                      {...grantRefundPageMessages.editRefundBtn}
-                    />
-                  ) : (
-                    <FormattedMessage
-                      {...grantRefundPageMessages.grantRefundBtn}
-                    />
-                  )}
-                </ConfirmButton>
               </DashboardCard.Content>
             </DashboardCard>
           </DetailPageLayout.Content>
         </GrantRefundContext.Provider>
       </form>
+      <Savebar
+        labels={{
+          confirm: isEdit
+            ? intl.formatMessage(grantRefundPageMessages.editRefundBtn)
+            : intl.formatMessage(grantRefundPageMessages.grantRefundBtn),
+        }}
+        onCancel={() => navigate(orderUrl(order?.id))}
+        onSubmit={submit}
+        state={submitState}
+        disabled={loading}
+      />
     </DetailPageLayout>
   );
 };
