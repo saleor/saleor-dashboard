@@ -113,11 +113,7 @@ export const calculateRefundAmountValue = ({
   totalCalulatedPrice: number;
   refundAmount: number;
 }) => {
-  if (!isAmountInputDirty && refundAmount) {
-    return refundAmount;
-  }
-
-  if (refundAmount && refundAmount !== totalCalulatedPrice) {
+  if (isAmountInputDirty) {
     return refundAmount;
   }
 

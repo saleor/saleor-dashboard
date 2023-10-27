@@ -102,7 +102,7 @@ describe("OrderGrantRefundPage utils", () => {
   });
 
   describe("calculateRefundAmountValue", () => {
-    it("should return refund amount when amount input is dirty - user provided own amount", () => {
+    it("should return refund amount only when user provided value and input is dirty", () => {
       // Arrange
       const isAmountInputDirty = true;
       const totalCalulatedPrice = 15;
@@ -119,28 +119,11 @@ describe("OrderGrantRefundPage utils", () => {
       expect(refundAmountValue).toBe(refundAmount);
     });
 
-    it("should return refunded amount when is bigger than 0 and calculated refund value is 0", () => {
-      // Arrange
-      const isAmountInputDirty = false;
-      const totalCalulatedPrice = 0;
-      const refundAmount = 10;
-
-      // Act
-      const refundAmountValue = calculateRefundAmountValue({
-        isAmountInputDirty,
-        totalCalulatedPrice,
-        refundAmount,
-      });
-
-      // Assert
-      expect(refundAmountValue).toBe(refundAmount);
-    });
-
-    it("should return total calculated price when granted refund amount is 0 and total calculated price is not 0", () => {
+    it("should return total calculated when user does not provided custom amount", () => {
       // Arrange
       const isAmountInputDirty = false;
       const totalCalulatedPrice = 25;
-      const refundAmount = 0;
+      const refundAmount = 30;
 
       // Act
       const refundAmountValue = calculateRefundAmountValue({
