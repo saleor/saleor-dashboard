@@ -10,6 +10,7 @@ import { getLineAvailableQuantity } from "./utils";
 export interface ReducerOrderLine {
   selectedQuantity: number;
   availableQuantity: number;
+  initialQuantity?: number;
   unitPrice: number;
   isDirty: boolean;
 }
@@ -54,43 +55,53 @@ export const getGrantRefundReducerInitialState = (
 ): GrantRefundState => {
   const unfulfilledLines = order?.lines
     .filter(line => line.quantityToFulfill > 0)
-    .map<GrantRefundLineKeyValue>(line => [
-      line.id,
-      {
-        isDirty: false,
-        availableQuantity: getLineAvailableQuantity(
-          line.id,
-          line.quantity,
-          order?.grantedRefunds,
-          grantedRefund?.id,
-        ),
-        unitPrice: line.unitPrice.gross.amount,
-        selectedQuantity:
-          grantedRefund?.lines?.find(
-            initLine => (initLine as any).orderLine.id === line.id,
-          )?.quantity ?? 0,
-      },
-    ]);
+    .map<GrantRefundLineKeyValue>(line => {
+      const initialQuantity =
+        grantedRefund?.lines?.find(
+          initLine => (initLine as any).orderLine.id === line.id,
+        )?.quantity ?? 0;
+
+      return [
+        line.id,
+        {
+          isDirty: false,
+          availableQuantity: getLineAvailableQuantity(
+            line.id,
+            line.quantity,
+            order?.grantedRefunds,
+            grantedRefund?.id,
+          ),
+          unitPrice: line.unitPrice.gross.amount,
+          selectedQuantity: initialQuantity,
+          initialQuantity,
+        },
+      ];
+    });
 
   const fulfilmentLines = order.fulfillments
     .flatMap(fulfilment => fulfilment.lines)
-    .map<GrantRefundLineKeyValue>(line => [
-      line.id,
-      {
-        isDirty: false,
-        availableQuantity: getLineAvailableQuantity(
-          line.id,
-          line.quantity,
-          order?.grantedRefunds,
-          grantedRefund?.id,
-        ),
-        unitPrice: line.orderLine.unitPrice.gross.amount,
-        selectedQuantity:
-          grantedRefund?.lines?.find(
-            initLine => (initLine as any).orderLine.id === line.id,
-          )?.quantity ?? 0,
-      },
-    ]);
+    .map<GrantRefundLineKeyValue>(line => {
+      const initialQuantity =
+        grantedRefund?.lines?.find(
+          initLine => (initLine as any).orderLine.id === line.id,
+        )?.quantity ?? 0;
+
+      return [
+        line.id,
+        {
+          isDirty: false,
+          availableQuantity: getLineAvailableQuantity(
+            line.id,
+            line.quantity,
+            order?.grantedRefunds,
+            grantedRefund?.id,
+          ),
+          unitPrice: line.orderLine.unitPrice.gross.amount,
+          selectedQuantity: initialQuantity,
+          initialQuantity,
+        },
+      ];
+    });
 
   return {
     lines: new Map([...unfulfilledLines, ...fulfilmentLines]),
@@ -114,7 +125,7 @@ export function grantRefundReducer(
 
       newLines.set(action.lineId, {
         ...line,
-        isDirty: action.amount !== 0,
+        isDirty: action.amount !== line.initialQuantity,
         unitPrice: action.unitPrice,
         selectedQuantity: action.amount,
       });
