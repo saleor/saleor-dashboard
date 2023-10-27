@@ -142,7 +142,7 @@ export function grantRefundReducer(
         const currentLine = state.lines.get(line.id);
         newLines.set(line.id, {
           ...currentLine,
-          isDirty: line.quantity > 0,
+          isDirty: line.quantity !== currentLine.initialQuantity,
           unitPrice: line.unitPrice,
           selectedQuantity: line.quantity,
         });
