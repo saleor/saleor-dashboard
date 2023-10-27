@@ -105,15 +105,22 @@ export const calculateCanRefundShipping = (
 };
 
 export const calculateRefundAmountValue = ({
+  linesOrShippingDirty,
   isAmountInputDirty,
   totalCalulatedPrice,
   refundAmount,
 }: {
+  linesOrShippingDirty: boolean;
   isAmountInputDirty: boolean;
   totalCalulatedPrice: number;
   refundAmount: number;
 }) => {
+  // User provided value into input and input is dirty
   if (isAmountInputDirty) {
+    return refundAmount;
+  }
+  // Show amount returned from server when user does not change anything
+  if (!isAmountInputDirty && !linesOrShippingDirty) {
     return refundAmount;
   }
 

@@ -102,15 +102,17 @@ describe("OrderGrantRefundPage utils", () => {
   });
 
   describe("calculateRefundAmountValue", () => {
-    it("should return refund amount only when user provided value and input is dirty", () => {
+    it("should return refund amount  when user provided value and input is dirty", () => {
       // Arrange
       const isAmountInputDirty = true;
+      const linesOrShippingDirty = false;
       const totalCalulatedPrice = 15;
       const refundAmount = 10;
 
       // Act
       const refundAmountValue = calculateRefundAmountValue({
         isAmountInputDirty,
+        linesOrShippingDirty,
         totalCalulatedPrice,
         refundAmount,
       });
@@ -119,15 +121,55 @@ describe("OrderGrantRefundPage utils", () => {
       expect(refundAmountValue).toBe(refundAmount);
     });
 
-    it("should return total calculated when user does not provided custom amount", () => {
+    it("should return refund amount  when user provided value and change quantity or shipping", () => {
+      // Arrange
+      const isAmountInputDirty = true;
+      const linesOrShippingDirty = true;
+      const totalCalulatedPrice = 15;
+      const refundAmount = 10;
+
+      // Act
+      const refundAmountValue = calculateRefundAmountValue({
+        isAmountInputDirty,
+        linesOrShippingDirty,
+        totalCalulatedPrice,
+        refundAmount,
+      });
+
+      // Assert
+      expect(refundAmountValue).toBe(refundAmount);
+    });
+
+    it("should return refund amount when user does not change anything in form", () => {
       // Arrange
       const isAmountInputDirty = false;
+      const linesOrShippingDirty = false;
+      const totalCalulatedPrice = 15;
+      const refundAmount = 10;
+
+      // Act
+      const refundAmountValue = calculateRefundAmountValue({
+        isAmountInputDirty,
+        linesOrShippingDirty,
+        totalCalulatedPrice,
+        refundAmount,
+      });
+
+      // Assert
+      expect(refundAmountValue).toBe(refundAmount);
+    });
+
+    it("should return total calculated when user change quantity or shipping", () => {
+      // Arrange
+      const isAmountInputDirty = false;
+      const linesOrShippingDirty = true;
       const totalCalulatedPrice = 25;
       const refundAmount = 30;
 
       // Act
       const refundAmountValue = calculateRefundAmountValue({
         isAmountInputDirty,
+        linesOrShippingDirty,
         totalCalulatedPrice,
         refundAmount,
       });

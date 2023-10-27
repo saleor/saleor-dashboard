@@ -108,6 +108,9 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   );
   const totalSelectedPrice = calculateTotalPrice(state, order);
   const amountValue = calculateRefundAmountValue({
+    linesOrShippingDirty:
+      lines.length > 0 ||
+      grantedRefund?.grantRefundForShipping !== state.refundShipping,
     isAmountInputDirty: isAmountDirty,
     refundAmount: Number(data.amount),
     totalCalulatedPrice: totalSelectedPrice,
