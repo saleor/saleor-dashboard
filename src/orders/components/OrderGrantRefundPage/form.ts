@@ -61,8 +61,7 @@ export const useGrantRefundForm = ({
   const submit = () =>
     handleFormSubmit({
       ...data,
-      //
-      amount: !isFormDirty.amount ? undefined : data.amount,
+      amount: !isFormDirty.amount && lines.length > 0 ? undefined : data.amount,
       lines,
       grantRefundForShipping,
     });
@@ -74,6 +73,7 @@ export const useGrantRefundForm = ({
       setIsFormDirty({ ...isFormDirty, amount: true });
     if (e.target.name === "reason")
       setIsFormDirty({ ...isFormDirty, reason: true });
+
     change(e);
   };
 

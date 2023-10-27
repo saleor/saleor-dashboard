@@ -76,6 +76,10 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
       );
     }
 
+    if (lines.length === 0 && amount === "") {
+      return;
+    }
+
     await extractMutationErrors(
       grantRefund({
         variables: {

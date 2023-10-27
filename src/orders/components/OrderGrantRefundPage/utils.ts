@@ -104,57 +104,21 @@ export const calculateCanRefundShipping = (
   return !grantedRefunds?.some(refund => refund.shippingCostsIncluded);
 };
 
-export const calculateRefundAmountValue = ({
-  linesOrShippingDirty,
+export const getRefundAmountValue = ({
   isAmountInputDirty,
+  isEditedRefundAmount,
   totalCalulatedPrice,
   refundAmount,
 }: {
-  linesOrShippingDirty: boolean;
   isAmountInputDirty: boolean;
   totalCalulatedPrice: number;
   refundAmount: number;
+  isEditedRefundAmount: boolean;
 }) => {
-  // User provided value into input and input is dirty
-  if (isAmountInputDirty) {
-    return refundAmount;
-  }
-  // Show amount returned from server when user does not change anything
-  if (!isAmountInputDirty && !linesOrShippingDirty) {
+  // User provided value into input or we are editing refund amount
+  if (isAmountInputDirty || isEditedRefundAmount) {
     return refundAmount;
   }
 
   return totalCalulatedPrice ?? 0;
-};
-
-export const isSubmitButtonDisabled = ({
-  linesLength,
-  canShippingBeRefunded,
-  shippingRefundValueDifferent,
-  isFormDirty,
-  isAmountValueValid,
-}: {
-  linesLength: number;
-  canShippingBeRefunded: boolean;
-  shippingRefundValueDifferent: boolean;
-  isFormDirty: boolean;
-  isAmountValueValid: boolean;
-}) => {
-  if (linesLength > 0) {
-    return false;
-  }
-
-  if (shippingRefundValueDifferent && canShippingBeRefunded) {
-    return false;
-  }
-
-  if (isAmountValueValid && !isFormDirty) {
-    return true;
-  }
-
-  if (!isAmountValueValid) {
-    return true;
-  }
-
-  return false;
 };

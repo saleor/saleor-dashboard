@@ -51,11 +51,15 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
     lines,
     grantRefundForShipping,
   }: OrderGrantRefundFormData) => {
+    if (lines.length === 0 && amount === "" && !grantRefundForShipping) {
+      return;
+    }
+
     extractMutationErrors(
       grantRefund({
         variables: {
           orderId,
-          amount: amount || undefined,
+          amount,
           reason,
           lines,
           grantRefundForShipping,

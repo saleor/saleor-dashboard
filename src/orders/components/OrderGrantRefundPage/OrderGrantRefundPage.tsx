@@ -31,11 +31,10 @@ import {
 } from "./reducer";
 import {
   calculateCanRefundShipping,
-  calculateRefundAmountValue,
   calculateTotalPrice,
   getFulfilmentSubtitle,
   getGrantedRefundData,
-  isSubmitButtonDisabled,
+  getRefundAmountValue,
   prepareLineData,
 } from "./utils";
 
@@ -90,9 +89,10 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   }, [order, initialData]);
 
   const lines = prepareLineData(state.lines);
-  const hasQuntityOrShippingChanged =
-    lines.length > 0 ||
-    grantedRefund?.grantRefundForShipping !== state.refundShipping;
+  const canRefundShipping = calculateCanRefundShipping(
+    grantedRefund,
+    order?.grantedRefunds,
+  );
 
   const { set, change, data, submit, setIsDirty, isFormDirty } =
     useGrantRefundForm({
@@ -106,27 +106,12 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
           : state.refundShipping,
     });
 
-  const canRefundShipping = calculateCanRefundShipping(
-    grantedRefund,
-    order?.grantedRefunds,
-  );
   const totalSelectedPrice = calculateTotalPrice(state, order);
-  const amountValue = calculateRefundAmountValue({
-    linesOrShippingDirty: hasQuntityOrShippingChanged,
+  const amountValue = getRefundAmountValue({
+    isEditedRefundAmount: grantedRefund !== undefined,
     isAmountInputDirty: isFormDirty.amount,
     refundAmount: Number(data.amount),
     totalCalulatedPrice: totalSelectedPrice,
-  });
-
-  const amount = parseFloat(data.amount);
-  const isAmountEmptyOrNaN = Number.isNaN(amount) || amount <= 0;
-  const submitDisabled = isSubmitButtonDisabled({
-    linesLength: lines.length,
-    canShippingBeRefunded: canRefundShipping,
-    isFormDirty: isFormDirty.amount || isFormDirty.reason,
-    isAmountValueValid: !isAmountEmptyOrNaN,
-    shippingRefundValueDifferent:
-      state.refundShipping !== grantedRefund?.grantRefundForShipping,
   });
 
   const currency = order?.total?.gross?.currency ?? "";
@@ -261,7 +246,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
 
                 <ConfirmButton
                   marginLeft="auto"
-                  disabled={submitDisabled || loading}
+                  disabled={loading}
                   transitionState={submitState}
                   variant="primary"
                   type="submit"

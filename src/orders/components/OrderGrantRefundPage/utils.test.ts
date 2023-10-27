@@ -2,8 +2,7 @@ import { OrderDetailsGrantedRefundFragment } from "@dashboard/graphql";
 
 import {
   calculateCanRefundShipping,
-  calculateRefundAmountValue,
-  isSubmitButtonDisabled,
+  getRefundAmountValue,
   OrderGrantRefundData,
 } from "./utils";
 
@@ -101,18 +100,18 @@ describe("OrderGrantRefundPage utils", () => {
     });
   });
 
-  describe("calculateRefundAmountValue", () => {
+  describe("getRefundAmountValue", () => {
     it("should return refund amount  when user provided value and input is dirty", () => {
       // Arrange
       const isAmountInputDirty = true;
-      const linesOrShippingDirty = false;
+      const isEditedRefundAmount = false;
       const totalCalulatedPrice = 15;
       const refundAmount = 10;
 
       // Act
-      const refundAmountValue = calculateRefundAmountValue({
+      const refundAmountValue = getRefundAmountValue({
         isAmountInputDirty,
-        linesOrShippingDirty,
+        isEditedRefundAmount,
         totalCalulatedPrice,
         refundAmount,
       });
@@ -121,36 +120,17 @@ describe("OrderGrantRefundPage utils", () => {
       expect(refundAmountValue).toBe(refundAmount);
     });
 
-    it("should return refund amount  when user provided value and change quantity or shipping", () => {
-      // Arrange
-      const isAmountInputDirty = true;
-      const linesOrShippingDirty = true;
-      const totalCalulatedPrice = 15;
-      const refundAmount = 10;
-
-      // Act
-      const refundAmountValue = calculateRefundAmountValue({
-        isAmountInputDirty,
-        linesOrShippingDirty,
-        totalCalulatedPrice,
-        refundAmount,
-      });
-
-      // Assert
-      expect(refundAmountValue).toBe(refundAmount);
-    });
-
-    it("should return refund amount when user does not change anything in form", () => {
+    it("should return refund amount  when user editing granted refund", () => {
       // Arrange
       const isAmountInputDirty = false;
-      const linesOrShippingDirty = false;
+      const isEditedRefundAmount = true;
       const totalCalulatedPrice = 15;
       const refundAmount = 10;
 
       // Act
-      const refundAmountValue = calculateRefundAmountValue({
+      const refundAmountValue = getRefundAmountValue({
         isAmountInputDirty,
-        linesOrShippingDirty,
+        isEditedRefundAmount,
         totalCalulatedPrice,
         refundAmount,
       });
@@ -159,109 +139,23 @@ describe("OrderGrantRefundPage utils", () => {
       expect(refundAmountValue).toBe(refundAmount);
     });
 
-    it("should return total calculated when user change quantity or shipping", () => {
+    it("should return total calculated when user create granted refund and change quantity or shipping ", () => {
       // Arrange
       const isAmountInputDirty = false;
-      const linesOrShippingDirty = true;
+      const isEditedRefundAmount = false;
       const totalCalulatedPrice = 25;
-      const refundAmount = 30;
+      const refundAmount = 0;
 
       // Act
-      const refundAmountValue = calculateRefundAmountValue({
+      const refundAmountValue = getRefundAmountValue({
         isAmountInputDirty,
-        linesOrShippingDirty,
+        isEditedRefundAmount,
         totalCalulatedPrice,
         refundAmount,
       });
 
       // Assert
       expect(refundAmountValue).toBe(totalCalulatedPrice);
-    });
-  });
-
-  describe("isSubmitButtonDisabled", () => {
-    it("should return false when there are dirty lines", () => {
-      // Arrange
-      const linesLength = 1;
-      const canShippingBeRefunded = false;
-      const shippingRefundValueDifferent = false;
-      const isFormDirty = false;
-      const isAmountValueValid = true;
-
-      // Act
-      const isSubmitDisabled = isSubmitButtonDisabled({
-        linesLength,
-        canShippingBeRefunded,
-        shippingRefundValueDifferent,
-        isFormDirty,
-        isAmountValueValid,
-      });
-
-      // Assert
-      expect(isSubmitDisabled).toBe(false);
-    });
-
-    it("should return false when shipping refund value is different than initial and shipping can be refunded", () => {
-      // Arrange
-      const linesLength = 0;
-      const canShippingBeRefunded = true;
-      const shippingRefundValueDifferent = true;
-      const isFormDirty = false;
-      const isAmountValueValid = true;
-
-      // Act
-      const isSubmitDisabled = isSubmitButtonDisabled({
-        linesLength,
-        canShippingBeRefunded,
-        shippingRefundValueDifferent,
-        isFormDirty,
-        isAmountValueValid,
-      });
-
-      // Assert
-      expect(isSubmitDisabled).toBe(false);
-    });
-
-    it("should return true when amount input is not dirty and amount value is not empty", () => {
-      // Arrange
-      const linesLength = 0;
-      const canShippingBeRefunded = false;
-      const shippingRefundValueDifferent = false;
-      const isFormDirty = false;
-      const isAmountValueValid = true;
-
-      // Act
-      const isSubmitDisabled = isSubmitButtonDisabled({
-        linesLength,
-        canShippingBeRefunded,
-        shippingRefundValueDifferent,
-        isFormDirty,
-        isAmountValueValid,
-      });
-
-      // Assert
-      expect(isSubmitDisabled).toBe(true);
-    });
-
-    it("should return true when amount value is empty", () => {
-      // Arrange
-      const linesLength = 0;
-      const canShippingBeRefunded = false;
-      const shippingRefundValueDifferent = false;
-      const isFormDirty = false;
-      const isAmountValueValid = true;
-
-      // Act
-      const isSubmitDisabled = isSubmitButtonDisabled({
-        linesLength,
-        canShippingBeRefunded,
-        shippingRefundValueDifferent,
-        isFormDirty,
-        isAmountValueValid,
-      });
-
-      //
-      expect(isSubmitDisabled).toBe(true);
     });
   });
 });
