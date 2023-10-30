@@ -53,55 +53,15 @@ export const getGrantRefundReducerInitialState = (
   order: OrderDetailsGrantRefundFragment,
   grantedRefund?: OrderDetailsGrantedRefundFragment,
 ): GrantRefundState => {
+  const toGrantRefundLine = createToGrantRefundLineMap(order, grantedRefund);
+
   const unfulfilledLines = order?.lines
     .filter(line => line.quantityToFulfill > 0)
-    .map<GrantRefundLineKeyValue>(line => {
-      const initialQuantity =
-        grantedRefund?.lines?.find(
-          initLine => (initLine as any).orderLine.id === line.id,
-        )?.quantity ?? 0;
-
-      return [
-        line.id,
-        {
-          isDirty: false,
-          availableQuantity: getLineAvailableQuantity(
-            line.id,
-            line.quantity,
-            order?.grantedRefunds,
-            grantedRefund?.id,
-          ),
-          unitPrice: line.unitPrice.gross.amount,
-          selectedQuantity: initialQuantity,
-          initialQuantity,
-        },
-      ];
-    });
+    .map(toGrantRefundLine);
 
   const fulfilmentLines = order.fulfillments
     .flatMap(fulfilment => fulfilment.lines)
-    .map<GrantRefundLineKeyValue>(line => {
-      const initialQuantity =
-        grantedRefund?.lines?.find(
-          initLine => (initLine as any).orderLine.id === line.id,
-        )?.quantity ?? 0;
-
-      return [
-        line.id,
-        {
-          isDirty: false,
-          availableQuantity: getLineAvailableQuantity(
-            line.id,
-            line.quantity,
-            order?.grantedRefunds,
-            grantedRefund?.id,
-          ),
-          unitPrice: line.orderLine.unitPrice.gross.amount,
-          selectedQuantity: initialQuantity,
-          initialQuantity,
-        },
-      ];
-    });
+    .map(toGrantRefundLine);
 
   return {
     lines: new Map([...unfulfilledLines, ...fulfilmentLines]),
@@ -172,4 +132,39 @@ export function grantRefundReducer(
     default:
       exhaustiveCheck(action);
   }
+}
+
+function createToGrantRefundLineMap(
+  order: OrderDetailsGrantRefundFragment,
+  grantedRefund?: OrderDetailsGrantedRefundFragment,
+) {
+  return (
+    line:
+      | OrderDetailsGrantRefundFragment["lines"][0]
+      | OrderDetailsGrantRefundFragment["fulfillments"][0]["lines"][0],
+  ): GrantRefundLineKeyValue => {
+    const initialQuantity =
+      grantedRefund?.lines?.find(
+        initLine => (initLine as any).orderLine.id === line.id,
+      )?.quantity ?? 0;
+
+    return [
+      line.id,
+      {
+        isDirty: false,
+        availableQuantity: getLineAvailableQuantity(
+          line.id,
+          line.quantity,
+          order?.grantedRefunds,
+          grantedRefund?.id,
+        ),
+        unitPrice:
+          "orderLine" in line
+            ? line.orderLine.unitPrice.gross.amount
+            : line.unitPrice.gross.amount,
+        selectedQuantity: initialQuantity,
+        initialQuantity,
+      },
+    ];
+  };
 }

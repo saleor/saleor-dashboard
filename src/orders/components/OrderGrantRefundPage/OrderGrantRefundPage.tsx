@@ -123,6 +123,20 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     submit();
   };
 
+  const getRefundAmountDisplayValue = () => {
+    if (isFormDirty) {
+      return amountValue.toString();
+    }
+
+    return formatMoneyAmount(
+      {
+        amount: amountValue,
+        currency,
+      },
+      locale,
+    );
+  };
+
   return (
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
@@ -230,17 +244,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                     disabled={loading}
                     name={"amount" as keyof OrderGrantRefundFormData}
                     currencySymbol={currency}
-                    value={
-                      isFormDirty
-                        ? amountValue.toString()
-                        : formatMoneyAmount(
-                            {
-                              amount: amountValue,
-                              currency,
-                            },
-                            locale,
-                          )
-                    }
+                    value={getRefundAmountDisplayValue()}
                     data-test-id="amountInput"
                   />
                 </Box>
