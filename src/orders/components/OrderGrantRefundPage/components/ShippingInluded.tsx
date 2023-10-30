@@ -49,8 +49,8 @@ export const ShippingIncluded = ({
       {!canRefundShipping && (
         <Text variant="caption" color="textNeutralDisabled">
           <FormattedMessage
-            defaultMessage="Shipping has been already refunded"
-            id="pNP2pn"
+            defaultMessage="Shipping has already been refunded"
+            id="o/4OCR"
           />
         </Text>
       )}

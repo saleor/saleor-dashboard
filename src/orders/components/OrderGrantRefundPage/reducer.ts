@@ -144,20 +144,19 @@ function createToGrantRefundLineMap(
       | OrderDetailsGrantRefundFragment["fulfillments"][0]["lines"][0],
   ): GrantRefundLineKeyValue => {
     const initialQuantity =
-      grantedRefund?.lines?.find(
-        initLine => (initLine as any).orderLine.id === line.id,
-      )?.quantity ?? 0;
+      grantedRefund?.lines?.find(initLine => initLine.orderLine.id === line.id)
+        ?.quantity ?? 0;
 
     return [
       line.id,
       {
         isDirty: false,
-        availableQuantity: getLineAvailableQuantity(
-          line.id,
-          line.quantity,
-          order?.grantedRefunds,
-          grantedRefund?.id,
-        ),
+        availableQuantity: getLineAvailableQuantity({
+          lineId: line.id,
+          lineQuntity: line.quantity,
+          grantRefunds: order?.grantedRefunds,
+          grantRefundId: grantedRefund?.id,
+        }),
         unitPrice:
           "orderLine" in line
             ? line.orderLine.unitPrice.gross.amount
