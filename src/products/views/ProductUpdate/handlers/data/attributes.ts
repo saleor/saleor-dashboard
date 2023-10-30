@@ -99,7 +99,9 @@ export function getAttributeInput(
 
   if (inputType === AttributeInputTypeEnum.DROPDOWN) {
     return {
-      dropdown: getAttributeValueWithId(values[0]),
+      dropdown: {
+        value: getAttributeValueOrNull(values[0], "name"),
+      },
     };
   }
 
@@ -111,7 +113,9 @@ export function getAttributeInput(
 
   if (inputType === AttributeInputTypeEnum.SWATCH) {
     return {
-      swatch: getAttributeValueWithId(values[0]),
+      swatch: {
+        value: getAttributeValueOrNull(values[0], "name"),
+      },
     };
   }
 
@@ -155,20 +159,6 @@ export function getAttributeInput(
 
   return {
     values: values.map(({ name }) => name).filter(byAttributeName),
-  };
-}
-
-function getAttributeValueWithId(
-  value: AttributeValueDetailsFragment | undefined,
-): BulkAttributeValueInput["swatch"] {
-  if (value?.id) {
-    return {
-      id: value.id,
-    };
-  }
-
-  return {
-    value: value?.name ?? null,
   };
 }
 

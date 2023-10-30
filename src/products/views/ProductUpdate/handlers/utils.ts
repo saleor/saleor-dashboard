@@ -191,13 +191,18 @@ const getVariantAttributesForUpdate = (
     variantsAttributes,
   );
 
+  if (!updatedAttributes.length) {
+    return [];
+  }
+
   // Re-send current values for all not-updated attributes, in case some of them were required
   const notUpdatedAttributes: ReturnType<typeof getAttributeData> =
     variant.attributes
-      .filter(attribute =>
-        updatedAttributes.find(
-          updatedAttribute => updatedAttribute.id !== attribute.attribute.id,
-        ),
+      .filter(
+        attribute =>
+          !updatedAttributes.find(
+            updatedAttribute => updatedAttribute.id === attribute.attribute.id,
+          ),
       )
       .map(attribute => {
         const attributeType = getAttributeType(
