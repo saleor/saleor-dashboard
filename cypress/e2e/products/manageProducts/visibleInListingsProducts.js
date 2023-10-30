@@ -4,16 +4,14 @@ import faker from "faker";
 
 import { productDetailsUrl } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import { searchInShop } from "../../../support/api/requests/storeFront/Search";
+import {
+  expectProductVisibleInShop,
+  searchInShop,
+} from "../../../support/api/requests/storeFront/Search";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import * as productsUtils
-  from "../../../support/api/utils/products/productsUtils";
-import {
-  isProductVisibleInSearchResult,
-} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import {
-  updateProductVisibleInListings,
-} from "../../../support/pages/catalog/products/productDetailsPage";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { isProductVisibleInSearchResult } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import { updateProductVisibleInListings } from "../../../support/pages/catalog/products/productDetailsPage";
 
 describe("Products displayed in listings", () => {
   const startsWith = "CyVisibleInListings-";
@@ -118,14 +116,7 @@ describe("Products displayed in listings", () => {
           cy.loginInShop();
         })
         .then(() => {
-          searchInShop(productName);
-        })
-        .then(resp => {
-          const isProductVisible = isProductVisibleInSearchResult(
-            resp,
-            productName,
-          );
-          expect(isProductVisible).to.be.eq(true);
+          expectProductVisibleInShop(productName);
         });
     },
   );
