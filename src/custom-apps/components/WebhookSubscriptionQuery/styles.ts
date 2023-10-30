@@ -1,4 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui-next";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -17,11 +18,11 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
     },
     error: {
-      color: theme.palette.error.main,
+      color: vars.colors.foreground.textCriticalDefault,
       "& .MuiTypography-colorTextSecondary": {
-        color: theme.palette.error.main,
-      }
-    }
+        color: vars.colors.foreground.textCriticalDefault,
+      },
+    },
   }),
   { name: "WebhookSubscriptionQuery" },
 );
