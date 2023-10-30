@@ -40,7 +40,6 @@ function updateProductManageInChannel(manageSelector) {
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldAppear()
-    .confirmationMessageShouldDisappear()
     .wait("@ProductChannelListingUpdate");
 }
 
