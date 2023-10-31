@@ -115,7 +115,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   });
 
   it(
-    "should be able to create price based shipping method. TC: SALEOR_0803",
+    "should be able to create price based shipping method and assign it to checkout. TC: SALEOR_0803",
     { tags: ["@shipping", "@allEnv", "@stable", "@oldRelease", "@critical"] },
     () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;

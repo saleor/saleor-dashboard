@@ -2,6 +2,7 @@ export const BUTTON_SELECTORS = {
   back: '[data-test-id="app-header-back-button"]',
   submit: '[data-test-id="submit"]',
   confirm: '[data-test-id="button-bar-confirm"]',
+  confirmButton: '[data-test-id="confirm-button"]',
   goBackButton: "[data-test-id='app-header-back-button']",
   checkbox: "[type='checkbox']",
   checked: "[class*='checked']",

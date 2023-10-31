@@ -12,3 +12,10 @@ export const PRODUCTS = {
     name: "Product that contains single variant",
   },
 };
+
+export const SHIPPING_METHODS = {
+  shippingMethodWithoutRates: {
+    id: "U2hpcHBpbmdab25lOjIzNzg%3D",
+    name: "Shipping method that is used to add rates",
+  },
+};
