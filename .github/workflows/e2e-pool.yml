@@ -115,7 +115,7 @@ jobs:
 
       - name: Build dashbaord
         env:
-          API_URI: ${{ steps.prepare_variables.outputs.API_URI }}
+          API_URI: ${{ needs.prepare_variables.outputs.API_URI }}
           APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
           APP_MOUNT_URI: /
           STATIC_URL: /
