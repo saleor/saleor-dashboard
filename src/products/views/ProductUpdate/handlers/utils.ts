@@ -63,11 +63,11 @@ export function getProductUpdateVariables(
 
 export function getCreateVariantInput(data: DatagridChangeOpts, index: number) {
   return {
-    attributes: getAttributeData(data.updates, index, data.removed),
-    sku: getSkuData(data.updates, index, data.removed),
-    name: getNameData(data.updates, index, data.removed),
+    attributes: getAttributeData(data.updates, index),
+    sku: getSkuData(data.updates, index),
+    name: getNameData(data.updates, index),
     channelListings: getVariantChannelsInputs(data, index),
-    stocks: getStockData(data.updates, index, data.removed),
+    stocks: getStockData(data.updates, index),
   };
 }
 
@@ -136,7 +136,11 @@ export function getBulkVariantUpdateInputs(
   data: DatagridChangeOpts,
 ): ProductVariantBulkUpdateInput[] {
   const toUpdateInput = createToUpdateInput(data);
-  return variants.map(toUpdateInput).filter(byAvailability);
+  return variants
+    .filter((_, index) => !data.removed.includes(index))
+    .map(toUpdateInput)
+    .filter(byAvailability)
+    .filter((_, index) => !data.added.includes(index));
 }
 
 const createToUpdateInput =
@@ -147,14 +151,9 @@ const createToUpdateInput =
   ): ProductVariantBulkUpdateInput => ({
     id: variant.id,
     attributes: getVariantAttributesForUpdate(data, variantIndex, variant),
-    sku: getSkuData(data.updates, variantIndex, data.removed),
-    name: getNameData(data.updates, variantIndex, data.removed),
-    stocks: getVaraintUpdateStockData(
-      data.updates,
-      variantIndex,
-      data.removed,
-      variant,
-    ),
+    sku: getSkuData(data.updates, variantIndex),
+    name: getNameData(data.updates, variantIndex),
+    stocks: getVaraintUpdateStockData(data.updates, variantIndex, variant),
     channelListings: getUpdateVariantChannelInputs(data, variantIndex, variant),
   });
 
@@ -163,11 +162,7 @@ const getVariantAttributesForUpdate = (
   variantIndex: number,
   variant: ProductFragment["variants"][number],
 ) => {
-  const updatedAttributes = getAttributeData(
-    data.updates,
-    variantIndex,
-    data.removed,
-  );
+  const updatedAttributes = getAttributeData(data.updates, variantIndex);
   // Re-send current values for all not-updated attributes, in case some of them were required
   const notUpdatedAttributes: ReturnType<typeof getAttributeData> =
     variant.attributes
