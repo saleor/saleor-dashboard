@@ -68,7 +68,7 @@ jobs:
             --skip-webhooks-update
 
 
-  deploy:
+  deploy_dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-22.04
     needs: prepare_variables
@@ -87,15 +87,6 @@ jobs:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
-          ref: ${{ github.head_ref }}
-
-      - name: Start storybook deployment
-        uses: bobheadxi/deployments@v1
-        id: storybook-deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: storybook ${{ needs.prepare_variables.outputs.POOL_NAME }}
           ref: ${{ github.head_ref }}
 
       - name: Cache node modules
@@ -122,9 +113,6 @@ jobs:
           IS_CLOUD_INSTANCE: true
         run: npm run build
 
-      - name: Build storybook
-        run: npm run build-storybook
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -133,9 +121,7 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Deploy to S3
-        run: |
-          aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ needs.prepare_variables.outputs.BASE_URL  }}
-          aws s3 sync ./build/storybook s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ needs.prepare_variables.outputs.BASE_URL  }}/storybook
+        run: aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ needs.prepare_variables.outputs.BASE_URL  }}
 
       - name: Invalidate cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ needs.prepare_variables.outputs.BASE_URL  }}/*"
@@ -151,6 +137,59 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
 
+
+  deploy_storybook:
+    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
+    runs-on: ubuntu-22.04
+    needs: prepare_variables
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Start storybook deployment
+        uses: bobheadxi/deployments@v1
+        id: storybook-deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: storybook ${{ needs.prepare_variables.outputs.POOL_NAME }}
+          ref: ${{ github.head_ref }}
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build storybook
+        run: npm run build-storybook
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Deploy to S3
+        run: aws s3 sync ./build/storybook s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ needs.prepare_variables.outputs.BASE_URL  }}/storybook
+
+      - name: Invalidate cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ needs.prepare_variables.outputs.BASE_URL  }}/*"
+
       - name: Update storybook deployment status
         uses: bobheadxi/deployments@v1
         if: always()
@@ -164,7 +203,7 @@ jobs:
 
   run-tests:
     runs-on: ubuntu-latest
-    needs: [prepare_variables, deploy, prepare_instance]
+    needs: [prepare_variables, deploy_dashboard, prepare_instance]
     strategy:
       fail-fast: false
       matrix:
