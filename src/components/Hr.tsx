@@ -1,8 +1,8 @@
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 /**
- * @deprecated use `Divider` component from `@saleor/macaw-ui/next`
+ * @deprecated use `Divider` component from `@saleor/macaw-ui-next`
  */
 export const Hr: React.FC<{
   className?: string;

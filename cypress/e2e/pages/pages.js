@@ -19,9 +19,8 @@ describe("Tests for pages", () => {
   let pageType;
   let pageTypeId;
 
-
   const attributes = [
-    { key: "DROPDOWN", value: "value",  TC: "SALEOR_2203" },
+    { key: "DROPDOWN", value: "value", TC: "SALEOR_2203" },
     { key: "MULTISELECT", value: "value", TC: "SALEOR_2204" },
     { key: "RICH_TEXT", value: faker.lorem.sentence(), TC: "SALEOR_2205" },
     { key: "BOOLEAN", value: true, TC: "SALEOR_2206" },
@@ -55,7 +54,7 @@ describe("Tests for pages", () => {
       cy.visit(urlList.pages);
       pagesPage.openCreatePageDialog();
       pagesPage.selectPageTypeOnIndex(0);
-      cy.clickSubmitButton();
+      cy.get(BUTTON_SELECTORS.confirmButton).click();
       cy.waitForRequestAndCheckIfNoErrors("@PageType");
       pageDetailsPage.typePageName(pageName).should("have.value", pageName);
       cy.get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox).click();
@@ -98,14 +97,14 @@ describe("Tests for pages", () => {
       { tags: ["@attribute", "@pages", "@allEnv"] },
       () => {
         const randomName = `${startsWith}${faker.datatype.number()}`;
-        const attributeKey = attributeType.key
-        const attributeValue =  attributeType.value
+        const attributeKey = attributeType.key;
+        const attributeValue = attributeType.value;
         attributeRequests
           .createAttribute({
             name: randomName,
             type: "PAGE_TYPE",
             inputType: attributeKey,
-            attributeValues: [attributeValue]
+            attributeValues: [attributeValue],
           })
           .then(attributeResp => {
             attribute = attributeResp;
@@ -147,54 +146,60 @@ describe("Tests for pages", () => {
     );
   });
 
-  it("should delete page TC: SALEOR_2209", 
-  { tags: ["@pages", "@allEnv", "@stable"] }, () => {
-    const randomName = `${startsWith}${faker.datatype.number()}`;
+  it(
+    "should delete page TC: SALEOR_2209",
+    { tags: ["@pages", "@allEnv", "@stable"] },
+    () => {
+      const randomName = `${startsWith}${faker.datatype.number()}`;
 
-    pageRequests
-      .createPage({
-        pageTypeId: pageType.id,
-        title: randomName,
-      })
-      .then(({ page }) => {
-        cy.visit(pageDetailsUrl(page.id))
-          .get(BUTTON_SELECTORS.deleteButton)
-          .click()
-          .addAliasToGraphRequest("PageRemove")
-          .get(BUTTON_SELECTORS.submit)
-          .click()
-          .waitForRequestAndCheckIfNoErrors("@PageRemove");
-        pageRequests.getPage(page.id).should("be.null");
-      });
-  });
+      pageRequests
+        .createPage({
+          pageTypeId: pageType.id,
+          title: randomName,
+        })
+        .then(({ page }) => {
+          cy.visit(pageDetailsUrl(page.id))
+            .get(BUTTON_SELECTORS.deleteButton)
+            .click()
+            .addAliasToGraphRequest("PageRemove")
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@PageRemove");
+          pageRequests.getPage(page.id).should("be.null");
+        });
+    },
+  );
 
-  it("should update page TC: SALEOR_2208", 
-  { tags: ["@pages", "@allEnv", "@stable"] }, () => {
-    const randomName = `${startsWith}${faker.datatype.number()}`;
-    const updatedName = `${startsWith}${faker.datatype.number()}`;
+  it(
+    "should update page TC: SALEOR_2208",
+    { tags: ["@pages", "@allEnv", "@stable"] },
+    () => {
+      const randomName = `${startsWith}${faker.datatype.number()}`;
+      const updatedName = `${startsWith}${faker.datatype.number()}`;
 
-    pageRequests
-      .createPage({
-        pageTypeId: pageType.id,
-        title: randomName,
-        isPublished: true,
-      })
-      .then(({ page }) => {
-        cy.visit(pageDetailsUrl(page.id))
-          .get(PAGE_DETAILS_SELECTORS.nameInput)
-          .clear()
-          .type(updatedName)
-          .get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox)
-          .click()
-          .addAliasToGraphRequest("PageUpdate")
-          .get(BUTTON_SELECTORS.confirm)
-          .click()
-          .waitForRequestAndCheckIfNoErrors("@PageUpdate");
-        pageRequests.getPage(page.id);
-      })
-      .then(page => {
-        expect(page.title).to.eq(updatedName);
-        expect(page.isPublished).to.eq(false);
-      });
-  });
+      pageRequests
+        .createPage({
+          pageTypeId: pageType.id,
+          title: randomName,
+          isPublished: true,
+        })
+        .then(({ page }) => {
+          cy.visit(pageDetailsUrl(page.id))
+            .get(PAGE_DETAILS_SELECTORS.nameInput)
+            .clear()
+            .type(updatedName)
+            .get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox)
+            .click()
+            .addAliasToGraphRequest("PageUpdate")
+            .get(BUTTON_SELECTORS.confirm)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@PageUpdate");
+          pageRequests.getPage(page.id);
+        })
+        .then(page => {
+          expect(page.title).to.eq(updatedName);
+          expect(page.isPublished).to.eq(false);
+        });
+    },
+  );
 });

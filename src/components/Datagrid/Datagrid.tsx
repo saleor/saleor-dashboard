@@ -18,7 +18,7 @@ import DataEditor, {
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { Card, CardContent, CircularProgress } from "@material-ui/core";
-import { Box, Text, useTheme } from "@saleor/macaw-ui/next";
+import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import range from "lodash/range";
 import React, {

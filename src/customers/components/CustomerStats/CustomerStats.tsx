@@ -3,7 +3,7 @@ import { DateTime } from "@dashboard/components/Date";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Skeleton from "@dashboard/components/Skeleton";
 import { CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
-import { Divider, Text } from "@saleor/macaw-ui/next";
+import { Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

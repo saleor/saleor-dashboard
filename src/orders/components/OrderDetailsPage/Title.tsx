@@ -5,7 +5,7 @@ import { transformOrderStatus } from "@dashboard/misc";
 import { Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

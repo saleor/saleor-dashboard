@@ -7,7 +7,7 @@ import {
   TableEditIcon,
   Text,
   vars,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 

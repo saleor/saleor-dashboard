@@ -14,13 +14,15 @@ export interface NumberCellProps {
   readonly kind: "number-cell";
   readonly value: number | typeof numberCellEmptyValue;
   readonly options?: {
-    format: "number" | "percent";
+    format?: "number" | "percent";
+    hasFloatingPoint?: boolean;
   };
 }
 
 export type NumberCell = CustomCell<NumberCellProps>;
 
 const onlyDigitsRegExp = /^\d+$/;
+const flaotingPointDigits = /^[0-9]+[.,]?[0-9]+$/;
 
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
@@ -80,7 +82,10 @@ export const numberCellRenderer = (
     }),
   }),
   onPaste: (value, data) => {
-    if (!onlyDigitsRegExp.test(value)) {
+    const testRegExp = data.options?.hasFloatingPoint
+      ? flaotingPointDigits
+      : onlyDigitsRegExp;
+    if (!testRegExp.test(value)) {
       return undefined;
     }
 

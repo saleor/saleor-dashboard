@@ -3,7 +3,7 @@ import { LogLevels } from "@editorjs/editorjs";
 import { FormControl, FormHelperText } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
 import { EditorCore, Props as ReactEditorJSProps } from "@react-editor-js/core";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 

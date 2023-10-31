@@ -85,8 +85,9 @@ function openCreatePageAndFillUpGeneralFields({
   isPublished,
 }) {
   cy.visit(urlList.pages).get(PAGES_LIST_SELECTORS.createPageButton).click();
-  fillUpPageTypeDialog({ pageTypeName });
-  cy.get(BUTTON_SELECTORS.submit)
+
+  selectPageTypeName(pageTypeName);
+  cy.get(BUTTON_SELECTORS.confirmButton)
     .click()
     .get(PAGE_DETAILS_SELECTORS.nameInput)
     .type(pageName);
@@ -108,9 +109,18 @@ export function openCreatePageDialog() {
   return cy.get(PAGES_LIST_SELECTORS.createPageButton).click();
 }
 export function selectPageTypeOnIndex(index) {
-  cy.get(PAGES_LIST_SELECTORS.dialogPageTypeInput).click();
+  cy.get(PAGES_LIST_SELECTORS.dialogPageTypeInput).click({ force: true });
   return cy
     .get(PAGES_LIST_SELECTORS.dialogPageTypeInputOptions)
     .eq(index)
-    .click();
+    .click({ force: true });
+}
+export function selectPageTypeName(pageTypeName) {
+  cy.get(PAGES_LIST_SELECTORS.dialogPageTypeInput)
+    .click({ force: true })
+    .type(pageTypeName);
+  return cy
+    .get(PAGES_LIST_SELECTORS.dialogPageTypeInputOptions)
+    .contains(pageTypeName)
+    .click({ force: true });
 }

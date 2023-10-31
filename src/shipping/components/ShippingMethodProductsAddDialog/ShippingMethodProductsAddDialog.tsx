@@ -161,7 +161,7 @@ const ShippingMethodProductsAddDialog: React.FC<
         </div>
         <div>
           <InfiniteScroll
-            dataLength={products?.length}
+            dataLength={products?.length ?? 0}
             next={onFetchMore}
             hasMore={hasMore}
             scrollThreshold="100px"
@@ -234,6 +234,7 @@ const ShippingMethodProductsAddDialog: React.FC<
       <DialogActions>
         <BackButton onClick={handleClose} />
         <ConfirmButton
+          data-test-id="assign-and-save-button"
           transitionState={confirmButtonState}
           type="submit"
           disabled={loading || !selectedProducts?.length}

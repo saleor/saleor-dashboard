@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Input, InputProps, Text } from "@saleor/macaw-ui/next";
+import { Input, InputProps, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { usePriceField } from "./usePriceField";

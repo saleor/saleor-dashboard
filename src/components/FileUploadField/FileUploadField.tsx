@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { FileFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Box, Button, Text, TrashBinIcon } from "@saleor/macaw-ui/next";
+import { Box, Button, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

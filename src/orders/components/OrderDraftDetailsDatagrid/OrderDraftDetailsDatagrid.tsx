@@ -17,7 +17,7 @@ import {
   ExternalLinkIcon,
   sprinkles,
   TrashBinIcon,
-} from "@saleor/macaw-ui/next";
+} from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -140,19 +140,17 @@ export const OrderDraftDetailsDatagrid = ({
 
   const handleDatagridChange = useCallback(
     async (
-      { updates }: DatagridChangeOpts,
+      { currentUpdate }: DatagridChangeOpts,
       setMarkCellsDirty: (areCellsDirty: boolean) => void,
     ) => {
-      await Promise.all(
-        updates.map(({ data, column, row }) => {
-          const orderId = lines[row].id;
+      if (!currentUpdate) return;
 
-          if (column === "quantity" && data.value !== "") {
-            return onOrderLineChange(orderId, { quantity: data.value });
-          }
-          return undefined;
-        }),
-      );
+      const { data, column, row } = currentUpdate;
+      const orderId = lines[row].id;
+
+      if (column === "quantity" && data.value !== "") {
+        await onOrderLineChange(orderId, { quantity: data.value });
+      }
 
       datagrid.changes.current = [];
       setMarkCellsDirty(false);

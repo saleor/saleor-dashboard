@@ -218,7 +218,10 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
             {renderCollection(
               postalCodes,
               postalCodeRange => (
-                <TableRowLink key={postalCodeRange?.id}>
+                <TableRowLink
+                  key={postalCodeRange?.id}
+                  data-test-id="assigned-postal-codes-rows"
+                >
                   <TableCell>
                     {getPostalCodeRangeLabel(postalCodeRange)}
                   </TableCell>

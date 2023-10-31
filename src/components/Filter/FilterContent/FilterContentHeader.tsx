@@ -2,7 +2,7 @@ import { Button } from "@dashboard/components/Button";
 import { buttonMessages } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

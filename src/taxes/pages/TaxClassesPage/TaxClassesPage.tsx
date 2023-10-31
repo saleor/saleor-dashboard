@@ -37,7 +37,7 @@ import {
   PageTabs,
   SearchIcon,
 } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -203,7 +203,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                                 variant="outlined"
                                 onChange={e => setQuery(e.target.value)}
                                 placeholder={intl.formatMessage(
-                                  taxesMessages.searchTaxClasses,
+                                  taxesMessages.searchTaxCountries,
                                 )}
                                 fullWidth
                                 InputProps={{

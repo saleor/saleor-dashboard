@@ -2,7 +2,7 @@ import { appInstallationStatusMessages } from "@dashboard/apps/messages";
 import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui/next";
+import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

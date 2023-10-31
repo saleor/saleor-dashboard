@@ -1,21 +1,24 @@
-// @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
+import { Combobox } from "@dashboard/components/Combobox";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { buttonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
 export interface PageTypePickerDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  pageTypes?: SingleAutocompleteChoiceType[];
+  pageTypes: SingleAutocompleteChoiceType[];
   fetchPageTypes: (data: string) => void;
   fetchMorePageTypes: FetchMoreProps;
   onClose: () => void;
@@ -32,39 +35,49 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
   onConfirm,
 }) => {
   const intl = useIntl();
-  const [choice, setChoice] = useStateFromProps("");
-  const pageTypeDisplayValue = pageTypes.find(
-    pageType => pageType.value === choice,
-  )?.label;
+  const [choice, setChoice] = useStateFromProps(null);
 
   useModalDialogOpen(open, {
     onClose: () => {
-      setChoice("");
+      setChoice(null);
       fetchPageTypes("");
     },
   });
 
   return (
-    <ActionDialog
-      confirmButtonState={confirmButtonState}
-      open={open}
-      onClose={onClose}
-      onConfirm={() => onConfirm(choice)}
-      title={intl.formatMessage(messages.selectPageType)}
-      disabled={!choice}
-    >
-      <SingleAutocompleteSelectField
-        displayValue={pageTypeDisplayValue}
-        name="pageType"
-        label={intl.formatMessage(messages.pageType)}
-        choices={pageTypes}
-        value={choice}
-        onChange={e => setChoice(e.target.value)}
-        fetchChoices={fetchPageTypes}
-        data-test-id="dialog-page-type"
-        {...fetchMorePageTypes}
-      />
-    </ActionDialog>
+    <DashboardModal open={open} onChange={onClose}>
+      <DashboardModal.Content __width="480px" disableAutofocus>
+        <DashboardModal.Title>
+          <FormattedMessage {...messages.selectPageType} />
+        </DashboardModal.Title>
+
+        <Combobox
+          name="pageType"
+          label={intl.formatMessage(messages.pageType)}
+          options={pageTypes}
+          value={choice}
+          onChange={e => setChoice(e.target.value)}
+          fetchOptions={fetchPageTypes}
+          data-test-id="dialog-page-type"
+          fetchMore={fetchMorePageTypes}
+        />
+
+        <DashboardModal.Actions>
+          <Button onClick={onClose} variant="secondary">
+            {intl.formatMessage(buttonMessages.back)}
+          </Button>
+
+          <ConfirmButton
+            data-test-id="confirm-button"
+            transitionState={confirmButtonState}
+            onClick={() => (choice ? onConfirm(choice) : null)}
+            disabled={!choice}
+          >
+            {intl.formatMessage(buttonMessages.confirm)}
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 PageTypePickerDialog.displayName = "PageTypePickerDialog";

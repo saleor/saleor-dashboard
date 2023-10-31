@@ -7,7 +7,7 @@ import {
   useAppQuery,
   useAppUpdatePermissionsMutation,
 } from "@dashboard/graphql";
-import { Box, BoxProps, Button, Text, TextProps } from "@saleor/macaw-ui/next";
+import { Box, BoxProps, Button, Text, TextProps } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useLocation, useParams } from "react-router";

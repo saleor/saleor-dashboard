@@ -6,7 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

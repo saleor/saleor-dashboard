@@ -11,7 +11,7 @@ import {
 } from "@dashboard/types";
 import { isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
