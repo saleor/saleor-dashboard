@@ -149,19 +149,7 @@ export const productVariantAttributesFragment = gql`
     productType {
       id
       variantAttributes {
-        id
-        name
-        inputType
-        valueRequired
-        unit
-        choices(
-          first: $firstValues
-          after: $afterValues
-          last: $lastValues
-          before: $beforeValues
-        ) {
-          ...AttributeValueList
-        }
+        ...VariantAttribute
       }
     }
     channelListings {
@@ -185,8 +173,7 @@ export const productDetailsVariant = gql`
         name
       }
       values {
-        id
-        name
+        ...AttributeValueDetails
       }
     }
     media {

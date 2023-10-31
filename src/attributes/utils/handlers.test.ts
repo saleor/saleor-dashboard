@@ -431,8 +431,8 @@ describe("Sending only changed attributes", () => {
       newAttr       | oldAttr       | expected
       ${null}       | ${null}       | ${null}
       ${"my value"} | ${"my value"} | ${null}
-      ${"my value"} | ${null}       | ${["my value"]}
-      ${null}       | ${"my value"} | ${[]}
+      ${"my value"} | ${null}       | ${"my value"}
+      ${null}       | ${"my value"} | ${""}
     `(
       "$oldAttr -> $newAttr returns $expected",
       ({ newAttr, oldAttr, expected }) => {
@@ -446,7 +446,9 @@ describe("Sending only changed attributes", () => {
         });
 
         const expectedResult =
-          expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
+          expected !== null
+            ? [{ id: ATTR_ID, swatch: { value: expected } }]
+            : [];
         expect(result).toEqual(expectedResult);
       },
     );
