@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { channelsList } from "@dashboard/channels/fixtures";
 import {
+  AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
   GridAttributesQuery,
   ProductFragment,
@@ -8,6 +9,7 @@ import {
   ProductMediaType,
   ProductVariantCreateDataQuery,
   ProductVariantFragment,
+  VariantAttributeFragment,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
@@ -479,6 +481,8 @@ export const product: (
         inputType: AttributeInputTypeEnum.DROPDOWN,
         valueRequired: false,
         unit: null,
+        slug: "attachment",
+        entityType: AttributeEntityTypeEnum.PRODUCT,
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -518,6 +522,8 @@ export const product: (
         __typename: "Attribute",
         id: "pta18161",
         name: "Color",
+        slug: "color",
+        entityType: AttributeEntityTypeEnum.PRODUCT,
         inputType: AttributeInputTypeEnum.DROPDOWN,
         valueRequired: false,
         unit: null,
@@ -617,6 +623,19 @@ export const product: (
             {
               id: "QXR0cmlidXRlVmFsdWU6NDc=",
               name: "1l",
+              plainText: "",
+              richText: "",
+              slug: "",
+              reference: "",
+              boolean: false,
+              date: "",
+              dateTime: "",
+              value: "",
+              file: {
+                __typename: "File",
+                url: "",
+                contentType: "",
+              },
               __typename: "AttributeValue",
             },
           ],
@@ -772,6 +791,19 @@ export const product: (
             {
               id: "QXR0cmlidXRlVmFsdWU6NDg=",
               name: "2l",
+              plainText: "",
+              richText: "",
+              slug: "",
+              reference: "",
+              boolean: false,
+              date: "",
+              dateTime: "",
+              value: "",
+              file: {
+                __typename: "File",
+                url: "",
+                contentType: "",
+              },
               __typename: "AttributeValue",
             },
           ],
@@ -860,6 +892,19 @@ export const product: (
             {
               id: "QXR0cmlidXRlVmFsdWU6NDY=",
               name: "500ml",
+              plainText: "",
+              richText: "",
+              slug: "",
+              reference: "",
+              boolean: false,
+              date: "",
+              dateTime: "",
+              value: "",
+              file: {
+                __typename: "File",
+                url: "",
+                contentType: "",
+              },
               __typename: "AttributeValue",
             },
           ],
@@ -3997,3 +4042,48 @@ export const gridAttributesResult: GridAttributesQuery = {
     ],
   },
 };
+
+export const variantAttributes: VariantAttributeFragment[] = [
+  {
+    __typename: "Attribute",
+    id: "QXR0cmlidXRlOjE1",
+    name: "Bottle size",
+    slug: "bottle-size",
+    inputType: AttributeInputTypeEnum.DROPDOWN,
+    entityType: null,
+    valueRequired: false,
+    unit: null,
+    choices: {
+      __typename: "AttributeValueCountableConnection",
+      pageInfo: {
+        __typename: "PageInfo",
+        endCursor: "WyI1IiwgIjg1Il0=",
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: "WyIwIiwgIjYzIl0=",
+      },
+      edges: [],
+    },
+  },
+  {
+    __typename: "Attribute",
+    id: "QXR0cmlidXRlOjY4MQ==",
+    name: "Plain text",
+    slug: "plain-text",
+    inputType: AttributeInputTypeEnum.PLAIN_TEXT,
+    entityType: null,
+    valueRequired: false,
+    unit: null,
+    choices: {
+      __typename: "AttributeValueCountableConnection",
+      pageInfo: {
+        __typename: "PageInfo",
+        endCursor: "WyI1IiwgIjg1Il0=",
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: "WyIwIiwgIjYzIl0=",
+      },
+      edges: [],
+    },
+  },
+];

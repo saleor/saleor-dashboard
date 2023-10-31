@@ -11,6 +11,7 @@ import {
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
   ProductVariantBulkUpdateInput,
+  VariantAttributeFragment,
 } from "@dashboard/graphql";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
@@ -18,7 +19,11 @@ import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc"
 import pick from "lodash/pick";
 import uniq from "lodash/uniq";
 
-import { getAttributeData } from "./data/attributes";
+import {
+  getAttributeData,
+  getAttributeInput,
+  getAttributeType,
+} from "./data/attributes";
 import {
   getUpdateVariantChannelInputs,
   getVariantChannelsInputs,
@@ -61,9 +66,13 @@ export function getProductUpdateVariables(
   };
 }
 
-export function getCreateVariantInput(data: DatagridChangeOpts, index: number) {
+export function getCreateVariantInput(
+  data: DatagridChangeOpts,
+  index: number,
+  variantAttributes: VariantAttributeFragment[],
+) {
   return {
-    attributes: getAttributeData(data.updates, index),
+    attributes: getAttributeData(data.updates, index, variantAttributes),
     sku: getSkuData(data.updates, index),
     name: getNameData(data.updates, index),
     channelListings: getVariantChannelsInputs(data, index),
@@ -134,8 +143,9 @@ export function hasProductChannelsUpdate(
 export function getBulkVariantUpdateInputs(
   variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
+  variantsAttributes: VariantAttributeFragment[],
 ): ProductVariantBulkUpdateInput[] {
-  const toUpdateInput = createToUpdateInput(data);
+  const toUpdateInput = createToUpdateInput(data, variantsAttributes);
   return variants
     .filter((_, index) => !data.removed.includes(index))
     .map(toUpdateInput)
@@ -144,13 +154,18 @@ export function getBulkVariantUpdateInputs(
 }
 
 const createToUpdateInput =
-  (data: DatagridChangeOpts) =>
+  (data: DatagridChangeOpts, variantsAttributes: VariantAttributeFragment[]) =>
   (
     variant: ProductFragment["variants"][number],
     variantIndex: number,
   ): ProductVariantBulkUpdateInput => ({
     id: variant.id,
-    attributes: getVariantAttributesForUpdate(data, variantIndex, variant),
+    attributes: getVariantAttributesForUpdate(
+      data,
+      variantIndex,
+      variant,
+      variantsAttributes,
+    ),
     sku: getSkuData(data.updates, variantIndex),
     name: getNameData(data.updates, variantIndex),
     stocks: getVaraintUpdateStockData(data.updates, variantIndex, variant),
@@ -161,20 +176,42 @@ const getVariantAttributesForUpdate = (
   data: DatagridChangeOpts,
   variantIndex: number,
   variant: ProductFragment["variants"][number],
+  variantsAttributes: VariantAttributeFragment[],
 ) => {
-  const updatedAttributes = getAttributeData(data.updates, variantIndex);
+  const updatedAttributes = getAttributeData(
+    data.updates,
+    variantIndex,
+    variantsAttributes,
+  );
+
+  if (!updatedAttributes.length) {
+    return [];
+  }
+
   // Re-send current values for all not-updated attributes, in case some of them were required
   const notUpdatedAttributes: ReturnType<typeof getAttributeData> =
     variant.attributes
-      .filter(attribute =>
-        updatedAttributes.find(
-          updatedAttribute => updatedAttribute.id !== attribute.attribute.id,
-        ),
+      .filter(
+        attribute =>
+          !updatedAttributes.find(
+            updatedAttribute => updatedAttribute.id === attribute.attribute.id,
+          ),
       )
-      .map(attribute => ({
-        id: attribute.attribute.id,
-        values: attribute.values.map(({ name }) => name),
-      }));
+      .map(attribute => {
+        const attributeType = getAttributeType(
+          variantsAttributes,
+          attribute.attribute.id,
+        );
+
+        if (!attributeType) {
+          return undefined;
+        }
+
+        return {
+          id: attribute.attribute.id,
+          ...getAttributeInput(attributeType, attribute.values),
+        };
+      });
   return [...updatedAttributes, ...notUpdatedAttributes];
 };
 
@@ -206,4 +243,8 @@ export function inferProductChannelsAfterUpdate(
     ),
     ...updatedChannelsIds,
   ]);
+}
+
+export function byAttributeName(x: string | null | undefined): x is string {
+  return typeof x === "string" && x.length > 0;
 }
