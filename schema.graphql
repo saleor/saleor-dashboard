@@ -4482,7 +4482,7 @@ type Checkout implements Node & ObjectWithMetadata {
   discountName: String
 
   """
-  Determines whether checkout prices should include taxes when displayed in a storefront.
+  Determines whether displayed prices should include taxes.
   
   Added in Saleor 3.9.
   """
@@ -7315,7 +7315,11 @@ type DiscountError {
   """List of products IDs which causes the error."""
   products: [ID!]
 
-  """List of voucher codes which causes the error."""
+  """
+  List of voucher codes which causes the error.
+  
+  Added in Saleor 3.18.
+  """
   voucherCodes: [String!]
 }
 
@@ -7329,6 +7333,7 @@ enum DiscountErrorCode {
   NOT_FOUND
   REQUIRED
   UNIQUE
+  VOUCHER_ALREADY_USED
 }
 
 enum DiscountStatusEnum {
@@ -7354,7 +7359,7 @@ enum DistanceUnitsEnum {
   YD
 }
 
-"""Represents shop's domain."""
+"""Represents API domain."""
 type Domain {
   """The host name of the domain."""
   host: String!
@@ -7362,7 +7367,7 @@ type Domain {
   """Inform if SSL is enabled."""
   sslEnabled: Boolean!
 
-  """Shop's absolute URL."""
+  """The absolute URL of the API."""
   url: String!
 }
 
@@ -7444,6 +7449,13 @@ input DraftOrderCreateInput {
 
   """ID of the voucher associated with the order."""
   voucher: ID
+
+  """
+  A code of the voucher associated with the order.
+  
+  Added in Saleor 3.18.
+  """
+  voucherCode: String
 }
 
 """
@@ -7540,6 +7552,13 @@ input DraftOrderInput {
 
   """ID of the voucher associated with the order."""
   voucher: ID
+
+  """
+  A code of the voucher associated with the order.
+  
+  Added in Saleor 3.18.
+  """
+  voucherCode: String
 }
 
 """
@@ -7988,6 +8007,40 @@ enum ExportScope {
 
   """Export products with given ids."""
   IDS
+}
+
+"""
+Export voucher codes to csv/xlsx file.
+
+Added in Saleor 3.18.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- VOUCHER_CODE_EXPORT_COMPLETED (async): A notification for the exported file.
+"""
+type ExportVoucherCodes {
+  errors: [ExportError!]!
+
+  """
+  The newly created export file job which is responsible for export data.
+  """
+  exportFile: ExportFile
+}
+
+input ExportVoucherCodesInput {
+  """Type of exported file."""
+  fileType: FileTypesEnum!
+
+  """List of voucher code IDs to export."""
+  ids: [ID!]
+
+  """
+  The ID of the voucher. If provided, exports all codes belonging to the voucher.
+  """
+  voucherId: ID
 }
 
 """External authentication plugin."""
@@ -13331,6 +13384,23 @@ type Mutation {
     input: ExportProductsInput!
   ): ExportProducts
 
+  """
+  Export voucher codes to csv/xlsx file.
+  
+  Added in Saleor 3.18.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - VOUCHER_CODE_EXPORT_COMPLETED (async): A notification for the exported file.
+  """
+  exportVoucherCodes(
+    """Fields required to export voucher codes."""
+    input: ExportVoucherCodesInput!
+  ): ExportVoucherCodes
+
   """Prepare external authentication URL for user by custom plugin."""
   externalAuthenticationUrl(
     """The data required by plugin to create external authentication url."""
@@ -15901,6 +15971,9 @@ type Mutation {
   Note: this API is currently in Feature Preview and can be subject to changes at later point. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
+  
+  Triggers the following webhook events:
+  - PRODUCT_VARIANT_STOCK_UPDATED (async): A product variant stock details were updated.
   """
   stockBulkUpdate(
     """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
@@ -16674,7 +16747,7 @@ type Order implements Node & ObjectWithMetadata {
   discounts: [OrderDiscount!]!
 
   """
-  Determines whether checkout prices should include taxes when displayed in a storefront.
+  Determines whether displayed prices should include taxes.
   
   Added in Saleor 3.9.
   """
@@ -16983,6 +17056,13 @@ type Order implements Node & ObjectWithMetadata {
   """
   userEmail: String
   voucher: Voucher
+
+  """
+  Voucher code that was used for Order.
+  
+  Added in Saleor 3.18.
+  """
+  voucherCode: String
   weight: Weight!
 }
 
@@ -17197,9 +17277,7 @@ input OrderBulkCreateInput {
   """List of discounts."""
   discounts: [OrderDiscountCommonInput!]
 
-  """
-  Determines whether checkout prices should include taxes, when displayed in a storefront.
-  """
+  """Determines whether displayed prices should include taxes."""
   displayGrossPrices: Boolean
 
   """External ID of the order."""
@@ -17246,8 +17324,19 @@ input OrderBulkCreateInput {
   """Customer associated with the order."""
   user: OrderBulkCreateUserInput!
 
-  """Code of a voucher associated with the order."""
+  """
+  Code of a voucher associated with the order.
+  
+  DEPRECATED: this field will be removed in Saleor 3.19. Use `voucherCode` instead.
+  """
   voucher: String
+
+  """
+  Code of a voucher associated with the order.
+  
+  Added in Saleor 3.18.
+  """
+  voucherCode: String
 
   """Weight of the order in kg."""
   weight: WeightScalar
@@ -17756,6 +17845,8 @@ enum OrderErrorCode {
   INSUFFICIENT_STOCK
   INVALID
   INVALID_QUANTITY
+  INVALID_VOUCHER
+  INVALID_VOUCHER_CODE
   NOT_AVAILABLE_IN_CHANNEL
   NOT_EDITABLE
   NOT_FOUND
@@ -23052,7 +23143,7 @@ type ProductPricingInfo {
   discountLocalCurrency: TaxedMoney @deprecated(reason: "This field will be removed in Saleor 4.0. Always returns `null`.")
 
   """
-  Determines whether this product's price displayed in a storefront should include taxes.
+  Determines whether displayed prices should include taxes.
   
   Added in Saleor 3.9.
   """
@@ -30091,6 +30182,9 @@ Added in Saleor 3.13.
 Note: this API is currently in Feature Preview and can be subject to changes at later point. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
+
+Triggers the following webhook events:
+- PRODUCT_VARIANT_STOCK_UPDATED (async): A product variant stock details were updated.
 """
 type StockBulkUpdate {
   """Returns how many objects were updated."""
@@ -30648,9 +30742,7 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   """List of country-specific exceptions in tax configuration."""
   countries: [TaxConfigurationPerCountry!]!
 
-  """
-  Determines whether prices displayed in a storefront should include taxes.
-  """
+  """Determines whether displayed prices should include taxes."""
   displayGrossPrices: Boolean!
 
   """The ID of the object."""
@@ -30739,7 +30831,7 @@ type TaxConfigurationPerCountry {
   country: CountryDisplay!
 
   """
-  Determines whether prices displayed in a storefront should include taxes for this country.
+  Determines whether displayed prices should include taxes for this country.
   """
   displayGrossPrices: Boolean!
 
@@ -30757,7 +30849,7 @@ input TaxConfigurationPerCountryInput {
   countryCode: CountryCode!
 
   """
-  Determines whether prices displayed in a storefront should include taxes for this country.
+  Determines whether displayed prices should include taxes for this country.
   """
   displayGrossPrices: Boolean!
 
@@ -30807,9 +30899,7 @@ input TaxConfigurationUpdateInput {
   """Determines whether taxes are charged in the given channel."""
   chargeTaxes: Boolean
 
-  """
-  Determines whether prices displayed in a storefront should include taxes.
-  """
+  """Determines whether displayed prices should include taxes."""
   displayGrossPrices: Boolean
 
   """Determines whether prices are entered with the tax included."""
@@ -32958,9 +33048,11 @@ type Voucher implements Node & ObjectWithMetadata {
   ): ProductCountableConnection
 
   """
-  Determine if the voucher is limited to a single use or unlimited use.
+  Determine if the voucher codes can be used once or multiple times.
   
   Added in Saleor 3.18.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   singleUse: Boolean!
 
@@ -32979,7 +33071,7 @@ type Voucher implements Node & ObjectWithMetadata {
   """The number of times a voucher can be used."""
   usageLimit: Int
 
-  """Usage count of the voucher.This field will be removed in Saleor 4.0."""
+  """Usage count of the voucher."""
   used: Int!
 
   """
@@ -33096,6 +33188,8 @@ type VoucherChannelListingUpdate {
 Represents voucher code.
 
 Added in Saleor 3.18.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
 """
 type VoucherCode {
   """Code to use the voucher."""
@@ -33169,6 +33263,28 @@ type VoucherCodeCountableEdge {
 
   """The item at the end of the edge."""
   node: VoucherCode!
+}
+
+"""
+Event sent when voucher code export is completed.
+
+Added in Saleor 3.18.
+"""
+type VoucherCodeExportCompleted implements Event {
+  """The export file for voucher codes."""
+  export: ExportFile
+
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
 }
 
 type VoucherCountableConnection {
@@ -33302,7 +33418,9 @@ input VoucherInput {
   """Categories discounted by the voucher."""
   categories: [ID!]
 
-  """Code to use the voucher.This field will be removed in Saleor 4.0."""
+  """
+  Code to use the voucher. This field will be removed in Saleor 4.0. Use `addCodes` instead.
+  """
   code: String
 
   """Collections discounted by the voucher."""
@@ -33330,9 +33448,13 @@ input VoucherInput {
   products: [ID!]
 
   """
-  When set to 'True', each voucher is limited to a single use; otherwise, usage remains unrestricted.
+  When set to 'True', each voucher code can be used only once; otherwise, codes can be used multiple times depending on `usageLimit`.
+  
+  The option can only be changed if none of the voucher codes have been used.
   
   Added in Saleor 3.18.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   singleUse: Boolean
 
@@ -34658,6 +34780,13 @@ enum WebhookEventTypeAsyncEnum {
   """A translation is updated."""
   TRANSLATION_UPDATED
 
+  """
+  A voucher code export is completed.
+  
+  Added in Saleor 3.18.
+  """
+  VOUCHER_CODE_EXPORT_COMPLETED
+
   """A new voucher created."""
   VOUCHER_CREATED
 
@@ -35273,6 +35402,13 @@ enum WebhookEventTypeEnum {
   """A translation is updated."""
   TRANSLATION_UPDATED
 
+  """
+  A voucher code export is completed.
+  
+  Added in Saleor 3.18.
+  """
+  VOUCHER_CODE_EXPORT_COMPLETED
+
   """A new voucher created."""
   VOUCHER_CREATED
 
@@ -35520,6 +35656,7 @@ enum WebhookSampleEventTypeEnum {
   TRANSACTION_ITEM_METADATA_UPDATED
   TRANSLATION_CREATED
   TRANSLATION_UPDATED
+  VOUCHER_CODE_EXPORT_COMPLETED
   VOUCHER_CREATED
   VOUCHER_DELETED
   VOUCHER_METADATA_UPDATED
