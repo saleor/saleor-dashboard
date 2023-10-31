@@ -22,10 +22,10 @@ jobs:
         id: write-config-file
         env:
           ACCESS_TOKEN: ${{ secrets.STAGING_TOKEN }}
-        run: echo '{"token":"Token ${{ env.ACCESS_TOKEN }}","telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
+        run: jq --null-input --arg token "Token $ACCESS_TOKEN" '{"token":$token,"telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
 
       - name: Instance creation
         id: create_instance
         env:
           SALEOR_CLI_ENV: staging
-        run: npx saleor env remove "${{ env.GITHUB_HEAD_REF_SLUG_URL }}"
+        run: npx saleor env remove "${{ env.GITHUB_HEAD_REF_SLUG_URL }}" --force

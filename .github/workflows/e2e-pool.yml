@@ -39,8 +39,8 @@ jobs:
       - name: Write config file
         id: write-config-file
         env:
-          ACCESS_TOKEN: ${{ secrets.STAGING_TOKEN }}
-        run: echo '{"token":"Token ${{ env.ACCESS_TOKEN }}","telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
+          ACCESS_TOKEN: ${{ secrets.STAGING_TOKEN }}          
+        run: jq --null-input --arg token "Token $ACCESS_TOKEN" '{"token":$token,"telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
 
       - name: Reload snapshot
         if: ${{ github.event_name == 'pull_request' && github.event.action != 'opened' && github.event.action != 'closed' }}
