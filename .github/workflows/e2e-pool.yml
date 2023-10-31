@@ -149,7 +149,7 @@ jobs:
           status: ${{ job.status }}
           env_url: needs.prepare_variables.outputs.BASE_URL
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
 
       - name: Update storybook deployment status
         uses: bobheadxi/deployments@v1
