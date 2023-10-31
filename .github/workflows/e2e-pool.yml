@@ -147,7 +147,7 @@ jobs:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
-          env_url: needs.prepare_variables.outputs.BASE_URL
+          env_url: https://${{ needs.prepare_variables.outputs.BASE_URL }}/
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
 
