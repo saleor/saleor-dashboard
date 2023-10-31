@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
+import { SortableTree } from "@dashboard/components/SortableTree/SortableTree";
 import { buttonMessages } from "@dashboard/intl";
 import { RecursiveMenuItem } from "@dashboard/navigation/types";
 import { Card, CardActions, Paper, Typography } from "@material-ui/core";
@@ -16,17 +17,10 @@ import { GripIcon, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import SortableTree, { NodeRendererProps } from "react-sortable-tree";
+import { NodeRendererProps } from "react-sortable-tree";
 
 import { MenuItemType } from "../MenuItemDialog";
-import {
-  getDiff,
-  getNodeData,
-  getNodeQuantity,
-  MenuTreeItem,
-  TreeItemProps,
-  TreeOperation,
-} from "./tree";
+import { getNodeQuantity, TreeItemProps, TreeOperation } from "./tree";
 
 const NODE_HEIGHT = 56;
 const NODE_MARGIN = 40;
@@ -143,73 +137,6 @@ const Placeholder: React.FC = props => {
   );
 };
 
-const Node: React.FC<NodeRendererProps<TreeItemProps>> = props => {
-  const { node, path, connectDragPreview, connectDragSource, isDragging } =
-    props;
-  const classes = useStyles(props);
-
-  const draggedClassName = clsx(
-    classes.rowContainer,
-    classes.rowContainerDragged,
-  );
-  const defaultClassName = isDragging ? draggedClassName : classes.rowContainer;
-  const placeholderClassName = clsx(
-    classes.rowContainer,
-    classes.rowContainerPlaceholder,
-  );
-
-  const [className, setClassName] = React.useState(defaultClassName);
-  React.useEffect(() => setClassName(defaultClassName), [isDragging]);
-
-  const handleDragStart = () => {
-    setClassName(placeholderClassName);
-    setTimeout(() => setClassName(defaultClassName), 0);
-  };
-
-  return connectDragPreview(
-    <div
-      className={className}
-      style={{
-        marginLeft: NODE_MARGIN * (path.length - 1),
-      }}
-    >
-      <Paper className={classes.row} elevation={0}>
-        {connectDragSource(
-          <div onDragStart={handleDragStart}>
-            <GripIcon color="iconNeutralDefault" />
-          </div>,
-        )}
-        <Typography className={classes.nodeTitle} onClick={node.onEdit}>
-          {node.title}
-        </Typography>
-        <div className={classes.spacer} />
-        <div className={classes.nodeActions}>
-          <Button onClick={node.onClick}>
-            <FormattedMessage {...buttonMessages.show} />
-          </Button>
-          <IconButton variant="secondary" onClick={node.onEdit}>
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            className={classes.deleteButton}
-            variant="secondary"
-            onClick={() =>
-              node.onChange([
-                {
-                  id: node.id,
-                  type: "remove",
-                },
-              ])
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        </div>
-      </Paper>
-    </div>,
-  );
-};
-
 const MenuItems: React.FC<MenuItemsProps> = props => {
   const {
     canUndo,
@@ -252,35 +179,36 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         {items === undefined ? (
           <Skeleton />
         ) : (
-          <SortableTree
-            className={classes.root}
-            generateNodeProps={({ path }) => ({
-              className: classes.row,
-              style: {
-                marginLeft: NODE_MARGIN * (path.length - 1),
-              },
-            })}
-            maxDepth={5}
-            isVirtualized={false}
-            rowHeight={NODE_HEIGHT}
-            treeData={items.map(item =>
-              getNodeData(item, onChange, onItemClick, onItemEdit),
-            )}
-            theme={{
-              nodeContentRenderer: Node,
-            }}
-            onChange={newTree =>
-              onChange(
-                getDiff(
-                  items.map(item =>
-                    getNodeData(item, onChange, onItemClick, onItemEdit),
-                  ),
-                  newTree as MenuTreeItem[],
-                ),
-              )
-            }
-            placeholderRenderer={Placeholder}
-          />
+          <SortableTree />
+          // <SortableTree
+          //   className={classes.root}
+          //   generateNodeProps={({ path }) => ({
+          //     className: classes.row,
+          //     style: {
+          //       marginLeft: NODE_MARGIN * (path.length - 1),
+          //     },
+          //   })}
+          //   maxDepth={5}
+          //   isVirtualized={false}
+          //   rowHeight={NODE_HEIGHT}
+          //   treeData={items.map(item =>
+          //     getNodeData(item, onChange, onItemClick, onItemEdit),
+          //   )}
+          //   theme={{
+          //     nodeContentRenderer: Node,
+          //   }}
+          //   onChange={newTree =>
+          //     onChange(
+          //       getDiff(
+          //         items.map(item =>
+          //           getNodeData(item, onChange, onItemClick, onItemEdit),
+          //         ),
+          //         newTree as MenuTreeItem[],
+          //       ),
+          //     )
+          //   }
+          //   placeholderRenderer={Placeholder}
+          // />
         )}
       </div>
       <CardActions className={classes.actions}>

@@ -18,6 +18,9 @@
   },
   "dependencies": {
     "@apollo/client": "3.4.17",
+    "@dnd-kit/core": "^6.0.8",
+    "@dnd-kit/sortable": "^7.0.2",
+    "@dnd-kit/utilities": "^3.2.1",
     "@editorjs/editorjs": "^2.24.3",
     "@editorjs/header": "^2.6.2",
     "@editorjs/image": "^2.6.2",
