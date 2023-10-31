@@ -314,6 +314,15 @@ export const prepareAttributesInput = ({
       });
       return attrInput;
     }
+    if (inputType === AttributeInputTypeEnum.SWATCH) {
+      attrInput.push({
+        id: attr.id,
+        swatch: {
+          value: attr.value[0] ?? "",
+        },
+      });
+      return attrInput;
+    }
 
     attrInput.push({
       id: attr.id,
