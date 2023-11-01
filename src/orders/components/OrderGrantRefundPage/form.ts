@@ -5,14 +5,14 @@ import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import React from "react";
 
 export interface OrderGrantRefundFormData {
-  amount: string | undefined;
+  amount: number | undefined;
   reason: string;
   lines: OrderGrantRefundCreateLineInput[];
   grantRefundForShipping: boolean;
 }
 
 const defaultInitialData: OrderGrantRefundFormData = {
-  amount: "",
+  amount: 0,
   reason: "",
   lines: [],
   grantRefundForShipping: false,
@@ -64,11 +64,12 @@ export const useGrantRefundForm = ({
       return data.amount;
     }
 
-    // When creating and user doesn not provide values and there are lines do not return the amount value
-    if (!isFormDirty.amount && lines.length > 0) {
+    // When creating and user doesn not provide value, value will be calculated base on lines and shipping
+    if (!isFormDirty.amount) {
       return undefined;
     }
 
+    // When creating and user provide value, return the provided value
     return data.amount;
   };
 

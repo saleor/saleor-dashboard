@@ -51,7 +51,9 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
     lines,
     grantRefundForShipping,
   }: OrderGrantRefundFormData) => {
-    if (lines.length === 0 && amount === "" && !grantRefundForShipping) {
+    // API call should be stoped when use doesn't select any line,
+    // doesn't provide own amount and doesn't want to refund shipping
+    if (lines.length === 0 && amount === undefined && !grantRefundForShipping) {
       return;
     }
 

@@ -69,7 +69,7 @@ export const getLineAvailableQuantity = ({
 };
 
 export interface OrderGrantRefundData {
-  amount: string;
+  amount: number;
   reason: string;
   lines: OrderGrantRefundCreateLineInput[];
   grantRefundForShipping: boolean;
@@ -86,7 +86,7 @@ export const getGrantedRefundData = (
   return {
     grantRefundId: grantedRefund.id,
     reason: grantedRefund?.reason ?? "",
-    amount: grantedRefund.amount.amount.toString(),
+    amount: grantedRefund.amount.amount,
     grantRefundForShipping: grantedRefund.shippingCostsIncluded,
     lines: grantedRefund?.lines ?? [],
   };
