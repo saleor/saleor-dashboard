@@ -3,7 +3,7 @@ import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useData
 import { ProductFragment } from "@dashboard/graphql";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 
-import { product } from "../../../fixtures";
+import { product, variantAttributes } from "../../../fixtures";
 import {
   getBulkVariantUpdateInputs,
   getCreateVariantInput,
@@ -152,14 +152,20 @@ describe("getCreateVariantInput", () => {
       added: [1],
     };
     // Act
-    const createDataInput = getCreateVariantInput(inputData, 1);
+    const createDataInput = getCreateVariantInput(
+      inputData,
+      1,
+      variantAttributes,
+    );
 
     // Assert
     expect(createDataInput).toEqual({
       attributes: [
         {
           id: "QXR0cmlidXRlOjE1",
-          values: ["1l"],
+          dropdown: {
+            value: "1l",
+          },
         },
       ],
       sku: "23423",
@@ -204,7 +210,11 @@ describe("getCreateVariantInput", () => {
     };
 
     // Act
-    const createDataInput = getCreateVariantInput(inputData, 1);
+    const createDataInput = getCreateVariantInput(
+      inputData,
+      1,
+      variantAttributes,
+    );
 
     // Assert
     expect(createDataInput).toEqual({
@@ -288,6 +298,7 @@ describe("getBulkVariantUpdateInputs", () => {
     const bulkVariantUpdateInput = getBulkVariantUpdateInputs(
       variants,
       inputData,
+      variantAttributes,
     );
 
     // Assert
@@ -312,8 +323,10 @@ describe("getBulkVariantUpdateInputs", () => {
         id: variants[2].id,
         attributes: [
           {
-            id: variants[2].attributes[0].attribute.id,
-            values: ["2l"],
+            id: "QXR0cmlidXRlOjE1",
+            dropdown: {
+              value: "2l",
+            },
           },
         ],
         sku: "2345555",

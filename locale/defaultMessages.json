@@ -7373,6 +7373,9 @@
     "context": "Add filter button text",
     "string": "+ Add filter"
   },
+  "o/4OCR": {
+    "string": "Shipping has already been refunded"
+  },
   "o5KXAN": {
     "context": "delete webhook",
     "string": "Are you sure you want to delete {name}?"
