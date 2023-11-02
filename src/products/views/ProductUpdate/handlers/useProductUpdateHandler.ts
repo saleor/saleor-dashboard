@@ -159,7 +159,11 @@ export function useProductUpdateHandler(
         variables: {
           id: product.id,
           inputs: data.variants.added.map(index => ({
-            ...getCreateVariantInput(data.variants, index),
+            ...getCreateVariantInput(
+              data.variants,
+              index,
+              product?.productType?.variantAttributes ?? [],
+            ),
           })),
         },
       });
@@ -176,6 +180,7 @@ export function useProductUpdateHandler(
       const updateInputdData = getBulkVariantUpdateInputs(
         product.variants,
         data.variants,
+        product?.productType?.variantAttributes ?? [],
       );
 
       if (updateInputdData.length) {

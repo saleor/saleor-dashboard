@@ -2336,6 +2336,25 @@ export const ProductWithChannelListingsFragmentDoc = gql`
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PriceRangeFragmentDoc}`;
+export const VariantAttributeFragmentDoc = gql`
+    fragment VariantAttribute on Attribute {
+  id
+  name
+  slug
+  inputType
+  entityType
+  valueRequired
+  unit
+  choices(
+    first: $firstValues
+    after: $afterValues
+    last: $lastValues
+    before: $beforeValues
+  ) {
+    ...AttributeValueList
+  }
+}
+    ${AttributeValueListFragmentDoc}`;
 export const ProductVariantAttributesFragmentDoc = gql`
     fragment ProductVariantAttributes on Product {
   id
@@ -2364,19 +2383,7 @@ export const ProductVariantAttributesFragmentDoc = gql`
   productType {
     id
     variantAttributes {
-      id
-      name
-      inputType
-      valueRequired
-      unit
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
-        ...AttributeValueList
-      }
+      ...VariantAttribute
     }
   }
   channelListings {
@@ -2388,7 +2395,8 @@ export const ProductVariantAttributesFragmentDoc = gql`
   }
 }
     ${AttributeValueListFragmentDoc}
-${AttributeValueDetailsFragmentDoc}`;
+${AttributeValueDetailsFragmentDoc}
+${VariantAttributeFragmentDoc}`;
 export const ProductMediaFragmentDoc = gql`
     fragment ProductMedia on ProductMedia {
   id
@@ -2437,8 +2445,7 @@ export const ProductDetailsVariantFragmentDoc = gql`
       name
     }
     values {
-      id
-      name
+      ...AttributeValueDetails
     }
   }
   media {
@@ -2456,7 +2463,8 @@ export const ProductDetailsVariantFragmentDoc = gql`
   }
   quantityLimitPerCustomer
 }
-    ${StockFragmentDoc}
+    ${AttributeValueDetailsFragmentDoc}
+${StockFragmentDoc}
 ${PreorderFragmentDoc}
 ${ChannelListingProductVariantFragmentDoc}`;
 export const WeightFragmentDoc = gql`
@@ -2515,25 +2523,6 @@ ${ChannelListingProductWithoutPricingFragmentDoc}
 ${ProductMediaFragmentDoc}
 ${ProductDetailsVariantFragmentDoc}
 ${WeightFragmentDoc}`;
-export const VariantAttributeFragmentDoc = gql`
-    fragment VariantAttribute on Attribute {
-  id
-  name
-  slug
-  inputType
-  entityType
-  valueRequired
-  unit
-  choices(
-    first: $firstValues
-    after: $afterValues
-    last: $lastValues
-    before: $beforeValues
-  ) {
-    ...AttributeValueList
-  }
-}
-    ${AttributeValueListFragmentDoc}`;
 export const SelectedVariantAttributeFragmentDoc = gql`
     fragment SelectedVariantAttribute on SelectedAttribute {
   attribute {
