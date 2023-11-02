@@ -7,23 +7,12 @@ import {
   Text,
   TrashBinIcon,
 } from "@saleor/macaw-ui-next";
-import React, { forwardRef, HTMLAttributes } from "react";
+import React, { forwardRef } from "react";
 import { FormattedMessage } from "react-intl";
 
-export interface Props extends Omit<HTMLAttributes<HTMLLIElement>, "id"> {
-  childCount?: number;
-  clone?: boolean;
-  depth: number;
-  disableInteraction?: boolean;
-  ghost?: boolean;
-  handleProps?: any;
-  indentationWidth: number;
-  value: string;
-  onRemove?: () => void;
-  wrapperRef?: (node: HTMLLIElement) => void;
-}
+import { TreeItemComponentProps } from "./types";
 
-export const TreeItem = forwardRef<HTMLDivElement, Props>(
+export const TreeItem = forwardRef<HTMLDivElement, TreeItemComponentProps>(
   (
     {
       childCount,
@@ -33,11 +22,9 @@ export const TreeItem = forwardRef<HTMLDivElement, Props>(
       ghost,
       handleProps,
       indentationWidth,
-      onRemove,
       style,
       value,
       wrapperRef,
-      ...props
     },
     ref,
   ) => {
@@ -46,13 +33,12 @@ export const TreeItem = forwardRef<HTMLDivElement, Props>(
         ref={wrapperRef}
         __marginLeft={`${indentationWidth * depth}px`}
         __marginBottom="-1px"
-        {...(props as any)}
         {...(clone && {
           display: "inline-block",
           pointerEvents: "none",
           padding: 0,
-          paddingLeft: "3",
-          paddingTop: "1",
+          paddingLeft: 3,
+          paddingTop: 1,
         })}
         {...(ghost && {
           opacity: "0.6",

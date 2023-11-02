@@ -27,42 +27,19 @@ import { createPortal } from "react-dom";
 
 import { sortableTreeKeyboardCoordinates } from "./keyboardCoordinates";
 import { SortableTreeItem } from "./SortableTreeItem";
-import type { FlattenedItem, SensorContext, TreeItems } from "./types";
+import type {
+  FlattenedItem,
+  SensorContext,
+  TreeItemComponentProps,
+  TreeItems,
+} from "./types";
 import {
   buildTree,
   flattenTree,
   getChildCount,
   getProjection,
   removeChildrenOf,
-  removeItem,
 } from "./utils";
-
-const initialItems: TreeItems = [
-  {
-    id: "Home",
-    children: [],
-  },
-  {
-    id: "Collections",
-    children: [
-      { id: "Spring", children: [] },
-      { id: "Summer", children: [] },
-      { id: "Fall", children: [] },
-      { id: "Winter", children: [] },
-    ],
-  },
-  {
-    id: "About Us",
-    children: [],
-  },
-  {
-    id: "My Account",
-    children: [
-      { id: "Addresses", children: [] },
-      { id: "Order History", children: [] },
-    ],
-  },
-];
 
 const measuring = {
   droppable: {
@@ -93,17 +70,17 @@ const dropAnimationConfig: DropAnimation = {
   },
 };
 
-interface Props {
-  defaultItems?: TreeItems;
+interface SortableTreeProps {
+  items?: TreeItems;
+  TreeItemComponent: React.ComponentType<TreeItemComponentProps>;
   indentationWidth?: number;
-  removable?: boolean;
 }
 
 export function SortableTree({
-  defaultItems = initialItems,
+  items: defaultItems,
+  TreeItemComponent,
   indentationWidth = 50,
-  removable,
-}: Props) {
+}: SortableTreeProps) {
   const [items, setItems] = useState(() => defaultItems);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
@@ -195,7 +172,7 @@ export function SortableTree({
             value={id}
             depth={id === activeId && projected ? projected.depth : depth}
             indentationWidth={indentationWidth}
-            onRemove={removable ? () => handleRemove(id) : undefined}
+            TreeItemComponent={TreeItemComponent}
           />
         ))}
         {createPortal(
@@ -205,6 +182,7 @@ export function SortableTree({
                 clone
                 id={activeId}
                 depth={activeItem.depth}
+                TreeItemComponent={TreeItemComponent}
                 childCount={getChildCount(items, activeId) + 1}
                 value={activeId.toString()}
                 indentationWidth={indentationWidth}
@@ -273,10 +251,6 @@ export function SortableTree({
     setCurrentPosition(null);
 
     document.body.style.setProperty("cursor", "");
-  }
-
-  function handleRemove(id: UniqueIdentifier) {
-    setItems(items => removeItem(items, id));
   }
 
   function getMovementAnnouncement(
