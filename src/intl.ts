@@ -403,6 +403,14 @@ export const buttonMessages = defineMessages({
     id: "rbrahO",
     defaultMessage: "Close",
   },
+  cancelOrder: {
+    id: "8fI5PB",
+    defaultMessage: "Cancel order",
+  },
+  keepOrder: {
+    id: "CswOOG",
+    defaultMessage: "Keep order",
+  },
 });
 
 export const sectionNames = defineMessages({

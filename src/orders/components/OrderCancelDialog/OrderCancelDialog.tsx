@@ -44,16 +44,19 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
     <Dialog onClose={onClose} open={open} maxWidth="sm">
       <DialogTitle disableTypography>
         <FormattedMessage
-          id="PRXpBm"
-          defaultMessage="Cancel Order"
+          id="dCpZEE"
+          defaultMessage="Cancel Order {orderNumber}"
           description="dialog header"
+          values={{
+            orderNumber,
+          }}
         />
       </DialogTitle>
       <DialogContent>
         <DialogContentText key="cancel">
           <FormattedMessage
-            id="VSztEE"
-            defaultMessage="Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. <b>Order will not be refunded when cancelling order - You need to do it manually.</b> Are you sure you want to cancel this order?"
+            id="uGS10l"
+            defaultMessage="Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. <b>Important:</b> Refunds need to be issued <b>manually</b> after order cancelation. Are you sure you want to cancel this order?"
             values={{
               b: (...chunks) => <b>{chunks}</b>,
               orderNumber,
@@ -72,13 +75,15 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
         )}
       </DialogContent>
       <DialogActions>
-        <BackButton onClick={onClose} />
+        <BackButton onClick={onClose}>
+          <FormattedMessage {...buttonMessages.keepOrder} />
+        </BackButton>
         <ConfirmButton
           onClick={onSubmit}
           transitionState={confirmButtonState}
           type="submit"
         >
-          <FormattedMessage {...buttonMessages.accept} />
+          <FormattedMessage {...buttonMessages.cancelOrder} />
         </ConfirmButton>
       </DialogActions>
     </Dialog>

@@ -1605,6 +1605,14 @@
     "context": "cancel button",
     "string": "Cancel order"
   },
+  "8fI5PB": {
+    "context": "confirm button",
+    "string": "Cancel order"
+  },
+  "CswOOG": {
+    "context": "cancel button",
+    "string": "Keep order"
+  },
   "9eC0MZ": {
     "context": "collection",
     "string": "Hidden"
@@ -3842,9 +3850,9 @@
     "context": "sum of all manual refunds for transaction",
     "string": "Manual refund"
   },
-  "PRXpBm": {
+  "dCpZEE": { 
     "context": "dialog header",
-    "string": "Cancel Order"
+    "string": "Cancel Order {orderNumber}"
   },
   "PTW56s": {
     "context": "alert",
@@ -4761,8 +4769,8 @@
     "context": "fulfill button label",
     "string": "Fulfill anyway"
   },
-  "VSztEE": {
-    "string": "Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. <b>Order will not be refunded when cancelling order - You need to do it manually.</b> Are you sure you want to cancel this order?"
+  "uGS10l": {
+    "string": "Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. <b>Important:</b> Refunds need to be issued <b>manually</b> after order cancelation. Are you sure you want to cancel this order?"
   },
   "VTITVe": {
     "context": "section header",
