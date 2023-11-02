@@ -43,11 +43,7 @@ export const TreeItem = ({
       __marginLeft={`${indentationWidth * depth}px`}
       __marginBottom="-1px"
       {...(clone && {
-        __display: "inline-block",
         __pointerEvents: "none",
-        padding: 0,
-        paddingLeft: 3,
-        paddingTop: 1,
       })}
       {...(ghost && {
         opacity: "0.6",
@@ -75,7 +71,7 @@ export const TreeItem = ({
           </Button>
           <Text>{data.name}</Text>
         </Box>
-        <Box display="flex" gap={2}>
+        <Box display={clone ? "none" : "flex"} gap={2}>
           <Button
             variant="secondary"
             onClick={() => onClick(getItemId(data), getItemType(data))}
