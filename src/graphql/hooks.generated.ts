@@ -1119,6 +1119,12 @@ export const OrderGrantRefundCreateErrorFragmentDoc = gql`
   field
   message
   code
+  lines {
+    field
+    message
+    code
+    lineId
+  }
 }
     `;
 export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
@@ -1126,6 +1132,18 @@ export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
   field
   message
   code
+  addLines {
+    field
+    message
+    code
+    lineId
+  }
+  removeLines {
+    field
+    message
+    code
+    lineId
+  }
 }
     `;
 export const GiftCardsSettingsFragmentDoc = gql`
@@ -1990,6 +2008,24 @@ export const OrderFulfillmentGrantRefundFragmentDoc = gql`
   }
 }
     ${OrderLineGrantRefundFragmentDoc}`;
+export const OrderDetailsGrantedRefundFragmentDoc = gql`
+    fragment OrderDetailsGrantedRefund on OrderGrantedRefund {
+  id
+  reason
+  amount {
+    ...Money
+  }
+  shippingCostsIncluded
+  lines {
+    id
+    quantity
+    orderLine {
+      ...OrderLine
+    }
+  }
+}
+    ${MoneyFragmentDoc}
+${OrderLineFragmentDoc}`;
 export const OrderDetailsGrantRefundFragmentDoc = gql`
     fragment OrderDetailsGrantRefund on Order {
   id
@@ -2010,10 +2046,14 @@ export const OrderDetailsGrantRefundFragmentDoc = gql`
       ...Money
     }
   }
+  grantedRefunds {
+    ...OrderDetailsGrantedRefund
+  }
 }
     ${OrderLineGrantRefundFragmentDoc}
 ${OrderFulfillmentGrantRefundFragmentDoc}
-${MoneyFragmentDoc}`;
+${MoneyFragmentDoc}
+${OrderDetailsGrantedRefundFragmentDoc}`;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -10498,8 +10538,11 @@ export type OrderTransactionRequestActionMutationHookResult = ReturnType<typeof 
 export type OrderTransactionRequestActionMutationResult = Apollo.MutationResult<Types.OrderTransactionRequestActionMutation>;
 export type OrderTransactionRequestActionMutationOptions = Apollo.BaseMutationOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>;
 export const OrderGrantRefundAddDocument = gql`
-    mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal!, $reason: String) {
-  orderGrantRefundCreate(id: $orderId, input: {amount: $amount, reason: $reason}) {
+    mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal, $reason: String, $lines: [OrderGrantRefundCreateLineInput!], $grantRefundForShipping: Boolean) {
+  orderGrantRefundCreate(
+    id: $orderId
+    input: {amount: $amount, reason: $reason, lines: $lines, grantRefundForShipping: $grantRefundForShipping}
+  ) {
     errors {
       ...OrderGrantRefundCreateError
     }
@@ -10524,6 +10567,8 @@ export type OrderGrantRefundAddMutationFn = Apollo.MutationFunction<Types.OrderG
  *      orderId: // value for 'orderId'
  *      amount: // value for 'amount'
  *      reason: // value for 'reason'
+ *      lines: // value for 'lines'
+ *      grantRefundForShipping: // value for 'grantRefundForShipping'
  *   },
  * });
  */
@@ -10535,8 +10580,11 @@ export type OrderGrantRefundAddMutationHookResult = ReturnType<typeof useOrderGr
 export type OrderGrantRefundAddMutationResult = Apollo.MutationResult<Types.OrderGrantRefundAddMutation>;
 export type OrderGrantRefundAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>;
 export const OrderGrantRefundEditDocument = gql`
-    mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal!, $reason: String) {
-  orderGrantRefundUpdate(id: $refundId, input: {amount: $amount, reason: $reason}) {
+    mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal, $reason: String, $addLines: [OrderGrantRefundUpdateLineAddInput!], $removeLines: [ID!], $grantRefundForShipping: Boolean) {
+  orderGrantRefundUpdate(
+    id: $refundId
+    input: {amount: $amount, reason: $reason, addLines: $addLines, removeLines: $removeLines, grantRefundForShipping: $grantRefundForShipping}
+  ) {
     errors {
       ...OrderGrantRefundUpdateError
     }
@@ -10561,6 +10609,9 @@ export type OrderGrantRefundEditMutationFn = Apollo.MutationFunction<Types.Order
  *      refundId: // value for 'refundId'
  *      amount: // value for 'amount'
  *      reason: // value for 'reason'
+ *      addLines: // value for 'addLines'
+ *      removeLines: // value for 'removeLines'
+ *      grantRefundForShipping: // value for 'grantRefundForShipping'
  *   },
  * });
  */
@@ -10993,17 +11044,9 @@ export const OrderDetailsGrantRefundEditDocument = gql`
     query OrderDetailsGrantRefundEdit($id: ID!) {
   order(id: $id) {
     ...OrderDetailsGrantRefund
-    grantedRefunds {
-      id
-      reason
-      amount {
-        ...Money
-      }
-    }
   }
 }
-    ${OrderDetailsGrantRefundFragmentDoc}
-${MoneyFragmentDoc}`;
+    ${OrderDetailsGrantRefundFragmentDoc}`;
 
 /**
  * __useOrderDetailsGrantRefundEditQuery__

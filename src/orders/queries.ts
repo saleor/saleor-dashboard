@@ -149,13 +149,6 @@ export const orderDetailsGrantedRefundEdit = gql`
   query OrderDetailsGrantRefundEdit($id: ID!) {
     order(id: $id) {
       ...OrderDetailsGrantRefund
-      grantedRefunds {
-        id
-        reason
-        amount {
-          ...Money
-        }
-      }
     }
   }
 `;
