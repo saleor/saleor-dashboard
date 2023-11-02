@@ -5,22 +5,20 @@ import { SortableTree } from "@dashboard/components/SortableTree/SortableTree";
 import { buttonMessages } from "@dashboard/intl";
 import { RecursiveMenuItem } from "@dashboard/navigation/types";
 import { Card, CardActions, Paper, Typography } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import {
-  Button,
-  DeleteIcon,
-  IconButton,
-  makeStyles,
-  useTheme,
-} from "@saleor/macaw-ui";
-import { GripIcon, vars } from "@saleor/macaw-ui-next";
+import { Button, makeStyles, useTheme } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { NodeRendererProps } from "react-sortable-tree";
 
 import { MenuItemType } from "../MenuItemDialog";
-import { getNodeQuantity, TreeItemProps, TreeOperation } from "./tree";
+import {
+  getNodeData,
+  getNodeQuantity,
+  TreeItemProps,
+  TreeOperation,
+} from "./tree";
+import { TreeItem } from "./TreeItem";
 
 const NODE_HEIGHT = 56;
 const NODE_MARGIN = 40;
@@ -179,7 +177,18 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         {items === undefined ? (
           <Skeleton />
         ) : (
-          <SortableTree />
+          <SortableTree
+            items={items.map(getNodeData)}
+            renderTreeItem={props => {
+              return (
+                <TreeItem
+                  {...props}
+                  onClick={onItemClick}
+                  onEdit={onItemEdit}
+                />
+              );
+            }}
+          />
           // <SortableTree
           //   className={classes.root}
           //   generateNodeProps={({ path }) => ({

@@ -25,6 +25,7 @@ import { CSS } from "@dnd-kit/utilities";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+import { useItems } from "./hooks/useItems";
 import { sortableTreeKeyboardCoordinates } from "./keyboardCoordinates";
 import { SortableTreeItem } from "./SortableTreeItem";
 import type {
@@ -33,13 +34,7 @@ import type {
   TreeItemComponentProps,
   TreeItems,
 } from "./types";
-import {
-  buildTree,
-  flattenTree,
-  getChildCount,
-  getProjection,
-  removeChildrenOf,
-} from "./utils";
+import { buildTree, flattenTree, getChildCount, getProjection } from "./utils";
 
 const measuring = {
   droppable: {
@@ -70,18 +65,17 @@ const dropAnimationConfig: DropAnimation = {
   },
 };
 
-interface SortableTreeProps {
-  items?: TreeItems;
-  TreeItemComponent: React.ComponentType<TreeItemComponentProps>;
+interface SortableTreeProps<T> {
+  items?: TreeItems<T>;
+  renderTreeItem: (props: TreeItemComponentProps<T>) => JSX.Element;
   indentationWidth?: number;
 }
 
-export function SortableTree({
+export function SortableTree<T>({
   items: defaultItems,
-  TreeItemComponent,
+  renderTreeItem,
   indentationWidth = 50,
-}: SortableTreeProps) {
-  const [items, setItems] = useState(() => defaultItems);
+}: SortableTreeProps<T>) {
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
   const [offsetLeft, setOffsetLeft] = useState(0);
@@ -90,11 +84,11 @@ export function SortableTree({
     overId: UniqueIdentifier;
   } | null>(null);
 
-  const flattenedItems = useMemo(() => {
-    const flattenedTree = flattenTree(items);
+  const { items, flattenedItems, setItems } = useItems({
+    defaultItems,
+    activeId,
+  });
 
-    return removeChildrenOf(flattenedTree, activeId ? [activeId] : []);
-  }, [activeId, items]);
   const projected =
     activeId && overId
       ? getProjection(
@@ -105,13 +99,16 @@ export function SortableTree({
           indentationWidth,
         )
       : null;
-  const sensorContext: SensorContext = useRef({
+
+  const sensorContext: SensorContext<T> = useRef({
     items: flattenedItems,
     offset: offsetLeft,
   });
+
   const [coordinateGetter] = useState(() =>
     sortableTreeKeyboardCoordinates(sensorContext, indentationWidth),
   );
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -165,14 +162,15 @@ export function SortableTree({
       onDragCancel={handleDragCancel}
     >
       <SortableContext items={sortedIds} strategy={verticalListSortingStrategy}>
-        {flattenedItems.map(({ id, depth }) => (
+        {flattenedItems.map(({ id, depth, data }) => (
           <SortableTreeItem
             key={id}
+            data={data}
             id={id}
             value={id}
             depth={id === activeId && projected ? projected.depth : depth}
             indentationWidth={indentationWidth}
-            TreeItemComponent={TreeItemComponent}
+            renderTreeItem={renderTreeItem}
           />
         ))}
         {createPortal(
@@ -180,9 +178,10 @@ export function SortableTree({
             {activeId && activeItem ? (
               <SortableTreeItem
                 clone
+                data={flattenedItems.find(({ id }) => id === activeId)?.data}
                 id={activeId}
                 depth={activeItem.depth}
-                TreeItemComponent={TreeItemComponent}
+                renderTreeItem={renderTreeItem}
                 childCount={getChildCount(items, activeId) + 1}
                 value={activeId.toString()}
                 indentationWidth={indentationWidth}
@@ -224,7 +223,7 @@ export function SortableTree({
 
     if (projected && over) {
       const { depth, parentId } = projected;
-      const clonedItems: FlattenedItem[] = JSON.parse(
+      const clonedItems: Array<FlattenedItem<T>> = JSON.parse(
         JSON.stringify(flattenTree(items)),
       );
       const overIndex = clonedItems.findIndex(({ id }) => id === over.id);
@@ -274,7 +273,7 @@ export function SortableTree({
         }
       }
 
-      const clonedItems: FlattenedItem[] = JSON.parse(
+      const clonedItems: Array<FlattenedItem<T>> = JSON.parse(
         JSON.stringify(flattenTree(items)),
       );
       const overIndex = clonedItems.findIndex(({ id }) => id === overId);
@@ -294,7 +293,7 @@ export function SortableTree({
         if (projected.depth > previousItem.depth) {
           announcement = `${activeId} was ${nestedVerb} under ${previousItem.id}.`;
         } else {
-          let previousSibling: FlattenedItem | undefined = previousItem;
+          let previousSibling: FlattenedItem<T> | undefined = previousItem;
           while (previousSibling && projected.depth < previousSibling.depth) {
             const parentId: UniqueIdentifier | null = previousSibling.parentId;
             previousSibling = sortedItems.find(({ id }) => id === parentId);

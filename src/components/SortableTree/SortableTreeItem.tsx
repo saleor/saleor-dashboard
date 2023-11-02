@@ -1,13 +1,13 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import { AnimateLayoutChanges, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import React, { CSSProperties } from "react";
+import { CSSProperties } from "react";
 
 import { TreeItemComponentProps } from "./types";
 
-interface SortableTreeItemProps extends TreeItemComponentProps {
+interface SortableTreeItemProps<T> extends TreeItemComponentProps<T> {
   id: UniqueIdentifier;
-  TreeItemComponent: React.ComponentType<TreeItemComponentProps>;
+  renderTreeItem: (props: TreeItemComponentProps<T>) => JSX.Element;
 }
 
 const animateLayoutChanges: AnimateLayoutChanges = ({
@@ -15,12 +15,13 @@ const animateLayoutChanges: AnimateLayoutChanges = ({
   wasDragging,
 }) => !(isSorting || wasDragging);
 
-export function SortableTreeItem({
+export function SortableTreeItem<T>({
   id,
   depth,
-  TreeItemComponent,
+  renderTreeItem,
+  data,
   ...props
-}: SortableTreeItemProps) {
+}: SortableTreeItemProps<T>) {
   const {
     attributes,
     isDragging,
@@ -39,19 +40,19 @@ export function SortableTreeItem({
     transition,
   };
 
-  return (
-    <TreeItemComponent
-      ref={setDraggableNodeRef}
-      wrapperRef={setDroppableNodeRef}
-      style={style}
-      depth={depth}
-      ghost={isDragging}
-      disableInteraction={isSorting}
-      handleProps={{
-        ...attributes,
-        ...listeners,
-      }}
-      {...props}
-    />
-  );
+  return renderTreeItem({
+    id,
+    data,
+    innerRef: setDraggableNodeRef,
+    wrapperRef: setDroppableNodeRef,
+    style,
+    depth,
+    ghost: isDragging,
+    disableInteraction: isSorting,
+    handleProps: {
+      ...attributes,
+      ...listeners,
+    },
+    ...props,
+  });
 }
