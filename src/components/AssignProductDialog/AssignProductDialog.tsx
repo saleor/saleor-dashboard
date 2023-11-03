@@ -109,9 +109,14 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     }));
   };
 
+  const handleClose = () => {
+    queryReset();
+    onClose();
+  };
+
   return (
     <Dialog
-      onClose={onClose}
+      onClose={handleClose}
       open={open}
       classes={{ paper: scrollableDialogClasses.dialog }}
       fullWidth

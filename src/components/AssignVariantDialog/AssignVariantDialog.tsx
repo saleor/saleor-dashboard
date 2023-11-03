@@ -71,7 +71,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
   const scrollableDialogClasses = useScrollableDialogStyle({});
 
   const intl = useIntl();
-  const [query, onQueryChange] = useSearchQuery(onFetch);
+  const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [variants, setVariants] = React.useState<VariantWithProductLabel[]>([]);
 
   const productChoices =
@@ -97,9 +97,14 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
       })),
     );
 
+  const handleClose = () => {
+    queryReset();
+    onClose();
+  };
+
   return (
     <Dialog
-      onClose={onClose}
+      onClose={handleClose}
       open={open}
       classes={{ paper: scrollableDialogClasses.dialog }}
       fullWidth
