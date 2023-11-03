@@ -565,6 +565,12 @@ export const orderGrantRefundCreateErrorFragment = gql`
     field
     message
     code
+    lines {
+      field
+      message
+      code
+      lineId
+    }
   }
 `;
 
@@ -573,5 +579,17 @@ export const orderGrantRefundUpdateErrorFragment = gql`
     field
     message
     code
+    addLines {
+      field
+      message
+      code
+      lineId
+    }
+    removeLines {
+      field
+      message
+      code
+      lineId
+    }
   }
 `;
