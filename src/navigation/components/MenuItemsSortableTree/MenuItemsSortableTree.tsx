@@ -1,5 +1,5 @@
 import { SortableTree } from "@dashboard/components/SortableTree";
-import { RecursiveMenuItem } from "@dashboard/navigation/types";
+import { MenuTreeItem, RecursiveMenuItem } from "@dashboard/navigation/types";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -10,6 +10,7 @@ import { getNodeData } from "./utils";
 
 interface MenuItemsSortableTreeProps {
   items: RecursiveMenuItem[];
+  onChange: (newTree: MenuTreeItem[]) => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
 }
@@ -18,6 +19,7 @@ export const MenuItemsSortableTree = ({
   items,
   onItemClick,
   onItemEdit,
+  onChange,
 }: MenuItemsSortableTreeProps) => {
   if (!items.length) {
     return (
@@ -40,6 +42,7 @@ export const MenuItemsSortableTree = ({
 
   return (
     <SortableTree
+      onChange={onChange as any}
       items={items.map(getNodeData)}
       renderTreeItem={props => (
         <MenuItemsSortableTreeItem

@@ -9,7 +9,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { MenuItemType } from "../MenuItemDialog";
 import { MenuItemsSortableTree } from "../MenuItemsSortableTree";
-import { TreeOperation } from "./tree";
+import { getNodeData } from "../MenuItemsSortableTree/utils";
+import { getDiff, TreeOperation } from "./tree";
 
 export interface MenuItemsProps {
   canUndo: boolean;
@@ -25,7 +26,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
   const {
     canUndo,
     items,
-    // onChange,
+    onChange,
     onItemAdd,
     onItemClick,
     onItemEdit,
@@ -54,22 +55,12 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
           ) : (
             <MenuItemsSortableTree
               items={items}
+              onChange={newTree =>
+                onChange(getDiff(items.map(getNodeData), newTree))
+              }
               onItemClick={onItemClick}
               onItemEdit={onItemEdit}
             />
-            // <SortableTree
-            //   maxDepth={5}
-            //   onChange={newTree =>
-            //     onChange(
-            //       getDiff(
-            //         items.map(item =>
-            //           getNodeData(item, onChange, onItemClick, onItemEdit),
-            //         ),
-            //         newTree as MenuTreeItem[],
-            //       ),
-            //     )
-            //   }
-            // />
           )}
         </Box>
 

@@ -68,11 +68,13 @@ const dropAnimationConfig: DropAnimation = {
 interface SortableTreeProps<T> {
   items?: TreeItems<T>;
   renderTreeItem: (props: TreeItemComponentProps<T>) => JSX.Element;
+  onChange: (newItems: TreeItems<T>) => void;
   indentationWidth?: number;
 }
 
 export function SortableTree<T>({
   items: defaultItems,
+  onChange,
   renderTreeItem,
   indentationWidth = 50,
 }: SortableTreeProps<T>) {
@@ -236,6 +238,7 @@ export function SortableTree<T>({
       const newItems = buildTree(sortedItems);
 
       setItems(newItems);
+      onChange(newItems);
     }
   }
 
