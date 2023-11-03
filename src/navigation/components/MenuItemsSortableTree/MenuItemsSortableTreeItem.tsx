@@ -14,14 +14,14 @@ import {
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { getItemId, getItemType } from "./tree";
+import { getItemId, getItemType } from "./utils";
 
 interface TreeItemProps extends TreeItemComponentProps<RecursiveMenuItem> {
   onClick?: (id: UniqueIdentifier, menuItemType: MenuItemType) => void;
   onEdit?: (id: UniqueIdentifier) => void;
 }
 
-export const TreeItem = ({
+export const MenuItemsSortableTreeItem = ({
   innerRef,
   id,
   data,
@@ -71,7 +71,7 @@ export const TreeItem = ({
           </Button>
           <Text>{data.name}</Text>
         </Box>
-        <Box display={clone ? "none" : "flex"} gap={2}>
+        <Box display="flex" gap={2}>
           <Button
             variant="secondary"
             onClick={() => onClick(getItemId(data), getItemType(data))}
@@ -111,5 +111,3 @@ export const TreeItem = ({
     </Box>
   );
 };
-
-TreeItem.displayName = "TreeItem";

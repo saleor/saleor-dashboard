@@ -1,27 +1,15 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Skeleton from "@dashboard/components/Skeleton";
-import { SortableTree } from "@dashboard/components/SortableTree/SortableTree";
 import { buttonMessages } from "@dashboard/intl";
 import { RecursiveMenuItem } from "@dashboard/navigation/types";
-import { Card, CardActions, Paper, Typography } from "@material-ui/core";
-import { Button, makeStyles, useTheme } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { MenuItemType } from "../MenuItemDialog";
-import {
-  getNodeData,
-  getNodeQuantity,
-  TreeItemProps,
-  TreeOperation,
-} from "./tree";
-import { TreeItem } from "./TreeItem";
-
-const NODE_HEIGHT = 56;
-const NODE_MARGIN = 40;
+import { MenuItemsSortableTree } from "../MenuItemsSortableTree";
+import { TreeOperation } from "./tree";
 
 export interface MenuItemsProps {
   canUndo: boolean;
@@ -33,203 +21,71 @@ export interface MenuItemsProps {
   onUndo: () => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    actions: {
-      "&&": {
-        padding: theme.spacing(2, 4),
-      },
-      flexDirection: "row",
-    },
-    container: {
-      background: theme.palette.grey[200],
-    },
-    darkContainer: {
-      background: `${theme.palette.grey[800]} !important`,
-    },
-    deleteButton: {
-      marginRight: theme.spacing(1),
-    },
-    dragIcon: {
-      cursor: "grab",
-    },
-    nodeTitle: {
-      cursor: "pointer",
-      marginLeft: theme.spacing(7),
-    },
-    nodeActions: {
-      display: "flex",
-      gap: theme.spacing(1),
-    },
-    root: {
-      "& .rst__collapseButton": {
-        display: "none",
-      },
-      "& .rst__node": {
-        "&:first-of-type": {
-          "& $row": {
-            borderTop: `1px ${vars.colors.border.neutralPlain} solid`,
-          },
-        },
-      },
-    },
-    row: {
-      alignItems: "center",
-      background: vars.colors.background.surfaceNeutralPlain,
-      borderBottom: `1px ${vars.colors.border.neutralPlain} solid`,
-      borderRadius: 0,
-      display: "flex",
-      flexDirection: "row",
-      height: NODE_HEIGHT,
-      justifyContent: "flex-start",
-      paddingLeft: theme.spacing(3),
-    },
-    rowContainer: {
-      "& > *": {
-        opacity: 1,
-        transition: `opacity ${theme.transitions.duration.standard}ms`,
-      },
-      transition: `margin ${theme.transitions.duration.standard}ms`,
-    },
-    rowContainerDragged: {
-      "&$rowContainer": {
-        "&:before": {
-          background: vars.colors.background.surfaceNeutralPlain,
-          border: `1px solid ${vars.colors.border.neutralPlain}`,
-          borderRadius: "100%",
-          content: "''",
-          height: 7,
-          left: 0,
-          position: "absolute",
-          top: -3,
-          width: 7,
-        },
-        borderTop: `1px solid ${vars.colors.border.neutralPlain}`,
-        height: 0,
-        position: "relative",
-        top: -1,
-      },
-    },
-    rowContainerPlaceholder: {
-      opacity: 0,
-    },
-    spacer: {
-      flex: 1,
-    },
-  }),
-  { name: "MenuItems" },
-);
-
-const Placeholder: React.FC = props => {
-  const classes = useStyles(props);
-
-  return (
-    <Paper className={classes.row} elevation={0}>
-      <Typography>
-        <FormattedMessage
-          id="WwZfNK"
-          defaultMessage="Add new menu item to begin creating menu"
-        />
-      </Typography>
-    </Paper>
-  );
-};
-
 const MenuItems: React.FC<MenuItemsProps> = props => {
   const {
     canUndo,
     items,
-    onChange,
+    // onChange,
     onItemAdd,
     onItemClick,
     onItemEdit,
     onUndo,
   } = props;
-  const classes = useStyles(props);
-
   const intl = useIntl();
-  const { themeType } = useTheme();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "dEUZg2",
-          defaultMessage: "Menu Items",
-          description: "header",
-        })}
-        toolbar={
+    <DashboardCard>
+      <DashboardCard.Title>
+        <Box display="flex" justifyContent="space-between">
+          {intl.formatMessage({
+            id: "dEUZg2",
+            defaultMessage: "Menu Items",
+            description: "header",
+          })}
           <Button disabled={!canUndo} onClick={onUndo}>
             <FormattedMessage {...buttonMessages.undo} />
           </Button>
-        }
-      />
-      <div
-        className={clsx(classes.container, {
-          [classes.darkContainer]: themeType === "dark",
-        })}
-        style={{
-          minHeight: (items ? getNodeQuantity(items) - 1 : 1) * NODE_HEIGHT,
-          padding: !items && "0 24px",
-          paddingTop: !items && 20,
-        }}
-      >
-        {items === undefined ? (
-          <Skeleton />
-        ) : (
-          <SortableTree
-            items={items.map(getNodeData)}
-            renderTreeItem={props => {
-              return (
-                <TreeItem
-                  {...props}
-                  onClick={onItemClick}
-                  onEdit={onItemEdit}
-                />
-              );
-            }}
-          />
-          // <SortableTree
-          //   className={classes.root}
-          //   generateNodeProps={({ path }) => ({
-          //     className: classes.row,
-          //     style: {
-          //       marginLeft: NODE_MARGIN * (path.length - 1),
-          //     },
-          //   })}
-          //   maxDepth={5}
-          //   isVirtualized={false}
-          //   rowHeight={NODE_HEIGHT}
-          //   treeData={items.map(item =>
-          //     getNodeData(item, onChange, onItemClick, onItemEdit),
-          //   )}
-          //   theme={{
-          //     nodeContentRenderer: Node,
-          //   }}
-          //   onChange={newTree =>
-          //     onChange(
-          //       getDiff(
-          //         items.map(item =>
-          //           getNodeData(item, onChange, onItemClick, onItemEdit),
-          //         ),
-          //         newTree as MenuTreeItem[],
-          //       ),
-          //     )
-          //   }
-          //   placeholderRenderer={Placeholder}
-          // />
-        )}
-      </div>
-      <CardActions className={classes.actions}>
-        <Button onClick={onItemAdd} data-test-id="create-new-menu-item">
+        </Box>
+      </DashboardCard.Title>
+      <DashboardCard.Content>
+        <Box backgroundColor="surfaceNeutralHighlight" marginBottom={4}>
+          {items === undefined ? (
+            <Skeleton />
+          ) : (
+            <MenuItemsSortableTree
+              items={items}
+              onItemClick={onItemClick}
+              onItemEdit={onItemEdit}
+            />
+            // <SortableTree
+            //   maxDepth={5}
+            //   onChange={newTree =>
+            //     onChange(
+            //       getDiff(
+            //         items.map(item =>
+            //           getNodeData(item, onChange, onItemClick, onItemEdit),
+            //         ),
+            //         newTree as MenuTreeItem[],
+            //       ),
+            //     )
+            //   }
+            // />
+          )}
+        </Box>
+
+        <Button
+          onClick={onItemAdd}
+          variant="secondary"
+          data-test-id="create-new-menu-item"
+        >
           <FormattedMessage
             id="Uf3oHA"
             defaultMessage="Create new item"
             description="add new menu item"
           />
         </Button>
-      </CardActions>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 MenuItems.displayName = "MenuItems";
