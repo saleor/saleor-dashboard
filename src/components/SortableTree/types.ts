@@ -1,7 +1,7 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import type { MutableRefObject } from "react";
 
-export type DataTypePlaceholder = Record<string, any> | null;
+export type DataTypePlaceholder = Record<string, unknown> | null;
 
 export interface TreeItem<T extends DataTypePlaceholder> {
   id: UniqueIdentifier;

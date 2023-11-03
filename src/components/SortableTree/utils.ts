@@ -112,7 +112,7 @@ export function flattenTree<T extends DataTypePlaceholder>(
 export function buildTree<T extends DataTypePlaceholder>(
   flattenedItems: FlattenedItems<T>,
 ): TreeItems<T> {
-  const root: TreeItem<T> = { id: "root", data: null, children: [] };
+  const root: TreeItem<T> = { id: "root", data: null as T, children: [] };
   const nodes: Record<string, TreeItem<T>> = { [root.id]: root };
   const items = flattenedItems.map(item => ({ ...item, children: [] }));
 
@@ -121,7 +121,7 @@ export function buildTree<T extends DataTypePlaceholder>(
     const parentId = item.parentId ?? root.id;
     const parent = nodes[parentId] ?? findItem(items, parentId);
 
-    nodes[id] = { id, children, data: null };
+    nodes[id] = { id, children, data: null as T };
     parent.children.push(item);
   }
 

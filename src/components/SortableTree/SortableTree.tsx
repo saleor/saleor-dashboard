@@ -136,7 +136,8 @@ export function SortableTree<T extends DataTypePlaceholder>({
               <SortableTreeItem
                 clone
                 data={
-                  flattenedItems.find(({ id }) => id === activeId)?.data ?? null
+                  flattenedItems.find(({ id }) => id === activeId)?.data ??
+                  (null as T)
                 }
                 id={activeId}
                 depth={activeItem.depth}
