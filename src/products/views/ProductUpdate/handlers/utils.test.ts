@@ -367,7 +367,7 @@ describe("getBulkVariantUpdateInputs", () => {
         {
           data: "2345555",
           column: "sku",
-          row: 0, // orignally 0
+          row: 0, // initially 0
         },
         {
           data: {
@@ -376,12 +376,12 @@ describe("getBulkVariantUpdateInputs", () => {
             currency: "USD",
           },
           column: `channel:${variants[0].channelListings[0].channel.id}`,
-          row: 0, // originally 0
+          row: 0, // initially 0
         },
         {
           data: "edited variant",
           column: "name",
-          row: 1, // originally 2
+          row: 1, // initially 2
         },
         {
           data: {
@@ -389,17 +389,18 @@ describe("getBulkVariantUpdateInputs", () => {
             value: 2344,
           },
           column: `warehouse:${variants[2].stocks[0].warehouse.id}`,
-          row: 1, // originally 2
+          row: 1, // initially 2
         },
-        // row 2 (originally 4) is unchanged
+        // row 2 (initially 4) is unchanged
         {
           data: "completely new variant",
           column: "name",
-          row: 3, // originally 5
+          row: 3, // initially 5
         },
       ],
-      // DatagridChangeOpts generates removed indices based on original grid,
-      // meanwhile added and updates are based on the current grid
+      // DatagridChangeOpts generates removed indices based on initial grid,
+      // meanwhile added and updates indices are calculated on the grid after removal
+      // of rows. This is why we have 3 as an index both in removed and added.
       removed: [1, 3],
       added: [3],
     };
