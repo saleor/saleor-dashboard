@@ -19,6 +19,7 @@ import { getItemId, getItemType } from "./utils";
 interface TreeItemProps extends TreeItemComponentProps<RecursiveMenuItem> {
   onClick?: (id: UniqueIdentifier, menuItemType: MenuItemType) => void;
   onEdit?: (id: UniqueIdentifier) => void;
+  onRemove: (id: UniqueIdentifier) => void;
 }
 
 export const MenuItemsSortableTreeItem = ({
@@ -36,6 +37,7 @@ export const MenuItemsSortableTreeItem = ({
   wrapperRef,
   onEdit,
   onClick,
+  onRemove,
 }: TreeItemProps) => {
   return (
     <Box
@@ -81,10 +83,7 @@ export const MenuItemsSortableTreeItem = ({
           <Button variant="secondary" onClick={() => onEdit(id)}>
             <EditIcon />
           </Button>
-          <Button
-            variant="secondary"
-            // onClick={() => console.log("Delete button")}
-          >
+          <Button variant="secondary" onClick={() => onRemove(id)}>
             <TrashBinIcon />
           </Button>
         </Box>

@@ -13,12 +13,14 @@ interface MenuItemsSortableTreeProps {
   onChange: (newTree: MenuTreeItem[]) => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
+  onItemRemove: (id: string) => void;
 }
 
 export const MenuItemsSortableTree = ({
   items,
   onItemClick,
   onItemEdit,
+  onItemRemove,
   onChange,
 }: MenuItemsSortableTreeProps) => {
   if (!items.length) {
@@ -47,6 +49,7 @@ export const MenuItemsSortableTree = ({
       renderTreeItem={props => (
         <MenuItemsSortableTreeItem
           {...props}
+          onRemove={onItemRemove}
           onClick={onItemClick}
           onEdit={onItemEdit}
         />

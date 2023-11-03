@@ -58,6 +58,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
               onChange={newTree =>
                 onChange(getDiff(items.map(getNodeData), newTree))
               }
+              onItemRemove={id => onChange([{ id, type: "remove" }])}
               onItemClick={onItemClick}
               onItemEdit={onItemEdit}
             />
