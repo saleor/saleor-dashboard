@@ -1,15 +1,18 @@
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useEffect, useMemo, useState } from "react";
 
-import { TreeItems } from "../types";
+import { DataTypePlaceholder, TreeItems } from "../types";
 import { flattenTree, removeChildrenOf } from "../utils";
 
-interface UseItemsProps<T> {
+interface UseItemsProps<T extends DataTypePlaceholder> {
   defaultItems: TreeItems<T>;
   activeId: UniqueIdentifier | null;
 }
 
-export const useItems = <T>({ defaultItems, activeId }: UseItemsProps<T>) => {
+export const useItems = <T extends DataTypePlaceholder>({
+  defaultItems,
+  activeId,
+}: UseItemsProps<T>) => {
   const [items, setItems] = useState(defaultItems);
 
   useEffect(() => {

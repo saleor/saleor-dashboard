@@ -1,14 +1,21 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
-import type { FlattenedItem, Projected, TreeItem, TreeItems } from "./types";
+import type {
+  DataTypePlaceholder,
+  FlattenedItem,
+  FlattenedItems,
+  Projected,
+  TreeItem,
+  TreeItems,
+} from "./types";
 
 function getDragDepth(offset: number, indentationWidth: number) {
   return Math.round(offset / indentationWidth);
 }
 
-export function getProjection<T>(
-  items: Array<FlattenedItem<T>>,
+export function getProjection<T extends DataTypePlaceholder>(
+  items: FlattenedItems<T>,
   activeId: UniqueIdentifier,
   overId: UniqueIdentifier,
   dragOffset: number,
@@ -58,7 +65,11 @@ export function getProjection<T>(
   }
 }
 
-function getMaxDepth<T>({ previousItem }: { previousItem: FlattenedItem<T> }) {
+function getMaxDepth<T extends DataTypePlaceholder>({
+  previousItem,
+}: {
+  previousItem: FlattenedItem<T>;
+}) {
   if (previousItem) {
     return previousItem.depth + 1;
   }
@@ -66,7 +77,11 @@ function getMaxDepth<T>({ previousItem }: { previousItem: FlattenedItem<T> }) {
   return 0;
 }
 
-function getMinDepth<T>({ nextItem }: { nextItem: FlattenedItem<T> }) {
+function getMinDepth<T extends DataTypePlaceholder>({
+  nextItem,
+}: {
+  nextItem: FlattenedItem<T>;
+}) {
   if (nextItem) {
     return nextItem.depth;
   }
@@ -74,12 +89,12 @@ function getMinDepth<T>({ nextItem }: { nextItem: FlattenedItem<T> }) {
   return 0;
 }
 
-function flatten<T>(
+function flatten<T extends DataTypePlaceholder>(
   items: TreeItems<T>,
   parentId: UniqueIdentifier | null = null,
   depth = 0,
-): Array<FlattenedItem<T>> {
-  return items.reduce<Array<FlattenedItem<T>>>((acc, item, index) => {
+): FlattenedItems<T> {
+  return items.reduce<FlattenedItems<T>>((acc, item, index) => {
     return [
       ...acc,
       { ...item, parentId, depth, index },
@@ -88,12 +103,14 @@ function flatten<T>(
   }, []);
 }
 
-export function flattenTree<T>(items: TreeItems<T>): Array<FlattenedItem<T>> {
+export function flattenTree<T extends DataTypePlaceholder>(
+  items: TreeItems<T>,
+): FlattenedItems<T> {
   return flatten(items);
 }
 
-export function buildTree<T>(
-  flattenedItems: Array<FlattenedItem<T>>,
+export function buildTree<T extends DataTypePlaceholder>(
+  flattenedItems: FlattenedItems<T>,
 ): TreeItems<T> {
   const root: TreeItem<T> = { id: "root", data: null, children: [] };
   const nodes: Record<string, TreeItem<T>> = { [root.id]: root };
@@ -111,14 +128,14 @@ export function buildTree<T>(
   return root.children;
 }
 
-export function findItem<T>(
+export function findItem<T extends DataTypePlaceholder>(
   items: Array<TreeItem<T>>,
   itemId: UniqueIdentifier,
 ) {
   return items.find(({ id }) => id === itemId);
 }
 
-export function findItemDeep<T>(
+export function findItemDeep<T extends DataTypePlaceholder>(
   items: TreeItems<T>,
   itemId: UniqueIdentifier,
 ): TreeItem<T> | undefined {
@@ -141,7 +158,10 @@ export function findItemDeep<T>(
   return undefined;
 }
 
-function countChildren<T>(items: Array<TreeItem<T>>, count = 0): number {
+function countChildren<T extends DataTypePlaceholder>(
+  items: Array<TreeItem<T>>,
+  count = 0,
+): number {
   return items.reduce((acc, { children }) => {
     if (children.length) {
       return countChildren(children, acc + 1);
@@ -151,14 +171,17 @@ function countChildren<T>(items: Array<TreeItem<T>>, count = 0): number {
   }, count);
 }
 
-export function getChildCount<T>(items: TreeItems<T>, id: UniqueIdentifier) {
+export function getChildCount<T extends DataTypePlaceholder>(
+  items: TreeItems<T>,
+  id: UniqueIdentifier,
+) {
   const item = findItemDeep(items, id);
 
   return item ? countChildren(item.children) : 0;
 }
 
-export function removeChildrenOf<T>(
-  items: Array<FlattenedItem<T>>,
+export function removeChildrenOf<T extends DataTypePlaceholder>(
+  items: FlattenedItems<T>,
   ids: UniqueIdentifier[],
 ) {
   const excludeParentIds = [...ids];

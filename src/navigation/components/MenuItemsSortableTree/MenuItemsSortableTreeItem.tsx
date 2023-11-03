@@ -17,8 +17,8 @@ import { FormattedMessage } from "react-intl";
 import { getItemId, getItemType } from "./utils";
 
 interface TreeItemProps extends TreeItemComponentProps<RecursiveMenuItem> {
-  onClick?: (id: UniqueIdentifier, menuItemType: MenuItemType) => void;
-  onEdit?: (id: UniqueIdentifier) => void;
+  onClick: (id: UniqueIdentifier, menuItemType: MenuItemType) => void;
+  onEdit: (id: UniqueIdentifier) => void;
   onRemove: (id: UniqueIdentifier) => void;
 }
 

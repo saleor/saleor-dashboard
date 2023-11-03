@@ -4,7 +4,7 @@ import { MenuItemType } from "../MenuItemDialog";
 
 export function getNodeData(item: RecursiveMenuItem): MenuTreeItem {
   return {
-    children: item.children.map(child => getNodeData(child)),
+    children: item.children?.map(child => getNodeData(child)) ?? [],
     data: item,
     id: item.id,
   };

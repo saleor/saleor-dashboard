@@ -1,5 +1,6 @@
 import { SortableTree } from "@dashboard/components/SortableTree";
 import { MenuTreeItem, RecursiveMenuItem } from "@dashboard/navigation/types";
+import { UniqueIdentifier } from "@dnd-kit/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -11,9 +12,9 @@ import { getNodeData } from "./utils";
 interface MenuItemsSortableTreeProps {
   items: RecursiveMenuItem[];
   onChange: (newTree: MenuTreeItem[]) => void;
-  onItemClick: (id: string, type: MenuItemType) => void;
-  onItemEdit: (id: string) => void;
-  onItemRemove: (id: string) => void;
+  onItemClick: (id: UniqueIdentifier, type: MenuItemType) => void;
+  onItemEdit: (id: UniqueIdentifier) => void;
+  onItemRemove: (id: UniqueIdentifier) => void;
 }
 
 export const MenuItemsSortableTree = ({

@@ -2,17 +2,23 @@ import { Announcements, UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { Dispatch, SetStateAction } from "react";
 
-import { CurrentPosition, FlattenedItem, Projected, TreeItems } from "../types";
+import {
+  CurrentPosition,
+  DataTypePlaceholder,
+  FlattenedItem,
+  Projected,
+  TreeItems,
+} from "../types";
 import { flattenTree } from "../utils";
 
-interface UseAnnouncementProps<T> {
+interface UseAnnouncementProps<T extends DataTypePlaceholder> {
   items: TreeItems<T>;
-  projected: Projected;
+  projected: Projected | null;
   currentPosition: CurrentPosition | null;
   setCurrentPosition: Dispatch<SetStateAction<CurrentPosition | null>>;
 }
 
-export const useAnnouncement = <T>({
+export const useAnnouncement = <T extends DataTypePlaceholder>({
   projected,
   currentPosition,
   setCurrentPosition,

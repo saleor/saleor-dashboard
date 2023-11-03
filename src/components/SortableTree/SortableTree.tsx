@@ -21,17 +21,22 @@ import { useItems } from "./hooks/useItems";
 import { useSortableHandlers } from "./hooks/useSortableHandlers";
 import { sortableTreeKeyboardCoordinates } from "./keyboardCoordinates";
 import { SortableTreeItem } from "./SortableTreeItem";
-import type { SensorContext, TreeItemComponentProps, TreeItems } from "./types";
+import type {
+  DataTypePlaceholder,
+  SensorContext,
+  TreeItemComponentProps,
+  TreeItems,
+} from "./types";
 import { getChildCount } from "./utils";
 
-interface SortableTreeProps<T> {
-  items?: TreeItems<T>;
+interface SortableTreeProps<T extends DataTypePlaceholder> {
+  items: TreeItems<T>;
   renderTreeItem: (props: TreeItemComponentProps<T>) => JSX.Element;
   onChange: (newItems: TreeItems<T>) => void;
   indentationWidth?: number;
 }
 
-export function SortableTree<T>({
+export function SortableTree<T extends DataTypePlaceholder>({
   items: defaultItems,
   onChange,
   renderTreeItem,
@@ -120,7 +125,6 @@ export function SortableTree<T>({
             key={id}
             data={data}
             id={id}
-            value={id}
             depth={id === activeId && projected ? projected.depth : depth}
             indentationWidth={indentationWidth}
             renderTreeItem={renderTreeItem}
@@ -131,12 +135,13 @@ export function SortableTree<T>({
             {activeId && activeItem ? (
               <SortableTreeItem
                 clone
-                data={flattenedItems.find(({ id }) => id === activeId)?.data}
+                data={
+                  flattenedItems.find(({ id }) => id === activeId)?.data ?? null
+                }
                 id={activeId}
                 depth={activeItem.depth}
                 renderTreeItem={renderTreeItem}
                 childCount={getChildCount(items, activeId) + 1}
-                value={activeId.toString()}
                 indentationWidth={indentationWidth}
               />
             ) : null}

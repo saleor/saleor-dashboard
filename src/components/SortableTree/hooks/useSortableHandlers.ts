@@ -8,11 +8,16 @@ import {
 import { arrayMove } from "@dnd-kit/sortable";
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { CurrentPosition, FlattenedItem, TreeItems } from "../types";
+import {
+  CurrentPosition,
+  DataTypePlaceholder,
+  FlattenedItems,
+  TreeItems,
+} from "../types";
 import { buildTree, flattenTree, getProjection } from "../utils";
 
-interface UseSortableHandlersProps<T> {
-  flattenedItems: Array<FlattenedItem<T>>;
+interface UseSortableHandlersProps<T extends DataTypePlaceholder> {
+  flattenedItems: FlattenedItems<T>;
   items: TreeItems<T>;
   activeId: UniqueIdentifier | null;
   indentationWidth: number;
@@ -21,7 +26,7 @@ interface UseSortableHandlersProps<T> {
   onChange: (newTree: TreeItems<T>) => void;
 }
 
-export const useSortableHandlers = <T>({
+export const useSortableHandlers = <T extends DataTypePlaceholder>({
   flattenedItems,
   onChange,
   setItems,
@@ -75,7 +80,7 @@ export const useSortableHandlers = <T>({
 
     if (projected && over) {
       const { depth, parentId } = projected;
-      const clonedItems: Array<FlattenedItem<T>> = JSON.parse(
+      const clonedItems: FlattenedItems<T> = JSON.parse(
         JSON.stringify(flattenTree(items)),
       );
       const overIndex = clonedItems.findIndex(({ id }) => id === over.id);

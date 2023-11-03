@@ -1,26 +1,33 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import type { MutableRefObject } from "react";
 
-export interface TreeItem<T> {
+export type DataTypePlaceholder = Record<string, any> | null;
+
+export interface TreeItem<T extends DataTypePlaceholder> {
   id: UniqueIdentifier;
   data: T;
   children: Array<TreeItem<T>>;
 }
 
-export type TreeItems<T> = Array<TreeItem<T>>;
+export type TreeItems<T extends DataTypePlaceholder> = Array<TreeItem<T>>;
 
-export interface FlattenedItem<T> extends TreeItem<T> {
+export interface FlattenedItem<T extends DataTypePlaceholder>
+  extends TreeItem<T> {
   parentId: UniqueIdentifier | null;
   depth: number;
   index: number;
 }
 
-export type SensorContext<T> = MutableRefObject<{
-  items: Array<FlattenedItem<T>>;
+export type FlattenedItems<T extends DataTypePlaceholder> = Array<
+  FlattenedItem<T>
+>;
+
+export type SensorContext<T extends DataTypePlaceholder> = MutableRefObject<{
+  items: FlattenedItems<T>;
   offset: number;
 }>;
 
-export interface TreeItemComponentProps<T> {
+export interface TreeItemComponentProps<T extends DataTypePlaceholder> {
   data: T;
   id: UniqueIdentifier;
   childCount?: number;
@@ -30,7 +37,6 @@ export interface TreeItemComponentProps<T> {
   ghost?: boolean;
   handleProps?: any;
   indentationWidth: number;
-  value: string | number;
   style?: React.CSSProperties;
   wrapperRef?: (node: HTMLDivElement) => void;
   innerRef?: (node: HTMLDivElement) => void;
@@ -40,7 +46,7 @@ export interface Projected {
   depth: number;
   maxDepth: number;
   minDepth: number;
-  parentId: UniqueIdentifier;
+  parentId: UniqueIdentifier | null;
 }
 
 export interface CurrentPosition {
