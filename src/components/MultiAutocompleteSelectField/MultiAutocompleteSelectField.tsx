@@ -236,6 +236,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
           <div
             className={classes.chip}
             key={value.value}
+            data-test-id="assigned-permission-group"
             id={`selected-option-${value.label}`}
           >
             <div
