@@ -35,3 +35,15 @@ export interface TreeItemComponentProps<T> {
   wrapperRef?: (node: HTMLDivElement) => void;
   innerRef?: (node: HTMLDivElement) => void;
 }
+
+export interface Projected {
+  depth: number;
+  maxDepth: number;
+  minDepth: number;
+  parentId: UniqueIdentifier;
+}
+
+export interface CurrentPosition {
+  parentId: UniqueIdentifier | null;
+  overId: UniqueIdentifier;
+}
