@@ -11,12 +11,6 @@ export interface TreeOperation {
   sortOrder?: number;
   simulatedMove?: boolean;
 }
-export interface TreeItemProps {
-  id: string;
-  onChange?: (operations: TreeOperation[]) => void;
-  onClick?: () => void;
-  onEdit?: () => void;
-}
 
 export function getDiff(
   originalTree: MenuTreeItem[],

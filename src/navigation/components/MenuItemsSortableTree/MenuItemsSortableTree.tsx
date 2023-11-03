@@ -45,7 +45,7 @@ export const MenuItemsSortableTree = ({
 
   return (
     <SortableTree
-      onChange={onChange as any}
+      onChange={onChange}
       items={items.map(getNodeData)}
       renderTreeItem={props => (
         <MenuItemsSortableTreeItem

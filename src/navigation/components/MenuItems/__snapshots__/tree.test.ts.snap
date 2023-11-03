@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuItems tree - getDiff should return array with operations 1`] = `
+Array [
+  Object {
+    "id": "4apparel",
+    "parentId": "2accessories",
+    "sortOrder": 1,
+    "type": "move",
+  },
+  Object {
+    "id": "0jewelry",
+    "parentId": "3groceries",
+    "sortOrder": 0,
+    "type": "move",
+  },
+]
+`;
+
+exports[`MenuItems tree - getDiff should return orinal tree when no changes 1`] = `Array []`;

@@ -4,7 +4,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { buttonMessages } from "@dashboard/intl";
 import { RecursiveMenuItem } from "@dashboard/navigation/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { MenuItemType } from "../MenuItemDialog";
@@ -33,6 +33,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
     onUndo,
   } = props;
   const intl = useIntl();
+  const currentTree = useMemo(() => items.map(getNodeData), [items]);
 
   return (
     <DashboardCard>
@@ -55,9 +56,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
           ) : (
             <MenuItemsSortableTree
               items={items}
-              onChange={newTree =>
-                onChange(getDiff(items.map(getNodeData), newTree))
-              }
+              onChange={newTree => onChange(getDiff(currentTree, newTree))}
               onItemRemove={id =>
                 onChange([{ id: id.toString(), type: "remove" }])
               }

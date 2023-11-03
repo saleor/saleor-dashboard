@@ -5,4 +5,4 @@ export type RecursiveMenuItem = MenuItemFragment & {
   children?: RecursiveMenuItem[];
 };
 
-export type MenuTreeItem = TreeItem<RecursiveMenuItem>;
+export type MenuTreeItem = TreeItem<MenuItemFragment>;
