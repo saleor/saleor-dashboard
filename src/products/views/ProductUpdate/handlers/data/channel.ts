@@ -19,7 +19,7 @@ export function getUpdateVariantChannelInputs(
   variant: ProductFragment["variants"][number],
 ): ProductVariantChannelListingUpdateInput {
   return data.updates
-    .filter(byCurrentRowByIndex(index, data))
+    .filter(byCurrentRowByIndex(index))
     .map(availabilityToChannelColumn)
     .filter(byChannelColumn)
     .reduce(byColumn, [])
@@ -39,7 +39,7 @@ export function getVariantChannelsInputs(
   index: number,
 ): ProductVariantChannelListingAddInput[] {
   return data.updates
-    .filter(byCurrentRowByIndex(index, data))
+    .filter(byCurrentRowByIndex(index))
     .map(availabilityToChannelColumn)
     .filter(byChannelColumn)
     .reduce(byColumn, [])
@@ -47,10 +47,9 @@ export function getVariantChannelsInputs(
     .filter(byNotNullPrice);
 }
 
-function byCurrentRowByIndex(index: number, data: DatagridChangeOpts) {
+function byCurrentRowByIndex(index: number) {
   return (change: DatagridChange) => {
-    const totalRemoved = data.removed.filter(r => r <= index).length;
-    return change.row === index + totalRemoved;
+    return change.row === index;
   };
 }
 
