@@ -77,16 +77,21 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
 
-  const [query, onQueryChange] = useSearchQuery(onFetch);
+  const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [selectedContainers, setSelectedContainers] = React.useState<
     Container[]
   >([]);
 
   const handleSubmit = () => onSubmit(selectedContainers);
 
+  const handleClose = () => {
+    queryReset();
+    onClose();
+  };
+
   return (
     <Dialog
-      onClose={onClose}
+      onClose={handleClose}
       open={open}
       classes={{ paper: scrollableDialogClasses.dialog }}
       fullWidth

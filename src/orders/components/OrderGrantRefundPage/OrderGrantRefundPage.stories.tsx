@@ -220,6 +220,7 @@ const props: OrderGrantRefundPageProps = {
         __typename: "Fulfillment",
       },
     ],
+    grantedRefunds: [],
     shippingPrice: {
       gross: {
         amount: 85.23,
