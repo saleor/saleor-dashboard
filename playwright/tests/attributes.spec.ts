@@ -5,7 +5,8 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
-test("TC: SALEOR_34 User should be able to create Dropdown, required, Product attribute @basic-regression", async ({
+test("TC: SALEOR_34 User should be able to create Dropdown attribute, required, Product attribute @basic-regression", async ({
+
   page,
 }) => {
   const configurationPage = new ConfigurationPage(page);
