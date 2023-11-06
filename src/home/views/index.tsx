@@ -8,6 +8,7 @@ import {
   PermissionEnum,
   StockAvailability,
   useHomeActivitiesQuery,
+  useHomeNotificationsQuery,
   useHomeQuery,
   useHomeTopProductsQuery,
 } from "@dashboard/graphql";
@@ -38,7 +39,6 @@ const HomeSection = () => {
     loading: homeActivitiesLoading,
     error: homeActivitiesError,
   } = useHomeActivitiesQuery({
-    displayLoader: true,
     skip: noChannel || !hasPermissionToManageOrders,
   });
 
@@ -47,15 +47,25 @@ const HomeSection = () => {
     loading: homeTopProductsLoading,
     error: homeTopProductsError,
   } = useHomeTopProductsQuery({
-    displayLoader: true,
     skip: noChannel || !hasPermissionToManageProducts,
     variables: {
       channel: channel?.slug,
     },
   });
 
+  const {
+    data: homeNotificationsData,
+    loading: homeNotificationsLoaing,
+    error: homeNotificationsError,
+  } = useHomeNotificationsQuery({
+    skip: noChannel,
+    variables: {
+      channel: channel?.slug,
+      hasPermissionToManageOrders,
+    },
+  });
+
   const { data } = useHomeQuery({
-    displayLoader: true,
     skip: noChannel,
     variables: {
       channel: channel?.slug,
@@ -71,13 +81,23 @@ const HomeSection = () => {
         loading: homeActivitiesLoading,
         error: homeActivitiesError,
       }}
-      orders={data?.ordersToday?.totalCount}
-      sales={data?.salesToday?.gross}
       topProducts={{
         data: mapEdgesToItems(homeTopProducts?.productTopToday),
         loading: homeTopProductsLoading,
         error: homeTopProductsError,
       }}
+      notifications={{
+        data: {
+          ordersToCapture: homeNotificationsData?.ordersToCapture?.totalCount,
+          ordersToFulfill: homeNotificationsData?.ordersToFulfill?.totalCount,
+          productsOutOfStock:
+            homeNotificationsData?.productsOutOfStock.totalCount,
+        },
+        loading: homeNotificationsLoaing,
+        error: homeNotificationsError,
+      }}
+      orders={data?.ordersToday?.totalCount}
+      sales={data?.salesToday?.gross}
       createNewChannelHref={channelsListUrl()}
       ordersToCaptureHref={orderListUrl({
         status: [OrderStatusFilter.READY_TO_CAPTURE],
@@ -91,9 +111,6 @@ const HomeSection = () => {
         stockStatus: StockAvailability.OUT_OF_STOCK,
         channel: channel?.slug,
       })}
-      ordersToCapture={data?.ordersToCapture?.totalCount}
-      ordersToFulfill={data?.ordersToFulfill?.totalCount}
-      productsOutOfStock={data?.productsOutOfStock.totalCount}
       userName={getUserName(user, true)}
       noChannel={noChannel}
     />

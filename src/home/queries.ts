@@ -17,24 +17,6 @@ export const home = gql`
       @include(if: $hasPermissionToManageOrders) {
       totalCount
     }
-    ordersToFulfill: orders(
-      filter: { status: READY_TO_FULFILL }
-      channel: $channel
-    ) @include(if: $hasPermissionToManageOrders) {
-      totalCount
-    }
-    ordersToCapture: orders(
-      filter: { status: READY_TO_CAPTURE }
-      channel: $channel
-    ) @include(if: $hasPermissionToManageOrders) {
-      totalCount
-    }
-    productsOutOfStock: products(
-      filter: { stockAvailability: OUT_OF_STOCK }
-      channel: $channel
-    ) {
-      totalCount
-    }
   }
 `;
 
@@ -96,6 +78,32 @@ export const homeTopProducts = gql`
           quantityOrdered
         }
       }
+    }
+  }
+`;
+
+export const homeNotifications = gql`
+  query homeNotifications(
+    $channel: String!
+    $hasPermissionToManageOrders: Boolean!
+  ) {
+    ordersToFulfill: orders(
+      filter: { status: READY_TO_FULFILL }
+      channel: $channel
+    ) @include(if: $hasPermissionToManageOrders) {
+      totalCount
+    }
+    ordersToCapture: orders(
+      filter: { status: READY_TO_CAPTURE }
+      channel: $channel
+    ) @include(if: $hasPermissionToManageOrders) {
+      totalCount
+    }
+    productsOutOfStock: products(
+      filter: { stockAvailability: OUT_OF_STOCK }
+      channel: $channel
+    ) {
+      totalCount
     }
   }
 `;

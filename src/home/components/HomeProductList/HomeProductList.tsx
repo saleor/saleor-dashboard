@@ -25,18 +25,25 @@ export const HomeProductList = ({
   const intl = useIntl();
 
   if (topProducts.loading) {
-    <Box data-test-id={testId}>
-      <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
-        {intl.formatMessage({
-          id: "e08xWz",
-          defaultMessage: "Top products",
-          description: "header",
-        })}
-      </Text>
-      <Box>
-        <Skeleton />
+    return (
+      <Box data-test-id={testId}>
+        <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
+          {intl.formatMessage({
+            id: "e08xWz",
+            defaultMessage: "Top products",
+            description: "header",
+          })}
+        </Text>
+        <Box display="flex" flexDirection="column" gap={3}>
+          <Skeleton height={3} />
+          <Skeleton height={3} />
+          <Skeleton height={3} />
+          <Skeleton height={3} />
+          <Skeleton height={3} />
+          <Skeleton height={3} />
+        </Box>
       </Box>
-    </Box>;
+    );
   }
 
   return (

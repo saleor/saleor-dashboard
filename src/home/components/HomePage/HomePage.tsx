@@ -24,12 +24,19 @@ export interface HomePageProps {
     error: any;
   };
   orders: number | null;
-  ordersToCapture: number | null;
-  ordersToFulfill: number | null;
-  productsOutOfStock: number;
+
   sales: NonNullable<HomeQuery["salesToday"]>["gross"];
   topProducts: {
     data: ProductTopToday | null;
+    loading: boolean;
+    error: any;
+  };
+  notifications: {
+    data: {
+      ordersToCapture: number | null;
+      ordersToFulfill: number | null;
+      productsOutOfStock: number;
+    };
     loading: boolean;
     error: any;
   };
@@ -52,9 +59,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     ordersToFulfillHref,
     ordersToCaptureHref,
     productsOutOfStockHref,
-    ordersToCapture = 0,
-    ordersToFulfill = 0,
-    productsOutOfStock = 0,
+    notifications,
     noChannel,
   } = props;
   const intl = useIntl();
@@ -105,9 +110,7 @@ const HomePage: React.FC<HomePageProps> = props => {
             ordersToFulfillHref={ordersToFulfillHref}
             ordersToCaptureHref={ordersToCaptureHref}
             productsOutOfStockHref={productsOutOfStockHref}
-            ordersToCapture={ordersToCapture ?? 0}
-            ordersToFulfill={ordersToFulfill ?? 0}
-            productsOutOfStock={productsOutOfStock}
+            notifications={notifications}
             noChannel={noChannel}
           />
           <CardSpacer />

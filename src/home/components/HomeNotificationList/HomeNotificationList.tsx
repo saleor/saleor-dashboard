@@ -1,6 +1,6 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import { List } from "@saleor/macaw-ui-next";
+import { Box, List, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -13,9 +13,15 @@ import {
 } from "./utils";
 
 interface HomeNotificationTableProps {
-  ordersToCapture: number;
-  ordersToFulfill: number;
-  productsOutOfStock: number;
+  notifications: {
+    data: {
+      ordersToCapture: number | null;
+      ordersToFulfill: number | null;
+      productsOutOfStock: number;
+    };
+    loading: boolean;
+    error: any;
+  };
   createNewChannelHref: string;
   ordersToFulfillHref: string;
   ordersToCaptureHref: string;
@@ -24,16 +30,25 @@ interface HomeNotificationTableProps {
 }
 
 export const HomeNotificationList = ({
+  notifications,
   createNewChannelHref,
   ordersToFulfillHref,
   ordersToCaptureHref,
   productsOutOfStockHref,
-  ordersToCapture,
-  ordersToFulfill,
-  productsOutOfStock,
+
   noChannel,
 }: HomeNotificationTableProps) => {
   const intl = useIntl();
+
+  if (notifications.loading) {
+    return (
+      <Box display="flex" flexDirection="column" gap={3}>
+        <Skeleton height={3} />
+        <Skeleton height={3} />
+        <Skeleton height={3} />
+      </Box>
+    );
+  }
 
   return (
     <List>
@@ -52,14 +67,17 @@ export const HomeNotificationList = ({
           linkUrl={ordersToFulfillHref}
           dataTestId="orders-to-fulfill"
         >
-          {getOrderToFulfillText(ordersToFulfill, intl)}
+          {getOrderToFulfillText(notifications.data.ordersToFulfill ?? 0, intl)}
         </HomeNotificationListItem>
 
         <HomeNotificationListItem
           linkUrl={ordersToCaptureHref}
           dataTestId="orders-to-capture"
         >
-          {getOrdersToCaptureText(ordersToCapture, intl)}
+          {getOrdersToCaptureText(
+            notifications.data.ordersToCapture ?? 0,
+            intl,
+          )}
         </HomeNotificationListItem>
       </RequirePermissions>
 
@@ -70,7 +88,10 @@ export const HomeNotificationList = ({
           linkUrl={productsOutOfStockHref}
           dataTestId="products-out-of-stock"
         >
-          {getProductsOutOfStockText(productsOutOfStock, intl)}
+          {getProductsOutOfStockText(
+            notifications.data.productsOutOfStock ?? 0,
+            intl,
+          )}
         </HomeNotificationListItem>
       </RequirePermissions>
     </List>
