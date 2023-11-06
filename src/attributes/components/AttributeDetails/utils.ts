@@ -53,7 +53,7 @@ export const getMeasurementUnitMessage = (
   const message = UNIT_MESSAGES_MAPPING[unit];
   return typeof message === "string" || React.isValidElement(message)
     ? message
-    : formatMessage(message);
+    : formatMessage(message as MessageDescriptor);
 };
 
 export const unitSystemChoices: Array<Choice<UnitSystem, MessageDescriptor>> = [
