@@ -8835,27 +8835,6 @@ export const HomeDocument = gql`
       }
     }
   }
-  activities: homepageEvents(last: 10) @include(if: $hasPermissionToManageOrders) {
-    edges {
-      node {
-        amount
-        composedId
-        date
-        email
-        emailType
-        id
-        message
-        orderNumber
-        oversoldItems
-        quantity
-        type
-        user {
-          id
-          email
-        }
-      }
-    }
-  }
 }
     `;
 
@@ -8889,6 +8868,58 @@ export function useHomeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpt
 export type HomeQueryHookResult = ReturnType<typeof useHomeQuery>;
 export type HomeLazyQueryHookResult = ReturnType<typeof useHomeLazyQuery>;
 export type HomeQueryResult = Apollo.QueryResult<Types.HomeQuery, Types.HomeQueryVariables>;
+export const HomeActivitiesDocument = gql`
+    query HomeActivities {
+  activities: homepageEvents(last: 10) {
+    edges {
+      node {
+        amount
+        composedId
+        date
+        email
+        emailType
+        id
+        message
+        orderNumber
+        oversoldItems
+        quantity
+        type
+        user {
+          id
+          email
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useHomeActivitiesQuery__
+ *
+ * To run a query within a React component, call `useHomeActivitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHomeActivitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHomeActivitiesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useHomeActivitiesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.HomeActivitiesQuery, Types.HomeActivitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.HomeActivitiesQuery, Types.HomeActivitiesQueryVariables>(HomeActivitiesDocument, options);
+      }
+export function useHomeActivitiesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.HomeActivitiesQuery, Types.HomeActivitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.HomeActivitiesQuery, Types.HomeActivitiesQueryVariables>(HomeActivitiesDocument, options);
+        }
+export type HomeActivitiesQueryHookResult = ReturnType<typeof useHomeActivitiesQuery>;
+export type HomeActivitiesLazyQueryHookResult = ReturnType<typeof useHomeActivitiesLazyQuery>;
+export type HomeActivitiesQueryResult = Apollo.QueryResult<Types.HomeActivitiesQuery, Types.HomeActivitiesQueryVariables>;
 export const MenuCreateDocument = gql`
     mutation MenuCreate($input: MenuCreateInput!) {
   menuCreate(input: $input) {

@@ -18,7 +18,11 @@ import { HomeProductList } from "../HomeProductList";
 import { homePageMessages } from "./messages";
 
 export interface HomePageProps {
-  activities: Activities;
+  activities: {
+    data: Activities;
+    loading: boolean;
+    error: any;
+  };
   orders: number | null;
   ordersToCapture: number | null;
   ordersToFulfill: number | null;

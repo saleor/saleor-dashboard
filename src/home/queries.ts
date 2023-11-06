@@ -67,8 +67,12 @@ export const home = gql`
         }
       }
     }
-    activities: homepageEvents(last: 10)
-      @include(if: $hasPermissionToManageOrders) {
+  }
+`;
+
+export const homeActivities = gql`
+  query HomeActivities {
+    activities: homepageEvents(last: 10) {
       edges {
         node {
           amount

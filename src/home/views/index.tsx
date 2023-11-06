@@ -7,6 +7,7 @@ import {
   OrderStatusFilter,
   PermissionEnum,
   StockAvailability,
+  useHomeActivitiesQuery,
   useHomeQuery,
 } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -24,6 +25,21 @@ const HomeSection = () => {
   const noChannel = !channel && typeof channel !== "undefined";
 
   const userPermissions = user?.userPermissions || [];
+  const hasPermissionToManageOrders = hasPermissions(userPermissions, [
+    PermissionEnum.MANAGE_ORDERS,
+  ]);
+  const hasPermissionToManageProducts = hasPermissions(userPermissions, [
+    PermissionEnum.MANAGE_PRODUCTS,
+  ]);
+
+  const {
+    data: homeActivities,
+    loading: homeActivitiesLoading,
+    error: homeActivitiesError,
+  } = useHomeActivitiesQuery({
+    displayLoader: true,
+    skip: noChannel || !hasPermissionToManageOrders,
+  });
 
   const { data } = useHomeQuery({
     displayLoader: true,
@@ -31,18 +47,18 @@ const HomeSection = () => {
     variables: {
       channel: channel?.slug,
       datePeriod: getDatePeriod(1),
-      hasPermissionToManageOrders: hasPermissions(userPermissions, [
-        PermissionEnum.MANAGE_ORDERS,
-      ]),
-      hasPermissionToManageProducts: hasPermissions(userPermissions, [
-        PermissionEnum.MANAGE_PRODUCTS,
-      ]),
+      hasPermissionToManageOrders,
+      hasPermissionToManageProducts,
     },
   });
 
   return (
     <HomePage
-      activities={mapEdgesToItems(data?.activities)?.reverse()}
+      activities={{
+        data: mapEdgesToItems(homeActivities?.activities)?.reverse(),
+        loading: homeActivitiesLoading,
+        error: homeActivitiesError,
+      }}
       orders={data?.ordersToday?.totalCount}
       sales={data?.salesToday?.gross}
       topProducts={mapEdgesToItems(data?.productTopToday)}
