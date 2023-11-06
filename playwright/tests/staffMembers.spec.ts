@@ -1,3 +1,4 @@
+import { BasicApiService } from "@api/basics";
 import { URL_LIST } from "@data/url";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { StaffMembersPage } from "@pages/staffMembersPage";
@@ -41,4 +42,25 @@ test("TC: SALEOR_35 User should be able to invite staff member with full access 
   await expect(singleUserEmails[0].Subject).toContain(
     "Set Your Dashboard Password",
   );
+});
+test("TC: SALEOR_36 Admin User should be able to deactivate other user @basic-regression @staff-members", async ({
+  page,
+  request,
+}) => {
+  const staffMembersPage = new StaffMembersPage(page, request);
+  const basicApiService = new BasicApiService(request);
+
+  await page.goto(URL_LIST.staffMembers + "VXNlcjoxMzQ3");
+  await staffMembersPage.clickIsActiveCheckbox();
+  await staffMembersPage.clickSaveButton();
+  await staffMembersPage.basePage.expectSuccessBanner();
+
+  const loginViaApiDeactivatedUserResponse =
+    await basicApiService.logInUserViaApi({
+      email: "user-to-be-deactivated@gmai.com",
+      password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
+    });
+  await expect(
+    loginViaApiDeactivatedUserResponse.data.tokenCreate.errors[0].code,
+  ).toEqual("INACTIVE");
 });

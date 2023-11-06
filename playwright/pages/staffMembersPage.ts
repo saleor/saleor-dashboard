@@ -15,6 +15,7 @@ export class StaffMembersPage {
   readonly permissionsGroupSelectButton: Locator;
   readonly permissionGroupOptions: Locator;
   readonly assignedPermissionGroups: Locator;
+  readonly isActiveCheckbox: Locator;
 
   constructor(page: Page, request: APIRequestContext) {
     this.page = page;
@@ -31,8 +32,14 @@ export class StaffMembersPage {
     this.assignedPermissionGroups = page.getByTestId(
       "assigned-permission-group",
     );
+    this.isActiveCheckbox = page
+      .getByTestId("is-active-checkbox")
+      .locator("input");
   }
 
+  async clickIsActiveCheckbox() {
+    await this.isActiveCheckbox.click();
+  }
   async clickPermissionsGroupSelectButton() {
     await this.permissionsGroupSelectButton.click();
   }
