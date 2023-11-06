@@ -1,9 +1,7 @@
 // @ts-strict-ignore
-import { HomeQuery, OrderEventsEnum } from "@dashboard/graphql";
+import { OrderEventsEnum } from "@dashboard/graphql";
 
-export const shop: (placeholderImage: string) => HomeQuery = (
-  placeholderImage: string,
-) => ({
+export const shop = (placeholderImage: string) => ({
   __typename: "Query",
   activities: {
     __typename: "OrderEventCountableConnection",

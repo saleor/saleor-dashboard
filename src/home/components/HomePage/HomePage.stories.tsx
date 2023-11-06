@@ -12,18 +12,38 @@ import HomePageComponent, { HomePageProps } from "./HomePage";
 const shop = shopFixture(placeholderImage);
 
 const homePageProps: Omit<HomePageProps, "classes"> = {
-  activities: mapEdgesToItems(shop.activities),
+  activities: {
+    data: mapEdgesToItems(shop.activities),
+    loading: false,
+    error: false,
+  },
+  notifications: {
+    data: {
+      ordersToCapture: shop.ordersToCapture.totalCount,
+      ordersToFulfill: shop.ordersToFulfill.totalCount,
+      productsOutOfStock: shop.productsOutOfStock.totalCount,
+    },
+    loading: false,
+    error: false,
+  },
+  analitics: {
+    data: {
+      orders: shop.ordersToday.totalCount,
+      sales: shop.salesToday.gross,
+    },
+    loading: false,
+    error: false,
+  },
   noChannel: false,
   createNewChannelHref: "",
   ordersToFulfillHref: "",
   ordersToCaptureHref: "",
   productsOutOfStockHref: "",
-  orders: shop.ordersToday.totalCount,
-  ordersToCapture: shop.ordersToCapture.totalCount,
-  ordersToFulfill: shop.ordersToFulfill.totalCount,
-  productsOutOfStock: shop.productsOutOfStock.totalCount,
-  sales: shop.salesToday.gross,
-  topProducts: mapEdgesToItems(shop.productTopToday),
+  topProducts: {
+    data: mapEdgesToItems(shop.productTopToday),
+    loading: false,
+    error: false,
+  },
   userName: "admin@example.com",
 };
 
