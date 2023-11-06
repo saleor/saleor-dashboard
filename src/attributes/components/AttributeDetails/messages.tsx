@@ -165,17 +165,22 @@ export const unitMessages = defineMessages({
 });
 
 export const units = {
+  cubicMillimeter: <>mm&sup3;</>,
   cubicCentimeter: <>cm&sup3;</>,
   cubicDecimeter: <>dm&sup3;</>,
   cubicMeter: <>m&sup3;</>,
   liter: "l",
   centimeter: "cm",
+  decimeter: "dm",
   meter: "m",
+  millimeter: "mm",
   kilometer: "km",
   gram: "g",
   kilogram: "kg",
   tonne: "t",
+  squareMillimeter: <>mm&sup2;</>,
   squareCentimeter: <>cm&sup2;</>,
+  squareDecimeter: <>dm&sup2;</>,
   squareMeter: <>m&sup2;</>,
   squareKilometer: <>km&sup2;</>,
   cubicFoot: <>ft&sup3;</>,
