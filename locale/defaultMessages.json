@@ -1861,10 +1861,6 @@
   "BWpuKl": {
     "string": "Update"
   },
-  "BXMSl4": {
-    "context": "currency channel",
-    "string": "To delete {channelSlug} you have to create a chanel with currency: {currency} to be able to move all existing orders."
-  },
   "BXkF8Z": {
     "context": "header",
     "string": "Activity"
@@ -2560,6 +2556,10 @@
     "context": "ProductTypeDeleteWarningDialog single assigned items button label",
     "string": "View products"
   },
+  "GCho9N": {
+    "context": "delete channel",
+    "string": "All channel settings information such as shipping, product listings, warehouse assignments, etc, will be lost."
+  },
   "GD/bom": {
     "context": "label",
     "string": "Min Delivery Time"
@@ -2591,6 +2591,10 @@
     "context": "webhooks inactive label",
     "string": "Inactive"
   },
+  "GP0zGO": {
+    "context": "dialog header",
+    "string": "Select destination channel:"
+  },
   "GVM/fi": {
     "context": "order history message",
     "string": "Payment was authorized"
@@ -2618,6 +2622,10 @@
   "GcbFa9": {
     "context": "aria-label, negative money amount",
     "string": "minus"
+  },
+  "Ge+dUe": {
+    "context": "currency channel",
+    "string": "To delete {channelSlug} you have to create a chanel with currency: {currency} to be able to move all existing orders."
   },
   "Gfbp36": {
     "context": "dialog header",
@@ -3284,6 +3292,10 @@
     "context": "channel select label",
     "string": "Channel"
   },
+  "LATHyi": {
+    "context": "dialog header",
+    "string": "Delete Channel: {channelSlug}"
+  },
   "LEZZkK": {
     "context": "WarehouseSettings all warehouses description",
     "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse"
@@ -3498,10 +3510,6 @@
   "Myx1Qp": {
     "context": "add discount button",
     "string": "Add Discount"
-  },
-  "Mz0cx+": {
-    "context": "delete channel",
-    "string": "All channel settings information such as shipping, product listings, warehouse assignments, etc, will be lost."
   },
   "N2SbNc": {
     "string": "{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
@@ -4045,10 +4053,6 @@
     "context": "button, unassign attribute from object",
     "string": "Unassign and save"
   },
-  "QZoU0r": {
-    "context": "dialog header",
-    "string": "Delete Channel: {channelSlug}"
-  },
   "Qb2XN5": {
     "string": "\"Mark as paid\" feature creates a {link} - used by Payment Apps"
   },
@@ -4330,10 +4334,6 @@
   "SZH0fw": {
     "context": "set variant as default, button",
     "string": "Set as default"
-  },
-  "SZJhvK": {
-    "context": "dialog header",
-    "string": "Select destination channel:"
   },
   "SZt9kC": {
     "context": "export filtered items to csv file",
@@ -7973,10 +7973,6 @@
     "context": "no products placeholder",
     "string": "No products are available in the channel assigned to this order."
   },
-  "sidKce": {
-    "context": "delete channel",
-    "string": "To delete channel channel that you wish to move existing orders to. {br} Note: Only channels with matching currency are available."
-  },
   "sjRXXz": {
     "string": "Order #{orderId} was placed from draft by {userEmail}"
   },
@@ -7995,6 +7991,10 @@
   "snUby7": {
     "context": "header",
     "string": "Unnamed Webhook Details"
+  },
+  "stRNn/": {
+    "context": "delete channel",
+    "string": "To delete channel channel that you wish to move existing orders to."
   },
   "stjHjY": {
     "context": "error message",
@@ -8537,6 +8537,10 @@
   },
   "wWTUrM": {
     "string": "No activities found"
+  },
+  "wXFttp": {
+    "context": "note on currency",
+    "string": "Note: Only channels with matching currency are available."
   },
   "wbsq7O": {
     "string": "Usage"

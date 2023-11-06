@@ -25,10 +25,14 @@ const messages = defineMessages({
     description: "delete channel",
   },
   needToBeMoved: {
-    id: "stRNn/",
-    defaultMessage:
-      "To delete channel channel that you wish to move existing orders to. {br} Note: Only channels with matching currency are available.",
+    id: "BR8au7",
+    defaultMessage: "Select channel that you wish to move existing orders to.",
     description: "delete channel",
+  },
+  note: {
+    id: "wXFttp",
+    defaultMessage: "Note: Only channels with matching currency are available.",
+    description: "note on currency",
   },
   noAvailableChannel: {
     id: "Ge+dUe",
@@ -98,7 +102,13 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
           hasChannels ? (
             <>
               <Typography>
-                {intl.formatMessage(messages.needToBeMoved, { br: <br /> })}
+                {intl.formatMessage(messages.deletingAllProductData)}
+              </Typography>
+              <br />
+              <Typography>
+                {intl.formatMessage(messages.needToBeMoved)}
+                <br />
+                {intl.formatMessage(messages.note)}
               </Typography>
               <div className={classes.select}>
                 <SingleSelectField
@@ -109,9 +119,6 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
                   onChange={e => setChoice(e.target.value)}
                 />
               </div>
-              <Typography>
-                {intl.formatMessage(messages.deletingAllProductData)}
-              </Typography>
             </>
           ) : (
             <Typography>
