@@ -9,6 +9,7 @@ import {
   StockAvailability,
   useHomeActivitiesQuery,
   useHomeQuery,
+  useHomeTopProductsQuery,
 } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
@@ -41,6 +42,18 @@ const HomeSection = () => {
     skip: noChannel || !hasPermissionToManageOrders,
   });
 
+  const {
+    data: homeTopProducts,
+    loading: homeTopProductsLoading,
+    error: homeTopProductsError,
+  } = useHomeTopProductsQuery({
+    displayLoader: true,
+    skip: noChannel || !hasPermissionToManageProducts,
+    variables: {
+      channel: channel?.slug,
+    },
+  });
+
   const { data } = useHomeQuery({
     displayLoader: true,
     skip: noChannel,
@@ -48,7 +61,6 @@ const HomeSection = () => {
       channel: channel?.slug,
       datePeriod: getDatePeriod(1),
       hasPermissionToManageOrders,
-      hasPermissionToManageProducts,
     },
   });
 
@@ -61,7 +73,11 @@ const HomeSection = () => {
       }}
       orders={data?.ordersToday?.totalCount}
       sales={data?.salesToday?.gross}
-      topProducts={mapEdgesToItems(data?.productTopToday)}
+      topProducts={{
+        data: mapEdgesToItems(homeTopProducts?.productTopToday),
+        loading: homeTopProductsLoading,
+        error: homeTopProductsError,
+      }}
       createNewChannelHref={channelsListUrl()}
       ordersToCaptureHref={orderListUrl({
         status: [OrderStatusFilter.READY_TO_CAPTURE],

@@ -4,7 +4,6 @@ export const home = gql`
   query Home(
     $channel: String!
     $datePeriod: DateRangeInput!
-    $hasPermissionToManageProducts: Boolean!
     $hasPermissionToManageOrders: Boolean!
   ) {
     salesToday: ordersTotal(period: TODAY, channel: $channel)
@@ -36,37 +35,6 @@ export const home = gql`
     ) {
       totalCount
     }
-    productTopToday: reportProductSales(
-      period: TODAY
-      first: 5
-      channel: $channel
-    ) @include(if: $hasPermissionToManageProducts) {
-      edges {
-        node {
-          id
-          revenue(period: TODAY) {
-            gross {
-              amount
-              currency
-            }
-          }
-          attributes {
-            values {
-              id
-              name
-            }
-          }
-          product {
-            id
-            name
-            thumbnail {
-              url
-            }
-          }
-          quantityOrdered
-        }
-      }
-    }
   }
 `;
 
@@ -90,6 +58,42 @@ export const homeActivities = gql`
             id
             email
           }
+        }
+      }
+    }
+  }
+`;
+
+export const homeTopProducts = gql`
+  query HomeTopProducts($channel: String!) {
+    productTopToday: reportProductSales(
+      period: TODAY
+      first: 5
+      channel: $channel
+    ) {
+      edges {
+        node {
+          id
+          revenue(period: TODAY) {
+            gross {
+              amount
+              currency
+            }
+          }
+          attributes {
+            values {
+              id
+              name
+            }
+          }
+          product {
+            id
+            name
+            thumbnail {
+              url
+            }
+          }
+          quantityOrdered
         }
       }
     }

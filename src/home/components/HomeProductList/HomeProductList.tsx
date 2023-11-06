@@ -1,8 +1,7 @@
 import Money from "@dashboard/components/Money";
-import Skeleton from "@dashboard/components/Skeleton";
 import { ProductTopToday } from "@dashboard/home/types";
 import { productVariantEditUrl } from "@dashboard/products/urls";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,7 +11,11 @@ import { generateAttributesInfo } from "./variant";
 
 interface HomeProductListProps {
   testId?: string;
-  topProducts: ProductTopToday;
+  topProducts: {
+    data: ProductTopToday | null;
+    loading: boolean;
+    error: any;
+  };
 }
 
 export const HomeProductList = ({
@@ -20,6 +23,21 @@ export const HomeProductList = ({
   testId,
 }: HomeProductListProps) => {
   const intl = useIntl();
+
+  if (topProducts.loading) {
+    <Box data-test-id={testId}>
+      <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
+        {intl.formatMessage({
+          id: "e08xWz",
+          defaultMessage: "Top products",
+          description: "header",
+        })}
+      </Text>
+      <Box>
+        <Skeleton />
+      </Box>
+    </Box>;
+  }
 
   return (
     <Box data-test-id={testId}>
@@ -32,7 +50,7 @@ export const HomeProductList = ({
       </Text>
       <Box>
         {renderCollection(
-          topProducts,
+          topProducts.data,
           variant => (
             <HomeProductListItem
               key={variant ? variant.id : "skeleton"}

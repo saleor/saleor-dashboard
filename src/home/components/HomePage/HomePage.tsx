@@ -28,7 +28,11 @@ export interface HomePageProps {
   ordersToFulfill: number | null;
   productsOutOfStock: number;
   sales: NonNullable<HomeQuery["salesToday"]>["gross"];
-  topProducts: ProductTopToday | null;
+  topProducts: {
+    data: ProductTopToday | null;
+    loading: boolean;
+    error: any;
+  };
   userName: string;
   createNewChannelHref: string;
   ordersToFulfillHref: string;

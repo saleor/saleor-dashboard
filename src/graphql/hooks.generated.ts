@@ -8786,7 +8786,7 @@ export type CustomerGiftCardListQueryHookResult = ReturnType<typeof useCustomerG
 export type CustomerGiftCardListLazyQueryHookResult = ReturnType<typeof useCustomerGiftCardListLazyQuery>;
 export type CustomerGiftCardListQueryResult = Apollo.QueryResult<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>;
 export const HomeDocument = gql`
-    query Home($channel: String!, $datePeriod: DateRangeInput!, $hasPermissionToManageProducts: Boolean!, $hasPermissionToManageOrders: Boolean!) {
+    query Home($channel: String!, $datePeriod: DateRangeInput!, $hasPermissionToManageOrders: Boolean!) {
   salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $hasPermissionToManageOrders) {
     gross {
       amount
@@ -8808,33 +8808,6 @@ export const HomeDocument = gql`
   ) {
     totalCount
   }
-  productTopToday: reportProductSales(period: TODAY, first: 5, channel: $channel) @include(if: $hasPermissionToManageProducts) {
-    edges {
-      node {
-        id
-        revenue(period: TODAY) {
-          gross {
-            amount
-            currency
-          }
-        }
-        attributes {
-          values {
-            id
-            name
-          }
-        }
-        product {
-          id
-          name
-          thumbnail {
-            url
-          }
-        }
-        quantityOrdered
-      }
-    }
-  }
 }
     `;
 
@@ -8852,7 +8825,6 @@ export const HomeDocument = gql`
  *   variables: {
  *      channel: // value for 'channel'
  *      datePeriod: // value for 'datePeriod'
- *      hasPermissionToManageProducts: // value for 'hasPermissionToManageProducts'
  *      hasPermissionToManageOrders: // value for 'hasPermissionToManageOrders'
  *   },
  * });
@@ -8920,6 +8892,65 @@ export function useHomeActivitiesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type HomeActivitiesQueryHookResult = ReturnType<typeof useHomeActivitiesQuery>;
 export type HomeActivitiesLazyQueryHookResult = ReturnType<typeof useHomeActivitiesLazyQuery>;
 export type HomeActivitiesQueryResult = Apollo.QueryResult<Types.HomeActivitiesQuery, Types.HomeActivitiesQueryVariables>;
+export const HomeTopProductsDocument = gql`
+    query HomeTopProducts($channel: String!) {
+  productTopToday: reportProductSales(period: TODAY, first: 5, channel: $channel) {
+    edges {
+      node {
+        id
+        revenue(period: TODAY) {
+          gross {
+            amount
+            currency
+          }
+        }
+        attributes {
+          values {
+            id
+            name
+          }
+        }
+        product {
+          id
+          name
+          thumbnail {
+            url
+          }
+        }
+        quantityOrdered
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useHomeTopProductsQuery__
+ *
+ * To run a query within a React component, call `useHomeTopProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHomeTopProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHomeTopProductsQuery({
+ *   variables: {
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useHomeTopProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.HomeTopProductsQuery, Types.HomeTopProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.HomeTopProductsQuery, Types.HomeTopProductsQueryVariables>(HomeTopProductsDocument, options);
+      }
+export function useHomeTopProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.HomeTopProductsQuery, Types.HomeTopProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.HomeTopProductsQuery, Types.HomeTopProductsQueryVariables>(HomeTopProductsDocument, options);
+        }
+export type HomeTopProductsQueryHookResult = ReturnType<typeof useHomeTopProductsQuery>;
+export type HomeTopProductsLazyQueryHookResult = ReturnType<typeof useHomeTopProductsLazyQuery>;
+export type HomeTopProductsQueryResult = Apollo.QueryResult<Types.HomeTopProductsQuery, Types.HomeTopProductsQueryVariables>;
 export const MenuCreateDocument = gql`
     mutation MenuCreate($input: MenuCreateInput!) {
   menuCreate(input: $input) {
