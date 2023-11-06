@@ -10182,14 +10182,13 @@ export type CustomerGiftCardListQueryVariables = Exact<{
 
 export type CustomerGiftCardListQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', edges: Array<{ __typename: 'GiftCardCountableEdge', node: { __typename: 'GiftCard', id: string, last4CodeChars: string, expiryDate: any | null, isActive: boolean, currentBalance: { __typename: 'Money', amount: number, currency: string } } }> } | null };
 
-export type HomeQueryVariables = Exact<{
+export type HomeAnaliticsQueryVariables = Exact<{
   channel: Scalars['String'];
   datePeriod: DateRangeInput;
-  hasPermissionToManageOrders: Scalars['Boolean'];
 }>;
 
 
-export type HomeQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null, ordersToday: { __typename: 'OrderCountableConnection', totalCount: number | null } | null };
+export type HomeAnaliticsQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null, ordersToday: { __typename: 'OrderCountableConnection', totalCount: number | null } | null };
 
 export type HomeActivitiesQueryVariables = Exact<{ [key: string]: never; }>;
 

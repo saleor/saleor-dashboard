@@ -3,10 +3,9 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Money from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import Skeleton from "@dashboard/components/Skeleton";
-import { HomeQuery, PermissionEnum } from "@dashboard/graphql";
+import { HomeAnaliticsQuery, PermissionEnum } from "@dashboard/graphql";
 import { Activities, ProductTopToday } from "@dashboard/home/types";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -23,9 +22,14 @@ export interface HomePageProps {
     loading: boolean;
     error: any;
   };
-  orders: number | null;
-
-  sales: NonNullable<HomeQuery["salesToday"]>["gross"];
+  analitics: {
+    data: {
+      orders: number | null;
+      sales: NonNullable<HomeAnaliticsQuery["salesToday"]>["gross"];
+    };
+    loading: boolean;
+    error: any;
+  };
   topProducts: {
     data: ProductTopToday | null;
     loading: boolean;
@@ -51,8 +55,7 @@ export interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = props => {
   const {
     userName,
-    orders,
-    sales,
+    analitics,
     topProducts,
     activities,
     createNewChannelHref,
@@ -85,8 +88,8 @@ const HomePage: React.FC<HomePageProps> = props => {
               >
                 {noChannel ? (
                   0
-                ) : sales ? (
-                  <Money money={sales} />
+                ) : !analitics.loading ? (
+                  <Money money={analitics.data.sales} />
                 ) : (
                   <Skeleton style={{ width: "5em" }} />
                 )}
@@ -97,8 +100,8 @@ const HomePage: React.FC<HomePageProps> = props => {
               >
                 {noChannel ? (
                   0
-                ) : orders !== undefined ? (
-                  orders
+                ) : !analitics.loading ? (
+                  analitics.data.orders
                 ) : (
                   <Skeleton style={{ width: "5em" }} />
                 )}

@@ -8785,49 +8785,48 @@ export function useCustomerGiftCardListLazyQuery(baseOptions?: ApolloReactHooks.
 export type CustomerGiftCardListQueryHookResult = ReturnType<typeof useCustomerGiftCardListQuery>;
 export type CustomerGiftCardListLazyQueryHookResult = ReturnType<typeof useCustomerGiftCardListLazyQuery>;
 export type CustomerGiftCardListQueryResult = Apollo.QueryResult<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>;
-export const HomeDocument = gql`
-    query Home($channel: String!, $datePeriod: DateRangeInput!, $hasPermissionToManageOrders: Boolean!) {
-  salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $hasPermissionToManageOrders) {
+export const HomeAnaliticsDocument = gql`
+    query HomeAnalitics($channel: String!, $datePeriod: DateRangeInput!) {
+  salesToday: ordersTotal(period: TODAY, channel: $channel) {
     gross {
       amount
       currency
     }
   }
-  ordersToday: orders(filter: {created: $datePeriod}, channel: $channel) @include(if: $hasPermissionToManageOrders) {
+  ordersToday: orders(filter: {created: $datePeriod}, channel: $channel) {
     totalCount
   }
 }
     `;
 
 /**
- * __useHomeQuery__
+ * __useHomeAnaliticsQuery__
  *
- * To run a query within a React component, call `useHomeQuery` and pass it any options that fit your needs.
- * When your component renders, `useHomeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useHomeAnaliticsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHomeAnaliticsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useHomeQuery({
+ * const { data, loading, error } = useHomeAnaliticsQuery({
  *   variables: {
  *      channel: // value for 'channel'
  *      datePeriod: // value for 'datePeriod'
- *      hasPermissionToManageOrders: // value for 'hasPermissionToManageOrders'
  *   },
  * });
  */
-export function useHomeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.HomeQuery, Types.HomeQueryVariables>) {
+export function useHomeAnaliticsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.HomeAnaliticsQuery, Types.HomeAnaliticsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.HomeQuery, Types.HomeQueryVariables>(HomeDocument, options);
+        return ApolloReactHooks.useQuery<Types.HomeAnaliticsQuery, Types.HomeAnaliticsQueryVariables>(HomeAnaliticsDocument, options);
       }
-export function useHomeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.HomeQuery, Types.HomeQueryVariables>) {
+export function useHomeAnaliticsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.HomeAnaliticsQuery, Types.HomeAnaliticsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.HomeQuery, Types.HomeQueryVariables>(HomeDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.HomeAnaliticsQuery, Types.HomeAnaliticsQueryVariables>(HomeAnaliticsDocument, options);
         }
-export type HomeQueryHookResult = ReturnType<typeof useHomeQuery>;
-export type HomeLazyQueryHookResult = ReturnType<typeof useHomeLazyQuery>;
-export type HomeQueryResult = Apollo.QueryResult<Types.HomeQuery, Types.HomeQueryVariables>;
+export type HomeAnaliticsQueryHookResult = ReturnType<typeof useHomeAnaliticsQuery>;
+export type HomeAnaliticsLazyQueryHookResult = ReturnType<typeof useHomeAnaliticsLazyQuery>;
+export type HomeAnaliticsQueryResult = Apollo.QueryResult<Types.HomeAnaliticsQuery, Types.HomeAnaliticsQueryVariables>;
 export const HomeActivitiesDocument = gql`
     query HomeActivities {
   activities: homepageEvents(last: 10) {

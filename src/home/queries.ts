@@ -1,20 +1,14 @@
 import { gql } from "@apollo/client";
 
-export const home = gql`
-  query Home(
-    $channel: String!
-    $datePeriod: DateRangeInput!
-    $hasPermissionToManageOrders: Boolean!
-  ) {
-    salesToday: ordersTotal(period: TODAY, channel: $channel)
-      @include(if: $hasPermissionToManageOrders) {
+export const homeAnalitics = gql`
+  query HomeAnalitics($channel: String!, $datePeriod: DateRangeInput!) {
+    salesToday: ordersTotal(period: TODAY, channel: $channel) {
       gross {
         amount
         currency
       }
     }
-    ordersToday: orders(filter: { created: $datePeriod }, channel: $channel)
-      @include(if: $hasPermissionToManageOrders) {
+    ordersToday: orders(filter: { created: $datePeriod }, channel: $channel) {
       totalCount
     }
   }

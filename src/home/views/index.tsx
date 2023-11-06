@@ -8,8 +8,8 @@ import {
   PermissionEnum,
   StockAvailability,
   useHomeActivitiesQuery,
+  useHomeAnaliticsQuery,
   useHomeNotificationsQuery,
-  useHomeQuery,
   useHomeTopProductsQuery,
 } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -65,12 +65,15 @@ const HomeSection = () => {
     },
   });
 
-  const { data } = useHomeQuery({
-    skip: noChannel,
+  const {
+    data: homeAnaliticsData,
+    loading: homeAnaliticsLoading,
+    error: homeAnaliticsError,
+  } = useHomeAnaliticsQuery({
+    skip: noChannel || !hasPermissionToManageOrders,
     variables: {
       channel: channel?.slug,
       datePeriod: getDatePeriod(1),
-      hasPermissionToManageOrders,
     },
   });
 
@@ -96,8 +99,14 @@ const HomeSection = () => {
         loading: homeNotificationsLoaing,
         error: homeNotificationsError,
       }}
-      orders={data?.ordersToday?.totalCount}
-      sales={data?.salesToday?.gross}
+      analitics={{
+        data: {
+          orders: homeAnaliticsData?.ordersToday?.totalCount,
+          sales: homeAnaliticsData?.salesToday?.gross,
+        },
+        loading: homeAnaliticsLoading,
+        error: homeAnaliticsError,
+      }}
       createNewChannelHref={channelsListUrl()}
       ordersToCaptureHref={orderListUrl({
         status: [OrderStatusFilter.READY_TO_CAPTURE],
