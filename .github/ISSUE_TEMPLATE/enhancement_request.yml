@@ -17,13 +17,9 @@ body:
     id: additional-info
     attributes:
       label: Additional information
-      description: Attach some additional context. Links, references, UI mockups and so on.
+      description: Attach some additional references, links, some context
       placeholder: |
-        Example:
-        Here are the mockups for this datagrid.
-        We consider keeping it simple and similar to the ordinary table.
-        Please look at the attached screenshots:
-        ...
+        Example: Currently we use old color values, we need to update it in the future
     validations:
       required: false
 
