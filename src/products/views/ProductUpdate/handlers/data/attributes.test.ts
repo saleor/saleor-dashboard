@@ -1,4 +1,5 @@
 import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { variantAttributes } from "@dashboard/products/fixtures";
 
 import { getAttributeData } from "./attributes";
 
@@ -6,17 +7,30 @@ describe("getAttributeData", () => {
   test("should filter and map data to attribute format", () => {
     // Arrage
     const changeData: DatagridChange[] = [
-      { column: "attribute:1", row: 1, data: { value: { value: "test" } } },
-      { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
+      {
+        column: "attribute:QXR0cmlidXRlOjE1",
+        row: 1,
+        data: { value: { value: "test" } },
+      },
+      {
+        column: "attribute:QXR0cmlidXRlOjY4MQ==",
+        row: 1,
+        data: { value: { value: "test2" } },
+      },
     ];
 
     // Act
-    const attributes = getAttributeData(changeData, 1, []);
+    const attributes = getAttributeData(changeData, 1, variantAttributes);
 
     // Assert
     expect(attributes).toEqual([
-      { id: "1", values: ["test"] },
-      { id: "2", values: ["test2"] },
+      {
+        id: "QXR0cmlidXRlOjE1",
+        dropdown: {
+          value: "test",
+        },
+      },
+      { id: "QXR0cmlidXRlOjY4MQ==", plainText: "test2" },
     ]);
   });
 
@@ -28,7 +42,7 @@ describe("getAttributeData", () => {
     ];
 
     // Act
-    const attributes = getAttributeData(changeData, 2, []);
+    const attributes = getAttributeData(changeData, 2, variantAttributes);
 
     // Assert
     expect(attributes).toEqual([]);
@@ -42,7 +56,7 @@ describe("getAttributeData", () => {
     ];
 
     // Act
-    const attributes = getAttributeData(changeData, 1, []);
+    const attributes = getAttributeData(changeData, 1, variantAttributes);
 
     // Assert
     expect(attributes).toEqual([]);
