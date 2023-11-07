@@ -1,5 +1,5 @@
 name: Feature request
-description: Publish a new feature request
+description: "Broader scope requests, a new implementation that is not yet present in the project."
 title: "[Feature]: "
 labels: ["feature", "backlog"]
 
