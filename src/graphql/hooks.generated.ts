@@ -680,7 +680,6 @@ export const DiscountErrorFragmentDoc = gql`
   field
   channels
   message
-  voucherCodes
 }
     `;
 export const MenuErrorFragmentDoc = gql`
@@ -7489,6 +7488,7 @@ export const VoucherUpdateDocument = gql`
   voucherUpdate(id: $id, input: $input) {
     errors {
       ...DiscountError
+      voucherCodes
     }
     voucher {
       ...Voucher
@@ -7623,6 +7623,7 @@ export const VoucherCreateDocument = gql`
   voucherCreate(input: $input) {
     errors {
       ...DiscountError
+      voucherCodes
     }
     voucher {
       ...Voucher
@@ -7662,6 +7663,7 @@ export const VoucherDeleteDocument = gql`
   voucherDelete(id: $id) {
     errors {
       ...DiscountError
+      voucherCodes
     }
   }
 }

@@ -56,7 +56,6 @@ export const discountErrorFragment = gql`
     field
     channels
     message
-    voucherCodes
   }
 `;
 
