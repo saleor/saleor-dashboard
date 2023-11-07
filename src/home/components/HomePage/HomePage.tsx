@@ -25,7 +25,7 @@ import { homePageMessages } from "./messages";
 export interface HomePageProps {
   activities: HomeData<Activities>;
   analitics: HomeData<Analitics>;
-  topProducts: HomeData<ProductTopToday | null>;
+  topProducts: HomeData<ProductTopToday>;
   notifications: HomeData<Notifications>;
   userName: string;
   createNewChannelHref: string;

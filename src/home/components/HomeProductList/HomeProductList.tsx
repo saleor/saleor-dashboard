@@ -11,7 +11,7 @@ import { generateAttributesInfo } from "./variant";
 
 interface HomeProductListProps {
   testId?: string;
-  topProducts: HomeData<ProductTopToday | null>;
+  topProducts: HomeData<ProductTopToday>;
 }
 
 export const HomeProductList = ({
