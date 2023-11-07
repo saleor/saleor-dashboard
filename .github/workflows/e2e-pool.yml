@@ -17,6 +17,8 @@ jobs:
       BACKUP_ID: ${{ steps.backup.outputs.BACKUP_ID }}
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v4
 
