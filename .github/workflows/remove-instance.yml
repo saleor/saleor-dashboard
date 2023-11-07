@@ -18,11 +18,10 @@ jobs:
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v4
 
-      - name: Write config file
-        id: write-config-file
-        env:
-          ACCESS_TOKEN: ${{ secrets.STAGING_TOKEN }}
-        run: jq --null-input --arg token "Token $ACCESS_TOKEN" '{"token":$token,"telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
+      - name: Saleor login
+        uses: ./.github/actions/cli-login
+        with:
+          token: ${{ secrets.STAGING_TOKEN }}
 
       - name: Instance creation
         id: create_instance

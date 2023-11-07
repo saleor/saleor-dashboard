@@ -28,6 +28,11 @@ jobs:
           echo "POOL_NAME=${{ env.GITHUB_HEAD_REF_SLUG_URL }}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${{ env.GITHUB_HEAD_REF_SLUG_URL }}.staging.saleor.cloud" >> $GITHUB_OUTPUT
 
+      - name: Saleor login
+        uses: ./.github/actions/cli-login
+        with:
+          token: ${{ secrets.STAGING_TOKEN }}
+
       - name: Obtain backup id
         id: backup
         env:
@@ -66,7 +71,9 @@ jobs:
           BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
-          npx saleor backup restore ${{ env.BACKUP_ID }} --environment="${{ env.INSTANCE_NAME }}" --skip-webhooks-update
+          npx saleor backup restore "${{ env.BACKUP_ID }}" \
+            --environment="${{ env.INSTANCE_NAME }}" \
+            --skip-webhooks-update
 
       - name: Create new instance
         if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }}
