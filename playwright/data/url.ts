@@ -3,6 +3,7 @@ export const URL_LIST = {
   addPageType: "pages/add?page-type-id=",
   apps: "custom-apps/",
   attributes: "attributes/",
+  addAttributes: "attributes/add",
   categories: "categories/",
   channels: "channels/",
   collections: "collections/",
