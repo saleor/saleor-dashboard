@@ -52,6 +52,7 @@ export const VoucherCodesGenerateDialog = ({
   };
 
   const handleModalClose = () => {
+    onClose();
     setData(initialData);
   };
 
