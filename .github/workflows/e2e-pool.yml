@@ -39,11 +39,11 @@ jobs:
           echo "BACKUP_ID=$BACKUP_ID" >> $GITHUB_OUTPUT
       - name: Print annotations
         run: |
-          echo "::notice title=BASE_URL::{{ steps.generate.outputs.BASE_URL }}"
-          echo "::notice title=API_URI::{{ steps.generate.outputs.API_URI }}"
-          echo "::notice title=POOL_NAME::{{ steps.generate.outputs.POOL_NAME }}"
-          echo "::notice title=POOL_INSTANCE::{{ steps.generate.outputs.POOL_INSTANCE }}"
-          echo "::notice title=BACKUP_ID::{{ steps.backup.outputs.BACKUP_ID }}"
+          echo "::notice title=BASE_URL::${{ steps.generate.outputs.BASE_URL }}"
+          echo "::notice title=API_URI::${{ steps.generate.outputs.API_URI }}"
+          echo "::notice title=POOL_NAME::${{ steps.generate.outputs.POOL_NAME }}"
+          echo "::notice title=POOL_INSTANCE::${{ steps.generate.outputs.POOL_INSTANCE }}"
+          echo "::notice title=BACKUP_ID::${{ steps.backup.outputs.BACKUP_ID }}"
 
   prepare_instance:
     runs-on: ubuntu-22.04
