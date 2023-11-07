@@ -27,8 +27,13 @@ export function createHandler(
   updateChannels: (options: {
     variables: VoucherChannelListingUpdateMutationVariables;
   }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>,
+  validateFn: (data: VoucherDetailsPageFormData) => boolean,
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
+    if (!validateFn(formData)) {
+      return { errors: ["Invalid data"] };
+    }
+
     const response = await voucherCreate({
       input: {
         name: formData.name,
