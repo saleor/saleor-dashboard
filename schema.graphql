@@ -4482,7 +4482,7 @@ type Checkout implements Node & ObjectWithMetadata {
   discountName: String
 
   """
-  Determines whether checkout prices should include taxes when displayed in a storefront.
+  Determines whether displayed prices should include taxes.
   
   Added in Saleor 3.9.
   """
@@ -7351,7 +7351,7 @@ enum DistanceUnitsEnum {
   YD
 }
 
-"""Represents shop's domain."""
+"""Represents API domain."""
 type Domain {
   """The host name of the domain."""
   host: String!
@@ -7359,7 +7359,7 @@ type Domain {
   """Inform if SSL is enabled."""
   sslEnabled: Boolean!
 
-  """Shop's absolute URL."""
+  """The absolute URL of the API."""
   url: String!
 }
 
@@ -15898,6 +15898,9 @@ type Mutation {
   Note: this API is currently in Feature Preview and can be subject to changes at later point. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
+  
+  Triggers the following webhook events:
+  - PRODUCT_VARIANT_STOCK_UPDATED (async): A product variant stock details were updated.
   """
   stockBulkUpdate(
     """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
@@ -16656,7 +16659,7 @@ type Order implements Node & ObjectWithMetadata {
   discounts: [OrderDiscount!]!
 
   """
-  Determines whether checkout prices should include taxes when displayed in a storefront.
+  Determines whether displayed prices should include taxes.
   
   Added in Saleor 3.9.
   """
@@ -17179,9 +17182,7 @@ input OrderBulkCreateInput {
   """List of discounts."""
   discounts: [OrderDiscountCommonInput!]
 
-  """
-  Determines whether checkout prices should include taxes, when displayed in a storefront.
-  """
+  """Determines whether displayed prices should include taxes."""
   displayGrossPrices: Boolean
 
   """External ID of the order."""
@@ -18539,6 +18540,13 @@ type OrderLine implements Node & ObjectWithMetadata {
   quantityToFulfill: Int!
 
   """
+  Denormalized sale ID, set when order line is created for a product variant that is on sale.
+  
+  Added in Saleor 3.14.
+  """
+  saleId: ID
+
+  """
   Denormalized tax class of the product in this order line.
   
   Added in Saleor 3.9.
@@ -18617,6 +18625,13 @@ type OrderLine implements Node & ObjectWithMetadata {
   """
   variant: ProductVariant
   variantName: String!
+
+  """
+  Voucher code that was used for this order line.
+  
+  Added in Saleor 3.14.
+  """
+  voucherCode: String
 }
 
 input OrderLineCreateInput {
@@ -20228,6 +20243,13 @@ type Payment implements Node & ObjectWithMetadata {
   """Order associated with a payment."""
   order: Order
 
+  """
+  Informs whether this is a partial payment.
+  
+  Added in Saleor 3.14.
+  """
+  partial: Boolean!
+
   """Type of method used for payment."""
   paymentMethodType: String!
 
@@ -20249,6 +20271,13 @@ type Payment implements Node & ObjectWithMetadata {
   Added in Saleor 3.3.
   """
   privateMetafields(keys: [String!]): Metadata
+
+  """
+  PSP reference of the payment.
+  
+  Added in Saleor 3.14.
+  """
+  pspReference: String
 
   """Unique token associated with a payment."""
   token: String!
@@ -23006,7 +23035,7 @@ type ProductPricingInfo {
   discountLocalCurrency: TaxedMoney @deprecated(reason: "This field will be removed in Saleor 4.0. Always returns `null`.")
 
   """
-  Determines whether this product's price displayed in a storefront should include taxes.
+  Determines whether displayed prices should include taxes.
   
   Added in Saleor 3.9.
   """
@@ -30045,6 +30074,9 @@ Added in Saleor 3.13.
 Note: this API is currently in Feature Preview and can be subject to changes at later point. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
+
+Triggers the following webhook events:
+- PRODUCT_VARIANT_STOCK_UPDATED (async): A product variant stock details were updated.
 """
 type StockBulkUpdate {
   """Returns how many objects were updated."""
@@ -30602,9 +30634,7 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   """List of country-specific exceptions in tax configuration."""
   countries: [TaxConfigurationPerCountry!]!
 
-  """
-  Determines whether prices displayed in a storefront should include taxes.
-  """
+  """Determines whether displayed prices should include taxes."""
   displayGrossPrices: Boolean!
 
   """The ID of the object."""
@@ -30693,7 +30723,7 @@ type TaxConfigurationPerCountry {
   country: CountryDisplay!
 
   """
-  Determines whether prices displayed in a storefront should include taxes for this country.
+  Determines whether displayed prices should include taxes for this country.
   """
   displayGrossPrices: Boolean!
 
@@ -30711,7 +30741,7 @@ input TaxConfigurationPerCountryInput {
   countryCode: CountryCode!
 
   """
-  Determines whether prices displayed in a storefront should include taxes for this country.
+  Determines whether displayed prices should include taxes for this country.
   """
   displayGrossPrices: Boolean!
 
@@ -30761,9 +30791,7 @@ input TaxConfigurationUpdateInput {
   """Determines whether taxes are charged in the given channel."""
   chargeTaxes: Boolean
 
-  """
-  Determines whether prices displayed in a storefront should include taxes.
-  """
+  """Determines whether displayed prices should include taxes."""
   displayGrossPrices: Boolean
 
   """Determines whether prices are entered with the tax included."""

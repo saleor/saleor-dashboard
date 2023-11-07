@@ -11,6 +11,7 @@ export const URL_LIST = {
   dashboard: "/dashboard/",
   draftOrders: "/orders/drafts/",
   giftCards: "/gift-cards/",
+  addAttributes: "attributes/add",
   homePage: "/",
   newPassword: "/new-password/",
   navigation: "/navigation/",
