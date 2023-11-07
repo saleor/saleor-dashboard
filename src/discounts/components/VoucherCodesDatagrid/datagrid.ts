@@ -67,6 +67,10 @@ export const createGetCellContent =
             },
           ],
           [statusMessage],
+          {
+            readonly: true,
+            allowOverlay: false,
+          },
         );
       }
       default:
