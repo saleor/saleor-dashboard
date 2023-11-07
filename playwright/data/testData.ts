@@ -1,21 +1,33 @@
 export const PRODUCTS = {
   singleProductType: {
     id: "UHJvZHVjdFR5cGU6Njcy",
-    name: "Single product type",
+    info: "Single product type",
   },
   productToAddVariants: {
     id: "UHJvZHVjdDo3Mjk%3D",
-    name: "Product that does not contain any variant yet",
+    info: "Product that does not contain any variant yet",
   },
   productWithOneVariant: {
     id: "UHJvZHVjdDo3MzM%3D",
-    name: "Product that contains single variant",
+    info: "Product that contains single variant",
   },
 };
 
 export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
     id: "U2hpcHBpbmdab25lOjIzNzg%3D",
-    name: "Shipping method that is used to add rates",
+    info: "Shipping method that is used to add rates",
+  },
+};
+export const USERS = {
+  userToBeDeactivated: {
+    id: "VXNlcjoxMzQ3",
+    email: "user-to-be-deactivated@gmai.com",
+    info: "Active user used in deactivation user test",
+  },
+  userToBeActivated: {
+    id: "VXNlcjoxMzQ5",
+    email: "user-to-be-activated@gmai.com",
+    info: "Inactive user used in activation user test",
   },
 };

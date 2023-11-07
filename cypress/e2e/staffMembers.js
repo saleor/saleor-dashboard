@@ -63,7 +63,7 @@ describe("Staff members", () => {
   });
 
   it(
-    "should be able to invite staff user. TC: SALEOR_3501",
+    "should be able to invite staff user. TC: SALEOR_3501 - migration in progress - to delete when done",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const firstName = faker.name.firstName();
@@ -84,7 +84,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should deactivate user. TC: SALEOR_3502",
+    "should deactivate user. TC: SALEOR_3502 - migration in progress - to delete when done",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
       updateStaffMember({ userId: user.id, isActive: true });
@@ -103,7 +103,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should activate user. TC: SALEOR_3503",
+    "should activate user. TC: SALEOR_3503 - migration in progress - to delete when done",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const serverStoredEmail = email.toLowerCase();
