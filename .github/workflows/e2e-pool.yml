@@ -44,7 +44,7 @@ jobs:
         run: |
           BACKUPS=$(npx saleor@1.40.0-rc.1 backup list --name=snapshot-automation-tests --latest --json)
           BACKUP_ID=$(echo $BACKUPS | jq -r '.[0].key')
-          BACKUP_VER=$(echo $BACKUPS | jq -r '.[0].version')
+          BACKUP_VER=$(echo $BACKUPS | jq -r '.[0].saleor_version')
 
           echo "BACKUP_ID=$BACKUP_ID" >> $GITHUB_OUTPUT
           echo "BACKUP_VER=$BACKUP_VER" >> $GITHUB_OUTPUT
