@@ -43,6 +43,7 @@ export const VoucherCodesManualDialog = ({
   const handleModalClose = () => {
     onClose();
     reset();
+    setError("");
   };
 
   const handleSubmit = async () => {

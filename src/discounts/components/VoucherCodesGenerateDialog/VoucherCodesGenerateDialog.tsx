@@ -88,7 +88,7 @@ export const VoucherCodesGenerateDialog = ({
           <Button onClick={handleModalClose} variant="secondary">
             {intl.formatMessage(buttonMessages.back)}
           </Button>
-          <Button onClick={handleSubmit}>
+          <Button onClick={handleSubmit} disabled={Number(data.quantity) === 0}>
             {intl.formatMessage(buttonMessages.confirm)}
           </Button>
         </DashboardModal.Actions>
