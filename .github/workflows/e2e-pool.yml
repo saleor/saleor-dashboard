@@ -55,7 +55,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Saleor login
-        uses: actions/cli-login
+        uses: ./.github/actions/cli-login
         with:
           token: ${{ secrets.STAGING_TOKEN }}          
 
