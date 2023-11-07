@@ -691,6 +691,9 @@
     "context": "window title",
     "string": "Install App"
   },
+  "2dgbGR": {
+    "string": "Those codes already exist"
+  },
   "2fgaAQ": {
     "context": "search input placeholder",
     "string": "Search shipping zones..."
@@ -2590,6 +2593,9 @@
   "GNKG74": {
     "context": "webhooks inactive label",
     "string": "Inactive"
+  },
+  "GTCg9O": {
+    "string": "You must add at least one voucher code"
   },
   "GVM/fi": {
     "context": "order history message",
@@ -4915,6 +4921,9 @@
   "WWV8aZ": {
     "context": "dialog title",
     "string": "Delete attribute value"
+  },
+  "WY3IXU": {
+    "string": "This code already exists"
   },
   "WasHjQ": {
     "context": "voucher discount",
