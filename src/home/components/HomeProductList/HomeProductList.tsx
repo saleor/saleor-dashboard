@@ -1,5 +1,5 @@
 import Money from "@dashboard/components/Money";
-import { ProductTopToday } from "@dashboard/home/types";
+import { HomeData, ProductTopToday } from "@dashboard/home/types";
 import { productVariantEditUrl } from "@dashboard/products/urls";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -11,11 +11,7 @@ import { generateAttributesInfo } from "./variant";
 
 interface HomeProductListProps {
   testId?: string;
-  topProducts: {
-    data: ProductTopToday | null;
-    loading: boolean;
-    error: any;
-  };
+  topProducts: HomeData<ProductTopToday | null>;
 }
 
 export const HomeProductList = ({
@@ -28,6 +24,22 @@ export const HomeProductList = ({
     defaultMessage: "Top products",
     description: "header",
   });
+
+  if (topProducts.hasError) {
+    return (
+      <Box data-test-id={testId}>
+        <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
+          {title}
+        </Text>
+        <Text color="textNeutralSubdued">
+          <FormattedMessage
+            id="/Fa+RP"
+            defaultMessage="Couldn't load top products"
+          />
+        </Text>
+      </Box>
+    );
+  }
 
   if (topProducts.loading) {
     return (

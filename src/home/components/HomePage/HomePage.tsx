@@ -3,8 +3,14 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Money from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import { HomeAnaliticsQuery, PermissionEnum } from "@dashboard/graphql";
-import { Activities, ProductTopToday } from "@dashboard/home/types";
+import { PermissionEnum } from "@dashboard/graphql";
+import {
+  Activities,
+  Analitics,
+  HomeData,
+  Notifications,
+  ProductTopToday,
+} from "@dashboard/home/types";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -17,33 +23,10 @@ import { HomeProductList } from "../HomeProductList";
 import { homePageMessages } from "./messages";
 
 export interface HomePageProps {
-  activities: {
-    data: Activities;
-    loading: boolean;
-    error: any;
-  };
-  analitics: {
-    data: {
-      orders: number | null;
-      sales: NonNullable<HomeAnaliticsQuery["salesToday"]>["gross"];
-    };
-    loading: boolean;
-    error: any;
-  };
-  topProducts: {
-    data: ProductTopToday | null;
-    loading: boolean;
-    error: any;
-  };
-  notifications: {
-    data: {
-      ordersToCapture: number | null;
-      ordersToFulfill: number | null;
-      productsOutOfStock: number;
-    };
-    loading: boolean;
-    error: any;
-  };
+  activities: HomeData<Activities>;
+  analitics: HomeData<Analitics>;
+  topProducts: HomeData<ProductTopToday | null>;
+  notifications: HomeData<Notifications>;
   userName: string;
   createNewChannelHref: string;
   ordersToFulfillHref: string;
@@ -86,7 +69,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                 title={intl.formatMessage(homePageMessages.salesCardTitle)}
                 testId="sales-analytics"
               >
-                {noChannel ? (
+                {noChannel || analitics.hasError ? (
                   0
                 ) : !analitics.loading ? (
                   <Money money={analitics.data.sales} />
@@ -98,7 +81,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                 title={intl.formatMessage(homePageMessages.ordersCardTitle)}
                 testId="orders-analytics"
               >
-                {noChannel ? (
+                {noChannel || analitics.hasError ? (
                   0
                 ) : !analitics.loading ? (
                   analitics.data.orders

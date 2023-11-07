@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
-import { Activities } from "@dashboard/home/types";
+import { Activities, HomeData } from "@dashboard/home/types";
 import { Box, List, Skeleton, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -9,11 +9,7 @@ import { renderCollection } from "../../../misc";
 import { getActivityMessage } from "./activityMessages";
 
 interface HomeActivityCardProps {
-  activities: {
-    data: Activities;
-    loading: boolean;
-    error: any;
-  };
+  activities: HomeData<Activities>;
   testId?: string;
 }
 
@@ -28,6 +24,22 @@ export const HomeActivityCard = ({
     defaultMessage: "Activity",
     description: "header",
   });
+
+  if (activities.hasError) {
+    return (
+      <DashboardCard data-test-id={testId}>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Content>
+          <Text color="textNeutralSubdued">
+            <FormattedMessage
+              id="/U8FUp"
+              defaultMessage="Couldn't load activities"
+            />
+          </Text>
+        </DashboardCard.Content>
+      </DashboardCard>
+    );
+  }
 
   if (activities.loading) {
     return (

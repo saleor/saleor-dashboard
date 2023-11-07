@@ -82,12 +82,12 @@ const HomeSection = () => {
       activities={{
         data: mapEdgesToItems(homeActivities?.activities)?.reverse(),
         loading: homeActivitiesLoading,
-        error: homeActivitiesError,
+        hasError: !!homeActivitiesError,
       }}
       topProducts={{
         data: mapEdgesToItems(homeTopProducts?.productTopToday),
         loading: homeTopProductsLoading,
-        error: homeTopProductsError,
+        hasError: !!homeTopProductsError,
       }}
       notifications={{
         data: {
@@ -97,7 +97,7 @@ const HomeSection = () => {
             homeNotificationsData?.productsOutOfStock.totalCount,
         },
         loading: homeNotificationsLoaing,
-        error: homeNotificationsError,
+        hasError: !!homeNotificationsError,
       }}
       analitics={{
         data: {
@@ -105,7 +105,7 @@ const HomeSection = () => {
           sales: homeAnaliticsData?.salesToday?.gross,
         },
         loading: homeAnaliticsLoading,
-        error: homeAnaliticsError,
+        hasError: !!homeAnaliticsError,
       }}
       createNewChannelHref={channelsListUrl()}
       ordersToCaptureHref={orderListUrl({

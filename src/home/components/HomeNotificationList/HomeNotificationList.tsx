@@ -1,5 +1,6 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
+import { HomeData, Notifications } from "@dashboard/home/types";
 import { List } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -13,15 +14,7 @@ import {
 } from "./utils";
 
 interface HomeNotificationTableProps {
-  notifications: {
-    data: {
-      ordersToCapture: number | null;
-      ordersToFulfill: number | null;
-      productsOutOfStock: number;
-    };
-    loading: boolean;
-    error: any;
-  };
+  notifications: HomeData<Notifications>;
   createNewChannelHref: string;
   ordersToFulfillHref: string;
   ordersToCaptureHref: string;
@@ -39,6 +32,10 @@ export const HomeNotificationList = ({
   noChannel,
 }: HomeNotificationTableProps) => {
   const intl = useIntl();
+
+  if (notifications.hasError) {
+    return null;
+  }
 
   return (
     <List>
