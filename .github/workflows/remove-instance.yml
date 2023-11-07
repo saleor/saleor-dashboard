@@ -23,8 +23,7 @@ jobs:
         with:
           token: ${{ secrets.STAGING_TOKEN }}
 
-      - name: Instance creation
-        id: create_instance
+      - name: Remove instance
         env:
           SALEOR_CLI_ENV: staging
         run: npx saleor env remove "${{ env.GITHUB_HEAD_REF_SLUG_URL }}" --force
