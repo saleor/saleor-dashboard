@@ -3,7 +3,6 @@ import {
   ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import useForm from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
@@ -18,14 +17,6 @@ interface VoucherCodesManualDialogProps {
   onSubmit: (code: string) => void;
 }
 
-interface FormData {
-  code: string;
-}
-
-const intialData: FormData = {
-  code: "",
-};
-
 export const VoucherCodesManualDialog = ({
   open,
   confirmButtonTransitionState,
@@ -34,23 +25,19 @@ export const VoucherCodesManualDialog = ({
 }: VoucherCodesManualDialogProps) => {
   const intl = useIntl();
   const [error, setError] = useState("");
-
-  const { data, change, submit, reset } = useForm(
-    intialData,
-    ({ code }: FormData) => onSubmit(code),
-  );
+  const [code, setCode] = useState("");
 
   const handleModalClose = () => {
     onClose();
-    reset();
+    setCode("");
     setError("");
   };
 
   const handleSubmit = async () => {
     try {
-      await submit();
+      await onSubmit(code);
       onClose();
-      reset();
+      setCode("");
     } catch (e: unknown) {
       if (e instanceof Error) {
         if (e.message === "Code already exists") {
@@ -72,11 +59,11 @@ export const VoucherCodesManualDialog = ({
             type="text"
             size="small"
             label={intl.formatMessage(messages.enterCode)}
-            value={data.code}
+            value={code}
             error={!!error}
             helperText={error}
             onChange={e => {
-              change(e);
+              setCode(e.target.value);
               setError("");
             }}
           />

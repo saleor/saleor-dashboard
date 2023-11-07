@@ -1,8 +1,7 @@
 import { DashboardModal } from "@dashboard/components/Modal";
-import useForm from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui-next";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -31,7 +30,8 @@ export const VoucherCodesGenerateDialog = ({
   onSubmit,
 }: VoucherCodesGenerateDialogProps) => {
   const intl = useIntl();
-  const { change, submit, data, reset } = useForm(initialData, onSubmit);
+  const [data, setData] =
+    useState<GenerateMultipleVoucherCodeFormData>(initialData);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
@@ -45,18 +45,20 @@ export const VoucherCodesGenerateDialog = ({
       return;
     }
 
-    change(e);
+    setData(data => ({
+      ...data,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleModalClose = () => {
-    onClose();
-    reset();
+    setData(initialData);
   };
 
   const handleSubmit = async () => {
-    await submit();
+    await onSubmit(data);
     onClose();
-    reset();
+    setData(initialData);
   };
 
   return (
@@ -81,7 +83,12 @@ export const VoucherCodesGenerateDialog = ({
             name="prefix"
             label={intl.formatMessage(messages.codePrefix)}
             value={data.prefix}
-            onChange={change}
+            onChange={e => {
+              setData(data => ({
+                ...data,
+                [e.target.name]: e.target.value,
+              }));
+            }}
           />
         </Box>
         <DashboardModal.Actions>

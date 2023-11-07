@@ -100,6 +100,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     prefix,
   }: GenerateMultipleVoucherCodeFormData) => {
     clearRowSelection();
+    triggerChange(true);
     set({
       codes: [...generateMultipleIds(quantity, prefix), ...data.codes],
     });
@@ -116,7 +117,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     if (voucherCodeExists(code, data.codes)) {
       throw new Error("Code already exists");
     }
-
+    triggerChange(true);
     set({
       codes: [{ code }, ...data.codes],
     });

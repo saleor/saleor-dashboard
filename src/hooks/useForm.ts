@@ -43,7 +43,7 @@ export interface UseFormResult<TData>
     Pick<UseExitFormDialogResult, "formId"> {
   reset: () => void;
   set: (data: Partial<TData>) => void;
-  triggerChange: () => void;
+  triggerChange: (value?: boolean) => void;
   handleChange: FormChange;
   toggleValue: FormChange;
   toggleValues: FormChange;

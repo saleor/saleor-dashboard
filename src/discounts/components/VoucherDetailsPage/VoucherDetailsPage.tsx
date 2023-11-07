@@ -257,8 +257,14 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 onSelectVoucherCodesIds={onSelectVoucherCodesIds}
                 onDeleteCodes={onDeleteVoucherCodes}
                 loading={voucherCodesLoading}
-                onMultiCodesGenerate={onMultipleVoucheCodesGenerate}
-                onCustomCodeGenerate={onCustomVoucherCodeGenerate}
+                onMultiCodesGenerate={codes => {
+                  triggerChange();
+                  onMultipleVoucheCodesGenerate(codes);
+                }}
+                onCustomCodeGenerate={code => {
+                  triggerChange();
+                  onCustomVoucherCodeGenerate(code);
+                }}
                 disabled={disabled}
                 codes={voucherCodes}
                 voucherCodesPagination={voucherCodesPagination}
