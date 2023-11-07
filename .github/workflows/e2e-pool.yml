@@ -34,7 +34,7 @@ jobs:
           SALEOR_CLI_ENV: staging
           BACKUP_NAME: snapshot-automation-tests
         run: |
-          BACKUP_ID=$(npx saleor@1.40.0-rc.1 backup list --name={{ env.BACKUP_NAME }} --latest --json | jq -r '.[0].key')
+          BACKUP_ID=$(npx saleor@1.40.0-rc.1 backup list --name=snapshot-automation-tests --latest --json | jq -r '.[0].key')
         
           echo "BACKUP_ID=$BACKUP_ID" >> $GITHUB_OUTPUT
       - name: Print annotations
