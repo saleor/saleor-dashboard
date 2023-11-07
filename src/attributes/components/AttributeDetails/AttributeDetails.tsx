@@ -152,6 +152,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
       />
       <CardContent>
         <TextField
+          data-test-id="attribute-default-label-input"
           disabled={disabled}
           error={!!formApiErrors.name}
           label={intl.formatMessage(messages.attributeLabel)}
@@ -163,6 +164,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
         />
         <FormSpacer />
         <TextField
+          data-test-id="attribute-code-input"
           disabled={disabled}
           error={!!formApiErrors.slug}
           label={intl.formatMessage(messages.attributeSlug)}
@@ -177,7 +179,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           onChange={onChange}
         />
         <FormSpacer />
-        <div className={classes.inputTypeSection}>
+        <div
+          className={classes.inputTypeSection}
+          data-test-id="attribute-type-select"
+        >
           <SingleSelectField
             choices={inputTypeChoices}
             disabled={disabled || !canChangeType}
