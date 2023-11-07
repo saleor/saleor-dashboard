@@ -14,6 +14,7 @@ jobs:
       POOL_INSTANCE: ${{ steps.generate.outputs.POOL_INSTANCE }}
       BASE_URL: ${{ steps.generate.outputs.BASE_URL }}
       API_URI: ${{ steps.generate.outputs.API_URI }}
+      BACKUP_ID: ${{ steps.backup.outputs.BACKUP_ID }}
 
     steps:
       - name: Inject slug/short variables
@@ -26,6 +27,16 @@ jobs:
           echo "API_URI=https://${{ env.GITHUB_HEAD_REF_SLUG_URL }}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${{ env.GITHUB_HEAD_REF_SLUG_URL }}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${{ env.GITHUB_HEAD_REF_SLUG_URL }}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+
+      - name: Obtain backup id
+        id: backup
+        env:
+          BACKUP_NAME: snapshot-automation-tests
+        run: |
+          BACKUP_ID=$(npx saleor@1.40.0-rc.1 backup list --name={{ env.BACKUP_NAME }} --latest --json | jq -r '.[0].key')
+        
+          echo "BACKUP_ID=$BACKUP_ID" >> $GITHUB_OUTPUT
+
 
   prepare_instance:
     runs-on: ubuntu-22.04
@@ -46,7 +57,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' && github.event.action != 'opened' && github.event.action != 'closed' }}
         env:
           SALEOR_CLI_ENV: staging
-          BACKUP_ID: ${{ secrets.BACKUP_ID }}
+          BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
           npx saleor backup restore ${{ env.BACKUP_ID }} --environment="${{ env.INSTANCE_NAME }}" --skip-webhooks-update
@@ -55,7 +66,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }}
         env:
           SALEOR_CLI_ENV: staging
-          BACKUP_ID: ${{ secrets.BACKUP_ID }}
+          BACKUP_ID:  ${{ needs.prepare_variables.outputs.BACKUP_ID }}
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
           npx saleor env create "${{ env.INSTANCE_NAME }}" \
