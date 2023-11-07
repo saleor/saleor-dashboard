@@ -44,4 +44,8 @@ export class BasePage {
       .waitFor({ state: "visible", timeout: 15000 });
     await expect(this.errorBanner).not.toBeVisible();
   }
+
+  async getRandomInt(max: number) {
+    return Math.floor(Math.random() * (max + 1));
+  }
 }

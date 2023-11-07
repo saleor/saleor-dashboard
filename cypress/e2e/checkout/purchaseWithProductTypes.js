@@ -17,9 +17,7 @@ import {
   getShippingMethodIdFromCheckout,
   updateShippingInCheckout,
 } from "../../support/api/utils/ordersUtils";
-import {
-  createDigitalAndPhysicalProductWithNewDataAndDefaultChannel,
-} from "../../support/api/utils/products/productsUtils";
+import { createDigitalAndPhysicalProductWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
 
 describe("As an unlogged customer I want to order physical and digital products", () => {
   const startsWith = `CyPurchaseByType`;
@@ -60,7 +58,7 @@ describe("As an unlogged customer I want to order physical and digital products"
   });
 
   it(
-    "should purchase digital product as unlogged customer. TC: SALEOR_0402",
+    "should purchase digital product as unlogged customer. TC: SALEOR_0402 - should not be migrated to playwright",
     { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease", "@critical"] },
     () => {
       createAndCompleteCheckoutWithoutShipping({
@@ -84,7 +82,7 @@ describe("As an unlogged customer I want to order physical and digital products"
   );
 
   it(
-    "should purchase physical product as unlogged customer. TC: SALEOR_0403",
+    "should purchase physical product as unlogged customer. TC: SALEOR_0403 should not be migrated to playwright",
     { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease", "@critical"] },
     () => {
       createWaitingForCaptureOrder({
