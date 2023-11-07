@@ -977,6 +977,9 @@
     "context": "Charge in progress transaction amount, data display header",
     "string": "Pending charge"
   },
+  "4gJAm6": {
+    "string": "Can't delete saved codes"
+  },
   "4gT3eD": {
     "context": "navigator section header",
     "string": "Search in Customers"
