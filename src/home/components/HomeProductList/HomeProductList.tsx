@@ -23,24 +23,22 @@ export const HomeProductList = ({
   testId,
 }: HomeProductListProps) => {
   const intl = useIntl();
+  const title = intl.formatMessage({
+    id: "e08xWz",
+    defaultMessage: "Top products",
+    description: "header",
+  });
 
   if (topProducts.loading) {
     return (
       <Box data-test-id={testId}>
         <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
-          {intl.formatMessage({
-            id: "e08xWz",
-            defaultMessage: "Top products",
-            description: "header",
-          })}
+          {title}
         </Text>
-        <Box display="flex" flexDirection="column" gap={3}>
-          <Skeleton height={3} />
-          <Skeleton height={3} />
-          <Skeleton height={3} />
-          <Skeleton height={3} />
-          <Skeleton height={3} />
-          <Skeleton height={3} />
+        <Box display="flex" flexDirection="column">
+          <ProductListSkeleton />
+          <ProductListSkeleton />
+          <ProductListSkeleton />
         </Box>
       </Box>
     );
@@ -49,11 +47,7 @@ export const HomeProductList = ({
   return (
     <Box data-test-id={testId}>
       <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
-        {intl.formatMessage({
-          id: "e08xWz",
-          defaultMessage: "Top products",
-          description: "header",
-        })}
+        {title}
       </Text>
       <Box>
         {renderCollection(
@@ -140,3 +134,17 @@ export const HomeProductList = ({
 
 HomeProductList.displayName = "HomeProductList";
 export default HomeProductList;
+
+function ProductListSkeleton() {
+  return (
+    <Box
+      borderColor="neutralPlain"
+      borderWidth={1}
+      borderBottomStyle="solid"
+      paddingX={3}
+      paddingY={6}
+    >
+      <Skeleton />
+    </Box>
+  );
+}

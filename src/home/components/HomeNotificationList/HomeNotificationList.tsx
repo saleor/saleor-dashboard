@@ -1,6 +1,6 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import { Box, List, Skeleton } from "@saleor/macaw-ui-next";
+import { List } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -40,23 +40,16 @@ export const HomeNotificationList = ({
 }: HomeNotificationTableProps) => {
   const intl = useIntl();
 
-  if (notifications.loading) {
-    return (
-      <Box display="flex" flexDirection="column" gap={3}>
-        <Skeleton height={3} />
-        <Skeleton height={3} />
-        <Skeleton height={3} />
-      </Box>
-    );
-  }
-
   return (
     <List>
       {noChannel && (
         <RequirePermissions
           requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
         >
-          <HomeNotificationListItem linkUrl={createNewChannelHref}>
+          <HomeNotificationListItem
+            loading={notifications.loading}
+            linkUrl={createNewChannelHref}
+          >
             {intl.formatMessage(messages.createNewChannel)}
           </HomeNotificationListItem>
         </RequirePermissions>
@@ -64,6 +57,7 @@ export const HomeNotificationList = ({
 
       <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
         <HomeNotificationListItem
+          loading={notifications.loading}
           linkUrl={ordersToFulfillHref}
           dataTestId="orders-to-fulfill"
         >
@@ -71,6 +65,7 @@ export const HomeNotificationList = ({
         </HomeNotificationListItem>
 
         <HomeNotificationListItem
+          loading={notifications.loading}
           linkUrl={ordersToCaptureHref}
           dataTestId="orders-to-capture"
         >
@@ -85,6 +80,7 @@ export const HomeNotificationList = ({
         requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
       >
         <HomeNotificationListItem
+          loading={notifications.loading}
           linkUrl={productsOutOfStockHref}
           dataTestId="products-out-of-stock"
         >

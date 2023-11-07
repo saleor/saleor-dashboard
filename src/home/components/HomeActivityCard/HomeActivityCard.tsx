@@ -23,68 +23,78 @@ export const HomeActivityCard = ({
 }: HomeActivityCardProps) => {
   const intl = useIntl();
   const { themeValues } = useTheme();
+  const title = intl.formatMessage({
+    id: "BXkF8Z",
+    defaultMessage: "Activity",
+    description: "header",
+  });
+
+  if (activities.loading) {
+    return (
+      <DashboardCard data-test-id={testId}>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Content>
+          <Box display="flex" flexDirection="column" gap={5}>
+            <Skeleton />
+            <Skeleton __width="80%" />
+            <Skeleton />
+          </Box>
+        </DashboardCard.Content>
+      </DashboardCard>
+    );
+  }
 
   return (
     <DashboardCard data-test-id={testId}>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "BXkF8Z",
-          defaultMessage: "Activity",
-          description: "header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Title>{title}</DashboardCard.Title>
       <DashboardCard.Content>
-        {activities.loading ? (
-          <Skeleton />
-        ) : (
-          <List>
-            {renderCollection(
-              activities.data,
-              (activity, activityId) => (
-                <List.Item
-                  key={activityId}
-                  flexDirection="column"
-                  alignItems="flex-start"
-                  cursor="auto"
-                  paddingY={1}
-                  paddingX={6}
-                  __marginLeft={"-" + themeValues.spacing[6]}
-                  __marginRight={"-" + themeValues.spacing[6]}
-                  marginBottom={3}
-                >
-                  {activity ? (
-                    <>
-                      <Text variant="body" size="small">
-                        {getActivityMessage(activity, intl)}
-                      </Text>
-                      <Text
-                        variant="body"
-                        size="small"
-                        color="textNeutralSubdued"
-                      >
-                        <DateTime date={activity.date} plain />
-                      </Text>
-                    </>
-                  ) : (
-                    <Box paddingY={4}>
-                      <Skeleton />
-                    </Box>
-                  )}
-                </List.Item>
-              ),
-              () => (
-                <Box paddingY={4}>
-                  <Text variant="body" size="small">
-                    <FormattedMessage
-                      id="wWTUrM"
-                      defaultMessage="No activities found"
-                    />
-                  </Text>
-                </Box>
-              ),
-            )}
-          </List>
-        )}
+        <List>
+          {renderCollection(
+            activities.data,
+            (activity, activityId) => (
+              <List.Item
+                key={activityId}
+                flexDirection="column"
+                alignItems="flex-start"
+                cursor="auto"
+                paddingY={1}
+                paddingX={6}
+                __marginLeft={"-" + themeValues.spacing[6]}
+                __marginRight={"-" + themeValues.spacing[6]}
+                marginBottom={3}
+              >
+                {activity ? (
+                  <>
+                    <Text variant="body" size="small">
+                      {getActivityMessage(activity, intl)}
+                    </Text>
+                    <Text
+                      variant="body"
+                      size="small"
+                      color="textNeutralSubdued"
+                    >
+                      <DateTime date={activity.date} plain />
+                    </Text>
+                  </>
+                ) : (
+                  <Box paddingY={4}>
+                    <Skeleton />
+                  </Box>
+                )}
+              </List.Item>
+            ),
+            () => (
+              <Box paddingY={4}>
+                <Text variant="body" size="small">
+                  <FormattedMessage
+                    id="wWTUrM"
+                    defaultMessage="No activities found"
+                  />
+                </Text>
+              </Box>
+            ),
+          )}
+        </List>
       </DashboardCard.Content>
     </DashboardCard>
   );
