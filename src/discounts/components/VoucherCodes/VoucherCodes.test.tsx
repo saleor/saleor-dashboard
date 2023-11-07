@@ -109,14 +109,35 @@ describe("VoucherCodes", () => {
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
 
-  it("should allow to delete selected codes", async () => {
-    // Arrange
+  it("should not allow to delete selected codes when contains saved codes", async () => {
+    // Arrange & Act
     const onDeleteCodes = jest.fn();
 
     renderVoucherCodes({
       onDeleteCodes,
       codes,
       selectedCodesIds: ["Code 1", "Code 2"],
+    });
+
+    const deleteButton = screen.getByTestId("bulk-delete-button");
+
+    // Assert
+    expect(deleteButton).toBeDisabled();
+  });
+
+  it("should  allow to delete selected codes when selected only draft codes", async () => {
+    // Arrange
+    const onDeleteCodes = jest.fn();
+
+    renderVoucherCodes({
+      onDeleteCodes,
+      codes: [
+        ...codes,
+        { code: "Manual code 1", status: "Draft" },
+        { code: "Manual code 2", status: "Draft" },
+        { code: "Manual code 3", status: "Draft" },
+      ],
+      selectedCodesIds: ["Manual code 1", "Manual code 1"],
     });
 
     const deleteButton = screen.getByTestId("bulk-delete-button");
