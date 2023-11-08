@@ -16,6 +16,7 @@ jobs:
       API_URI: ${{ steps.generate.outputs.API_URI }}
       BACKUP_ID: ${{ steps.backup.outputs.BACKUP_ID }}
       BACKUP_VER: ${{ steps.backup.outputs.BACKUP_VER }}
+      BACKUP_NAME: ${{ steps.backup.outputs.BACKUP_NAME }}
 
     steps:
       - uses: actions/checkout@v4
@@ -42,19 +43,22 @@ jobs:
           SALEOR_CLI_ENV: staging
           BACKUP_NAME: snapshot-automation-tests
         run: |
-          BACKUPS=$(npx saleor@1.40.0-rc.1 backup list --name=snapshot-automation-tests --latest --json)
+          BACKUPS=$(npx saleor backup list --name=snapshot-automation-tests --latest --json)
           BACKUP_ID=$(echo $BACKUPS | jq -r '.[0].key')
           BACKUP_VER=$(echo $BACKUPS | jq -r '.[0].saleor_version')
+          BACKUP_NAME=$(echo $BACKUPS | jq -r '.[0].name')
 
           echo "BACKUP_ID=$BACKUP_ID" >> $GITHUB_OUTPUT
           echo "BACKUP_VER=$BACKUP_VER" >> $GITHUB_OUTPUT
+          echo "BACKUP_NAME=$BACKUP_NAME" >> $GITHUB_OUTPUT
+
       - name: Print annotations
         run: |
           echo "::notice title=BASE_URL::${{ steps.generate.outputs.BASE_URL }}"
           echo "::notice title=API_URI::${{ steps.generate.outputs.API_URI }}"
           echo "::notice title=POOL_NAME::${{ steps.generate.outputs.POOL_NAME }}"
           echo "::notice title=POOL_INSTANCE::${{ steps.generate.outputs.POOL_INSTANCE }}"
-          echo "::notice title=SNAPSHOT::backup_id=${{ steps.backup.outputs.BACKUP_ID }}, version=${{ steps.backup.outputs.BACKUP_VER }}"
+          echo "::notice title=SNAPSHOT::backup_id=${{ steps.backup.outputs.BACKUP_ID }}, version=${{ steps.backup.outputs.BACKUP_VER }}, name=${{ steps.backup.outputs.BACKUP_NAME }}"
 
   prepare_instance:
     runs-on: ubuntu-22.04
@@ -258,10 +262,7 @@ jobs:
           E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-        run: |
-          echo "Running tests on: $API_URI"
-          echo "Base url $BASE_URL"
-          npx playwright test --shard ${{ matrix.shard }}
+        run: npx playwright test --shard ${{ matrix.shard }}
 
       - name: Upload blob report to GitHub Actions Artifacts
         uses: actions/upload-artifact@v3
@@ -272,7 +273,7 @@ jobs:
           retention-days: 1
 
   merge-reports:
-    if: always()
+    if: '!cancelled()'
     needs: [run-tests]
 
     runs-on: ubuntu-latest
