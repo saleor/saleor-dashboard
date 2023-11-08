@@ -13,7 +13,6 @@ interface VoucherInfoProps {
   data: VoucherDetailsPageFormData;
   errors: DiscountErrorFragment[];
   disabled: boolean;
-  variant: "create" | "update";
   onChange: (event: any) => void;
 }
 
@@ -21,7 +20,6 @@ const VoucherInfo = ({
   data,
   disabled,
   errors,
-  variant,
   onChange,
 }: VoucherInfoProps) => {
   const intl = useIntl();
@@ -36,7 +34,7 @@ const VoucherInfo = ({
       <DashboardCard.Content>
         <Input
           size="small"
-          disabled={variant === "update" || disabled}
+          disabled={disabled}
           error={!!formErrors.name}
           helperText={getDiscountErrorMessage(formErrors.name, intl)}
           name={"name" as keyof VoucherDetailsPageFormData}

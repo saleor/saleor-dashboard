@@ -250,7 +250,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 disabled={disabled}
                 errors={errors}
                 onChange={change}
-                variant="update"
               />
               <VoucherCodes
                 selectedCodesIds={selectedVoucherCodesIds}

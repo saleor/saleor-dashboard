@@ -143,7 +143,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             errors={errors}
             disabled={disabled}
             onChange={event => handleDiscountTypeChange(data, event)}
-            variant="create"
           />
           <VoucherCodes
             codes={paginatedCodes}
