@@ -23,7 +23,7 @@ export const vouchersListStaticColumnsAdapter = (
   [
     {
       id: "code",
-      title: intl.formatMessage(columnsMessages.code),
+      title: intl.formatMessage(columnsMessages.voucher),
       width: 350,
     },
     {

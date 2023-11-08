@@ -151,7 +151,7 @@ describe("VoucherCodes", () => {
     expect(await screen.findByRole("dialog")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        /are you sure you want to delete this voucher code?/i,
+        /are you sure you want to delete these voucher codes?/i,
       ),
     ).toBeInTheDocument();
 

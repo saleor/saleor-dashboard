@@ -1531,6 +1531,9 @@
     "context": "tile view pagination label",
     "string": "No. of products"
   },
+  "9BvYb9": {
+    "string": "Voucher"
+  },
   "9C7PZE": {
     "context": "navigation section name",
     "string": "Navigation"
@@ -3144,10 +3147,6 @@
   },
   "JqiqNj": {
     "string": "Something went wrong"
-  },
-  "JsPIOX": {
-    "context": "voucher code",
-    "string": "Code"
   },
   "Jsh6+U": {
     "context": "product type is digital or physical",
