@@ -35,6 +35,7 @@ export function createUpdateHandler(
       updateVoucher({
         id,
         input: {
+          name: formData.name,
           applyOncePerCustomer: formData.applyOncePerCustomer,
           applyOncePerOrder: formData.applyOncePerOrder,
           onlyForStaff: formData.onlyForStaff,
