@@ -18,7 +18,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { translateVoucherTypes } from "../../translations";
-import useStyles from "./styles";
 
 export interface VoucherSummaryProps extends ChannelProps {
   voucher: VoucherDetailsFragment;
@@ -29,7 +28,6 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
   voucher,
 }) => {
   const intl = useIntl();
-  const classes = useStyles();
 
   const translatedVoucherTypes = translateVoucherTypes(intl);
   const channel = voucher?.channelListings?.find(
@@ -40,18 +38,6 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
     <Card>
       <CardTitle title={intl.formatMessage(commonMessages.summary)} />
       <CardContent>
-        <Typography variant="caption">
-          <FormattedMessage
-            id="JsPIOX"
-            defaultMessage="Code"
-            description="voucher code"
-          />
-        </Typography>
-        <Typography className={classes.ellipsis}>
-          {maybe<React.ReactNode>(() => voucher.code, <Skeleton />)}
-        </Typography>
-        <FormSpacer />
-
         <Typography variant="caption">
           <FormattedMessage
             id="bcf60I"
