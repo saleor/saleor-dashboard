@@ -19,6 +19,7 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { DiscountCatalog } from "../DiscountCatalog";
 import DiscountDates from "../DiscountDates";
 import { ChannelSaleFormData } from "../SaleDetailsPage";
 import SaleInfo from "../SaleInfo";
@@ -110,6 +111,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
               })}
             />
             <DetailPageLayout.Content>
+              <DiscountCatalog />
               <SaleInfo
                 data={data}
                 disabled={disabled}
