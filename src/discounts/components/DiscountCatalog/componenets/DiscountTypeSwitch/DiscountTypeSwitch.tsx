@@ -4,7 +4,7 @@ import React from "react";
 type DiscountType = "fixed" | "percentage";
 interface DiscountTypeSwitchProps {
   selected: DiscountType;
-  onChange: (type: DiscountType) => void;
+  onChange: (type: string) => void;
 }
 
 export const DiscountTypeSwitch = ({
