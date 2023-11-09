@@ -11,7 +11,6 @@ import {
 } from "@dashboard/discounts/handlers";
 import { voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
-import { useFlag } from "@dashboard/featureFlags";
 import { DiscountErrorFragment, PermissionEnum } from "@dashboard/graphql";
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -33,7 +32,7 @@ import VoucherValue from "../VoucherValue";
 import { initialForm } from "./const";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
-import { generateMultipleIds } from "./utils";
+import { generateMultipleIds, voucherCodeExists } from "./utils";
 
 export interface FormData extends VoucherDetailsPageFormData {
   value: number;
@@ -62,8 +61,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
-  const voucherCodesFlag = useFlag("voucher_codes");
 
   const { makeChangeHandler: makeMetadataChangeHandler } =
     useMetadataChangeTrigger();
@@ -103,6 +100,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     prefix,
   }: GenerateMultipleVoucherCodeFormData) => {
     clearRowSelection();
+    triggerChange(true);
     set({
       codes: [...generateMultipleIds(quantity, prefix), ...data.codes],
     });
@@ -116,6 +114,10 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   };
 
   const handleGenerateCustomCode = (code: string) => {
+    if (voucherCodeExists(code, data.codes)) {
+      throw new Error("Code already exists");
+    }
+    triggerChange(true);
     set({
       codes: [{ code }, ...data.codes],
     });
@@ -141,21 +143,18 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             errors={errors}
             disabled={disabled}
             onChange={event => handleDiscountTypeChange(data, event)}
-            variant="create"
           />
-          {voucherCodesFlag.enabled && (
-            <VoucherCodes
-              codes={paginatedCodes}
-              onDeleteCodes={handleDeleteVoucherCodes}
-              onMultiCodesGenerate={handleGenerateMultipleCodes}
-              onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
-              onSettingsChange={onSettingsChange}
-              onCustomCodeGenerate={handleGenerateCustomCode}
-              selectedCodesIds={selectedRowIds}
-              settings={settings}
-              voucherCodesPagination={pagination}
-            />
-          )}
+          <VoucherCodes
+            codes={paginatedCodes}
+            onDeleteCodes={handleDeleteVoucherCodes}
+            onMultiCodesGenerate={handleGenerateMultipleCodes}
+            onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
+            onSettingsChange={onSettingsChange}
+            onCustomCodeGenerate={handleGenerateCustomCode}
+            selectedCodesIds={selectedRowIds}
+            settings={settings}
+            voucherCodesPagination={pagination}
+          />
           <VoucherTypes
             data={data}
             disabled={disabled}

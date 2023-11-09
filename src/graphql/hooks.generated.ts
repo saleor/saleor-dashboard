@@ -521,11 +521,17 @@ export const SaleDetailsFragmentDoc = gql`
     ${SaleFragmentDoc}
 ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
+export const VoucherCodeFragmentDoc = gql`
+    fragment VoucherCode on VoucherCode {
+  code
+  used
+  isActive
+}
+    `;
 export const VoucherFragmentDoc = gql`
     fragment Voucher on Voucher {
   ...Metadata
   id
-  code
   name
   startDate
   endDate
@@ -556,12 +562,12 @@ export const VoucherFragmentDoc = gql`
 export const VoucherDetailsFragmentDoc = gql`
     fragment VoucherDetails on Voucher {
   ...Voucher
-  code
   usageLimit
   used
   applyOncePerOrder
   applyOncePerCustomer
   onlyForStaff
+  singleUse
   productsCount: products {
     totalCount
   }
@@ -7482,6 +7488,7 @@ export const VoucherUpdateDocument = gql`
   voucherUpdate(id: $id, input: $input) {
     errors {
       ...DiscountError
+      voucherCodes
     }
     voucher {
       ...Voucher
@@ -7616,6 +7623,7 @@ export const VoucherCreateDocument = gql`
   voucherCreate(input: $input) {
     errors {
       ...DiscountError
+      voucherCodes
     }
     voucher {
       ...Voucher
@@ -7655,6 +7663,7 @@ export const VoucherDeleteDocument = gql`
   voucherDelete(id: $id) {
     errors {
       ...DiscountError
+      voucherCodes
     }
   }
 }
@@ -7919,6 +7928,55 @@ export function useVoucherDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type VoucherDetailsQueryHookResult = ReturnType<typeof useVoucherDetailsQuery>;
 export type VoucherDetailsLazyQueryHookResult = ReturnType<typeof useVoucherDetailsLazyQuery>;
 export type VoucherDetailsQueryResult = Apollo.QueryResult<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>;
+export const VoucherCodesDocument = gql`
+    query VoucherCodes($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+  voucher(id: $id) {
+    codes(first: $first, last: $last, before: $before, after: $after) {
+      edges {
+        node {
+          ...VoucherCode
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+}
+    ${VoucherCodeFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useVoucherCodesQuery__
+ *
+ * To run a query within a React component, call `useVoucherCodesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVoucherCodesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVoucherCodesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *   },
+ * });
+ */
+export function useVoucherCodesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>(VoucherCodesDocument, options);
+      }
+export function useVoucherCodesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>(VoucherCodesDocument, options);
+        }
+export type VoucherCodesQueryHookResult = ReturnType<typeof useVoucherCodesQuery>;
+export type VoucherCodesLazyQueryHookResult = ReturnType<typeof useVoucherCodesLazyQuery>;
+export type VoucherCodesQueryResult = Apollo.QueryResult<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {

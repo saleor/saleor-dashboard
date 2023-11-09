@@ -18,8 +18,9 @@ import {
 } from "../VoucherCodesGenerateDialog";
 import { VoucherCodesManualDialog } from "../VoucherCodesManualDialog";
 import { VoucherCodesUrlDialog } from "./types";
+import { hasSavedVoucherCodesToDelete } from "./utils";
 
-interface VoucherCodesProps extends VoucherCodesDatagridProps {
+export interface VoucherCodesProps extends VoucherCodesDatagridProps {
   selectedCodesIds: string[];
   voucherCodesPagination: LocalPagination;
   settings: UseListSettings["settings"];
@@ -43,6 +44,11 @@ export const VoucherCodes = ({
     null,
   );
 
+  const hasSavedCodesToDelete = hasSavedVoucherCodesToDelete(
+    selectedCodesIds,
+    datagridProps.codes,
+  );
+
   const closeModal = () => {
     setOpenModal(null);
   };
@@ -63,8 +69,18 @@ export const VoucherCodes = ({
           </Text>
           <Box display="flex" gap={3}>
             {selectedCodesIds.length > 0 && (
-              <BulkDeleteButton onClick={() => setOpenModal("delete-codes")}>
-                <FormattedMessage defaultMessage="Delete codes" id="UJ97Lb" />
+              <BulkDeleteButton
+                disabled={hasSavedCodesToDelete}
+                onClick={() => setOpenModal("delete-codes")}
+              >
+                {hasSavedCodesToDelete ? (
+                  <FormattedMessage
+                    defaultMessage="Can't delete saved codes"
+                    id="4gJAm6"
+                  />
+                ) : (
+                  <FormattedMessage defaultMessage="Delete codes" id="UJ97Lb" />
+                )}
               </BulkDeleteButton>
             )}
             <VoucherCodesAddButton
