@@ -4,6 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { AddButton } from "./componenets/AddButton";
+import { Rule } from "./componenets/Rule";
 import { messages } from "./messages";
 
 export const DiscountCatalog = () => {
@@ -17,7 +18,12 @@ export const DiscountCatalog = () => {
           <AddButton onCatalogClick={() => {}} />
         </Box>
       </DashboardCard.Title>
-      <DashboardCard.Content>Test</DashboardCard.Content>
+      <DashboardCard.Content>
+        <Box display="flex" flexDirection="column" gap={6}>
+          <Rule rule={{ name: "test1", id: "2", description: "" }} />
+          <Rule rule={{ name: "test1", id: "2", description: "" }} />
+        </Box>
+      </DashboardCard.Content>
     </DashboardCard>
   );
 };
