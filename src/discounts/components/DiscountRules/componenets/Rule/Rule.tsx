@@ -1,10 +1,10 @@
 import { Accordion, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 
-import { Rule as RuleType } from "../../types";
+import { DiscountRule } from "../../types";
 
 interface RuleProps {
-  rule: RuleType;
+  rule: DiscountRule;
 }
 
 const AccordionItemId = "ruleItem";

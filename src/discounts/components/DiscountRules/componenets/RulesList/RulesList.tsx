@@ -1,15 +1,15 @@
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { Rule as RuleType } from "../../types";
+import { DiscountRule } from "../../types";
 import { Placeholder } from "../Placeholder";
 import { Rule } from "../Rule";
 
-interface CatalogRulesProps {
-  rules: RuleType[];
+interface RulesListProps {
+  rules: DiscountRule[];
 }
 
-export const CatalogRules = ({ rules }: CatalogRulesProps) => {
+export const RulesList = ({ rules }: RulesListProps) => {
   if (rules.length === 0) {
     return <Placeholder />;
   }

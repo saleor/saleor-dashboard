@@ -2,7 +2,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { DiscountCatalog } from "./DiscountCatalog";
+import { DiscountRules } from "./DiscountRules";
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
@@ -11,10 +11,10 @@ jest.mock("react-intl", () => ({
   defineMessages: jest.fn(x => x),
 }));
 
-describe("DiscountCatalog", () => {
+describe("DiscountRules", () => {
   it("should render placeholder when no rules", () => {
     // Arrange & Act
-    render(<DiscountCatalog rules={[]} onRuleAdd={jest.fn()} />);
+    render(<DiscountRules rules={[]} onRuleAdd={jest.fn()} />);
 
     // Assert
     expect(
@@ -25,7 +25,7 @@ describe("DiscountCatalog", () => {
   it("should render discount rules", () => {
     // Arrange & Act
     render(
-      <DiscountCatalog
+      <DiscountRules
         rules={[
           {
             id: "Catalog rule 2",
@@ -44,7 +44,7 @@ describe("DiscountCatalog", () => {
   it("should fire callback when user whant to add new rule", async () => {
     // Arrange
     const onRuleAdd = jest.fn();
-    render(<DiscountCatalog rules={[]} onRuleAdd={onRuleAdd} />);
+    render(<DiscountRules rules={[]} onRuleAdd={onRuleAdd} />);
 
     // Act
     await act(() => {

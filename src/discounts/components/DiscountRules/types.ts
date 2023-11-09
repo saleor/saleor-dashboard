@@ -1,4 +1,4 @@
-export interface Rule {
+export interface DiscountRule {
   id: string;
   name: string;
   description: string;

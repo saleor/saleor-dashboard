@@ -4,16 +4,16 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { AddButton } from "./componenets/AddButton";
-import { CatalogRules } from "./componenets/CatalogRules";
+import { RulesList } from "./componenets/RulesList";
 import { messages } from "./messages";
-import { Rule as RuleType } from "./types";
+import { DiscountRule } from "./types";
 
-interface DiscountCatalogProps {
-  rules: RuleType[];
+interface DiscountRulesProps {
+  rules: DiscountRule[];
   onRuleAdd: () => void;
 }
 
-export const DiscountCatalog = ({ onRuleAdd, rules }: DiscountCatalogProps) => {
+export const DiscountRules = ({ onRuleAdd, rules }: DiscountRulesProps) => {
   const intl = useIntl();
 
   return (
@@ -25,7 +25,7 @@ export const DiscountCatalog = ({ onRuleAdd, rules }: DiscountCatalogProps) => {
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <CatalogRules rules={rules} />
+        <RulesList rules={rules} />
       </DashboardCard.Content>
     </DashboardCard>
   );
