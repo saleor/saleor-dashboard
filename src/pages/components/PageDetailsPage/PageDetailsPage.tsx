@@ -249,6 +249,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   assignReferencesAttributeId,
                   data.attributes,
                 )}
+                attribute={data.attributes.find(
+                  ({ id }) => id === assignReferencesAttributeId,
+                )}
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}
