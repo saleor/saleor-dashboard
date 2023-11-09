@@ -169,6 +169,7 @@
       "TransactionRefundRequested",
       "TranslationCreated",
       "TranslationUpdated",
+      "VoucherCodeExportCompleted",
       "VoucherCreated",
       "VoucherDeleted",
       "VoucherMetadataUpdated",

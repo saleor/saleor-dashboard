@@ -7314,6 +7314,13 @@ type DiscountError {
 
   """List of products IDs which causes the error."""
   products: [ID!]
+
+  """
+  List of voucher codes which causes the error.
+  
+  Added in Saleor 3.18.
+  """
+  voucherCodes: [String!]
 }
 
 """An enumeration."""
@@ -7326,6 +7333,7 @@ enum DiscountErrorCode {
   NOT_FOUND
   REQUIRED
   UNIQUE
+  VOUCHER_ALREADY_USED
 }
 
 enum DiscountStatusEnum {
@@ -7441,6 +7449,13 @@ input DraftOrderCreateInput {
 
   """ID of the voucher associated with the order."""
   voucher: ID
+
+  """
+  A code of the voucher associated with the order.
+  
+  Added in Saleor 3.18.
+  """
+  voucherCode: String
 }
 
 """
@@ -7537,6 +7552,13 @@ input DraftOrderInput {
 
   """ID of the voucher associated with the order."""
   voucher: ID
+
+  """
+  A code of the voucher associated with the order.
+  
+  Added in Saleor 3.18.
+  """
+  voucherCode: String
 }
 
 """
@@ -7985,6 +8007,40 @@ enum ExportScope {
 
   """Export products with given ids."""
   IDS
+}
+
+"""
+Export voucher codes to csv/xlsx file.
+
+Added in Saleor 3.18.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- VOUCHER_CODE_EXPORT_COMPLETED (async): A notification for the exported file.
+"""
+type ExportVoucherCodes {
+  errors: [ExportError!]!
+
+  """
+  The newly created export file job which is responsible for export data.
+  """
+  exportFile: ExportFile
+}
+
+input ExportVoucherCodesInput {
+  """Type of exported file."""
+  fileType: FileTypesEnum!
+
+  """List of voucher code IDs to export."""
+  ids: [ID!]
+
+  """
+  The ID of the voucher. If provided, exports all codes belonging to the voucher.
+  """
+  voucherId: ID
 }
 
 """External authentication plugin."""
@@ -13328,6 +13384,23 @@ type Mutation {
     input: ExportProductsInput!
   ): ExportProducts
 
+  """
+  Export voucher codes to csv/xlsx file.
+  
+  Added in Saleor 3.18.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - VOUCHER_CODE_EXPORT_COMPLETED (async): A notification for the exported file.
+  """
+  exportVoucherCodes(
+    """Fields required to export voucher codes."""
+    input: ExportVoucherCodesInput!
+  ): ExportVoucherCodes
+
   """Prepare external authentication URL for user by custom plugin."""
   externalAuthenticationUrl(
     """The data required by plugin to create external authentication url."""
@@ -16415,6 +16488,21 @@ type Mutation {
   ): VoucherChannelListingUpdate
 
   """
+  Deletes voucher codes.
+  
+  Added in Saleor 3.18. 
+  
+  Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - VOUCHER_UPDATED (async): A voucher was updated.
+  """
+  voucherCodeBulkDelete(
+    """List of voucher codes IDs to delete."""
+    ids: [ID!]!
+  ): VoucherCodeBulkDelete
+
+  """
   Creates a new voucher. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
@@ -16968,6 +17056,13 @@ type Order implements Node & ObjectWithMetadata {
   """
   userEmail: String
   voucher: Voucher
+
+  """
+  Voucher code that was used for Order.
+  
+  Added in Saleor 3.18.
+  """
+  voucherCode: String
   weight: Weight!
 }
 
@@ -17229,8 +17324,19 @@ input OrderBulkCreateInput {
   """Customer associated with the order."""
   user: OrderBulkCreateUserInput!
 
-  """Code of a voucher associated with the order."""
+  """
+  Code of a voucher associated with the order.
+  
+  DEPRECATED: this field will be removed in Saleor 3.19. Use `voucherCode` instead.
+  """
   voucher: String
+
+  """
+  Code of a voucher associated with the order.
+  
+  Added in Saleor 3.18.
+  """
+  voucherCode: String
 
   """Weight of the order in kg."""
   weight: WeightScalar
@@ -17739,6 +17845,8 @@ enum OrderErrorCode {
   INSUFFICIENT_STOCK
   INVALID
   INVALID_QUANTITY
+  INVALID_VOUCHER
+  INVALID_VOUCHER_CODE
   NOT_AVAILABLE_IN_CHANNEL
   NOT_EDITABLE
   NOT_FOUND
@@ -32799,8 +32907,31 @@ type Voucher implements Node & ObjectWithMetadata {
   """
   channelListings: [VoucherChannelListing!]
 
-  """The code of the voucher."""
-  code: String!
+  """The code of the voucher.This field will be removed in Saleor 4.0."""
+  code: String
+
+  """
+  List of codes available for this voucher.
+  
+  Added in Saleor 3.18.
+  """
+  codes(
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): VoucherCodeCountableConnection
 
   """
   List of collections this voucher applies to.
@@ -32915,6 +33046,15 @@ type Voucher implements Node & ObjectWithMetadata {
     """
     last: Int
   ): ProductCountableConnection
+
+  """
+  Determine if the voucher codes can be used once or multiple times.
+  
+  Added in Saleor 3.18.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  singleUse: Boolean!
 
   """The start date and time of voucher."""
   startDate: DateTime!
@@ -33044,6 +33184,109 @@ type VoucherChannelListingUpdate {
   voucher: Voucher
 }
 
+"""
+Represents voucher code.
+
+Added in Saleor 3.18.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type VoucherCode {
+  """Code to use the voucher."""
+  code: String
+
+  """Date time of code creation."""
+  createdAt: DateTime!
+
+  """The ID of the voucher code."""
+  id: ID!
+
+  """Whether a code is active or not."""
+  isActive: Boolean
+
+  """Number of times a code has been used."""
+  used: Int
+}
+
+"""
+Deletes voucher codes.
+
+Added in Saleor 3.18. 
+
+Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- VOUCHER_UPDATED (async): A voucher was updated.
+"""
+type VoucherCodeBulkDelete {
+  """Returns how many codes were deleted."""
+  count: Int!
+  errors: [VoucherCodeBulkDeleteError!]!
+}
+
+type VoucherCodeBulkDeleteError {
+  """The error code."""
+  code: VoucherCodeBulkDeleteErrorCode!
+
+  """The error message."""
+  message: String
+
+  """
+  Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  path: String
+
+  """List of voucher codes which causes the error."""
+  voucherCodes: [ID!]
+}
+
+"""An enumeration."""
+enum VoucherCodeBulkDeleteErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+}
+
+type VoucherCodeCountableConnection {
+  edges: [VoucherCodeCountableEdge!]!
+
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """A total count of items in the collection."""
+  totalCount: Int
+}
+
+type VoucherCodeCountableEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: VoucherCode!
+}
+
+"""
+Event sent when voucher code export is completed.
+
+Added in Saleor 3.18.
+"""
+type VoucherCodeExportCompleted implements Event {
+  """The export file for voucher codes."""
+  export: ExportFile
+
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+}
+
 type VoucherCountableConnection {
   edges: [VoucherCountableEdge!]!
 
@@ -33157,6 +33400,15 @@ input VoucherFilterInput {
 }
 
 input VoucherInput {
+  """
+  List of codes to add.
+  
+  Added in Saleor 3.18.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addCodes: [String!]
+
   """Voucher should be applied once per customer."""
   applyOncePerCustomer: Boolean
 
@@ -33166,7 +33418,9 @@ input VoucherInput {
   """Categories discounted by the voucher."""
   categories: [ID!]
 
-  """Code to use the voucher."""
+  """
+  Code to use the voucher. This field will be removed in Saleor 4.0. Use `addCodes` instead.
+  """
   code: String
 
   """Collections discounted by the voucher."""
@@ -33192,6 +33446,17 @@ input VoucherInput {
 
   """Products discounted by the voucher."""
   products: [ID!]
+
+  """
+  When set to 'True', each voucher code can be used only once; otherwise, codes can be used multiple times depending on `usageLimit`.
+  
+  The option can only be changed if none of the voucher codes have been used.
+  
+  Added in Saleor 3.18.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  singleUse: Boolean
 
   """Start date of the voucher in ISO 8601 format."""
   startDate: DateTime
@@ -33252,7 +33517,11 @@ type VoucherRemoveCatalogues {
 }
 
 enum VoucherSortField {
-  """Sort vouchers by code."""
+  """
+  Sort vouchers by code.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.
+  """
   CODE
 
   """Sort vouchers by end date."""
@@ -33264,6 +33533,13 @@ enum VoucherSortField {
   This option requires a channel filter to work as the values can vary between channels.
   """
   MINIMUM_SPENT_AMOUNT
+
+  """
+  Sort vouchers by name.
+  
+  Added in Saleor 3.18.
+  """
+  NAME
 
   """Sort vouchers by start date."""
   START_DATE
@@ -34504,6 +34780,13 @@ enum WebhookEventTypeAsyncEnum {
   """A translation is updated."""
   TRANSLATION_UPDATED
 
+  """
+  A voucher code export is completed.
+  
+  Added in Saleor 3.18.
+  """
+  VOUCHER_CODE_EXPORT_COMPLETED
+
   """A new voucher created."""
   VOUCHER_CREATED
 
@@ -35119,6 +35402,13 @@ enum WebhookEventTypeEnum {
   """A translation is updated."""
   TRANSLATION_UPDATED
 
+  """
+  A voucher code export is completed.
+  
+  Added in Saleor 3.18.
+  """
+  VOUCHER_CODE_EXPORT_COMPLETED
+
   """A new voucher created."""
   VOUCHER_CREATED
 
@@ -35366,6 +35656,7 @@ enum WebhookSampleEventTypeEnum {
   TRANSACTION_ITEM_METADATA_UPDATED
   TRANSLATION_CREATED
   TRANSLATION_UPDATED
+  VOUCHER_CODE_EXPORT_COMPLETED
   VOUCHER_CREATED
   VOUCHER_DELETED
   VOUCHER_METADATA_UPDATED
