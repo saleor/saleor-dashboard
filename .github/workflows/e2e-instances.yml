@@ -20,18 +20,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ./.github/actions
 
       - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
+        uses: rlespinasse/github-slug-action@102b1a064a9b145e56556e22b18b19c624538d94
 
       - name: Generate
         id: generate
         run: |
-          echo "BASE_URL=${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
-          echo "API_URI=https://${{ env.GITHUB_HEAD_REF_SLUG_URL }}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
-          echo "POOL_NAME=${{ env.GITHUB_HEAD_REF_SLUG_URL }}" >> $GITHUB_OUTPUT
-          echo "POOL_INSTANCE=https://${{ env.GITHUB_HEAD_REF_SLUG_URL }}.staging.saleor.cloud" >> $GITHUB_OUTPUT
-
+          echo "BASE_URL=${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+          echo "API_URI=https://${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+      
       - name: Saleor login
         uses: ./.github/actions/cli-login
         with:
@@ -44,9 +46,9 @@ jobs:
           BACKUP_NAME: snapshot-automation-tests
         run: |
           BACKUPS=$(npx saleor backup list --name=snapshot-automation-tests --latest --json)
-          BACKUP_ID=$(echo $BACKUPS | jq -r '.[0].key')
-          BACKUP_VER=$(echo $BACKUPS | jq -r '.[0].saleor_version')
-          BACKUP_NAME=$(echo $BACKUPS | jq -r '.[0].name')
+          BACKUP_ID=$(echo "$BACKUPS" | jq -r '.[0].key')
+          BACKUP_VER=$(echo "$BACKUPS" | jq -r '.[0].saleor_version')
+          BACKUP_NAME=$(echo "$BACKUPS" | jq -r '.[0].name')
 
           echo "BACKUP_ID=$BACKUP_ID" >> $GITHUB_OUTPUT
           echo "BACKUP_VER=$BACKUP_VER" >> $GITHUB_OUTPUT
@@ -65,9 +67,11 @@ jobs:
     needs: prepare_variables
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ./.github/actions
 
       - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
+        uses: rlespinasse/github-slug-action@102b1a064a9b145e56556e22b18b19c624538d94
 
       - name: Saleor login
         uses: ./.github/actions/cli-login
@@ -81,8 +85,8 @@ jobs:
           BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
-          npx saleor backup restore "${{ env.BACKUP_ID }}" \
-            --environment="${{ env.INSTANCE_NAME }}" \
+          npx saleor backup restore "$BACKUP_ID" \
+            --environment="$INSTANCE_NAME" \
             --skip-webhooks-update
 
       - name: Create new instance
@@ -92,15 +96,14 @@ jobs:
           BACKUP_ID:  ${{ needs.prepare_variables.outputs.BACKUP_ID }}
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
-          npx saleor env create "${{ env.INSTANCE_NAME }}" \
+          npx saleor env create "$INSTANCE_NAME" \
             --project=project-for-pr-testing \
             --database=snapshot \
-            --restore-from=${{ env.BACKUP_ID }}  \
+            --restore-from="$BACKUP_ID" \
             --saleor=saleor-master-staging \
-            --domain="${{ env.INSTANCE_NAME }}" \
+            --domain="$INSTANCE_NAME" \
             --skip-restrict \
             --skip-webhooks-update
-
 
   deploy_dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
@@ -115,7 +118,7 @@ jobs:
           node-version-file: ".nvmrc"
 
       - name: Start deployment
-        uses: bobheadxi/deployments@v1
+        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
         id: deployment
         with:
           step: start
@@ -138,7 +141,7 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      - name: Build dashbaord
+      - name: Build dashboard
         env:
           API_URI: ${{ needs.prepare_variables.outputs.API_URI }}
           APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
@@ -155,13 +158,19 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Deploy to S3
-        run: aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ needs.prepare_variables.outputs.BASE_URL  }}
-
+        env:
+          AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
+          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
+        run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}"
+      
       - name: Invalidate cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ needs.prepare_variables.outputs.BASE_URL  }}/*"
+        env:
+          AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
+          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
+        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL}/*"
 
       - name: Update deployment status
-        uses: bobheadxi/deployments@v1
+        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
         if: always()
         with:
           step: finish
@@ -185,7 +194,7 @@ jobs:
           node-version-file: ".nvmrc"
 
       - name: Start storybook deployment
-        uses: bobheadxi/deployments@v1
+        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
         id: storybook-deployment
         with:
           step: start
@@ -219,13 +228,19 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Deploy to S3
-        run: aws s3 sync ./build/storybook s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ needs.prepare_variables.outputs.BASE_URL  }}/storybook
-
+        env:
+          AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
+          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
+        run: aws s3 sync ./build/storybook "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}/storybook"
+      
       - name: Invalidate cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ needs.prepare_variables.outputs.BASE_URL  }}/*"
+        env:
+          AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
+          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
+        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL}/*"
 
       - name: Update storybook deployment status
-        uses: bobheadxi/deployments@v1
+        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
         if: always()
         with:
           step: finish
