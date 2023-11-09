@@ -1,22 +1,29 @@
 import { gql } from "@apollo/client";
 
 export const homeAnalitics = gql`
-  query HomeAnalitics($channel: String!, $datePeriod: DateRangeInput!) {
-    salesToday: ordersTotal(period: TODAY, channel: $channel) {
+  query HomeAnalitics(
+    $channel: String!
+    $datePeriod: DateRangeInput!
+    $hasPermissionToManageOrders: Boolean!
+  ) {
+    salesToday: ordersTotal(period: TODAY, channel: $channel)
+      @include(if: $hasPermissionToManageOrders) {
       gross {
         amount
         currency
       }
     }
-    ordersToday: orders(filter: { created: $datePeriod }, channel: $channel) {
+    ordersToday: orders(filter: { created: $datePeriod }, channel: $channel)
+      @include(if: $hasPermissionToManageOrders) {
       totalCount
     }
   }
 `;
 
 export const homeActivities = gql`
-  query HomeActivities {
-    activities: homepageEvents(last: 10) {
+  query HomeActivities($hasPermissionToManageOrders: Boolean!) {
+    activities: homepageEvents(last: 10)
+      @include(if: $hasPermissionToManageOrders) {
       edges {
         node {
           amount
@@ -41,12 +48,15 @@ export const homeActivities = gql`
 `;
 
 export const homeTopProducts = gql`
-  query HomeTopProducts($channel: String!) {
+  query HomeTopProducts(
+    $channel: String!
+    $hasPermissionToManageProducts: Boolean!
+  ) {
     productTopToday: reportProductSales(
       period: TODAY
       first: 5
       channel: $channel
-    ) {
+    ) @include(if: $hasPermissionToManageProducts) {
       edges {
         node {
           id

@@ -8844,14 +8844,14 @@ export type CustomerGiftCardListQueryHookResult = ReturnType<typeof useCustomerG
 export type CustomerGiftCardListLazyQueryHookResult = ReturnType<typeof useCustomerGiftCardListLazyQuery>;
 export type CustomerGiftCardListQueryResult = Apollo.QueryResult<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>;
 export const HomeAnaliticsDocument = gql`
-    query HomeAnalitics($channel: String!, $datePeriod: DateRangeInput!) {
-  salesToday: ordersTotal(period: TODAY, channel: $channel) {
+    query HomeAnalitics($channel: String!, $datePeriod: DateRangeInput!, $hasPermissionToManageOrders: Boolean!) {
+  salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $hasPermissionToManageOrders) {
     gross {
       amount
       currency
     }
   }
-  ordersToday: orders(filter: {created: $datePeriod}, channel: $channel) {
+  ordersToday: orders(filter: {created: $datePeriod}, channel: $channel) @include(if: $hasPermissionToManageOrders) {
     totalCount
   }
 }
@@ -8871,6 +8871,7 @@ export const HomeAnaliticsDocument = gql`
  *   variables: {
  *      channel: // value for 'channel'
  *      datePeriod: // value for 'datePeriod'
+ *      hasPermissionToManageOrders: // value for 'hasPermissionToManageOrders'
  *   },
  * });
  */
@@ -8886,8 +8887,8 @@ export type HomeAnaliticsQueryHookResult = ReturnType<typeof useHomeAnaliticsQue
 export type HomeAnaliticsLazyQueryHookResult = ReturnType<typeof useHomeAnaliticsLazyQuery>;
 export type HomeAnaliticsQueryResult = Apollo.QueryResult<Types.HomeAnaliticsQuery, Types.HomeAnaliticsQueryVariables>;
 export const HomeActivitiesDocument = gql`
-    query HomeActivities {
-  activities: homepageEvents(last: 10) {
+    query HomeActivities($hasPermissionToManageOrders: Boolean!) {
+  activities: homepageEvents(last: 10) @include(if: $hasPermissionToManageOrders) {
     edges {
       node {
         amount
@@ -8923,10 +8924,11 @@ export const HomeActivitiesDocument = gql`
  * @example
  * const { data, loading, error } = useHomeActivitiesQuery({
  *   variables: {
+ *      hasPermissionToManageOrders: // value for 'hasPermissionToManageOrders'
  *   },
  * });
  */
-export function useHomeActivitiesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.HomeActivitiesQuery, Types.HomeActivitiesQueryVariables>) {
+export function useHomeActivitiesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.HomeActivitiesQuery, Types.HomeActivitiesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.HomeActivitiesQuery, Types.HomeActivitiesQueryVariables>(HomeActivitiesDocument, options);
       }
@@ -8938,8 +8940,8 @@ export type HomeActivitiesQueryHookResult = ReturnType<typeof useHomeActivitiesQ
 export type HomeActivitiesLazyQueryHookResult = ReturnType<typeof useHomeActivitiesLazyQuery>;
 export type HomeActivitiesQueryResult = Apollo.QueryResult<Types.HomeActivitiesQuery, Types.HomeActivitiesQueryVariables>;
 export const HomeTopProductsDocument = gql`
-    query HomeTopProducts($channel: String!) {
-  productTopToday: reportProductSales(period: TODAY, first: 5, channel: $channel) {
+    query HomeTopProducts($channel: String!, $hasPermissionToManageProducts: Boolean!) {
+  productTopToday: reportProductSales(period: TODAY, first: 5, channel: $channel) @include(if: $hasPermissionToManageProducts) {
     edges {
       node {
         id
@@ -8982,6 +8984,7 @@ export const HomeTopProductsDocument = gql`
  * const { data, loading, error } = useHomeTopProductsQuery({
  *   variables: {
  *      channel: // value for 'channel'
+ *      hasPermissionToManageProducts: // value for 'hasPermissionToManageProducts'
  *   },
  * });
  */

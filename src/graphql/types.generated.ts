@@ -10280,18 +10280,22 @@ export type CustomerGiftCardListQuery = { __typename: 'Query', giftCards: { __ty
 export type HomeAnaliticsQueryVariables = Exact<{
   channel: Scalars['String'];
   datePeriod: DateRangeInput;
+  hasPermissionToManageOrders: Scalars['Boolean'];
 }>;
 
 
 export type HomeAnaliticsQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null, ordersToday: { __typename: 'OrderCountableConnection', totalCount: number | null } | null };
 
-export type HomeActivitiesQueryVariables = Exact<{ [key: string]: never; }>;
+export type HomeActivitiesQueryVariables = Exact<{
+  hasPermissionToManageOrders: Scalars['Boolean'];
+}>;
 
 
 export type HomeActivitiesQuery = { __typename: 'Query', activities: { __typename: 'OrderEventCountableConnection', edges: Array<{ __typename: 'OrderEventCountableEdge', node: { __typename: 'OrderEvent', amount: number | null, composedId: string | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, id: string, message: string | null, orderNumber: string | null, oversoldItems: Array<string> | null, quantity: number | null, type: OrderEventsEnum | null, user: { __typename: 'User', id: string, email: string } | null } }> } | null };
 
 export type HomeTopProductsQueryVariables = Exact<{
   channel: Scalars['String'];
+  hasPermissionToManageProducts: Scalars['Boolean'];
 }>;
 
 

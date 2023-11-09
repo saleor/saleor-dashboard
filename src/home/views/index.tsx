@@ -39,7 +39,10 @@ const HomeSection = () => {
     loading: homeActivitiesLoading,
     error: homeActivitiesError,
   } = useHomeActivitiesQuery({
-    skip: noChannel || !hasPermissionToManageOrders,
+    skip: noChannel,
+    variables: {
+      hasPermissionToManageOrders,
+    },
   });
 
   const {
@@ -47,9 +50,10 @@ const HomeSection = () => {
     loading: homeTopProductsLoading,
     error: homeTopProductsError,
   } = useHomeTopProductsQuery({
-    skip: noChannel || !hasPermissionToManageProducts,
+    skip: noChannel,
     variables: {
       channel: channel?.slug,
+      hasPermissionToManageProducts,
     },
   });
 
@@ -70,10 +74,11 @@ const HomeSection = () => {
     loading: homeAnaliticsLoading,
     error: homeAnaliticsError,
   } = useHomeAnaliticsQuery({
-    skip: noChannel || !hasPermissionToManageOrders,
+    skip: noChannel,
     variables: {
       channel: channel?.slug,
       datePeriod: getDatePeriod(1),
+      hasPermissionToManageOrders,
     },
   });
 
