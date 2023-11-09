@@ -17,4 +17,8 @@ export const messages = defineMessages({
     defaultMessage: "Discount rules for products, collections or categories.",
     id: "ucLtY8",
   },
+  placeholder: {
+    defaultMessage: "Add your first rule to set up a promotion",
+    id: "XtlUj6",
+  },
 });
