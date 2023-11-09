@@ -55,6 +55,7 @@ export const VoucherCodesManualDialog = ({
         </DashboardModal.Title>
         <Box display="grid" gap={3} __width={390}>
           <Input
+            data-test-id="enter-code-input"
             name="code"
             type="text"
             size="small"
@@ -73,6 +74,7 @@ export const VoucherCodesManualDialog = ({
             {intl.formatMessage(buttonMessages.back)}
           </Button>
           <ConfirmButton
+            data-test-id="confirm-button"
             transitionState={confirmButtonTransitionState}
             onClick={handleSubmit}
           >

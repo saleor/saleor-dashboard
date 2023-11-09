@@ -33,7 +33,12 @@ export const SubMenu = ({ menuItems }: SubMenuProps) => {
             borderBottomWidth={1}
             borderColor="neutralPlain"
           >
-            <Text variant="bodyStrong">{title}</Text>
+            <Text
+              data-test-id={String(title).toLowerCase()}
+              variant="bodyStrong"
+            >
+              {title}
+            </Text>
             <Text>{description}</Text>
           </List.Item>
         );
