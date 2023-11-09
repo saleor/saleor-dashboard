@@ -4,10 +4,16 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { AddButton } from "./componenets/AddButton";
-import { Rule } from "./componenets/Rule";
+import { CatalogRules } from "./componenets/CatalogRules";
 import { messages } from "./messages";
+import { Rule as RuleType } from "./types";
 
-export const DiscountCatalog = () => {
+interface DiscountCatalogProps {
+  rules: RuleType[];
+  onRuleAdd: () => void;
+}
+
+export const DiscountCatalog = ({ onRuleAdd, rules }: DiscountCatalogProps) => {
   const intl = useIntl();
 
   return (
@@ -15,14 +21,11 @@ export const DiscountCatalog = () => {
       <DashboardCard.Title>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {intl.formatMessage(messages.title)}
-          <AddButton onCatalogClick={() => {}} />
+          <AddButton onCatalogClick={onRuleAdd} />
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <Box display="flex" flexDirection="column" gap={6}>
-          <Rule rule={{ name: "test1", id: "2", description: "" }} />
-          <Rule rule={{ name: "test1", id: "2", description: "" }} />
-        </Box>
+        <CatalogRules rules={rules} />
       </DashboardCard.Content>
     </DashboardCard>
   );
