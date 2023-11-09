@@ -2600,6 +2600,9 @@
     "context": "webhooks inactive label",
     "string": "Inactive"
   },
+  "GOdq5V": {
+    "string": "Catalog"
+  },
   "GTCg9O": {
     "string": "You must add at least one voucher code"
   },
@@ -5146,6 +5149,9 @@
   "Xtd0AT": {
     "string": "Original String"
   },
+  "XtlUj6": {
+    "string": "Add your first rule to set up a promotion"
+  },
   "Xu4ech": {
     "context": "deactivate app",
     "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app."
@@ -6388,6 +6394,9 @@
     "context": "PluginChannelConfigurationCell channel title",
     "string": "Per channel"
   },
+  "gzM1em": {
+    "string": "Add rule"
+  },
   "h1rPPg": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {attributeName}?"
@@ -6804,6 +6813,9 @@
   "k9hf7F": {
     "context": "total order price",
     "string": "Total"
+  },
+  "kAAlGL": {
+    "string": "Rules"
   },
   "kAPaN6": {
     "context": "empty metadata text",
@@ -8236,6 +8248,9 @@
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
+  },
+  "ucLtY8": {
+    "string": "Discount rules for products, collections or categories."
   },
   "uccjUM": {
     "context": "Dry run objects",
