@@ -173,6 +173,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
             values,
             (value, valueIndex) => (
               <SortableTableRow<"row">
+                data-test-id="attributes-rows"
                 className={!!value ? classes.link : undefined}
                 hover={!!value}
                 onClick={!!value ? () => onValueUpdate(value.id) : undefined}

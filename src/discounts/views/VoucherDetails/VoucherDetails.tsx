@@ -142,12 +142,14 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     voucherCodesSettings,
     selectedVoucherCodesIds,
     addedVoucherCodes,
+    voucherCodesRefetch,
     handleSetSelectedVoucherCodesIds,
     updateVoucherCodesListSettings,
     handleAddVoucherCode,
     handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,
-  } = useVoucherCodes();
+    handleClearAddedVoucherCodes,
+  } = useVoucherCodes({ id });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherUrlDialog,
@@ -200,6 +202,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       if (data.voucherUpdate.errors.length === 0) {
         closeModal();
         notifySaved();
+        handleClearAddedVoucherCodes();
+        voucherCodesRefetch();
       }
     },
   });
@@ -642,7 +646,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             description="dialog content"
             values={{
               voucherCode: (
-                <strong>{maybe(() => data.voucher.code, "...")}</strong>
+                <strong>{maybe(() => data.voucher.name, "...")}</strong>
               ),
             }}
           />

@@ -3,22 +3,15 @@
 
 import faker from "faker";
 
-import {
-  ATTRIBUTES_DETAILS,
-} from "../../../elements/attribute/attributes_details";
+import { ATTRIBUTES_DETAILS } from "../../../elements/attribute/attributes_details";
 import { ATTRIBUTES_LIST } from "../../../elements/attribute/attributes_list";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import {
-  attributeDetailsUrl,
-  urlList,
-} from "../../../fixtures/urlList";
+import { attributeDetailsUrl, urlList } from "../../../fixtures/urlList";
 import {
   createAttribute,
   getAttribute,
 } from "../../../support/api/requests/Attribute";
-import {
-  expectCorrectDataInAttribute,
-} from "../../../support/api/utils/attributes/checkAttributeData";
+import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
 import {
   createAttributeWithInputType,
   fillUpAttributeNameAndCode,
@@ -27,7 +20,7 @@ import {
 describe("As an admin I want to create product attribute", () => {
   const startsWith = "AttrCreate" + Date.now();
   const attributesTypes = [
-    { type: "DROPDOWN", testCase: "SALEOR_0501" },
+    { type: "DROPDOWN", testCase: "SALEOR_0501" }, //  migration in progress - to delete when done
     { type: "MULTISELECT", testCase: "SALEOR_0502" },
     { type: "RICH_TEXT", testCase: "SALEOR_0504" },
     { type: "BOOLEAN", testCase: "SALEOR_0505" },
