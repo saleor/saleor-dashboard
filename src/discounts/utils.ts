@@ -98,7 +98,7 @@ export function getFilteredProductVariants(
 
   return products?.map(suggestedProduct => ({
     ...suggestedProduct,
-    variants: suggestedProduct.variants.filter(
+    variants: suggestedProduct.variants?.filter(
       variant => !excludedVariantsIds.includes(variant.id),
     ),
   }));

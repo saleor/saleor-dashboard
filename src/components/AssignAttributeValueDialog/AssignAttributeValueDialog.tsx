@@ -56,10 +56,12 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
     case AttributeEntityTypeEnum.PAGE:
       return (
         <AssignContainerDialog
-          containers={filteredPages?.map(page => ({
-            id: page.id,
-            name: page.title,
-          }))}
+          containers={
+            filteredPages?.map(page => ({
+              id: page.id,
+              name: page.title,
+            })) ?? []
+          }
           labels={{
             confirmBtn: intl.formatMessage(pagesMessages.confirmBtn),
             label: intl.formatMessage(pagesMessages.searchLabel),
