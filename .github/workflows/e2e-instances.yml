@@ -55,12 +55,20 @@ jobs:
           echo "BACKUP_NAME=$BACKUP_NAME" >> $GITHUB_OUTPUT
 
       - name: Print annotations
+        env:
+          BASE_URL: ${{ steps.generate.outputs.BASE_URL }}
+          API_URI: ${{ steps.generate.outputs.API_URI }}
+          POOL_NAME: ${{ steps.generate.outputs.POOL_NAME }}
+          POOL_INSTANCE: ${{ steps.generate.outputs.POOL_INSTANCE }}
+          BACKUP_ID: ${{ steps.backup.outputs.BACKUP_ID }}
+          BACKUP_VER: ${{ steps.backup.outputs.BACKUP_VER }}
+          BACKUP_NAME: ${{ steps.backup.outputs.BACKUP_NAME }}
         run: |
-          echo "::notice title=BASE_URL::${{ steps.generate.outputs.BASE_URL }}"
-          echo "::notice title=API_URI::${{ steps.generate.outputs.API_URI }}"
-          echo "::notice title=POOL_NAME::${{ steps.generate.outputs.POOL_NAME }}"
-          echo "::notice title=POOL_INSTANCE::${{ steps.generate.outputs.POOL_INSTANCE }}"
-          echo "::notice title=SNAPSHOT::backup_id=${{ steps.backup.outputs.BACKUP_ID }}, version=${{ steps.backup.outputs.BACKUP_VER }}, name=${{ steps.backup.outputs.BACKUP_NAME }}"
+          echo "::notice title=BASE_URL::${BASE_URL}"
+          echo "::notice title=API_URI::${API_URI}"
+          echo "::notice title=POOL_NAME::${POOL_NAME}"
+          echo "::notice title=POOL_INSTANCE::${POOL_INSTANCE}"
+          echo "::notice title=SNAPSHOT::backup_id=${BACKUP_ID}, version=${BACKUP_VER}, name=${BACKUP_NAME}"
 
   prepare_instance:
     runs-on: ubuntu-22.04
@@ -109,6 +117,8 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-22.04
     needs: prepare_variables
+    permissions:
+      deployments: write
     steps:
       - uses: actions/checkout@v4
 
@@ -185,6 +195,8 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-22.04
     needs: prepare_variables
+    permissions:
+      deployments: write
     steps:
       - uses: actions/checkout@v4
 
