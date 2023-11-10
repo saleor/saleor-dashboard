@@ -34,6 +34,7 @@ export const DiscountConditionRow = ({
 
       <Select
         value={"is"}
+        size="small"
         options={[
           {
             value: "is",

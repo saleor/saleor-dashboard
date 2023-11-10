@@ -4,6 +4,7 @@ import { createSortedSaleData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DiscountRules } from "@dashboard/discounts/components/DiscountRules";
 import SaleCreatePage from "@dashboard/discounts/components/SaleCreatePage";
 import { ChannelSaleFormData } from "@dashboard/discounts/components/SaleDetailsPage";
 import {
@@ -117,6 +118,16 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
           toggleAll={toggleAllChannels}
         />
       )}
+      <DiscountRules
+        rules={[
+          {
+            id: "1",
+            name: "Rule 1",
+            description: "Rule 1 description",
+          },
+        ]}
+        onRuleAdd={() => {}}
+      />
       <SaleCreatePage
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}

@@ -4,11 +4,15 @@ import React from "react";
 type DiscountType = "fixed" | "percentage";
 interface DiscountTypeSwitchProps {
   selected: DiscountType;
+  currencySymbol: string;
   onChange: (type: string) => void;
 }
 
+const PERCENT_SYMBOL = "%";
+
 export const DiscountTypeSwitch = ({
   selected,
+  currencySymbol,
   onChange,
 }: DiscountTypeSwitchProps) => {
   return (
@@ -27,7 +31,7 @@ export const DiscountTypeSwitch = ({
           width={9}
           height="100%"
         >
-          <Text>zl</Text>
+          <Text>{currencySymbol}</Text>
         </Box>
       </Switch.Item>
       <Switch.Item id="percentage" value="percentage" marginRight={0.5}>
@@ -38,7 +42,7 @@ export const DiscountTypeSwitch = ({
           width={9}
           height="100%"
         >
-          <Text>%</Text>
+          <Text>{PERCENT_SYMBOL}</Text>
         </Box>
       </Switch.Item>
     </Switch>
