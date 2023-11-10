@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { HomeQuery, OrderEventsEnum } from "@dashboard/graphql";
+import { HomeActivitiesQuery, OrderEventsEnum } from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({
@@ -22,7 +22,7 @@ const messages = defineMessages({
 });
 
 export const getActivityMessage = (
-  activity: HomeQuery["activities"]["edges"][0]["node"],
+  activity: HomeActivitiesQuery["activities"]["edges"][0]["node"],
   intl: IntlShape,
 ) => {
   switch (activity.type) {
