@@ -61,19 +61,16 @@ export const useAnnouncement = <T extends DataTypePlaceholder>({
       if (!previousItem) {
         const nextItem = sortedItems[overIndex + 1];
         announcement = `${activeId} was ${movedVerb} before ${nextItem.id}.`;
+      } else if (projected.depth > previousItem.depth) {
+        announcement = `${activeId} was ${nestedVerb} under ${previousItem.id}.`;
       } else {
-        if (projected.depth > previousItem.depth) {
-          announcement = `${activeId} was ${nestedVerb} under ${previousItem.id}.`;
-        } else {
-          let previousSibling: FlattenedItem<T> | undefined = previousItem;
-          while (previousSibling && projected.depth < previousSibling.depth) {
-            const parentId: UniqueIdentifier | null = previousSibling.parentId;
-            previousSibling = sortedItems.find(({ id }) => id === parentId);
-          }
-
-          if (previousSibling) {
-            announcement = `${activeId} was ${movedVerb} after ${previousSibling.id}.`;
-          }
+        const previousSibling = findPreviousSibling(
+          projected,
+          previousItem,
+          sortedItems,
+        );
+        if (previousSibling) {
+          announcement = `${activeId} was ${movedVerb} after ${previousSibling.id}.`;
         }
       }
 
@@ -101,3 +98,16 @@ export const useAnnouncement = <T extends DataTypePlaceholder>({
 
   return announcements;
 };
+
+function findPreviousSibling<T extends DataTypePlaceholder>(
+  projected: Projected,
+  previousItem: FlattenedItem<T>,
+  sortedItems: Array<FlattenedItem<T>>,
+): FlattenedItem<T> | undefined {
+  let previousSibling: FlattenedItem<T> | undefined = previousItem;
+  while (previousSibling && projected.depth < previousSibling.depth) {
+    const parentId: UniqueIdentifier | null = previousSibling.parentId;
+    previousSibling = sortedItems.find(({ id }) => id === parentId);
+  }
+  return previousSibling;
+}

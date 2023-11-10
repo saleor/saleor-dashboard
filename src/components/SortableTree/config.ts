@@ -1,11 +1,12 @@
 import {
   defaultDropAnimation,
   DropAnimation,
+  MeasuringConfiguration,
   MeasuringStrategy,
 } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 
-export const measuring = {
+export const measuring: MeasuringConfiguration = {
   droppable: {
     strategy: MeasuringStrategy.Always,
   },
