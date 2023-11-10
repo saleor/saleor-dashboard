@@ -1,4 +1,4 @@
-name: Testing
+name: PR cleanup
 
 on:
   pull_request:

@@ -1,4 +1,4 @@
-name: Testing
+name: PR automation
 
 on: [pull_request]
 
