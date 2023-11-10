@@ -214,6 +214,9 @@
     "context": "section description",
     "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
   },
+  "/Fa+RP": {
+    "string": "Couldn't load top products"
+  },
   "/ILyIf": {
     "context": "tax classes menu header",
     "string": "Tax class label"
@@ -240,6 +243,9 @@
   "/TK7QD": {
     "context": "page label",
     "string": "Hidden"
+  },
+  "/U8FUp": {
+    "string": "Couldn't load activities"
   },
   "/V7UOC": {
     "context": "unassign category from sale and save, button",

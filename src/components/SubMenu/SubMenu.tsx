@@ -36,7 +36,12 @@ export const SubMenu = ({ menuItems }: SubMenuProps) => {
           >
             <Box display="flex" gap={3} alignItems="center">
               {icon}
-              <Text variant="bodyStrong">{title}</Text>
+              <Text
+                data-test-id={String(title).toLowerCase()}
+                variant="bodyStrong"
+              >
+                {title}
+              </Text>
             </Box>
             <Text>{description}</Text>
           </List.Item>
