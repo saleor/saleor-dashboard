@@ -1,11 +1,13 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import {
   readonlyTextCell,
-  statusCell,
+  tagsCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
+import { getStatusColor } from "@dashboard/misc";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
+import { ThemeTokensValues } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages, messages } from "./messages";
@@ -30,7 +32,12 @@ export const voucherCodesStaticColumnsAdapter = (intl: IntlShape) => [
 ];
 
 export const createGetCellContent =
-  (voucherCodes: VoucherCode[], columns: AvailableColumn[], intl: IntlShape) =>
+  (
+    voucherCodes: VoucherCode[],
+    columns: AvailableColumn[],
+    intl: IntlShape,
+    themeValues: ThemeTokensValues,
+  ) =>
   ([column, row]: Item): GridCell => {
     const columnId = columns[column]?.id;
     const rowData: VoucherCode | undefined = voucherCodes[row];
@@ -47,11 +54,25 @@ export const createGetCellContent =
           rowData?.used?.toString() ?? PLACEHOLDER,
           false,
         );
-      case "status":
-        return statusCell(
-          getStatus(rowData?.isActive),
-          getStatusMessage(rowData?.isActive, intl),
+      case "status": {
+        const status = getStatus(rowData?.isActive);
+        const statusColor = getStatusColor(status);
+        const statusMessage = getStatusMessage(rowData?.isActive, intl);
+
+        return tagsCell(
+          [
+            {
+              tag: statusMessage,
+              color: getTagCellColor(statusColor, themeValues),
+            },
+          ],
+          [statusMessage],
+          {
+            readonly: true,
+            allowOverlay: false,
+          },
         );
+      }
       default:
         return readonlyTextCell("", false);
     }
@@ -72,4 +93,17 @@ function getStatusMessage(isActive: boolean | undefined, intl: IntlShape) {
   return isActive
     ? intl.formatMessage(messages.active)
     : intl.formatMessage(messages.inactive);
+}
+
+function getTagCellColor(
+  color: string,
+  currentTheme: ThemeTokensValues,
+): string {
+  if (color.startsWith("#")) {
+    return color;
+  }
+
+  return currentTheme.colors.background[
+    color as keyof ThemeTokensValues["colors"]["background"]
+  ];
 }
