@@ -89,10 +89,10 @@ export function getFilteredProductVariants(
 ) {
   const products = mapEdgesToItems(searchProductsOpts?.data?.search);
 
-  if (!data.sale?.variants?.edges) {
+  if (!data?.sale?.variants?.edges) {
     return products;
   }
-  const excludedVariantsIds = data.sale?.variants.edges.map(
+  const excludedVariantsIds = data?.sale?.variants.edges.map(
     variant => variant.node.id,
   );
 
