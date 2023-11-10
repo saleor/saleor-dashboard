@@ -11,7 +11,7 @@ export const initialForm: FormData = {
   applyOncePerOrder: false,
   onlyForStaff: false,
   channelListings: [],
-  code: "",
+  name: "",
   discountType: DiscountTypeEnum.VALUE_FIXED,
   endDate: "",
   endTime: "",

@@ -25,10 +25,11 @@ export function createVoucher({
 }) {
   cy.get(VOUCHERS_SELECTORS.createVoucherButton).click();
   selectChannelInDetailsPages(channelName);
-  cy.get(VOUCHERS_SELECTORS.voucherCodeInput)
-    .type(voucherCode)
-    .get(discountOption)
-    .click();
+  cy.get(VOUCHERS_SELECTORS.voucherCodeAddButton).click();
+  cy.get(VOUCHERS_SELECTORS.manualVoucherItem).click();
+  cy.get(VOUCHERS_SELECTORS.voucherCodeNameInput).type(voucherCode);
+  cy.get(VOUCHERS_SELECTORS.voucherCodeConfirmButton).click();
+  cy.get(discountOption).click();
   if (discountOption !== discountOptions.SHIPPING) {
     cy.get(VOUCHERS_SELECTORS.discountValueInputs).type(voucherValue, {
       force: true,
