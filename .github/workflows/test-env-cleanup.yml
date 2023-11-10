@@ -1,4 +1,4 @@
-name: TEST-ENV-CLEANUP
+name: Testing
 # Remove test instance for closed pull requests
 
 on:
