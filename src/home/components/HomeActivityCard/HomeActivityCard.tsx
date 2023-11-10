@@ -1,8 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
-import Skeleton from "@dashboard/components/Skeleton";
-import { Activities } from "@dashboard/home/types";
-import { Box, List, Text, useTheme } from "@saleor/macaw-ui-next";
+import { Activities, HomeData } from "@dashboard/home/types";
+import { Box, List, Skeleton, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -10,7 +9,7 @@ import { renderCollection } from "../../../misc";
 import { getActivityMessage } from "./activityMessages";
 
 interface HomeActivityCardProps {
-  activities: Activities;
+  activities: HomeData<Activities>;
   testId?: string;
 }
 
@@ -20,20 +19,50 @@ export const HomeActivityCard = ({
 }: HomeActivityCardProps) => {
   const intl = useIntl();
   const { themeValues } = useTheme();
+  const title = intl.formatMessage({
+    id: "BXkF8Z",
+    defaultMessage: "Activity",
+    description: "header",
+  });
+
+  if (activities.hasError) {
+    return (
+      <DashboardCard data-test-id={testId}>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Content>
+          <Text color="textNeutralSubdued">
+            <FormattedMessage
+              id="/U8FUp"
+              defaultMessage="Couldn't load activities"
+            />
+          </Text>
+        </DashboardCard.Content>
+      </DashboardCard>
+    );
+  }
+
+  if (activities.loading) {
+    return (
+      <DashboardCard data-test-id={testId}>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Content>
+          <Box display="flex" flexDirection="column" gap={5}>
+            <Skeleton />
+            <Skeleton __width="80%" />
+            <Skeleton />
+          </Box>
+        </DashboardCard.Content>
+      </DashboardCard>
+    );
+  }
 
   return (
     <DashboardCard data-test-id={testId}>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "BXkF8Z",
-          defaultMessage: "Activity",
-          description: "header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Title>{title}</DashboardCard.Title>
       <DashboardCard.Content>
         <List>
           {renderCollection(
-            activities,
+            activities.data,
             (activity, activityId) => (
               <List.Item
                 key={activityId}
