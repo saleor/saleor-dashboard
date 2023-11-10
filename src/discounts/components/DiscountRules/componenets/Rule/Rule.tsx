@@ -1,40 +1,33 @@
-import { Accordion, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { Multiselect } from "@dashboard/components/Combobox";
+import { Box, Input, Option } from "@saleor/macaw-ui-next";
+import React from "react";
 
 import { DiscountRule } from "../../types";
+import { DiscountConditions } from "../DiscountConditions";
+import { RuleAccordion } from "./RuleAccordion";
 
 interface RuleProps {
   rule: DiscountRule;
+  channels: Option[];
 }
 
-const AccordionItemId = "ruleItem";
-
-export const Rule = ({ rule }: RuleProps) => {
-  const { name } = rule;
-  const [collapsedId, setCollapsedId] = useState("");
-  const isCollapsed = collapsedId === AccordionItemId;
-
+export const Rule = ({ channels }: RuleProps) => {
   return (
-    <Accordion value={collapsedId} onValueChange={setCollapsedId}>
-      <Accordion.Item
-        value={AccordionItemId}
-        borderRadius={4}
-        borderColor="neutralPlain"
-        borderWidth={1}
-        borderStyle="solid"
-        backgroundColor={
-          isCollapsed ? "surfaceNeutralSubdued" : "surfaceNeutralPlain"
-        }
-        padding={4}
-      >
-        <Accordion.Trigger>
-          <Text variant="heading">Catalog rule</Text>
-          <Accordion.TriggerButton />
-        </Accordion.Trigger>
-        <Accordion.Content>
-          <Text>{name}</Text>
-        </Accordion.Content>
-      </Accordion.Item>
-    </Accordion>
+    <RuleAccordion title="Catalog rule">
+      <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
+        <Input name="name" label="Name" size="small" />
+
+        <Multiselect
+          size="small"
+          label="Channels"
+          options={channels}
+          value={[]}
+          onChange={() => {}}
+          fetchOptions={() => {}}
+        />
+
+        <DiscountConditions />
+      </Box>
+    </RuleAccordion>
   );
 };

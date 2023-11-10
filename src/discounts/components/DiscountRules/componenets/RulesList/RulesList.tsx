@@ -16,7 +16,14 @@ export const RulesList = ({ rules }: RulesListProps) => {
   return (
     <Box display="flex" flexDirection="column" gap={6}>
       {rules.map(rule => (
-        <Rule key={rule.id} rule={rule} />
+        <Rule
+          key={rule.id}
+          rule={rule}
+          channels={[
+            { label: "Chan 1", value: "1" },
+            { label: "Chan 2", value: "2" },
+          ]}
+        />
       ))}
     </Box>
   );
