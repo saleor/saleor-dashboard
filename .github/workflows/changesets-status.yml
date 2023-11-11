@@ -10,7 +10,7 @@ jobs:
       - name: Extract branch name
         id: extract_branch
         run: |
-          echo "test: $GITHUB_HEAD_REF"
+          echo "test: $GITHUB_REPOSITORY_OWNER"
           echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
       - name: Changeset file lookup  
         env:
