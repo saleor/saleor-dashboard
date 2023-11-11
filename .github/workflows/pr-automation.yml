@@ -9,6 +9,7 @@ concurrency:
 jobs:
   prepare_variables:
     runs-on: ubuntu-22.04
+    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     outputs:
       POOL_NAME: ${{ steps.generate.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.generate.outputs.POOL_INSTANCE }}
