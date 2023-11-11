@@ -10,7 +10,7 @@ jobs:
       - name: Extract branch name
         id: extract_branch
         run: |
-          echo "test: ${{ github.event.pull_request.organization.head.sha }}"
+          echo "test: ${{ github.event.pull_request.head.sha }}"
           echo "test: ${{ github.triggering_actor }}"
 
           echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
