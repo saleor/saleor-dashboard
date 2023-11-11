@@ -13,14 +13,14 @@ jobs:
           echo "test: ${{ github.event.pull_request.head.sha }}"
           echo "test: ${{ github.triggering_actor }}"
 
-          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+          echo "branch=${{ github.event.pull_request.head.sha }}" >> $GITHUB_OUTPUT
       - name: Changeset file lookup  
         env:
           GH_TOKEN: ${{ github.token }}
           PR_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         run: |
           echo "$PR_BRANCH"
-          files=$(gh pr diff "andrzejewsky:$PR_BRANCH" --name-only)
+          files=$(gh pr diff "$PR_BRANCH" --name-only)
           if [[ $files =~ \.changeset\/.*.md ]]; then
             echo "Changesets found!"
           else
