@@ -13,7 +13,7 @@ jobs:
           echo "test: ${{ github.event.pull_request.head.sha }}"
           echo "test: ${{ github.triggering_actor }}"
 
-          echo "branch=${{ github.event.pull_request.head.sha }}" >> $GITHUB_OUTPUT
+          echo "branch=${{ github.event.number }}" >> $GITHUB_OUTPUT
       - name: Changeset file lookup  
         env:
           GH_TOKEN: ${{ github.token }}
