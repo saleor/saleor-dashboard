@@ -13,7 +13,6 @@ jobs:
       - name: Changeset file lookup  
         env:
           GH_TOKEN: ${{ github.token }}
-          PR_BRANCH: ${{ steps.extract_branch.outputs.branch }}
           PR_ID: ${{ github.event.number }}
         run: |
           files=$(gh pr diff "$PR_ID" --name-only)
