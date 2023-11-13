@@ -1,10 +1,11 @@
-import { List, Text } from "@saleor/macaw-ui-next";
+import { Box, List, Text } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 
 export interface MenuItem {
   id: string;
   title: ReactNode;
   description: ReactNode;
+  icon?: ReactNode;
   onClick: () => void;
 }
 
@@ -19,7 +20,7 @@ export const SubMenu = ({ menuItems }: SubMenuProps) => {
       __minWidth={326}
       borderRadius={3}
     >
-      {menuItems.map(({ id, title, description, onClick }, idx) => {
+      {menuItems.map(({ id, title, description, icon, onClick }, idx) => {
         const isLastItem = idx === menuItems.length - 1;
 
         return (
@@ -33,12 +34,15 @@ export const SubMenu = ({ menuItems }: SubMenuProps) => {
             borderBottomWidth={1}
             borderColor="neutralPlain"
           >
-            <Text
-              data-test-id={String(title).toLowerCase()}
-              variant="bodyStrong"
-            >
-              {title}
-            </Text>
+            <Box display="flex" gap={3} alignItems="center">
+              {icon}
+              <Text
+                data-test-id={String(title).toLowerCase()}
+                variant="bodyStrong"
+              >
+                {title}
+              </Text>
+            </Box>
             <Text>{description}</Text>
           </List.Item>
         );
