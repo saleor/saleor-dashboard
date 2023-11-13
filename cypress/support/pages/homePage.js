@@ -4,11 +4,9 @@ import { HOMEPAGE_SELECTORS } from "../../elements/homePage/homePage-selectors";
 export function changeChannel(channelName) {
   cy.get(HEADER_SELECTORS.channelSelect)
     .click()
-    .addAliasToGraphRequest("Home")
     .get(HEADER_SELECTORS.channelSelectList)
     .contains(channelName)
-    .click()
-    .wait("@Home");
+    .click();
 }
 
 export function expectWelcomeMessageIncludes(name) {
@@ -21,37 +19,37 @@ export function expectWelcomeMessageIncludes(name) {
 
 export function getOrdersReadyToFulfillRegex(
   ordersReadyToFulfillBefore,
-  quantityOfNewOrders
+  quantityOfNewOrders,
 ) {
   const allOrdersReadyToFulfill =
     ordersReadyToFulfillBefore + quantityOfNewOrders;
   const notANumberRegex = "\\D*";
   return new RegExp(
-    `${notANumberRegex}${allOrdersReadyToFulfill}${notANumberRegex}`
+    `${notANumberRegex}${allOrdersReadyToFulfill}${notANumberRegex}`,
   );
 }
 
 export function getOrdersReadyForCaptureRegex(
   ordersReadyForCaptureBefore,
-  quantityOfNewOrders
+  quantityOfNewOrders,
 ) {
   const allOrdersReadyForCapture =
     ordersReadyForCaptureBefore + quantityOfNewOrders;
   const notANumberRegex = "\\D*";
   return new RegExp(
-    `${notANumberRegex}${allOrdersReadyForCapture}${notANumberRegex}`
+    `${notANumberRegex}${allOrdersReadyForCapture}${notANumberRegex}`,
   );
 }
 
 export function getProductsOutOfStockRegex(
   productsOutOfStockBefore,
-  quantityOfNewProducts
+  quantityOfNewProducts,
 ) {
   const allProductsOutOfStock =
     productsOutOfStockBefore + quantityOfNewProducts;
   const notANumberRegex = "\\D*";
   return new RegExp(
-    `${notANumberRegex}${allProductsOutOfStock}${notANumberRegex}`
+    `${notANumberRegex}${allProductsOutOfStock}${notANumberRegex}`,
   );
 }
 
@@ -67,7 +65,7 @@ export function getSalesAmountRegex(salesAmountBefore, addedAmount) {
   const totalAmountWithSeparators = `${totalAmountIntegerWithThousandsSeparator}${decimalSeparator}${totalAmountDecimalValue}`;
   const notANumberRegex = "\\D*";
   return new RegExp(
-    `${notANumberRegex}${totalAmountWithSeparators}${notANumberRegex}`
+    `${notANumberRegex}${totalAmountWithSeparators}${notANumberRegex}`,
   );
 }
 

@@ -21,7 +21,7 @@ export class LoginPage {
     page: Page,
     path: string,
   ) {
-    await this.goto();
+    await page.goto(process.env.BASE_URL!);
     await this.typeEmail(userEmail);
     await this.typePassword(userPassword);
     await this.clickSignInButton();
@@ -37,13 +37,5 @@ export class LoginPage {
   }
   async clickSignInButton() {
     await this.signInButton.click();
-  }
-  async goto() {
-    const BASE_URL = process.env.BASE_URL;
-    const loginPageUrl =
-      BASE_URL === "http://localhost:9000/"
-        ? "http://localhost:9000/"
-        : "/dashboard";
-    await this.page.goto(loginPageUrl);
   }
 }
