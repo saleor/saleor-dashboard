@@ -6,18 +6,16 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
-      - name: Extract branch name
-        id: extract_branch
-        run: |
-          
-          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: ./.changeset
+
       - name: Changeset file lookup  
         env:
           GH_TOKEN: ${{ github.token }}
-          PR_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          PR_ID: ${{ github.event.number }}
         run: |
-          files=$(gh pr diff "$PR_BRANCH" --name-only)
+          files=$(gh pr diff "$PR_ID" --name-only)
           if [[ $files =~ \.changeset\/.*.md ]]; then
             echo "Changesets found!"
           else
