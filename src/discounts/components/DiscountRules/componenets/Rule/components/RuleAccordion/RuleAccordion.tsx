@@ -6,15 +6,13 @@ interface RuleAccordionProps {
   title: ReactNode;
 }
 
-const AccordionItemId = "ruleItem";
-
 export const RuleAccordion = ({ children, title }: RuleAccordionProps) => {
   const [collapsedId, setCollapsedId] = useState("");
 
   return (
     <Accordion value={collapsedId} onValueChange={setCollapsedId}>
       <Accordion.Item
-        value={AccordionItemId}
+        value="ruleItem"
         borderRadius={4}
         borderColor="neutralPlain"
         borderWidth={1}
