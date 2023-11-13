@@ -28,4 +28,4 @@ jobs:
       - name: Remove instance
         env:
           SALEOR_CLI_ENV: staging
-        run: npx saleor env remove "$GITHUB_HEAD_REF_SLUG_URL" --force
+        run: npx saleor env remove "pr-${GITHUB_HEAD_REF_SLUG_URL}" --force
