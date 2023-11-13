@@ -1,5 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { Metadata } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import { saleListUrl } from "@dashboard/discounts/urls";
 import { ChannelFragment } from "@dashboard/graphql";
@@ -9,6 +10,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import DiscountDates from "../DiscountDates";
+import { DiscountRules } from "../DiscountRules";
 import { DiscountDescription } from "./components/DiscountDescription";
 import { DiscountName } from "./components/DiscountName";
 
@@ -53,6 +55,12 @@ export const DiscountCreatePage = ({
             }}
             disabled={disabled}
             errors={[]}
+            onChange={() => {}}
+          />
+          <DiscountRules onRuleAdd={() => {}} rules={[]} />
+
+          <Metadata
+            data={{ privateMetadata: [], metadata: [] }}
             onChange={() => {}}
           />
         </DetailPageLayout.Content>
