@@ -8,7 +8,7 @@ import { DiscountRule } from "../../types";
 import { RuleAccordion } from "./components/RuleAccordion/RuleAccordion";
 import { RuleConditions } from "./components/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription";
-import { RuleReword } from "./components/RuleReword";
+import { RuleReward } from "./components/RuleReward";
 
 interface RuleProps {
   rule: DiscountRule;
@@ -39,7 +39,7 @@ export const Rule = ({ channels }: RuleProps) => {
 
           <RuleConditions />
 
-          <RuleReword />
+          <RuleReward />
 
           <RuleDescription />
         </Box>

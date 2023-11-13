@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { messages } from "../../../../messages";
 import { DiscountTypeSwitch } from "../../../DiscountTypeSwitch";
 
-export const RuleReword = () => {
+export const RuleReward = () => {
   const intl = useIntl();
   return (
     <Box>
