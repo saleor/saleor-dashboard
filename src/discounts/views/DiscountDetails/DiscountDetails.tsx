@@ -1,5 +1,10 @@
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DiscountCreatePage } from "@dashboard/discounts/components/DiscountCreatePage";
 import { DiscountUrlQueryParams } from "@dashboard/discounts/urls";
+import { commonMessages } from "@dashboard/intl";
 import React from "react";
+import { useIntl } from "react-intl";
 
 interface DiscountDetailsProps {
   id: string;
@@ -7,5 +12,17 @@ interface DiscountDetailsProps {
 }
 
 export const DiscountDetails = (props: DiscountDetailsProps) => {
-  return <div>Discount details</div>;
+  const { availableChannels } = useAppChannel(false);
+  const intl = useIntl();
+
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
+      <DiscountCreatePage
+        disabled={false}
+        onBack={() => {}}
+        channels={availableChannels}
+      />
+    </>
+  );
 };
