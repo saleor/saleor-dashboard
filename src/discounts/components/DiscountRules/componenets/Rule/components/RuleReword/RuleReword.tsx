@@ -1,13 +1,16 @@
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { useIntl } from "react-intl";
 
-import { DiscountTypeSwitch } from "../DiscountTypeSwitch/DiscountTypeSwitch";
+import { messages } from "../../../../messages";
+import { DiscountTypeSwitch } from "../../../DiscountTypeSwitch";
 
-export const DiscountReword = () => {
+export const RuleReword = () => {
+  const intl = useIntl();
   return (
     <Box>
       <Text marginBottom={4} as="p">
-        Reward
+        {intl.formatMessage(messages.reward)}
       </Text>
       <Box display="flex" gap={4}>
         <DiscountTypeSwitch
@@ -16,7 +19,10 @@ export const DiscountReword = () => {
           currencySymbol="EUR"
         />
         <Box __flex="1">
-          <Input onChange={() => {}} label="Discount value" />
+          <Input
+            onChange={() => {}}
+            label={intl.formatMessage(messages.discountValue)}
+          />
         </Box>
       </Box>
     </Box>

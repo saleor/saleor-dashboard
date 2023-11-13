@@ -21,4 +21,16 @@ export const messages = defineMessages({
     defaultMessage: "Add your first rule to set up a promotion",
     id: "XtlUj6",
   },
+  conditions: {
+    defaultMessage: "Conditions",
+    id: "S8kqP9",
+  },
+  discountValue: {
+    defaultMessage: "Discount value",
+    id: "kNK4es",
+  },
+  reward: {
+    defaultMessage: "Reward",
+    id: "PuQb0P",
+  },
 });

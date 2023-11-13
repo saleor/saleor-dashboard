@@ -1,7 +1,8 @@
 import { Box, Switch, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
-type DiscountType = "fixed" | "percentage";
+import { DiscountType } from "../../types";
+
 interface DiscountTypeSwitchProps {
   selected: DiscountType;
   currencySymbol: string;

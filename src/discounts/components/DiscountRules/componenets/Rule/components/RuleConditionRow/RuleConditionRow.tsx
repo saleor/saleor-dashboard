@@ -2,7 +2,7 @@ import { Combobox, Multiselect } from "@dashboard/components/Combobox";
 import { Box, Button, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { DiscountCondition } from "../../types";
+import { DiscountCondition } from "../../../../types";
 import { discountConditionTypes } from "./const";
 
 interface DiscountConditionRowProps {
@@ -10,7 +10,7 @@ interface DiscountConditionRowProps {
   onRemove: () => void;
 }
 
-export const DiscountConditionRow = ({
+export const RuleConditionRow = ({
   condition,
   onRemove,
 }: DiscountConditionRowProps) => {

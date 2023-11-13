@@ -1,20 +1,23 @@
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
-import { DiscountCondition } from "../../types";
-import { DiscountConditionRow } from "../DiscountConditonRow";
+import { messages } from "../../../../messages";
+import { DiscountCondition } from "../../../../types";
+import { RuleConditionRow } from "../RuleConditionRow";
 
-export const DiscountConditions = () => {
+export const RuleConditions = () => {
+  const intl = useIntl();
   const [conditions, setConditions] = useState<DiscountCondition[]>([
     { type: "", values: [] },
   ]);
   return (
     <Box display="flex" flexDirection="column" gap={4}>
-      <Text>Conditions</Text>
+      <Text>{intl.formatMessage(messages.conditions)}</Text>
 
       <Box display="flex" flexDirection="column" gap={4}>
         {conditions.map(condition => (
-          <DiscountConditionRow
+          <RuleConditionRow
             key={condition.type}
             condition={condition}
             onRemove={() => {

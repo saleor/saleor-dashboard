@@ -3936,6 +3936,9 @@
     "context": "page header",
     "string": "Create Voucher"
   },
+  "PuQb0P": {
+    "string": "Reward"
+  },
   "Pyjarj": {
     "string": "This shipping rate has no postal codes assigned"
   },
@@ -4284,6 +4287,9 @@
   "S7j+Wf": {
     "context": "unassign attribute from product type, button",
     "string": "Unassign"
+  },
+  "S8kqP9": {
+    "string": "Conditions"
   },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
@@ -6870,6 +6876,9 @@
   },
   "kN6SLs": {
     "string": "Min Value"
+  },
+  "kNK4es": {
+    "string": "Discount value"
   },
   "kPIZ65": {
     "context": "page header",

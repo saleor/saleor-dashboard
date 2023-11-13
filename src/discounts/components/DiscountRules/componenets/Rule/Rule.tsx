@@ -5,10 +5,10 @@ import { Box, Input, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { DiscountRule } from "../../types";
-import { DiscountConditions } from "../DiscountConditions";
-import { DiscountReword } from "../DiscountReword";
-import { RuleDescription } from "../RuleDescription";
-import { RuleAccordion } from "./RuleAccordion";
+import { RuleAccordion } from "./components/RuleAccordion/RuleAccordion";
+import { RuleConditions } from "./components/RuleConditions";
+import { RuleDescription } from "./components/RuleDescription";
+import { RuleReword } from "./components/RuleReword";
 
 interface RuleProps {
   rule: DiscountRule;
@@ -37,9 +37,9 @@ export const Rule = ({ channels }: RuleProps) => {
             fetchOptions={() => {}}
           />
 
-          <DiscountConditions />
+          <RuleConditions />
 
-          <DiscountReword />
+          <RuleReword />
 
           <RuleDescription />
         </Box>
