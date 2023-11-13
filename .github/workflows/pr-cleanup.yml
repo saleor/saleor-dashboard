@@ -28,7 +28,6 @@ jobs:
       - name: Remove instance
         env:
           SALEOR_CLI_ENV: staging
-          PREFIX: "pr-"
         run: |
           echo "slug: ${GITHUB_HEAD_REF_SLUG_URL}"
           npx saleor env remove "pr-${GITHUB_HEAD_REF_SLUG_URL}" --force
