@@ -9,6 +9,7 @@ concurrency:
 jobs:
   prepare_variables:
     runs-on: ubuntu-22.04
+    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     outputs:
       POOL_NAME: ${{ steps.generate.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.generate.outputs.POOL_INSTANCE }}
@@ -28,11 +29,13 @@ jobs:
 
       - name: Generate
         id: generate
+        env:
+          PREFIX: pr-
         run: |
-          echo "BASE_URL=${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
-          echo "API_URI=https://${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
-          echo "POOL_NAME=${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
-          echo "POOL_INSTANCE=https://${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "BASE_URL=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+          echo "API_URI=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
       
       - name: Saleor login
         uses: ./.github/actions/cli-login
