@@ -1,8 +1,9 @@
+import { DiscountUrlQueryParams } from "@dashboard/discounts/urls";
 import React from "react";
 
 interface DiscountDetailsProps {
   id: string;
-  params: any;
+  params: DiscountUrlQueryParams;
 }
 
 export const DiscountDetails = (props: DiscountDetailsProps) => {

@@ -9,12 +9,10 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   saleAddPath,
-  SaleCreateUrlQueryParams,
   saleListPath,
   SaleListUrlQueryParams,
   SaleListUrlSortField,
   salePath,
-  SaleUrlQueryParams,
   voucherAddPath,
   VoucherCreateUrlQueryParams,
   voucherListPath,
@@ -43,7 +41,7 @@ const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
   location,
 }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: SaleUrlQueryParams = qs;
+  const params = qs;
   const { enabled } = useFlag("discounts_rules");
 
   if (enabled) {
@@ -65,7 +63,7 @@ const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
 
 const SaleCreateView: React.FC<RouteComponentProps> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: SaleCreateUrlQueryParams = qs;
+  const params = qs;
   const { enabled } = useFlag("discounts_rules");
 
   if (enabled) {
