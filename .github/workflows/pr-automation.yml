@@ -87,10 +87,19 @@ jobs:
       - name: Saleor login
         uses: ./.github/actions/cli-login
         with:
-          token: ${{ secrets.STAGING_TOKEN }}          
+          token: ${{ secrets.STAGING_TOKEN }}     
+
+      - name: Instance check
+        id: instance_check
+        env:
+          SALEOR_CLI_ENV: staging
+          INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
+        run: |
+          INSTANCE_KEY=$(npx saleor env show "$INSTANCE_NAME" --json | jq .key)
+          echo "INSTANCE_KEY=$INSTANCE_KEY" >> $GITHUB_OUTPUT
 
       - name: Reload snapshot
-        if: ${{ github.event_name == 'pull_request' && github.event.action != 'opened' && github.event.action != 'closed' }}
+        if: ${{ steps.instance_check.outputs.INSTANCE_KEY }}
         env:
           SALEOR_CLI_ENV: staging
           BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
@@ -101,7 +110,7 @@ jobs:
             --skip-webhooks-update
 
       - name: Create new instance
-        if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }}
+        if: ${{ !steps.instance_check.outputs.INSTANCE_KEY }}
         env:
           SALEOR_CLI_ENV: staging
           BACKUP_ID:  ${{ needs.prepare_variables.outputs.BACKUP_ID }}
