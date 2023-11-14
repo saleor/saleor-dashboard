@@ -16,7 +16,7 @@ jobs:
           stale-issue-message: This issue is stale because it has been open 14 days with no activity.
           stale-pr-message: This pull request is stale because it has been open 14 days with no activity.
           close-issue-message: This issue was closed because it has been stalled for 2 days with no activity.
-          close-pr-message: This PR was closed because it has been stalled for 2 days with no activity.
+          close-pr-message: This PR request has been closed because it has been stalled for 2 days with no activity. You are still welcome to reopen it and continue from where you finished. Best regards Saleor team
           days-before-stale: 14
           days-before-close: 2
           exempt-pr-labels: epic,triage,bug,blocker,backlog,feature
