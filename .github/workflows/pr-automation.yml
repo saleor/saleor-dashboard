@@ -99,7 +99,7 @@ jobs:
           echo "INSTANCE_KEY=$INSTANCE_KEY" >> $GITHUB_OUTPUT
 
       - name: Reload snapshot
-        if: ${{ steps.instance_check.output.INSTANCE_KEY }}
+        if: ${{ steps.instance_check.outputs.INSTANCE_KEY }}
         env:
           SALEOR_CLI_ENV: staging
           BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
@@ -108,7 +108,7 @@ jobs:
           echo "reload"
 
       - name: Create new instance
-        if: ${{ !steps.instance_check.output.INSTANCE_KEY }}
+        if: ${{ !steps.instance_check.outputs.INSTANCE_KEY }}
         env:
           SALEOR_CLI_ENV: staging
           BACKUP_ID:  ${{ needs.prepare_variables.outputs.BACKUP_ID }}
