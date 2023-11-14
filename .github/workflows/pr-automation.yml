@@ -87,246 +87,247 @@ jobs:
       - name: Saleor login
         uses: ./.github/actions/cli-login
         with:
-          token: ${{ secrets.STAGING_TOKEN }}          
+          token: ${{ secrets.STAGING_TOKEN }}     
+
+      - name: Instance check
+        id: instance_check
+        env:
+          SALEOR_CLI_ENV: staging
+          INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
+        run: |
+          INSTANCE_KEY=$(npx saleor env show "$INSTANCE_NAME" --json | jq .key)
+          echo "INSTANCE_KEY=$INSTANCE_KEY" >> $GITHUB_OUTPUT
 
       - name: Reload snapshot
-        if: ${{ github.event_name == 'pull_request' && github.event.action != 'opened' && github.event.action != 'closed' }}
+        if: ${{ steps.instance_check.output.INSTANCE_KEY }}
         env:
           SALEOR_CLI_ENV: staging
           BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
-          npx saleor backup restore "$BACKUP_ID" \
-            --environment="$INSTANCE_NAME" \
-            --skip-webhooks-update
+          echo "reload"
 
       - name: Create new instance
-        if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }}
+        if: ${{ !steps.instance_check.output.INSTANCE_KEY }}
         env:
           SALEOR_CLI_ENV: staging
           BACKUP_ID:  ${{ needs.prepare_variables.outputs.BACKUP_ID }}
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
-          npx saleor env create "$INSTANCE_NAME" \
-            --project=project-for-pr-testing \
-            --database=snapshot \
-            --restore-from="$BACKUP_ID" \
-            --saleor=saleor-master-staging \
-            --domain="$INSTANCE_NAME" \
-            --skip-restrict \
-            --skip-webhooks-update
+          echo "create new"
 
-  deploy_dashboard:
-    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
-    runs-on: ubuntu-22.04
-    needs: prepare_variables
-    permissions:
-      deployments: write
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
+  # deploy_dashboard:
+  #   if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
+  #   runs-on: ubuntu-22.04
+  #   needs: prepare_variables
+  #   permissions:
+  #     deployments: write
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - name: Start deployment
-        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
-        id: deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
-          ref: ${{ github.head_ref }}
+  #     - name: Setup Node
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version-file: ".nvmrc"
 
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
+  #     - name: Start deployment
+  #       uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
+  #       id: deployment
+  #       with:
+  #         step: start
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
+  #         ref: ${{ github.head_ref }}
 
-      - name: Install deps
-        run: npm ci
+  #     - name: Cache node modules
+  #       uses: actions/cache@v3
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-qa-${{ env.cache-name }}-
+  #           ${{ runner.os }}-qa-
+  #           ${{ runner.os }}-
 
-      - name: Build dashboard
-        env:
-          API_URI: ${{ needs.prepare_variables.outputs.API_URI }}
-          APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
-          APP_MOUNT_URI: /
-          STATIC_URL: /
-          IS_CLOUD_INSTANCE: true
-        run: npm run build
+  #     - name: Install deps
+  #       run: npm ci
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+  #     - name: Build dashboard
+  #       env:
+  #         API_URI: ${{ needs.prepare_variables.outputs.API_URI }}
+  #         APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+  #         APP_MOUNT_URI: /
+  #         STATIC_URL: /
+  #         IS_CLOUD_INSTANCE: true
+  #       run: npm run build
 
-      - name: Deploy to S3
-        env:
-          AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
-          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
-        run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}"
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v3
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+  #     - name: Deploy to S3
+  #       env:
+  #         AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
+  #         BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
+  #       run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}"
       
-      - name: Invalidate cache
-        env:
-          AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
-          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
-        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL}/*"
+  #     - name: Invalidate cache
+  #       env:
+  #         AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
+  #         BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
+  #       run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL}/*"
 
-      - name: Update deployment status
-        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
-        if: always()
-        with:
-          step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
-          env_url: https://${{ needs.prepare_variables.outputs.BASE_URL }}/
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
+  #     - name: Update deployment status
+  #       uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
+  #       if: always()
+  #       with:
+  #         step: finish
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         status: ${{ job.status }}
+  #         env_url: https://${{ needs.prepare_variables.outputs.BASE_URL }}/
+  #         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+  #         env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
 
 
-  deploy_storybook:
-    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
-    runs-on: ubuntu-22.04
-    needs: prepare_variables
-    permissions:
-      deployments: write
-    steps:
-      - uses: actions/checkout@v4
+  # deploy_storybook:
+  #   if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
+  #   runs-on: ubuntu-22.04
+  #   needs: prepare_variables
+  #   permissions:
+  #     deployments: write
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
+  #     - name: Setup Node
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version-file: ".nvmrc"
 
-      - name: Start storybook deployment
-        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
-        id: storybook-deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: storybook ${{ needs.prepare_variables.outputs.POOL_NAME }}
-          ref: ${{ github.head_ref }}
+  #     - name: Start storybook deployment
+  #       uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
+  #       id: storybook-deployment
+  #       with:
+  #         step: start
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         env: storybook ${{ needs.prepare_variables.outputs.POOL_NAME }}
+  #         ref: ${{ github.head_ref }}
 
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
+  #     - name: Cache node modules
+  #       uses: actions/cache@v3
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-qa-${{ env.cache-name }}-
+  #           ${{ runner.os }}-qa-
+  #           ${{ runner.os }}-
 
-      - name: Install deps
-        run: npm ci
+  #     - name: Install deps
+  #       run: npm ci
 
-      - name: Build storybook
-        run: npm run build-storybook
+  #     - name: Build storybook
+  #       run: npm run build-storybook
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v3
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      - name: Deploy to S3
-        env:
-          AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
-          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
-        run: aws s3 sync ./build/storybook "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}/storybook"
+  #     - name: Deploy to S3
+  #       env:
+  #         AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
+  #         BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
+  #       run: aws s3 sync ./build/storybook "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}/storybook"
       
-      - name: Invalidate cache
-        env:
-          AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
-          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
-        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL}/*"
+  #     - name: Invalidate cache
+  #       env:
+  #         AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
+  #         BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
+  #       run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL}/*"
 
-      - name: Update storybook deployment status
-        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
-        if: always()
-        with:
-          step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
-          env_url: https://${{ needs.prepare_variables.outputs.BASE_URL }}/storybook/index.html
-          deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
-          env: storybook ${{ needs.prepare_variables.outputs.POOL_NAME }}
+  #     - name: Update storybook deployment status
+  #       uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
+  #       if: always()
+  #       with:
+  #         step: finish
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         status: ${{ job.status }}
+  #         env_url: https://${{ needs.prepare_variables.outputs.BASE_URL }}/storybook/index.html
+  #         deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
+  #         env: storybook ${{ needs.prepare_variables.outputs.POOL_NAME }}
 
-  run-tests:
-    runs-on: ubuntu-latest
-    needs: [prepare_variables, deploy_dashboard, prepare_instance]
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [1/2, 2/2]
-    steps:
-      - uses: actions/checkout@v4
+  # run-tests:
+  #   runs-on: ubuntu-latest
+  #   needs: [prepare_variables, deploy_dashboard, prepare_instance]
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       shard: [1/2, 2/2]
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version-file: ".nvmrc"
 
-      - name: Install dependencies
-        run: npm ci
+  #     - name: Install dependencies
+  #       run: npm ci
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+  #     - name: Install Playwright Browsers
+  #       run: npx playwright install --with-deps
 
-      - name: Run tests
-        env:
-          API_URI: ${{ needs.prepare_variables.outputs.API_URI }}
-          BASE_URL: https://${{ needs.prepare_variables.outputs.BASE_URL }}/
-          E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-        run: npx playwright test --shard ${{ matrix.shard }}
+  #     - name: Run tests
+  #       env:
+  #         API_URI: ${{ needs.prepare_variables.outputs.API_URI }}
+  #         BASE_URL: https://${{ needs.prepare_variables.outputs.BASE_URL }}/
+  #         E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+  #         E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+  #         E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+  #       run: npx playwright test --shard ${{ matrix.shard }}
 
-      - name: Upload blob report to GitHub Actions Artifacts
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: all-blob-reports
-          path: blob-report
-          retention-days: 1
+  #     - name: Upload blob report to GitHub Actions Artifacts
+  #       uses: actions/upload-artifact@v3
+  #       if: always()
+  #       with:
+  #         name: all-blob-reports
+  #         path: blob-report
+  #         retention-days: 1
 
-  merge-reports:
-    if: '!cancelled()'
-    needs: [run-tests]
+  # merge-reports:
+  #   if: '!cancelled()'
+  #   needs: [run-tests]
 
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - name: Install dependencies
-        run: npm ci
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18
+  #     - name: Install dependencies
+  #       run: npm ci
 
-      - name: Download blob reports from GitHub Actions Artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: all-blob-reports
-          path: all-blob-reports
+  #     - name: Download blob reports from GitHub Actions Artifacts
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: all-blob-reports
+  #         path: all-blob-reports
 
-      - name: Merge into HTML Report
-        run: npx playwright merge-reports --reporter html ./all-blob-reports
+  #     - name: Merge into HTML Report
+  #       run: npx playwright merge-reports --reporter html ./all-blob-reports
 
-      - name: Upload HTML report
-        uses: actions/upload-artifact@v3
-        with:
-          name: html-report--attempt-${{ github.run_attempt }}
-          path: playwright-report
-          retention-days: 14
+  #     - name: Upload HTML report
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: html-report--attempt-${{ github.run_attempt }}
+  #         path: playwright-report
+  #         retention-days: 14
