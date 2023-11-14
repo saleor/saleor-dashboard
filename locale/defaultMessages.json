@@ -2606,6 +2606,9 @@
     "context": "webhooks inactive label",
     "string": "Inactive"
   },
+  "GOdq5V": {
+    "string": "Catalog"
+  },
   "GTCg9O": {
     "string": "You must add at least one voucher code"
   },
@@ -3933,6 +3936,9 @@
     "context": "page header",
     "string": "Create Voucher"
   },
+  "PuQb0P": {
+    "string": "Reward"
+  },
   "Pyjarj": {
     "string": "This shipping rate has no postal codes assigned"
   },
@@ -4281,6 +4287,9 @@
   "S7j+Wf": {
     "context": "unassign attribute from product type, button",
     "string": "Unassign"
+  },
+  "S8kqP9": {
+    "string": "Conditions"
   },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
@@ -5151,6 +5160,9 @@
   },
   "Xtd0AT": {
     "string": "Original String"
+  },
+  "XtlUj6": {
+    "string": "Add your first rule to set up a promotion"
   },
   "Xu4ech": {
     "context": "deactivate app",
@@ -6394,6 +6406,9 @@
     "context": "PluginChannelConfigurationCell channel title",
     "string": "Per channel"
   },
+  "gzM1em": {
+    "string": "Add rule"
+  },
   "h1rPPg": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {attributeName}?"
@@ -6811,6 +6826,9 @@
     "context": "total order price",
     "string": "Total"
   },
+  "kAAlGL": {
+    "string": "Rules"
+  },
   "kAPaN6": {
     "context": "empty metadata text",
     "string": "Empty"
@@ -6858,6 +6876,9 @@
   },
   "kN6SLs": {
     "string": "Min Value"
+  },
+  "kNK4es": {
+    "string": "Discount value"
   },
   "kPIZ65": {
     "context": "page header",
@@ -8242,6 +8263,9 @@
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
+  },
+  "ucLtY8": {
+    "string": "Discount rules for products, collections or categories."
   },
   "uccjUM": {
     "context": "Dry run objects",
