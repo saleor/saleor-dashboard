@@ -144,7 +144,7 @@ describe("As an admin I want to see correct information on dashboard home page",
   });
 
   it(
-    "should display correct information on dashboard home page. SALEOR_2004",
+    "should display correct information on dashboard home page. SALEOR_2004 - migration in progress - to delete when done",
     { tags: ["@homePage", "@allEnv", "@critical"] },
     () => {
       cy.visit(urlList.homePage);

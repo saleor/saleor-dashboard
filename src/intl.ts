@@ -247,6 +247,14 @@ export const errorMessages = defineMessages({
     id: "7+GBlj",
     defaultMessage: "Error code {errorCode} {fieldError}",
   },
+  voucherCodesErrorMessage: {
+    id: "2dgbGR",
+    defaultMessage: "Those codes already exist",
+  },
+  voucherCodeErrorMessage: {
+    id: "WY3IXU",
+    defaultMessage: "This code already exists",
+  },
   codeErrorFieldMessage: {
     id: "Qox+kb",
     defaultMessage: "on field {fieldName}",

@@ -61,9 +61,9 @@ export function tagsCell(
   opts?: Partial<GridCell>,
 ): GridCell {
   return {
+    allowOverlay: true,
     ...opts,
     kind: GridCellKind.Custom,
-    allowOverlay: true,
     copyData: selectedTags.join(", "),
     data: {
       kind: "tags-cell",

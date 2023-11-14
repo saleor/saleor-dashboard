@@ -214,6 +214,9 @@
     "context": "section description",
     "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
   },
+  "/Fa+RP": {
+    "string": "Couldn't load top products"
+  },
   "/ILyIf": {
     "context": "tax classes menu header",
     "string": "Tax class label"
@@ -240,6 +243,9 @@
   "/TK7QD": {
     "context": "page label",
     "string": "Hidden"
+  },
+  "/U8FUp": {
+    "string": "Couldn't load activities"
   },
   "/V7UOC": {
     "context": "unassign category from sale and save, button",
@@ -691,6 +697,9 @@
     "context": "window title",
     "string": "Install App"
   },
+  "2dgbGR": {
+    "string": "Those codes already exist"
+  },
   "2fgaAQ": {
     "context": "search input placeholder",
     "string": "Search shipping zones..."
@@ -973,6 +982,9 @@
   "4fJ17F": {
     "context": "Charge in progress transaction amount, data display header",
     "string": "Pending charge"
+  },
+  "4gJAm6": {
+    "string": "Can't delete saved codes"
   },
   "4gT3eD": {
     "context": "navigator section header",
@@ -1513,9 +1525,6 @@
     "context": "button",
     "string": "Go back to dashboard"
   },
-  "989O5D": {
-    "string": "Are you sure you want to delete this voucher code?"
-  },
   "98Nw4g": {
     "context": "card subtitle",
     "string": "Rendered prices"
@@ -1527,6 +1536,9 @@
   "9B2mOB": {
     "context": "tile view pagination label",
     "string": "No. of products"
+  },
+  "9BvYb9": {
+    "string": "Voucher"
   },
   "9C7PZE": {
     "context": "navigation section name",
@@ -2552,6 +2564,9 @@
     "context": "tooltip",
     "string": "Checkout reservation time threshold is enabled in settings."
   },
+  "GA+Djy": {
+    "string": "Are you sure you want to delete these voucher codes?"
+  },
   "GAmGog": {
     "context": "value input label",
     "string": "Discount value"
@@ -2590,6 +2605,12 @@
   "GNKG74": {
     "context": "webhooks inactive label",
     "string": "Inactive"
+  },
+  "GOdq5V": {
+    "string": "Catalog"
+  },
+  "GTCg9O": {
+    "string": "You must add at least one voucher code"
   },
   "GVM/fi": {
     "context": "order history message",
@@ -3135,10 +3156,6 @@
   },
   "JqiqNj": {
     "string": "Something went wrong"
-  },
-  "JsPIOX": {
-    "context": "voucher code",
-    "string": "Code"
   },
   "Jsh6+U": {
     "context": "product type is digital or physical",
@@ -3919,6 +3936,9 @@
     "context": "page header",
     "string": "Create Voucher"
   },
+  "PuQb0P": {
+    "string": "Reward"
+  },
   "Pyjarj": {
     "string": "This shipping rate has no postal codes assigned"
   },
@@ -4267,6 +4287,9 @@
   "S7j+Wf": {
     "context": "unassign attribute from product type, button",
     "string": "Unassign"
+  },
+  "S8kqP9": {
+    "string": "Conditions"
   },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
@@ -4885,6 +4908,9 @@
     "context": "used by filter label",
     "string": "Used by"
   },
+  "WMN0q+": {
+    "string": "Delete voucher codes"
+  },
   "WQMTKI": {
     "context": "list of warehouses",
     "string": "Warehouses A to Z"
@@ -4915,6 +4941,9 @@
   "WWV8aZ": {
     "context": "dialog title",
     "string": "Delete attribute value"
+  },
+  "WY3IXU": {
+    "string": "This code already exists"
   },
   "WasHjQ": {
     "context": "voucher discount",
@@ -5131,6 +5160,9 @@
   },
   "Xtd0AT": {
     "string": "Original String"
+  },
+  "XtlUj6": {
+    "string": "Add your first rule to set up a promotion"
   },
   "Xu4ech": {
     "context": "deactivate app",
@@ -5926,6 +5958,9 @@
     "context": "search box placeholder",
     "string": "Search by country name"
   },
+  "dHAwu8": {
+    "string": "Code already exists"
+  },
   "dJQxHt": {
     "context": "delete category",
     "string": "Are you sure you want to delete {categoryName}?"
@@ -6371,6 +6406,9 @@
     "context": "PluginChannelConfigurationCell channel title",
     "string": "Per channel"
   },
+  "gzM1em": {
+    "string": "Add rule"
+  },
   "h1rPPg": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {attributeName}?"
@@ -6548,9 +6586,6 @@
   "iIfq2+": {
     "context": "Transaction cancel button - return preauthorized amount to client",
     "string": "Cancel"
-  },
-  "iL/zeh": {
-    "string": "Delete voucher code"
   },
   "iMJka8": {
     "string": "No pages found"
@@ -6739,9 +6774,6 @@
     "context": "dialog header",
     "string": "Assign product"
   },
-  "jvKNMP": {
-    "string": "Discount Code"
-  },
   "jvo0vs": {
     "string": "Save"
   },
@@ -6794,6 +6826,9 @@
     "context": "total order price",
     "string": "Total"
   },
+  "kAAlGL": {
+    "string": "Rules"
+  },
   "kAPaN6": {
     "context": "empty metadata text",
     "string": "Empty"
@@ -6841,6 +6876,9 @@
   },
   "kN6SLs": {
     "string": "Min Value"
+  },
+  "kNK4es": {
+    "string": "Discount value"
   },
   "kPIZ65": {
     "context": "page header",
@@ -7127,10 +7165,6 @@
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
-  },
-  "mSLr9d": {
-    "context": "voucher code, button",
-    "string": "Generate Code"
   },
   "mTEqYL": {
     "context": "NoChannels content",
@@ -8229,6 +8263,9 @@
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
+  },
+  "ucLtY8": {
+    "string": "Discount rules for products, collections or categories."
   },
   "uccjUM": {
     "context": "Dry run objects",
