@@ -7,7 +7,7 @@ interface RuleAccordionProps {
 }
 
 export const RuleAccordion = ({ children, title }: RuleAccordionProps) => {
-  const [collapsedId, setCollapsedId] = useState("");
+  const [collapsedId, setCollapsedId] = useState("ruleItem");
 
   return (
     <Accordion value={collapsedId} onValueChange={setCollapsedId}>

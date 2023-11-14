@@ -3,11 +3,18 @@ import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import React from "react";
+import { useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
+
+import { Inputs } from "../../types";
 
 export const DiscountDescription = () => {
   const { defaultValue, editorRef, isReadyForMount, handleChange } =
     useRichTextContext();
+
+  const { field } = useController<Inputs, "description">({
+    name: "description",
+  });
 
   return (
     <DashboardCard>
@@ -19,7 +26,11 @@ export const DiscountDescription = () => {
           <RichTextEditor
             defaultValue={defaultValue}
             editorRef={editorRef}
-            onChange={handleChange}
+            onChange={data => {
+              handleChange();
+              field.onChange(JSON.stringify(data));
+            }}
+            onBlur={field.onBlur}
             disabled={false}
             error={false}
             helperText=""

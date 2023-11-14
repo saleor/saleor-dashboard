@@ -18,6 +18,7 @@ interface DiscountDatesProps {
   disabled: boolean;
   errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
+  onBlur?: (event: React.FocusEvent<any>) => void;
 }
 
 const DiscountDates = ({
@@ -25,6 +26,7 @@ const DiscountDates = ({
   disabled,
   errors,
   onChange,
+  onBlur,
 }: DiscountDatesProps) => {
   const intl = useIntl();
 
@@ -46,8 +48,9 @@ const DiscountDates = ({
             disabled={disabled}
             error={!!formErrors.startDate}
             helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
-            name={"startDate" as keyof FormData}
+            name="startDate"
             onChange={onChange}
+            onBlur={onBlur}
             label={intl.formatMessage(commonMessages.startDate)}
             value={data.startDate}
             type="date"
@@ -57,8 +60,9 @@ const DiscountDates = ({
             disabled={disabled}
             error={!!formErrors.startDate}
             helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
-            name={"startTime" as keyof FormData}
+            name="startTime"
             onChange={onChange}
+            onBlur={onBlur}
             label={intl.formatMessage(commonMessages.startHour)}
             value={data.startTime}
             type="time"
@@ -67,9 +71,10 @@ const DiscountDates = ({
         </Box>
         <Checkbox
           marginY={4}
-          checked={data.hasEndDate}
-          name={"hasEndDate" as keyof FormData}
+          defaultChecked={data.hasEndDate}
+          name="hasEndDate"
           onChange={onChange}
+          onBlur={onBlur}
         >
           <Text>
             <FormattedMessage
@@ -85,8 +90,9 @@ const DiscountDates = ({
               disabled={disabled}
               error={!!formErrors.endDate}
               helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
-              name={"endDate" as keyof FormData}
+              name="endDate"
               onChange={onChange}
+              onBlur={onBlur}
               label={intl.formatMessage(commonMessages.endDate)}
               value={data.endDate}
               type="date"
@@ -96,8 +102,9 @@ const DiscountDates = ({
               disabled={disabled}
               error={!!formErrors.endDate}
               helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
-              name={"endTime" as keyof FormData}
+              name="endTime"
               onChange={onChange}
+              onBlur={onBlur}
               label={intl.formatMessage(commonMessages.endHour)}
               value={data.endTime}
               type="time"
