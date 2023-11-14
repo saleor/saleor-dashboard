@@ -25,6 +25,7 @@ interface DiscountCreateProps {
 export const DiscountCreatePage = ({
   disabled,
   onBack,
+  channels,
 }: DiscountCreateProps) => {
   const intl = useIntl();
 
@@ -38,8 +39,6 @@ export const DiscountCreatePage = ({
     loading: false,
     triggerChange: methods.trigger,
   });
-
-  console.log(methods.watch());
 
   const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
@@ -60,7 +59,7 @@ export const DiscountCreatePage = ({
               <DiscountName />
               <DiscountDescription />
               <DiscountDates />
-              <DiscountRules />
+              <DiscountRules channels={channels} />
             </form>
           </FormProvider>
         </DetailPageLayout.Content>

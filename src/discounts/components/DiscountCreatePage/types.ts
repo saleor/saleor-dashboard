@@ -1,3 +1,4 @@
+import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
 export interface Inputs {
@@ -17,6 +18,6 @@ export interface Rule {
   name: string;
   description: string;
   channels: Option[];
-  rewardValueType: string;
+  rewardValueType: RewardValueTypeEnum;
   rewardValue: number;
 }

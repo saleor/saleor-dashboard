@@ -18,6 +18,9 @@ export const RuleAccordion = ({ children, title }: RuleAccordionProps) => {
         borderWidth={1}
         borderStyle="solid"
         padding={4}
+        backgroundColor={
+          collapsedId === "ruleItem" ? "surfaceNeutralSubdued" : "plain"
+        }
       >
         <Accordion.Trigger>
           <Text variant="heading">{title}</Text>

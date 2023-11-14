@@ -1,5 +1,4 @@
 import { Inputs } from "@dashboard/discounts/components/DiscountCreatePage/types";
-import { DiscountType } from "@dashboard/discounts/components/DiscountRules/types";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController } from "react-hook-form";
@@ -8,14 +7,21 @@ import { useIntl } from "react-intl";
 import { messages } from "../../../../messages";
 import { DiscountTypeSwitch } from "../../../DiscountTypeSwitch";
 
-export const RuleReward = ({ index }: { index: number }) => {
+interface RuleRewardProps {
+  currencySymbol: string | null;
+  index: number;
+}
+
+export const RuleReward = ({ index, currencySymbol }: RuleRewardProps) => {
   const intl = useIntl();
+
   const { field: rewardTypeField } = useController<
     Inputs,
     `rules.${number}.rewardValueType`
   >({
     name: `rules.${index}.rewardValueType`,
   });
+
   const { field: rewardValueType } = useController<
     Inputs,
     `rules.${number}.rewardValue`
@@ -31,8 +37,8 @@ export const RuleReward = ({ index }: { index: number }) => {
       <Box display="flex" gap={4}>
         <DiscountTypeSwitch
           onChange={type => rewardTypeField.onChange(type)}
-          selected={rewardTypeField.value as DiscountType}
-          currencySymbol="EUR"
+          selected={rewardTypeField.value}
+          currencySymbol={currencySymbol}
         />
         <Box __flex="1">
           <Input

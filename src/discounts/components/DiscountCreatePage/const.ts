@@ -1,3 +1,5 @@
+import { RewardValueTypeEnum } from "@dashboard/graphql";
+
 import { Inputs, Rule } from "./types";
 
 export const initialFormValues: Inputs = {
@@ -18,5 +20,5 @@ export const initialRuleValues: Rule = {
   description: "",
   name: "",
   rewardValue: 0,
-  rewardValueType: "",
+  rewardValueType: RewardValueTypeEnum.PERCENTAGE,
 };

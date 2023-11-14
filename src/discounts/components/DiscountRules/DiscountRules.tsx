@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { ChannelFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray } from "react-hook-form";
@@ -10,7 +11,11 @@ import { AddButton } from "./componenets/AddButton";
 import { RulesList } from "./componenets/RulesList";
 import { messages } from "./messages";
 
-export const DiscountRules = () => {
+interface DiscountRulesProps {
+  channels: ChannelFragment[];
+}
+
+export const DiscountRules = ({ channels }: DiscountRulesProps) => {
   const intl = useIntl();
   const { append, fields: rules } = useFieldArray<Inputs, "rules">({
     name: "rules",
@@ -31,7 +36,7 @@ export const DiscountRules = () => {
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <RulesList rules={rules} />
+        <RulesList rules={rules} channels={channels} />
       </DashboardCard.Content>
     </DashboardCard>
   );
