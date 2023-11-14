@@ -6,7 +6,7 @@ import { AttributeInput } from "../Attributes";
 type ProductsToFilter = RelayToFlat<SearchProductsQuery["search"]>;
 type PagesToFilter = RelayToFlat<SearchPagesQuery["search"]>;
 
-export const filterProducts = (
+export const filterProductsByAttributeValues = (
   products: ProductsToFilter,
   attribute: AttributeInput,
 ): ProductsToFilter => {
@@ -30,7 +30,7 @@ export const filterProducts = (
   }
 };
 
-export const filterPages = (
+export const filterPagesByAttributeValues = (
   pages: PagesToFilter,
   attribute: AttributeInput,
 ): PagesToFilter => {

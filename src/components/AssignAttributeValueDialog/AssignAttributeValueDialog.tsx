@@ -9,7 +9,10 @@ import AssignProductDialog, {
 } from "../AssignProductDialog";
 import AssignVariantDialog from "../AssignVariantDialog";
 import { AttributeInput } from "../Attributes";
-import { filterPages, filterProducts } from "./utils";
+import {
+  filterPagesByAttributeValues,
+  filterProductsByAttributeValues,
+} from "./utils";
 
 const pagesMessages = defineMessages({
   confirmBtn: {
@@ -49,8 +52,8 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const filteredProducts = filterProducts(products, attribute);
-  const filteredPages = filterPages(pages, attribute);
+  const filteredProducts = filterProductsByAttributeValues(products, attribute);
+  const filteredPages = filterPagesByAttributeValues(pages, attribute);
 
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:

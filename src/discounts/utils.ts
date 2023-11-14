@@ -1,12 +1,11 @@
 import { SaleDetailsQuery, VoucherDetailsQuery } from "@dashboard/graphql";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-type SearchCategoriesOpts = ReturnType<typeof useCategorySearch>["result"];
-type SearchCollectionOpts = ReturnType<typeof useCollectionSearch>["result"];
-type SearchProductsOpts = ReturnType<typeof useProductSearch>["result"];
+import {
+  SearchCategoriesOpts,
+  SearchCollectionOpts,
+  SearchProductsOpts,
+} from "./types";
 
 type SaleOrVoucherData = SaleDetailsQuery | VoucherDetailsQuery;
 
