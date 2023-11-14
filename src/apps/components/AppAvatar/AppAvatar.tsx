@@ -2,10 +2,11 @@
 import { AppLogo } from "@dashboard/apps/types";
 import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
 import React from "react";
-
+type Logo = AppLogo | undefined;
+type Size = 8 | 12;
 export const AppAvatar: React.FC<{
-  logo?: AppLogo | undefined;
-  size?: 8 | 12;
+  logo?: Logo;
+  size?: Size;
 }> = ({ logo, size = 8 }) =>
   logo ? (
     <Box
