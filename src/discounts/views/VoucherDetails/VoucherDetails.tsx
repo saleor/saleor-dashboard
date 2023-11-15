@@ -25,6 +25,11 @@ import {
   VoucherUrlQueryParams,
 } from "@dashboard/discounts/urls";
 import {
+  getFilteredCategories,
+  getFilteredCollections,
+  getFilteredProducts,
+} from "@dashboard/discounts/utils";
+import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVoucherCataloguesAddMutation,
@@ -50,7 +55,6 @@ import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { DialogContentText } from "@material-ui/core";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -442,9 +446,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         toggleAll={toggleAll}
       />
       <AssignCategoriesDialog
-        categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)?.filter(
-          suggestedCategory => suggestedCategory.id,
-        )}
+        categories={getFilteredCategories(data, searchCategoriesOpts)}
         confirmButtonState={voucherCataloguesAddOpts.status}
         hasMore={searchCategoriesOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-category"}
@@ -466,9 +468,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         }
       />
       <AssignCollectionDialog
-        collections={mapEdgesToItems(
-          searchCollectionsOpts?.data?.search,
-        )?.filter(suggestedCategory => suggestedCategory.id)}
+        collections={getFilteredCollections(data, searchCollectionsOpts)}
         confirmButtonState={voucherCataloguesAddOpts.status}
         hasMore={searchCollectionsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-collection"}
@@ -529,9 +529,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             },
           })
         }
-        products={mapEdgesToItems(searchProductsOpts?.data?.search)?.filter(
-          suggestedProduct => suggestedProduct.id,
-        )}
+        products={getFilteredProducts(data, searchProductsOpts)}
       />
       <ActionDialog
         open={params.action === "unassign-category" && canOpenBulkActionDialog}
