@@ -4,11 +4,13 @@ import React from "react";
 import { useController } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Inputs } from "../../types";
+import { CreateDiscoutFormData } from "../../types";
 
 export const DiscountName = () => {
   const intl = useIntl();
-  const { field } = useController<Inputs, "name">({ name: "name" });
+  const { field } = useController<CreateDiscoutFormData, "name">({
+    name: "name",
+  });
 
   return (
     <DashboardCard>

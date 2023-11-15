@@ -1,4 +1,4 @@
-import { Inputs } from "@dashboard/discounts/components/DiscountCreatePage/types";
+import { CreateDiscoutFormData } from "@dashboard/discounts/components/DiscountCreatePage/types";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController } from "react-hook-form";
@@ -16,14 +16,14 @@ export const RuleReward = ({ index, currencySymbol }: RuleRewardProps) => {
   const intl = useIntl();
 
   const { field: rewardTypeField } = useController<
-    Inputs,
+    CreateDiscoutFormData,
     `rules.${number}.rewardValueType`
   >({
     name: `rules.${index}.rewardValueType`,
   });
 
   const { field: rewardValueType } = useController<
-    Inputs,
+    CreateDiscoutFormData,
     `rules.${number}.rewardValue`
   >({
     name: `rules.${index}.rewardValue`,

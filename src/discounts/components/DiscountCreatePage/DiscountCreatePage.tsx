@@ -14,7 +14,7 @@ import { DiscountDates } from "./components/DiscountDates/DiscountDates";
 import { DiscountDescription } from "./components/DiscountDescription";
 import { DiscountName } from "./components/DiscountName";
 import { initialFormValues } from "./const";
-import { Inputs } from "./types";
+import { CreateDiscoutFormData } from "./types";
 
 interface DiscountCreateProps {
   channels: ChannelFragment[];
@@ -29,7 +29,7 @@ export const DiscountCreatePage = ({
 }: DiscountCreateProps) => {
   const intl = useIntl();
 
-  const methods = useForm<Inputs>({
+  const methods = useForm<CreateDiscoutFormData>({
     mode: "onBlur",
     values: initialFormValues,
   });
@@ -40,9 +40,8 @@ export const DiscountCreatePage = ({
     triggerChange: methods.trigger,
   });
 
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
-
-  console.log(methods.watch("rules"));
+  const onSubmit: SubmitHandler<CreateDiscoutFormData> = data =>
+    console.log(data);
 
   return (
     <RichTextContext.Provider value={richText}>
@@ -69,7 +68,7 @@ export const DiscountCreatePage = ({
         <Savebar
           disabled={disabled}
           onCancel={onBack}
-          onSubmit={() => {}}
+          onSubmit={methods.handleSubmit(onSubmit)}
           state={"default"}
         />
       </DetailPageLayout>

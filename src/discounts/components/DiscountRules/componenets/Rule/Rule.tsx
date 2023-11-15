@@ -1,5 +1,5 @@
 import { Multiselect } from "@dashboard/components/Combobox";
-import { Inputs } from "@dashboard/discounts/components/DiscountCreatePage/types";
+import { CreateDiscoutFormData } from "@dashboard/discounts/components/DiscountCreatePage/types";
 import { ChannelFragment } from "@dashboard/graphql";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
@@ -19,13 +19,16 @@ interface RuleProps {
 }
 
 export const Rule = ({ channels, index }: RuleProps) => {
-  const { control, watch } = useFormContext<Inputs>();
-  const { field: nameField } = useController<Inputs, `rules.${number}.name`>({
+  const { control, watch } = useFormContext<CreateDiscoutFormData>();
+  const { field: nameField } = useController<
+    CreateDiscoutFormData,
+    `rules.${number}.name`
+  >({
     name: `rules.${index}.name`,
     control,
   });
   const { field: channelsfield } = useController<
-    Inputs,
+    CreateDiscoutFormData,
     `rules.${number}.channels`
   >({
     name: `rules.${index}.channels`,

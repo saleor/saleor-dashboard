@@ -1,7 +1,7 @@
 import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
-export interface Inputs {
+export interface CreateDiscoutFormData {
   name: string;
   description: string;
   dates: {

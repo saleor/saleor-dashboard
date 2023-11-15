@@ -1,8 +1,8 @@
 import { RewardValueTypeEnum } from "@dashboard/graphql";
 
-import { Condition, Inputs, Rule } from "./types";
+import { Condition, CreateDiscoutFormData, Rule } from "./types";
 
-export const initialFormValues: Inputs = {
+export const initialFormValues: CreateDiscoutFormData = {
   name: "",
   description: "",
   dates: {

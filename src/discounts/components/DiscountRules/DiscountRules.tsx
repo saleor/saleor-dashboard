@@ -6,7 +6,7 @@ import { useFieldArray } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { initialRuleValues } from "../DiscountCreatePage/const";
-import { Inputs } from "../DiscountCreatePage/types";
+import { CreateDiscoutFormData } from "../DiscountCreatePage/types";
 import { AddButton } from "./componenets/AddButton";
 import { RulesList } from "./componenets/RulesList";
 import { messages } from "./messages";
@@ -17,7 +17,10 @@ interface DiscountRulesProps {
 
 export const DiscountRules = ({ channels }: DiscountRulesProps) => {
   const intl = useIntl();
-  const { append, fields: rules } = useFieldArray<Inputs, "rules">({
+  const { append, fields: rules } = useFieldArray<
+    CreateDiscoutFormData,
+    "rules"
+  >({
     name: "rules",
   });
 

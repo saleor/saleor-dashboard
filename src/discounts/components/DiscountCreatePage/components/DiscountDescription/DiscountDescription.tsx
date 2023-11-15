@@ -6,13 +6,13 @@ import React from "react";
 import { useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
-import { Inputs } from "../../types";
+import { CreateDiscoutFormData } from "../../types";
 
 export const DiscountDescription = () => {
   const { defaultValue, editorRef, isReadyForMount, handleChange } =
     useRichTextContext();
 
-  const { field } = useController<Inputs, "description">({
+  const { field } = useController<CreateDiscoutFormData, "description">({
     name: "description",
   });
 
