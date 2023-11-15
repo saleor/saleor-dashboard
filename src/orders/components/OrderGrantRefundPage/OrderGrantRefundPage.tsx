@@ -72,7 +72,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
 
   const totalSelectedPrice = calculateTotalPrice(state, order);
 
-  const handleSubmit = (e: React.FormEvent<any>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.stopPropagation();
     e.preventDefault();
     submit();
