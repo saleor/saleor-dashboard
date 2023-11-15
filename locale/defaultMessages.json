@@ -5525,6 +5525,10 @@
   "aKSUWR": {
     "string": "Cannot create transaction to non-existing order"
   },
+  "aMWJ7/": {
+    "context": "local error",
+    "string": "This field cannot be blank for a new webhook"
+  },
   "aMwxYb": {
     "string": "Countries"
   },
