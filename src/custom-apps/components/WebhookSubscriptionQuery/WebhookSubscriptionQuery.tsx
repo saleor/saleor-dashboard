@@ -2,9 +2,12 @@
 import "graphiql/graphiql.min.css";
 
 import CardTitle from "@dashboard/components/CardTitle";
+import { WebhookErrorFragment } from "@dashboard/graphql";
+import { getFormErrors } from "@dashboard/utils/errors";
 import { useExplorerPlugin } from "@graphiql/plugin-explorer";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Card, CardContent } from "@material-ui/core";
+import clsx from "clsx";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -24,6 +27,7 @@ interface WebhookSubscriptionQueryProps {
   query: any;
   setQuery: React.Dispatch<any>;
   data: WebhookFormData;
+  errors: WebhookErrorFragment[];
 }
 
 const fetcher = createGraphiQLFetcher({
@@ -31,6 +35,7 @@ const fetcher = createGraphiQLFetcher({
 });
 
 const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
+  errors,
   query,
   setQuery,
   data,
@@ -45,9 +50,15 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
 
   const classes = useStyles();
 
+  const formErrors = getFormErrors(["subscriptionQuery"], errors);
+
   return (
     <Card className={classes.card}>
-      <CardTitle title={intl.formatMessage(messages.title)} />
+      <CardTitle
+        title={intl.formatMessage(messages.title)}
+        subtitle={formErrors.subscriptionQuery?.message}
+        className={clsx(formErrors.subscriptionQuery && classes.error)}
+      />
       <CardContent className={classes.cardContent}>
         <GraphiQL
           data-test-id="graphiql-webhook"

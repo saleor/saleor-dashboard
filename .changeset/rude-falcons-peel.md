@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix language switcher
+Improve channel delete dialogs
