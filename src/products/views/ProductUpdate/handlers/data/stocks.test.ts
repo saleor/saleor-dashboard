@@ -20,7 +20,7 @@ describe("getStockData", () => {
     ];
 
     // Act
-    const stocks = getStockData(changeData, 1, []);
+    const stocks = getStockData(changeData, 1);
 
     // Assert
     expect(stocks).toEqual([
@@ -42,7 +42,7 @@ describe("getStockData", () => {
     ];
 
     // Act
-    const stocks = getStockData(changeData, 1, []);
+    const stocks = getStockData(changeData, 1);
 
     // Assert
     expect(stocks).toEqual([]);
@@ -55,7 +55,7 @@ describe("getStockData", () => {
     ];
 
     // Act
-    const stocks = getStockData(changeData, 1, []);
+    const stocks = getStockData(changeData, 1);
 
     // Assert
     expect(stocks).toEqual([]);
@@ -86,7 +86,7 @@ describe("getVaraintUpdateStockData", () => {
     ];
 
     // Act
-    const variantStocks = getVaraintUpdateStockData(changeData, 1, [], {
+    const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
     } as ProductFragment["variants"][number]);
 
@@ -123,7 +123,7 @@ describe("getVaraintUpdateStockData", () => {
     ];
 
     // Act
-    const variantStocks = getVaraintUpdateStockData(changeData, 1, [], {
+    const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
     } as ProductFragment["variants"][number]);
 
@@ -146,7 +146,7 @@ describe("getVaraintUpdateStockData", () => {
     ];
 
     // Act
-    const variantStocks = getVaraintUpdateStockData(changeData, 1, [], {
+    const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
     } as ProductFragment["variants"][number]);
 
@@ -174,7 +174,7 @@ describe("getVaraintUpdateStockData", () => {
     ];
 
     // Act
-    const variantStocks = getVaraintUpdateStockData(changeData, 1, [], {
+    const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
     } as ProductFragment["variants"][number]);
 
@@ -189,7 +189,7 @@ describe("getVaraintUpdateStockData", () => {
     ];
 
     // Act
-    const variantStocks = getVaraintUpdateStockData(changeData, 1, [], {
+    const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
     } as ProductFragment["variants"][number]);
 

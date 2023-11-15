@@ -117,7 +117,7 @@ export function getData({
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
   const dataRow = added.includes(row)
     ? undefined
-    : variants[row + removed.filter(r => r <= row).length];
+    : variants.filter((_, index) => !removed.includes(index))[row];
 
   switch (columnId) {
     case "name":

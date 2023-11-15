@@ -23,7 +23,7 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   name: string;
   editorRef:
     | React.RefCallback<EditorCore>
-    | React.MutableRefObject<EditorCore>
+    | React.MutableRefObject<EditorCore | null>
     | null;
   // onChange with value shouldn't be used due to issues with React and EditorJS integration
   onChange?: () => void;

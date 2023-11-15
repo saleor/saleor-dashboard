@@ -140,6 +140,7 @@ export const voucherUpdate = gql`
     voucherUpdate(id: $id, input: $input) {
       errors {
         ...DiscountError
+        voucherCodes
       }
       voucher {
         ...Voucher
@@ -199,6 +200,7 @@ export const voucherCreate = gql`
     voucherCreate(input: $input) {
       errors {
         ...DiscountError
+        voucherCodes
       }
       voucher {
         ...Voucher
@@ -212,6 +214,7 @@ export const voucherDelete = gql`
     voucherDelete(id: $id) {
       errors {
         ...DiscountError
+        voucherCodes
       }
     }
   }

@@ -3,10 +3,9 @@ import {
   ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import useForm from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -18,14 +17,6 @@ interface VoucherCodesManualDialogProps {
   onSubmit: (code: string) => void;
 }
 
-interface FormData {
-  code: string;
-}
-
-const intialData: FormData = {
-  code: "",
-};
-
 export const VoucherCodesManualDialog = ({
   open,
   confirmButtonTransitionState,
@@ -33,21 +24,27 @@ export const VoucherCodesManualDialog = ({
   onSubmit,
 }: VoucherCodesManualDialogProps) => {
   const intl = useIntl();
-
-  const { data, change, submit, reset } = useForm(
-    intialData,
-    ({ code }: FormData) => onSubmit(code),
-  );
+  const [error, setError] = useState("");
+  const [code, setCode] = useState("");
 
   const handleModalClose = () => {
     onClose();
-    reset();
+    setCode("");
+    setError("");
   };
 
   const handleSubmit = async () => {
-    await submit();
-    onClose();
-    reset();
+    try {
+      await onSubmit(code);
+      onClose();
+      setCode("");
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        if (e.message === "Code already exists") {
+          setError(intl.formatMessage(messages.codeExists));
+        }
+      }
+    }
   };
 
   return (
@@ -58,12 +55,18 @@ export const VoucherCodesManualDialog = ({
         </DashboardModal.Title>
         <Box display="grid" gap={3} __width={390}>
           <Input
+            data-test-id="enter-code-input"
             name="code"
             type="text"
             size="small"
             label={intl.formatMessage(messages.enterCode)}
-            value={data.code}
-            onChange={change}
+            value={code}
+            error={!!error}
+            helperText={error}
+            onChange={e => {
+              setCode(e.target.value);
+              setError("");
+            }}
           />
         </Box>
         <DashboardModal.Actions>
@@ -71,6 +74,7 @@ export const VoucherCodesManualDialog = ({
             {intl.formatMessage(buttonMessages.back)}
           </Button>
           <ConfirmButton
+            data-test-id="confirm-button"
             transitionState={confirmButtonTransitionState}
             onClick={handleSubmit}
           >

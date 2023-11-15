@@ -6,6 +6,7 @@ import {
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
@@ -87,9 +88,25 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     },
   });
 
+  const handleFormValidate = (data: VoucherDetailsPageFormData) => {
+    if (data.codes.length === 0) {
+      notify({
+        status: "error",
+        text: intl.formatMessage({
+          id: "GTCg9O",
+          defaultMessage: "You must add at least one voucher code",
+        }),
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleCreate = createHandler(
     variables => voucherCreate({ variables }),
     updateChannels,
+    handleFormValidate,
   );
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,

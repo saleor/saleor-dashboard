@@ -10,13 +10,9 @@ import {
   isCurrentRow,
 } from "@dashboard/products/utils/datagrid";
 
-export function getStockData(
-  data: DatagridChange[],
-  currentIndex: number,
-  removedIds: number[],
-) {
+export function getStockData(data: DatagridChange[], currentIndex: number) {
   return data
-    .filter(change => byHavingStockColumn(change, currentIndex, removedIds))
+    .filter(change => byHavingStockColumn(change, currentIndex))
     .map(toStockData)
     .filter(byStockWithQuantity);
 }
@@ -24,11 +20,10 @@ export function getStockData(
 export function getVaraintUpdateStockData(
   data: DatagridChange[],
   currentIndex: number,
-  removedIds: number[],
   variant: ProductFragment["variants"][number],
 ) {
   return data
-    .filter(change => byHavingStockColumn(change, currentIndex, removedIds))
+    .filter(change => byHavingStockColumn(change, currentIndex))
     .map(toStockData)
     .reduce<ProductVariantStocksUpdateInput>(toUpdateStockData(variant), {
       create: [],
@@ -77,13 +72,8 @@ function byStockWithQuantity(stock: { quantity: unknown }) {
   return stock.quantity !== numberCellEmptyValue;
 }
 
-function byHavingStockColumn(
-  change: DatagridChange,
-  currentIndex: number,
-  removedIds: number[],
-) {
+function byHavingStockColumn(change: DatagridChange, currentIndex: number) {
   return (
-    getColumnStock(change.column) &&
-    isCurrentRow(change.row, currentIndex, removedIds)
+    getColumnStock(change.column) && isCurrentRow(change.row, currentIndex)
   );
 }

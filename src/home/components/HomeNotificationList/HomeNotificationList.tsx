@@ -1,5 +1,6 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
+import { HomeData, Notifications } from "@dashboard/home/types";
 import { List } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -13,9 +14,7 @@ import {
 } from "./utils";
 
 interface HomeNotificationTableProps {
-  ordersToCapture: number;
-  ordersToFulfill: number;
-  productsOutOfStock: number;
+  notifications: HomeData<Notifications>;
   createNewChannelHref: string;
   ordersToFulfillHref: string;
   ordersToCaptureHref: string;
@@ -24,16 +23,19 @@ interface HomeNotificationTableProps {
 }
 
 export const HomeNotificationList = ({
+  notifications,
   createNewChannelHref,
   ordersToFulfillHref,
   ordersToCaptureHref,
   productsOutOfStockHref,
-  ordersToCapture,
-  ordersToFulfill,
-  productsOutOfStock,
+
   noChannel,
 }: HomeNotificationTableProps) => {
   const intl = useIntl();
+
+  if (notifications.hasError) {
+    return null;
+  }
 
   return (
     <List>
@@ -41,7 +43,10 @@ export const HomeNotificationList = ({
         <RequirePermissions
           requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
         >
-          <HomeNotificationListItem linkUrl={createNewChannelHref}>
+          <HomeNotificationListItem
+            loading={notifications.loading}
+            linkUrl={createNewChannelHref}
+          >
             {intl.formatMessage(messages.createNewChannel)}
           </HomeNotificationListItem>
         </RequirePermissions>
@@ -49,17 +54,22 @@ export const HomeNotificationList = ({
 
       <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
         <HomeNotificationListItem
+          loading={notifications.loading}
           linkUrl={ordersToFulfillHref}
           dataTestId="orders-to-fulfill"
         >
-          {getOrderToFulfillText(ordersToFulfill, intl)}
+          {getOrderToFulfillText(notifications.data.ordersToFulfill ?? 0, intl)}
         </HomeNotificationListItem>
 
         <HomeNotificationListItem
+          loading={notifications.loading}
           linkUrl={ordersToCaptureHref}
           dataTestId="orders-to-capture"
         >
-          {getOrdersToCaptureText(ordersToCapture, intl)}
+          {getOrdersToCaptureText(
+            notifications.data.ordersToCapture ?? 0,
+            intl,
+          )}
         </HomeNotificationListItem>
       </RequirePermissions>
 
@@ -67,10 +77,14 @@ export const HomeNotificationList = ({
         requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
       >
         <HomeNotificationListItem
+          loading={notifications.loading}
           linkUrl={productsOutOfStockHref}
           dataTestId="products-out-of-stock"
         >
-          {getProductsOutOfStockText(productsOutOfStock, intl)}
+          {getProductsOutOfStockText(
+            notifications.data.productsOutOfStock ?? 0,
+            intl,
+          )}
         </HomeNotificationListItem>
       </RequirePermissions>
     </List>

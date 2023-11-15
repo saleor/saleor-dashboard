@@ -9,4 +9,8 @@ export const messages = defineMessages({
     defaultMessage: "Enter usage",
     id: "qPSWmL",
   },
+  codeExists: {
+    id: "dHAwu8",
+    defaultMessage: "Code already exists",
+  },
 });
