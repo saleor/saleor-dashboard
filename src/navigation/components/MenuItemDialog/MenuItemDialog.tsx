@@ -208,7 +208,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     onQueryChange(query);
   };
 
-  const handleSelectChange = (event: React.ChangeEvent<any>) => {
+  const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const menuItemData = getMenuItemData(value);
 

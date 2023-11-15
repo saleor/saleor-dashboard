@@ -25,7 +25,9 @@ export const ColumnPickerSearch: React.FC<ColumnPickerSearchProps> = ({
       time={500}
     >
       {debounceSearchChange => {
-        const handleSearchChange = (event: React.ChangeEvent<any>) => {
+        const handleSearchChange = (
+          event: React.ChangeEvent<HTMLInputElement>,
+        ) => {
           const value = event.target.value ?? "";
           setQuery(value);
           debounceSearchChange(value);

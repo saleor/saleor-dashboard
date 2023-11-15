@@ -71,7 +71,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
       : getPageErrorMessage(error as PageErrorFragment, intl);
   };
 
-  const handleSlugChange = (event: React.ChangeEvent<any>) => {
+  const handleSlugChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
     if (value === "" || SLUG_REGEX.test(value)) {
