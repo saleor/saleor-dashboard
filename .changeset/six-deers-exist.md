@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-fix pt-br locale
+Add missing units for attributes
