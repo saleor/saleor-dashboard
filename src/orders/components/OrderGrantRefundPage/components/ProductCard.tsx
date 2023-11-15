@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import Money from "@dashboard/components/Money";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderLineGrantRefundFragment } from "@dashboard/graphql";
@@ -75,6 +76,9 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
           <TableCell className={classes.colProduct}>
             <FormattedMessage {...productCardMessages.product} />
           </TableCell>
+          <TableCell className={classes.colUnitPrice}>
+            <FormattedMessage {...productCardMessages.unitPrice} />
+          </TableCell>
           <TableCell className={classes.colQuantity}>
             <FormattedMessage {...productCardMessages.quantity} />
           </TableCell>
@@ -99,6 +103,9 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                       <span>{line.variantName}</span>
                     </div>
                   </TableCellAvatar>
+                  <TableCell className={classes.colUnitPrice}>
+                    <Money money={line.unitPrice.gross} />
+                  </TableCell>
                   <TableCell className={classes.colQuantity}>
                     {line.quantity}
                   </TableCell>
