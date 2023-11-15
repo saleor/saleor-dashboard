@@ -68,7 +68,7 @@ export const Rule = ({ channels, index }: RuleProps) => {
 
           {currencySymbol ? (
             <>
-              <RuleConditions />
+              <RuleConditions index={index} />
 
               <RuleReward index={index} currencySymbol={currencySymbol} />
             </>

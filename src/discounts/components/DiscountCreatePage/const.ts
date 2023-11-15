@@ -1,6 +1,6 @@
 import { RewardValueTypeEnum } from "@dashboard/graphql";
 
-import { Inputs, Rule } from "./types";
+import { Condition, Inputs, Rule } from "./types";
 
 export const initialFormValues: Inputs = {
   name: "",
@@ -15,10 +15,17 @@ export const initialFormValues: Inputs = {
   rules: [],
 };
 
+export const intialConditionValues: Condition = {
+  type: "product",
+  condition: "is",
+  values: [],
+};
+
 export const initialRuleValues: Rule = {
   channels: [],
   description: "",
   name: "",
   rewardValue: 0,
+  conditions: [{ ...intialConditionValues }],
   rewardValueType: RewardValueTypeEnum.PERCENTAGE,
 };

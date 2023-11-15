@@ -18,6 +18,13 @@ export interface Rule {
   name: string;
   description: string;
   channels: Option[];
+  conditions: Condition[];
   rewardValueType: RewardValueTypeEnum;
   rewardValue: number;
+}
+
+export interface Condition {
+  type: "product" | "category" | "collection" | "variant";
+  condition: "is";
+  values: Option[];
 }

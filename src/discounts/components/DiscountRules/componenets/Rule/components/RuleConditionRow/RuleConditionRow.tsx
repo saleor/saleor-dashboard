@@ -1,19 +1,35 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
+import { Inputs } from "@dashboard/discounts/components/DiscountCreatePage/types";
 import { Box, Button, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
+import { useController } from "react-hook-form";
 
-import { DiscountCondition } from "../../../../types";
 import { discountConditionTypes } from "./const";
 
 interface DiscountConditionRowProps {
-  condition: DiscountCondition;
+  ruleIndex: number;
+  conditionIndex: number;
   onRemove: () => void;
 }
 
 export const RuleConditionRow = ({
-  condition,
+  ruleIndex,
+  conditionIndex,
   onRemove,
 }: DiscountConditionRowProps) => {
+  const { field: typeField } = useController<
+    Inputs,
+    `rules.${number}.conditions.${number}.type`
+  >({
+    name: `rules.${ruleIndex}.conditions.${conditionIndex}.type`,
+  });
+  const { field: valuesField } = useController<
+    Inputs,
+    `rules.${number}.conditions.${number}.values`
+  >({
+    name: `rules.${ruleIndex}.conditions.${conditionIndex}.values`,
+  });
+
   return (
     <Box
       display="grid"
@@ -24,12 +40,13 @@ export const RuleConditionRow = ({
     >
       <Combobox
         value={{
-          label: condition.type,
-          value: condition.type,
+          label: typeField.value,
+          value: typeField.value,
         }}
         fetchOptions={() => {}}
         options={discountConditionTypes}
-        onChange={() => {}}
+        onChange={typeField.onChange}
+        onBlur={typeField.onBlur}
       />
 
       <Select
@@ -45,10 +62,14 @@ export const RuleConditionRow = ({
       />
 
       <Multiselect
-        value={condition.values}
+        value={valuesField.value}
         fetchOptions={() => {}}
-        options={[]}
-        onChange={() => {}}
+        options={[
+          { label: "test", value: "test" },
+          { label: "test2", value: "test2" },
+        ]}
+        onChange={valuesField.onChange}
+        onBlur={valuesField.onBlur}
       />
 
       <Button variant="tertiary" icon={<RemoveIcon />} onClick={onRemove} />

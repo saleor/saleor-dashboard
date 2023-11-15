@@ -43,6 +43,7 @@ export const RuleReward = ({ index, currencySymbol }: RuleRewardProps) => {
         <Box __flex="1">
           <Input
             {...rewardValueType}
+            type="number"
             label={intl.formatMessage(messages.discountValue)}
           />
         </Box>

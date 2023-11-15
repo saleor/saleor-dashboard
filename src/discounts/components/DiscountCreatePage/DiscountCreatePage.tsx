@@ -42,6 +42,8 @@ export const DiscountCreatePage = ({
 
   const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
+  console.log(methods.watch("rules"));
+
   return (
     <RichTextContext.Provider value={richText}>
       <DetailPageLayout gridTemplateColumns={1}>
