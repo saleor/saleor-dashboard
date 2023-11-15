@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import Money from "@dashboard/components/Money";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -90,16 +89,19 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
           {renderCollection(
             lines,
             line => {
+              if (!line) {
+                return null;
+              }
               const stateLine = state.lines.get(line.id);
 
               return (
-                <TableRowLink key={line?.id}>
+                <TableRowLink key={line.id}>
                   <TableCellAvatar
-                    thumbnail={line?.thumbnail?.url}
+                    thumbnail={line.thumbnail?.url}
                     className={classes.colProduct}
                   >
                     <div className={classes.productName}>
-                      <span>{line?.productName}</span>
+                      <span>{line.productName}</span>
                       <span>{line.variantName}</span>
                     </div>
                   </TableCellAvatar>
@@ -116,11 +118,11 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                       type="number"
                       max={stateLine?.availableQuantity}
                       min={0}
-                      data-test-id={"quantityInput" + line?.id}
+                      data-test-id={"quantityInput" + line.id}
                       value={stateLine?.selectedQuantity ?? 0}
                       onChange={getHandleAmountChange(line)}
                       endAdornment={
-                        line?.quantity && (
+                        line.quantity && (
                           <Box
                             fontSize="bodySmall"
                             whiteSpace="nowrap"
