@@ -49,8 +49,8 @@ jobs:
 
       - name: Deploy master staging
         run: |
-          aws s3 sync build/dashboard s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/static/
-          aws s3 cp build/dashboard/index.html s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
 
