@@ -217,7 +217,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     formData: ShippingZoneRateUpdateFormData,
   ): Promise<unknown[]> => {
     const getUpdateVariables =
-      rate!.type === ShippingMethodTypeEnum.PRICE
+      rate.type === ShippingMethodTypeEnum.PRICE
         ? getUpdateShippingPriceRateVariables
         : getUpdateShippingWeightRateVariables;
     const response = await updateShippingRate({
