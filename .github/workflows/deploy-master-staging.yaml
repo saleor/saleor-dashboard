@@ -56,8 +56,8 @@ jobs:
 
       - name: Deploy fake production
         run: |
-          aws s3 sync build/dashboard s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/static/
-          aws s3 cp build/dashboard/index.html s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
 
