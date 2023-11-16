@@ -14,6 +14,7 @@ import { render } from "react-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
+import { useHistory, useLocation } from "react-router";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { AppsSectionRoot } from "./apps";
@@ -154,7 +155,9 @@ const Routes: React.FC = () => {
   const homePageLoading = (authenticated && !channelLoaded) || authenticating;
 
   const { isAppPath } = useLocationState();
-
+  const location = useLocation();
+  const history = useHistory();
+  const currentRoute = location.pathname;
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
@@ -178,7 +181,7 @@ const Routes: React.FC = () => {
                 fallbackRender={({ resetErrorBoundary }) => (
                   <ErrorPage
                     onBack={resetErrorBoundary}
-                    onRefresh={() => window.location.reload()}
+                    onRefresh={() => history.replace(currentRoute)}
                   />
                 )}
               >

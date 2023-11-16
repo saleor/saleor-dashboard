@@ -6,6 +6,7 @@ import { capitalize } from "@dashboard/misc";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useHistory, useLocation } from "react-router";
 
 interface StaffPreferencesProps {
   locale: Locale;
@@ -17,6 +18,9 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({
   onLocaleChange,
 }) => {
   const intl = useIntl();
+  const location = useLocation();
+  const history = useHistory();
+  const currentRoute = location.pathname;
 
   const handleLocaleChange = async (locale: Locale) => {
     await onLocaleChange(locale);
@@ -27,7 +31,8 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({
       Migration to auth-sdk can solve it.
       Ref: https://github.com/saleor/saleor-dashboard/issues/4340
     */
-    window.location.reload();
+
+    history.replace(currentRoute);
   };
 
   return (
