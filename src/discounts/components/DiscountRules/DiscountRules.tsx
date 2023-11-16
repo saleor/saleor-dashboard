@@ -13,9 +13,13 @@ import { messages } from "./messages";
 
 interface DiscountRulesProps {
   channels: ChannelFragment[];
+  onRuleSubmit?: (index: number) => void;
 }
 
-export const DiscountRules = ({ channels }: DiscountRulesProps) => {
+export const DiscountRules = ({
+  channels,
+  onRuleSubmit,
+}: DiscountRulesProps) => {
   const intl = useIntl();
   const { append, fields: rules } = useFieldArray<
     CreateDiscoutFormData,
@@ -39,7 +43,11 @@ export const DiscountRules = ({ channels }: DiscountRulesProps) => {
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <RulesList rules={rules} channels={channels} />
+        <RulesList
+          rules={rules}
+          channels={channels}
+          onRuleSubmit={onRuleSubmit}
+        />
       </DashboardCard.Content>
     </DashboardCard>
   );

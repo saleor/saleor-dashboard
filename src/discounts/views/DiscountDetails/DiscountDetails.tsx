@@ -1,7 +1,9 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { DiscountCreatePage } from "@dashboard/discounts/components/DiscountCreatePage";
-import { DiscountUrlQueryParams } from "@dashboard/discounts/urls";
+import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage";
+import { discount } from "@dashboard/discounts/fixtures";
+import { DiscountUrlQueryParams, saleListUrl } from "@dashboard/discounts/urls";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -11,17 +13,23 @@ interface DiscountDetailsProps {
   params: DiscountUrlQueryParams;
 }
 
-export const DiscountDetails = (props: DiscountDetailsProps) => {
+export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const { availableChannels } = useAppChannel(false);
+  const navigate = useNavigator();
   const intl = useIntl();
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
-      <DiscountCreatePage
+      <DiscountDetailsPage
         disabled={false}
-        onBack={() => {}}
+        onBack={() => {
+          navigate(saleListUrl());
+        }}
         channels={availableChannels}
+        discount={discount}
+        onSubmit={() => {}} // To be implemented
+        onRuleSubmit={() => {}} // To be implemented
       />
     </>
   );

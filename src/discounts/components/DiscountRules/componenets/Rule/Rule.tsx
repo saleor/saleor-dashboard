@@ -1,11 +1,13 @@
 import { Multiselect } from "@dashboard/components/Combobox";
 import { CreateDiscoutFormData } from "@dashboard/discounts/components/DiscountCreatePage/types";
 import { ChannelFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { Box, Input, Option } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Option } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
+import { useIntl } from "react-intl";
 
 import { getCurencySymbol } from "../../utils";
 import { RuleAccordion } from "./components/RuleAccordion/RuleAccordion";
@@ -16,9 +18,11 @@ import { RuleReward } from "./components/RuleReward";
 interface RuleProps {
   channels: ChannelFragment[];
   index: number;
+  onSubmit?: (index: number) => void;
 }
 
-export const Rule = ({ channels, index }: RuleProps) => {
+export const Rule = ({ channels, index, onSubmit }: RuleProps) => {
+  const intl = useIntl();
   const { control, watch } = useFormContext<CreateDiscoutFormData>();
   const { field: nameField } = useController<
     CreateDiscoutFormData,
@@ -76,6 +80,13 @@ export const Rule = ({ channels, index }: RuleProps) => {
               <RuleReward index={index} currencySymbol={currencySymbol} />
             </>
           ) : null}
+          {onSubmit && (
+            <Box display="flex" justifyContent="flex-end">
+              <Button variant="secondary" onClick={() => onSubmit(index)}>
+                {intl.formatMessage(buttonMessages.save)}
+              </Button>
+            </Box>
+          )}
         </Box>
       </RuleAccordion>
     </RichTextContext.Provider>

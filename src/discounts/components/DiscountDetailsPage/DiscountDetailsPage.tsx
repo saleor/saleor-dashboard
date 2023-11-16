@@ -7,33 +7,44 @@ import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import React from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useIntl } from "react-intl";
 
+import { DiscountDates } from "../DiscountCreatePage/components/DiscountDates";
+import { DiscountDescription } from "../DiscountCreatePage/components/DiscountDescription";
+import { DiscountName } from "../DiscountCreatePage/components/DiscountName";
+import { CreateDiscoutFormData, Rule } from "../DiscountCreatePage/types";
 import { DiscountRules } from "../DiscountRules";
-import { DiscountDates } from "./components/DiscountDates/DiscountDates";
-import { DiscountDescription } from "./components/DiscountDescription";
-import { DiscountName } from "./components/DiscountName";
-import { initialFormValues } from "./const";
-import { CreateDiscoutFormData } from "./types";
 
-interface DiscountCreateProps {
+interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
   disabled: boolean;
   onBack: () => void;
   onSubmit: (data: CreateDiscoutFormData) => void;
+  onRuleSubmit: (ruleData: Rule) => void;
+  discount: any; // TODO: add type when handle API logic
 }
 
-export const DiscountCreatePage = ({
+export const DiscountDetailsPage = ({
+  channels,
   disabled,
   onBack,
-  channels,
+  discount,
   onSubmit,
-}: DiscountCreateProps) => {
-  const intl = useIntl();
-
+  onRuleSubmit,
+}: DiscountDetailsPageProps) => {
   const methods = useForm<CreateDiscoutFormData>({
     mode: "onBlur",
-    values: initialFormValues,
+    values: {
+      dates: {
+        endDate: discount?.endDate,
+        startDate: discount?.startDate,
+        endTime: discount?.endTime,
+        hasEndDate: !!discount?.endDate,
+        startTime: discount?.startTime,
+      },
+      name: discount?.name,
+      description: discount?.description,
+      rules: discount?.rules,
+    },
   });
 
   const richText = useRichText({
@@ -42,28 +53,28 @@ export const DiscountCreatePage = ({
     triggerChange: methods.trigger,
   });
 
-  const handleSubmit: SubmitHandler<CreateDiscoutFormData> = data => {
+  const handleSubmit: SubmitHandler<CreateDiscoutFormData> = data =>
     onSubmit(data);
+
+  const handleRuleSubmit = (index: number) => {
+    const formData = methods.getValues();
+    onRuleSubmit(formData.rules[index]);
   };
 
   return (
     <RichTextContext.Provider value={richText}>
       <DetailPageLayout gridTemplateColumns={1}>
-        <TopNav
-          href={saleListUrl()}
-          title={intl.formatMessage({
-            id: "FWbv/u",
-            defaultMessage: "Create Discount",
-            description: "page header",
-          })}
-        />
+        <TopNav href={saleListUrl()} title={discount?.name} />
         <DetailPageLayout.Content>
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(handleSubmit)}>
               <DiscountName />
               <DiscountDescription />
               <DiscountDates />
-              <DiscountRules channels={channels} />
+              <DiscountRules
+                channels={channels}
+                onRuleSubmit={handleRuleSubmit}
+              />
             </form>
           </FormProvider>
         </DetailPageLayout.Content>
@@ -71,7 +82,7 @@ export const DiscountCreatePage = ({
         <Savebar
           disabled={disabled}
           onCancel={onBack}
-          onSubmit={methods.handleSubmit(handleSubmit)}
+          onSubmit={methods.handleSubmit(onSubmit)}
           state={"default"}
         />
       </DetailPageLayout>
