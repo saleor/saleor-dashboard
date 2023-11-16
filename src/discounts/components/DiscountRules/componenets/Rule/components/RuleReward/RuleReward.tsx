@@ -1,11 +1,11 @@
-import { CreateDiscoutFormData } from "@dashboard/discounts/components/DiscountCreatePage/types";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
-import { DiscountTypeSwitch } from "../../../DiscountTypeSwitch";
+import { DiscountTypeSwitch } from "../DiscountTypeSwitch";
 
 interface RuleRewardProps {
   currencySymbol: string | null;
@@ -16,14 +16,14 @@ export const RuleReward = ({ index, currencySymbol }: RuleRewardProps) => {
   const intl = useIntl();
 
   const { field: rewardTypeField } = useController<
-    CreateDiscoutFormData,
+    DiscoutFormData,
     `rules.${number}.rewardValueType`
   >({
     name: `rules.${index}.rewardValueType`,
   });
 
   const { field: rewardValueType } = useController<
-    CreateDiscoutFormData,
+    DiscoutFormData,
     `rules.${number}.rewardValue`
   >({
     name: `rules.${index}.rewardValue`,

@@ -1,11 +1,11 @@
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import React, { ChangeEvent } from "react";
 import { useController } from "react-hook-form";
 
-import DiscountDatesComponent from "../../../DiscountDates";
-import { CreateDiscoutFormData } from "../../types";
+import DiscountDates from "./DiscountDates";
 
-export const DiscountDates = () => {
-  const { field } = useController<CreateDiscoutFormData, "dates">({
+export const DiscountDatesWithController = () => {
+  const { field } = useController<DiscoutFormData, "dates">({
     name: "dates",
   });
 
@@ -18,9 +18,9 @@ export const DiscountDates = () => {
   };
 
   return (
-    <DiscountDatesComponent
+    <DiscountDates
       data={field.value}
-      disabled={field.disabled}
+      disabled={!!field.disabled}
       errors={[]}
       onChange={handleChange}
       onBlur={field.onBlur}

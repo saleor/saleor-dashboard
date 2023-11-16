@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -6,7 +7,6 @@ import { useFieldArray } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { initialRuleValues } from "../DiscountCreatePage/const";
-import { CreateDiscoutFormData } from "../DiscountCreatePage/types";
 import { AddButton } from "./componenets/AddButton";
 import { RulesList } from "./componenets/RulesList";
 import { messages } from "./messages";
@@ -21,10 +21,7 @@ export const DiscountRules = ({
   onRuleSubmit,
 }: DiscountRulesProps) => {
   const intl = useIntl();
-  const { append, fields: rules } = useFieldArray<
-    CreateDiscoutFormData,
-    "rules"
-  >({
+  const { append, fields: rules } = useFieldArray<DiscoutFormData, "rules">({
     name: "rules",
   });
 

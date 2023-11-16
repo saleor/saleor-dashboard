@@ -1,6 +1,7 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
+import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
 import { ChannelFragment } from "@dashboard/graphql";
 import { RichTextContext } from "@dashboard/utils/richText/context";
@@ -8,17 +9,16 @@ import useRichText from "@dashboard/utils/richText/useRichText";
 import React from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-import { DiscountDates } from "../DiscountCreatePage/components/DiscountDates";
-import { DiscountDescription } from "../DiscountCreatePage/components/DiscountDescription";
-import { DiscountName } from "../DiscountCreatePage/components/DiscountName";
-import { CreateDiscoutFormData, Rule } from "../DiscountCreatePage/types";
+import { DiscountDatesWithController } from "../DiscountDates";
+import { DiscountDescription } from "../DiscountDescription";
+import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
 
 interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
   disabled: boolean;
   onBack: () => void;
-  onSubmit: (data: CreateDiscoutFormData) => void;
+  onSubmit: (data: DiscoutFormData) => void;
   onRuleSubmit: (ruleData: Rule) => void;
   discount: any; // TODO: add type when handle API logic
 }
@@ -31,7 +31,7 @@ export const DiscountDetailsPage = ({
   onSubmit,
   onRuleSubmit,
 }: DiscountDetailsPageProps) => {
-  const methods = useForm<CreateDiscoutFormData>({
+  const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: {
       dates: {
@@ -53,8 +53,7 @@ export const DiscountDetailsPage = ({
     triggerChange: methods.trigger,
   });
 
-  const handleSubmit: SubmitHandler<CreateDiscoutFormData> = data =>
-    onSubmit(data);
+  const handleSubmit: SubmitHandler<DiscoutFormData> = data => onSubmit(data);
 
   const handleRuleSubmit = (index: number) => {
     const formData = methods.getValues();
@@ -70,7 +69,7 @@ export const DiscountDetailsPage = ({
             <form onSubmit={methods.handleSubmit(handleSubmit)}>
               <DiscountName />
               <DiscountDescription />
-              <DiscountDates />
+              <DiscountDatesWithController />
               <DiscountRules
                 channels={channels}
                 onRuleSubmit={handleRuleSubmit}

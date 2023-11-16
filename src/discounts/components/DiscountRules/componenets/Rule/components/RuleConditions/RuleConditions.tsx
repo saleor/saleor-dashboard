@@ -1,5 +1,5 @@
 import { intialConditionValues } from "@dashboard/discounts/components/DiscountCreatePage/const";
-import { CreateDiscoutFormData } from "@dashboard/discounts/components/DiscountCreatePage/types";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray } from "react-hook-form";
@@ -18,7 +18,7 @@ export const RuleConditions = ({ index }: RuleConditionsProps) => {
     append,
     remove,
     fields: conditions,
-  } = useFieldArray<CreateDiscoutFormData, `rules.${number}.conditions`>({
+  } = useFieldArray<DiscoutFormData, `rules.${number}.conditions`>({
     name: `rules.${index}.conditions`,
   });
 

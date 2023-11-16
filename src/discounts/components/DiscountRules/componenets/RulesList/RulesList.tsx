@@ -1,4 +1,4 @@
-import { Rule as RuleType } from "@dashboard/discounts/components/DiscountCreatePage/types";
+import { Rule as RuleType } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";

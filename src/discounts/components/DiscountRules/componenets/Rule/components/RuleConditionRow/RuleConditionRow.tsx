@@ -1,5 +1,5 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
-import { CreateDiscoutFormData } from "@dashboard/discounts/components/DiscountCreatePage/types";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import { Box, Button, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController } from "react-hook-form";
@@ -18,13 +18,13 @@ export const RuleConditionRow = ({
   onRemove,
 }: DiscountConditionRowProps) => {
   const { field: typeField } = useController<
-    CreateDiscoutFormData,
+    DiscoutFormData,
     `rules.${number}.conditions.${number}.type`
   >({
     name: `rules.${ruleIndex}.conditions.${conditionIndex}.type`,
   });
   const { field: valuesField } = useController<
-    CreateDiscoutFormData,
+    DiscoutFormData,
     `rules.${number}.conditions.${number}.values`
   >({
     name: `rules.${ruleIndex}.conditions.${conditionIndex}.values`,

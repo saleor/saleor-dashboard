@@ -1,5 +1,5 @@
 import { Multiselect } from "@dashboard/components/Combobox";
-import { CreateDiscoutFormData } from "@dashboard/discounts/components/DiscountCreatePage/types";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { RichTextContext } from "@dashboard/utils/richText/context";
@@ -23,16 +23,16 @@ interface RuleProps {
 
 export const Rule = ({ channels, index, onSubmit }: RuleProps) => {
   const intl = useIntl();
-  const { control, watch } = useFormContext<CreateDiscoutFormData>();
+  const { control, watch } = useFormContext<DiscoutFormData>();
   const { field: nameField } = useController<
-    CreateDiscoutFormData,
+    DiscoutFormData,
     `rules.${number}.name`
   >({
     name: `rules.${index}.name`,
     control,
   });
   const { field: channelsfield } = useController<
-    CreateDiscoutFormData,
+    DiscoutFormData,
     `rules.${number}.channels`
   >({
     name: `rules.${index}.channels`,

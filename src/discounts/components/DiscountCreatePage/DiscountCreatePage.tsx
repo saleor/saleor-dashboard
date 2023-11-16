@@ -1,6 +1,7 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
 import { ChannelFragment } from "@dashboard/graphql";
 import { RichTextContext } from "@dashboard/utils/richText/context";
@@ -9,18 +10,17 @@ import React from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
+import { DiscountDatesWithController } from "../DiscountDates";
+import { DiscountDescription } from "../DiscountDescription";
+import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
-import { DiscountDates } from "./components/DiscountDates/DiscountDates";
-import { DiscountDescription } from "./components/DiscountDescription";
-import { DiscountName } from "./components/DiscountName";
 import { initialFormValues } from "./const";
-import { CreateDiscoutFormData } from "./types";
 
 interface DiscountCreateProps {
   channels: ChannelFragment[];
   disabled: boolean;
   onBack: () => void;
-  onSubmit: (data: CreateDiscoutFormData) => void;
+  onSubmit: (data: DiscoutFormData) => void;
 }
 
 export const DiscountCreatePage = ({
@@ -31,7 +31,7 @@ export const DiscountCreatePage = ({
 }: DiscountCreateProps) => {
   const intl = useIntl();
 
-  const methods = useForm<CreateDiscoutFormData>({
+  const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: initialFormValues,
   });
@@ -42,7 +42,7 @@ export const DiscountCreatePage = ({
     triggerChange: methods.trigger,
   });
 
-  const handleSubmit: SubmitHandler<CreateDiscoutFormData> = data => {
+  const handleSubmit: SubmitHandler<DiscoutFormData> = data => {
     onSubmit(data);
   };
 
@@ -62,7 +62,7 @@ export const DiscountCreatePage = ({
             <form onSubmit={methods.handleSubmit(handleSubmit)}>
               <DiscountName />
               <DiscountDescription />
-              <DiscountDates />
+              <DiscountDatesWithController />
               <DiscountRules channels={channels} />
             </form>
           </FormProvider>

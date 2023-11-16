@@ -1,5 +1,5 @@
 import RichTextEditor from "@dashboard/components/RichTextEditor";
-import { CreateDiscoutFormData } from "@dashboard/discounts/components/DiscountCreatePage/types";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -13,7 +13,7 @@ export const RuleDescription = ({ index }: { index: number }) => {
     useRichTextContext();
 
   const { field } = useController<
-    CreateDiscoutFormData,
+    DiscoutFormData,
     `rules.${number}.description`
   >({
     name: `rules.${index}.description`,

@@ -45,12 +45,7 @@ const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
   const { enabled } = useFlag("discounts_rules");
 
   if (enabled) {
-    return (
-      <DiscountDetails
-        id={decodeURIComponent(match.params.id)}
-        params={params}
-      />
-    );
+    return <DiscountDetails />;
   }
 
   return (
@@ -67,7 +62,7 @@ const SaleCreateView: React.FC<RouteComponentProps> = ({ location }) => {
   const { enabled } = useFlag("discounts_rules");
 
   if (enabled) {
-    return <DiscountCreate params={params} />;
+    return <DiscountCreate />;
   }
 
   return <SaleCreateViewComponent params={params} />;

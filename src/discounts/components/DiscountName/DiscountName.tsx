@@ -1,14 +1,13 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import { Input } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CreateDiscoutFormData } from "../../types";
-
 export const DiscountName = () => {
   const intl = useIntl();
-  const { field } = useController<CreateDiscoutFormData, "name">({
+  const { field } = useController<DiscoutFormData, "name">({
     name: "name",
   });
 
