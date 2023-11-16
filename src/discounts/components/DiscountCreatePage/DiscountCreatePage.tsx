@@ -16,7 +16,7 @@ import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
 import { initialFormValues } from "./const";
 
-interface DiscountCreateProps {
+export interface DiscountCreatePageProps {
   channels: ChannelFragment[];
   disabled: boolean;
   onBack: () => void;
@@ -28,7 +28,7 @@ export const DiscountCreatePage = ({
   onBack,
   channels,
   onSubmit,
-}: DiscountCreateProps) => {
+}: DiscountCreatePageProps) => {
   const intl = useIntl();
 
   const methods = useForm<DiscoutFormData>({

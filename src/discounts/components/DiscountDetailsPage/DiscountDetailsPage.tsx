@@ -14,7 +14,7 @@ import { DiscountDescription } from "../DiscountDescription";
 import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
 
-interface DiscountDetailsPageProps {
+export interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
   disabled: boolean;
   onBack: () => void;
