@@ -1,3 +1,4 @@
+import { URL_LIST } from "@data/url";
 import { APIRequestContext, expect } from "@playwright/test";
 
 const MAILPIT_URI = process.env.CYPRESS_MAILPITURL || "no mailpit url provided";
@@ -50,5 +51,16 @@ export class MailpitService {
     await expect(userEmails).not.toEqual([]);
 
     return userEmails;
+  }
+
+  async generateResetPasswordUrl(userEmail: string) {
+    const tokenRegex = /token=([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/;
+
+    const userEmails = await this.getEmailsForUser(userEmail);
+    const emailDetails = await this.getEmailDetails(userEmails[0].ID);
+    const emailHtmlFormat = tokenRegex.exec(emailDetails.HTML.toString());
+    const token = "&" + emailHtmlFormat![0];
+    const resetPasswordUrl = URL_LIST.resetPassword + userEmail + token;
+    return resetPasswordUrl;
   }
 }

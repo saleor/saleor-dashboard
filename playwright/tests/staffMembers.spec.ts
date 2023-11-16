@@ -1,7 +1,10 @@
 import { BasicApiService } from "@api/basics";
-import { USERS } from "@data/testData";
+import { USERS } from "@data/e2eTestData";
 import { URL_LIST } from "@data/url";
 import { ConfigurationPage } from "@pages/configurationPage";
+import { HomePage } from "@pages/homePage";
+import { LoginPage } from "@pages/loginPage";
+import { SetUpNewPasswordPage } from "@pages/setUpNewPasswordPage";
 import { StaffMembersPage } from "@pages/staffMembersPage";
 import { expect, test } from "@playwright/test";
 
@@ -95,5 +98,52 @@ test("TC: SALEOR_38 Admin User should be able to activate other user @basic-regr
   ).toEqual([]);
   await expect(
     loginViaApiDeactivatedUserResponse.data.tokenCreate.token,
+  ).not.toEqual(null);
+});
+
+test.use({ storageState: "playwright/.auth/unauthenticated-user.json" });
+
+test("TC: SALEOR_39 User should be able to reset password @basic-regression @staff-members", async ({
+  page,
+  request,
+}) => {
+  const loginPage = new LoginPage(page);
+  const homePage = new HomePage(page);
+  const setUpNewPasswordPage = new SetUpNewPasswordPage(page, request);
+  const basicApiService = new BasicApiService(request);
+
+  await page.goto("/");
+  await loginPage.clickResetPasswordLink();
+  await loginPage.typeEmail(USERS.userForPasswordReset.email);
+  await loginPage.clickSendEmailWithResetLinkButton();
+  await loginPage.clickBackToLoginPageButton();
+  await loginPage.emailInput.waitFor({ state: "visible" });
+
+  await setUpNewPasswordPage.gotoUserResetPasswordPage(
+    USERS.userForPasswordReset.email,
+  );
+
+  await setUpNewPasswordPage.typePassword(
+    USERS.userForPasswordReset.newPassword,
+  );
+  await setUpNewPasswordPage.typeConfirmedPassword(
+    USERS.userForPasswordReset.newPassword,
+  );
+  await setUpNewPasswordPage.clickSetNewPasswordButton();
+  await expect(homePage.welcomeMessage).toBeVisible({ timeout: 10000 });
+  await expect(homePage.welcomeMessage).toContainText(
+    `${USERS.userForPasswordReset.name} ${USERS.userForPasswordReset.lastName}`,
+  );
+
+  const userWithNewPasswordLoginResponse =
+    await basicApiService.logInUserViaApi({
+      email: USERS.userForPasswordReset.email,
+      password: USERS.userForPasswordReset.newPassword,
+    });
+  await expect(
+    userWithNewPasswordLoginResponse.data.tokenCreate.errors,
+  ).toEqual([]);
+  await expect(
+    userWithNewPasswordLoginResponse.data.tokenCreate.token,
   ).not.toEqual(null);
 });

@@ -35,4 +35,5 @@ export const URL_LIST = {
   variant: "variant/",
   warehouses: "warehouses/",
   webhooksAndEvents: "custom-apps/",
+  resetPassword: "/new-password/?email=",
 };

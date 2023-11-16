@@ -178,7 +178,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should not be able to create staff member with not unique email. TC: SALEOR_3508",
+    "should not be able to create staff member with not unique email. TC: SALEOR_3508 - should not be migrated to playwright as critical",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const firstName = faker.name.firstName();

@@ -17,15 +17,26 @@ const contentPermissionsFile = "playwright/.auth/content.json";
 const channelsWebhooksPermissionsFile =
   "playwright/.auth/channels-webhooks.json";
 const customerWebhooksPermissionsFile = "playwright/.auth/customer.json";
+const unauthenticatedUserPermissionsFile =
+  "playwright/.auth/unauthenticated-user.json";
 
-setup("authenticate as admin", async ({ page }) => {
+// setup("authenticate as admin", async ({ page }) => {
+//   const loginPage = await new LoginPage(page);
+//   await loginPage.loginAndSetStorageState(
+//     process.env.CYPRESS_USER_NAME!,
+//     process.env.CYPRESS_USER_PASSWORD!,
+//     page,
+//     adminFile,
+//   );
+// });
+setup("unauthenticated user ", async ({ page }) => {
   const loginPage = await new LoginPage(page);
-  await loginPage.loginAndSetStorageState(
-    process.env.CYPRESS_USER_NAME!,
-    process.env.CYPRESS_USER_PASSWORD!,
-    page,
-    adminFile,
-  );
+  await loginPage.goto();
+  await loginPage.resetPasswordLink.waitFor({ state: "visible" });
+  // End of authentication steps.
+  await page
+    .context()
+    .storageState({ path: unauthenticatedUserPermissionsFile });
 });
 // setup("authenticate as user with discount permissions", async ({ page }) => {
 //   const loginPage = new LoginPage(page);

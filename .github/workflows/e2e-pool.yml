@@ -1,0 +1,92 @@
+name: E2E pool
+
+on: [pull_request]
+
+jobs:
+  instances:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Retrieve instance
+        id: retrieve_instance
+        env:
+          SALEOR_CLI_ENV: staging
+        run: |
+          echo "Getting instance"...
+          npx saleor login --headless --token=${{ secrets.STAGING_API_TOKEN }}
+          NAME=$(node scripts/pick-e2e-instance.js | jq -r .name)
+          echo "POOL_NAME=$NAME" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://$NAME.staging.saleor.cloud" >> $GITHUB_OUTPUT
+      outputs:
+        pollIntance: 
+  run-tests:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1/2, 2/2]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run tests
+        env:
+          API_URI: "${{ needs.instances.outputs.POOL_INSTANCE }}/graphql/"
+          API_URI: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/graphql/"
+          BASE_URL: "${{ steps.retrieve_instance.outputs.POOL_INSTANCE }}/dashboard/"
+          E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+        run: |
+          echo "Running tests on: $API_URI"
+          echo "Base url $BASE_URL"
+          npx playwright test --shard ${{ matrix.shard }}
+      - name: Release instance
+        if: always()
+        run: node scripts/release-e2e-instance.js ${{ steps.retrieve_instance.outputs.POOL_NAME }}
+      - name: Upload blob report to GitHub Actions Artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: all-blob-reports
+          path: blob-report
+          retention-days: 1
+
+  merge-reports:
+    if: always()
+    needs: [run-tests]
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download blob reports from GitHub Actions Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: all-blob-reports
+          path: all-blob-reports
+
+      - name: Merge into HTML Report
+        run: npx playwright merge-reports --reporter html ./all-blob-reports
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v3
+        with:
+          name: html-report--attempt-${{ github.run_attempt }}
+          path: playwright-report
+          retention-days: 14

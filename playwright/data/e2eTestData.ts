@@ -30,4 +30,11 @@ export const USERS = {
     email: "user-to-be-activated@gmai.com",
     info: "Inactive user used in activation user test",
   },
+  userForPasswordReset: {
+    email: "user-for-password-reset@gmail.com",
+    newPassword: "4321test",
+    info: "User used in reset password test",
+    name: "e2e",
+    lastName: "user",
+  },
 };
