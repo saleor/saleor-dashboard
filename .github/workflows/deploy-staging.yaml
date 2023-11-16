@@ -81,7 +81,7 @@ jobs:
 
           IFS=',' read -ra DISTRIBUTIONS_ARRAY <<< "${CDN_DISTRIBUTIONS}"
           for DISTRIBUTION in "${DISTRIBUTIONS_ARRAY[@]}"; do
-            for i in {1..3}; do aws cloudfront create-invalidation --distribution-id $DISTRIBUTION --paths "/dashboard*" && break || sleep 5; done
+            for i in {1..3}; do aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*" && break || sleep 5; done
           done
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
