@@ -23,20 +23,22 @@ interface RuleProps {
 
 export const Rule = ({ channels, index, onSubmit }: RuleProps) => {
   const intl = useIntl();
-  const { control, watch } = useFormContext<DiscoutFormData>();
+  const { watch } = useFormContext<DiscoutFormData>();
+
+  const ruleNameField = `rules.${index}.name` as const;
   const { field: nameField } = useController<
     DiscoutFormData,
-    `rules.${number}.name`
+    typeof ruleNameField
   >({
-    name: `rules.${index}.name`,
-    control,
+    name: ruleNameField,
   });
+
+  const channelNameField = `rules.${index}.channels` as const;
   const { field: channelsfield } = useController<
     DiscoutFormData,
-    `rules.${number}.channels`
+    typeof channelNameField
   >({
-    name: `rules.${index}.channels`,
-    control,
+    name: channelNameField,
   });
 
   const selectedChannels = watch(`rules.${index}.channels`);
@@ -76,7 +78,6 @@ export const Rule = ({ channels, index, onSubmit }: RuleProps) => {
           {currencySymbol ? (
             <>
               <RuleConditions index={index} />
-
               <RuleReward index={index} currencySymbol={currencySymbol} />
             </>
           ) : null}

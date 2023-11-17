@@ -14,7 +14,7 @@ import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
-import { initialFormValues } from "./const";
+import { initialFormValues } from "./initialFormValues";
 
 export interface DiscountCreatePageProps {
   channels: ChannelFragment[];

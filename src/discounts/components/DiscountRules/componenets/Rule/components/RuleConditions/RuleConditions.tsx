@@ -1,4 +1,4 @@
-import { intialConditionValues } from "@dashboard/discounts/components/DiscountCreatePage/const";
+import { intialConditionValues } from "@dashboard/discounts/components/DiscountCreatePage/initialFormValues";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -14,12 +14,13 @@ interface RuleConditionsProps {
 
 export const RuleConditions = ({ index }: RuleConditionsProps) => {
   const intl = useIntl();
+  const conditionFieldName = `rules.${index}.conditions` as const;
   const {
     append,
     remove,
     fields: conditions,
-  } = useFieldArray<DiscoutFormData, `rules.${number}.conditions`>({
-    name: `rules.${index}.conditions`,
+  } = useFieldArray<DiscoutFormData, typeof conditionFieldName>({
+    name: conditionFieldName,
   });
 
   return (

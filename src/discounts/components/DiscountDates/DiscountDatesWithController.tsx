@@ -9,11 +9,10 @@ export const DiscountDatesWithController = () => {
     name: "dates",
   });
 
-  const handleChange = (e: ChangeEvent<any>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     field.onChange({
       ...field.value,
-      [e.target.name]:
-        e.target.name === "hasEndDate" ? e.target.checked : e.target.value,
+      [e.target.name]: getInputChangeValue(e),
     });
   };
 
@@ -27,3 +26,13 @@ export const DiscountDatesWithController = () => {
     />
   );
 };
+
+function getInputChangeValue(e: ChangeEvent<HTMLInputElement>) {
+  // When checkbox get value from e.target.checked
+  if (e.target.name === "hasEndDate") {
+    return e.target.checked;
+  }
+
+  // Otherwise get value from e.target.value
+  return e.target.value;
+}

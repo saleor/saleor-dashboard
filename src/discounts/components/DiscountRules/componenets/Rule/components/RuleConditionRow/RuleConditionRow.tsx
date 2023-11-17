@@ -17,17 +17,22 @@ export const RuleConditionRow = ({
   conditionIndex,
   onRemove,
 }: DiscountConditionRowProps) => {
+  const ruleConditionTypeFieldName =
+    `rules.${ruleIndex}.conditions.${conditionIndex}.type` as const;
   const { field: typeField } = useController<
     DiscoutFormData,
-    `rules.${number}.conditions.${number}.type`
+    typeof ruleConditionTypeFieldName
   >({
-    name: `rules.${ruleIndex}.conditions.${conditionIndex}.type`,
+    name: ruleConditionTypeFieldName,
   });
+
+  const ruleConditionValuesFieldName =
+    `rules.${ruleIndex}.conditions.${conditionIndex}.values` as const;
   const { field: valuesField } = useController<
     DiscoutFormData,
-    `rules.${number}.conditions.${number}.values`
+    typeof ruleConditionValuesFieldName
   >({
-    name: `rules.${ruleIndex}.conditions.${conditionIndex}.values`,
+    name: ruleConditionValuesFieldName,
   });
 
   return (

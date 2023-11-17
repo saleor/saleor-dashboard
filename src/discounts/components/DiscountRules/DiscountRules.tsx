@@ -6,7 +6,7 @@ import React from "react";
 import { useFieldArray } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { initialRuleValues } from "../DiscountCreatePage/const";
+import { initialRuleValues } from "../DiscountCreatePage/initialFormValues";
 import { AddButton } from "./componenets/AddButton";
 import { RulesList } from "./componenets/RulesList";
 import { messages } from "./messages";
