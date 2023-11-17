@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Add extempt labels for issues
+Add exemption labels to ignore stale issues
