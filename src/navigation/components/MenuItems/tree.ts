@@ -1,9 +1,7 @@
 // @ts-strict-ignore
-import { RecursiveMenuItem } from "@dashboard/navigation/types";
-import { getPatch } from "fast-array-diff";
-import { TreeItem } from "react-sortable-tree";
 
-import { MenuItemType } from "../MenuItemDialog";
+import { MenuTreeItem } from "@dashboard/navigation/types";
+import { getPatch } from "fast-array-diff";
 
 export type TreeOperationType = "move" | "remove";
 export interface TreeOperation {
@@ -12,66 +10,6 @@ export interface TreeOperation {
   parentId?: string;
   sortOrder?: number;
   simulatedMove?: boolean;
-}
-export interface TreeItemProps {
-  id: string;
-  onChange?: (operations: TreeOperation[]) => void;
-  onClick?: () => void;
-  onEdit?: () => void;
-}
-
-export type MenuTreeItem = TreeItem<TreeItemProps>;
-
-export const unknownTypeError = Error("Unknown type");
-
-function treeToMap(
-  tree: MenuTreeItem[],
-  parent: string,
-): Record<string, string[]> {
-  const childrenList = tree.map(node => node.id);
-  const childrenMaps = tree.map(node => ({
-    id: node.id,
-    mappedNodes: treeToMap(node.children as MenuTreeItem[], node.id),
-  }));
-
-  return {
-    [parent]: childrenList,
-    ...childrenMaps.reduce(
-      (acc, childMap) => ({
-        ...acc,
-        ...childMap.mappedNodes,
-      }),
-      {},
-    ),
-  };
-}
-
-export function getItemType(item: RecursiveMenuItem): MenuItemType {
-  if (item.category) {
-    return "category";
-  } else if (item.collection) {
-    return "collection";
-  } else if (item.page) {
-    return "page";
-  } else if (item.url) {
-    return "link";
-  } else {
-    throw unknownTypeError;
-  }
-}
-
-export function getItemId(item: RecursiveMenuItem): string {
-  if (item.category) {
-    return item.category.id;
-  } else if (item.collection) {
-    return item.collection.id;
-  } else if (item.page) {
-    return item.page.id;
-  } else if (item.url) {
-    return item.url;
-  } else {
-    throw unknownTypeError;
-  }
 }
 
 export function getDiff(
@@ -137,28 +75,24 @@ export function getDiff(
   return diff.filter(d => !!d);
 }
 
-export function getNodeData(
-  item: RecursiveMenuItem,
-  onChange: (operations: TreeOperation[]) => void,
-  onClick: (id: string, type: MenuItemType) => void,
-  onEdit: (id: string) => void,
-): MenuTreeItem {
-  return {
-    children: item.children.map(child =>
-      getNodeData(child, onChange, onClick, onEdit),
-    ),
-    expanded: true,
-    id: item.id,
-    onChange,
-    onClick: () => onClick(getItemId(item), getItemType(item)),
-    onEdit: () => onEdit(item.id),
-    title: item.name,
-  };
-}
+function treeToMap(
+  tree: MenuTreeItem[],
+  parent: string,
+): Record<string, string[]> {
+  const childrenList = tree.map(node => node.id);
+  const childrenMaps = tree.map(node => ({
+    id: node.id,
+    mappedNodes: treeToMap(node.children as MenuTreeItem[], node.id.toString()),
+  }));
 
-export function getNodeQuantity(items: RecursiveMenuItem[]): number {
-  return items.reduce(
-    (acc, curr) => acc + getNodeQuantity(curr.children),
-    items.length,
-  );
+  return {
+    [parent]: childrenList,
+    ...childrenMaps.reduce(
+      (acc, childMap) => ({
+        ...acc,
+        ...childMap.mappedNodes,
+      }),
+      {},
+    ),
+  };
 }
