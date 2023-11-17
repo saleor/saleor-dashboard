@@ -97,8 +97,8 @@ const ProductVariant: React.FC<
 
   return (
     <ProductVariantComponent
-      variantId={decodeURIComponent(match.params.variantId)}
-      productId={decodeURIComponent(match.params.productId)}
+      variantId={decodeURIComponent(match.params.variantId ?? "")}
+      productId={decodeURIComponent(match.params.productId ?? "")}
       params={params}
     />
   );
@@ -128,7 +128,7 @@ const ProductVariantCreate: React.FC<RouteComponentProps<MatchParams>> = ({
 
   return (
     <ProductVariantCreateComponent
-      productId={decodeURIComponent(match.params.id)}
+      productId={decodeURIComponent(match.params.id ?? "")}
       params={params}
     />
   );
