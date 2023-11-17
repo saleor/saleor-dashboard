@@ -88,22 +88,28 @@ const OrderFulfill: React.FC<RouteComponentProps<any>> = ({
 
 const OrderPaymentRefund: React.FC<RouteComponentProps<MatchParams>> = ({
   match,
-}) => <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />;
+}) => (
+  <OrderRefundComponent orderId={decodeURIComponent(match.params.id ?? "")} />
+);
 
 const OrderSendRefund: React.FC<RouteComponentProps<MatchParams>> = ({
   match,
 }) => (
-  <OrderSendRefundComponent orderId={decodeURIComponent(match.params.id)} />
+  <OrderSendRefundComponent
+    orderId={decodeURIComponent(match.params.id ?? "")}
+  />
 );
 
 const OrderReturn: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => (
-  <OrderReturnComponent orderId={decodeURIComponent(match.params.id)} />
+  <OrderReturnComponent orderId={decodeURIComponent(match.params.id ?? "")} />
 );
 
 const OrderGrantRefund: React.FC<RouteComponentProps<MatchParams>> = ({
   match,
 }) => (
-  <OrderGrantRefundComponent orderId={decodeURIComponent(match.params.id)} />
+  <OrderGrantRefundComponent
+    orderId={decodeURIComponent(match.params.id ?? "")}
+  />
 );
 
 const OrderGrantRefundEdit: React.FC<RouteComponentProps<any>> = ({
