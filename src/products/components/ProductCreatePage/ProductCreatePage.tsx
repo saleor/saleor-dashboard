@@ -385,6 +385,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}
+                attribute={data.attributes.find(
+                  ({ id }) => id === assignReferencesAttributeId,
+                )}
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
                 onFetch={handlers.fetchReferences}

@@ -50,13 +50,45 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
     },
   });
 
-  const handleSubmit = async ({ amount, reason }: OrderGrantRefundFormData) => {
-    extractMutationErrors(
+  const handleSubmit = async ({
+    amount,
+    reason,
+    lines,
+    grantRefundForShipping,
+  }: OrderGrantRefundFormData) => {
+    const grantedRefundLinesToDelete = lines
+      .map(line =>
+        grantedRefund.lines.find(
+          grandLine => grandLine.orderLine.id === line.id,
+        ),
+      )
+      .filter(Boolean)
+      .map(line => line.id);
+
+    if (grantedRefundLinesToDelete.length > 0) {
+      await extractMutationErrors(
+        grantRefund({
+          variables: {
+            refundId: grantRefundId,
+            removeLines: grantedRefundLinesToDelete,
+          },
+        }),
+      );
+    }
+
+    await extractMutationErrors(
       grantRefund({
         variables: {
           refundId: grantRefundId,
           amount,
           reason,
+          grantRefundForShipping,
+          addLines: lines.map(line => ({
+            id: line.id,
+            quantity: line.quantity,
+            reason: line.reason ?? "",
+          })),
+          removeLines: [],
         },
       }),
     );
@@ -67,7 +99,7 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
       <OrderGrantRefundPage
         order={undefined}
         loading={true}
-        submitState="loading"
+        submitState="default"
         onSubmit={() => undefined}
         isEdit
       />
@@ -93,10 +125,7 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
         submitState={grantRefundOptions.status}
         onSubmit={handleSubmit}
         isEdit
-        initialData={{
-          reason: grantedRefund.reason,
-          amount: grantedRefund.amount.amount.toString(),
-        }}
+        initialData={grantedRefund}
       />
     </>
   );

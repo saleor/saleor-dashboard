@@ -1,10 +1,9 @@
 import { defineMessages } from "react-intl";
 
 export const columnsMessages = defineMessages({
-  code: {
-    id: "JsPIOX",
-    defaultMessage: "Code",
-    description: "voucher code",
+  voucher: {
+    id: "9BvYb9",
+    defaultMessage: "Voucher",
   },
   minSpent: {
     id: "tuYPlG",

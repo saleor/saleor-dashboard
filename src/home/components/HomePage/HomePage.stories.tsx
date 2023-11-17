@@ -2,28 +2,53 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { adminUserPermissions } from "@dashboard/fixtures";
 import { PermissionEnum } from "@dashboard/graphql";
-import { shop as shopFixture } from "@dashboard/home/fixtures";
+import {
+  activities,
+  analitics,
+  notifications,
+  topProducts as topProductsFixture,
+} from "@dashboard/home/fixtures";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 
 import { MockedUserProvider } from "../../../../.storybook/helpers";
 import HomePageComponent, { HomePageProps } from "./HomePage";
 
-const shop = shopFixture(placeholderImage);
+const productTopToday = topProductsFixture(placeholderImage);
 
 const homePageProps: Omit<HomePageProps, "classes"> = {
-  activities: mapEdgesToItems(shop.activities),
+  activities: {
+    data: mapEdgesToItems(activities),
+    loading: false,
+    hasError: false,
+  },
+  notifications: {
+    data: {
+      ordersToCapture: notifications.ordersToCapture.totalCount,
+      ordersToFulfill: notifications.ordersToFulfill.totalCount,
+      productsOutOfStock: notifications.productsOutOfStock.totalCount,
+    },
+    loading: false,
+    hasError: false,
+  },
+  analitics: {
+    data: {
+      orders: analitics.ordersToday.totalCount,
+      sales: analitics.salesToday.gross,
+    },
+    loading: false,
+    hasError: false,
+  },
   noChannel: false,
   createNewChannelHref: "",
   ordersToFulfillHref: "",
   ordersToCaptureHref: "",
   productsOutOfStockHref: "",
-  orders: shop.ordersToday.totalCount,
-  ordersToCapture: shop.ordersToCapture.totalCount,
-  ordersToFulfill: shop.ordersToFulfill.totalCount,
-  productsOutOfStock: shop.productsOutOfStock.totalCount,
-  sales: shop.salesToday.gross,
-  topProducts: mapEdgesToItems(shop.productTopToday),
+  topProducts: {
+    data: mapEdgesToItems(productTopToday),
+    loading: false,
+    hasError: false,
+  },
   userName: "admin@example.com",
 };
 
@@ -46,19 +71,69 @@ export const Default = () => <HomePage {...homePageProps} />;
 export const Loading = () => (
   <HomePage
     {...homePageProps}
-    activities={undefined}
-    orders={undefined}
-    ordersToCapture={undefined}
-    ordersToFulfill={undefined}
-    productsOutOfStock={undefined}
-    sales={undefined}
-    topProducts={undefined}
-    userName={undefined}
+    activities={{
+      data: [],
+      loading: true,
+      hasError: false,
+    }}
+    notifications={{
+      data: {},
+      loading: true,
+      hasError: false,
+    }}
+    analitics={{
+      data: {},
+      loading: true,
+      hasError: false,
+    }}
+    topProducts={{
+      data: [],
+      loading: true,
+      hasError: false,
+    }}
+  />
+);
+
+export const Error = () => (
+  <HomePage
+    {...homePageProps}
+    activities={{
+      data: [],
+      loading: false,
+      hasError: true,
+    }}
+    notifications={{
+      data: {},
+      loading: false,
+      hasError: true,
+    }}
+    analitics={{
+      data: {},
+      loading: false,
+      hasError: true,
+    }}
+    topProducts={{
+      data: [],
+      loading: false,
+      hasError: true,
+    }}
   />
 );
 
 export const NoData = () => (
-  <HomePage {...homePageProps} topProducts={[]} activities={[]} />
+  <HomePage
+    {...homePageProps}
+    topProducts={{
+      data: [],
+      loading: false,
+      hasError: false,
+    }}
+    activities={{
+      data: [],
+      loading: false,
+      hasError: false,
+    }}
+  />
 );
 
 export const NoPermissions = () => (
