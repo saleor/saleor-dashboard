@@ -9,6 +9,7 @@ concurrency:
 jobs:
   prepare_variables:
     runs-on: ubuntu-22.04
+    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     outputs:
       POOL_NAME: ${{ steps.generate.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.generate.outputs.POOL_INSTANCE }}
@@ -28,11 +29,13 @@ jobs:
 
       - name: Generate
         id: generate
+        env:
+          PREFIX: pr-
         run: |
-          echo "BASE_URL=${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
-          echo "API_URI=https://${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
-          echo "POOL_NAME=${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
-          echo "POOL_INSTANCE=https://${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "BASE_URL=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+          echo "API_URI=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
       
       - name: Saleor login
         uses: ./.github/actions/cli-login
@@ -84,10 +87,19 @@ jobs:
       - name: Saleor login
         uses: ./.github/actions/cli-login
         with:
-          token: ${{ secrets.STAGING_TOKEN }}          
+          token: ${{ secrets.STAGING_TOKEN }}     
+
+      - name: Instance check
+        id: instance_check
+        env:
+          SALEOR_CLI_ENV: staging
+          INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
+        run: |
+          INSTANCE_KEY=$(npx saleor env show "$INSTANCE_NAME" --json | jq .key)
+          echo "INSTANCE_KEY=$INSTANCE_KEY" >> $GITHUB_OUTPUT
 
       - name: Reload snapshot
-        if: ${{ github.event_name == 'pull_request' && github.event.action != 'opened' && github.event.action != 'closed' }}
+        if: ${{ steps.instance_check.outputs.INSTANCE_KEY }}
         env:
           SALEOR_CLI_ENV: staging
           BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
@@ -98,7 +110,7 @@ jobs:
             --skip-webhooks-update
 
       - name: Create new instance
-        if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }}
+        if: ${{ !steps.instance_check.outputs.INSTANCE_KEY }}
         env:
           SALEOR_CLI_ENV: staging
           BACKUP_ID:  ${{ needs.prepare_variables.outputs.BACKUP_ID }}
