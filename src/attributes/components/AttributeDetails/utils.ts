@@ -26,17 +26,22 @@ const UNIT_MESSAGES_MAPPING = {
   [MeasurementUnitsEnum.SQ_FT]: M.units.squareFt,
   [MeasurementUnitsEnum.SQ_YD]: M.units.squareYd,
   [MeasurementUnitsEnum.SQ_INCH]: M.units.squareInch,
+  [MeasurementUnitsEnum.CUBIC_MILLIMETER]: M.units.cubicMillimeter,
   [MeasurementUnitsEnum.CUBIC_CENTIMETER]: M.units.cubicCentimeter,
   [MeasurementUnitsEnum.CUBIC_DECIMETER]: M.units.cubicDecimeter,
   [MeasurementUnitsEnum.CUBIC_METER]: M.units.cubicMeter,
   [MeasurementUnitsEnum.LITER]: M.units.liter,
   [MeasurementUnitsEnum.CM]: M.units.centimeter,
+  [MeasurementUnitsEnum.DM]: M.units.decimeter,
+  [MeasurementUnitsEnum.MM]: M.units.millimeter,
   [MeasurementUnitsEnum.M]: M.units.meter,
   [MeasurementUnitsEnum.KM]: M.units.kilometer,
   [MeasurementUnitsEnum.G]: M.units.gram,
   [MeasurementUnitsEnum.KG]: M.units.kilogram,
   [MeasurementUnitsEnum.TONNE]: M.units.tonne,
+  [MeasurementUnitsEnum.SQ_MM]: M.units.squareMillimeter,
   [MeasurementUnitsEnum.SQ_CM]: M.units.squareCentimeter,
+  [MeasurementUnitsEnum.SQ_DM]: M.units.squareDecimeter,
   [MeasurementUnitsEnum.SQ_M]: M.units.squareMeter,
   [MeasurementUnitsEnum.SQ_KM]: M.units.squareKilometer,
 };
@@ -48,7 +53,7 @@ export const getMeasurementUnitMessage = (
   const message = UNIT_MESSAGES_MAPPING[unit];
   return typeof message === "string" || React.isValidElement(message)
     ? message
-    : formatMessage(message);
+    : formatMessage(message as MessageDescriptor);
 };
 
 export const unitSystemChoices: Array<Choice<UnitSystem, MessageDescriptor>> = [
@@ -107,13 +112,16 @@ export const unitMapping = {
   },
   metric: {
     volume: [
+      MeasurementUnitsEnum.CUBIC_MILLIMETER,
       MeasurementUnitsEnum.CUBIC_CENTIMETER,
       MeasurementUnitsEnum.CUBIC_DECIMETER,
       MeasurementUnitsEnum.CUBIC_METER,
       MeasurementUnitsEnum.LITER,
     ],
     distance: [
+      MeasurementUnitsEnum.MM,
       MeasurementUnitsEnum.CM,
+      MeasurementUnitsEnum.DM,
       MeasurementUnitsEnum.M,
       MeasurementUnitsEnum.KM,
     ],
@@ -123,7 +131,9 @@ export const unitMapping = {
       MeasurementUnitsEnum.TONNE,
     ],
     area: [
+      MeasurementUnitsEnum.SQ_MM,
       MeasurementUnitsEnum.SQ_CM,
+      MeasurementUnitsEnum.SQ_DM,
       MeasurementUnitsEnum.SQ_M,
       MeasurementUnitsEnum.SQ_KM,
     ],
