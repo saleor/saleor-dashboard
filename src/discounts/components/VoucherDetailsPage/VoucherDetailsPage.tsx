@@ -21,7 +21,6 @@ import {
   RequirementsPicker,
 } from "@dashboard/discounts/types";
 import { voucherListUrl } from "@dashboard/discounts/urls";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
@@ -69,7 +68,7 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   applyOncePerOrder: boolean;
   onlyForStaff: boolean;
   channelListings: ChannelVoucherData[];
-  code: string;
+  name: string;
   discountType: DiscountTypeEnum;
   endDate: string;
   endTime: string;
@@ -175,7 +174,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const voucherCodesFlag = useFlag("voucher_codes");
 
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>(
     [],
@@ -207,7 +205,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     applyOncePerOrder: voucher?.applyOncePerOrder || false,
     onlyForStaff: voucher?.onlyForStaff || false,
     channelListings,
-    code: voucher?.code || "",
+    name: voucher?.name || "",
     discountType,
     codes: addedVoucherCodes,
     endDate: splitDateTime(voucher?.endDate ?? "").date,
@@ -222,7 +220,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
     usageLimit: voucher?.usageLimit ?? 1,
     used: voucher?.used ?? 0,
-    singleUse: false,
+    singleUse: voucher?.singleUse ?? false,
     metadata: voucher?.metadata.map(mapMetadataItemToInput),
     privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
   };
@@ -252,24 +250,26 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 disabled={disabled}
                 errors={errors}
                 onChange={change}
-                variant="update"
               />
-              {voucherCodesFlag.enabled && (
-                <VoucherCodes
-                  selectedCodesIds={selectedVoucherCodesIds}
-                  onSelectVoucherCodesIds={onSelectVoucherCodesIds}
-                  onDeleteCodes={onDeleteVoucherCodes}
-                  loading={voucherCodesLoading}
-                  onMultiCodesGenerate={onMultipleVoucheCodesGenerate}
-                  onCustomCodeGenerate={onCustomVoucherCodeGenerate}
-                  disabled={disabled}
-                  codes={voucherCodes}
-                  voucherCodesPagination={voucherCodesPagination}
-                  onSettingsChange={onVoucherCodesSettingsChange}
-                  settings={voucherCodesSettings}
-                />
-              )}
-
+              <VoucherCodes
+                selectedCodesIds={selectedVoucherCodesIds}
+                onSelectVoucherCodesIds={onSelectVoucherCodesIds}
+                onDeleteCodes={onDeleteVoucherCodes}
+                loading={voucherCodesLoading}
+                onMultiCodesGenerate={codes => {
+                  triggerChange();
+                  onMultipleVoucheCodesGenerate(codes);
+                }}
+                onCustomCodeGenerate={code => {
+                  triggerChange();
+                  onCustomVoucherCodeGenerate(code);
+                }}
+                disabled={disabled}
+                codes={voucherCodes}
+                voucherCodesPagination={voucherCodesPagination}
+                onSettingsChange={onVoucherCodesSettingsChange}
+                settings={voucherCodesSettings}
+              />
               <VoucherTypes
                 data={data}
                 disabled={disabled}

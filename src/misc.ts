@@ -311,12 +311,26 @@ export const parseLogMessage = ({
   intl,
   code,
   field,
+  voucherCodes,
 }: {
   intl: IntlShape;
   code: string;
   field?: string;
-}) =>
-  intl.formatMessage(errorMessages.baseCodeErrorMessage, {
+  voucherCodes?: string[];
+}) => {
+  if (voucherCodes) {
+    return (
+      intl.formatMessage(
+        voucherCodes.length > 1
+          ? errorMessages.voucherCodesErrorMessage
+          : errorMessages.voucherCodeErrorMessage,
+      ) +
+      ": \n" +
+      voucherCodes.join("\n")
+    );
+  }
+
+  return intl.formatMessage(errorMessages.baseCodeErrorMessage, {
     errorCode: code,
     fieldError:
       field &&
@@ -324,6 +338,7 @@ export const parseLogMessage = ({
         fieldName: field,
       }),
   });
+};
 
 interface User {
   email: string;

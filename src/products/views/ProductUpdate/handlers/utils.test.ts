@@ -358,4 +358,96 @@ describe("getBulkVariantUpdateInputs", () => {
       },
     ]);
   });
+  test("should return input data base on datagrid change data for simultaneous bulk operations", () => {
+    // Arrange
+    const variants: ProductFragment["variants"] =
+      product("http://google.com").variants;
+    const inputData: DatagridChangeOpts = {
+      updates: [
+        {
+          data: "2345555",
+          column: "sku",
+          row: 0, // initially 0
+        },
+        {
+          data: {
+            kind: "money-cell",
+            value: 234,
+            currency: "USD",
+          },
+          column: `channel:${variants[0].channelListings[0].channel.id}`,
+          row: 0, // initially 0
+        },
+        {
+          data: "edited variant",
+          column: "name",
+          row: 1, // initially 2
+        },
+        {
+          data: {
+            kind: "number-cell",
+            value: 2344,
+          },
+          column: `warehouse:${variants[2].stocks[0].warehouse.id}`,
+          row: 1, // initially 2
+        },
+        // row 2 (initially 4) is unchanged
+        {
+          data: "completely new variant",
+          column: "name",
+          row: 3, // initially 5
+        },
+      ],
+      // DatagridChangeOpts generates removed indices based on initial grid,
+      // meanwhile added and updates indices are calculated on the grid after removal
+      // of rows. This is why we have 3 as an index both in removed and added.
+      removed: [1, 3],
+      added: [3],
+    };
+
+    // Act
+    const bulkVariantUpdateInput = getBulkVariantUpdateInputs(
+      variants,
+      inputData,
+      variantAttributes,
+    );
+
+    // Assert
+    expect(bulkVariantUpdateInput).toEqual([
+      {
+        id: variants[0].id,
+        attributes: [],
+        sku: "2345555",
+        name: undefined,
+        stocks: { create: [], update: [], remove: [] },
+        channelListings: {
+          create: [],
+          remove: [],
+          update: [
+            {
+              channelListing: variants[0].channelListings[0].id,
+              price: 234,
+            },
+          ],
+        },
+      },
+      {
+        id: variants[2].id,
+        attributes: [],
+        sku: undefined,
+        name: "edited variant",
+        stocks: {
+          create: [],
+          update: [
+            {
+              stock: variants[2].stocks[0].id,
+              quantity: 2344,
+            },
+          ],
+          remove: [],
+        },
+        channelListings: { create: [], remove: [], update: [] },
+      },
+    ]);
+  });
 });
