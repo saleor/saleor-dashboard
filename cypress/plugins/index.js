@@ -38,6 +38,7 @@ module.exports = async (on, config) => {
   config.env.MAILPITURL = process.env.CYPRESS_MAILPITURL;
   config.env.grepTags = process.env.CYPRESS_grepTags;
   config.baseUrl = process.env.BASE_URL;
+  config.env.LOCALE_CODE = process.env.LOCALE_CODE;
 
   on("before:browser:launch", (_browser = {}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
