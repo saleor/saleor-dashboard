@@ -45,6 +45,13 @@ export class LoginPage {
     // End of authentication steps.
     await page.context().storageState({ path });
   }
+  async basicUiLogin(userEmail: string, userPassword: string) {
+    await this.goto();
+    await this.typeEmail(userEmail);
+    await this.typePassword(userPassword);
+    await this.clickSignInButton();
+    await expect(this.homePage.welcomeMessage).toContainText("Hello there,");
+  }
   async typeEmail(email: string) {
     await this.emailInput.fill(email);
   }

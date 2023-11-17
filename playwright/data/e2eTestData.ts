@@ -37,4 +37,11 @@ export const USERS = {
     name: "e2e",
     lastName: "user",
   },
+  userForPasswordChange: {
+    email: "change-password-user@gmail.com",
+    newPassword: "4321test",
+    info: "User used in change password test",
+    name: "change password",
+    lastName: "user",
+  },
 };

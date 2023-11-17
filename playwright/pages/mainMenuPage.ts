@@ -22,9 +22,13 @@ export class MainMenuPage {
   readonly menuItem: Locator;
   readonly drafts: Locator;
   readonly collections: Locator;
+  readonly accountSettings: Locator;
+  readonly userMenu: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.userMenu = page.getByTestId("userMenu");
+    this.accountSettings = page.getByTestId("account-settings-button");
     this.catalog = page.getByTestId("menu-item-label-catalogue");
     this.content = page.getByTestId("menu-item-label-pages");
     this.categories = page.getByTestId("menu-item-label-categories");
@@ -43,6 +47,11 @@ export class MainMenuPage {
     this.listItem = page.getByTestId("menu-list-item");
     this.products = page.getByTestId("menu-item-label-products");
     this.menuItem = page.locator("[data-test-id*='menu-item-label-']");
+  }
+
+  async gotoAccountSettings() {
+    await this.userMenu.click();
+    await this.accountSettings.click();
   }
 
   async openDiscounts() {
