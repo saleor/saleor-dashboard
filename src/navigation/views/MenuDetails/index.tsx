@@ -34,7 +34,7 @@ import {
   getItemId,
   getItemType,
   unknownTypeError,
-} from "../../components/MenuItems";
+} from "../../components/MenuItemsSortableTree/utils";
 import { menuUrl, MenuUrlQueryParams } from "../../urls";
 import {
   handleDelete,
