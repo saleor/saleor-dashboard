@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": patch
+"saleor-dashboard": minor
 ---
 
 add env var LOCALE_CODE
