@@ -59,6 +59,15 @@ export const discountErrorFragment = gql`
   }
 `;
 
+export const promotionCreateErrorFragment = gql`
+  fragment PromotionCreateError on PromotionCreateError {
+    field
+    message
+    code
+    index
+  }
+`;
+
 export const menuErrorFragment = gql`
   fragment MenuError on MenuError {
     code

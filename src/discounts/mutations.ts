@@ -229,3 +229,13 @@ export const voucherBulkDelete = gql`
     }
   }
 `;
+
+export const promotionCreate = gql`
+  mutation PromotionCreate($input: PromotionCreateInput!) {
+    promotionCreate(input: $input) {
+      errors {
+        ...PromotionCreateError
+      }
+    }
+  }
+`;
