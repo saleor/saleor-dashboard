@@ -5,8 +5,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
-test("TC: SALEOR_34 User should be able to create Dropdown attribute, required, Product attribute @basic-regression", async ({
-
+test("TC: SALEOR_34 User should be able to create Dropdown attribute, required, Product attribute @e2e", async ({
   page,
 }) => {
   const configurationPage = new ConfigurationPage(page);
@@ -29,8 +28,7 @@ test("TC: SALEOR_34 User should be able to create Dropdown attribute, required, 
   await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
   expect(await attributesPage.valueRequiredCheckbox.isChecked()).toBeTruthy();
 });
-test("TC: SALEOR_35 User should be able to create Plain Text attribute, not required, Product attribute @basic-regression", async ({
-
+test("TC: SALEOR_35 User should be able to create Plain Text attribute, not required, Product attribute @e2e", async ({
   page,
 }) => {
   const attributesPage = new AttributesPage(page);
