@@ -119,3 +119,11 @@ export const voucherCodes = gql`
     }
   }
 `;
+
+export const promotionDetails = gql`
+  query PromotionDetails($id: ID!) {
+    promotion(id: $id) {
+      ...PromotionDetails
+    }
+  }
+`;

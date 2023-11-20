@@ -256,30 +256,6 @@ export const ChannelErrorFragmentDoc = gql`
   message
 }
     `;
-export const WarehouseFragmentDoc = gql`
-    fragment Warehouse on Warehouse {
-  id
-  name
-}
-    `;
-export const ChannelDetailsFragmentDoc = gql`
-    fragment ChannelDetails on Channel {
-  ...Channel
-  hasOrders
-  warehouses {
-    ...Warehouse
-  }
-  orderSettings {
-    markAsPaidStrategy
-    deleteExpiredOrdersAfter
-    allowUnpaidOrders
-  }
-  paymentSettings {
-    defaultTransactionFlowStrategy
-  }
-}
-    ${ChannelFragmentDoc}
-${WarehouseFragmentDoc}`;
 export const CollectionFragmentDoc = gql`
     fragment Collection on Collection {
   id
@@ -630,6 +606,53 @@ export const VoucherDetailsFragmentDoc = gql`
     ${VoucherFragmentDoc}
 ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
+export const WarehouseFragmentDoc = gql`
+    fragment Warehouse on Warehouse {
+  id
+  name
+}
+    `;
+export const ChannelDetailsFragmentDoc = gql`
+    fragment ChannelDetails on Channel {
+  ...Channel
+  hasOrders
+  warehouses {
+    ...Warehouse
+  }
+  orderSettings {
+    markAsPaidStrategy
+    deleteExpiredOrdersAfter
+    allowUnpaidOrders
+  }
+  paymentSettings {
+    defaultTransactionFlowStrategy
+  }
+}
+    ${ChannelFragmentDoc}
+${WarehouseFragmentDoc}`;
+export const PromotionRuleDetailsFragmentDoc = gql`
+    fragment PromotionRuleDetails on PromotionRule {
+  name
+  description
+  channels {
+    ...ChannelDetails
+  }
+  rewardValueType
+  rewardValue
+}
+    ${ChannelDetailsFragmentDoc}`;
+export const PromotionDetailsFragmentDoc = gql`
+    fragment PromotionDetails on Promotion {
+  id
+  name
+  description
+  startDate
+  endDate
+  rules {
+    ...PromotionRuleDetails
+  }
+}
+    ${PromotionRuleDetailsFragmentDoc}`;
 export const AttributeErrorFragmentDoc = gql`
     fragment AttributeError on AttributeError {
   code
@@ -7743,6 +7766,9 @@ export const PromotionCreateDocument = gql`
     errors {
       ...PromotionCreateError
     }
+    promotion {
+      id
+    }
   }
 }
     ${PromotionCreateErrorFragmentDoc}`;
@@ -8020,6 +8046,41 @@ export function useVoucherCodesLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type VoucherCodesQueryHookResult = ReturnType<typeof useVoucherCodesQuery>;
 export type VoucherCodesLazyQueryHookResult = ReturnType<typeof useVoucherCodesLazyQuery>;
 export type VoucherCodesQueryResult = Apollo.QueryResult<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>;
+export const PromotionDetailsDocument = gql`
+    query PromotionDetails($id: ID!) {
+  promotion(id: $id) {
+    ...PromotionDetails
+  }
+}
+    ${PromotionDetailsFragmentDoc}`;
+
+/**
+ * __usePromotionDetailsQuery__
+ *
+ * To run a query within a React component, call `usePromotionDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePromotionDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePromotionDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePromotionDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>(PromotionDetailsDocument, options);
+      }
+export function usePromotionDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>(PromotionDetailsDocument, options);
+        }
+export type PromotionDetailsQueryHookResult = ReturnType<typeof usePromotionDetailsQuery>;
+export type PromotionDetailsLazyQueryHookResult = ReturnType<typeof usePromotionDetailsLazyQuery>;
+export type PromotionDetailsQueryResult = Apollo.QueryResult<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {

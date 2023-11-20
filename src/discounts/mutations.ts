@@ -236,6 +236,9 @@ export const promotionCreate = gql`
       errors {
         ...PromotionCreateError
       }
+      promotion {
+        id
+      }
     }
   }
 `;

@@ -3,7 +3,8 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
-import { ChannelFragment } from "@dashboard/graphql";
+import { ChannelFragment, PromotionDetailsFragment } from "@dashboard/graphql";
+import { splitDateTime } from "@dashboard/misc";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import React from "react";
@@ -20,14 +21,14 @@ export interface DiscountDetailsPageProps {
   onBack: () => void;
   onSubmit: (data: DiscoutFormData) => void;
   onRuleSubmit: (ruleData: Rule) => void;
-  discount: any; // TODO: add type when handle API logic
+  data: PromotionDetailsFragment;
 }
 
 export const DiscountDetailsPage = ({
   channels,
   disabled,
   onBack,
-  discount,
+  data,
   onSubmit,
   onRuleSubmit,
 }: DiscountDetailsPageProps) => {
@@ -35,20 +36,20 @@ export const DiscountDetailsPage = ({
     mode: "onBlur",
     values: {
       dates: {
-        endDate: discount?.endDate,
-        startDate: discount?.startDate,
-        endTime: discount?.endTime,
-        hasEndDate: !!discount?.endDate,
-        startTime: discount?.startTime,
+        startDate: splitDateTime(data?.startDate ?? "").date,
+        startTime: splitDateTime(data?.startDate ?? "").time,
+        endDate: splitDateTime(data?.endDate ?? "").date,
+        endTime: splitDateTime(data?.endDate ?? "").time,
+        hasEndDate: !!data?.endDate,
       },
-      name: discount?.name,
-      description: discount?.description,
-      rules: discount?.rules,
+      name: data?.name,
+      description: JSON.stringify(data?.description),
+      rules: [],
     },
   });
 
   const richText = useRichText({
-    initial: "",
+    initial: JSON.stringify(data?.description),
     loading: false,
     triggerChange: methods.trigger,
   });
@@ -63,7 +64,7 @@ export const DiscountDetailsPage = ({
   return (
     <RichTextContext.Provider value={richText}>
       <DetailPageLayout gridTemplateColumns={1}>
-        <TopNav href={saleListUrl()} title={discount?.name} />
+        <TopNav href={saleListUrl()} title={data?.name} />
         <DetailPageLayout.Content>
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(handleSubmit)}>
