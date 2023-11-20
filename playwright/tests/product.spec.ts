@@ -1,6 +1,7 @@
 import { PRODUCTS } from "@data/testData";
 import { BasePage } from "@pages/basePage";
 import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
+import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import { ProductPage } from "@pages/productPage";
 import { VariantsPage } from "@pages/variantsPage";
 import { expect, test } from "@playwright/test";
@@ -103,4 +104,17 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page @basic-regr
   await variantsPage.typeQuantityInStock();
   await variantsPage.clickSaveVariantButton();
   await variantsPage.expectSuccessBanner();
+});
+test("TC: XXX Integration", async ({ page }) => {
+  const variantName = `TC: SALEOR_26 - variant name - ${new Date().toISOString()}`;
+  const basePage = new BasePage(page);
+  const productPage = new ProductPage(page);
+  const variantsPage = new VariantsPage(page);
+  const rightSideDetailsPage = new RightSideDetailsPage(page);
+
+  await basePage.gotoExistingProductPage("UHJvZHVjdDo4Ng%3D%3D");
+  await rightSideDetailsPage.selectFirstTax();
+  await expect(page.getByTestId("taxes").getByLabel("Tax class")).toHaveValue(
+    "Audio Products (tapes, cds etc.)",
+  );
 });
