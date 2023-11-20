@@ -6,7 +6,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/shipping.json" });
 
-test("TC: SALEOR_21 User should be able to navigate to shipping zones page as a staff member using SHIPPING permission", async ({
+test("TC: SALEOR_21 User should be able to navigate to shipping zones page as a staff member using SHIPPING permission @basic-regression", async ({
   page,
 }) => {
   const mainMenuPage = new MainMenuPage(page);
