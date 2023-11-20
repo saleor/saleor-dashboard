@@ -50,7 +50,7 @@ export const DiscountDetailsPage = ({
 
   const richText = useRichText({
     initial: JSON.stringify(data?.description),
-    loading: false,
+    loading: disabled,
     triggerChange: methods.trigger,
   });
 
