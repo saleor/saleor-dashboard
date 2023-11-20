@@ -66,9 +66,9 @@ jobs:
             echo "::add-mask::$DISTRIBUTION"
             for i in {1..3}; do aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*" && break || sleep 5; done
           done
-          env:
-            DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_EU_DEPLOYMENT_BUCKET }}
-            CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_EU_CDN_DISTRIBUTIONS }}
+        env:
+          DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_EU_DEPLOYMENT_BUCKET }}
+          CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_EU_CDN_DISTRIBUTIONS }}
 
       - name: Deploy
         if: env.REGION == 'us'
@@ -81,9 +81,9 @@ jobs:
             echo "::add-mask::$DISTRIBUTION"
             for i in {1..3}; do aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*" && break || sleep 5; done
           done
-          env:
-            DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_US_DEPLOYMENT_BUCKET }}
-            CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_US_CDN_DISTRIBUTIONS }}
+        env:
+          DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_US_DEPLOYMENT_BUCKET }}
+          CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_US_CDN_DISTRIBUTIONS }}
 
       - name: Notify Slack
         if: ${{ always() }}
