@@ -1,28 +1,33 @@
+import { Rule as RuleType } from "@dashboard/discounts/types";
+import { ChannelFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { DiscountRule } from "../../types";
 import { Placeholder } from "../Placeholder";
 import { Rule } from "../Rule";
 
 interface RulesListProps {
-  rules: DiscountRule[];
+  rules: Array<RuleType & { id: string }>;
+  channels: ChannelFragment[];
+  onRuleSubmit?: (index: number) => void;
 }
 
-export const RulesList = ({ rules }: RulesListProps) => {
+export const RulesList = ({
+  rules,
+  channels,
+  onRuleSubmit,
+}: RulesListProps) => {
   if (rules.length === 0) {
     return <Placeholder />;
   }
   return (
     <Box display="flex" flexDirection="column" gap={6}>
-      {rules.map(rule => (
+      {rules.map((rule, index) => (
         <Rule
           key={rule.id}
-          rule={rule}
-          channels={[
-            { label: "Chan 1", value: "1" },
-            { label: "Chan 2", value: "2" },
-          ]}
+          index={index}
+          channels={channels}
+          onSubmit={onRuleSubmit}
         />
       ))}
     </Box>
