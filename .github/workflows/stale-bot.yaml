@@ -19,3 +19,4 @@ jobs:
           days-before-stale: 14
           days-before-close: 2
           exempt-pr-labels: epic,triage,bug,blocker,backlog,feature
+          exempt-issue-labels: epic,triage,bug,blocker,backlog,feature
