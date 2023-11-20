@@ -63,7 +63,7 @@ describe("Staff members", () => {
   });
 
   it(
-    "should be able to invite staff user. TC: SALEOR_3501 - migration in progress - to delete when done",
+    "should be able to invite staff user. TC: SALEOR_3501",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const firstName = faker.name.firstName();
