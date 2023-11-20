@@ -1,19 +1,40 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import { Box, Button, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
+import { useController } from "react-hook-form";
 
-import { DiscountCondition } from "../../../../types";
 import { discountConditionTypes } from "./const";
 
 interface DiscountConditionRowProps {
-  condition: DiscountCondition;
+  ruleIndex: number;
+  conditionIndex: number;
   onRemove: () => void;
 }
 
 export const RuleConditionRow = ({
-  condition,
+  ruleIndex,
+  conditionIndex,
   onRemove,
 }: DiscountConditionRowProps) => {
+  const ruleConditionTypeFieldName =
+    `rules.${ruleIndex}.conditions.${conditionIndex}.type` as const;
+  const { field: typeField } = useController<
+    DiscoutFormData,
+    typeof ruleConditionTypeFieldName
+  >({
+    name: ruleConditionTypeFieldName,
+  });
+
+  const ruleConditionValuesFieldName =
+    `rules.${ruleIndex}.conditions.${conditionIndex}.values` as const;
+  const { field: valuesField } = useController<
+    DiscoutFormData,
+    typeof ruleConditionValuesFieldName
+  >({
+    name: ruleConditionValuesFieldName,
+  });
+
   return (
     <Box
       display="grid"
@@ -24,12 +45,13 @@ export const RuleConditionRow = ({
     >
       <Combobox
         value={{
-          label: condition.type,
-          value: condition.type,
+          label: typeField.value,
+          value: typeField.value,
         }}
         fetchOptions={() => {}}
         options={discountConditionTypes}
-        onChange={() => {}}
+        onChange={typeField.onChange}
+        onBlur={typeField.onBlur}
       />
 
       <Select
@@ -45,10 +67,14 @@ export const RuleConditionRow = ({
       />
 
       <Multiselect
-        value={condition.values}
+        value={valuesField.value}
         fetchOptions={() => {}}
-        options={[]}
-        onChange={() => {}}
+        options={[
+          { label: "test", value: "test" },
+          { label: "test2", value: "test2" },
+        ]}
+        onChange={valuesField.onChange}
+        onBlur={valuesField.onBlur}
       />
 
       <Button variant="tertiary" icon={<RemoveIcon />} onClick={onRemove} />

@@ -15,6 +15,7 @@ import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { IntrospectionNode } from "@dashboard/custom-apps/utils";
 import {
   WebhookDetailsFragment,
+  WebhookErrorCode,
   WebhookErrorFragment,
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
@@ -29,7 +30,7 @@ import { useIntl } from "react-intl";
 import PermissionAlert from "../PermissionAlert";
 import WebhookHeaders from "../WebhookHeaders";
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
-import { getHeaderTitle } from "./messages";
+import { getHeaderTitle, messages } from "./messages";
 
 export interface WebhookFormData {
   syncEvents: WebhookEventTypeSyncEnum[];
@@ -91,7 +92,24 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     setQuery(prettified);
   }, [prettified]);
 
+  const [localErrors, setLocalErrors] = React.useState<WebhookErrorFragment[]>(
+    [],
+  );
+
   const handleSubmit = (data: WebhookFormData) => {
+    if (!webhook && query.length === 0) {
+      setLocalErrors([
+        {
+          __typename: "WebhookError",
+          code: WebhookErrorCode.REQUIRED,
+          field: "subscriptionQuery",
+          message: intl.formatMessage(messages.subscriptionQueryBlankError),
+        },
+      ]);
+
+      return;
+    }
+
     onSubmit({ ...data, ...{ subscriptionQuery: query } });
   };
 
@@ -143,6 +161,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                   query={query}
                   setQuery={setQuery}
                   data={data}
+                  errors={localErrors}
                 />
                 <FormSpacer />
                 <PermissionAlert query={query} />

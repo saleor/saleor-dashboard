@@ -1,34 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Properly computes diffs # 1`] = `
+exports[`MenuItems tree - getDiff should return array with operations 1`] = `
 Array [
   Object {
-    "id": "1glasses",
-    "parentId": "0jewelry",
-    "sortOrder": 0,
-    "type": "move",
-  },
-]
-`;
-
-exports[`Properly computes diffs # 2`] = `
-Array [
-  Object {
-    "id": "1glasses",
+    "id": "4apparel",
     "parentId": "2accessories",
-    "sortOrder": -1,
+    "sortOrder": 1,
     "type": "move",
   },
-]
-`;
-
-exports[`Properly computes diffs # 3`] = `
-Array [
   Object {
-    "id": "2accessories",
-    "parentId": "4apparel",
+    "id": "0jewelry",
+    "parentId": "3groceries",
     "sortOrder": 0,
     "type": "move",
   },
 ]
 `;
+
+exports[`MenuItems tree - getDiff should return orinal tree when no changes 1`] = `Array []`;
