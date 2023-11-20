@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { LogLevels } from "@editorjs/editorjs";
+import { LogLevels, OutputData } from "@editorjs/editorjs";
 import { FormControl, FormHelperText } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
 import { EditorCore, Props as ReactEditorJSProps } from "@react-editor-js/core";
@@ -26,7 +26,8 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
     | React.MutableRefObject<EditorCore | null>
     | null;
   // onChange with value shouldn't be used due to issues with React and EditorJS integration
-  onChange?: () => void;
+  onChange?: (data?: OutputData) => void;
+  onBlur?: () => void;
 }
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
@@ -39,6 +40,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   editorRef,
   onInitialize,
   onChange,
+  onBlur,
   ...props
 }) => {
   const classes = useStyles({});
@@ -95,7 +97,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           onChange={async event => {
             const editorJsValue = await event.saver.save();
             setHasValue(editorJsValue.blocks.length > 0);
-            return onChange?.();
+            return onChange?.(editorJsValue);
           }}
           {...props}
         >
@@ -111,7 +113,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                 isTyped || props.defaultValue?.blocks?.length > 0,
             })}
             onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            onBlur={() => {
+              setIsFocused(false);
+              onBlur?.();
+            }}
           />
         </ReactEditorJS>
       )}
