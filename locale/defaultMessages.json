@@ -7045,6 +7045,10 @@
     "context": "order",
     "string": "Channel"
   },
+  "lJXkFS": {
+    "context": "discount name",
+    "string": "Discount name"
+  },
   "lL1HTg": {
     "string": "Order marked as paid"
   },
