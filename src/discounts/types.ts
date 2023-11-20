@@ -47,7 +47,7 @@ export interface Rule {
 }
 
 export interface Condition {
-  type: "product" | "category" | "collection" | "variant";
+  type: string;
   condition: "is";
   values: Option[];
 }

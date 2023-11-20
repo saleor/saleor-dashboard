@@ -6,7 +6,7 @@ import {
   DynamicMultiselectProps,
   Option,
 } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useCombbobxCustomOption } from "../hooks/useCombbobxCustomOption";
@@ -22,79 +22,87 @@ type MultiselectProps = Omit<DynamicMultiselectProps<Option>, "onChange"> & {
   onChange: (event: ChangeEvent) => void;
 };
 
-export const Multiselect = ({
-  disabled,
-  options,
-  onChange,
-  fetchOptions,
-  value,
-  alwaysFetchOnFocus = false,
-  allowCustomValues = false,
-  loading,
-  fetchMore,
-  size = "small",
-  ...rest
-}: MultiselectProps) => {
-  const intl = useIntl();
-  const inputValue = useRef("");
-
-  const [selectedValues, setSelectedValues] = useState(value);
-
-  useEffect(() => {
-    setSelectedValues(value);
-  }, [value]);
-
-  const { handleFetchMore, handleFocus, handleInputChange } =
-    useComboboxHandlers({
+export const Multiselect = forwardRef<HTMLInputElement, MultiselectProps>(
+  (
+    {
+      disabled,
+      options,
+      onChange,
       fetchOptions,
-      alwaysFetchOnFocus,
+      value,
+      alwaysFetchOnFocus = false,
+      allowCustomValues = false,
+      loading,
       fetchMore,
+      size = "small",
+      ...rest
+    },
+    ref,
+  ) => {
+    const intl = useIntl();
+    const inputValue = useRef("");
+
+    const [selectedValues, setSelectedValues] = useState(value);
+
+    useEffect(() => {
+      setSelectedValues(value);
+    }, [value]);
+
+    const { handleFetchMore, handleFocus, handleInputChange } =
+      useComboboxHandlers({
+        fetchOptions,
+        alwaysFetchOnFocus,
+        fetchMore,
+      });
+
+    const { customValueLabel, customValueOption } = useCombbobxCustomOption({
+      query: inputValue.current,
+      allowCustomValues,
+      selectedValue: selectedValues,
     });
 
-  const { customValueLabel, customValueOption } = useCombbobxCustomOption({
-    query: inputValue.current,
-    allowCustomValues,
-    selectedValue: selectedValues,
-  });
+    const handleOnChange = (values: Option[]) => {
+      const hasCustomValue = values.find(value =>
+        value.label.includes(customValueLabel),
+      );
+      const valuesWithCustom = values.map(toWithCustomValues(customValueLabel));
 
-  const handleOnChange = (values: Option[]) => {
-    const hasCustomValue = values.find(value =>
-      value.label.includes(customValueLabel),
+      onChange({
+        target: {
+          value: valuesWithCustom,
+          name: rest.name ?? "",
+        },
+      });
+
+      inputValue.current = "";
+
+      if (hasCustomValue) {
+        fetchOptions("");
+      }
+    };
+
+    return (
+      <DynamicMultiselect
+        ref={ref}
+        options={[...customValueOption, ...options]}
+        disabled={disabled}
+        onChange={handleOnChange}
+        value={selectedValues}
+        onInputValueChange={value => {
+          inputValue.current = value;
+          handleInputChange(value);
+        }}
+        onFocus={handleFocus}
+        onScrollEnd={handleFetchMore}
+        loading={loading || fetchMore?.hasMore || fetchMore?.loading}
+        locale={{
+          loadingText: intl.formatMessage(commonMessages.loading),
+        }}
+        size={size}
+        {...rest}
+      />
     );
-    const valuesWithCustom = values.map(toWithCustomValues(customValueLabel));
+  },
+);
 
-    onChange({
-      target: {
-        value: valuesWithCustom,
-        name: rest.name ?? "",
-      },
-    });
-
-    inputValue.current = "";
-
-    if (hasCustomValue) {
-      fetchOptions("");
-    }
-  };
-
-  return (
-    <DynamicMultiselect
-      options={[...customValueOption, ...options]}
-      disabled={disabled}
-      onChange={handleOnChange}
-      value={selectedValues}
-      onInputValueChange={value => {
-        inputValue.current = value;
-        handleInputChange(value);
-      }}
-      onFocus={handleFocus}
-      onScrollEnd={handleFetchMore}
-      loading={loading || fetchMore?.hasMore || fetchMore?.loading}
-      locale={{
-        loadingText: intl.formatMessage(commonMessages.loading),
-      }}
-      size={size}
-      {...rest}
-    />
-  );
-};
+Multiselect.displayName = "Multiselect";

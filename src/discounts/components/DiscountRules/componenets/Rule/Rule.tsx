@@ -1,5 +1,9 @@
 import { Multiselect } from "@dashboard/components/Combobox";
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import {
+  FetchOptions,
+  OptionsType,
+} from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { ChannelFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { RichTextContext } from "@dashboard/utils/richText/context";
@@ -19,9 +23,15 @@ interface RuleProps {
   channels: ChannelFragment[];
   index: number;
   onSubmit?: (index: number) => void;
+  fetchOptions: (type: OptionsType) => FetchOptions;
 }
 
-export const Rule = ({ channels, index, onSubmit }: RuleProps) => {
+export const Rule = ({
+  channels,
+  index,
+  onSubmit,
+  fetchOptions,
+}: RuleProps) => {
   const intl = useIntl();
   const { watch } = useFormContext<DiscoutFormData>();
 
@@ -77,7 +87,7 @@ export const Rule = ({ channels, index, onSubmit }: RuleProps) => {
 
           {currencySymbol ? (
             <>
-              <RuleConditions index={index} />
+              <RuleConditions fetchOptions={fetchOptions} index={index} />
               <RuleReward index={index} currencySymbol={currencySymbol} />
             </>
           ) : null}

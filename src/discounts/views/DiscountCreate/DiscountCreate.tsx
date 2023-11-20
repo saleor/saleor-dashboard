@@ -11,6 +11,8 @@ import { joinDateTime } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { useOptionsFetch } from "./hooks/useOptionsFetch";
+
 export const DiscountCreate = () => {
   const { availableChannels } = useAppChannel(false);
   const navigate = useNavigator();
@@ -31,6 +33,8 @@ export const DiscountCreate = () => {
       }
     },
   });
+
+  const fetchOptionsByType = useOptionsFetch();
 
   const handlePromotionCreate = (data: DiscoutFormData) => {
     promotionCreate({
@@ -56,6 +60,7 @@ export const DiscountCreate = () => {
         onBack={() => {
           navigate(saleListUrl());
         }}
+        fetchOptions={fetchOptionsByType}
         channels={availableChannels}
         onSubmit={handlePromotionCreate}
       />

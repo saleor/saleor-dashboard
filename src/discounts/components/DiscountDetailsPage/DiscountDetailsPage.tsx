@@ -42,7 +42,7 @@ export const DiscountDetailsPage = ({
         endTime: splitDateTime(data?.endDate ?? "").time,
         hasEndDate: !!data?.endDate,
       },
-      name: data?.name,
+      name: data?.name ?? "",
       description: JSON.stringify(data?.description),
       rules: [],
     },

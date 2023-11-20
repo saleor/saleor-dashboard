@@ -15,7 +15,7 @@ export const initialFormValues: DiscoutFormData = {
 };
 
 export const intialConditionValues: Condition = {
-  type: "product",
+  type: "",
   condition: "is",
   values: [],
 };

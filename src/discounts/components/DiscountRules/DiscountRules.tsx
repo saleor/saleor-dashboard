@@ -1,5 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import {
+  FetchOptions,
+  OptionsType,
+} from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { ChannelFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -13,12 +17,14 @@ import { messages } from "./messages";
 
 interface DiscountRulesProps {
   channels: ChannelFragment[];
+  fetchOptions: (type: OptionsType) => FetchOptions;
   onRuleSubmit?: (index: number) => void;
 }
 
 export const DiscountRules = ({
   channels,
   onRuleSubmit,
+  fetchOptions,
 }: DiscountRulesProps) => {
   const intl = useIntl();
   const { append, fields: rules } = useFieldArray<DiscoutFormData, "rules">({
@@ -41,6 +47,7 @@ export const DiscountRules = ({
       </DashboardCard.Title>
       <DashboardCard.Content>
         <RulesList
+          fetchOptions={fetchOptions}
           rules={rules}
           channels={channels}
           onRuleSubmit={onRuleSubmit}

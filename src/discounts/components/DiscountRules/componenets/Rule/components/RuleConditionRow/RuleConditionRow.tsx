@@ -1,21 +1,30 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import {
+  FetchOptions,
+  OptionsType,
+} from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { Box, Button, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController } from "react-hook-form";
 
-import { discountConditionTypes } from "./const";
+import { initialDiscountConditionType } from "./const";
+import { getConditionTypeValue } from "./utils";
 
 interface DiscountConditionRowProps {
   ruleIndex: number;
   conditionIndex: number;
   onRemove: () => void;
+  fetchOptions: (type: OptionsType) => FetchOptions;
+  isConditionTypeSelected: (conditionType: string) => boolean;
 }
 
 export const RuleConditionRow = ({
   ruleIndex,
   conditionIndex,
   onRemove,
+  fetchOptions,
+  isConditionTypeSelected,
 }: DiscountConditionRowProps) => {
   const ruleConditionTypeFieldName =
     `rules.${ruleIndex}.conditions.${conditionIndex}.type` as const;
@@ -35,6 +44,13 @@ export const RuleConditionRow = ({
     name: ruleConditionValuesFieldName,
   });
 
+  const { fetch, loadMore, result, loading, options } =
+    fetchOptions(typeField.value as OptionsType) ?? {};
+
+  const discountConditionType = initialDiscountConditionType.filter(
+    condition => !isConditionTypeSelected(condition.value),
+  );
+
   return (
     <Box
       display="grid"
@@ -44,12 +60,12 @@ export const RuleConditionRow = ({
       alignItems="start"
     >
       <Combobox
-        value={{
-          label: typeField.value,
-          value: typeField.value,
-        }}
+        value={getConditionTypeValue(
+          typeField.value,
+          initialDiscountConditionType,
+        )}
         fetchOptions={() => {}}
-        options={discountConditionTypes}
+        options={discountConditionType}
         onChange={typeField.onChange}
         onBlur={typeField.onBlur}
       />
@@ -68,11 +84,13 @@ export const RuleConditionRow = ({
 
       <Multiselect
         value={valuesField.value}
-        fetchOptions={() => {}}
-        options={[
-          { label: "test", value: "test" },
-          { label: "test2", value: "test2" },
-        ]}
+        fetchOptions={fetch}
+        fetchMore={{
+          hasMore: result?.data?.pageInfo?.hasNextPage ?? false,
+          loading,
+          onFetchMore: loadMore,
+        }}
+        options={options ?? []}
         onChange={valuesField.onChange}
         onBlur={valuesField.onBlur}
       />

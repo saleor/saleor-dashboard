@@ -1,7 +1,7 @@
-export const discountConditionTypes = [
+export const initialDiscountConditionType = [
   {
     label: "Products",
-    value: "produts",
+    value: "products",
   },
   {
     label: "Collections",
