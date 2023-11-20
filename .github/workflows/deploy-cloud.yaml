@@ -22,9 +22,7 @@ jobs:
     steps:
       - name: Check region
         if: ${{ !contains(fromJSON('["eu", "us"]'), env.REGION) }}
-        uses: actions/github-script@v3
-        with:
-          script: core.setFailed('Unknown region provided')
+        run: echo 'Unknown region provided' >&2; exit 1
 
       - uses: actions/checkout@v2
         with:
@@ -65,25 +63,27 @@ jobs:
 
           IFS=',' read -ra DISTRIBUTIONS_ARRAY <<< "${CDN_DISTRIBUTIONS}"
           for DISTRIBUTION in "${DISTRIBUTIONS_ARRAY[@]}"; do
+            echo "::add-mask::$DISTRIBUTION"
             for i in {1..3}; do aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*" && break || sleep 5; done
           done
           env:
             DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_EU_DEPLOYMENT_BUCKET }}
             CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_EU_CDN_DISTRIBUTIONS }}
 
-            - name: Deploy
-            if: env.REGION == 'us'
-            run: |
-              aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/"
-              aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/"
+      - name: Deploy
+        if: env.REGION == 'us'
+        run: |
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/"
 
-              IFS=',' read -ra DISTRIBUTIONS_ARRAY <<< "${CDN_DISTRIBUTIONS}"
-              for DISTRIBUTION in "${DISTRIBUTIONS_ARRAY[@]}"; do
-                for i in {1..3}; do aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*" && break || sleep 5; done
-              done
-              env:
-                DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_US_DEPLOYMENT_BUCKET }}
-                CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_US_CDN_DISTRIBUTIONS }}
+          IFS=',' read -ra DISTRIBUTIONS_ARRAY <<< "${CDN_DISTRIBUTIONS}"
+          for DISTRIBUTION in "${DISTRIBUTIONS_ARRAY[@]}"; do
+            echo "::add-mask::$DISTRIBUTION"
+            for i in {1..3}; do aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*" && break || sleep 5; done
+          done
+          env:
+            DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_US_DEPLOYMENT_BUCKET }}
+            CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_US_CDN_DISTRIBUTIONS }}
 
       - name: Notify Slack
         if: ${{ always() }}
