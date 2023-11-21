@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { FetchResult } from "@apollo/client";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -156,7 +157,7 @@ export const OrderUnconfirmedDetails: React.FC<
 
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>,
-  ): Promise<any> =>
+  ): Promise<FetchResult<OrderUpdateMutation>> =>
     orderUpdate.mutate({
       id,
       input: data,

@@ -36,7 +36,6 @@ jobs:
           echo "API_URI=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
-      
       - name: Saleor login
         uses: ./.github/actions/cli-login
         with:
@@ -87,7 +86,7 @@ jobs:
       - name: Saleor login
         uses: ./.github/actions/cli-login
         with:
-          token: ${{ secrets.STAGING_TOKEN }}     
+          token: ${{ secrets.STAGING_TOKEN }}
 
       - name: Instance check
         id: instance_check
@@ -113,7 +112,7 @@ jobs:
         if: ${{ !steps.instance_check.outputs.INSTANCE_KEY }}
         env:
           SALEOR_CLI_ENV: staging
-          BACKUP_ID:  ${{ needs.prepare_variables.outputs.BACKUP_ID }}
+          BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
           npx saleor env create "$INSTANCE_NAME" \
@@ -184,7 +183,7 @@ jobs:
           AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
           BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
         run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}"
-      
+
       - name: Invalidate cache
         env:
           AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
@@ -201,7 +200,6 @@ jobs:
           env_url: https://${{ needs.prepare_variables.outputs.BASE_URL }}/
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
-
 
   deploy_storybook:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
@@ -256,7 +254,7 @@ jobs:
           AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
           BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
         run: aws s3 sync ./build/storybook "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}/storybook"
-      
+
       - name: Invalidate cache
         env:
           AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
@@ -301,7 +299,7 @@ jobs:
           E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-        run: npx playwright test --shard ${{ matrix.shard }}
+        run: npm run qa:pw-e2e -- --shard ${{ matrix.shard }}
 
       - name: Upload blob report to GitHub Actions Artifacts
         uses: actions/upload-artifact@v3
@@ -312,7 +310,7 @@ jobs:
           retention-days: 1
 
   merge-reports:
-    if: '!cancelled()'
+    if: !cancelled()
     needs: [run-tests]
 
     runs-on: ubuntu-latest

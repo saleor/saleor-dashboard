@@ -23,6 +23,7 @@ import {
   OrderDiscountType,
 } from "./types";
 
+type GetErrorMessageReturn = string | null;
 const numbersRegex = /([0-9]+\.?[0-9]*)$/;
 
 const useStyles = makeStyles(
@@ -202,7 +203,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     return getParsedDiscountValue() > topAmount;
   };
 
-  const getErrorMessage = (value: string): string | null => {
+  const getErrorMessage = (value: string): GetErrorMessageReturn => {
     if (isAmountTooLarge(value)) {
       if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
         return intl.formatMessage(messages.valueBiggerThat100);

@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
-test("TC: SALEOR_29 Correct information on dashboard home page @basic-regression", async ({
+test("TC: SALEOR_29 Correct information on dashboard home page @e2e", async ({
   page,
 }) => {
   const homePage = new HomePage(page);

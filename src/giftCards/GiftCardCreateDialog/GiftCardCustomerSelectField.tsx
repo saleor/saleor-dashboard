@@ -33,7 +33,7 @@ const GiftCardCustomerSelectField: React.FC<
     label: getFullName({ firstName, lastName }),
   }));
 
-  const handleSelect = (event: React.ChangeEvent<any>) => {
+  const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const label = choices?.find(category => category.value === value)?.label;
 
