@@ -58,7 +58,7 @@ export const DiscountDetailsPage = ({
           conditions: rule.cataloguePredicate.OR.reduce((acc, condition) => {
             if (condition.productPredicate) {
               acc.push({
-                type: "products",
+                type: "product",
                 condition: "is",
                 values: condition.productPredicate.ids.map(id => ({
                   label: id,
@@ -69,7 +69,7 @@ export const DiscountDetailsPage = ({
 
             if (condition.categoryPredicate) {
               acc.push({
-                type: "categories",
+                type: "categorie",
                 condition: "is",
                 values: condition.categoryPredicate.ids.map(id => ({
                   label: id,
@@ -80,7 +80,7 @@ export const DiscountDetailsPage = ({
 
             if (condition.collectionPredicate) {
               acc.push({
-                type: "collections",
+                type: "collection",
                 condition: "is",
                 values: condition.collectionPredicate.ids.map(id => ({
                   label: id,

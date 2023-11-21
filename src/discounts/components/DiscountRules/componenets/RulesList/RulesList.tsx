@@ -1,8 +1,5 @@
-import { Rule as RuleType } from "@dashboard/discounts/types";
-import {
-  FetchOptions,
-  OptionsType,
-} from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
+import { ConditionType, Rule as RuleType } from "@dashboard/discounts/types";
+import { FetchOptions } from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { ChannelFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -14,7 +11,7 @@ interface RulesListProps {
   rules: Array<RuleType & { id: string }>;
   channels: ChannelFragment[];
   onRuleSubmit?: (index: number) => void;
-  fetchOptions: (type: OptionsType) => FetchOptions;
+  fetchOptions: (type: ConditionType) => FetchOptions;
 }
 
 export const RulesList = ({

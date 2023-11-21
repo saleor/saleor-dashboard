@@ -13,7 +13,7 @@ const props: DiscountDetailsPageProps = {
   onBack: () => undefined,
   onSubmit: () => undefined,
   onRuleSubmit: () => undefined,
-  discount,
+  data: discount,
 };
 
 export default {

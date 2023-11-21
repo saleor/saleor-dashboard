@@ -1,12 +1,9 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { ConditionType, DiscoutFormData } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
-import {
-  FetchOptions,
-  OptionsType,
-} from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
+import { FetchOptions } from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { ChannelFragment } from "@dashboard/graphql";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
@@ -25,7 +22,7 @@ export interface DiscountCreatePageProps {
   disabled: boolean;
   onBack: () => void;
   onSubmit: (data: DiscoutFormData) => void;
-  fetchOptions: (type: OptionsType) => FetchOptions;
+  fetchOptions: (type: ConditionType) => FetchOptions;
 }
 
 export const DiscountCreatePage = ({

@@ -9,6 +9,7 @@ import {
 const props: DiscountCreatePageProps = {
   channels: channelsList,
   disabled: false,
+  fetchOptions: () => undefined,
   onBack: () => undefined,
   onSubmit: () => undefined,
 };

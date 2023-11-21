@@ -1,9 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { DiscoutFormData } from "@dashboard/discounts/types";
-import {
-  FetchOptions,
-  OptionsType,
-} from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
+import { ConditionType, DiscoutFormData } from "@dashboard/discounts/types";
+import { FetchOptions } from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { ChannelFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -17,7 +14,7 @@ import { messages } from "./messages";
 
 interface DiscountRulesProps {
   channels: ChannelFragment[];
-  fetchOptions: (type: OptionsType) => FetchOptions;
+  fetchOptions: (type: ConditionType) => FetchOptions;
   onRuleSubmit?: (index: number) => void;
 }
 

@@ -1,9 +1,6 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
-import { DiscoutFormData } from "@dashboard/discounts/types";
-import {
-  FetchOptions,
-  OptionsType,
-} from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
+import { ConditionType, DiscoutFormData } from "@dashboard/discounts/types";
+import { FetchOptions } from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { Box, Button, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController } from "react-hook-form";
@@ -15,7 +12,7 @@ interface DiscountConditionRowProps {
   ruleIndex: number;
   conditionIndex: number;
   onRemove: () => void;
-  fetchOptions: (type: OptionsType) => FetchOptions;
+  fetchOptions: (type: ConditionType) => FetchOptions;
   isConditionTypeSelected: (conditionType: string) => boolean;
 }
 
@@ -48,7 +45,7 @@ export const RuleConditionRow = ({
     fetch = () => {},
     fetchMoreProps,
     options,
-  } = fetchOptions(typeField.value as OptionsType) ?? {};
+  } = fetchOptions(typeField.value as ConditionType) ?? {};
 
   const discountConditionType = initialDiscountConditionType.filter(
     condition => !isConditionTypeSelected(condition.value),

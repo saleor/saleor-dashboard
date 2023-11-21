@@ -1,9 +1,6 @@
 import { intialConditionValues } from "@dashboard/discounts/components/DiscountCreatePage/initialFormValues";
-import { DiscoutFormData } from "@dashboard/discounts/types";
-import {
-  FetchOptions,
-  OptionsType,
-} from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
+import { ConditionType, DiscoutFormData } from "@dashboard/discounts/types";
+import { FetchOptions } from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray } from "react-hook-form";
@@ -15,7 +12,7 @@ import { initialDiscountConditionType } from "../RuleConditionRow/const";
 
 interface RuleConditionsProps {
   index: number;
-  fetchOptions: (type: OptionsType) => FetchOptions;
+  fetchOptions: (type: ConditionType) => FetchOptions;
 }
 
 export const RuleConditions = ({

@@ -47,7 +47,7 @@ export interface Rule {
 }
 
 export interface Condition {
-  type: ConditionType;
+  type: ConditionType | null;
   condition: "is";
   values: Option[];
 }
