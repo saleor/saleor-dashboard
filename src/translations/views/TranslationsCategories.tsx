@@ -18,6 +18,8 @@ import TranslationsCategoriesPage from "../components/TranslationsCategoriesPage
 import { TranslationField, TranslationInputFieldName } from "../types";
 import { getParsedTranslationInputData } from "../utils";
 
+type HandleSubmitData = string | OutputData;
+
 export interface TranslationsCategoriesQueryParams {
   activeField: string;
 }
@@ -70,7 +72,7 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
 
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string | OutputData,
+    data: HandleSubmitData,
   ) =>
     extractMutationErrors(
       updateTranslations({

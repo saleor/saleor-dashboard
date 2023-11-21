@@ -43,8 +43,8 @@ import ProductExportDialogInfo, {
 import { exportSettingsInitialFormData } from "./types";
 
 export enum ProductExportStep {
-  INFO,
-  SETTINGS,
+  INFO = 0,
+  SETTINGS = 1,
 }
 
 function useSteps(): Array<Step<ProductExportStep>> {

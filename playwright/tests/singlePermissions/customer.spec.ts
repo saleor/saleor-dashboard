@@ -6,7 +6,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/customer.json" });
 
-test("TC: SALEOR_13 User should be able to navigate to customer list as a staff member using CUSTOMER permission", async ({
+test("TC: SALEOR_13 User should be able to navigate to customer list as a staff member using CUSTOMER permission @e2e", async ({
   page,
 }) => {
   const basePage = new BasePage(page);

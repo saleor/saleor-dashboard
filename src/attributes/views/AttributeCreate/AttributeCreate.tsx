@@ -42,6 +42,8 @@ import {
   getAttributeData,
 } from "../../utils/data";
 
+type ParamId = number | undefined;
+
 interface AttributeDetailsProps {
   params: AttributeAddUrlQueryParams;
 }
@@ -96,7 +98,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const id: number | undefined = params.id
+  const id: ParamId = params.id
     ? parseInt(params.id, 10) + pageInfo.startCursor
     : undefined;
 
