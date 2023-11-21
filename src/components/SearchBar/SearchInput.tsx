@@ -33,7 +33,9 @@ const SearchInput: React.FC<SearchInputProps> = props => {
   return (
     <Debounce debounceFn={onSearchChange} time={500}>
       {debounceSearchChange => {
-        const handleSearchChange = (event: React.ChangeEvent<any>) => {
+        const handleSearchChange = (
+          event: React.ChangeEvent<HTMLInputElement>,
+        ) => {
           const value = event.target.value;
           setSearch(value);
           debounceSearchChange(value);
