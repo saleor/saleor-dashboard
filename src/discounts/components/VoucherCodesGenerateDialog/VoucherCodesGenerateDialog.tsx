@@ -1,8 +1,7 @@
 import { DashboardModal } from "@dashboard/components/Modal";
-import useForm from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui-next";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -24,7 +23,6 @@ const initialData: GenerateMultipleVoucherCodeFormData = {
 };
 
 const MAX_VOUCHER_CODES = 50;
-const numberRegexp = /\d+/;
 
 export const VoucherCodesGenerateDialog = ({
   open,
@@ -32,33 +30,36 @@ export const VoucherCodesGenerateDialog = ({
   onSubmit,
 }: VoucherCodesGenerateDialogProps) => {
   const intl = useIntl();
-  const { change, submit, data, reset } = useForm(initialData, onSubmit);
+  const [data, setData] =
+    useState<GenerateMultipleVoucherCodeFormData>(initialData);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
 
-    if (!numberRegexp.test(value) && value !== "") {
+    if (
+      Number.isNaN(Number(value)) ||
+      Number(value) > MAX_VOUCHER_CODES ||
+      value.includes(".")
+    ) {
       e.preventDefault();
       return;
     }
 
-    if (Number(value) > MAX_VOUCHER_CODES) {
-      e.preventDefault();
-      return;
-    }
-
-    change(e);
+    setData(data => ({
+      ...data,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleModalClose = () => {
     onClose();
-    reset();
+    setData(initialData);
   };
 
   const handleSubmit = async () => {
-    await submit();
+    await onSubmit(data);
     onClose();
-    reset();
+    setData(initialData);
   };
 
   return (
@@ -76,7 +77,6 @@ export const VoucherCodesGenerateDialog = ({
             label={intl.formatMessage(messages.codeQuantity, {
               maxCodes: MAX_VOUCHER_CODES,
             })}
-            // onKeyDown={handleKeyDown}
             value={data.quantity}
             onChange={handleChange}
           />
@@ -84,14 +84,19 @@ export const VoucherCodesGenerateDialog = ({
             name="prefix"
             label={intl.formatMessage(messages.codePrefix)}
             value={data.prefix}
-            onChange={change}
+            onChange={e => {
+              setData(data => ({
+                ...data,
+                [e.target.name]: e.target.value,
+              }));
+            }}
           />
         </Box>
         <DashboardModal.Actions>
           <Button onClick={handleModalClose} variant="secondary">
             {intl.formatMessage(buttonMessages.back)}
           </Button>
-          <Button onClick={handleSubmit}>
+          <Button onClick={handleSubmit} disabled={Number(data.quantity) === 0}>
             {intl.formatMessage(buttonMessages.confirm)}
           </Button>
         </DashboardModal.Actions>

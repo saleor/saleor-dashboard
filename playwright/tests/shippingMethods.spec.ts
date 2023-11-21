@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
-test("TC: SALEOR_31 Create basic shipping method @shipping-method @basic-regression", async ({
+test("TC: SALEOR_31 Create basic shipping method @shipping-method @e2e", async ({
   page,
 }) => {
   const shippingMethodsPage = new ShippingMethodsPage(page);
@@ -26,7 +26,7 @@ test("TC: SALEOR_31 Create basic shipping method @shipping-method @basic-regress
   await shippingMethodsPage.saveShippingZone();
   await shippingMethodsPage.basePage.expectSuccessBanner();
 });
-test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes adn excluded product @shipping-method @basic-regression", async ({
+test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes adn excluded product @shipping-method @e2e", async ({
   page,
 }) => {
   const shippingMethodsPage = new ShippingMethodsPage(page);
@@ -55,7 +55,7 @@ test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes 
     1,
   );
 });
-test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes adn excluded product @shipping-method @basic-regression", async ({
+test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes adn excluded product @shipping-method @e2e", async ({
   page,
 }) => {
   const shippingMethodsPage = new ShippingMethodsPage(page);

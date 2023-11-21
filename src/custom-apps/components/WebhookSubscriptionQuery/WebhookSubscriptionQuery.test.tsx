@@ -41,6 +41,7 @@ describe("WebhookSubscriptionQuery", () => {
         subscriptionQuery: "",
         customHeaders: "",
       },
+      errors: [],
     };
 
     // Act

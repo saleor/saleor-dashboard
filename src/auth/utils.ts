@@ -81,6 +81,7 @@ export const handleNestedMutationErrors = ({
           intl,
           code: error.code,
           field: error.field,
+          voucherCodes: error.voucherCodes,
         }),
       });
     });

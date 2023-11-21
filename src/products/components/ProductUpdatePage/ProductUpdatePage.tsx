@@ -449,6 +449,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}
+                attribute={data.attributes.find(
+                  ({ id }) => id === assignReferencesAttributeId,
+                )}
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
                 onFetch={handlers.fetchReferences}

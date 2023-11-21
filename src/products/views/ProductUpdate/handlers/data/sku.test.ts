@@ -11,7 +11,7 @@ describe("getSkuData", () => {
     ];
 
     // Act
-    const name = getSkuData(changeData, 1, []);
+    const name = getSkuData(changeData, 1);
 
     // Assert
     expect(name).toEqual("123");
@@ -24,7 +24,7 @@ describe("getSkuData", () => {
     ];
 
     // Act
-    const name = getSkuData(changeData, 1, []);
+    const name = getSkuData(changeData, 1);
 
     // Assert
     expect(name).toEqual(undefined);
@@ -37,7 +37,7 @@ describe("getSkuData", () => {
     ];
 
     // Act
-    const name = getSkuData(changeData, 1, []);
+    const name = getSkuData(changeData, 1);
 
     // Assert
     expect(name).toEqual(undefined);

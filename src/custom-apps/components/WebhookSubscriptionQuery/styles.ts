@@ -1,4 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui-next";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -15,6 +16,12 @@ export const useStyles = makeStyles(
     },
     cardTitle: {
       paddingLeft: 0,
+    },
+    error: {
+      color: vars.colors.foreground.textCriticalDefault,
+      "& .MuiTypography-colorTextSecondary": {
+        color: vars.colors.foreground.textCriticalDefault,
+      },
     },
   }),
   { name: "WebhookSubscriptionQuery" },

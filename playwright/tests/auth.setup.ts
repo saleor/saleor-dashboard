@@ -22,8 +22,8 @@ const customerWebhooksPermissionsFile = "playwright/.auth/customer.json";
 setup("authenticate as admin", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
-    process.env.CYPRESS_USER_NAME!,
-    process.env.CYPRESS_USER_PASSWORD!,
+    process.env.E2E_USER_NAME!,
+    process.env.E2E_USER_PASSWORD!,
     page,
     adminFile,
   );
@@ -32,7 +32,7 @@ setup("authenticate as user with discount permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.discount,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     discountPermissionsFile,
   );
@@ -42,7 +42,7 @@ setup("authenticate as user with orders permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.order,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     ordersPermissionsFile,
   );
@@ -51,7 +51,7 @@ setup("authenticate as user with apps permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.app,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     appsPermissionsFile,
   );
@@ -60,7 +60,7 @@ setup("authenticate as user with channels permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.channel,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     channelsWebhooksPermissionsFile,
   );
@@ -69,7 +69,7 @@ setup("authenticate as user with customer permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.customer,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     customerWebhooksPermissionsFile,
   );
@@ -78,7 +78,7 @@ setup("authenticate as user with gift cards permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.giftCard,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     giftCardsPermissionsFile,
   );
@@ -89,7 +89,7 @@ setup(
     const loginPage = new LoginPage(page);
     await loginPage.loginAndSetStorageState(
       USER_PERMISSION.page,
-      process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+      process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
       page,
       contentPermissionsFile,
     );
@@ -99,7 +99,7 @@ setup("authenticate as user with plugins permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.plugin,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     pluginPermissionsFile,
   );
@@ -110,7 +110,7 @@ setup(
     const loginPage = new LoginPage(page);
     await loginPage.loginAndSetStorageState(
       USER_PERMISSION.productTypeAndAttribute,
-      process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+      process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
       page,
       productTypePermissionsFile,
     );
@@ -120,7 +120,7 @@ setup("authenticate as user with settings permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.settings,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     settingsPermissionsFile,
   );
@@ -131,7 +131,7 @@ setup(
     const loginPage = new LoginPage(page);
     await loginPage.loginAndSetStorageState(
       USER_PERMISSION.staff,
-      process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+      process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
       page,
       staffMemberPermissionsFile,
     );
@@ -141,7 +141,7 @@ setup("authenticate as user with shipping permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.shipping,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     shippingPermissionsFile,
   );
@@ -150,7 +150,7 @@ setup("authenticate as user with translation permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.translations,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     translationPermissionsFile,
   );
@@ -159,7 +159,7 @@ setup("authenticate as user with product permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(
     USER_PERMISSION.product,
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD!,
+    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
     page,
     productPermissionsFile,
   );

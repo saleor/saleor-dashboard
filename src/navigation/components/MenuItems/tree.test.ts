@@ -1,88 +1,74 @@
 // @ts-strict-ignore
-import {
-  addNodeUnderParent,
-  find,
-  insertNode,
-  removeNode,
-} from "react-sortable-tree";
+import { MenuItemFragment } from "@dashboard/graphql";
+import { MenuTreeItem } from "@dashboard/navigation/types";
 
-import { getDiff, MenuTreeItem } from "./tree";
+import { getDiff } from "./tree";
 
 const originalTree: MenuTreeItem[] = [
   {
     children: [
-      { children: [], expanded: true, id: "0jewelry", title: "Jewelry" },
-      { children: [], expanded: true, id: "1glasses", title: "Glasses" },
+      {
+        children: [],
+        id: "0jewelry",
+        data: { name: "Jewelry" } as MenuItemFragment,
+      },
+      {
+        children: [],
+        id: "1glasses",
+        data: { name: "Glasses" } as MenuItemFragment,
+      },
     ],
-    expanded: true,
     id: "2accessories",
-    title: "Accessories",
+    data: { name: "Accessories" } as MenuItemFragment,
   },
-  { children: [], expanded: true, id: "3groceries", title: "Groceries" },
-  { children: [], expanded: true, id: "4apparel", title: "Apparel" },
+  {
+    children: [],
+    id: "3groceries",
+    data: { name: "Groceries" } as MenuItemFragment,
+  },
+  {
+    children: [],
+    id: "4apparel",
+    data: { name: "Apparel" } as MenuItemFragment,
+  },
 ];
 
-function getNodeKey(node: any) {
-  return node.treeIndex;
-}
-
-function moveNode(
-  tree: MenuTreeItem[],
-  src: string,
-  target: string,
-  asChild: boolean,
-) {
-  const { matches: srcNodeCandidates } = find({
-    getNodeKey,
-    searchMethod: ({ node }) => node.id === src,
-    treeData: tree,
+describe("MenuItems tree - getDiff", () => {
+  it("should return orinal tree when no changes", () => {
+    const diff = getDiff(originalTree, []);
+    expect(diff).toMatchSnapshot();
   });
-  const srcNodeData = srcNodeCandidates[0];
 
-  const treeAfterRemoval = removeNode({
-    getNodeKey,
-    path: srcNodeData.path,
-    treeData: tree,
-  }).treeData;
-
-  const { matches: targetNodeCandidates } = find({
-    getNodeKey,
-    searchMethod: ({ node }) => node.id === target,
-    treeData: treeAfterRemoval,
+  it("should return array with operations", () => {
+    const diff = getDiff(originalTree, [
+      {
+        children: [
+          {
+            children: [],
+            id: "1glasses",
+            data: { name: "Glasses" } as MenuItemFragment,
+          },
+          {
+            children: [],
+            id: "4apparel",
+            data: { name: "Apparel" } as MenuItemFragment,
+          },
+        ],
+        id: "2accessories",
+        data: { name: "Accessories" } as MenuItemFragment,
+      },
+      {
+        children: [
+          {
+            children: [],
+            id: "0jewelry",
+            data: { name: "Jewelry" } as MenuItemFragment,
+          },
+        ],
+        id: "3groceries",
+        data: { name: "Groceries" } as MenuItemFragment,
+      },
+    ]);
+    expect(diff).toMatchSnapshot();
   });
-  const targetNodeData = targetNodeCandidates[0];
-
-  const treeAfterInsertion = asChild
-    ? addNodeUnderParent({
-        addAsFirstChild: true,
-        getNodeKey,
-        ignoreCollapsed: false,
-        newNode: srcNodeData.node,
-        parentKey: targetNodeData.treeIndex,
-        treeData: treeAfterRemoval,
-      }).treeData
-    : insertNode({
-        depth: targetNodeData.path.length,
-        getNodeKey,
-        minimumTreeIndex: targetNodeData.treeIndex,
-        newNode: srcNodeData.node,
-        treeData: treeAfterRemoval,
-      }).treeData;
-
-  return treeAfterInsertion as MenuTreeItem[];
-}
-
-describe("Properly computes diffs", () => {
-  const testTable = [
-    moveNode(originalTree, "1glasses", "0jewelry", true),
-    moveNode(originalTree, "1glasses", "0jewelry", false),
-    moveNode(originalTree, "2accessories", "4apparel", true),
-  ];
-
-  testTable.forEach(testData =>
-    it("#", () => {
-      const diff = getDiff(originalTree, testData);
-      expect(diff).toMatchSnapshot();
-    }),
-  );
 });

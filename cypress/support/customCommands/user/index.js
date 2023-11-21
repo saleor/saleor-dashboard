@@ -19,10 +19,10 @@ Cypress.Commands.add("loginInShop", () => {
 });
 
 Cypress.Commands.add("visitHomePageLoggedViaApi", user => {
-  cy.addAliasToGraphRequest("Home")
+  cy.addAliasToGraphRequest("UserDetails")
     .loginUserViaRequest("auth", user)
     .visit(urlList.homePage)
-    .waitForRequestAndCheckIfNoErrors("@Home");
+    .waitForRequestAndCheckIfNoErrors("@UserDetails");
 });
 
 Cypress.Commands.add(

@@ -153,9 +153,9 @@ jobs:
               case 'workflow_dispatch':
                 return browser
               case 'schedule':
-                return 'chrome'
+                return 'electron'
               default:
-                return 'chrome'
+                return 'electron'
             }
 
       - name: Cypress install
@@ -167,7 +167,7 @@ jobs:
 
       - name: Cypress run electron
         id: cypress-electron
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result) && ! cancelled() }}
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["electron", "all"]'), steps.get-browsers.outputs.result) && ! cancelled() }}
         uses: ./.github/actions/e2e
         with:
           apiUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
@@ -211,7 +211,7 @@ jobs:
           install: false
           browser: firefox
       - name: Testmo threads submit
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result) && ! cancelled() }}
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["electron", "all"]'), steps.get-browsers.outputs.result) && ! cancelled() }}
         uses: ./.github/actions/testmo/testmo-threads-submit
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}

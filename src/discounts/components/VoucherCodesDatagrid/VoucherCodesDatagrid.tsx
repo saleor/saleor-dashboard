@@ -6,7 +6,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -36,6 +36,7 @@ export const VoucherCodesDatagrid = ({
 }: VoucherCodesDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
+  const { themeValues } = useTheme();
 
   const voucherCodesStaticColumns = useMemo(
     () => voucherCodesStaticColumnsAdapter(intl),
@@ -49,14 +50,13 @@ export const VoucherCodesDatagrid = ({
   });
 
   const getCellContent = useCallback(
-    createGetCellContent(codes, visibleColumns, intl),
+    createGetCellContent(codes, visibleColumns, intl, themeValues),
     [codes, visibleColumns],
   );
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
-        readonly
         loading={loading}
         rowMarkers="checkbox-visible"
         columnSelect="single"
