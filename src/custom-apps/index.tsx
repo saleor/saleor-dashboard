@@ -17,6 +17,14 @@ import CustomAppListView from "./views/CustomAppList";
 import CustomAppWebhookCreateView from "./views/CustomAppWebhookCreate";
 import CustomAppWebhookDetailsView from "./views/CustomAppWebhookDetails";
 
+interface MatchParams {
+  appId?: string;
+}
+
+interface MatchParamsWebhookDetails {
+  id?: string;
+}
+
 const CustomAppList: React.FC<RouteComponentProps> = () => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomAppListUrlQueryParams = qs;
@@ -52,7 +60,7 @@ const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({
   );
 };
 
-const CustomAppWebhookCreate: React.FC<RouteComponentProps<any>> = ({
+const CustomAppWebhookCreate: React.FC<RouteComponentProps<MatchParams>> = ({
   match,
 }) => {
   const appId = match.params.appId;
@@ -64,9 +72,9 @@ const CustomAppWebhookCreate: React.FC<RouteComponentProps<any>> = ({
   return <CustomAppWebhookCreateView appId={decodeURIComponent(appId)} />;
 };
 
-const CustomAppWebhookDetails: React.FC<RouteComponentProps<any>> = ({
-  match,
-}) => {
+const CustomAppWebhookDetails: React.FC<
+  RouteComponentProps<MatchParamsWebhookDetails>
+> = ({ match }) => {
   const id = match.params.id;
 
   if (!id) {

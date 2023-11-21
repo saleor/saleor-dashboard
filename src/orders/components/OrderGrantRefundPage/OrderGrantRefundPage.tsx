@@ -117,7 +117,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
 
   const currency = order?.total?.gross?.currency ?? "";
 
-  const handleSubmit = (e: React.FormEvent<any>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.stopPropagation();
     e.preventDefault();
     submit();

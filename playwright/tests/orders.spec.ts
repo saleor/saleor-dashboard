@@ -4,9 +4,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
-test("TC: SALEOR_28 Create basic order @basic-regression @order", async ({
-  page,
-}) => {
+test("TC: SALEOR_28 Create basic order @e2e @order", async ({ page }) => {
   const ordersPage = new OrdersPage(page);
 
   await page.goto(URL_LIST.orders);

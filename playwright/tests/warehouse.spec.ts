@@ -4,7 +4,7 @@ import { test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
-test("TC: SALEOR_30 Create basic warehouse @basic-regression @warehouse", async ({
+test("TC: SALEOR_30 Create basic warehouse @e2e @warehouse", async ({
   page,
 }) => {
   const warehousePage = new WarehousePage(page);

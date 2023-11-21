@@ -6,7 +6,7 @@ import { test } from "@playwright/test";
 test.use({ storageState: "playwright/.auth/admin.json" });
 const productTypeName = `e2e-product-type-${faker.datatype.number()}`;
 
-test("TC: SALEOR_1 Create basic product type @basic-regression @product-type", async ({
+test("TC: SALEOR_1 Create basic product type @e2e @product-type", async ({
   page,
 }) => {
   const productTypePage = new ProductTypePage(page);
@@ -18,7 +18,7 @@ test("TC: SALEOR_1 Create basic product type @basic-regression @product-type", a
   await productTypePage.clickSaveButton();
   await productTypePage.expectSuccessBanner();
 });
-test("TC: SALEOR_2 Create gift card product type @basic-regression @product-type", async ({
+test("TC: SALEOR_2 Create gift card product type @e2e @product-type", async ({
   page,
 }) => {
   const productTypePage = new ProductTypePage(page);

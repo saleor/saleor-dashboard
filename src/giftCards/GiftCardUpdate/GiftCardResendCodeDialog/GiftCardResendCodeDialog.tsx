@@ -150,8 +150,8 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
             name="differentMailConsent"
             label={intl.formatMessage(messages.consentCheckboxLabel)}
             checked={consentSelected}
-            onChange={(event: React.ChangeEvent<any>) =>
-              setConsentSelected(event.target.value)
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setConsentSelected(!!event.target.value)
             }
           />
           <VerticalSpacer />

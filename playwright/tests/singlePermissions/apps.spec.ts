@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/apps.json" });
 
-test("TC: SALEOR_10 User should be able to navigate to apps list as a staff member using APP permission", async ({
+test("TC: SALEOR_10 User should be able to navigate to apps list as a staff member using APP permission @e2e", async ({
   page,
 }) => {
   const mainMenuPage = new MainMenuPage(page);

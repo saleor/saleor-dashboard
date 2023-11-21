@@ -8,7 +8,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/product.json" });
 
-test("TC: SALEOR_23 User should be able to navigate to product list as a staff member using PRODUCT permission", async ({
+test("TC: SALEOR_23 User should be able to navigate to product list as a staff member using PRODUCT permission @e2e", async ({
   page,
 }) => {
   const mainMenuPage = new MainMenuPage(page);
@@ -21,7 +21,7 @@ test("TC: SALEOR_23 User should be able to navigate to product list as a staff m
   await mainMenuPage.expectMenuItemsCount(5);
   await basePage.expectGridToBeAttached();
 });
-test("TC: SALEOR_24 User should be able to navigate to collections list as a staff member using PRODUCT permission", async ({
+test("TC: SALEOR_24 User should be able to navigate to collections list as a staff member using PRODUCT permission @e2e", async ({
   page,
 }) => {
   const mainMenuPage = new MainMenuPage(page);
@@ -34,7 +34,7 @@ test("TC: SALEOR_24 User should be able to navigate to collections list as a sta
   await mainMenuPage.expectMenuItemsCount(5);
   await basePage.expectGridToBeAttached();
 });
-test("TC: SALEOR_25 User should be able to navigate to categories list as a staff member using PRODUCT permission", async ({
+test("TC: SALEOR_25 User should be able to navigate to categories list as a staff member using PRODUCT permission @e2e", async ({
   page,
 }) => {
   const mainMenuPage = new MainMenuPage(page);
