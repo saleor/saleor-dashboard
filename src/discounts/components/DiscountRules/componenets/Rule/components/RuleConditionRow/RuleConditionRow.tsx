@@ -44,8 +44,11 @@ export const RuleConditionRow = ({
     name: ruleConditionValuesFieldName,
   });
 
-  const { fetch, loadMore, result, loading, options } =
-    fetchOptions(typeField.value as OptionsType) ?? {};
+  const {
+    fetch = () => {},
+    fetchMoreProps,
+    options,
+  } = fetchOptions(typeField.value as OptionsType) ?? {};
 
   const discountConditionType = initialDiscountConditionType.filter(
     condition => !isConditionTypeSelected(condition.value),
@@ -83,13 +86,10 @@ export const RuleConditionRow = ({
       />
 
       <Multiselect
+        alwaysFetchOnFocus
         value={valuesField.value}
         fetchOptions={fetch}
-        fetchMore={{
-          hasMore: result?.data?.pageInfo?.hasNextPage ?? false,
-          loading,
-          onFetchMore: loadMore,
-        }}
+        fetchMore={fetchMoreProps}
         options={options ?? []}
         onChange={valuesField.onChange}
         onBlur={valuesField.onBlur}

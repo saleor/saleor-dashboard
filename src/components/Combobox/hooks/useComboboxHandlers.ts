@@ -1,7 +1,7 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { FetchMoreProps } from "@dashboard/types";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 
 export const useComboboxHandlers = ({
   fetchOptions,
@@ -14,11 +14,12 @@ export const useComboboxHandlers = ({
 }) => {
   const mounted = useRef(false);
 
-  const debouncedFetchOptions = useRef(
+  const debouncedFetchOptions = useCallback(
     useDebounce(async (value: string) => {
       fetchOptions(value);
     }, 500),
-  ).current;
+    [fetchOptions],
+  );
 
   const handleFetchMore = () => {
     if (fetchMore?.hasMore) {
