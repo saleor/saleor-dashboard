@@ -21,6 +21,8 @@ import {
 } from "./datagrid";
 import { messages } from "./messages";
 
+type RowData = ShippingZoneFragment | undefined;
+
 interface ShippingZoneListDatagridProps extends ListProps {
   shippingZones: ShippingZoneFragment[] | undefined;
   onSelectShippingZones: (
@@ -73,7 +75,7 @@ export const ShippingZoneListDatagrid = ({
 
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
-      const rowData: ShippingZoneFragment | undefined = shippingZones?.[row];
+      const rowData: RowData = shippingZones?.[row];
 
       if (rowData) {
         navigate(shippingZoneUrl(rowData.id));
