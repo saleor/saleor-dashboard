@@ -7,7 +7,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
-test("TC: SALEOR_3 Create basic product with variants @basic-regression @product", async ({
+test("TC: SALEOR_3 Create basic product with variants @e2e @product", async ({
   page,
 }) => {
   const productCreateDialog = new ProductCreateDialog(page);
@@ -25,7 +25,7 @@ test("TC: SALEOR_3 Create basic product with variants @basic-regression @product
   await productPage.clickSaveButton();
   await productPage.expectSuccessBanner();
 });
-test("TC: SALEOR_5 Create basic product without variants @basic-regression @product", async ({
+test("TC: SALEOR_5 Create basic product without variants @e2e @product", async ({
   page,
 }) => {
   const basePage = new BasePage(page);
@@ -44,7 +44,7 @@ test("TC: SALEOR_5 Create basic product without variants @basic-regression @prod
   await productPage.expectSuccessBanner();
 });
 
-test("TC: SALEOR_26 Create basic info variant - via edit variant page @basic-regression @product", async ({
+test("TC: SALEOR_26 Create basic info variant - via edit variant page @e2e @product", async ({
   page,
 }) => {
   const variantName = `TC: SALEOR_26 - variant name - ${new Date().toISOString()}`;
@@ -70,7 +70,7 @@ test("TC: SALEOR_26 Create basic info variant - via edit variant page @basic-reg
     }),
   ).toBeVisible();
 });
-test("TC: SALEOR_27 Create full info variant - via edit variant page @basic-regression @product", async ({
+test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @product", async ({
   page,
 }) => {
   const variantName = `TC: SALEOR_26 - variant name - ${new Date().toISOString()}`;
