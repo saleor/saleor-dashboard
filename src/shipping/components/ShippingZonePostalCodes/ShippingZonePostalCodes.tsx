@@ -87,10 +87,17 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
     );
   };
 
-  const onInclusionRadioChange = (event: React.ChangeEvent<any>) => {
+  const onInclusionRadioChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const value = event.target.value;
+    const postalType =
+      value === "EXCLUDE"
+        ? PostalCodeRuleInclusionTypeEnum.EXCLUDE
+        : PostalCodeRuleInclusionTypeEnum.INCLUDE;
+
     setInclusionType(value);
-    onPostalCodeInclusionChange(value);
+    onPostalCodeInclusionChange(postalType);
   };
 
   const getPostalCodeRangeLabel = (

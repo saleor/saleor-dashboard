@@ -122,7 +122,9 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         ) : isInEditMode && canEditCustomer ? (
           <Form confirmLeave initial={{ query: "" }}>
             {({ change, data }) => {
-              const handleChange = (event: React.ChangeEvent<any>) => {
+              const handleChange = (
+                event: React.ChangeEvent<HTMLInputElement>,
+              ) => {
                 change(event);
                 const value = event.target.value;
 
