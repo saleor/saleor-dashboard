@@ -46,7 +46,50 @@ export const DiscountCreate = () => {
             ? joinDateTime(data.dates.endDate, data.dates.endTime)
             : null,
           startDate: joinDateTime(data.dates.startDate, data.dates.startTime),
-          // rules: data.rules,
+          rules: data.rules.map(rule => ({
+            name: rule.name,
+            description: JSON.parse(rule.description),
+            channels: rule.channels.map(chan => chan.value),
+            rewardValue: rule.rewardValue,
+            rewardValueType: rule.rewardValueType,
+            cataloguePredicate: {
+              OR: rule.conditions.reduce((acc, condition) => {
+                if (condition.type === "products") {
+                  acc.push({
+                    productPredicate: {
+                      ids: condition.values.map(val => val.value),
+                    },
+                  });
+                }
+
+                if (condition.type === "categories") {
+                  acc.push({
+                    categoryPredicate: {
+                      ids: condition.values.map(val => val.value),
+                    },
+                  });
+                }
+
+                if (condition.type === "collections") {
+                  acc.push({
+                    collectionPredicate: {
+                      ids: condition.values.map(val => val.value),
+                    },
+                  });
+                }
+
+                if (condition.type === "variants") {
+                  acc.push({
+                    variantPredicate: {
+                      ids: condition.values.map(val => val.value),
+                    },
+                  });
+                }
+
+                return acc;
+              }, []),
+            },
+          })),
         },
       },
     });
