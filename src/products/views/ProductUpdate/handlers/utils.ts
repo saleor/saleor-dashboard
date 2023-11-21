@@ -72,16 +72,11 @@ export function getCreateVariantInput(
   variantAttributes: VariantAttributeFragment[],
 ) {
   return {
-    attributes: getAttributeData(
-      data.updates,
-      index,
-      data.removed,
-      variantAttributes,
-    ),
-    sku: getSkuData(data.updates, index, data.removed),
-    name: getNameData(data.updates, index, data.removed),
+    attributes: getAttributeData(data.updates, index, variantAttributes),
+    sku: getSkuData(data.updates, index),
+    name: getNameData(data.updates, index),
     channelListings: getVariantChannelsInputs(data, index),
-    stocks: getStockData(data.updates, index, data.removed),
+    stocks: getStockData(data.updates, index),
   };
 }
 
@@ -151,7 +146,11 @@ export function getBulkVariantUpdateInputs(
   variantsAttributes: VariantAttributeFragment[],
 ): ProductVariantBulkUpdateInput[] {
   const toUpdateInput = createToUpdateInput(data, variantsAttributes);
-  return variants.map(toUpdateInput).filter(byAvailability);
+  return variants
+    .filter((_, index) => !data.removed.includes(index))
+    .map(toUpdateInput)
+    .filter(byAvailability)
+    .filter((_, index) => !data.added.includes(index));
 }
 
 const createToUpdateInput =
@@ -167,14 +166,9 @@ const createToUpdateInput =
       variant,
       variantsAttributes,
     ),
-    sku: getSkuData(data.updates, variantIndex, data.removed),
-    name: getNameData(data.updates, variantIndex, data.removed),
-    stocks: getVaraintUpdateStockData(
-      data.updates,
-      variantIndex,
-      data.removed,
-      variant,
-    ),
+    sku: getSkuData(data.updates, variantIndex),
+    name: getNameData(data.updates, variantIndex),
+    stocks: getVaraintUpdateStockData(data.updates, variantIndex, variant),
     channelListings: getUpdateVariantChannelInputs(data, variantIndex, variant),
   });
 
@@ -187,7 +181,6 @@ const getVariantAttributesForUpdate = (
   const updatedAttributes = getAttributeData(
     data.updates,
     variantIndex,
-    data.removed,
     variantsAttributes,
   );
 

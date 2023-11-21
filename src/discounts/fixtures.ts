@@ -157,7 +157,6 @@ export const voucherList: VoucherFragment[] = [
         },
       },
     ],
-    code: "FREE2019",
     countries: [
       {
         __typename: "CountryDisplay",
@@ -197,7 +196,6 @@ export const voucherList: VoucherFragment[] = [
         },
       },
     ],
-    code: "FREE2020",
     countries: [],
     type: "ENTIRE_ORDER" as VoucherTypeEnum,
     discountValueType: "FIXED" as DiscountValueTypeEnum,
@@ -589,6 +587,7 @@ export const voucherDetails: VoucherDetailsFragment = {
   privateMetadata: [],
   applyOncePerCustomer: false,
   applyOncePerOrder: false,
+  singleUse: false,
   onlyForStaff: false,
   categoriesCount: {
     __typename: "CategoryCountableConnection",
@@ -632,7 +631,6 @@ export const voucherDetails: VoucherDetailsFragment = {
       },
     },
   ],
-  code: "DISCOUNT",
   collections: {
     __typename: "CollectionCountableConnection",
     edges: [],
@@ -670,4 +668,53 @@ export const voucherDetails: VoucherDetailsFragment = {
   type: VoucherTypeEnum.ENTIRE_ORDER,
   usageLimit: null,
   used: 0,
+};
+
+export const discount = {
+  __typename: "Promotion",
+  metadata: [],
+  privateMetadata: [],
+  name: "Discunt 1",
+  descrption: "",
+  startDate: "2019-01-03",
+  endDate: null,
+  startTime: "10:10",
+  endTime: null,
+  rules: [
+    {
+      channels: [
+        {
+          value: "Q2hhbm5lbDoyMjQ0",
+          label: "Channel-PLN",
+        },
+      ],
+      description:
+        '{"time":1700126384046,"blocks":[{"id":"Sj7p30CLFo","type":"header","data":{"text":"Example title","level":1}}],"version":"2.24.3"}',
+      name: "Rule 1",
+      rewardValue: "33",
+      rewardValueType: "PERCENTAGE",
+      conditions: [
+        {
+          type: "produts",
+          condition: "is",
+          values: [
+            {
+              label: "test",
+              value: "test",
+            },
+          ],
+        },
+        {
+          type: "categories",
+          condition: "is",
+          values: [
+            {
+              label: "test2",
+              value: "test2",
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };

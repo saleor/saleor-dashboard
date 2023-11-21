@@ -1,0 +1,15 @@
+name: Saleor CLI login
+description: Saleor CLI login
+inputs:
+  token:
+    description: "Cloud accces token"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Write config file
+      shell: bash
+      id: write-config-file
+      env:
+        ACCESS_TOKEN: ${{ inputs.token }}
+      run: jq --null-input --arg token "Token $ACCESS_TOKEN" '{"token":$token,"telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json

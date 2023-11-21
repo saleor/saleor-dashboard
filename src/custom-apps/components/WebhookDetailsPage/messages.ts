@@ -19,6 +19,11 @@ export const messages = defineMessages({
     defaultMessage: "Create Webhook",
     description: "header",
   },
+  subscriptionQueryBlankError: {
+    id: "aMWJ7/",
+    defaultMessage: "This field cannot be blank for a new webhook",
+    description: "local error",
+  },
 });
 
 export const getHeaderTitle = (

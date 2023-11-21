@@ -11,7 +11,7 @@ describe("getNameData", () => {
     ];
 
     // Act
-    const name = getNameData(changeData, 1, []);
+    const name = getNameData(changeData, 1);
 
     // Assert
     expect(name).toEqual("Joe");
@@ -24,7 +24,7 @@ describe("getNameData", () => {
     ];
 
     // Act
-    const name = getNameData(changeData, 1, []);
+    const name = getNameData(changeData, 1);
 
     // Assert
     expect(name).toEqual(undefined);
@@ -37,7 +37,7 @@ describe("getNameData", () => {
     ];
 
     // Act
-    const name = getNameData(changeData, 1, []);
+    const name = getNameData(changeData, 1);
 
     // Assert
     expect(name).toEqual(undefined);

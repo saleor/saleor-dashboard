@@ -16,11 +16,10 @@ import { byAttributeName } from "../utils";
 export function getAttributeData(
   data: DatagridChange[],
   currentIndex: number,
-  removedIds: number[],
   variantAttributes: VariantAttributeFragment[],
 ) {
   return data
-    .filter(change => isCurrentRow(change.row, currentIndex, removedIds))
+    .filter(change => isCurrentRow(change.row, currentIndex))
     .filter(byHavingAnyAttribute)
     .map(toAttributeData(variantAttributes));
 }

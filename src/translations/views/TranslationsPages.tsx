@@ -31,6 +31,9 @@ export interface TranslationsPagesProps {
   params: TranslationsPagesQueryParams;
 }
 
+type HandleSubmitData = string | any;
+type HandleSubmitAttributeValue = OutputData | string;
+
 const TranslationsPages: React.FC<TranslationsPagesProps> = ({
   id,
   languageCode,
@@ -81,7 +84,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
 
   const handleSubmit = (
     { name: fieldName }: TranslationField<PageTranslationInputFieldName>,
-    data: string | any,
+    data: HandleSubmitData,
   ) =>
     extractMutationErrors(
       updateTranslations({
@@ -98,7 +101,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
 
   const handleAttributeValueSubmit = (
     { id, type }: TranslationField<PageTranslationInputFieldName>,
-    data: OutputData | string,
+    data: HandleSubmitAttributeValue,
   ) =>
     extractMutationErrors(
       updateAttributeValueTranslations({

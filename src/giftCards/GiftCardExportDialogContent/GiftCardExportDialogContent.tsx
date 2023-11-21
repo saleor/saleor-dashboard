@@ -28,10 +28,11 @@ import { useGiftCardList } from "../GiftCardsList/providers/GiftCardListProvider
 import { giftCardExportDialogMessages as messages } from "./messages";
 import useStyles from "./styles";
 import { getExportGiftCardsInput } from "./utils";
+type IdsToExport = string[] | null;
 
 const GiftCardExportDialog: React.FC<
   Pick<DialogProps, "onClose"> & {
-    idsToExport?: string[] | null;
+    idsToExport?: IdsToExport;
   }
 > = ({ onClose, idsToExport }) => {
   const intl = useIntl();

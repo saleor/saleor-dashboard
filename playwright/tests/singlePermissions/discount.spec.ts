@@ -7,7 +7,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/discount.json" });
 
-test("TC: SALEOR_6 User should be able to navigate to discount list as a staff member using DISCOUNTS permission", async ({
+test("TC: SALEOR_6 User should be able to navigate to discount list as a staff member using DISCOUNTS permission @e2e", async ({
   page,
 }) => {
   const basePage = new BasePage(page);
@@ -21,7 +21,7 @@ test("TC: SALEOR_6 User should be able to navigate to discount list as a staff m
   await mainMenuPage.expectMenuItemsCount(3);
 });
 
-test("TC: SALEOR_7 User should be able to navigate to voucher list as a staff member using DISCOUNTS permission", async ({
+test("TC: SALEOR_7 User should be able to navigate to voucher list as a staff member using DISCOUNTS permission @e2e", async ({
   page,
 }) => {
   const basePage = new BasePage(page);

@@ -1,7 +1,10 @@
 import { VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
 import { GenerateMultipleVoucherCodeFormData } from "@dashboard/discounts/components/VoucherCodesGenerateDialog";
 import { useVoucherCodesPagination } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useVoucherCodesPagination";
-import { generateMultipleIds } from "@dashboard/discounts/components/VoucherCreatePage/utils";
+import {
+  generateMultipleIds,
+  voucherCodeExists,
+} from "@dashboard/discounts/components/VoucherCreatePage/utils";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
 import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import { ListSettings } from "@dashboard/types";
@@ -17,6 +20,7 @@ interface UseVoucherCodesClient {
   onSettingsChange: UseListSettings["updateListSettings"];
   handleDeleteAddedVoucherCodes: (idsToDelete: string[]) => void;
   handleAddVoucherCode: (code: string) => void;
+  handleClearAddedVoucherCodes: () => void;
   handleGenerateMultipleCodes: ({
     quantity,
     prefix,
@@ -45,6 +49,10 @@ export const useVoucherCodesClient = (
     settings.rowNumber - clientVoucherCodes.length;
 
   const handleAddVoucherCode = (code: string) => {
+    if (voucherCodeExists(code, addedVoucherCodes)) {
+      throw new Error("Code already exists");
+    }
+
     setAddedVoucherCodes(codes => [{ code, status: "Draft" }, ...codes]);
     switchToClientPagination();
     resetPage();
@@ -68,6 +76,10 @@ export const useVoucherCodesClient = (
     );
   };
 
+  const handleClearAddedVoucherCodes = () => {
+    setAddedVoucherCodes([]);
+  };
+
   return {
     addedVoucherCodes,
     clientVoucherCodes,
@@ -79,5 +91,6 @@ export const useVoucherCodesClient = (
     handleAddVoucherCode,
     handleGenerateMultipleCodes,
     handleDeleteAddedVoucherCodes,
+    handleClearAddedVoucherCodes,
   };
 };

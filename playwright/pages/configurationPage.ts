@@ -12,6 +12,7 @@ export class ConfigurationPage {
   readonly siteSettingsButton: Locator;
   readonly staffMembersButton: Locator;
   readonly shippingMethodsButton: Locator;
+  readonly attributesButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -27,6 +28,7 @@ export class ConfigurationPage {
     );
     this.productTypesButton = page.locator("[data-test-id*='product-types']");
     this.webhooksAndEventsButton = page.locator("[data-test-id*='webhooks']");
+    this.attributesButton = page.locator("[data-test-id*='attributes']");
     this.pageTypesButton = page.locator(
       "[data-test-id*='configuration-menu-page-type']",
     );
@@ -61,5 +63,8 @@ export class ConfigurationPage {
   }
   async openWebhooksAndEvents() {
     await this.webhooksAndEventsButton.click();
+  }
+  async openAttributes() {
+    await this.attributesButton.click();
   }
 }

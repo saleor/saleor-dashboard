@@ -22,6 +22,8 @@ import {
   getParsedTranslationInputData,
 } from "../utils";
 
+type HandleSubmitAttributeValue = OutputData | string;
+
 export interface TranslationsProductsQueryParams {
   activeField: string;
 }
@@ -98,7 +100,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
 
   const handleAttributeValueSubmit = (
     { id, type }: TranslationField<TranslationInputFieldName>,
-    data: OutputData | string,
+    data: HandleSubmitAttributeValue,
   ) =>
     extractMutationErrors(
       updateAttributeValueTranslations({
