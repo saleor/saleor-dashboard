@@ -20,7 +20,7 @@ describe("getAttributeData", () => {
     ];
 
     // Act
-    const attributes = getAttributeData(changeData, 1, [], variantAttributes);
+    const attributes = getAttributeData(changeData, 1, variantAttributes);
 
     // Assert
     expect(attributes).toEqual([
@@ -42,7 +42,7 @@ describe("getAttributeData", () => {
     ];
 
     // Act
-    const attributes = getAttributeData(changeData, 2, [], variantAttributes);
+    const attributes = getAttributeData(changeData, 2, variantAttributes);
 
     // Assert
     expect(attributes).toEqual([]);
@@ -56,7 +56,7 @@ describe("getAttributeData", () => {
     ];
 
     // Act
-    const attributes = getAttributeData(changeData, 1, [], variantAttributes);
+    const attributes = getAttributeData(changeData, 1, variantAttributes);
 
     // Assert
     expect(attributes).toEqual([]);

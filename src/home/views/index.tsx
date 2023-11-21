@@ -7,7 +7,10 @@ import {
   OrderStatusFilter,
   PermissionEnum,
   StockAvailability,
-  useHomeQuery,
+  useHomeActivitiesQuery,
+  useHomeAnaliticsQuery,
+  useHomeNotificationsQuery,
+  useHomeTopProductsQuery,
 } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
@@ -24,28 +27,91 @@ const HomeSection = () => {
   const noChannel = !channel && typeof channel !== "undefined";
 
   const userPermissions = user?.userPermissions || [];
+  const hasPermissionToManageOrders = hasPermissions(userPermissions, [
+    PermissionEnum.MANAGE_ORDERS,
+  ]);
+  const hasPermissionToManageProducts = hasPermissions(userPermissions, [
+    PermissionEnum.MANAGE_PRODUCTS,
+  ]);
 
-  const { data } = useHomeQuery({
-    displayLoader: true,
+  const {
+    data: homeActivities,
+    loading: homeActivitiesLoading,
+    error: homeActivitiesError,
+  } = useHomeActivitiesQuery({
+    skip: noChannel,
+    variables: {
+      hasPermissionToManageOrders,
+    },
+  });
+
+  const {
+    data: homeTopProducts,
+    loading: homeTopProductsLoading,
+    error: homeTopProductsError,
+  } = useHomeTopProductsQuery({
+    skip: noChannel,
+    variables: {
+      channel: channel?.slug,
+      hasPermissionToManageProducts,
+    },
+  });
+
+  const {
+    data: homeNotificationsData,
+    loading: homeNotificationsLoaing,
+    error: homeNotificationsError,
+  } = useHomeNotificationsQuery({
+    skip: noChannel,
+    variables: {
+      channel: channel?.slug,
+      hasPermissionToManageOrders,
+    },
+  });
+
+  const {
+    data: homeAnaliticsData,
+    loading: homeAnaliticsLoading,
+    error: homeAnaliticsError,
+  } = useHomeAnaliticsQuery({
     skip: noChannel,
     variables: {
       channel: channel?.slug,
       datePeriod: getDatePeriod(1),
-      hasPermissionToManageOrders: hasPermissions(userPermissions, [
-        PermissionEnum.MANAGE_ORDERS,
-      ]),
-      hasPermissionToManageProducts: hasPermissions(userPermissions, [
-        PermissionEnum.MANAGE_PRODUCTS,
-      ]),
+      hasPermissionToManageOrders,
     },
   });
 
   return (
     <HomePage
-      activities={mapEdgesToItems(data?.activities)?.reverse()}
-      orders={data?.ordersToday?.totalCount}
-      sales={data?.salesToday?.gross}
-      topProducts={mapEdgesToItems(data?.productTopToday)}
+      activities={{
+        data: mapEdgesToItems(homeActivities?.activities)?.reverse(),
+        loading: homeActivitiesLoading,
+        hasError: !!homeActivitiesError,
+      }}
+      topProducts={{
+        data: mapEdgesToItems(homeTopProducts?.productTopToday),
+        loading: homeTopProductsLoading,
+        hasError: !!homeTopProductsError,
+      }}
+      notifications={{
+        data: {
+          ordersToCapture: homeNotificationsData?.ordersToCapture?.totalCount,
+          ordersToFulfill: homeNotificationsData?.ordersToFulfill?.totalCount,
+          productsOutOfStock:
+            homeNotificationsData?.productsOutOfStock.totalCount,
+        },
+        loading: homeNotificationsLoaing,
+        hasError: !!homeNotificationsError,
+      }}
+      analitics={{
+        data: {
+          orders: homeAnaliticsData?.ordersToday?.totalCount,
+          sales: homeAnaliticsData?.salesToday?.gross,
+        },
+        loading: homeAnaliticsLoading,
+        hasError: !!homeAnaliticsError,
+      }}
       createNewChannelHref={channelsListUrl()}
       ordersToCaptureHref={orderListUrl({
         status: [OrderStatusFilter.READY_TO_CAPTURE],
@@ -59,9 +125,6 @@ const HomeSection = () => {
         stockStatus: StockAvailability.OUT_OF_STOCK,
         channel: channel?.slug,
       })}
-      ordersToCapture={data?.ordersToCapture?.totalCount}
-      ordersToFulfill={data?.ordersToFulfill?.totalCount}
-      productsOutOfStock={data?.productsOutOfStock.totalCount}
       userName={getUserName(user, true)}
       noChannel={noChannel}
     />

@@ -622,6 +622,24 @@ export const orderLineGrantRefund = gql`
   }
 `;
 
+export const orderDetailsGrantedRefund = gql`
+  fragment OrderDetailsGrantedRefund on OrderGrantedRefund {
+    id
+    reason
+    amount {
+      ...Money
+    }
+    shippingCostsIncluded
+    lines {
+      id
+      quantity
+      orderLine {
+        ...OrderLine
+      }
+    }
+  }
+`;
+
 export const grantRefundFulfillment = gql`
   fragment OrderFulfillmentGrantRefund on Fulfillment {
     id
@@ -656,6 +674,9 @@ export const fragmentOrderDetailsGrantRefund = gql`
       gross {
         ...Money
       }
+    }
+    grantedRefunds {
+      ...OrderDetailsGrantedRefund
     }
   }
 `;

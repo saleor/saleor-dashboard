@@ -3,13 +3,14 @@ import React, { forwardRef, useState } from "react";
 
 interface ProductListDeleteButtonProps {
   onClick: () => void;
+  disabled?: boolean;
   children: React.ReactNode;
 }
 
 export const BulkDeleteButton = forwardRef<
   HTMLButtonElement,
   ProductListDeleteButtonProps
->(({ onClick, children }, ref) => {
+>(({ onClick, children, disabled }, ref) => {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   return (
@@ -17,6 +18,7 @@ export const BulkDeleteButton = forwardRef<
       <Tooltip.Trigger>
         <Button
           ref={ref}
+          disabled={disabled}
           onMouseOver={() => {
             setIsTooltipOpen(true);
           }}

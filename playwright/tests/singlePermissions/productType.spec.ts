@@ -6,7 +6,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/product-type.json" });
 
-test("TC: SALEOR_17 User should be able to navigate to product type list as a staff member using PRODUCT TYPE permission", async ({
+test("TC: SALEOR_17 User should be able to navigate to product type list as a staff member using PRODUCT TYPE permission @e2e", async ({
   page,
 }) => {
   const configurationPage = new ConfigurationPage(page);
