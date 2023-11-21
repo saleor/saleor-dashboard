@@ -1,12 +1,13 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
-import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
+import { Condition, DiscoutFormData, Rule } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
 import { ChannelFragment, PromotionDetailsFragment } from "@dashboard/graphql";
 import { splitDateTime } from "@dashboard/misc";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -44,7 +45,53 @@ export const DiscountDetailsPage = ({
       },
       name: data?.name ?? "",
       description: JSON.stringify(data?.description),
-      rules: [],
+      rules: data?.rules.map<Rule>(rule => {
+        return {
+          channels: rule.channels.map<Option>(chan => ({
+            label: chan.name,
+            value: chan.id,
+          })),
+          name: rule.name,
+          description: JSON.stringify(rule.description),
+          rewardValue: rule.rewardValue,
+          rewardValueType: rule.rewardValueType,
+          conditions: rule.cataloguePredicate.OR.reduce((acc, condition) => {
+            if (condition.productPredicate) {
+              acc.push({
+                type: "products",
+                condition: "is",
+                values: condition.productPredicate.ids.map(id => ({
+                  label: id,
+                  value: id,
+                })),
+              } as Condition);
+            }
+
+            if (condition.categoryPredicate) {
+              acc.push({
+                type: "categories",
+                condition: "is",
+                values: condition.categoryPredicate.ids.map(id => ({
+                  label: id,
+                  value: id,
+                })),
+              });
+            }
+
+            if (condition.collectionPredicate) {
+              acc.push({
+                type: "collections",
+                condition: "is",
+                values: condition.collectionPredicate.ids.map(id => ({
+                  label: id,
+                  value: id,
+                })),
+              });
+            }
+            return acc;
+          }, []),
+        };
+      }),
     },
   });
 
@@ -72,6 +119,7 @@ export const DiscountDetailsPage = ({
               <DiscountDescription />
               <DiscountDatesWithController />
               <DiscountRules
+                fetchOptions={(() => {}) as any}
                 channels={channels}
                 onRuleSubmit={handleRuleSubmit}
               />

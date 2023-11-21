@@ -239,6 +239,7 @@ export const promotionRuleDetailsFragment = gql`
     }
     rewardValueType
     rewardValue
+    cataloguePredicate
   }
 `;
 
