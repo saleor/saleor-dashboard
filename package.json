@@ -38,7 +38,7 @@
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
     "@saleor/macaw-ui": "npm:@saleor/macaw-ui@0.7.4",
-    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.0.0-pre.7",
+    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.0.0-pre.9",
     "@saleor/sdk": "0.6.0",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
@@ -85,6 +85,7 @@
     "react-github-btn": "^1.4.0",
     "react-gtm-module": "^2.0.11",
     "react-helmet": "^6.1.0",
+    "react-hook-form": "^7.48.2",
     "react-infinite-scroll-component": "^6.1.0",
     "react-inlinesvg": "^3.0.2",
     "react-intl": "^5.21.2",
@@ -360,8 +361,8 @@
     "qa:move-videos": "find cypress/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
     "qa:artifact-move-screenshots": "find cypress/reports/*/mochareports -type d -name \"*.js\" -exec mv {} cypress/reports/mochareports \\;",
     "qa:artifact-move-videos": "find cypress/reports/*/mochareports/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
-    "qa:basic-regression": "npx playwright test --grep @basic-regression",
-    "qa:full-regression": "npx playwright test"
+    "qa:pw-e2e": "npx playwright test --grep @e2e",
+    "qa:pw-ui": "npx playwright test --ui"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }

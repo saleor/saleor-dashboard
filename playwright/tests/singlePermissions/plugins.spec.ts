@@ -6,7 +6,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/plugins.json" });
 
-test("TC: SALEOR_16 User should be able to navigate to plugin list as a staff member using PLUGINS permission", async ({
+test("TC: SALEOR_16 User should be able to navigate to plugin list as a staff member using PLUGINS permission @e2e", async ({
   page,
 }) => {
   const configurationPage = new ConfigurationPage(page);
