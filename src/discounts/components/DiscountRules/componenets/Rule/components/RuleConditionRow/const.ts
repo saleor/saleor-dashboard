@@ -1,18 +1,23 @@
-export const initialDiscountConditionType = [
+import { ConditionType } from "@dashboard/discounts/types";
+
+export const initialDiscountConditionType: Array<{
+  label: string;
+  value: ConditionType;
+}> = [
   {
     label: "Products",
-    value: "products",
+    value: "product",
   },
   {
     label: "Collections",
-    value: "collections",
+    value: "collection",
   },
   {
     label: "Categories",
-    value: "categories",
+    value: "categorie",
   },
   {
     label: "Variants",
-    value: "variants",
+    value: "variant",
   },
 ];

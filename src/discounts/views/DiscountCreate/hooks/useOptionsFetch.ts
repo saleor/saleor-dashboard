@@ -1,12 +1,11 @@
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { ConditionType } from "@dashboard/discounts/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Option } from "@saleor/macaw-ui-next";
 
-export type OptionsType = "products" | "categories" | "collections";
+import { useCategorieSearch } from "./useCategorieSearch";
+import { useCollectionSearch } from "./useCollectionSearch";
+import { useProductSearch } from "./useProductSearch";
+
 export interface FetchOptions {
   fetch: (query: string) => void;
   fetchMoreProps?: ReturnType<typeof getSearchFetchMoreProps>;
@@ -14,81 +13,18 @@ export interface FetchOptions {
 }
 
 export const useOptionsFetch = () => {
-  const {
-    loadMore: loadMoreCategories,
-    search: searchCategories,
-    result: searchCategoriesOpts,
-  } = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMoreCollections,
-    search: searchCollections,
-    result: searchCollectionsOpts,
-  } = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMoreProducts,
-    search: searchProducts,
-    result: searchProductsOpts,
-  } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  const productSearch = useProductSearch();
+  const collectionSearch = useCollectionSearch();
+  const categorySearch = useCategorieSearch();
 
-  const fetchMoreCollections = getSearchFetchMoreProps(
-    searchCollectionsOpts,
-    loadMoreCollections,
-  );
+  const typeToFetchMap: Record<ConditionType, FetchOptions> = {
+    product: productSearch,
+    collection: collectionSearch,
+    categorie: categorySearch,
+    variant: {} as any, // TODO: implement variant search
+  };
 
-  const fetchMoreCategories = getSearchFetchMoreProps(
-    searchCategoriesOpts,
-    loadMoreCategories,
-  );
-
-  const fetchMoreProducts = getSearchFetchMoreProps(
-    searchProductsOpts,
-    loadMoreProducts,
-  );
-
-  return (type: OptionsType): FetchOptions => {
-    if (type === "products") {
-      return {
-        fetch: searchProducts,
-        fetchMoreProps: fetchMoreProducts,
-        options: (mapEdgesToItems(searchProductsOpts?.data?.search) ?? []).map(
-          product => ({
-            label: product.name,
-            value: product.id,
-          }),
-        ),
-      };
-    }
-
-    if (type === "categories") {
-      return {
-        fetch: searchCategories,
-        fetchMoreProps: fetchMoreCategories,
-        options: (
-          mapEdgesToItems(searchCategoriesOpts?.data?.search) ?? []
-        ).map(category => ({
-          label: category.name,
-          value: category.id,
-        })),
-      };
-    }
-
-    if (type === "collections") {
-      return {
-        fetch: searchCollections,
-        fetchMoreProps: fetchMoreCollections,
-        options: (
-          mapEdgesToItems(searchCollectionsOpts?.data?.search) ?? []
-        ).map(collection => ({
-          label: collection.name,
-          value: collection.id,
-        })),
-      };
-    }
+  return (type: ConditionType): FetchOptions => {
+    return typeToFetchMap[type];
   };
 };
