@@ -310,7 +310,7 @@ jobs:
           retention-days: 1
 
   merge-reports:
-    if: !cancelled()
+    if: '!cancelled()'
     needs: [run-tests]
 
     runs-on: ubuntu-latest
