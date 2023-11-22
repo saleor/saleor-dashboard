@@ -4809,6 +4809,9 @@
     "context": "order refund amount",
     "string": "Shipment Cost"
   },
+  "WHgdsk": {
+    "string": "Out of stock"
+  },
   "WIxSDm": {
     "context": "card header",
     "string": "{country} class rates"
@@ -4935,9 +4938,6 @@
   "X7fqfM": {
     "context": "title",
     "string": "Reserved stock"
-  },
-  "X7jl6w": {
-    "string": "Out of stock"
   },
   "X8qjg3": {
     "context": "inactive",
