@@ -24,8 +24,6 @@ const homePageProps: Omit<HomePageProps, "classes"> = {
   },
   notifications: {
     data: {
-      ordersToCapture: notifications.ordersToCapture.totalCount,
-      ordersToFulfill: notifications.ordersToFulfill.totalCount,
       productsOutOfStock: notifications.productsOutOfStock.totalCount,
     },
     loading: false,
@@ -33,17 +31,12 @@ const homePageProps: Omit<HomePageProps, "classes"> = {
   },
   analitics: {
     data: {
-      orders: analitics.ordersToday.totalCount,
       sales: analitics.salesToday.gross,
     },
     loading: false,
     hasError: false,
   },
   noChannel: false,
-  createNewChannelHref: "",
-  ordersToFulfillHref: "",
-  ordersToCaptureHref: "",
-  productsOutOfStockHref: "",
   topProducts: {
     data: mapEdgesToItems(productTopToday),
     loading: false,

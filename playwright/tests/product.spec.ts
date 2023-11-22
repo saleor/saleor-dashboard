@@ -1,4 +1,4 @@
-import { PRODUCTS } from "@data/testData";
+import { PRODUCTS } from "@data/e2eTestData";
 import { BasePage } from "@pages/basePage";
 import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
 import { ProductPage } from "@pages/productPage";

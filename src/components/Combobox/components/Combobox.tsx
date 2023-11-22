@@ -12,6 +12,8 @@ import { useIntl } from "react-intl";
 import { useCombbobxCustomOption } from "../hooks/useCombbobxCustomOption";
 import { useComboboxHandlers } from "../hooks/useComboboxHandlers";
 
+type HandleOnChangeValue = Option | null;
+
 type ComboboxProps = Omit<
   DynamicComboboxProps<Option | null>,
   "value" | "onChange"
@@ -60,7 +62,7 @@ export const Combobox = ({
     selectedValue,
   });
 
-  const handleOnChange = (value: Option | null) => {
+  const handleOnChange = (value: HandleOnChangeValue) => {
     onChange({
       target: { value: value?.value ?? null, name: rest.name ?? "" },
     });

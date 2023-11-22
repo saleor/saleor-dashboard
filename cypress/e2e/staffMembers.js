@@ -84,7 +84,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should deactivate user. TC: SALEOR_3502",
+    "should deactivate user. TC: SALEOR_3502 - migration in progress - to delete when done",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
       updateStaffMember({ userId: user.id, isActive: true });
@@ -103,7 +103,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should activate user. TC: SALEOR_3503",
+    "should activate user. TC: SALEOR_3503 - migration in progress - to delete when done",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const serverStoredEmail = email.toLowerCase();
@@ -178,7 +178,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should not be able to create staff member with not unique email. TC: SALEOR_3508",
+    "should not be able to create staff member with not unique email. TC: SALEOR_3508 - should not be migrated to playwright as critical",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const firstName = faker.name.firstName();

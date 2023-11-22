@@ -1,4 +1,4 @@
-import { SHIPPING_METHODS } from "@data/testData";
+import { SHIPPING_METHODS } from "@data/e2eTestData";
 import { ShippingMethodsPage } from "@pages/shippingMethodsPage";
 import { ShippingRatesPage } from "@pages/shippingRatesPage";
 import { expect, test } from "@playwright/test";
