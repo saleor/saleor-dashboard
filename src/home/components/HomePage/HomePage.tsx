@@ -44,7 +44,10 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Box paddingLeft={6} paddingRight={8}>
           <CardSpacer />
           <RequirePermissions
-            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+            requiredPermissions={[
+              PermissionEnum.MANAGE_ORDERS,
+              PermissionEnum.MANAGE_PRODUCTS,
+            ]}
           >
             <Box
               display="grid"
