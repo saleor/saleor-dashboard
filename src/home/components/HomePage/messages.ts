@@ -5,8 +5,8 @@ export const homePageMessages = defineMessages({
     defaultMessage: "Sales",
     id: "c8nvms",
   },
-  ordersCardTitle: {
-    defaultMessage: "Orders",
-    id: "X7jl6w",
+  outOfStockCardTitle: {
+    defaultMessage: "Out of stock",
+    id: "WHgdsk",
   },
 });

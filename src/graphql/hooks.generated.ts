@@ -8136,21 +8136,12 @@ export type CustomerGiftCardListQueryHookResult = ReturnType<typeof useCustomerG
 export type CustomerGiftCardListLazyQueryHookResult = ReturnType<typeof useCustomerGiftCardListLazyQuery>;
 export type CustomerGiftCardListQueryResult = Apollo.QueryResult<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>;
 export const HomeDocument = gql`
-    query Home($channel: String!, $datePeriod: DateRangeInput!, $PERMISSION_MANAGE_PRODUCTS: Boolean!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
+    query Home($channel: String!, $PERMISSION_MANAGE_PRODUCTS: Boolean!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
   salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
     gross {
       amount
       currency
     }
-  }
-  ordersToday: orders(filter: {created: $datePeriod}, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
-    totalCount
-  }
-  ordersToFulfill: orders(filter: {status: READY_TO_FULFILL}, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
-    totalCount
-  }
-  ordersToCapture: orders(filter: {status: READY_TO_CAPTURE}, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
-    totalCount
   }
   productsOutOfStock: products(
     filter: {stockAvailability: OUT_OF_STOCK}
@@ -8222,7 +8213,6 @@ export const HomeDocument = gql`
  * const { data, loading, error } = useHomeQuery({
  *   variables: {
  *      channel: // value for 'channel'
- *      datePeriod: // value for 'datePeriod'
  *      PERMISSION_MANAGE_PRODUCTS: // value for 'PERMISSION_MANAGE_PRODUCTS'
  *      PERMISSION_MANAGE_ORDERS: // value for 'PERMISSION_MANAGE_ORDERS'
  *   },

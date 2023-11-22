@@ -14,22 +14,16 @@ import { useIntl } from "react-intl";
 import HomeActivityCard from "../HomeActivityCard";
 import HomeAnalyticsCard from "../HomeAnalyticsCard";
 import HomeHeader from "../HomeHeader";
-import HomeNotificationTable from "../HomeNotificationTable/HomeNotificationTable";
 import HomeProductListCard from "../HomeProductListCard";
 import { homePageMessages } from "./messages";
 
 export interface HomePageProps {
   activities: RelayToFlat<HomeQuery["activities"]>;
-  orders: number | null;
-  ordersToCapture: number | null;
-  ordersToFulfill: number | null;
   productsOutOfStock: number;
   sales: HomeQuery["salesToday"]["gross"];
   topProducts: RelayToFlat<HomeQuery["productTopToday"]> | null;
   userName: string;
   createNewChannelHref: string;
-  ordersToFulfillHref: string;
-  ordersToCaptureHref: string;
   productsOutOfStockHref: string;
   noChannel: boolean;
 }
@@ -37,16 +31,9 @@ export interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = props => {
   const {
     userName,
-    orders,
     sales,
     topProducts,
     activities,
-    createNewChannelHref,
-    ordersToFulfillHref,
-    ordersToCaptureHref,
-    productsOutOfStockHref,
-    ordersToCapture = 0,
-    ordersToFulfill = 0,
     productsOutOfStock = 0,
     noChannel,
   } = props;
@@ -80,29 +67,19 @@ const HomePage: React.FC<HomePageProps> = props => {
                 )}
               </HomeAnalyticsCard>
               <HomeAnalyticsCard
-                title={intl.formatMessage(homePageMessages.ordersCardTitle)}
-                testId="orders-analytics"
+                title={intl.formatMessage(homePageMessages.outOfStockCardTitle)}
+                testId="out-of-stock-analytics"
               >
                 {noChannel ? (
                   0
-                ) : orders !== undefined ? (
-                  orders
+                ) : productsOutOfStock !== undefined ? (
+                  productsOutOfStock
                 ) : (
                   <Skeleton style={{ width: "5em" }} />
                 )}
               </HomeAnalyticsCard>
             </Box>
           </RequirePermissions>
-          <HomeNotificationTable
-            createNewChannelHref={createNewChannelHref}
-            ordersToFulfillHref={ordersToFulfillHref}
-            ordersToCaptureHref={ordersToCaptureHref}
-            productsOutOfStockHref={productsOutOfStockHref}
-            ordersToCapture={ordersToCapture}
-            ordersToFulfill={ordersToFulfill}
-            productsOutOfStock={productsOutOfStock}
-            noChannel={noChannel}
-          />
           <CardSpacer />
           {topProducts && (
             <RequirePermissions
