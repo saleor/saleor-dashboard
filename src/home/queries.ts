@@ -3,7 +3,6 @@ import { gql } from "@apollo/client";
 export const home = gql`
   query Home(
     $channel: String!
-    $datePeriod: DateRangeInput!
     $PERMISSION_MANAGE_PRODUCTS: Boolean!
     $PERMISSION_MANAGE_ORDERS: Boolean!
   ) {
@@ -13,22 +12,6 @@ export const home = gql`
         amount
         currency
       }
-    }
-    ordersToday: orders(filter: { created: $datePeriod }, channel: $channel)
-      @include(if: $PERMISSION_MANAGE_ORDERS) {
-      totalCount
-    }
-    ordersToFulfill: orders(
-      filter: { status: READY_TO_FULFILL }
-      channel: $channel
-    ) @include(if: $PERMISSION_MANAGE_ORDERS) {
-      totalCount
-    }
-    ordersToCapture: orders(
-      filter: { status: READY_TO_CAPTURE }
-      channel: $channel
-    ) @include(if: $PERMISSION_MANAGE_ORDERS) {
-      totalCount
     }
     productsOutOfStock: products(
       filter: { stockAvailability: OUT_OF_STOCK }
