@@ -13,39 +13,25 @@ import { useIntl } from "react-intl";
 import { HomeActivityCard } from "../HomeActivityCard";
 import { HomeAnalyticsCard } from "../HomeAnalyticsCard";
 import { HomeHeader } from "../HomeHeader";
-import { HomeNotificationList } from "../HomeNotificationList";
 import { HomeProductList } from "../HomeProductList";
 import { homePageMessages } from "./messages";
 
 export interface HomePageProps {
   activities: Activities;
-  orders: number | null;
-  ordersToCapture: number | null;
-  ordersToFulfill: number | null;
   productsOutOfStock: number;
   sales: NonNullable<HomeQuery["salesToday"]>["gross"];
   topProducts: ProductTopToday | null;
   userName: string;
-  createNewChannelHref: string;
-  ordersToFulfillHref: string;
-  ordersToCaptureHref: string;
-  productsOutOfStockHref: string;
+
   noChannel: boolean;
 }
 
 const HomePage: React.FC<HomePageProps> = props => {
   const {
     userName,
-    orders,
     sales,
     topProducts,
     activities,
-    createNewChannelHref,
-    ordersToFulfillHref,
-    ordersToCaptureHref,
-    productsOutOfStockHref,
-    ordersToCapture = 0,
-    ordersToFulfill = 0,
     productsOutOfStock = 0,
     noChannel,
   } = props;
@@ -58,7 +44,10 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Box paddingLeft={6} paddingRight={8}>
           <CardSpacer />
           <RequirePermissions
-            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+            requiredPermissions={[
+              PermissionEnum.MANAGE_ORDERS,
+              PermissionEnum.MANAGE_PRODUCTS,
+            ]}
           >
             <Box
               display="grid"
@@ -79,29 +68,19 @@ const HomePage: React.FC<HomePageProps> = props => {
                 )}
               </HomeAnalyticsCard>
               <HomeAnalyticsCard
-                title={intl.formatMessage(homePageMessages.ordersCardTitle)}
-                testId="orders-analytics"
+                title={intl.formatMessage(homePageMessages.outOfStockCardTitle)}
+                testId="out-of-stock--analytics"
               >
                 {noChannel ? (
                   0
-                ) : orders !== undefined ? (
-                  orders
+                ) : productsOutOfStock !== undefined ? (
+                  productsOutOfStock
                 ) : (
                   <Skeleton style={{ width: "5em" }} />
                 )}
               </HomeAnalyticsCard>
             </Box>
           </RequirePermissions>
-          <HomeNotificationList
-            createNewChannelHref={createNewChannelHref}
-            ordersToFulfillHref={ordersToFulfillHref}
-            ordersToCaptureHref={ordersToCaptureHref}
-            productsOutOfStockHref={productsOutOfStockHref}
-            ordersToCapture={ordersToCapture ?? 0}
-            ordersToFulfill={ordersToFulfill ?? 0}
-            productsOutOfStock={productsOutOfStock}
-            noChannel={noChannel}
-          />
           <CardSpacer />
           {topProducts && (
             <RequirePermissions
