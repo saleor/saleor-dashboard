@@ -6,6 +6,9 @@ export class LoginPage {
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
   readonly signInButton: Locator;
+  readonly resetPasswordLink: Locator;
+  readonly sendEmailWithResetLinkButton: Locator;
+  readonly backToLoginPageButton: Locator;
   homePage: HomePage;
   constructor(page: Page) {
     this.page = page;
@@ -13,6 +16,19 @@ export class LoginPage {
     this.emailInput = page.getByTestId("email");
     this.passwordInput = page.getByTestId("password");
     this.signInButton = page.getByTestId("submit");
+    this.resetPasswordLink = page.getByTestId("reset-password-link");
+    this.sendEmailWithResetLinkButton = page.getByTestId("submit");
+    this.backToLoginPageButton = page.getByTestId("back-to-login-button");
+  }
+
+  async clickBackToLoginPageButton() {
+    await this.backToLoginPageButton.click();
+  }
+  async clickResetPasswordLink() {
+    await this.resetPasswordLink.click();
+  }
+  async clickSendEmailWithResetLinkButton() {
+    await this.sendEmailWithResetLinkButton.click();
   }
 
   async loginAndSetStorageState(
@@ -21,7 +37,7 @@ export class LoginPage {
     page: Page,
     path: string,
   ) {
-    await page.goto(process.env.BASE_URL!);
+    await this.page.goto(process.env.BASE_URL!);
     await this.typeEmail(userEmail);
     await this.typePassword(userPassword);
     await this.clickSignInButton();
@@ -29,6 +45,7 @@ export class LoginPage {
     // End of authentication steps.
     await page.context().storageState({ path });
   }
+
   async typeEmail(email: string) {
     await this.emailInput.fill(email);
   }

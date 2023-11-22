@@ -10,11 +10,12 @@ test.use({ storageState: "playwright/.auth/staff-member.json" });
 
 test("TC: SALEOR_19 User should be able to navigate to staff members list page as a staff member using STAFF permission @e2e", async ({
   page,
+  request,
 }) => {
   const mainMenuPage = new MainMenuPage(page);
   const basePage = new BasePage(page);
   const configurationPage = new ConfigurationPage(page);
-  const staffMembersPage = new StaffMembersPage(page);
+  const staffMembersPage = new StaffMembersPage(page, request);
 
   await page.goto(URL_LIST.configuration);
   await configurationPage.openStaffMembers();
