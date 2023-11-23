@@ -1,0 +1,30 @@
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import useVariantSearchQuery from "@dashboard/searches/useVariantSearch";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+
+export const useVariantSearch = () => {
+  const {
+    loadMore: loadMoreVariants,
+    search: searchVariants,
+    result: searchVariantsOpts,
+  } = useVariantSearchQuery({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
+  const fetchMoreVariants = getSearchFetchMoreProps(
+    searchVariantsOpts,
+    loadMoreVariants,
+  );
+
+  return {
+    fetch: searchVariants,
+    fetchMoreProps: fetchMoreVariants,
+    options: (mapEdgesToItems(searchVariantsOpts?.data?.search) ?? []).map(
+      product => ({
+        label: product.name,
+        value: product.id,
+      }),
+    ),
+  };
+};
