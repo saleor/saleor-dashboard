@@ -9,14 +9,6 @@ import {
 
 export const notifications: HomeNotificationsQuery = {
   __typename: "Query",
-  ordersToCapture: {
-    __typename: "OrderCountableConnection",
-    totalCount: 0,
-  },
-  ordersToFulfill: {
-    __typename: "OrderCountableConnection",
-    totalCount: 1,
-  },
 
   productsOutOfStock: {
     __typename: "ProductCountableConnection",
@@ -441,9 +433,5 @@ export const analitics: HomeAnaliticsQuery = {
       amount: 57.15,
       currency: "USD",
     },
-  },
-  ordersToday: {
-    __typename: "OrderCountableConnection",
-    totalCount: 1,
   },
 };

@@ -1134,9 +1134,6 @@
     "context": "references attribute type",
     "string": "References"
   },
-  "5dyOs0": {
-    "string": "No payments waiting for capture"
-  },
   "5elC9k": {
     "context": "taxes section name",
     "string": "Taxes"
@@ -2249,9 +2246,6 @@
   "E9Dz18": {
     "context": "Order summary refunds header",
     "string": "Refunds"
-  },
-  "E9Jssl": {
-    "string": "No orders ready to fulfill"
   },
   "EA7rjI": {
     "context": "disabled status label",
@@ -3669,9 +3663,6 @@
     "context": "weight",
     "string": "{value} {unit}"
   },
-  "Nuq83+": {
-    "string": "Create new channel"
-  },
   "Nv/toB": {
     "context": "button",
     "string": "Assign and save"
@@ -4901,6 +4892,9 @@
     "context": "order refund amount",
     "string": "Shipment Cost"
   },
+  "WHgdsk": {
+    "string": "Out of stock"
+  },
   "WIxSDm": {
     "context": "card header",
     "string": "{country} class rates"
@@ -5033,9 +5027,6 @@
   "X7fqfM": {
     "context": "title",
     "string": "Reserved stock"
-  },
-  "X7jl6w": {
-    "string": "Orders"
   },
   "X8qjg3": {
     "context": "inactive",
@@ -5651,9 +5642,6 @@
     "context": "success gift card enable message",
     "string": "Successfully enabled gift card"
   },
-  "bFhzRX": {
-    "string": "No products are out of stock"
-  },
   "bGqAdR": {
     "context": "seo complete text",
     "string": "Complete"
@@ -5783,9 +5771,6 @@
   "byP6IC": {
     "string": "Selected"
   },
-  "c0H45L": {
-    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
-  },
   "c24hjq": {
     "context": "status",
     "string": "Active"
@@ -5891,9 +5876,6 @@
   "cdiRSf": {
     "context": "WarehouseSettings no shipping zones assigned",
     "string": "This warehouse has no shipping zones assigned."
-  },
-  "cdxwA8": {
-    "string": "{amount, plural,one {One product out of stock}other {{amount} products out of stock}}"
   },
   "cfQf0w": {
     "context": "button",
@@ -7203,9 +7185,6 @@
   "mbj1J5": {
     "context": "bulk issue gift cards success alert description",
     "string": "Requested {cardsAmount} were successfully issued"
-  },
-  "md326v": {
-    "string": "{amount, plural,one {One payment to capture}other {{amount} payments to capture}}"
   },
   "me585h": {
     "context": "navigator section header",

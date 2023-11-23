@@ -110,12 +110,14 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
             <DialogContent>
               <div className={classes.textFieldGrid}>
                 <TextField
+                  data-test-id="first-name-input"
                   {...getFieldProps("firstName")}
                   type="text"
                   value={formData.firstName}
                   onChange={change}
                 />
                 <TextField
+                  data-test-id="last-name-input"
                   {...getFieldProps("lastName")}
                   type="text"
                   value={formData.lastName}
@@ -124,6 +126,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
               </div>
               <FormSpacer />
               <TextField
+                data-test-id="email-input"
                 fullWidth
                 {...getFieldProps("email")}
                 type="email"

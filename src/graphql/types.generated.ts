@@ -10279,12 +10279,11 @@ export type CustomerGiftCardListQuery = { __typename: 'Query', giftCards: { __ty
 
 export type HomeAnaliticsQueryVariables = Exact<{
   channel: Scalars['String'];
-  datePeriod: DateRangeInput;
   hasPermissionToManageOrders: Scalars['Boolean'];
 }>;
 
 
-export type HomeAnaliticsQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null, ordersToday: { __typename: 'OrderCountableConnection', totalCount: number | null } | null };
+export type HomeAnaliticsQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null };
 
 export type HomeActivitiesQueryVariables = Exact<{
   hasPermissionToManageOrders: Scalars['Boolean'];
@@ -10303,11 +10302,10 @@ export type HomeTopProductsQuery = { __typename: 'Query', productTopToday: { __t
 
 export type HomeNotificationsQueryVariables = Exact<{
   channel: Scalars['String'];
-  hasPermissionToManageOrders: Scalars['Boolean'];
 }>;
 
 
-export type HomeNotificationsQuery = { __typename: 'Query', ordersToFulfill: { __typename: 'OrderCountableConnection', totalCount: number | null } | null, ordersToCapture: { __typename: 'OrderCountableConnection', totalCount: number | null } | null, productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
+export type HomeNotificationsQuery = { __typename: 'Query', productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
 
 export type MenuCreateMutationVariables = Exact<{
   input: MenuCreateInput;

@@ -31,6 +31,15 @@ import ProductUpdateComponent from "./views/ProductUpdate";
 import ProductVariantComponent from "./views/ProductVariant";
 import ProductVariantCreateComponent from "./views/ProductVariantCreate";
 
+interface MatchParams {
+  id?: string;
+}
+
+interface matchParamsProductVariant {
+  variantId?: string;
+  productId?: string;
+}
+
 const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const productListingPageFiltersFlag = useFlag("product_filters");
@@ -80,14 +89,16 @@ const ProductCreate: React.FC<RouteComponentProps<any>> = () => {
   return <ProductCreateComponent params={params} />;
 };
 
-const ProductVariant: React.FC<RouteComponentProps<any>> = ({ match }) => {
+const ProductVariant: React.FC<
+  RouteComponentProps<matchParamsProductVariant>
+> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductVariantEditUrlQueryParams = qs;
 
   return (
     <ProductVariantComponent
-      variantId={decodeURIComponent(match.params.variantId)}
-      productId={decodeURIComponent(match.params.productId)}
+      variantId={decodeURIComponent(match.params.variantId ?? "")}
+      productId={decodeURIComponent(match.params.productId ?? "")}
       params={params}
     />
   );
@@ -109,7 +120,7 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
   );
 };
 
-const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
+const ProductVariantCreate: React.FC<RouteComponentProps<MatchParams>> = ({
   match,
 }) => {
   const qs = parseQs(location.search.substr(1));
@@ -117,7 +128,7 @@ const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
 
   return (
     <ProductVariantCreateComponent
-      productId={decodeURIComponent(match.params.id)}
+      productId={decodeURIComponent(match.params.id ?? "")}
       params={params}
     />
   );

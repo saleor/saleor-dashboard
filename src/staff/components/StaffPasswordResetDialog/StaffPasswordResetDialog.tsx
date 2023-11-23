@@ -79,6 +79,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                   description: "input label",
                 })}
                 name="oldPassword"
+                data-test-id="old-password-input"
                 type="password"
                 onChange={change}
                 inputProps={{
@@ -103,6 +104,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                   description: "input label",
                 })}
                 name="newPassword"
+                data-test-id="new-password-input"
                 type="password"
                 onChange={change}
                 inputProps={{
