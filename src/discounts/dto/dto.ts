@@ -22,7 +22,10 @@ export class RuleDTO {
     };
   }
 
-  static fromAPI(rule: PromotionRuleDetailsFragment): Rule {
+  static fromAPI(
+    rule: PromotionRuleDetailsFragment,
+    conditionLabels: Record<string, string>,
+  ): Rule {
     return {
       channels: rule.channels.map<Option>(chan => ({
         label: chan.name,
@@ -32,7 +35,9 @@ export class RuleDTO {
       description: JSON.stringify(rule.description),
       rewardValue: rule.rewardValue,
       rewardValueType: rule.rewardValueType,
-      conditions: (rule.cataloguePredicate.OR || []).map(ConditionDTO.fromAPI),
+      conditions: (rule.cataloguePredicate.OR || []).map(predicate =>
+        ConditionDTO.fromAPI(predicate, conditionLabels),
+      ),
     };
   }
 }
@@ -46,13 +51,16 @@ export class ConditionDTO {
     };
   }
 
-  static fromAPI(condition: CataloguePredicateAPI): Condition {
+  static fromAPI(
+    condition: CataloguePredicateAPI,
+    conditionLabels: Record<string, string>,
+  ): Condition {
     if (condition.productPredicate) {
       return {
         type: "product",
         condition: "is",
         values: condition.productPredicate.ids.map(id => ({
-          label: id,
+          label: conditionLabels[id] || id,
           value: id,
         })),
       };
@@ -63,7 +71,7 @@ export class ConditionDTO {
         type: "category",
         condition: "is",
         values: condition.categoryPredicate.ids.map(id => ({
-          label: id,
+          label: conditionLabels[id] || id,
           value: id,
         })),
       };
@@ -74,7 +82,7 @@ export class ConditionDTO {
         type: "collection",
         condition: "is",
         values: condition.collectionPredicate.ids.map(id => ({
-          label: id,
+          label: conditionLabels[id] || id,
           value: id,
         })),
       };
@@ -84,7 +92,7 @@ export class ConditionDTO {
         type: "variant",
         condition: "is",
         values: condition.variantPredicate.ids.map(id => ({
-          label: id,
+          label: conditionLabels[id] || id,
           value: id,
         })),
       };

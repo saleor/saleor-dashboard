@@ -8082,6 +8082,73 @@ export function usePromotionDetailsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type PromotionDetailsQueryHookResult = ReturnType<typeof usePromotionDetailsQuery>;
 export type PromotionDetailsLazyQueryHookResult = ReturnType<typeof usePromotionDetailsLazyQuery>;
 export type PromotionDetailsQueryResult = Apollo.QueryResult<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>;
+export const ConditionsDetailsDocument = gql`
+    query conditionsDetails($categoriesIds: [ID!], $collectionsIds: [ID!], $productsIds: [ID!], $variantsIds: [ID!]) {
+  categories(first: 20, where: {ids: $categoriesIds}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+  collections(first: 20, where: {ids: $collectionsIds}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+  products(first: 20, where: {ids: $productsIds}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+  productVariants(first: 20, where: {ids: $variantsIds}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useConditionsDetailsQuery__
+ *
+ * To run a query within a React component, call `useConditionsDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useConditionsDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useConditionsDetailsQuery({
+ *   variables: {
+ *      categoriesIds: // value for 'categoriesIds'
+ *      collectionsIds: // value for 'collectionsIds'
+ *      productsIds: // value for 'productsIds'
+ *      variantsIds: // value for 'variantsIds'
+ *   },
+ * });
+ */
+export function useConditionsDetailsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ConditionsDetailsQuery, Types.ConditionsDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ConditionsDetailsQuery, Types.ConditionsDetailsQueryVariables>(ConditionsDetailsDocument, options);
+      }
+export function useConditionsDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ConditionsDetailsQuery, Types.ConditionsDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ConditionsDetailsQuery, Types.ConditionsDetailsQueryVariables>(ConditionsDetailsDocument, options);
+        }
+export type ConditionsDetailsQueryHookResult = ReturnType<typeof useConditionsDetailsQuery>;
+export type ConditionsDetailsLazyQueryHookResult = ReturnType<typeof useConditionsDetailsLazyQuery>;
+export type ConditionsDetailsQueryResult = Apollo.QueryResult<Types.ConditionsDetailsQuery, Types.ConditionsDetailsQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {

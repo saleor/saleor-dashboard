@@ -9637,6 +9637,16 @@ export type PromotionDetailsQueryVariables = Exact<{
 
 export type PromotionDetailsQuery = { __typename: 'Query', promotion: { __typename: 'Promotion', id: string, name: string, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', name: string | null, description: any | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null } | null };
 
+export type ConditionsDetailsQueryVariables = Exact<{
+  categoriesIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  collectionsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  productsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  variantsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+}>;
+
+
+export type ConditionsDetailsQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }> } | null, products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string } }> } | null, productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string } }> } | null };
+
 export type FileUploadMutationVariables = Exact<{
   file: Scalars['Upload'];
 }>;

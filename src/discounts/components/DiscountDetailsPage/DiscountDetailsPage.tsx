@@ -23,6 +23,7 @@ export interface DiscountDetailsPageProps {
   onSubmit: (data: DiscoutFormData) => void;
   onRuleSubmit: (ruleData: Rule) => void;
   data: PromotionDetailsFragment;
+  conditionLabels: Record<string, string>;
 }
 
 export const DiscountDetailsPage = ({
@@ -30,6 +31,7 @@ export const DiscountDetailsPage = ({
   disabled,
   onBack,
   data,
+  conditionLabels,
   onSubmit,
   onRuleSubmit,
 }: DiscountDetailsPageProps) => {
@@ -45,7 +47,7 @@ export const DiscountDetailsPage = ({
       },
       name: data?.name ?? "",
       description: JSON.stringify(data?.description),
-      rules: data?.rules.map(RuleDTO.fromAPI),
+      rules: data?.rules.map(rule => RuleDTO.fromAPI(rule, conditionLabels)),
     },
   });
 

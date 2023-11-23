@@ -127,3 +127,48 @@ export const promotionDetails = gql`
     }
   }
 `;
+
+export const conditionsDetials = gql`
+  query conditionsDetails(
+    $categoriesIds: [ID!]
+    $collectionsIds: [ID!]
+    $productsIds: [ID!]
+    $variantsIds: [ID!]
+  ) {
+    categories(first: 20, where: { ids: $categoriesIds }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+
+    collections(first: 20, where: { ids: $collectionsIds }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+
+    products(first: 20, where: { ids: $productsIds }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+
+    productVariants(first: 20, where: { ids: $variantsIds }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;

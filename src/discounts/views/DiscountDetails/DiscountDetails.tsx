@@ -2,11 +2,16 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage";
 import { DiscountUrlQueryParams, saleListUrl } from "@dashboard/discounts/urls";
-import { usePromotionDetailsQuery } from "@dashboard/graphql";
+import {
+  useConditionsDetailsQuery,
+  usePromotionDetailsQuery,
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import React from "react";
 import { useIntl } from "react-intl";
+
+import { getAllConditionsIds, getConditonLabels } from "./utils";
 
 interface DiscountDetailsProps {
   id: string;
@@ -24,12 +29,19 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
     },
   });
 
+  const { data: conditionData } = useConditionsDetailsQuery({
+    variables: {
+      ...getAllConditionsIds(data),
+    },
+  });
+
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
       <DiscountDetailsPage
         data={data?.promotion}
         disabled={loading}
+        conditionLabels={getConditonLabels(conditionData)}
         onBack={() => {
           navigate(saleListUrl());
         }}
