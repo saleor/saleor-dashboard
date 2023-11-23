@@ -2,8 +2,13 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { RuleDTO } from "@dashboard/discounts/dto/dto";
-import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
+import {
+  ConditionType,
+  DiscoutFormData,
+  Rule,
+} from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
+import { FetchOptions } from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { ChannelFragment, PromotionDetailsFragment } from "@dashboard/graphql";
 import { splitDateTime } from "@dashboard/misc";
 import { RichTextContext } from "@dashboard/utils/richText/context";
@@ -22,6 +27,7 @@ export interface DiscountDetailsPageProps {
   onBack: () => void;
   onSubmit: (data: DiscoutFormData) => void;
   onRuleSubmit: (ruleData: Rule) => void;
+  fetchOptions: (type: ConditionType) => FetchOptions;
   data: PromotionDetailsFragment;
   conditionLabels: Record<string, string>;
 }
@@ -34,6 +40,7 @@ export const DiscountDetailsPage = ({
   conditionLabels,
   onSubmit,
   onRuleSubmit,
+  fetchOptions,
 }: DiscountDetailsPageProps) => {
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
@@ -75,7 +82,7 @@ export const DiscountDetailsPage = ({
               <DiscountDescription />
               <DiscountDatesWithController />
               <DiscountRules
-                fetchOptions={(() => {}) as any}
+                fetchOptions={fetchOptions}
                 channels={channels}
                 onRuleSubmit={handleRuleSubmit}
               />

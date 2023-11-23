@@ -11,6 +11,7 @@ import { commonMessages } from "@dashboard/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { useOptionsFetch } from "../DiscountCreate/hooks/useOptionsFetch";
 import { getAllConditionsIds, getConditonLabels } from "./utils";
 
 interface DiscountDetailsProps {
@@ -35,6 +36,8 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
     },
   });
 
+  const fetchOptions = useOptionsFetch();
+
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
@@ -45,6 +48,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         onBack={() => {
           navigate(saleListUrl());
         }}
+        fetchOptions={fetchOptions}
         channels={availableChannels}
         onSubmit={() => {}} // To be implemented
         onRuleSubmit={() => {}} // To be implemented
