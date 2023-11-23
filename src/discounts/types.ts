@@ -53,3 +53,19 @@ export interface Condition {
 }
 
 export type ConditionType = "product" | "categorie" | "collection" | "variant";
+
+// Mimic API catalogue predicate structure because api scheme type return any
+export interface CataloguePredicateAPI {
+  productPredicate?: {
+    ids: string[];
+  };
+  categoryPredicate?: {
+    ids: string[];
+  };
+  collectionPredicate?: {
+    ids: string[];
+  };
+  variantPredicate?: {
+    ids: string[];
+  };
+}
