@@ -21,7 +21,6 @@
 </div>
 
 <div align="center">
-  <a href="https://demo.saleor.io/dashboard">▶️ Demo</a>
    <span> • </span>
   <a href="https://githubbox.com/saleor/saleor-dashboard">🔎 Explore Code</a>
 </div>
