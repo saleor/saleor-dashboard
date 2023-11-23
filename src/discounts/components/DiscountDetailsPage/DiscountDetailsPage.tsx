@@ -1,4 +1,5 @@
 import { TopNav } from "@dashboard/components/AppLayout";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { RuleDTO } from "@dashboard/discounts/dto/dto";
@@ -28,6 +29,7 @@ export interface DiscountDetailsPageProps {
   onSubmit: (data: DiscoutFormData) => void;
   onRuleSubmit: (ruleData: Rule) => void;
   fetchOptions: (type: ConditionType) => FetchOptions;
+  submitButtonState: ConfirmButtonTransitionState;
   data: PromotionDetailsFragment;
   conditionLabels: Record<string, string>;
 }
@@ -38,6 +40,7 @@ export const DiscountDetailsPage = ({
   onBack,
   data,
   conditionLabels,
+  submitButtonState,
   onSubmit,
   onRuleSubmit,
   fetchOptions,
@@ -94,7 +97,7 @@ export const DiscountDetailsPage = ({
           disabled={disabled}
           onCancel={onBack}
           onSubmit={methods.handleSubmit(onSubmit)}
-          state={"default"}
+          state={submitButtonState}
         />
       </DetailPageLayout>
     </RichTextContext.Provider>

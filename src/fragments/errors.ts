@@ -68,6 +68,14 @@ export const promotionCreateErrorFragment = gql`
   }
 `;
 
+export const promotionUpdateErrorFragment = gql`
+  fragment PromotionUpdateError on PromotionUpdateError {
+    field
+    message
+    code
+  }
+`;
+
 export const menuErrorFragment = gql`
   fragment MenuError on MenuError {
     code

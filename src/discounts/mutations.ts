@@ -242,3 +242,13 @@ export const promotionCreate = gql`
     }
   }
 `;
+
+export const promotionUpdate = gql`
+  mutation PromotionUpdate($id: ID!, $input: PromotionUpdateInput!) {
+    promotionUpdate(id: $id, input: $input) {
+      errors {
+        ...PromotionUpdateError
+      }
+    }
+  }
+`;

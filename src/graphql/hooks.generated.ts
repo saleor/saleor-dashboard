@@ -714,6 +714,13 @@ export const PromotionCreateErrorFragmentDoc = gql`
   index
 }
     `;
+export const PromotionUpdateErrorFragmentDoc = gql`
+    fragment PromotionUpdateError on PromotionUpdateError {
+  field
+  message
+  code
+}
+    `;
 export const MenuErrorFragmentDoc = gql`
     fragment MenuError on MenuError {
   code
@@ -7799,6 +7806,42 @@ export function usePromotionCreateMutation(baseOptions?: ApolloReactHooks.Mutati
 export type PromotionCreateMutationHookResult = ReturnType<typeof usePromotionCreateMutation>;
 export type PromotionCreateMutationResult = Apollo.MutationResult<Types.PromotionCreateMutation>;
 export type PromotionCreateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionCreateMutation, Types.PromotionCreateMutationVariables>;
+export const PromotionUpdateDocument = gql`
+    mutation PromotionUpdate($id: ID!, $input: PromotionUpdateInput!) {
+  promotionUpdate(id: $id, input: $input) {
+    errors {
+      ...PromotionUpdateError
+    }
+  }
+}
+    ${PromotionUpdateErrorFragmentDoc}`;
+export type PromotionUpdateMutationFn = Apollo.MutationFunction<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>;
+
+/**
+ * __usePromotionUpdateMutation__
+ *
+ * To run a mutation, you first call `usePromotionUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePromotionUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [promotionUpdateMutation, { data, loading, error }] = usePromotionUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePromotionUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>(PromotionUpdateDocument, options);
+      }
+export type PromotionUpdateMutationHookResult = ReturnType<typeof usePromotionUpdateMutation>;
+export type PromotionUpdateMutationResult = Apollo.MutationResult<Types.PromotionUpdateMutation>;
+export type PromotionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>;
 export const SaleListDocument = gql`
     query SaleList($after: String, $before: String, $first: Int, $last: Int, $filter: SaleFilterInput, $sort: SaleSortingInput, $channel: String) {
   sales(
