@@ -74,7 +74,7 @@ export function setVoucherDate({
   }
   if (endDate) {
     if (hasEndDate) {
-      cy.get(VOUCHERS_SELECTORS.hasEndDateCheckbox).click();
+      cy.get(VOUCHERS_SELECTORS.hasEndDateCheckbox).click({ force: true });
     }
     cy.get(VOUCHERS_SELECTORS.endDateInput)
       .type(endDate)
