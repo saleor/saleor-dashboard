@@ -8949,15 +8949,12 @@ export type CustomerGiftCardListQueryHookResult = ReturnType<typeof useCustomerG
 export type CustomerGiftCardListLazyQueryHookResult = ReturnType<typeof useCustomerGiftCardListLazyQuery>;
 export type CustomerGiftCardListQueryResult = Apollo.QueryResult<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>;
 export const HomeAnaliticsDocument = gql`
-    query HomeAnalitics($channel: String!, $datePeriod: DateRangeInput!, $hasPermissionToManageOrders: Boolean!) {
+    query HomeAnalitics($channel: String!, $hasPermissionToManageOrders: Boolean!) {
   salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $hasPermissionToManageOrders) {
     gross {
       amount
       currency
     }
-  }
-  ordersToday: orders(filter: {created: $datePeriod}, channel: $channel) @include(if: $hasPermissionToManageOrders) {
-    totalCount
   }
 }
     `;
@@ -8975,7 +8972,6 @@ export const HomeAnaliticsDocument = gql`
  * const { data, loading, error } = useHomeAnaliticsQuery({
  *   variables: {
  *      channel: // value for 'channel'
- *      datePeriod: // value for 'datePeriod'
  *      hasPermissionToManageOrders: // value for 'hasPermissionToManageOrders'
  *   },
  * });
@@ -9105,13 +9101,7 @@ export type HomeTopProductsQueryHookResult = ReturnType<typeof useHomeTopProduct
 export type HomeTopProductsLazyQueryHookResult = ReturnType<typeof useHomeTopProductsLazyQuery>;
 export type HomeTopProductsQueryResult = Apollo.QueryResult<Types.HomeTopProductsQuery, Types.HomeTopProductsQueryVariables>;
 export const HomeNotificationsDocument = gql`
-    query homeNotifications($channel: String!, $hasPermissionToManageOrders: Boolean!) {
-  ordersToFulfill: orders(filter: {status: READY_TO_FULFILL}, channel: $channel) @include(if: $hasPermissionToManageOrders) {
-    totalCount
-  }
-  ordersToCapture: orders(filter: {status: READY_TO_CAPTURE}, channel: $channel) @include(if: $hasPermissionToManageOrders) {
-    totalCount
-  }
+    query homeNotifications($channel: String!) {
   productsOutOfStock: products(
     filter: {stockAvailability: OUT_OF_STOCK}
     channel: $channel
@@ -9134,7 +9124,6 @@ export const HomeNotificationsDocument = gql`
  * const { data, loading, error } = useHomeNotificationsQuery({
  *   variables: {
  *      channel: // value for 'channel'
- *      hasPermissionToManageOrders: // value for 'hasPermissionToManageOrders'
  *   },
  * });
  */

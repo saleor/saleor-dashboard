@@ -18,7 +18,6 @@ import { useIntl } from "react-intl";
 import { HomeActivityCard } from "../HomeActivityCard";
 import { HomeAnalyticsCard } from "../HomeAnalyticsCard";
 import { HomeHeader } from "../HomeHeader";
-import { HomeNotificationList } from "../HomeNotificationList";
 import { HomeProductList } from "../HomeProductList";
 import { homePageMessages } from "./messages";
 
@@ -28,10 +27,6 @@ export interface HomePageProps {
   topProducts: HomeData<ProductTopToday>;
   notifications: HomeData<Notifications>;
   userName: string;
-  createNewChannelHref: string;
-  ordersToFulfillHref: string;
-  ordersToCaptureHref: string;
-  productsOutOfStockHref: string;
   noChannel: boolean;
 }
 
@@ -41,10 +36,6 @@ const HomePage: React.FC<HomePageProps> = props => {
     analitics,
     topProducts,
     activities,
-    createNewChannelHref,
-    ordersToFulfillHref,
-    ordersToCaptureHref,
-    productsOutOfStockHref,
     notifications,
     noChannel,
   } = props;
@@ -78,27 +69,19 @@ const HomePage: React.FC<HomePageProps> = props => {
                 )}
               </HomeAnalyticsCard>
               <HomeAnalyticsCard
-                title={intl.formatMessage(homePageMessages.ordersCardTitle)}
-                testId="orders-analytics"
+                title={intl.formatMessage(homePageMessages.outOfStockCardTitle)}
+                testId="out-of-stock-analytics"
               >
-                {noChannel || analitics.hasError ? (
+                {noChannel || notifications.hasError ? (
                   0
-                ) : !analitics.loading ? (
-                  analitics.data.orders
+                ) : !notifications.loading ? (
+                  notifications.data.productsOutOfStock
                 ) : (
                   <Skeleton style={{ width: "5em" }} />
                 )}
               </HomeAnalyticsCard>
             </Box>
           </RequirePermissions>
-          <HomeNotificationList
-            createNewChannelHref={createNewChannelHref}
-            ordersToFulfillHref={ordersToFulfillHref}
-            ordersToCaptureHref={ordersToCaptureHref}
-            productsOutOfStockHref={productsOutOfStockHref}
-            notifications={notifications}
-            noChannel={noChannel}
-          />
           <CardSpacer />
           {topProducts && (
             <RequirePermissions

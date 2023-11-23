@@ -31,6 +31,7 @@ const AppStatus: React.FC<AppStatusProps> = ({
           {intl.formatMessage(messages.userDisableInstruction)}
         </Typography>
         <ControlledCheckbox
+          data-test-id="is-active-checkbox"
           checked={data.isActive}
           disabled={disabled}
           label={label}

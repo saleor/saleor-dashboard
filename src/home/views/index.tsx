@@ -1,12 +1,9 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
-import { channelsListUrl } from "@dashboard/channels/urls";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import {
-  OrderStatusFilter,
   PermissionEnum,
-  StockAvailability,
   useHomeActivitiesQuery,
   useHomeAnaliticsQuery,
   useHomeNotificationsQuery,
@@ -15,9 +12,7 @@ import {
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 
-import { getDatePeriod, getUserName } from "../../misc";
-import { orderListUrl } from "../../orders/urls";
-import { productListUrl } from "../../products/urls";
+import { getUserName } from "../../misc";
 import HomePage from "../components/HomePage";
 
 const HomeSection = () => {
@@ -63,10 +58,7 @@ const HomeSection = () => {
     error: homeNotificationsError,
   } = useHomeNotificationsQuery({
     skip: noChannel,
-    variables: {
-      channel: channel?.slug,
-      hasPermissionToManageOrders,
-    },
+    variables: { channel: channel?.slug },
   });
 
   const {
@@ -77,7 +69,6 @@ const HomeSection = () => {
     skip: noChannel,
     variables: {
       channel: channel?.slug,
-      datePeriod: getDatePeriod(1),
       hasPermissionToManageOrders,
     },
   });
@@ -96,8 +87,6 @@ const HomeSection = () => {
       }}
       notifications={{
         data: {
-          ordersToCapture: homeNotificationsData?.ordersToCapture?.totalCount,
-          ordersToFulfill: homeNotificationsData?.ordersToFulfill?.totalCount,
           productsOutOfStock:
             homeNotificationsData?.productsOutOfStock.totalCount,
         },
@@ -106,25 +95,11 @@ const HomeSection = () => {
       }}
       analitics={{
         data: {
-          orders: homeAnaliticsData?.ordersToday?.totalCount,
           sales: homeAnaliticsData?.salesToday?.gross,
         },
         loading: homeAnaliticsLoading,
         hasError: !!homeAnaliticsError,
       }}
-      createNewChannelHref={channelsListUrl()}
-      ordersToCaptureHref={orderListUrl({
-        status: [OrderStatusFilter.READY_TO_CAPTURE],
-        channel: [channel?.id],
-      })}
-      ordersToFulfillHref={orderListUrl({
-        status: [OrderStatusFilter.READY_TO_FULFILL],
-        channel: [channel?.id],
-      })}
-      productsOutOfStockHref={productListUrl({
-        stockStatus: StockAvailability.OUT_OF_STOCK,
-        channel: channel?.slug,
-      })}
       userName={getUserName(user, true)}
       noChannel={noChannel}
     />

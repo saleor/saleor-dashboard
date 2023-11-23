@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { FetchResult } from "@apollo/client";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -178,11 +179,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>,
-  ): Promise<any> =>
-    orderDraftUpdate.mutate({
-      id,
-      input: data,
-    });
+  ): Promise<FetchResult<OrderDraftUpdateMutation>> =>
+    orderDraftUpdate.mutate({ id, input: data });
 
   const handleOrderDraftCancel = async () => {
     const errors = await extractMutationErrors(orderDraftCancel.mutate({ id }));

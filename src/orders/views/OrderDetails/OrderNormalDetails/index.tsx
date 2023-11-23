@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { FetchResult } from "@apollo/client";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CreateManualTransactionCaptureMutation,
@@ -149,7 +150,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
     });
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>,
-  ): Promise<any> =>
+  ): Promise<FetchResult<OrderUpdateMutation>> =>
     orderUpdate.mutate({
       id,
       input: data,

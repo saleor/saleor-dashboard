@@ -35,6 +35,10 @@ import OrderReturnComponent from "./views/OrderReturn";
 import OrderSendRefundComponent from "./views/OrderSendRefund";
 import OrderSettings from "./views/OrderSettings";
 
+interface MatchParams {
+  id?: string;
+}
+
 const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderListUrlQueryParams = asSortParams(
@@ -82,20 +86,30 @@ const OrderFulfill: React.FC<RouteComponentProps<any>> = ({
   );
 };
 
-const OrderPaymentRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
-  <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />
+const OrderPaymentRefund: React.FC<RouteComponentProps<MatchParams>> = ({
+  match,
+}) => (
+  <OrderRefundComponent orderId={decodeURIComponent(match.params.id ?? "")} />
 );
 
-const OrderSendRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
-  <OrderSendRefundComponent orderId={decodeURIComponent(match.params.id)} />
+const OrderSendRefund: React.FC<RouteComponentProps<MatchParams>> = ({
+  match,
+}) => (
+  <OrderSendRefundComponent
+    orderId={decodeURIComponent(match.params.id ?? "")}
+  />
 );
 
-const OrderReturn: React.FC<RouteComponentProps<any>> = ({ match }) => (
-  <OrderReturnComponent orderId={decodeURIComponent(match.params.id)} />
+const OrderReturn: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => (
+  <OrderReturnComponent orderId={decodeURIComponent(match.params.id ?? "")} />
 );
 
-const OrderGrantRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
-  <OrderGrantRefundComponent orderId={decodeURIComponent(match.params.id)} />
+const OrderGrantRefund: React.FC<RouteComponentProps<MatchParams>> = ({
+  match,
+}) => (
+  <OrderGrantRefundComponent
+    orderId={decodeURIComponent(match.params.id ?? "")}
+  />
 );
 
 const OrderGrantRefundEdit: React.FC<RouteComponentProps<any>> = ({

@@ -37,6 +37,7 @@ const ResetPasswordSuccessPage: React.FC<
         variant="primary"
         onClick={onBack}
         type="submit"
+        data-test-id="back-to-login-button"
       >
         <FormattedMessage
           id="2oyWT9"

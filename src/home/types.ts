@@ -13,13 +13,10 @@ export type ProductTopToday = RelayToFlat<
 >;
 
 export interface Analitics {
-  orders: number | null;
   sales: NonNullable<HomeAnaliticsQuery["salesToday"]>["gross"];
 }
 
 export interface Notifications {
-  ordersToCapture: number | null;
-  ordersToFulfill: number | null;
   productsOutOfStock: number;
 }
 

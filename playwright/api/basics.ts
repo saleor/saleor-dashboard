@@ -1,4 +1,4 @@
-import { APIResponse, request } from "@playwright/test";
+import { APIRequestContext } from "@playwright/test";
 
 const URL = process.env.API_URI || "";
 interface Data {
@@ -9,21 +9,41 @@ interface User {
   email: string;
   password: string;
 }
-export class GraphQLService {
-  async example(
-    user: User,
-    authorization: string = "auth",
-  ): Promise<APIResponse> {
+interface TokenCreateResponse {
+  tokenCreate: {
+    token: string;
+    refreshToken: string;
+    errors: [
+      {
+        message: string;
+        code: string;
+      },
+    ];
+    user: {
+      id: string;
+    };
+  };
+}
+
+interface ApiResponse<T> {
+  data: T;
+}
+
+export class BasicApiService {
+  readonly request: APIRequestContext;
+
+  constructor(request: APIRequestContext) {
+    this.request = request;
+  }
+  async logInUserViaApi(user: User, authorization: string = "auth") {
     const headers = { Authorization: `Bearer ${authorization}` };
 
-    const api = await request.newContext();
     const query = `mutation TokenAuth{
         tokenCreate(email: "${user.email}", password: "${user.password}") {
           token
-          refreshToken
+          refreshToken 
           errors: errors {
             code
-            field
             message
           }
           user {
@@ -34,7 +54,8 @@ export class GraphQLService {
     const data: Data = {
       query: query,
     };
-    const loginResponse = await api.post(URL, { data, headers });
-    return loginResponse;
+    const loginResponse = await this.request.post(URL, { data, headers });
+    const loginResponseJson = await loginResponse.json();
+    return loginResponseJson as ApiResponse<TokenCreateResponse>;
   }
 }
