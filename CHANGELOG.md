@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.15.7
+
+### Patch Changes
+
+- 78d4279dc: update old versions and new home page e2e test - cypress
+
 ## 3.15.5
 
 ### Patch Changes
