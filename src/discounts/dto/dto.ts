@@ -60,7 +60,7 @@ export class ConditionDTO {
 
     if (condition.categoryPredicate) {
       return {
-        type: "categorie",
+        type: "category",
         condition: "is",
         values: condition.categoryPredicate.ids.map(id => ({
           label: id,

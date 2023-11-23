@@ -22,7 +22,7 @@ export const useOptionsFetch = () => {
   const typeToFetchMap: Record<ConditionType, FetchOptions> = {
     product: productSearch,
     collection: collectionSearch,
-    categorie: categorySearch,
+    category: categorySearch,
     variant: variantSearch,
   };
 

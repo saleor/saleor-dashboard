@@ -14,7 +14,7 @@ export const initialDiscountConditionType: Array<{
   },
   {
     label: "Categories",
-    value: "categorie",
+    value: "category",
   },
   {
     label: "Variants",

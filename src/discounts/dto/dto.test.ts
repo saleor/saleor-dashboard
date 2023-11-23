@@ -24,7 +24,7 @@ describe("RuleDTO", () => {
           ],
         },
         {
-          type: "categorie",
+          type: "category",
           condition: "is",
           values: [
             { value: "cat_1", label: "Category 1" },
@@ -59,7 +59,7 @@ describe("RuleDTO", () => {
             },
           },
           {
-            categoriePredicate: {
+            categoryPredicate: {
               ids: ["cat_1", "cat_2"],
             },
           },
@@ -133,7 +133,7 @@ describe("RuleDTO", () => {
         },
         {
           condition: "is",
-          type: "categorie",
+          type: "category",
           values: [
             { value: "cat_1", label: "cat_1" },
             { value: "cat_2", label: "cat_2" },

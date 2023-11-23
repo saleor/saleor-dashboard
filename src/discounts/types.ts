@@ -52,7 +52,7 @@ export interface Condition {
   values: Option[];
 }
 
-export type ConditionType = "product" | "categorie" | "collection" | "variant";
+export type ConditionType = "product" | "category" | "collection" | "variant";
 
 // Mimic API catalogue predicate structure because api scheme type return any
 export interface CataloguePredicateAPI {
