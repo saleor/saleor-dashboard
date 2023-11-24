@@ -15,12 +15,10 @@ import { messages } from "./messages";
 interface DiscountRulesProps {
   channels: ChannelFragment[];
   fetchOptions: (type: ConditionType) => FetchOptions;
-  onRuleSubmit?: (index: number) => void;
 }
 
 export const DiscountRules = ({
   channels,
-  onRuleSubmit,
   fetchOptions,
 }: DiscountRulesProps) => {
   const intl = useIntl();
@@ -47,7 +45,6 @@ export const DiscountRules = ({
           fetchOptions={fetchOptions}
           rules={rules}
           channels={channels}
-          onRuleSubmit={onRuleSubmit}
         />
       </DashboardCard.Content>
     </DashboardCard>

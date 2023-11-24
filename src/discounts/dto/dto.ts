@@ -12,7 +12,7 @@ export class RuleDTO {
   static toAPI(rule: Rule): PromotionRuleInput {
     return {
       name: rule.name,
-      description: JSON.parse(rule.description),
+      description: rule.description ? JSON.parse(rule.description) : null,
       channels: rule.channels.map(channel => channel.value),
       rewardValue: rule.rewardValue,
       rewardValueType: rule.rewardValueType,
@@ -27,6 +27,7 @@ export class RuleDTO {
     conditionLabels: Record<string, string>,
   ): Rule {
     return {
+      id: rule.id,
       channels: rule.channels.map<Option>(chan => ({
         label: chan.name,
         value: chan.id,

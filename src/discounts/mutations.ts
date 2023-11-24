@@ -252,3 +252,26 @@ export const promotionUpdate = gql`
     }
   }
 `;
+
+export const promotionRuleUpdate = gql`
+  mutation PromotionRuleUpdate($id: ID!, $input: PromotionRuleUpdateInput!) {
+    promotionRuleUpdate(id: $id, input: $input) {
+      errors {
+        ...PromotionRuleUpdateError
+      }
+    }
+  }
+`;
+
+export const promotinRuleCreate = gql`
+  mutation PromotionRuleCreate($input: PromotionRuleCreateInput!) {
+    promotionRuleCreate(input: $input) {
+      errors {
+        ...PromotionRuleCreateError
+      }
+      promotionRule {
+        id
+      }
+    }
+  }
+`;

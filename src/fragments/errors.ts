@@ -76,6 +76,23 @@ export const promotionUpdateErrorFragment = gql`
   }
 `;
 
+export const promotionRuleUpdateErrorFragment = gql`
+  fragment PromotionRuleUpdateError on PromotionRuleUpdateError {
+    field
+    message
+    code
+    channels
+  }
+`;
+
+export const promotionRuleCreateErrorFragment = gql`
+  fragment PromotionRuleCreateError on PromotionRuleCreateError {
+    field
+    message
+    code
+  }
+`;
+
 export const menuErrorFragment = gql`
   fragment MenuError on MenuError {
     code

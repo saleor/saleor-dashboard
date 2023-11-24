@@ -3,11 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { RuleDTO } from "@dashboard/discounts/dto/dto";
-import {
-  ConditionType,
-  DiscoutFormData,
-  Rule,
-} from "@dashboard/discounts/types";
+import { ConditionType, DiscoutFormData } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
 import { FetchOptions } from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { ChannelFragment, PromotionDetailsFragment } from "@dashboard/graphql";
@@ -21,13 +17,13 @@ import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
+import { filterRules } from "./utils";
 
 export interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
   disabled: boolean;
   onBack: () => void;
   onSubmit: (data: DiscoutFormData) => void;
-  onRuleSubmit: (ruleData: Rule) => void;
   fetchOptions: (type: ConditionType) => FetchOptions;
   submitButtonState: ConfirmButtonTransitionState;
   data: PromotionDetailsFragment;
@@ -42,7 +38,6 @@ export const DiscountDetailsPage = ({
   conditionLabels,
   submitButtonState,
   onSubmit,
-  onRuleSubmit,
   fetchOptions,
 }: DiscountDetailsPageProps) => {
   const methods = useForm<DiscoutFormData>({
@@ -67,11 +62,15 @@ export const DiscountDetailsPage = ({
     triggerChange: methods.trigger,
   });
 
-  const handleSubmit: SubmitHandler<DiscoutFormData> = data => onSubmit(data);
+  const handleSubmit: SubmitHandler<DiscoutFormData> = formData => {
+    const dirtyRulesIndexes = Object.keys(
+      methods.formState.dirtyFields?.rules ?? {},
+    );
 
-  const handleRuleSubmit = (index: number) => {
-    const formData = methods.getValues();
-    onRuleSubmit(formData.rules[index]);
+    onSubmit({
+      ...formData,
+      rules: filterRules(data?.rules, formData.rules, dirtyRulesIndexes),
+    });
   };
 
   return (
@@ -84,11 +83,7 @@ export const DiscountDetailsPage = ({
               <DiscountName />
               <DiscountDescription />
               <DiscountDatesWithController />
-              <DiscountRules
-                fetchOptions={fetchOptions}
-                channels={channels}
-                onRuleSubmit={handleRuleSubmit}
-              />
+              <DiscountRules fetchOptions={fetchOptions} channels={channels} />
             </form>
           </FormProvider>
         </DetailPageLayout.Content>
@@ -96,7 +91,7 @@ export const DiscountDetailsPage = ({
         <Savebar
           disabled={disabled}
           onCancel={onBack}
-          onSubmit={methods.handleSubmit(onSubmit)}
+          onSubmit={methods.handleSubmit(handleSubmit)}
           state={submitButtonState}
         />
       </DetailPageLayout>

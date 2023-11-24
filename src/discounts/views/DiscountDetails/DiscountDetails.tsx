@@ -5,6 +5,8 @@ import { DiscountUrlQueryParams, saleListUrl } from "@dashboard/discounts/urls";
 import {
   useConditionsDetailsQuery,
   usePromotionDetailsQuery,
+  usePromotionRuleCreateMutation,
+  usePromotionRuleUpdateMutation,
   usePromotionUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -28,7 +30,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const { data, loading } = usePromotionDetailsQuery({
+  const { data: promotionData, loading } = usePromotionDetailsQuery({
     variables: {
       id,
     },
@@ -36,7 +38,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
 
   const { data: conditionData } = useConditionsDetailsQuery({
     variables: {
-      ...getAllConditionsIds(data),
+      ...getAllConditionsIds(promotionData),
     },
   });
 
@@ -47,23 +49,54 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate(saleListUrl());
       }
     },
   });
 
+  const [promotionRuleUpdate, promotionRuleUpdateOpts] =
+    usePromotionRuleUpdateMutation({
+      onCompleted: data => {
+        if (data.promotionRuleUpdate.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
+
+  const [promotionRuleCreate, promotionRuleCreateOpts] =
+    usePromotionRuleCreateMutation({
+      onCompleted: data => {
+        if (data.promotionRuleCreate.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
+
   const fetchOptions = useOptionsFetch();
 
-  const onSubmit = createUpdateHandler(id, variables =>
-    promotionUpdate({ variables }),
+  const onSubmit = createUpdateHandler(
+    promotionData?.promotion,
+    variables => promotionUpdate({ variables }),
+    variables => promotionRuleUpdate({ variables }),
+    variables => promotionRuleCreate({ variables }),
   );
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
       <DiscountDetailsPage
-        data={data?.promotion}
-        disabled={loading || promotionUpdateOpts.loading}
+        data={promotionData?.promotion}
+        disabled={
+          loading ||
+          promotionUpdateOpts.loading ||
+          promotionRuleCreateOpts.loading ||
+          promotionRuleUpdateOpts.loading
+        }
         conditionLabels={getConditonLabels(conditionData)}
         onBack={() => {
           navigate(saleListUrl());
@@ -72,7 +105,6 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         channels={availableChannels}
         onSubmit={onSubmit}
         submitButtonState={promotionUpdateOpts.status}
-        onRuleSubmit={() => {}} // To be implemented
       />
     </>
   );

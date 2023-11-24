@@ -38,6 +38,7 @@ export interface DiscoutFormData {
 }
 
 export interface Rule {
+  id?: string;
   name: string;
   description: string;
   channels: Option[];

@@ -232,6 +232,7 @@ export const voucherDetailsFragment = gql`
 
 export const promotionRuleDetailsFragment = gql`
   fragment PromotionRuleDetails on PromotionRule {
+    id
     name
     description
     channels {

@@ -632,6 +632,7 @@ export const ChannelDetailsFragmentDoc = gql`
 ${WarehouseFragmentDoc}`;
 export const PromotionRuleDetailsFragmentDoc = gql`
     fragment PromotionRuleDetails on PromotionRule {
+  id
   name
   description
   channels {
@@ -716,6 +717,21 @@ export const PromotionCreateErrorFragmentDoc = gql`
     `;
 export const PromotionUpdateErrorFragmentDoc = gql`
     fragment PromotionUpdateError on PromotionUpdateError {
+  field
+  message
+  code
+}
+    `;
+export const PromotionRuleUpdateErrorFragmentDoc = gql`
+    fragment PromotionRuleUpdateError on PromotionRuleUpdateError {
+  field
+  message
+  code
+  channels
+}
+    `;
+export const PromotionRuleCreateErrorFragmentDoc = gql`
+    fragment PromotionRuleCreateError on PromotionRuleCreateError {
   field
   message
   code
@@ -7842,6 +7858,80 @@ export function usePromotionUpdateMutation(baseOptions?: ApolloReactHooks.Mutati
 export type PromotionUpdateMutationHookResult = ReturnType<typeof usePromotionUpdateMutation>;
 export type PromotionUpdateMutationResult = Apollo.MutationResult<Types.PromotionUpdateMutation>;
 export type PromotionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>;
+export const PromotionRuleUpdateDocument = gql`
+    mutation PromotionRuleUpdate($id: ID!, $input: PromotionRuleUpdateInput!) {
+  promotionRuleUpdate(id: $id, input: $input) {
+    errors {
+      ...PromotionRuleUpdateError
+    }
+  }
+}
+    ${PromotionRuleUpdateErrorFragmentDoc}`;
+export type PromotionRuleUpdateMutationFn = Apollo.MutationFunction<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>;
+
+/**
+ * __usePromotionRuleUpdateMutation__
+ *
+ * To run a mutation, you first call `usePromotionRuleUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePromotionRuleUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [promotionRuleUpdateMutation, { data, loading, error }] = usePromotionRuleUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePromotionRuleUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>(PromotionRuleUpdateDocument, options);
+      }
+export type PromotionRuleUpdateMutationHookResult = ReturnType<typeof usePromotionRuleUpdateMutation>;
+export type PromotionRuleUpdateMutationResult = Apollo.MutationResult<Types.PromotionRuleUpdateMutation>;
+export type PromotionRuleUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>;
+export const PromotionRuleCreateDocument = gql`
+    mutation PromotionRuleCreate($input: PromotionRuleCreateInput!) {
+  promotionRuleCreate(input: $input) {
+    errors {
+      ...PromotionRuleCreateError
+    }
+    promotionRule {
+      id
+    }
+  }
+}
+    ${PromotionRuleCreateErrorFragmentDoc}`;
+export type PromotionRuleCreateMutationFn = Apollo.MutationFunction<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>;
+
+/**
+ * __usePromotionRuleCreateMutation__
+ *
+ * To run a mutation, you first call `usePromotionRuleCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePromotionRuleCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [promotionRuleCreateMutation, { data, loading, error }] = usePromotionRuleCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePromotionRuleCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>(PromotionRuleCreateDocument, options);
+      }
+export type PromotionRuleCreateMutationHookResult = ReturnType<typeof usePromotionRuleCreateMutation>;
+export type PromotionRuleCreateMutationResult = Apollo.MutationResult<Types.PromotionRuleCreateMutation>;
+export type PromotionRuleCreateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>;
 export const SaleListDocument = gql`
     query SaleList($after: String, $before: String, $first: Int, $last: Int, $filter: SaleFilterInput, $sort: SaleSortingInput, $channel: String) {
   sales(
