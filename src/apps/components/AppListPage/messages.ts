@@ -23,8 +23,8 @@ export const messages = defineMessages({
     description: "section header",
   },
   comingSoonApps: {
-    id: "VTq2gn",
-    defaultMessage: "Coming Soon",
+    id: "hJDnLg",
+    defaultMessage: "Upcoming Apps",
     description: "section header",
   },
   nothingInstalledPlaceholder: {

@@ -4786,10 +4786,6 @@
     "context": "section header",
     "string": "Staff Member Information"
   },
-  "VTq2gn": {
-    "context": "section header",
-    "string": "Coming Soon"
-  },
   "VYK2nN": {
     "string": "Product details"
   },
@@ -6327,6 +6323,10 @@
     "context": "empty list message",
     "string": "You haven’t assigned any member to this permission group yet."
   },
+  "gXvoFf": {
+    "context": "information",
+    "string": "{releaseDate}"
+  },
   "gZHmaV": {
     "context": "plugin filters error messages channels",
     "string": "No channels selected"
@@ -6428,6 +6428,10 @@
   "hHOI7D": {
     "context": "product type name",
     "string": "Type Name"
+  },
+  "hJDnLg": {
+    "context": "section header",
+    "string": "Upcoming Apps"
   },
   "hJZwTS": {
     "string": "Email address"
@@ -7423,10 +7427,6 @@
   "oB0y5Y": {
     "context": "order status",
     "string": "Unfulfilled"
-  },
-  "oGIPb7": {
-    "context": "information",
-    "string": "Coming soon ({releaseDate})"
   },
   "oHbgcK": {
     "context": "PageTypeDeleteWarningDialog title",

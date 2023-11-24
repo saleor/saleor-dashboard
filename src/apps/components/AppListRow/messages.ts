@@ -12,8 +12,8 @@ export const messages = defineMessages({
     description: "button",
   },
   releaseComingSoon: {
-    id: "oGIPb7",
-    defaultMessage: "Coming soon ({releaseDate})",
+    id: "gXvoFf",
+    defaultMessage: "{releaseDate}",
     description: "information",
   },
   installationCloudOnly: {
