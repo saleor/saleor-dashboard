@@ -13,18 +13,6 @@ const props: DiscountDetailsPageProps = {
   onBack: () => undefined,
   onSubmit: () => undefined,
   conditionLabels: {},
-  fetchOptions: () => {
-    return {
-      fetch: () => undefined,
-      loading: false,
-      options: [],
-      fetchMoreProps: {
-        hasMore: false,
-        loading: false,
-        onFetchMore: () => undefined,
-      },
-    };
-  },
   submitButtonState: "default",
   data: discount,
 };

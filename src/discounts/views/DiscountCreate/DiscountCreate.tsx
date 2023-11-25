@@ -10,7 +10,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { createHandler } from "./handlers";
-import { useOptionsFetch } from "./hooks/useOptionsFetch";
 
 export const DiscountCreate = () => {
   const { availableChannels } = useAppChannel(false);
@@ -39,8 +38,6 @@ export const DiscountCreate = () => {
     promotionCreate({ variables }),
   );
 
-  const fetchOptionsByType = useOptionsFetch();
-
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
@@ -49,7 +46,6 @@ export const DiscountCreate = () => {
         onBack={() => {
           navigate(saleListUrl());
         }}
-        fetchOptions={fetchOptionsByType}
         channels={availableChannels}
         onSubmit={handlePromotionCreate}
       />

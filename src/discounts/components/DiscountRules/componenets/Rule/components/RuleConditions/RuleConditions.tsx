@@ -1,24 +1,23 @@
 import { intialConditionValues } from "@dashboard/discounts/components/DiscountCreatePage/initialFormValues";
 import { ConditionType, DiscoutFormData } from "@dashboard/discounts/types";
-import { FetchOptions } from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
-import { RuleConditionRow } from "../RuleConditionRow";
-import { initialDiscountConditionType } from "../RuleConditionRow/const";
+import { FetchOptions, RuleConditionRow } from "../RuleConditionRow";
+import { initialDiscountConditionType } from "../RuleConditionRow/initialDiscountConditionType";
+import { useCategorieSearch } from "./hooks/useCategorieSearch";
+import { useCollectionSearch } from "./hooks/useCollectionSearch";
+import { useProductSearch } from "./hooks/useProductSearch";
+import { useVariantSearch } from "./hooks/useVariantSearch";
 
 interface RuleConditionsProps {
   index: number;
-  fetchOptions: (type: ConditionType) => FetchOptions;
 }
 
-export const RuleConditions = ({
-  index,
-  fetchOptions,
-}: RuleConditionsProps) => {
+export const RuleConditions = ({ index }: RuleConditionsProps) => {
   const intl = useIntl();
   const conditionFieldName = `rules.${index}.conditions` as const;
   const {
@@ -28,6 +27,18 @@ export const RuleConditions = ({
   } = useFieldArray<DiscoutFormData, typeof conditionFieldName>({
     name: conditionFieldName,
   });
+
+  const productSearch = useProductSearch();
+  const collectionSearch = useCollectionSearch();
+  const categorySearch = useCategorieSearch();
+  const variantSearch = useVariantSearch();
+
+  const typeToFetchMap: Record<ConditionType, FetchOptions> = {
+    product: productSearch,
+    collection: collectionSearch,
+    category: categorySearch,
+    variant: variantSearch,
+  };
 
   const allConditionsSelected =
     conditions.length === initialDiscountConditionType.length;
@@ -42,7 +53,7 @@ export const RuleConditions = ({
       <Box display="flex" flexDirection="column" gap={4}>
         {conditions.map((condition, conditionIndex) => (
           <RuleConditionRow
-            fetchOptions={fetchOptions}
+            fetchOptions={typeToFetchMap[condition.type]}
             isConditionTypeSelected={isConditionTypeSelected}
             key={condition.id}
             ruleIndex={index}

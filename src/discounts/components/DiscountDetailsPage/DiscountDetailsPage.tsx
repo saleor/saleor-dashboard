@@ -3,9 +3,8 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { RuleDTO } from "@dashboard/discounts/dto/dto";
-import { ConditionType, DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
-import { FetchOptions } from "@dashboard/discounts/views/DiscountCreate/hooks/useOptionsFetch";
 import { ChannelFragment, PromotionDetailsFragment } from "@dashboard/graphql";
 import { splitDateTime } from "@dashboard/misc";
 import { RichTextContext } from "@dashboard/utils/richText/context";
@@ -24,7 +23,6 @@ export interface DiscountDetailsPageProps {
   disabled: boolean;
   onBack: () => void;
   onSubmit: (data: DiscoutFormData) => void;
-  fetchOptions: (type: ConditionType) => FetchOptions;
   submitButtonState: ConfirmButtonTransitionState;
   data: PromotionDetailsFragment | undefined;
   conditionLabels: Record<string, string>;
@@ -38,7 +36,6 @@ export const DiscountDetailsPage = ({
   conditionLabels,
   submitButtonState,
   onSubmit,
-  fetchOptions,
 }: DiscountDetailsPageProps) => {
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
@@ -84,7 +81,7 @@ export const DiscountDetailsPage = ({
               <DiscountName />
               <DiscountDescription />
               <DiscountDatesWithController />
-              <DiscountRules fetchOptions={fetchOptions} channels={channels} />
+              <DiscountRules channels={channels} />
             </form>
           </FormProvider>
         </DetailPageLayout.Content>

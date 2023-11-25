@@ -15,7 +15,6 @@ import { commonMessages } from "@dashboard/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { useOptionsFetch } from "../DiscountCreate/hooks/useOptionsFetch";
 import { createUpdateHandler } from "./handlers";
 import { getAllConditionsIds, getConditonLabels } from "./utils";
 
@@ -77,8 +76,6 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
       },
     });
 
-  const fetchOptions = useOptionsFetch();
-
   const onSubmit = createUpdateHandler(
     promotionData?.promotion,
     variables => promotionUpdate({ variables }),
@@ -101,7 +98,6 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         onBack={() => {
           navigate(saleListUrl());
         }}
-        fetchOptions={fetchOptions}
         channels={availableChannels}
         onSubmit={onSubmit}
         submitButtonState={promotionUpdateOpts.status}

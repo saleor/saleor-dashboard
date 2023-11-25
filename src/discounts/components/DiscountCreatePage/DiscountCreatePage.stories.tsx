@@ -9,18 +9,6 @@ import {
 const props: DiscountCreatePageProps = {
   channels: channelsList,
   disabled: false,
-  fetchOptions: () => {
-    return {
-      fetch: () => undefined,
-      loading: false,
-      options: [],
-      fetchMoreProps: {
-        hasMore: false,
-        loading: false,
-        onFetchMore: () => undefined,
-      },
-    };
-  },
   onBack: () => undefined,
   onSubmit: () => undefined,
 };
