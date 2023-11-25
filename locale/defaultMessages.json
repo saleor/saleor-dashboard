@@ -1134,6 +1134,9 @@
     "context": "references attribute type",
     "string": "References"
   },
+  "5dOOAB": {
+    "string": "Successfully created discount"
+  },
   "5elC9k": {
     "context": "taxes section name",
     "string": "Taxes"
