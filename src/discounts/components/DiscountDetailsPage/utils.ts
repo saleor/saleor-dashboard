@@ -6,6 +6,10 @@ export const filterRules = (
   formRules: Rule[],
   dirtyRulesIndexes: string[],
 ): Rule[] => {
+  if (!promotionRules) {
+    return [];
+  }
+
   return formRules.filter((rule, index) => {
     // Selected only dirty rules to update
     if (promotionRules.find(r => r.id === rule.id)) {

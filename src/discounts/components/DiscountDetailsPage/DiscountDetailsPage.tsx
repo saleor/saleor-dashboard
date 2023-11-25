@@ -26,7 +26,7 @@ export interface DiscountDetailsPageProps {
   onSubmit: (data: DiscoutFormData) => void;
   fetchOptions: (type: ConditionType) => FetchOptions;
   submitButtonState: ConfirmButtonTransitionState;
-  data: PromotionDetailsFragment;
+  data: PromotionDetailsFragment | undefined;
   conditionLabels: Record<string, string>;
 }
 
@@ -52,7 +52,8 @@ export const DiscountDetailsPage = ({
       },
       name: data?.name ?? "",
       description: JSON.stringify(data?.description),
-      rules: data?.rules.map(rule => RuleDTO.fromAPI(rule, conditionLabels)),
+      rules:
+        data?.rules?.map(rule => RuleDTO.fromAPI(rule, conditionLabels)) ?? [],
     },
   });
 

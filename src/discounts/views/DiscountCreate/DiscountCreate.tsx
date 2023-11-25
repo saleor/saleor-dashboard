@@ -20,7 +20,7 @@ export const DiscountCreate = () => {
 
   const [promotionCreate, promotionCreateOpts] = usePromotionCreateMutation({
     onCompleted(data) {
-      if (data.promotionCreate.errors.length === 0) {
+      if (data?.promotionCreate?.errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -28,7 +28,9 @@ export const DiscountCreate = () => {
             defaultMessage: "Successfully created discount",
           }),
         });
-        navigate(saleUrl(data.promotionCreate.promotion.id), { replace: true });
+        navigate(saleUrl(data?.promotionCreate?.promotion?.id ?? ""), {
+          replace: true,
+        });
       }
     },
   });

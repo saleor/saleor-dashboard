@@ -682,6 +682,7 @@ export const discount: PromotionDetailsFragment = {
   rules: [
     {
       __typename: "PromotionRule",
+      id: "1",
       channels: [
         {
           __typename: "Channel",

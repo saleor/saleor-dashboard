@@ -165,7 +165,7 @@ describe("DiscountDetailsPage, utils", () => {
           rewardValueType: RewardValueTypeEnum.PERCENTAGE,
         },
       ];
-      const dirtyRulesIndexes = [];
+      const dirtyRulesIndexes: string[] = [];
 
       // Act
       const result = filterRules(promotionRules, formRules, dirtyRulesIndexes);

@@ -16,7 +16,7 @@ import { DiscoutFormData, Rule } from "../../types";
 import { getRulesToCreateData, getRulesToUpdateData } from "./utils";
 
 export const createUpdateHandler = (
-  promotion: PromotionDetailsFragment | undefined,
+  promotion: PromotionDetailsFragment | undefined | null,
   update: (
     varaibles: PromotionUpdateMutationVariables,
   ) => Promise<FetchResult<PromotionUpdateMutation>>,
@@ -84,13 +84,13 @@ export const createRuleUpdateHandler = (
       return;
     }
 
-    const ruleData = promotionData.rules.find(rule => rule.id === data.id);
-    const ruleChannels = ruleData?.channels.map(channel => channel.id);
+    const ruleData = promotionData?.rules.find(rule => rule.id === data.id);
+    const ruleChannels = ruleData?.channels.map(channel => channel.id) ?? [];
 
     const { channels, ...input } = RuleDTO.toAPI(data);
 
     const response = await updateRule({
-      id: data.id,
+      id: data.id!,
       input: {
         ...input,
         addChannels: difference(channels, ruleChannels),

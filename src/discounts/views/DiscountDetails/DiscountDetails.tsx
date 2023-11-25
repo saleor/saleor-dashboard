@@ -44,7 +44,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
 
   const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation({
     onCompleted: data => {
-      if (data.promotionUpdate.errors.length === 0) {
+      if (data?.promotionUpdate?.errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -56,7 +56,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const [promotionRuleUpdate, promotionRuleUpdateOpts] =
     usePromotionRuleUpdateMutation({
       onCompleted: data => {
-        if (data.promotionRuleUpdate.errors.length === 0) {
+        if (data?.promotionRuleUpdate?.errors?.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
@@ -68,7 +68,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const [promotionRuleCreate, promotionRuleCreateOpts] =
     usePromotionRuleCreateMutation({
       onCompleted: data => {
-        if (data.promotionRuleCreate.errors.length === 0) {
+        if (data?.promotionRuleCreate?.errors?.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),

@@ -3,6 +3,7 @@ import {
   CataloguePredicateInput,
   PromotionRuleDetailsFragment,
   PromotionRuleInput,
+  RewardValueTypeEnum,
 } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
@@ -32,10 +33,10 @@ export class RuleDTO {
         label: chan.name,
         value: chan.id,
       })),
-      name: rule.name,
-      description: JSON.stringify(rule.description),
+      name: rule.name ?? "",
+      description: rule.description ? JSON.stringify(rule.description) : "",
       rewardValue: rule.rewardValue,
-      rewardValueType: rule.rewardValueType,
+      rewardValueType: rule.rewardValueType ?? RewardValueTypeEnum.FIXED,
       conditions: (rule.cataloguePredicate.OR || []).map(predicate =>
         ConditionDTO.fromAPI(predicate, conditionLabels),
       ),
@@ -98,5 +99,7 @@ export class ConditionDTO {
         })),
       };
     }
+
+    return undefined;
   }
 }

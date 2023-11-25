@@ -116,7 +116,7 @@ describe("RuleDTO", () => {
       },
     } as PromotionRuleDetailsFragment;
 
-    expect(RuleDTO.fromAPI(rule)).toEqual({
+    expect(RuleDTO.fromAPI(rule, {})).toEqual({
       channels: [{ value: "channel_1", label: "Channel 1" }],
       name: "name",
       description: '{"text":"description"}',

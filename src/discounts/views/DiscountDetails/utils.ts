@@ -18,22 +18,38 @@ export const getAllConditionsIds = (
   collectionsIds: string[];
   variantsIds: string[];
 } => {
-  return (data?.promotion?.rules ?? []).reduce(
+  if (!data?.promotion?.rules) {
+    return {
+      productsIds: [],
+      categoriesIds: [],
+      collectionsIds: [],
+      variantsIds: [],
+    };
+  }
+
+  return data.promotion.rules.reduce<{
+    productsIds: string[];
+    categoriesIds: string[];
+    collectionsIds: string[];
+    variantsIds: string[];
+  }>(
     (acc, rule) => {
-      rule.cataloguePredicate.OR.forEach(predicate => {
-        if (predicate.productPredicate) {
-          acc.productsIds.push(...predicate.productPredicate.ids);
-        }
-        if (predicate.categoryPredicate) {
-          acc.categoriesIds.push(...predicate.categoryPredicate.ids);
-        }
-        if (predicate.collectionPredicate) {
-          acc.collectionsIds.push(...predicate.collectionPredicate.ids);
-        }
-        if (predicate.variantPredicate) {
-          acc.variantsIds.push(...predicate.variantPredicate.ids);
-        }
-      });
+      rule.cataloguePredicate.OR.forEach(
+        (predicate: Record<string, { ids: string[] }>) => {
+          if (predicate.productPredicate) {
+            acc.productsIds.push(...predicate.productPredicate.ids);
+          }
+          if (predicate.categoryPredicate) {
+            acc.categoriesIds.push(...predicate.categoryPredicate.ids);
+          }
+          if (predicate.collectionPredicate) {
+            acc.collectionsIds.push(...predicate.collectionPredicate.ids);
+          }
+          if (predicate.variantPredicate) {
+            acc.variantsIds.push(...predicate.variantPredicate.ids);
+          }
+        },
+      );
       return acc;
     },
     {
@@ -53,9 +69,8 @@ export const getConditonLabels = (
   }
 
   return Object.values(data).reduce((acc, value) => {
-    const items = mapEdgesToItems(
-      value as ConditionsDetailsQuery["categories"],
-    );
+    const items =
+      mapEdgesToItems(value as ConditionsDetailsQuery["categories"]) ?? [];
     items.forEach(item => {
       acc[item.id] = item.name;
     });
@@ -71,13 +86,14 @@ export const getRulesToUpdateData = (
   return dataRules.reduce<
     Array<{ id: string; input: PromotionRuleUpdateInput }>
   >((acc, rule) => {
-    const savedRule = promotionRules.find(
+    const savedRule = promotionRules?.find(
       promotionRule => promotionRule.id === rule.id,
     );
 
     if (savedRule) {
       const { channels, ...ruleInput } = RuleDTO.toAPI(rule);
-      const savedRuleChannels = savedRule.channels.map(channel => channel.id);
+      const savedRuleChannels =
+        savedRule?.channels.map(channel => channel.id) ?? [];
 
       acc.push({
         id: rule.id,
