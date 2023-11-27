@@ -2,7 +2,7 @@ import { intialConditionValues } from "@dashboard/discounts/components/DiscountC
 import { ConditionType, DiscoutFormData } from "@dashboard/discounts/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
@@ -19,14 +19,18 @@ interface RuleConditionsProps {
 
 export const RuleConditions = ({ index }: RuleConditionsProps) => {
   const intl = useIntl();
+
+  const { watch } = useFormContext<DiscoutFormData>();
+
   const conditionFieldName = `rules.${index}.conditions` as const;
-  const {
-    append,
-    remove,
-    fields: conditions,
-  } = useFieldArray<DiscoutFormData, typeof conditionFieldName>({
+  const { append, remove } = useFieldArray<
+    DiscoutFormData,
+    typeof conditionFieldName
+  >({
     name: conditionFieldName,
   });
+
+  const conditionsList = watch(conditionFieldName);
 
   const productSearch = useProductSearch();
   const collectionSearch = useCollectionSearch();
@@ -41,21 +45,21 @@ export const RuleConditions = ({ index }: RuleConditionsProps) => {
   };
 
   const allConditionsSelected =
-    conditions.length === initialDiscountConditionType.length;
+    conditionsList.length === initialDiscountConditionType.length;
 
   const isConditionTypeSelected = (conditionType: string) =>
-    conditions.some(condition => condition.type === conditionType);
+    conditionsList.some(condition => condition.type === conditionType);
 
   return (
     <Box display="flex" flexDirection="column" gap={4}>
       <Text>{intl.formatMessage(messages.conditions)}</Text>
 
       <Box display="flex" flexDirection="column" gap={4}>
-        {conditions.map((condition, conditionIndex) => (
+        {conditionsList.map((condition, conditionIndex) => (
           <RuleConditionRow
             fetchOptions={typeToFetchMap[condition.type]}
             isConditionTypeSelected={isConditionTypeSelected}
-            key={condition.id}
+            key={condition.type}
             ruleIndex={index}
             conditionIndex={conditionIndex}
             onRemove={() => {

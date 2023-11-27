@@ -46,7 +46,7 @@ export const RuleConditionRow = ({
     name: ruleConditionValuesFieldName,
   });
 
-  const { fetch = () => {}, fetchMoreProps, options } = fetchOptions;
+  const { fetch = () => {}, fetchMoreProps, options } = fetchOptions || {};
 
   const discountConditionType = initialDiscountConditionType.filter(
     condition => !isConditionTypeSelected(condition.value),
