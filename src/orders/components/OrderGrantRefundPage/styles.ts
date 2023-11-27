@@ -22,6 +22,10 @@ export const useProductsCardStyles = makeStyles(
         textAlign: "right",
         width: `${75 + 32 + 32}px`,
       },
+      colUnitPrice: {
+        textAlign: "right",
+        width: `${100 + 32 + 32}px`,
+      },
     };
   },
   { name: "ProductsCard" },
