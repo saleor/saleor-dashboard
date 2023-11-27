@@ -1,10 +1,10 @@
 import { Multiselect } from "@dashboard/components/Combobox";
 import { DiscoutFormData } from "@dashboard/discounts/types";
-import { ChannelFragment } from "@dashboard/graphql";
+import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { Box, Input, Option } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 
 import { getCurencySymbol } from "../../utils";
@@ -21,7 +21,7 @@ interface RuleProps {
 }
 
 export const Rule = ({ channels, index, disabled = false }: RuleProps) => {
-  const { watch, getValues } = useFormContext<DiscoutFormData>();
+  const { watch, getValues, setValue } = useFormContext<DiscoutFormData>();
 
   const ruleNameField = `rules.${index}.name` as const;
   const { trigger } = useFormContext<DiscoutFormData>();
@@ -57,6 +57,15 @@ export const Rule = ({ channels, index, disabled = false }: RuleProps) => {
       })),
     [channels],
   );
+
+  useEffect(() => {
+    if (!currencySymbol) {
+      setValue(
+        `rules.${index}.rewardValueType`,
+        RewardValueTypeEnum.PERCENTAGE,
+      );
+    }
+  }, [currencySymbol]);
 
   return (
     <RichTextContext.Provider value={richText}>

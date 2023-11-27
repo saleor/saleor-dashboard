@@ -1,7 +1,7 @@
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useController } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
@@ -20,7 +20,7 @@ export const RuleReward = ({
   disabled,
 }: RuleRewardProps) => {
   const intl = useIntl();
-
+  const { watch } = useFormContext<DiscoutFormData>();
   const { field: rewardTypeField } = useController<
     DiscoutFormData,
     `rules.${number}.rewardValueType`
@@ -35,6 +35,8 @@ export const RuleReward = ({
     name: `rules.${index}.rewardValue`,
   });
 
+  const discountType = watch(`rules.${index}.rewardValueType`);
+
   return (
     <>
       <Text as="p">{intl.formatMessage(messages.reward)}</Text>
@@ -42,7 +44,7 @@ export const RuleReward = ({
         <DiscountTypeSwitch
           disabled={disabled}
           onChange={type => rewardTypeField.onChange(type)}
-          selected={rewardTypeField.value}
+          selected={discountType}
           currencySymbol={currencySymbol}
         />
         <RuleInputWrapper __flex="1">
