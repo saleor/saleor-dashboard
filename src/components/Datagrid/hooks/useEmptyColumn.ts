@@ -10,9 +10,9 @@ export const useEmptyColumn = (): AvailableColumn => {
     title: "",
     width: 20,
     themeOverride: {
-      accentColor: themeValues.colors.background.plain,
-      accentLight: themeValues.colors.background.plain,
-      bgHeaderHovered: themeValues.colors.background.plain,
+      accentColor: themeValues.colors.background.default1,
+      accentLight: themeValues.colors.background.default1,
+      bgHeaderHovered: themeValues.colors.background.default1,
     },
   };
 };

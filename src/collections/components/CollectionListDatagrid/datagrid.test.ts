@@ -12,10 +12,8 @@ import {
 const theme = {
   colors: {
     background: {
-      surfaceCriticalDepressed: "surfaceCriticalDepressed",
-      surfaceBrandDepressed: "surfaceBrandDepressed",
-      decorativeSurfaceSubdued2: "decorativeSurfaceSubdued2",
-      surfaceBrandSubdued: "surfaceBrandSubdued",
+      critical2: "critical2",
+      accent1: "accent1",
     },
   },
 } as ThemeTokensValues;
@@ -50,7 +48,7 @@ describe("getAvailablilityLabelWhenSelectedChannel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "decorativeSurfaceSubdued2",
+      color: "accent1",
       label: "Published",
     });
   });
@@ -78,7 +76,7 @@ describe("getAvailablilityLabelWhenSelectedChannel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "surfaceCriticalDepressed",
+      color: "critical2",
       label: "Unpublished",
     });
   });
@@ -124,7 +122,7 @@ describe("getAvailablilityLabel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "surfaceCriticalDepressed",
+      color: "critical2",
       label: "No channels",
     });
   });
@@ -151,7 +149,7 @@ describe("getAvailablilityLabel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "decorativeSurfaceSubdued2",
+      color: "accent1",
       label:
         "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
     });
@@ -179,7 +177,7 @@ describe("getAvailablilityLabel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "surfaceCriticalDepressed",
+      color: "critical2",
       label:
         "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
     });

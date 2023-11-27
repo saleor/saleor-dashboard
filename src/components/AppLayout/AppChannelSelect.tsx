@@ -14,7 +14,7 @@ const useStyles = makeStyles(
     },
     root: {
       "&& fieldset": {
-        borderColor: vars.colors.border.neutralPlain,
+        borderColor: vars.colors.border.default1,
       },
       width: 192,
       padding: 10,

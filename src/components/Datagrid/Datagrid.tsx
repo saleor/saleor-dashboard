@@ -228,14 +228,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
         ...(changed && areCellsDirty
           ? {
               themeOverride: {
-                bgCell: themeValues.colors.background.surfaceBrandSubdued,
+                bgCell: themeValues.colors.background.accent1,
               },
             }
           : {}),
         ...(getCellError(item, opts)
           ? {
               themeOverride: {
-                bgCell: themeValues.colors.background.surfaceCriticalDepressed,
+                bgCell: themeValues.colors.background.critical2,
               },
             }
           : {}),
@@ -249,8 +249,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
       availableColumns,
       getCellContent,
       areCellsDirty,
-      themeValues.colors.background.surfaceBrandSubdued,
-      themeValues.colors.background.surfaceCriticalDepressed,
+      themeValues.colors.background.accent1,
+      themeValues.colors.background.critical2,
       getCellError,
     ],
   );
@@ -341,15 +341,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
       }
 
       const overrideTheme: Partial<Theme> = {
-        bgCell:
-          themeValues.colors.background.interactiveNeutralSecondaryHovering,
-        bgCellMedium:
-          themeValues.colors.background.interactiveNeutralSecondaryHovering,
+        bgCell: themeValues.colors.background.default1Hovered,
+        bgCellMedium: themeValues.colors.background.default1Hovered,
       };
 
       if (readonly) {
-        overrideTheme.accentLight =
-          themeValues.colors.background.surfaceNeutralHighlight;
+        overrideTheme.accentLight = themeValues.colors.background.default1;
       }
 
       return overrideTheme;
@@ -494,10 +491,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
                 )}
               <div className={classes.editorContainer}>
                 <Box
-                  backgroundColor="plain"
+                  backgroundColor="default1"
                   borderTopWidth={1}
                   borderTopStyle="solid"
-                  borderColor="neutralPlain"
+                  borderColor="default1"
                 />
                 <DataEditor
                   {...datagridProps}

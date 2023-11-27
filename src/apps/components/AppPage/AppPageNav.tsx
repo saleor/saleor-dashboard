@@ -68,7 +68,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
               <Text variant="heading">{name}</Text>
               <Text
                 variant="caption"
-                color="textNeutralSubdued"
+                color="default2"
                 textTransform="uppercase"
               >
                 {author && (

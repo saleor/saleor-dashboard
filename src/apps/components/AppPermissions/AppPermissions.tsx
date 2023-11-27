@@ -19,7 +19,7 @@ export const AppPermissions: React.FC<AppPermissionsProps> = ({
     <Tooltip>
       <Tooltip.Trigger>
         <Box display="flex" placeItems="center">
-          <InfoIcon color="iconNeutralSubdued" size="large" />
+          <InfoIcon color="default2" size="large" />
         </Box>
       </Tooltip.Trigger>
       <Tooltip.Content side="bottom">

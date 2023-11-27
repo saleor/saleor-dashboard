@@ -24,7 +24,7 @@ export const PermissionsExceeded = ({
         width="100%"
         borderBottomStyle="solid"
         borderBottomWidth={1}
-        borderColor="neutralPlain"
+        borderColor="default1"
         height={1}
         marginTop={6}
         marginBottom={6}
@@ -42,7 +42,7 @@ export const PermissionsExceeded = ({
             marginLeft={4}
             cursor="text"
             backgroundColor={{
-              hover: "interactiveNeutralHighlightDefault",
+              hover: "default1Hovered",
             }}
           >
             <Text variant="caption" size="large">{`- ${perm.name}`}</Text>
