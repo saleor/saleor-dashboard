@@ -4,7 +4,13 @@ import { useController } from "react-hook-form";
 
 import DiscountDates from "./DiscountDates";
 
-export const DiscountDatesWithController = () => {
+interface DiscountDatesWithControllerProps {
+  disabled?: boolean;
+}
+
+export const DiscountDatesWithController = ({
+  disabled,
+}: DiscountDatesWithControllerProps) => {
   const { field } = useController<DiscoutFormData, "dates">({
     name: "dates",
   });
@@ -19,7 +25,7 @@ export const DiscountDatesWithController = () => {
   return (
     <DiscountDates
       data={field.value}
-      disabled={!!field.disabled}
+      disabled={disabled || !!field.disabled}
       errors={[]}
       onChange={handleChange}
       onBlur={field.onBlur}

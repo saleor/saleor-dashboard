@@ -73,6 +73,7 @@ const DiscountDates = ({
           marginY={4}
           defaultChecked={data.hasEndDate}
           name="hasEndDate"
+          disabled={disabled}
           onChange={onChange}
           onBlur={onBlur}
         >

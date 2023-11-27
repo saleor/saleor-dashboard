@@ -1,4 +1,5 @@
 import RichTextEditor from "@dashboard/components/RichTextEditor";
+import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
@@ -7,7 +8,19 @@ import React from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-export const RuleDescription = ({ index }: { index: number }) => {
+import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
+
+interface RuleDescriptionProps {
+  index: number;
+  disabled?: boolean;
+  error?: boolean;
+}
+
+export const RuleDescription = ({
+  index,
+  disabled = false,
+  error = false,
+}: RuleDescriptionProps) => {
   const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } =
     useRichTextContext();
@@ -21,23 +34,30 @@ export const RuleDescription = ({ index }: { index: number }) => {
 
   return (
     <Box>
-      <Text marginBottom={4} as="p">
+      <Text marginBottom={2} as="p">
         {intl.formatMessage(commonMessages.description)}
       </Text>
-      <RichTextEditor
-        defaultValue={defaultValue}
-        editorRef={editorRef}
-        onChange={data => {
-          handleChange();
-          field.onChange(JSON.stringify(data));
-        }}
-        onBlur={field.onBlur}
-        name="description"
-        label="Optional"
-        disabled={!isReadyForMount}
-        error={false}
-        helperText=""
-      />
+
+      <RuleInputWrapper>
+        {isReadyForMount ? (
+          <RichTextEditor
+            defaultValue={defaultValue}
+            editorRef={editorRef}
+            onChange={data => {
+              handleChange();
+              field.onChange(JSON.stringify(data));
+            }}
+            onBlur={field.onBlur}
+            disabled={disabled}
+            error={error}
+            helperText=""
+            label={intl.formatMessage(commonMessages.optionalField)}
+            name="rule-description"
+          />
+        ) : (
+          <RichTextEditorLoading label="" name="description" />
+        )}
+      </RuleInputWrapper>
     </Box>
   );
 };

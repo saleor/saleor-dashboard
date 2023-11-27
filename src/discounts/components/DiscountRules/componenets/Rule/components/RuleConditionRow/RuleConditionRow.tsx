@@ -15,6 +15,7 @@ export interface FetchOptions {
   options: Option[];
 }
 interface DiscountConditionRowProps {
+  disabled?: boolean;
   ruleIndex: number;
   conditionIndex: number;
   onRemove: () => void;
@@ -28,6 +29,7 @@ export const RuleConditionRow = ({
   onRemove,
   fetchOptions,
   isConditionTypeSelected,
+  disabled = false,
 }: DiscountConditionRowProps) => {
   const ruleConditionTypeFieldName =
     `rules.${ruleIndex}.conditions.${conditionIndex}.type` as const;
@@ -71,6 +73,7 @@ export const RuleConditionRow = ({
           options={discountConditionType}
           onChange={typeField.onChange}
           onBlur={typeField.onBlur}
+          disabled={disabled}
         />
       </RuleInputWrapper>
 
@@ -85,6 +88,7 @@ export const RuleConditionRow = ({
             },
           ]}
           onChange={() => {}}
+          disabled={disabled}
         />
       </RuleInputWrapper>
 
@@ -97,6 +101,7 @@ export const RuleConditionRow = ({
           options={options ?? []}
           onChange={valuesField.onChange}
           onBlur={valuesField.onBlur}
+          disabled={disabled}
         />
       </RuleInputWrapper>
 

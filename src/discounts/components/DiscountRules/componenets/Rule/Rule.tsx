@@ -17,12 +17,14 @@ import { RuleReward } from "./components/RuleReward";
 interface RuleProps {
   channels: ChannelFragment[];
   index: number;
+  disabled?: boolean;
 }
 
-export const Rule = ({ channels, index }: RuleProps) => {
-  const { watch } = useFormContext<DiscoutFormData>();
+export const Rule = ({ channels, index, disabled = false }: RuleProps) => {
+  const { watch, getValues } = useFormContext<DiscoutFormData>();
 
   const ruleNameField = `rules.${index}.name` as const;
+  const { trigger } = useFormContext<DiscoutFormData>();
   const { field: nameField } = useController<
     DiscoutFormData,
     typeof ruleNameField
@@ -42,9 +44,9 @@ export const Rule = ({ channels, index }: RuleProps) => {
   const currencySymbol = getCurencySymbol(selectedChannels, channels);
 
   const richText = useRichText({
-    initial: "",
+    initial: getValues(`rules.${index}.description`),
     loading: false,
-    triggerChange: () => {},
+    triggerChange: trigger,
   });
 
   const channelOptions = useMemo(
@@ -61,25 +63,35 @@ export const Rule = ({ channels, index }: RuleProps) => {
       <RuleAccordion title="Catalog rule">
         <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
           <RuleInputWrapper>
-            <Input {...nameField} size="small" label="Name" />
+            <Input
+              {...nameField}
+              disabled={disabled || nameField.disabled}
+              size="small"
+              label="Name"
+            />
           </RuleInputWrapper>
 
-          <RuleDescription index={index} />
+          <RuleDescription disabled={disabled} index={index} />
 
           <RuleInputWrapper>
             <Multiselect
+              {...channelsfield}
               size="small"
               label="Channels"
               options={channelOptions}
               fetchOptions={() => {}}
-              {...channelsfield}
+              disabled={disabled || channelsfield.disabled}
             />
           </RuleInputWrapper>
 
           {selectedChannels.length > 0 ? (
             <>
-              <RuleConditions index={index} />
-              <RuleReward index={index} currencySymbol={currencySymbol} />
+              <RuleConditions disabled={disabled} index={index} />
+              <RuleReward
+                disabled={disabled}
+                index={index}
+                currencySymbol={currencySymbol}
+              />
             </>
           ) : null}
         </Box>

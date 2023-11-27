@@ -78,10 +78,10 @@ export const DiscountDetailsPage = ({
         <DetailPageLayout.Content>
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(handleSubmit)}>
-              <DiscountName />
-              <DiscountDescription />
-              <DiscountDatesWithController />
-              <DiscountRules channels={channels} />
+              <DiscountName disabled={disabled} />
+              <DiscountDescription disabled={disabled} />
+              <DiscountDatesWithController disabled={disabled} />
+              <DiscountRules channels={channels} disabled={disabled} />
             </form>
           </FormProvider>
         </DetailPageLayout.Content>

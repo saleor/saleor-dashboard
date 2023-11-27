@@ -13,10 +13,14 @@ import { useIntl } from "react-intl";
 import { messages } from "../../messages";
 
 interface AddButtonProps {
+  disabled?: boolean;
   onCatalogClick: () => void;
 }
 
-export const AddButton = ({ onCatalogClick }: AddButtonProps) => {
+export const AddButton = ({
+  onCatalogClick,
+  disabled = false,
+}: AddButtonProps) => {
   const intl = useIntl();
   const [isSubMenuOpen, setSubMenuOpen] = useState(false);
 
@@ -43,6 +47,7 @@ export const AddButton = ({ onCatalogClick }: AddButtonProps) => {
       <Popover.Trigger>
         <Button
           type="button"
+          disabled={disabled}
           backgroundColor="interactiveNeutralDefault"
           color="textNeutralContrasted"
         >

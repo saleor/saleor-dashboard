@@ -5,7 +5,11 @@ import React from "react";
 import { useController } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export const DiscountName = () => {
+interface DiscountNameProps {
+  disabled?: boolean;
+}
+
+export const DiscountName = ({ disabled }: DiscountNameProps) => {
   const intl = useIntl();
   const { field } = useController<DiscoutFormData, "name">({
     name: "name",
@@ -24,6 +28,7 @@ export const DiscountName = () => {
             id: "lJXkFS",
             description: "discount name",
           })}
+          disabled={disabled || field.disabled}
         />
       </DashboardCard.Content>
     </DashboardCard>

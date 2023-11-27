@@ -9,11 +9,16 @@ import { DiscountTypeSwitch } from "../DiscountTypeSwitch";
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 
 interface RuleRewardProps {
+  disabled?: boolean;
   currencySymbol: string | null;
   index: number;
 }
 
-export const RuleReward = ({ index, currencySymbol }: RuleRewardProps) => {
+export const RuleReward = ({
+  index,
+  currencySymbol,
+  disabled,
+}: RuleRewardProps) => {
   const intl = useIntl();
 
   const { field: rewardTypeField } = useController<
@@ -31,12 +36,11 @@ export const RuleReward = ({ index, currencySymbol }: RuleRewardProps) => {
   });
 
   return (
-    <Box>
-      <Text marginBottom={4} as="p">
-        {intl.formatMessage(messages.reward)}
-      </Text>
+    <>
+      <Text as="p">{intl.formatMessage(messages.reward)}</Text>
       <Box display="flex" gap={4}>
         <DiscountTypeSwitch
+          disabled={disabled}
           onChange={type => rewardTypeField.onChange(type)}
           selected={rewardTypeField.value}
           currencySymbol={currencySymbol}
@@ -44,11 +48,12 @@ export const RuleReward = ({ index, currencySymbol }: RuleRewardProps) => {
         <RuleInputWrapper __flex="1">
           <Input
             {...rewardValueType}
+            disabled={disabled || rewardValueType.disabled}
             type="number"
             label={intl.formatMessage(messages.discountValue)}
           />
         </RuleInputWrapper>
       </Box>
-    </Box>
+    </>
   );
 };

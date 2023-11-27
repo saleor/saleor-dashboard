@@ -15,9 +15,13 @@ import { useVariantSearch } from "./hooks/useVariantSearch";
 
 interface RuleConditionsProps {
   index: number;
+  disabled?: boolean;
 }
 
-export const RuleConditions = ({ index }: RuleConditionsProps) => {
+export const RuleConditions = ({
+  index,
+  disabled = false,
+}: RuleConditionsProps) => {
   const intl = useIntl();
 
   const { watch } = useFormContext<DiscoutFormData>();
@@ -57,6 +61,7 @@ export const RuleConditions = ({ index }: RuleConditionsProps) => {
       <Box display="flex" flexDirection="column" gap={4}>
         {conditionsList.map((condition, conditionIndex) => (
           <RuleConditionRow
+            disabled={disabled}
             fetchOptions={typeToFetchMap[condition.type]}
             isConditionTypeSelected={isConditionTypeSelected}
             key={condition.type}
@@ -74,6 +79,7 @@ export const RuleConditions = ({ index }: RuleConditionsProps) => {
           variant="secondary"
           size="small"
           alignSelf="end"
+          disabled={disabled}
           onClick={() => append({ ...intialConditionValues })}
         >
           Add condition

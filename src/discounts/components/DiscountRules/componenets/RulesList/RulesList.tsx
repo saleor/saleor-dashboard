@@ -7,18 +7,25 @@ import { Placeholder } from "../Placeholder";
 import { Rule } from "../Rule";
 
 interface RulesListProps {
+  disabled?: boolean;
   rules: Array<RuleType & { id: string }>;
   channels: ChannelFragment[];
 }
 
-export const RulesList = ({ rules, channels }: RulesListProps) => {
+export const RulesList = ({ rules, channels, disabled }: RulesListProps) => {
   if (rules.length === 0) {
     return <Placeholder />;
   }
+
   return (
     <Box display="flex" flexDirection="column" gap={6}>
       {rules.map((rule, index) => (
-        <Rule key={rule.id} index={index} channels={channels} />
+        <Rule
+          key={rule.id}
+          index={index}
+          channels={channels}
+          disabled={disabled}
+        />
       ))}
     </Box>
   );

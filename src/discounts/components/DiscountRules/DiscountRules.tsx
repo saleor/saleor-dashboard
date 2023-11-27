@@ -12,10 +12,11 @@ import { RulesList } from "./componenets/RulesList";
 import { messages } from "./messages";
 
 interface DiscountRulesProps {
+  disabled?: boolean;
   channels: ChannelFragment[];
 }
 
-export const DiscountRules = ({ channels }: DiscountRulesProps) => {
+export const DiscountRules = ({ channels, disabled }: DiscountRulesProps) => {
   const intl = useIntl();
   const { append, fields: rules } = useFieldArray<DiscoutFormData, "rules">({
     name: "rules",
@@ -27,6 +28,7 @@ export const DiscountRules = ({ channels }: DiscountRulesProps) => {
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {intl.formatMessage(messages.title)}
           <AddButton
+            disabled={disabled}
             onCatalogClick={() =>
               append({
                 ...initialRuleValues,
@@ -36,7 +38,7 @@ export const DiscountRules = ({ channels }: DiscountRulesProps) => {
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <RulesList rules={rules} channels={channels} />
+        <RulesList disabled={disabled} rules={rules} channels={channels} />
       </DashboardCard.Content>
     </DashboardCard>
   );

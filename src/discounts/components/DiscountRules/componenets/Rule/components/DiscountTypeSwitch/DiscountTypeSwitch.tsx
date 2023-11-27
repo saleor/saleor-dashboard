@@ -3,6 +3,7 @@ import { Box, Switch, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface DiscountTypeSwitchProps {
+  disabled?: boolean;
   selected: RewardValueTypeEnum;
   currencySymbol: string | null;
   onChange: (type: string) => void;
@@ -13,10 +14,12 @@ const PERCENT_SYMBOL = "%";
 export const DiscountTypeSwitch = ({
   selected,
   currencySymbol,
+  disabled,
   onChange,
 }: DiscountTypeSwitchProps) => {
   return (
     <Switch
+      disabled={disabled}
       defaultValue={selected}
       onValueChange={onChange}
       height={14}
@@ -26,6 +29,7 @@ export const DiscountTypeSwitch = ({
       {currencySymbol && (
         <Switch.Item
           id="fixed"
+          disabled={disabled}
           value={RewardValueTypeEnum.FIXED}
           marginLeft={0.5}
         >
@@ -42,6 +46,7 @@ export const DiscountTypeSwitch = ({
       )}
       <Switch.Item
         id="percentage"
+        disabled={disabled}
         value={RewardValueTypeEnum.PERCENTAGE}
         marginRight={0.5}
       >
