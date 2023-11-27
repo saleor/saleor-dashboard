@@ -3225,6 +3225,10 @@
   "KRqgfo": {
     "string": "User is out of your permissions scope"
   },
+  "KWXwFo": {
+    "context": "grant refund table, column header",
+    "string": "Unit price"
+  },
   "KXkdMH": {
     "context": "order discount removed title",
     "string": "Order discount was removed by"
