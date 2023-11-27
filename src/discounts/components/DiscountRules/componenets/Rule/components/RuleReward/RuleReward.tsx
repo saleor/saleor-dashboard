@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
 import { DiscountTypeSwitch } from "../DiscountTypeSwitch";
+import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 
 interface RuleRewardProps {
   currencySymbol: string | null;
@@ -40,13 +41,13 @@ export const RuleReward = ({ index, currencySymbol }: RuleRewardProps) => {
           selected={rewardTypeField.value}
           currencySymbol={currencySymbol}
         />
-        <Box __flex="1">
+        <RuleInputWrapper __flex="1">
           <Input
             {...rewardValueType}
             type="number"
             label={intl.formatMessage(messages.discountValue)}
           />
-        </Box>
+        </RuleInputWrapper>
       </Box>
     </Box>
   );

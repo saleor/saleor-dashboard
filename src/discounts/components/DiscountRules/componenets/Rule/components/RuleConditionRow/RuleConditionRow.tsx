@@ -5,6 +5,7 @@ import { Box, Button, Option, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController } from "react-hook-form";
 
+import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 import { initialDiscountConditionType } from "./initialDiscountConditionType";
 import { getConditionTypeValue } from "./utils";
 
@@ -60,38 +61,44 @@ export const RuleConditionRow = ({
       placeItems="center"
       alignItems="start"
     >
-      <Combobox
-        value={getConditionTypeValue(
-          typeField.value,
-          initialDiscountConditionType,
-        )}
-        fetchOptions={() => {}}
-        options={discountConditionType}
-        onChange={typeField.onChange}
-        onBlur={typeField.onBlur}
-      />
+      <RuleInputWrapper>
+        <Combobox
+          value={getConditionTypeValue(
+            typeField.value,
+            initialDiscountConditionType,
+          )}
+          fetchOptions={() => {}}
+          options={discountConditionType}
+          onChange={typeField.onChange}
+          onBlur={typeField.onBlur}
+        />
+      </RuleInputWrapper>
 
-      <Select
-        value={"is"}
-        size="small"
-        options={[
-          {
-            value: "is",
-            label: "is",
-          },
-        ]}
-        onChange={() => {}}
-      />
+      <RuleInputWrapper>
+        <Select
+          value={"is"}
+          size="small"
+          options={[
+            {
+              value: "is",
+              label: "is",
+            },
+          ]}
+          onChange={() => {}}
+        />
+      </RuleInputWrapper>
 
-      <Multiselect
-        alwaysFetchOnFocus
-        value={valuesField.value}
-        fetchOptions={fetch}
-        fetchMore={fetchMoreProps}
-        options={options ?? []}
-        onChange={valuesField.onChange}
-        onBlur={valuesField.onBlur}
-      />
+      <RuleInputWrapper>
+        <Multiselect
+          alwaysFetchOnFocus
+          value={valuesField.value}
+          fetchOptions={fetch}
+          fetchMore={fetchMoreProps}
+          options={options ?? []}
+          onChange={valuesField.onChange}
+          onBlur={valuesField.onBlur}
+        />
+      </RuleInputWrapper>
 
       <Button variant="tertiary" icon={<RemoveIcon />} onClick={onRemove} />
     </Box>

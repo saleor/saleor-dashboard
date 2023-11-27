@@ -11,6 +11,7 @@ import { getCurencySymbol } from "../../utils";
 import { RuleAccordion } from "./components/RuleAccordion/RuleAccordion";
 import { RuleConditions } from "./components/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription";
+import { RuleInputWrapper } from "./components/RuleInputWrapper/RuleInputWrapper";
 import { RuleReward } from "./components/RuleReward";
 
 interface RuleProps {
@@ -59,19 +60,23 @@ export const Rule = ({ channels, index }: RuleProps) => {
     <RichTextContext.Provider value={richText}>
       <RuleAccordion title="Catalog rule">
         <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
-          <Input {...nameField} size="small" label="Name" />
+          <RuleInputWrapper>
+            <Input {...nameField} size="small" label="Name" />
+          </RuleInputWrapper>
 
           <RuleDescription index={index} />
 
-          <Multiselect
-            size="small"
-            label="Channels"
-            options={channelOptions}
-            fetchOptions={() => {}}
-            {...channelsfield}
-          />
+          <RuleInputWrapper>
+            <Multiselect
+              size="small"
+              label="Channels"
+              options={channelOptions}
+              fetchOptions={() => {}}
+              {...channelsfield}
+            />
+          </RuleInputWrapper>
 
-          {currencySymbol ? (
+          {selectedChannels.length > 0 ? (
             <>
               <RuleConditions index={index} />
               <RuleReward index={index} currencySymbol={currencySymbol} />
