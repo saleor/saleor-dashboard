@@ -24,7 +24,7 @@ export class HomePage {
     this.topProducts = page.getByTestId("top-products");
     this.ordersReadyToFulfill = page.getByTestId("orders-to-fulfill");
     this.paymentsWaitingForCapture = page.getByTestId("orders-to-capture");
-    this.productsOutOfStock = page.getByTestId("products-out-of-stock");
+    this.productsOutOfStock = page.getByTestId("out-of-stock-analytics");
   }
   async goto() {
     await this.page.goto("/");
@@ -43,11 +43,8 @@ export class HomePage {
 
   async expectHomePageElementsToBeVisible() {
     await expect(this.sales).toBeVisible();
-    await expect(this.orders).toBeVisible();
     await expect(this.activity).toBeVisible();
     await expect(this.topProducts).toBeVisible();
-    await expect(this.ordersReadyToFulfill).toBeVisible();
-    await expect(this.paymentsWaitingForCapture).toBeVisible();
     await expect(this.productsOutOfStock).toBeVisible();
   }
 }

@@ -7,7 +7,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/orders.json" });
 
-test("TC: SALEOR_8 User should be able to navigate to order list as a staff member using ORDER permission", async ({
+test("TC: SALEOR_8 User should be able to navigate to order list as a staff member using ORDER permission @e2e", async ({
   page,
 }) => {
   const basePage = new BasePage(page);
@@ -20,7 +20,7 @@ test("TC: SALEOR_8 User should be able to navigate to order list as a staff memb
   await basePage.expectGridToBeAttached();
   await mainMenuPage.expectMenuItemsCount(3);
 });
-test("TC: SALEOR_9 User should be able to navigate to draft list as a staff member using ORDER permission", async ({
+test("TC: SALEOR_9 User should be able to navigate to draft list as a staff member using ORDER permission @e2e", async ({
   page,
 }) => {
   const basePage = new BasePage(page);

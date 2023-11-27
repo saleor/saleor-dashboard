@@ -8,7 +8,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/content.json" });
 
-test("TC: SALEOR_14 User should be able to navigate to content list as a staff member using CONTENT aka PAGE permission", async ({
+test("TC: SALEOR_14 User should be able to navigate to content list as a staff member using CONTENT aka PAGE permission @e2e", async ({
   page,
 }) => {
   const basePage = new BasePage(page);
@@ -21,7 +21,7 @@ test("TC: SALEOR_14 User should be able to navigate to content list as a staff m
   await mainMenuPage.expectMenuItemsCount(3);
   await basePage.expectGridToBeAttached();
 });
-test("TC: SALEOR_15 User should be able to navigate to page types list as a staff member using CONTENT aka PAGE permission", async ({
+test("TC: SALEOR_15 User should be able to navigate to page types list as a staff member using CONTENT aka PAGE permission @e2e", async ({
   page,
 }) => {
   const basePage = new BasePage(page);

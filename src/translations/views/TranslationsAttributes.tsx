@@ -26,6 +26,8 @@ import TranslationsAttributesPage, {
 } from "../components/TranslationsAttributesPage";
 import { TranslationField } from "../types";
 
+type HandleSubmitData = string | OutputData;
+
 export interface TranslationsAttributesQueryParams extends Pagination {
   activeField: string;
 }
@@ -116,10 +118,7 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
     navigate("?", { replace: true });
   };
 
-  const handleSubmit = (
-    { name }: TranslationField,
-    data: string | OutputData,
-  ) => {
+  const handleSubmit = ({ name }: TranslationField, data: HandleSubmitData) => {
     const [fieldName, fieldId] = name.split(":");
 
     if (fieldName === fieldNames.attribute) {
