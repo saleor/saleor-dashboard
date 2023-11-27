@@ -18,9 +18,9 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
     },
     error: {
-      color: vars.colors.foreground.textCriticalDefault,
+      color: vars.colors.text.critical1,
       "& .MuiTypography-colorTextSecondary": {
-        color: vars.colors.foreground.textCriticalDefault,
+        color: vars.colors.text.critical1,
       },
     },
   }),

@@ -120,7 +120,7 @@ export const OrderDraftDetailsDatagrid = ({
           <Box
             data-test-id="delete-order-line"
             as="span"
-            color="iconCriticalDefault"
+            color="critical1"
             display="flex"
             alignItems="center"
             __marginLeft="-2px"

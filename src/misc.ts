@@ -588,20 +588,20 @@ export const getStatusColor = (
 ): keyof ThemeTokensValues["colors"]["background"] | CustomWarningColor => {
   switch (status) {
     case "error":
-      return "surfaceCriticalDepressed";
+      return "critical2";
     case "info":
-      return "surfaceBrandDepressed";
+      return "info1";
     case "success":
-      return "decorativeSurfaceSubdued2";
+      return "accent1";
     case "warning":
       // TODO: use color from new macaw theme when will be ready
       return currentTheme === "defaultDark"
         ? COLOR_WARNING_DARK
         : COLOR_WARNING;
     case "generic":
-      return "surfaceBrandSubdued";
+      return "accent1";
     default:
-      return "surfaceBrandSubdued";
+      return "accent1";
   }
 };
 

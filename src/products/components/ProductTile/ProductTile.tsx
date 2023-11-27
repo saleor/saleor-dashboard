@@ -51,12 +51,12 @@ export const ProductTile: React.FC<ProductTileProps> = ({
         display="flex"
         alignItems="center"
         justifyContent="center"
-        backgroundColor="surfaceNeutralSubdued"
+        backgroundColor="default2"
       >
         <Box __width="40%" __height="40%">
           <ProductsIcons
             size="fill"
-            color="iconNeutralDisabled"
+            color="defaultDisabled"
             data-test-id={`placeholder-svg-${product.id}`}
           />
         </Box>
@@ -68,7 +68,7 @@ export const ProductTile: React.FC<ProductTileProps> = ({
       </Box>
       <Text
         ellipsis
-        color="textNeutralSubdued"
+        color="default2"
         variant="caption"
         size="small"
         alignItems="center"
@@ -78,7 +78,7 @@ export const ProductTile: React.FC<ProductTileProps> = ({
       </Text>
     </Box>
     <Box display="flex" justifyContent="space-between" marginTop={0.5}>
-      <Text ellipsis color="textNeutralDefault" variant="bodyEmp" size="small">
+      <Text ellipsis color="default1" variant="bodyEmp" size="small">
         {product.name}
       </Text>
     </Box>
@@ -92,7 +92,7 @@ export const ProductTile: React.FC<ProductTileProps> = ({
       __opacity={0.1}
       borderRadius={5}
       backgroundColor={{
-        hover: "highlightDim",
+        hover: "default1Hovered",
       }}
     ></Box>
   </Box>

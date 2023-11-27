@@ -126,7 +126,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                           <Box
                             fontSize="bodySmall"
                             whiteSpace="nowrap"
-                            color="textNeutralSubdued"
+                            color="default2"
                           >
                             / {stateLine?.availableQuantity}
                           </Box>

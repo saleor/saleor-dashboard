@@ -14,13 +14,11 @@ export const RuleAccordion = ({ children, title }: RuleAccordionProps) => {
       <Accordion.Item
         value="ruleItem"
         borderRadius={4}
-        borderColor="neutralPlain"
+        borderColor="default1"
         borderWidth={1}
         borderStyle="solid"
         padding={4}
-        backgroundColor={
-          collapsedId === "ruleItem" ? "surfaceNeutralSubdued" : "plain"
-        }
+        backgroundColor={collapsedId === "ruleItem" ? "default2" : "default1"}
       >
         <Accordion.Trigger>
           <Text variant="heading">{title}</Text>
