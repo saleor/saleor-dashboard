@@ -15,7 +15,7 @@ export const getStatusDotColor = (
     case "warning":
       return "warning1"; // TODO: warning token needs to be in macaw
     default:
-      return "accent1";
+      return "success1";
   }
 };
 
