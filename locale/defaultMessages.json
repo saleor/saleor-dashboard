@@ -1680,6 +1680,9 @@
     "context": "product discount removed title",
     "string": "{productName} discount was removed by"
   },
+  "A7W4KO": {
+    "string": "Catalog rule"
+  },
   "A9QSur": {
     "context": "area units type",
     "string": "Area"

@@ -6,7 +6,9 @@ import useRichText from "@dashboard/utils/richText/useRichText";
 import { Box, Input, Option } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
+import { useIntl } from "react-intl";
 
+import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
 import { RuleAccordion } from "./components/RuleAccordion/RuleAccordion";
 import { RuleConditions } from "./components/RuleConditions";
@@ -21,6 +23,7 @@ interface RuleProps {
 }
 
 export const Rule = ({ channels, index, disabled = false }: RuleProps) => {
+  const intl = useIntl();
   const { watch, getValues, setValue } = useFormContext<DiscoutFormData>();
 
   const ruleNameField = `rules.${index}.name` as const;
@@ -40,6 +43,7 @@ export const Rule = ({ channels, index, disabled = false }: RuleProps) => {
     name: channelNameField,
   });
 
+  const ruleName = watch(`rules.${index}.name`);
   const selectedChannels = watch(`rules.${index}.channels`);
   const currencySymbol = getCurencySymbol(selectedChannels, channels);
 
@@ -59,6 +63,7 @@ export const Rule = ({ channels, index, disabled = false }: RuleProps) => {
   );
 
   useEffect(() => {
+    // Restart reward type to percentage if  no currency
     if (!currencySymbol) {
       setValue(
         `rules.${index}.rewardValueType`,
@@ -69,7 +74,10 @@ export const Rule = ({ channels, index, disabled = false }: RuleProps) => {
 
   return (
     <RichTextContext.Provider value={richText}>
-      <RuleAccordion title="Catalog rule">
+      <RuleAccordion
+        title={intl.formatMessage(messages.catalogRule) + `: ${ruleName}`}
+        collapsedTitle={intl.formatMessage(messages.catalogRule)}
+      >
         <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
           <RuleInputWrapper>
             <Input

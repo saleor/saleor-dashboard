@@ -33,4 +33,8 @@ export const messages = defineMessages({
     defaultMessage: "Reward",
     id: "PuQb0P",
   },
+  catalogRule: {
+    id: "A7W4KO",
+    defaultMessage: "Catalog rule",
+  },
 });

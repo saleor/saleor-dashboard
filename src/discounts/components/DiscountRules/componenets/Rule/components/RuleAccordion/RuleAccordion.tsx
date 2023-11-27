@@ -4,9 +4,14 @@ import React, { ReactNode, useState } from "react";
 interface RuleAccordionProps {
   children: ReactNode;
   title: ReactNode;
+  collapsedTitle?: ReactNode;
 }
 
-export const RuleAccordion = ({ children, title }: RuleAccordionProps) => {
+export const RuleAccordion = ({
+  children,
+  title,
+  collapsedTitle,
+}: RuleAccordionProps) => {
   const [collapsedId, setCollapsedId] = useState("ruleItem");
 
   return (
@@ -23,7 +28,7 @@ export const RuleAccordion = ({ children, title }: RuleAccordionProps) => {
         }
       >
         <Accordion.Trigger>
-          <Text variant="heading">{title}</Text>
+          <Text variant="heading">{collapsedId ? collapsedTitle : title}</Text>
           <Accordion.TriggerButton />
         </Accordion.Trigger>
         <Accordion.Content>{children}</Accordion.Content>
