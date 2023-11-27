@@ -11,11 +11,11 @@ export const getStatusDotColor = (
 ): keyof ThemeTokensValues["colors"]["background"] => {
   switch (status) {
     case "error":
-      return "interactiveCriticalDefault";
+      return "critical1";
     case "warning":
-      return "interactiveBrandDefault"; // TODO: warning token needs to be in macaw
+      return "warning1"; // TODO: warning token needs to be in macaw
     default:
-      return "decorativeSurfacePlain2";
+      return "accent1";
   }
 };
 

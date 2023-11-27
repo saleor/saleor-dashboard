@@ -15,8 +15,8 @@ const useStyles = makeStyles(
       position: "sticky",
       top: 0,
       padding: theme.spacing(1, 3),
-      backgroundColor: vars.colors.background.surfaceNeutralPlain,
-      borderBottom: `1px solid ${vars.colors.border.neutralPlain}`,
+      backgroundColor: vars.colors.background.default1,
+      borderBottom: `1px solid ${vars.colors.border.default1}`,
       zIndex: 1,
     },
     clear: {
