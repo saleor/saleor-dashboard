@@ -266,7 +266,7 @@ function getCollectionsCellContent(
   theme: DefaultTheme,
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
-  if (rowData.collections.length === 0) {
+  if (rowData.collections === undefined || rowData.collections.length === 0) {
     return readonlyTextCell("-");
   }
 

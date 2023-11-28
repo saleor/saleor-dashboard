@@ -110,11 +110,11 @@ export const productFragment = gql`
       name
       hasVariants
     }
-    category {
+    category @include(if: $includeCategories) {
       id
       name
     }
-    collections {
+    collections @include(if: $includeCollections) {
       id
       name
     }
