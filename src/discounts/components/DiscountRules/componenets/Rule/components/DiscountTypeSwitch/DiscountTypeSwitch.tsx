@@ -20,7 +20,7 @@ export const DiscountTypeSwitch = ({
   return (
     <Switch
       disabled={disabled}
-      defaultValue={selected}
+      value={selected}
       onValueChange={onChange}
       height={14}
       padding={1.5}
