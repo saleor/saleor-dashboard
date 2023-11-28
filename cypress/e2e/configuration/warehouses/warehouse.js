@@ -6,8 +6,10 @@ import faker from "faker";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
 import { WAREHOUSES_DETAILS } from "../../../elements/warehouses/warehouse-details";
+import { WAREHOUSES_LIST } from "../../../elements/warehouses/warehouses-list";
 import {
   shippingZoneDetailsUrl,
+  urlList,
   warehouseDetailsUrl,
 } from "../../../fixtures/urlList";
 import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
