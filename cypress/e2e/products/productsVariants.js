@@ -3,7 +3,6 @@
 
 import faker from "faker";
 
-import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
 import { urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createChannel } from "../../support/api/requests/Channels";
@@ -150,61 +149,6 @@ describe("As an admin I should be able to create variant", () => {
         ).waitForProgressBarToNotBeVisible();
         addVariantToDataGrid(name);
       });
-    },
-  );
-
-  it(
-    "should be able to create several variants visible for the customers. TC: SALEOR_2902 - migration in progress - to delete when done",
-    { tags: ["@variants", "@allEnv", "@critical", "@stable", "@oldRelease"] },
-    () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      const secondVariantSku = `${startsWith}${faker.datatype.number()}`;
-      const secondVariantName = `${startsWith}${faker.datatype.number()}`;
-      const variants = [{ price: 7 }, { name: attributeValues[1], price: 16 }];
-      let createdProduct;
-
-      productUtils
-        .createProductInChannel({
-          name,
-          attributeId: attribute.id,
-          channelId: defaultChannel.id,
-          warehouseId: warehouse.id,
-          productTypeId: productType.id,
-          categoryId: category.id,
-          price: variants[0].price,
-        })
-        .then(({ product: productResp }) => {
-          createdProduct = productResp;
-
-          cy.visit(`${urlList.products}${createdProduct.id}`);
-          cy.get(PRODUCT_DETAILS.dataGridTable).scrollIntoView();
-          enterVariantEditPage();
-          cy.get(PRODUCT_DETAILS.addVariantButton)
-            .click()
-            .then(() => {
-              cy.addAliasToGraphRequest("VariantCreate");
-              createVariant({
-                sku: secondVariantSku,
-                attributeName: variants[1].name,
-                price: variants[1].price,
-                channelName: defaultChannel.name,
-                variantName: secondVariantName,
-              });
-              cy.wait("@VariantCreate");
-              getProductVariants(createdProduct.id, defaultChannel.slug);
-            })
-            .then(([secondVariant, firstVariant]) => {
-              expect(firstVariant).to.have.property("price", variants[0].price);
-              expect(firstVariant).to.have.property("name", "value");
-              expect(firstVariant).to.have.property("currency", "USD");
-              expect(secondVariant).to.have.property("name", secondVariantName);
-              expect(secondVariant).to.have.property(
-                "price",
-                variants[1].price,
-              );
-              expect(secondVariant).to.have.property("currency", "USD");
-            });
-        });
     },
   );
 });

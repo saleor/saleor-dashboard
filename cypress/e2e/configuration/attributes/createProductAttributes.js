@@ -20,7 +20,6 @@ import {
 describe("As an admin I want to create product attribute", () => {
   const startsWith = "AttrCreate" + Date.now();
   const attributesTypes = [
-    { type: "DROPDOWN", testCase: "SALEOR_0501" }, //  migration in progress - to delete when done
     { type: "MULTISELECT", testCase: "SALEOR_0502" },
     { type: "RICH_TEXT", testCase: "SALEOR_0504" },
     { type: "BOOLEAN", testCase: "SALEOR_0505" },
