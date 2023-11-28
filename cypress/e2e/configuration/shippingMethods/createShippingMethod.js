@@ -115,56 +115,6 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   });
 
   it(
-    "should be able to create price based shipping method and assign it to checkout. TC: SALEOR_0803 should not be migrated to playwright",
-    { tags: ["@shipping", "@allEnv", "@stable", "@oldRelease", "@critical"] },
-    () => {
-      const shippingName = `${startsWith}${faker.datatype.number()}`;
-      cy.clearSessionData().loginUserViaRequest(
-        "auth",
-        ONE_PERMISSION_USERS.shipping,
-      );
-      cy.visit(urlList.shippingMethods);
-      createShippingZone(
-        shippingName,
-        warehouse.name,
-        address.countryFullName,
-        defaultChannel.name,
-      );
-      createShippingRate({
-        rateName: shippingName,
-        price,
-        priceLimits: { min: price, max: 100 },
-        rateOption: rateOptions.PRICE_OPTION,
-        deliveryTime,
-      });
-      createWaitingForCaptureOrder({
-        channelSlug: defaultChannel.slug,
-        email: "test@example.com",
-        variantsList,
-        address,
-        shippingMethodName: shippingName,
-      })
-        .then(({ order }) => {
-          expect(order.id).to.be.ok;
-          createCheckout({
-            channelSlug: defaultChannel.slug,
-            email: "test@example.com",
-            variantsList: secondVariantsList,
-            address,
-            auth: "token",
-          });
-        })
-        .then(({ checkout }) => {
-          const isShippingAvailable = isShippingAvailableInCheckout(
-            checkout,
-            shippingName,
-          );
-          expect(isShippingAvailable).to.be.false;
-        });
-    },
-  );
-
-  it(
     "should be able to create weight based shipping method. TC: SALEOR_0804",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {

@@ -73,7 +73,7 @@ test("TC: SALEOR_26 Create basic info variant - via edit variant page @e2e @prod
 test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @product", async ({
   page,
 }) => {
-  const variantName = `TC: SALEOR_26 - variant name - ${new Date().toISOString()}`;
+  const variantName = `TC: SALEOR_27 - variant name - ${new Date().toISOString()}`;
   const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
   const variantsPage = new VariantsPage(page);

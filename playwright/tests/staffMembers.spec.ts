@@ -6,7 +6,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
-test("TC: SALEOR_37 Admin User should be able to deactivate other user @basic-regression @staff-members", async ({
+test("TC: SALEOR_37 Admin User should be able to deactivate other user @e2e @staff-members", async ({
   page,
   request,
 }) => {
@@ -31,7 +31,7 @@ test("TC: SALEOR_37 Admin User should be able to deactivate other user @basic-re
   ).toEqual("INACTIVE");
 });
 
-test("TC: SALEOR_38 Admin User should be able to activate other user @basic-regression @staff-members", async ({
+test("TC: SALEOR_38 Admin User should be able to activate other user @e2e @staff-members", async ({
   page,
   request,
 }) => {

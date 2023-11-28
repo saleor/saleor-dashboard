@@ -6,10 +6,8 @@ import faker from "faker";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
 import { WAREHOUSES_DETAILS } from "../../../elements/warehouses/warehouse-details";
-import { WAREHOUSES_LIST } from "../../../elements/warehouses/warehouses-list";
 import {
   shippingZoneDetailsUrl,
-  urlList,
   warehouseDetailsUrl,
 } from "../../../fixtures/urlList";
 import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
@@ -42,8 +40,8 @@ describe("As an admin I want to manage warehouses", () => {
   });
 
   it(
-    "should be able to create warehouse. TC: SALEOR_1101 - migration in progress - to delete when done",
-    { tags: ["@warehouse", "@allEnv", "@stable", "@oldRelease", "@critical"] },
+    "should be able to create warehouse. TC: SALEOR_1101",
+    { tags: ["@warehouse", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       cy.visit(urlList.warehouses)
