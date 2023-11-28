@@ -41,7 +41,7 @@ export const StaffListDatagrid = ({
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
   const intl = useIntl();
-  const { themeValues } = useTheme();
+  const { theme } = useTheme();
 
   const emptyColumn = useEmptyColumn();
   const staffMemebersListStaticColumns = useMemo(
@@ -69,7 +69,7 @@ export const StaffListDatagrid = ({
       staffMembers,
       columns: visibleColumns,
       intl,
-      currentTheme: themeValues,
+      theme,
     }),
     [staffMembers, intl, visibleColumns],
   );
