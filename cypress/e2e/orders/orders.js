@@ -40,9 +40,7 @@ import {
   deletePublicFulfillmentMetadata,
   expandPrivateFulfillmentMetadata,
   expandPublicFulfillmentMetadata,
-  finalizeDraftOrder,
   openVariantDetailsOptions,
-  selectChannelInPicker,
   updatePrivateMetadataFieldFulfillmentOrder,
   updatePublicMetadataFieldFulfillmentOrder,
 } from "../../support/pages/";
@@ -144,16 +142,6 @@ describe("Orders", () => {
   beforeEach(() => {
     cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.order);
   });
-
-  it(
-    "should create order with selected channel. TC: SALEOR_2104 - migration in progress - to delete when done",
-    { tags: ["@orders", "@allEnv", "@stable", "@oldRelease", "@critical"] },
-    () => {
-      cy.visit(urlList.orders).get(ORDERS_SELECTORS.createOrderButton).click();
-      selectChannelInPicker(defaultChannel.name);
-      finalizeDraftOrder(randomName, address);
-    },
-  );
 
   it(
     "should not be possible to change channel in order. TC: SALEOR_2105",

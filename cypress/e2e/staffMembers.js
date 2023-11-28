@@ -14,11 +14,7 @@ import {
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { MESSAGES, TEST_ADMIN_USER, urlList } from "../fixtures";
 import { userDetailsUrl } from "../fixtures/urlList";
-import {
-  activatePlugin,
-  updatePlugin,
-  updateStaffMember,
-} from "../support/api/requests/";
+import { activatePlugin, updatePlugin } from "../support/api/requests/";
 import {
   getMailActivationLinkForUser,
   getMailActivationLinkForUserAndSubject,
@@ -31,7 +27,6 @@ import {
   fillUpOnlyUserDetails,
   fillUpSetPassword,
   fillUpUserDetailsAndAddFirstPermission,
-  updateUserActiveFlag,
 } from "../support/pages/";
 
 describe("Staff members", () => {
@@ -80,40 +75,6 @@ describe("Staff members", () => {
         fillUpSetPassword(password);
         expectWelcomeMessageIncludes(`${firstName} ${lastName}`);
       });
-    },
-  );
-
-  it(
-    "should deactivate user. TC: SALEOR_3502 - migration in progress - to delete when done",
-    { tags: ["@staffMembers", "@allEnv"] },
-    () => {
-      updateStaffMember({ userId: user.id, isActive: true });
-      updateUserActiveFlag(user.id);
-      cy.clearSessionData()
-        .loginUserViaRequest("auth", { email, password })
-        .its("body.data.tokenCreate")
-        .then(tokenCreate => {
-          expect(
-            tokenCreate.errors[0].code,
-            "logging in should return error",
-          ).to.be.eq("INACTIVE");
-          expect(tokenCreate.token).to.be.not.ok;
-        });
-    },
-  );
-
-  it(
-    "should activate user. TC: SALEOR_3503 - migration in progress - to delete when done",
-    { tags: ["@staffMembers", "@allEnv", "@critical"] },
-    () => {
-      const serverStoredEmail = email.toLowerCase();
-
-      updateStaffMember({ userId: user.id, isActive: false });
-      updateUserActiveFlag(user.id);
-      cy.clearSessionData()
-        .loginUserViaRequest("auth", { email, password })
-        .visit(urlList.homePage);
-      expectWelcomeMessageIncludes(serverStoredEmail);
     },
   );
 
