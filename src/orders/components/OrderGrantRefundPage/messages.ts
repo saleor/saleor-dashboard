@@ -95,6 +95,11 @@ export const productCardMessages = defineMessages({
     id: "1/oauz",
     description: "grant refund table, column header",
   },
+  unitPrice: {
+    defaultMessage: "Unit price",
+    id: "KWXwFo",
+    description: "grant refund table, column header",
+  },
 });
 
 export const fulfilmentStatusMessages = defineMessages({
