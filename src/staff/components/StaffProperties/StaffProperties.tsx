@@ -45,7 +45,7 @@ const useStyles = makeStyles(
     },
     avatarDefault: {
       "& div": {
-        color: vars.colors.text.default2,
+        color: vars.colors.text.buttonDefaultPrimary,
         fontSize: 35,
         fontWeight: 580,
         lineHeight: "120px",

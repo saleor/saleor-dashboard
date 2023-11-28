@@ -20,7 +20,7 @@ import { useIntl } from "react-intl";
 
 import {
   createGetCellContent,
-  staffMemebersListStaticColumnsAdapter,
+  staffMembersListStaticColumnsAdapter,
 } from "./datagrid";
 import { messages } from "./messages";
 
@@ -44,8 +44,8 @@ export const StaffListDatagrid = ({
   const { theme } = useTheme();
 
   const emptyColumn = useEmptyColumn();
-  const staffMemebersListStaticColumns = useMemo(
-    () => staffMemebersListStaticColumnsAdapter(intl, sort, emptyColumn),
+  const staffMembersListStaticColumns = useMemo(
+    () => staffMembersListStaticColumnsAdapter(intl, sort, emptyColumn),
     [intl, sort, emptyColumn],
   );
 
@@ -60,7 +60,7 @@ export const StaffListDatagrid = ({
 
   const { handlers, visibleColumns, recentlyAddedColumn } = useColumns({
     selectedColumns: settings?.columns ?? [],
-    staticColumns: staffMemebersListStaticColumns,
+    staticColumns: staffMembersListStaticColumns,
     onSave: onColumnChange,
   });
 

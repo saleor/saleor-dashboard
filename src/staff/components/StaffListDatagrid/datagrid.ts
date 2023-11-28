@@ -22,7 +22,7 @@ import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const staffMemebersListStaticColumnsAdapter = (
+export const staffMembersListStaticColumnsAdapter = (
   intl: IntlShape,
   sort: Sort<StaffListUrlSortField>,
   emptyColumn: AvailableColumn,
