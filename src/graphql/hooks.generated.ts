@@ -2371,6 +2371,14 @@ export const ProductWithChannelListingsFragmentDoc = gql`
     name
     hasVariants
   }
+  category {
+    id
+    name
+  }
+  collections {
+    id
+    name
+  }
   channelListings {
     ...ChannelListingProductWithoutPricing
     pricing @include(if: $hasChannel) {
