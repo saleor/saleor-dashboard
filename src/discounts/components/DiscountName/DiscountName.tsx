@@ -7,9 +7,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 interface DiscountNameProps {
   disabled?: boolean;
+  error: string | undefined;
 }
 
-export const DiscountName = ({ disabled }: DiscountNameProps) => {
+export const DiscountName = ({ disabled, error }: DiscountNameProps) => {
   const intl = useIntl();
   const { field } = useController<DiscoutFormData, "name">({
     name: "name",
@@ -23,6 +24,8 @@ export const DiscountName = ({ disabled }: DiscountNameProps) => {
       <DashboardCard.Content>
         <Input
           {...field}
+          error={!!error}
+          helperText={error}
           label={intl.formatMessage({
             defaultMessage: "Discount name",
             id: "lJXkFS",

@@ -259,6 +259,9 @@ export const promotionRuleUpdate = gql`
       errors {
         ...PromotionRuleUpdateError
       }
+      promotionRule {
+        id
+      }
     }
   }
 `;

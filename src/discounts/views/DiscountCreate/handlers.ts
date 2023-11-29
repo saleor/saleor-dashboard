@@ -16,7 +16,7 @@ export const createHandler = (
     const response = await create({
       input: {
         name: data.name,
-        description: JSON.parse(data.description),
+        description: data.description ? JSON.parse(data.description) : null,
         endDate: data.dates.hasEndDate
           ? joinDateTime(data.dates.endDate, data.dates.endTime)
           : null,

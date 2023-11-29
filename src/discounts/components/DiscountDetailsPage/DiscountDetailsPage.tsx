@@ -5,12 +5,19 @@ import Savebar from "@dashboard/components/Savebar";
 import { RuleDTO } from "@dashboard/discounts/dto/dto";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
-import { ChannelFragment, PromotionDetailsFragment } from "@dashboard/graphql";
+import {
+  ChannelFragment,
+  PromotionDetailsFragment,
+  PromotionUpdateErrorFragment,
+} from "@dashboard/graphql";
 import { splitDateTime } from "@dashboard/misc";
+import { getFormErrors } from "@dashboard/utils/errors";
+import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import React from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useIntl } from "react-intl";
 
 import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
@@ -20,23 +27,26 @@ import { filterRules } from "./utils";
 
 export interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
-  disabled: boolean;
-  onBack: () => void;
-  onSubmit: (data: DiscoutFormData) => void;
-  submitButtonState: ConfirmButtonTransitionState;
-  data: PromotionDetailsFragment | undefined;
   conditionLabels: Record<string, string>;
+  data: PromotionDetailsFragment | undefined;
+  disabled: boolean;
+  errors: PromotionUpdateErrorFragment[];
+  submitButtonState: ConfirmButtonTransitionState;
+  onSubmit: (data: DiscoutFormData) => void;
+  onBack: () => void;
 }
 
 export const DiscountDetailsPage = ({
   channels,
-  disabled,
-  onBack,
-  data,
   conditionLabels,
+  disabled,
+  data,
+  errors,
   submitButtonState,
+  onBack,
   onSubmit,
 }: DiscountDetailsPageProps) => {
+  const intl = useIntl();
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: {
@@ -71,6 +81,8 @@ export const DiscountDetailsPage = ({
     });
   };
 
+  const formErrors = getFormErrors(["name"], errors);
+
   return (
     <RichTextContext.Provider value={richText}>
       <DetailPageLayout gridTemplateColumns={1}>
@@ -78,10 +90,20 @@ export const DiscountDetailsPage = ({
         <DetailPageLayout.Content>
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(handleSubmit)}>
-              <DiscountName disabled={disabled} />
+              <DiscountName
+                error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
+                disabled={disabled}
+              />
               <DiscountDescription disabled={disabled} />
-              <DiscountDatesWithController disabled={disabled} />
-              <DiscountRules channels={channels} disabled={disabled} />
+              <DiscountDatesWithController
+                errors={errors}
+                disabled={disabled}
+              />
+              <DiscountRules
+                errors={[]}
+                channels={channels}
+                disabled={disabled}
+              />
             </form>
           </FormProvider>
         </DetailPageLayout.Content>

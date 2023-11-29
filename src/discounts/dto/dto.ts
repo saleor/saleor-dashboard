@@ -15,11 +15,9 @@ export class RuleDTO {
       name: rule.name,
       description: rule.description ? JSON.parse(rule.description) : null,
       channels: rule.channels.map(channel => channel.value),
-      rewardValue: rule.rewardValue,
+      rewardValue: (rule.rewardValue as any) === "" ? null : rule.rewardValue,
       rewardValueType: rule.rewardValueType,
-      cataloguePredicate: {
-        OR: rule.conditions.map(ConditionDTO.toAPI),
-      },
+      cataloguePredicate: prepareCataloguePredicate(rule.conditions),
     };
   }
 
@@ -29,23 +27,28 @@ export class RuleDTO {
   ): Rule {
     return {
       id: rule.id,
-      channels: rule.channels.map<Option>(chan => ({
-        label: chan.name,
-        value: chan.id,
+      channels: rule.channels.map<Option>(channel => ({
+        label: channel.name,
+        value: channel.id,
       })),
       name: rule.name ?? "",
       description: rule.description ? JSON.stringify(rule.description) : "",
       rewardValue: rule.rewardValue,
       rewardValueType: rule.rewardValueType ?? RewardValueTypeEnum.FIXED,
-      conditions: (rule.cataloguePredicate.OR || []).map(predicate =>
-        ConditionDTO.fromAPI(predicate, conditionLabels),
+      conditions: prepareRuleConditions(
+        rule.cataloguePredicate,
+        conditionLabels,
       ),
     };
   }
 }
 
 export class ConditionDTO {
-  static toAPI(condition: Condition): CataloguePredicateInput {
+  static toAPI(condition: Condition): CataloguePredicateInput | undefined {
+    if (!condition.type) {
+      return undefined;
+    }
+
     return {
       [`${condition.type}Predicate`]: {
         ids: condition.values.map(val => val.value),
@@ -103,3 +106,60 @@ export class ConditionDTO {
     return undefined;
   }
 }
+
+function prepareCataloguePredicate(
+  conditions: Condition[],
+): CataloguePredicateInput {
+  const ruleConditions = conditions.map(ConditionDTO.toAPI).filter(Boolean);
+
+  if (ruleConditions.length === 0) {
+    return {};
+  }
+
+  if (ruleConditions.length === 1) {
+    return {
+      ...ruleConditions[0],
+    };
+  }
+
+  return {
+    OR: ruleConditions,
+  };
+}
+
+function prepareRuleConditions(
+  cataloguePredicate: PromotionRuleDetailsFragment["cataloguePredicate"],
+  conditionLabels: Record<string, string>,
+): Condition[] {
+  return Object.entries(cataloguePredicate)
+    .map(([key, value]) => {
+      if (key === "OR") {
+        return prepareRuleConditions(value, conditionLabels);
+      }
+
+      return ConditionDTO.fromAPI(
+        { [key]: value } as unknown as CataloguePredicateAPI,
+        conditionLabels,
+      );
+    })
+    .flat();
+}
+
+// {
+//   "errors": [
+//     {
+//       "message": "Variable \"$input\" got invalid value {\"addChannels\": [], \"cataloguePredicate\": {\"productPredicate\": {\"ids\": []}}, \"description\": null, \"name\": \"\", \"removeChannels\": [], \"rewardValue\": \"\", \"rewardValueType\": \"PERCENTAGE\"}.\nIn field \"rewardValue\": Expected type \"PositiveDecimal\", found \"\".",
+//       "locations": [
+//         {
+//           "line": 1,
+//           "column": 40
+//         }
+//       ],
+//       "extensions": {
+//         "exception": {
+//           "code": "GraphQLError"
+//         }
+//       }
+//     }
+//   ]
+// }

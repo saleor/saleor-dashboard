@@ -1,6 +1,12 @@
 import { Multiselect } from "@dashboard/components/Combobox";
 import { DiscoutFormData } from "@dashboard/discounts/types";
-import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
+import {
+  ChannelFragment,
+  PromotionCreateErrorFragment,
+  RewardValueTypeEnum,
+} from "@dashboard/graphql";
+import { getFormErrors } from "@dashboard/utils/errors";
+import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { Box, Input, Option } from "@saleor/macaw-ui-next";
@@ -20,11 +26,18 @@ interface RuleProps {
   channels: ChannelFragment[];
   index: number;
   disabled?: boolean;
+  errors: PromotionCreateErrorFragment[];
 }
 
-export const Rule = ({ channels, index, disabled = false }: RuleProps) => {
+export const Rule = ({
+  channels,
+  index,
+  disabled = false,
+  errors,
+}: RuleProps) => {
   const intl = useIntl();
   const { watch, getValues, setValue } = useFormContext<DiscoutFormData>();
+  const formErrors = getFormErrors(["rewardValue"], errors);
 
   const ruleNameField = `rules.${index}.name` as const;
   const { trigger } = useFormContext<DiscoutFormData>();
@@ -108,6 +121,10 @@ export const Rule = ({ channels, index, disabled = false }: RuleProps) => {
                 disabled={disabled}
                 index={index}
                 currencySymbol={currencySymbol}
+                error={getCommonFormFieldErrorMessage(
+                  formErrors.rewardValue,
+                  intl,
+                )}
               />
             </>
           ) : null}

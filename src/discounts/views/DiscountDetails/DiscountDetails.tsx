@@ -12,6 +12,7 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
+import { getMutationErrors } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -41,53 +42,33 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
     },
   });
 
-  const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation({
-    onCompleted: data => {
-      if (data?.promotionUpdate?.errors?.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+  const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation();
 
   const [promotionRuleUpdate, promotionRuleUpdateOpts] =
-    usePromotionRuleUpdateMutation({
-      onCompleted: data => {
-        if (data?.promotionRuleUpdate?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
+    usePromotionRuleUpdateMutation();
 
   const [promotionRuleCreate, promotionRuleCreateOpts] =
-    usePromotionRuleCreateMutation({
-      onCompleted: data => {
-        if (data?.promotionRuleCreate?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
+    usePromotionRuleCreateMutation();
 
-  const onSubmit = createUpdateHandler(
-    promotionData?.promotion,
-    variables => promotionUpdate({ variables }),
-    variables => promotionRuleUpdate({ variables }),
-    variables => promotionRuleCreate({ variables }),
-  );
+  const onSubmit = createUpdateHandler({
+    promotion: promotionData?.promotion,
+    update: variables => promotionUpdate({ variables }),
+    updateRule: variables => promotionRuleUpdate({ variables }),
+    createRule: variables => promotionRuleCreate({ variables }),
+    successNotification: () => {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges),
+      });
+    },
+  });
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
       <DiscountDetailsPage
         data={promotionData?.promotion}
+        errors={getMutationErrors(promotionUpdateOpts)}
         disabled={
           loading ||
           promotionUpdateOpts.loading ||

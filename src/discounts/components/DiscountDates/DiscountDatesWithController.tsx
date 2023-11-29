@@ -1,16 +1,19 @@
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import { CommonError } from "@dashboard/utils/errors/common";
 import React, { ChangeEvent } from "react";
 import { useController } from "react-hook-form";
 
 import DiscountDates from "./DiscountDates";
 
-interface DiscountDatesWithControllerProps {
+interface DiscountDatesWithControllerProps<ErrorCode> {
   disabled?: boolean;
+  errors: Array<CommonError<ErrorCode>>;
 }
 
-export const DiscountDatesWithController = ({
+export const DiscountDatesWithController = <ErrorCode,>({
   disabled,
-}: DiscountDatesWithControllerProps) => {
+  errors,
+}: DiscountDatesWithControllerProps<ErrorCode>) => {
   const { field } = useController<DiscoutFormData, "dates">({
     name: "dates",
   });
@@ -26,7 +29,7 @@ export const DiscountDatesWithController = ({
     <DiscountDates
       data={field.value}
       disabled={disabled || !!field.disabled}
-      errors={[]}
+      errors={errors}
       onChange={handleChange}
       onBlur={field.onBlur}
     />

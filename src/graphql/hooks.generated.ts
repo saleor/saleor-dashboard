@@ -7864,6 +7864,9 @@ export const PromotionRuleUpdateDocument = gql`
     errors {
       ...PromotionRuleUpdateError
     }
+    promotionRule {
+      id
+    }
   }
 }
     ${PromotionRuleUpdateErrorFragmentDoc}`;

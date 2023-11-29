@@ -9579,7 +9579,7 @@ export type PromotionRuleUpdateMutationVariables = Exact<{
 }>;
 
 
-export type PromotionRuleUpdateMutation = { __typename: 'Mutation', promotionRuleUpdate: { __typename: 'PromotionRuleUpdate', errors: Array<{ __typename: 'PromotionRuleUpdateError', field: string | null, message: string | null, code: PromotionRuleUpdateErrorCode, channels: Array<string> | null }> } | null };
+export type PromotionRuleUpdateMutation = { __typename: 'Mutation', promotionRuleUpdate: { __typename: 'PromotionRuleUpdate', errors: Array<{ __typename: 'PromotionRuleUpdateError', field: string | null, message: string | null, code: PromotionRuleUpdateErrorCode, channels: Array<string> | null }>, promotionRule: { __typename: 'PromotionRule', id: string } | null } | null };
 
 export type PromotionRuleCreateMutationVariables = Exact<{
   input: PromotionRuleCreateInput;

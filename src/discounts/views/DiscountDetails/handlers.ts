@@ -15,18 +15,25 @@ import difference from "lodash/difference";
 import { DiscoutFormData, Rule } from "../../types";
 import { getRulesToCreateData, getRulesToUpdateData } from "./utils";
 
-export const createUpdateHandler = (
-  promotion: PromotionDetailsFragment | undefined | null,
+export const createUpdateHandler = ({
+  createRule,
+  promotion,
+  successNotification,
+  update,
+  updateRule,
+}: {
+  promotion: PromotionDetailsFragment | undefined | null;
   update: (
     varaibles: PromotionUpdateMutationVariables,
-  ) => Promise<FetchResult<PromotionUpdateMutation>>,
+  ) => Promise<FetchResult<PromotionUpdateMutation>>;
   updateRule: (
     variables: PromotionRuleUpdateMutationVariables,
-  ) => Promise<FetchResult<PromotionRuleUpdateMutation>>,
+  ) => Promise<FetchResult<PromotionRuleUpdateMutation>>;
   createRule: (
     variables: PromotionRuleCreateMutationVariables,
-  ) => Promise<FetchResult<PromotionRuleCreateMutation>>,
-) => {
+  ) => Promise<FetchResult<PromotionRuleCreateMutation>>;
+  successNotification: () => void;
+}) => {
   return async (data: DiscoutFormData) => {
     if (!promotion) {
       return;
@@ -67,9 +74,11 @@ export const createUpdateHandler = (
 
     const errors = response.map(res => getMutationErrors(res)).flat();
 
-    if (errors.length > 0) {
-      return { errors };
+    if (errors.length === 0) {
+      successNotification();
     }
+
+    return { errors };
   };
 };
 

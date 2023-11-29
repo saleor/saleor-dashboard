@@ -12,12 +12,14 @@ interface RuleRewardProps {
   disabled?: boolean;
   currencySymbol: string | null;
   index: number;
+  error: string | undefined;
 }
 
 export const RuleReward = ({
   index,
   currencySymbol,
   disabled,
+  error,
 }: RuleRewardProps) => {
   const intl = useIntl();
   const { watch } = useFormContext<DiscoutFormData>();
@@ -50,6 +52,8 @@ export const RuleReward = ({
         <RuleInputWrapper __flex="1">
           <Input
             {...rewardValueType}
+            error={!!error}
+            helperText={error}
             disabled={disabled || rewardValueType.disabled}
             type="number"
             label={intl.formatMessage(messages.discountValue)}

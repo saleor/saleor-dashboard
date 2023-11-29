@@ -1,5 +1,8 @@
 import { Rule as RuleType } from "@dashboard/discounts/types";
-import { ChannelFragment } from "@dashboard/graphql";
+import {
+  ChannelFragment,
+  PromotionCreateErrorFragment,
+} from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -10,9 +13,15 @@ interface RulesListProps {
   disabled?: boolean;
   rules: Array<RuleType & { id: string }>;
   channels: ChannelFragment[];
+  errors: PromotionCreateErrorFragment[];
 }
 
-export const RulesList = ({ rules, channels, disabled }: RulesListProps) => {
+export const RulesList = ({
+  rules,
+  channels,
+  disabled,
+  errors,
+}: RulesListProps) => {
   if (rules.length === 0) {
     return <Placeholder />;
   }
@@ -25,6 +34,7 @@ export const RulesList = ({ rules, channels, disabled }: RulesListProps) => {
           index={index}
           channels={channels}
           disabled={disabled}
+          errors={errors?.filter(error => error.index === index) ?? []}
         />
       ))}
     </Box>

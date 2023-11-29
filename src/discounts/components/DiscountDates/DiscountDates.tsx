@@ -1,13 +1,15 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { DiscountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
-import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
+import {
+  CommonError,
+  getCommonFormFieldErrorMessage,
+} from "@dashboard/utils/errors/common";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-interface DiscountDatesProps {
+interface DiscountDatesProps<ErrorCode> {
   data: {
     endDate: string;
     endTime: string;
@@ -16,18 +18,18 @@ interface DiscountDatesProps {
     startTime: string;
   };
   disabled: boolean;
-  errors: DiscountErrorFragment[];
+  errors: Array<CommonError<ErrorCode>>;
   onChange: (event: React.ChangeEvent<any>) => void;
   onBlur?: (event: React.FocusEvent<any>) => void;
 }
 
-const DiscountDates = ({
+const DiscountDates = <ErrorCode,>({
   data,
   disabled,
   errors,
   onChange,
   onBlur,
-}: DiscountDatesProps) => {
+}: DiscountDatesProps<ErrorCode>) => {
   const intl = useIntl();
 
   const formErrors = getFormErrors(["startDate", "endDate"], errors);
@@ -47,7 +49,10 @@ const DiscountDates = ({
           <Input
             disabled={disabled}
             error={!!formErrors.startDate}
-            helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
+            helperText={getCommonFormFieldErrorMessage(
+              formErrors.startDate,
+              intl,
+            )}
             name="startDate"
             onChange={onChange}
             onBlur={onBlur}
@@ -59,7 +64,10 @@ const DiscountDates = ({
           <Input
             disabled={disabled}
             error={!!formErrors.startDate}
-            helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
+            helperText={getCommonFormFieldErrorMessage(
+              formErrors.startDate,
+              intl,
+            )}
             name="startTime"
             onChange={onChange}
             onBlur={onBlur}
@@ -90,7 +98,10 @@ const DiscountDates = ({
             <Input
               disabled={disabled}
               error={!!formErrors.endDate}
-              helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
+              helperText={getCommonFormFieldErrorMessage(
+                formErrors.endDate,
+                intl,
+              )}
               name="endDate"
               onChange={onChange}
               onBlur={onBlur}
@@ -102,7 +113,10 @@ const DiscountDates = ({
             <Input
               disabled={disabled}
               error={!!formErrors.endDate}
-              helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
+              helperText={getCommonFormFieldErrorMessage(
+                formErrors.endDate,
+                intl,
+              )}
               name="endTime"
               onChange={onChange}
               onBlur={onBlur}
