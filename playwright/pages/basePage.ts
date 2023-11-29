@@ -3,6 +3,8 @@ import { URL_LIST } from "@data/url";
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
+const DEFAULT_GRID_TEST_ID = "data-grid-canvas"
+
 export class BasePage {
   readonly page: Page;
   readonly pageHeader: Locator;
@@ -13,7 +15,7 @@ export class BasePage {
   constructor(page: Page) {
     this.page = page;
     this.pageHeader = page.getByTestId("page-header");
-    this.gridCanvas = page.locator('[data-testid="data-grid-canvas"]');
+    this.gridCanvas = page.locator(`[data-testid="${DEFAULT_GRID_TEST_ID}"]`);
     this.successBanner = page.locator(LOCATORS.successBanner);
     this.errorBanner = page.locator(LOCATORS.errorBanner);
   }
@@ -47,5 +49,64 @@ export class BasePage {
 
   async getRandomInt(max: number) {
     return Math.floor(Math.random() * (max + 1));
+  }
+  
+  async waitForGrid() {
+    await this.page.locator(`[data-testid="${DEFAULT_GRID_TEST_ID}"] > table`)
+      .waitFor({ state: "attached", timeout: 10000 })
+  }
+
+  async findGridCellBounds(col: number, row: number) {
+    return this.gridCanvas.evaluate((node, { col, row }) => {
+      const fiberKey = Object.keys(node).find(x => x && x.includes("__reactFiber"));
+          
+      if (!fiberKey || !node.parentNode) return null
+
+      /* 
+        We seek over the fiber node (hack), ignore typings for it.
+      */
+      const fiberParent = node.parentNode[fiberKey as keyof typeof node.parentNode] as any
+
+      const bounds: { x: number, y: number, width: number, height: number} = fiberParent
+        .pendingProps
+        .children
+        .props
+        .gridRef
+        .current
+        .getBounds(col, row)
+
+        if (!bounds) return null
+
+        return { 
+          ...bounds,
+          center: {
+            x: bounds.x + bounds.width / 2,
+            y: bounds.y + bounds.height / 2,
+          }
+        }
+      }, { col, row })
+  }
+
+
+  /*
+    Example:
+
+      const basePage = new BasePage(page);
+      const productPage = new ProductPage(page);
+
+      await basePage.gotoExistingProductPage(PRODUCTS.productWithOneVariant.id);
+      await productPage.editVariantButton.scrollIntoViewIfNeeded();
+      await basePage.waitForGrid()
+      await basePage.fillGridCell(1, 0, "New variant name")
+  */
+
+  async fillGridCell(col: number, row: number, content: string) {
+    const bounds = await this.findGridCellBounds(col, row)
+
+    if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`)
+
+    await this.page.mouse.dblclick(bounds.center.x, bounds.center.y)
+    await this.page.locator('[class="clip-region"]').waitFor({ state: "attached" });
+    await this.page.locator('[class="clip-region"]').locator("textarea").fill(content);
   }
 }
