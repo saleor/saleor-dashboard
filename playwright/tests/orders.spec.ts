@@ -10,7 +10,7 @@ test("TC: SALEOR_28 Create basic order @e2e @order", async ({ page }) => {
   await page.goto(URL_LIST.orders);
   await ordersPage.clickCreateOrderButton();
   await ordersPage.orderCreateDialog.completeOrderCreateDialogWithFirstChannel();
-  await ordersPage.clickAddOrderButton();
+  await ordersPage.clickAddProductsButton();
   await ordersPage.addProductsDialog.selectVariantOnListAndConfirm();
   await ordersPage.clickEditCustomerButton();
   await ordersPage.clickSearchCustomerInput();
