@@ -104,7 +104,7 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @produ
   await variantsPage.clickSaveVariantButton();
   await variantsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_45 As an admin I should be able to delete a single product with variants @basic-regression @product", async ({
+test("TC: SALEOR_45 As an admin I should be able to delete a single product with variants @basic-regression @product @e2e", async ({
   page,
 }) => {
   const basePage = new BasePage(page);
