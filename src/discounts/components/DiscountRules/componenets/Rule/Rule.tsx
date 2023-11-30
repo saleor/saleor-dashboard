@@ -21,6 +21,7 @@ import { RuleConditions } from "./components/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription";
 import { RuleInputWrapper } from "./components/RuleInputWrapper/RuleInputWrapper";
 import { RuleReward } from "./components/RuleReward";
+import { RuleSummary } from "./components/RuleSummary";
 
 interface RuleProps {
   channels: ChannelFragment[];
@@ -85,10 +86,23 @@ export const Rule = ({
     }
   }, [currencySymbol]);
 
+  const getRuleName = () => {
+    if (ruleName) {
+      return `: ${ruleName}`;
+    }
+
+    return "";
+  };
+
   return (
     <RichTextContext.Provider value={richText}>
       <RuleAccordion
-        title={intl.formatMessage(messages.catalogRule) + `: ${ruleName}`}
+        title={
+          <Box display="flex" flexDirection="column" gap={1}>
+            {intl.formatMessage(messages.catalogRule) + getRuleName()}
+            <RuleSummary ruleIndex={index} currencySymbol={currencySymbol} />
+          </Box>
+        }
         collapsedTitle={intl.formatMessage(messages.catalogRule)}
       >
         <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
