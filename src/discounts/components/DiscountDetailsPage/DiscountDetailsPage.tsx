@@ -27,7 +27,7 @@ import { filterRules } from "./utils";
 
 export interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
-  conditionLabels: Record<string, string>;
+  ruleConditionsOptionsDetailsMap: Record<string, string>;
   data: PromotionDetailsFragment | undefined;
   disabled: boolean;
   errors: PromotionUpdateErrorFragment[];
@@ -38,7 +38,7 @@ export interface DiscountDetailsPageProps {
 
 export const DiscountDetailsPage = ({
   channels,
-  conditionLabels,
+  ruleConditionsOptionsDetailsMap,
   disabled,
   data,
   errors,
@@ -60,7 +60,9 @@ export const DiscountDetailsPage = ({
       name: data?.name ?? "",
       description: JSON.stringify(data?.description),
       rules:
-        data?.rules?.map(rule => RuleDTO.fromAPI(rule, conditionLabels)) ?? [],
+        data?.rules?.map(rule =>
+          RuleDTO.fromAPI(rule, ruleConditionsOptionsDetailsMap),
+        ) ?? [],
     },
   });
 

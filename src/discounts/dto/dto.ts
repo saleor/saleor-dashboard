@@ -23,7 +23,7 @@ export class RuleDTO {
 
   static fromAPI(
     rule: PromotionRuleDetailsFragment,
-    conditionLabels: Record<string, string>,
+    ruleConditionsOptionsDetailsMap: Record<string, string>,
   ): Rule {
     return {
       id: rule.id,
@@ -37,7 +37,7 @@ export class RuleDTO {
       rewardValueType: rule.rewardValueType ?? RewardValueTypeEnum.FIXED,
       conditions: prepareRuleConditions(
         rule.cataloguePredicate,
-        conditionLabels,
+        ruleConditionsOptionsDetailsMap,
       ),
     };
   }
@@ -58,14 +58,14 @@ export class ConditionDTO {
 
   static fromAPI(
     condition: CataloguePredicateAPI,
-    conditionLabels: Record<string, string>,
+    ruleConditionsOptionsDetailsMap: Record<string, string>,
   ): Condition {
     if (condition.productPredicate) {
       return {
         type: "product",
         condition: "is",
         values: condition.productPredicate.ids.map(id => ({
-          label: conditionLabels[id] || id,
+          label: ruleConditionsOptionsDetailsMap[id] || id,
           value: id,
         })),
       };
@@ -76,7 +76,7 @@ export class ConditionDTO {
         type: "category",
         condition: "is",
         values: condition.categoryPredicate.ids.map(id => ({
-          label: conditionLabels[id] || id,
+          label: ruleConditionsOptionsDetailsMap[id] || id,
           value: id,
         })),
       };
@@ -87,7 +87,7 @@ export class ConditionDTO {
         type: "collection",
         condition: "is",
         values: condition.collectionPredicate.ids.map(id => ({
-          label: conditionLabels[id] || id,
+          label: ruleConditionsOptionsDetailsMap[id] || id,
           value: id,
         })),
       };
@@ -97,7 +97,7 @@ export class ConditionDTO {
         type: "variant",
         condition: "is",
         values: condition.variantPredicate.ids.map(id => ({
-          label: conditionLabels[id] || id,
+          label: ruleConditionsOptionsDetailsMap[id] || id,
           value: id,
         })),
       };
@@ -128,38 +128,25 @@ function prepareCataloguePredicate(
 }
 
 function prepareRuleConditions(
-  cataloguePredicate: PromotionRuleDetailsFragment["cataloguePredicate"],
-  conditionLabels: Record<string, string>,
+  cataloguePredicate: CataloguePredicateAPI,
+  ruleConditionsOptionsDetailsMap: Record<string, string>,
 ): Condition[] {
   return Object.entries(cataloguePredicate)
     .map(([key, value]) => {
       if (key === "OR") {
-        return prepareRuleConditions(value, conditionLabels);
+        return prepareRuleConditions(
+          value.reduce((acc, val) => {
+            acc = { ...acc, ...val };
+            return acc;
+          }, {}),
+          ruleConditionsOptionsDetailsMap,
+        );
       }
 
       return ConditionDTO.fromAPI(
         { [key]: value } as unknown as CataloguePredicateAPI,
-        conditionLabels,
+        ruleConditionsOptionsDetailsMap,
       );
     })
     .flat();
 }
-
-// {
-//   "errors": [
-//     {
-//       "message": "Variable \"$input\" got invalid value {\"addChannels\": [], \"cataloguePredicate\": {\"productPredicate\": {\"ids\": []}}, \"description\": null, \"name\": \"\", \"removeChannels\": [], \"rewardValue\": \"\", \"rewardValueType\": \"PERCENTAGE\"}.\nIn field \"rewardValue\": Expected type \"PositiveDecimal\", found \"\".",
-//       "locations": [
-//         {
-//           "line": 1,
-//           "column": 40
-//         }
-//       ],
-//       "extensions": {
-//         "exception": {
-//           "code": "GraphQLError"
-//         }
-//       }
-//     }
-//   ]
-// }

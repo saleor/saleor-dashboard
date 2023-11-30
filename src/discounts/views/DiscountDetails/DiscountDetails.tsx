@@ -3,7 +3,6 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage";
 import { DiscountUrlQueryParams, saleListUrl } from "@dashboard/discounts/urls";
 import {
-  useConditionsDetailsQuery,
   usePromotionDetailsQuery,
   usePromotionRuleCreateMutation,
   usePromotionRuleUpdateMutation,
@@ -17,7 +16,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { createUpdateHandler } from "./handlers";
-import { getAllConditionsIds, getConditonLabels } from "./utils";
+import {
+  getRuleConditionsOptionsDetailsMap,
+  useFetchConditionsOptionsDetails,
+} from "./hooks/useFetchConditionsOptionsDetails";
 
 interface DiscountDetailsProps {
   id: string;
@@ -36,11 +38,8 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
     },
   });
 
-  const { data: conditionData } = useConditionsDetailsQuery({
-    variables: {
-      ...getAllConditionsIds(promotionData),
-    },
-  });
+  const ruleConditionsOptionsDetails =
+    useFetchConditionsOptionsDetails(promotionData);
 
   const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation();
 
@@ -75,7 +74,9 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           promotionRuleCreateOpts.loading ||
           promotionRuleUpdateOpts.loading
         }
-        conditionLabels={getConditonLabels(conditionData)}
+        ruleConditionsOptionsDetailsMap={getRuleConditionsOptionsDetailsMap(
+          ruleConditionsOptionsDetails,
+        )}
         onBack={() => {
           navigate(saleListUrl());
         }}

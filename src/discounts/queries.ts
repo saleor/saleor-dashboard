@@ -128,8 +128,8 @@ export const promotionDetails = gql`
   }
 `;
 
-export const conditionsDetials = gql`
-  query conditionsDetails(
+export const ruleConditionsSelectedOptionsDetails = gql`
+  query RuleConditionsSelectedOptionsDetails(
     $categoriesIds: [ID!]
     $collectionsIds: [ID!]
     $productsIds: [ID!]
