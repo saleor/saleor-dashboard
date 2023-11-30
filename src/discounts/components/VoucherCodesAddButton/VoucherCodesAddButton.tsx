@@ -58,7 +58,7 @@ export const VoucherCodesAddButton = ({
           data-test-id="add-code-button"
           type="button"
           backgroundColor="default1"
-          color="default3"
+          color="default1"
         >
           <PlusIcon />
           {intl.formatMessage(messages.addCode)}
