@@ -14,14 +14,11 @@ import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
-import { RuleAccordion } from "./components/RuleAccordion/RuleAccordion";
 import { RuleConditions } from "./components/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription";
 import { RuleInputWrapper } from "./components/RuleInputWrapper/RuleInputWrapper";
 import { RuleReward } from "./components/RuleReward";
-import { RuleSummary } from "./components/RuleSummary";
 
 interface RuleProps {
   channels: ChannelFragment[];
@@ -57,7 +54,7 @@ export const Rule = ({
     name: channelNameField,
   });
 
-  const ruleName = watch(`rules.${index}.name`);
+  // const ruleName = watch(`rules.${index}.name`);
   const selectedChannels = watch(`rules.${index}.channels`);
   const currencySymbol = getCurencySymbol(selectedChannels, channels);
 
@@ -86,64 +83,46 @@ export const Rule = ({
     }
   }, [currencySymbol]);
 
-  const getRuleName = () => {
-    if (ruleName) {
-      return `: ${ruleName}`;
-    }
-
-    return "";
-  };
-
   return (
     <RichTextContext.Provider value={richText}>
-      <RuleAccordion
-        title={
-          <Box display="flex" flexDirection="column" gap={1}>
-            {intl.formatMessage(messages.catalogRule) + getRuleName()}
-            <RuleSummary ruleIndex={index} currencySymbol={currencySymbol} />
-          </Box>
-        }
-        collapsedTitle={intl.formatMessage(messages.catalogRule)}
-      >
-        <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
-          <RuleInputWrapper>
-            <Input
-              {...nameField}
-              disabled={disabled || nameField.disabled}
-              size="small"
-              label="Name"
+      <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
+        <RuleInputWrapper>
+          <Input
+            {...nameField}
+            disabled={disabled || nameField.disabled}
+            size="small"
+            label="Name"
+          />
+        </RuleInputWrapper>
+
+        <RuleDescription disabled={disabled} index={index} />
+
+        <RuleInputWrapper>
+          <Multiselect
+            {...channelsfield}
+            size="small"
+            label="Channels"
+            options={channelOptions}
+            fetchOptions={() => {}}
+            disabled={disabled || channelsfield.disabled}
+          />
+        </RuleInputWrapper>
+
+        {selectedChannels.length > 0 ? (
+          <>
+            <RuleConditions disabled={disabled} index={index} />
+            <RuleReward
+              disabled={disabled}
+              index={index}
+              currencySymbol={currencySymbol}
+              error={getCommonFormFieldErrorMessage(
+                formErrors.rewardValue,
+                intl,
+              )}
             />
-          </RuleInputWrapper>
-
-          <RuleDescription disabled={disabled} index={index} />
-
-          <RuleInputWrapper>
-            <Multiselect
-              {...channelsfield}
-              size="small"
-              label="Channels"
-              options={channelOptions}
-              fetchOptions={() => {}}
-              disabled={disabled || channelsfield.disabled}
-            />
-          </RuleInputWrapper>
-
-          {selectedChannels.length > 0 ? (
-            <>
-              <RuleConditions disabled={disabled} index={index} />
-              <RuleReward
-                disabled={disabled}
-                index={index}
-                currencySymbol={currencySymbol}
-                error={getCommonFormFieldErrorMessage(
-                  formErrors.rewardValue,
-                  intl,
-                )}
-              />
-            </>
-          ) : null}
-        </Box>
-      </RuleAccordion>
+          </>
+        ) : null}
+      </Box>
     </RichTextContext.Provider>
   );
 };

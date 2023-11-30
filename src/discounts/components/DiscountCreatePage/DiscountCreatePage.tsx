@@ -82,9 +82,9 @@ export const DiscountCreatePage = ({
                 disabled={disabled}
               />
               <DiscountRules
-                errors={errors}
                 channels={channels}
                 disabled={disabled}
+                onRuleEdit={() => {}}
               />
             </form>
           </FormProvider>

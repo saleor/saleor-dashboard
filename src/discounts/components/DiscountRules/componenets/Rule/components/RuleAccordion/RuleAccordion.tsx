@@ -1,38 +1,24 @@
-import { Accordion, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode, useState } from "react";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import React, { ReactNode } from "react";
 
 interface RuleAccordionProps {
   children: ReactNode;
-  title: ReactNode;
-  collapsedTitle?: ReactNode;
+  onClick?: () => void;
 }
 
-export const RuleAccordion = ({
-  children,
-  title,
-  collapsedTitle,
-}: RuleAccordionProps) => {
-  const [collapsedId, setCollapsedId] = useState("ruleItem");
-
+export const RuleAccordion = ({ children, onClick }: RuleAccordionProps) => {
   return (
-    <Accordion value={collapsedId} onValueChange={setCollapsedId}>
-      <Accordion.Item
-        value="ruleItem"
-        borderRadius={4}
-        borderColor="neutralPlain"
-        borderWidth={1}
-        borderStyle="solid"
-        padding={4}
-        backgroundColor={
-          collapsedId === "ruleItem" ? "surfaceNeutralSubdued" : "plain"
-        }
-      >
-        <Accordion.Trigger>
-          <Text variant="heading">{collapsedId ? collapsedTitle : title}</Text>
-          <Accordion.TriggerButton />
-        </Accordion.Trigger>
-        <Accordion.Content>{children}</Accordion.Content>
-      </Accordion.Item>
-    </Accordion>
+    <Box
+      onClick={onClick}
+      cursor="pointer"
+      borderRadius={4}
+      borderColor="neutralPlain"
+      borderWidth={1}
+      borderStyle="solid"
+      padding={4}
+      backgroundColor="plain"
+    >
+      <Text variant="heading">{children}</Text>
+    </Box>
   );
 };

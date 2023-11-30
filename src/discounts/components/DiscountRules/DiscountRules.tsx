@@ -1,9 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DiscoutFormData } from "@dashboard/discounts/types";
-import {
-  ChannelFragment,
-  PromotionCreateErrorFragment,
-} from "@dashboard/graphql";
+import { ChannelFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray } from "react-hook-form";
@@ -17,13 +14,13 @@ import { messages } from "./messages";
 interface DiscountRulesProps {
   disabled?: boolean;
   channels: ChannelFragment[];
-  errors: PromotionCreateErrorFragment[];
+  onRuleEdit: (id: string) => void;
 }
 
 export const DiscountRules = ({
-  channels,
   disabled,
-  errors,
+  onRuleEdit,
+  channels,
 }: DiscountRulesProps) => {
   const intl = useIntl();
   const { append, fields: rules } = useFieldArray<DiscoutFormData, "rules">({
@@ -46,12 +43,7 @@ export const DiscountRules = ({
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <RulesList
-          disabled={disabled}
-          rules={rules}
-          channels={channels}
-          errors={errors}
-        />
+        <RulesList rules={rules} onClick={onRuleEdit} channels={channels} />
       </DashboardCard.Content>
     </DashboardCard>
   );
