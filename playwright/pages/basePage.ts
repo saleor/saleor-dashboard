@@ -14,7 +14,7 @@ export class BasePage {
   constructor(page: Page) {
     this.page = page;
     this.pageHeader = page.getByTestId("page-header");
-    this.gridCanvas = page.locator(`[data-testid="data-grid-canvas]`);
+    this.gridCanvas = page.locator('[data-testid="data-grid-canvas"]');
     this.gridInput = this.page.locator('[class="clip-region"]').locator("textarea")
     this.successBanner = page.locator(LOCATORS.successBanner);
     this.errorBanner = page.locator(LOCATORS.errorBanner);
