@@ -3,19 +3,19 @@ import { URL_LIST } from "@data/url";
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
-const DEFAULT_GRID_TEST_ID = "data-grid-canvas"
-
 export class BasePage {
   readonly page: Page;
   readonly pageHeader: Locator;
   readonly gridCanvas: Locator;
   readonly successBanner: Locator;
   readonly errorBanner: Locator;
+  readonly gridInput: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.pageHeader = page.getByTestId("page-header");
-    this.gridCanvas = page.locator(`[data-testid="${DEFAULT_GRID_TEST_ID}"]`);
+    this.gridCanvas = page.locator(`[data-testid="data-grid-canvas]`);
+    this.gridInput = this.page.locator('[class="clip-region"]').locator("textarea")
     this.successBanner = page.locator(LOCATORS.successBanner);
     this.errorBanner = page.locator(LOCATORS.errorBanner);
   }
@@ -52,7 +52,7 @@ export class BasePage {
   }
   
   async waitForGrid() {
-    await this.page.locator(`[data-testid="${DEFAULT_GRID_TEST_ID}"] > table`)
+    await this.gridCanvas.locator("table")
       .waitFor({ state: "attached", timeout: 10000 })
   }
 
@@ -106,7 +106,7 @@ export class BasePage {
     if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`)
 
     await this.page.mouse.dblclick(bounds.center.x, bounds.center.y)
-    await this.page.locator('[class="clip-region"]').waitFor({ state: "attached" });
-    await this.page.locator('[class="clip-region"]').locator("textarea").fill(content);
+    await this.gridInput.waitFor({ state: "attached" });
+    await this.gridInput.fill(content);
   }
 }
