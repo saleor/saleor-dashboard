@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Stop deploying dashbaord to demos
+Stop deploying dashboard to demos
