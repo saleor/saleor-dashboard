@@ -12,6 +12,7 @@ import {
   pillCell,
   readonlyTextCell,
   statusCell,
+  tagsCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import {
@@ -77,6 +78,16 @@ export const productListStaticColumnAdapter = (
       id: "price",
       title: intl.formatMessage(columnsMessages.price),
       width: 250,
+    },
+    {
+      id: "productCategory",
+      title: intl.formatMessage(columnsMessages.category),
+      width: 200,
+    },
+    {
+      id: "productCollections",
+      title: intl.formatMessage(columnsMessages.collections),
+      width: 300,
     },
   ].map(column => ({
     ...column,
@@ -203,6 +214,10 @@ export function createGetCellContent({
         return getPriceCellContent(channel);
       case "date":
         return getDateCellContent(rowData);
+      case "productCategory":
+        return getCategoryCellContent(theme, rowData);
+      case "productCollections":
+        return getCollectionsCellContent(theme, rowData);
     }
 
     if (columnId.startsWith("attribute")) {
@@ -229,6 +244,51 @@ function getProductTypeCellContent(
       ? hueToPillColorDark(hue)
       : hueToPillColorLight(hue);
   return pillCell(rowData.productType?.name, color);
+}
+
+function getCategoryCellContent(
+  theme: DefaultTheme,
+  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+) {
+  if (!rowData.category) {
+    return readonlyTextCell("-");
+  }
+
+  const hue = stringToHue(rowData.category?.name);
+  const color =
+    theme === "defaultDark"
+      ? hueToPillColorDark(hue)
+      : hueToPillColorLight(hue);
+  return pillCell(rowData.category?.name, color);
+}
+
+function getCollectionsCellContent(
+  theme: DefaultTheme,
+  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+) {
+  if (rowData.collections === undefined || rowData.collections.length === 0) {
+    return readonlyTextCell("-");
+  }
+
+  const tags = rowData.collections.map(collection => {
+    const hue = stringToHue(collection.name);
+    const color =
+      theme === "defaultDark"
+        ? hueToPillColorDark(hue)
+        : hueToPillColorLight(hue);
+    return {
+      tag: collection.name,
+      color: color.base,
+    };
+  });
+  return tagsCell(
+    tags,
+    tags.map(tag => tag.tag),
+    {
+      readonly: true,
+      allowOverlay: false,
+    },
+  );
 }
 
 function getAvailabilityCellContent(

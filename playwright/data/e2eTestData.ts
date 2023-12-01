@@ -11,6 +11,11 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3MzM%3D",
     info: "Product that contains single variant",
   },
+  productWithOneVariantToBeDeletedFromDetails: {
+    name: "beer to be deleted",
+    id: "UHJvZHVjdDo3NTc%3D",
+    info: "Product that contains single variant - to be deleted from details view",
+  },
 };
 
 export const SHIPPING_METHODS = {

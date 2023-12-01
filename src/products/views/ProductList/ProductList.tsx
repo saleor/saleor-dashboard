@@ -305,7 +305,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const sort = getSortQueryVariables(params, !!selectedChannel);
   const queryVariables = React.useMemo<
-    Omit<ProductListQueryVariables, "hasChannel" | "hasSelectedAttributes">
+    Omit<
+      ProductListQueryVariables,
+      | "hasChannel"
+      | "hasSelectedAttributes"
+      | "includeCategories"
+      | "includeCollections"
+    >
   >(
     () => ({
       ...paginationState,
@@ -324,6 +330,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     variables: {
       ...queryVariables,
       hasChannel: !!selectedChannel,
+      includeCategories: settings.columns.includes("productCategory"),
+      includeCollections: settings.columns.includes("productCollections"),
     },
     skip: valueProvider.loading,
   });
