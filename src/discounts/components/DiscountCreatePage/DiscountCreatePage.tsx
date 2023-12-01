@@ -2,7 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
 import {
   ChannelFragment,
@@ -12,7 +12,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React from "react";
+import React, { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -20,6 +20,7 @@ import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
+import { RuleModal } from "../DiscountRules/componenets/RuleModal/RuleModal";
 import { initialFormValues } from "./initialFormValues";
 
 export interface DiscountCreatePageProps {
@@ -40,6 +41,9 @@ export const DiscountCreatePage = ({
   onSubmit,
 }: DiscountCreatePageProps) => {
   const intl = useIntl();
+  const [showRuleModal, setShowRuleModal] = useState(false);
+  const [rules, setRules] = useState<Rule[]>([]);
+  const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
 
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
@@ -53,7 +57,10 @@ export const DiscountCreatePage = ({
   });
 
   const handleSubmit: SubmitHandler<DiscoutFormData> = data => {
-    onSubmit(data);
+    onSubmit({
+      ...data,
+      rules,
+    });
   };
 
   const formErrors = getFormErrors(["name"], errors);
@@ -82,9 +89,15 @@ export const DiscountCreatePage = ({
                 disabled={disabled}
               />
               <DiscountRules
+                errors={errors}
                 channels={channels}
                 disabled={disabled}
-                onRuleEdit={() => {}}
+                onRuleEdit={editIndex => {
+                  setRuleEditIndex(Number(editIndex));
+                  setShowRuleModal(true);
+                }}
+                onRuleAdd={() => setShowRuleModal(true)}
+                rules={rules}
               />
             </form>
           </FormProvider>
@@ -96,6 +109,33 @@ export const DiscountCreatePage = ({
           onSubmit={methods.handleSubmit(handleSubmit)}
           state={submitButtonState}
         />
+
+        {showRuleModal && (
+          <RuleModal
+            onClose={() => {
+              setShowRuleModal(false);
+              setRuleEditIndex(null);
+            }}
+            channels={channels}
+            initialFormValues={
+              ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
+            }
+            errors={errors.filter(error => error.index === ruleEditIndex)}
+            onSubmit={data => {
+              if (ruleEditIndex) {
+                setRules(rules => {
+                  rules[ruleEditIndex] = data;
+                  return rules;
+                });
+              } else {
+                setRules([...rules, data]);
+              }
+
+              setRuleEditIndex(null);
+              setShowRuleModal(false);
+            }}
+          />
+        )}
       </DetailPageLayout>
     </RichTextContext.Provider>
   );

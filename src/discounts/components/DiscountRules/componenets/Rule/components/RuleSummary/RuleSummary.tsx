@@ -1,25 +1,17 @@
-import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/types";
 import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { Chip, Text } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
-import { useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../../../messages";
 
 interface RuleSummaryProps {
-  ruleIndex: number;
+  rule: Rule;
   currencySymbol: string;
 }
 
-export const RuleSummary = ({
-  ruleIndex,
-  currencySymbol,
-}: RuleSummaryProps) => {
-  const { getValues } = useFormContext<DiscoutFormData>();
-
-  const rule = getValues(`rules.${ruleIndex}`);
-
+export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
   if (
     !rule.channels.length ||
     !rule.rewardValue ||

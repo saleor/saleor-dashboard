@@ -1,4 +1,4 @@
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/types";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
@@ -11,33 +11,25 @@ import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 interface RuleRewardProps {
   disabled?: boolean;
   currencySymbol: string | null;
-  index: number;
   error: string | undefined;
 }
 
 export const RuleReward = ({
-  index,
   currencySymbol,
   disabled,
   error,
 }: RuleRewardProps) => {
   const intl = useIntl();
-  const { watch } = useFormContext<DiscoutFormData>();
-  const { field: rewardTypeField } = useController<
-    DiscoutFormData,
-    `rules.${number}.rewardValueType`
-  >({
-    name: `rules.${index}.rewardValueType`,
+  const { watch } = useFormContext<Rule>();
+  const { field: rewardTypeField } = useController<Rule, "rewardValueType">({
+    name: "rewardValueType",
   });
 
-  const { field: rewardValueType } = useController<
-    DiscoutFormData,
-    `rules.${number}.rewardValue`
-  >({
-    name: `rules.${index}.rewardValue`,
+  const { field: rewardValueType } = useController<Rule, "rewardValue">({
+    name: "rewardValue",
   });
 
-  const discountType = watch(`rules.${index}.rewardValueType`);
+  const discountType = watch("rewardValueType");
 
   return (
     <>

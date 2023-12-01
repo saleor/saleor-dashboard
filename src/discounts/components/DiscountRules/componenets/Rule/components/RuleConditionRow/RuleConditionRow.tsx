@@ -1,5 +1,5 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { Box, Button, Option, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -16,7 +16,6 @@ export interface FetchOptions {
 }
 interface DiscountConditionRowProps {
   disabled?: boolean;
-  ruleIndex: number;
   conditionIndex: number;
   onRemove: () => void;
   fetchOptions: FetchOptions;
@@ -24,7 +23,6 @@ interface DiscountConditionRowProps {
 }
 
 export const RuleConditionRow = ({
-  ruleIndex,
   conditionIndex,
   onRemove,
   fetchOptions,
@@ -32,18 +30,18 @@ export const RuleConditionRow = ({
   disabled = false,
 }: DiscountConditionRowProps) => {
   const ruleConditionTypeFieldName =
-    `rules.${ruleIndex}.conditions.${conditionIndex}.type` as const;
+    `conditions.${conditionIndex}.type` as const;
   const { field: typeField } = useController<
-    DiscoutFormData,
+    Rule,
     typeof ruleConditionTypeFieldName
   >({
     name: ruleConditionTypeFieldName,
   });
 
   const ruleConditionValuesFieldName =
-    `rules.${ruleIndex}.conditions.${conditionIndex}.values` as const;
+    `conditions.${conditionIndex}.values` as const;
   const { field: valuesField } = useController<
-    DiscoutFormData,
+    Rule,
     typeof ruleConditionValuesFieldName
   >({
     name: ruleConditionValuesFieldName,

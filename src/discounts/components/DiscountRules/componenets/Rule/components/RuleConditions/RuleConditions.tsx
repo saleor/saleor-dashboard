@@ -1,5 +1,5 @@
 import { intialConditionValues } from "@dashboard/discounts/components/DiscountCreatePage/initialFormValues";
-import { ConditionType, DiscoutFormData } from "@dashboard/discounts/types";
+import { ConditionType, Rule } from "@dashboard/discounts/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
@@ -14,27 +14,19 @@ import { useProductSearch } from "./hooks/useProductSearch";
 import { useVariantSearch } from "./hooks/useVariantSearch";
 
 interface RuleConditionsProps {
-  index: number;
   disabled?: boolean;
 }
 
-export const RuleConditions = ({
-  index,
-  disabled = false,
-}: RuleConditionsProps) => {
+export const RuleConditions = ({ disabled = false }: RuleConditionsProps) => {
   const intl = useIntl();
 
-  const { watch } = useFormContext<DiscoutFormData>();
+  const { watch } = useFormContext<Rule>();
 
-  const conditionFieldName = `rules.${index}.conditions` as const;
-  const { append, remove } = useFieldArray<
-    DiscoutFormData,
-    typeof conditionFieldName
-  >({
-    name: conditionFieldName,
+  const { append, remove } = useFieldArray<Rule, "conditions">({
+    name: "conditions",
   });
 
-  const conditionsList = watch(conditionFieldName);
+  const conditionsList = watch("conditions");
 
   const productSearch = useProductSearch();
   const collectionSearch = useCollectionSearch();
@@ -65,7 +57,6 @@ export const RuleConditions = ({
             fetchOptions={typeToFetchMap[condition.type]}
             isConditionTypeSelected={isConditionTypeSelected}
             key={condition.type}
-            ruleIndex={index}
             conditionIndex={conditionIndex}
             onRemove={() => {
               remove(conditionIndex);

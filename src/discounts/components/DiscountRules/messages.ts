@@ -46,4 +46,16 @@ export const messages = defineMessages({
     id: "w/pqbB",
     defaultMessage: "and {itemsLength} more {type}",
   },
+  createRule: {
+    id: "9d24PR",
+    defaultMessage: "Create rule",
+  },
+  editRule: {
+    id: "v1vJ77",
+    defaultMessage: "Edit rule",
+  },
+  ruleError: {
+    id: "zehNKT",
+    defaultMessage: "Rule has error, open rule to see details",
+  },
 });

@@ -1,22 +1,31 @@
 import { Rule as RuleType } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
-import { Box } from "@saleor/macaw-ui-next";
+import { CommonError } from "@dashboard/utils/errors/common";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
 import { Placeholder } from "../Placeholder";
-import { RuleAccordion } from "../Rule/components/RuleAccordion";
 import { RuleSummary } from "../Rule/components/RuleSummary";
+import { RuleWrapper } from "../Rule/components/RuleWrapper";
 
-interface RulesListProps {
-  rules: Array<RuleType & { id: string }>;
+interface RulesListProps<ErrorCode> {
+  rules: RuleType[];
+  disabled?: boolean;
   channels: ChannelFragment[];
+  errors: Array<CommonError<ErrorCode> & { index?: number }>;
   onClick?: (id: string) => void;
 }
 
-export const RulesList = ({ rules, onClick, channels }: RulesListProps) => {
+export const RulesList = <ErrorCode,>({
+  rules,
+  errors,
+  onClick,
+  channels,
+  disabled,
+}: RulesListProps<ErrorCode>) => {
   const intl = useIntl();
   if (rules.length === 0) {
     return <Placeholder />;
@@ -31,17 +40,32 @@ export const RulesList = ({ rules, onClick, channels }: RulesListProps) => {
 
   return (
     <Box display="flex" flexDirection="column" gap={6}>
-      {rules.map((rule, index) => (
-        <RuleAccordion key={rule.id} onClick={() => onClick(rule.id)}>
-          <Box display="flex" flexDirection="column" gap={1}>
-            {intl.formatMessage(messages.catalogRule) + getRuleName(rule.name)}
-            <RuleSummary
-              ruleIndex={index}
-              currencySymbol={getCurencySymbol(rule.channels, channels)}
-            />
-          </Box>
-        </RuleAccordion>
-      ))}
+      {rules.map((rule, index) => {
+        const hasError = errors.some(error => error.index === index);
+
+        return (
+          <RuleWrapper
+            key={rule.id || index}
+            disabled={disabled}
+            onClick={() => onClick(rule.id || index.toString())}
+            hasError={hasError}
+          >
+            <Box display="flex" flexDirection="column" gap={1}>
+              {intl.formatMessage(messages.catalogRule) +
+                getRuleName(rule.name)}
+              <RuleSummary
+                rule={rule}
+                currencySymbol={getCurencySymbol(rule.channels, channels)}
+              />
+              {hasError && (
+                <Text color="textCriticalSubdued">
+                  {intl.formatMessage(messages.ruleError)}
+                </Text>
+              )}
+            </Box>
+          </RuleWrapper>
+        );
+      })}
     </Box>
   );
 };

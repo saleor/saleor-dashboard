@@ -1617,6 +1617,9 @@
     "context": "cancel button",
     "string": "Cancel order"
   },
+  "9d24PR": {
+    "string": "Create rule"
+  },
   "9eC0MZ": {
     "context": "collection",
     "string": "Hidden"
@@ -3629,6 +3632,9 @@
   "NgCb99": {
     "context": "order line discount updated title",
     "string": "{productName} discount was updated by"
+  },
+  "NgRa6m": {
+    "string": "Discount of {value} on the purchase of {items} through the {channel}"
   },
   "NhQboB": {
     "context": "dialog header",
@@ -8356,6 +8362,9 @@
   "v1pNHW": {
     "string": "Attribute Class"
   },
+  "v1vJ77": {
+    "string": "Edit rule"
+  },
   "v2+u4c": {
     "context": "card subtitle",
     "string": "Assign and sort warehouses that will be used in this channel (warehouses can be assigned in multiple channels)."
@@ -8511,6 +8520,9 @@
   "w+8BfK": {
     "context": "button",
     "string": "Edit Address"
+  },
+  "w/pqbB": {
+    "string": "and {itemsLength} more {type}"
   },
   "w2Cewo": {
     "string": "Search engine title"
@@ -8968,6 +8980,9 @@
   "zbJHl7": {
     "context": "attribute type",
     "string": "Content Attribute"
+  },
+  "zehNKT": {
+    "string": "Rule has error, open rule to see details"
   },
   "zf48rQ": {
     "context": "sum of captured amount of all transactions",

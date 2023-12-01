@@ -1,49 +1,49 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
+import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useFieldArray } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { initialRuleValues } from "../DiscountCreatePage/initialFormValues";
 import { AddButton } from "./componenets/AddButton";
 import { RulesList } from "./componenets/RulesList";
 import { messages } from "./messages";
 
-interface DiscountRulesProps {
+interface DiscountRulesProps<ErrorCode> {
   disabled?: boolean;
   channels: ChannelFragment[];
+  rules: Rule[];
+  errors: Array<CommonError<ErrorCode> & { index?: number }>;
   onRuleEdit: (id: string) => void;
+  onRuleAdd: () => void;
 }
 
-export const DiscountRules = ({
+export const DiscountRules = <ErrorCode,>({
   disabled,
-  onRuleEdit,
   channels,
-}: DiscountRulesProps) => {
+  rules,
+  errors,
+  onRuleEdit,
+  onRuleAdd,
+}: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
-  const { append, fields: rules } = useFieldArray<DiscoutFormData, "rules">({
-    name: "rules",
-  });
 
   return (
     <DashboardCard marginBottom={20}>
       <DashboardCard.Title>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {intl.formatMessage(messages.title)}
-          <AddButton
-            disabled={disabled}
-            onCatalogClick={() =>
-              append({
-                ...initialRuleValues,
-              })
-            }
-          />
+          <AddButton disabled={disabled} onCatalogClick={onRuleAdd} />
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <RulesList rules={rules} onClick={onRuleEdit} channels={channels} />
+        <RulesList
+          rules={rules}
+          onClick={onRuleEdit}
+          channels={channels}
+          errors={errors}
+        />
       </DashboardCard.Content>
     </DashboardCard>
   );

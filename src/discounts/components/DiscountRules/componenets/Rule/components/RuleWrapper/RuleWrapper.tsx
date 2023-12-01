@@ -1,18 +1,25 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 
-interface RuleAccordionProps {
+interface RuleWrapperProps {
   children: ReactNode;
+  hasError?: boolean;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-export const RuleAccordion = ({ children, onClick }: RuleAccordionProps) => {
+export const RuleWrapper = ({
+  children,
+  disabled,
+  hasError,
+  onClick,
+}: RuleWrapperProps) => {
   return (
     <Box
-      onClick={onClick}
-      cursor="pointer"
+      onClick={!disabled ? onClick : undefined}
+      cursor={disabled ? "not-allowed" : "pointer"}
       borderRadius={4}
-      borderColor="neutralPlain"
+      borderColor={hasError ? "criticalSubdued" : "neutralPlain"}
       borderWidth={1}
       borderStyle="solid"
       padding={4}

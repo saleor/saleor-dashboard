@@ -1,12 +1,14 @@
 import { Multiselect } from "@dashboard/components/Combobox";
-import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
   ChannelFragment,
   PromotionCreateErrorFragment,
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
+import {
+  CommonError,
+  getCommonFormFieldErrorMessage,
+} from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { Box, Input, Option } from "@saleor/macaw-ui-next";
@@ -14,6 +16,7 @@ import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
+import { Rule as RuleType } from "../../../../types";
 import { getCurencySymbol } from "../../utils";
 import { RuleConditions } from "./components/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription";
@@ -22,44 +25,29 @@ import { RuleReward } from "./components/RuleReward";
 
 interface RuleProps {
   channels: ChannelFragment[];
-  index: number;
   disabled?: boolean;
-  errors: PromotionCreateErrorFragment[];
+  errors: Array<CommonError<PromotionCreateErrorFragment["code"]>>;
 }
 
-export const Rule = ({
-  channels,
-  index,
-  disabled = false,
-  errors,
-}: RuleProps) => {
+export const Rule = ({ channels, disabled = false, errors }: RuleProps) => {
   const intl = useIntl();
-  const { watch, getValues, setValue } = useFormContext<DiscoutFormData>();
+  const { watch, getValues, setValue } = useFormContext<RuleType>();
   const formErrors = getFormErrors(["rewardValue"], errors);
 
-  const ruleNameField = `rules.${index}.name` as const;
-  const { trigger } = useFormContext<DiscoutFormData>();
-  const { field: nameField } = useController<
-    DiscoutFormData,
-    typeof ruleNameField
-  >({
-    name: ruleNameField,
+  const { trigger } = useFormContext<RuleType>();
+  const { field: nameField } = useController<RuleType, "name">({
+    name: "name",
   });
 
-  const channelNameField = `rules.${index}.channels` as const;
-  const { field: channelsfield } = useController<
-    DiscoutFormData,
-    typeof channelNameField
-  >({
-    name: channelNameField,
+  const { field: channelsfield } = useController<RuleType, "channels">({
+    name: "channels",
   });
 
-  // const ruleName = watch(`rules.${index}.name`);
-  const selectedChannels = watch(`rules.${index}.channels`);
-  const currencySymbol = getCurencySymbol(selectedChannels, channels);
+  const selectedChannels = watch("channels");
+  const currencySymbol = getCurencySymbol(selectedChannels ?? [], channels);
 
   const richText = useRichText({
-    initial: getValues(`rules.${index}.description`),
+    initial: getValues("description"),
     loading: false,
     triggerChange: trigger,
   });
@@ -76,10 +64,7 @@ export const Rule = ({
   useEffect(() => {
     // Restart reward type to percentage if  no currency
     if (!currencySymbol) {
-      setValue(
-        `rules.${index}.rewardValueType`,
-        RewardValueTypeEnum.PERCENTAGE,
-      );
+      setValue("rewardValueType", RewardValueTypeEnum.PERCENTAGE);
     }
   }, [currencySymbol]);
 
@@ -95,7 +80,7 @@ export const Rule = ({
           />
         </RuleInputWrapper>
 
-        <RuleDescription disabled={disabled} index={index} />
+        <RuleDescription disabled={disabled} />
 
         <RuleInputWrapper>
           <Multiselect
@@ -108,12 +93,11 @@ export const Rule = ({
           />
         </RuleInputWrapper>
 
-        {selectedChannels.length > 0 ? (
+        {selectedChannels?.length > 0 ? (
           <>
-            <RuleConditions disabled={disabled} index={index} />
+            <RuleConditions disabled={disabled} />
             <RuleReward
               disabled={disabled}
-              index={index}
               currencySymbol={currencySymbol}
               error={getCommonFormFieldErrorMessage(
                 formErrors.rewardValue,

@@ -1,6 +1,6 @@
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/types";
 import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -11,13 +11,11 @@ import { useIntl } from "react-intl";
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 
 interface RuleDescriptionProps {
-  index: number;
   disabled?: boolean;
   error?: boolean;
 }
 
 export const RuleDescription = ({
-  index,
   disabled = false,
   error = false,
 }: RuleDescriptionProps) => {
@@ -25,11 +23,8 @@ export const RuleDescription = ({
   const { defaultValue, editorRef, isReadyForMount, handleChange } =
     useRichTextContext();
 
-  const { field } = useController<
-    DiscoutFormData,
-    `rules.${number}.description`
-  >({
-    name: `rules.${index}.description`,
+  const { field } = useController<Rule, "description">({
+    name: "description",
   });
 
   return (
