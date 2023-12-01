@@ -45,6 +45,8 @@ export default defineConfig(({ command, mode }) => {
     LOCALE_CODE,
   } = env;
 
+  console.log("CUSTOM_VERSION", CUSTOM_VERSION)
+
   const base = STATIC_URL ?? "/";
   const featureFlagsEnvs = Object.fromEntries(
     Object.entries(env).filter(([flagKey]) => flagKey.startsWith("FF_")),
