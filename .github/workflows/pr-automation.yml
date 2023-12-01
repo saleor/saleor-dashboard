@@ -163,8 +163,9 @@ jobs:
         run: |
           HASH=$(git rev-parse --short HEAD)
           CURRENT_VERSION=$(jq -r .version package.json)
-          echo "CUSTOM_VERSION=${CURRENT_VERSION}-${HASH}" >> $GITHUB_ENV
-          echo "SENTRY_RELEASE=${CURRENT_VERSION}-${HASH}" >> $GITHUB_ENV
+          RELEASE="${CURRENT_VERSION}-${HASH}"
+          echo "CUSTOM_VERSION=${RELEASE}" >> $GITHUB_ENV
+          echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
           echo "Release: $SENTRY_RELEASE"
 
       - name: Install deps
