@@ -64,6 +64,12 @@ jobs:
           environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
           echo "ENVIRONMENT=${environment}" >> $GITHUB_ENV
 
+      - name: Set sentry release
+        run: |
+          HASH=$(git rev-parse --short HEAD)
+          VERSION=$(jq -r .version package.json)
+          echo "SENTRY_RELEASE=${VERSION}-${HASH}" >> $GITHUB_ENV
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:

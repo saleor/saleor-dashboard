@@ -342,7 +342,7 @@
     "test:watch": "jest --watch src/",
     "lint": "eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix",
     "lint:check-progress": "eslint-nibble \"src/**/*.@(tsx|ts|jsx|js)\"",
-    "prebuild": "./scripts/sentry-init.sh && npm run build-types",
+    "prebuild": "npm run build-types",
     "postbuild": "./scripts/sentry-upload.sh",
     "predev": "npm run build-types",
     "release": "echo $npm_package_version | xargs git tag && git push --follow-tags",

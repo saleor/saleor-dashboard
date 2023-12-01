@@ -33,6 +33,7 @@ export default defineConfig(({ command, mode }) => {
     IS_CLOUD_INSTANCE,
     APP_MOUNT_URI,
     SENTRY_DSN,
+    SENTRY_RELEASE,
     ENVIRONMENT,
     STATIC_URL,
     APPS_MARKETPLACE_API_URI,
@@ -48,7 +49,7 @@ export default defineConfig(({ command, mode }) => {
     Object.entries(env).filter(([flagKey]) => flagKey.startsWith("FF_")),
   );
 
-  const sourcemap = SKIP_SOURCEMAPS ? false : true;
+  const sourcemap = !SKIP_SOURCEMAPS;
 
   const plugins = [
     react(),
@@ -82,7 +83,6 @@ export default defineConfig(({ command, mode }) => {
     }),
     copyOgImage(),
   ];
-
 
   if (!isDev) {
     console.log("Enabling service worker...");
@@ -142,6 +142,7 @@ export default defineConfig(({ command, mode }) => {
         ENVIRONMENT,
         DEMO_MODE,
         CUSTOM_VERSION,
+        SENTRY_RELEASE,
       },
     },
     build: {
