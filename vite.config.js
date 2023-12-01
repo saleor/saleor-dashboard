@@ -33,6 +33,7 @@ export default defineConfig(({ command, mode }) => {
     IS_CLOUD_INSTANCE,
     APP_MOUNT_URI,
     SENTRY_DSN,
+    SENTRY_RELEASE,
     ENVIRONMENT,
     STATIC_URL,
     APPS_MARKETPLACE_API_URI,
@@ -145,6 +146,7 @@ export default defineConfig(({ command, mode }) => {
         DEMO_MODE,
         CUSTOM_VERSION,
         LOCALE_CODE,
+        SENTRY_RELEASE
       },
     },
     build: {
