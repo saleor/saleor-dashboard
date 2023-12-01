@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ -z "${SENTRY_DSN}" ]]; then
+if [[ -z "${SENTRY_ORG}" ]]; then
   echo "Sentry not definied. Skipping uploading..."
 else 
   echo "Sentry processing... ($SENTRY_RELEASE)"
