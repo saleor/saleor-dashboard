@@ -3,6 +3,7 @@ import {
   OrderErrorCode,
   useFulfillmentReturnProductsMutation,
   useOrderDetailsQuery,
+  useOrderGrantRefundAddMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -15,6 +16,7 @@ import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { orderGrantRefundMessages } from "../OrderGrantRefund/messages";
 import { messages } from "./messages";
 import ReturnFormDataParser from "./utils";
 
@@ -26,6 +28,8 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
+  const [replacedOrder, setReplacedOrder] = React.useState(null);
 
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
@@ -45,7 +49,10 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
             text: intl.formatMessage(messages.successAlert),
           });
 
-          navigate(orderUrl(replaceOrder?.id || orderId));
+          // navigate(orderUrl(replaceOrder?.id || orderId));
+          if (replaceOrder?.id) {
+            setReplacedOrder(replaceOrder?.id);
+          }
 
           return;
         }
@@ -70,12 +77,25 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     },
   );
 
+  const [grantRefund] = useOrderGrantRefundAddMutation({
+    onCompleted: submitData => {
+      if (submitData.orderGrantRefundCreate.errors.length === 0) {
+        navigate(orderUrl(orderId), { replace: true });
+        notify({
+          status: "success",
+          text: intl.formatMessage(orderGrantRefundMessages.formSubmitted, {
+            orderNumber: data?.order?.number,
+          }),
+        });
+      }
+    },
+  });
+
   const handleSubmit = async (formData: OrderReturnFormData) => {
     if (!data?.order) {
       return;
     }
-
-    return extractMutationErrors(
+    const returnErrors = await extractMutationErrors(
       returnCreate({
         variables: {
           id: data.order.id,
@@ -87,6 +107,34 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         },
       }),
     );
+
+    const grantRefundErrors = formData.autoGrantRefund
+      ? await extractMutationErrors(
+          grantRefund({
+            variables: {
+              orderId,
+              amount: formData.amount,
+              reason: "",
+              lines: [
+                ...formData.fulfilledItemsQuantities.map(({ id, value }) => ({
+                  id,
+                  quantity: value,
+                })),
+                ...formData.unfulfilledItemsQuantities.map(({ id, value }) => ({
+                  id,
+                  quantity: value,
+                })),
+              ],
+              grantRefundForShipping: formData.refundShipmentCosts,
+            },
+          }),
+        )
+      : [];
+
+    const errors = [...returnErrors, ...grantRefundErrors];
+    if (!errors.length) {
+      navigate(orderUrl(replacedOrder ?? orderId));
+    }
   };
 
   return (

@@ -1495,6 +1495,7 @@ export const OrderGrantedRefundFragmentDoc = gql`
     fragment OrderGrantedRefund on OrderGrantedRefund {
   id
   createdAt
+  shippingCostsIncluded
   amount {
     currency
     amount

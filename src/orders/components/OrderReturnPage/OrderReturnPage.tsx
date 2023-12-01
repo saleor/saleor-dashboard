@@ -11,6 +11,7 @@ import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
 import OrderAmount from "../OrderRefundReturnAmount";
 import { getReturnProductsAmountValues } from "../OrderRefundReturnAmount/utils";
 import { SubmitCard } from "./components";
@@ -35,102 +36,116 @@ export interface OrderReturnPageProps {
 const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
   const { order, loading, errors = [], onSubmit, submitStatus } = props;
 
+  const canRefundShipping = calculateCanRefundShipping(
+    null,
+    order?.grantedRefunds,
+  );
+
   const intl = useIntl();
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
-      {({ data, handlers, change, submit, isSaveDisabled }) => (
-        <DetailPageLayout>
-          <TopNav
-            href={orderUrl(order?.id)}
-            title={intl.formatMessage(orderReturnMessages.pageTitle, {
-              orderNumber: order?.number,
-            })}
-          />
-          <DetailPageLayout.Content>
-            {!!data.unfulfilledItemsQuantities.length && (
-              <>
-                <ItemsCard
-                  errors={errors}
-                  order={order}
-                  lines={getUnfulfilledLines(order as OrderDetailsFragment)}
-                  itemsQuantities={data.unfulfilledItemsQuantities}
-                  itemsSelections={data.itemsToBeReplaced}
-                  onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
-                  onSetMaxQuantity={
-                    handlers.handleSetMaximalUnfulfiledItemsQuantities
-                  }
-                  onChangeSelected={handlers.changeItemsToBeReplaced}
+      {({ data, handlers, change, submit, isSaveDisabled }) =>
+        void console.log(data) || (
+          <DetailPageLayout>
+            <TopNav
+              href={orderUrl(order?.id)}
+              title={intl.formatMessage(orderReturnMessages.pageTitle, {
+                orderNumber: order?.number,
+              })}
+            />
+            <DetailPageLayout.Content>
+              {!!data.unfulfilledItemsQuantities.length && (
+                <>
+                  <ItemsCard
+                    errors={errors}
+                    order={order}
+                    lines={getUnfulfilledLines(order as OrderDetailsFragment)}
+                    itemsQuantities={data.unfulfilledItemsQuantities}
+                    itemsSelections={data.itemsToBeReplaced}
+                    onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
+                    onSetMaxQuantity={
+                      handlers.handleSetMaximalUnfulfiledItemsQuantities
+                    }
+                    onChangeSelected={handlers.changeItemsToBeReplaced}
+                  />
+                  <CardSpacer />
+                </>
+              )}
+              {renderCollection(
+                getWaitingFulfillments(order as OrderDetailsFragment),
+                ({ id, lines }) => (
+                  <React.Fragment key={id}>
+                    <ItemsCard
+                      errors={errors}
+                      order={order}
+                      fulfilmentId={id}
+                      lines={getParsedLines(lines)}
+                      itemsQuantities={data.waitingItemsQuantities}
+                      itemsSelections={data.itemsToBeReplaced}
+                      onChangeQuantity={handlers.changeWaitingItemsQuantity}
+                      onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
+                        id,
+                      )}
+                      onChangeSelected={handlers.changeItemsToBeReplaced}
+                    />
+                    <CardSpacer />
+                  </React.Fragment>
+                ),
+              )}
+              {renderCollection(
+                getFulfilledFulfillemnts(order as OrderDetailsFragment),
+                ({ id, lines }) => (
+                  <React.Fragment key={id}>
+                    <ItemsCard
+                      errors={errors}
+                      order={order}
+                      fulfilmentId={id}
+                      lines={getParsedLines(lines)}
+                      itemsQuantities={data.fulfilledItemsQuantities}
+                      itemsSelections={data.itemsToBeReplaced}
+                      onChangeQuantity={handlers.changeFulfiledItemsQuantity}
+                      onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
+                        id,
+                      )}
+                      onChangeSelected={handlers.changeItemsToBeReplaced}
+                    />
+                    <CardSpacer />
+                  </React.Fragment>
+                ),
+              )}
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
+              {orderHasTransactions(order) ? (
+                <SubmitCard
+                  customRefundValue={data.amount}
+                  autoGrantRefund={data.autoGrantRefund}
+                  refundShipmentCosts={data.refundShipmentCosts}
+                  canRefundShipping={canRefundShipping}
+                  shippingCosts={order?.shippingPrice?.gross}
+                  amountData={getReturnProductsAmountValues(order, data)}
+                  onChange={change}
+                  disabled={isSaveDisabled}
+                  onSubmit={submit}
+                  submitStatus={submitStatus}
                 />
-                <CardSpacer />
-              </>
-            )}
-            {renderCollection(
-              getWaitingFulfillments(order as OrderDetailsFragment),
-              ({ id, lines }) => (
-                <React.Fragment key={id}>
-                  <ItemsCard
-                    errors={errors}
-                    order={order}
-                    fulfilmentId={id}
-                    lines={getParsedLines(lines)}
-                    itemsQuantities={data.waitingItemsQuantities}
-                    itemsSelections={data.itemsToBeReplaced}
-                    onChangeQuantity={handlers.changeWaitingItemsQuantity}
-                    onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
-                      id,
-                    )}
-                    onChangeSelected={handlers.changeItemsToBeReplaced}
-                  />
-                  <CardSpacer />
-                </React.Fragment>
-              ),
-            )}
-            {renderCollection(
-              getFulfilledFulfillemnts(order as OrderDetailsFragment),
-              ({ id, lines }) => (
-                <React.Fragment key={id}>
-                  <ItemsCard
-                    errors={errors}
-                    order={order}
-                    fulfilmentId={id}
-                    lines={getParsedLines(lines)}
-                    itemsQuantities={data.fulfilledItemsQuantities}
-                    itemsSelections={data.itemsToBeReplaced}
-                    onChangeQuantity={handlers.changeFulfiledItemsQuantity}
-                    onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
-                      id,
-                    )}
-                    onChangeSelected={handlers.changeItemsToBeReplaced}
-                  />
-                  <CardSpacer />
-                </React.Fragment>
-              ),
-            )}
-          </DetailPageLayout.Content>
-          <DetailPageLayout.RightSidebar>
-            {orderHasTransactions(order) ? (
-              <SubmitCard
-                disabled={isSaveDisabled}
-                onSubmit={submit}
-                submitStatus={submitStatus}
-              />
-            ) : (
-              <OrderAmount
-                allowNoRefund
-                isReturn
-                amountData={getReturnProductsAmountValues(order, data)}
-                data={data}
-                order={order}
-                disableSubmitButton={isSaveDisabled}
-                disabled={loading}
-                errors={errors}
-                onChange={change}
-                onRefund={submit}
-              />
-            )}
-          </DetailPageLayout.RightSidebar>
-        </DetailPageLayout>
-      )}
+              ) : (
+                <OrderAmount
+                  allowNoRefund
+                  isReturn
+                  amountData={getReturnProductsAmountValues(order, data)}
+                  data={data}
+                  order={order}
+                  disableSubmitButton={isSaveDisabled}
+                  disabled={loading}
+                  errors={errors}
+                  onChange={change}
+                  onRefund={submit}
+                />
+              )}
+            </DetailPageLayout.RightSidebar>
+          </DetailPageLayout>
+        )
+      }
     </OrderRefundForm>
   );
 };
