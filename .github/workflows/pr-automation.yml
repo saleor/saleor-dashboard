@@ -177,7 +177,9 @@ jobs:
           APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
-        run: npm run build
+        run: |
+          echo "dump: $CURRENT_VERSION, $SENTRY_RELEASE"
+          npm run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
