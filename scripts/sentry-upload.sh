@@ -1,4 +1,6 @@
-if [[ -z "${SENTRY_ORG}" ]]; then
+#!/bin/bash
+
+if [[ -z "${SENTRY_RELEASE}" ]]; then
   echo "Sentry not definied. Skipping uploading..."
 else 
   echo "Sentry processing... ($SENTRY_RELEASE)"
