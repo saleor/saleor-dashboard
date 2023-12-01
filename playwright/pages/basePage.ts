@@ -1,23 +1,22 @@
 import { LOCATORS } from "@data/commonLocators";
 import { URL_LIST } from "@data/url";
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 export class BasePage {
   readonly page: Page;
-  readonly pageHeader: Locator;
-  readonly gridCanvas: Locator;
-  readonly successBanner: Locator;
-  readonly errorBanner: Locator;
-  readonly gridInput: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly pageHeader = page.getByTestId("page-header"),
+    readonly gridCanvas = page.locator('[data-testid="data-grid-canvas"]'),
+    readonly gridInput = page
+      .locator('[class="clip-region"]')
+      .locator("textarea"),
+    readonly successBanner = page.locator(LOCATORS.successBanner),
+    readonly errorBanner = page.locator(LOCATORS.errorBanner),
+  ) {
     this.page = page;
-    this.pageHeader = page.getByTestId("page-header");
-    this.gridCanvas = page.locator('[data-testid="data-grid-canvas"]');
-    this.gridInput = this.page.locator('[class="clip-region"]').locator("textarea")
-    this.successBanner = page.locator(LOCATORS.successBanner);
-    this.errorBanner = page.locator(LOCATORS.errorBanner);
   }
   async gotoCreateProductPage(productTypeId: string) {
     await this.page.goto(
@@ -50,43 +49,48 @@ export class BasePage {
   async getRandomInt(max: number) {
     return Math.floor(Math.random() * (max + 1));
   }
-  
+
   async waitForGrid() {
-    await this.gridCanvas.locator("table")
-      .waitFor({ state: "attached", timeout: 10000 })
+    await this.gridCanvas
+      .locator("table")
+      .waitFor({ state: "attached", timeout: 10000 });
   }
 
   async findGridCellBounds(col: number, row: number) {
-    return this.gridCanvas.evaluate((node, { col, row }) => {
-      const fiberKey = Object.keys(node).find(x => x && x.includes("__reactFiber"));
-          
-      if (!fiberKey || !node.parentNode) return null
+    return this.gridCanvas.evaluate(
+      (node, { col, row }) => {
+        const fiberKey = Object.keys(node).find(
+          x => x && x.includes("__reactFiber"),
+        );
 
-      /* 
+        if (!fiberKey || !node.parentNode) return null;
+
+        /* 
         We seek over the fiber node (hack), ignore typings for it.
       */
-      const fiberParent = node.parentNode[fiberKey as keyof typeof node.parentNode] as any
+        const fiberParent = node.parentNode[
+          fiberKey as keyof typeof node.parentNode
+        ] as any;
 
-      const bounds: { x: number, y: number, width: number, height: number} = fiberParent
-        .pendingProps
-        .children
-        .props
-        .gridRef
-        .current
-        .getBounds(col, row)
+        const bounds: { x: number; y: number; width: number; height: number } =
+          fiberParent.pendingProps.children.props.gridRef.current.getBounds(
+            col,
+            row,
+          );
 
-        if (!bounds) return null
+        if (!bounds) return null;
 
-        return { 
+        return {
           ...bounds,
           center: {
             x: bounds.x + bounds.width / 2,
             y: bounds.y + bounds.height / 2,
-          }
-        }
-      }, { col, row })
+          },
+        };
+      },
+      { col, row },
+    );
   }
-
 
   /*
     Example:
@@ -101,11 +105,12 @@ export class BasePage {
   */
 
   async fillGridCell(col: number, row: number, content: string) {
-    const bounds = await this.findGridCellBounds(col, row)
+    const bounds = await this.findGridCellBounds(col, row);
 
-    if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`)
+    if (!bounds)
+      throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
 
-    await this.page.mouse.dblclick(bounds.center.x, bounds.center.y)
+    await this.page.mouse.dblclick(bounds.center.x, bounds.center.y);
     await this.gridInput.waitFor({ state: "attached" });
     await this.gridInput.fill(content);
   }
