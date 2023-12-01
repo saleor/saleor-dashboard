@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { RuleDTO } from "@dashboard/discounts/dto/dto";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
 import {
   ChannelFragment,
@@ -12,10 +12,13 @@ import {
 } from "@dashboard/graphql";
 import { splitDateTime } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
+import {
+  CommonError,
+  getCommonFormFieldErrorMessage,
+} from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -23,6 +26,7 @@ import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
+import { RuleModal } from "../DiscountRules/componenets/RuleModal/RuleModal";
 import { filterRules } from "./utils";
 
 export interface DiscountDetailsPageProps {
@@ -33,6 +37,10 @@ export interface DiscountDetailsPageProps {
   errors: PromotionUpdateErrorFragment[];
   submitButtonState: ConfirmButtonTransitionState;
   onSubmit: (data: DiscoutFormData) => void;
+  onRuleUpdateSubmit: (data: Rule) => Promise<Array<CommonError<any>>>;
+  ruleUpdateButtonState: ConfirmButtonTransitionState;
+  onRuleCreateSubmit: (data: Rule) => Promise<Array<CommonError<any>>>;
+  ruleCreateButtonState: ConfirmButtonTransitionState;
   onBack: () => void;
 }
 
@@ -45,8 +53,28 @@ export const DiscountDetailsPage = ({
   submitButtonState,
   onBack,
   onSubmit,
+  onRuleCreateSubmit,
+  onRuleUpdateSubmit,
+  ruleCreateButtonState,
+  ruleUpdateButtonState,
 }: DiscountDetailsPageProps) => {
   const intl = useIntl();
+  const [rules, setRules] = useState<Rule[]>([]);
+  const [rulesErrors, setRulesErrors] = useState<Array<CommonError<any>>>([]);
+
+  useEffect(() => {
+    if (data?.rules) {
+      setRules(
+        data.rules.map(rule =>
+          RuleDTO.fromAPI(rule, ruleConditionsOptionsDetailsMap),
+        ) ?? [],
+      );
+    }
+  }, [data?.rules]);
+
+  const [showRuleModal, setShowRuleModal] = useState(false);
+  const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
+
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: {
@@ -59,10 +87,7 @@ export const DiscountDetailsPage = ({
       },
       name: data?.name ?? "",
       description: JSON.stringify(data?.description),
-      rules:
-        data?.rules?.map(rule =>
-          RuleDTO.fromAPI(rule, ruleConditionsOptionsDetailsMap),
-        ) ?? [],
+      rules: [],
     },
   });
 
@@ -81,6 +106,26 @@ export const DiscountDetailsPage = ({
       ...formData,
       rules: filterRules(data?.rules, formData.rules, dirtyRulesIndexes),
     });
+  };
+
+  const handleRuleSubmit = async (rule: Rule) => {
+    let errors: Array<CommonError<any>> = [];
+    if (ruleEditIndex) {
+      errors = await onRuleUpdateSubmit(rule);
+      if (errors.length > 0) {
+        setRulesErrors(errors);
+      }
+    } else {
+      errors = await onRuleCreateSubmit(rule);
+      if (errors.length > 0) {
+        setRulesErrors(errors);
+      }
+    }
+
+    if (!errors.length) {
+      setShowRuleModal(false);
+      setRuleEditIndex(null);
+    }
   };
 
   const formErrors = getFormErrors(["name"], errors);
@@ -102,7 +147,13 @@ export const DiscountDetailsPage = ({
                 disabled={disabled}
               />
               <DiscountRules
-                errors={[]}
+                errors={rulesErrors}
+                rules={rules}
+                onRuleEdit={editIndex => {
+                  setRuleEditIndex(Number(editIndex));
+                  setShowRuleModal(true);
+                }}
+                onRuleAdd={() => setShowRuleModal(true)}
                 channels={channels}
                 disabled={disabled}
               />
@@ -116,6 +167,26 @@ export const DiscountDetailsPage = ({
           onSubmit={methods.handleSubmit(handleSubmit)}
           state={submitButtonState}
         />
+
+        {showRuleModal && (
+          <RuleModal
+            confimButtonState={
+              ruleEditIndex !== null
+                ? ruleUpdateButtonState
+                : ruleCreateButtonState
+            }
+            onClose={() => {
+              setShowRuleModal(false);
+              setRuleEditIndex(null);
+            }}
+            channels={channels}
+            initialFormValues={
+              ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
+            }
+            errors={rulesErrors}
+            onSubmit={handleRuleSubmit}
+          />
+        )}
       </DetailPageLayout>
     </RichTextContext.Provider>
   );

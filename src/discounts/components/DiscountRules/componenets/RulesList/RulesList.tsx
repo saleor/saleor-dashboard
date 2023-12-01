@@ -47,7 +47,7 @@ export const RulesList = <ErrorCode,>({
           <RuleWrapper
             key={rule.id || index}
             disabled={disabled}
-            onClick={() => onClick(rule.id || index.toString())}
+            onClick={() => onClick(index.toString())}
             hasError={hasError}
           >
             <Box display="flex" flexDirection="column" gap={1}>
@@ -58,7 +58,7 @@ export const RulesList = <ErrorCode,>({
                 currencySymbol={getCurencySymbol(rule.channels, channels)}
               />
               {hasError && (
-                <Text color="textCriticalSubdued">
+                <Text color="textCriticalDefault">
                   {intl.formatMessage(messages.ruleError)}
                 </Text>
               )}

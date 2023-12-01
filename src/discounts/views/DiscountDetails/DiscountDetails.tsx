@@ -15,7 +15,11 @@ import { getMutationErrors } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { createUpdateHandler } from "./handlers";
+import {
+  createRuleCreateHandler,
+  createRuleUpdateHandler,
+  createUpdateHandler,
+} from "./handlers";
 import {
   getRuleConditionsOptionsDetailsMap,
   useFetchConditionsOptionsDetails,
@@ -32,7 +36,11 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const { data: promotionData, loading } = usePromotionDetailsQuery({
+  const {
+    data: promotionData,
+    loading,
+    refetch,
+  } = usePromotionDetailsQuery({
     variables: {
       id,
     },
@@ -41,26 +49,57 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const ruleConditionsOptionsDetails =
     useFetchConditionsOptionsDetails(promotionData);
 
-  const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation();
-
-  const [promotionRuleUpdate, promotionRuleUpdateOpts] =
-    usePromotionRuleUpdateMutation();
-
-  const [promotionRuleCreate, promotionRuleCreateOpts] =
-    usePromotionRuleCreateMutation();
-
-  const onSubmit = createUpdateHandler({
-    promotion: promotionData?.promotion,
-    update: variables => promotionUpdate({ variables }),
-    updateRule: variables => promotionRuleUpdate({ variables }),
-    createRule: variables => promotionRuleCreate({ variables }),
-    successNotification: () => {
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
-      });
+  const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation({
+    onCompleted(data) {
+      if (data?.promotionUpdate?.errors?.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        refetch();
+      }
     },
   });
+
+  const [promotionRuleUpdate, promotionRuleUpdateOpts] =
+    usePromotionRuleUpdateMutation({
+      onCompleted(data) {
+        if (data?.promotionRuleUpdate?.errors?.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          refetch();
+        }
+      },
+    });
+
+  const [promotionRuleCreate, promotionRuleCreateOpts] =
+    usePromotionRuleCreateMutation({
+      onCompleted(data) {
+        if (data?.promotionRuleCreate?.errors?.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          refetch();
+        }
+      },
+    });
+
+  const onSubmit = createUpdateHandler(promotionData?.promotion, variables =>
+    promotionUpdate({ variables }),
+  );
+
+  const onRuleUpdateSubmit = createRuleUpdateHandler(
+    promotionData?.promotion,
+    variables => promotionRuleUpdate({ variables }),
+  );
+
+  const onRuleCreateSubmit = createRuleCreateHandler(
+    promotionData?.promotion,
+    variables => promotionRuleCreate({ variables }),
+  );
 
   return (
     <>
@@ -83,6 +122,10 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         channels={availableChannels}
         onSubmit={onSubmit}
         submitButtonState={promotionUpdateOpts.status}
+        onRuleUpdateSubmit={onRuleUpdateSubmit as any}
+        ruleUpdateButtonState={promotionRuleUpdateOpts.status}
+        onRuleCreateSubmit={onRuleCreateSubmit as any}
+        ruleCreateButtonState={promotionRuleCreateOpts.status}
       />
     </>
   );

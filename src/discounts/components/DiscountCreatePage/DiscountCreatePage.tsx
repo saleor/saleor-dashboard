@@ -112,6 +112,7 @@ export const DiscountCreatePage = ({
 
         {showRuleModal && (
           <RuleModal
+            confimButtonState="default"
             onClose={() => {
               setShowRuleModal(false);
               setRuleEditIndex(null);
@@ -121,7 +122,7 @@ export const DiscountCreatePage = ({
               ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
             }
             errors={errors.filter(error => error.index === ruleEditIndex)}
-            onSubmit={data => {
+            onSubmit={async data => {
               if (ruleEditIndex) {
                 setRules(rules => {
                   rules[ruleEditIndex] = data;

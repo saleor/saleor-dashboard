@@ -13,33 +13,19 @@ import { getMutationErrors, joinDateTime } from "@dashboard/misc";
 import difference from "lodash/difference";
 
 import { DiscoutFormData, Rule } from "../../types";
-import { getRulesToCreateData, getRulesToUpdateData } from "./utils";
 
-export const createUpdateHandler = ({
-  createRule,
-  promotion,
-  successNotification,
-  update,
-  updateRule,
-}: {
-  promotion: PromotionDetailsFragment | undefined | null;
+export const createUpdateHandler = (
+  promotion: PromotionDetailsFragment | undefined | null,
   update: (
     varaibles: PromotionUpdateMutationVariables,
-  ) => Promise<FetchResult<PromotionUpdateMutation>>;
-  updateRule: (
-    variables: PromotionRuleUpdateMutationVariables,
-  ) => Promise<FetchResult<PromotionRuleUpdateMutation>>;
-  createRule: (
-    variables: PromotionRuleCreateMutationVariables,
-  ) => Promise<FetchResult<PromotionRuleCreateMutation>>;
-  successNotification: () => void;
-}) => {
+  ) => Promise<FetchResult<PromotionUpdateMutation>>,
+) => {
   return async (data: DiscoutFormData) => {
     if (!promotion) {
       return;
     }
 
-    const updateResponse = update({
+    const updateResponse = await update({
       id: promotion.id,
       input: {
         name: data.name,
@@ -51,34 +37,13 @@ export const createUpdateHandler = ({
       },
     });
 
-    const rulesToUpdateData = getRulesToUpdateData(data.rules, promotion.rules);
-    const rulesToCreateData = getRulesToCreateData(data.rules, promotion.rules);
+    const errors = getMutationErrors(updateResponse);
 
-    const rulesToUpdateMutation = rulesToUpdateData.map(({ id, input }) =>
-      updateRule({ id, input }),
-    );
-    const rulesToCreateMutation = rulesToCreateData.map(rule =>
-      createRule({
-        input: {
-          promotion: promotion.id,
-          ...rule,
-        },
-      }),
-    );
-
-    const response = await Promise.all([
-      updateResponse,
-      ...rulesToUpdateMutation,
-      ...rulesToCreateMutation,
-    ]);
-
-    const errors = response.map(res => getMutationErrors(res)).flat();
-
-    if (errors.length === 0) {
-      successNotification();
+    if (errors.length) {
+      return { errors };
     }
 
-    return { errors };
+    return { errors: [] };
   };
 };
 
@@ -110,7 +75,35 @@ export const createRuleUpdateHandler = (
     const errors = getMutationErrors(response);
 
     if (errors.length > 0) {
-      return { errors };
+      return errors;
     }
+
+    return [];
+  };
+};
+
+export const createRuleCreateHandler = (
+  promotionData: PromotionDetailsFragment | undefined,
+  createRule: (
+    variables: PromotionRuleCreateMutationVariables,
+  ) => Promise<FetchResult<PromotionRuleCreateMutation>>,
+) => {
+  return async (data: Rule) => {
+    const ruleData = RuleDTO.toAPI(data);
+
+    const response = await createRule({
+      input: {
+        promotion: promotionData?.id,
+        ...ruleData,
+      },
+    });
+
+    const errors = getMutationErrors(response);
+
+    if (errors.length > 0) {
+      return errors;
+    }
+
+    return [];
   };
 };
