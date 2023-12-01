@@ -66,6 +66,8 @@ export const productListQuery = gql`
     $channel: String
     $sort: ProductOrder
     $hasChannel: Boolean!
+    $includeCategories: Boolean!
+    $includeCollections: Boolean!
   ) {
     products(
       before: $before
