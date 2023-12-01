@@ -31,6 +31,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
+      - name: Set sentry release
+        run: |
+          HASH=$(git rev-parse --short HEAD)
+          VERSION=$(jq -r .version package.json)
+          echo "SENTRY_RELEASE=${VERSION}-${HASH}" >> $GITHUB_ENV
       - name: Package
         timeout-minutes: 15
         run: |
