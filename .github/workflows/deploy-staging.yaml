@@ -51,8 +51,10 @@ jobs:
         run: |
           set -x
           hash=$(git rev-parse --short HEAD)
-          echo "CUSTOM_VERSION=${VERSION}-${hash}" >> $GITHUB_ENV
-          echo "SENTRY_RELEASE=$CUSTOM_VERSION" >> $GITHUB_ENV
+          RELEASE="${CURRENT_VERSION}-${HASH}"
+          echo "CUSTOM_VERSION=${RELEASE}" >> $GITHUB_ENV
+          echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
