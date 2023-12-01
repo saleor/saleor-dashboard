@@ -164,7 +164,8 @@ jobs:
           HASH=$(git rev-parse --short HEAD)
           CURRENT_VERSION=$(jq -r .version package.json)
           echo "CUSTOM_VERSION=${CURRENT_VERSION}-${HASH}" >> $GITHUB_ENV
-          echo "SENTRY_RELEASE=$CUSTOM_VERSION" >> $GITHUB_ENV
+          echo "SENTRY_RELEASE=${CUSTOM_VERSION}" >> $GITHUB_ENV
+          echo "Release: $SENTRY_RELEASE"
 
       - name: Install deps
         run: npm ci
