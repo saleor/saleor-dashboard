@@ -1323,6 +1323,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -1416,6 +1418,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -1509,6 +1513,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -1624,6 +1630,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -1739,6 +1747,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -1855,6 +1865,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -1970,6 +1982,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -2085,6 +2099,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -2200,6 +2216,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -2315,6 +2333,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -2430,6 +2450,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -2545,6 +2567,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -2660,6 +2684,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -2775,6 +2801,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -2890,6 +2918,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -3005,6 +3035,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -3120,6 +3152,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -3235,6 +3269,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -3350,6 +3386,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
   {
     __typename: "Product",
@@ -3465,6 +3503,8 @@ export const products = (
       __typename: "Image",
       url: placeholderImage,
     },
+    category: null,
+    collections: [],
   },
 ];
 
