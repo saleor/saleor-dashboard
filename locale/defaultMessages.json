@@ -5929,6 +5929,10 @@
     "context": "volume units types",
     "string": "Volume"
   },
+  "d1PvC8": {
+    "context": "checkbox",
+    "string": "Grant refund for returned items"
+  },
   "d68yq7": {
     "string": "Delete gift cards"
   },
@@ -6406,6 +6410,10 @@
   },
   "gzM1em": {
     "string": "Add rule"
+  },
+  "h0IgEq": {
+    "context": "checkbox",
+    "string": "Automatically send granted refund"
   },
   "h1rPPg": {
     "context": "dialog content",
@@ -7083,6 +7091,10 @@
   "lW5uJO": {
     "context": "money",
     "string": "from {money}"
+  },
+  "lXq4EE": {
+    "context": "checkbox",
+    "string": "Refund shipment: {currency} {amount}"
   },
   "lct0qd": {
     "string": "This list shows all attributes that will be assigned to pages that have this page type assigned."
