@@ -11,6 +11,19 @@ describe("SubmitCard", () => {
     render(
       <Wrapper>
         <SubmitCard
+          autoGrantRefund={false}
+          refundShipmentCosts={false}
+          canRefundShipping={false}
+          shippingCosts={{ amount: 0, currency: "USD" }}
+          amountData={{
+            refundTotalAmount: { amount: 0, currency: "USD" },
+            shipmentCost: { amount: 0, currency: "USD" },
+            authorizedAmount: { amount: 0, currency: "USD" },
+            previouslyRefunded: { amount: 0, currency: "USD" },
+            maxRefund: { amount: 0, currency: "USD" },
+          }}
+          onChange={() => {}}
+          customRefundValue={0}
           onSubmit={submitFn}
           disabled={false}
           submitStatus="default"
