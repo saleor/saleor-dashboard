@@ -1654,6 +1654,10 @@
     "context": "apps section name",
     "string": "Apps"
   },
+  "9qKFTA": {
+    "context": "Product category",
+    "string": "Category"
+  },
   "9scTQ0": {
     "context": "section header",
     "string": "Product Attributes"
@@ -6669,6 +6673,10 @@
   "j/vV0n": {
     "context": "channel name",
     "string": "Channel Name"
+  },
+  "j08fR9": {
+    "context": "Product collections",
+    "string": "Collections"
   },
   "j0ugM4": {
     "context": "Manage and Update your warehouse information",

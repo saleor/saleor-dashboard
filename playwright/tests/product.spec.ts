@@ -73,7 +73,7 @@ test("TC: SALEOR_26 Create basic info variant - via edit variant page @e2e @prod
 test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @product", async ({
   page,
 }) => {
-  const variantName = `TC: SALEOR_26 - variant name - ${new Date().toISOString()}`;
+  const variantName = `TC: SALEOR_27 - variant name - ${new Date().toISOString()}`;
   const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
   const variantsPage = new VariantsPage(page);
@@ -103,4 +103,20 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @produ
   await variantsPage.typeQuantityInStock();
   await variantsPage.clickSaveVariantButton();
   await variantsPage.expectSuccessBanner();
+});
+test("TC: SALEOR_45 As an admin I should be able to delete a single product with variants @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const basePage = new BasePage(page);
+  const productPage = new ProductPage(page);
+
+  await basePage.gotoExistingProductPage(
+    PRODUCTS.productWithOneVariantToBeDeletedFromDetails.id,
+  );
+  await productPage.clickDeleteProductButton();
+  await productPage.deleteProductDialog.clickDeleteButton();
+  await await basePage.expectSuccessBannerMessage("Product Removed");
+  await expect(basePage.gridCanvas.locator("table")).not.toContainText(
+    PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name,
+  );
 });

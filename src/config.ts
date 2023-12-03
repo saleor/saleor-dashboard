@@ -37,7 +37,9 @@ export type ProductListColumns =
   | "description"
   | "availability"
   | "price"
-  | "date";
+  | "date"
+  | "productCategory"
+  | "productCollections";
 
 export interface AppListViewSettings {
   [ListViews.APPS_LIST]: ListSettings;

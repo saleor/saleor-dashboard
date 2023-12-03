@@ -40,6 +40,16 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Last updated",
     description: "product updated at",
   },
+  category: {
+    id: "9qKFTA",
+    defaultMessage: "Category",
+    description: "Product category",
+  },
+  collections: {
+    id: "j08fR9",
+    defaultMessage: "Collections",
+    description: "Product collections",
+  },
 });
 
 export const categoryMetaGroups = defineMessages({

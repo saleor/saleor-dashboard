@@ -58,7 +58,7 @@ export class OrdersPage {
   async clickAddShippingCarrierButton() {
     await this.addShippingCarrierLink.click();
   }
-  async clickAddOrderButton() {
+  async clickAddProductsButton() {
     await this.addProducts.click();
   }
   async clickEditCustomerButton() {

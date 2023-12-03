@@ -2372,6 +2372,14 @@ export const ProductWithChannelListingsFragmentDoc = gql`
     name
     hasVariants
   }
+  category @include(if: $includeCategories) {
+    id
+    name
+  }
+  collections @include(if: $includeCollections) {
+    id
+    name
+  }
   channelListings {
     ...ChannelListingProductWithoutPricing
     pricing @include(if: $hasChannel) {
@@ -14214,7 +14222,7 @@ export type InitialProductFilterProductTypesQueryHookResult = ReturnType<typeof 
 export type InitialProductFilterProductTypesLazyQueryHookResult = ReturnType<typeof useInitialProductFilterProductTypesLazyQuery>;
 export type InitialProductFilterProductTypesQueryResult = Apollo.QueryResult<Types.InitialProductFilterProductTypesQuery, Types.InitialProductFilterProductTypesQueryVariables>;
 export const ProductListDocument = gql`
-    query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $search: String, $where: ProductWhereInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!) {
+    query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $search: String, $where: ProductWhereInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!, $includeCategories: Boolean!, $includeCollections: Boolean!) {
   products(
     before: $before
     after: $after
@@ -14270,6 +14278,8 @@ ${ProductListAttributeFragmentDoc}`;
  *      channel: // value for 'channel'
  *      sort: // value for 'sort'
  *      hasChannel: // value for 'hasChannel'
+ *      includeCategories: // value for 'includeCategories'
+ *      includeCollections: // value for 'includeCollections'
  *   },
  * });
  */
