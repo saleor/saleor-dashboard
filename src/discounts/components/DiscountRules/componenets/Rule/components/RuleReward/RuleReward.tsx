@@ -61,6 +61,7 @@ export const RuleReward = ({
             helperText={error || formState.errors?.rewardValue?.message}
             disabled={disabled || rewardValueType.disabled}
             type="number"
+            size="small"
             label={intl.formatMessage(messages.discountValue)}
           />
         </RuleInputWrapper>

@@ -22,7 +22,7 @@ export const DiscountTypeSwitch = ({
       disabled={disabled}
       value={selected}
       onValueChange={onChange}
-      height={14}
+      height="100%"
       padding={1.5}
       __width="fit-content"
     >
@@ -32,6 +32,7 @@ export const DiscountTypeSwitch = ({
           disabled={disabled}
           value={RewardValueTypeEnum.FIXED}
           marginLeft={0.5}
+          paddingY={2}
         >
           <Box
             display="flex"
@@ -49,6 +50,7 @@ export const DiscountTypeSwitch = ({
         disabled={disabled}
         value={RewardValueTypeEnum.PERCENTAGE}
         marginRight={0.5}
+        paddingY={2}
       >
         <Box
           display="flex"
