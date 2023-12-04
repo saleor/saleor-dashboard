@@ -36,7 +36,7 @@ export const VoucherCodesDatagrid = ({
 }: VoucherCodesDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
-  const { themeValues } = useTheme();
+  const { theme } = useTheme();
 
   const voucherCodesStaticColumns = useMemo(
     () => voucherCodesStaticColumnsAdapter(intl),
@@ -50,7 +50,7 @@ export const VoucherCodesDatagrid = ({
   });
 
   const getCellContent = useCallback(
-    createGetCellContent(codes, visibleColumns, intl, themeValues),
+    createGetCellContent(codes, visibleColumns, intl, theme),
     [codes, visibleColumns],
   );
 

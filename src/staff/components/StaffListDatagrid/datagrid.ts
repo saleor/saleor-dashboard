@@ -11,7 +11,7 @@ import {
 } from "@dashboard/components/Datagrid/customCells/PillCell";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { commonStatusMessages } from "@dashboard/intl";
-import { getUserName } from "@dashboard/misc";
+import { getStatusColor, getUserName } from "@dashboard/misc";
 import { StaffMember, StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import { Sort } from "@dashboard/types";
@@ -54,12 +54,12 @@ export const createGetCellContent =
     staffMembers,
     columns,
     intl,
-    theme,
+    currentTheme,
   }: {
     staffMembers: StaffMembers;
     columns: AvailableColumn[];
     intl: IntlShape;
-    theme: DefaultTheme;
+    currentTheme: DefaultTheme;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData: StaffMember | undefined = staffMembers[row];
@@ -80,11 +80,10 @@ export const createGetCellContent =
         );
       case "status": {
         const isActive = rowData?.isActive;
-        const hue = stringToHue(isActive ? "false" : "true");
-        const color =
-          theme === "defaultDark"
-            ? hueToPillColorDark(hue)
-            : hueToPillColorLight(hue);
+        const color = getStatusColor({
+          status: isActive ? "success" : "error",
+          currentTheme,
+        });
 
         const status = isActive
           ? intl.formatMessage(commonStatusMessages.active)

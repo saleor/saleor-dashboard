@@ -15,6 +15,10 @@ import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
+import {
+  hueToPillColorDark,
+  hueToPillColorLight,
+} from "./components/Datagrid/customCells/PillCell";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
@@ -580,29 +584,19 @@ export const findById = <T extends Node>(id: string, list?: T[]) =>
 
 export const COLOR_WARNING = "#FBE5AC";
 export const COLOR_WARNING_DARK = "#3E2F0A";
-type CustomWarningColor = typeof COLOR_WARNING | typeof COLOR_WARNING_DARK;
 
-export const getStatusColor = (
-  status: "error" | "warning" | "info" | "success" | "generic",
-  currentTheme?: DefaultTheme,
-): keyof ThemeTokensValues["colors"]["background"] | CustomWarningColor => {
-  switch (status) {
-    case "error":
-      return "critical2";
-    case "info":
-      return "info1";
-    case "success":
-      return "accent1";
-    case "warning":
-      // TODO: use color from new macaw theme when will be ready
-      return currentTheme === "defaultDark"
-        ? COLOR_WARNING_DARK
-        : COLOR_WARNING;
-    case "generic":
-      return "accent1";
-    default:
-      return "accent1";
-  }
+export const getStatusColor = ({
+  status,
+  currentTheme,
+}: {
+  status: "error" | "warning" | "info" | "success" | "generic";
+  currentTheme: DefaultTheme;
+}) => {
+  const statusHue = getStatusHue(status);
+
+  return currentTheme === "defaultDark"
+    ? hueToPillColorDark(statusHue)
+    : hueToPillColorLight(statusHue);
 };
 
 export const getStatusHue = (
