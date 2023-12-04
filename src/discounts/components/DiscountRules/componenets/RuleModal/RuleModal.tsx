@@ -10,14 +10,16 @@ import {
 } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { Rule as RuleType } from "../../../../types";
 import { messages } from "../../messages";
 import { Rule } from "../Rule/Rule";
+import { getValidationSchema } from "./validationSchema";
 
 interface RuleModalProps {
   onClose: () => void;
@@ -36,9 +38,11 @@ export const RuleModal = ({
   onSubmit,
   errors,
 }: RuleModalProps) => {
+  const intl = useIntl();
   const methods = useForm<RuleType>({
     mode: "onBlur",
     values: initialFormValues || initialRuleValues,
+    resolver: zodResolver(getValidationSchema(intl)),
   });
 
   const handleSubmit: SubmitHandler<RuleType> = async data => {

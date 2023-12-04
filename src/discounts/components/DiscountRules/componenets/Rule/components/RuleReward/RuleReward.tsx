@@ -22,7 +22,7 @@ export const RuleReward = ({
   hasSelectedChannels,
 }: RuleRewardProps) => {
   const intl = useIntl();
-  const { watch } = useFormContext<Rule>();
+  const { watch, formState } = useFormContext<Rule>();
   const { field: rewardTypeField } = useController<Rule, "rewardValueType">({
     name: "rewardValueType",
   });
@@ -57,8 +57,8 @@ export const RuleReward = ({
         <RuleInputWrapper __width={220}>
           <Input
             {...rewardValueType}
-            error={!!error}
-            helperText={error}
+            error={!!error || !!formState.errors?.rewardValue?.message}
+            helperText={error || formState.errors?.rewardValue?.message}
             disabled={disabled || rewardValueType.disabled}
             type="number"
             label={intl.formatMessage(messages.discountValue)}

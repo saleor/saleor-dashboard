@@ -31,7 +31,7 @@ interface RuleProps {
 
 export const Rule = ({ channels, disabled = false, errors }: RuleProps) => {
   const intl = useIntl();
-  const { watch, getValues, setValue } = useFormContext<RuleType>();
+  const { watch, getValues, setValue, formState } = useFormContext<RuleType>();
   const formErrors = getFormErrors(["rewardValue"], errors);
 
   const { trigger } = useFormContext<RuleType>();
@@ -78,6 +78,8 @@ export const Rule = ({ channels, disabled = false, errors }: RuleProps) => {
             disabled={disabled || nameField.disabled}
             size="small"
             label="Name"
+            error={!!formState.errors?.name?.message}
+            helperText={formState.errors?.name?.message}
           />
         </RuleInputWrapper>
 
@@ -105,6 +107,10 @@ export const Rule = ({ channels, disabled = false, errors }: RuleProps) => {
         />
 
         <RuleDescription disabled={disabled} />
+
+        <button type="submit" hidden>
+          Submit
+        </button>
       </Box>
     </RichTextContext.Provider>
   );
