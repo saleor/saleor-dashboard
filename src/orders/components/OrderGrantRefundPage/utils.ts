@@ -36,8 +36,8 @@ export const getFulfilmentSubtitle = (
 export const prepareLineData = (lines: Map<string, ReducerOrderLine>): Line[] =>
   Array.from(lines.entries())
     .filter(([_, line]) => line.isDirty)
-    .map(([id, line]) => ({
-      id,
+    .map(([, line]) => ({
+      id: line.orderLineId,
       quantity: line.selectedQuantity,
     }));
 
