@@ -66,4 +66,8 @@ export const messages = defineMessages({
     id: "XVuPMw",
     defaultMessage: "Are you sure you want to delete this rule?",
   },
+  noChannelsSelected: {
+    id: "w7jT4W",
+    defaultMessage: "No channels selected",
+  },
 });

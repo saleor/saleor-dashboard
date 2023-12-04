@@ -14,10 +14,14 @@ import { useProductSearch } from "./hooks/useProductSearch";
 import { useVariantSearch } from "./hooks/useVariantSearch";
 
 interface RuleConditionsProps {
+  hasSelectedChannels: boolean;
   disabled?: boolean;
 }
 
-export const RuleConditions = ({ disabled = false }: RuleConditionsProps) => {
+export const RuleConditions = ({
+  disabled = false,
+  hasSelectedChannels,
+}: RuleConditionsProps) => {
   const intl = useIntl();
 
   const { watch } = useFormContext<Rule>();
@@ -46,6 +50,17 @@ export const RuleConditions = ({ disabled = false }: RuleConditionsProps) => {
   const isConditionTypeSelected = (conditionType: string) =>
     conditionsList.some(condition => condition.type === conditionType);
 
+  if (!hasSelectedChannels) {
+    return (
+      <Box display="flex" flexDirection="column" gap={4}>
+        <Text>{intl.formatMessage(messages.conditions)}</Text>
+        <Text variant="caption" color="textNeutralSubdued">
+          {intl.formatMessage(messages.noChannelsSelected)}
+        </Text>
+      </Box>
+    );
+  }
+
   return (
     <Box display="flex" flexDirection="column" gap={4}>
       <Text>{intl.formatMessage(messages.conditions)}</Text>
@@ -69,7 +84,7 @@ export const RuleConditions = ({ disabled = false }: RuleConditionsProps) => {
         <Button
           variant="secondary"
           size="small"
-          alignSelf="end"
+          alignSelf="start"
           disabled={disabled}
           onClick={() => append({ ...intialConditionValues })}
         >

@@ -58,7 +58,7 @@ export const RuleModal = ({
           />
           <DashboardModal.Close onClose={onClose} />
         </DashboardModal.Title>
-        <Box __width={590}>
+        <Box __width={650}>
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(handleSubmit)}>
               <Rule channels={channels} errors={errors} disabled={false} />

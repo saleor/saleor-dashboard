@@ -44,6 +44,7 @@ export const Rule = ({ channels, disabled = false, errors }: RuleProps) => {
   });
 
   const selectedChannels = watch("channels");
+  const hasSelectedChannels = !!selectedChannels?.length;
   const currencySymbol = getCurencySymbol(selectedChannels ?? [], channels);
 
   const richText = useRichText({
@@ -80,8 +81,6 @@ export const Rule = ({ channels, disabled = false, errors }: RuleProps) => {
           />
         </RuleInputWrapper>
 
-        <RuleDescription disabled={disabled} />
-
         <RuleInputWrapper>
           <Multiselect
             {...channelsfield}
@@ -93,19 +92,19 @@ export const Rule = ({ channels, disabled = false, errors }: RuleProps) => {
           />
         </RuleInputWrapper>
 
-        {selectedChannels?.length > 0 ? (
-          <>
-            <RuleConditions disabled={disabled} />
-            <RuleReward
-              disabled={disabled}
-              currencySymbol={currencySymbol}
-              error={getCommonFormFieldErrorMessage(
-                formErrors.rewardValue,
-                intl,
-              )}
-            />
-          </>
-        ) : null}
+        <RuleConditions
+          disabled={disabled}
+          hasSelectedChannels={hasSelectedChannels}
+        />
+
+        <RuleReward
+          disabled={disabled}
+          currencySymbol={currencySymbol}
+          hasSelectedChannels={hasSelectedChannels}
+          error={getCommonFormFieldErrorMessage(formErrors.rewardValue, intl)}
+        />
+
+        <RuleDescription disabled={disabled} />
       </Box>
     </RichTextContext.Provider>
   );
