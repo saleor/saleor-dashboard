@@ -4,7 +4,7 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -35,8 +35,10 @@ export const RuleDeleteModal = ({
           <DashboardModal.Close onClose={onClose} />
         </DashboardModal.Title>
 
-        <Box __width={590}>
-          <FormattedMessage {...messages.deleteRuleDescription} />
+        <Box __width={390}>
+          <Text>
+            <FormattedMessage {...messages.deleteRuleDescription} />
+          </Text>
         </Box>
 
         <DashboardModal.Actions>

@@ -4,20 +4,11 @@ import React, { ReactNode } from "react";
 interface RuleWrapperProps {
   children: ReactNode;
   hasError?: boolean;
-  onClick?: () => void;
-  disabled?: boolean;
 }
 
-export const RuleWrapper = ({
-  children,
-  disabled,
-  hasError,
-  onClick,
-}: RuleWrapperProps) => {
+export const RuleWrapper = ({ children, hasError }: RuleWrapperProps) => {
   return (
     <Box
-      onClick={!disabled ? onClick : undefined}
-      cursor={disabled ? "not-allowed" : "pointer"}
       borderRadius={4}
       borderColor={hasError ? "criticalDefault" : "neutralPlain"}
       borderWidth={1}
