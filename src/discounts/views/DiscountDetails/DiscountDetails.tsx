@@ -130,12 +130,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
       <DiscountDetailsPage
         data={promotionData?.promotion}
         errors={getMutationErrors(promotionUpdateOpts)}
-        disabled={
-          loading ||
-          promotionUpdateOpts.loading ||
-          promotionRuleCreateOpts.loading ||
-          promotionRuleUpdateOpts.loading
-        }
+        disabled={loading || promotionUpdateOpts.loading}
         ruleConditionsOptionsDetailsMap={getRuleConditionsOptionsDetailsMap(
           ruleConditionsOptionsDetails,
         )}

@@ -75,7 +75,7 @@ export const DiscountDetailsPage = ({
         ) ?? [],
       );
     }
-  }, [data?.rules]);
+  }, [data?.rules, ruleConditionsOptionsDetailsMap]);
 
   const [showRuleModal, setShowRuleModal] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
