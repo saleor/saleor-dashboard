@@ -39,7 +39,11 @@ export const RulesList = <ErrorCode,>({
   };
 
   return (
-    <Box display="flex" flexDirection="column" gap={6}>
+    <Box
+      display="grid"
+      __gridTemplateColumns="repeat(auto-fill, minmax(800px, 1fr))"
+      gap={6}
+    >
       {rules.map((rule, index) => {
         const hasError = errors.some(error => error.index === index);
 
