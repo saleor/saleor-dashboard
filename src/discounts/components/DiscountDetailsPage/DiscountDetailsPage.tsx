@@ -26,6 +26,7 @@ import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
+import { RuleDeleteModal } from "../DiscountRules/componenets/RuleDeleteModal/RuleDeleteModal";
 import { RuleModal } from "../DiscountRules/componenets/RuleModal/RuleModal";
 import { filterRules } from "./utils";
 
@@ -41,6 +42,8 @@ export interface DiscountDetailsPageProps {
   ruleUpdateButtonState: ConfirmButtonTransitionState;
   onRuleCreateSubmit: (data: Rule) => Promise<Array<CommonError<any>>>;
   ruleCreateButtonState: ConfirmButtonTransitionState;
+  onRuleDeleteSubmit: (id: string) => void;
+  ruleDeleteButtonState: ConfirmButtonTransitionState;
   onBack: () => void;
 }
 
@@ -55,8 +58,10 @@ export const DiscountDetailsPage = ({
   onSubmit,
   onRuleCreateSubmit,
   onRuleUpdateSubmit,
+  onRuleDeleteSubmit,
   ruleCreateButtonState,
   ruleUpdateButtonState,
+  ruleDeleteButtonState,
 }: DiscountDetailsPageProps) => {
   const intl = useIntl();
   const [rules, setRules] = useState<Rule[]>([]);
@@ -74,6 +79,7 @@ export const DiscountDetailsPage = ({
 
   const [showRuleModal, setShowRuleModal] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
+  const [ruleDeleteIndex, setRuleDeleteIndex] = useState<string | null>(null);
 
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
@@ -128,6 +134,12 @@ export const DiscountDetailsPage = ({
     }
   };
 
+  const handleDeleteRule = () => {
+    const ruleId = rules[ruleDeleteIndex].id;
+    onRuleDeleteSubmit(ruleId);
+    setRuleDeleteIndex(null);
+  };
+
   const formErrors = getFormErrors(["name"], errors);
 
   return (
@@ -152,6 +164,9 @@ export const DiscountDetailsPage = ({
                 onRuleEdit={editIndex => {
                   setRuleEditIndex(Number(editIndex));
                   setShowRuleModal(true);
+                }}
+                onRuleDelete={(id: string) => {
+                  setRuleDeleteIndex(id);
                 }}
                 onRuleAdd={() => setShowRuleModal(true)}
                 channels={channels}
@@ -185,6 +200,14 @@ export const DiscountDetailsPage = ({
             }
             errors={rulesErrors}
             onSubmit={handleRuleSubmit}
+          />
+        )}
+
+        {ruleDeleteIndex !== null && (
+          <RuleDeleteModal
+            onClose={() => setRuleDeleteIndex(null)}
+            onSubmit={handleDeleteRule}
+            confimButtonState={ruleDeleteButtonState}
           />
         )}
       </DetailPageLayout>

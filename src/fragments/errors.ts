@@ -93,6 +93,14 @@ export const promotionRuleCreateErrorFragment = gql`
   }
 `;
 
+export const promotionRuleDeleteErrorFragment = gql`
+  fragment PromotionRuleDeleteError on PromotionRuleDeleteError {
+    field
+    message
+    code
+  }
+`;
+
 export const menuErrorFragment = gql`
   fragment MenuError on MenuError {
     code

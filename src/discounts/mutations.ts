@@ -278,3 +278,13 @@ export const promotinRuleCreate = gql`
     }
   }
 `;
+
+export const promotionRuleDelete = gql`
+  mutation PromotionRuleDelete($id: ID!) {
+    promotionRuleDelete(id: $id) {
+      errors {
+        ...PromotionRuleDeleteError
+      }
+    }
+  }
+`;

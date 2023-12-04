@@ -9588,6 +9588,13 @@ export type PromotionRuleCreateMutationVariables = Exact<{
 
 export type PromotionRuleCreateMutation = { __typename: 'Mutation', promotionRuleCreate: { __typename: 'PromotionRuleCreate', errors: Array<{ __typename: 'PromotionRuleCreateError', field: string | null, message: string | null, code: PromotionRuleCreateErrorCode }>, promotionRule: { __typename: 'PromotionRule', id: string } | null } | null };
 
+export type PromotionRuleDeleteMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PromotionRuleDeleteMutation = { __typename: 'Mutation', promotionRuleDelete: { __typename: 'PromotionRuleDelete', errors: Array<{ __typename: 'PromotionRuleDeleteError', field: string | null, message: string | null, code: PromotionRuleDeleteErrorCode }> } | null };
+
 export type SaleListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -9771,6 +9778,8 @@ export type PromotionUpdateErrorFragment = { __typename: 'PromotionUpdateError',
 export type PromotionRuleUpdateErrorFragment = { __typename: 'PromotionRuleUpdateError', field: string | null, message: string | null, code: PromotionRuleUpdateErrorCode, channels: Array<string> | null };
 
 export type PromotionRuleCreateErrorFragment = { __typename: 'PromotionRuleCreateError', field: string | null, message: string | null, code: PromotionRuleCreateErrorCode };
+
+export type PromotionRuleDeleteErrorFragment = { __typename: 'PromotionRuleDeleteError', field: string | null, message: string | null, code: PromotionRuleDeleteErrorCode };
 
 export type MenuErrorFragment = { __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null };
 

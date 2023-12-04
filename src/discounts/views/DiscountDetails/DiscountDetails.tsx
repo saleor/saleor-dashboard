@@ -5,6 +5,7 @@ import { DiscountUrlQueryParams, saleListUrl } from "@dashboard/discounts/urls";
 import {
   usePromotionDetailsQuery,
   usePromotionRuleCreateMutation,
+  usePromotionRuleDeleteMutation,
   usePromotionRuleUpdateMutation,
   usePromotionUpdateMutation,
 } from "@dashboard/graphql";
@@ -87,6 +88,20 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
       },
     });
 
+  const [promotionDelete, promotionDeleteOpts] = usePromotionRuleDeleteMutation(
+    {
+      onCompleted(data) {
+        if (data?.promotionRuleDelete?.errors?.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          refetch();
+        }
+      },
+    },
+  );
+
   const onSubmit = createUpdateHandler(promotionData?.promotion, variables =>
     promotionUpdate({ variables }),
   );
@@ -100,6 +115,14 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
     promotionData?.promotion,
     variables => promotionRuleCreate({ variables }),
   );
+
+  const onRuleDeleteSubmit = (id: string) => {
+    promotionDelete({
+      variables: {
+        id,
+      },
+    });
+  };
 
   return (
     <>
@@ -126,6 +149,8 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         ruleUpdateButtonState={promotionRuleUpdateOpts.status}
         onRuleCreateSubmit={onRuleCreateSubmit as any}
         ruleCreateButtonState={promotionRuleCreateOpts.status}
+        onRuleDeleteSubmit={onRuleDeleteSubmit}
+        ruleDeleteButtonState={promotionDeleteOpts.status}
       />
     </>
   );

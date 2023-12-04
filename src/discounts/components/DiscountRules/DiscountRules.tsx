@@ -17,6 +17,7 @@ interface DiscountRulesProps<ErrorCode> {
   errors: Array<CommonError<ErrorCode> & { index?: number }>;
   onRuleEdit: (id: string) => void;
   onRuleAdd: () => void;
+  onRuleDelete: (id: string) => void;
 }
 
 export const DiscountRules = <ErrorCode,>({
@@ -26,6 +27,7 @@ export const DiscountRules = <ErrorCode,>({
   errors,
   onRuleEdit,
   onRuleAdd,
+  onRuleDelete,
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
 
@@ -40,7 +42,8 @@ export const DiscountRules = <ErrorCode,>({
       <DashboardCard.Content>
         <RulesList
           rules={rules}
-          onClick={onRuleEdit}
+          onRulEdit={onRuleEdit}
+          onRuleDelete={onRuleDelete}
           channels={channels}
           errors={errors}
         />

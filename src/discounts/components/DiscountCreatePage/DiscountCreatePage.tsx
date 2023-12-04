@@ -20,6 +20,7 @@ import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
+import { RuleDeleteModal } from "../DiscountRules/componenets/RuleDeleteModal/RuleDeleteModal";
 import { RuleModal } from "../DiscountRules/componenets/RuleModal/RuleModal";
 import { initialFormValues } from "./initialFormValues";
 
@@ -44,6 +45,7 @@ export const DiscountCreatePage = ({
   const [showRuleModal, setShowRuleModal] = useState(false);
   const [rules, setRules] = useState<Rule[]>([]);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
+  const [ruleDeleteIndex, setRuleDeleteIndex] = useState<string | null>(null);
 
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
@@ -61,6 +63,14 @@ export const DiscountCreatePage = ({
       ...data,
       rules,
     });
+  };
+
+  const handleDeleteRule = () => {
+    setRules(rules => {
+      rules.splice(Number(ruleDeleteIndex), 1);
+      return rules;
+    });
+    setRuleDeleteIndex(null);
   };
 
   const formErrors = getFormErrors(["name"], errors);
@@ -95,6 +105,9 @@ export const DiscountCreatePage = ({
                 onRuleEdit={editIndex => {
                   setRuleEditIndex(Number(editIndex));
                   setShowRuleModal(true);
+                }}
+                onRuleDelete={(id: string) => {
+                  setRuleDeleteIndex(id);
                 }}
                 onRuleAdd={() => setShowRuleModal(true)}
                 rules={rules}
@@ -135,6 +148,14 @@ export const DiscountCreatePage = ({
               setRuleEditIndex(null);
               setShowRuleModal(false);
             }}
+          />
+        )}
+
+        {ruleDeleteIndex !== null && (
+          <RuleDeleteModal
+            onClose={() => setRuleDeleteIndex(null)}
+            onSubmit={handleDeleteRule}
+            confimButtonState="default"
           />
         )}
       </DetailPageLayout>

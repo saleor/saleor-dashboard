@@ -1,0 +1,53 @@
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { buttonMessages } from "@dashboard/intl";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { messages } from "../../messages";
+
+interface RuleDeleteModalProps {
+  onClose: () => void;
+  onSubmit: () => void;
+  confimButtonState: ConfirmButtonTransitionState;
+}
+
+export const RuleDeleteModal = ({
+  onClose,
+  onSubmit,
+  confimButtonState,
+}: RuleDeleteModalProps) => {
+  const intl = useIntl();
+
+  return (
+    <DashboardModal open={true} onChange={onClose}>
+      <DashboardModal.Content>
+        <DashboardModal.Title
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          {intl.formatMessage(messages.deleteRule)}
+          <DashboardModal.Close onClose={onClose} />
+        </DashboardModal.Title>
+
+        <Box __width={590}>
+          <FormattedMessage {...messages.deleteRuleDescription} />
+        </Box>
+
+        <DashboardModal.Actions>
+          <Button onClick={onClose} variant="secondary">
+            <FormattedMessage {...buttonMessages.close} />
+          </Button>
+          <ConfirmButton transitionState={confimButtonState} onClick={onSubmit}>
+            <FormattedMessage {...buttonMessages.save} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
+  );
+};

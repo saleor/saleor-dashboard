@@ -58,4 +58,12 @@ export const messages = defineMessages({
     id: "zehNKT",
     defaultMessage: "Rule has error, open rule to see details",
   },
+  deleteRule: {
+    id: "MdFdbd",
+    defaultMessage: "Delete rule",
+  },
+  deleteRuleDescription: {
+    id: "XVuPMw",
+    defaultMessage: "Are you sure you want to delete this rule?",
+  },
 });

@@ -1,7 +1,7 @@
 import { Rule as RuleType } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -16,13 +16,15 @@ interface RulesListProps<ErrorCode> {
   disabled?: boolean;
   channels: ChannelFragment[];
   errors: Array<CommonError<ErrorCode> & { index?: number }>;
-  onClick?: (id: string) => void;
+  onRuleDelete: (id: string) => void;
+  onRulEdit: (id: string) => void;
 }
 
 export const RulesList = <ErrorCode,>({
   rules,
   errors,
-  onClick,
+  onRulEdit,
+  onRuleDelete,
   channels,
   disabled,
 }: RulesListProps<ErrorCode>) => {
@@ -51,12 +53,27 @@ export const RulesList = <ErrorCode,>({
           <RuleWrapper
             key={rule.id || index}
             disabled={disabled}
-            onClick={() => onClick(index.toString())}
+            onClick={() => onRulEdit(index.toString())}
             hasError={hasError}
           >
             <Box display="flex" flexDirection="column" gap={1}>
-              {intl.formatMessage(messages.catalogRule) +
-                getRuleName(rule.name)}
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                {intl.formatMessage(messages.catalogRule) +
+                  getRuleName(rule.name)}
+                <Button
+                  variant="tertiary"
+                  onClick={e => {
+                    e.stopPropagation();
+                    onRuleDelete(index.toString());
+                  }}
+                >
+                  <TrashBinIcon />
+                </Button>
+              </Box>
               <RuleSummary
                 rule={rule}
                 currencySymbol={getCurencySymbol(rule.channels, channels)}
