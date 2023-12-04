@@ -1,4 +1,5 @@
 import { PRODUCTS } from "@data/e2eTestData";
+import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
 import { ProductPage } from "@pages/productPage";
@@ -104,6 +105,28 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @produ
   await variantsPage.clickSaveVariantButton();
   await variantsPage.expectSuccessBanner();
 });
+
+test("TC: SALEOR_44 As an admin I should be able to delete a several products with variants @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const basePage = new BasePage(page);
+  const productPage = new ProductPage(page);
+  await page.goto(URL_LIST.products);
+
+  await basePage.checkListRowsBasedOnContainingText(
+    PRODUCTS.productsToBeBulkDeleted.names,
+  );
+  await productPage.clickBulkDeleteButton();
+  await productPage.deleteProductDialog.clickDeleteButton();
+  await basePage.expectSuccessBanner();
+  await basePage.waitForGrid();
+  await expect(
+    await basePage.findRowIndexBasedOnText(
+      PRODUCTS.productsToBeBulkDeleted.names,
+    ),
+  ).toEqual([]);
+});
+
 test("TC: SALEOR_45 As an admin I should be able to delete a single product with variants @basic-regression @product @e2e", async ({
   page,
 }) => {
