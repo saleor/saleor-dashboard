@@ -143,7 +143,7 @@ test("TC: SALEOR_45 As an admin I should be able to delete a single products @ba
     PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name,
   );
 });
-test("TC: SALEOR_46 As an admin I should be able to update a single product by: upload media, assign channel, assign tax and add new variant  @basic-regression @product @e2e", async ({
+test("TC: SALEOR_46 As an admin, I should be able to update a single product by uploading media, assigning channels, assigning tax, and adding a new variant   @basic-regression @product @e2e", async ({
   page,
 }) => {
   const newVariantName = "variant 2";
