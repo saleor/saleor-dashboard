@@ -174,7 +174,9 @@ test("TC: SALEOR_46 As an admin, I should be able to update a single product by 
     .locator("input")
     .inputValue();
   await expect(preSaveTax).toEqual(postSaveTax);
-  await page.getByText(newVariantName).waitFor({ state: "attached" });
+  await productPage.basePage.gridCanvas
+    .getByText(newVariantName)
+    .waitFor({ state: "attached" });
   await expect(productPage.productAvailableInChannelsText).toContainText(
     "In 1 out of 7 channels",
   );
