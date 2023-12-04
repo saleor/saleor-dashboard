@@ -156,11 +156,8 @@ test("TC: SALEOR_46 As an admin, I should be able to update a single product by 
   await productPage.clickUploadMediaButton();
   await productPage.uploadProductImage("beer.avif");
   await productPage.productImage.waitFor({ state: "visible" });
-  expect(await productPage.productImage.count()).toEqual(1);
   await productPage.selectOneChannelAsAvailableWhenNoneSelected();
-  await expect(productPage.productAvailableInChannelsText).toContainText(
-    "In 1 out of 7 channels",
-  );
+
   await productPage.selectFirstTaxOption();
   const preSaveTax = await productPage.rightSideDetailsPage.taxInput
     .locator("input")
@@ -178,4 +175,8 @@ test("TC: SALEOR_46 As an admin, I should be able to update a single product by 
     .inputValue();
   await expect(preSaveTax).toEqual(postSaveTax);
   await page.getByText(newVariantName).waitFor({ state: "attached" });
+  await expect(productPage.productAvailableInChannelsText).toContainText(
+    "In 1 out of 7 channels",
+  );
+  expect(await productPage.productImage.count()).toEqual(1);
 });
