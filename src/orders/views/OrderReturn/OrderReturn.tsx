@@ -31,7 +31,11 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
 
   const [replacedOrder, setReplacedOrder] = React.useState(null);
 
-  const { data, loading } = useOrderDetailsQuery({
+  const {
+    data,
+    loading,
+    refetch: refetchOrderDetails,
+  } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId,
@@ -77,7 +81,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     },
   );
 
-  const [grantRefund] = useOrderGrantRefundAddMutation({
+  const [grantRefund, grantRefundOpts] = useOrderGrantRefundAddMutation({
     onCompleted: submitData => {
       if (submitData.orderGrantRefundCreate.errors.length === 0) {
         navigate(orderUrl(orderId), { replace: true });
@@ -108,6 +112,10 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       }),
     );
 
+    if (returnErrors.length) {
+      return;
+    }
+
     const grantRefundErrors = formData.autoGrantRefund
       ? await extractMutationErrors(
           grantRefund({
@@ -116,9 +124,9 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
               amount: formData.amount,
               reason: "",
               lines: [
-                ...formData.fulfilledItemsQuantities.map(({ id, value }) => ({
-                  id,
-                  quantity: value,
+                ...formData.fulfilledItemsQuantities.map(line => ({
+                  id: line.data.orderLineId,
+                  quantity: line.value,
                 })),
                 ...formData.unfulfilledItemsQuantities.map(({ id, value }) => ({
                   id,
@@ -131,6 +139,12 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         )
       : [];
 
+    // If return was successful, but grant refund failed, we need to refetch order details
+    // to display updated order data affected by return mutation
+    if (grantRefundErrors.length) {
+      refetchOrderDetails();
+    }
+
     const errors = [...returnErrors, ...grantRefundErrors];
     if (!errors.length) {
       navigate(orderUrl(replacedOrder ?? orderId));
@@ -139,7 +153,10 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
 
   return (
     <OrderReturnPage
-      errors={returnCreateOpts.data?.orderFulfillmentReturnProducts.errors}
+      returnErrors={
+        returnCreateOpts.data?.orderFulfillmentReturnProducts.errors
+      }
+      grantRefundErrors={grantRefundOpts.data?.orderGrantRefundCreate.errors}
       order={data?.order}
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}

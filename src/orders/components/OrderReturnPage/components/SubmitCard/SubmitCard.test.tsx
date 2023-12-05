@@ -11,6 +11,7 @@ describe("SubmitCard", () => {
     render(
       <Wrapper>
         <SubmitCard
+          grantRefundErrors={[]}
           autoGrantRefund={false}
           refundShipmentCosts={false}
           canRefundShipping={false}

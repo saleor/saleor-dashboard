@@ -30,6 +30,7 @@ export interface LineItemOptions<T> {
 export interface LineItemData {
   isFulfillment: boolean;
   isRefunded: boolean;
+  orderLineId: string;
 }
 
 export type FormsetQuantityData = FormsetData<LineItemData, number>;

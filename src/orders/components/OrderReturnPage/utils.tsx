@@ -9,6 +9,10 @@ import {
   LineItemOptions,
 } from "./form";
 
+type OrderLine = OrderDetailsFragment["lines"][0];
+type FulfillmentLine = OrderDetailsFragment["fulfillments"][0]["lines"][0];
+type ParsedFulfillmentLine = OrderLine & { orderLineId: string };
+
 const fulfiledStatuses = [
   FulfillmentStatus.FULFILLED,
   FulfillmentStatus.REFUNDED,
@@ -45,7 +49,7 @@ export const getAllOrderWaitingLines = (order?: OrderDetailsFragment) =>
   );
 
 export function getLineItem<T>(
-  { id }: Node,
+  line: FulfillmentLine | ParsedFulfillmentLine | OrderLine,
   {
     initialValue,
     isFulfillment = false,
@@ -53,8 +57,12 @@ export function getLineItem<T>(
   }: LineItemOptions<T>,
 ) {
   return {
-    data: { isFulfillment, isRefunded },
-    id,
+    data: {
+      isFulfillment,
+      isRefunded,
+      orderLineId: "orderLineId" in line ? line.orderLineId : line.id,
+    },
+    id: line.id,
     label: null,
     value: initialValue,
   };
@@ -65,7 +73,7 @@ export function getParsedLineData<T>({
   isFulfillment = false,
   isRefunded = false,
 }: LineItemOptions<T>) {
-  return (item: Node) =>
+  return (item: ParsedFulfillmentLine | OrderLine) =>
     getLineItem(item, { initialValue, isFulfillment, isRefunded });
 }
 
@@ -88,7 +96,7 @@ export const getFulfillmentsWithStatus = (
 
 export const getParsedLinesOfFulfillments = (
   fullfillments: OrderDetailsFragment["fulfillments"],
-) =>
+): ParsedFulfillmentLine[] =>
   fullfillments.reduce(
     (result, { lines }) => [...result, ...getParsedLines(lines)],
     [],
@@ -96,10 +104,11 @@ export const getParsedLinesOfFulfillments = (
 
 export const getParsedLines = (
   lines: OrderDetailsFragment["fulfillments"][0]["lines"],
-) =>
+): ParsedFulfillmentLine[] =>
   lines.map(({ id, quantity, orderLine }) => ({
     ...orderLine,
     id,
+    orderLineId: orderLine.id,
     quantity,
   }));
 

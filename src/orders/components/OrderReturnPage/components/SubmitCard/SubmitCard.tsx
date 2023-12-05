@@ -4,6 +4,7 @@ import {
   ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
+import { OrderGrantRefundCreateErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { OrderRefundAmountValuesProps } from "@dashboard/orders/components/OrderRefundReturnAmount/OrderRefundReturnAmountValues";
 import { IMoney } from "@dashboard/utils/intl";
@@ -26,6 +27,7 @@ interface SubmitCardProps {
   amountData: OrderRefundAmountValuesProps;
   customRefundValue: number;
   onChange: FormChange;
+  grantRefundErrors: OrderGrantRefundCreateErrorFragment[];
 }
 
 export const SubmitCard = ({
@@ -38,6 +40,7 @@ export const SubmitCard = ({
   amountData,
   onChange,
   customRefundValue,
+  grantRefundErrors,
 }: SubmitCardProps) => {
   const intl = useIntl();
   const classes = useSubmitCardStyles();
@@ -57,6 +60,7 @@ export const SubmitCard = ({
           </Box>
           <Checkbox
             checked={autoGrantRefund}
+            error={grantRefundErrors.length > 0}
             name={"autoGrantRefund" satisfies keyof OrderReturnData}
             onCheckedChange={checked => {
               onChange({
@@ -67,7 +71,11 @@ export const SubmitCard = ({
               });
             }}
           >
-            <Text>
+            <Text
+              color={
+                grantRefundErrors.length ? "textCriticalDefault" : undefined
+              }
+            >
               <FormattedMessage {...submitCardMessages.autoGrantRefund} />
             </Text>
           </Checkbox>
