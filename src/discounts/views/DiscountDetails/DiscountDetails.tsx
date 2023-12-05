@@ -117,7 +117,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   );
 
   const onRuleDeleteSubmit = (id: string) => {
-    promotionDelete({
+    return promotionDelete({
       variables: {
         id,
       },

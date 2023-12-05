@@ -102,7 +102,6 @@ export const Rule = ({ channels, disabled = false, errors }: RuleProps) => {
         <RuleReward
           disabled={disabled}
           currencySymbol={currencySymbol}
-          hasSelectedChannels={hasSelectedChannels}
           error={getCommonFormFieldErrorMessage(formErrors.rewardValue, intl)}
         />
 

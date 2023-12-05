@@ -134,9 +134,9 @@ export const DiscountDetailsPage = ({
     }
   };
 
-  const handleDeleteRule = () => {
+  const handleDeleteRule = async () => {
     const ruleId = rules[ruleDeleteIndex].id;
-    onRuleDeleteSubmit(ruleId);
+    await onRuleDeleteSubmit(ruleId);
     setRuleDeleteIndex(null);
   };
 

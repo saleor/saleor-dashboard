@@ -12,14 +12,12 @@ interface RuleRewardProps {
   disabled?: boolean;
   currencySymbol: string | null;
   error: string | undefined;
-  hasSelectedChannels: boolean;
 }
 
 export const RuleReward = ({
   currencySymbol,
   disabled,
   error,
-  hasSelectedChannels,
 }: RuleRewardProps) => {
   const intl = useIntl();
   const { watch, formState } = useFormContext<Rule>();
@@ -32,17 +30,6 @@ export const RuleReward = ({
   });
 
   const discountType = watch("rewardValueType");
-
-  if (!hasSelectedChannels) {
-    return (
-      <Box display="flex" flexDirection="column" gap={4}>
-        <Text>{intl.formatMessage(messages.reward)}</Text>
-        <Text variant="caption" color="textNeutralSubdued">
-          {intl.formatMessage(messages.noChannelsSelected)}
-        </Text>
-      </Box>
-    );
-  }
 
   return (
     <>
