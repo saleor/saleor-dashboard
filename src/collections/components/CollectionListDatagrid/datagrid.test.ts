@@ -1,6 +1,5 @@
 import { Collection } from "@dashboard/collections/types";
 import { CollectionChannels } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
-import { COLOR_WARNING } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
 
 import {
@@ -37,7 +36,7 @@ describe("getAvailabilityLabelWhenSelectedChannel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "accent1",
+      color: "#d7f5d7",
       label: "Published",
     });
   });
@@ -64,7 +63,7 @@ describe("getAvailabilityLabelWhenSelectedChannel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "critical2",
+      color: "#ffdeea",
       label: "Unpublished",
     });
   });
@@ -91,7 +90,7 @@ describe("getAvailabilityLabelWhenSelectedChannel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: COLOR_WARNING,
+      color: "#ffe6c8",
       label: "Scheduled to publish",
     });
   });
@@ -109,7 +108,7 @@ describe("getAvailabilityLabel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "critical2",
+      color: "#ffdeea",
       label: "No channels",
     });
   });
@@ -136,7 +135,7 @@ describe("getAvailabilityLabel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "accent1",
+      color: "#d7f5d7",
       label:
         "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
     });
@@ -164,7 +163,7 @@ describe("getAvailabilityLabel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "critical2",
+      color: "#ffdeea",
       label:
         "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
     });
