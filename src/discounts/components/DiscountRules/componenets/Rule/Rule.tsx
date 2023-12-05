@@ -79,26 +79,28 @@ export const Rule = ({
   return (
     <RichTextContext.Provider value={richText}>
       <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
-        <RuleInputWrapper>
-          <Input
-            {...nameField}
-            disabled={disabled || nameField.disabled}
-            size="small"
-            label="Name"
-            error={!!formState.errors?.name?.message}
-            helperText={formState.errors?.name?.message}
-          />
-        </RuleInputWrapper>
+        <Box display="flex" gap={4}>
+          <RuleInputWrapper __flex={1}>
+            <Input
+              {...nameField}
+              disabled={disabled || nameField.disabled}
+              size="small"
+              label="Name"
+              error={!!formState.errors?.name?.message}
+              helperText={formState.errors?.name?.message}
+            />
+          </RuleInputWrapper>
 
-        <RuleInputWrapper>
-          <Select
-            {...channelfield}
-            size="small"
-            label={intl.formatMessage(commonMessages.channel)}
-            options={channelOptions}
-            disabled={disabled || channelfield.disabled}
-          />
-        </RuleInputWrapper>
+          <RuleInputWrapper __flex={1}>
+            <Select
+              {...channelfield}
+              size="small"
+              label={intl.formatMessage(commonMessages.channel)}
+              options={channelOptions}
+              disabled={disabled || channelfield.disabled}
+            />
+          </RuleInputWrapper>
+        </Box>
 
         <RuleConditions
           disabled={disabled}
