@@ -110,6 +110,14 @@ export const productFragment = gql`
       name
       hasVariants
     }
+    category @include(if: $includeCategories) {
+      id
+      name
+    }
+    collections @include(if: $includeCollections) {
+      id
+      name
+    }
     channelListings {
       ...ChannelListingProductWithoutPricing
       pricing @include(if: $hasChannel) {

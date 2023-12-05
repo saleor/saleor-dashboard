@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [[ -z "${SENTRY_ORG}" ]]; then
   echo "Sentry not definied. Skipping uploading..."
 else 

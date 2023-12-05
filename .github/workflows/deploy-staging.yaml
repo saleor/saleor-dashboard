@@ -50,8 +50,11 @@ jobs:
         # Add commit hash to basic version number
         run: |
           set -x
-          hash=$(git rev-parse --short HEAD)
-          echo "CUSTOM_VERSION=${VERSION}-${hash}" >> $GITHUB_ENV
+          HASH=$(git rev-parse --short HEAD)
+          CURRENT_VERSION=$(jq -r .version package.json)
+          RELEASE="${CURRENT_VERSION}-${HASH}"
+          echo "CUSTOM_VERSION=${RELEASE}" >> $GITHUB_ENV
+          echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
 
       - name: Setup Node
         uses: actions/setup-node@v3
