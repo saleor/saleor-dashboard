@@ -25,6 +25,9 @@ export class BasePage {
     await expect(this.pageHeader).toBeVisible({ timeout: 10000 });
   }
   async gotoExistingProductPage(productId: string) {
+    await console.log(
+      `Navigating to existing product: ${URL_LIST.products}${productId}`,
+    );
     await this.page.goto(`${URL_LIST.products}${productId}`);
     await expect(this.pageHeader).toBeVisible({ timeout: 10000 });
   }
