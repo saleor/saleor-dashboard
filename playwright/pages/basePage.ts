@@ -127,11 +127,11 @@ export class BasePage {
     await this.waitForGrid();
     let rowIndexes: number[] = [];
 
-    for (const searchedText of searchTextArray) {
-      const rows = await this.page.$$eval("table tr", rows =>
-        rows.map(row => row.textContent),
-      );
+    const rows = await this.page.$$eval("table tr", rows =>
+      rows.map(row => row.textContent),
+    );
 
+    for (const searchedText of searchTextArray) {
       const rowIndex = rows.findIndex(rowText =>
         rowText!.includes(searchedText),
       );
