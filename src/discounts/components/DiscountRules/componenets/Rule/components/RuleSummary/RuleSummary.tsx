@@ -1,6 +1,6 @@
 import { Rule } from "@dashboard/discounts/types";
 import { RewardValueTypeEnum } from "@dashboard/graphql";
-import { Chip, Text } from "@saleor/macaw-ui-next";
+import { Box, Chip, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -9,15 +9,28 @@ import { messages } from "../../../../messages";
 interface RuleSummaryProps {
   rule: Rule;
   currencySymbol: string;
+  ruleConditionsOptionsDetailsLoading?: boolean;
 }
 
-export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
+export const RuleSummary = ({
+  rule,
+  currencySymbol,
+  ruleConditionsOptionsDetailsLoading,
+}: RuleSummaryProps) => {
   if (
     !rule.channels.length ||
     !rule.rewardValue ||
     rule.conditions.every(condition => !condition.values.length)
   ) {
     return null;
+  }
+
+  if (ruleConditionsOptionsDetailsLoading) {
+    return (
+      <Box paddingY={3}>
+        <Skeleton />
+      </Box>
+    );
   }
 
   return (

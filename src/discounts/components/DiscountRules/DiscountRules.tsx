@@ -15,6 +15,7 @@ interface DiscountRulesProps<ErrorCode> {
   channels: ChannelFragment[];
   rules: Rule[];
   errors: Array<CommonError<ErrorCode> & { index?: number }>;
+  ruleConditionsOptionsDetailsLoading?: boolean;
   onRuleEdit: (id: string) => void;
   onRuleAdd: () => void;
   onRuleDelete: (id: string) => void;
@@ -25,6 +26,7 @@ export const DiscountRules = <ErrorCode,>({
   channels,
   rules,
   errors,
+  ruleConditionsOptionsDetailsLoading,
   onRuleEdit,
   onRuleAdd,
   onRuleDelete,
@@ -41,6 +43,9 @@ export const DiscountRules = <ErrorCode,>({
       </DashboardCard.Title>
       <DashboardCard.Content>
         <RulesList
+          ruleConditionsOptionsDetailsLoading={
+            ruleConditionsOptionsDetailsLoading
+          }
           rules={rules}
           onRulEdit={onRuleEdit}
           onRuleDelete={onRuleDelete}

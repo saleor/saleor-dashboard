@@ -32,9 +32,10 @@ export const getValidationSchema = (intl: IntlShape) =>
           values: z.array(z.object({ label: z.string(), value: z.string() })),
         }),
       ),
-      rewardValue: z
-        .string()
-        .min(1, intl.formatMessage(validationMessages.nameRequired)),
+      rewardValue: z.number({
+        required_error: intl.formatMessage(validationMessages.nameRequired),
+        invalid_type_error: intl.formatMessage(validationMessages.nameRequired),
+      }),
       rewardValueType: z.string(),
     })
     .refine(

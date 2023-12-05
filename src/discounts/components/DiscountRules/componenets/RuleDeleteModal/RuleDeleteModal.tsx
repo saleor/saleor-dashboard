@@ -11,12 +11,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { messages } from "../../messages";
 
 interface RuleDeleteModalProps {
+  open: boolean;
   onClose: () => void;
   onSubmit: () => void;
   confimButtonState: ConfirmButtonTransitionState;
 }
 
 export const RuleDeleteModal = ({
+  open,
   onClose,
   onSubmit,
   confimButtonState,
@@ -24,7 +26,7 @@ export const RuleDeleteModal = ({
   const intl = useIntl();
 
   return (
-    <DashboardModal open={true} onChange={onClose}>
+    <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content>
         <DashboardModal.Title
           display="flex"

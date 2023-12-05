@@ -44,7 +44,7 @@ export interface Rule {
   channels: Option[];
   conditions: Condition[];
   rewardValueType: RewardValueTypeEnum;
-  rewardValue: string | undefined;
+  rewardValue: number | null;
 }
 
 export interface Condition {

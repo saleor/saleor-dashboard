@@ -44,6 +44,10 @@ export const RuleReward = ({
         <RuleInputWrapper __width={220}>
           <Input
             {...rewardValueType}
+            onChange={e => {
+              const value = parseInt(e.target.value, 10);
+              rewardValueType.onChange(Number.isNaN(value) ? null : value);
+            }}
             error={!!error || !!formState.errors?.rewardValue?.message}
             helperText={error || formState.errors?.rewardValue?.message}
             disabled={disabled || rewardValueType.disabled}

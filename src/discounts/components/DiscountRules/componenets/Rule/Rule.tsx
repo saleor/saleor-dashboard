@@ -16,8 +16,9 @@ import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { Rule as RuleType } from "../../../../types";
+import { ConditionType, Rule as RuleType } from "../../../../types";
 import { getCurencySymbol } from "../../utils";
+import { FetchOptions } from "./components/RuleConditionRow";
 import { RuleConditions } from "./components/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription";
 import { RuleInputWrapper } from "./components/RuleInputWrapper/RuleInputWrapper";
@@ -27,9 +28,15 @@ interface RuleProps {
   channels: ChannelFragment[];
   disabled?: boolean;
   errors: Array<CommonError<PromotionCreateErrorFragment["code"]>>;
+  typeToFetchMap: Record<ConditionType, FetchOptions>;
 }
 
-export const Rule = ({ channels, disabled = false, errors }: RuleProps) => {
+export const Rule = ({
+  channels,
+  disabled = false,
+  errors,
+  typeToFetchMap,
+}: RuleProps) => {
   const intl = useIntl();
   const { watch, getValues, setValue, formState } = useFormContext<RuleType>();
   const formErrors = getFormErrors(["rewardValue"], errors);
@@ -97,6 +104,7 @@ export const Rule = ({ channels, disabled = false, errors }: RuleProps) => {
         <RuleConditions
           disabled={disabled}
           hasSelectedChannels={hasSelectedChannels}
+          typeToFetchMap={typeToFetchMap}
         />
 
         <RuleReward

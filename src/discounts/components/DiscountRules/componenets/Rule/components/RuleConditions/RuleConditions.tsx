@@ -8,19 +8,17 @@ import { useIntl } from "react-intl";
 import { messages } from "../../../../messages";
 import { FetchOptions, RuleConditionRow } from "../RuleConditionRow";
 import { initialDiscountConditionType } from "../RuleConditionRow/initialDiscountConditionType";
-import { useCategorieSearch } from "./hooks/useCategorieSearch";
-import { useCollectionSearch } from "./hooks/useCollectionSearch";
-import { useProductSearch } from "./hooks/useProductSearch";
-import { useVariantSearch } from "./hooks/useVariantSearch";
 
 interface RuleConditionsProps {
   hasSelectedChannels: boolean;
   disabled?: boolean;
+  typeToFetchMap: Record<ConditionType, FetchOptions>;
 }
 
 export const RuleConditions = ({
   disabled = false,
   hasSelectedChannels,
+  typeToFetchMap,
 }: RuleConditionsProps) => {
   const intl = useIntl();
 
@@ -31,18 +29,6 @@ export const RuleConditions = ({
   });
 
   const conditionsList = watch("conditions");
-
-  const productSearch = useProductSearch();
-  const collectionSearch = useCollectionSearch();
-  const categorySearch = useCategorieSearch();
-  const variantSearch = useVariantSearch();
-
-  const typeToFetchMap: Record<ConditionType, FetchOptions> = {
-    product: productSearch,
-    collection: collectionSearch,
-    category: categorySearch,
-    variant: variantSearch,
-  };
 
   const allConditionsSelected =
     conditionsList.length === initialDiscountConditionType.length;

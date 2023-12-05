@@ -33,6 +33,7 @@ import { filterRules } from "./utils";
 export interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
   ruleConditionsOptionsDetailsMap: Record<string, string>;
+  ruleConditionsOptionsDetailsLoading: boolean;
   data: PromotionDetailsFragment | undefined;
   disabled: boolean;
   errors: PromotionUpdateErrorFragment[];
@@ -50,6 +51,7 @@ export interface DiscountDetailsPageProps {
 export const DiscountDetailsPage = ({
   channels,
   ruleConditionsOptionsDetailsMap,
+  ruleConditionsOptionsDetailsLoading,
   disabled,
   data,
   errors,
@@ -168,6 +170,9 @@ export const DiscountDetailsPage = ({
                 onRuleDelete={(id: string) => {
                   setRuleDeleteIndex(id);
                 }}
+                ruleConditionsOptionsDetailsLoading={
+                  ruleConditionsOptionsDetailsLoading
+                }
                 onRuleAdd={() => setShowRuleModal(true)}
                 channels={channels}
                 disabled={disabled}
@@ -183,33 +188,31 @@ export const DiscountDetailsPage = ({
           state={submitButtonState}
         />
 
-        {showRuleModal && (
-          <RuleModal
-            confimButtonState={
-              ruleEditIndex !== null
-                ? ruleUpdateButtonState
-                : ruleCreateButtonState
-            }
-            onClose={() => {
-              setShowRuleModal(false);
-              setRuleEditIndex(null);
-            }}
-            channels={channels}
-            initialFormValues={
-              ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
-            }
-            errors={rulesErrors}
-            onSubmit={handleRuleSubmit}
-          />
-        )}
+        <RuleModal
+          open={showRuleModal}
+          confimButtonState={
+            ruleEditIndex !== null
+              ? ruleUpdateButtonState
+              : ruleCreateButtonState
+          }
+          onClose={() => {
+            setShowRuleModal(false);
+            setRuleEditIndex(null);
+          }}
+          channels={channels}
+          initialFormValues={
+            ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
+          }
+          errors={rulesErrors}
+          onSubmit={handleRuleSubmit}
+        />
 
-        {ruleDeleteIndex !== null && (
-          <RuleDeleteModal
-            onClose={() => setRuleDeleteIndex(null)}
-            onSubmit={handleDeleteRule}
-            confimButtonState={ruleDeleteButtonState}
-          />
-        )}
+        <RuleDeleteModal
+          open={ruleDeleteIndex !== null}
+          onClose={() => setRuleDeleteIndex(null)}
+          onSubmit={handleDeleteRule}
+          confimButtonState={ruleDeleteButtonState}
+        />
       </DetailPageLayout>
     </RichTextContext.Provider>
   );

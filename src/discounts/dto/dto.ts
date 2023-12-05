@@ -15,7 +15,7 @@ export class RuleDTO {
       name: rule.name,
       description: rule.description ? JSON.parse(rule.description) : null,
       channels: rule.channels.map(channel => channel.value),
-      rewardValue: (rule.rewardValue as any) === "" ? null : rule.rewardValue,
+      rewardValue: rule.rewardValue,
       rewardValueType: rule.rewardValueType,
       cataloguePredicate: prepareCataloguePredicate(rule.conditions),
     };
@@ -33,7 +33,7 @@ export class RuleDTO {
       })),
       name: rule.name ?? "",
       description: rule.description ? JSON.stringify(rule.description) : "",
-      rewardValue: rule.rewardValue,
+      rewardValue: rule.rewardValue ?? null,
       rewardValueType: rule.rewardValueType ?? RewardValueTypeEnum.FIXED,
       conditions: prepareRuleConditions(
         rule.cataloguePredicate,

@@ -123,41 +123,39 @@ export const DiscountCreatePage = ({
           state={submitButtonState}
         />
 
-        {showRuleModal && (
-          <RuleModal
-            confimButtonState="default"
-            onClose={() => {
-              setShowRuleModal(false);
-              setRuleEditIndex(null);
-            }}
-            channels={channels}
-            initialFormValues={
-              ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
+        <RuleModal
+          open={showRuleModal}
+          confimButtonState="default"
+          onClose={() => {
+            setShowRuleModal(false);
+            setRuleEditIndex(null);
+          }}
+          channels={channels}
+          initialFormValues={
+            ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
+          }
+          errors={errors.filter(error => error.index === ruleEditIndex)}
+          onSubmit={async data => {
+            if (ruleEditIndex) {
+              setRules(rules => {
+                rules[ruleEditIndex] = data;
+                return rules;
+              });
+            } else {
+              setRules([...rules, data]);
             }
-            errors={errors.filter(error => error.index === ruleEditIndex)}
-            onSubmit={async data => {
-              if (ruleEditIndex) {
-                setRules(rules => {
-                  rules[ruleEditIndex] = data;
-                  return rules;
-                });
-              } else {
-                setRules([...rules, data]);
-              }
 
-              setRuleEditIndex(null);
-              setShowRuleModal(false);
-            }}
-          />
-        )}
+            setRuleEditIndex(null);
+            setShowRuleModal(false);
+          }}
+        />
 
-        {ruleDeleteIndex !== null && (
-          <RuleDeleteModal
-            onClose={() => setRuleDeleteIndex(null)}
-            onSubmit={handleDeleteRule}
-            confimButtonState="default"
-          />
-        )}
+        <RuleDeleteModal
+          open={ruleDeleteIndex !== null}
+          onClose={() => setRuleDeleteIndex(null)}
+          onSubmit={handleDeleteRule}
+          confimButtonState="default"
+        />
       </DetailPageLayout>
     </RichTextContext.Provider>
   );

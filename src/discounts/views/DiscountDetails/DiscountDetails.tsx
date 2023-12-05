@@ -47,7 +47,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
     },
   });
 
-  const ruleConditionsOptionsDetails =
+  const { ruleConditionsOptionsDetails, ruleConditionsOptionsDetailsLoading } =
     useFetchConditionsOptionsDetails(promotionData);
 
   const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation({
@@ -134,6 +134,9 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         ruleConditionsOptionsDetailsMap={getRuleConditionsOptionsDetailsMap(
           ruleConditionsOptionsDetails,
         )}
+        ruleConditionsOptionsDetailsLoading={
+          ruleConditionsOptionsDetailsLoading
+        }
         onBack={() => {
           navigate(saleListUrl());
         }}

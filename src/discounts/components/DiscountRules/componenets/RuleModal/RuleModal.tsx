@@ -12,16 +12,22 @@ import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Rule as RuleType } from "../../../../types";
+import { ConditionType, Rule as RuleType } from "../../../../types";
 import { messages } from "../../messages";
+import { FetchOptions } from "../Rule/components/RuleConditionRow";
+import { useCategorieSearch } from "../Rule/components/RuleConditions/hooks/useCategorieSearch";
+import { useCollectionSearch } from "../Rule/components/RuleConditions/hooks/useCollectionSearch";
+import { useProductSearch } from "../Rule/components/RuleConditions/hooks/useProductSearch";
+import { useVariantSearch } from "../Rule/components/RuleConditions/hooks/useVariantSearch";
 import { Rule } from "../Rule/Rule";
 import { getValidationSchema } from "./validationSchema";
 
 interface RuleModalProps {
+  open: boolean;
   onClose: () => void;
   onSubmit: (data: RuleType) => Promise<void>;
   confimButtonState: ConfirmButtonTransitionState;
@@ -31,6 +37,7 @@ interface RuleModalProps {
 }
 
 export const RuleModal = ({
+  open,
   onClose,
   channels,
   initialFormValues,
@@ -45,12 +52,30 @@ export const RuleModal = ({
     resolver: zodResolver(getValidationSchema(intl)),
   });
 
+  const productSearch = useProductSearch();
+  const collectionSearch = useCollectionSearch();
+  const categorySearch = useCategorieSearch();
+  const variantSearch = useVariantSearch();
+
+  const typeToFetchMap: Record<ConditionType, FetchOptions> = {
+    product: productSearch,
+    collection: collectionSearch,
+    category: categorySearch,
+    variant: variantSearch,
+  };
+
   const handleSubmit: SubmitHandler<RuleType> = async data => {
     await onSubmit(data);
   };
 
+  useEffect(() => {
+    if (!initialFormValues && open) {
+      methods.reset(initialRuleValues);
+    }
+  }, [open]);
+
   return (
-    <DashboardModal open={true} onChange={onClose}>
+    <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content>
         <DashboardModal.Title
           display="flex"
@@ -65,7 +90,12 @@ export const RuleModal = ({
         <Box __width={650}>
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(handleSubmit)}>
-              <Rule channels={channels} errors={errors} disabled={false} />
+              <Rule
+                channels={channels}
+                errors={errors}
+                disabled={false}
+                typeToFetchMap={typeToFetchMap}
+              />
             </form>
           </FormProvider>
         </Box>
