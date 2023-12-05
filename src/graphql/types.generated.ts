@@ -11527,6 +11527,7 @@ export type SearchCollectionsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
   query: Scalars['String'];
+  channel?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -11635,6 +11636,7 @@ export type SearchVariantsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
   query: Scalars['String'];
+  channel?: InputMaybe<Scalars['String']>;
 }>;
 
 

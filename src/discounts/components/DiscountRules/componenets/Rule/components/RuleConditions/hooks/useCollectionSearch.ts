@@ -3,13 +3,17 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import useCollectionSearchQuery from "@dashboard/searches/useCollectionSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-export const useCollectionSearch = () => {
+export const useCollectionSearch = (channel: string) => {
   const {
     loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts,
   } = useCollectionSearchQuery({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      channel,
+    },
+    skip: !channel,
   });
 
   const fetchMoreCollections = getSearchFetchMoreProps(

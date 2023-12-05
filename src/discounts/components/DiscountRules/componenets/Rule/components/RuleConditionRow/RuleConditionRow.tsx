@@ -3,7 +3,7 @@ import { Rule } from "@dashboard/discounts/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { Box, Button, Option, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useController } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 import { initialDiscountConditionType } from "./initialDiscountConditionType";
@@ -47,6 +47,9 @@ export const RuleConditionRow = ({
     name: ruleConditionValuesFieldName,
   });
 
+  const { watch, setValue } = useFormContext<Rule>();
+  const condition = watch(`conditions.${conditionIndex}`);
+
   const { fetch = () => {}, fetchMoreProps, options } = fetchOptions || {};
 
   const discountConditionType = initialDiscountConditionType.filter(
@@ -69,7 +72,10 @@ export const RuleConditionRow = ({
           )}
           fetchOptions={() => {}}
           options={discountConditionType}
-          onChange={typeField.onChange}
+          onChange={e => {
+            setValue(ruleConditionValuesFieldName, []);
+            typeField.onChange(e);
+          }}
           onBlur={typeField.onBlur}
           disabled={disabled}
         />
@@ -93,7 +99,7 @@ export const RuleConditionRow = ({
       <RuleInputWrapper>
         <Multiselect
           alwaysFetchOnFocus
-          value={valuesField.value}
+          value={condition.values}
           fetchOptions={fetch}
           fetchMore={fetchMoreProps}
           options={options ?? []}

@@ -15398,8 +15398,13 @@ export type SearchCategoriesQueryHookResult = ReturnType<typeof useSearchCategor
 export type SearchCategoriesLazyQueryHookResult = ReturnType<typeof useSearchCategoriesLazyQuery>;
 export type SearchCategoriesQueryResult = Apollo.QueryResult<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>;
 export const SearchCollectionsDocument = gql`
-    query SearchCollections($after: String, $first: Int!, $query: String!) {
-  search: collections(after: $after, first: $first, filter: {search: $query}) {
+    query SearchCollections($after: String, $first: Int!, $query: String!, $channel: String) {
+  search: collections(
+    after: $after
+    first: $first
+    filter: {search: $query}
+    channel: $channel
+  ) {
     edges {
       node {
         id
@@ -15428,6 +15433,7 @@ export const SearchCollectionsDocument = gql`
  *      after: // value for 'after'
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      channel: // value for 'channel'
  *   },
  * });
  */
@@ -15983,8 +15989,13 @@ export type SearchStaffMembersQueryHookResult = ReturnType<typeof useSearchStaff
 export type SearchStaffMembersLazyQueryHookResult = ReturnType<typeof useSearchStaffMembersLazyQuery>;
 export type SearchStaffMembersQueryResult = Apollo.QueryResult<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>;
 export const SearchVariantsDocument = gql`
-    query SearchVariants($after: String, $first: Int!, $query: String!) {
-  search: productVariants(after: $after, first: $first, filter: {search: $query}) {
+    query SearchVariants($after: String, $first: Int!, $query: String!, $channel: String) {
+  search: productVariants(
+    after: $after
+    first: $first
+    filter: {search: $query}
+    channel: $channel
+  ) {
     edges {
       node {
         id
@@ -16013,6 +16024,7 @@ export const SearchVariantsDocument = gql`
  *      after: // value for 'after'
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      channel: // value for 'channel'
  *   },
  * });
  */

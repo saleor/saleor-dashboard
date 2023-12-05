@@ -1,20 +1,8 @@
 // @ts-strict-ignore
 import { createAppsDebug } from "@dashboard/apps/apps-debug";
+import { usePrevious } from "@dashboard/hooks/usePrevious";
 import { DashboardEventFactory, Events } from "@saleor/app-sdk/app-bridge";
-import { useEffect, useRef } from "react";
-
-/**
- * https://usehooks.com/usePrevious/
- */
-function usePreviousValue(value) {
-  const ref = useRef();
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return ref.current;
-}
+import { useEffect } from "react";
 
 interface Args {
   enabled: boolean;
@@ -32,7 +20,7 @@ export const useUpdateAppToken = ({
   appToken,
   postToExtension,
 }: Args) => {
-  const cachedToken = usePreviousValue(appToken);
+  const cachedToken = usePrevious(appToken);
 
   useEffect(() => {
     if (!enabled) {
