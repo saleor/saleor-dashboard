@@ -228,7 +228,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         ...(changed && areCellsDirty
           ? {
               themeOverride: {
-                bgCell: themeValues.colors.background.accent1,
+                bgCell: themeValues.colors.background.default1,
               },
             }
           : {}),
