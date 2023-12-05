@@ -1,22 +1,12 @@
 import { Collection } from "@dashboard/collections/types";
 import { CollectionChannels } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import { COLOR_WARNING } from "@dashboard/misc";
-import { ThemeTokensValues } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import {
-  getAvailablilityLabel,
-  getAvailablilityLabelWhenSelectedChannel,
+  getAvailabilityLabel,
+  getAvailabilityLabelWhenSelectedChannel,
 } from "./datagrid";
-
-const theme = {
-  colors: {
-    background: {
-      critical2: "critical2",
-      accent1: "accent1",
-    },
-  },
-} as ThemeTokensValues;
 
 const currentTheme = "defaultLight";
 
@@ -24,7 +14,7 @@ const intl = {
   formatMessage: jest.fn(x => x.defaultMessage),
 } as unknown as IntlShape;
 
-describe("getAvailablilityLabelWhenSelectedChannel", () => {
+describe("getAvailabilityLabelWhenSelectedChannel", () => {
   it("should return published label when channel is active", () => {
     // Arrange
     const channel = {
@@ -39,11 +29,10 @@ describe("getAvailablilityLabelWhenSelectedChannel", () => {
     } as CollectionChannels;
 
     // Act;
-    const result = getAvailablilityLabelWhenSelectedChannel(
+    const result = getAvailabilityLabelWhenSelectedChannel(
       channel,
       intl,
       currentTheme,
-      theme,
     );
 
     // Assert
@@ -67,11 +56,10 @@ describe("getAvailablilityLabelWhenSelectedChannel", () => {
     } as CollectionChannels;
 
     // Act;
-    const result = getAvailablilityLabelWhenSelectedChannel(
+    const result = getAvailabilityLabelWhenSelectedChannel(
       channel,
       intl,
       currentTheme,
-      theme,
     );
 
     // Assert
@@ -95,11 +83,10 @@ describe("getAvailablilityLabelWhenSelectedChannel", () => {
     } as CollectionChannels;
 
     // Act;
-    const result = getAvailablilityLabelWhenSelectedChannel(
+    const result = getAvailabilityLabelWhenSelectedChannel(
       channel,
       intl,
       currentTheme,
-      theme,
     );
 
     // Assert
@@ -110,7 +97,7 @@ describe("getAvailablilityLabelWhenSelectedChannel", () => {
   });
 });
 
-describe("getAvailablilityLabel", () => {
+describe("getAvailabilityLabel", () => {
   it("should return no channels label when there is not channels in collection", () => {
     // Arrange
     const collection = {
@@ -118,7 +105,7 @@ describe("getAvailablilityLabel", () => {
     } as unknown as Collection;
 
     // Act
-    const result = getAvailablilityLabel(collection, intl, currentTheme, theme);
+    const result = getAvailabilityLabel(collection, intl, currentTheme);
 
     // Assert
     expect(result).toEqual({
@@ -145,7 +132,7 @@ describe("getAvailablilityLabel", () => {
     } as unknown as Collection;
 
     // Act
-    const result = getAvailablilityLabel(collection, intl, currentTheme, theme);
+    const result = getAvailabilityLabel(collection, intl, currentTheme);
 
     // Assert
     expect(result).toEqual({
@@ -173,7 +160,7 @@ describe("getAvailablilityLabel", () => {
     } as unknown as Collection;
 
     // Act
-    const result = getAvailablilityLabel(collection, intl, currentTheme, theme);
+    const result = getAvailabilityLabel(collection, intl, currentTheme);
 
     // Assert
     expect(result).toEqual({

@@ -69,13 +69,13 @@ export const PageListDatagrid = ({
     onSave: onColumnChange,
   });
 
-  const { themeValues } = useTheme();
+  const { theme: currentTheme } = useTheme();
   const getCellContent = useCallback(
     createGetCellContent({
       pages,
       columns: visibleColumns,
       intl,
-      themeValues,
+      currentTheme,
     }),
     [pages, visibleColumns],
   );

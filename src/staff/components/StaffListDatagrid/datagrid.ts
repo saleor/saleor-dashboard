@@ -4,11 +4,6 @@ import {
   tagsCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import {
-  hueToPillColorDark,
-  hueToPillColorLight,
-  stringToHue,
-} from "@dashboard/components/Datagrid/customCells/PillCell";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { commonStatusMessages } from "@dashboard/intl";
 import { getStatusColor, getUserName } from "@dashboard/misc";
