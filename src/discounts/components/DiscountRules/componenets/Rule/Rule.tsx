@@ -1,9 +1,9 @@
-import { Multiselect } from "@dashboard/components/Combobox";
 import {
   ChannelFragment,
   PromotionCreateErrorFragment,
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import {
   CommonError,
@@ -11,7 +11,7 @@ import {
 } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { Box, Input, Option } from "@saleor/macaw-ui-next";
+import { Box, Input, Option, Select } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -46,13 +46,13 @@ export const Rule = ({
     name: "name",
   });
 
-  const { field: channelsfield } = useController<RuleType, "channels">({
-    name: "channels",
+  const { field: channelfield } = useController<RuleType, "channel">({
+    name: "channel",
   });
 
-  const selectedChannels = watch("channels");
-  const hasSelectedChannels = !!selectedChannels?.length;
-  const currencySymbol = getCurencySymbol(selectedChannels ?? [], channels);
+  const selectedChannel = watch("channel");
+  const hasSelectedChannel = !!selectedChannel;
+  const currencySymbol = getCurencySymbol(selectedChannel, channels);
 
   const richText = useRichText({
     initial: getValues("description"),
@@ -91,19 +91,18 @@ export const Rule = ({
         </RuleInputWrapper>
 
         <RuleInputWrapper>
-          <Multiselect
-            {...channelsfield}
+          <Select
+            {...channelfield}
             size="small"
-            label="Channels"
+            label={intl.formatMessage(commonMessages.channel)}
             options={channelOptions}
-            fetchOptions={() => {}}
-            disabled={disabled || channelsfield.disabled}
+            disabled={disabled || channelfield.disabled}
           />
         </RuleInputWrapper>
 
         <RuleConditions
           disabled={disabled}
-          hasSelectedChannels={hasSelectedChannels}
+          hasSelectedChannels={hasSelectedChannel}
           typeToFetchMap={typeToFetchMap}
         />
 

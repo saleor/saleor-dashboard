@@ -5,7 +5,6 @@ import {
   PromotionRuleInput,
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
-import { Option } from "@saleor/macaw-ui-next";
 
 import { CataloguePredicateAPI, Condition, Rule } from "../types";
 
@@ -14,7 +13,7 @@ export class RuleDTO {
     return {
       name: rule.name,
       description: rule.description ? JSON.parse(rule.description) : null,
-      channels: rule.channels.map(channel => channel.value),
+      channels: [rule.channel.value],
       rewardValue: rule.rewardValue,
       rewardValueType: rule.rewardValueType,
       cataloguePredicate: prepareCataloguePredicate(rule.conditions),
@@ -27,10 +26,9 @@ export class RuleDTO {
   ): Rule {
     return {
       id: rule.id,
-      channels: rule.channels.map<Option>(channel => ({
-        label: channel.name,
-        value: channel.id,
-      })),
+      channel: rule.channels.length
+        ? { label: rule.channels[0].name, value: rule.channels[0].id }
+        : null,
       name: rule.name ?? "",
       description: rule.description ? JSON.stringify(rule.description) : "",
       rewardValue: rule.rewardValue ?? null,

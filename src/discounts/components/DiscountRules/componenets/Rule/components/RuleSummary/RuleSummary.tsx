@@ -18,7 +18,7 @@ export const RuleSummary = ({
   ruleConditionsOptionsDetailsLoading,
 }: RuleSummaryProps) => {
   if (
-    !rule.channels.length ||
+    !rule.channel ||
     !rule.rewardValue ||
     rule.conditions.every(condition => !condition.values.length)
   ) {
@@ -40,7 +40,7 @@ export const RuleSummary = ({
         values={{
           value: getRuleValue(rule, currencySymbol),
           items: getItems(rule),
-          channel: getChannels(rule.channels),
+          channel: getChannel(rule.channel),
         }}
       />
     </Text>
@@ -57,8 +57,8 @@ function getRuleValue(rule: Rule, currencySymbol: string) {
   );
 }
 
-function getChannels(channels: Rule["channels"]) {
-  return channels.map(channel => (
+function getChannel(channel: Rule["channel"]) {
+  return (
     <Chip
       marginRight={1.5}
       backgroundColor="surfaceCriticalSubdued"
@@ -66,7 +66,7 @@ function getChannels(channels: Rule["channels"]) {
     >
       {channel.label}
     </Chip>
-  ));
+  );
 }
 
 function getItems(rule: Rule) {

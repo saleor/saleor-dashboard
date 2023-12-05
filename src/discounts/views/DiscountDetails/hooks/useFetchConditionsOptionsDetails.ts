@@ -26,7 +26,7 @@ export const useFetchConditionsOptionsDetails = (
 
   useEffect(() => {
     refetch();
-  }, [promotionData.promotion?.rules]);
+  }, [promotionData?.promotion?.rules]);
 
   return {
     ruleConditionsOptionsDetails,
