@@ -24,13 +24,15 @@ export const getValidationSchema = (intl: IntlShape) =>
       name: z
         .string()
         .min(1, intl.formatMessage(validationMessages.nameRequired)),
-      channels: z.array(z.object({ label: z.string(), value: z.string() })),
+      channel: z.object({ label: z.string(), value: z.string() }).nullable(),
       conditions: z.array(
-        z.object({
-          type: z.string().nullable(),
-          condition: z.string(),
-          values: z.array(z.object({ label: z.string(), value: z.string() })),
-        }),
+        z
+          .object({
+            type: z.string().nullable(),
+            condition: z.string(),
+            values: z.array(z.object({ label: z.string(), value: z.string() })),
+          })
+          .optional(),
       ),
       rewardValue: z.number({
         required_error: intl.formatMessage(validationMessages.nameRequired),
@@ -39,9 +41,9 @@ export const getValidationSchema = (intl: IntlShape) =>
       rewardValueType: z.string(),
     })
     .refine(
-      ({ rewardValue, rewardValueType, channels }) => {
+      ({ rewardValue, rewardValueType, channel }) => {
         if (
-          channels.length > 0 &&
+          channel &&
           rewardValueType === RewardValueTypeEnum.PERCENTAGE &&
           Number(rewardValue) > 100
         ) {
