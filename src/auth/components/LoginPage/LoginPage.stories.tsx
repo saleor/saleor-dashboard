@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import React from "react";
 
 import { CardDecorator } from "../../../../.storybook/decorators";
@@ -16,7 +15,7 @@ const props: Omit<LoginCardProps, "classes"> = {
   loading: false,
   errors: [],
   onExternalAuthentication: () => undefined,
-  onSubmit: () => undefined,
+  onSubmit: async () => {},
 };
 
 export default {
