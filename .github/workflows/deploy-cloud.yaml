@@ -34,8 +34,9 @@ jobs:
       - name: Set sentry release
         run: |
           HASH=$(git rev-parse --short HEAD)
-          VERSION=$(jq -r .version package.json)
-          echo "SENTRY_RELEASE=${VERSION}-${HASH}" >> $GITHUB_ENV
+          CURRENT_VERSION=$(jq -r .version package.json)
+          RELEASE="${CURRENT_VERSION}-${HASH}"
+          echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
       - name: Package
         timeout-minutes: 15
         run: |
