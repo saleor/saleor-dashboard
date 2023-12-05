@@ -54,12 +54,7 @@ export const VoucherCodesAddButton = ({
   return (
     <Popover open={isSubMenuOpen} onOpenChange={setSubMenuOpen}>
       <Popover.Trigger>
-        <Button
-          data-test-id="add-code-button"
-          type="button"
-          backgroundColor="default1"
-          color="default1"
-        >
+        <Button data-test-id="add-code-button" type="button">
           <PlusIcon />
           {intl.formatMessage(messages.addCode)}
           <ArrowDownIcon />
