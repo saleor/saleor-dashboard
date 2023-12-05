@@ -25,6 +25,7 @@ export class ProductPage {
     page: Page,
     readonly productsNames = page.getByTestId("name"),
     readonly createProductButton = page.getByTestId("add-product"),
+    readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteProductButton = page.getByTestId("button-bar-delete"),
     readonly searchProducts = page.locator(
       "[placeholder='Search Products...']",
@@ -81,6 +82,9 @@ export class ProductPage {
 
   async clickDeleteProductButton() {
     await this.deleteProductButton.click();
+  }
+  async clickBulkDeleteButton() {
+    await this.bulkDeleteButton.click();
   }
 
   async addSeo() {
