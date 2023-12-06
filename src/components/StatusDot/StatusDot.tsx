@@ -1,4 +1,5 @@
-import { Box, ThemeTokensValues } from "@saleor/macaw-ui-next";
+import { getStatusColor } from "@dashboard/misc";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 
 export type DotStatus = "success" | "error" | "warning";
@@ -6,24 +7,15 @@ export interface StatusDotProps {
   status: DotStatus;
 }
 
-export const getStatusDotColor = (
-  status: DotStatus,
-): keyof ThemeTokensValues["colors"]["background"] => {
-  switch (status) {
-    case "error":
-      return "critical1";
-    case "warning":
-      return "warning1";
-    default:
-      return "success1";
-  }
+export const StatusDot: React.FC<StatusDotProps> = ({ status }) => {
+  const { theme: currentTheme } = useTheme();
+  const color = getStatusColor({ status, currentTheme });
+  return (
+    <Box
+      width={2}
+      height={2}
+      borderRadius="50%"
+      __backgroundColor={color.base}
+    />
+  );
 };
-
-export const StatusDot: React.FC<StatusDotProps> = ({ status }) => (
-  <Box
-    width={2}
-    height={2}
-    borderRadius="50%"
-    backgroundColor={getStatusDotColor(status)}
-  />
-);
