@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import "@testing-library/jest-dom";
 
 import { configure } from "@testing-library/react";
@@ -41,7 +40,7 @@ configure({ testIdAttribute: "data-test-id" });
  */
 import { TextDecoder, TextEncoder } from "util";
 global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
+global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 
 global.CSS = {
   supports: () => false,

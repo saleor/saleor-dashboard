@@ -1,8 +1,7 @@
-// @ts-strict-ignore
 import { PermissionEnum, UserFragment } from "@dashboard/graphql";
 
 export const hasPermission = (permission: PermissionEnum, user: UserFragment) =>
-  user.userPermissions.map(perm => perm.code).includes(permission);
+  user.userPermissions?.map(perm => perm.code).includes(permission);
 
 export const hasAnyPermissions = (
   permissions: PermissionEnum[],

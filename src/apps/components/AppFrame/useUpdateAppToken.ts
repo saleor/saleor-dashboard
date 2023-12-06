@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { createAppsDebug } from "@dashboard/apps/apps-debug";
 import { usePrevious } from "@dashboard/hooks/usePrevious";
 import { DashboardEventFactory, Events } from "@saleor/app-sdk/app-bridge";

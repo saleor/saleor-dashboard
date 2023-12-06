@@ -26,7 +26,7 @@ export type CommonErrorCode =
   (typeof CommonErrorCode)[keyof typeof CommonErrorCode];
 
 export interface CommonError<ErrorCode> {
-  code: ErrorCode | CommonErrorCode;
+  code?: ErrorCode | CommonErrorCode;
   field: string | null;
   message?: string | null;
 }

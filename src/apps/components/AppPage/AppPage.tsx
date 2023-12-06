@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   borderHeight,
   topBarHeight,
@@ -38,7 +37,7 @@ export const AppPage: React.FC<AppPageProps> = ({
   return (
     <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
       <AppPageNav
-        appId={data?.id}
+        appId={data?.id || ""}
         name={data?.name}
         supportUrl={data?.supportUrl}
         homepageUrl={data?.homepageUrl}

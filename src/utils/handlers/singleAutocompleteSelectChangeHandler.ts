@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { FormChange } from "@dashboard/hooks/useForm";
 
@@ -13,7 +12,7 @@ function createSingleAutocompleteSelectHandler(
   setSelected: (value: string) => void,
   choices: SingleAutocompleteChoiceType[],
 ): FormChange {
-  return (event: React.ChangeEvent<any>) => {
+  return event => {
     change(event);
 
     const value = event.target.value;

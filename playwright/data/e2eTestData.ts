@@ -3,6 +3,10 @@ export const PRODUCTS = {
     id: "UHJvZHVjdFR5cGU6Njcy",
     info: "Single product type",
   },
+  singleProductTypeToBeUpdated: {
+    id: "UHJvZHVjdDo3NjE%3D",
+    info: "Single product type to be updated",
+  },
   productToAddVariants: {
     id: "UHJvZHVjdDo3Mjk%3D",
     info: "Product that does not contain any variant yet",
@@ -15,6 +19,13 @@ export const PRODUCTS = {
     name: "beer to be deleted",
     id: "UHJvZHVjdDo3NTc%3D",
     info: "Product that contains single variant - to be deleted from details view",
+  },
+  productsToBeBulkDeleted: {
+    names: [
+      "a product to be deleted via bulk 1/3",
+      "a product to be deleted via bulk 2/3",
+      "a product to be deleted via bulk 3/3",
+    ],
   },
 };
 

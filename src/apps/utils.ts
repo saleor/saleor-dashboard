@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getAppsConfig } from "@dashboard/config";
 import { AppInstallationFragment, JobStatusEnum } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
@@ -88,7 +87,7 @@ interface GetAppDetailsOpts {
   app: AppstoreApi.SaleorApp;
   appInstallation?: AppInstallationFragment;
   navigateToAppInstallPage?: (url: string) => void;
-  navigateToGithubForkPage?: (url?: string) => void;
+  navigateToGithubForkPage?: (githubForkUrl: string) => void;
   retryAppInstallation: (installationId: string) => void;
   removeAppInstallation: (installationId: string) => void;
 }
@@ -118,11 +117,11 @@ export const getAppDetails = ({
       !appInstallation && isAppComingSoon ? app.releaseDate : undefined,
     installHandler:
       !appInstallation && isAppInstallable
-        ? () => navigateToAppInstallPage(app.manifestUrl)
+        ? () => navigateToAppInstallPage(app.manifestUrl || "")
         : undefined,
     githubForkHandler:
       !appInstallation && isAppForkableOnGithub && !!app.githubForkUrl
-        ? () => navigateToGithubForkPage(app.githubForkUrl)
+        ? () => navigateToGithubForkPage(app.githubForkUrl || "")
         : undefined,
     installationPending,
     retryInstallHandler:

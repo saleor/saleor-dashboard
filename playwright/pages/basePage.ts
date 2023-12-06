@@ -25,6 +25,9 @@ export class BasePage {
     await expect(this.pageHeader).toBeVisible({ timeout: 10000 });
   }
   async gotoExistingProductPage(productId: string) {
+    await console.log(
+      `Navigating to existing product: ${URL_LIST.products}${productId}`,
+    );
     await this.page.goto(`${URL_LIST.products}${productId}`);
     await expect(this.pageHeader).toBeVisible({ timeout: 10000 });
   }
@@ -56,7 +59,7 @@ export class BasePage {
       .waitFor({ state: "attached", timeout: 10000 });
   }
 
-  async findGridCellBounds(col: number, row: number) {
+  private async findGridCellBounds(col: number, row: number) {
     return this.gridCanvas.evaluate(
       (node, { col, row }) => {
         const fiberKey = Object.keys(node).find(
@@ -113,5 +116,45 @@ export class BasePage {
     await this.page.mouse.dblclick(bounds.center.x, bounds.center.y);
     await this.gridInput.waitFor({ state: "attached" });
     await this.gridInput.fill(content);
+  }
+  async clickGridCell(col: number, row: number) {
+    const bounds = await this.findGridCellBounds(col, row);
+
+    if (!bounds)
+      throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
+
+    await this.page.mouse.click(bounds.center.x, bounds.center.y);
+  }
+
+  async findRowIndexBasedOnText(searchTextArray: string[]) {
+    await this.waitForGrid();
+    let rowIndexes: number[] = [];
+
+    const rows = await this.page.$$eval("table tr", rows =>
+      rows.map(row => row.textContent),
+    );
+
+    for (const searchedText of searchTextArray) {
+      const rowIndex = rows.findIndex(rowText =>
+        rowText!.includes(searchedText),
+      );
+
+      if (rowIndex !== -1) {
+        console.log("Index of row containing text:", rowIndex - 1);
+        // since row index starts with 1 and selecting cells in grid starts with zero there is -1 on rowIndex
+        rowIndexes.push(rowIndex - 1);
+      }
+    }
+    return rowIndexes;
+  }
+
+  // check row on grid list view
+  async checkListRowsBasedOnContainingText(searchText: string[]) {
+    const rowIndexes = await this.findRowIndexBasedOnText(searchText);
+    for (const rowIndex of rowIndexes) {
+      await this.clickGridCell(0, rowIndex);
+    }
+    // make sure all searched texts were found and checked
+    await expect(searchText.length).toEqual(rowIndexes.length);
   }
 }

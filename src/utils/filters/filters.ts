@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   FilterElement,
   FilterElementKeyValue,
@@ -16,13 +15,15 @@ function createFilterUtils<
     return Object.keys(params)
       .filter(key => Object.values(filters).includes(key))
       .reduce((acc, key) => {
-        acc[key] = params[key];
+        acc[key] = params[key as keyof typeof params];
         return acc;
       }, {} as any);
   }
 
   function areFiltersApplied(params: TQueryParams): boolean {
-    return Object.keys(getActiveFilters(params)).some(key => !!params[key]);
+    return Object.keys(getActiveFilters(params)).some(
+      key => !!params[key as keyof typeof params],
+    );
   }
 
   function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(

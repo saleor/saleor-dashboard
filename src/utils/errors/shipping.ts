@@ -1,4 +1,5 @@
 import { ShippingErrorCode, ShippingErrorFragment } from "@dashboard/graphql";
+import { ChannelError } from "@dashboard/utils/errors";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
@@ -16,11 +17,16 @@ const messages = defineMessages({
   },
 });
 
+export type ShippingError =
+  | Omit<ShippingErrorFragment, "__typename">
+  | ChannelError
+  | undefined;
+
 function getShippingErrorMessage(
-  err: Omit<ShippingErrorFragment, "__typename"> | undefined,
+  err: ShippingError,
   intl: IntlShape,
 ): string | undefined {
-  if (err) {
+  if (err && "code" in err) {
     switch (err.code) {
       case ShippingErrorCode.ALREADY_EXISTS:
         return intl.formatMessage(messages.alreadyExists);
