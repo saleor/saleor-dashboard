@@ -1,4 +1,5 @@
 import { PRODUCTS } from "@data/e2eTestData";
+import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
 import { ProductPage } from "@pages/productPage";
@@ -25,14 +26,14 @@ test("TC: SALEOR_3 Create basic product with variants @e2e @product", async ({
   await productPage.clickSaveButton();
   await productPage.expectSuccessBanner();
 });
-test("TC: SALEOR_5 Create basic product without variants @e2e @product", async ({
+test("TC: SALEOR_5 Create basic - single product type - product without variants @e2e @product", async ({
   page,
 }) => {
   const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
 
   await basePage.gotoCreateProductPage(PRODUCTS.singleProductType.id);
-  await productPage.selectOneChannelAsAvailable();
+  await productPage.selectOneChannelAsAvailableWhenMoreSelected();
   await productPage.typeNameDescAndRating();
   await productPage.addSeo();
   await productPage.addAllMetaData();
@@ -104,7 +105,29 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @produ
   await variantsPage.clickSaveVariantButton();
   await variantsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_45 As an admin I should be able to delete a single product with variants @basic-regression @product @e2e", async ({
+
+test("TC: SALEOR_44 As an admin I should be able to delete a several products @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const basePage = new BasePage(page);
+  const productPage = new ProductPage(page);
+  await page.goto(URL_LIST.products);
+
+  await basePage.checkListRowsBasedOnContainingText(
+    PRODUCTS.productsToBeBulkDeleted.names,
+  );
+  await productPage.clickBulkDeleteButton();
+  await productPage.deleteProductDialog.clickDeleteButton();
+  await basePage.expectSuccessBanner();
+  await basePage.waitForGrid();
+  await expect(
+    await basePage.findRowIndexBasedOnText(
+      PRODUCTS.productsToBeBulkDeleted.names,
+    ),
+  ).toEqual([]);
+});
+
+test("TC: SALEOR_45 As an admin I should be able to delete a single products @basic-regression @product @e2e", async ({
   page,
 }) => {
   const basePage = new BasePage(page);
@@ -119,4 +142,43 @@ test("TC: SALEOR_45 As an admin I should be able to delete a single product with
   await expect(basePage.gridCanvas.locator("table")).not.toContainText(
     PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name,
   );
+});
+test("TC: SALEOR_46 As an admin, I should be able to update a single product by uploading media, assigning channels, assigning tax, and adding a new variant   @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const newVariantName = "variant 2";
+  const basePage = new BasePage(page);
+  const productPage = new ProductPage(page);
+
+  await basePage.gotoExistingProductPage(
+    PRODUCTS.singleProductTypeToBeUpdated.id,
+  );
+  await productPage.clickUploadMediaButton();
+  await productPage.uploadProductImage("beer.avif");
+  await productPage.productImage.waitFor({ state: "visible" });
+  await productPage.selectOneChannelAsAvailableWhenNoneSelected();
+
+  await productPage.selectFirstTaxOption();
+  const preSaveTax = await productPage.rightSideDetailsPage.taxInput
+    .locator("input")
+    .inputValue();
+  await productPage.basePage.waitForGrid();
+  await productPage.clickAddVariantButton();
+  await productPage.editVariantButton.nth(1).scrollIntoViewIfNeeded();
+  // click and fill variant name cell
+  await productPage.basePage.clickGridCell(1, 1);
+  await productPage.basePage.fillGridCell(1, 1, newVariantName);
+  await productPage.clickSaveButton();
+  await productPage.basePage.expectSuccessBanner();
+  const postSaveTax = await productPage.rightSideDetailsPage.taxInput
+    .locator("input")
+    .inputValue();
+  await expect(preSaveTax).toEqual(postSaveTax);
+  await productPage.basePage.gridCanvas
+    .getByText(newVariantName)
+    .waitFor({ state: "attached" });
+  await expect(productPage.productAvailableInChannelsText).toContainText(
+    "In 1 out of 7 channels",
+  );
+  expect(await productPage.productImage.count()).toEqual(1);
 });

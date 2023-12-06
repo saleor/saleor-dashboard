@@ -1,11 +1,10 @@
-// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { AccountErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField, Typography } from "@material-ui/core";
-import { SetPasswordData } from "@saleor/sdk";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -17,7 +16,7 @@ export interface NewPasswordPageFormData {
 }
 export interface NewPasswordPageProps {
   loading: boolean;
-  errors: SetPasswordData["errors"];
+  errors: AccountErrorFragment[];
   onSubmit: (data: NewPasswordPageFormData) => SubmitPromise;
 }
 

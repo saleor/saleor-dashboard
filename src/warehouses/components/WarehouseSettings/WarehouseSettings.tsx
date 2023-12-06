@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
@@ -65,7 +64,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
 
   const classes = useStyles({});
 
-  const booleanRadioHandler = ({ target: { name, value } }) => {
+  const booleanRadioHandler = ({
+    target: { name, value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
     setData({ [name]: value === "true" });
   };
 

@@ -1,4 +1,5 @@
 import * as faker from "faker";
+import path from "path";
 
 import { URL_LIST } from "@data/url";
 import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
@@ -24,7 +25,11 @@ export class ProductPage {
   constructor(
     page: Page,
     readonly productsNames = page.getByTestId("name"),
+    readonly productAvailableInChannelsText = page.getByTestId(
+      "product-available-in-channels-text",
+    ),
     readonly createProductButton = page.getByTestId("add-product"),
+    readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteProductButton = page.getByTestId("button-bar-delete"),
     readonly searchProducts = page.locator(
       "[placeholder='Search Products...']",
@@ -82,6 +87,15 @@ export class ProductPage {
   async clickDeleteProductButton() {
     await this.deleteProductButton.click();
   }
+  async clickUploadImagesButtonButton() {
+    await this.uploadSavedImagesButton.click();
+  }
+  async clickUploadMediaButton() {
+    await this.uploadImageButton.click();
+  }
+  async clickBulkDeleteButton() {
+    await this.bulkDeleteButton.click();
+  }
 
   async addSeo() {
     await this.metadataSeoPage.fillSeoSection();
@@ -134,9 +148,14 @@ export class ProductPage {
   async expectSuccessBanner() {
     await this.basePage.expectSuccessBanner();
   }
-  async selectOneChannelAsAvailable() {
+  async selectOneChannelAsAvailableWhenMoreSelected() {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.clickAllChannelsCheckbox();
+    await this.channelSelectDialog.selectFirstChannel();
+    await this.channelSelectDialog.clickConfirmButton();
+  }
+  async selectOneChannelAsAvailableWhenNoneSelected() {
+    await this.manageChannelsButton.click();
     await this.channelSelectDialog.selectFirstChannel();
     await this.channelSelectDialog.clickConfirmButton();
   }
@@ -147,8 +166,18 @@ export class ProductPage {
   async clickFirstEditVariantButton() {
     await this.editVariantButton.first().click();
   }
+  async clickAddVariantButton() {
+    await this.addVariantButton.click();
+  }
 
   async gotoProductListPage() {
     await this.page.goto(URL_LIST.products);
+  }
+
+  async uploadProductImage(fileName: string) {
+    const fileChooserPromise = this.page.waitForEvent("filechooser");
+    await this.clickUploadImagesButtonButton();
+    const fileChooser = await fileChooserPromise;
+    await fileChooser.setFiles(path.join("playwright/data/images/", fileName));
   }
 }

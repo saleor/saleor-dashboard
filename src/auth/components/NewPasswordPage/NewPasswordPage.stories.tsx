@@ -1,5 +1,5 @@
-// @ts-strict-ignore
 import { AccountErrorCode } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
 import React from "react";
 
 import { CardDecorator } from "../../../../.storybook/decorators";
@@ -10,12 +10,14 @@ export default {
   decorators: [CardDecorator],
 };
 
+const dummyPromise = () => undefined as unknown as SubmitPromise;
+
 export const Default = () => (
-  <NewPasswordPage errors={[]} loading={false} onSubmit={() => undefined} />
+  <NewPasswordPage errors={[]} loading={false} onSubmit={dummyPromise} />
 );
 
 export const Loading = () => (
-  <NewPasswordPage errors={[]} loading={true} onSubmit={() => undefined} />
+  <NewPasswordPage errors={[]} loading={true} onSubmit={dummyPromise} />
 );
 
 export const TooShortError = () => (
@@ -28,6 +30,6 @@ export const TooShortError = () => (
       message: null,
     }))}
     loading={false}
-    onSubmit={() => undefined}
+    onSubmit={dummyPromise}
   />
 );

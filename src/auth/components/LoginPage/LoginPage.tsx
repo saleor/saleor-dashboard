@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { UserContextError } from "@dashboard/auth/types";
 import { passwordResetUrl } from "@dashboard/auth/urls";
 import { Button } from "@dashboard/components/Button";
@@ -27,7 +26,7 @@ export interface LoginCardProps {
   loading: boolean;
   externalAuthentications?: AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
   onExternalAuthentication: (pluginId: string) => void;
-  onSubmit?: (event: LoginFormData) => SubmitPromise;
+  onSubmit: (event: LoginFormData) => SubmitPromise;
 }
 
 const LoginPage: React.FC<LoginCardProps> = props => {

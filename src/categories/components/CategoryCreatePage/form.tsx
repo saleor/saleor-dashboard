@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import useForm, {
@@ -22,7 +21,7 @@ export interface CategoryCreateFormData extends MetadataFormData {
   slug: string;
 }
 export interface CategoryCreateData extends CategoryCreateFormData {
-  description: OutputData;
+  description: OutputData | null;
 }
 
 interface CategoryCreateHandlers {

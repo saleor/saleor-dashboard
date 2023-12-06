@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
 import { useUpdateAppToken } from "@dashboard/apps/components/AppFrame/useUpdateAppToken";
 import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
@@ -36,7 +35,7 @@ export const AppFrame: React.FC<Props> = ({
   onError,
   refetch,
   dashboardVersion,
-  coreVersion,
+  coreVersion = "",
 }) => {
   const frameRef = React.useRef<HTMLIFrameElement | null>(null);
   const classes = useStyles();

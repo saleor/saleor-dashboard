@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
@@ -36,7 +35,7 @@ export interface WarehouseListPageProps
     TabPageProps {
   limits: RefreshLimitsQuery["shop"]["limits"] | undefined;
   warehouses: WarehouseWithShippingFragment[] | undefined;
-  onRemove: (id: string) => void;
+  onRemove: (id: string | undefined) => void;
 }
 
 export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { attributeListUrl } from "@dashboard/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/utils/data";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -21,7 +20,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { maybe } from "@dashboard/misc";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -60,7 +58,7 @@ export interface AttributePageProps {
 }
 
 export interface AttributePageFormData extends MetadataFormData {
-  type: AttributeTypeEnum;
+  type?: AttributeTypeEnum;
   availableInGrid: boolean;
   filterableInDashboard: boolean;
   inputType: AttributeInputTypeEnum;
@@ -174,7 +172,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                         defaultMessage: "Create New Attribute",
                         description: "page title",
                       })
-                    : maybe(() => attribute.name)
+                    : attribute?.name
                 }
               />
               <DetailPageLayout.Content>

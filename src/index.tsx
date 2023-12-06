@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import "@saleor/macaw-ui-next/style";
 import "./index.css";
 
@@ -79,7 +78,7 @@ import TranslationsSection from "./translations";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
 
-if (process.env.GTM_ID) {
+if (GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
 

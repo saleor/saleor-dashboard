@@ -4,7 +4,7 @@ import {
 } from "@dashboard/graphql";
 
 export interface AppLogo {
-  source: string | null;
+  source?: string;
 }
 
 export interface InstalledApp {
