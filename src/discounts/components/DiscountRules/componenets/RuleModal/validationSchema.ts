@@ -39,6 +39,7 @@ export const getValidationSchema = (intl: IntlShape) =>
         invalid_type_error: intl.formatMessage(validationMessages.nameRequired),
       }),
       rewardValueType: z.string(),
+      description: z.string().optional(),
     })
     .refine(
       ({ rewardValue, rewardValueType, channel }) => {

@@ -6,7 +6,7 @@ import {
   getCommonFormFieldErrorMessage,
 } from "@dashboard/utils/errors/common";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface DiscountDatesProps<ErrorCode> {
@@ -79,10 +79,17 @@ const DiscountDates = <ErrorCode,>({
         </Box>
         <Checkbox
           marginY={4}
-          defaultChecked={data.hasEndDate}
+          checked={data.hasEndDate}
           name="hasEndDate"
           disabled={disabled}
-          onChange={onChange}
+          onCheckedChange={() => {
+            onChange({
+              target: {
+                name: "hasEndDate",
+                value: !data.hasEndDate,
+              },
+            } as ChangeEvent<any>);
+          }}
           onBlur={onBlur}
         >
           <Text>

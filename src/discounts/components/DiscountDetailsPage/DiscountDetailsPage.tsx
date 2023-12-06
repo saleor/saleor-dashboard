@@ -118,7 +118,8 @@ export const DiscountDetailsPage = ({
 
   const handleRuleSubmit = async (rule: Rule) => {
     let errors: Array<CommonError<any>> = [];
-    if (ruleEditIndex) {
+
+    if (ruleEditIndex !== null) {
       errors = await onRuleUpdateSubmit(rule);
       if (errors.length > 0) {
         setRulesErrors(errors);

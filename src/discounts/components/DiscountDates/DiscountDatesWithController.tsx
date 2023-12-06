@@ -21,7 +21,7 @@ export const DiscountDatesWithController = <ErrorCode,>({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     field.onChange({
       ...field.value,
-      [e.target.name]: getInputChangeValue(e),
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -35,13 +35,3 @@ export const DiscountDatesWithController = <ErrorCode,>({
     />
   );
 };
-
-function getInputChangeValue(e: ChangeEvent<HTMLInputElement>) {
-  // When checkbox get value from e.target.checked
-  if (e.target.name === "hasEndDate") {
-    return e.target.checked;
-  }
-
-  // Otherwise get value from e.target.value
-  return e.target.value;
-}

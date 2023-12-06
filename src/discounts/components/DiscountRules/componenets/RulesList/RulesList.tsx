@@ -93,7 +93,7 @@ export const RulesList = <ErrorCode,>({
               </Box>
               <RuleSummary
                 rule={rule}
-                currencySymbol={getCurencySymbol(rule.channels, channels)}
+                currencySymbol={getCurencySymbol(rule.channel, channels)}
                 ruleConditionsOptionsDetailsLoading={
                   ruleConditionsOptionsDetailsLoading
                 }

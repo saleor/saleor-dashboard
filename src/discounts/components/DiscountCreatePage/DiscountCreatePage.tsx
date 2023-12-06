@@ -136,7 +136,7 @@ export const DiscountCreatePage = ({
           }
           errors={errors.filter(error => error.index === ruleEditIndex)}
           onSubmit={async data => {
-            if (ruleEditIndex) {
+            if (ruleEditIndex !== null) {
               setRules(rules => {
                 rules[ruleEditIndex] = data;
                 return rules;
