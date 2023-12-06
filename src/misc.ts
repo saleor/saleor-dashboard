@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
 import {
   AddressInput,
@@ -206,14 +205,16 @@ export function maybe(exp: any, d?: any) {
   }
 }
 
-export function only<T>(obj: T, key: keyof T): boolean {
+export function only<T extends object>(obj: T, key: keyof T): boolean {
   return Object.keys(obj).every(objKey =>
     objKey === key ? obj[key] !== undefined : obj[key] === undefined,
   );
 }
 
 export function empty(obj: {}): boolean {
-  return Object.keys(obj).every(key => obj[key] === undefined);
+  return Object.keys(obj).every(
+    key => obj[key as keyof typeof obj] === undefined,
+  );
 }
 
 export function hasErrors(errorList: UserError[] | null): boolean {
@@ -265,7 +266,7 @@ export const hasMutationErrors = (result: FetchResult): boolean => {
     return false;
   }
   return Object.values(result.data).some(
-    ({ errors }: SaleorMutationResult) => errors.length > 0,
+    ({ errors }: SaleorMutationResult) => errors && errors.length > 0,
   );
 };
 
@@ -279,11 +280,12 @@ export const getMutationErrors = <
   if (!result?.data) {
     return [] as TErrors;
   }
-  return Object.values(result.data).reduce(
-    (acc: TErrors[], mut: TData) => [
+  return Object.values<TData>(result.data).reduce(
+    (acc: TErrors[], mut) => [
       ...acc,
       ...(mut.errors || []),
-      ...(mut?.results?.flatMap(res => res.errors) || []),
+      ...(mut?.results?.flatMap((res: { errors: TErrors[] }) => res.errors) ||
+        []),
     ],
     [] as TErrors[],
   ) as TErrors;
@@ -297,7 +299,10 @@ export function getMutationStatus<
   return getMutationState(opts.called, opts.loading, errors);
 }
 
-export function getMutationProviderData<TData, TVariables>(
+export function getMutationProviderData<
+  TData extends object,
+  TVariables extends object,
+>(
   mutateFn: MutationFunction<TData, TVariables>,
   opts: MutationResult<TData> & MutationResultAdditionalProps,
 ): PartialMutationProviderOutput<TData, TVariables> {
@@ -361,7 +366,7 @@ export function getUserInitials(user?: User) {
   const hasEmail = !!user?.email;
 
   if (hasName) {
-    return `${user.firstName[0] + user.lastName[0]}`.toUpperCase();
+    return `${user.firstName![0] + user.lastName![0]}`.toUpperCase();
   }
 
   if (hasEmail) {
@@ -529,16 +534,19 @@ export function getFullName<T extends { firstName: string; lastName: string }>(
 
   return `${data.firstName} ${data.lastName}`;
 }
-export const flatten = (obj: unknown) => {
+export const flatten = (obj: object) => {
   // Be cautious that repeated keys are overwritten
 
   const result = {};
 
   Object.keys(obj).forEach(key => {
-    if (typeof obj[key] === "object" && obj[key] !== null) {
-      Object.assign(result, flatten(obj[key]));
+    if (
+      typeof obj[key as keyof typeof obj] === "object" &&
+      obj[key as keyof typeof obj] !== null
+    ) {
+      Object.assign(result, flatten(obj[key as keyof typeof obj]));
     } else {
-      result[key] = obj[key];
+      result[key as keyof typeof obj] = obj[key as keyof typeof obj];
     }
   });
 

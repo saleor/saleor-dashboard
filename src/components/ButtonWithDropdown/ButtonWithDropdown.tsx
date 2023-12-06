@@ -10,7 +10,11 @@ import React from "react";
 
 interface ButtonWithDropdownProps {
   onClick: () => void;
-  options: Array<{ label: string; testId: string; onSelect: () => void }>;
+  options: Array<{
+    label: string;
+    testId: string;
+    onSelect: <T>(params?: T) => void;
+  }>;
   testId?: string;
   disabled?: boolean;
 }

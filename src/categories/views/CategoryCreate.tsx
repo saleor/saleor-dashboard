@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CategoryCreateMutation,
@@ -19,7 +18,7 @@ import { CategoryCreateData } from "../components/CategoryCreatePage/form";
 import { categoryListUrl, categoryUrl } from "../urls";
 
 interface CategoryCreateViewProps {
-  parentId: string;
+  parentId?: string;
 }
 
 export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
@@ -32,7 +31,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const handleSuccess = (data: CategoryCreateMutation) => {
-    if (data.categoryCreate.errors.length === 0) {
+    if (data.categoryCreate?.errors.length === 0) {
       notify({
         status: "success",
         text: intl.formatMessage({
@@ -40,7 +39,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
           defaultMessage: "Category created",
         }),
       });
-      navigate(categoryUrl(data.categoryCreate.category.id));
+      navigate(categoryUrl(data.categoryCreate.category?.id || ""));
     }
   };
 
@@ -52,7 +51,9 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
     const result = await createCategory({
       variables: {
         input: {
-          description: getParsedDataForJsonStringField(formData.description),
+          description:
+            formData.description &&
+            getParsedDataForJsonStringField(formData.description),
           name: formData.name,
           seo: {
             description: formData.seoDescription,
@@ -65,7 +66,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
     });
 
     return {
-      id: result.data?.categoryCreate.category?.id || null,
+      id: result.data?.categoryCreate?.category?.id || "",
       errors: getMutationErrors(result),
     };
   };
@@ -87,7 +88,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
       />
       <CategoryCreatePage
         saveButtonBarState={createCategoryResult.status}
-        errors={createCategoryResult.data?.categoryCreate.errors || []}
+        errors={createCategoryResult.data?.categoryCreate?.errors || []}
         disabled={createCategoryResult.loading}
         backUrl={parentId ? categoryUrl(parentId) : categoryListUrl()}
         onSubmit={handleSubmit}

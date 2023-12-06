@@ -88,7 +88,7 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
               </>
             }
             name={"type" as keyof FormData}
-            value={data.type}
+            value={data.type as AttributeTypeEnum}
             onChange={onChange}
           />
         ) : (

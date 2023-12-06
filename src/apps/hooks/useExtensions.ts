@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import {
   AppExtensionMountEnum,
@@ -79,7 +78,7 @@ const filterAndMapToTarget = (
     }),
   );
 
-const mapToMenuItem = ({ label, id, open }: Extension) => ({
+const mapToMenuItem = ({ label, id, open }: ExtensionWithParams) => ({
   label,
   testId: `extension-${id}`,
   onSelect: open,
@@ -167,7 +166,7 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
 
   const extensionsMap = mountList.reduce(
     (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
-    {} as Record<T, Extension[]>,
+    {} as Record<AppExtensionMountEnum, Extension[]>,
   );
 
   return extensions.reduce(
