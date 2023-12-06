@@ -3,6 +3,10 @@ export const PRODUCTS = {
     id: "UHJvZHVjdFR5cGU6Njcy",
     info: "Single product type",
   },
+  singleProductTypeToBeUpdated: {
+    id: "UHJvZHVjdDo3NjE%3D",
+    info: "Single product type to be updated",
+  },
   productToAddVariants: {
     id: "UHJvZHVjdDo3Mjk%3D",
     info: "Product that does not contain any variant yet",
