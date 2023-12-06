@@ -82,6 +82,8 @@ const DeliveryStatusDisplay = ({
       return <>{formatMessage({ defaultMessage: "Pending", id: "eKEL/g" })}</>;
     case EventDeliveryStatusEnum.SUCCESS:
       return <>{formatMessage({ defaultMessage: "Success", id: "xrKHS6" })} </>;
+    default:
+      throw new Error("Invalid EventDeliveryStatusEnum value");
   }
 };
 

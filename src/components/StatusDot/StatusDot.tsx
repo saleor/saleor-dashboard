@@ -13,7 +13,7 @@ export const getStatusDotColor = (
     case "error":
       return "critical1";
     case "warning":
-      return "warning1"; // TODO: warning token needs to be in macaw
+      return "warning1";
     default:
       return "success1";
   }
