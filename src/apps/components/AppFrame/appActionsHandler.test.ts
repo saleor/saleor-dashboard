@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AppActionsHandler } from "@dashboard/apps/components/AppFrame/appActionsHandler";
 import * as ExternalAppContext from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
 import * as dashboardConfig from "@dashboard/config";
@@ -71,7 +70,7 @@ describe("AppActionsHandler", function () {
    * @see https://wildwolf.name/jest-how-to-mock-window-location-href/
    */
   beforeEach((): void => {
-    delete window.location;
+    delete (window as { location?: unknown }).location;
     // @ts-expect-error
     window.location = {
       href: "http://localhost:3000",

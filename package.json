@@ -210,7 +210,8 @@
     "workbox-expiration": "^6.1.2",
     "workbox-precaching": "^6.1.2",
     "workbox-routing": "^6.1.2",
-    "workbox-strategies": "^6.1.2"
+    "workbox-strategies": "^6.1.2",
+    "@types/react-gtm-module": "^2.0.3"
   },
   "optionalDependencies": {
     "@storybook/addon-essentials": "^7.5.1",

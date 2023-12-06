@@ -1,7 +1,9 @@
-// @ts-strict-ignore
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
-import { ColorPicker } from "@dashboard/components/ColorPicker";
+import {
+  ColorPicker,
+  ColorPickerProps,
+} from "@dashboard/components/ColorPicker";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import { RadioGroupField } from "@dashboard/components/RadioGroupField";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
@@ -110,7 +112,10 @@ const AttributeSwatchField: React.FC<
           )}
         </>
       ) : (
-        <ColorPicker {...props} onColorChange={handleColorChange} />
+        <ColorPicker
+          {...(props as ColorPickerProps)}
+          onColorChange={handleColorChange}
+        />
       )}
     </>
   );
