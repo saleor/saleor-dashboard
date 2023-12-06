@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
@@ -9,6 +8,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import {
+  ChannelError,
   getFormChannelError,
   getFormChannelErrors,
 } from "@dashboard/utils/errors";
@@ -46,7 +46,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
   const intl = useIntl();
   const formErrors = getFormChannelErrors(
     ["maximumOrderPrice", "minimumOrderPrice"],
-    errors,
+    errors as ChannelError[],
   );
 
   return (
