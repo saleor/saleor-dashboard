@@ -8,7 +8,6 @@ import {
   ChannelFragment,
   PromotionCreateErrorFragment,
 } from "@dashboard/graphql";
-import { usePrevious } from "@dashboard/hooks/usePrevious";
 import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -54,8 +53,6 @@ export const RuleModal = ({
   });
 
   const channel = methods.watch("channel");
-  const prevChannel = usePrevious(channel);
-  const conditions = methods.watch("conditions");
   const channelSlug = channels?.find(chan => chan.id === channel?.value)?.slug;
 
   const productSearch = useProductSearch(channelSlug);
@@ -79,21 +76,6 @@ export const RuleModal = ({
       methods.reset(initialRuleValues);
     }
   }, [open]);
-
-  useEffect(() => {
-    if (
-      prevChannel?.value !== undefined &&
-      channel?.value !== prevChannel?.value
-    ) {
-      methods.setValue(
-        "conditions",
-        conditions.map(condition => ({
-          ...condition,
-          values: [],
-        })),
-      );
-    }
-  }, [channel]);
 
   return (
     <DashboardModal open={open} onChange={onClose}>

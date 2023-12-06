@@ -21,7 +21,7 @@ export const intialConditionValues: Condition = {
 };
 
 export const initialRuleValues: Rule = {
-  channels: [],
+  channel: null,
   description: "",
   name: "",
   rewardValue: undefined,

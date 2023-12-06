@@ -1,3 +1,4 @@
+import { intialConditionValues } from "@dashboard/discounts/components/DiscountCreatePage/initialFormValues";
 import {
   ChannelFragment,
   PromotionCreateErrorFragment,
@@ -94,6 +95,10 @@ export const Rule = ({
           <RuleInputWrapper __flex={1}>
             <Select
               {...channelfield}
+              onChange={selectedChannel => {
+                channelfield.onChange(selectedChannel);
+                setValue("conditions", [{ ...intialConditionValues }]);
+              }}
               size="small"
               label={intl.formatMessage(commonMessages.channel)}
               options={channelOptions}

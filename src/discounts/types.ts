@@ -41,7 +41,7 @@ export interface Rule {
   id?: string;
   name: string;
   description: string;
-  channel: Option;
+  channel: Option | null;
   conditions: Condition[];
   rewardValueType: RewardValueTypeEnum;
   rewardValue: number | null;
