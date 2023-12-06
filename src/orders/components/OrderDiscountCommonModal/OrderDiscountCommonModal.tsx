@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import {
@@ -119,7 +118,7 @@ export interface OrderDiscountCommonModalProps {
 }
 
 const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
-  maxPrice = { amount: null, currency: "" },
+  maxPrice = { amount: 0, currency: "" },
   onConfirm,
   modalType,
   onClose,
@@ -296,7 +295,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
         <PriceField
           label={intl.formatMessage(messages.discountValueLabel)}
           error={!!valueErrorMsg}
-          hint={valueErrorMsg}
+          hint={valueErrorMsg || ""}
           value={toFixed(value, 2)}
           onChange={handleSetDiscountValue}
           currencySymbol={valueFieldSymbol}

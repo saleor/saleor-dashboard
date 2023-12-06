@@ -58,7 +58,9 @@ export const useSaveChannel = ({
         });
       }
 
-      await refetchUser();
+      if (refetchUser) {
+        await refetchUser();
+      }
     }
 
     return errors;
