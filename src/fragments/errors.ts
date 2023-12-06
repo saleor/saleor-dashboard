@@ -593,3 +593,11 @@ export const orderGrantRefundUpdateErrorFragment = gql`
     }
   }
 `;
+
+export const transactionRequestRefundForGrantedRefundErrorFragment = gql`
+  fragment TransactionRequestRefundForGrantedRefundError on TransactionRequestRefundForGrantedRefundError {
+    field
+    message
+    code
+  }
+`;

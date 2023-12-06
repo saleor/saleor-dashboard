@@ -40,6 +40,7 @@ export interface OrderReturnData {
   amount: number;
   refundShipmentCosts: boolean;
   autoGrantRefund: boolean;
+  autoSendRefund: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
 }
 
@@ -77,6 +78,7 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
   amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
   refundShipmentCosts: false,
   autoGrantRefund: false,
+  autoSendRefund: false,
 });
 
 function useOrderReturnForm(

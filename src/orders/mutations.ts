@@ -527,6 +527,9 @@ export const orderGrantRefundAddMutation = gql`
       errors {
         ...OrderGrantRefundCreateError
       }
+      grantedRefund {
+        id
+      }
     }
   }
 `;
@@ -569,6 +572,25 @@ export const orderSendRefundMutation = gql`
       }
       errors {
         ...TransactionRequestActionError
+      }
+    }
+  }
+`;
+
+export const orderSendRefundForGrantedRefund = gql`
+  mutation OrderSendRefundForGrantedRefund(
+    $grantedRefundId: ID!
+    $transactionId: ID!
+  ) {
+    transactionRequestRefundForGrantedRefund(
+      grantedRefundId: $grantedRefundId
+      id: $transactionId
+    ) {
+      transaction {
+        ...TransactionItem
+      }
+      errors {
+        ...TransactionRequestRefundForGrantedRefundError
       }
     }
   }

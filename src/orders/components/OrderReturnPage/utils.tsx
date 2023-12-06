@@ -1,8 +1,14 @@
 // @ts-strict-ignore
-import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
+import {
+  FulfillmentStatus,
+  OrderDetailsFragment,
+  TransactionActionEnum,
+} from "@dashboard/graphql";
 import { getById } from "@dashboard/misc";
 import { Node } from "@dashboard/types";
+import { MessageDescriptor } from "react-intl";
 
+import { submitCardMessages } from "./components/SubmitCard/messages";
 import {
   FormsetQuantityData,
   FormsetReplacementData,
@@ -178,3 +184,42 @@ export function getReplacementDataFromItems(
     isSelected: replacementData.value,
   };
 }
+
+export const canSendRefundDuringReturn = ({
+  autoGrantRefund,
+  transactions,
+}: {
+  autoGrantRefund: boolean | undefined;
+  transactions: OrderDetailsFragment["transactions"];
+}):
+  | { value: false; reason: MessageDescriptor }
+  | { value: true; reason: null } => {
+  if (!autoGrantRefund) {
+    return {
+      value: false,
+      reason: submitCardMessages.cantSendRefundGrantFirst,
+    };
+  }
+  if (transactions.length === 0) {
+    return {
+      value: false,
+      reason: submitCardMessages.cantSendRefundNoTransactions,
+    };
+  }
+  if (transactions.length > 1) {
+    return {
+      value: false,
+      reason: submitCardMessages.cantSendRefundMultipleTransactions,
+    };
+  }
+  if (!transactions[0].actions.includes(TransactionActionEnum.REFUND)) {
+    return {
+      value: false,
+      reason: submitCardMessages.cantSendRefundNonRefundable,
+    };
+  }
+  return {
+    value: true,
+    reason: null,
+  };
+};

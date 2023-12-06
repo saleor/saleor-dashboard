@@ -7,6 +7,7 @@ import {
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderGrantRefundCreateErrorFragment,
+  TransactionRequestRefundForGrantedRefundErrorFragment,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
@@ -34,6 +35,7 @@ export interface OrderReturnPageProps {
   loading: boolean;
   returnErrors?: OrderErrorFragment[];
   grantRefundErrors?: OrderGrantRefundCreateErrorFragment[];
+  sendRefundErrors?: TransactionRequestRefundForGrantedRefundErrorFragment[];
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
   submitStatus: ConfirmButtonTransitionState;
 }
@@ -44,6 +46,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
     loading,
     returnErrors = [],
     grantRefundErrors = [],
+    sendRefundErrors = [],
     onSubmit,
     submitStatus,
   } = props;
@@ -128,9 +131,12 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
           <DetailPageLayout.RightSidebar>
             {orderHasTransactions(order) ? (
               <SubmitCard
+                transactions={order.transactions}
                 grantRefundErrors={grantRefundErrors}
+                sendRefundErrors={sendRefundErrors}
                 customRefundValue={data.amount}
                 autoGrantRefund={data.autoGrantRefund}
+                autoSendRefund={data.autoSendRefund}
                 refundShipmentCosts={data.refundShipmentCosts}
                 canRefundShipping={canRefundShipping}
                 shippingCosts={order?.shippingPrice?.gross}

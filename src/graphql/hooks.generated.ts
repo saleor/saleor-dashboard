@@ -1152,6 +1152,13 @@ export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
   }
 }
     `;
+export const TransactionRequestRefundForGrantedRefundErrorFragmentDoc = gql`
+    fragment TransactionRequestRefundForGrantedRefundError on TransactionRequestRefundForGrantedRefundError {
+  field
+  message
+  code
+}
+    `;
 export const GiftCardsSettingsFragmentDoc = gql`
     fragment GiftCardsSettings on GiftCardSettings {
   expiryType
@@ -10699,6 +10706,9 @@ export const OrderGrantRefundAddDocument = gql`
     errors {
       ...OrderGrantRefundCreateError
     }
+    grantedRefund {
+      id
+    }
   }
 }
     ${OrderGrantRefundCreateErrorFragmentDoc}`;
@@ -10819,6 +10829,49 @@ export function useOrderSendRefundMutation(baseOptions?: ApolloReactHooks.Mutati
 export type OrderSendRefundMutationHookResult = ReturnType<typeof useOrderSendRefundMutation>;
 export type OrderSendRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundMutation>;
 export type OrderSendRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
+export const OrderSendRefundForGrantedRefundDocument = gql`
+    mutation OrderSendRefundForGrantedRefund($grantedRefundId: ID!, $transactionId: ID!) {
+  transactionRequestRefundForGrantedRefund(
+    grantedRefundId: $grantedRefundId
+    id: $transactionId
+  ) {
+    transaction {
+      ...TransactionItem
+    }
+    errors {
+      ...TransactionRequestRefundForGrantedRefundError
+    }
+  }
+}
+    ${TransactionItemFragmentDoc}
+${TransactionRequestRefundForGrantedRefundErrorFragmentDoc}`;
+export type OrderSendRefundForGrantedRefundMutationFn = Apollo.MutationFunction<Types.OrderSendRefundForGrantedRefundMutation, Types.OrderSendRefundForGrantedRefundMutationVariables>;
+
+/**
+ * __useOrderSendRefundForGrantedRefundMutation__
+ *
+ * To run a mutation, you first call `useOrderSendRefundForGrantedRefundMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderSendRefundForGrantedRefundMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [orderSendRefundForGrantedRefundMutation, { data, loading, error }] = useOrderSendRefundForGrantedRefundMutation({
+ *   variables: {
+ *      grantedRefundId: // value for 'grantedRefundId'
+ *      transactionId: // value for 'transactionId'
+ *   },
+ * });
+ */
+export function useOrderSendRefundForGrantedRefundMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderSendRefundForGrantedRefundMutation, Types.OrderSendRefundForGrantedRefundMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.OrderSendRefundForGrantedRefundMutation, Types.OrderSendRefundForGrantedRefundMutationVariables>(OrderSendRefundForGrantedRefundDocument, options);
+      }
+export type OrderSendRefundForGrantedRefundMutationHookResult = ReturnType<typeof useOrderSendRefundForGrantedRefundMutation>;
+export type OrderSendRefundForGrantedRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundForGrantedRefundMutation>;
+export type OrderSendRefundForGrantedRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundForGrantedRefundMutation, Types.OrderSendRefundForGrantedRefundMutationVariables>;
 export const CreateManualTransactionCaptureDocument = gql`
     mutation CreateManualTransactionCapture($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
   transactionCreate(

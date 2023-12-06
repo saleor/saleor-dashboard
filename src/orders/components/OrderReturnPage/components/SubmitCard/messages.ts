@@ -31,4 +31,27 @@ export const submitCardMessages = defineMessages({
     id: "uN88fb",
     description: "button, submit form",
   },
+  cantSendRefundGrantFirst: {
+    defaultMessage: "You have to grant refund first.",
+    id: "KOqZv3",
+    description: "tooltip, submit form",
+  },
+  cantSendRefundNoTransactions: {
+    defaultMessage:
+      "Order has no transactions. You have to send refund manually.",
+    id: "UR2wY+",
+    description: "tooltip, submit form",
+  },
+  cantSendRefundMultipleTransactions: {
+    defaultMessage:
+      "Client has made more than one transaction. You have to send refund manually.",
+    id: "ygxco/",
+    description: "tooltip, submit form",
+  },
+  cantSendRefundNonRefundable: {
+    defaultMessage:
+      "Transaction is non-refundable. You have to send refund manually.",
+    id: "6heBHt",
+    description: "tooltip, submit form",
+  },
 });

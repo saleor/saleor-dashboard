@@ -1272,6 +1272,10 @@
     "context": "delete app",
     "string": "Are you sure you want to delete this app?"
   },
+  "6heBHt": {
+    "context": "tooltip, submit form",
+    "string": "Transaction is non-refundable. You have to send refund manually."
+  },
   "6iw4VR": {
     "context": "delete variant dialog title",
     "string": "Delete Product Variants"
@@ -3226,6 +3230,10 @@
   "KN7zKn": {
     "string": "Error"
   },
+  "KOqZv3": {
+    "context": "tooltip, submit form",
+    "string": "You have to grant refund first."
+  },
   "KRqgfo": {
     "string": "User is out of your permissions scope"
   },
@@ -4612,6 +4620,10 @@
   "UQu75k": {
     "context": "dialog header",
     "string": "Approve this fulfillment"
+  },
+  "UR2wY+": {
+    "context": "tooltip, submit form",
+    "string": "Order has no transactions. You have to send refund manually."
   },
   "US3IPU": {
     "string": "Search Engine Description"
@@ -8863,6 +8875,10 @@
   },
   "yfhLcv": {
     "string": "We are working on replacing plugins with apps. Read more about"
+  },
+  "ygxco/": {
+    "context": "tooltip, submit form",
+    "string": "Client has made more than one transaction. You have to send refund manually."
   },
   "yhv3HX": {
     "context": "voucher requirements, header",

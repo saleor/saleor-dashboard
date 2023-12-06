@@ -11,8 +11,11 @@ describe("SubmitCard", () => {
     render(
       <Wrapper>
         <SubmitCard
+          transactions={[]}
           grantRefundErrors={[]}
+          sendRefundErrors={[]}
           autoGrantRefund={false}
+          autoSendRefund={false}
           refundShipmentCosts={false}
           canRefundShipping={false}
           shippingCosts={{ amount: 0, currency: "USD" }}

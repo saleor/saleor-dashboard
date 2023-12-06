@@ -9839,6 +9839,8 @@ export type OrderGrantRefundCreateErrorFragment = { __typename: 'OrderGrantRefun
 
 export type OrderGrantRefundUpdateErrorFragment = { __typename: 'OrderGrantRefundUpdateError', field: string | null, message: string | null, code: OrderGrantRefundUpdateErrorCode, addLines: Array<{ __typename: 'OrderGrantRefundUpdateLineError', field: string | null, message: string | null, code: OrderGrantRefundUpdateLineErrorCode, lineId: string }> | null, removeLines: Array<{ __typename: 'OrderGrantRefundUpdateLineError', field: string | null, message: string | null, code: OrderGrantRefundUpdateLineErrorCode, lineId: string }> | null };
 
+export type TransactionRequestRefundForGrantedRefundErrorFragment = { __typename: 'TransactionRequestRefundForGrantedRefundError', field: string | null, message: string | null, code: TransactionRequestRefundForGrantedRefundErrorCode };
+
 export type FileFragment = { __typename: 'File', url: string, contentType: string | null };
 
 export type GiftCardsSettingsFragment = { __typename: 'GiftCardSettings', expiryType: GiftCardSettingsExpiryTypeEnum, expiryPeriod: { __typename: 'TimePeriod', type: TimePeriodTypeEnum, amount: number } | null };
@@ -10626,7 +10628,7 @@ export type OrderGrantRefundAddMutationVariables = Exact<{
 }>;
 
 
-export type OrderGrantRefundAddMutation = { __typename: 'Mutation', orderGrantRefundCreate: { __typename: 'OrderGrantRefundCreate', errors: Array<{ __typename: 'OrderGrantRefundCreateError', field: string | null, message: string | null, code: OrderGrantRefundCreateErrorCode, lines: Array<{ __typename: 'OrderGrantRefundCreateLineError', field: string | null, message: string | null, code: OrderGrantRefundCreateLineErrorCode, lineId: string }> | null }> } | null };
+export type OrderGrantRefundAddMutation = { __typename: 'Mutation', orderGrantRefundCreate: { __typename: 'OrderGrantRefundCreate', errors: Array<{ __typename: 'OrderGrantRefundCreateError', field: string | null, message: string | null, code: OrderGrantRefundCreateErrorCode, lines: Array<{ __typename: 'OrderGrantRefundCreateLineError', field: string | null, message: string | null, code: OrderGrantRefundCreateLineErrorCode, lineId: string }> | null }>, grantedRefund: { __typename: 'OrderGrantedRefund', id: string } | null } | null };
 
 export type OrderGrantRefundEditMutationVariables = Exact<{
   refundId: Scalars['ID'];
@@ -10647,6 +10649,14 @@ export type OrderSendRefundMutationVariables = Exact<{
 
 
 export type OrderSendRefundMutation = { __typename: 'Mutation', transactionRequestAction: { __typename: 'TransactionRequestAction', transaction: { __typename: 'TransactionItem', id: string, pspReference: string, actions: Array<TransactionActionEnum>, name: string, externalUrl: string, events: Array<{ __typename: 'TransactionEvent', id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, externalUrl: string, amount: { __typename: 'Money', amount: number, currency: string }, createdBy: { __typename: 'App', id: string, name: string | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } } | null, errors: Array<{ __typename: 'TransactionRequestActionError', field: string | null, message: string | null, code: TransactionRequestActionErrorCode }> } | null };
+
+export type OrderSendRefundForGrantedRefundMutationVariables = Exact<{
+  grantedRefundId: Scalars['ID'];
+  transactionId: Scalars['ID'];
+}>;
+
+
+export type OrderSendRefundForGrantedRefundMutation = { __typename: 'Mutation', transactionRequestRefundForGrantedRefund: { __typename: 'TransactionRequestRefundForGrantedRefund', transaction: { __typename: 'TransactionItem', id: string, pspReference: string, actions: Array<TransactionActionEnum>, name: string, externalUrl: string, events: Array<{ __typename: 'TransactionEvent', id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, externalUrl: string, amount: { __typename: 'Money', amount: number, currency: string }, createdBy: { __typename: 'App', id: string, name: string | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } } | null, errors: Array<{ __typename: 'TransactionRequestRefundForGrantedRefundError', field: string | null, message: string | null, code: TransactionRequestRefundForGrantedRefundErrorCode }> } | null };
 
 export type CreateManualTransactionCaptureMutationVariables = Exact<{
   orderId: Scalars['ID'];

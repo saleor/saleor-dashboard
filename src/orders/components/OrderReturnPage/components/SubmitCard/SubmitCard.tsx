@@ -4,15 +4,22 @@ import {
   ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
-import { OrderGrantRefundCreateErrorFragment } from "@dashboard/graphql";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import {
+  OrderDetailsFragment,
+  OrderGrantRefundCreateErrorFragment,
+  PermissionEnum,
+  TransactionRequestRefundForGrantedRefundErrorFragment,
+} from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { OrderRefundAmountValuesProps } from "@dashboard/orders/components/OrderRefundReturnAmount/OrderRefundReturnAmountValues";
 import { IMoney } from "@dashboard/utils/intl";
-import { Box, Checkbox, InfoIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, InfoIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderReturnData } from "../../form";
+import { canSendRefundDuringReturn } from "../../utils";
 import { submitCardMessages } from "./messages";
 import { useSubmitCardStyles } from "./styles";
 
@@ -21,6 +28,7 @@ interface SubmitCardProps {
   onSubmit: () => void;
   submitStatus: ConfirmButtonTransitionState;
   autoGrantRefund: boolean;
+  autoSendRefund: boolean;
   refundShipmentCosts: boolean;
   canRefundShipping: boolean;
   shippingCosts: IMoney;
@@ -28,6 +36,8 @@ interface SubmitCardProps {
   customRefundValue: number;
   onChange: FormChange;
   grantRefundErrors: OrderGrantRefundCreateErrorFragment[];
+  sendRefundErrors: TransactionRequestRefundForGrantedRefundErrorFragment[];
+  transactions: OrderDetailsFragment["transactions"];
 }
 
 export const SubmitCard = ({
@@ -35,15 +45,23 @@ export const SubmitCard = ({
   onSubmit,
   submitStatus,
   autoGrantRefund,
+  autoSendRefund,
   refundShipmentCosts,
   canRefundShipping,
   amountData,
   onChange,
   customRefundValue,
   grantRefundErrors,
+  sendRefundErrors,
+  transactions,
 }: SubmitCardProps) => {
   const intl = useIntl();
   const classes = useSubmitCardStyles();
+
+  const canSendRefund = canSendRefundDuringReturn({
+    autoGrantRefund,
+    transactions,
+  });
 
   return (
     <div>
@@ -108,6 +126,49 @@ export const SubmitCard = ({
               />
             </Text>
           </Checkbox>
+          <RequirePermissions
+            requiredPermissions={[PermissionEnum.HANDLE_PAYMENTS]}
+          >
+            {canSendRefund.value ? (
+              <Checkbox
+                checked={autoSendRefund}
+                error={sendRefundErrors.length > 0}
+                name={"autoSendRefund" satisfies keyof OrderReturnData}
+                onCheckedChange={checked => {
+                  onChange({
+                    target: {
+                      name: "autoSendRefund",
+                      value: checked,
+                    },
+                  });
+                }}
+              >
+                <Text
+                  color={
+                    sendRefundErrors.length ? "textCriticalDefault" : undefined
+                  }
+                >
+                  <FormattedMessage {...submitCardMessages.autoSendRefund} />
+                </Text>
+              </Checkbox>
+            ) : (
+              <Tooltip>
+                <Tooltip.Trigger>
+                  <Checkbox checked={false} disabled={true}>
+                    <Text color="textNeutralDisabled">
+                      <FormattedMessage
+                        {...submitCardMessages.autoSendRefund}
+                      />
+                    </Text>
+                  </Checkbox>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  <Tooltip.Arrow />
+                  <FormattedMessage {...canSendRefund.reason} />
+                </Tooltip.Content>
+              </Tooltip>
+            )}
+          </RequirePermissions>
           <PriceField
             onChange={onChange}
             name="amount"
