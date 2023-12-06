@@ -140,7 +140,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
-  const { themeValues } = useTheme();
+  const { themeValues, theme } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);
   const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
@@ -228,7 +228,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
         ...(changed && areCellsDirty
           ? {
               themeOverride: {
-                bgCell: themeValues.colors.background.default1,
+                bgCell:
+                  // Consider moving this to MacawUI if we need it in other places
+                  theme === "defaultLight"
+                    ? "hsla(215, 100%, 96%, 1)"
+                    : "hsla(215, 100%, 21%, 1)",
               },
             }
           : {}),
