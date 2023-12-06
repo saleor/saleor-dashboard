@@ -43,8 +43,8 @@ export const messages = defineMessages({
       "Discount of {value} on the purchase of {items} through the {channel}",
   },
   ruleSummaryMoreItems: {
-    id: "w/pqbB",
-    defaultMessage: "and {itemsLength} more {type}",
+    id: "B0fwAj",
+    defaultMessage: "and {itemsLength} more",
   },
   createRule: {
     id: "9d24PR",

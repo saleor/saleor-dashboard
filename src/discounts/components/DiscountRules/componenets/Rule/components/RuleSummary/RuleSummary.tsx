@@ -1,10 +1,20 @@
 import { Rule } from "@dashboard/discounts/types";
 import { RewardValueTypeEnum } from "@dashboard/graphql";
-import { Box, Chip, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import {
+  Box,
+  Chip,
+  DefaultTheme,
+  Skeleton,
+  Text,
+  useTheme,
+} from "@saleor/macaw-ui-next";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../../../messages";
+import { RuleSummaryChips } from "./components/RuleSummaryChips";
+import { RuleSummaryTooltip } from "./components/RuleSummaryTooltip/RuleSummaryTooltip";
+import { mapConditionToOption, splitConditions } from "./utils";
 
 interface RuleSummaryProps {
   rule: Rule;
@@ -17,6 +27,8 @@ export const RuleSummary = ({
   currencySymbol,
   ruleConditionsOptionsDetailsLoading,
 }: RuleSummaryProps) => {
+  const { theme } = useTheme();
+
   if (
     !rule.channel ||
     !rule.rewardValue ||
@@ -39,7 +51,7 @@ export const RuleSummary = ({
         {...messages.ruleSummary}
         values={{
           value: getRuleValue(rule, currencySymbol),
-          items: getItems(rule),
+          items: getItems(rule, theme),
           channel: getChannel(rule.channel),
         }}
       />
@@ -69,35 +81,19 @@ function getChannel(channel: Rule["channel"]) {
   );
 }
 
-function getItems(rule: Rule) {
-  return rule.conditions.reduce<ReactNode[]>((acc, condition) => {
-    const conditionValue = condition.values;
-    acc.push(
-      condition.values.slice(0, 2).map(({ label, value }) => (
-        <Chip
-          key={value}
-          backgroundColor="surfaceBrandSubdued"
-          marginRight={1.5}
-        >
-          {label}
-        </Chip>
-      )),
-    );
-    if (conditionValue.length > 3) {
-      acc.push(
-        <Chip backgroundColor="surfaceBrandSubdued" marginRight={1.5}>
-          <FormattedMessage
-            {...messages.ruleSummaryMoreItems}
-            values={{
-              itemsLength: conditionValue.length - 2,
-              type: condition.type,
-            }}
-          />
-          s
-        </Chip>,
-      );
-    }
+function getItems(rule: Rule, theme: DefaultTheme) {
+  const conditions = mapConditionToOption(rule.conditions);
+  const { conditionsInSummary, conditionsInTooltip } =
+    splitConditions(conditions);
 
-    return acc;
-  }, []);
+  const hasConditionInTooltip = conditionsInTooltip.length > 0;
+  const conditionValues = conditionsInSummary.map(({ value, label, type }) => (
+    <RuleSummaryChips key={value} type={type} theme={theme} label={label} />
+  ));
+
+  const restSummaryRender = hasConditionInTooltip ? (
+    <RuleSummaryTooltip conditionsValues={conditionsInTooltip} theme={theme} />
+  ) : null;
+
+  return [...conditionValues, restSummaryRender];
 }
