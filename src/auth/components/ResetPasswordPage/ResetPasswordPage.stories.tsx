@@ -1,14 +1,16 @@
-// @ts-strict-ignore
+import { SubmitPromise } from "@dashboard/hooks/useForm";
 import React from "react";
 
 import { CardDecorator } from "../../../../.storybook/decorators";
 import { formError } from "../../../../.storybook/helpers";
 import ResetPasswordPage, { ResetPasswordPageProps } from "./ResetPasswordPage";
 
+const dummyPromise = () => undefined as unknown as SubmitPromise;
+
 const props: ResetPasswordPageProps = {
   disabled: false,
-  error: undefined,
-  onSubmit: () => undefined,
+  error: "",
+  onSubmit: dummyPromise,
 };
 
 export default {
