@@ -70,8 +70,7 @@ describe("AppActionsHandler", function () {
    * @see https://wildwolf.name/jest-how-to-mock-window-location-href/
    */
   beforeEach((): void => {
-    // @ts-expect-error
-    delete window.location;
+    delete (window as { location?: unknown }).location;
     // @ts-expect-error
     window.location = {
       href: "http://localhost:3000",
