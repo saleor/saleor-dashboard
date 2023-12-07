@@ -17,4 +17,9 @@ export const messages = defineMessages({
     defaultMessage: "Successfully returned products!",
     description: "order returned success message",
   },
+  sendRefundSuccessAlert: {
+    id: "kOccZr",
+    defaultMessage: "Successfully requested refund!",
+    description: "order returned success message",
+  },
 });

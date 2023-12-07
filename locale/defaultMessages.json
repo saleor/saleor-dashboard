@@ -6906,6 +6906,10 @@
   "kNK4es": {
     "string": "Discount value"
   },
+  "kOccZr": {
+    "context": "order returned success message",
+    "string": "Successfully requested refund!"
+  },
   "kPIZ65": {
     "context": "page header",
     "string": "Order #{orderNumber}"

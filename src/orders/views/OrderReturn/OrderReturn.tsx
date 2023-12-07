@@ -104,9 +104,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         ) {
           notify({
             status: "success",
-            text: intl.formatMessage(orderGrantRefundMessages.formSubmitted, {
-              orderNumber: data?.order?.number,
-            }),
+            text: intl.formatMessage(messages.sendRefundSuccessAlert),
           });
         }
       },
