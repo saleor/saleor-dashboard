@@ -15,12 +15,12 @@ import { thumbnailCellRenderer } from "./ThumbnailCell";
 export function useCustomCellRenderers() {
   const { locale } = useLocale();
   const { customRenderers } = useExtraCells();
-  const { theme } = useTheme();
+  const { themeValues } = useTheme();
 
   const renderers = useMemo(
     () => [
       pillCellRenderer(),
-      statusCellRenderer(theme),
+      statusCellRenderer(themeValues),
       moneyCellRenderer(locale),
       moneyDiscountedCellRenderer(),
       numberCellRenderer(locale),

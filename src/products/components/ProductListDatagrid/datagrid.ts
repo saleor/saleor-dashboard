@@ -205,7 +205,6 @@ export function createGetCellContent({
         return getProductTypeCellContent(theme, rowData);
       case "availability":
         return getAvailabilityCellContent(rowData, intl, channel);
-
       case "description":
         return getDescriptionCellContent(columnId, change, rowData);
       case "name":

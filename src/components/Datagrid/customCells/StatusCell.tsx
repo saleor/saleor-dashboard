@@ -1,11 +1,11 @@
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
-import { getStatusColor } from "@dashboard/misc";
+import { getDotColor } from "@dashboard/misc";
 import {
   CustomCell,
   CustomRenderer,
   GridCellKind,
 } from "@glideapps/glide-data-grid";
-import { DefaultTheme } from "@saleor/macaw-ui-next";
+import { ThemeTokensValues } from "@saleor/macaw-ui-next";
 
 interface StatusCellProps {
   readonly status: DotStatus;
@@ -15,7 +15,7 @@ interface StatusCellProps {
 export type StatusCell = CustomCell<StatusCellProps>;
 
 export const statusCellRenderer = (
-  currentTheme: DefaultTheme,
+  themeValues: ThemeTokensValues,
 ): CustomRenderer<StatusCell> => ({
   kind: GridCellKind.Custom,
   isMatch: (c): c is StatusCell => (c.data as any).kind === "status-cell",
@@ -31,9 +31,9 @@ export const statusCellRenderer = (
 
     circle.arc(x + 15, y + height / 2, 4, 0, 2 * Math.PI);
 
-    const color = getStatusColor({ status: cell.data.status, currentTheme });
+    const color = getDotColor(cell.data.status, themeValues);
 
-    ctx.fillStyle = color.base;
+    ctx.fillStyle = color;
 
     ctx.fill(circle);
 

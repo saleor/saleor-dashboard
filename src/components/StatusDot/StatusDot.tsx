@@ -1,4 +1,4 @@
-import { getStatusColor } from "@dashboard/misc";
+import { getDotColor } from "@dashboard/misc";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -8,14 +8,9 @@ export interface StatusDotProps {
 }
 
 export const StatusDot: React.FC<StatusDotProps> = ({ status }) => {
-  const { theme: currentTheme } = useTheme();
-  const color = getStatusColor({ status, currentTheme });
+  const { themeValues } = useTheme();
+  const color = getDotColor(status, themeValues);
   return (
-    <Box
-      width={2}
-      height={2}
-      borderRadius="50%"
-      __backgroundColor={color.base}
-    />
+    <Box width={2} height={2} borderRadius="50%" __backgroundColor={color} />
   );
 };

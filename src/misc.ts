@@ -8,7 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { Node, SlugNode } from "@dashboard/types";
 import { ThemeType } from "@saleor/macaw-ui";
-import { DefaultTheme } from "@saleor/macaw-ui-next";
+import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui-next";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -19,6 +19,7 @@ import {
   hueToPillColorLight,
 } from "./components/Datagrid/customCells/PillCell";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
+import { DotStatus } from "./components/StatusDot/StatusDot";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
   commonStatusMessages,
@@ -607,7 +608,7 @@ export const getStatusColor = ({
     : hueToPillColorLight(statusHue);
 };
 
-export const getStatusHue = (
+const getStatusHue = (
   status: "error" | "warning" | "info" | "success" | "generic",
 ): number => {
   const red = 0;
@@ -627,6 +628,21 @@ export const getStatusHue = (
       return yellow;
     default:
       return blue;
+  }
+};
+
+export const getDotColor = (
+  status: DotStatus,
+  themeValues: ThemeTokensValues,
+) => {
+  switch (status) {
+    case "success":
+      // TODO: add this as success2 to MacawUI
+      return "hsla(173, 100%, 26%, 1)";
+    case "error":
+      return themeValues.colors.background.critical2;
+    case "warning":
+      return themeValues.colors.background.warning1;
   }
 };
 
