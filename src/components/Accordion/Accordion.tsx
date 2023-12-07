@@ -12,6 +12,7 @@ export interface AccordionProps {
   initialExpand?: boolean;
   quickPeek?: React.ReactNode;
   title: string;
+  dataTestId?: string;
 }
 
 const AccordionItemId = "accordionItemId";
@@ -22,6 +23,7 @@ const Accordion: React.FC<AccordionProps> = ({
   quickPeek,
   title,
   className,
+  dataTestId = "expand-icon",
 }) => {
   const [openedAccordionId, setOpendAccordionId] = useState<undefined | string>(
     !!initialExpand ? AccordionItemId : undefined,
@@ -45,7 +47,7 @@ const Accordion: React.FC<AccordionProps> = ({
             <Text paddingY={3} variant="body" size="small">
               {title}
             </Text>
-            <AccordionMacaw.TriggerButton dataTestId="expand-icon" />
+            <AccordionMacaw.TriggerButton dataTestId={dataTestId} />
           </AccordionMacaw.Trigger>
           <AccordionMacaw.Content>
             <Divider />
