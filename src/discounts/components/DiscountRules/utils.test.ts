@@ -31,7 +31,7 @@ describe("DiscountRules utils", () => {
       const result = getCurencySymbol(selectedChannel, channels);
 
       // Assert
-      expect(result).toBeNull();
+      expect(result).toBe("");
     });
   });
 });

@@ -50,7 +50,7 @@ describe("DiscountDetailsPage, utils", () => {
       expect(result).toMatchInlineSnapshot(`
         Array [
           Object {
-            "channels": Array [],
+            "channel": null,
             "conditions": Array [],
             "description": "",
             "id": "2",
@@ -112,7 +112,7 @@ describe("DiscountDetailsPage, utils", () => {
       expect(result).toMatchInlineSnapshot(`
         Array [
           Object {
-            "channels": Array [],
+            "channel": null,
             "conditions": Array [],
             "description": "",
             "id": "1",
@@ -121,7 +121,7 @@ describe("DiscountDetailsPage, utils", () => {
             "rewardValueType": "FIXED",
           },
           Object {
-            "channels": Array [],
+            "channel": null,
             "conditions": Array [],
             "description": "",
             "name": "",
