@@ -1,6 +1,6 @@
-// @ts-strict-ignore
+import { AccountErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { SetPasswordData, useAuth } from "@saleor/sdk";
+import { useAuth } from "@saleor/sdk";
 import { parse as parseQs } from "qs";
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router";
@@ -16,7 +16,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const { setPassword } = useAuth();
 
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<SetPasswordData["errors"]>([]);
+  const [errors, setErrors] = useState<AccountErrorFragment[]>([]);
 
   const params: NewPasswordUrlQueryParams = parseQs(
     location.search.substr(1),
@@ -31,7 +31,8 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
       token: params.token,
     });
 
-    const errors = result.data?.setPassword?.errors || [];
+    const errors = (result.data?.setPassword?.errors ||
+      []) as AccountErrorFragment[];
 
     setErrors(errors);
     setLoading(false);

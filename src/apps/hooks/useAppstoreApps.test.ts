@@ -1,10 +1,11 @@
-// @ts-strict-ignore
 import { renderHook } from "@testing-library/react-hooks";
 
 import { comingSoonApp, releasedApp } from "../fixtures";
 import useAppstoreApps from "./useAppstoreApps";
 
 const mockApps = [releasedApp, comingSoonApp];
+
+type Fetch = typeof global.fetch;
 
 global.fetch = jest.fn(url => {
   if (url === "https://apps.saleor.io/apps") {
@@ -20,7 +21,7 @@ global.fetch = jest.fn(url => {
     } as unknown as Response);
   }
   return Promise.reject(new Error("API is down"));
-});
+}) as Fetch;
 
 describe("apps hooks useAppstoreApps", () => {
   it("should return apps when request to proper appstore url returns apps", async () => {

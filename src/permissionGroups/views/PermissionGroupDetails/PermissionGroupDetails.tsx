@@ -103,7 +103,8 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
             checkIfUserBelongToPermissionGroup(
               data?.permissionGroup,
               user?.user?.id ?? "",
-            )
+            ) &&
+            user.refetchUser
           ) {
             user.refetchUser();
           }

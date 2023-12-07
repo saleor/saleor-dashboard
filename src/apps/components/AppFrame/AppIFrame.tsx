@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AppDetailsUrlQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { FlagList } from "@dashboard/featureFlags";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
@@ -10,9 +9,9 @@ interface AppIFrameProps {
   appId: string;
   src: string;
   featureFlags: FlagList;
-  params: AppDetailsUrlQueryParams;
+  params?: AppDetailsUrlQueryParams;
   onLoad: () => void;
-  onError: () => void;
+  onError?: () => void;
   className: string;
 }
 
@@ -31,7 +30,7 @@ const _AppIFrame = forwardRef<HTMLIFrameElement, AppIFrameProps>(
     const iframeSrc = AppUrls.resolveAppIframeUrl(appId, src, {
       ...params,
       featureFlags,
-      theme: themeRef.current,
+      theme: themeRef.current!,
     });
 
     return (

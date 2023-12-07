@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AppLogo } from "@dashboard/apps/types";
 import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
 import React from "react";

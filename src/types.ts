@@ -85,7 +85,7 @@ export interface SortPage<TSortKey extends string> {
 export interface ListActionsWithoutToolbar {
   toggle: (id: string) => void;
   toggleAll: (items: Node[], selected: number) => void;
-  isChecked: (id: string) => boolean;
+  isChecked: (id: string) => boolean | undefined;
   selected: number;
 }
 export type TabListActions<TToolbars extends string> =

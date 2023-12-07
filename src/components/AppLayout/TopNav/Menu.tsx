@@ -11,7 +11,7 @@ import React from "react";
 interface TopNavMenuItem {
   label: string;
   testId?: string;
-  onSelect: () => void;
+  onSelect: <T>(params?: T) => void;
 }
 
 interface TopNavMenuProps {

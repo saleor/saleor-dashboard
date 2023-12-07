@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { createAppsDebug } from "@dashboard/apps/apps-debug";
 import { DashboardEventFactory, Events } from "@saleor/app-sdk/app-bridge";
 import { useEffect, useRef } from "react";
@@ -6,8 +5,8 @@ import { useEffect, useRef } from "react";
 /**
  * https://usehooks.com/usePrevious/
  */
-function usePreviousValue(value) {
-  const ref = useRef();
+function usePreviousValue(value: unknown) {
+  const ref = useRef<unknown>();
 
   useEffect(() => {
     ref.current = value;

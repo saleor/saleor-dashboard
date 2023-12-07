@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import {
   AttributeInput,
@@ -234,7 +233,7 @@ export const mergeFileUploadErrors = (
       return [...errors, ...uploadErrors];
     }
     return errors;
-  }, []);
+  }, [] as UploadErrorFragment[]);
 
 export const mergeAttributeValueDeleteErrors = (
   deleteAttributeValuesResult: Array<FetchResult<AttributeValueDeleteMutation>>,
@@ -245,7 +244,7 @@ export const mergeAttributeValueDeleteErrors = (
       return [...errors, ...deleteErrors];
     }
     return errors;
-  }, []);
+  }, [] as AttributeErrorFragment[]);
 
 export const mergeChoicesWithValues = (
   attribute:
