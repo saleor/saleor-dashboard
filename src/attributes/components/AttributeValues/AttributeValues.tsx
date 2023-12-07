@@ -29,7 +29,7 @@ export interface AttributeValuesProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     PaginateListProps {
   disabled: boolean;
-  values: RelayToFlat<AttributeValueListFragment>;
+  values?: RelayToFlat<AttributeValueListFragment>;
   onValueAdd: () => void;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { parse as parseQs } from "qs";
 import React, { useContext } from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";

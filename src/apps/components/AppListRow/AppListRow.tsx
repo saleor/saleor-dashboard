@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { useAppListContext } from "@dashboard/apps/context";
 import {

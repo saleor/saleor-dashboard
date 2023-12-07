@@ -15,7 +15,7 @@ import { useIntl } from "react-intl";
 interface CategoryDetailsFormProps {
   data: {
     name: string;
-    description: OutputData;
+    description: OutputData | null;
   };
   disabled: boolean;
   errors: ProductErrorFragment[];

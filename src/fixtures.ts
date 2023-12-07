@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   AllocationStrategyEnum,
   ChannelFragment,
@@ -457,7 +456,9 @@ export const date = {
   to: "2019-12-38",
 };
 
-export const adminUserPermissions: UserDetailsQuery["me"]["userPermissions"] = [
+export const adminUserPermissions: NonNullable<
+  NonNullable<UserDetailsQuery["me"]>["userPermissions"]
+> = [
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_CHECKOUTS,

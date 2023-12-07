@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AppPageNav } from "@dashboard/apps/components/AppPage/AppPageNav";
 import { AppUrls } from "@dashboard/apps/urls";
 import { AppQuery } from "@dashboard/graphql";
@@ -52,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({
       />
 
       <HeaderOptions
-        isActive={data.isActive}
+        isActive={!!data.isActive}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}

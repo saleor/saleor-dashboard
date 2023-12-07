@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ApolloError, ServerError } from "@apollo/client/core";
 import { IMessage, IMessageContext } from "@dashboard/components/messages";
 import { UseNotifierResult } from "@dashboard/hooks/useNotifier";
@@ -25,13 +24,17 @@ const getNetworkErrors = (error: ApolloError): string[] => {
     if (Array.isArray(networkErrors.result)) {
       networkErrors.result.forEach(result => {
         if (result.errors) {
-          return result.errors.map(({ message }) => message);
+          return result.errors.map(
+            ({ message }: { message: string }) => message,
+          );
         }
       });
     }
 
     if (networkErrors.result?.errors) {
-      return networkErrors.result.errors.map(({ message }) => message);
+      return networkErrors.result.errors.map(
+        ({ message }: { message: string }) => message,
+      );
     }
 
     return [networkErrors.message];

@@ -31,13 +31,13 @@ export type UserContextError =
   (typeof UserContextError)[keyof typeof UserContextError];
 
 export interface UserContext {
-  login: (username: string, password: string) => Promise<LoginData>;
-  loginByExternalPlugin: (
+  login?: (username: string, password: string) => Promise<LoginData>;
+  loginByExternalPlugin?: (
     pluginId: string,
     input: ExternalLoginInput,
   ) => Promise<GetExternalAccessTokenData>;
-  logout: () => Promise<void>;
-  requestLoginByExternalPlugin: (
+  logout?: () => Promise<void>;
+  requestLoginByExternalPlugin?: (
     pluginId: string,
     input: RequestExternalLoginInput,
   ) => Promise<GetExternalAuthUrlData>;
@@ -45,5 +45,5 @@ export interface UserContext {
   authenticating: boolean;
   authenticated: boolean;
   errors: UserContextError[];
-  refetchUser: () => Promise<ApolloQueryResult<UserDetailsQuery>>;
+  refetchUser?: () => Promise<ApolloQueryResult<UserDetailsQuery>>;
 }

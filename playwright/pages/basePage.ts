@@ -18,7 +18,6 @@ export class BasePage {
   ) {
     this.page = page;
   }
-
   async expectGridToBeAttached() {
     await expect(this.gridCanvas).toBeAttached({
       timeout: 10000,
