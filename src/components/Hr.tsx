@@ -10,7 +10,7 @@ export const Hr: React.FC<{
   <Box
     as="hr"
     className={className}
-    backgroundColor="surfaceNeutralDepressed"
+    backgroundColor="default3"
     borderWidth={0}
     width="100%"
     height="px"

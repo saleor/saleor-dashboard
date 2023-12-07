@@ -89,7 +89,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
           </Button>
         )}
         {error && (
-          <Text variant="caption" color="textCriticalDefault" paddingLeft={3}>
+          <Text variant="caption" color="critical1" paddingLeft={3}>
             {helperText}
           </Text>
         )}

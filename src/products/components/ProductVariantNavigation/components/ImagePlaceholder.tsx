@@ -11,7 +11,7 @@ export const ImagePlaceholder = () => {
       justifyContent="center"
       alignItems="center"
       borderRadius={2}
-      borderColor="neutralHighlight"
+      borderColor="default1"
       borderStyle="solid"
       borderWidth={1}
       flexShrink="0"

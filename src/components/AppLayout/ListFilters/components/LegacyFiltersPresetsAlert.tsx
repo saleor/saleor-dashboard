@@ -1,12 +1,13 @@
 import { TokenType } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
 import { getStatusColor } from "@dashboard/misc";
 import { storageUtils } from "@dashboard/products/views/ProductList/filters";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 export const LegacyFiltersPresetsAlert = () => {
   const presets = storageUtils.getFilterTabs();
+  const { theme: currentTheme } = useTheme();
   const { formatMessage } = useIntl();
 
   const legacyPresets = presets.filter(
@@ -16,7 +17,7 @@ export const LegacyFiltersPresetsAlert = () => {
   if (legacyPresets.length > 0) {
     return (
       <Box
-        __backgroundColor={getStatusColor("warning")}
+        __backgroundColor={getStatusColor({ status: "warning", currentTheme })}
         paddingX={7}
         paddingY={5}
         marginBottom={5}

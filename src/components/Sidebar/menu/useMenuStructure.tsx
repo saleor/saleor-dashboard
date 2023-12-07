@@ -37,7 +37,7 @@ import { SidebarMenuItem } from "./types";
 import { mapToExtensionsItems } from "./utils";
 
 const iconSettings = {
-  color: "iconNeutralSubdued",
+  color: "default2",
   size: "medium",
 } as const;
 

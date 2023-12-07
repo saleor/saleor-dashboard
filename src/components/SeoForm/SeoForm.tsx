@@ -97,7 +97,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                     id="TGX4T1"
                   />
                 </Text>
-                <Text variant="caption" color="textNeutralSubdued">
+                <Text variant="caption" color="default2">
                   {completed ? (
                     <FormattedMessage
                       id="bGqAdR"

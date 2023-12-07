@@ -53,7 +53,7 @@ export const CollectionListDatagrid = ({
   selectedChannelId,
 }: CollectionListDatagridProps) => {
   const intl = useIntl();
-  const { theme: currentTheme, themeValues } = useTheme();
+  const { theme: currentTheme } = useTheme();
   const datagrid = useDatagridChangeState();
 
   const collectionListStaticColumns = useMemo(
@@ -89,16 +89,8 @@ export const CollectionListDatagrid = ({
       columns: visibleColumns,
       selectedChannelId,
       currentTheme,
-      theme: themeValues,
     }),
-    [
-      collections,
-      intl,
-      visibleColumns,
-      selectedChannelId,
-      currentTheme,
-      themeValues,
-    ],
+    [collections, intl, visibleColumns, selectedChannelId, currentTheme],
   );
 
   const handleRowClick = useCallback(

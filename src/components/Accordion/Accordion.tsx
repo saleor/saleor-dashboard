@@ -35,7 +35,7 @@ const Accordion: React.FC<AccordionProps> = ({
         className={sprinkles({
           borderStyle: "solid",
           borderWidth: 1,
-          borderColor: "neutralPlain",
+          borderColor: "default1",
           paddingX: 4,
           borderRadius: 5,
         })}

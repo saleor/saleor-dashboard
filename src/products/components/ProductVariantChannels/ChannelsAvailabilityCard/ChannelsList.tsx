@@ -18,7 +18,7 @@ export const ChannelsList: React.FC<ChannelListProps> = ({
           paddingBottom: 8,
         })}
       >
-        <Text variant="caption" color="textNeutralSubdued">
+        <Text variant="caption" color="default2">
           {summary}
         </Text>
         <Accordion.TriggerButton dataTestId="expand-icon" />

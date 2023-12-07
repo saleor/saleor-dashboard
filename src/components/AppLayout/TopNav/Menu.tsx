@@ -34,7 +34,7 @@ export const Menu: React.FC<TopNavMenuProps> = ({ items, dataTestId }) => (
           padding={2}
           borderRadius={4}
           boxShadow="overlay"
-          backgroundColor="surfaceNeutralPlain"
+          backgroundColor="default1"
         >
           {items.map(item => (
             <Dropdown.Item key={item.label}>

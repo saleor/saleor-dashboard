@@ -7,7 +7,7 @@ import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { getStatusColor } from "@dashboard/misc";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { ThemeTokensValues } from "@saleor/macaw-ui-next";
+import { DefaultTheme } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages, messages } from "./messages";
@@ -36,7 +36,7 @@ export const createGetCellContent =
     voucherCodes: VoucherCode[],
     columns: AvailableColumn[],
     intl: IntlShape,
-    themeValues: ThemeTokensValues,
+    currentTheme: DefaultTheme,
   ) =>
   ([column, row]: Item): GridCell => {
     const columnId = columns[column]?.id;
@@ -56,14 +56,15 @@ export const createGetCellContent =
         );
       case "status": {
         const status = getStatus(rowData?.isActive);
-        const statusColor = getStatusColor(status);
+        const color = getStatusColor({ status, currentTheme });
+
         const statusMessage = getStatusMessage(rowData?.isActive, intl);
 
         return tagsCell(
           [
             {
               tag: statusMessage,
-              color: getTagCellColor(statusColor, themeValues),
+              color: color.base,
             },
           ],
           [statusMessage],
@@ -93,17 +94,4 @@ function getStatusMessage(isActive: boolean | undefined, intl: IntlShape) {
   return isActive
     ? intl.formatMessage(messages.active)
     : intl.formatMessage(messages.inactive);
-}
-
-function getTagCellColor(
-  color: string,
-  currentTheme: ThemeTokensValues,
-): string {
-  if (color.startsWith("#")) {
-    return color;
-  }
-
-  return currentTheme.colors.background[
-    color as keyof ThemeTokensValues["colors"]["background"]
-  ];
 }

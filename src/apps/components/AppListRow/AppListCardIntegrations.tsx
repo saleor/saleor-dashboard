@@ -24,7 +24,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
       flexWrap="wrap"
       gap={5}
       margin={0}
-      borderColor="neutralPlain"
+      borderColor="default1"
       borderLeftStyle="solid"
       borderRightStyle="solid"
       borderWidth={1}
@@ -45,7 +45,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
             width={10}
             borderRadius={3}
             borderStyle="solid"
-            borderColor="neutralPlain"
+            borderColor="default1"
             borderWidth={1}
             padding={1}
             display="flex"
@@ -61,7 +61,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
               alt={integration.name}
             />
           </Box>
-          <Text variant="caption" size="small" color="textNeutralSubdued">
+          <Text variant="caption" size="small" color="default2">
             {integration.name}
           </Text>
         </Box>

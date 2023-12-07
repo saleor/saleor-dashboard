@@ -6,15 +6,11 @@ import {
   readonlyTextCell,
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import {
-  hueToPillColorDark,
-  hueToPillColorLight,
-} from "@dashboard/components/Datagrid/customCells/PillCell";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderListQuery } from "@dashboard/graphql";
 import {
-  getStatusHue,
+  getStatusColor,
   transformOrderStatus,
   transformPaymentStatus,
 } from "@dashboard/misc";
@@ -139,18 +135,17 @@ export function getCustomerCellContent(
 
 export function getStatusCellContent(
   intl: IntlShape,
-  theme: DefaultTheme,
+  currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  const status = transformOrderStatus(rowData.status, intl);
-  const statusHue = getStatusHue(status.status);
+  const orderStatus = transformOrderStatus(rowData.status, intl);
 
-  if (status) {
-    const color =
-      theme === "defaultDark"
-        ? hueToPillColorDark(statusHue)
-        : hueToPillColorLight(statusHue);
-    return pillCell(status.localized, color);
+  if (orderStatus) {
+    const color = getStatusColor({
+      status: orderStatus.status,
+      currentTheme,
+    });
+    return pillCell(orderStatus.localized, color);
   }
 
   return readonlyTextCell("-");
@@ -158,18 +153,17 @@ export function getStatusCellContent(
 
 export function getPaymentCellContent(
   intl: IntlShape,
-  theme: DefaultTheme,
+  currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  const status = transformPaymentStatus(rowData.paymentStatus, intl);
-  const statusHue = getStatusHue(status.status);
+  const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
 
-  if (status) {
-    const color =
-      theme === "defaultDark"
-        ? hueToPillColorDark(statusHue)
-        : hueToPillColorLight(statusHue);
-    return pillCell(status.localized, color);
+  if (paymentStatus) {
+    const color = getStatusColor({
+      status: paymentStatus.status,
+      currentTheme,
+    });
+    return pillCell(paymentStatus.localized, color);
   }
 
   return readonlyTextCell("-");
