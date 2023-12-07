@@ -11,7 +11,7 @@ describe("RuleDTO", () => {
     const rule = {
       name: "name",
       description: '{"text":"description"}',
-      channels: [{ value: "channel_1", label: "Channel 1" }],
+      channel: { value: "channel_1", label: "Channel 1" },
       rewardValue: 1,
       rewardValueType: RewardValueTypeEnum.FIXED,
       conditions: [
@@ -117,7 +117,7 @@ describe("RuleDTO", () => {
     } as PromotionRuleDetailsFragment;
 
     expect(RuleDTO.fromAPI(rule, {})).toEqual({
-      channels: [{ value: "channel_1", label: "Channel 1" }],
+      channel: { value: "channel_1", label: "Channel 1" },
       name: "name",
       description: '{"text":"description"}',
       rewardValue: 1,
