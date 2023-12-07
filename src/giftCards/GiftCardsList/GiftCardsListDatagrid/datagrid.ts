@@ -14,7 +14,7 @@ import { getStatusColor } from "@dashboard/misc";
 import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui-next";
+import { DefaultTheme } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import { giftCardUpdatePageHeaderMessages as giftCardStatusChipMessages } from "../../GiftCardUpdate/GiftCardUpdatePageHeader/messages";
@@ -70,7 +70,6 @@ export const createGetCellContent =
     >,
     columns: AvailableColumn[],
     intl: IntlShape,
-    theme: ThemeTokensValues,
     currentTheme: DefaultTheme,
   ) =>
   ([column, row]: Item): GridCell => {
@@ -91,32 +90,32 @@ export const createGetCellContent =
         );
       case "status": {
         const status = getStatusText(rowData);
+        const color = getStatusColor({
+          status: status?.color ?? "info",
+          currentTheme,
+        });
 
         if (!status) {
           return tagsCell(
             [
               {
                 tag: intl.formatMessage(messages.active),
-                color: getTagCellColor(
-                  getStatusColor("success", currentTheme),
-                  theme,
-                ),
+                color: color.base,
               },
             ],
             [intl.formatMessage(messages.active)],
           );
         }
 
-        const statusLabel = intl.formatMessage(status.label);
+        const statusLabel = status?.label
+          ? intl.formatMessage(status.label)
+          : "";
 
         return tagsCell(
           [
             {
               tag: statusLabel,
-              color: getTagCellColor(
-                getStatusColor(status.color as any, currentTheme),
-                theme,
-              ),
+              color: color.base,
             },
           ],
           [statusLabel],
@@ -161,28 +160,15 @@ export const getStatusText = (
     return {
       color: "info",
       label: giftCardStatusChipMessages.expiredStatusLabel,
-    };
+    } as const;
   }
 
   if (!isActive) {
     return {
       color: "error",
       label: giftCardStatusChipMessages.disabledStatusLabel,
-    };
+    } as const;
   }
 
   return null;
 };
-
-function getTagCellColor(
-  color: string,
-  currentTheme: ThemeTokensValues,
-): string {
-  if (color.startsWith("#")) {
-    return color;
-  }
-
-  return currentTheme.colors.background[
-    color as keyof ThemeTokensValues["colors"]["background"]
-  ];
-}

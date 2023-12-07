@@ -46,7 +46,7 @@ const initialForm: AddMemberFormData = {
 const useStyles = makeStyles(
   theme => ({
     hr: {
-      backgroundColor: vars.colors.border.neutralPlain,
+      backgroundColor: vars.colors.border.default1,
       border: "none",
       height: 1,
       marginBottom: 0,

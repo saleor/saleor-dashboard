@@ -53,7 +53,7 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
             {!!channelsAvailabilityText && (
               <Text
                 variant="caption"
-                color="textNeutralSubdued"
+                color="default2"
                 data-test-id="product-available-in-channels-text"
               >
                 {channelsAvailabilityText}

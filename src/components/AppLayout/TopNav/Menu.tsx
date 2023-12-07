@@ -11,7 +11,7 @@ import React from "react";
 interface TopNavMenuItem {
   label: string;
   testId?: string;
-  onSelect: () => void;
+  onSelect: <T>(params?: T) => void;
 }
 
 interface TopNavMenuProps {
@@ -34,7 +34,7 @@ export const Menu: React.FC<TopNavMenuProps> = ({ items, dataTestId }) => (
           padding={2}
           borderRadius={4}
           boxShadow="overlay"
-          backgroundColor="surfaceNeutralPlain"
+          backgroundColor="default1"
         >
           {items.map(item => (
             <Dropdown.Item key={item.label}>

@@ -10,7 +10,11 @@ import React from "react";
 
 interface ButtonWithDropdownProps {
   onClick: () => void;
-  options: Array<{ label: string; testId: string; onSelect: () => void }>;
+  options: Array<{
+    label: string;
+    testId: string;
+    onSelect: <T>(params?: T) => void;
+  }>;
   testId?: string;
   disabled?: boolean;
 }
@@ -35,7 +39,7 @@ export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
           padding={2}
           borderRadius={4}
           boxShadow="overlay"
-          backgroundColor="surfaceNeutralPlain"
+          backgroundColor="default1"
         >
           {options.map((item, idx) => (
             <Dropdown.Item key={`dropdown-item-${idx}`}>

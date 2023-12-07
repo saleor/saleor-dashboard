@@ -1,7 +1,5 @@
-import {
-  DotStatus,
-  getStatusDotColor,
-} from "@dashboard/components/StatusDot/StatusDot";
+import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
+import { getDotColor } from "@dashboard/misc";
 import {
   CustomCell,
   CustomRenderer,
@@ -33,8 +31,9 @@ export const statusCellRenderer = (
 
     circle.arc(x + 15, y + height / 2, 4, 0, 2 * Math.PI);
 
-    ctx.fillStyle =
-      themeValues.colors.background[getStatusDotColor(cell.data.status)];
+    const color = getDotColor(cell.data.status, themeValues);
+
+    ctx.fillStyle = color;
 
     ctx.fill(circle);
 

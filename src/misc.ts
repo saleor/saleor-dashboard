@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
 import {
   AddressInput,
@@ -15,7 +14,12 @@ import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
+import {
+  hueToPillColorDark,
+  hueToPillColorLight,
+} from "./components/Datagrid/customCells/PillCell";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
+import { DotStatus } from "./components/StatusDot/StatusDot";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
   commonStatusMessages,
@@ -206,14 +210,16 @@ export function maybe(exp: any, d?: any) {
   }
 }
 
-export function only<T>(obj: T, key: keyof T): boolean {
+export function only<T extends object>(obj: T, key: keyof T): boolean {
   return Object.keys(obj).every(objKey =>
     objKey === key ? obj[key] !== undefined : obj[key] === undefined,
   );
 }
 
 export function empty(obj: {}): boolean {
-  return Object.keys(obj).every(key => obj[key] === undefined);
+  return Object.keys(obj).every(
+    key => obj[key as keyof typeof obj] === undefined,
+  );
 }
 
 export function hasErrors(errorList: UserError[] | null): boolean {
@@ -265,7 +271,7 @@ export const hasMutationErrors = (result: FetchResult): boolean => {
     return false;
   }
   return Object.values(result.data).some(
-    ({ errors }: SaleorMutationResult) => errors.length > 0,
+    ({ errors }: SaleorMutationResult) => errors && errors.length > 0,
   );
 };
 
@@ -279,11 +285,12 @@ export const getMutationErrors = <
   if (!result?.data) {
     return [] as TErrors;
   }
-  return Object.values(result.data).reduce(
-    (acc: TErrors[], mut: TData) => [
+  return Object.values<TData>(result.data).reduce(
+    (acc: TErrors[], mut) => [
       ...acc,
       ...(mut.errors || []),
-      ...(mut?.results?.flatMap(res => res.errors) || []),
+      ...(mut?.results?.flatMap((res: { errors: TErrors[] }) => res.errors) ||
+        []),
     ],
     [] as TErrors[],
   ) as TErrors;
@@ -297,7 +304,10 @@ export function getMutationStatus<
   return getMutationState(opts.called, opts.loading, errors);
 }
 
-export function getMutationProviderData<TData, TVariables>(
+export function getMutationProviderData<
+  TData extends object,
+  TVariables extends object,
+>(
   mutateFn: MutationFunction<TData, TVariables>,
   opts: MutationResult<TData> & MutationResultAdditionalProps,
 ): PartialMutationProviderOutput<TData, TVariables> {
@@ -361,7 +371,7 @@ export function getUserInitials(user?: User) {
   const hasEmail = !!user?.email;
 
   if (hasName) {
-    return `${user.firstName[0] + user.lastName[0]}`.toUpperCase();
+    return `${user.firstName![0] + user.lastName![0]}`.toUpperCase();
   }
 
   if (hasEmail) {
@@ -529,16 +539,19 @@ export function getFullName<T extends { firstName: string; lastName: string }>(
 
   return `${data.firstName} ${data.lastName}`;
 }
-export const flatten = (obj: unknown) => {
+export const flatten = (obj: object) => {
   // Be cautious that repeated keys are overwritten
 
   const result = {};
 
   Object.keys(obj).forEach(key => {
-    if (typeof obj[key] === "object" && obj[key] !== null) {
-      Object.assign(result, flatten(obj[key]));
+    if (
+      typeof obj[key as keyof typeof obj] === "object" &&
+      obj[key as keyof typeof obj] !== null
+    ) {
+      Object.assign(result, flatten(obj[key as keyof typeof obj]));
     } else {
-      result[key] = obj[key];
+      result[key as keyof typeof obj] = obj[key as keyof typeof obj];
     }
   });
 
@@ -580,32 +593,22 @@ export const findById = <T extends Node>(id: string, list?: T[]) =>
 
 export const COLOR_WARNING = "#FBE5AC";
 export const COLOR_WARNING_DARK = "#3E2F0A";
-type CustomWarningColor = typeof COLOR_WARNING | typeof COLOR_WARNING_DARK;
 
-export const getStatusColor = (
-  status: "error" | "warning" | "info" | "success" | "generic",
-  currentTheme?: DefaultTheme,
-): keyof ThemeTokensValues["colors"]["background"] | CustomWarningColor => {
-  switch (status) {
-    case "error":
-      return "surfaceCriticalDepressed";
-    case "info":
-      return "surfaceBrandDepressed";
-    case "success":
-      return "decorativeSurfaceSubdued2";
-    case "warning":
-      // TODO: use color from new macaw theme when will be ready
-      return currentTheme === "defaultDark"
-        ? COLOR_WARNING_DARK
-        : COLOR_WARNING;
-    case "generic":
-      return "surfaceBrandSubdued";
-    default:
-      return "surfaceBrandSubdued";
-  }
+export const getStatusColor = ({
+  status,
+  currentTheme,
+}: {
+  status: "error" | "warning" | "info" | "success" | "generic";
+  currentTheme: DefaultTheme;
+}) => {
+  const statusHue = getStatusHue(status);
+
+  return currentTheme === "defaultDark"
+    ? hueToPillColorDark(statusHue)
+    : hueToPillColorLight(statusHue);
 };
 
-export const getStatusHue = (
+const getStatusHue = (
   status: "error" | "warning" | "info" | "success" | "generic",
 ): number => {
   const red = 0;
@@ -625,6 +628,21 @@ export const getStatusHue = (
       return yellow;
     default:
       return blue;
+  }
+};
+
+export const getDotColor = (
+  status: DotStatus,
+  themeValues: ThemeTokensValues,
+) => {
+  switch (status) {
+    case "success":
+      // TODO: add this as success2 to MacawUI
+      return "hsla(173, 100%, 26%, 1)";
+    case "error":
+      return themeValues.colors.background.critical2;
+    case "warning":
+      return themeValues.colors.background.warning1;
   }
 };
 

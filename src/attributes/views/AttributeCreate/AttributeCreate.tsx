@@ -1,4 +1,5 @@
 import {
+  AttributeCreateInput,
   AttributeErrorCode,
   AttributeErrorFragment,
   useAttributeCreateMutation,
@@ -160,7 +161,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const handleCreate = async (data: AttributePageFormData) => {
     const result = await attributeCreate({
       variables: {
-        input: getAttributeData(data, values),
+        input: getAttributeData(data, values) as AttributeCreateInput,
       },
     });
 

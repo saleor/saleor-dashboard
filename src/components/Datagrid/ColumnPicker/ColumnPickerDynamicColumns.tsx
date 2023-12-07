@@ -23,7 +23,7 @@ export const ColumnPickerDynamicColumns = ({
       alignItems="center"
       marginTop={3}
     >
-      <Text variant="caption" size="small" color="textNeutralSubdued">
+      <Text variant="caption" size="small" color="default2">
         <FormattedMessage {...messages.custom} />
       </Text>
       <Button
@@ -49,14 +49,14 @@ export const ColumnPickerDynamicColumns = ({
             data-test-id={`remove-dynamic-col-button-${column.title}`}
             variant="tertiary"
             size="small"
-            icon={<RemoveIcon color="iconNeutralPlain" />}
+            icon={<RemoveIcon color="default1" />}
             __width="20px"
             __height="20px"
           />
           <Text
             variant="body"
             size="small"
-            color="textNeutralSubdued"
+            color="default2"
             whiteSpace="nowrap"
           >
             {`${column.metaGroup} /`}
@@ -64,7 +64,7 @@ export const ColumnPickerDynamicColumns = ({
           <Text
             variant="body"
             size="small"
-            color="textNeutralDefault"
+            color="default1"
             ellipsis
             data-test-id={`column-name-${column.title}`}
           >

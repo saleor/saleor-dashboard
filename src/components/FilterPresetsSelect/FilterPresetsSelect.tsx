@@ -103,7 +103,7 @@ export const FilterPresetsSelect = ({
             size="medium"
             data-test-id="show-saved-filters-button"
             style={{
-              borderColor: isOpen ? vars.colors.border.brandDefault : undefined,
+              borderColor: isOpen ? vars.colors.border.accent1 : undefined,
             }}
           >
             <Box __maxWidth="200px">
@@ -122,12 +122,12 @@ export const FilterPresetsSelect = ({
             padding={1}
             borderRadius={3}
             boxShadow="overlay"
-            borderColor="neutralHighlight"
+            borderColor="default1"
             borderStyle="solid"
             borderWidth={1}
             width="100%"
             marginTop={0.5}
-            backgroundColor="surfaceNeutralPlain"
+            backgroundColor="default1"
           >
             <Dropdown.Item>
               <List.Item
@@ -146,7 +146,7 @@ export const FilterPresetsSelect = ({
               <Box
                 height="px"
                 marginY={1}
-                __backgroundColor={vars.colors.border.neutralHighlight}
+                __backgroundColor={vars.colors.border.default1}
                 __marginLeft={-4}
                 __width={getSeparatorWidth("4px")}
               />

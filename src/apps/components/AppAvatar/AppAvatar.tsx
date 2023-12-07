@@ -20,16 +20,16 @@ export const AppAvatar: React.FC<{
   ) : (
     <Box
       padding={1}
-      backgroundColor="surfaceNeutralSubdued"
+      backgroundColor="default2"
       width={size}
       height={size}
       display="flex"
       placeItems="center"
       borderRadius={2}
       borderWidth={1}
-      borderColor={"neutralPlain"}
+      borderColor="default1"
       borderStyle={"solid"}
     >
-      <GenericAppIcon size="large" color="iconNeutralSubdued" />
+      <GenericAppIcon size="large" color="default2" />
     </Box>
   );

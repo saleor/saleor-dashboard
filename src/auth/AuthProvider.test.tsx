@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
 import { useUserDetailsQuery } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -135,12 +134,12 @@ describe("AuthProvider", () => {
     const hook = renderHook(() =>
       useAuthProvider({ intl, notify, apolloClient }),
     );
-    await act(async () =>
-      hook.result.current.login(
+    await act(async () => {
+      hook.result.current.login!(
         adminCredentials.email,
         adminCredentials.password,
-      ),
-    );
+      );
+    });
 
     // Assert
     expect(hook.result.current.user?.email).toBe(adminCredentials.email);
@@ -196,12 +195,12 @@ describe("AuthProvider", () => {
     const hook = renderHook(() =>
       useAuthProvider({ intl, notify, apolloClient }),
     );
-    await act(async () =>
-      hook.result.current.login(
+    await act(async () => {
+      hook.result.current.login!(
         nonStaffUserCredentials.email,
         nonStaffUserCredentials.password,
-      ),
-    );
+      );
+    });
 
     // Assert
     expect(hook.result.current.errors).toEqual([]);
@@ -231,12 +230,12 @@ describe("AuthProvider", () => {
     const hook = renderHook(() =>
       useAuthProvider({ intl, notify, apolloClient }),
     );
-    await act(async () =>
-      hook.result.current.login(
+    await act(async () => {
+      hook.result.current.login!(
         nonStaffUserCredentials.email,
         nonStaffUserCredentials.password,
-      ),
-    );
+      );
+    });
 
     // Assert
     expect(hook.result.current.errors).toEqual(["noPermissionsError"]);

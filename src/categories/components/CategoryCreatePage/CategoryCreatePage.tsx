@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -79,7 +78,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
             onCancel={() => navigate(backUrl)}
             onSubmit={submit}
             state={saveButtonBarState}
-            disabled={isSaveDisabled}
+            disabled={!!isSaveDisabled}
           />
         </DetailPageLayout>
       )}

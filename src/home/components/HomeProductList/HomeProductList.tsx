@@ -31,7 +31,7 @@ export const HomeProductList = ({
         <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
           {title}
         </Text>
-        <Text color="textNeutralSubdued">
+        <Text color="default2">
           <FormattedMessage
             id="/Fa+RP"
             defaultMessage="Couldn't load top products"
@@ -77,7 +77,7 @@ export const HomeProductList = ({
                 <>
                   <Box display="flex" gap={3} alignItems="center">
                     <Box
-                      borderColor="neutralHighlight"
+                      borderColor="default1"
                       borderStyle="solid"
                       borderWidth={1}
                       borderRadius={3}
@@ -93,11 +93,11 @@ export const HomeProductList = ({
                     <Box display="flex" flexDirection="column">
                       <Text size="small">{variant.product.name}</Text>
 
-                      <Text size="small" color="textNeutralSubdued">
+                      <Text size="small" color="default2">
                         {generateAttributesInfo(variant)}
                       </Text>
 
-                      <Text size="small" color="textNeutralSubdued">
+                      <Text size="small" color="default2">
                         <FormattedMessage
                           id="nII/qB"
                           defaultMessage="{amount, plural,one {One ordered}other {{amount} ordered}}"
@@ -125,7 +125,7 @@ export const HomeProductList = ({
           ),
           () => (
             <Box
-              borderColor="neutralPlain"
+              borderColor="default1"
               borderWidth={1}
               paddingY={5}
               borderBottomStyle="solid"
@@ -150,7 +150,7 @@ export default HomeProductList;
 function ProductListSkeleton() {
   return (
     <Box
-      borderColor="neutralPlain"
+      borderColor="default1"
       borderWidth={1}
       borderBottomStyle="solid"
       paddingX={3}

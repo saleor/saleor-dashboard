@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Choice } from "@dashboard/components/SingleSelectField";
 import { MeasurementUnitsEnum } from "@dashboard/graphql";
 import React from "react";

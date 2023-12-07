@@ -133,7 +133,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
               </Box>
             </Checkbox>
 
-            <Text marginLeft={5} variant="caption" color="textNeutralSubdued">
+            <Text marginLeft={5} variant="caption" color="default2">
               <FormattedMessage {...messages.trackInventoryDescription} />
             </Text>
           </Box>
@@ -143,7 +143,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                 <FormattedMessage {...messages.stock} />
               </Text>
               {!productVariantChannelListings?.length && (
-                <Text variant="caption" color="textNeutralSubdued">
+                <Text variant="caption" color="default2">
                   <FormattedMessage
                     {...messages.noChannelWarehousesAllocation}
                   />
@@ -151,7 +151,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
               )}
             </Box>
             {!warehouses?.length && (
-              <Text color="textNeutralSubdued">
+              <Text color="default2">
                 {hasVariants ? (
                   <FormattedMessage
                     {...messages.configureWarehouseForVariant}
@@ -182,17 +182,17 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
               <TableHead>
                 <TableRowLink>
                   <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-                    <Text variant="caption" color="textNeutralSubdued">
+                    <Text variant="caption" color="default2">
                       <FormattedMessage {...messages.warehouseName} />
                     </Text>
                   </TableCell>
                   <TableCell style={{ width: 100, verticalAlign: "middle" }}>
-                    <Text variant="caption" color="textNeutralSubdued">
+                    <Text variant="caption" color="default2">
                       <FormattedMessage {...messages.allocated} />
                     </Text>
                   </TableCell>
                   <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-                    <Text variant="caption" color="textNeutralSubdued">
+                    <Text variant="caption" color="default2">
                       <FormattedMessage {...messages.quantity} />
                     </Text>
                   </TableCell>
@@ -266,7 +266,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                     padding={2}
                     borderRadius={4}
                     boxShadow="overlay"
-                    backgroundColor="surfaceNeutralPlain"
+                    backgroundColor="default1"
                     __maxHeight={400}
                     overflowY="auto"
                   >

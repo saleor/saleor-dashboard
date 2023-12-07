@@ -79,7 +79,7 @@ export const TimelineEventHeader: React.FC<
         <Text
           variant="caption"
           size="large"
-          color="textNeutralSubdued"
+          color="default2"
           whiteSpace="nowrap"
         >
           <DateTime date={date} plain={hasPlainDate} />
