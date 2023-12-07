@@ -34,7 +34,7 @@ export interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
   ruleConditionsOptionsDetailsMap: Record<string, string>;
   ruleConditionsOptionsDetailsLoading: boolean;
-  data: PromotionDetailsFragment | undefined;
+  data: PromotionDetailsFragment | undefined | null;
   disabled: boolean;
   errors: PromotionUpdateErrorFragment[];
   submitButtonState: ConfirmButtonTransitionState;
@@ -112,7 +112,7 @@ export const DiscountDetailsPage = ({
 
     onSubmit({
       ...formData,
-      rules: filterRules(data?.rules, formData.rules, dirtyRulesIndexes),
+      rules: filterRules(data?.rules ?? [], formData.rules, dirtyRulesIndexes),
     });
   };
 
@@ -138,7 +138,15 @@ export const DiscountDetailsPage = ({
   };
 
   const handleDeleteRule = async () => {
-    const ruleId = rules[ruleDeleteIndex].id;
+    if (ruleDeleteIndex === null) {
+      return;
+    }
+
+    const ruleId = rules[Number(ruleDeleteIndex)].id;
+    if (!ruleId) {
+      return;
+    }
+
     await onRuleDeleteSubmit(ruleId);
     setRuleDeleteIndex(null);
   };

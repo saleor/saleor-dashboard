@@ -53,7 +53,8 @@ export const RuleModal = ({
   });
 
   const channel = methods.watch("channel");
-  const channelSlug = channels?.find(chan => chan.id === channel?.value)?.slug;
+  const channelSlug =
+    channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
 
   const productSearch = useProductSearch(channelSlug);
   const collectionSearch = useCollectionSearch(channelSlug);

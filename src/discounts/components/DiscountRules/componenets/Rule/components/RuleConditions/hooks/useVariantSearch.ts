@@ -1,4 +1,5 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useVariantSearchQuery from "@dashboard/searches/useVariantSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -17,7 +18,7 @@ export const useVariantSearch = (channel: string) => {
   });
 
   const fetchMoreVariants = getSearchFetchMoreProps(
-    searchVariantsOpts,
+    searchVariantsOpts as CommonSearchOpts,
     loadMoreVariants,
   );
 

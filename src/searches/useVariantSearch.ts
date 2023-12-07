@@ -1,10 +1,11 @@
 import { gql } from "@apollo/client";
 import {
   SearchVariantsDocument,
-  SearchVariantsQuery,
   SearchVariantsQueryVariables,
 } from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import makeTopLevelSearch, {
+  SearchData,
+} from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchVariants = gql`
   query SearchVariants(
@@ -32,7 +33,6 @@ export const searchVariants = gql`
   }
 `;
 
-export default makeTopLevelSearch<
-  SearchVariantsQuery,
-  SearchVariantsQueryVariables
->(SearchVariantsDocument);
+export default makeTopLevelSearch<SearchData, SearchVariantsQueryVariables>(
+  SearchVariantsDocument,
+);

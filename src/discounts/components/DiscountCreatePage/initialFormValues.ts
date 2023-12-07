@@ -24,7 +24,7 @@ export const initialRuleValues: Rule = {
   channel: null,
   description: "",
   name: "",
-  rewardValue: undefined,
+  rewardValue: null,
   conditions: [{ ...intialConditionValues }],
   rewardValueType: RewardValueTypeEnum.PERCENTAGE,
 };

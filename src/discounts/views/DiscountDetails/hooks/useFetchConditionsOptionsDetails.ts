@@ -8,7 +8,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useEffect } from "react";
 
 export const useFetchConditionsOptionsDetails = (
-  promotionData: PromotionDetailsQuery,
+  promotionData: PromotionDetailsQuery | undefined,
 ) => {
   const conditionsOptionsIdsToFetch =
     getAllConditionsOptionsIdsToFetch(promotionData);
@@ -49,7 +49,7 @@ const initAllConditionsIds: AllConditionsIds = {
 };
 
 export function getAllConditionsOptionsIdsToFetch(
-  data: PromotionDetailsQuery,
+  data: PromotionDetailsQuery | undefined,
 ): AllConditionsIds {
   if (!data?.promotion?.rules) {
     return initAllConditionsIds;
@@ -97,12 +97,12 @@ export function getAllConditionsOptionsIdsToFetch(
 
 export function getRuleConditionsOptionsDetailsMap(
   data: RuleConditionsSelectedOptionsDetailsQuery | undefined,
-): Record<string, string> {
+) {
   if (!data) {
     return {};
   }
 
-  return Object.values(data).reduce((acc, value) => {
+  return Object.values(data).reduce<Record<string, string>>((acc, value) => {
     const items =
       mapEdgesToItems(
         value as RuleConditionsSelectedOptionsDetailsQuery["categories"],

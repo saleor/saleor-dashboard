@@ -30,7 +30,6 @@ export const RuleReward = ({
   });
 
   const discountType = watch("rewardValueType");
-
   return (
     <>
       <Text as="p">{intl.formatMessage(messages.reward)}</Text>
@@ -43,7 +42,10 @@ export const RuleReward = ({
         />
         <RuleInputWrapper __width={220}>
           <Input
-            {...rewardValueType}
+            value={rewardValueType.value || ""}
+            onBlur={rewardValueType.onBlur}
+            name={rewardValueType.name}
+            ref={rewardValueType.ref}
             onChange={e => {
               const value = parseInt(e.target.value, 10);
               rewardValueType.onChange(Number.isNaN(value) ? null : value);

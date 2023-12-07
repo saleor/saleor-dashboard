@@ -55,7 +55,9 @@ export const RuleConditions = ({
         {conditionsList.map((condition, conditionIndex) => (
           <RuleConditionRow
             disabled={disabled}
-            fetchOptions={typeToFetchMap[condition.type]}
+            fetchOptions={
+              condition.type ? typeToFetchMap[condition.type] : undefined
+            }
             isConditionTypeSelected={isConditionTypeSelected}
             key={condition.type}
             conditionIndex={conditionIndex}

@@ -69,7 +69,7 @@ function getRuleValue(rule: Rule, currencySymbol: string) {
   );
 }
 
-function getChannel(channel: Rule["channel"]) {
+function getChannel(channel: NonNullable<Rule["channel"]>) {
   return (
     <Chip
       marginRight={1.5}

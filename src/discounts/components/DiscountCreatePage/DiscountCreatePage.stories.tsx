@@ -11,6 +11,8 @@ const props: DiscountCreatePageProps = {
   disabled: false,
   onBack: () => undefined,
   onSubmit: () => undefined,
+  errors: [],
+  submitButtonState: "default",
 };
 
 export default {

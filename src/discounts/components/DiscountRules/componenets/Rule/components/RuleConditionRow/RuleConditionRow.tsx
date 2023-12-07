@@ -19,7 +19,7 @@ interface DiscountConditionRowProps {
   conditionIndex: number;
   onRemove: () => void;
   updateCondition: (index: number, value: Condition) => void;
-  fetchOptions: FetchOptions;
+  fetchOptions: FetchOptions | undefined;
   isConditionTypeSelected: (conditionType: string) => boolean;
 }
 

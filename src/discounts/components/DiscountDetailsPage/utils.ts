@@ -1,8 +1,8 @@
 import { Rule } from "@dashboard/discounts/types";
-import { PromotionDetailsFragment } from "@dashboard/graphql";
+import { PromotionRuleDetailsFragment } from "@dashboard/graphql";
 
 export const filterRules = (
-  promotionRules: PromotionDetailsFragment["rules"],
+  promotionRules: PromotionRuleDetailsFragment[],
   formRules: Rule[],
   dirtyRulesIndexes: string[],
 ): Rule[] => {

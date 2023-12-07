@@ -48,7 +48,7 @@ export const createUpdateHandler = (
 };
 
 export const createRuleUpdateHandler = (
-  promotionData: PromotionDetailsFragment | undefined,
+  promotionData: PromotionDetailsFragment | undefined | null,
   updateRule: (
     variables: PromotionRuleUpdateMutationVariables,
   ) => Promise<FetchResult<PromotionRuleUpdateMutation>>,
@@ -58,8 +58,9 @@ export const createRuleUpdateHandler = (
       return;
     }
 
-    const ruleData = promotionData?.rules.find(rule => rule.id === data.id);
-    const ruleChannels = ruleData?.channels.map(channel => channel.id) ?? [];
+    const ruleData = promotionData?.rules?.find(rule => rule.id === data.id);
+    const ruleChannels: string[] =
+      ruleData?.channels?.map(channel => channel.id) ?? [];
 
     const { channels, ...input } = RuleDTO.toAPI(data);
 
@@ -68,7 +69,7 @@ export const createRuleUpdateHandler = (
       input: {
         ...input,
         addChannels: difference(channels, ruleChannels),
-        removeChannels: difference(ruleChannels, channels),
+        removeChannels: difference(ruleChannels, channels ?? []),
       },
     });
 
@@ -83,7 +84,7 @@ export const createRuleUpdateHandler = (
 };
 
 export const createRuleCreateHandler = (
-  promotionData: PromotionDetailsFragment | undefined,
+  promotionData: PromotionDetailsFragment | undefined | null,
   createRule: (
     variables: PromotionRuleCreateMutationVariables,
   ) => Promise<FetchResult<PromotionRuleCreateMutation>>,
@@ -93,7 +94,7 @@ export const createRuleCreateHandler = (
 
     const response = await createRule({
       input: {
-        promotion: promotionData?.id,
+        promotion: promotionData?.id ?? "",
         ...ruleData,
       },
     });

@@ -13,7 +13,7 @@ export class RuleDTO {
     return {
       name: rule.name,
       description: rule.description ? JSON.parse(rule.description) : null,
-      channels: [rule.channel.value],
+      channels: rule?.channel ? [rule.channel.value] : [],
       rewardValue: rule.rewardValue,
       rewardValueType: rule.rewardValueType,
       cataloguePredicate: prepareCataloguePredicate(rule.conditions),
@@ -26,8 +26,8 @@ export class RuleDTO {
   ): Rule {
     return {
       id: rule.id,
-      channel: rule.channels.length
-        ? { label: rule.channels[0].name, value: rule.channels[0].id }
+      channel: rule?.channels?.length
+        ? { label: rule?.channels[0].name, value: rule?.channels[0].id }
         : null,
       name: rule.name ?? "",
       description: rule.description ? JSON.stringify(rule.description) : "",
@@ -57,7 +57,7 @@ export class ConditionDTO {
   static fromAPI(
     condition: CataloguePredicateAPI,
     ruleConditionsOptionsDetailsMap: Record<string, string>,
-  ): Condition {
+  ): Condition | undefined {
     if (condition.productPredicate) {
       return {
         type: "product",
@@ -108,7 +108,9 @@ export class ConditionDTO {
 function prepareCataloguePredicate(
   conditions: Condition[],
 ): CataloguePredicateInput {
-  const ruleConditions = conditions.map(ConditionDTO.toAPI).filter(Boolean);
+  const ruleConditions = conditions
+    .map(ConditionDTO.toAPI)
+    .filter(Boolean) as CataloguePredicateInput[];
 
   if (ruleConditions.length === 0) {
     return {};
@@ -133,10 +135,13 @@ function prepareRuleConditions(
     .map(([key, value]) => {
       if (key === "OR") {
         return prepareRuleConditions(
-          value.reduce((acc, val) => {
-            acc = { ...acc, ...val };
-            return acc;
-          }, {}),
+          value.reduce(
+            (acc: CataloguePredicateAPI, val: Record<string, unknown>) => {
+              acc = { ...acc, ...val };
+              return acc;
+            },
+            {} as CataloguePredicateAPI,
+          ),
           ruleConditionsOptionsDetailsMap,
         );
       }
@@ -146,5 +151,6 @@ function prepareRuleConditions(
         ruleConditionsOptionsDetailsMap,
       );
     })
-    .flat();
+    .filter(Boolean)
+    .flat() as Condition[];
 }

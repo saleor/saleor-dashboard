@@ -27,20 +27,16 @@ export const splitConditions = (
 export const mapConditionToOption = (
   conditions: Condition[],
 ): OptionWithConditionType[] => {
-  return conditions.reduce<OptionWithConditionType[]>(
-    toConditionOptionWithType,
-    [],
-  );
-};
+  return conditions.reduce<OptionWithConditionType[]>((acc, condition) => {
+    acc.push(
+      ...condition.values.map<OptionWithConditionType>(value => ({
+        ...value,
+        type: condition.type!,
+      })),
+    );
 
-const toConditionOptionWithType = (
-  acc: OptionWithConditionType[],
-  condition: Condition,
-) => {
-  return [
-    ...acc,
-    ...condition.values.map(value => ({ ...value, type: condition.type })),
-  ];
+    return acc;
+  }, []);
 };
 
 export const conditionTypeToHue = (

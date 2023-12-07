@@ -2,7 +2,7 @@ import { ChannelFragment } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
 export const getCurencySymbol = (
-  selectedChannel: Option,
+  selectedChannel: Option | null,
   channels: ChannelFragment[],
 ) => {
   const selectedChannelId = selectedChannel?.value;
@@ -12,5 +12,5 @@ export const getCurencySymbol = (
     return channel.currencyCode;
   }
 
-  return null;
+  return "";
 };

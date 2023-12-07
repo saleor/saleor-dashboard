@@ -6,10 +6,14 @@ import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
 import { saleListUrl } from "@dashboard/discounts/urls";
 import {
   ChannelFragment,
+  PromotionCreateErrorCode,
   PromotionCreateErrorFragment,
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
+import {
+  CommonError,
+  getCommonFormFieldErrorMessage,
+} from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import React, { useState } from "react";
@@ -99,7 +103,13 @@ export const DiscountCreatePage = ({
                 disabled={disabled}
               />
               <DiscountRules
-                errors={errors}
+                errors={
+                  errors as Array<
+                    CommonError<CommonError<PromotionCreateErrorCode>> & {
+                      index?: number;
+                    }
+                  >
+                }
                 channels={channels}
                 disabled={disabled}
                 onRuleEdit={editIndex => {

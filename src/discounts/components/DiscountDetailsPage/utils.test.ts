@@ -1,6 +1,6 @@
 import { Rule } from "@dashboard/discounts/types";
 import {
-  PromotionDetailsFragment,
+  PromotionRuleDetailsFragment,
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
@@ -19,13 +19,13 @@ describe("DiscountDetailsPage, utils", () => {
           id: "2",
           name: "rule 2",
         },
-      ] as PromotionDetailsFragment["rules"];
+      ] as PromotionRuleDetailsFragment[];
 
       const formRules: Rule[] = [
         {
           id: "1",
           name: "rule 1",
-          channels: [],
+          channel: null,
           conditions: [],
           description: "",
           rewardValue: 10,
@@ -34,7 +34,7 @@ describe("DiscountDetailsPage, utils", () => {
         {
           id: "2",
           name: "rule 2",
-          channels: [],
+          channel: null,
           conditions: [],
           description: "",
           rewardValue: 20,
@@ -73,13 +73,13 @@ describe("DiscountDetailsPage, utils", () => {
           id: "2",
           name: "rule 2",
         },
-      ] as PromotionDetailsFragment["rules"];
+      ] as PromotionRuleDetailsFragment[];
 
       const formRules: Rule[] = [
         {
           id: "1",
           name: "rule 1",
-          channels: [],
+          channel: null,
           conditions: [],
           description: "",
           rewardValue: 10,
@@ -88,7 +88,7 @@ describe("DiscountDetailsPage, utils", () => {
         {
           id: "2",
           name: "rule 2",
-          channels: [],
+          channel: null,
           conditions: [],
           description: "",
           rewardValue: 20,
@@ -96,7 +96,7 @@ describe("DiscountDetailsPage, utils", () => {
         },
         {
           name: "",
-          channels: [],
+          channel: null,
           conditions: [],
           description: "",
           rewardValue: 0,
@@ -143,13 +143,13 @@ describe("DiscountDetailsPage, utils", () => {
           id: "2",
           name: "rule 2",
         },
-      ] as PromotionDetailsFragment["rules"];
+      ] as PromotionRuleDetailsFragment[];
 
       const formRules: Rule[] = [
         {
           id: "1",
           name: "rule 1",
-          channels: [],
+          channel: null,
           conditions: [],
           description: "",
           rewardValue: 10,
@@ -158,7 +158,7 @@ describe("DiscountDetailsPage, utils", () => {
         {
           id: "2",
           name: "rule 2",
-          channels: [],
+          channel: null,
           conditions: [],
           description: "",
           rewardValue: 20,
