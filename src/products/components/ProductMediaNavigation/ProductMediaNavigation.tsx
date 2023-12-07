@@ -31,7 +31,7 @@ const useStyles = makeStyles(
       width: "100%",
     },
     imageContainer: {
-      border: `2px solid ${vars.colors.border.neutralPlain}`,
+      border: `2px solid ${vars.colors.border.default1}`,
       borderRadius: theme.spacing(),
       cursor: "pointer",
       height: 48,

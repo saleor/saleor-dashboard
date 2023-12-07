@@ -16,11 +16,11 @@ export const Placeholder = () => {
       alignItems="center"
       gap={4}
       borderRadius={4}
-      borderColor="neutralPlain"
+      borderColor="default1"
       borderWidth={1}
       borderStyle="solid"
     >
-      <PlusIcon size="large" color="iconNeutralSubdued" />
+      <PlusIcon size="large" color="default2" />
       <Text size="large">{intl.formatMessage(messages.placeholder)}</Text>
     </Box>
   );

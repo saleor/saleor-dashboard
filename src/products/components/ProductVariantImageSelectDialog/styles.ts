@@ -11,7 +11,7 @@ export const useStyles = makeStyles(
     },
     imageContainer: {
       background: "transparent",
-      border: `1px solid ${vars.colors.border.neutralPlain}`,
+      border: `1px solid ${vars.colors.border.default1}`,
       borderRadius: theme.spacing(),
       cursor: "pointer",
       height: theme.spacing(21.5),

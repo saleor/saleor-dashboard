@@ -39,7 +39,7 @@ export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
           padding={2}
           borderRadius={4}
           boxShadow="overlay"
-          backgroundColor="surfaceNeutralPlain"
+          backgroundColor="default1"
         >
           {options.map((item, idx) => (
             <Dropdown.Item key={`dropdown-item-${idx}`}>

@@ -13,7 +13,7 @@ import {
   productVariantEditUrl,
 } from "@dashboard/products/urls";
 import { ReorderAction } from "@dashboard/types";
-import { Box, Button, GripIcon, Text, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, GripIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -82,7 +82,7 @@ const ProductVariantNavigation: React.FC<
                 borderLeftStyle="solid"
                 __borderLeftWidth={2}
                 __borderColor={
-                  isActive ? vars.colors.background.highlightDim : "transparent"
+                  isActive ? "hsla(0, 0%, 0%, 0.6)" : "transparent"
                 }
               >
                 <Box
@@ -101,7 +101,7 @@ const ProductVariantNavigation: React.FC<
                       height={10}
                       objectFit="cover"
                       borderRadius={2}
-                      borderColor="neutralHighlight"
+                      borderColor="default1"
                       borderStyle="solid"
                       borderWidth={1}
                       padding={1}
@@ -116,11 +116,7 @@ const ProductVariantNavigation: React.FC<
                       {variant ? variant.name || variant.sku : <Skeleton />}
                     </Text>
                     {isDefault && (
-                      <Text
-                        display="block"
-                        variant="caption"
-                        color="textNeutralSubdued"
-                      >
+                      <Text display="block" variant="caption" color="default2">
                         {intl.formatMessage(messages.defaultVariant)}
                       </Text>
                     )}
@@ -150,7 +146,7 @@ const ProductVariantNavigation: React.FC<
             gap={5}
             borderLeftStyle="solid"
             __borderLeftWidth={2}
-            __borderColor={vars.colors.background.highlightDim}
+            __borderColor={"hsla(0, 0%, 0%, 0.6)"}
           >
             <Box opacity="0">
               <GripIcon />

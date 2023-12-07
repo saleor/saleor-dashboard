@@ -50,7 +50,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <Box backgroundColor="surfaceNeutralHighlight" marginBottom={4}>
+        <Box backgroundColor="default1" marginBottom={4}>
           {items === undefined ? (
             <Skeleton />
           ) : (

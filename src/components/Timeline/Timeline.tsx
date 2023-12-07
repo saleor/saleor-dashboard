@@ -34,7 +34,7 @@ const useStyles = makeStyles(
           opacity: [[1], "!important"] as any,
         },
       },
-      background: vars.colors.background.surfaceNeutralPlain,
+      background: vars.colors.background.default1,
     },
     noteRoot: {
       marginBottom: theme.spacing(3),

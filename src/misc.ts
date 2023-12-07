@@ -14,7 +14,12 @@ import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
+import {
+  hueToPillColorDark,
+  hueToPillColorLight,
+} from "./components/Datagrid/customCells/PillCell";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
+import { DotStatus } from "./components/StatusDot/StatusDot";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
   commonStatusMessages,
@@ -588,32 +593,22 @@ export const findById = <T extends Node>(id: string, list?: T[]) =>
 
 export const COLOR_WARNING = "#FBE5AC";
 export const COLOR_WARNING_DARK = "#3E2F0A";
-type CustomWarningColor = typeof COLOR_WARNING | typeof COLOR_WARNING_DARK;
 
-export const getStatusColor = (
-  status: "error" | "warning" | "info" | "success" | "generic",
-  currentTheme?: DefaultTheme,
-): keyof ThemeTokensValues["colors"]["background"] | CustomWarningColor => {
-  switch (status) {
-    case "error":
-      return "surfaceCriticalDepressed";
-    case "info":
-      return "surfaceBrandDepressed";
-    case "success":
-      return "decorativeSurfaceSubdued2";
-    case "warning":
-      // TODO: use color from new macaw theme when will be ready
-      return currentTheme === "defaultDark"
-        ? COLOR_WARNING_DARK
-        : COLOR_WARNING;
-    case "generic":
-      return "surfaceBrandSubdued";
-    default:
-      return "surfaceBrandSubdued";
-  }
+export const getStatusColor = ({
+  status,
+  currentTheme,
+}: {
+  status: "error" | "warning" | "info" | "success" | "generic";
+  currentTheme: DefaultTheme;
+}) => {
+  const statusHue = getStatusHue(status);
+
+  return currentTheme === "defaultDark"
+    ? hueToPillColorDark(statusHue)
+    : hueToPillColorLight(statusHue);
 };
 
-export const getStatusHue = (
+const getStatusHue = (
   status: "error" | "warning" | "info" | "success" | "generic",
 ): number => {
   const red = 0;
@@ -633,6 +628,21 @@ export const getStatusHue = (
       return yellow;
     default:
       return blue;
+  }
+};
+
+export const getDotColor = (
+  status: DotStatus,
+  themeValues: ThemeTokensValues,
+) => {
+  switch (status) {
+    case "success":
+      // TODO: add this as success2 to MacawUI
+      return "hsla(173, 100%, 26%, 1)";
+    case "error":
+      return themeValues.colors.background.critical2;
+    case "warning":
+      return themeValues.colors.background.warning1;
   }
 };
 
