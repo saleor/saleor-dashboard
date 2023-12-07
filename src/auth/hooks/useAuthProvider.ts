@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ApolloClient, ApolloError } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
 import { DEMO_MODE } from "@dashboard/config";
@@ -144,24 +143,24 @@ export function useAuthProvider({
         includeDetails: false,
       });
 
-      if (isEmpty(result.data?.tokenCreate.user.userPermissions)) {
+      if (isEmpty(result.data?.tokenCreate?.user?.userPermissions)) {
         setErrors(["noPermissionsError"]);
         await handleLogout();
       }
 
-      if (result && !result.data.tokenCreate.errors.length) {
+      if (result && !result.data?.tokenCreate?.errors.length) {
         if (DEMO_MODE) {
           displayDemoMessage(intl, notify);
         }
 
-        saveCredentials(result.data.tokenCreate.user, password);
+        saveCredentials(result.data?.tokenCreate?.user!, password);
       } else {
         setErrors(["loginError"]);
       }
 
-      await logoutNonStaffUser(result.data.tokenCreate);
+      await logoutNonStaffUser(result.data?.tokenCreate!);
 
-      return result.data.tokenCreate;
+      return result.data?.tokenCreate;
     } catch (error) {
       if (error instanceof ApolloError) {
         handleLoginError(error);
@@ -184,7 +183,7 @@ export function useAuthProvider({
   };
 
   const handleExternalLogin = async (
-    pluginId: string | undefined,
+    pluginId: string | null,
     input: ExternalLoginInput,
   ) => {
     if (!pluginId) {
@@ -197,13 +196,13 @@ export function useAuthProvider({
       });
 
       if (
-        isEmpty(result.data?.externalObtainAccessTokens.user.userPermissions)
+        isEmpty(result.data?.externalObtainAccessTokens?.user?.userPermissions)
       ) {
         setErrors(["noPermissionsError"]);
         await handleLogout();
       }
 
-      if (result && !result.data?.externalObtainAccessTokens.errors.length) {
+      if (result && !result.data?.externalObtainAccessTokens?.errors.length) {
         if (DEMO_MODE) {
           displayDemoMessage(intl, notify);
         }
@@ -212,7 +211,7 @@ export function useAuthProvider({
         await handleLogout();
       }
 
-      await logoutNonStaffUser(result.data.externalObtainAccessTokens);
+      await logoutNonStaffUser(result.data?.externalObtainAccessTokens!);
 
       return result?.data?.externalObtainAccessTokens;
     } catch (error) {
@@ -227,7 +226,7 @@ export function useAuthProvider({
   const logoutNonStaffUser = async (
     data: LoginData | GetExternalAccessTokenData,
   ) => {
-    if (data.user && !data.user.isStaff) {
+    if (data?.user && !data.user.isStaff) {
       notify({
         status: "error",
         text: intl.formatMessage(commonMessages.unauthorizedDashboardAccess),

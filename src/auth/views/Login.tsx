@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useAvailableExternalAuthenticationsLazyQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
@@ -39,7 +38,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   } = useAuthParameters();
 
   const handleSubmit = async (data: LoginFormData) => {
-    const result = await login(data.email, data.password);
+    const result = await login!(data.email, data.password);
     const errors = result?.errors || [];
 
     return errors;
@@ -48,7 +47,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   const handleRequestExternalAuthentication = async (pluginId: string) => {
     setFallbackUri(location.pathname);
 
-    const result = await requestLoginByExternalPlugin(pluginId, {
+    const result = await requestLoginByExternalPlugin!(pluginId, {
       redirectUri: urlJoin(
         window.location.origin,
         getAppMountUriForRedirect(),
@@ -63,7 +62,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   };
 
   const handleExternalAuthentication = async (code: string, state: string) => {
-    await loginByExternalPlugin(requestedExternalPluginId, {
+    await loginByExternalPlugin!(requestedExternalPluginId, {
       code,
       state,
     });

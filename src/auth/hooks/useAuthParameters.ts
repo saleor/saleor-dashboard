@@ -4,8 +4,8 @@ import { loginCallbackPath } from "../urls";
 
 export const useAuthParameters = () => {
   const [requestedExternalPluginId, setRequestedExternalPluginId] =
-    useLocalStorage("requestedExternalPluginId", null);
-  const [fallbackUri, setFallbackUri] = useLocalStorage(
+    useLocalStorage<string | null>("requestedExternalPluginId", null);
+  const [fallbackUri, setFallbackUri] = useLocalStorage<string | null>(
     "externalLoginFallbackUri",
     null,
   );
