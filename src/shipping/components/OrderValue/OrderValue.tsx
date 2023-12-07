@@ -22,6 +22,7 @@ import { useStyles } from "./styles";
 interface Value {
   maxValue: string;
   minValue: string;
+  price: string;
 }
 export interface OrderValueProps {
   channels: ChannelShippingData[];

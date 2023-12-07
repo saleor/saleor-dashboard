@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelShippingZones } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import CardTitle from "@dashboard/components/CardTitle";
 import { SearchShippingZonesQuery } from "@dashboard/graphql";
@@ -44,8 +43,8 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
       </CardContent>
       <AssignmentList
         loading={loading}
-        items={shippingZones}
-        itemsChoices={shippingZonesChoices}
+        items={shippingZones!}
+        itemsChoices={shippingZonesChoices!}
         addItem={addShippingZone}
         removeItem={removeShippingZone}
         searchItems={searchShippingZones}

@@ -1,7 +1,8 @@
-// @ts-strict-ignore
 import { createFilterStructure } from "@dashboard/collections/components/CollectionListPage";
 import { CollectionListUrlFilters } from "@dashboard/collections/urls";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { CollectionPublished } from "@dashboard/graphql";
+import { FilterOpts } from "@dashboard/types";
 import { getFilterQueryParams } from "@dashboard/utils/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
@@ -36,7 +37,9 @@ describe("Filtering URL params", () => {
       active: false,
       value: CollectionPublished.PUBLISHED,
     },
-    channel: undefined,
+    channel: undefined as unknown as FilterOpts<string> & {
+      choices: MultiAutocompleteChoiceType[];
+    },
   });
 
   it("should be empty if no active filters", () => {
@@ -54,7 +57,9 @@ describe("Filtering URL params", () => {
         active: true,
         value: CollectionPublished.PUBLISHED,
       },
-      channel: undefined,
+      channel: undefined as unknown as FilterOpts<string> & {
+        choices: MultiAutocompleteChoiceType[];
+      },
     });
 
     const filterQueryParams = getFilterQueryParams(

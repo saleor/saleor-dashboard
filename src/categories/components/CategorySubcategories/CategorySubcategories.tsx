@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { categoryAddUrl } from "@dashboard/categories/urls";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -18,7 +17,9 @@ interface CategorySubcategoriesProps
   > {
   categoryId: string;
   disabled: boolean;
-  subcategories: RelayToFlat<CategoryDetailsQuery["category"]["children"]>;
+  subcategories: RelayToFlat<
+    NonNullable<CategoryDetailsQuery["category"]>["children"]
+  >;
   onCategoriesDelete: () => void;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
 }
@@ -56,7 +57,7 @@ export const CategorySubcategories = ({
       <CategoryListDatagrid
         settings={settings}
         onUpdateListSettings={onUpdateListSettings}
-        categories={subcategories}
+        categories={subcategories || []}
         disabled={disabled}
         onSelectCategoriesIds={onSelectCategoriesIds}
         selectionActionButton={

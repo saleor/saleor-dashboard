@@ -76,7 +76,7 @@ const useStyles = makeStyles(
 
 interface MediaTileBaseProps {
   media: {
-    alt: string;
+    alt: string | null;
     url: string;
     type?: string;
     oembedData?: string;
@@ -150,7 +150,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
           </div>
         )}
       </div>
-      <img className={classes.media} src={mediaUrl} alt={media.alt} />
+      <img className={classes.media} src={mediaUrl} alt={media.alt!} />
     </div>
   );
 };
