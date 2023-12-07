@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FormData } from "@dashboard/channels/components/ChannelForm";
 import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
@@ -28,7 +27,7 @@ export function createShippingZoneAddHandler(
         zoneId,
       ),
       shippingZonesToDisplay: [
-        ...data.shippingZonesToDisplay,
+        ...data.shippingZonesToDisplay!,
         getParsedSearchData({ data: searchShippingZonesData }).find(
           getById(zoneId),
         ),
@@ -55,7 +54,7 @@ export function createShippingZoneRemoveHandler(
         data.shippingZonesIdsToRemove,
         zoneId,
       ),
-      shippingZonesToDisplay: data.shippingZonesToDisplay.filter(
+      shippingZonesToDisplay: data.shippingZonesToDisplay!.filter(
         getByUnmatchingId(zoneId),
       ),
     });
