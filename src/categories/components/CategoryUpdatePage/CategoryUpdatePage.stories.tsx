@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { category as categoryFixture } from "@dashboard/categories/fixtures";
 import { listActionsProps } from "@dashboard/fixtures";
@@ -17,7 +16,7 @@ const category = categoryFixture(placeholderImage);
 const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   category,
   categoryId: "123",
-  changeTab: undefined,
+  changeTab: () => {},
   currentTab: CategoryPageTab.categories,
   disabled: false,
   errors: [],
@@ -25,10 +24,10 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
-  onSubmit: () => undefined,
-  products: mapEdgesToItems(category.products),
+  onSubmit: async () => undefined,
+  products: mapEdgesToItems(category!.products) || [],
   saveButtonBarState: "default",
-  subcategories: mapEdgesToItems(category.children),
+  subcategories: mapEdgesToItems(category!.children) || [],
   onCategoriesDelete: () => undefined,
   onProductsDelete: () => undefined,
   onSelectCategoriesIds: () => undefined,
@@ -51,7 +50,7 @@ export const NoBackground = () => (
   <CategoryUpdatePage
     {...updateProps}
     category={{
-      ...category,
+      ...category!,
       backgroundImage: null,
     }}
   />

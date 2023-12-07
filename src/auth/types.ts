@@ -31,17 +31,20 @@ export type UserContextError =
   (typeof UserContextError)[keyof typeof UserContextError];
 
 export interface UserContext {
-  login?: (username: string, password: string) => Promise<LoginData>;
+  login?: (
+    username: string,
+    password: string,
+  ) => Promise<LoginData | undefined>;
   loginByExternalPlugin?: (
-    pluginId: string,
+    pluginId: string | null,
     input: ExternalLoginInput,
-  ) => Promise<GetExternalAccessTokenData>;
+  ) => Promise<GetExternalAccessTokenData | undefined>;
   logout?: () => Promise<void>;
   requestLoginByExternalPlugin?: (
     pluginId: string,
     input: RequestExternalLoginInput,
-  ) => Promise<GetExternalAuthUrlData>;
-  user?: UserFragment;
+  ) => Promise<GetExternalAuthUrlData | undefined>;
+  user?: UserFragment | null;
   authenticating: boolean;
   authenticated: boolean;
   errors: UserContextError[];
