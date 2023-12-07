@@ -90,7 +90,12 @@ export const RuleModal = ({
           />
           <DashboardModal.Close onClose={onClose} />
         </DashboardModal.Title>
-        <Box __width={650}>
+        <Box
+          __width={650}
+          __maxHeight="75vh"
+          __minHeight="515px"
+          overflowY="auto"
+        >
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(handleSubmit)}>
               <Rule
