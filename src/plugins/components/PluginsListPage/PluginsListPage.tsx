@@ -15,7 +15,7 @@ import {
   TabPageProps,
 } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -52,6 +52,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const { theme: currentTheme } = useTheme();
 
   const filterStructure = createFilterStructure(intl, filterOpts);
 
@@ -67,7 +68,10 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
             paddingX={7}
             paddingY={5}
             marginBottom={5}
-            __backgroundColor={getStatusColor("warning")}
+            __backgroundColor={getStatusColor({
+              status: "warning",
+              currentTheme,
+            })}
           >
             <Text variant="heading" as="h2">
               {intl.formatMessage(pluginsListPageMessages.warningHeadline)}

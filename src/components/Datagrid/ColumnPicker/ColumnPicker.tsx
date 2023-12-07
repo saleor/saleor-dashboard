@@ -56,13 +56,9 @@ export const ColumnPicker = ({
           icon={<TableEditIcon />}
           pointerEvents={pickerOpen ? "none" : undefined}
           __backgroundColor={
-            pickerOpen
-              ? vars.colors.background.interactiveNeutralSecondaryPressing
-              : undefined
+            pickerOpen ? vars.colors.background.default1Pressed : undefined
           }
-          __borderColor={
-            pickerOpen ? vars.colors.border.neutralSubdued : undefined
-          }
+          __borderColor={pickerOpen ? vars.colors.border.default2 : undefined}
         />
       </Popover.Trigger>
       <Popover.Content
@@ -87,12 +83,12 @@ export const ColumnPicker = ({
             __width="320px"
             __maxHeight="50vh"
             __minHeight={expanded ? "502px" : undefined}
-            backgroundColor="plain"
+            backgroundColor="default1"
             padding={4}
             overflow="scroll"
           >
             <Box marginBottom={3}>
-              <Text variant="caption" size="small" color="textNeutralSubdued">
+              <Text variant="caption" size="small" color="default2">
                 <FormattedMessage {...messages.column} />
               </Text>
             </Box>

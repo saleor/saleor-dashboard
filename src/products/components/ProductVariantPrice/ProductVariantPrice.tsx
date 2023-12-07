@@ -95,7 +95,7 @@ export const ProductVariantPrice: React.FC<
         <TableHead>
           <TableRowLink>
             <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-              <Text variant="caption" color="textNeutralSubdued">
+              <Text variant="caption" color="default2">
                 <FormattedMessage
                   id="c8UT0c"
                   defaultMessage="Channel Name"
@@ -104,7 +104,7 @@ export const ProductVariantPrice: React.FC<
               </Text>
             </TableCell>
             <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-              <Text variant="caption" color="textNeutralSubdued">
+              <Text variant="caption" color="default2">
                 <FormattedMessage
                   id="JFtFgc"
                   defaultMessage="Selling Price"
@@ -113,7 +113,7 @@ export const ProductVariantPrice: React.FC<
               </Text>
             </TableCell>
             <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-              <Text variant="caption" color="textNeutralSubdued">
+              <Text variant="caption" color="default2">
                 <FormattedMessage
                   id="2zCmiR"
                   defaultMessage="Cost price"

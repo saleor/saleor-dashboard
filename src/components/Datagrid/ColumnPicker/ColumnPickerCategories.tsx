@@ -30,7 +30,7 @@ export const ColumnPickerCategories = ({
 
   return (
     <Box
-      backgroundColor="subdued"
+      backgroundColor="default2"
       display="flex"
       flexDirection="column"
       justifyContent="space-between"

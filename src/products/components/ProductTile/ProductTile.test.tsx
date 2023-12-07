@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { products } from "@dashboard/products/fixtures";
+import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
@@ -19,7 +20,11 @@ describe("ProductTile", () => {
     const product = mockProduct(true);
 
     // Act
-    render(<ProductTile product={product} onClick={jest.fn()} />);
+    render(
+      <ThemeProvider>
+        <ProductTile product={product} onClick={jest.fn()} />
+      </ThemeProvider>,
+    );
 
     // Assert
     const img = screen.getByAltText(product.name);
@@ -34,7 +39,11 @@ describe("ProductTile", () => {
     const product = mockProduct(false);
 
     // Act
-    render(<ProductTile product={product} onClick={jest.fn()} />);
+    render(
+      <ThemeProvider>
+        <ProductTile product={product} onClick={jest.fn()} />
+      </ThemeProvider>,
+    );
 
     // Assert
     expect(
@@ -51,7 +60,11 @@ describe("ProductTile", () => {
     const user = userEvent.setup();
 
     // Act
-    render(<ProductTile product={product} onClick={onClick} />);
+    render(
+      <ThemeProvider>
+        <ProductTile product={product} onClick={onClick} />
+      </ThemeProvider>,
+    );
     await user.click(screen.getByTestId(`product-tile-${product.id}`));
 
     // Assert

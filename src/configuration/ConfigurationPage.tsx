@@ -58,7 +58,7 @@ const useStyles = makeStyles(
       fontWeight: 600 as 600,
     },
     navigationCard: {
-      border: `1px solid ${vars.colors.border.neutralDefault}`,
+      border: `1px solid ${vars.colors.border.default1}`,
       height: 130,
       boxShadow: "none !important",
       "& .MuiCardContent-root": {

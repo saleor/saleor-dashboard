@@ -55,7 +55,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                 <Text variant="heading">{intl.formatMessage(title)}</Text>
 
                 {data?.length > 0 && (
-                  <Text variant="caption" color="textNeutralSubdued">
+                  <Text variant="caption" color="default2">
                     <FormattedMessage
                       id="2+v1wX"
                       defaultMessage="{number,plural,one{{number} string} other{{number} strings}}"
@@ -68,7 +68,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                 )}
 
                 {data?.length === 0 && (
-                  <Text variant="caption" color="textNeutralSubdued">
+                  <Text variant="caption" color="default2">
                     <FormattedMessage
                       id="kAPaN6"
                       defaultMessage="Empty"

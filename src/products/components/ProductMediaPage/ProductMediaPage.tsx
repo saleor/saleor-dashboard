@@ -53,7 +53,7 @@ const useStyles = makeStyles(
         width: "100%",
         maxHeight: 420,
       },
-      border: `1px solid ${vars.colors.border.neutralPlain}`,
+      border: `1px solid ${vars.colors.border.default1}`,
       borderRadius: theme.spacing(),
       margin: `0 auto ${theme.spacing(2)}px`,
       width: "100%",

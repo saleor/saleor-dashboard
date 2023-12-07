@@ -58,9 +58,7 @@ export const AppPermissionsDialogPermissionPicker = ({
                 display={"flex"}
                 alignItems={"center"}
                 as={"label"}
-                backgroundColor={
-                  isAssigned ? "decorativeSurfaceSubdued3" : undefined
-                }
+                backgroundColor={isAssigned ? "accent1" : undefined}
               >
                 <Checkbox
                   name={perm.code}

@@ -17,7 +17,7 @@ export const UserInfo = () => {
       paddingY={4}
       alignItems="center"
       borderTopWidth={1}
-      borderColor="neutralPlain"
+      borderColor="default1"
       borderTopStyle="solid"
       justifyContent="space-between"
     >

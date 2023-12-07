@@ -28,7 +28,7 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
     <Box
       paddingX={6}
       borderBottomStyle="solid"
-      borderColor="neutralHighlight"
+      borderColor="default1"
       borderBottomWidth={1}
     >
       <div className={classes.appHeaderLinks}>

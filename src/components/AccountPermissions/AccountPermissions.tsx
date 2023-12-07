@@ -107,7 +107,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
             width="100%"
             borderBottomStyle="solid"
             borderBottomWidth={1}
-            borderColor="neutralPlain"
+            borderColor="default1"
             height={1}
             margin={0}
           />
@@ -125,12 +125,12 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                 width="100%"
                 borderBottomStyle="solid"
                 borderBottomWidth={1}
-                borderColor="neutralPlain"
+                borderColor="default1"
                 height={1}
                 marginTop={6}
                 marginBottom={6}
               />
-              <Text as="p" variant="body" color="textCriticalSubdued">
+              <Text as="p" variant="body" color="critical1">
                 {errorMessage}
               </Text>
             </>

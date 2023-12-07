@@ -30,7 +30,7 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
       <Box
         as="span"
         position="absolute"
-        backgroundColor="interactiveNeutralPressing"
+        backgroundColor="default1Pressed"
         borderRadius="100%"
         __height="7px"
         __width="7px"
