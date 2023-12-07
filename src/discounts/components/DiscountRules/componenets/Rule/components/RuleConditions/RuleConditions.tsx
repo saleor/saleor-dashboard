@@ -24,7 +24,7 @@ export const RuleConditions = ({
 
   const { watch } = useFormContext<Rule>();
 
-  const { append, remove } = useFieldArray<Rule, "conditions">({
+  const { append, remove, update } = useFieldArray<Rule, "conditions">({
     name: "conditions",
   });
 
@@ -59,6 +59,7 @@ export const RuleConditions = ({
             isConditionTypeSelected={isConditionTypeSelected}
             key={condition.type}
             conditionIndex={conditionIndex}
+            updateCondition={update}
             onRemove={() => {
               remove(conditionIndex);
             }}

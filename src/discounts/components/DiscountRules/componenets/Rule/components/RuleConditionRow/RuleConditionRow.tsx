@@ -1,5 +1,5 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
-import { Rule } from "@dashboard/discounts/types";
+import { Condition, Rule } from "@dashboard/discounts/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { Box, Button, Option, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -18,6 +18,7 @@ interface DiscountConditionRowProps {
   disabled?: boolean;
   conditionIndex: number;
   onRemove: () => void;
+  updateCondition: (index: number, value: Condition) => void;
   fetchOptions: FetchOptions;
   isConditionTypeSelected: (conditionType: string) => boolean;
 }
@@ -27,6 +28,7 @@ export const RuleConditionRow = ({
   onRemove,
   fetchOptions,
   isConditionTypeSelected,
+  updateCondition,
   disabled = false,
 }: DiscountConditionRowProps) => {
   const ruleConditionTypeFieldName =
@@ -47,7 +49,7 @@ export const RuleConditionRow = ({
     name: ruleConditionValuesFieldName,
   });
 
-  const { watch, setValue } = useFormContext<Rule>();
+  const { watch } = useFormContext<Rule>();
   const condition = watch(`conditions.${conditionIndex}`);
 
   const { fetch = () => {}, fetchMoreProps, options } = fetchOptions || {};
@@ -73,7 +75,7 @@ export const RuleConditionRow = ({
           fetchOptions={() => {}}
           options={discountConditionType}
           onChange={e => {
-            setValue(ruleConditionValuesFieldName, []);
+            updateCondition(conditionIndex, { ...condition, values: [] });
             typeField.onChange(e);
           }}
           onBlur={typeField.onBlur}
