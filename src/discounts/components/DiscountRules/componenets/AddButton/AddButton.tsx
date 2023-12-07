@@ -45,7 +45,12 @@ export const AddButton = ({
   return (
     <Popover open={isSubMenuOpen} onOpenChange={setSubMenuOpen}>
       <Popover.Trigger>
-        <Button type="button" backgroundColor="default1" color="default1">
+        <Button
+          type="button"
+          disabled={disabled}
+          backgroundColor="default1"
+          color="default1"
+        >
           <PlusIcon />
           {intl.formatMessage(messages.addRule)}
           <ArrowDownIcon />

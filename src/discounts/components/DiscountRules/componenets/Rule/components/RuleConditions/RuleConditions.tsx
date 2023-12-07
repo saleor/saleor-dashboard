@@ -40,7 +40,7 @@ export const RuleConditions = ({
     return (
       <Box display="flex" flexDirection="column" gap={4}>
         <Text>{intl.formatMessage(messages.conditions)}</Text>
-        <Text variant="caption" color="textNeutralSubdued">
+        <Text variant="caption" color="default2">
           {intl.formatMessage(messages.noChannelsSelected)}
         </Text>
       </Box>

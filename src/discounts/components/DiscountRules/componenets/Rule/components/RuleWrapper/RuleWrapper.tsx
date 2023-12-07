@@ -10,11 +10,11 @@ export const RuleWrapper = ({ children, hasError }: RuleWrapperProps) => {
   return (
     <Box
       borderRadius={4}
-      borderColor={hasError ? "criticalDefault" : "neutralPlain"}
+      borderColor={hasError ? "critical1" : "default1"}
       borderWidth={1}
       borderStyle="solid"
       padding={4}
-      backgroundColor="plain"
+      backgroundColor="default1"
     >
       <Text variant="heading">{children}</Text>
     </Box>

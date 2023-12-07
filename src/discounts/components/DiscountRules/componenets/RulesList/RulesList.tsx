@@ -99,7 +99,7 @@ export const RulesList = <ErrorCode,>({
                 }
               />
               {hasError && (
-                <Text color="textCriticalDefault">
+                <Text color="critical1">
                   {intl.formatMessage(messages.ruleError)}
                 </Text>
               )}

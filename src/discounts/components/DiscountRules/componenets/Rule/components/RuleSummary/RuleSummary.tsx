@@ -63,7 +63,7 @@ function getRuleValue(rule: Rule, currencySymbol: string) {
   const rewarddTypeValue =
     rule.rewardValueType === RewardValueTypeEnum.FIXED ? currencySymbol : "%";
   return (
-    <Chip backgroundColor="surfaceBrandSubdued">
+    <Chip backgroundColor="accent1">
       {`${rule.rewardValue}${rewarddTypeValue}`}
     </Chip>
   );
@@ -71,11 +71,7 @@ function getRuleValue(rule: Rule, currencySymbol: string) {
 
 function getChannel(channel: NonNullable<Rule["channel"]>) {
   return (
-    <Chip
-      marginRight={1.5}
-      backgroundColor="surfaceCriticalSubdued"
-      key={channel.value}
-    >
+    <Chip marginRight={1.5} backgroundColor="critical2" key={channel.value}>
       {channel.label}
     </Chip>
   );

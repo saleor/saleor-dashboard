@@ -18,7 +18,7 @@ export const RuleSummaryTooltip = ({
   return (
     <Tooltip>
       <Tooltip.Trigger>
-        <Chip backgroundColor="surfaceBrandSubdued" marginRight={1.5}>
+        <Chip backgroundColor="accent1" marginRight={1.5}>
           <FormattedMessage
             {...messages.ruleSummaryMoreItems}
             values={{

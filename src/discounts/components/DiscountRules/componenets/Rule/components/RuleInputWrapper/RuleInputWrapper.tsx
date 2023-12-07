@@ -10,7 +10,7 @@ export const RuleInputWrapper = ({
   ...props
 }: RuleInputWrapperProps) => {
   return (
-    <Box {...props} backgroundColor="plain">
+    <Box {...props} backgroundColor="default1">
       {children}
     </Box>
   );
