@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
@@ -96,7 +95,7 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
           }))}
           disabled={disabled}
           name="allocationStrategy"
-          value={data?.allocationStrategy}
+          value={data?.allocationStrategy!}
           onChange={onChange}
         />
       </CardContent>

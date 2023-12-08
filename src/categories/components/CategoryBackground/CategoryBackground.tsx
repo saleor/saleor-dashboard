@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import Hr from "@dashboard/components/Hr";
@@ -28,7 +27,7 @@ const useStyles = makeStyles(
     },
     imageContainer: {
       background: "#ffffff",
-      border: `1px solid ${vars.colors.border.neutralPlain}`,
+      border: `1px solid ${vars.colors.border.default1}`,
       borderRadius: theme.spacing(),
       height: 148,
       justifySelf: "start",
@@ -46,17 +45,17 @@ export interface CategoryBackgroundProps {
   image: CategoryDetailsFragment["backgroundImage"];
   onChange: (event: React.ChangeEvent<any>) => void;
   onImageDelete: () => void;
-  onImageUpload: (file: File) => void;
+  onImageUpload: (file: File | null) => void;
 }
 
 const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
-  const anchor = React.useRef<HTMLInputElement>();
+  const anchor = React.useRef<HTMLInputElement>(null);
 
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
 
-  const handleImageUploadButtonClick = () => anchor.current.click();
+  const handleImageUploadButtonClick = () => anchor.current?.click();
 
   return (
     <Card>
@@ -74,7 +73,9 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
             <input
               className={classes.fileField}
               id="fileUpload"
-              onChange={event => onImageUpload(event.target.files[0])}
+              onChange={({ target: { files } }) =>
+                onImageUpload(files && files[0])
+              }
               type="file"
               ref={anchor}
               accept="image/*"

@@ -182,7 +182,7 @@ export const useGetCellContent = ({
 
 function toTagValue(currentTheme: DefaultTheme) {
   return ({ status, type }: OrderStatus) => ({
-    color: getStatusColor(type, currentTheme),
+    color: getStatusColor({ status: type, currentTheme }).base,
     tag: status,
   });
 }

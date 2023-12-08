@@ -90,7 +90,7 @@ export const Attributes: React.FC<AttributesProps> = ({
                   <Text variant="heading">
                     {title || intl.formatMessage(messages.header)}
                   </Text>
-                  <Text variant="caption" color="textNeutralSubdued">
+                  <Text variant="caption" color="default2">
                     <FormattedMessage
                       {...messages.attributesNumber}
                       values={{

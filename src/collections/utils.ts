@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import {
   CollectionDetailsQuery,
@@ -38,7 +37,7 @@ export const getAssignedProductIdsToCollection = (
   }
 
   return queryData.edges
-    .filter(e => e.node.collections.some(s => collection.id === s.id))
+    .filter(e => e.node?.collections?.some(s => collection.id === s.id))
     .map(e => ({ [e.node.id]: true }))
     .reduce((p, c) => ({ ...p, ...c }), {});
 };

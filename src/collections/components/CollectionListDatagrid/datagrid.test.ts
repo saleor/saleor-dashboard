@@ -1,24 +1,11 @@
 import { Collection } from "@dashboard/collections/types";
 import { CollectionChannels } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
-import { COLOR_WARNING } from "@dashboard/misc";
-import { ThemeTokensValues } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import {
-  getAvailablilityLabel,
-  getAvailablilityLabelWhenSelectedChannel,
+  getAvailabilityLabel,
+  getAvailabilityLabelWhenSelectedChannel,
 } from "./datagrid";
-
-const theme = {
-  colors: {
-    background: {
-      surfaceCriticalDepressed: "surfaceCriticalDepressed",
-      surfaceBrandDepressed: "surfaceBrandDepressed",
-      decorativeSurfaceSubdued2: "decorativeSurfaceSubdued2",
-      surfaceBrandSubdued: "surfaceBrandSubdued",
-    },
-  },
-} as ThemeTokensValues;
 
 const currentTheme = "defaultLight";
 
@@ -26,7 +13,7 @@ const intl = {
   formatMessage: jest.fn(x => x.defaultMessage),
 } as unknown as IntlShape;
 
-describe("getAvailablilityLabelWhenSelectedChannel", () => {
+describe("getAvailabilityLabelWhenSelectedChannel", () => {
   it("should return published label when channel is active", () => {
     // Arrange
     const channel = {
@@ -41,16 +28,15 @@ describe("getAvailablilityLabelWhenSelectedChannel", () => {
     } as CollectionChannels;
 
     // Act;
-    const result = getAvailablilityLabelWhenSelectedChannel(
+    const result = getAvailabilityLabelWhenSelectedChannel(
       channel,
       intl,
       currentTheme,
-      theme,
     );
 
     // Assert
     expect(result).toEqual({
-      color: "decorativeSurfaceSubdued2",
+      color: "#d7f5d7",
       label: "Published",
     });
   });
@@ -69,16 +55,15 @@ describe("getAvailablilityLabelWhenSelectedChannel", () => {
     } as CollectionChannels;
 
     // Act;
-    const result = getAvailablilityLabelWhenSelectedChannel(
+    const result = getAvailabilityLabelWhenSelectedChannel(
       channel,
       intl,
       currentTheme,
-      theme,
     );
 
     // Assert
     expect(result).toEqual({
-      color: "surfaceCriticalDepressed",
+      color: "#ffdeea",
       label: "Unpublished",
     });
   });
@@ -97,22 +82,21 @@ describe("getAvailablilityLabelWhenSelectedChannel", () => {
     } as CollectionChannels;
 
     // Act;
-    const result = getAvailablilityLabelWhenSelectedChannel(
+    const result = getAvailabilityLabelWhenSelectedChannel(
       channel,
       intl,
       currentTheme,
-      theme,
     );
 
     // Assert
     expect(result).toEqual({
-      color: COLOR_WARNING,
+      color: "#ffe6c8",
       label: "Scheduled to publish",
     });
   });
 });
 
-describe("getAvailablilityLabel", () => {
+describe("getAvailabilityLabel", () => {
   it("should return no channels label when there is not channels in collection", () => {
     // Arrange
     const collection = {
@@ -120,11 +104,11 @@ describe("getAvailablilityLabel", () => {
     } as unknown as Collection;
 
     // Act
-    const result = getAvailablilityLabel(collection, intl, currentTheme, theme);
+    const result = getAvailabilityLabel(collection, intl, currentTheme);
 
     // Assert
     expect(result).toEqual({
-      color: "surfaceCriticalDepressed",
+      color: "#ffdeea",
       label: "No channels",
     });
   });
@@ -147,11 +131,11 @@ describe("getAvailablilityLabel", () => {
     } as unknown as Collection;
 
     // Act
-    const result = getAvailablilityLabel(collection, intl, currentTheme, theme);
+    const result = getAvailabilityLabel(collection, intl, currentTheme);
 
     // Assert
     expect(result).toEqual({
-      color: "decorativeSurfaceSubdued2",
+      color: "#d7f5d7",
       label:
         "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
     });
@@ -175,11 +159,11 @@ describe("getAvailablilityLabel", () => {
     } as unknown as Collection;
 
     // Act
-    const result = getAvailablilityLabel(collection, intl, currentTheme, theme);
+    const result = getAvailabilityLabel(collection, intl, currentTheme);
 
     // Assert
     expect(result).toEqual({
-      color: "surfaceCriticalDepressed",
+      color: "#ffdeea",
       label:
         "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
     });

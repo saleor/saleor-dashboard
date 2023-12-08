@@ -107,7 +107,7 @@ export const AppPermissionsDialog = ({
       case "error":
         return (
           <Box padding={4}>
-            <Text as={"p"} color={"textCriticalDefault"}>
+            <Text as={"p"} color="critical1">
               {state.error}
             </Text>
           </Box>
@@ -128,13 +128,13 @@ export const AppPermissionsDialog = ({
             marginBottom={6}
             marginTop={4}
             padding={4}
-            backgroundColor={"surfaceCriticalSubdued"}
+            backgroundColor="critical1"
           >
             <Text
               marginBottom={2}
               as={"p"}
-              color={"textCriticalDefault"}
-              variant={"bodyStrong"}
+              color="critical1"
+              variant="bodyStrong"
             >
               {formatMessage(messages.warningHeading)}
             </Text>

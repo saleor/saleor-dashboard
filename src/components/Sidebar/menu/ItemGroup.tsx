@@ -59,7 +59,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
         <Box
           borderLeftWidth={1}
           borderLeftStyle="solid"
-          borderColor="neutralPlain"
+          borderColor="default1"
           paddingLeft={4}
           marginLeft={4}
           display="flex"

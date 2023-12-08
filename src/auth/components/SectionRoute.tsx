@@ -33,10 +33,10 @@ export const SectionRoute: React.FC<SectionRouteProps> = ({
     }
 
     if (matchAll(matchPermission)) {
-      return hasAllPermissions(permissions, user);
+      return hasAllPermissions(permissions, user!);
     }
 
-    return hasAnyPermissions(permissions, user);
+    return hasAnyPermissions(permissions, user!);
   };
 
   return hasSectionPermissions() ? <Route {...props} /> : <NotFound />;

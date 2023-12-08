@@ -17,15 +17,15 @@ export const UserInfo = () => {
       paddingY={4}
       alignItems="center"
       borderTopWidth={1}
-      borderColor="neutralPlain"
+      borderColor="default1"
       borderTopStyle="solid"
       justifyContent="space-between"
     >
       <Box display="flex" gap={3} alignItems="center">
-        <UserAvatar initials={getUserInitials(user)} url={user?.avatar?.url} />
+        <UserAvatar initials={getUserInitials(user!)} url={user?.avatar?.url} />
         <Box __width={128} className="ellipsis">
           <Text variant="bodyStrong" size="small">
-            {getUserName(user, true)}
+            {getUserName(user!, true)}
           </Text>
         </Box>
       </Box>

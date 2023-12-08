@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
@@ -16,7 +15,6 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
@@ -117,7 +115,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const handleCategoryBulkDeleteOnComplete = (
     data: CategoryBulkDeleteMutation,
   ) => {
-    if (data.categoryBulkDelete.errors.length === 0) {
+    if (data?.categoryBulkDelete?.errors.length === 0) {
       navigate(categoryListUrl(), { replace: true });
       refetch();
       clearRowSelection();
@@ -165,7 +163,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     <PaginatorContext.Provider value={paginationValues}>
       <CategoryListPage
         hasPresetsChanged={hasPresetsChanged()}
-        categories={mapEdgesToItems(data?.categories)}
+        categories={mapEdgesToItems(data?.categories)!}
         currentTab={selectedPreset}
         initialSearch={params.query || ""}
         onSearchChange={query => changeFilterField({ query })}
@@ -216,10 +214,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
             id="Pp/7T7"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
             values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
-              ),
+              counter: params?.ids?.length,
+              displayQuantity: <strong>{params?.ids?.length}</strong>,
             }}
           />
         </DialogContentText>

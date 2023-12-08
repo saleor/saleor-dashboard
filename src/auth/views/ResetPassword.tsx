@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useRequestPasswordResetMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -21,11 +20,13 @@ const ResetPasswordView: React.FC = () => {
   const [requestPasswordReset, requestPasswordResetOpts] =
     useRequestPasswordResetMutation({
       onCompleted: data => {
-        if (data.requestPasswordReset.errors.length === 0) {
+        if (data?.requestPasswordReset?.errors.length === 0) {
           navigate(passwordResetSuccessUrl);
         } else {
           if (
-            data.requestPasswordReset.errors.find(err => err.field === "email")
+            data?.requestPasswordReset?.errors.find(
+              err => err.field === "email",
+            )
           ) {
             setError(
               intl.formatMessage({
@@ -58,7 +59,7 @@ const ResetPasswordView: React.FC = () => {
   return (
     <ResetPasswordPage
       disabled={requestPasswordResetOpts.loading}
-      error={error}
+      error={error as string}
       onSubmit={handleSubmit}
     />
   );

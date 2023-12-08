@@ -82,7 +82,7 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
           />
         ))}
         {error && (
-          <Text variant="caption" color="textCriticalDefault">
+          <Text variant="caption" color="critical1">
             {helperText}
           </Text>
         )}

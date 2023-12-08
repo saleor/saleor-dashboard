@@ -50,7 +50,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
       borderWidth={1}
       borderBottomLeftRadius={3}
       borderBottomRightRadius={3}
-      borderColor="neutralPlain"
+      borderColor="default1"
       borderTopStyle="none"
       padding={5}
     >
@@ -95,7 +95,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
       )}
       {installationPending && (
         <Text
-          color="textNeutralSubdued"
+          color="default2"
           variant="body"
           size="small"
           data-test-id="app-installation-pending"
@@ -109,7 +109,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
         removeInstall={removeInstallHandler}
       />
       {releaseDate && (
-        <Text color="textNeutralSubdued" variant="body" size="small">
+        <Text color="default2" variant="body" size="small">
           <FormattedMessage
             {...messages.releaseComingSoon}
             values={{

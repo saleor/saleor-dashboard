@@ -9,7 +9,7 @@ import { PageListUrlSortField } from "@dashboard/pages/urls";
 import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { ThemeTokensValues } from "@saleor/macaw-ui-next";
+import { DefaultTheme } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages, messages } from "./messages";
@@ -44,12 +44,12 @@ export const createGetCellContent =
     pages,
     columns,
     intl,
-    themeValues,
+    currentTheme,
   }: {
     pages: Pages | undefined;
     columns: AvailableColumn[];
     intl: IntlShape;
-    themeValues: ThemeTokensValues;
+    currentTheme: DefaultTheme;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = pages?.[row];
@@ -68,16 +68,15 @@ export const createGetCellContent =
         const tag = rowData?.isPublished
           ? intl.formatMessage(messages.published)
           : intl.formatMessage(messages.notPublished);
+        const color = getStatusColor({
+          status: rowData?.isPublished ? "success" : "error",
+          currentTheme,
+        });
         return tagsCell(
           [
             {
               tag,
-              color:
-                themeValues.colors.background[
-                  getStatusColor(
-                    rowData?.isPublished ? "success" : "error",
-                  ) as keyof ThemeTokensValues["colors"]["background"]
-                ],
+              color: color.base,
             },
           ],
           [tag],

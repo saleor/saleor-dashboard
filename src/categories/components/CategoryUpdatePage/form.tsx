@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { CategoryDetailsFragment } from "@dashboard/graphql";
@@ -26,7 +25,7 @@ export interface CategoryUpdateFormData extends MetadataFormData {
   seoDescription: string;
 }
 export interface CategoryUpdateData extends CategoryUpdateFormData {
-  description: OutputData;
+  description: OutputData | null;
 }
 
 interface CategoryUpdateHandlers {
@@ -40,7 +39,7 @@ export interface UseCategoryUpdateFormResult
 
 export interface CategoryUpdateFormProps {
   children: (props: UseCategoryUpdateFormResult) => React.ReactNode;
-  category: CategoryDetailsFragment;
+  category?: CategoryDetailsFragment;
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>;
   disabled: boolean;
 }
@@ -91,21 +90,23 @@ function useCategoryUpdateForm(
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-  const data: CategoryUpdateData = {
+  const data = {
     ...formData,
     description: null,
-  };
+  } as CategoryUpdateData;
 
   // Need to make it function to always have description.current up to date
-  const getData = async (): Promise<CategoryUpdateData> => ({
-    ...formData,
-    description: await richText.getValue(),
-  });
+  const getData = async (): Promise<CategoryUpdateData> =>
+    ({
+      ...formData,
+      description: await richText.getValue(),
+    } as CategoryUpdateData);
 
-  const getSubmitData = async (): Promise<CategoryUpdateData> => ({
-    ...(await getData()),
-    ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
-  });
+  const getSubmitData = async (): Promise<CategoryUpdateData> =>
+    ({
+      ...(await getData()),
+      ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
+    } as CategoryUpdateData);
 
   const submit = async () => handleFormSubmit(await getSubmitData());
 
@@ -132,7 +133,7 @@ const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({
   disabled,
 }) => {
   const { richText, ...props } = useCategoryUpdateForm(
-    category,
+    category!,
     onSubmit,
     disabled,
   );

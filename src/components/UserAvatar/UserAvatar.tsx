@@ -13,7 +13,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
   ...rest
 }) =>
   url ? (
-    <Avatar.User scheme="decorative3" src={url} {...rest} />
+    <Avatar.User scheme="accent1" src={url} {...rest} />
   ) : (
-    <Avatar.User scheme="decorative3" initials={initials} {...rest} />
+    <Avatar.User scheme="accent1" initials={initials} {...rest} />
   );

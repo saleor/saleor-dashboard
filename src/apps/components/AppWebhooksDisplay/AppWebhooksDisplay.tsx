@@ -44,14 +44,14 @@ const Wrapper = (boxProps: BoxProps) => {
 
 const mapDeliveryStatusToTextColor = (
   status: EventDeliveryStatusEnum,
-): keyof ThemeTokensValues["colors"]["foreground"] => {
+): keyof ThemeTokensValues["colors"]["text"] => {
   switch (status) {
     case EventDeliveryStatusEnum.FAILED:
-      return "textCriticalDefault";
+      return "critical1";
     case EventDeliveryStatusEnum.PENDING:
-      return "textBrandDefault";
+      return "accent1";
     case EventDeliveryStatusEnum.SUCCESS:
-      return "text1Decorative";
+      return "success1";
   }
 };
 
@@ -60,11 +60,11 @@ const mapDeliveryStatusToBackgroundColor = (
 ): keyof ThemeTokensValues["colors"]["background"] => {
   switch (status) {
     case EventDeliveryStatusEnum.FAILED:
-      return "surfaceCriticalSubdued";
+      return "default2";
     case EventDeliveryStatusEnum.PENDING:
-      return "surfaceNeutralHighlight";
+      return "default1";
     case EventDeliveryStatusEnum.SUCCESS:
-      return "surfaceBrandSubdued";
+      return "accent1";
   }
 };
 
@@ -82,9 +82,9 @@ const DeliveryStatusDisplay = ({
       return <>{formatMessage({ defaultMessage: "Pending", id: "eKEL/g" })}</>;
     case EventDeliveryStatusEnum.SUCCESS:
       return <>{formatMessage({ defaultMessage: "Success", id: "xrKHS6" })} </>;
+    default:
+      throw new Error("Invalid EventDeliveryStatusEnum value");
   }
-
-  throw new Error("Invalid EventDeliveryStatusEnum value");
 };
 
 const StatusChip = ({ status }: { status: EventDeliveryStatusEnum }) => {
@@ -101,8 +101,8 @@ const DisabledWebhookChip = () => {
   const { formatMessage } = useIntl();
 
   return (
-    <Chip backgroundColor="surfaceNeutralHighlight">
-      <Text color="textNeutralDefault">
+    <Chip backgroundColor="default1">
+      <Text color="default1">
         {formatMessage({
           defaultMessage: "Disabled",
           id: "tthToS",
@@ -157,7 +157,7 @@ export const AppWebhooksDisplay = ({
                 key={wh.id}
                 padding={4}
                 borderBottomWidth={isLastWebhook ? 0 : 1}
-                borderColor="neutralHighlight"
+                borderColor="default1"
                 borderBottomStyle="solid"
               >
                 <Box>
@@ -178,7 +178,7 @@ export const AppWebhooksDisplay = ({
                   <Accordion.Item
                     value={wh.id}
                     marginTop={6}
-                    borderColor="neutralHighlight"
+                    borderColor="default1"
                     borderWidth={1}
                     borderStyle="solid"
                     paddingY={2}

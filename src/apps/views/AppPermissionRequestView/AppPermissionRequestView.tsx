@@ -23,7 +23,7 @@ const WrapperBox = (props: BoxProps) => (
   <Box
     marginX="auto"
     marginY={12}
-    borderColor="neutralHighlight"
+    borderColor="default1"
     borderWidth={1}
     borderStyle="solid"
     padding={8}
@@ -141,7 +141,7 @@ export const AppPermissionRequestView = () => {
               {formatMessage(appPermissionsRequestViewMessages.by)}{" "}
               {data.app.author}
             </Text>
-            <Text as="p" color="textNeutralSubdued">
+            <Text as="p" color="default2">
               {formatMessage(
                 appPermissionsRequestViewMessages.requestsNewPermissions,
               )}
@@ -152,7 +152,7 @@ export const AppPermissionRequestView = () => {
           <Box
             borderRightStyle="solid"
             borderWidth={1}
-            borderColor="neutralHighlight"
+            borderColor="default1"
             paddingRight={6}
           >
             <SmallHeading marginBottom={2}>
@@ -183,7 +183,7 @@ export const AppPermissionRequestView = () => {
           borderTopStyle="solid"
           paddingTop={8}
           borderWidth={1}
-          borderColor="neutralHighlight"
+          borderColor="default1"
         >
           <SmallHeading marginBottom={2}>
             {formatMessage(

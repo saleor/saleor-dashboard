@@ -30,7 +30,7 @@ export const HomeActivityCard = ({
       <DashboardCard data-test-id={testId}>
         <DashboardCard.Title>{title}</DashboardCard.Title>
         <DashboardCard.Content>
-          <Text color="textNeutralSubdued">
+          <Text color="default2">
             <FormattedMessage
               id="/U8FUp"
               defaultMessage="Couldn't load activities"
@@ -80,11 +80,7 @@ export const HomeActivityCard = ({
                     <Text variant="body" size="small">
                       {getActivityMessage(activity, intl)}
                     </Text>
-                    <Text
-                      variant="body"
-                      size="small"
-                      color="textNeutralSubdued"
-                    >
+                    <Text variant="body" size="small" color="default2">
                       <DateTime date={activity.date} plain />
                     </Text>
                   </>
