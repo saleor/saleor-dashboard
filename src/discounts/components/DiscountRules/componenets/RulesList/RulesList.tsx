@@ -75,6 +75,7 @@ export const RulesList = <ErrorCode,>({
                     onClick={() => onRulEdit(index.toString())}
                     cursor={disabled ? "not-allowed" : "pointer"}
                     disabled={disabled}
+                    data-test-id="rule-edit-button"
                   >
                     <EditIcon />
                   </Button>
@@ -82,6 +83,7 @@ export const RulesList = <ErrorCode,>({
                     size="small"
                     disabled={disabled}
                     variant="tertiary"
+                    data-test-id="rule-delete-button"
                     onClick={e => {
                       e.stopPropagation();
                       onRuleDelete(index.toString());
