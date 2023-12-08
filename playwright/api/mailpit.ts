@@ -73,7 +73,6 @@ export class MailpitService {
         async () => {
           let userEmails: any[] = await this.getEmailsForUser(userEmail);
           for (const email of userEmails) {
-            await console.log(email);
             if (email.Subject === mailSubject) {
               confirmationMessageReceived = true;
               break;

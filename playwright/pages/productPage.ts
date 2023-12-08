@@ -97,7 +97,7 @@ export class ProductPage {
   }
 
   async gotoExistingProductPage(productId: string) {
-    await console.log(
+    console.log(
       `Navigating to existing product: ${URL_LIST.products}${productId}`,
     );
     await this.page.goto(`${URL_LIST.products}${productId}`);
