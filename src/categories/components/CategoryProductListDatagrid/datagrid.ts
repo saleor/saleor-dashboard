@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   readonlyTextCell,
   thumbnailCell,
@@ -21,7 +20,9 @@ export const getColumns = (intl: IntlShape): AvailableColumn[] => [
 
 export const createGetCellContent =
   (
-    products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>,
+    products: RelayToFlat<
+      NonNullable<CategoryDetailsQuery["category"]>["products"]
+    >,
     columns: AvailableColumn[],
   ) =>
   ([column, row]: Item): GridCell => {
@@ -31,7 +32,7 @@ export const createGetCellContent =
       return readonlyTextCell("");
     }
 
-    const rowData = products[row];
+    const rowData = products![row];
 
     switch (columnId) {
       case "name":

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/CardAddItemsFooter";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
@@ -45,7 +44,7 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
     itemsRef.current = items;
   }, [items]);
 
-  const handleChoice = ({ target }) => {
+  const handleChoice = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setIsChoicesSelectShown(false);
     addItem(target.value);
   };

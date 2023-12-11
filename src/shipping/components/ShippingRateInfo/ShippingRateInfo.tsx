@@ -57,7 +57,7 @@ const useStyles = makeStyles(
 
 export interface ShippingRateInfoProps {
   data: {
-    description: OutputData;
+    description: OutputData | null;
     name: string;
     maxDays: string;
     minDays: string;

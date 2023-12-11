@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
 import { InternalLink } from "@dashboard/components/InternalLink";
@@ -14,7 +13,9 @@ import { CategoryProductListDatagrid } from "../CategoryProductListDatagrid";
 interface CategoryProductsProps {
   category: CategoryDetailsQuery["category"];
   categoryId: string;
-  products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
+  products: RelayToFlat<
+    NonNullable<CategoryDetailsQuery["category"]>["products"]
+  >;
   disabled: boolean;
   onProductsDelete: () => void;
   onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;

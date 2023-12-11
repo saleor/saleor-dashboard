@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -48,11 +47,15 @@ export interface ShippingZoneRatesPageProps
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
-  rate: ShippingZoneQuery["shippingZone"]["shippingMethods"][0];
+  rate: NonNullable<
+    NonNullable<ShippingZoneQuery["shippingZone"]>["shippingMethods"]
+  >[number];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  postalCodeRules: ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["postalCodeRules"];
+  postalCodeRules: NonNullable<
+    NonNullable<ShippingZoneQuery["shippingZone"]>["shippingMethods"]
+  >[number]["postalCodeRules"];
   backHref: string;
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateUpdateFormData) => SubmitPromise;
@@ -61,7 +64,7 @@ export interface ShippingZoneRatesPageProps
   ) => void;
   onPostalCodeAssign: () => void;
   onPostalCodeUnassign: (
-    code: ShippingMethodTypeFragment["postalCodeRules"][0],
+    code: NonNullable<ShippingMethodTypeFragment["postalCodeRules"]>[number],
   ) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
@@ -111,7 +114,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
         minDays: rate?.minimumDeliveryDays?.toString() || "",
         minValue: rate?.minimumOrderWeight?.value.toString() || "",
         name: rate?.name || "",
-        orderValueRestricted: !!rate?.channelListings.length,
+        orderValueRestricted: !!rate?.channelListings?.length,
         privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
         type: rate?.type || null,
         taxClassId: rate?.taxClass?.id || "",
@@ -224,7 +227,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
             />
             <CardSpacer />
             <ShippingMethodProducts
-              products={mapEdgesToItems(rate?.excludedProducts)}
+              products={mapEdgesToItems(rate?.excludedProducts)!}
               onProductAssign={onProductAssign}
               onProductUnassign={onProductUnassign}
               disabled={disabled}
@@ -236,7 +239,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
           <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
               managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
-              allChannelsCount={allChannelsCount}
+              allChannelsCount={allChannelsCount!}
               channelsList={data.channelListings.map(channel => ({
                 id: channel.id,
                 name: channel.name,

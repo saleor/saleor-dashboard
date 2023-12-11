@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import CardTitle from "@dashboard/components/CardTitle";
 import { SearchWarehousesQuery } from "@dashboard/graphql";
@@ -47,7 +46,7 @@ const Warehouses: React.FC<WarehousesProps> = props => {
       <AssignmentList
         loading={loading}
         items={warehouses}
-        itemsChoices={warehousesChoices}
+        itemsChoices={warehousesChoices!}
         addItem={addWarehouse}
         removeItem={removeWarehouse}
         searchItems={searchWarehouses}

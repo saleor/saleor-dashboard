@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -113,7 +112,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const products = mapEdgesToItems(data?.category?.products);
 
   const handleCategoryDelete = (data: CategoryDeleteMutation) => {
-    if (data.categoryDelete.errors.length === 0) {
+    if (data?.categoryDelete?.errors.length === 0) {
       notify({
         status: "success",
         text: intl.formatMessage({
@@ -132,8 +131,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 
   const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
     clearProductRowSelection();
-    if (data.categoryUpdate.errors.length > 0) {
-      const backgroundImageError = data.categoryUpdate.errors.find(
+    if (data?.categoryUpdate?.errors.length! > 0) {
+      const backgroundImageError = data?.categoryUpdate?.errors.find(
         error => error.field === ("backgroundImage" as keyof CategoryInput),
       );
       if (backgroundImageError) {
@@ -157,7 +156,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 
   const handleBulkCategoryDelete = (data: CategoryBulkDeleteMutation) => {
     clearCategryRowSelection();
-    if (data.categoryBulkDelete.errors.length === 0) {
+    if (data?.categoryBulkDelete?.errors.length === 0) {
       closeModal();
       notify({
         status: "success",
@@ -175,7 +174,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     useProductBulkDeleteMutation({
       onCompleted: data => {
         clearProductRowSelection();
-        if (data.productBulkDelete.errors.length === 0) {
+        if (data?.productBulkDelete?.errors.length === 0) {
           closeModal();
           notify({
             status: "success",
@@ -193,8 +192,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 
   const { pageInfo, ...paginationFunctions } = paginate(
     activeTab === CategoryPageTab.categories
-      ? maybe(() => data.category.children.pageInfo)
-      : maybe(() => data.category.products.pageInfo),
+      ? data?.category?.children?.pageInfo
+      : data?.category?.products?.pageInfo,
     paginationState,
   );
 
@@ -205,7 +204,9 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           id,
           input: {
             backgroundImageAlt: formData.backgroundImageAlt,
-            description: getParsedDataForJsonStringField(formData.description),
+            description: getParsedDataForJsonStringField(
+              formData?.description!,
+            ),
             name: formData.name,
             seo: {
               description: formData.seoDescription,
@@ -264,7 +265,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   );
 
   const handleSubmit = createMetadataUpdateHandler(
-    data?.category,
+    data?.category!,
     handleUpdate,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
@@ -276,16 +277,16 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationFunctions }}>
-      <WindowTitle title={maybe(() => data.category.name)} />
+      <WindowTitle title={data?.category?.name!} />
       <CategoryUpdatePage
         categoryId={id}
         settings={settings}
         onUpdateListSettings={updateListSettings}
         changeTab={changeTab}
         currentTab={activeTab}
-        category={maybe(() => data.category)}
+        category={data?.category}
         disabled={loading}
-        errors={updateResult.data?.categoryUpdate.errors || []}
+        errors={updateResult?.data?.categoryUpdate?.errors || []}
         addProductHref={productAddUrl()}
         onDelete={() => openModal("delete")}
         onImageDelete={() =>
@@ -339,9 +340,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             id="xRkj2h"
             defaultMessage="Are you sure you want to delete {categoryName}?"
             values={{
-              categoryName: (
-                <strong>{maybe(() => data.category.name, "...")}</strong>
-              ),
+              categoryName: <strong>{data?.category?.name || "..."}</strong>,
             }}
           />
         </DialogContentText>
