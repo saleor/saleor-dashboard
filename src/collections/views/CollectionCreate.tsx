@@ -1,6 +1,9 @@
-// @ts-strict-ignore
 import { ChannelsAction } from "@dashboard/channels/urls";
-import { createCollectionChannels } from "@dashboard/channels/utils";
+import {
+  Channel,
+  ChannelCollectionData,
+  createCollectionChannels,
+} from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -17,7 +20,9 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import createMetadataCreateHandler, {
+  CreateMetadataHandlerFunctionResult,
+} from "@dashboard/utils/handlers/metadataCreateHandler";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -68,8 +73,8 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels,
-  } = useChannels(
-    allChannels,
+  } = useChannels<Channel, ChannelsAction | "open-channels-picker" | undefined>(
+    allChannels || [],
     params?.action,
     { closeModal, openModal },
     { formId: COLLECTION_CREATE_FORM_ID },
@@ -77,14 +82,14 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
 
   const [createCollection, createCollectionOpts] = useCreateCollectionMutation({
     onCompleted: data => {
-      if (data.collectionCreate.errors.length === 0) {
+      if (data?.collectionCreate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate(collectionUrl(data.collectionCreate.collection.id));
+        navigate(collectionUrl(data?.collectionCreate?.collection?.id || ""));
       } else {
-        const backgroundImageError = data.collectionCreate.errors.find(
+        const backgroundImageError = data?.collectionCreate?.errors.find(
           error =>
             error.field === ("backgroundImage" as keyof CollectionCreateInput),
         );
@@ -104,7 +109,9 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
         input: {
           backgroundImage: formData.backgroundImage.value,
           backgroundImageAlt: formData.backgroundImageAlt,
-          description: getParsedDataForJsonStringField(formData.description),
+          description: getParsedDataForJsonStringField(
+            formData?.description || undefined,
+          ),
           name: formData.name,
           seo: {
             description: formData.seoDescription,
@@ -114,7 +121,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
       },
     });
 
-    const id = result.data?.collectionCreate.collection?.id || null;
+    const id = result.data?.collectionCreate?.collection?.id || null;
     if (id) {
       updateChannels({
         variables: {
@@ -131,7 +138,10 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
       });
     }
 
-    return { id, errors: getMutationErrors(result) };
+    return {
+      id,
+      errors: getMutationErrors(result),
+    } as CreateMetadataHandlerFunctionResult<unknown[]>;
   };
 
   const handleSubmit = createMetadataCreateHandler(
@@ -168,11 +178,11 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
         />
       )}
       <CollectionCreatePage
-        errors={createCollectionOpts.data?.collectionCreate.errors || []}
+        errors={createCollectionOpts.data?.collectionCreate?.errors || []}
         channelsErrors={
-          updateChannelsOpts?.data?.collectionChannelListingUpdate.errors || []
+          updateChannelsOpts?.data?.collectionChannelListingUpdate?.errors || []
         }
-        currentChannels={currentChannels}
+        currentChannels={currentChannels as ChannelCollectionData[]}
         channelsCount={availableChannels.length}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}

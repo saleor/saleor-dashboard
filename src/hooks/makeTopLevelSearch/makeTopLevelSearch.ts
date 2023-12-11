@@ -14,7 +14,7 @@ export interface SearchData {
 }
 
 export interface ResultSearchData {
-  data: SearchData;
+  data?: SearchData;
 }
 
 function makeTopLevelSearch<

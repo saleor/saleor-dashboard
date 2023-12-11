@@ -1,13 +1,13 @@
-// @ts-strict-ignore
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ChannelCreateInput,
-  ChannelCreateMutation,
   ChannelErrorFragment,
   useChannelCreateMutation,
   useChannelReorderWarehousesMutation,
 } from "@dashboard/graphql";
+import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
+import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -38,8 +38,8 @@ export const ChannelCreateView = () => {
   };
 
   const [createChannel, createChannelOpts] = useChannelCreateMutation({
-    onCompleted: ({ channelCreate: { errors } }: ChannelCreateMutation) => {
-      if (!errors.length) {
+    onCompleted: ({ channelCreate }) => {
+      if (!channelCreate?.errors.length) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -51,12 +51,14 @@ export const ChannelCreateView = () => {
   const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
     useChannelReorderWarehousesMutation({
       onCompleted: data => {
-        const errors = data.channelReorderWarehouses.errors;
-        if (errors.length) {
+        const errors = data?.channelReorderWarehouses?.errors;
+        if (errors?.length) {
           errors.forEach(error => handleError(error));
         }
 
-        navigate(channelPath(data.channelReorderWarehouses.channel?.id));
+        navigate(
+          channelPath(data?.channelReorderWarehouses?.channel?.id || ""),
+        );
       },
     });
 
@@ -141,19 +143,21 @@ export const ChannelCreateView = () => {
       <>
         <ChannelDetailsPage
           allShippingZonesCount={
-            shippingZonesCountData?.shippingZones?.totalCount
+            shippingZonesCountData?.shippingZones?.totalCount as number
           }
           searchShippingZones={searchShippingZones}
-          searchShippingZonesData={searchShippingZonesResult.data}
+          searchShippingZonesData={searchShippingZonesResult.data as SearchData}
           fetchMoreShippingZones={getSearchFetchMoreProps(
-            searchShippingZonesResult,
+            searchShippingZonesResult as CommonSearchOpts,
             fetchMoreShippingZones,
           )}
-          allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
+          allWarehousesCount={
+            warehousesCountData?.warehouses?.totalCount as number
+          }
           searchWarehouses={searchWarehouses}
-          searchWarehousesData={searchWarehousesResult.data}
+          searchWarehousesData={searchWarehousesResult.data as SearchData}
           fetchMoreWarehouses={getSearchFetchMoreProps(
-            searchWarehousesResult,
+            searchWarehousesResult as CommonSearchOpts,
             fetchMoreWarehouses,
           )}
           disabled={

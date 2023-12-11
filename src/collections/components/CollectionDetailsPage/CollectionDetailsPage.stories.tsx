@@ -1,10 +1,13 @@
-// @ts-strict-ignore
 import placeholderCollectionImage from "@assets/images/block1.jpg";
 import placeholderProductImage from "@assets/images/placeholder60x60.png";
 import { createCollectionChannelsData } from "@dashboard/channels/utils";
 import { collection as collectionFixture } from "@dashboard/collections/fixtures";
 import { listActionsProps, pageListProps } from "@dashboard/fixtures";
-import { CollectionErrorCode } from "@dashboard/graphql";
+import {
+  CollectionDetailsFragment,
+  CollectionDetailsQuery,
+  CollectionErrorCode,
+} from "@dashboard/graphql";
 import React from "react";
 
 import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
@@ -16,7 +19,9 @@ const collection = collectionFixture(
   placeholderCollectionImage,
   placeholderProductImage,
 );
-const channels = createCollectionChannelsData(collection);
+const channels = createCollectionChannelsData(
+  collection as CollectionDetailsFragment,
+);
 
 const props: Omit<CollectionDetailsPageProps, "classes"> = {
   ...listActionsProps,
@@ -24,7 +29,7 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
   channelsCount: 2,
   channelsErrors: [],
   collection,
-  currentChannels: channels,
+  currentChannels: channels || [],
   disabled: false,
   errors: [],
   onChannelsChange: () => undefined,
@@ -32,8 +37,9 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
   onProductUnassign: () => undefined,
-  onSubmit: () => undefined,
+  onSubmit: async () => undefined,
   openChannelsModal: () => undefined,
+  onAdd: async () => undefined,
   saveButtonBarState: "default",
   selectedChannelId: "123",
 };
@@ -46,7 +52,7 @@ export default {
 export const Default = () => <CollectionDetailsPage {...props} />;
 
 export const Loading = () => (
-  <CollectionDetailsPage {...props} collection={undefined} disabled={true} />
+  <CollectionDetailsPage {...props} collection={null} disabled={true} />
 );
 
 export const FormErrors = () => (
@@ -73,12 +79,14 @@ export const FormErrors = () => (
 export const NoProducts = () => (
   <CollectionDetailsPage
     {...props}
-    collection={{
-      ...collection,
-      products: {
-        ...collection.products,
-        edges: [],
-      },
-    }}
+    collection={
+      {
+        ...collection,
+        products: {
+          ...collection?.products,
+          edges: [],
+        },
+      } as CollectionDetailsQuery["collection"]
+    }
   />
 );

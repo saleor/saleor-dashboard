@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
@@ -115,7 +114,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={mapEdgesToItems(collection?.products)}
+          items={mapEdgesToItems(collection?.products) || []}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
@@ -168,18 +167,18 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                       checked={isSelected}
                       disabled={disabled}
                       disableClickPropagation
-                      onChange={() => toggle(product.id)}
+                      onChange={() => toggle(product?.id || "")}
                     />
                   </TableCell>
                   <TableCellAvatar
                     className={classes.colName}
-                    thumbnail={maybe(() => product.thumbnail.url)}
+                    thumbnail={product?.thumbnail?.url}
                   >
-                    {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
+                    {maybe<React.ReactNode>(() => product?.name, <Skeleton />)}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
                     {maybe<React.ReactNode>(
-                      () => product.productType.name,
+                      () => product?.productType.name,
                       <Skeleton />,
                     )}
                   </TableCell>
@@ -200,7 +199,9 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                         data-test-id="delete-icon"
                         variant="secondary"
                         disabled={!product}
-                        onClick={event => onProductUnassign(product.id, event)}
+                        onClick={event =>
+                          onProductUnassign(product?.id || "", event)
+                        }
                       >
                         <DeleteIcon />
                       </IconButton>

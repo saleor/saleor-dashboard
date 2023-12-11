@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { collectionListUrl } from "@dashboard/collections/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -11,6 +10,7 @@ import Savebar from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
   CollectionChannelListingErrorFragment,
+  CollectionDetailsFragment,
   CollectionDetailsQuery,
   CollectionErrorFragment,
   PermissionEnum,
@@ -39,7 +39,7 @@ export interface CollectionDetailsPageProps
   saveButtonBarState: ConfirmButtonTransitionState;
   onCollectionRemove: () => void;
   onImageDelete: () => void;
-  onImageUpload: (file: File) => void;
+  onImageUpload: (file: File | null) => void;
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
   onSubmit: (data: CollectionUpdateData) => SubmitPromise;
   onChannelsChange: (data: ChannelCollectionData[]) => void;
@@ -67,7 +67,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
 
   return (
     <CollectionUpdateForm
-      collection={collection}
+      collection={collection as CollectionDetailsFragment}
       currentChannels={currentChannels}
       setChannels={onChannelsChange}
       onSubmit={onSubmit}
@@ -86,7 +86,9 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
             <CardSpacer />
             <CollectionImage
               data={data}
-              image={collection?.backgroundImage}
+              image={
+                collection?.backgroundImage as CollectionDetailsFragment["backgroundImage"]
+              }
               onImageDelete={onImageDelete}
               onImageUpload={onImageUpload}
               onChange={change}
@@ -113,7 +115,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               slug={data.slug}
               slugPlaceholder={data.name}
               title={data.seoTitle}
-              titlePlaceholder={collection?.name}
+              titlePlaceholder={collection?.name as string}
               onChange={change}
             />
           </DetailPageLayout.Content>
@@ -145,7 +147,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
           </DetailPageLayout.RightSidebar>
           <Savebar
             state={saveButtonBarState}
-            disabled={isSaveDisabled}
+            disabled={!!isSaveDisabled}
             onCancel={() => navigate(collectionListUrl())}
             onDelete={onCollectionRemove}
             onSubmit={submit}

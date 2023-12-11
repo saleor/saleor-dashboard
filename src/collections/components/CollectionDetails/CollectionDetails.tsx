@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
@@ -14,7 +13,7 @@ import { useIntl } from "react-intl";
 
 export interface CollectionDetailsProps {
   data: {
-    description: OutputData;
+    description: OutputData | null;
     name: string;
   };
   disabled: boolean;

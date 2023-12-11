@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { createChannelsChangeHandler } from "@dashboard/collections/utils";
 import { COLLECTION_CREATE_FORM_ID } from "@dashboard/collections/views/consts";
@@ -21,8 +20,8 @@ import React, { useEffect } from "react";
 
 export interface CollectionCreateFormData extends MetadataFormData {
   backgroundImage: {
-    url: string;
-    value: string;
+    url: string | null;
+    value: string | null;
   };
   backgroundImageAlt: string;
   channelListings: ChannelCollectionData[];
@@ -32,7 +31,7 @@ export interface CollectionCreateFormData extends MetadataFormData {
   seoTitle: string;
 }
 export interface CollectionCreateData extends CollectionCreateFormData {
-  description: OutputData;
+  description: OutputData | null;
 }
 
 interface CollectionCreateHandlers {

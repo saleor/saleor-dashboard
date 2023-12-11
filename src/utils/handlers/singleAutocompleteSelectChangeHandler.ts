@@ -10,13 +10,13 @@ export interface SingleAutocompleteSelectedChangeHandlerProps {
 function createSingleAutocompleteSelectHandler(
   change: FormChange,
   setSelected: (value: string) => void,
-  choices: SingleAutocompleteChoiceType[],
+  choices?: SingleAutocompleteChoiceType[],
 ): FormChange {
   return event => {
     change(event);
 
     const value = event.target.value;
-    const choice = choices.find(category => category.value === value);
+    const choice = choices?.find(category => category.value === value);
     setSelected(choice ? choice.label : value);
   };
 }

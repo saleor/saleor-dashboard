@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { createChannelsChangeHandler } from "@dashboard/collections/utils";
 import { COLLECTION_DETAILS_FORM_ID } from "@dashboard/collections/views/consts";
@@ -30,7 +29,7 @@ export interface CollectionUpdateFormData extends MetadataFormData {
   seoTitle: string;
 }
 export interface CollectionUpdateData extends CollectionUpdateFormData {
-  description: OutputData;
+  description: OutputData | null;
 }
 
 interface CollectionUpdateHandlers {
@@ -122,7 +121,11 @@ function useCollectionUpdateForm(
 
   const getSubmitData = async (): Promise<CollectionUpdateData> => ({
     ...(await getData()),
-    ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
+    ...(getMetadata(
+      formData,
+      isMetadataModified,
+      isPrivateMetadataModified,
+    ) as MetadataFormData),
   });
 
   const handleChannelChange = createChannelsChangeHandler(

@@ -1,8 +1,8 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   useCollectionBulkDeleteMutation,
   useCollectionListQuery,
@@ -35,6 +35,7 @@ import {
   collectionListUrl,
   CollectionListUrlDialog,
   CollectionListUrlQueryParams,
+  CollectionListUrlSortField,
 } from "../../urls";
 import {
   getFilterOpts,
@@ -121,7 +122,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const [collectionBulkDelete, collectionBulkDeleteOpts] =
     useCollectionBulkDeleteMutation({
       onCompleted: data => {
-        if (data.collectionBulkDelete.errors.length === 0) {
+        if (data?.collectionBulkDelete?.errors.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
@@ -133,10 +134,15 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
       },
     });
 
-  const filterOpts = getFilterOpts(params, channelOpts);
+  const filterOpts = getFilterOpts(
+    params,
+    channelOpts as SingleAutocompleteChoiceType[],
+  );
 
   useEffect(() => {
-    if (!canBeSorted(params.sort, !!selectedChannel)) {
+    if (
+      !canBeSorted(params.sort as CollectionListUrlSortField, !!selectedChannel)
+    ) {
       navigate(
         collectionListUrl({
           ...params,
@@ -152,7 +158,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   >(navigate, collectionListUrl, params);
 
   const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.collections.pageInfo),
+    pageInfo: data?.collections?.pageInfo,
     paginationState,
     queryString: params,
   });
@@ -209,12 +215,12 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         tabs={presets.map(tab => tab.name)}
         loading={loading}
         disabled={loading}
-        collections={collections}
+        collections={collections || []}
         settings={settings}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
-        selectedChannelId={selectedChannel?.id}
+        selectedChannelId={selectedChannel?.id || ""}
         filterOpts={filterOpts}
         onFilterChange={changeFilters}
         selectedCollectionIds={selectedRowIds}
@@ -227,9 +233,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         }
       />
       <ActionDialog
-        open={
-          params.action === "remove" && maybe(() => selectedRowIds.length > 0)
-        }
+        open={params.action === "remove" && selectedRowIds.length > 0}
         onClose={closeModal}
         confirmButtonState={collectionBulkDeleteOpts.status}
         onConfirm={handleCollectionBulkDelete}

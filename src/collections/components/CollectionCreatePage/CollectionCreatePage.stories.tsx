@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { channelsList } from "@dashboard/channels/fixtures";
 import { createCollectionChannels } from "@dashboard/channels/utils";
 import { CollectionErrorCode } from "@dashboard/graphql";
@@ -13,11 +12,11 @@ const channels = createCollectionChannels(channelsList);
 const props: Omit<CollectionCreatePageProps, "classes"> = {
   channelsCount: 2,
   channelsErrors: [],
-  currentChannels: channels,
+  currentChannels: channels || [],
   disabled: false,
   errors: [],
   onChannelsChange: () => undefined,
-  onSubmit: () => undefined,
+  onSubmit: async () => undefined,
   openChannelsModal: () => undefined,
   saveButtonBarState: "default",
 };

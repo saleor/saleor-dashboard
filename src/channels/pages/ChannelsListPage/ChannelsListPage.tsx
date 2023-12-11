@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -24,7 +23,7 @@ import { useStyles } from "./styles";
 
 export interface ChannelsListPageProps {
   channelsList: ChannelDetailsFragment[] | undefined;
-  limits: RefreshLimitsQuery["shop"]["limits"];
+  limits?: RefreshLimitsQuery["shop"]["limits"];
   onRemove: (id: string) => void;
 }
 
@@ -67,8 +66,8 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                 description: "created channels counter",
               },
               {
-                count: limits.currentUsage.channels,
-                max: limits.allowedUsage.channels,
+                count: limits?.currentUsage.channels,
+                max: limits?.allowedUsage.channels,
               },
             )}
           />
@@ -124,7 +123,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                     </span>
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    {channelsList?.length > 1 && (
+                    {channelsList?.length && channelsList?.length > 1 && (
                       <TableButtonWrapper>
                         <IconButton
                           variant="secondary"

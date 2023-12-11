@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Collections } from "@dashboard/collections/types";
 import {
   collectionAddUrl,

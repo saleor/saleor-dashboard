@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   CollectionFilterKeys,
   CollectionListFilterOpts,
@@ -9,7 +8,7 @@ import {
 } from "@dashboard/components/Filter";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { CollectionFilterInput, CollectionPublished } from "@dashboard/graphql";
-import { findValueInEnum, maybe } from "@dashboard/misc";
+import { findValueInEnum } from "@dashboard/misc";
 
 import {
   createFilterTabUtils,
@@ -33,11 +32,11 @@ export function getFilterOpts(
     channel: {
       active: params?.channel !== undefined,
       choices: channels,
-      value: params?.channel,
+      value: params?.channel || "",
     },
     status: {
-      active: maybe(() => params.status !== undefined, false),
-      value: maybe(() => findValueInEnum(status, CollectionPublished)),
+      active: params.status !== undefined,
+      value: findValueInEnum(status, CollectionPublished),
     },
   };
 }

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import Hr from "@dashboard/components/Hr";
@@ -57,17 +56,17 @@ export interface CollectionImageProps {
   image: CollectionDetailsFragment["backgroundImage"];
   onChange: (event: React.ChangeEvent<any>) => void;
   onImageDelete: () => void;
-  onImageUpload: (file: File) => void;
+  onImageUpload: (file: File | null) => void;
 }
 
 export const CollectionImage: React.FC<CollectionImageProps> = props => {
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
 
-  const anchor = React.useRef<HTMLInputElement>();
+  const anchor = React.useRef<HTMLInputElement | null>(null);
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const handleImageUploadButtonClick = () => anchor.current.click();
+  const handleImageUploadButtonClick = () => anchor.current?.click();
 
   return (
     <Card>
@@ -85,7 +84,9 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
             <input
               className={classes.fileField}
               id="fileUpload"
-              onChange={event => onImageUpload(event.target.files[0])}
+              onChange={({ target: { files } }) =>
+                onImageUpload(files && files[0])
+              }
               type="file"
               ref={anchor}
               accept="image/*"

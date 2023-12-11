@@ -1,10 +1,10 @@
-// @ts-strict-ignore
 import ChannelDeleteDialog from "@dashboard/channels/components/ChannelDeleteDialog";
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ChannelDeleteMutation,
+  ChannelDetailsFragment,
   ChannelErrorFragment,
   ChannelUpdateMutation,
   useChannelActivateMutation,
@@ -15,6 +15,8 @@ import {
   useChannelsQuery,
   useChannelUpdateMutation,
 } from "@dashboard/graphql";
+import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
+import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -60,8 +62,10 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   >(navigate, params => channelUrl(id, params), params);
 
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
-    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
-      notify(getDefaultNotifierSuccessErrorData(errors, intl)),
+    onCompleted: ({ channelUpdate }: ChannelUpdateMutation) =>
+      notify(
+        getDefaultNotifierSuccessErrorData(channelUpdate?.errors || [], intl),
+      ),
   });
 
   const { data, loading } = useChannelQuery({
@@ -78,7 +82,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
 
   const [activateChannel, activateChannelOpts] = useChannelActivateMutation({
     onCompleted: data => {
-      const errors = data.channelActivate.errors;
+      const errors = data?.channelActivate?.errors || [];
       if (errors.length) {
         errors.forEach(error => handleError(error));
       }
@@ -88,7 +92,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   const [deactivateChannel, deactivateChannelOpts] =
     useChannelDeactivateMutation({
       onCompleted: data => {
-        const errors = data.channelDeactivate.errors;
+        const errors = data?.channelDeactivate?.errors || [];
         if (errors.length) {
           errors.forEach(error => handleError(error));
         }
@@ -98,7 +102,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
     useChannelReorderWarehousesMutation({
       onCompleted: data => {
-        const errors = data.channelReorderWarehouses.errors;
+        const errors = data?.channelReorderWarehouses?.errors || [];
         if (errors.length) {
           errors.forEach(error => handleError(error));
         }
@@ -122,7 +126,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   }: FormData) => {
     const updateChannelMutation = updateChannel({
       variables: {
-        id: data?.channel.id,
+        id: data?.channel?.id || "",
         input: {
           name,
           slug,
@@ -151,7 +155,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
 
     if (!errors?.length) {
       const moves = calculateItemsOrderMoves(
-        resultChannel.data?.channelUpdate.channel?.warehouses,
+        resultChannel.data?.channelUpdate?.channel?.warehouses || [],
         warehousesToDisplay,
       );
 
@@ -167,7 +171,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   };
 
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
-    const errors = data.channelDelete.errors;
+    const errors = data?.channelDelete?.errors || [];
     if (errors.length === 0) {
       notify({
         status: "success",
@@ -194,8 +198,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
 
   const channelsChoices = getChannelsCurrencyChoices(
     id,
-    data?.channel,
-    channelsListData?.data?.channels,
+    data?.channel || undefined,
+    channelsListData?.data?.channels || [],
   );
 
   const handleRemoveConfirm = (channelId?: string) => {
@@ -238,23 +242,25 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       <ChannelDetailsPage
         channelShippingZones={channelShippingZones}
         allShippingZonesCount={
-          shippingZonesCountData?.shippingZones?.totalCount
+          shippingZonesCountData?.shippingZones?.totalCount as number
         }
         searchShippingZones={searchShippingZones}
-        searchShippingZonesData={searchShippingZonesResult.data}
+        searchShippingZonesData={searchShippingZonesResult.data as SearchData}
         fetchMoreShippingZones={getSearchFetchMoreProps(
-          searchShippingZonesResult,
+          searchShippingZonesResult as CommonSearchOpts,
           fetchMoreShippingZones,
         )}
         channelWarehouses={channelWarehouses}
-        allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
+        allWarehousesCount={
+          warehousesCountData?.warehouses?.totalCount as number
+        }
         searchWarehouses={searchWarehouses}
-        searchWarehousesData={searchWarehousesResult.data}
+        searchWarehousesData={searchWarehousesResult.data as SearchData}
         fetchMoreWarehouses={getSearchFetchMoreProps(
-          searchWarehousesResult,
+          searchWarehousesResult as CommonSearchOpts,
           fetchMoreWarehouses,
         )}
-        channel={data?.channel}
+        channel={data?.channel as ChannelDetailsFragment}
         disabled={
           updateChannelOpts.loading ||
           reorderChannelWarehousesOpts.loading ||
@@ -278,10 +284,10 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         countries={shop?.countries || []}
       />
       <ChannelDeleteDialog
-        channelSlug={data?.channel?.slug}
-        currency={data?.channel?.currencyCode}
+        channelSlug={data?.channel?.slug as string}
+        currency={data?.channel?.currencyCode as string}
         channelsChoices={channelsChoices}
-        hasOrders={data?.channel?.hasOrders}
+        hasOrders={!!data?.channel?.hasOrders}
         open={params.action === "remove"}
         confirmButtonState={deleteChannelOpts.status}
         onBack={() => navigate(channelsListUrl())}

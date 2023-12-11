@@ -9,7 +9,7 @@ import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
 export function createShippingZoneAddHandler(
   data: FormData,
-  searchShippingZonesData: SearchData,
+  searchShippingZonesData: SearchData | undefined,
   set: (data: Partial<FormData>) => void,
   triggerChange: () => void,
 ) {
@@ -63,7 +63,7 @@ export function createShippingZoneRemoveHandler(
 
 export function createWarehouseAddHandler(
   data: FormData,
-  searchWarehousesData: SearchData,
+  searchWarehousesData: SearchData | undefined,
   set: (data: Partial<FormData>) => void,
   triggerChange: () => void,
 ) {

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
@@ -47,7 +46,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   >(navigate, channelsListUrl, params);
 
   const onCompleted = (data: ChannelDeleteMutation) => {
-    const errors = data.channelDelete.errors;
+    const errors = data?.channelDelete?.errors || [];
     if (errors.length === 0) {
       notify({
         status: "success",
@@ -74,9 +73,9 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   });
 
   const channelsChoices = getChannelsCurrencyChoices(
-    params.id,
+    params.id || "",
     selectedChannel,
-    data?.channels,
+    data?.channels || [],
   );
 
   const handleRemoveConfirm = (channelId?: string) => {
@@ -84,7 +83,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
 
     deleteChannel({
       variables: {
-        id: params.id,
+        id: params.id || "",
         ...inputVariables,
       },
     });
@@ -93,7 +92,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   return (
     <>
       <ChannelsListPage
-        channelsList={data?.channels}
+        channelsList={data?.channels || []}
         limits={limitOpts.data?.shop.limits}
         onRemove={id =>
           openModal("remove", {

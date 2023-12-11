@@ -1,5 +1,6 @@
-// @ts-strict-ignore
 import {
+  Channel,
+  ChannelCollectionData,
   createCollectionChannels,
   createCollectionChannelsData,
 } from "@dashboard/channels/utils";
@@ -13,8 +14,11 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
+  CollectionDetailsFragment,
+  CollectionDetailsQuery,
   CollectionInput,
   CollectionUpdateMutation,
+  SearchProductsQuery,
   useCollectionAssignProductMutation,
   useCollectionChannelListingUpdateMutation,
   useCollectionDetailsQuery,
@@ -35,16 +39,19 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { commonMessages, errorMessages } from "@dashboard/intl";
 import useProductSearch from "@dashboard/searches/useProductSearch";
+import { RelayToFlat } from "@dashboard/types";
 import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import createMetadataUpdateHandler, {
+  ObjectWithMetadata,
+} from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getMutationErrors, getMutationState, maybe } from "../../misc";
+import { getMutationErrors, getMutationState } from "../../misc";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
 import { CollectionUpdateData } from "../components/CollectionDetailsPage/form";
 import {
@@ -87,14 +94,14 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const { availableChannels } = useAppChannel(false);
 
   const handleCollectionUpdate = (data: CollectionUpdateMutation) => {
-    if (data.collectionUpdate.errors.length === 0) {
+    if (data.collectionUpdate?.errors.length === 0) {
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
       navigate(collectionUrl(id));
     } else {
-      const backgroundImageError = data.collectionUpdate.errors.find(
+      const backgroundImageError = data.collectionUpdate?.errors.find(
         error => error.field === ("backgroundImage" as keyof CollectionInput),
       );
       if (backgroundImageError) {
@@ -113,7 +120,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const [assignProduct, assignProductOpts] = useCollectionAssignProductMutation(
     {
       onCompleted: data => {
-        if (data.collectionAddProducts.errors.length === 0) {
+        if (data.collectionAddProducts?.errors.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage({
@@ -130,7 +137,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const [unassignProduct, unassignProductOpts] =
     useUnassignCollectionProductMutation({
       onCompleted: data => {
-        if (data.collectionRemoveProducts.errors.length === 0) {
+        if (data.collectionRemoveProducts?.errors.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage({
@@ -146,7 +153,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
 
   const [removeCollection, removeCollectionOpts] = useRemoveCollectionMutation({
     onCompleted: data => {
-      if (data.collectionDelete.errors.length === 0) {
+      if (data.collectionDelete?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -174,7 +181,9 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const allChannels = createCollectionChannels(availableChannels)?.sort(
     (channel, nextChannel) => channel.name.localeCompare(nextChannel.name),
   );
-  const collectionChannelsChoices = createCollectionChannelsData(collection);
+  const collectionChannelsChoices = createCollectionChannelsData(
+    collection as CollectionDetailsFragment,
+  );
   const {
     channelListElements,
     channelsToggle,
@@ -186,8 +195,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels,
-  } = useChannels(
-    collectionChannelsChoices,
+  } = useChannels<Channel, CollectionUrlDialog | undefined>(
+    collectionChannelsChoices || [],
     params?.action,
     {
       closeModal,
@@ -214,14 +223,14 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         input,
       },
     });
-    const initialIds = collectionChannelsChoices.map(channel => channel.id);
+    const initialIds = collectionChannelsChoices?.map(channel => channel.id);
     const modifiedIds = formData.channelListings.map(channel => channel.id);
 
-    const idsDiff = arrayDiff(initialIds, modifiedIds);
+    const idsDiff = arrayDiff(initialIds || [], modifiedIds);
 
     updateChannels({
       variables: {
-        id: collection.id,
+        id: collection?.id || "",
         input: {
           addChannels: formData.channelListings.map(channel => ({
             channelId: channel.id,
@@ -237,7 +246,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   };
 
   const handleSubmit = createMetadataUpdateHandler(
-    data?.collection,
+    data?.collection as ObjectWithMetadata,
     handleUpdate,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
@@ -270,7 +279,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   const formTransitionState = getMutationState(
     updateCollectionOpts.called,
     updateCollectionOpts.loading,
-    updateCollectionOpts.data?.collectionUpdate.errors,
+    updateCollectionOpts.data?.collectionUpdate?.errors || [],
   );
 
   const { pageInfo, ...paginationValues } = paginate(
@@ -283,13 +292,13 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   }
 
   const assignedProductDict = getAssignedProductIdsToCollection(
-    collection,
-    result.data?.search,
+    collection as CollectionDetailsQuery["collection"],
+    result.data?.search as SearchProductsQuery["search"],
   );
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
-      <WindowTitle title={data?.collection?.name} />
+      <WindowTitle title={data?.collection?.name || ""} />
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
@@ -311,11 +320,11 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
       <CollectionDetailsPage
         onAdd={() => openModal("assign")}
         disabled={loading || updateChannelsOpts.loading}
-        collection={data?.collection}
+        collection={data?.collection as CollectionDetailsQuery["collection"]}
         channelsErrors={
-          updateChannelsOpts?.data?.collectionChannelListingUpdate.errors || []
+          updateChannelsOpts?.data?.collectionChannelListingUpdate?.errors || []
         }
-        errors={updateCollectionOpts?.data?.collectionUpdate.errors || []}
+        errors={updateCollectionOpts?.data?.collectionUpdate?.errors || []}
         onCollectionRemove={() => openModal("remove")}
         onImageDelete={() => openModal("removeImage")}
         onImageUpload={file =>
@@ -361,7 +370,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
-        currentChannels={currentChannels}
+        currentChannels={currentChannels as ChannelCollectionData[]}
         channelsCount={availableChannels.length}
         selectedChannelId={selectedChannel}
         openChannelsModal={handleChannelsModalOpen}
@@ -370,16 +379,18 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
       <AssignProductDialog
         selectedIds={assignedProductDict}
         confirmButtonState={assignProductOpts.status}
-        hasMore={result.data?.search?.pageInfo.hasNextPage}
+        hasMore={!!result.data?.search?.pageInfo.hasNextPage}
         open={params.action === "assign"}
         onFetch={search}
         onFetchMore={loadMore}
         loading={result.loading}
         onClose={closeModal}
         onSubmit={handleAssignationChange}
-        products={mapEdgesToItems(result?.data?.search)?.filter(
-          suggestedProduct => suggestedProduct.id,
-        )}
+        products={
+          mapEdgesToItems(result?.data?.search)?.filter(
+            suggestedProduct => suggestedProduct.id,
+          ) as RelayToFlat<SearchProductsQuery["search"]>
+        }
       />
 
       <ActionDialog
@@ -404,7 +415,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             defaultMessage="Are you sure you want to delete {collectionName}?"
             values={{
               collectionName: (
-                <strong>{maybe(() => data.collection.name, "...")}</strong>
+                <strong>{data?.collection?.name || "..."}</strong>
               ),
             }}
           />
@@ -418,7 +429,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             variables: {
               ...paginationState,
               collectionId: id,
-              productIds: params.ids,
+              productIds: params.ids as string[],
             },
           })
         }
@@ -434,10 +445,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             id="AulH/n"
             defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
             values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
-              ),
+              counter: params.ids?.length,
+              displayQuantity: <strong>{params.ids?.length}</strong>,
             }}
           />
         </DialogContentText>

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { collectionListUrl } from "@dashboard/collections/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -100,7 +99,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                   target: {
                     name: "backgroundImage",
                     value: {
-                      url: URL.createObjectURL(file),
+                      url: URL.createObjectURL(file as File),
                       value: file,
                     },
                   },
@@ -155,7 +154,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
           </DetailPageLayout.RightSidebar>
           <Savebar
             state={saveButtonBarState}
-            disabled={isSaveDisabled}
+            disabled={!!isSaveDisabled}
             onCancel={() => navigate(collectionListUrl())}
             onSubmit={submit}
           />

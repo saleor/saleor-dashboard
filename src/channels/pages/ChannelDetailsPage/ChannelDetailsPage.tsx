@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ChannelAllocationStrategy from "@dashboard/channels/components/ChannelAllocationStrategy";
 import ShippingZones from "@dashboard/channels/components/ShippingZones";
 import Warehouses from "@dashboard/channels/components/Warehouses";
@@ -13,7 +12,6 @@ import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Savebar from "@dashboard/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
-  AllocationStrategyEnum,
   ChannelDetailsFragment,
   ChannelErrorFragment,
   CountryCode,
@@ -117,13 +115,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     ...formData
   } = channel || ({} as ChannelDetailsFragment);
   const initialStockSettings: StockSettingsInput = {
-    allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
   };
   const initialData: FormData = {
-    currencyCode: "",
-    name: "",
-    slug: "",
     shippingZonesIdsToAdd: [],
     shippingZonesIdsToRemove: [],
     warehousesIdsToAdd: [],
@@ -143,9 +137,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
   ): RelayToFlat<SearchShippingZonesQuery["search"]> =>
-    getParsedSearchData({ data: searchShippingZonesData }).filter(
+    getParsedSearchData({ data: searchShippingZonesData! }).filter(
       ({ id: searchedZoneId }) =>
-        !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId),
+        !shippingZonesToDisplay!.some(({ id }) => id === searchedZoneId),
     );
 
   const getFilteredWarehousesChoices = (
@@ -264,8 +258,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               {!!updateChannelStatus && (
                 <>
                   <ChannelStatus
-                    isActive={channel?.isActive}
-                    disabled={disabledStatus}
+                    isActive={!!channel?.isActive}
+                    disabled={!!disabledStatus}
                     updateChannelStatus={updateChannelStatus}
                   />
                   <CardSpacer />

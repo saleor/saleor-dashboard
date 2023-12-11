@@ -408,8 +408,8 @@ export const createSortedChannelsDataFromSale = (
 
 export const getChannelsCurrencyChoices = (
   id: string,
-  selectedChannel: ChannelDetailsFragment,
-  channelsList: ChannelDetailsFragment[],
+  selectedChannel?: ChannelDetailsFragment,
+  channelsList?: ChannelDetailsFragment[],
 ) =>
   id
     ? mapNodeToChoice(
@@ -417,7 +417,7 @@ export const getChannelsCurrencyChoices = (
           channel =>
             channel.id !== id &&
             channel.currencyCode === selectedChannel?.currencyCode,
-        ),
+        ) || [],
       )
     : [];
 
