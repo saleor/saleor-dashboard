@@ -8711,6 +8711,9 @@
     "context": "configuration section name",
     "string": "Configuration"
   },
+  "xgpgVX": {
+    "string": "Open environment"
+  },
   "xjpTLF": {
     "context": "informations about product stock, header",
     "string": "Inventory Information"

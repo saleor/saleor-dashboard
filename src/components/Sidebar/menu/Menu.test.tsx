@@ -1,0 +1,50 @@
+import { render, screen } from "@testing-library/react";
+import React from "react";
+
+import { Menu } from "./Menu";
+
+jest.mock("react-intl", () => ({
+  FormattedMessage: () => <>Open env</>,
+  defineMessages: jest.fn(),
+}));
+jest.mock("./useMenuStructure", () => ({
+  useMenuStructure: jest.fn(() => []),
+}));
+
+jest.mock("./useEnvironmentLink", () => ({
+  useEnvironmentLink: jest.fn(() => ({ canRender: true })),
+}));
+
+describe("Sidebar menu", () => {
+  it("renders link to the cloud environment on production", async () => {
+    // Arrange
+    const stagingHref = "https://cloud.saleor.io/env/test.com";
+    delete (window as { location?: unknown }).location;
+    // @ts-expect-error
+    window.location = { hostname: "test.com" };
+    render(<Menu />);
+
+    // Assert
+    await screen.findAllByTestId((content, element) => {
+      const isMatchTestId = content === "menu-item-label-env";
+      const isMatchHref = element.getAttribute("href") === stagingHref;
+      return isMatchTestId && isMatchHref;
+    });
+  });
+
+  it("renders link to the cloud environment on staging", async () => {
+    // Arrange
+    const stagingHref = "https://staging-cloud.saleor.io/env/test.staging.com";
+    delete (window as { location?: unknown }).location;
+    // @ts-expect-error
+    window.location = { hostname: "test.staging.com" };
+    render(<Menu />);
+
+    // Assert
+    await screen.findAllByTestId((content, element) => {
+      const isMatchTestId = content === "menu-item-label-env";
+      const isMatchHref = element.getAttribute("href") === stagingHref;
+      return isMatchTestId && isMatchHref;
+    });
+  });
+});
