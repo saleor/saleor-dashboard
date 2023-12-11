@@ -43,7 +43,7 @@ describe("Sidebar menu", () => {
     // Assert
     await screen.findAllByTestId((content, element) => {
       const isMatchTestId = content === "menu-item-label-env";
-      const isMatchHref = element.getAttribute("href") === stagingHref;
+      const isMatchHref = element?.getAttribute("href") === stagingHref;
       return isMatchTestId && isMatchHref;
     });
   });
