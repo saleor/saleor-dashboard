@@ -2,14 +2,22 @@ import { Box, EnvironmentIcon, List, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+const UTM_PARAMS = "?utm_source=dashboard&utm_content=sidebar_button";
+
+const stagingLink = (hostname: string) =>
+  `https://staging-cloud.saleor.io/env/${hostname}${UTM_PARAMS}`;
+
+const prodLink = (hostname: string) =>
+  `https://cloud.saleor.io/env/${hostname}${UTM_PARAMS}`;
+
 const generateEnvLink = () => {
   const { hostname } = window.location;
 
   if (hostname.includes(".staging.")) {
-    return `https://staging-cloud.saleor.io/env/${hostname}`;
+    return stagingLink(hostname);
   }
 
-  return `https://cloud.saleor.io/env/${hostname}`;
+  return prodLink(hostname);
 };
 
 export const EnvironmentLink = () => {
