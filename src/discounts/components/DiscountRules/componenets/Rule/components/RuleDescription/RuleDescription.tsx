@@ -28,7 +28,7 @@ export const RuleDescription = ({
   });
 
   return (
-    <Box>
+    <Box overflow="hidden">
       <Text marginBottom={2} as="p">
         {intl.formatMessage(commonMessages.description)}
       </Text>

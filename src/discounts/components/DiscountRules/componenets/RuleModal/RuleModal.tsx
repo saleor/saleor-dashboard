@@ -91,23 +91,23 @@ export const RuleModal = ({
           />
           <DashboardModal.Close onClose={onClose} />
         </DashboardModal.Title>
-        <Box
-          __width={650}
-          __maxHeight="75vh"
-          __minHeight="515px"
-          overflowY="auto"
-        >
-          <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(handleSubmit)}>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(handleSubmit)}>
+            <Box
+              __width={650}
+              __minHeight={515}
+              __maxHeight="75vh"
+              overflowY="auto"
+            >
               <Rule
                 channels={channels}
                 errors={errors}
                 disabled={false}
                 typeToFetchMap={typeToFetchMap}
               />
-            </form>
-          </FormProvider>
-        </Box>
+            </Box>
+          </form>
+        </FormProvider>
         <DashboardModal.Actions>
           <Button onClick={onClose} variant="secondary">
             <FormattedMessage {...buttonMessages.close} />
