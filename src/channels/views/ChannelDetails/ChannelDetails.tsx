@@ -284,8 +284,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         countries={shop?.countries || []}
       />
       <ChannelDeleteDialog
-        channelSlug={data?.channel?.slug as string}
-        currency={data?.channel?.currencyCode as string}
+        channelSlug={data?.channel?.slug  || ''}
+        currency={data?.channel?.currencyCode || ''}
         channelsChoices={channelsChoices}
         hasOrders={!!data?.channel?.hasOrders}
         open={params.action === "remove"}
