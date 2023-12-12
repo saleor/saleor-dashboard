@@ -10,10 +10,7 @@ import {
   PromotionCreateErrorFragment,
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
-import {
-  CommonError,
-  getCommonFormFieldErrorMessage,
-} from "@dashboard/utils/errors/common";
+import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import React, { useState } from "react";
@@ -23,7 +20,7 @@ import { useIntl } from "react-intl";
 import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountName } from "../DiscountName";
-import { DiscountRules } from "../DiscountRules";
+import { DiscountRules, DiscountRulesErrors } from "../DiscountRules";
 import { RuleDeleteModal } from "../DiscountRules/componenets/RuleDeleteModal/RuleDeleteModal";
 import { RuleModal } from "../DiscountRules/componenets/RuleModal/RuleModal";
 import { initialFormValues } from "./initialFormValues";
@@ -70,11 +67,24 @@ export const DiscountCreatePage = ({
   };
 
   const handleDeleteRule = () => {
-    setRules(rules => {
-      rules.splice(Number(ruleDeleteIndex), 1);
-      return rules;
-    });
+    setRules(rules =>
+      rules.filter((_, index) => index !== Number(ruleDeleteIndex)),
+    );
     setRuleDeleteIndex(null);
+  };
+
+  const handleRuleSubmit = async (data: Rule) => {
+    if (ruleEditIndex !== null) {
+      setRules(rules => {
+        rules[ruleEditIndex] = data;
+        return rules;
+      });
+    } else {
+      setRules([...rules, data]);
+    }
+
+    setRuleEditIndex(null);
+    setShowRuleModal(false);
   };
 
   const formErrors = getFormErrors(["name"], errors);
@@ -103,13 +113,7 @@ export const DiscountCreatePage = ({
                 disabled={disabled}
               />
               <DiscountRules
-                errors={
-                  errors as Array<
-                    CommonError<CommonError<PromotionCreateErrorCode>> & {
-                      index?: number;
-                    }
-                  >
-                }
+                errors={errors as DiscountRulesErrors<PromotionCreateErrorCode>}
                 channels={channels}
                 disabled={disabled}
                 onRuleEdit={editIndex => {
@@ -145,19 +149,7 @@ export const DiscountCreatePage = ({
             ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
           }
           errors={errors.filter(error => error.index === ruleEditIndex)}
-          onSubmit={async data => {
-            if (ruleEditIndex !== null) {
-              setRules(rules => {
-                rules[ruleEditIndex] = data;
-                return rules;
-              });
-            } else {
-              setRules([...rules, data]);
-            }
-
-            setRuleEditIndex(null);
-            setShowRuleModal(false);
-          }}
+          onSubmit={handleRuleSubmit}
         />
 
         <RuleDeleteModal

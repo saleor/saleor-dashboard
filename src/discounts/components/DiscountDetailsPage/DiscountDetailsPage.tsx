@@ -8,6 +8,8 @@ import { saleListUrl } from "@dashboard/discounts/urls";
 import {
   ChannelFragment,
   PromotionDetailsFragment,
+  PromotionRuleCreateErrorFragment,
+  PromotionRuleUpdateErrorFragment,
   PromotionUpdateErrorFragment,
 } from "@dashboard/graphql";
 import { splitDateTime } from "@dashboard/misc";
@@ -39,9 +41,13 @@ export interface DiscountDetailsPageProps {
   errors: PromotionUpdateErrorFragment[];
   submitButtonState: ConfirmButtonTransitionState;
   onSubmit: (data: DiscoutFormData) => void;
-  onRuleUpdateSubmit: (data: Rule) => Promise<Array<CommonError<any>>>;
+  onRuleUpdateSubmit: (
+    data: Rule,
+  ) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
   ruleUpdateButtonState: ConfirmButtonTransitionState;
-  onRuleCreateSubmit: (data: Rule) => Promise<Array<CommonError<any>>>;
+  onRuleCreateSubmit: (
+    data: Rule,
+  ) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
   ruleCreateButtonState: ConfirmButtonTransitionState;
   onRuleDeleteSubmit: (id: string) => void;
   ruleDeleteButtonState: ConfirmButtonTransitionState;
@@ -117,7 +123,11 @@ export const DiscountDetailsPage = ({
   };
 
   const handleRuleSubmit = async (rule: Rule) => {
-    let errors: Array<CommonError<any>> = [];
+    let errors: Array<
+      CommonError<
+        PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment
+      >
+    > = [];
 
     if (ruleEditIndex !== null) {
       errors = await onRuleUpdateSubmit(rule);

@@ -10,11 +10,15 @@ import { AddButton } from "./componenets/AddButton";
 import { RulesList } from "./componenets/RulesList";
 import { messages } from "./messages";
 
+export type DiscountRulesErrors<ErrorCode> = Array<
+  CommonError<ErrorCode> & { index?: number }
+>;
+
 interface DiscountRulesProps<ErrorCode> {
   disabled?: boolean;
   channels: ChannelFragment[];
   rules: Rule[];
-  errors: Array<CommonError<ErrorCode> & { index?: number }>;
+  errors: DiscountRulesErrors<ErrorCode>;
   ruleConditionsOptionsDetailsLoading?: boolean;
   onRuleEdit: (id: string) => void;
   onRuleAdd: () => void;

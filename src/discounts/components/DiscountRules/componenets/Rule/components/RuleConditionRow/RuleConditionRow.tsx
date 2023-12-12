@@ -101,7 +101,6 @@ export const RuleConditionRow = ({
 
       <RuleInputWrapper>
         <Multiselect
-          alwaysFetchOnFocus
           data-test-id="rule-values"
           value={condition.values}
           fetchOptions={fetch}
