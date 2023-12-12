@@ -31,6 +31,7 @@ export const DiscountTypeSwitch = ({
           id="fixed"
           disabled={disabled}
           value={RewardValueTypeEnum.FIXED}
+          name="fixed"
           marginLeft={0.5}
           paddingY={2}
         >
@@ -48,6 +49,7 @@ export const DiscountTypeSwitch = ({
       <Switch.Item
         id="percentage"
         disabled={disabled}
+        name="percentage"
         value={RewardValueTypeEnum.PERCENTAGE}
         marginRight={0.5}
         paddingY={2}

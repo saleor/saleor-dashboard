@@ -78,6 +78,7 @@ export const RuleConditionRow = ({
             updateCondition(conditionIndex, { ...condition, values: [] });
             typeField.onChange(e);
           }}
+          data-test-id="rule-type"
           onBlur={typeField.onBlur}
           disabled={disabled}
         />
@@ -101,6 +102,7 @@ export const RuleConditionRow = ({
       <RuleInputWrapper>
         <Multiselect
           alwaysFetchOnFocus
+          data-test-id="rule-values"
           value={condition.values}
           fetchOptions={fetch}
           fetchMore={fetchMoreProps}

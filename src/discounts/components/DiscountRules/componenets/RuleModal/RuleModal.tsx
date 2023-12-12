@@ -113,6 +113,7 @@ export const RuleModal = ({
             <FormattedMessage {...buttonMessages.close} />
           </Button>
           <ConfirmButton
+            data-test-id="saveRuleButton"
             transitionState={confimButtonState}
             onClick={methods.handleSubmit(handleSubmit)}
           >

@@ -100,6 +100,7 @@ export const Rule = ({
                 setValue("conditions", [{ ...intialConditionValues }]);
               }}
               size="small"
+              data-test-id="channel-dropdown"
               label={intl.formatMessage(commonMessages.channel)}
               options={channelOptions}
               disabled={disabled || channelfield.disabled}
