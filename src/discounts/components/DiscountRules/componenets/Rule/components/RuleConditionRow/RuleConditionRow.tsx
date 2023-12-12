@@ -76,7 +76,7 @@ export const RuleConditionRow = ({
           options={discountConditionType}
           onChange={e => {
             updateCondition(conditionIndex, { ...condition, values: [] });
-            typeField.onChange(e);
+            typeField.onChange(e.target.value);
           }}
           data-test-id="rule-type"
           onBlur={typeField.onBlur}

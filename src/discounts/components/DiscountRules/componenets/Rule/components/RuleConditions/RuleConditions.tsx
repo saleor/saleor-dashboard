@@ -24,7 +24,7 @@ export const RuleConditions = ({
 
   const { watch } = useFormContext<Rule>();
 
-  const { append, remove, update } = useFieldArray<Rule, "conditions">({
+  const { append, remove, update, fields } = useFieldArray<Rule, "conditions">({
     name: "conditions",
   });
 
@@ -52,14 +52,14 @@ export const RuleConditions = ({
       <Text>{intl.formatMessage(messages.conditions)}</Text>
 
       <Box display="flex" flexDirection="column" gap={4}>
-        {conditionsList.map((condition, conditionIndex) => (
+        {fields.map((condition, conditionIndex) => (
           <RuleConditionRow
             disabled={disabled}
             fetchOptions={
               condition.type ? typeToFetchMap[condition.type] : undefined
             }
             isConditionTypeSelected={isConditionTypeSelected}
-            key={condition.type}
+            key={condition.type || conditionIndex}
             conditionIndex={conditionIndex}
             updateCondition={update}
             onRemove={() => {
