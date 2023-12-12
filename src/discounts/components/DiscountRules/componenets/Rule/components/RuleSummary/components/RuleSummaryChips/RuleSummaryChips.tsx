@@ -15,7 +15,12 @@ export const RuleSummaryChips = ({
 }) => {
   const color = conditionTypeToHue(type, theme);
   return (
-    <Chip __backgroundColor={color.base} marginRight={1.5}>
+    <Chip
+      __backgroundColor={color.base}
+      __color={color.text}
+      __borderColor={color.border}
+      marginRight={1.5}
+    >
       {type.slice(0, 1).toLocaleUpperCase() + type.slice(1)}: {label}
     </Chip>
   );
