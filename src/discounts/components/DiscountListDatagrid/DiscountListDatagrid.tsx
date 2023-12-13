@@ -10,7 +10,7 @@ import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHea
 import { SaleListUrlSortField, saleUrl } from "@dashboard/discounts/urls";
 import { PromotionFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import { ChannelProps, ListProps, SortPage } from "@dashboard/types";
+import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
@@ -25,10 +25,8 @@ import { messages } from "./messages";
 
 interface DiscountListDatagridProps
   extends ListProps,
-    SortPage<SaleListUrlSortField>,
-    ChannelProps {
+    SortPage<SaleListUrlSortField> {
   promotions: PromotionFragment[];
-  onSelectSaleIds: (ids: number[], clearSelection: () => void) => void;
   onRowClick: (id: string) => void;
   hasRowHover?: boolean;
 }
@@ -37,11 +35,9 @@ export const DiscountListDatagrid = ({
   disabled,
   onSort,
   promotions,
-  selectedChannelId,
   sort,
   filterDependency,
   onUpdateListSettings,
-  onSelectSaleIds,
   onRowClick,
   hasRowHover = true,
   settings,
@@ -81,9 +77,8 @@ export const DiscountListDatagrid = ({
       promotions,
       columns: visibleColumns,
       locale,
-      selectedChannelId,
     }),
-    [promotions, selectedChannelId, locale, visibleColumns],
+    [promotions, locale, visibleColumns],
   );
 
   const handleRowClick = useCallback(
@@ -106,7 +101,7 @@ export const DiscountListDatagrid = ({
     (col: number): string => {
       const columnName = visibleColumns[col].id as SaleListUrlSortField;
 
-      if (canBeSorted(columnName, !!selectedChannelId)) {
+      if (canBeSorted(columnName)) {
         return "";
       }
 
@@ -115,14 +110,14 @@ export const DiscountListDatagrid = ({
         filterName: filterDependency?.label ?? "",
       });
     },
-    [filterDependency, intl, selectedChannelId, visibleColumns],
+    [filterDependency, intl, visibleColumns],
   );
 
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as SaleListUrlSortField;
 
-      if (canBeSorted(columnName, !!selectedChannelId)) {
+      if (canBeSorted(columnName)) {
         onSort(columnName);
       }
     },
@@ -134,7 +129,7 @@ export const DiscountListDatagrid = ({
       <Datagrid
         readonly
         loading={disabled}
-        rowMarkers="checkbox-visible"
+        rowMarkers="none"
         columnSelect="single"
         hasRowHover={hasRowHover}
         onColumnMoved={handlers.onMove}
@@ -143,7 +138,6 @@ export const DiscountListDatagrid = ({
         rows={promotions?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
-        onRowSelectionChange={onSelectSaleIds}
         getCellContent={getCellContent}
         getCellError={() => false}
         selectionActions={() => null}

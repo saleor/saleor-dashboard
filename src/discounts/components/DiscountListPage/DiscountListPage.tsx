@@ -1,6 +1,5 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -13,7 +12,6 @@ import { PromotionFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import {
-  ChannelProps,
   FilterPagePropsWithPresets,
   PageListProps,
   SortPage,
@@ -33,12 +31,8 @@ import {
 export interface DiscountListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<SaleFilterKeys, SaleListFilterOpts>,
-    SortPage<SaleListUrlSortField>,
-    ChannelProps {
+    SortPage<SaleListUrlSortField> {
   promotions: PromotionFragment[];
-  selectedSaleIds: string[];
-  onSalesDelete: () => void;
-  onSelectSaleIds: (rows: number[], clearSelection: () => void) => void;
 }
 
 const DiscountListPage: React.FC<DiscountListPageProps> = ({
@@ -52,9 +46,7 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
   onFilterPresetUpdate,
   onFilterPresetsAll,
   hasPresetsChanged,
-  onSalesDelete,
   filterPresets,
-  selectedSaleIds,
   selectedFilterPreset,
   currencySymbol,
   ...listProps
@@ -132,18 +124,6 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
             id: "+bhokL",
             defaultMessage: "Search discounts...",
           })}
-          actions={
-            <Box display="flex" gap={4}>
-              {selectedSaleIds.length > 0 && (
-                <BulkDeleteButton onClick={onSalesDelete}>
-                  <FormattedMessage
-                    defaultMessage="Delete discounts"
-                    id="Hswqx2"
-                  />
-                </BulkDeleteButton>
-              )}
-            </Box>
-          }
         />
 
         <DiscountListDatagrid

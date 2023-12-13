@@ -46,7 +46,6 @@ export const createGetCellContent =
     promotions: PromotionFragment[];
     columns: AvailableColumn[];
     locale: Locale;
-    selectedChannelId?: string;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = promotions[row];

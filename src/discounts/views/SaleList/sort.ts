@@ -5,10 +5,7 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export const DEFAULT_SORT_KEY = SaleListUrlSortField.name;
 
-export function canBeSorted(
-  sort: SaleListUrlSortField | undefined,
-  isChannelSelected: boolean,
-) {
+export function canBeSorted(sort: SaleListUrlSortField | undefined) {
   if (sort === undefined) {
     return false;
   }
@@ -17,10 +14,7 @@ export function canBeSorted(
     case SaleListUrlSortField.name:
     case SaleListUrlSortField.startDate:
     case SaleListUrlSortField.endDate:
-    case SaleListUrlSortField.type:
       return true;
-    case SaleListUrlSortField.value:
-      return isChannelSelected;
     default:
       return false;
   }
