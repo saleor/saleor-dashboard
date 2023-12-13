@@ -1,6 +1,9 @@
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import DiscountListPage from "@dashboard/discounts/components/DiscountListPage/DiscountListPage";
 import { PromotionFragment, usePromotionsListQuery } from "@dashboard/graphql";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
@@ -10,6 +13,7 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import { commonMessages } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -19,8 +23,10 @@ import { useIntl } from "react-intl";
 
 import {
   discountListUrl,
+  DiscountListUrlDialog,
   DiscountListUrlQueryParams,
 } from "../../discountsUrls";
+import { storageUtils } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface DiscountListProps {
@@ -70,6 +76,27 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
       keepActiveTab: true,
     });
 
+  const [openModal, closeModal] = createDialogActionHandlers<
+    DiscountListUrlDialog,
+    DiscountListUrlQueryParams
+  >(navigate, discountListUrl, params);
+
+  const {
+    hasPresetsChanged,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    getPresetNameToDelete,
+    selectedPreset,
+    presets,
+    setPresetIdToDelete,
+  } = useFilterPresets({
+    getUrl: discountListUrl,
+    params,
+    storageUtils,
+  });
+
   useEffect(() => {
     if (!canBeSorted(params?.sort)) {
       navigate(
@@ -97,10 +124,35 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         onSort={handleSort}
+        onFilterPresetDelete={(id: number) => {
+          setPresetIdToDelete(id);
+          openModal("delete-search");
+        }}
+        onFilterPresetPresetSave={() => openModal("save-search")}
+        onFilterPresetChange={onPresetChange}
+        onFilterPresetUpdate={onPresetUpdate}
+        onFilterPresetsAll={resetFilters}
+        filterPresets={presets.map(preset => preset.name)}
+        selectedFilterPreset={selectedPreset}
+        hasPresetsChanged={hasPresetsChanged}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
         onSearchChange={handleSearchChange}
         initialSearch={params.query || ""}
+      />
+
+      <SaveFilterTabDialog
+        open={params.action === "save-search"}
+        confirmButtonState="default"
+        onClose={closeModal}
+        onSubmit={onPresetSave}
+      />
+      <DeleteFilterTabDialog
+        open={params.action === "delete-search"}
+        confirmButtonState="default"
+        onClose={closeModal}
+        onSubmit={onPresetDelete}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

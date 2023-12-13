@@ -1,5 +1,6 @@
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
   discountAddUrl,
@@ -9,16 +10,17 @@ import {
 import { PromotionFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
-import { PageListProps, SortPage } from "@dashboard/types";
+import { FilterPresetsProps, PageListProps, SortPage } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { DiscountListDatagrid } from "../DiscountListDatagrid";
 
 export interface DiscountListPageProps
   extends PageListProps,
+    FilterPresetsProps,
     SortPage<DiscountListUrlSortField> {
   onSearchChange: (query: string) => void;
   initialSearch: string;
@@ -28,10 +30,20 @@ export interface DiscountListPageProps
 const DiscountListPage: React.FC<DiscountListPageProps> = ({
   initialSearch,
   onSearchChange,
+  onFilterPresetChange,
+  onFilterPresetDelete,
+  onFilterPresetPresetSave,
+  onFilterPresetUpdate,
+  onFilterPresetsAll,
+  hasPresetsChanged,
+  filterPresets,
+  selectedFilterPreset,
+
   ...listProps
 }) => {
   const intl = useIntl();
   const navigation = useNavigator();
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const handleRowClick = (id: string) => {
     navigation(discountUrl(id));
@@ -54,13 +66,24 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
             <Box marginX={3} display="flex" alignItems="center">
               <ChevronRightIcon />
             </Box>
-            <Text variant="title" size="small">
-              <FormattedMessage
-                id="YZ9A2I"
-                defaultMessage="All discounts"
-                description="header"
-              />
-            </Text>
+
+            <FilterPresetsSelect
+              presetsChanged={hasPresetsChanged()}
+              onSelect={onFilterPresetChange}
+              onRemove={onFilterPresetDelete}
+              onUpdate={onFilterPresetUpdate}
+              savedPresets={filterPresets}
+              activePreset={selectedFilterPreset}
+              onSelectAll={onFilterPresetsAll}
+              onSave={onFilterPresetPresetSave}
+              isOpen={isFilterPresetOpen}
+              onOpenChange={setFilterPresetOpen}
+              selectAllLabel={intl.formatMessage({
+                id: "a6GDem",
+                defaultMessage: "All discounts",
+                description: "tab name",
+              })}
+            />
           </Box>
           <Box>
             <Button

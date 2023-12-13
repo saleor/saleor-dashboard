@@ -1,11 +1,10 @@
-import { SaleListUrlSortField } from "@dashboard/discounts/urls";
+import { DiscountListUrlSortField } from "@dashboard/discounts/discountsUrls";
 import {
   filterPresetsProps,
   pageListProps,
   searchPageProps,
   sortPageProps,
 } from "@dashboard/fixtures";
-import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
 import { Meta, StoryObj } from "@storybook/react";
 
 import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
@@ -16,42 +15,15 @@ const props: DiscountListPageProps = {
   ...searchPageProps,
   ...sortPageProps,
   ...filterPresetsProps,
-  onFilterChange: () => undefined,
   settings: {
     ...pageListProps.default.settings,
     columns: ["name", "startDate", "endDate", "value"],
   },
-  filterOpts: {
-    channel: {
-      active: false,
-      value: "default-channel",
-      choices: [
-        {
-          value: "default-channel",
-          label: "Default channel",
-        },
-      ],
-    },
-    saleType: {
-      active: false,
-      value: DiscountValueTypeEnum.FIXED,
-    },
-    started: {
-      active: false,
-      value: {
-        max: "",
-        min: "",
-      },
-    },
-    status: {
-      active: false,
-      value: [DiscountStatusEnum.ACTIVE],
-    },
-  },
+
   promotions: [],
   sort: {
     ...sortPageProps.sort,
-    sort: SaleListUrlSortField.name,
+    sort: DiscountListUrlSortField.name,
   },
 };
 
