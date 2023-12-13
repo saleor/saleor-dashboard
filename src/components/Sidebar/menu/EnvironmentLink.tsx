@@ -34,7 +34,7 @@ export const EnvironmentLink = () => {
       <Box paddingY={1.5} gap={3} display="flex" alignItems="center">
         <ArrowLeftIcon color="default2" size="medium" />
         <Text size="small" variant="bodyEmp">
-          <FormattedMessage defaultMessage="Open environment" id="xgpgVX" />
+          <FormattedMessage defaultMessage="Go to cloud" id="vgMjS5" />
         </Text>
       </Box>
     </List.Item>
