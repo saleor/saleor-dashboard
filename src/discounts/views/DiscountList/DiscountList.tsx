@@ -66,15 +66,14 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
     mapEdgesToItems(data?.promotions) ?? [];
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      createUrl: discountListUrl,
-      // TODO: implement getFilterQueryParam when new filter will be implemented
-      getFilterQueryParam: () => undefined,
-      navigate,
-      params,
-      keepActiveTab: true,
-    });
+  const [_, resetFilters, handleSearchChange] = createFilterHandlers({
+    createUrl: discountListUrl,
+    // TODO: implement getFilterQueryParam when new filter will be implemented
+    getFilterQueryParam: () => 0,
+    navigate,
+    params,
+    keepActiveTab: true,
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     DiscountListUrlDialog,
