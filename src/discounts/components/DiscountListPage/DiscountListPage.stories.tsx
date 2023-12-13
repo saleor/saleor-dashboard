@@ -1,4 +1,5 @@
 import { DiscountListUrlSortField } from "@dashboard/discounts/discountsUrls";
+import { discountList } from "@dashboard/discounts/fixtures";
 import {
   filterPresetsProps,
   pageListProps,
@@ -17,10 +18,10 @@ const props: DiscountListPageProps = {
   ...filterPresetsProps,
   settings: {
     ...pageListProps.default.settings,
-    columns: ["name", "startDate", "endDate", "value"],
+    columns: ["name", "startDate", "endDate"],
   },
 
-  promotions: [],
+  promotions: discountList,
   sort: {
     ...sortPageProps.sort,
     sort: DiscountListUrlSortField.name,
@@ -28,7 +29,7 @@ const props: DiscountListPageProps = {
 };
 
 const meta: Meta<typeof DiscountListPage> = {
-  title: "Discounts / Sale list",
+  title: "Discounts / Discount list",
   decorators: [PaginatorContextDecorator],
   component: DiscountListPage,
 };
@@ -58,17 +59,6 @@ export const Loading: Story = {
 export const NoData: Story = {
   args: {
     ...props,
-    promotions: [],
-  },
-  parameters: {
-    chromatic: { diffThreshold: 0.85 },
-  },
-};
-
-export const NoChannels: Story = {
-  args: {
-    ...props,
-    // promotions: saleList.map(sale => ({ ...sale, channelListings: [] })),
     promotions: [],
   },
   parameters: {
