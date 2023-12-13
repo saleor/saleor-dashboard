@@ -12,6 +12,7 @@ const props: DiscountDetailsPageProps = {
   disabled: false,
   onBack: () => undefined,
   onSubmit: () => undefined,
+  onDelete: () => undefined,
   ruleConditionsOptionsDetailsMap: {},
   errors: [],
   onRuleCreateSubmit: () => Promise.resolve([]),

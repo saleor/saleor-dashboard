@@ -16,7 +16,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { canBeSorted } from "../../views/SaleList/sort";
+import { canBeSorted } from "../../views/DiscountList/sort";
 import {
   createGetCellContent,
   salesListStaticColumnsAdapter,

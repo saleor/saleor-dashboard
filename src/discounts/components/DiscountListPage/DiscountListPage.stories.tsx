@@ -17,9 +17,6 @@ const props: DiscountListPageProps = {
   ...sortPageProps,
   ...filterPresetsProps,
   onFilterChange: () => undefined,
-  selectedSaleIds: [],
-  onSelectSaleIds: () => {},
-  onSalesDelete: () => {},
   settings: {
     ...pageListProps.default.settings,
     columns: ["name", "startDate", "endDate", "value"],
@@ -52,7 +49,6 @@ const props: DiscountListPageProps = {
     },
   },
   promotions: [],
-  selectedChannelId: "123",
   sort: {
     ...sortPageProps.sort,
     sort: SaleListUrlSortField.name,
@@ -102,7 +98,6 @@ export const NoChannels: Story = {
     ...props,
     // promotions: saleList.map(sale => ({ ...sale, channelListings: [] })),
     promotions: [],
-    selectedChannelId: "",
   },
   parameters: {
     chromatic: { diffThreshold: 0.85 },

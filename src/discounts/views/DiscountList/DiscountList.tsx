@@ -99,7 +99,7 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
     });
 
   useEffect(() => {
-    if (!canBeSorted(params?.sort, !!selectedChannel)) {
+    if (!canBeSorted(params?.sort)) {
       navigate(
         saleListUrl({
           ...params,
