@@ -11,8 +11,8 @@ jest.mock("./useMenuStructure", () => ({
   useMenuStructure: jest.fn(() => []),
 }));
 
-jest.mock("./useEnvironmentLink", () => ({
-  useEnvironmentLink: jest.fn(() => ({ canRender: true })),
+jest.mock("@dashboard/auth/hooks/useCloud", () => ({
+  useCloud: jest.fn(() => ({ isAuthenticatedViaCloud: true })),
 }));
 
 describe("Sidebar menu", () => {
