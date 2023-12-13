@@ -9608,6 +9608,18 @@ export type SaleListQueryVariables = Exact<{
 
 export type SaleListQuery = { __typename: 'Query', sales: { __typename: 'SaleCountableConnection', edges: Array<{ __typename: 'SaleCountableEdge', node: { __typename: 'Sale', id: string, name: string, type: SaleType, startDate: any, endDate: any | null, channelListings: Array<{ __typename: 'SaleChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
+export type PromotionsListQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PromotionWhereInput>;
+  sort?: InputMaybe<PromotionSortingInput>;
+}>;
+
+
+export type PromotionsListQuery = { __typename: 'Query', promotions: { __typename: 'PromotionCountableConnection', edges: Array<{ __typename: 'PromotionCountableEdge', node: { __typename: 'Promotion', id: string, name: string, startDate: any, endDate: any | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
 export type VoucherListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -9756,6 +9768,8 @@ export type VoucherDetailsFragment = { __typename: 'Voucher', usageLimit: number
 export type PromotionRuleDetailsFragment = { __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
 
 export type PromotionDetailsFragment = { __typename: 'Promotion', id: string, name: string, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null };
+
+export type PromotionFragment = { __typename: 'Promotion', id: string, name: string, startDate: any, endDate: any | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type AttributeErrorFragment = { __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null };
 

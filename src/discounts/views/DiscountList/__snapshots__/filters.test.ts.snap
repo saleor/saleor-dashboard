@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filtering URL params should not be empty if active filters are present 1`] = `
+Object {
+  "channel": "default-channel",
+  "startedFrom": "2019-12-09",
+  "startedTo": "2019-12-38",
+  "status": Array [
+    "ACTIVE",
+    "EXPIRED",
+  ],
+  "type": "FIXED",
+}
+`;
+
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"channel=default-channel&startedFrom=2019-12-09&startedTo=2019-12-38&status%5B0%5D=ACTIVE&status%5B1%5D=EXPIRED&type=FIXED"`;
