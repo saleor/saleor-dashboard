@@ -2958,6 +2958,9 @@
     "context": "gift card bulk create success dialog export button",
     "string": "Export To Email"
   },
+  "IYuKD6": {
+    "string": "No discounts found"
+  },
   "Iafyt5": {
     "context": "page attribute entity type",
     "string": "Pages"

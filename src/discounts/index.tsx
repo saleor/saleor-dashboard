@@ -8,6 +8,10 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
+  DiscountListUrlQueryParams,
+  DiscountListUrlSortField,
+} from "./discountsUrls";
+import {
   saleAddPath,
   saleListPath,
   SaleListUrlQueryParams,
@@ -37,6 +41,10 @@ const SaleListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const { enabled } = useFlag("discounts_rules");
 
   if (enabled) {
+    const params: DiscountListUrlQueryParams = asSortParams(
+      qs,
+      DiscountListUrlSortField,
+    );
     return <DiscountList params={params} />;
   }
 

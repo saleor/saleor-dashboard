@@ -1,64 +1,35 @@
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { getByName } from "@dashboard/components/Filter/utils";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
-  saleAddUrl,
-  SaleListUrlSortField,
-  saleUrl,
-} from "@dashboard/discounts/urls";
+  discountAddUrl,
+  DiscountListUrlSortField,
+  discountUrl,
+} from "@dashboard/discounts/discountsUrls";
 import { PromotionFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
-import {
-  FilterPagePropsWithPresets,
-  PageListProps,
-  SortPage,
-} from "@dashboard/types";
+import { PageListProps, SortPage } from "@dashboard/types";
 import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { DiscountListDatagrid } from "../DiscountListDatagrid";
-import {
-  createFilterStructure,
-  SaleFilterKeys,
-  SaleListFilterOpts,
-} from "./filters";
 
 export interface DiscountListPageProps
   extends PageListProps,
-    FilterPagePropsWithPresets<SaleFilterKeys, SaleListFilterOpts>,
-    SortPage<SaleListUrlSortField> {
+    SortPage<DiscountListUrlSortField> {
   promotions: PromotionFragment[];
 }
 
 const DiscountListPage: React.FC<DiscountListPageProps> = ({
-  filterOpts,
-  initialSearch,
-  onFilterChange,
-  onSearchChange,
-  onFilterPresetChange,
-  onFilterPresetDelete,
-  onFilterPresetPresetSave,
-  onFilterPresetUpdate,
-  onFilterPresetsAll,
-  hasPresetsChanged,
-  filterPresets,
-  selectedFilterPreset,
-  currencySymbol,
   ...listProps
 }) => {
   const intl = useIntl();
   const navigation = useNavigator();
-  const structure = createFilterStructure(intl, filterOpts);
-  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const filterDependency = structure.find(getByName("channel"));
 
   const handleRowClick = (id: string) => {
-    navigation(saleUrl(id));
+    navigation(discountUrl(id));
   };
 
   return (
@@ -78,28 +49,10 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
             <Box marginX={3} display="flex" alignItems="center">
               <ChevronRightIcon />
             </Box>
-
-            <FilterPresetsSelect
-              presetsChanged={hasPresetsChanged()}
-              onSelect={onFilterPresetChange}
-              onRemove={onFilterPresetDelete}
-              onUpdate={onFilterPresetUpdate}
-              savedPresets={filterPresets}
-              activePreset={selectedFilterPreset}
-              onSelectAll={onFilterPresetsAll}
-              onSave={onFilterPresetPresetSave}
-              isOpen={isFilterPresetOpen}
-              onOpenChange={setFilterPresetOpen}
-              selectAllLabel={intl.formatMessage({
-                id: "a6GDem",
-                defaultMessage: "All discounts",
-                description: "tab name",
-              })}
-            />
           </Box>
           <Box>
             <Button
-              onClick={() => navigation(saleAddUrl())}
+              onClick={() => navigation(discountAddUrl())}
               variant="primary"
               data-test-id="create-sale"
             >
@@ -114,24 +67,7 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
       </TopNav>
 
       <Card>
-        <ListFilters<SaleFilterKeys>
-          currencySymbol={currencySymbol}
-          initialSearch={initialSearch}
-          onFilterChange={onFilterChange}
-          onSearchChange={onSearchChange}
-          filterStructure={structure}
-          searchPlaceholder={intl.formatMessage({
-            id: "+bhokL",
-            defaultMessage: "Search discounts...",
-          })}
-        />
-
-        <DiscountListDatagrid
-          {...listProps}
-          hasRowHover={!isFilterPresetOpen}
-          filterDependency={filterDependency}
-          onRowClick={handleRowClick}
-        />
+        <DiscountListDatagrid {...listProps} onRowClick={handleRowClick} />
       </Card>
     </ListPageLayout>
   );

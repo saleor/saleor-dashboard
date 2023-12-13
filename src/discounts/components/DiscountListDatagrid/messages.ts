@@ -16,16 +16,11 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Ends",
     description: "sale end date",
   },
-  value: {
-    id: "XZR590",
-    defaultMessage: "Value",
-    description: "sale value",
-  },
 });
 
 export const messages = defineMessages({
   empty: {
-    id: "U2mOqA",
-    defaultMessage: "No vouchers found",
+    id: "IYuKD6",
+    defaultMessage: "No discounts found",
   },
 });

@@ -2,7 +2,7 @@ import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
-import { SaleListUrlSortField } from "@dashboard/discounts/urls";
+import { DiscountListUrlSortField } from "@dashboard/discounts/discountsUrls";
 import { PromotionFragment } from "@dashboard/graphql";
 import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
@@ -12,9 +12,9 @@ import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const salesListStaticColumnsAdapter = (
+export const dicountListStaticColumnsAdapter = (
   intl: IntlShape,
-  sort: Sort<SaleListUrlSortField>,
+  sort: Sort<DiscountListUrlSortField>,
 ) =>
   [
     {

@@ -1,19 +1,19 @@
 // @ts-strict-ignore
-import { SaleListUrlSortField } from "@dashboard/discounts/urls";
+import { DiscountListUrlSortField } from "@dashboard/discounts/discountsUrls";
 import { PromotionSortField } from "@dashboard/graphql";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
-export const DEFAULT_SORT_KEY = SaleListUrlSortField.name;
+export const DEFAULT_SORT_KEY = DiscountListUrlSortField.name;
 
-export function canBeSorted(sort: SaleListUrlSortField | undefined) {
+export function canBeSorted(sort: DiscountListUrlSortField | undefined) {
   if (sort === undefined) {
     return false;
   }
 
   switch (sort) {
-    case SaleListUrlSortField.name:
-    case SaleListUrlSortField.startDate:
-    case SaleListUrlSortField.endDate:
+    case DiscountListUrlSortField.name:
+    case DiscountListUrlSortField.startDate:
+    case DiscountListUrlSortField.endDate:
       return true;
     default:
       return false;
@@ -21,14 +21,14 @@ export function canBeSorted(sort: SaleListUrlSortField | undefined) {
 }
 
 export function getSortQueryField(
-  sort: SaleListUrlSortField,
+  sort: DiscountListUrlSortField,
 ): PromotionSortField {
   switch (sort) {
-    case SaleListUrlSortField.name:
+    case DiscountListUrlSortField.name:
       return PromotionSortField.NAME;
-    case SaleListUrlSortField.startDate:
+    case DiscountListUrlSortField.startDate:
       return PromotionSortField.START_DATE;
-    case SaleListUrlSortField.endDate:
+    case DiscountListUrlSortField.endDate:
       return PromotionSortField.END_DATE;
     default:
       return undefined;

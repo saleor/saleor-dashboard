@@ -6,8 +6,10 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
-import { SaleListUrlSortField, saleUrl } from "@dashboard/discounts/urls";
+import {
+  DiscountListUrlSortField,
+  discountUrl,
+} from "@dashboard/discounts/discountsUrls";
 import { PromotionFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { ListProps, SortPage } from "@dashboard/types";
@@ -19,13 +21,13 @@ import { useIntl } from "react-intl";
 import { canBeSorted } from "../../views/DiscountList/sort";
 import {
   createGetCellContent,
-  salesListStaticColumnsAdapter,
+  dicountListStaticColumnsAdapter,
 } from "./datagrid";
 import { messages } from "./messages";
 
 interface DiscountListDatagridProps
   extends ListProps,
-    SortPage<SaleListUrlSortField> {
+    SortPage<DiscountListUrlSortField> {
   promotions: PromotionFragment[];
   onRowClick: (id: string) => void;
   hasRowHover?: boolean;
@@ -36,7 +38,6 @@ export const DiscountListDatagrid = ({
   onSort,
   promotions,
   sort,
-  filterDependency,
   onUpdateListSettings,
   onRowClick,
   hasRowHover = true,
@@ -46,8 +47,8 @@ export const DiscountListDatagrid = ({
   const { locale } = useLocale();
   const datagrid = useDatagridChangeState();
 
-  const collectionListStaticColumns = useMemo(
-    () => salesListStaticColumnsAdapter(intl, sort),
+  const discountListStaticColumns = useMemo(
+    () => dicountListStaticColumnsAdapter(intl, sort),
     [intl, sort],
   );
 
@@ -67,7 +68,7 @@ export const DiscountListDatagrid = ({
     selectedColumns,
     recentlyAddedColumn,
   } = useColumns({
-    staticColumns: collectionListStaticColumns,
+    staticColumns: discountListStaticColumns,
     selectedColumns: settings?.columns ?? [],
     onSave: onColumnChange,
   });
@@ -93,29 +94,13 @@ export const DiscountListDatagrid = ({
   );
 
   const handleRowAnchor = useCallback(
-    ([, row]: Item) => saleUrl(promotions[row].id),
+    ([, row]: Item) => discountUrl(promotions[row].id),
     [promotions],
-  );
-
-  const handleGetColumnTooltipContent = useCallback(
-    (col: number): string => {
-      const columnName = visibleColumns[col].id as SaleListUrlSortField;
-
-      if (canBeSorted(columnName)) {
-        return "";
-      }
-
-      // Sortable but requrie selected channel
-      return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-        filterName: filterDependency?.label ?? "",
-      });
-    },
-    [filterDependency, intl, visibleColumns],
   );
 
   const handleHeaderClick = useCallback(
     (col: number) => {
-      const columnName = visibleColumns[col].id as SaleListUrlSortField;
+      const columnName = visibleColumns[col].id as DiscountListUrlSortField;
 
       if (canBeSorted(columnName)) {
         onSort(columnName);
@@ -145,7 +130,6 @@ export const DiscountListDatagrid = ({
         onRowClick={handleRowClick}
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
-        getColumnTooltipContent={handleGetColumnTooltipContent}
         recentlyAddedColumn={recentlyAddedColumn}
         renderColumnPicker={() => (
           <ColumnPicker
