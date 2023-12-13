@@ -10,6 +10,7 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import { commonMessages } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
@@ -41,6 +42,11 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       sort: getSortQueryVariables(params),
+      where: {
+        ...(params?.query && {
+          name: { eq: params.query },
+        }),
+      },
     }),
     [params, settings.rowNumber],
   );
@@ -52,6 +58,17 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
 
   const promotions: PromotionFragment[] =
     mapEdgesToItems(data?.promotions) ?? [];
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      createUrl: discountListUrl,
+      // TODO: implement getFilterQueryParam when new filter will be implemented
+      getFilterQueryParam: () => undefined,
+      navigate,
+      params,
+      keepActiveTab: true,
+    });
 
   useEffect(() => {
     if (!canBeSorted(params?.sort)) {
@@ -82,6 +99,8 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
+        onSearchChange={handleSearchChange}
+        initialSearch={params.query || ""}
       />
     </PaginatorContext.Provider>
   );

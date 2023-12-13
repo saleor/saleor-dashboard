@@ -14,7 +14,9 @@ export type DiscountListUrlSort = Sort<DiscountListUrlSortField>;
 
 export type DiscountListUrlQueryParams = Dialog<DiscountListUrlDialog> &
   Pagination &
-  DiscountListUrlSort;
+  DiscountListUrlSort & {
+    query?: string;
+  };
 
 export const discountListUrl = (params?: DiscountListUrlQueryParams) =>
   "/discounts/sales" + "?" + stringifyQs(params);
