@@ -9573,6 +9573,13 @@ export type PromotionUpdateMutationVariables = Exact<{
 
 export type PromotionUpdateMutation = { __typename: 'Mutation', promotionUpdate: { __typename: 'PromotionUpdate', errors: Array<{ __typename: 'PromotionUpdateError', field: string | null, message: string | null, code: PromotionUpdateErrorCode }> } | null };
 
+export type PromotionDeleteMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PromotionDeleteMutation = { __typename: 'Mutation', promotionDelete: { __typename: 'PromotionDelete', errors: Array<{ __typename: 'PromotionDeleteError', field: string | null, message: string | null, code: PromotionDeleteErrorCode }> } | null };
+
 export type PromotionRuleUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
   input: PromotionRuleUpdateInput;
@@ -9788,6 +9795,8 @@ export type DiscountErrorFragment = { __typename: 'DiscountError', code: Discoun
 export type PromotionCreateErrorFragment = { __typename: 'PromotionCreateError', field: string | null, message: string | null, code: PromotionCreateErrorCode, index: number | null };
 
 export type PromotionUpdateErrorFragment = { __typename: 'PromotionUpdateError', field: string | null, message: string | null, code: PromotionUpdateErrorCode };
+
+export type PromotionDeleteErrorFragment = { __typename: 'PromotionDeleteError', field: string | null, message: string | null, code: PromotionDeleteErrorCode };
 
 export type PromotionRuleUpdateErrorFragment = { __typename: 'PromotionRuleUpdateError', field: string | null, message: string | null, code: PromotionRuleUpdateErrorCode, channels: Array<string> | null };
 

@@ -76,6 +76,14 @@ export const promotionUpdateErrorFragment = gql`
   }
 `;
 
+export const promotionDeleteErrorFragment = gql`
+  fragment PromotionDeleteError on PromotionDeleteError {
+    field
+    message
+    code
+  }
+`;
+
 export const promotionRuleUpdateErrorFragment = gql`
   fragment PromotionRuleUpdateError on PromotionRuleUpdateError {
     field

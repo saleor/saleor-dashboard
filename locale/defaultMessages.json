@@ -948,6 +948,9 @@
   "4Kq3O6": {
     "string": "This unit will be used as default shipping weight"
   },
+  "4LRapg": {
+    "string": "Discount removed"
+  },
   "4PlW0w": {
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
@@ -5470,6 +5473,9 @@
     "context": "order was discounted event title",
     "string": "Order was discounted by"
   },
+  "ZrIt1W": {
+    "string": "Delete discount"
+  },
   "ZuqkSp": {
     "context": "note input subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
@@ -8861,6 +8867,9 @@
   },
   "yT5zvU": {
     "string": "{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
+  },
+  "yWMZKn": {
+    "string": "Are you sure you want to delete this discount"
   },
   "yZB41s": {
     "context": "section header",

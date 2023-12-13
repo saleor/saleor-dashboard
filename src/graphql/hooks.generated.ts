@@ -731,6 +731,13 @@ export const PromotionUpdateErrorFragmentDoc = gql`
   code
 }
     `;
+export const PromotionDeleteErrorFragmentDoc = gql`
+    fragment PromotionDeleteError on PromotionDeleteError {
+  field
+  message
+  code
+}
+    `;
 export const PromotionRuleUpdateErrorFragmentDoc = gql`
     fragment PromotionRuleUpdateError on PromotionRuleUpdateError {
   field
@@ -7882,6 +7889,41 @@ export function usePromotionUpdateMutation(baseOptions?: ApolloReactHooks.Mutati
 export type PromotionUpdateMutationHookResult = ReturnType<typeof usePromotionUpdateMutation>;
 export type PromotionUpdateMutationResult = Apollo.MutationResult<Types.PromotionUpdateMutation>;
 export type PromotionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>;
+export const PromotionDeleteDocument = gql`
+    mutation PromotionDelete($id: ID!) {
+  promotionDelete(id: $id) {
+    errors {
+      ...PromotionDeleteError
+    }
+  }
+}
+    ${PromotionDeleteErrorFragmentDoc}`;
+export type PromotionDeleteMutationFn = Apollo.MutationFunction<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>;
+
+/**
+ * __usePromotionDeleteMutation__
+ *
+ * To run a mutation, you first call `usePromotionDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePromotionDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [promotionDeleteMutation, { data, loading, error }] = usePromotionDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePromotionDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>(PromotionDeleteDocument, options);
+      }
+export type PromotionDeleteMutationHookResult = ReturnType<typeof usePromotionDeleteMutation>;
+export type PromotionDeleteMutationResult = Apollo.MutationResult<Types.PromotionDeleteMutation>;
+export type PromotionDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>;
 export const PromotionRuleUpdateDocument = gql`
     mutation PromotionRuleUpdate($id: ID!, $input: PromotionRuleUpdateInput!) {
   promotionRuleUpdate(id: $id, input: $input) {
