@@ -1,5 +1,6 @@
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
@@ -11,7 +12,6 @@ import { PromotionFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { FilterPresetsProps, PageListProps, SortPage } from "@dashboard/types";
-import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -101,7 +101,7 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
         </Box>
       </TopNav>
 
-      <Card>
+      <DashboardCard>
         <Box __width="320px" marginLeft={4} marginBottom={2}>
           {/* TODO: remove when new fileters will be implemented */}
           <SearchInput
@@ -114,7 +114,7 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
           />
         </Box>
         <DiscountListDatagrid {...listProps} onRowClick={handleRowClick} />
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };
