@@ -33,7 +33,6 @@ export const EnvironmentLink = () => {
     >
       <Box paddingY={1.5} gap={3} display="flex" alignItems="center">
         <EnvironmentIcon color="default2" size="medium" />
-        <div>icon</div>
         <Text size="small" variant="bodyEmp">
           <FormattedMessage defaultMessage="Open environment" id="xgpgVX" />
         </Text>
