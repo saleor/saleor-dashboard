@@ -1,4 +1,4 @@
-import { Box, EnvironmentIcon, List, Text } from "@saleor/macaw-ui-next";
+import { ArrowLeftIcon, Box, List, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -32,7 +32,7 @@ export const EnvironmentLink = () => {
       target="__blank"
     >
       <Box paddingY={1.5} gap={3} display="flex" alignItems="center">
-        <EnvironmentIcon color="default2" size="medium" />
+        <ArrowLeftIcon color="default2" size="medium" />
         <Text size="small" variant="bodyEmp">
           <FormattedMessage defaultMessage="Open environment" id="xgpgVX" />
         </Text>
