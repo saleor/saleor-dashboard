@@ -33,7 +33,7 @@ export const Menu: React.FC<TopNavMenuProps> = ({ items, dataTestId }) => (
         <List
           padding={2}
           borderRadius={4}
-          boxShadow="overlay"
+          boxShadow="defaultOverlay"
           backgroundColor="default1"
         >
           {items.map(item => (
