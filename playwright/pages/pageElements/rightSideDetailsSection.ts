@@ -1,4 +1,4 @@
-import type { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 
 export class RightSideDetailsPage {
   readonly page: Page;
@@ -87,6 +87,7 @@ export class RightSideDetailsPage {
     await this.categorySelectOption.first().click();
   }
   async selectFirstTax() {
+    await expect(this.taxInput.locator("input")).not.toBeDisabled();
     await this.taxInput.click();
     await this.taxSelectOption.first().click();
   }
