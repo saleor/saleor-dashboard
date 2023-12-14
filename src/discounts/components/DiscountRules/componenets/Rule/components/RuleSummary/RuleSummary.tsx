@@ -1,4 +1,4 @@
-import { Rule } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/models";
 import { RewardValueTypeEnum } from "@dashboard/graphql";
 import {
   Box,

@@ -1,4 +1,4 @@
-import { Rule as RuleType } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/models";
 import { ChannelFragment } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import {
@@ -18,7 +18,7 @@ import { RuleSummary } from "../Rule/components/RuleSummary";
 import { RuleWrapper } from "../Rule/components/RuleWrapper";
 
 interface RulesListProps<ErrorCode> {
-  rules: RuleType[];
+  rules: Rule[];
   disabled?: boolean;
   channels: ChannelFragment[];
   errors: Array<CommonError<ErrorCode> & { index?: number }>;

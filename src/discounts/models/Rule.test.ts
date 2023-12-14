@@ -3,54 +3,39 @@ import {
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
-import { Rule } from "../types";
-import { RuleDTO } from "./dto";
+import { Condition } from "./Condition";
+import { Rule } from "./Rule";
 
-describe("RuleDTO", () => {
+describe("Rule model", () => {
   it("should transform domain object to API format", () => {
-    const rule = {
-      name: "name",
-      description: '{"text":"description"}',
-      channel: { value: "channel_1", label: "Channel 1" },
-      rewardValue: 1,
-      rewardValueType: RewardValueTypeEnum.FIXED,
-      conditions: [
-        {
-          type: "product",
-          condition: "is",
-          values: [
-            { value: "prod_1", label: "Product 1" },
-            { value: "prod_2", label: "Product 2" },
-          ],
-        },
-        {
-          type: "category",
-          condition: "is",
-          values: [
-            { value: "cat_1", label: "Category 1" },
-            { value: "cat_2", label: "Category 2" },
-          ],
-        },
-        {
-          type: "collection",
-          condition: "is",
-          values: [
-            { value: "coll_1", label: "Collection 1" },
-            { value: "coll_2", label: "Collection 2" },
-          ],
-        },
-        {
-          type: "variant",
-          condition: "is",
-          values: [
-            { value: "var_1", label: "Variant 1" },
-            { value: "var_2", label: "Variant 2" },
-          ],
-        },
+    const rule = new Rule(
+      "rule_1",
+      "name",
+      '{"text":"description"}',
+      { label: "Channel 1", value: "channel_1" },
+      1,
+      RewardValueTypeEnum.FIXED,
+      [
+        new Condition("product", "is", [
+          { value: "prod_1", label: "prod_1" },
+          { value: "prod_2", label: "prod_2" },
+        ]),
+        new Condition("category", "is", [
+          { value: "cat_1", label: "cat_1" },
+          { value: "cat_2", label: "cat_2" },
+        ]),
+        new Condition("collection", "is", [
+          { value: "coll_1", label: "coll_1" },
+          { value: "coll_2", label: "coll_2" },
+        ]),
+        new Condition("variant", "is", [
+          { value: "var_1", label: "var_1" },
+          { value: "var_2", label: "var_2" },
+        ]),
       ],
-    } as Rule;
+    );
 
-    expect(RuleDTO.toAPI(rule)).toEqual({
+    expect(rule.toAPI()).toEqual({
       cataloguePredicate: {
         OR: [
           {
@@ -85,6 +70,7 @@ describe("RuleDTO", () => {
 
   it("should transform API object to domain format", () => {
     const rule = {
+      id: "rule_1",
       name: "name",
       description: { text: "description" },
       channels: [{ id: "channel_1", name: "Channel 1" }],
@@ -116,9 +102,10 @@ describe("RuleDTO", () => {
       },
     } as PromotionRuleDetailsFragment;
 
-    expect(RuleDTO.fromAPI(rule, {})).toEqual({
-      channel: { value: "channel_1", label: "Channel 1" },
+    expect(Rule.fromAPI(rule, {})).toMatchObject({
+      id: "rule_1",
       name: "name",
+      channel: { label: "Channel 1", value: "channel_1" },
       description: '{"text":"description"}',
       rewardValue: 1,
       rewardValueType: RewardValueTypeEnum.FIXED,

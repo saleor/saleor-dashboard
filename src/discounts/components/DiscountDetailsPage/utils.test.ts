@@ -1,4 +1,4 @@
-import { Rule } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/models";
 import {
   PromotionRuleDetailsFragment,
   RewardValueTypeEnum,
@@ -21,13 +21,13 @@ describe("DiscountDetailsPage, utils", () => {
         },
       ] as PromotionRuleDetailsFragment[];
 
-      const formRules: Rule[] = [
+      const formRules = [
         {
           id: "1",
           name: "rule 1",
           channel: null,
           conditions: [],
-          description: "",
+          description: null,
           rewardValue: 10,
           rewardValueType: RewardValueTypeEnum.FIXED,
         },
@@ -36,11 +36,11 @@ describe("DiscountDetailsPage, utils", () => {
           name: "rule 2",
           channel: null,
           conditions: [],
-          description: "",
+          description: null,
           rewardValue: 20,
           rewardValueType: RewardValueTypeEnum.PERCENTAGE,
         },
-      ];
+      ] as unknown as Rule[];
       const dirtyRulesIndexes = ["1"];
 
       // Act
@@ -75,7 +75,7 @@ describe("DiscountDetailsPage, utils", () => {
         },
       ] as PromotionRuleDetailsFragment[];
 
-      const formRules: Rule[] = [
+      const formRules = [
         {
           id: "1",
           name: "rule 1",
@@ -102,7 +102,7 @@ describe("DiscountDetailsPage, utils", () => {
           rewardValue: 0,
           rewardValueType: RewardValueTypeEnum.PERCENTAGE,
         },
-      ];
+      ] as unknown as Rule[];
       const dirtyRulesIndexes = ["0"];
 
       // Act
@@ -145,7 +145,7 @@ describe("DiscountDetailsPage, utils", () => {
         },
       ] as PromotionRuleDetailsFragment[];
 
-      const formRules: Rule[] = [
+      const formRules = [
         {
           id: "1",
           name: "rule 1",
@@ -164,7 +164,7 @@ describe("DiscountDetailsPage, utils", () => {
           rewardValue: 20,
           rewardValueType: RewardValueTypeEnum.PERCENTAGE,
         },
-      ];
+      ] as unknown as Rule[];
       const dirtyRulesIndexes: string[] = [];
 
       // Act

@@ -3,7 +3,7 @@ import {
   ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { initialRuleValues } from "@dashboard/discounts/components/DiscountCreatePage/initialFormValues";
+import { Rule } from "@dashboard/discounts/models";
 import {
   ChannelFragment,
   PromotionCreateErrorFragment,
@@ -16,23 +16,23 @@ import React, { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ConditionType, Rule as RuleType } from "../../../../types";
+import { ConditionType } from "../../../../types";
 import { messages } from "../../messages";
 import { FetchOptions } from "../Rule/components/RuleConditionRow";
 import { useCategorieSearch } from "../Rule/components/RuleConditions/hooks/useCategorieSearch";
 import { useCollectionSearch } from "../Rule/components/RuleConditions/hooks/useCollectionSearch";
 import { useProductSearch } from "../Rule/components/RuleConditions/hooks/useProductSearch";
 import { useVariantSearch } from "../Rule/components/RuleConditions/hooks/useVariantSearch";
-import { Rule } from "../Rule/Rule";
+import { Rule as RuleComponent } from "../Rule/Rule";
 import { getValidationSchema } from "./validationSchema";
 
 interface RuleModalProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: (data: RuleType) => Promise<void>;
+  onSubmit: (data: Rule) => Promise<void>;
   confimButtonState: ConfirmButtonTransitionState;
   channels: ChannelFragment[];
-  initialFormValues?: RuleType;
+  initialFormValues?: Rule;
   errors: Array<CommonError<PromotionCreateErrorFragment["code"]>>;
 }
 
@@ -46,9 +46,9 @@ export const RuleModal = ({
   errors,
 }: RuleModalProps) => {
   const intl = useIntl();
-  const methods = useForm<RuleType>({
+  const methods = useForm<Rule>({
     mode: "onBlur",
-    values: initialFormValues || initialRuleValues,
+    values: initialFormValues || Rule.empty(),
     resolver: zodResolver(getValidationSchema(intl)),
   });
 
@@ -68,13 +68,13 @@ export const RuleModal = ({
     variant: variantSearch,
   };
 
-  const handleSubmit: SubmitHandler<RuleType> = async data => {
+  const handleSubmit: SubmitHandler<Rule> = async data => {
     await onSubmit(data);
   };
 
   useEffect(() => {
     if (!initialFormValues && open) {
-      methods.reset(initialRuleValues);
+      methods.reset(Rule.empty());
     }
   }, [open]);
 
@@ -99,7 +99,7 @@ export const RuleModal = ({
               __maxHeight="75vh"
               overflowY="auto"
             >
-              <Rule
+              <RuleComponent
                 channels={channels}
                 errors={errors}
                 disabled={false}

@@ -1,4 +1,4 @@
-import { intialConditionValues } from "@dashboard/discounts/components/DiscountCreatePage/initialFormValues";
+import { Condition, Rule as RuleType } from "@dashboard/discounts/models";
 import {
   ChannelFragment,
   PromotionCreateErrorFragment,
@@ -17,7 +17,7 @@ import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { ConditionType, Rule as RuleType } from "../../../../types";
+import { ConditionType } from "../../../../types";
 import { getCurencySymbol } from "../../utils";
 import { FetchOptions } from "./components/RuleConditionRow";
 import { RuleConditions } from "./components/RuleConditions";
@@ -97,7 +97,7 @@ export const Rule = ({
               {...channelfield}
               onChange={selectedChannel => {
                 channelfield.onChange(selectedChannel);
-                setValue("conditions", [{ ...intialConditionValues }]);
+                setValue("conditions", [Condition.empty()]);
               }}
               size="small"
               data-test-id="channel-dropdown"

@@ -3,7 +3,8 @@ import {
   hueToPillColorLight,
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
-import { Condition, ConditionType } from "@dashboard/discounts/types";
+import { Condition } from "@dashboard/discounts/models";
+import { ConditionType } from "@dashboard/discounts/types";
 import { DefaultTheme, Option } from "@saleor/macaw-ui-next";
 
 const MAX_ITEMS_TO_SHOW = 3;

@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Rule } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/models";
 import { ChannelFragment } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";

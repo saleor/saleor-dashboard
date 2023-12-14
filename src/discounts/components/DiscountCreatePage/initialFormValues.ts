@@ -1,5 +1,4 @@
-import { Condition, DiscoutFormData, Rule } from "@dashboard/discounts/types";
-import { RewardValueTypeEnum } from "@dashboard/graphql";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 
 export const initialFormValues: DiscoutFormData = {
   name: "",
@@ -12,19 +11,4 @@ export const initialFormValues: DiscoutFormData = {
     startTime: "",
   },
   rules: [],
-};
-
-export const intialConditionValues: Condition = {
-  type: null,
-  condition: "is",
-  values: [],
-};
-
-export const initialRuleValues: Rule = {
-  channel: null,
-  description: "",
-  name: "",
-  rewardValue: null,
-  conditions: [{ ...intialConditionValues }],
-  rewardValueType: RewardValueTypeEnum.PERCENTAGE,
 };

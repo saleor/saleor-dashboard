@@ -1,5 +1,5 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
-import { Condition, Rule } from "@dashboard/discounts/types";
+import { Condition, Rule } from "@dashboard/discounts/models";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { Box, Button, Option, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -75,7 +75,8 @@ export const RuleConditionRow = ({
           fetchOptions={() => {}}
           options={discountConditionType}
           onChange={e => {
-            updateCondition(conditionIndex, { ...condition, values: [] });
+            condition.values = [];
+            updateCondition(conditionIndex, condition);
             typeField.onChange(e.target.value);
           }}
           data-test-id="rule-type"

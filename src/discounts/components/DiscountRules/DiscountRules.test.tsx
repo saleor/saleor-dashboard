@@ -1,4 +1,4 @@
-import { Rule } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/models";
 import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
@@ -26,7 +26,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
   );
 };
 
-const rules: Rule[] = [
+const rules = [
   {
     id: "cat-1",
     name: "Catalog rule 1",
@@ -60,7 +60,7 @@ const rules: Rule[] = [
     rewardValue: 34,
     rewardValueType: RewardValueTypeEnum.PERCENTAGE,
   },
-];
+] as Rule[];
 
 describe("DiscountRules", () => {
   it("should render placeholder when no rules", () => {

@@ -1,4 +1,4 @@
-import { Rule } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/models";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";

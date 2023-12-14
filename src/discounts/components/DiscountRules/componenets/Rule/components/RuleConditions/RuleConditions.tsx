@@ -1,5 +1,5 @@
-import { intialConditionValues } from "@dashboard/discounts/components/DiscountCreatePage/initialFormValues";
-import { ConditionType, Rule } from "@dashboard/discounts/types";
+import { Condition, Rule } from "@dashboard/discounts/models";
+import { ConditionType } from "@dashboard/discounts/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
@@ -75,7 +75,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append({ ...intialConditionValues })}
+          onClick={() => append(Condition.empty())}
         >
           Add condition
         </Button>

@@ -1,6 +1,6 @@
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
-import { Rule } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/models";
 import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { Box, Text } from "@saleor/macaw-ui-next";

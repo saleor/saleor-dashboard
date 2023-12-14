@@ -1,5 +1,5 @@
 import { FetchResult } from "@apollo/client";
-import { RuleDTO } from "@dashboard/discounts/dto/dto";
+import { Rule } from "@dashboard/discounts/models";
 import {
   PromotionDetailsFragment,
   PromotionRuleCreateMutation,
@@ -12,7 +12,7 @@ import {
 import { getMutationErrors, joinDateTime } from "@dashboard/misc";
 import difference from "lodash/difference";
 
-import { DiscoutFormData, Rule } from "../../types";
+import { DiscoutFormData } from "../../types";
 
 export const createUpdateHandler = (
   promotion: PromotionDetailsFragment | undefined | null,
@@ -62,7 +62,7 @@ export const createRuleUpdateHandler = (
     const ruleChannels: string[] =
       ruleData?.channels?.map(channel => channel.id) ?? [];
 
-    const { channels, ...input } = RuleDTO.toAPI(data);
+    const { channels, ...input } = data.toAPI();
 
     const response = await updateRule({
       id: data.id!,
@@ -90,7 +90,7 @@ export const createRuleCreateHandler = (
   ) => Promise<FetchResult<PromotionRuleCreateMutation>>,
 ) => {
   return async (data: Rule) => {
-    const ruleData = RuleDTO.toAPI(data);
+    const ruleData = data.toAPI();
 
     const response = await createRule({
       input: {

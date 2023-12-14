@@ -1,5 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
+import { Condition } from "@dashboard/discounts/models";
 import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
@@ -191,26 +192,24 @@ describe("RuleModal", () => {
         open={true}
         onSubmit={onSubmit}
         initialFormValues={{
+          id: "1",
           name: "Name 123",
           channel: {
             label: "PLN",
             value: "1",
           },
           conditions: [
-            {
-              type: "product",
-              condition: "is",
-              values: [
-                {
-                  label: "Bean Juice",
-                  value: "UHJvZHVjdDo3OQ==",
-                },
-              ],
-            },
+            new Condition("product", "is", [
+              {
+                label: "Bean Juice",
+                value: "UHJvZHVjdDo3OQ==",
+              },
+            ]),
           ],
           rewardValue: 22,
           rewardValueType: RewardValueTypeEnum.PERCENTAGE,
           description: "",
+          toAPI: () => ({}),
         }}
       />,
       { wrapper: Wrapper },

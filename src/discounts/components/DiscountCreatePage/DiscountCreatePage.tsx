@@ -3,7 +3,8 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
-import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/models";
+import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
   ChannelFragment,
   PromotionCreateErrorCode,
