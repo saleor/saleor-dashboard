@@ -8,6 +8,7 @@ export class BasePage {
   constructor(
     page: Page,
     readonly pageHeader = page.getByTestId("page-header"),
+    readonly searchInputListView = page.getByTestId("search-input"),
     readonly gridCanvas = page.locator('[data-testid="data-grid-canvas"]'),
     readonly gridInput = page
       .locator('[class="clip-region"]')
@@ -17,6 +18,10 @@ export class BasePage {
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
   ) {
     this.page = page;
+  }
+
+  async typeInSearchOnListView(searchItem: string) {
+    await this.searchInputListView.fill(searchItem);
   }
   async expectGridToBeAttached() {
     await expect(this.gridCanvas).toBeAttached({

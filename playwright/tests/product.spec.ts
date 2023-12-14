@@ -1,6 +1,5 @@
 import { MailpitService } from "@api/mailpit";
 import { PRODUCTS } from "@data/e2eTestData";
-import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
 import { ProductPage } from "@pages/productPage";
@@ -30,7 +29,6 @@ test("TC: SALEOR_3 Create basic product with variants @e2e @product", async ({
 test("TC: SALEOR_5 Create basic - single product type - product without variants @e2e @product", async ({
   page,
 }) => {
-  const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
 
   await productPage.gotoCreateProductPage(PRODUCTS.singleProductType.id);
@@ -110,7 +108,7 @@ test("TC: SALEOR_44 As an admin I should be able to delete a several products @b
 }) => {
   const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
-  await page.goto(URL_LIST.products);
+  await productPage.gotoProductListPage();
 
   await basePage.checkListRowsBasedOnContainingText(
     PRODUCTS.productsToBeBulkDeleted.names,
@@ -189,7 +187,7 @@ test.skip("TC: SALEOR_56 As an admin, I should be able to export products from s
   const productPage = new ProductPage(page);
   const mailpitService = new MailpitService(request);
 
-  await page.goto(URL_LIST.products);
+  await productPage.gotoProductListPage();
   await productPage.clickCogShowMoreButtonButton();
   await productPage.clickExportButton();
   await productPage.exportProductsDialog.clickChannelsAccordion();
@@ -198,8 +196,25 @@ test.skip("TC: SALEOR_56 As an admin, I should be able to export products from s
   await productPage.exportProductsDialog.clickExportSearchedProductsRadioButton();
   await productPage.exportProductsDialog.clickSubmitButton();
   await productPage.basePage.expectInfoBanner();
-  const userEmails = await mailpitService.checkDoesUserReceivedExportedData(
+  await mailpitService.checkDoesUserReceivedExportedData(
     process.env.E2E_USER_NAME!,
     "Your exported products data is ready",
   );
+});
+
+test("TC: SALEOR_57 As an admin, I should be able to search products on list view @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const productPage = new ProductPage(page);
+  await productPage.gotoProductListPage();
+  await productPage.basePage.typeInSearchOnListView(
+    PRODUCTS.productToAddVariants.name,
+  );
+  await productPage.basePage.waitForGrid();
+  await productPage.basePage.checkListRowsBasedOnContainingText([
+    PRODUCTS.productToAddVariants.name,
+  ]);
+  expect(
+    await productPage.basePage.gridCanvas.locator("table tbody tr").count(),
+  ).toEqual(1);
 });
