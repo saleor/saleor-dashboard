@@ -192,7 +192,10 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
   const [state, dispatch] = React.useReducer(postalCodesReducer, {
     codesToDelete: [],
     havePostalCodesChanged: false,
-    inclusionType: rate?.postalCodeRules![0].inclusionType!,
+    inclusionType:
+      (rate?.postalCodeRules?.length &&
+        rate?.postalCodeRules[0].inclusionType) ||
+      undefined,
     originalCodes: [],
     postalCodeRules: rate?.postalCodeRules || [],
   });

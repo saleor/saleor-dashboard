@@ -10,17 +10,23 @@ export class MailpitService {
     this.request = request;
   }
 
-  async getLastEmails(getEmailsLimit = 100) {
+  async getLastEmails(getEmailsLimit = 50) {
     let latestEmails: any;
-    await expect(async () => {
-      latestEmails = await this.request.get(
-        `${mailpitUrl}/api/v1/messages?limit=${getEmailsLimit}`,
-      );
-      expect(latestEmails.body()).not.toBeUndefined();
-    }).toPass({
-      intervals: [3_000, 3_000, 3_000],
-      timeout: 10_000,
-    });
+    await expect
+      .poll(
+        async () => {
+          latestEmails = await this.request.get(
+            `${mailpitUrl}/api/v1/messages?limit=${getEmailsLimit}`,
+          );
+          return latestEmails;
+        },
+        {
+          message: `Could not found last ${getEmailsLimit}`,
+          intervals: [2000, 3000, 5000, 5000],
+          timeout: 15000,
+        },
+      )
+      .not.toBeUndefined();
     const latestEmailsJson = await latestEmails!.json();
     return latestEmailsJson;
   }
@@ -36,21 +42,51 @@ export class MailpitService {
 
   async getEmailsForUser(userEmail: string) {
     let userEmails: any[] = [];
-    await expect(async () => {
-      const emails = await this.getLastEmails();
-      userEmails = emails.messages.filter((mails: { To: any[] }) =>
-        mails.To.map(
-          (recipientObj: { Address: any }) => `${recipientObj.Address}`,
-        ).includes(userEmail),
-      );
-      expect(userEmails.length).toBeGreaterThanOrEqual(1);
-    }).toPass({
-      intervals: [3_000, 3_000, 3_000],
-      timeout: 10_000,
-    });
-    await expect(userEmails).not.toEqual([]);
+    await expect
+      .poll(
+        async () => {
+          const emails = await this.getLastEmails();
+          userEmails = await emails.messages.filter((mails: { To: any[] }) =>
+            mails.To.map(
+              (recipientObj: { Address: any }) => `${recipientObj.Address}`,
+            ).includes(userEmail),
+          );
 
+          return userEmails.length;
+        },
+        {
+          message: `User: ${userEmail} messages were not found`,
+          intervals: [2000, 3000, 5000, 5000],
+          timeout: 15000,
+        },
+      )
+      .toBeGreaterThanOrEqual(1);
     return userEmails;
+  }
+  async checkDoesUserReceivedExportedData(
+    userEmail: string,
+    mailSubject: string,
+  ) {
+    let confirmationMessageReceived: boolean = false;
+    await expect
+      .poll(
+        async () => {
+          let userEmails: any[] = await this.getEmailsForUser(userEmail);
+          for (const email of userEmails) {
+            if (email.Subject === mailSubject) {
+              confirmationMessageReceived = true;
+              break;
+            }
+          }
+          return confirmationMessageReceived;
+        },
+        {
+          message: `Message with subject: ${mailSubject} was not found`,
+          intervals: [2000, 3000, 5000, 5000],
+          timeout: 15000,
+        },
+      )
+      .toBe(true);
   }
 
   async generateResetPasswordUrl(userEmail: string) {
