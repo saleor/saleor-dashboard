@@ -9,6 +9,7 @@ export const PRODUCTS = {
   },
   productToAddVariants: {
     id: "UHJvZHVjdDo3Mjk%3D",
+    name: "beer with variants",
     info: "Product that does not contain any variant yet",
   },
   productWithOneVariant: {

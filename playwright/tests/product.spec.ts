@@ -203,3 +203,51 @@ test.skip("TC: SALEOR_56 As an admin, I should be able to export products from s
     "Your exported products data is ready",
   );
 });
+
+test("TC: SALEOR_57 As an admin, I should be able to search products on list view @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const productPage = new ProductPage(page);
+  await productPage.gotoProductListPage();
+  await productPage.basePage.typeInSearchOnListView(
+    PRODUCTS.productToAddVariants.name,
+  );
+  await productPage.basePage.waitForGrid();
+  await productPage.basePage.checkListRowsBasedOnContainingText([
+    PRODUCTS.productToAddVariants.name,
+  ]);
+  expect(
+    await productPage.basePage.gridCanvas.locator("table tbody tr").count(),
+  ).toEqual(1);
+});
+
+test("TC: SALEOR_58 As an admin I should be able use pagination on product list view @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const productPage = new ProductPage(page);
+  await productPage.gotoProductListPage();
+  await productPage.basePage.waitForGrid();
+  const firstPageProductName = await productPage.basePage.getGridCellText(1, 1);
+  await productPage.basePage.clickNextPageButton();
+  await productPage.basePage.waitForGrid();
+  const secondPageProductName = await productPage.basePage.getGridCellText(
+    1,
+    1,
+  );
+  await expect(
+    firstPageProductName,
+    `Second side first product name: ${secondPageProductName} should be visible and be different than: ${firstPageProductName}`,
+  ).not.toEqual(secondPageProductName);
+  await expect(
+    productPage.basePage.gridCanvas,
+    `Product from first page: ${firstPageProductName} should not be visible`,
+  ).not.toContainText(firstPageProductName);
+
+  await productPage.basePage.clickPreviousPageButton();
+  await productPage.basePage.waitForGrid();
+
+  await expect(
+    productPage.basePage.gridCanvas,
+    `Product from first page: ${firstPageProductName} should be visible again`,
+  ).toContainText(firstPageProductName);
+});
