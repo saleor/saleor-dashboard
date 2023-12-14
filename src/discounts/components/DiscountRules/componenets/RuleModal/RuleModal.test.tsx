@@ -1,6 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
-import { Condition } from "@dashboard/discounts/models";
+import { Condition, Rule } from "@dashboard/discounts/models";
 import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
@@ -146,6 +146,7 @@ describe("RuleModal", () => {
 
     // Assert
     expect(onSubmit).toHaveBeenCalledWith({
+      id: "",
       name: "Name 123",
       channel: {
         label: "PLN",
@@ -191,26 +192,27 @@ describe("RuleModal", () => {
         onClose={jest.fn()}
         open={true}
         onSubmit={onSubmit}
-        initialFormValues={{
-          id: "1",
-          name: "Name 123",
-          channel: {
-            label: "PLN",
-            value: "1",
-          },
-          conditions: [
-            new Condition("product", "is", [
-              {
-                label: "Bean Juice",
-                value: "UHJvZHVjdDo3OQ==",
-              },
-            ]),
-          ],
-          rewardValue: 22,
-          rewardValueType: RewardValueTypeEnum.PERCENTAGE,
-          description: "",
-          toAPI: () => ({}),
-        }}
+        initialFormValues={
+          new Rule(
+            "1",
+            "Name 123",
+            "",
+            {
+              label: "PLN",
+              value: "1",
+            },
+            22,
+            RewardValueTypeEnum.PERCENTAGE,
+            [
+              new Condition("product", "is", [
+                {
+                  label: "Bean Juice",
+                  value: "UHJvZHVjdDo3OQ==",
+                },
+              ]),
+            ],
+          )
+        }
       />,
       { wrapper: Wrapper },
     );
@@ -232,6 +234,7 @@ describe("RuleModal", () => {
 
     // Assert
     expect(onSubmit).toHaveBeenCalledWith({
+      id: "1",
       name: "New name",
       channel: {
         label: "PLN",

@@ -30,14 +30,13 @@ export class Condition {
     condition: CataloguePredicateAPI,
     ruleConditionsOptionsDetailsMap: Record<string, string>,
   ): Condition {
+    const toOptions = createToOptionMap(ruleConditionsOptionsDetailsMap);
+
     if (condition.productPredicate) {
       return new Condition(
         "product",
         "is",
-        condition.productPredicate.ids.map(id => ({
-          label: ruleConditionsOptionsDetailsMap[id] || id,
-          value: id,
-        })),
+        condition.productPredicate.ids.map(toOptions),
       );
     }
 
@@ -45,10 +44,7 @@ export class Condition {
       return new Condition(
         "category",
         "is",
-        condition.categoryPredicate.ids.map(id => ({
-          label: ruleConditionsOptionsDetailsMap[id] || id,
-          value: id,
-        })),
+        condition.categoryPredicate.ids.map(toOptions),
       );
     }
 
@@ -56,10 +52,7 @@ export class Condition {
       return new Condition(
         "collection",
         "is",
-        condition.collectionPredicate.ids.map(id => ({
-          label: ruleConditionsOptionsDetailsMap[id] || id,
-          value: id,
-        })),
+        condition.collectionPredicate.ids.map(toOptions),
       );
     }
 
@@ -67,13 +60,19 @@ export class Condition {
       return new Condition(
         "variant",
         "is",
-        condition.variantPredicate.ids.map(id => ({
-          label: ruleConditionsOptionsDetailsMap[id] || id,
-          value: id,
-        })),
+        condition.variantPredicate.ids.map(toOptions),
       );
     }
 
     return new Condition(null, "is", []);
   }
+}
+
+function createToOptionMap(
+  ruleConditionsOptionsDetailsMap: Record<string, string>,
+) {
+  return (id: string) => ({
+    label: ruleConditionsOptionsDetailsMap[id] || id,
+    value: id,
+  });
 }

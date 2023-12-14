@@ -33,7 +33,7 @@ export class Rule {
   }
 
   public static empty(): Rule {
-    return new Rule("", "", null, null, 0, RewardValueTypeEnum.FIXED, []);
+    return new Rule("", "", "", null, 0, RewardValueTypeEnum.PERCENTAGE, []);
   }
 
   public static fromAPI(

@@ -46,9 +46,12 @@ export const RuleModal = ({
   errors,
 }: RuleModalProps) => {
   const intl = useIntl();
+
+  const { toAPI, ...emptyRule } = Rule.empty();
+
   const methods = useForm<Rule>({
     mode: "onBlur",
-    values: initialFormValues || Rule.empty(),
+    values: initialFormValues || { ...emptyRule, toAPI },
     resolver: zodResolver(getValidationSchema(intl)),
   });
 
@@ -72,6 +75,7 @@ export const RuleModal = ({
     await onSubmit(data);
   };
 
+  // Clear modal form
   useEffect(() => {
     if (!initialFormValues && open) {
       methods.reset(Rule.empty());
