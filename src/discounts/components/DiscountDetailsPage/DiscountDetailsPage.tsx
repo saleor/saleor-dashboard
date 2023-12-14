@@ -2,9 +2,9 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
+import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { RuleDTO } from "@dashboard/discounts/dto/dto";
 import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
-import { saleListUrl } from "@dashboard/discounts/urls";
 import {
   ChannelFragment,
   PromotionDetailsFragment,
@@ -166,7 +166,7 @@ export const DiscountDetailsPage = ({
   return (
     <RichTextContext.Provider value={richText}>
       <DetailPageLayout gridTemplateColumns={1}>
-        <TopNav href={saleListUrl()} title={data?.name} />
+        <TopNav href={discountListUrl()} title={data?.name} />
         <DetailPageLayout.Content>
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(handleSubmit)}>

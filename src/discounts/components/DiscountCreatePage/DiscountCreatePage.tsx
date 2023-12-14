@@ -2,8 +2,8 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
+import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
-import { saleListUrl } from "@dashboard/discounts/urls";
 import {
   ChannelFragment,
   PromotionCreateErrorCode,
@@ -93,7 +93,7 @@ export const DiscountCreatePage = ({
     <RichTextContext.Provider value={richText}>
       <DetailPageLayout gridTemplateColumns={1}>
         <TopNav
-          href={saleListUrl()}
+          href={discountListUrl()}
           title={intl.formatMessage({
             id: "FWbv/u",
             defaultMessage: "Create Discount",

@@ -1,7 +1,10 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage";
-import { DiscountUrlQueryParams, saleListUrl } from "@dashboard/discounts/urls";
+import {
+  discountListUrl,
+  DiscountUrlQueryParams,
+} from "@dashboard/discounts/discountsUrls";
 import {
   usePromotionDetailsQuery,
   usePromotionRuleCreateMutation,
@@ -138,7 +141,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           ruleConditionsOptionsDetailsLoading
         }
         onBack={() => {
-          navigate(saleListUrl());
+          navigate(discountListUrl());
         }}
         channels={availableChannels}
         onSubmit={onSubmit}
