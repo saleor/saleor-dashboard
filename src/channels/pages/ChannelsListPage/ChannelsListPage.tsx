@@ -123,7 +123,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                     </span>
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    {channelsList?.length > 1 && (
+                    {channelsList?.length && (
                       <TableButtonWrapper>
                         <IconButton
                           variant="secondary"
