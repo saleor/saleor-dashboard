@@ -184,6 +184,7 @@ export class ProductPage {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.selectFirstChannel();
     await this.channelSelectDialog.clickConfirmButton();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async clickCreateProductButton() {
@@ -205,5 +206,6 @@ export class ProductPage {
     await this.clickUploadImagesButtonButton();
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(path.join("playwright/data/images/", fileName));
+    await this.page.waitForLoadState("domcontentloaded");
   }
 }
