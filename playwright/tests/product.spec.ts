@@ -1,3 +1,4 @@
+import { MailpitService } from "@api/mailpit";
 import { PRODUCTS } from "@data/e2eTestData";
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
@@ -32,7 +33,7 @@ test("TC: SALEOR_5 Create basic - single product type - product without variants
   const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
 
-  await basePage.gotoCreateProductPage(PRODUCTS.singleProductType.id);
+  await productPage.gotoCreateProductPage(PRODUCTS.singleProductType.id);
   await productPage.selectOneChannelAsAvailableWhenMoreSelected();
   await productPage.typeNameDescAndRating();
   await productPage.addSeo();
@@ -49,11 +50,10 @@ test("TC: SALEOR_26 Create basic info variant - via edit variant page @e2e @prod
   page,
 }) => {
   const variantName = `TC: SALEOR_26 - variant name - ${new Date().toISOString()}`;
-  const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
   const variantsPage = new VariantsPage(page);
 
-  await basePage.gotoExistingProductPage(PRODUCTS.productWithOneVariant.id);
+  await productPage.gotoExistingProductPage(PRODUCTS.productWithOneVariant.id);
   await productPage.clickFirstEditVariantButton();
   await variantsPage.clickAddVariantButton();
   await variantsPage.typeVariantName(variantName);
@@ -75,11 +75,10 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @produ
   page,
 }) => {
   const variantName = `TC: SALEOR_27 - variant name - ${new Date().toISOString()}`;
-  const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
   const variantsPage = new VariantsPage(page);
 
-  await basePage.gotoExistingProductPage(PRODUCTS.productWithOneVariant.id);
+  await productPage.gotoExistingProductPage(PRODUCTS.productWithOneVariant.id);
   await productPage.clickFirstEditVariantButton();
   await variantsPage.clickAddVariantButton();
   await variantsPage.typeVariantName(variantName);
@@ -133,7 +132,7 @@ test("TC: SALEOR_45 As an admin I should be able to delete a single products @ba
   const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
 
-  await basePage.gotoExistingProductPage(
+  await productPage.gotoExistingProductPage(
     PRODUCTS.productWithOneVariantToBeDeletedFromDetails.id,
   );
   await productPage.clickDeleteProductButton();
@@ -143,14 +142,13 @@ test("TC: SALEOR_45 As an admin I should be able to delete a single products @ba
     PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name,
   );
 });
-test("TC: SALEOR_46 As an admin, I should be able to update a single product by uploading media, assigning channels, assigning tax, and adding a new variant   @basic-regression @product @e2e", async ({
+test("TC: SALEOR_46 As an admin, I should be able to update a product by uploading media, assigning channels, assigning tax, and adding a new variant   @basic-regression @product @e2e", async ({
   page,
 }) => {
   const newVariantName = "variant 2";
-  const basePage = new BasePage(page);
   const productPage = new ProductPage(page);
 
-  await basePage.gotoExistingProductPage(
+  await productPage.gotoExistingProductPage(
     PRODUCTS.singleProductTypeToBeUpdated.id,
   );
   await productPage.clickUploadMediaButton();
@@ -181,4 +179,27 @@ test("TC: SALEOR_46 As an admin, I should be able to update a single product by 
     "In 1 out of 7 channels",
   );
   expect(await productPage.productImage.count()).toEqual(1);
+});
+
+// blocked by bug https://github.com/saleor/saleor-dashboard/issues/4368
+test.skip("TC: SALEOR_56 As an admin, I should be able to export products from single channel as CSV file @basic-regression @product @e2e", async ({
+  page,
+  request,
+}) => {
+  const productPage = new ProductPage(page);
+  const mailpitService = new MailpitService(request);
+
+  await page.goto(URL_LIST.products);
+  await productPage.clickCogShowMoreButtonButton();
+  await productPage.clickExportButton();
+  await productPage.exportProductsDialog.clickChannelsAccordion();
+  await productPage.exportProductsDialog.checkChannelCheckbox("PLN");
+  await productPage.exportProductsDialog.clickNextButton();
+  await productPage.exportProductsDialog.clickExportSearchedProductsRadioButton();
+  await productPage.exportProductsDialog.clickSubmitButton();
+  await productPage.basePage.expectInfoBanner();
+  const userEmails = await mailpitService.checkDoesUserReceivedExportedData(
+    process.env.E2E_USER_NAME!,
+    "Your exported products data is ready",
+  );
 });

@@ -3,9 +3,10 @@ import path from "path";
 
 import { URL_LIST } from "@data/url";
 import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
+import { ExportProductsDialog } from "@pages/dialogs/exportProductsDialog";
 import { MetadataSeoPage } from "@pages/pageElements/metadataSeoPage";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
-import type { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 import { BasePage } from "./basePage";
 import { DeleteProductDialog } from "./dialogs/deleteProductDialog";
@@ -17,6 +18,7 @@ export class ProductPage {
   readonly page: Page;
 
   readonly metadataSeoPage: MetadataSeoPage;
+  readonly exportProductsDialog: ExportProductsDialog;
   readonly rightSideDetailsPage: RightSideDetailsPage;
   readonly basePage: BasePage;
   readonly channelSelectDialog: ChannelSelectDialog;
@@ -29,6 +31,8 @@ export class ProductPage {
       "product-available-in-channels-text",
     ),
     readonly createProductButton = page.getByTestId("add-product"),
+    readonly cogShowMoreButtonButton = page.getByTestId("show-more-button"),
+    readonly exportButton = page.getByTestId("export"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteProductButton = page.getByTestId("button-bar-delete"),
     readonly searchProducts = page.locator(
@@ -78,14 +82,36 @@ export class ProductPage {
   ) {
     this.page = page;
     this.basePage = new BasePage(page);
+    this.exportProductsDialog = new ExportProductsDialog(page);
     this.deleteProductDialog = new DeleteProductDialog(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
   }
 
+  async gotoCreateProductPage(productTypeId: string) {
+    await this.page.goto(
+      `${URL_LIST.products}${URL_LIST.productsAdd}${productTypeId}`,
+    );
+    await expect(this.basePage.pageHeader).toBeVisible({ timeout: 10000 });
+  }
+
+  async gotoExistingProductPage(productId: string) {
+    console.log(
+      `Navigating to existing product: ${URL_LIST.products}${productId}`,
+    );
+    await this.page.goto(`${URL_LIST.products}${productId}`);
+    await expect(this.basePage.pageHeader).toBeVisible({ timeout: 10000 });
+  }
+
   async clickDeleteProductButton() {
     await this.deleteProductButton.click();
+  }
+  async clickExportButton() {
+    await this.exportButton.click();
+  }
+  async clickCogShowMoreButtonButton() {
+    await this.cogShowMoreButtonButton.click();
   }
   async clickUploadImagesButtonButton() {
     await this.uploadSavedImagesButton.click();
