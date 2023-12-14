@@ -8457,6 +8457,9 @@
   "vfG+nh": {
     "string": "Confirm Password"
   },
+  "vgMjS5": {
+    "string": "Go to cloud"
+  },
   "viFkCw": {
     "context": "site settings section name",
     "string": "Site Settings"
@@ -8710,9 +8713,6 @@
   "xfGZsi": {
     "context": "configuration section name",
     "string": "Configuration"
-  },
-  "xgpgVX": {
-    "string": "Open environment"
   },
   "xjpTLF": {
     "context": "informations about product stock, header",
