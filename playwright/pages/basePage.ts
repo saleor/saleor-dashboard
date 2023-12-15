@@ -8,7 +8,6 @@ export class BasePage {
   constructor(
     page: Page,
     readonly pageHeader = page.getByTestId("page-header"),
-    readonly searchInputListView = page.getByTestId("search-input"),
     readonly gridCanvas = page.locator('[data-testid="data-grid-canvas"]'),
     readonly gridInput = page
       .locator('[class="clip-region"]')
@@ -16,12 +15,42 @@ export class BasePage {
     readonly successBanner = page.locator(LOCATORS.successBanner),
     readonly errorBanner = page.locator(LOCATORS.errorBanner),
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
+    readonly previousPagePaginationButton = page.getByTestId(
+      "button-pagination-back",
+    ),
+    readonly rowNumberButton = page.getByTestId("PaginationRowNumberSelect"),
+    readonly nextPagePaginationButton = page.getByTestId(
+      "button-pagination-next",
+    ),
+    readonly searchInputListView = page.getByTestId("search-input"),
   ) {
     this.page = page;
   }
 
+  async getGridCellText(rowNumber: number, tdNumber: number) {
+    const cellText = await this.gridCanvas
+      .locator("table tbody tr")
+      .nth(rowNumber)
+      .locator("td")
+      .nth(tdNumber)
+      .innerText();
+
+    return cellText;
+  }
+
   async typeInSearchOnListView(searchItem: string) {
     await this.searchInputListView.fill(searchItem);
+  }
+  async clickNextPageButton() {
+    await this.nextPagePaginationButton.click();
+    await expect(this.errorBanner).not.toBeVisible();
+  }
+  async clickPreviousPageButton() {
+    await this.previousPagePaginationButton.click();
+    await expect(this.errorBanner).not.toBeVisible();
+  }
+  async clickNumbersOfRowsButton() {
+    await this.rowNumberButton.click();
   }
   async expectGridToBeAttached() {
     await expect(this.gridCanvas).toBeAttached({
