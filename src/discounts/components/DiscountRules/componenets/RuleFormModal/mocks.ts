@@ -45,38 +45,80 @@ export const searchCategoriesMock = {
   result: {
     data: {
       search: {
-        edges: [],
+        edges: [
+          {
+            node: {
+              id: "Q2F0ZWdvcnk6Nw==",
+              name: "Accessories",
+            },
+          },
+          {
+            node: {
+              id: "Q2F0ZWdvcnk6OA==",
+              name: "Groceries",
+            },
+          },
+          {
+            node: {
+              id: "Q2F0ZWdvcnk6OQ==",
+              name: "Apparel",
+            },
+          },
+          {
+            node: {
+              id: "Q2F0ZWdvcnk6MTA=",
+              name: "T-shirts",
+            },
+          },
+        ],
         pageInfo: {
-          endCursor: null,
+          endCursor: "WyI0OTgiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
-          startCursor: null,
+          startCursor: "WyI3Il0=",
         },
-        totalCount: 0,
       },
     },
   },
 };
 
-export const seatchCollectionMock = {
+export const searchCollectionsMock = {
   request: {
     query: SearchCollectionsDocument,
     variables: {
       ...queryVariablesMock,
-      channel: "PLN",
+      channel: "test",
     },
   },
   result: {
     data: {
       search: {
-        edges: [],
+        edges: [
+          {
+            node: {
+              id: "Q29sbGVjdGlvbjoz",
+              name: "Featured Products",
+            },
+          },
+          {
+            node: {
+              id: "Q29sbGVjdGlvbjox",
+              name: "Summer collection",
+            },
+          },
+          {
+            node: {
+              id: "Q29sbGVjdGlvbjoy",
+              name: "Winter sale",
+            },
+          },
+        ],
         pageInfo: {
-          endCursor: null,
+          endCursor: "WyJ3aW50ZXItc2FsZSJd",
           hasNextPage: false,
           hasPreviousPage: false,
-          startCursor: null,
+          startCursor: "WyJmZWF0dXJlZC1wcm9kdWN0cyJd",
         },
-        totalCount: 0,
       },
     },
   },
@@ -87,7 +129,7 @@ export const searchProductsMock = {
     query: SearchProductsDocument,
     variables: {
       ...queryVariablesMock,
-      channel: "PLN",
+      channel: "test",
     },
   },
   result: {
@@ -96,45 +138,95 @@ export const searchProductsMock = {
         edges: [
           {
             node: {
-              thumbnail: null,
-              variants: [],
-              collections: [],
               id: "UHJvZHVjdDo3OQ==",
               name: "Bean Juice",
             },
           },
+          {
+            node: {
+              id: "UHJvZHVjdDoxMTU=",
+              name: "Black Hoodie",
+            },
+          },
+          {
+            node: {
+              id: "UHJvZHVjdDo3Mw==",
+              name: "Carrot Juice",
+            },
+          },
+          {
+            node: {
+              id: "UHJvZHVjdDo4OQ==",
+              name: "Code Division T-shirt",
+            },
+          },
+          {
+            node: {
+              id: "UHJvZHVjdDo4NQ==",
+              name: "Colored Parrot Cushion",
+            },
+          },
         ],
         pageInfo: {
-          endCursor: null,
+          endCursor: "WyJsYWtlLXR1bmVzIl0=",
           hasNextPage: false,
           hasPreviousPage: false,
-          startCursor: null,
+          startCursor: "WyJiZWFuLWp1aWNlIl0=",
         },
-        totalCount: 0,
       },
     },
   },
 };
 
-export const seatchVariantsMock = {
+export const searchVariantsMock = {
   request: {
     query: SearchVariantsDocument,
     variables: {
       ...queryVariablesMock,
-      channel: "PLN",
+      channel: "test",
     },
   },
   result: {
     data: {
       search: {
-        edges: [],
+        edges: [
+          {
+            node: {
+              id: "UHJvZHVjdFZhcmlhbnQ6OTg3",
+              name: "45cm x 45cm",
+            },
+          },
+          {
+            node: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MjE0",
+              name: "500ml",
+            },
+          },
+          {
+            node: {
+              id: "UHJvZHVjdFZhcmlhbnQ6OTg4",
+              name: "55cm x 55cm",
+            },
+          },
+          {
+            node: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MjE1",
+              name: "1l",
+            },
+          },
+          {
+            node: {
+              id: "UHJvZHVjdFZhcmlhbnQ6MjE2",
+              name: "2l",
+            },
+          },
+        ],
         pageInfo: {
-          endCursor: null,
+          endCursor: "W251bGwsICIyMTQzODU0MiJd",
           hasNextPage: false,
           hasPreviousPage: false,
-          startCursor: null,
+          startCursor: "WyIwIiwgIjEyMzEyM2FzZHp4YzEyMyJd",
         },
-        totalCount: 0,
       },
     },
   },
