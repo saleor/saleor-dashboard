@@ -7,6 +7,16 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3NjE%3D",
     info: "Single product type to be updated",
   },
+  productAvailableOnlyInPlnChannel: {
+    id: "UHJvZHVjdDo3NjM%3D",
+    name: "a beer available only in pln channel",
+    info: "Product available only in PLN channel",
+  },
+  productAvailableOnlyInUsdChannel: {
+    id: "UHJvZHVjdDo3NjQ%3D",
+    name: "a beer available only in USD channel",
+    info: "Product available only in USD channel",
+  },
   productToAddVariants: {
     id: "UHJvZHVjdDo3Mjk%3D",
     name: "beer with variants",

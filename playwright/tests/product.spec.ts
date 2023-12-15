@@ -218,3 +218,62 @@ test("TC: SALEOR_57 As an admin, I should be able to search products on list vie
     await productPage.basePage.gridCanvas.locator("table tbody tr").count(),
   ).toEqual(1);
 });
+
+test("TC: SALEOR_58 As an admin I should be able use pagination on product list view @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const productPage = new ProductPage(page);
+  await productPage.gotoProductListPage();
+  await productPage.basePage.waitForGrid();
+  const firstPageProductName = await productPage.basePage.getGridCellText(0, 0);
+  await productPage.basePage.clickNextPageButton();
+  await productPage.basePage.waitForGrid();
+  const secondPageProductName = await productPage.basePage.getGridCellText(
+    1,
+    1,
+  );
+
+  await expect(
+    firstPageProductName,
+    `Second side first product name: ${secondPageProductName} should be visible and be different than: ${firstPageProductName}`,
+  ).not.toEqual(secondPageProductName);
+  await expect(
+    productPage.basePage.gridCanvas,
+    `Product from first page: ${firstPageProductName} should not be visible`,
+  ).not.toContainText(firstPageProductName);
+
+  await productPage.basePage.clickPreviousPageButton();
+  await productPage.basePage.waitForGrid();
+
+  await expect(
+    productPage.basePage.gridCanvas,
+    `Product from first page: ${firstPageProductName} should be visible again`,
+  ).toContainText(firstPageProductName);
+});
+
+test("TC: SALEOR_59 As an admin I should be able to filter products by channel on product list view @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const productPage = new ProductPage(page);
+  await productPage.gotoProductListPage();
+  await productPage.basePage.waitForGrid();
+
+  await expect(
+    productPage.basePage.gridCanvas,
+    `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should be visible on grid table`,
+  ).toContainText(PRODUCTS.productAvailableOnlyInUsdChannel.name);
+
+  await productPage.basePage.clickFilterButton();
+  await productPage.filtersPage.pickFilter("Channel", "Channel-PLN");
+  await productPage.filtersPage.clickSaveFiltersButton();
+  await productPage.basePage.waitForGrid();
+
+  await expect(
+    productPage.basePage.gridCanvas,
+    `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should not be visible on grid table`,
+  ).not.toContainText(PRODUCTS.productAvailableOnlyInUsdChannel.name);
+  await expect(
+    productPage.basePage.gridCanvas,
+    `Product: ${PRODUCTS.productAvailableOnlyInPlnChannel.name} should be visible on grid table`,
+  ).toContainText(PRODUCTS.productAvailableOnlyInPlnChannel.name);
+});
