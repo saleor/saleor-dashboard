@@ -10,6 +10,7 @@ import { expect, Page } from "@playwright/test";
 
 import { BasePage } from "./basePage";
 import { DeleteProductDialog } from "./dialogs/deleteProductDialog";
+import { FiltersPage } from "./pageElements/filtersPage";
 
 const productName = `e2e-productName-${faker.datatype.number()}`;
 const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
@@ -23,6 +24,7 @@ export class ProductPage {
   readonly basePage: BasePage;
   readonly channelSelectDialog: ChannelSelectDialog;
   readonly deleteProductDialog: DeleteProductDialog;
+  readonly filtersPage: FiltersPage;
 
   constructor(
     page: Page,
@@ -35,9 +37,6 @@ export class ProductPage {
     readonly exportButton = page.getByTestId("export"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteProductButton = page.getByTestId("button-bar-delete"),
-    readonly searchProducts = page.locator(
-      "[placeholder='Search Products...']",
-    ),
     readonly productNameInput = page.locator("[name='name']"),
     readonly addProductButton = page.getByTestId("add-product"),
     readonly productTypeInput = page.getByTestId("product-type"),
@@ -87,6 +86,7 @@ export class ProductPage {
     this.channelSelectDialog = new ChannelSelectDialog(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
+    this.filtersPage = new FiltersPage(page);
   }
 
   async gotoCreateProductPage(productTypeId: string) {
@@ -184,6 +184,7 @@ export class ProductPage {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.selectFirstChannel();
     await this.channelSelectDialog.clickConfirmButton();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async clickCreateProductButton() {
@@ -205,5 +206,6 @@ export class ProductPage {
     await this.clickUploadImagesButtonButton();
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(path.join("playwright/data/images/", fileName));
+    await this.page.waitForLoadState("domcontentloaded");
   }
 }
