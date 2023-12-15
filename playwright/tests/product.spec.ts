@@ -225,7 +225,7 @@ test("TC: SALEOR_58 As an admin I should be able use pagination on product list 
   const productPage = new ProductPage(page);
   await productPage.gotoProductListPage();
   await productPage.basePage.waitForGrid();
-  const firstPageProductName = await productPage.basePage.getGridCellText(1, 1);
+  const firstPageProductName = await productPage.basePage.getGridCellText(0, 0);
   await productPage.basePage.clickNextPageButton();
   await productPage.basePage.waitForGrid();
   const secondPageProductName = await productPage.basePage.getGridCellText(
