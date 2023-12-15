@@ -14,8 +14,8 @@ import { useIntl } from "react-intl";
 import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
 import { Placeholder } from "../Placeholder";
-import { RuleSummary } from "../Rule/components/RuleSummary";
-import { RuleWrapper } from "../Rule/components/RuleWrapper";
+import { RuleSummary } from "../RuleForm/components/RuleSummary";
+import { RuleWrapper } from "../RuleForm/components/RuleWrapper";
 
 interface RulesListProps<ErrorCode> {
   rules: Rule[];
@@ -24,13 +24,13 @@ interface RulesListProps<ErrorCode> {
   errors: Array<CommonError<ErrorCode> & { index?: number }>;
   ruleConditionsOptionsDetailsLoading?: boolean;
   onRuleDelete: (id: string) => void;
-  onRulEdit: (id: string) => void;
+  onRuleEdit: (id: string) => void;
 }
 
 export const RulesList = <ErrorCode,>({
   rules,
   errors,
-  onRulEdit,
+  onRuleEdit,
   onRuleDelete,
   channels,
   disabled,
@@ -72,7 +72,7 @@ export const RulesList = <ErrorCode,>({
                   <Button
                     size="small"
                     variant="tertiary"
-                    onClick={() => onRulEdit(index.toString())}
+                    onClick={() => onRuleEdit(index.toString())}
                     cursor={disabled ? "not-allowed" : "pointer"}
                     disabled={disabled}
                     data-test-id="rule-edit-button"

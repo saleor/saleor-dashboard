@@ -3,7 +3,6 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
-import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
   ChannelFragment,
@@ -12,19 +11,14 @@ import {
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
-import { RichTextContext } from "@dashboard/utils/richText/context";
-import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { useState } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import React from "react";
 import { useIntl } from "react-intl";
 
+import { DiscountCreateForm } from "../DiscountCreateForm";
 import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountName } from "../DiscountName";
 import { DiscountRules, DiscountRulesErrors } from "../DiscountRules";
-import { RuleDeleteModal } from "../DiscountRules/componenets/RuleDeleteModal/RuleDeleteModal";
-import { RuleModal } from "../DiscountRules/componenets/RuleModal/RuleModal";
-import { initialFormValues } from "./initialFormValues";
 
 export interface DiscountCreatePageProps {
   channels: ChannelFragment[];
@@ -44,122 +38,54 @@ export const DiscountCreatePage = ({
   onSubmit,
 }: DiscountCreatePageProps) => {
   const intl = useIntl();
-  const [showRuleModal, setShowRuleModal] = useState(false);
-  const [rules, setRules] = useState<Rule[]>([]);
-  const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
-  const [ruleDeleteIndex, setRuleDeleteIndex] = useState<string | null>(null);
-
-  const methods = useForm<DiscoutFormData>({
-    mode: "onBlur",
-    values: initialFormValues,
-  });
-
-  const richText = useRichText({
-    initial: "",
-    loading: false,
-    triggerChange: methods.trigger,
-  });
-
-  const handleSubmit: SubmitHandler<DiscoutFormData> = data => {
-    onSubmit({
-      ...data,
-      rules,
-    });
-  };
-
-  const handleDeleteRule = () => {
-    setRules(rules =>
-      rules.filter((_, index) => index !== Number(ruleDeleteIndex)),
-    );
-    setRuleDeleteIndex(null);
-  };
-
-  const handleRuleSubmit = async (data: Rule) => {
-    if (ruleEditIndex !== null) {
-      setRules(rules => {
-        rules[ruleEditIndex] = data;
-        return rules;
-      });
-    } else {
-      setRules([...rules, data]);
-    }
-
-    setRuleEditIndex(null);
-    setShowRuleModal(false);
-  };
-
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <RichTextContext.Provider value={richText}>
-      <DetailPageLayout gridTemplateColumns={1}>
-        <TopNav
-          href={discountListUrl()}
-          title={intl.formatMessage({
-            id: "FWbv/u",
-            defaultMessage: "Create Discount",
-            description: "page header",
-          })}
-        />
-        <DetailPageLayout.Content>
-          <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(handleSubmit)}>
+    <DetailPageLayout gridTemplateColumns={1}>
+      <TopNav
+        href={discountListUrl()}
+        title={intl.formatMessage({
+          id: "FWbv/u",
+          defaultMessage: "Create Discount",
+          description: "page header",
+        })}
+      />
+      <DetailPageLayout.Content>
+        <DiscountCreateForm onSubmit={onSubmit}>
+          {({ onDeleteRule, onRuleSubmit, rules, onSubmit }) => (
+            <>
               <DiscountName
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
                 disabled={disabled}
               />
+
               <DiscountDescription disabled={disabled} />
               <DiscountDatesWithController
                 errors={errors}
                 disabled={disabled}
               />
+
               <DiscountRules
                 errors={errors as DiscountRulesErrors<PromotionCreateErrorCode>}
                 channels={channels}
                 disabled={disabled}
-                onRuleEdit={editIndex => {
-                  setRuleEditIndex(Number(editIndex));
-                  setShowRuleModal(true);
-                }}
-                onRuleDelete={(id: string) => {
-                  setRuleDeleteIndex(id);
-                }}
-                onRuleAdd={() => setShowRuleModal(true)}
                 rules={rules}
+                onRuleDelete={onDeleteRule}
+                onRuleSubmit={onRuleSubmit}
+                getRuleConfirmButtonState={() => "default"}
+                deleteButtonState="default"
               />
-            </form>
-          </FormProvider>
-        </DetailPageLayout.Content>
 
-        <Savebar
-          disabled={disabled}
-          onCancel={onBack}
-          onSubmit={methods.handleSubmit(handleSubmit)}
-          state={submitButtonState}
-        />
-
-        <RuleModal
-          open={showRuleModal}
-          confimButtonState="default"
-          onClose={() => {
-            setShowRuleModal(false);
-            setRuleEditIndex(null);
-          }}
-          channels={channels}
-          initialFormValues={
-            ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
-          }
-          errors={errors.filter(error => error.index === ruleEditIndex)}
-          onSubmit={handleRuleSubmit}
-        />
-
-        <RuleDeleteModal
-          open={ruleDeleteIndex !== null}
-          onClose={() => setRuleDeleteIndex(null)}
-          onSubmit={handleDeleteRule}
-          confimButtonState="default"
-        />
-      </DetailPageLayout>
-    </RichTextContext.Provider>
+              <Savebar
+                disabled={disabled}
+                onCancel={onBack}
+                onSubmit={onSubmit}
+                state={submitButtonState}
+              />
+            </>
+          )}
+        </DiscountCreateForm>
+      </DetailPageLayout.Content>
+    </DetailPageLayout>
   );
 };

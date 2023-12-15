@@ -1,9 +1,5 @@
 import { Condition, Rule as RuleType } from "@dashboard/discounts/models";
-import {
-  ChannelFragment,
-  PromotionCreateErrorFragment,
-  RewardValueTypeEnum,
-} from "@dashboard/graphql";
+import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import {
@@ -25,19 +21,19 @@ import { RuleDescription } from "./components/RuleDescription";
 import { RuleInputWrapper } from "./components/RuleInputWrapper/RuleInputWrapper";
 import { RuleReward } from "./components/RuleReward";
 
-interface RuleProps {
+interface RuleFormProps<ErrorCode> {
   channels: ChannelFragment[];
   disabled?: boolean;
-  errors: Array<CommonError<PromotionCreateErrorFragment["code"]>>;
+  errors: Array<CommonError<ErrorCode>>;
   typeToFetchMap: Record<ConditionType, FetchOptions>;
 }
 
-export const Rule = ({
+export const RuleForm = <ErrorCode,>({
   channels,
   disabled = false,
   errors,
   typeToFetchMap,
-}: RuleProps) => {
+}: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
   const { watch, getValues, setValue, formState } = useFormContext<RuleType>();
   const formErrors = getFormErrors(["rewardValue"], errors);

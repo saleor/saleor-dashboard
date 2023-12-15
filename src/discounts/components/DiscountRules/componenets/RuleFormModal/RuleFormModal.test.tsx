@@ -14,7 +14,7 @@ import {
   seatchCollectionMock,
   seatchVariantsMock,
 } from "./mocks";
-import { RuleModal } from "./RuleModal";
+import { RuleFormModal } from "./RuleFormModal";
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
@@ -43,7 +43,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
   );
 };
 
-describe("RuleModal", () => {
+describe("RuleFormModal", () => {
   beforeAll(() => {
     Object.defineProperty(window, "matchMedia", {
       writable: true,
@@ -75,7 +75,7 @@ describe("RuleModal", () => {
     const onSubmit = jest.fn();
 
     render(
-      <RuleModal
+      <RuleFormModal
         channels={[]}
         confimButtonState="default"
         errors={[]}
@@ -98,7 +98,7 @@ describe("RuleModal", () => {
     const onSubmit = jest.fn();
 
     render(
-      <RuleModal
+      <RuleFormModal
         channels={
           [
             {
@@ -175,7 +175,7 @@ describe("RuleModal", () => {
     const onSubmit = jest.fn();
 
     render(
-      <RuleModal
+      <RuleFormModal
         channels={
           [
             {

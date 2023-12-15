@@ -4,39 +4,36 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Rule } from "@dashboard/discounts/models";
-import {
-  ChannelFragment,
-  PromotionCreateErrorFragment,
-} from "@dashboard/graphql";
+import { ChannelFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ConditionType } from "../../../../types";
 import { messages } from "../../messages";
-import { FetchOptions } from "../Rule/components/RuleConditionRow";
-import { useCategorieSearch } from "../Rule/components/RuleConditions/hooks/useCategorieSearch";
-import { useCollectionSearch } from "../Rule/components/RuleConditions/hooks/useCollectionSearch";
-import { useProductSearch } from "../Rule/components/RuleConditions/hooks/useProductSearch";
-import { useVariantSearch } from "../Rule/components/RuleConditions/hooks/useVariantSearch";
-import { Rule as RuleComponent } from "../Rule/Rule";
+import { FetchOptions } from "../RuleForm/components/RuleConditionRow";
+import { useCategorieSearch } from "../RuleForm/components/RuleConditions/hooks/useCategorieSearch";
+import { useCollectionSearch } from "../RuleForm/components/RuleConditions/hooks/useCollectionSearch";
+import { useProductSearch } from "../RuleForm/components/RuleConditions/hooks/useProductSearch";
+import { useVariantSearch } from "../RuleForm/components/RuleConditions/hooks/useVariantSearch";
+import { RuleForm } from "../RuleForm/RuleForm";
 import { getValidationSchema } from "./validationSchema";
 
-interface RuleModalProps {
+interface RuleFormModalProps<ErrorCode> {
   open: boolean;
   onClose: () => void;
-  onSubmit: (data: Rule) => Promise<void>;
+  onSubmit: (data: Rule) => void;
   confimButtonState: ConfirmButtonTransitionState;
   channels: ChannelFragment[];
   initialFormValues?: Rule;
-  errors: Array<CommonError<PromotionCreateErrorFragment["code"]>>;
+  errors: Array<CommonError<ErrorCode>>;
 }
 
-export const RuleModal = ({
+export const RuleFormModal = <ErrorCode,>({
   open,
   onClose,
   channels,
@@ -44,7 +41,7 @@ export const RuleModal = ({
   confimButtonState,
   onSubmit,
   errors,
-}: RuleModalProps) => {
+}: RuleFormModalProps<ErrorCode>) => {
   const intl = useIntl();
 
   const { toAPI, ...emptyRule } = Rule.empty();
@@ -71,10 +68,6 @@ export const RuleModal = ({
     variant: variantSearch,
   };
 
-  const handleSubmit: SubmitHandler<Rule> = async data => {
-    await onSubmit(data);
-  };
-
   // Clear modal form
   useEffect(() => {
     if (!initialFormValues && open) {
@@ -96,14 +89,14 @@ export const RuleModal = ({
           <DashboardModal.Close onClose={onClose} />
         </DashboardModal.Title>
         <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(handleSubmit)}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
             <Box
               __width={650}
               __minHeight={515}
               __maxHeight="75vh"
               overflowY="auto"
             >
-              <RuleComponent
+              <RuleForm
                 channels={channels}
                 errors={errors}
                 disabled={false}
@@ -119,7 +112,7 @@ export const RuleModal = ({
           <ConfirmButton
             data-test-id="saveRuleButton"
             transitionState={confimButtonState}
-            onClick={methods.handleSubmit(handleSubmit)}
+            onClick={methods.handleSubmit(onSubmit)}
           >
             <FormattedMessage {...buttonMessages.save} />
           </ConfirmButton>
