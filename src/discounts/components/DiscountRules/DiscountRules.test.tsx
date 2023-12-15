@@ -10,9 +10,9 @@ import React, { ReactNode } from "react";
 
 import {
   searchCategoriesMock,
+  searchCollectionsMock,
   searchProductsMock,
-  seatchCollectionMock,
-  seatchVariantsMock,
+  searchVariantsMock,
 } from "./componenets/RuleFormModal/mocks";
 import { DiscountRules } from "./DiscountRules";
 
@@ -31,9 +31,9 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
     <MockedProvider
       mocks={[
         searchCategoriesMock,
-        seatchCollectionMock,
+        searchCollectionsMock,
         searchProductsMock,
-        seatchVariantsMock,
+        searchVariantsMock,
       ]}
     >
       <LegacyThemeProvider>
@@ -43,12 +43,24 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
   );
 };
 
+const channels = [
+  // Apollo mocks only work with test channel
+  // oif you want to use different channel, you need to update mocks
+  {
+    currencyCode: "$",
+    id: "Q2hhbm5lcDoy",
+    name: "Test",
+    slug: "test",
+    isActive: true,
+  },
+] as ChannelFragment[];
+
 const rules = [
   {
     id: "cat-1",
     name: "Catalog rule 1",
     description: "",
-    channel: { label: "PLN", value: "1" },
+    channel: { label: "Test", value: "Q2hhbm5lcDoy" },
     conditions: [
       {
         type: "product",
@@ -66,7 +78,7 @@ const rules = [
     id: "cat-2",
     name: "Catalog rule 2",
     description: "",
-    channel: { label: "USD", value: "2" },
+    channel: { label: "Test", value: "Q2hhbm5lcDoy" },
     conditions: [
       {
         type: "category",
@@ -165,17 +177,7 @@ describe("DiscountRules", () => {
     const onRuleAdd = jest.fn();
     render(
       <DiscountRules
-        channels={
-          [
-            {
-              currencyCode: "$",
-              id: "1",
-              name: "PLN",
-              slug: "PLN",
-              isActive: true,
-            },
-          ] as ChannelFragment[]
-        }
+        channels={channels}
         rules={[]}
         errors={[]}
         onRuleSubmit={onRuleAdd}
@@ -206,7 +208,7 @@ describe("DiscountRules", () => {
       "Name 123",
     );
     await userEvent.click(screen.getByRole("combobox"));
-    expect(await screen.findByText(/pln/i)).toBeInTheDocument();
+    expect(await screen.findByText(/test/i)).toBeInTheDocument();
 
     await act(async () => {
       await userEvent.click(screen.getAllByTestId("select-option")[0]);
@@ -229,8 +231,8 @@ describe("DiscountRules", () => {
     expect(onRuleAdd).toHaveBeenCalledWith(
       {
         channel: {
-          label: "PLN",
-          value: "1",
+          label: "Test",
+          value: "Q2hhbm5lcDoy",
         },
         conditions: [
           {
@@ -295,17 +297,7 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
-        channels={
-          [
-            {
-              currencyCode: "$",
-              id: "1",
-              name: "PLN",
-              slug: "PLN",
-              isActive: true,
-            },
-          ] as ChannelFragment[]
-        }
+        channels={channels}
         rules={rules}
         errors={[]}
         onRuleSubmit={onRuleEdit}
@@ -345,8 +337,8 @@ describe("DiscountRules", () => {
         id: "cat-1",
         name: "New name",
         channel: {
-          label: "PLN",
-          value: "1",
+          label: "Test",
+          value: "Q2hhbm5lcDoy",
         },
         conditions: [
           {
