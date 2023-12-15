@@ -10,6 +10,7 @@ import { expect, Page } from "@playwright/test";
 
 import { BasePage } from "./basePage";
 import { DeleteProductDialog } from "./dialogs/deleteProductDialog";
+import { FiltersPage } from "./pageElements/filtersPage";
 
 const productName = `e2e-productName-${faker.datatype.number()}`;
 const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
@@ -23,6 +24,7 @@ export class ProductPage {
   readonly basePage: BasePage;
   readonly channelSelectDialog: ChannelSelectDialog;
   readonly deleteProductDialog: DeleteProductDialog;
+  readonly filtersPage: FiltersPage;
 
   constructor(
     page: Page,
@@ -84,6 +86,7 @@ export class ProductPage {
     this.channelSelectDialog = new ChannelSelectDialog(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
+    this.filtersPage = new FiltersPage(page);
   }
 
   async gotoCreateProductPage(productTypeId: string) {
