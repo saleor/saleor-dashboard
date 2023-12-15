@@ -64,7 +64,7 @@ export const DiscountDetailsForm = ({
         hasEndDate: !!data?.endDate,
       },
       name: data?.name ?? "",
-      description: data?.description ? JSON.stringify(data.description) : null,
+      description: data?.description ? JSON.stringify(data.description) : "",
       rules: [],
     },
     resolver: zodResolver(getValidationSchema(intl)),
