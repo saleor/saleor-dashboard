@@ -39,7 +39,7 @@ export const useRulesHandlers = ({
     }
   }, [data?.rules, ruleConditionsOptionsDetailsMap]);
 
-  const onRuleSubmit = async (rule: Rule, ruleEditIndex: string | null) => {
+  const onRuleSubmit = async (rule: Rule, ruleEditIndex: number | null) => {
     let errors: Array<
       CommonError<
         PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment
@@ -59,12 +59,12 @@ export const useRulesHandlers = ({
     }
   };
 
-  const onDeleteRule = async (ruleDeleteIndex: string) => {
+  const onDeleteRule = async (ruleDeleteIndex: number) => {
     if (ruleDeleteIndex === null) {
       return;
     }
 
-    const ruleId = rules[Number(ruleDeleteIndex)].id;
+    const ruleId = rules[ruleDeleteIndex].id;
     if (!ruleId) {
       return;
     }

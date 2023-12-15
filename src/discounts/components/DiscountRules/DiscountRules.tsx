@@ -23,12 +23,12 @@ interface DiscountRulesProps<ErrorCode> {
   rules: Rule[];
   errors: Array<CommonError<ErrorCode>>;
   loading?: boolean;
-  deleteButtonState?: ConfirmButtonTransitionState;
+  deleteButtonState: ConfirmButtonTransitionState;
   getRuleConfirmButtonState: (
-    ruleEditIndex: string | null,
+    ruleEditIndex: number | null,
   ) => ConfirmButtonTransitionState;
-  onRuleSubmit: (data: Rule, ruleIndex: string) => void;
-  onRuleDelete: (ruleIndex: string) => void;
+  onRuleSubmit: (data: Rule, ruleIndex: number | null) => void;
+  onRuleDelete: (ruleIndex: number) => void;
 }
 
 export const DiscountRules = <ErrorCode,>({
@@ -45,8 +45,8 @@ export const DiscountRules = <ErrorCode,>({
   const intl = useIntl();
 
   const [showRuleModal, setShowRuleModal] = useState(false);
-  const [ruleEditIndex, setRuleEditIndex] = useState<string | null>(null);
-  const [ruleDeleteIndex, setRuleDeleteIndex] = useState<string | null>(null);
+  const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
+  const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
 
   return (
     <DashboardCard marginBottom={20}>
@@ -67,8 +67,8 @@ export const DiscountRules = <ErrorCode,>({
             setRuleEditIndex(editIndex);
             setShowRuleModal(true);
           }}
-          onRuleDelete={(id: string) => {
-            setRuleDeleteIndex(id);
+          onRuleDelete={index => {
+            setRuleDeleteIndex(index);
           }}
           channels={channels}
           errors={errors}
@@ -98,7 +98,7 @@ export const DiscountRules = <ErrorCode,>({
         open={ruleDeleteIndex !== null}
         onClose={() => setRuleDeleteIndex(null)}
         onSubmit={() => {
-          onRuleDelete(ruleDeleteIndex);
+          onRuleDelete(ruleDeleteIndex!);
           setRuleDeleteIndex(null);
         }}
         confimButtonState={deleteButtonState}

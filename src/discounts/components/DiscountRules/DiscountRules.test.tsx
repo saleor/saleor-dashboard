@@ -285,7 +285,7 @@ describe("DiscountRules", () => {
     });
 
     // Assert
-    expect(onRuleDelete).toHaveBeenCalledWith("0");
+    expect(onRuleDelete).toHaveBeenCalledWith(0);
     expect(screen.queryByText(/delete rule/i)).not.toBeInTheDocument();
   });
 
@@ -368,7 +368,7 @@ describe("DiscountRules", () => {
         rewardValue: 122,
         rewardValueType: "FIXED",
       },
-      "0",
+      0,
     );
   });
 

@@ -19,8 +19,8 @@ interface DiscountDetailsFormRenderProps {
   rulesErrors: Array<CommonError<any>>;
   rules: Rule[];
   onSubmit: () => void;
-  onRuleSubmit: (rule: Rule, ruleEditIndex: string | null) => Promise<void>;
-  onDeleteRule: (ruleDeleteIndex: string) => Promise<void>;
+  onRuleSubmit: (rule: Rule, ruleEditIndex: number | null) => Promise<void>;
+  onDeleteRule: (ruleDeleteIndex: number) => Promise<void>;
 }
 
 interface DiscountDetailsFormProps {

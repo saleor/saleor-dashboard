@@ -23,8 +23,8 @@ interface RulesListProps<ErrorCode> {
   channels: ChannelFragment[];
   errors: Array<CommonError<ErrorCode> & { index?: number }>;
   loading?: boolean;
-  onRuleDelete: (id: string) => void;
-  onRuleEdit: (id: string) => void;
+  onRuleDelete: (index: number) => void;
+  onRuleEdit: (index: number) => void;
 }
 
 export const RulesList = <ErrorCode,>({
@@ -72,7 +72,7 @@ export const RulesList = <ErrorCode,>({
                   <Button
                     size="small"
                     variant="tertiary"
-                    onClick={() => onRuleEdit(index.toString())}
+                    onClick={() => onRuleEdit(index)}
                     cursor={disabled ? "not-allowed" : "pointer"}
                     disabled={disabled}
                     data-test-id="rule-edit-button"
@@ -86,7 +86,7 @@ export const RulesList = <ErrorCode,>({
                     data-test-id="rule-delete-button"
                     onClick={e => {
                       e.stopPropagation();
-                      onRuleDelete(index.toString());
+                      onRuleDelete(index);
                     }}
                   >
                     <TrashBinIcon />

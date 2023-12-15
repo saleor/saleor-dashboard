@@ -11,7 +11,7 @@ const rule = {
   rewardValue: 10,
   rewardValueType: RewardValueTypeEnum.FIXED,
   conditions: [],
-} as Rule;
+} as unknown as Rule;
 
 describe("DiscountCreateForm useRulesHandlers", () => {
   it("should allow to add new rule ", () => {
@@ -38,7 +38,7 @@ describe("DiscountCreateForm useRulesHandlers", () => {
       rewardValue: 10,
       rewardValueType: RewardValueTypeEnum.FIXED,
       conditions: [],
-    } as Rule;
+    } as unknown as Rule;
 
     // Act
     act(() => {
@@ -46,7 +46,7 @@ describe("DiscountCreateForm useRulesHandlers", () => {
     });
 
     act(() => {
-      result.current.onRuleSubmit({ ...rule, name: "Rule 2" } as Rule, "0");
+      result.current.onRuleSubmit({ ...rule, name: "Rule 2" } as Rule, 0);
     });
 
     // Assert
@@ -64,7 +64,7 @@ describe("DiscountCreateForm useRulesHandlers", () => {
       rewardValue: 10,
       rewardValueType: RewardValueTypeEnum.FIXED,
       conditions: [],
-    } as Rule;
+    } as unknown as Rule;
 
     // Act
     act(() => {
@@ -72,7 +72,7 @@ describe("DiscountCreateForm useRulesHandlers", () => {
     });
 
     act(() => {
-      result.current.onDeleteRule("0");
+      result.current.onDeleteRule(0);
     });
 
     // Assert

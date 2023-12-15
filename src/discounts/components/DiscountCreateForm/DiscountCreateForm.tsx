@@ -10,8 +10,8 @@ import { initialFormValues } from "./initialFormValues";
 
 interface CreateFormRenderProps {
   rules: Rule[];
-  onDeleteRule: (ruleDeleteIndex: string) => void;
-  onRuleSubmit: (data: Rule, ruleEditIndex: string | null) => void;
+  onDeleteRule: (ruleDeleteIndex: number) => void;
+  onRuleSubmit: (data: Rule, ruleEditIndex: number | null) => void;
   onSubmit: () => void;
 }
 
