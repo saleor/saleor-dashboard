@@ -2,17 +2,20 @@ import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
+import { zodResolver } from "@hookform/resolvers/zod";
 import React, { ReactNode } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useIntl } from "react-intl";
 
 import { useRulesHandlers } from "./hooks/useRulesHandlers";
 import { initialFormValues } from "./initialFormValues";
+import { getValidationSchema } from "./validationSchema";
 
 interface CreateFormRenderProps {
   rules: Rule[];
   onDeleteRule: (ruleDeleteIndex: number) => void;
   onRuleSubmit: (data: Rule, ruleEditIndex: number | null) => void;
-  onSubmit: () => void;
+  submitHandler: () => void;
 }
 
 interface DiscountCreateFormProps {
@@ -24,9 +27,12 @@ export const DiscountCreateForm = ({
   children,
   onSubmit,
 }: DiscountCreateFormProps) => {
+  const intl = useIntl();
+
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: initialFormValues,
+    resolver: zodResolver(getValidationSchema(intl)),
   });
 
   const richText = useRichText({
@@ -44,14 +50,16 @@ export const DiscountCreateForm = ({
     });
   };
 
+  const submitHandlerWithValidation = methods.handleSubmit(handleSubmit);
+
   return (
     <RichTextContext.Provider value={richText}>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(handleSubmit)}>
+        <form onSubmit={submitHandlerWithValidation}>
           {children({
             onDeleteRule,
             onRuleSubmit,
-            onSubmit: methods.handleSubmit(handleSubmit),
+            submitHandler: submitHandlerWithValidation,
             rules,
           })}
         </form>

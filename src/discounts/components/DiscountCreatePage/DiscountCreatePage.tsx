@@ -52,7 +52,7 @@ export const DiscountCreatePage = ({
       />
       <DetailPageLayout.Content>
         <DiscountCreateForm onSubmit={onSubmit}>
-          {({ rules, onDeleteRule, onRuleSubmit, onSubmit }) => (
+          {({ rules, onDeleteRule, onRuleSubmit, submitHandler }) => (
             <>
               <DiscountName
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
@@ -80,7 +80,7 @@ export const DiscountCreatePage = ({
               <Savebar
                 disabled={disabled}
                 onCancel={onBack}
-                onSubmit={onSubmit}
+                onSubmit={submitHandler}
                 state={submitButtonState}
               />
             </>

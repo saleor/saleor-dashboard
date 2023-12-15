@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import { Input } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useController } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface DiscountNameProps {
@@ -12,6 +12,7 @@ interface DiscountNameProps {
 
 export const DiscountName = ({ disabled, error }: DiscountNameProps) => {
   const intl = useIntl();
+  const { formState } = useFormContext<DiscoutFormData>();
   const { field } = useController<DiscoutFormData, "name">({
     name: "name",
   });
@@ -24,8 +25,8 @@ export const DiscountName = ({ disabled, error }: DiscountNameProps) => {
       <DashboardCard.Content>
         <Input
           {...field}
-          error={!!error}
-          helperText={error}
+          error={!!error || !!formState.errors?.name}
+          helperText={error || formState.errors?.name?.message}
           label={intl.formatMessage({
             defaultMessage: "Discount name",
             id: "lJXkFS",

@@ -9,9 +9,12 @@ import { splitDateTime } from "@dashboard/misc";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
+import { zodResolver } from "@hookform/resolvers/zod";
 import React, { ReactNode } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useIntl } from "react-intl";
 
+import { getValidationSchema } from "../DiscountCreateForm/validationSchema";
 import { useRulesHandlers } from "./hooks/useRulesHandlers";
 import { filterRules } from "./utils";
 
@@ -48,6 +51,8 @@ export const DiscountDetailsForm = ({
   onRuleUpdateSubmit,
   ruleConditionsOptionsDetailsMap,
 }: DiscountDetailsFormProps) => {
+  const intl = useIntl();
+
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: {
@@ -62,6 +67,7 @@ export const DiscountDetailsForm = ({
       description: JSON.stringify(data?.description),
       rules: [],
     },
+    resolver: zodResolver(getValidationSchema(intl)),
   });
 
   const richText = useRichText({
