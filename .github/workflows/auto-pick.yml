@@ -1,4 +1,4 @@
-name: Cherry pick
+name: Auto cherry pick
 
 on:
   pull_request:
@@ -19,10 +19,12 @@ jobs:
           version=$(sed "s/release://g" <<< $release_label)
           echo "TARGET_VERSION=$version" >> $GITHUB_ENV
       - name: Checkout
+        if: env.TARGET_VERSION != ''
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Cherry pick into ${{ env.TARGET_VERSION }}
+        if: env.TARGET_VERSION != ''
         env:
           GH_TOKEN: ${{ github.token }}
           PR_BRANCH: pick-${{ github.event.pull_request.head.ref }}-${{ env.TARGET_VERSION }}
