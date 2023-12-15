@@ -45,14 +45,15 @@ export const useRulesHandlers = ({
         PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment
       >
     > = [];
+    const ruleObj = Rule.fromFormValues(rule);
 
     if (ruleEditIndex !== null) {
-      errors = await onRuleUpdateSubmit(rule);
+      errors = await onRuleUpdateSubmit(ruleObj);
       if (errors.length > 0) {
         setRulesErrors(errors);
       }
     } else {
-      errors = await onRuleCreateSubmit(rule);
+      errors = await onRuleCreateSubmit(ruleObj);
       if (errors.length > 0) {
         setRulesErrors(errors);
       }

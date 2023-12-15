@@ -9,13 +9,15 @@ export const useRulesHandlers = () => {
   };
 
   const onRuleSubmit = async (data: Rule, ruleEditIndex: number | null) => {
+    const ruleObj = Rule.fromFormValues(data);
+
     if (ruleEditIndex !== null) {
       setRules(rules => {
-        rules[ruleEditIndex] = data;
+        rules[ruleEditIndex] = ruleObj;
         return rules;
       });
     } else {
-      setRules([...rules, data]);
+      setRules([...rules, ruleObj]);
     }
   };
 

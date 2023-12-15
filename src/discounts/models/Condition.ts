@@ -26,6 +26,10 @@ export class Condition {
     return new Condition(null, "is", []);
   }
 
+  public static fromFormValues(data: Condition): Condition {
+    return new Condition(data.type, data.condition, data.values);
+  }
+
   public static fromAPI(
     condition: CataloguePredicateAPI,
     ruleConditionsOptionsDetailsMap: Record<string, string>,

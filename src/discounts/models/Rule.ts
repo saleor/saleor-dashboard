@@ -55,6 +55,18 @@ export class Rule {
       ),
     );
   }
+
+  public static fromFormValues(data: Rule): Rule {
+    return new Rule(
+      data.id,
+      data.name,
+      data.description,
+      data.channel,
+      data.rewardValue,
+      data.rewardValueType,
+      data.conditions.map(condition => Condition.fromFormValues(condition)),
+    );
+  }
 }
 
 function prepareCataloguePredicate(
