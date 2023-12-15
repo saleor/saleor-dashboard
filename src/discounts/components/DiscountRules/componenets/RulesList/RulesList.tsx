@@ -22,7 +22,7 @@ interface RulesListProps<ErrorCode> {
   disabled?: boolean;
   channels: ChannelFragment[];
   errors: Array<CommonError<ErrorCode> & { index?: number }>;
-  ruleConditionsOptionsDetailsLoading?: boolean;
+  loading?: boolean;
   onRuleDelete: (id: string) => void;
   onRuleEdit: (id: string) => void;
 }
@@ -34,7 +34,7 @@ export const RulesList = <ErrorCode,>({
   onRuleDelete,
   channels,
   disabled,
-  ruleConditionsOptionsDetailsLoading,
+  loading,
 }: RulesListProps<ErrorCode>) => {
   const intl = useIntl();
   if (rules.length === 0) {
@@ -96,9 +96,7 @@ export const RulesList = <ErrorCode,>({
               <RuleSummary
                 rule={rule}
                 currencySymbol={getCurencySymbol(rule.channel, channels)}
-                ruleConditionsOptionsDetailsLoading={
-                  ruleConditionsOptionsDetailsLoading
-                }
+                loading={loading}
               />
               {hasError && (
                 <Text color="critical1">

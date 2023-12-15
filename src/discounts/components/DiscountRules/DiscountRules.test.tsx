@@ -1,11 +1,19 @@
+import { MockedProvider } from "@apollo/client/testing";
+import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
 import { Rule } from "@dashboard/discounts/models";
-import { RewardValueTypeEnum } from "@dashboard/graphql";
+import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React, { ReactNode } from "react";
 
+import {
+  searchCategoriesMock,
+  searchProductsMock,
+  seatchCollectionMock,
+  seatchVariantsMock,
+} from "./componenets/RuleFormModal/mocks";
 import { DiscountRules } from "./DiscountRules";
 
 jest.mock("react-intl", () => ({
@@ -20,9 +28,18 @@ jest.mock("react-intl", () => ({
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
-    <LegacyThemeProvider>
-      <ThemeProvider>{children}</ThemeProvider>
-    </LegacyThemeProvider>
+    <MockedProvider
+      mocks={[
+        searchCategoriesMock,
+        seatchCollectionMock,
+        searchProductsMock,
+        seatchVariantsMock,
+      ]}
+    >
+      <LegacyThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
+      </LegacyThemeProvider>
+    </MockedProvider>
   );
 };
 
@@ -31,7 +48,7 @@ const rules = [
     id: "cat-1",
     name: "Catalog rule 1",
     description: "",
-    channel: { label: "Channel-1", value: "chan-1" },
+    channel: { label: "PLN", value: "1" },
     conditions: [
       {
         type: "product",
@@ -49,7 +66,7 @@ const rules = [
     id: "cat-2",
     name: "Catalog rule 2",
     description: "",
-    channel: { label: "Channel-3", value: "chan-3" },
+    channel: { label: "USD", value: "2" },
     conditions: [
       {
         type: "category",
@@ -63,6 +80,32 @@ const rules = [
 ] as Rule[];
 
 describe("DiscountRules", () => {
+  beforeAll(() => {
+    Object.defineProperty(window, "matchMedia", {
+      writable: true,
+      value: jest.fn().mockImplementation(query => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(), // Deprecated
+        removeListener: jest.fn(), // Deprecated
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      })),
+    });
+
+    const mockIntersectionObserver = jest.fn();
+    mockIntersectionObserver.mockReturnValue({
+      observe: () => null,
+      unobserve: () => null,
+      disconnect: () => null,
+    });
+    window.IntersectionObserver = mockIntersectionObserver;
+
+    mockResizeObserver();
+  });
+
   it("should render placeholder when no rules", () => {
     // Arrange & Act
     render(
@@ -70,11 +113,12 @@ describe("DiscountRules", () => {
         channels={[]}
         rules={[]}
         errors={[]}
-        onRuleAdd={jest.fn()}
+        onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
-        onRuleEdit={jest.fn()}
         disabled={false}
-        ruleConditionsOptionsDetailsLoading={false}
+        loading={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
     );
@@ -92,11 +136,12 @@ describe("DiscountRules", () => {
         channels={[]}
         rules={rules}
         errors={[]}
-        onRuleAdd={jest.fn()}
+        onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
-        onRuleEdit={jest.fn()}
         disabled={false}
-        ruleConditionsOptionsDetailsLoading={false}
+        loading={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
     );
@@ -120,14 +165,25 @@ describe("DiscountRules", () => {
     const onRuleAdd = jest.fn();
     render(
       <DiscountRules
-        channels={[]}
+        channels={
+          [
+            {
+              currencyCode: "$",
+              id: "1",
+              name: "PLN",
+              slug: "PLN",
+              isActive: true,
+            },
+          ] as ChannelFragment[]
+        }
         rules={[]}
         errors={[]}
-        onRuleAdd={onRuleAdd}
+        onRuleSubmit={onRuleAdd}
         onRuleDelete={jest.fn()}
-        onRuleEdit={jest.fn()}
         disabled={false}
-        ruleConditionsOptionsDetailsLoading={false}
+        loading={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
     );
@@ -145,8 +201,57 @@ describe("DiscountRules", () => {
       await userEvent.click(screen.getByText(/^catalog$/i));
     });
 
+    await userEvent.type(
+      screen.getByRole("input", { name: "Name" }),
+      "Name 123",
+    );
+    await userEvent.click(screen.getByRole("combobox"));
+    expect(await screen.findByText(/pln/i)).toBeInTheDocument();
+
+    await act(async () => {
+      await userEvent.click(screen.getAllByTestId("select-option")[0]);
+    });
+
+    await userEvent.click(await screen.findByTestId(/rule-type/i));
+    await userEvent.click(screen.getAllByTestId("select-option")[0]);
+
+    await userEvent.click(await screen.findByTestId(/rule-value/i));
+    await userEvent.click(await screen.getAllByTestId("select-option")[0]);
+
+    await userEvent.type(
+      screen.getByRole("input", { name: "Discount value" }),
+      "22",
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: /save/i }));
+
     // Assert
-    expect(onRuleAdd).toHaveBeenCalled();
+    expect(onRuleAdd).toHaveBeenCalledWith(
+      {
+        channel: {
+          label: "PLN",
+          value: "1",
+        },
+        conditions: [
+          {
+            condition: "is",
+            type: "product",
+            values: [
+              {
+                label: "Bean Juice",
+                value: "UHJvZHVjdDo3OQ==",
+              },
+            ],
+          },
+        ],
+        description: "",
+        id: "",
+        name: "Name 123",
+        rewardValue: 22,
+        rewardValueType: "PERCENTAGE",
+      },
+      null,
+    );
   });
 
   it("should allow to to handle delete rule", async () => {
@@ -158,11 +263,12 @@ describe("DiscountRules", () => {
         channels={[]}
         rules={rules}
         errors={[]}
-        onRuleAdd={jest.fn()}
+        onRuleSubmit={jest.fn()}
         onRuleDelete={onRuleDelete}
-        onRuleEdit={jest.fn()}
         disabled={false}
-        ruleConditionsOptionsDetailsLoading={false}
+        loading={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
     );
@@ -172,8 +278,15 @@ describe("DiscountRules", () => {
       await userEvent.click(screen.getAllByTestId("rule-delete-button")[0]);
     });
 
+    await screen.findByText(/delete rule/i);
+
+    await act(async () => {
+      await userEvent.click(screen.getByRole("button", { name: /delete/i }));
+    });
+
     // Assert
-    expect(onRuleDelete).toHaveBeenCalled();
+    expect(onRuleDelete).toHaveBeenCalledWith("0");
+    expect(screen.queryByText(/delete rule/i)).not.toBeInTheDocument();
   });
 
   it("should allow to to handle update rule", async () => {
@@ -182,25 +295,81 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
-        channels={[]}
+        channels={
+          [
+            {
+              currencyCode: "$",
+              id: "1",
+              name: "PLN",
+              slug: "PLN",
+              isActive: true,
+            },
+          ] as ChannelFragment[]
+        }
         rules={rules}
         errors={[]}
-        onRuleAdd={jest.fn()}
+        onRuleSubmit={onRuleEdit}
         onRuleDelete={jest.fn()}
-        onRuleEdit={onRuleEdit}
         disabled={false}
-        ruleConditionsOptionsDetailsLoading={false}
+        loading={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
     );
 
     // Act
     await act(async () => {
-      await userEvent.click(screen.getAllByTestId("rule-edit-button")[1]);
+      await userEvent.click(screen.getAllByTestId("rule-edit-button")[0]);
     });
 
+    await screen.findAllByText(/edit rule/i);
+
+    const nameField = screen.getByRole("input", { name: "Name" });
+    await userEvent.clear(nameField);
+    await userEvent.type(nameField, "New name");
+
+    await userEvent.click(screen.getByRole("radio", { name: "$" }));
+
+    const discountValueField = screen.getByRole("input", {
+      name: "Discount value",
+    });
+    await userEvent.clear(discountValueField);
+    await userEvent.type(discountValueField, "122");
+
+    await userEvent.click(screen.getByRole("button", { name: /save/i }));
+
     // Assert
-    expect(onRuleEdit).toHaveBeenCalled();
+    expect(onRuleEdit).toHaveBeenCalledWith(
+      {
+        id: "cat-1",
+        name: "New name",
+        channel: {
+          label: "PLN",
+          value: "1",
+        },
+        conditions: [
+          {
+            condition: "is",
+            type: "product",
+            values: [
+              {
+                label: "Product-1",
+                value: "prod-1",
+              },
+              {
+                label: "Product-2",
+                value: "prod-2",
+              },
+            ],
+          },
+        ],
+        description: "",
+        rewardValue: 122,
+        rewardValueType: "FIXED",
+      },
+      "0",
+    );
   });
 
   it("should show error in rule", async () => {
@@ -215,13 +384,14 @@ describe("DiscountRules", () => {
             message: "Reward value is required",
             code: "GRAPHQL_ERROR",
             index: 0,
-          },
+          } as any,
         ]}
-        onRuleAdd={jest.fn()}
+        onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
-        onRuleEdit={jest.fn()}
         disabled={false}
-        ruleConditionsOptionsDetailsLoading={false}
+        loading={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
     );

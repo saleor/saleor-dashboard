@@ -9,9 +9,10 @@ import { splitDateTime } from "@dashboard/misc";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
+import { useRulesHandlers } from "./hooks/useRulesHandlers";
 import { filterRules } from "./utils";
 
 interface DiscountDetailsFormRenderProps {
@@ -47,19 +48,6 @@ export const DiscountDetailsForm = ({
   onRuleUpdateSubmit,
   ruleConditionsOptionsDetailsMap,
 }: DiscountDetailsFormProps) => {
-  const [rules, setRules] = useState<Rule[]>([]);
-  const [rulesErrors, setRulesErrors] = useState<Array<CommonError<any>>>([]);
-
-  useEffect(() => {
-    if (data?.rules) {
-      setRules(
-        data.rules.map(rule =>
-          Rule.fromAPI(rule, ruleConditionsOptionsDetailsMap),
-        ) ?? [],
-      );
-    }
-  }, [data?.rules, ruleConditionsOptionsDetailsMap]);
-
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: {
@@ -93,38 +81,13 @@ export const DiscountDetailsForm = ({
     });
   };
 
-  const onRuleSubmit = async (rule: Rule, ruleEditIndex: string | null) => {
-    let errors: Array<
-      CommonError<
-        PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment
-      >
-    > = [];
-
-    if (ruleEditIndex !== null) {
-      errors = await onRuleUpdateSubmit(rule);
-      if (errors.length > 0) {
-        setRulesErrors(errors);
-      }
-    } else {
-      errors = await onRuleCreateSubmit(rule);
-      if (errors.length > 0) {
-        setRulesErrors(errors);
-      }
-    }
-  };
-
-  const onDeleteRule = async (ruleDeleteIndex: string) => {
-    if (ruleDeleteIndex === null) {
-      return;
-    }
-
-    const ruleId = rules[Number(ruleDeleteIndex)].id;
-    if (!ruleId) {
-      return;
-    }
-
-    await onRuleDeleteSubmit(ruleId);
-  };
+  const { onDeleteRule, onRuleSubmit, rules, rulesErrors } = useRulesHandlers({
+    data,
+    onRuleCreateSubmit,
+    onRuleDeleteSubmit,
+    onRuleUpdateSubmit,
+    ruleConditionsOptionsDetailsMap,
+  });
 
   return (
     <RichTextContext.Provider value={richText}>

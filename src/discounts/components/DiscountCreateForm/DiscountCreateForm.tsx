@@ -2,9 +2,10 @@ import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
+import { useRulesHandlers } from "./hooks/useRulesHandlers";
 import { initialFormValues } from "./initialFormValues";
 
 interface CreateFormRenderProps {
@@ -23,8 +24,6 @@ export const DiscountCreateForm = ({
   children,
   onSubmit,
 }: DiscountCreateFormProps) => {
-  const [rules, setRules] = useState<Rule[]>([]);
-
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: initialFormValues,
@@ -36,28 +35,13 @@ export const DiscountCreateForm = ({
     triggerChange: methods.trigger,
   });
 
+  const { rules, onDeleteRule, onRuleSubmit } = useRulesHandlers();
+
   const handleSubmit: SubmitHandler<DiscoutFormData> = data => {
     onSubmit({
       ...data,
       rules,
     });
-  };
-
-  const onDeleteRule = (ruleDeleteIndex: string) => {
-    setRules(rules =>
-      rules.filter((_, index) => index !== Number(ruleDeleteIndex)),
-    );
-  };
-
-  const onRuleSubmit = async (data: Rule, ruleEditIndex: string | null) => {
-    if (ruleEditIndex !== null) {
-      setRules(rules => {
-        rules[ruleEditIndex] = data;
-        return rules;
-      });
-    } else {
-      setRules([...rules, data]);
-    }
   };
 
   return (

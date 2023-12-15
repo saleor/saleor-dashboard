@@ -82,7 +82,7 @@ export const DiscountDetailsPage = ({
           onRuleDeleteSubmit={onRuleDeleteSubmit}
           onRuleUpdateSubmit={onRuleUpdateSubmit}
         >
-          {({ onDeleteRule, onRuleSubmit, onSubmit, rulesErrors, rules }) => (
+          {({ rulesErrors, rules, onDeleteRule, onRuleSubmit, onSubmit }) => (
             <>
               <DiscountName
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
@@ -99,9 +99,7 @@ export const DiscountDetailsPage = ({
               <DiscountRules
                 errors={rulesErrors}
                 rules={rules}
-                ruleConditionsOptionsDetailsLoading={
-                  ruleConditionsOptionsDetailsLoading
-                }
+                loading={ruleConditionsOptionsDetailsLoading}
                 getRuleConfirmButtonState={ruleEditIndex =>
                   ruleEditIndex ? ruleUpdateButtonState : ruleCreateButtonState
                 }

@@ -22,7 +22,7 @@ interface DiscountRulesProps<ErrorCode> {
   channels: ChannelFragment[];
   rules: Rule[];
   errors: Array<CommonError<ErrorCode>>;
-  ruleConditionsOptionsDetailsLoading?: boolean;
+  loading?: boolean;
   deleteButtonState?: ConfirmButtonTransitionState;
   getRuleConfirmButtonState: (
     ruleEditIndex: string | null,
@@ -38,7 +38,7 @@ export const DiscountRules = <ErrorCode,>({
   errors,
   getRuleConfirmButtonState,
   deleteButtonState,
-  ruleConditionsOptionsDetailsLoading,
+  loading,
   onRuleSubmit,
   onRuleDelete,
 }: DiscountRulesProps<ErrorCode>) => {
@@ -61,9 +61,7 @@ export const DiscountRules = <ErrorCode,>({
       </DashboardCard.Title>
       <DashboardCard.Content>
         <RulesList
-          ruleConditionsOptionsDetailsLoading={
-            ruleConditionsOptionsDetailsLoading
-          }
+          loading={loading}
           rules={rules}
           onRuleEdit={editIndex => {
             setRuleEditIndex(editIndex);

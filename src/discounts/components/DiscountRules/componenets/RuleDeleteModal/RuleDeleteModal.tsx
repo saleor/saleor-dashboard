@@ -48,7 +48,7 @@ export const RuleDeleteModal = ({
             <FormattedMessage {...buttonMessages.close} />
           </Button>
           <ConfirmButton transitionState={confimButtonState} onClick={onSubmit}>
-            <FormattedMessage {...buttonMessages.save} />
+            <FormattedMessage {...buttonMessages.delete} />
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>

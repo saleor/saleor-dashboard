@@ -19,13 +19,13 @@ import { mapConditionToOption, splitConditions } from "./utils";
 interface RuleSummaryProps {
   rule: Rule;
   currencySymbol: string;
-  ruleConditionsOptionsDetailsLoading?: boolean;
+  loading?: boolean;
 }
 
 export const RuleSummary = ({
   rule,
   currencySymbol,
-  ruleConditionsOptionsDetailsLoading,
+  loading,
 }: RuleSummaryProps) => {
   const { theme } = useTheme();
 
@@ -37,7 +37,7 @@ export const RuleSummary = ({
     return null;
   }
 
-  if (ruleConditionsOptionsDetailsLoading) {
+  if (loading) {
     return (
       <Box paddingY={3}>
         <Skeleton />
