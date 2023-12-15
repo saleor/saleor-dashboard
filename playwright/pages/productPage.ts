@@ -35,9 +35,6 @@ export class ProductPage {
     readonly exportButton = page.getByTestId("export"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteProductButton = page.getByTestId("button-bar-delete"),
-    readonly searchProducts = page.locator(
-      "[placeholder='Search Products...']",
-    ),
     readonly productNameInput = page.locator("[name='name']"),
     readonly addProductButton = page.getByTestId("add-product"),
     readonly productTypeInput = page.getByTestId("product-type"),
