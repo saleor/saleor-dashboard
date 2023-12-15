@@ -249,3 +249,42 @@ test("TC: SALEOR_58 As an admin I should be able use pagination on product list 
     `Product from first page: ${firstPageProductName} should be visible again`,
   ).toContainText(firstPageProductName);
 });
+test("TC: SALEOR_59 As an admin I should be able update existing variant @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const variantName = `TC: SALEOR_59 - variant name - ${new Date().toISOString()}`;
+  const sku = `SALEOR_59-sku-${new Date().toISOString()}`;
+
+  const productPage = new ProductPage(page);
+  const variantsPage = new VariantsPage(page);
+  await variantsPage.gotoExistingVariantPage(
+    PRODUCTS.productWithVariantWhichWillBeUpdated.id,
+    PRODUCTS.productWithVariantWhichWillBeUpdated.variantId,
+  );
+  await variantsPage.typeVariantName(variantName);
+  await variantsPage.clickMageChannelsButton();
+  await variantsPage.channelSelectDialog.clickAllChannelsCheckbox();
+  await variantsPage.channelSelectDialog.selectLastChannel();
+  await variantsPage.channelSelectDialog.clickConfirmButton();
+  await variantsPage.selectLastAttributeValue();
+  await variantsPage.typeCheckoutLimit("50");
+  await variantsPage.typeShippingWeight("1000");
+  await variantsPage.typeSellingPriceInChannel("USD", "120");
+  await variantsPage.typeCostPriceInChannel("USD", "100");
+  await variantsPage.typeSku(sku);
+  await variantsPage.clickSaveVariantButton();
+
+  await variantsPage.expectSuccessBanner();
+  await expect(
+    variantsPage.variantsList.locator(variantsPage.variantsNames, {
+      hasText: variantName,
+    }),
+  ).toBeVisible();
+
+  await variantsPage.selectWarehouse("Africa");
+  await variantsPage.typeQuantityInStock("Africa", "5000");
+  await variantsPage.clickSaveVariantButton();
+
+  await variantsPage.expectSuccessBanner();
+  await productPage.productImage.waitFor({ state: "visible" });
+});
