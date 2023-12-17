@@ -1,5 +1,4 @@
 import { FetchResult } from "@apollo/client";
-import { RuleDTO } from "@dashboard/discounts/dto/dto";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
   PromotionCreateMutation,
@@ -21,7 +20,7 @@ export const createHandler = (
           ? joinDateTime(data.dates.endDate, data.dates.endTime)
           : null,
         startDate: joinDateTime(data.dates.startDate, data.dates.startTime),
-        rules: data.rules.map(RuleDTO.toAPI),
+        rules: data.rules.map(rule => rule.toAPI()),
       },
     });
 

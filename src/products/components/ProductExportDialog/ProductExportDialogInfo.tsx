@@ -320,6 +320,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
       </Typography>
       <div className={classes.scrollArea}>
         <Accordion
+          dataTestId="channel-expand-button"
           className={classes.accordion}
           title={intl.formatMessage(sectionNames.channels)}
           quickPeek={

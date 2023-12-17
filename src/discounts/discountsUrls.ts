@@ -8,6 +8,8 @@ export enum DiscountListUrlSortField {
   startDate = "startDate",
 }
 
+const discountSection = "/discounts/sales";
+
 export type DiscountListUrlDialog = TabActionDialog;
 
 export type DiscountListUrlSort = Sort<DiscountListUrlSortField>;
@@ -18,10 +20,13 @@ export type DiscountListUrlQueryParams = Dialog<DiscountListUrlDialog> &
     query?: string;
   };
 
+export type DiscountUrlDialog = "remove";
+export type DiscountUrlQueryParams = Dialog<DiscountUrlDialog>;
+
 export const discountListUrl = (params?: DiscountListUrlQueryParams) =>
-  "/discounts/sales" + "?" + stringifyQs(params);
+  discountSection + "?" + stringifyQs(params);
 
 export const discountUrl = (id: string, params?: DiscountListUrlQueryParams) =>
-  urlJoin("/discounts/sales", id) + "?" + stringifyQs(params);
+  urlJoin(discountSection, id) + "?" + stringifyQs(params);
 
-export const discountAddUrl = () => "/discounts/sales/add";
+export const discountAddUrl = () => urlJoin(discountSection, "add");

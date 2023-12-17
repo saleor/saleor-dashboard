@@ -1,4 +1,5 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
+import { channelsList } from "@dashboard/channels/fixtures";
 import {
   DiscountValueTypeEnum,
   PromotionDetailsFragment,
@@ -684,33 +685,25 @@ export const discount: PromotionDetailsFragment = {
     {
       __typename: "PromotionRule",
       id: "1",
-      channels: [
-        {
-          __typename: "Channel",
-          id: "Q2hhbm5lbDoyMjQ0",
-          name: "Channel-PLN",
-          currencyCode: "PLN",
-          defaultCountry: {
-            __typename: "CountryDisplay",
-            code: "PL",
-            country: "Poland",
-          },
-          hasOrders: false,
-          isActive: true,
-          orderSettings: {} as any,
-          paymentSettings: {} as any,
-          slug: "channel-pln",
-          stockSettings: {} as any,
-          warehouses: [] as any,
-        },
-      ],
+      channels: [channelsList[0]],
       description:
         '{"time":1700126384046,"blocks":[{"id":"Sj7p30CLFo","type":"header","data":{"text":"Example title","level":1}}],"version":"2.24.3"}',
       name: "Rule 1",
       rewardValue: "33",
       rewardValueType: RewardValueTypeEnum.FIXED,
       cataloguePredicate: {
-        OR: [],
+        OR: [
+          {
+            productPredicate: {
+              ids: ["UHJvZHVjdDo3OQ==", "UHJvZHVjdDoxMTU="],
+            },
+          },
+          {
+            variantPredicate: {
+              ids: ["UHJvZHVjdFZhcmlhbnQ6OTg3", "UHJvZHVjdFZhcmlhbnQ6MjE1"],
+            },
+          },
+        ],
       },
     },
   ],

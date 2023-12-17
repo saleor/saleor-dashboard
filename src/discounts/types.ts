@@ -1,8 +1,8 @@
-import { RewardValueTypeEnum } from "@dashboard/graphql";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
-import { Option } from "@saleor/macaw-ui-next";
+
+import { Rule } from "./models";
 
 export enum RequirementsPicker {
   ORDER = "ORDER",
@@ -35,22 +35,6 @@ export interface DiscoutFormData {
     startTime: string;
   };
   rules: Rule[];
-}
-
-export interface Rule {
-  id?: string;
-  name: string;
-  description: string;
-  channel: Option | null;
-  conditions: Condition[];
-  rewardValueType: RewardValueTypeEnum;
-  rewardValue: number | null;
-}
-
-export interface Condition {
-  type: ConditionType | null;
-  condition: "is";
-  values: Option[];
 }
 
 export type ConditionType = "product" | "category" | "collection" | "variant";

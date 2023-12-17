@@ -7,6 +7,7 @@ import {
 } from "@dashboard/utils/errors/common";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import React, { ChangeEvent } from "react";
+import { FieldError } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface DiscountDatesProps<ErrorCode> {
@@ -18,6 +19,9 @@ interface DiscountDatesProps<ErrorCode> {
     startTime: string;
   };
   disabled: boolean;
+  formErrors?: {
+    startDate?: FieldError;
+  };
   errors: Array<CommonError<ErrorCode>>;
   onChange: (event: React.ChangeEvent<any>) => void;
   onBlur?: (event: React.FocusEvent<any>) => void;
@@ -27,12 +31,13 @@ const DiscountDates = <ErrorCode,>({
   data,
   disabled,
   errors,
+  formErrors,
   onChange,
   onBlur,
 }: DiscountDatesProps<ErrorCode>) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["startDate", "endDate"], errors);
+  const apiErrors = getFormErrors(["startDate", "endDate"], errors);
 
   return (
     <DashboardCard>
@@ -48,11 +53,11 @@ const DiscountDates = <ErrorCode,>({
         <Box display="flex" gap={4}>
           <Input
             disabled={disabled}
-            error={!!formErrors.startDate}
-            helperText={getCommonFormFieldErrorMessage(
-              formErrors.startDate,
-              intl,
-            )}
+            error={!!apiErrors.startDate || !!formErrors?.startDate}
+            helperText={
+              getCommonFormFieldErrorMessage(apiErrors.startDate, intl) ||
+              formErrors?.startDate?.message
+            }
             name="startDate"
             onChange={onChange}
             onBlur={onBlur}
@@ -63,9 +68,9 @@ const DiscountDates = <ErrorCode,>({
           />
           <Input
             disabled={disabled}
-            error={!!formErrors.startDate}
+            error={!!apiErrors.startDate}
             helperText={getCommonFormFieldErrorMessage(
-              formErrors.startDate,
+              apiErrors.startDate,
               intl,
             )}
             name="startTime"
@@ -104,9 +109,9 @@ const DiscountDates = <ErrorCode,>({
           <Box display="flex" gap={4}>
             <Input
               disabled={disabled}
-              error={!!formErrors.endDate}
+              error={!!apiErrors.endDate}
               helperText={getCommonFormFieldErrorMessage(
-                formErrors.endDate,
+                apiErrors.endDate,
                 intl,
               )}
               name="endDate"
@@ -119,9 +124,9 @@ const DiscountDates = <ErrorCode,>({
             />
             <Input
               disabled={disabled}
-              error={!!formErrors.endDate}
+              error={!!apiErrors.endDate}
               helperText={getCommonFormFieldErrorMessage(
-                formErrors.endDate,
+                apiErrors.endDate,
                 intl,
               )}
               name="endTime"

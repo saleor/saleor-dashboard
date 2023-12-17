@@ -1,4 +1,4 @@
-import { Rule as RuleType } from "@dashboard/discounts/types";
+import { Rule } from "@dashboard/discounts/models";
 import { ChannelFragment } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import {
@@ -14,27 +14,27 @@ import { useIntl } from "react-intl";
 import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
 import { Placeholder } from "../Placeholder";
-import { RuleSummary } from "../Rule/components/RuleSummary";
-import { RuleWrapper } from "../Rule/components/RuleWrapper";
+import { RuleSummary } from "../RuleForm/components/RuleSummary";
+import { RuleWrapper } from "../RuleForm/components/RuleWrapper";
 
 interface RulesListProps<ErrorCode> {
-  rules: RuleType[];
+  rules: Rule[];
   disabled?: boolean;
   channels: ChannelFragment[];
   errors: Array<CommonError<ErrorCode> & { index?: number }>;
-  ruleConditionsOptionsDetailsLoading?: boolean;
-  onRuleDelete: (id: string) => void;
-  onRulEdit: (id: string) => void;
+  loading?: boolean;
+  onRuleDelete: (index: number) => void;
+  onRuleEdit: (index: number) => void;
 }
 
 export const RulesList = <ErrorCode,>({
   rules,
   errors,
-  onRulEdit,
+  onRuleEdit,
   onRuleDelete,
   channels,
   disabled,
-  ruleConditionsOptionsDetailsLoading,
+  loading,
 }: RulesListProps<ErrorCode>) => {
   const intl = useIntl();
   if (rules.length === 0) {
@@ -72,7 +72,7 @@ export const RulesList = <ErrorCode,>({
                   <Button
                     size="small"
                     variant="tertiary"
-                    onClick={() => onRulEdit(index.toString())}
+                    onClick={() => onRuleEdit(index)}
                     cursor={disabled ? "not-allowed" : "pointer"}
                     disabled={disabled}
                     data-test-id="rule-edit-button"
@@ -86,7 +86,7 @@ export const RulesList = <ErrorCode,>({
                     data-test-id="rule-delete-button"
                     onClick={e => {
                       e.stopPropagation();
-                      onRuleDelete(index.toString());
+                      onRuleDelete(index);
                     }}
                   >
                     <TrashBinIcon />
@@ -96,9 +96,7 @@ export const RulesList = <ErrorCode,>({
               <RuleSummary
                 rule={rule}
                 currencySymbol={getCurencySymbol(rule.channel, channels)}
-                ruleConditionsOptionsDetailsLoading={
-                  ruleConditionsOptionsDetailsLoading
-                }
+                loading={loading}
               />
               {hasError && (
                 <Text color="critical1">

@@ -1,7 +1,10 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountCreatePage } from "@dashboard/discounts/components/DiscountCreatePage";
-import { saleListUrl, saleUrl } from "@dashboard/discounts/urls";
+import {
+  discountListUrl,
+  discountUrl,
+} from "@dashboard/discounts/discountsUrls";
 import { usePromotionCreateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -28,7 +31,7 @@ export const DiscountCreate = () => {
             defaultMessage: "Successfully created discount",
           }),
         });
-        navigate(saleUrl(data?.promotionCreate?.promotion?.id ?? ""), {
+        navigate(discountUrl(data?.promotionCreate?.promotion?.id ?? ""), {
           replace: true,
         });
       }
@@ -45,7 +48,7 @@ export const DiscountCreate = () => {
       <DiscountCreatePage
         disabled={promotionCreateOpts.loading}
         onBack={() => {
-          navigate(saleListUrl());
+          navigate(discountListUrl());
         }}
         errors={getMutationErrors(promotionCreateOpts)}
         channels={availableChannels}
