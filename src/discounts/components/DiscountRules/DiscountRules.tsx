@@ -48,6 +48,30 @@ export const DiscountRules = <ErrorCode,>({
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
 
+  const handleOpenRuleModal = (editIndex: number) => {
+    setRuleEditIndex(editIndex);
+    setShowRuleModal(true);
+  };
+
+  const handleOpenRuleDeleteModal = (index: number) => {
+    setRuleDeleteIndex(index);
+  };
+
+  const handleRuleModalClose = () => {
+    setShowRuleModal(false);
+    setRuleEditIndex(null);
+  };
+
+  const handleRuleModalSubmit = async (data: Rule) => {
+    await onRuleSubmit(data, ruleEditIndex);
+    handleRuleModalClose();
+  };
+
+  const handleRuleDelete = async () => {
+    await onRuleDelete(ruleDeleteIndex!);
+    setRuleDeleteIndex(null);
+  };
+
   return (
     <DashboardCard marginBottom={20}>
       <DashboardCard.Title>
@@ -63,13 +87,8 @@ export const DiscountRules = <ErrorCode,>({
         <RulesList
           loading={loading}
           rules={rules}
-          onRuleEdit={editIndex => {
-            setRuleEditIndex(editIndex);
-            setShowRuleModal(true);
-          }}
-          onRuleDelete={index => {
-            setRuleDeleteIndex(index);
-          }}
+          onRuleEdit={handleOpenRuleModal}
+          onRuleDelete={handleOpenRuleDeleteModal}
           channels={channels}
           errors={errors}
         />
@@ -78,29 +97,19 @@ export const DiscountRules = <ErrorCode,>({
       <RuleFormModal
         open={showRuleModal}
         confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
-        onClose={() => {
-          setShowRuleModal(false);
-          setRuleEditIndex(null);
-        }}
+        onClose={handleRuleModalClose}
         channels={channels}
         initialFormValues={
           ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
         }
         errors={errors}
-        onSubmit={data => {
-          onRuleSubmit(data, ruleEditIndex);
-          setShowRuleModal(false);
-          setRuleEditIndex(null);
-        }}
+        onSubmit={handleRuleModalSubmit}
       />
 
       <RuleDeleteModal
         open={ruleDeleteIndex !== null}
         onClose={() => setRuleDeleteIndex(null)}
-        onSubmit={() => {
-          onRuleDelete(ruleDeleteIndex!);
-          setRuleDeleteIndex(null);
-        }}
+        onSubmit={handleRuleDelete}
         confimButtonState={deleteButtonState}
       />
     </DashboardCard>

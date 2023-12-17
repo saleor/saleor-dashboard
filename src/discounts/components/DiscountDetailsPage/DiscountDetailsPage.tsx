@@ -101,7 +101,9 @@ export const DiscountDetailsPage = ({
                 rules={rules}
                 loading={ruleConditionsOptionsDetailsLoading}
                 getRuleConfirmButtonState={ruleEditIndex =>
-                  ruleEditIndex ? ruleUpdateButtonState : ruleCreateButtonState
+                  ruleEditIndex !== null
+                    ? ruleUpdateButtonState
+                    : ruleCreateButtonState
                 }
                 deleteButtonState={ruleDeleteButtonState}
                 onRuleDelete={onDeleteRule}

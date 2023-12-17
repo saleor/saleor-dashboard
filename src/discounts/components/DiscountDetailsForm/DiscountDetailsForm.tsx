@@ -81,7 +81,7 @@ export const DiscountDetailsForm = ({
       methods.formState.dirtyFields?.rules ?? {},
     );
 
-    onSubmit({
+    return onSubmit({
       ...formData,
       rules: filterRules(data?.rules ?? [], formData.rules, dirtyRulesIndexes),
     });
