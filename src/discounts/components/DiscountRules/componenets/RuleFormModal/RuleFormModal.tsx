@@ -30,7 +30,7 @@ interface RuleFormModalProps<ErrorCode> {
   onSubmit: (data: Rule) => void;
   confimButtonState: ConfirmButtonTransitionState;
   channels: ChannelFragment[];
-  initialFormValues?: Rule;
+  initialFormValues?: Rule | null;
   errors: Array<CommonError<ErrorCode>>;
 }
 
