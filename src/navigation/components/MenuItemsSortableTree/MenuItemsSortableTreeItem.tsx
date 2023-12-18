@@ -63,7 +63,7 @@ export const MenuItemsSortableTreeItem = ({
         display="flex"
         alignItems="center"
         justifyContent="space-between"
-        boxShadow={clone ? "overlay" : "none"}
+        boxShadow={clone ? "defaultOverlay" : "none"}
         ref={innerRef}
         style={style}
       >

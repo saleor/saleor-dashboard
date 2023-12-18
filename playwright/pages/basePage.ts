@@ -13,6 +13,7 @@ export class BasePage {
       .locator('[class="clip-region"]')
       .locator("textarea"),
     readonly successBanner = page.locator(LOCATORS.successBanner),
+    readonly filterButton = page.getByTestId("filters-button"),
     readonly errorBanner = page.locator(LOCATORS.errorBanner),
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
     readonly previousPagePaginationButton = page.getByTestId(
@@ -36,6 +37,10 @@ export class BasePage {
       .innerText();
 
     return cellText;
+  }
+
+  async clickFilterButton() {
+    await this.filterButton.click();
   }
 
   async typeInSearchOnListView(searchItem: string) {
