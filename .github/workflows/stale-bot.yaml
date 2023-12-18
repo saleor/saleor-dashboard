@@ -18,5 +18,5 @@ jobs:
           close-pr-message: This PR request has been closed because it has been stalled for 2 days with no activity. You are still welcome to reopen it and continue from where you finished. Best regards Saleor team
           days-before-stale: 14
           days-before-close: 2
-          exempt-pr-labels: epic,triage,bug,blocker,backlog,feature
-          exempt-issue-labels: epic,triage,bug,blocker,backlog,feature
+          exempt-pr-labels: epic,triage,bug,blocker,backlog,feature,cherry-pick
+          exempt-issue-labels: epic,triage,bug,blocker,backlog,feature,cherry-pick
