@@ -6208,6 +6208,9 @@
     "context": "table head",
     "string": "Category Name"
   },
+  "fXdkiI": {
+    "string": "is"
+  },
   "fbH51z": {
     "context": "Amount error message",
     "string": "Amount cannot be bigger than max refund"
@@ -6215,6 +6218,9 @@
   "fehqPs": {
     "context": "order history message",
     "string": "Products were deleted from an order"
+  },
+  "fg8dzN": {
+    "string": "Add condition"
   },
   "fgHLXc": {
     "context": "attribute value",

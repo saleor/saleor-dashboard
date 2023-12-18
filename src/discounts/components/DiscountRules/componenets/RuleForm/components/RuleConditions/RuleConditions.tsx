@@ -3,7 +3,7 @@ import { ConditionType } from "@dashboard/discounts/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
 import { FetchOptions, RuleConditionRow } from "../RuleConditionRow";
@@ -77,7 +77,7 @@ export const RuleConditions = ({
           disabled={disabled}
           onClick={() => append(Condition.empty())}
         >
-          Add condition
+          <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>
       )}
     </Box>

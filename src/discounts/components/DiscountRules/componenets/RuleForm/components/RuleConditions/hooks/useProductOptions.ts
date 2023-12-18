@@ -1,15 +1,15 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import useProductSearchQuery from "@dashboard/searches/useProductSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-export const useProductSearch = (channel: string) => {
+export const useProductOptions = (channel: string) => {
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
     result: searchProductsOpts,
-  } = useProductSearchQuery({
+  } = useProductSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       channel,

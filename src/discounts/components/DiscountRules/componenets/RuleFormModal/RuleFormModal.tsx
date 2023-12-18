@@ -16,10 +16,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { ConditionType } from "../../../../types";
 import { messages } from "../../messages";
 import { FetchOptions } from "../RuleForm/components/RuleConditionRow";
-import { useCategorieSearch } from "../RuleForm/components/RuleConditions/hooks/useCategorieSearch";
-import { useCollectionSearch } from "../RuleForm/components/RuleConditions/hooks/useCollectionSearch";
-import { useProductSearch } from "../RuleForm/components/RuleConditions/hooks/useProductSearch";
-import { useVariantSearch } from "../RuleForm/components/RuleConditions/hooks/useVariantSearch";
+import { useCategorieOptions } from "../RuleForm/components/RuleConditions/hooks/useCategorieOptions";
+import { useCollectionOptions } from "../RuleForm/components/RuleConditions/hooks/useCollectionOptions";
+import { useProductOptions } from "../RuleForm/components/RuleConditions/hooks/useProductOptions";
+import { useVariantOptions } from "../RuleForm/components/RuleConditions/hooks/useVariantOptions";
 import { RuleForm } from "../RuleForm/RuleForm";
 import { getValidationSchema } from "./validationSchema";
 
@@ -56,10 +56,10 @@ export const RuleFormModal = <ErrorCode,>({
   const channelSlug =
     channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
 
-  const productSearch = useProductSearch(channelSlug);
-  const collectionSearch = useCollectionSearch(channelSlug);
-  const categorySearch = useCategorieSearch();
-  const variantSearch = useVariantSearch(channelSlug);
+  const productSearch = useProductOptions(channelSlug);
+  const collectionSearch = useCollectionOptions(channelSlug);
+  const categorySearch = useCategorieOptions();
+  const variantSearch = useVariantOptions(channelSlug);
 
   const typeToFetchMap: Record<ConditionType, FetchOptions> = {
     product: productSearch,

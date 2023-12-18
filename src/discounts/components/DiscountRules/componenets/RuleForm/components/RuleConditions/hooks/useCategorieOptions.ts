@@ -1,15 +1,15 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import useCategorySearchQuery from "@dashboard/searches/useCategorySearch";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-export const useCategorieSearch = () => {
+export const useCategorieOptions = () => {
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts,
-  } = useCategorySearchQuery({
+  } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 

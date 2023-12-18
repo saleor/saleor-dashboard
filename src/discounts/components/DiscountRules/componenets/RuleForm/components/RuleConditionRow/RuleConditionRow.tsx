@@ -4,6 +4,7 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import { Box, Button, Option, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
+import { useIntl } from "react-intl";
 
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 import { initialDiscountConditionType } from "./initialDiscountConditionType";
@@ -31,6 +32,8 @@ export const RuleConditionRow = ({
   updateCondition,
   disabled = false,
 }: DiscountConditionRowProps) => {
+  const intl = useIntl();
+
   const ruleConditionTypeFieldName =
     `conditions.${conditionIndex}.type` as const;
   const { field: typeField } = useController<
@@ -87,11 +90,14 @@ export const RuleConditionRow = ({
 
       <RuleInputWrapper>
         <Select
-          value={"is"}
+          value="is"
           size="small"
           options={[
             {
-              value: "is",
+              value: intl.formatMessage({
+                id: "fXdkiI",
+                defaultMessage: "is",
+              }),
               label: "is",
             },
           ]}
