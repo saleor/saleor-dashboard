@@ -1,8 +1,8 @@
-import { RewardValueTypeEnum } from "@dashboard/graphql";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
-import { Option } from "@saleor/macaw-ui-next";
+
+import { Rule } from "./models";
 
 export enum RequirementsPicker {
   ORDER = "ORDER",
@@ -37,17 +37,22 @@ export interface DiscoutFormData {
   rules: Rule[];
 }
 
-export interface Rule {
-  name: string;
-  description: string;
-  channels: Option[];
-  conditions: Condition[];
-  rewardValueType: RewardValueTypeEnum;
-  rewardValue: number;
-}
+export type ConditionType = "product" | "category" | "collection" | "variant";
 
-export interface Condition {
-  type: "product" | "category" | "collection" | "variant";
-  condition: "is";
-  values: Option[];
+// Mimic API catalogue predicate structure because api scheme type return any
+export interface CataloguePredicateAPI {
+  OR: CataloguePredicateAPI[];
+  AND: CataloguePredicateAPI[];
+  productPredicate?: {
+    ids: string[];
+  };
+  categoryPredicate?: {
+    ids: string[];
+  };
+  collectionPredicate?: {
+    ids: string[];
+  };
+  variantPredicate?: {
+    ids: string[];
+  };
 }

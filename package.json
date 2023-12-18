@@ -32,13 +32,14 @@
     "@graphiql/plugin-explorer": "^0.1.12",
     "@graphiql/react": "^0.15.0",
     "@graphiql/toolkit": "^0.8.0",
+    "@hookform/resolvers": "^3.3.2",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
     "@saleor/macaw-ui": "npm:@saleor/macaw-ui@0.7.4",
-    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.0.0-pre.14",
+    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.0.0-pre.15",
     "@saleor/sdk": "0.6.0",
     "@sentry/react": "^7.83.0",
     "@types/faker": "^5.1.6",
@@ -100,7 +101,8 @@
     "tslib": "^2.4.1",
     "url-join": "^4.0.1",
     "use-react-router": "^1.0.7",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -145,6 +147,7 @@
     "@types/react": "^17.0.50",
     "@types/react-dom": "^17.0.17",
     "@types/react-dropzone": "^4.2.2",
+    "@types/react-gtm-module": "^2.0.3",
     "@types/react-helmet": "^5.0.8",
     "@types/react-infinite-scroller": "^1.2.3",
     "@types/react-router-dom": "^4.3.4",
@@ -210,8 +213,7 @@
     "workbox-expiration": "^6.1.2",
     "workbox-precaching": "^6.1.2",
     "workbox-routing": "^6.1.2",
-    "workbox-strategies": "^6.1.2",
-    "@types/react-gtm-module": "^2.0.3"
+    "workbox-strategies": "^6.1.2"
   },
   "optionalDependencies": {
     "@storybook/addon-essentials": "^7.5.1",

@@ -256,30 +256,6 @@ export const ChannelErrorFragmentDoc = gql`
   message
 }
     `;
-export const WarehouseFragmentDoc = gql`
-    fragment Warehouse on Warehouse {
-  id
-  name
-}
-    `;
-export const ChannelDetailsFragmentDoc = gql`
-    fragment ChannelDetails on Channel {
-  ...Channel
-  hasOrders
-  warehouses {
-    ...Warehouse
-  }
-  orderSettings {
-    markAsPaidStrategy
-    deleteExpiredOrdersAfter
-    allowUnpaidOrders
-  }
-  paymentSettings {
-    defaultTransactionFlowStrategy
-  }
-}
-    ${ChannelFragmentDoc}
-${WarehouseFragmentDoc}`;
 export const CollectionFragmentDoc = gql`
     fragment Collection on Collection {
   id
@@ -630,6 +606,55 @@ export const VoucherDetailsFragmentDoc = gql`
     ${VoucherFragmentDoc}
 ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
+export const WarehouseFragmentDoc = gql`
+    fragment Warehouse on Warehouse {
+  id
+  name
+}
+    `;
+export const ChannelDetailsFragmentDoc = gql`
+    fragment ChannelDetails on Channel {
+  ...Channel
+  hasOrders
+  warehouses {
+    ...Warehouse
+  }
+  orderSettings {
+    markAsPaidStrategy
+    deleteExpiredOrdersAfter
+    allowUnpaidOrders
+  }
+  paymentSettings {
+    defaultTransactionFlowStrategy
+  }
+}
+    ${ChannelFragmentDoc}
+${WarehouseFragmentDoc}`;
+export const PromotionRuleDetailsFragmentDoc = gql`
+    fragment PromotionRuleDetails on PromotionRule {
+  id
+  name
+  description
+  channels {
+    ...ChannelDetails
+  }
+  rewardValueType
+  rewardValue
+  cataloguePredicate
+}
+    ${ChannelDetailsFragmentDoc}`;
+export const PromotionDetailsFragmentDoc = gql`
+    fragment PromotionDetails on Promotion {
+  id
+  name
+  description
+  startDate
+  endDate
+  rules {
+    ...PromotionRuleDetails
+  }
+}
+    ${PromotionRuleDetailsFragmentDoc}`;
 export const AttributeErrorFragmentDoc = gql`
     fragment AttributeError on AttributeError {
   code
@@ -680,6 +705,43 @@ export const DiscountErrorFragmentDoc = gql`
   field
   channels
   message
+}
+    `;
+export const PromotionCreateErrorFragmentDoc = gql`
+    fragment PromotionCreateError on PromotionCreateError {
+  field
+  message
+  code
+  index
+}
+    `;
+export const PromotionUpdateErrorFragmentDoc = gql`
+    fragment PromotionUpdateError on PromotionUpdateError {
+  field
+  message
+  code
+}
+    `;
+export const PromotionRuleUpdateErrorFragmentDoc = gql`
+    fragment PromotionRuleUpdateError on PromotionRuleUpdateError {
+  field
+  message
+  code
+  channels
+}
+    `;
+export const PromotionRuleCreateErrorFragmentDoc = gql`
+    fragment PromotionRuleCreateError on PromotionRuleCreateError {
+  field
+  message
+  code
+}
+    `;
+export const PromotionRuleDeleteErrorFragmentDoc = gql`
+    fragment PromotionRuleDeleteError on PromotionRuleDeleteError {
+  field
+  message
+  code
 }
     `;
 export const MenuErrorFragmentDoc = gql`
@@ -7737,6 +7799,192 @@ export function useVoucherBulkDeleteMutation(baseOptions?: ApolloReactHooks.Muta
 export type VoucherBulkDeleteMutationHookResult = ReturnType<typeof useVoucherBulkDeleteMutation>;
 export type VoucherBulkDeleteMutationResult = Apollo.MutationResult<Types.VoucherBulkDeleteMutation>;
 export type VoucherBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VoucherBulkDeleteMutation, Types.VoucherBulkDeleteMutationVariables>;
+export const PromotionCreateDocument = gql`
+    mutation PromotionCreate($input: PromotionCreateInput!) {
+  promotionCreate(input: $input) {
+    errors {
+      ...PromotionCreateError
+    }
+    promotion {
+      id
+    }
+  }
+}
+    ${PromotionCreateErrorFragmentDoc}`;
+export type PromotionCreateMutationFn = Apollo.MutationFunction<Types.PromotionCreateMutation, Types.PromotionCreateMutationVariables>;
+
+/**
+ * __usePromotionCreateMutation__
+ *
+ * To run a mutation, you first call `usePromotionCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePromotionCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [promotionCreateMutation, { data, loading, error }] = usePromotionCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePromotionCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionCreateMutation, Types.PromotionCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PromotionCreateMutation, Types.PromotionCreateMutationVariables>(PromotionCreateDocument, options);
+      }
+export type PromotionCreateMutationHookResult = ReturnType<typeof usePromotionCreateMutation>;
+export type PromotionCreateMutationResult = Apollo.MutationResult<Types.PromotionCreateMutation>;
+export type PromotionCreateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionCreateMutation, Types.PromotionCreateMutationVariables>;
+export const PromotionUpdateDocument = gql`
+    mutation PromotionUpdate($id: ID!, $input: PromotionUpdateInput!) {
+  promotionUpdate(id: $id, input: $input) {
+    errors {
+      ...PromotionUpdateError
+    }
+  }
+}
+    ${PromotionUpdateErrorFragmentDoc}`;
+export type PromotionUpdateMutationFn = Apollo.MutationFunction<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>;
+
+/**
+ * __usePromotionUpdateMutation__
+ *
+ * To run a mutation, you first call `usePromotionUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePromotionUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [promotionUpdateMutation, { data, loading, error }] = usePromotionUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePromotionUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>(PromotionUpdateDocument, options);
+      }
+export type PromotionUpdateMutationHookResult = ReturnType<typeof usePromotionUpdateMutation>;
+export type PromotionUpdateMutationResult = Apollo.MutationResult<Types.PromotionUpdateMutation>;
+export type PromotionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>;
+export const PromotionRuleUpdateDocument = gql`
+    mutation PromotionRuleUpdate($id: ID!, $input: PromotionRuleUpdateInput!) {
+  promotionRuleUpdate(id: $id, input: $input) {
+    errors {
+      ...PromotionRuleUpdateError
+    }
+    promotionRule {
+      id
+    }
+  }
+}
+    ${PromotionRuleUpdateErrorFragmentDoc}`;
+export type PromotionRuleUpdateMutationFn = Apollo.MutationFunction<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>;
+
+/**
+ * __usePromotionRuleUpdateMutation__
+ *
+ * To run a mutation, you first call `usePromotionRuleUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePromotionRuleUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [promotionRuleUpdateMutation, { data, loading, error }] = usePromotionRuleUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePromotionRuleUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>(PromotionRuleUpdateDocument, options);
+      }
+export type PromotionRuleUpdateMutationHookResult = ReturnType<typeof usePromotionRuleUpdateMutation>;
+export type PromotionRuleUpdateMutationResult = Apollo.MutationResult<Types.PromotionRuleUpdateMutation>;
+export type PromotionRuleUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>;
+export const PromotionRuleCreateDocument = gql`
+    mutation PromotionRuleCreate($input: PromotionRuleCreateInput!) {
+  promotionRuleCreate(input: $input) {
+    errors {
+      ...PromotionRuleCreateError
+    }
+    promotionRule {
+      id
+    }
+  }
+}
+    ${PromotionRuleCreateErrorFragmentDoc}`;
+export type PromotionRuleCreateMutationFn = Apollo.MutationFunction<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>;
+
+/**
+ * __usePromotionRuleCreateMutation__
+ *
+ * To run a mutation, you first call `usePromotionRuleCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePromotionRuleCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [promotionRuleCreateMutation, { data, loading, error }] = usePromotionRuleCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePromotionRuleCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>(PromotionRuleCreateDocument, options);
+      }
+export type PromotionRuleCreateMutationHookResult = ReturnType<typeof usePromotionRuleCreateMutation>;
+export type PromotionRuleCreateMutationResult = Apollo.MutationResult<Types.PromotionRuleCreateMutation>;
+export type PromotionRuleCreateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>;
+export const PromotionRuleDeleteDocument = gql`
+    mutation PromotionRuleDelete($id: ID!) {
+  promotionRuleDelete(id: $id) {
+    errors {
+      ...PromotionRuleDeleteError
+    }
+  }
+}
+    ${PromotionRuleDeleteErrorFragmentDoc}`;
+export type PromotionRuleDeleteMutationFn = Apollo.MutationFunction<Types.PromotionRuleDeleteMutation, Types.PromotionRuleDeleteMutationVariables>;
+
+/**
+ * __usePromotionRuleDeleteMutation__
+ *
+ * To run a mutation, you first call `usePromotionRuleDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePromotionRuleDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [promotionRuleDeleteMutation, { data, loading, error }] = usePromotionRuleDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePromotionRuleDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionRuleDeleteMutation, Types.PromotionRuleDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PromotionRuleDeleteMutation, Types.PromotionRuleDeleteMutationVariables>(PromotionRuleDeleteDocument, options);
+      }
+export type PromotionRuleDeleteMutationHookResult = ReturnType<typeof usePromotionRuleDeleteMutation>;
+export type PromotionRuleDeleteMutationResult = Apollo.MutationResult<Types.PromotionRuleDeleteMutation>;
+export type PromotionRuleDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PromotionRuleDeleteMutation, Types.PromotionRuleDeleteMutationVariables>;
 export const SaleListDocument = gql`
     query SaleList($after: String, $before: String, $first: Int, $last: Int, $filter: SaleFilterInput, $sort: SaleSortingInput, $channel: String) {
   sales(
@@ -7985,6 +8233,108 @@ export function useVoucherCodesLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type VoucherCodesQueryHookResult = ReturnType<typeof useVoucherCodesQuery>;
 export type VoucherCodesLazyQueryHookResult = ReturnType<typeof useVoucherCodesLazyQuery>;
 export type VoucherCodesQueryResult = Apollo.QueryResult<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>;
+export const PromotionDetailsDocument = gql`
+    query PromotionDetails($id: ID!) {
+  promotion(id: $id) {
+    ...PromotionDetails
+  }
+}
+    ${PromotionDetailsFragmentDoc}`;
+
+/**
+ * __usePromotionDetailsQuery__
+ *
+ * To run a query within a React component, call `usePromotionDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePromotionDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePromotionDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePromotionDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>(PromotionDetailsDocument, options);
+      }
+export function usePromotionDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>(PromotionDetailsDocument, options);
+        }
+export type PromotionDetailsQueryHookResult = ReturnType<typeof usePromotionDetailsQuery>;
+export type PromotionDetailsLazyQueryHookResult = ReturnType<typeof usePromotionDetailsLazyQuery>;
+export type PromotionDetailsQueryResult = Apollo.QueryResult<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>;
+export const RuleConditionsSelectedOptionsDetailsDocument = gql`
+    query RuleConditionsSelectedOptionsDetails($categoriesIds: [ID!], $collectionsIds: [ID!], $productsIds: [ID!], $variantsIds: [ID!]) {
+  categories(first: 20, where: {ids: $categoriesIds}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+  collections(first: 20, where: {ids: $collectionsIds}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+  products(first: 20, where: {ids: $productsIds}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+  productVariants(first: 20, where: {ids: $variantsIds}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useRuleConditionsSelectedOptionsDetailsQuery__
+ *
+ * To run a query within a React component, call `useRuleConditionsSelectedOptionsDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRuleConditionsSelectedOptionsDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRuleConditionsSelectedOptionsDetailsQuery({
+ *   variables: {
+ *      categoriesIds: // value for 'categoriesIds'
+ *      collectionsIds: // value for 'collectionsIds'
+ *      productsIds: // value for 'productsIds'
+ *      variantsIds: // value for 'variantsIds'
+ *   },
+ * });
+ */
+export function useRuleConditionsSelectedOptionsDetailsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>(RuleConditionsSelectedOptionsDetailsDocument, options);
+      }
+export function useRuleConditionsSelectedOptionsDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>(RuleConditionsSelectedOptionsDetailsDocument, options);
+        }
+export type RuleConditionsSelectedOptionsDetailsQueryHookResult = ReturnType<typeof useRuleConditionsSelectedOptionsDetailsQuery>;
+export type RuleConditionsSelectedOptionsDetailsLazyQueryHookResult = ReturnType<typeof useRuleConditionsSelectedOptionsDetailsLazyQuery>;
+export type RuleConditionsSelectedOptionsDetailsQueryResult = Apollo.QueryResult<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {
@@ -15048,8 +15398,13 @@ export type SearchCategoriesQueryHookResult = ReturnType<typeof useSearchCategor
 export type SearchCategoriesLazyQueryHookResult = ReturnType<typeof useSearchCategoriesLazyQuery>;
 export type SearchCategoriesQueryResult = Apollo.QueryResult<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>;
 export const SearchCollectionsDocument = gql`
-    query SearchCollections($after: String, $first: Int!, $query: String!) {
-  search: collections(after: $after, first: $first, filter: {search: $query}) {
+    query SearchCollections($after: String, $first: Int!, $query: String!, $channel: String) {
+  search: collections(
+    after: $after
+    first: $first
+    filter: {search: $query}
+    channel: $channel
+  ) {
     edges {
       node {
         id
@@ -15078,6 +15433,7 @@ export const SearchCollectionsDocument = gql`
  *      after: // value for 'after'
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      channel: // value for 'channel'
  *   },
  * });
  */
@@ -15632,6 +15988,57 @@ export function useSearchStaffMembersLazyQuery(baseOptions?: ApolloReactHooks.La
 export type SearchStaffMembersQueryHookResult = ReturnType<typeof useSearchStaffMembersQuery>;
 export type SearchStaffMembersLazyQueryHookResult = ReturnType<typeof useSearchStaffMembersLazyQuery>;
 export type SearchStaffMembersQueryResult = Apollo.QueryResult<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>;
+export const SearchVariantsDocument = gql`
+    query SearchVariants($after: String, $first: Int!, $query: String!, $channel: String) {
+  search: productVariants(
+    after: $after
+    first: $first
+    filter: {search: $query}
+    channel: $channel
+  ) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${PageInfoFragmentDoc}`;
+
+/**
+ * __useSearchVariantsQuery__
+ *
+ * To run a query within a React component, call `useSearchVariantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchVariantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchVariantsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useSearchVariantsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>(SearchVariantsDocument, options);
+      }
+export function useSearchVariantsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>(SearchVariantsDocument, options);
+        }
+export type SearchVariantsQueryHookResult = ReturnType<typeof useSearchVariantsQuery>;
+export type SearchVariantsLazyQueryHookResult = ReturnType<typeof useSearchVariantsLazyQuery>;
+export type SearchVariantsQueryResult = Apollo.QueryResult<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>;
 export const SearchWarehousesDocument = gql`
     query SearchWarehouses($after: String, $first: Int!, $query: String!) {
   search: warehouses(

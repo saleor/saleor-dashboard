@@ -1,3 +1,4 @@
+import { URL_LIST } from "@data/url";
 import type { Page } from "@playwright/test";
 
 import { BasePage } from "./basePage";
@@ -46,30 +47,36 @@ export class VariantsPage {
   }
 
   async typeVariantName(variantName = "XXL beverage") {
+    await this.variantNameInput.clear();
     await this.variantNameInput.fill(variantName);
   }
   async typeShippingWeight(weight = "150") {
+    await this.shippingWeightInput.clear();
     await this.shippingWeightInput.fill(weight);
   }
   async typeCheckoutLimit(checkoutLimit = "10") {
+    await this.checkoutLimitInput.clear();
     await this.checkoutLimitInput.fill(checkoutLimit);
   }
   async typeSellingPriceInChannel(
     channelName: string,
     sellingPriceValue = "99",
   ) {
-    await this.page
+    const sellingPriceInput = await this.page
       .locator(`[data-test-id="Channel-${channelName}"]`)
       .locator(this.priceFieldInput)
-      .first()
-      .fill(sellingPriceValue);
+      .first();
+    await sellingPriceInput.clear();
+    await sellingPriceInput.fill(sellingPriceValue);
   }
   async typeCostPriceInChannel(channelName: string, costPriceValue = "10") {
-    await this.page
+    const costPriceInput = await this.page
       .locator(`[data-test-id="Channel-${channelName}"]`)
       .locator(this.priceFieldInput)
-      .last()
-      .fill(costPriceValue);
+      .last();
+
+    await costPriceInput.clear();
+    await costPriceInput.fill(costPriceValue);
   }
 
   async clickMageChannelsButton() {
@@ -83,6 +90,7 @@ export class VariantsPage {
   }
 
   async typeSku(sku = "sku dummy e2e") {
+    await this.skuTextField.clear();
     await this.skuTextField.fill(sku);
   }
   async clickAssignWarehouseButton() {
@@ -98,6 +106,11 @@ export class VariantsPage {
     await this.attributeSelector.click();
     await this.attributeOption.first().click();
   }
+  async selectLastAttributeValue() {
+    await this.attributeSelector.locator("input").clear();
+    await this.attributeSelector.click();
+    await this.attributeOption.last().click();
+  }
   async selectWarehouse(warehouse = "Oceania") {
     await this.clickAssignWarehouseButton();
     await this.warehouseOption.locator(`text=${warehouse}`).click();
@@ -111,5 +124,15 @@ export class VariantsPage {
   }
   async addAllMetaData() {
     await this.metadataSeoPage.expandAndAddAllMetadata();
+  }
+
+  async gotoExistingVariantPage(productId: string, variantId: string) {
+    console.log(
+      `Navigating to existing variant: ${URL_LIST.products}${productId}/${URL_LIST.variant}${variantId}`,
+    );
+    await this.page.goto(
+      `${URL_LIST.products}${productId}/${URL_LIST.variant}${variantId}`,
+    );
+    await this.variantNameInput.waitFor({ state: "visible" });
   }
 }
