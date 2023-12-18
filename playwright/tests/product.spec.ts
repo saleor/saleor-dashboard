@@ -280,8 +280,8 @@ test("TC: SALEOR_59 As an admin I should be able to filter products by channel o
 test("TC: SALEOR_60 As an admin I should be able update existing variant @basic-regression @product @e2e", async ({
   page,
 }) => {
-  const variantName = `TC: SALEOR_59 - variant name - ${new Date().toISOString()}`;
-  const sku = `SALEOR_59-sku-${new Date().toISOString()}`;
+  const variantName = `TC: SALEOR_60 - variant name - ${new Date().toISOString()}`;
+  const sku = `SALEOR_60-sku-${new Date().toISOString()}`;
 
   const productPage = new ProductPage(page);
   const variantsPage = new VariantsPage(page);
