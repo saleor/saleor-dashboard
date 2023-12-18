@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   extensionMountPoints,
   useExtensions,
@@ -33,7 +32,7 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
       data-test-id={`menu-item-label-${menuItem.id}`}
     >
       <Link
-        to={menuItem.url}
+        to={menuItem.url || ""}
         replace={active}
         className={sprinkles({
           display: "block",
