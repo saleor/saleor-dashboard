@@ -655,6 +655,15 @@ export const PromotionDetailsFragmentDoc = gql`
   }
 }
     ${PromotionRuleDetailsFragmentDoc}`;
+export const PromotionFragmentDoc = gql`
+    fragment Promotion on Promotion {
+  ...Metadata
+  id
+  name
+  startDate
+  endDate
+}
+    ${MetadataFragmentDoc}`;
 export const AttributeErrorFragmentDoc = gql`
     fragment AttributeError on AttributeError {
   code
@@ -717,6 +726,13 @@ export const PromotionCreateErrorFragmentDoc = gql`
     `;
 export const PromotionUpdateErrorFragmentDoc = gql`
     fragment PromotionUpdateError on PromotionUpdateError {
+  field
+  message
+  code
+}
+    `;
+export const PromotionDeleteErrorFragmentDoc = gql`
+    fragment PromotionDeleteError on PromotionDeleteError {
   field
   message
   code
@@ -7873,6 +7889,41 @@ export function usePromotionUpdateMutation(baseOptions?: ApolloReactHooks.Mutati
 export type PromotionUpdateMutationHookResult = ReturnType<typeof usePromotionUpdateMutation>;
 export type PromotionUpdateMutationResult = Apollo.MutationResult<Types.PromotionUpdateMutation>;
 export type PromotionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>;
+export const PromotionDeleteDocument = gql`
+    mutation PromotionDelete($id: ID!) {
+  promotionDelete(id: $id) {
+    errors {
+      ...PromotionDeleteError
+    }
+  }
+}
+    ${PromotionDeleteErrorFragmentDoc}`;
+export type PromotionDeleteMutationFn = Apollo.MutationFunction<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>;
+
+/**
+ * __usePromotionDeleteMutation__
+ *
+ * To run a mutation, you first call `usePromotionDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePromotionDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [promotionDeleteMutation, { data, loading, error }] = usePromotionDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePromotionDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>(PromotionDeleteDocument, options);
+      }
+export type PromotionDeleteMutationHookResult = ReturnType<typeof usePromotionDeleteMutation>;
+export type PromotionDeleteMutationResult = Apollo.MutationResult<Types.PromotionDeleteMutation>;
+export type PromotionDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>;
 export const PromotionRuleUpdateDocument = gql`
     mutation PromotionRuleUpdate($id: ID!, $input: PromotionRuleUpdateInput!) {
   promotionRuleUpdate(id: $id, input: $input) {
@@ -8042,6 +8093,61 @@ export function useSaleListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type SaleListQueryHookResult = ReturnType<typeof useSaleListQuery>;
 export type SaleListLazyQueryHookResult = ReturnType<typeof useSaleListLazyQuery>;
 export type SaleListQueryResult = Apollo.QueryResult<Types.SaleListQuery, Types.SaleListQueryVariables>;
+export const PromotionsListDocument = gql`
+    query PromotionsList($after: String, $before: String, $first: Int, $last: Int, $where: PromotionWhereInput, $sort: PromotionSortingInput) {
+  promotions(
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    where: $where
+    sortBy: $sort
+  ) {
+    edges {
+      node {
+        ...Promotion
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${PromotionFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __usePromotionsListQuery__
+ *
+ * To run a query within a React component, call `usePromotionsListQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePromotionsListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePromotionsListQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      where: // value for 'where'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function usePromotionsListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>(PromotionsListDocument, options);
+      }
+export function usePromotionsListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>(PromotionsListDocument, options);
+        }
+export type PromotionsListQueryHookResult = ReturnType<typeof usePromotionsListQuery>;
+export type PromotionsListLazyQueryHookResult = ReturnType<typeof usePromotionsListLazyQuery>;
+export type PromotionsListQueryResult = Apollo.QueryResult<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>;
 export const VoucherListDocument = gql`
     query VoucherList($after: String, $before: String, $first: Int, $last: Int, $filter: VoucherFilterInput, $sort: VoucherSortingInput, $channel: String) {
   vouchers(

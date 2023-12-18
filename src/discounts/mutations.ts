@@ -253,6 +253,16 @@ export const promotionUpdate = gql`
   }
 `;
 
+export const promotionDelete = gql`
+  mutation PromotionDelete($id: ID!) {
+    promotionDelete(id: $id) {
+      errors {
+        ...PromotionDeleteError
+      }
+    }
+  }
+`;
+
 export const promotionRuleUpdate = gql`
   mutation PromotionRuleUpdate($id: ID!, $input: PromotionRuleUpdateInput!) {
     promotionRuleUpdate(id: $id, input: $input) {

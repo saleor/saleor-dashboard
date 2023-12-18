@@ -16,7 +16,6 @@ import { useIntl } from "react-intl";
 
 import { getValidationSchema } from "../DiscountCreateForm/validationSchema";
 import { useRulesHandlers } from "./hooks/useRulesHandlers";
-import { filterRules } from "./utils";
 
 interface DiscountDetailsFormRenderProps {
   rulesErrors: Array<CommonError<any>>;
@@ -77,14 +76,11 @@ export const DiscountDetailsForm = ({
   });
 
   const handleSubmit: SubmitHandler<DiscoutFormData> = formData => {
-    const dirtyRulesIndexes = Object.keys(
-      methods.formState.dirtyFields?.rules ?? {},
-    );
+    if (!methods.formState.isDirty) {
+      return;
+    }
 
-    return onSubmit({
-      ...formData,
-      rules: filterRules(data?.rules ?? [], formData.rules, dirtyRulesIndexes),
-    });
+    return onSubmit(formData);
   };
 
   const { onDeleteRule, onRuleSubmit, rules, rulesErrors } = useRulesHandlers({

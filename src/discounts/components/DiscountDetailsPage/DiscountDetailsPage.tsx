@@ -35,6 +35,7 @@ export interface DiscountDetailsPageProps {
   errors: PromotionUpdateErrorFragment[];
   submitButtonState: ConfirmButtonTransitionState;
   onSubmit: (data: DiscoutFormData) => void;
+  onDelete: () => void;
   onRuleUpdateSubmit: (
     data: Rule,
   ) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
@@ -58,6 +59,7 @@ export const DiscountDetailsPage = ({
   submitButtonState,
   onBack,
   onSubmit,
+  onDelete,
   onRuleCreateSubmit,
   onRuleUpdateSubmit,
   onRuleDeleteSubmit,
@@ -116,6 +118,7 @@ export const DiscountDetailsPage = ({
                 disabled={disabled}
                 onCancel={onBack}
                 onSubmit={onSubmit}
+                onDelete={onDelete}
                 state={submitButtonState}
               />
             </>

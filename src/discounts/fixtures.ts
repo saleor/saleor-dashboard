@@ -3,6 +3,7 @@ import { channelsList } from "@dashboard/channels/fixtures";
 import {
   DiscountValueTypeEnum,
   PromotionDetailsFragment,
+  PromotionFragment,
   RewardValueTypeEnum,
   SaleDetailsFragment,
   SaleFragment,
@@ -707,3 +708,51 @@ export const discount: PromotionDetailsFragment = {
     },
   ],
 };
+
+export const discountList: PromotionFragment[] = [
+  {
+    __typename: "Promotion",
+    metadata: [],
+    privateMetadata: [],
+    id: "UHJvbW90aW9uOjNlYWM1OGMyLWU1OTEtNDI3OS05YzIwLWU3OTA0ZjhkYjhiZg==",
+    name: "Promo 1",
+    startDate: "2023-12-13T12:33:18.550840+00:00",
+    endDate: null,
+  },
+  {
+    __typename: "Promotion",
+    metadata: [],
+    privateMetadata: [],
+    id: "UHJvbW90aW9uOmM2NjgzOGUxLTViZGQtNDJiZC04YzIyLTQ0YzlmYTYxNGM5OA==",
+    name: "Promo 2",
+    startDate: "2024-01-08T23:00:00+00:00",
+    endDate: "2024-02-12T23:00:00+00:00",
+  },
+  {
+    __typename: "Promotion",
+    metadata: [],
+    privateMetadata: [],
+    id: "UHJvbW90aW9uOmQyMmQ3NDUyLTAzNDYtNDJiYS1iMmY4LTEzMjJlNDg4ZDIzZA==",
+    name: "Promo 3",
+    startDate: "2023-12-13T12:32:13.272371+00:00",
+    endDate: null,
+  },
+  {
+    __typename: "Promotion",
+    metadata: [],
+    privateMetadata: [],
+    id: "UHJvbW90aW9uOjk3ZDcxNDJjLWMyZjMtNDE5ZC1iNGM1LTUzNjBjNTNjYWM3Zg==",
+    name: "Promo 4",
+    startDate: "2023-12-13T15:18:22.922335+00:00",
+    endDate: null,
+  },
+  {
+    __typename: "Promotion",
+    metadata: [],
+    privateMetadata: [],
+    id: "UHJvbW90aW9uOjI2YzUzNmQ5LTNmNzctNDExYy1hYjRkLWNiMzgzMDJmYWExNw==",
+    name: "Promo 5",
+    startDate: "2023-12-31T23:00:00+00:00",
+    endDate: null,
+  },
+];

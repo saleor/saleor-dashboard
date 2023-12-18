@@ -19,6 +19,7 @@ const props: DiscountDetailsPageProps = {
   disabled: false,
   onBack: () => undefined,
   onSubmit: () => undefined,
+  onDelete: () => undefined,
   ruleConditionsOptionsDetailsMap: {
     "UHJvZHVjdDo3OQ==": "Bean Juice",
     "UHJvZHVjdDoxMTU=": "Black Hoodie",

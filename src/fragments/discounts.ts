@@ -256,3 +256,13 @@ export const promotionDetailsFragments = gql`
     }
   }
 `;
+
+export const promotionFragment = gql`
+  fragment Promotion on Promotion {
+    ...Metadata
+    id
+    name
+    startDate
+    endDate
+  }
+`;

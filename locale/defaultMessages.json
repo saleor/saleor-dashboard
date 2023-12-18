@@ -948,6 +948,9 @@
   "4Kq3O6": {
     "string": "This unit will be used as default shipping weight"
   },
+  "4LRapg": {
+    "string": "Discount removed"
+  },
   "4PlW0w": {
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
@@ -1210,6 +1213,9 @@
   },
   "6D+yYX": {
     "string": "Payment status"
+  },
+  "6FLezz": {
+    "string": "Are you sure you want to delete this discount?"
   },
   "6G41zU": {
     "context": "WarehouseSettings local warehouse description",
@@ -2954,6 +2960,9 @@
   "IVOjqW": {
     "context": "gift card bulk create success dialog export button",
     "string": "Export To Email"
+  },
+  "IYuKD6": {
+    "string": "No discounts found"
   },
   "Iafyt5": {
     "context": "page attribute entity type",
@@ -5469,6 +5478,9 @@
   "Zptsep": {
     "context": "order was discounted event title",
     "string": "Order was discounted by"
+  },
+  "ZrIt1W": {
+    "string": "Delete discount"
   },
   "ZuqkSp": {
     "context": "note input subtitle",
