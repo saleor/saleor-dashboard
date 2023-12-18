@@ -30,8 +30,8 @@ export const DiscountDeleteModal = ({
 
         <Text>
           <FormattedMessage
-            defaultMessage="Are you sure you want to delete this discount"
-            id="yWMZKn"
+            defaultMessage="Are you sure you want to delete this discount?"
+            id="6FLezz"
           />
         </Text>
 

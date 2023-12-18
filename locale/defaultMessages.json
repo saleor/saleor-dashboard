@@ -1214,6 +1214,9 @@
   "6D+yYX": {
     "string": "Payment status"
   },
+  "6FLezz": {
+    "string": "Are you sure you want to delete this discount?"
+  },
   "6G41zU": {
     "context": "WarehouseSettings local warehouse description",
     "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock"
@@ -8879,9 +8882,6 @@
   },
   "yT5zvU": {
     "string": "{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
-  },
-  "yWMZKn": {
-    "string": "Are you sure you want to delete this discount"
   },
   "yZB41s": {
     "context": "section header",
