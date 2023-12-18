@@ -1,3 +1,4 @@
+// import { isLimitReached } from "@dashboard/utils/limits";
 import { ChannelData } from "@dashboard/channels/utils";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
@@ -20,7 +21,6 @@ import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
-// import { isLimitReached } from "@dashboard/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -211,7 +211,11 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
       ]}
       rows={variants?.length ?? 0}
       selectionActions={(indexes, { removeRows }) => (
-        <Button variant="tertiary" onClick={() => removeRows(indexes)}>
+        <Button
+          data-test-id="bulk-delete-button"
+          variant="tertiary"
+          onClick={() => removeRows(indexes)}
+        >
           <FormattedMessage {...buttonMessages.delete} />
         </Button>
       )}

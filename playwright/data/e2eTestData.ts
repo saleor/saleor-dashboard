@@ -26,6 +26,17 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3MzM%3D",
     info: "Product that contains single variant",
   },
+  singleVariantDeleteProduct: {
+    productId: "UHJvZHVjdDo3Njc%3D",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6MTIzNg%3D%3D",
+    productName: "beer with variant to be deleted",
+    info: "Delete variant via it details page product",
+  },
+  multipleVariantsBulkDeleteProduct: {
+    productId: "UHJvZHVjdDo3NjY%3D",
+    productName: "juice with variant to be deleted",
+    info: "Delete multiple variants via grid product page",
+  },
   productWithVariantWhichWillBeUpdated: {
     id: "UHJvZHVjdDo3NjU%3D",
     name: "product with variant which will be updated",
