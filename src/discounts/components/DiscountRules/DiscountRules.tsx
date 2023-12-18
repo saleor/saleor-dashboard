@@ -4,7 +4,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { ChannelFragment } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AddButton } from "./componenets/AddButton";
@@ -47,6 +47,10 @@ export const DiscountRules = <ErrorCode,>({
   const [showRuleModal, setShowRuleModal] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
+
+  const ruleInitialValues = useMemo(() => {
+    return ruleEditIndex !== null ? rules[ruleEditIndex] : null;
+  }, [ruleEditIndex]);
 
   const handleOpenRuleModal = (editIndex: number) => {
     setRuleEditIndex(editIndex);
@@ -101,9 +105,7 @@ export const DiscountRules = <ErrorCode,>({
         confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
         onClose={handleRuleModalClose}
         channels={channels}
-        initialFormValues={
-          ruleEditIndex !== null ? rules[ruleEditIndex] : undefined
-        }
+        initialFormValues={ruleInitialValues}
         errors={errors}
         onSubmit={handleRuleModalSubmit}
       />
