@@ -67,10 +67,15 @@ export const TransactionSubmitCard = ({
         <DashboardCard.Title>
           {intl.formatMessage(submitCardMessages.cardTitle)}
         </DashboardCard.Title>
-        <DashboardCard.Content display="flex" flexDirection="column" gap={2}>
-          <Box display="flex" gap={1} alignItems="center">
-            <InfoIcon color="iconNeutralSubdued" size="small" />
-            <Text color="textNeutralSubdued">
+        <DashboardCard.Content
+          display="flex"
+          flexDirection="column"
+          gap={2}
+          alignItems="start"
+        >
+          <Box display="flex" gap={1} alignItems="center" marginBottom={4}>
+            <InfoIcon color="default2" size="small" />
+            <Text color="default2">
               <FormattedMessage {...submitCardMessages.descrption} />
             </Text>
           </Box>
@@ -87,41 +92,8 @@ export const TransactionSubmitCard = ({
               });
             }}
           >
-            <Text
-              color={
-                grantRefundErrors.length ? "textCriticalDefault" : undefined
-              }
-            >
+            <Text color={grantRefundErrors.length ? "critical1" : undefined}>
               <FormattedMessage {...submitCardMessages.autoGrantRefund} />
-            </Text>
-          </Checkbox>
-          <Checkbox
-            checked={refundShipmentCosts}
-            name={"refundShipmentCosts" satisfies keyof OrderReturnData}
-            onCheckedChange={checked => {
-              onChange({
-                target: {
-                  name: "refundShipmentCosts",
-                  value: checked,
-                },
-              });
-            }}
-            disabled={!canRefundShipping || !autoGrantRefund}
-          >
-            <Text
-              color={
-                !canRefundShipping || !autoGrantRefund
-                  ? "textNeutralDisabled"
-                  : undefined
-              }
-            >
-              <FormattedMessage
-                {...submitCardMessages.refundShipment}
-                values={{
-                  currency: amountData?.shipmentCost?.currency,
-                  amount: amountData?.shipmentCost?.amount,
-                }}
-              />
             </Text>
           </Checkbox>
           <RequirePermissions
@@ -141,11 +113,7 @@ export const TransactionSubmitCard = ({
                   });
                 }}
               >
-                <Text
-                  color={
-                    sendRefundErrors.length ? "textCriticalDefault" : undefined
-                  }
-                >
+                <Text color={sendRefundErrors.length ? "critical1" : undefined}>
                   <FormattedMessage {...submitCardMessages.autoSendRefund} />
                 </Text>
               </Checkbox>
@@ -153,7 +121,7 @@ export const TransactionSubmitCard = ({
               <Tooltip>
                 <Tooltip.Trigger>
                   <Checkbox checked={false} disabled={true}>
-                    <Text color="textNeutralDisabled">
+                    <Text color="defaultDisabled">
                       <FormattedMessage
                         {...submitCardMessages.autoSendRefund}
                       />
@@ -167,7 +135,40 @@ export const TransactionSubmitCard = ({
               </Tooltip>
             )}
           </RequirePermissions>
+          <Checkbox
+            marginTop={4}
+            checked={refundShipmentCosts}
+            name={"refundShipmentCosts" satisfies keyof OrderReturnData}
+            onCheckedChange={checked => {
+              onChange({
+                target: {
+                  name: "refundShipmentCosts",
+                  value: checked,
+                },
+              });
+            }}
+            disabled={!canRefundShipping || !autoGrantRefund}
+          >
+            <Text
+              color={
+                !canRefundShipping || !autoGrantRefund
+                  ? "defaultDisabled"
+                  : undefined
+              }
+            >
+              <FormattedMessage
+                {...submitCardMessages.refundShipment}
+                values={{
+                  currency: amountData?.shipmentCost?.currency,
+                  amount: amountData?.shipmentCost?.amount,
+                }}
+              />
+            </Text>
+          </Checkbox>
           <PriceField
+            label={intl.formatMessage(
+              submitCardMessages.returnRefundValueLabel,
+            )}
             onChange={onChange}
             name="amount"
             value={
@@ -179,7 +180,7 @@ export const TransactionSubmitCard = ({
             currencySymbol={amountData?.refundTotalAmount?.currency}
             disabled={!autoGrantRefund}
           />
-          <Box display="flex" justifyContent="flex-end">
+          <Box display="flex" alignSelf="end" marginTop={4}>
             <ConfirmButton
               data-test-id="return-submit-button"
               transitionState={submitStatus}

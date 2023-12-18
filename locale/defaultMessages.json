@@ -3227,6 +3227,10 @@
     "context": "checkbox label",
     "string": "Rest of the World"
   },
+  "K1ycaD": {
+    "context": "input label",
+    "string": "Refund value"
+  },
   "K8xNLe": {
     "context": "products section name",
     "string": "Products"

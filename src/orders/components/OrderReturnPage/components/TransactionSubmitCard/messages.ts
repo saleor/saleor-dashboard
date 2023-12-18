@@ -54,4 +54,9 @@ export const submitCardMessages = defineMessages({
     id: "6heBHt",
     description: "tooltip, submit form",
   },
+  returnRefundValueLabel: {
+    defaultMessage: "Refund value",
+    id: "K1ycaD",
+    description: "input label",
+  },
 });
