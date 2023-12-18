@@ -8,13 +8,15 @@ on:
 
 jobs:
   cherry_pick:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Cherry pick into release branch
     if: ${{ github.event.pull_request.merged == true }}
     steps:
       - name: Obtain release
+        env:
+          PR_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
         run: |
-          labels='${{ toJSON(github.event.pull_request.labels.*.name) }}'
+          labels="$PR_LABELS"
           release_label=$(jq -r '.[] | select(contains("release:"))' <<< $labels)
           version=$(sed "s/release://g" <<< $release_label)
           echo "TARGET_VERSION=$version" >> $GITHUB_ENV
