@@ -1134,6 +1134,9 @@
     "context": "references attribute type",
     "string": "References"
   },
+  "5dOOAB": {
+    "string": "Successfully created discount"
+  },
   "5elC9k": {
     "context": "taxes section name",
     "string": "Taxes"
@@ -1326,6 +1329,9 @@
   "7H2D5m": {
     "context": "attribute value deleted",
     "string": "Value deleted"
+  },
+  "7Hdiw2": {
+    "string": "Rule name is required"
   },
   "7J1ZKs": {
     "context": "button",
@@ -1614,6 +1620,9 @@
     "context": "cancel button",
     "string": "Cancel order"
   },
+  "9d24PR": {
+    "string": "Create rule"
+  },
   "9eC0MZ": {
     "context": "collection",
     "string": "Hidden"
@@ -1680,6 +1689,9 @@
   "A0Wlg7": {
     "context": "product discount removed title",
     "string": "{productName} discount was removed by"
+  },
+  "A7W4KO": {
+    "string": "Catalog rule"
   },
   "A9QSur": {
     "context": "area units type",
@@ -1818,6 +1830,9 @@
   "B0PaVS": {
     "context": "pint unit",
     "string": "pint"
+  },
+  "B0fwAj": {
+    "string": "and {itemsLength} more"
   },
   "B2LE7A": {
     "context": "menu item loading",
@@ -1992,6 +2007,9 @@
   "CFT171": {
     "context": "card header title",
     "string": "Country list"
+  },
+  "CFlmRP": {
+    "string": "Rule reword value is required"
   },
   "CG+awx": {
     "context": "dialog content",
@@ -3179,6 +3197,9 @@
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
   },
+  "JyaQcP": {
+    "string": "Rule reword value must be less than 100"
+  },
   "K+vjtE": {
     "string": "Search Variants"
   },
@@ -3495,6 +3516,9 @@
     "context": "customers section name",
     "string": "Customers"
   },
+  "MdFdbd": {
+    "string": "Delete rule"
+  },
   "MewrtN": {
     "context": "section header",
     "string": "Fulfillment"
@@ -3627,6 +3651,9 @@
   "NgCb99": {
     "context": "order line discount updated title",
     "string": "{productName} discount was updated by"
+  },
+  "NgRa6m": {
+    "string": "Discount of {value} on the purchase of {items} through the {channel}"
   },
   "NhQboB": {
     "context": "dialog header",
@@ -5118,6 +5145,9 @@
     "context": "section header",
     "string": "All Media"
   },
+  "XVuPMw": {
+    "string": "Are you sure you want to delete this rule?"
+  },
   "XWGZLL": {
     "context": "transaction reference subtitle",
     "string": "Transaction reference"
@@ -6178,6 +6208,9 @@
     "context": "table head",
     "string": "Category Name"
   },
+  "fXdkiI": {
+    "string": "is"
+  },
   "fbH51z": {
     "context": "Amount error message",
     "string": "Amount cannot be bigger than max refund"
@@ -6185,6 +6218,9 @@
   "fehqPs": {
     "context": "order history message",
     "string": "Products were deleted from an order"
+  },
+  "fg8dzN": {
+    "string": "Add condition"
   },
   "fgHLXc": {
     "context": "attribute value",
@@ -8358,6 +8394,9 @@
   "v1pNHW": {
     "string": "Attribute Class"
   },
+  "v1vJ77": {
+    "string": "Edit rule"
+  },
   "v2+u4c": {
     "context": "card subtitle",
     "string": "Assign and sort warehouses that will be used in this channel (warehouses can be assigned in multiple channels)."
@@ -8533,6 +8572,9 @@
   },
   "w6kcxY": {
     "string": "What happens if I approve?"
+  },
+  "w7jT4W": {
+    "string": "No channels selected"
   },
   "w9xgN9": {
     "context": "see error log label in notification",
@@ -8973,6 +9015,9 @@
   "zbJHl7": {
     "context": "attribute type",
     "string": "Content Attribute"
+  },
+  "zehNKT": {
+    "string": "Rule has error, open rule to see details"
   },
   "zf48rQ": {
     "context": "sum of captured amount of all transactions",

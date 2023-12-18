@@ -9558,6 +9558,43 @@ export type VoucherBulkDeleteMutationVariables = Exact<{
 
 export type VoucherBulkDeleteMutation = { __typename: 'Mutation', voucherBulkDelete: { __typename: 'VoucherBulkDelete', errors: Array<{ __typename: 'DiscountError', code: DiscountErrorCode, field: string | null, message: string | null }> } | null };
 
+export type PromotionCreateMutationVariables = Exact<{
+  input: PromotionCreateInput;
+}>;
+
+
+export type PromotionCreateMutation = { __typename: 'Mutation', promotionCreate: { __typename: 'PromotionCreate', errors: Array<{ __typename: 'PromotionCreateError', field: string | null, message: string | null, code: PromotionCreateErrorCode, index: number | null }>, promotion: { __typename: 'Promotion', id: string } | null } | null };
+
+export type PromotionUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: PromotionUpdateInput;
+}>;
+
+
+export type PromotionUpdateMutation = { __typename: 'Mutation', promotionUpdate: { __typename: 'PromotionUpdate', errors: Array<{ __typename: 'PromotionUpdateError', field: string | null, message: string | null, code: PromotionUpdateErrorCode }> } | null };
+
+export type PromotionRuleUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: PromotionRuleUpdateInput;
+}>;
+
+
+export type PromotionRuleUpdateMutation = { __typename: 'Mutation', promotionRuleUpdate: { __typename: 'PromotionRuleUpdate', errors: Array<{ __typename: 'PromotionRuleUpdateError', field: string | null, message: string | null, code: PromotionRuleUpdateErrorCode, channels: Array<string> | null }>, promotionRule: { __typename: 'PromotionRule', id: string } | null } | null };
+
+export type PromotionRuleCreateMutationVariables = Exact<{
+  input: PromotionRuleCreateInput;
+}>;
+
+
+export type PromotionRuleCreateMutation = { __typename: 'Mutation', promotionRuleCreate: { __typename: 'PromotionRuleCreate', errors: Array<{ __typename: 'PromotionRuleCreateError', field: string | null, message: string | null, code: PromotionRuleCreateErrorCode }>, promotionRule: { __typename: 'PromotionRule', id: string } | null } | null };
+
+export type PromotionRuleDeleteMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PromotionRuleDeleteMutation = { __typename: 'Mutation', promotionRuleDelete: { __typename: 'PromotionRuleDelete', errors: Array<{ __typename: 'PromotionRuleDeleteError', field: string | null, message: string | null, code: PromotionRuleDeleteErrorCode }> } | null };
+
 export type SaleListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -9623,6 +9660,23 @@ export type VoucherCodesQueryVariables = Exact<{
 
 
 export type VoucherCodesQuery = { __typename: 'Query', voucher: { __typename: 'Voucher', codes: { __typename: 'VoucherCodeCountableConnection', edges: Array<{ __typename: 'VoucherCodeCountableEdge', node: { __typename: 'VoucherCode', code: string | null, used: number | null, isActive: boolean | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
+
+export type PromotionDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PromotionDetailsQuery = { __typename: 'Query', promotion: { __typename: 'Promotion', id: string, name: string, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null } | null };
+
+export type RuleConditionsSelectedOptionsDetailsQueryVariables = Exact<{
+  categoriesIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  collectionsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  productsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  variantsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+}>;
+
+
+export type RuleConditionsSelectedOptionsDetailsQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }> } | null, products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string } }> } | null, productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string } }> } | null };
 
 export type FileUploadMutationVariables = Exact<{
   file: Scalars['Upload'];
@@ -9699,6 +9753,10 @@ export type VoucherCodeFragment = { __typename: 'VoucherCode', code: string | nu
 
 export type VoucherDetailsFragment = { __typename: 'Voucher', usageLimit: number | null, used: number, applyOncePerOrder: boolean, applyOncePerCustomer: boolean, onlyForStaff: boolean, singleUse: boolean, id: string, name: string | null, startDate: any, endDate: any | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, productsCount: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, collectionsCount: { __typename: 'CollectionCountableConnection', totalCount: number | null } | null, categoriesCount: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, products?: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, collections?: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, categories?: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
+export type PromotionRuleDetailsFragment = { __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
+
+export type PromotionDetailsFragment = { __typename: 'Promotion', id: string, name: string, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null };
+
 export type AttributeErrorFragment = { __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null };
 
 export type ProductErrorFragment = { __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null };
@@ -9712,6 +9770,16 @@ export type CollectionChannelListingErrorFragment = { __typename: 'CollectionCha
 export type AccountErrorFragment = { __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null };
 
 export type DiscountErrorFragment = { __typename: 'DiscountError', code: DiscountErrorCode, field: string | null, channels: Array<string> | null, message: string | null };
+
+export type PromotionCreateErrorFragment = { __typename: 'PromotionCreateError', field: string | null, message: string | null, code: PromotionCreateErrorCode, index: number | null };
+
+export type PromotionUpdateErrorFragment = { __typename: 'PromotionUpdateError', field: string | null, message: string | null, code: PromotionUpdateErrorCode };
+
+export type PromotionRuleUpdateErrorFragment = { __typename: 'PromotionRuleUpdateError', field: string | null, message: string | null, code: PromotionRuleUpdateErrorCode, channels: Array<string> | null };
+
+export type PromotionRuleCreateErrorFragment = { __typename: 'PromotionRuleCreateError', field: string | null, message: string | null, code: PromotionRuleCreateErrorCode };
+
+export type PromotionRuleDeleteErrorFragment = { __typename: 'PromotionRuleDeleteError', field: string | null, message: string | null, code: PromotionRuleDeleteErrorCode };
 
 export type MenuErrorFragment = { __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null };
 
@@ -11459,6 +11527,7 @@ export type SearchCollectionsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
   query: Scalars['String'];
+  channel?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -11562,6 +11631,16 @@ export type SearchStaffMembersQueryVariables = Exact<{
 
 
 export type SearchStaffMembersQuery = { __typename: 'Query', search: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isActive: boolean, avatar: { __typename: 'Image', alt: string | null, url: string } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchVariantsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+  channel?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type SearchVariantsQuery = { __typename: 'Query', search: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchWarehousesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;

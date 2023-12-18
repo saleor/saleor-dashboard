@@ -1,6 +1,9 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
+import { channelsList } from "@dashboard/channels/fixtures";
 import {
   DiscountValueTypeEnum,
+  PromotionDetailsFragment,
+  RewardValueTypeEnum,
   SaleDetailsFragment,
   SaleFragment,
   SaleType,
@@ -670,51 +673,37 @@ export const voucherDetails: VoucherDetailsFragment = {
   used: 0,
 };
 
-export const discount = {
+export const discount: PromotionDetailsFragment = {
   __typename: "Promotion",
-  metadata: [],
-  privateMetadata: [],
+  id: "1",
   name: "Discunt 1",
-  descrption: "",
+  description: {},
   startDate: "2019-01-03",
   endDate: null,
-  startTime: "10:10",
-  endTime: null,
   rules: [
     {
-      channels: [
-        {
-          value: "Q2hhbm5lbDoyMjQ0",
-          label: "Channel-PLN",
-        },
-      ],
+      __typename: "PromotionRule",
+      id: "1",
+      channels: [channelsList[0]],
       description:
         '{"time":1700126384046,"blocks":[{"id":"Sj7p30CLFo","type":"header","data":{"text":"Example title","level":1}}],"version":"2.24.3"}',
       name: "Rule 1",
       rewardValue: "33",
-      rewardValueType: "PERCENTAGE",
-      conditions: [
-        {
-          type: "produts",
-          condition: "is",
-          values: [
-            {
-              label: "test",
-              value: "test",
+      rewardValueType: RewardValueTypeEnum.FIXED,
+      cataloguePredicate: {
+        OR: [
+          {
+            productPredicate: {
+              ids: ["UHJvZHVjdDo3OQ==", "UHJvZHVjdDoxMTU="],
             },
-          ],
-        },
-        {
-          type: "categories",
-          condition: "is",
-          values: [
-            {
-              label: "test2",
-              value: "test2",
+          },
+          {
+            variantPredicate: {
+              ids: ["UHJvZHVjdFZhcmlhbnQ6OTg3", "UHJvZHVjdFZhcmlhbnQ6MjE1"],
             },
-          ],
-        },
-      ],
+          },
+        ],
+      },
     },
   ],
 };

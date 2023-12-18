@@ -1,13 +1,16 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { DiscountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
-import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
+import {
+  CommonError,
+  getCommonFormFieldErrorMessage,
+} from "@dashboard/utils/errors/common";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { ChangeEvent } from "react";
+import { FieldError } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-interface DiscountDatesProps {
+interface DiscountDatesProps<ErrorCode> {
   data: {
     endDate: string;
     endTime: string;
@@ -16,21 +19,25 @@ interface DiscountDatesProps {
     startTime: string;
   };
   disabled: boolean;
-  errors: DiscountErrorFragment[];
+  formErrors?: {
+    startDate?: FieldError;
+  };
+  errors: Array<CommonError<ErrorCode>>;
   onChange: (event: React.ChangeEvent<any>) => void;
   onBlur?: (event: React.FocusEvent<any>) => void;
 }
 
-const DiscountDates = ({
+const DiscountDates = <ErrorCode,>({
   data,
   disabled,
   errors,
+  formErrors,
   onChange,
   onBlur,
-}: DiscountDatesProps) => {
+}: DiscountDatesProps<ErrorCode>) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["startDate", "endDate"], errors);
+  const apiErrors = getFormErrors(["startDate", "endDate"], errors);
 
   return (
     <DashboardCard>
@@ -46,8 +53,11 @@ const DiscountDates = ({
         <Box display="flex" gap={4}>
           <Input
             disabled={disabled}
-            error={!!formErrors.startDate}
-            helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
+            error={!!apiErrors.startDate || !!formErrors?.startDate}
+            helperText={
+              getCommonFormFieldErrorMessage(apiErrors.startDate, intl) ||
+              formErrors?.startDate?.message
+            }
             name="startDate"
             onChange={onChange}
             onBlur={onBlur}
@@ -58,8 +68,11 @@ const DiscountDates = ({
           />
           <Input
             disabled={disabled}
-            error={!!formErrors.startDate}
-            helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
+            error={!!apiErrors.startDate}
+            helperText={getCommonFormFieldErrorMessage(
+              apiErrors.startDate,
+              intl,
+            )}
             name="startTime"
             onChange={onChange}
             onBlur={onBlur}
@@ -71,9 +84,17 @@ const DiscountDates = ({
         </Box>
         <Checkbox
           marginY={4}
-          defaultChecked={data.hasEndDate}
+          checked={data.hasEndDate}
           name="hasEndDate"
-          onChange={onChange}
+          disabled={disabled}
+          onCheckedChange={() => {
+            onChange({
+              target: {
+                name: "hasEndDate",
+                value: !data.hasEndDate,
+              },
+            } as ChangeEvent<any>);
+          }}
           onBlur={onBlur}
         >
           <Text>
@@ -88,8 +109,11 @@ const DiscountDates = ({
           <Box display="flex" gap={4}>
             <Input
               disabled={disabled}
-              error={!!formErrors.endDate}
-              helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
+              error={!!apiErrors.endDate}
+              helperText={getCommonFormFieldErrorMessage(
+                apiErrors.endDate,
+                intl,
+              )}
               name="endDate"
               onChange={onChange}
               onBlur={onBlur}
@@ -100,8 +124,11 @@ const DiscountDates = ({
             />
             <Input
               disabled={disabled}
-              error={!!formErrors.endDate}
-              helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
+              error={!!apiErrors.endDate}
+              helperText={getCommonFormFieldErrorMessage(
+                apiErrors.endDate,
+                intl,
+              )}
               name="endTime"
               onChange={onChange}
               onBlur={onBlur}
