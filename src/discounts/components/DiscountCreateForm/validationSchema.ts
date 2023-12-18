@@ -1,5 +1,5 @@
 import { defineMessages, IntlShape } from "react-intl";
-import { z } from "zod";
+import * as z from "zod";
 
 const validationMessages = defineMessages({
   nameRequired: {
