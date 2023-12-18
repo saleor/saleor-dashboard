@@ -277,3 +277,42 @@ test("TC: SALEOR_59 As an admin I should be able to filter products by channel o
     `Product: ${PRODUCTS.productAvailableOnlyInPlnChannel.name} should be visible on grid table`,
   ).toContainText(PRODUCTS.productAvailableOnlyInPlnChannel.name);
 });
+test("TC: SALEOR_60 As an admin I should be able update existing variant @basic-regression @product @e2e", async ({
+  page,
+}) => {
+  const variantName = `TC: SALEOR_60 - variant name - ${new Date().toISOString()}`;
+  const sku = `SALEOR_60-sku-${new Date().toISOString()}`;
+
+  const productPage = new ProductPage(page);
+  const variantsPage = new VariantsPage(page);
+  await variantsPage.gotoExistingVariantPage(
+    PRODUCTS.productWithVariantWhichWillBeUpdated.id,
+    PRODUCTS.productWithVariantWhichWillBeUpdated.variantId,
+  );
+  await variantsPage.typeVariantName(variantName);
+  await variantsPage.clickMageChannelsButton();
+  await variantsPage.channelSelectDialog.clickAllChannelsCheckbox();
+  await variantsPage.channelSelectDialog.selectLastChannel();
+  await variantsPage.channelSelectDialog.clickConfirmButton();
+  await variantsPage.selectLastAttributeValue();
+  await variantsPage.typeCheckoutLimit("50");
+  await variantsPage.typeShippingWeight("1000");
+  await variantsPage.typeSellingPriceInChannel("USD", "120");
+  await variantsPage.typeCostPriceInChannel("USD", "100");
+  await variantsPage.typeSku(sku);
+  await variantsPage.clickSaveVariantButton();
+
+  await variantsPage.expectSuccessBanner();
+  await expect(
+    variantsPage.variantsList.locator(variantsPage.variantsNames, {
+      hasText: variantName,
+    }),
+  ).toBeVisible();
+
+  await variantsPage.selectWarehouse("Africa");
+  await variantsPage.typeQuantityInStock("Africa", "5000");
+  await variantsPage.clickSaveVariantButton();
+
+  await variantsPage.expectSuccessBanner();
+  await productPage.productImage.waitFor({ state: "visible" });
+});

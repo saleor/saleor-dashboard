@@ -26,6 +26,13 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3MzM%3D",
     info: "Product that contains single variant",
   },
+  productWithVariantWhichWillBeUpdated: {
+    id: "UHJvZHVjdDo3NjU%3D",
+    name: "product with variant which will be updated",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6MTIzMg%3D%3D",
+    variantName: "update variant",
+    info: "Product with variant which will be updated",
+  },
   productWithOneVariantToBeDeletedFromDetails: {
     name: "beer to be deleted",
     id: "UHJvZHVjdDo3NTc%3D",

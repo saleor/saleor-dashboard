@@ -137,7 +137,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
               <List
                 padding={2}
                 borderRadius={4}
-                boxShadow="overlay"
+                boxShadow="defaultOverlay"
                 backgroundColor="default1"
               >
                 <Dropdown.Item>

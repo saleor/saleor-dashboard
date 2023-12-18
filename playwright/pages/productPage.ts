@@ -56,7 +56,8 @@ export class ProductPage {
     readonly addWarehouseButton = page.getByTestId("add-warehouse"),
     readonly stockInput = page.getByTestId("stock-input"),
     readonly productImage = page.getByTestId("product-image"),
-    readonly uploadImageButton = page.getByTestId("button-upload-image"),
+    readonly uploadProductImageButton = page.getByTestId("button-upload-image"),
+    readonly chooseMediaVariantButton = page.getByTestId("choose-media-button"),
     readonly uploadSavedImagesButton = page.getByTestId("upload-images"),
     readonly uploadMediaUrlButton = page.getByTestId("upload-media-url"),
     readonly saveUploadUrlButton = page.getByTestId("upload-url-button"),
@@ -113,11 +114,14 @@ export class ProductPage {
   async clickCogShowMoreButtonButton() {
     await this.cogShowMoreButtonButton.click();
   }
-  async clickUploadImagesButtonButton() {
+  async clickUploadImagesButton() {
     await this.uploadSavedImagesButton.click();
   }
   async clickUploadMediaButton() {
-    await this.uploadImageButton.click();
+    await this.uploadProductImageButton.click();
+  }
+  async clickChooseMediaVariantButton() {
+    await this.chooseMediaVariantButton.click();
   }
   async clickBulkDeleteButton() {
     await this.bulkDeleteButton.click();
@@ -203,7 +207,7 @@ export class ProductPage {
 
   async uploadProductImage(fileName: string) {
     const fileChooserPromise = this.page.waitForEvent("filechooser");
-    await this.clickUploadImagesButtonButton();
+    await this.clickUploadImagesButton();
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(path.join("playwright/data/images/", fileName));
     await this.page.waitForLoadState("domcontentloaded");

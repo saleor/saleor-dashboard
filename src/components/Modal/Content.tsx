@@ -15,7 +15,7 @@ export const Content = ({
     <Modal.Content disableAutofocus={disableAutofocus}>
       <Box
         backgroundColor="default1"
-        boxShadow="modal"
+        boxShadow="defaultModal"
         borderRadius={4}
         position="fixed"
         __left="50%"
