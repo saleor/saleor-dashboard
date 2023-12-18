@@ -45,7 +45,12 @@ const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
   const { enabled } = useFlag("discounts_rules");
 
   if (enabled) {
-    return <DiscountDetails />;
+    return (
+      <DiscountDetails
+        id={decodeURIComponent(match.params.id)}
+        params={params}
+      />
+    );
   }
 
   return (

@@ -59,8 +59,6 @@ export type SaleUrlDialog =
   | "remove"
   | ChannelsAction;
 export type SaleUrlQueryParams = BulkAction & Dialog<SaleUrlDialog>;
-export type DiscountUrlDialog = "remove";
-export type DiscountUrlQueryParams = Dialog<DiscountUrlDialog>;
 export type SaleCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const saleUrl = (id: string, params?: SaleUrlQueryParams) =>
   salePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
