@@ -1,11 +1,13 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DiscountDeleteModal } from "@dashboard/discounts/components/DiscountDeleteModal";
 import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage";
 import {
   discountListUrl,
   DiscountUrlQueryParams,
 } from "@dashboard/discounts/discountsUrls";
 import {
+  usePromotionDeleteMutation,
   usePromotionDetailsQuery,
   usePromotionRuleCreateMutation,
   usePromotionRuleDeleteMutation,
@@ -16,7 +18,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -37,6 +39,7 @@ interface DiscountDetailsProps {
 export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const notify = useNotifier();
   const { availableChannels } = useAppChannel(false);
+  const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigator();
   const intl = useIntl();
 
@@ -61,6 +64,21 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         refetch();
+      }
+    },
+  });
+
+  const [promotionDelete, promotionDeleteOpts] = usePromotionDeleteMutation({
+    onCompleted(data) {
+      if (data?.promotionDelete?.errors?.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            id: "4LRapg",
+            defaultMessage: "Discount removed",
+          }),
+        });
+        navigate(discountListUrl());
       }
     },
   });
@@ -91,8 +109,8 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
       },
     });
 
-  const [promotionDelete, promotionDeleteOpts] = usePromotionRuleDeleteMutation(
-    {
+  const [promotionRuleDelete, promotionRuleDeleteOpts] =
+    usePromotionRuleDeleteMutation({
       onCompleted(data) {
         if (data?.promotionRuleDelete?.errors?.length === 0) {
           notify({
@@ -102,8 +120,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           refetch();
         }
       },
-    },
-  );
+    });
 
   const onSubmit = createUpdateHandler(promotionData?.promotion, variables =>
     promotionUpdate({ variables }),
@@ -120,7 +137,15 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   );
 
   const onRuleDeleteSubmit = (id: string) => {
-    return promotionDelete({
+    return promotionRuleDelete({
+      variables: {
+        id,
+      },
+    });
+  };
+
+  const onPromotionDelete = () => {
+    promotionDelete({
       variables: {
         id,
       },
@@ -133,7 +158,14 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
       <DiscountDetailsPage
         data={promotionData?.promotion}
         errors={getMutationErrors(promotionUpdateOpts)}
-        disabled={loading || promotionUpdateOpts.loading}
+        disabled={
+          loading ||
+          promotionUpdateOpts.loading ||
+          promotionDeleteOpts.loading ||
+          promotionRuleUpdateOpts.loading ||
+          promotionRuleCreateOpts.loading ||
+          promotionRuleDeleteOpts.loading
+        }
         ruleConditionsOptionsDetailsMap={getRuleConditionsOptionsDetailsMap(
           ruleConditionsOptionsDetails,
         )}
@@ -145,13 +177,21 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         }}
         channels={availableChannels}
         onSubmit={onSubmit}
+        onDelete={() => setOpenModal(true)}
         submitButtonState={promotionUpdateOpts.status}
         onRuleUpdateSubmit={onRuleUpdateSubmit}
         ruleUpdateButtonState={promotionRuleUpdateOpts.status}
         onRuleCreateSubmit={onRuleCreateSubmit}
         ruleCreateButtonState={promotionRuleCreateOpts.status}
         onRuleDeleteSubmit={onRuleDeleteSubmit}
-        ruleDeleteButtonState={promotionDeleteOpts.status}
+        ruleDeleteButtonState={promotionRuleDeleteOpts.status}
+      />
+
+      <DiscountDeleteModal
+        confirmButtonTransitionState={promotionDeleteOpts.status}
+        onChange={() => setOpenModal(false)}
+        onConfirm={onPromotionDelete}
+        open={openModal}
       />
     </>
   );

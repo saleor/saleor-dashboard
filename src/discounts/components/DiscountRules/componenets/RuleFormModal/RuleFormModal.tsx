@@ -25,6 +25,7 @@ import { getValidationSchema } from "./validationSchema";
 
 interface RuleFormModalProps<ErrorCode> {
   open: boolean;
+  disabled: boolean;
   onClose: () => void;
   onSubmit: (data: Rule) => void;
   confimButtonState: ConfirmButtonTransitionState;
@@ -35,6 +36,7 @@ interface RuleFormModalProps<ErrorCode> {
 
 export const RuleFormModal = <ErrorCode,>({
   open,
+  disabled,
   onClose,
   channels,
   initialFormValues,
@@ -99,7 +101,7 @@ export const RuleFormModal = <ErrorCode,>({
               <RuleForm
                 channels={channels}
                 errors={errors}
-                disabled={false}
+                disabled={disabled}
                 typeToFetchMap={typeToFetchMap}
               />
             </Box>

@@ -31,6 +31,35 @@ export const saleList = gql`
   }
 `;
 
+export const discountList = gql`
+  query PromotionsList(
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $where: PromotionWhereInput
+    $sort: PromotionSortingInput
+  ) {
+    promotions(
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      where: $where
+      sortBy: $sort
+    ) {
+      edges {
+        node {
+          ...Promotion
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+`;
+
 export const voucherList = gql`
   query VoucherList(
     $after: String

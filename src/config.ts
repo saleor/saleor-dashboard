@@ -53,6 +53,7 @@ export interface AppListViewSettings {
   [ListViews.PLUGINS_LIST]: ListSettings;
   [ListViews.PRODUCT_LIST]: ListSettings<ProductListColumns>;
   [ListViews.SALES_LIST]: ListSettings;
+  [ListViews.DISCOUNTS_LIST]: ListSettings;
   [ListViews.SHIPPING_METHODS_LIST]: ListSettings;
   [ListViews.STAFF_MEMBERS_LIST]: ListSettings;
   [ListViews.PERMISSION_GROUP_LIST]: ListSettings;
@@ -122,6 +123,10 @@ export const defaultListSettings: AppListViewSettings = {
   [ListViews.SALES_LIST]: {
     rowNumber: PAGINATE_BY,
     columns: ["name", "startDate", "endDate", "value"],
+  },
+  [ListViews.DISCOUNTS_LIST]: {
+    rowNumber: PAGINATE_BY,
+    columns: ["name", "startDate", "endDate"],
   },
   [ListViews.SHIPPING_METHODS_LIST]: {
     columns: ["name", "countries"],
