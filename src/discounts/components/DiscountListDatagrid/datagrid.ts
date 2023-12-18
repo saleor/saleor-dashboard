@@ -1,13 +1,14 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
-import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
+import {
+  dateCell,
+  readonlyTextCell,
+} from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Locale } from "@dashboard/components/Locale";
 import { DiscountListUrlSortField } from "@dashboard/discounts/discountsUrls";
 import { PromotionFragment } from "@dashboard/graphql";
 import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import moment from "moment";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
@@ -41,11 +42,9 @@ export const createGetCellContent =
   ({
     promotions,
     columns,
-    locale,
   }: {
     promotions: PromotionFragment[];
     columns: AvailableColumn[];
-    locale: Locale;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = promotions[row];
@@ -59,17 +58,13 @@ export const createGetCellContent =
       case "name":
         return readonlyTextCell(rowData.name);
       case "startDate":
-        return readonlyTextCell(
-          rowData.startDate
-            ? moment(rowData.startDate).locale(locale).format("lll")
-            : PLACEHOLDER,
-        );
+        return rowData.startDate
+          ? dateCell(rowData.startDate)
+          : readonlyTextCell(PLACEHOLDER);
       case "endDate":
-        return readonlyTextCell(
-          rowData.endDate
-            ? moment(rowData.endDate).locale(locale).format("lll")
-            : PLACEHOLDER,
-        );
+        return rowData.endDate
+          ? dateCell(rowData.endDate)
+          : readonlyTextCell(PLACEHOLDER);
       default:
         return readonlyTextCell("");
     }

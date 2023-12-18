@@ -11,7 +11,6 @@ import {
   discountUrl,
 } from "@dashboard/discounts/discountsUrls";
 import { PromotionFragment } from "@dashboard/graphql";
-import useLocale from "@dashboard/hooks/useLocale";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
@@ -44,7 +43,6 @@ export const DiscountListDatagrid = ({
   settings,
 }: DiscountListDatagridProps) => {
   const intl = useIntl();
-  const { locale } = useLocale();
   const datagrid = useDatagridChangeState();
 
   const discountListStaticColumns = useMemo(
@@ -77,9 +75,8 @@ export const DiscountListDatagrid = ({
     createGetCellContent({
       promotions,
       columns: visibleColumns,
-      locale,
     }),
-    [promotions, locale, visibleColumns],
+    [promotions, visibleColumns],
   );
 
   const handleRowClick = useCallback(
