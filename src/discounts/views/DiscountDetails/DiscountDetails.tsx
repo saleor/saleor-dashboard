@@ -146,9 +146,9 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         channels={availableChannels}
         onSubmit={onSubmit}
         submitButtonState={promotionUpdateOpts.status}
-        onRuleUpdateSubmit={onRuleUpdateSubmit as any}
+        onRuleUpdateSubmit={onRuleUpdateSubmit}
         ruleUpdateButtonState={promotionRuleUpdateOpts.status}
-        onRuleCreateSubmit={onRuleCreateSubmit as any}
+        onRuleCreateSubmit={onRuleCreateSubmit}
         ruleCreateButtonState={promotionRuleCreateOpts.status}
         onRuleDeleteSubmit={onRuleDeleteSubmit}
         ruleDeleteButtonState={promotionDeleteOpts.status}

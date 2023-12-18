@@ -2,14 +2,17 @@ import { FetchResult } from "@apollo/client";
 import { Rule } from "@dashboard/discounts/models";
 import {
   PromotionDetailsFragment,
+  PromotionRuleCreateErrorFragment,
   PromotionRuleCreateMutation,
   PromotionRuleCreateMutationVariables,
+  PromotionRuleUpdateErrorFragment,
   PromotionRuleUpdateMutation,
   PromotionRuleUpdateMutationVariables,
   PromotionUpdateMutation,
   PromotionUpdateMutationVariables,
 } from "@dashboard/graphql";
 import { getMutationErrors, joinDateTime } from "@dashboard/misc";
+import { CommonError } from "@dashboard/utils/errors/common";
 import difference from "lodash/difference";
 
 import { DiscoutFormData } from "../../types";
@@ -54,8 +57,12 @@ export const createRuleUpdateHandler = (
   ) => Promise<FetchResult<PromotionRuleUpdateMutation>>,
 ) => {
   return async (data: Rule) => {
+    const emptyRuleErrors = [] as Array<
+      CommonError<PromotionRuleUpdateErrorFragment>
+    >;
+
     if (!promotionData) {
-      return;
+      return emptyRuleErrors;
     }
 
     const ruleData = promotionData?.rules?.find(rule => rule.id === data.id);
@@ -76,10 +83,10 @@ export const createRuleUpdateHandler = (
     const errors = getMutationErrors(response);
 
     if (errors.length > 0) {
-      return errors;
+      return errors as Array<CommonError<PromotionRuleUpdateErrorFragment>>;
     }
 
-    return [];
+    return emptyRuleErrors;
   };
 };
 
@@ -102,9 +109,9 @@ export const createRuleCreateHandler = (
     const errors = getMutationErrors(response);
 
     if (errors.length > 0) {
-      return errors;
+      return errors as Array<CommonError<PromotionRuleCreateErrorFragment>>;
     }
 
-    return [];
+    return [] as Array<CommonError<PromotionRuleCreateErrorFragment>>;
   };
 };
