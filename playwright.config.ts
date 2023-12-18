@@ -8,10 +8,11 @@ export default defineConfig({
   testDir: "playwright/tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
+  // TODO hardcoded values should be extracted to ENVs
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? "blob" : "html",
-  timeout: 60000,
+  timeout: process.env.CI ? 60000 : 10000,
   // webServer: {
   //   command: "npm run dev",
   //   url: "http://localhost:9000/",

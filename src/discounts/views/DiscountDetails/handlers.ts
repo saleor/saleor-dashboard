@@ -57,8 +57,12 @@ export const createRuleUpdateHandler = (
   ) => Promise<FetchResult<PromotionRuleUpdateMutation>>,
 ) => {
   return async (data: Rule) => {
+    const emptyRuleErrors = [] as Array<
+      CommonError<PromotionRuleUpdateErrorFragment>
+    >;
+
     if (!promotionData) {
-      return [] as Array<CommonError<PromotionRuleUpdateErrorFragment>>;
+      return emptyRuleErrors;
     }
 
     const ruleData = promotionData?.rules?.find(rule => rule.id === data.id);
@@ -82,7 +86,7 @@ export const createRuleUpdateHandler = (
       return errors as Array<CommonError<PromotionRuleUpdateErrorFragment>>;
     }
 
-    return [] as Array<CommonError<PromotionRuleUpdateErrorFragment>>;
+    return emptyRuleErrors;
   };
 };
 

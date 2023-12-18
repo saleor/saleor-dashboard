@@ -86,7 +86,7 @@ export const FiltersSelect = <TFilterKeys extends string = string>({
           className={sprinkles({
             backgroundColor: "default1",
             overflowY: "scroll",
-            boxShadow: "modal",
+            boxShadow: "defaultModal",
             zIndex: "3",
           })}
           style={{
