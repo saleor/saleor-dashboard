@@ -3,14 +3,14 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { SubmitCard } from "./SubmitCard";
+import { TransactionSubmitCard } from "./TransactionSubmitCard";
 
 describe("SubmitCard", () => {
   it("submits on click", async () => {
     const submitFn = jest.fn();
     render(
       <Wrapper>
-        <SubmitCard
+        <TransactionSubmitCard
           transactions={[]}
           grantRefundErrors={[]}
           sendRefundErrors={[]}

@@ -26,10 +26,10 @@ const useStyles = makeStyles(
       textAlign: "right",
     },
   }),
-  { name: "OrderRefundAmountValues" },
+  { name: "PaymentSubmitCardValues" },
 );
 
-export interface OrderRefundAmountValuesProps {
+export interface PaymentSubmitCardValuesProps {
   authorizedAmount: IMoney;
   shipmentCost?: IMoney;
   selectedProductsValue?: IMoney;
@@ -83,13 +83,13 @@ const messages = defineMessages({
   },
 });
 
-const OrderRefundAmountValues: React.FC<
-  OrderRefundAmountValuesProps
+export const PaymentSubmitCardValues: React.FC<
+  PaymentSubmitCardValuesProps
 > = props => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  const orderedKeys: Array<keyof OrderRefundAmountValuesProps> = [
+  const orderedKeys: Array<keyof PaymentSubmitCardValuesProps> = [
     "authorizedAmount",
     "shipmentCost",
     "selectedProductsValue",
@@ -99,7 +99,7 @@ const OrderRefundAmountValues: React.FC<
     "refundTotalAmount",
   ];
 
-  const highlightedItems: Array<keyof OrderRefundAmountValuesProps> = [
+  const highlightedItems: Array<keyof PaymentSubmitCardValuesProps> = [
     "maxRefund",
     "refundTotalAmount",
   ];
@@ -140,5 +140,5 @@ const OrderRefundAmountValues: React.FC<
   );
 };
 
-OrderRefundAmountValues.displayName = "OrderRefundAmountValues";
-export default OrderRefundAmountValues;
+PaymentSubmitCardValues.displayName = "PaymentSubmitCardValues";
+export default PaymentSubmitCardValues;

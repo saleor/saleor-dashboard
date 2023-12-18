@@ -17,9 +17,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
-import OrderAmount from "../OrderRefundReturnAmount";
-import { getReturnProductsAmountValues } from "../OrderRefundReturnAmount/utils";
-import { SubmitCard } from "./components";
+import { TransactionSubmitCard } from "./components";
+import { PaymentSubmitCard } from "./components/PaymentSubmitCard";
+import { getReturnProductsAmountValues } from "./components/PaymentSubmitCard/utils";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
 import { orderReturnMessages } from "./messages";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
@@ -130,7 +130,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             {orderHasTransactions(order) ? (
-              <SubmitCard
+              <TransactionSubmitCard
                 transactions={order.transactions}
                 grantRefundErrors={grantRefundErrors}
                 sendRefundErrors={sendRefundErrors}
@@ -147,7 +147,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 submitStatus={submitStatus}
               />
             ) : (
-              <OrderAmount
+              <PaymentSubmitCard
                 allowNoRefund
                 isReturn
                 amountData={getReturnProductsAmountValues(order, data)}

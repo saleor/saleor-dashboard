@@ -12,7 +12,7 @@ import {
   TransactionRequestRefundForGrantedRefundErrorFragment,
 } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { OrderRefundAmountValuesProps } from "@dashboard/orders/components/OrderRefundReturnAmount/OrderRefundReturnAmountValues";
+import { PaymentSubmitCardValuesProps } from "@dashboard/orders/components/OrderReturnPage/components/PaymentSubmitCard/PaymentSubmitCardValues";
 import { IMoney } from "@dashboard/utils/intl";
 import { Box, Checkbox, InfoIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -21,9 +21,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { OrderReturnData } from "../../form";
 import { canSendRefundDuringReturn } from "../../utils";
 import { submitCardMessages } from "./messages";
-import { useSubmitCardStyles } from "./styles";
 
-interface SubmitCardProps {
+interface TransactionSubmitCardProps {
   disabled: boolean;
   onSubmit: () => void;
   submitStatus: ConfirmButtonTransitionState;
@@ -32,7 +31,7 @@ interface SubmitCardProps {
   refundShipmentCosts: boolean;
   canRefundShipping: boolean;
   shippingCosts: IMoney;
-  amountData: OrderRefundAmountValuesProps;
+  amountData: PaymentSubmitCardValuesProps;
   customRefundValue: number;
   onChange: FormChange;
   grantRefundErrors: OrderGrantRefundCreateErrorFragment[];
@@ -40,7 +39,7 @@ interface SubmitCardProps {
   transactions: OrderDetailsFragment["transactions"];
 }
 
-export const SubmitCard = ({
+export const TransactionSubmitCard = ({
   disabled,
   onSubmit,
   submitStatus,
@@ -54,9 +53,8 @@ export const SubmitCard = ({
   grantRefundErrors,
   sendRefundErrors,
   transactions,
-}: SubmitCardProps) => {
+}: TransactionSubmitCardProps) => {
   const intl = useIntl();
-  const classes = useSubmitCardStyles();
 
   const canSendRefund = canSendRefundDuringReturn({
     autoGrantRefund,
@@ -181,7 +179,7 @@ export const SubmitCard = ({
             currencySymbol={amountData?.refundTotalAmount?.currency}
             disabled={!autoGrantRefund}
           />
-          <div className={classes.submitButtonWrapper}>
+          <Box display="flex" justifyContent="flex-end">
             <ConfirmButton
               data-test-id="return-submit-button"
               transitionState={submitStatus}
@@ -191,7 +189,7 @@ export const SubmitCard = ({
             >
               <FormattedMessage {...submitCardMessages.submitButton} />
             </ConfirmButton>
-          </div>
+          </Box>
         </DashboardCard.Content>
       </DashboardCard>
     </div>

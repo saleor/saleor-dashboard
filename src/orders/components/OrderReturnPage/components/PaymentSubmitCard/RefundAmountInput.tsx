@@ -8,7 +8,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { OrderRefundFormData } from "../OrderRefundPage/form";
+import { OrderRefundFormData } from "../../../OrderRefundPage/form";
 
 const useStyles = makeStyles(
   theme => ({

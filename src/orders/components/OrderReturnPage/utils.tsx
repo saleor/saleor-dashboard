@@ -8,7 +8,7 @@ import { getById } from "@dashboard/misc";
 import { Node } from "@dashboard/types";
 import { MessageDescriptor } from "react-intl";
 
-import { submitCardMessages } from "./components/SubmitCard/messages";
+import { submitCardMessages } from "./components/TransactionSubmitCard/messages";
 import {
   FormsetQuantityData,
   FormsetReplacementData,
