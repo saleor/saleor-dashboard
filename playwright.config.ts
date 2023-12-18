@@ -8,6 +8,7 @@ export default defineConfig({
   testDir: "playwright/tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
+  // TODO hardcoded values should be extracted to ENVs
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? "blob" : "html",
