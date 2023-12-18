@@ -158,7 +158,14 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
       <DiscountDetailsPage
         data={promotionData?.promotion}
         errors={getMutationErrors(promotionUpdateOpts)}
-        disabled={loading || promotionUpdateOpts.loading}
+        disabled={
+          loading ||
+          promotionUpdateOpts.loading ||
+          promotionDeleteOpts.loading ||
+          promotionRuleUpdateOpts.loading ||
+          promotionRuleCreateOpts.loading ||
+          promotionRuleDeleteOpts.loading
+        }
         ruleConditionsOptionsDetailsMap={getRuleConditionsOptionsDetailsMap(
           ruleConditionsOptionsDetails,
         )}
@@ -172,9 +179,9 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         onSubmit={onSubmit}
         onDelete={() => setOpenModal(true)}
         submitButtonState={promotionUpdateOpts.status}
-        onRuleUpdateSubmit={onRuleUpdateSubmit as any}
+        onRuleUpdateSubmit={onRuleUpdateSubmit}
         ruleUpdateButtonState={promotionRuleUpdateOpts.status}
-        onRuleCreateSubmit={onRuleCreateSubmit as any}
+        onRuleCreateSubmit={onRuleCreateSubmit}
         ruleCreateButtonState={promotionRuleCreateOpts.status}
         onRuleDeleteSubmit={onRuleDeleteSubmit}
         ruleDeleteButtonState={promotionRuleDeleteOpts.status}

@@ -18,7 +18,7 @@ export type DiscountRulesErrors<ErrorCode> = Array<
 >;
 
 interface DiscountRulesProps<ErrorCode> {
-  disabled?: boolean;
+  disabled: boolean;
   channels: ChannelFragment[];
   rules: Rule[];
   errors: Array<CommonError<ErrorCode>>;
@@ -85,6 +85,7 @@ export const DiscountRules = <ErrorCode,>({
       </DashboardCard.Title>
       <DashboardCard.Content>
         <RulesList
+          disabled={disabled}
           loading={loading}
           rules={rules}
           onRuleEdit={handleOpenRuleModal}
@@ -95,6 +96,7 @@ export const DiscountRules = <ErrorCode,>({
       </DashboardCard.Content>
 
       <RuleFormModal
+        disabled={disabled}
         open={showRuleModal}
         confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
         onClose={handleRuleModalClose}
