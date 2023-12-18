@@ -194,7 +194,7 @@ const OrderDraftDetailsSummary: React.FC<
                 align="start"
                 className={sprinkles({ zIndex: "3" })}
               >
-                <Box boxShadow="overlay">
+                <Box boxShadow="defaultOverlay">
                   <OrderDiscountCommonModal
                     modalType={ORDER_DISCOUNT}
                     existingDiscount={orderDiscount}

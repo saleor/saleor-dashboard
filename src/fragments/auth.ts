@@ -27,6 +27,7 @@ export const fragmentUser = gql`
       key
       value
     }
+
     userPermissions {
       ...UserPermission
     }
