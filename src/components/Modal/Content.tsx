@@ -14,8 +14,8 @@ export const Content = ({
   return (
     <Modal.Content disableAutofocus={disableAutofocus}>
       <Box
-        backgroundColor="surfaceNeutralPlain"
-        boxShadow="modal"
+        backgroundColor="default1"
+        boxShadow="defaultModal"
         borderRadius={4}
         position="fixed"
         __left="50%"
@@ -23,7 +23,7 @@ export const Content = ({
         __transform="translate(-50%, -50%)"
         borderStyle="solid"
         borderWidth={1}
-        borderColor="neutralPlain"
+        borderColor="default1"
         padding={6}
         display="grid"
         gap={6}

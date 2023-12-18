@@ -54,22 +54,22 @@ export const MenuItemsSortableTreeItem = ({
     >
       <Box
         position="relative"
-        borderColor="neutralPlain"
+        borderColor="default1"
         borderStyle="solid"
         borderWidth={1}
-        backgroundColor={"surfaceNeutralPlain"}
+        backgroundColor="default1"
         padding={3}
         paddingLeft={5}
         display="flex"
         alignItems="center"
         justifyContent="space-between"
-        boxShadow={clone ? "overlay" : "none"}
+        boxShadow={clone ? "defaultOverlay" : "none"}
         ref={innerRef}
         style={style}
       >
         <Box display="flex" gap={6} alignItems="center">
           <Button variant="tertiary" __cursor="grab" {...handleProps}>
-            <GripIcon color="iconNeutralDefault" />
+            <GripIcon color="default1" />
           </Button>
           <Text>{data.name}</Text>
         </Box>
@@ -98,10 +98,10 @@ export const MenuItemsSortableTreeItem = ({
             alignItems="center"
             justifyContent="center"
             borderRadius="50%"
-            backgroundColor="interactiveBrandDefault"
+            backgroundColor="accent1"
             fontSize="bodyEmpSmall"
             fontWeight="bodyEmpSmall"
-            color="textNeutralContrasted"
+            color="default1"
           >
             {childCount}
           </Box>

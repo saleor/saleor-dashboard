@@ -8,6 +8,10 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
+  DiscountListUrlQueryParams,
+  DiscountListUrlSortField,
+} from "./discountsUrls";
+import {
   saleAddPath,
   saleListPath,
   SaleListUrlQueryParams,
@@ -23,6 +27,7 @@ import {
 } from "./urls";
 import { DiscountCreate } from "./views/DiscountCreate";
 import { DiscountDetails } from "./views/DiscountDetails";
+import { DiscountList } from "./views/DiscountList";
 import SaleCreateViewComponent from "./views/SaleCreate/SaleCreate";
 import SaleDetailsViewComponent from "./views/SaleDetails";
 import SaleListViewComponent from "./views/SaleList";
@@ -33,6 +38,16 @@ import VoucherListViewComponent from "./views/VoucherList";
 const SaleListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: SaleListUrlQueryParams = asSortParams(qs, SaleListUrlSortField);
+  const { enabled } = useFlag("discounts_rules");
+
+  if (enabled) {
+    const params: DiscountListUrlQueryParams = asSortParams(
+      qs,
+      DiscountListUrlSortField,
+    );
+    return <DiscountList params={params} />;
+  }
+
   return <SaleListViewComponent params={params} />;
 };
 
@@ -45,7 +60,12 @@ const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
   const { enabled } = useFlag("discounts_rules");
 
   if (enabled) {
-    return <DiscountDetails />;
+    return (
+      <DiscountDetails
+        id={decodeURIComponent(match.params.id)}
+        params={params}
+      />
+    );
   }
 
   return (

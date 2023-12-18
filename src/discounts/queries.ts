@@ -31,6 +31,35 @@ export const saleList = gql`
   }
 `;
 
+export const discountList = gql`
+  query PromotionsList(
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $where: PromotionWhereInput
+    $sort: PromotionSortingInput
+  ) {
+    promotions(
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      where: $where
+      sortBy: $sort
+    ) {
+      edges {
+        node {
+          ...Promotion
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+`;
+
 export const voucherList = gql`
   query VoucherList(
     $after: String
@@ -114,6 +143,59 @@ export const voucherCodes = gql`
         }
         pageInfo {
           ...PageInfo
+        }
+      }
+    }
+  }
+`;
+
+export const promotionDetails = gql`
+  query PromotionDetails($id: ID!) {
+    promotion(id: $id) {
+      ...PromotionDetails
+    }
+  }
+`;
+
+export const ruleConditionsSelectedOptionsDetails = gql`
+  query RuleConditionsSelectedOptionsDetails(
+    $categoriesIds: [ID!]
+    $collectionsIds: [ID!]
+    $productsIds: [ID!]
+    $variantsIds: [ID!]
+  ) {
+    categories(first: 20, where: { ids: $categoriesIds }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+
+    collections(first: 20, where: { ids: $collectionsIds }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+
+    products(first: 20, where: { ids: $productsIds }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+
+    productVariants(first: 20, where: { ids: $variantsIds }) {
+      edges {
+        node {
+          id
+          name
         }
       }
     }

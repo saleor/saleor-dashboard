@@ -14,7 +14,7 @@ export const HomeProductListItem = ({
   children,
 }: HomeNotificationListItemProps) => (
   <List.Item
-    borderColor="neutralPlain"
+    borderColor="default1"
     borderWidth={1}
     borderBottomStyle="solid"
     data-test-id={dataTestId}

@@ -10,7 +10,7 @@ export const RightSidebar: React.FC<DetailPageLayoutRightSidebarProps> = ({
 }) => (
   <Box
     borderLeftStyle="solid"
-    borderColor="neutralPlain"
+    borderColor="default1"
     height="100%"
     overflowY="auto"
     className="hide-scrollbar"

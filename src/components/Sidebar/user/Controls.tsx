@@ -74,8 +74,8 @@ export const UserControls = () => {
             <List
               padding={2}
               borderRadius={4}
-              boxShadow="overlay"
-              backgroundColor="surfaceNeutralPlain"
+              boxShadow="defaultOverlay"
+              backgroundColor="default1"
             >
               <Dropdown.Item>
                 <List.Item

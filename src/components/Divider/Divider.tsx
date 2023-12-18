@@ -7,7 +7,7 @@ export const Divider = (props: BoxProps) => {
       width="100%"
       borderBottomStyle="solid"
       borderBottomWidth={1}
-      borderColor="neutralPlain"
+      borderColor="default1"
       height={1}
       {...props}
     />

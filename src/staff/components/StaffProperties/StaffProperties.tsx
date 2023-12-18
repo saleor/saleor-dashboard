@@ -45,12 +45,12 @@ const useStyles = makeStyles(
     },
     avatarDefault: {
       "& div": {
-        color: vars.colors.foreground.textNeutralContrasted,
+        color: vars.colors.text.buttonDefaultPrimary,
         fontSize: 35,
         fontWeight: 580,
         lineHeight: "120px",
       },
-      background: vars.colors.background.decorativeSurfacePlain3,
+      background: vars.colors.background.accent1,
       height: 120,
       textAlign: "center",
       width: 120,

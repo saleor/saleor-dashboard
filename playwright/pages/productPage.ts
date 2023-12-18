@@ -3,12 +3,14 @@ import path from "path";
 
 import { URL_LIST } from "@data/url";
 import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
+import { ExportProductsDialog } from "@pages/dialogs/exportProductsDialog";
 import { MetadataSeoPage } from "@pages/pageElements/metadataSeoPage";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
-import type { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 import { BasePage } from "./basePage";
 import { DeleteProductDialog } from "./dialogs/deleteProductDialog";
+import { FiltersPage } from "./pageElements/filtersPage";
 
 const productName = `e2e-productName-${faker.datatype.number()}`;
 const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
@@ -17,10 +19,12 @@ export class ProductPage {
   readonly page: Page;
 
   readonly metadataSeoPage: MetadataSeoPage;
+  readonly exportProductsDialog: ExportProductsDialog;
   readonly rightSideDetailsPage: RightSideDetailsPage;
   readonly basePage: BasePage;
   readonly channelSelectDialog: ChannelSelectDialog;
   readonly deleteProductDialog: DeleteProductDialog;
+  readonly filtersPage: FiltersPage;
 
   constructor(
     page: Page,
@@ -29,11 +33,10 @@ export class ProductPage {
       "product-available-in-channels-text",
     ),
     readonly createProductButton = page.getByTestId("add-product"),
+    readonly cogShowMoreButtonButton = page.getByTestId("show-more-button"),
+    readonly exportButton = page.getByTestId("export"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteProductButton = page.getByTestId("button-bar-delete"),
-    readonly searchProducts = page.locator(
-      "[placeholder='Search Products...']",
-    ),
     readonly productNameInput = page.locator("[name='name']"),
     readonly addProductButton = page.getByTestId("add-product"),
     readonly productTypeInput = page.getByTestId("product-type"),
@@ -53,7 +56,8 @@ export class ProductPage {
     readonly addWarehouseButton = page.getByTestId("add-warehouse"),
     readonly stockInput = page.getByTestId("stock-input"),
     readonly productImage = page.getByTestId("product-image"),
-    readonly uploadImageButton = page.getByTestId("button-upload-image"),
+    readonly uploadProductImageButton = page.getByTestId("button-upload-image"),
+    readonly chooseMediaVariantButton = page.getByTestId("choose-media-button"),
     readonly uploadSavedImagesButton = page.getByTestId("upload-images"),
     readonly uploadMediaUrlButton = page.getByTestId("upload-media-url"),
     readonly saveUploadUrlButton = page.getByTestId("upload-url-button"),
@@ -78,20 +82,46 @@ export class ProductPage {
   ) {
     this.page = page;
     this.basePage = new BasePage(page);
+    this.exportProductsDialog = new ExportProductsDialog(page);
     this.deleteProductDialog = new DeleteProductDialog(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
+    this.filtersPage = new FiltersPage(page);
+  }
+
+  async gotoCreateProductPage(productTypeId: string) {
+    await this.page.goto(
+      `${URL_LIST.products}${URL_LIST.productsAdd}${productTypeId}`,
+    );
+    await expect(this.basePage.pageHeader).toBeVisible({ timeout: 10000 });
+  }
+
+  async gotoExistingProductPage(productId: string) {
+    console.log(
+      `Navigating to existing product: ${URL_LIST.products}${productId}`,
+    );
+    await this.page.goto(`${URL_LIST.products}${productId}`);
+    await expect(this.basePage.pageHeader).toBeVisible({ timeout: 10000 });
   }
 
   async clickDeleteProductButton() {
     await this.deleteProductButton.click();
   }
-  async clickUploadImagesButtonButton() {
+  async clickExportButton() {
+    await this.exportButton.click();
+  }
+  async clickCogShowMoreButtonButton() {
+    await this.cogShowMoreButtonButton.click();
+  }
+  async clickUploadImagesButton() {
     await this.uploadSavedImagesButton.click();
   }
   async clickUploadMediaButton() {
-    await this.uploadImageButton.click();
+    await this.uploadProductImageButton.click();
+  }
+  async clickChooseMediaVariantButton() {
+    await this.chooseMediaVariantButton.click();
   }
   async clickBulkDeleteButton() {
     await this.bulkDeleteButton.click();
@@ -158,6 +188,7 @@ export class ProductPage {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.selectFirstChannel();
     await this.channelSelectDialog.clickConfirmButton();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async clickCreateProductButton() {
@@ -176,8 +207,9 @@ export class ProductPage {
 
   async uploadProductImage(fileName: string) {
     const fileChooserPromise = this.page.waitForEvent("filechooser");
-    await this.clickUploadImagesButtonButton();
+    await this.clickUploadImagesButton();
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(path.join("playwright/data/images/", fileName));
+    await this.page.waitForLoadState("domcontentloaded");
   }
 }

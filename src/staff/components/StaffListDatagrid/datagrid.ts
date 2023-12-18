@@ -12,12 +12,12 @@ import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { ThemeTokensValues } from "@saleor/macaw-ui-next";
+import { DefaultTheme } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const staffMemebersListStaticColumnsAdapter = (
+export const staffMembersListStaticColumnsAdapter = (
   intl: IntlShape,
   sort: Sort<StaffListUrlSortField>,
   emptyColumn: AvailableColumn,
@@ -54,7 +54,7 @@ export const createGetCellContent =
     staffMembers: StaffMembers;
     columns: AvailableColumn[];
     intl: IntlShape;
-    currentTheme: ThemeTokensValues;
+    currentTheme: DefaultTheme;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData: StaffMember | undefined = staffMembers[row];
@@ -75,19 +75,20 @@ export const createGetCellContent =
         );
       case "status": {
         const isActive = rowData?.isActive;
+        const color = getStatusColor({
+          status: isActive ? "success" : "error",
+          currentTheme,
+        });
+
         const status = isActive
           ? intl.formatMessage(commonStatusMessages.active)
           : intl.formatMessage(commonStatusMessages.notActive);
-        const statusColor = getStatusColor(isActive ? "success" : "error");
 
         return tagsCell(
           [
             {
               tag: status,
-              color:
-                currentTheme.colors.background[
-                  statusColor as keyof typeof currentTheme.colors.background
-                ],
+              color: color.base,
             },
           ],
           [status],

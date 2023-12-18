@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
@@ -17,7 +16,9 @@ import { useIntl } from "react-intl";
 import { createGetCellContent, getColumns } from "./datagrid";
 
 interface CategoryListDatagridProps extends PageListProps {
-  products?: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
+  products?: RelayToFlat<
+    NonNullable<CategoryDetailsQuery["category"]>["products"]
+  >;
   disabled: boolean;
   selectionActionButton?: ReactNode | null;
   onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;
@@ -36,7 +37,7 @@ export const CategoryProductListDatagrid = ({
   const availableColumns = useMemo(() => getColumns(intl), [intl]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getCellContent = useCallback(
-    createGetCellContent(products, availableColumns),
+    createGetCellContent(products!, availableColumns),
     [products, availableColumns],
   );
 
@@ -47,7 +48,7 @@ export const CategoryProductListDatagrid = ({
   });
 
   const handleRowAnchor = useCallback(
-    ([, row]: Item) => productUrl(products[row].id),
+    ([, row]: Item) => productUrl(products![row].id),
     [products],
   );
 

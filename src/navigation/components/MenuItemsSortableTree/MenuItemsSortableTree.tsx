@@ -27,9 +27,9 @@ export const MenuItemsSortableTree = ({
   if (!items.length) {
     return (
       <Box
-        backgroundColor="surfaceNeutralPlain"
+        backgroundColor="default1"
         paddingBottom={3}
-        borderColor="neutralPlain"
+        borderColor="default1"
         borderBottomWidth={1}
         borderBottomStyle="solid"
       >

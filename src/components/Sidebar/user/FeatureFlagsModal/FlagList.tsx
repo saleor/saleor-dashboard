@@ -17,7 +17,7 @@ export const FlagList = ({ selectedName, onItemClick }: FlagListProps) => {
       borderWidth={1}
       borderStyle="solid"
       borderBottomWidth={0}
-      borderColor="neutralHighlight"
+      borderColor="default1"
       overflowY="scroll"
     >
       {flags
@@ -28,13 +28,10 @@ export const FlagList = ({ selectedName, onItemClick }: FlagListProps) => {
             paddingX={3}
             paddingY={4}
             backgroundColor={{
-              default:
-                selectedName === flag.name
-                  ? "surfaceNeutralHighlight"
-                  : "surfaceNeutralSubdued",
-              hover: "surfaceNeutralHighlight",
+              default: selectedName === flag.name ? "default1" : "default2",
+              hover: "default1",
             }}
-            borderColor="neutralHighlight"
+            borderColor="default1"
             borderBottomWidth={1}
             borderBottomStyle="solid"
             onClick={() => onItemClick(flag.name)}

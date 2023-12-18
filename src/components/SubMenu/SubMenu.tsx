@@ -15,11 +15,7 @@ interface SubMenuProps {
 
 export const SubMenu = ({ menuItems }: SubMenuProps) => {
   return (
-    <List
-      backgroundColor="surfaceNeutralPlain"
-      __minWidth={326}
-      borderRadius={3}
-    >
+    <List backgroundColor="default1" __minWidth={326} borderRadius={3}>
       {menuItems.map(({ id, title, description, icon, onClick }, idx) => {
         const isLastItem = idx === menuItems.length - 1;
 
@@ -32,7 +28,7 @@ export const SubMenu = ({ menuItems }: SubMenuProps) => {
             paddingY={2}
             borderBottomStyle={isLastItem ? "none" : "solid"}
             borderBottomWidth={1}
-            borderColor="neutralPlain"
+            borderColor="default1"
           >
             <Box display="flex" gap={3} alignItems="center">
               {icon}

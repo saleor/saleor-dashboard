@@ -7,13 +7,31 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3NjE%3D",
     info: "Single product type to be updated",
   },
+  productAvailableOnlyInPlnChannel: {
+    id: "UHJvZHVjdDo3NjM%3D",
+    name: "a beer available only in pln channel",
+    info: "Product available only in PLN channel",
+  },
+  productAvailableOnlyInUsdChannel: {
+    id: "UHJvZHVjdDo3NjQ%3D",
+    name: "a beer available only in USD channel",
+    info: "Product available only in USD channel",
+  },
   productToAddVariants: {
     id: "UHJvZHVjdDo3Mjk%3D",
+    name: "beer with variants",
     info: "Product that does not contain any variant yet",
   },
   productWithOneVariant: {
     id: "UHJvZHVjdDo3MzM%3D",
     info: "Product that contains single variant",
+  },
+  productWithVariantWhichWillBeUpdated: {
+    id: "UHJvZHVjdDo3NjU%3D",
+    name: "product with variant which will be updated",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6MTIzMg%3D%3D",
+    variantName: "update variant",
+    info: "Product with variant which will be updated",
   },
   productWithOneVariantToBeDeletedFromDetails: {
     name: "beer to be deleted",

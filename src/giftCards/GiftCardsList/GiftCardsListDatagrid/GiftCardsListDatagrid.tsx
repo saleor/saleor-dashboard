@@ -76,17 +76,11 @@ export const GiftCardsListDatagrid = () => {
     onSave: onColumnChange,
   });
 
-  const { theme: currentTheme, themeValues } = useTheme();
+  const { theme: currentTheme } = useTheme();
 
   const getCellContent = useCallback(
-    createGetCellContent(
-      giftCards,
-      visibleColumns,
-      intl,
-      themeValues,
-      currentTheme,
-    ),
-    [giftCards, visibleColumns, themeValues, currentTheme],
+    createGetCellContent(giftCards, visibleColumns, intl, currentTheme),
+    [giftCards, visibleColumns, currentTheme],
   );
 
   const handleHeaderClick = useCallback(

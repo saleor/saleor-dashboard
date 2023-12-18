@@ -33,4 +33,41 @@ export const messages = defineMessages({
     defaultMessage: "Reward",
     id: "PuQb0P",
   },
+  catalogRule: {
+    id: "A7W4KO",
+    defaultMessage: "Catalog rule",
+  },
+  ruleSummary: {
+    id: "NgRa6m",
+    defaultMessage:
+      "Discount of {value} on the purchase of {items} through the {channel}",
+  },
+  ruleSummaryMoreItems: {
+    id: "B0fwAj",
+    defaultMessage: "and {itemsLength} more",
+  },
+  createRule: {
+    id: "9d24PR",
+    defaultMessage: "Create rule",
+  },
+  editRule: {
+    id: "v1vJ77",
+    defaultMessage: "Edit rule",
+  },
+  ruleError: {
+    id: "zehNKT",
+    defaultMessage: "Rule has error, open rule to see details",
+  },
+  deleteRule: {
+    id: "MdFdbd",
+    defaultMessage: "Delete rule",
+  },
+  deleteRuleDescription: {
+    id: "XVuPMw",
+    defaultMessage: "Are you sure you want to delete this rule?",
+  },
+  noChannelsSelected: {
+    id: "w7jT4W",
+    defaultMessage: "No channels selected",
+  },
 });

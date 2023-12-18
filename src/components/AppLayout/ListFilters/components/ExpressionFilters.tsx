@@ -39,7 +39,7 @@ export const ExpressionFilters = () => {
           display="grid"
           __gridTemplateRows="auto 1fr"
         >
-          <Popover.Arrow fill="surfaceNeutralPlain" />
+          <Popover.Arrow fill="default1" />
           <Box
             paddingTop={3}
             paddingX={3}
@@ -48,7 +48,7 @@ export const ExpressionFilters = () => {
             gap={1}
             alignItems="center"
             justifyContent="space-between"
-            backgroundColor="surfaceNeutralPlain"
+            backgroundColor="default1"
             borderTopLeftRadius={2}
             borderTopRightRadius={2}
           >

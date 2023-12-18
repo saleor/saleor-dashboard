@@ -1,23 +1,56 @@
+import { MockedProvider } from "@apollo/client/testing";
 import { channelsList } from "@dashboard/channels/fixtures";
 import { discount } from "@dashboard/discounts/fixtures";
 import React from "react";
 
+import {
+  searchCategoriesMock,
+  searchCollectionsMock,
+  searchProductsMock,
+  searchVariantsMock,
+} from "../DiscountRules/componenets/RuleFormModal/mocks";
 import {
   DiscountDetailsPage,
   DiscountDetailsPageProps,
 } from "./DiscountDetailsPage";
 
 const props: DiscountDetailsPageProps = {
-  channels: channelsList,
+  channels: [channelsList[0]],
   disabled: false,
   onBack: () => undefined,
   onSubmit: () => undefined,
-  onRuleSubmit: () => undefined,
-  discount,
+  onDelete: () => undefined,
+  ruleConditionsOptionsDetailsMap: {
+    "UHJvZHVjdDo3OQ==": "Bean Juice",
+    "UHJvZHVjdDoxMTU=": "Black Hoodie",
+    UHJvZHVjdFZhcmlhbnQ6OTg3: "45cm x 45cm",
+    UHJvZHVjdFZhcmlhbnQ6MjE1: "1l",
+  },
+  errors: [],
+  onRuleCreateSubmit: () => Promise.resolve([]),
+  onRuleDeleteSubmit: () => Promise.resolve([]),
+  onRuleUpdateSubmit: () => Promise.resolve([]),
+  ruleConditionsOptionsDetailsLoading: false,
+  ruleCreateButtonState: "default",
+  ruleDeleteButtonState: "default",
+  ruleUpdateButtonState: "default",
+  submitButtonState: "default",
+  data: discount,
 };
 
 export default {
   title: "Discounts / Discounts details page",
 };
 
-export const Default = () => <DiscountDetailsPage {...props} />;
+export const Default = () => (
+  <MockedProvider
+    mocks={[
+      searchCategoriesMock,
+      searchProductsMock,
+      searchCollectionsMock,
+      searchVariantsMock,
+    ]}
+  >
+    <DiscountDetailsPage {...props} />
+  </MockedProvider>
+);

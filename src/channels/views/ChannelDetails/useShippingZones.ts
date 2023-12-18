@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -11,7 +10,7 @@ import useShippingZonesSearch from "@dashboard/searches/useShippingZonesSearch";
 
 export const useShippingZones = (channelId?: string) => {
   const userPermissions = useUserPermissions();
-  const canLoadShippingZones = hasPermissions(userPermissions, [
+  const canLoadShippingZones = hasPermissions(userPermissions!, [
     PermissionEnum.MANAGE_SHIPPING,
   ]);
 
@@ -24,7 +23,7 @@ export const useShippingZones = (channelId?: string) => {
   } = useChannelShippingZonesQuery({
     variables: {
       filter: {
-        channels: [channelId],
+        channels: [channelId!],
       },
     },
     skip: !channelId || !canLoadShippingZones,

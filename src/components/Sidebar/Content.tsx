@@ -7,7 +7,7 @@ import { UserInfo } from "./user";
 
 export const SidebarContent = () => (
   <Box
-    backgroundColor="subdued"
+    backgroundColor="default2"
     as="aside"
     height="100%"
     display="grid"

@@ -84,9 +84,9 @@ export const FiltersSelect = <TFilterKeys extends string = string>({
         </DropdownButton>
         <Popper
           className={sprinkles({
-            backgroundColor: "surfaceNeutralPlain",
+            backgroundColor: "default1",
             overflowY: "scroll",
-            boxShadow: "modal",
+            boxShadow: "defaultModal",
             zIndex: "3",
           })}
           style={{

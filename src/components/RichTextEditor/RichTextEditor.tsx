@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { LogLevels, OutputData } from "@editorjs/editorjs";
 import { FormControl, FormHelperText } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
@@ -18,7 +17,7 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   id?: string;
   disabled: boolean;
   error: boolean;
-  helperText: string;
+  helperText?: string;
   label: string;
   name: string;
   editorRef:
@@ -75,7 +74,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     >
       <Box
         as="label"
-        color={error ? "textCriticalSubdued" : "textNeutralSubdued"}
+        color={error ? "critical2" : "default2"}
         fontWeight="bodySmall"
         fontSize="captionSmall"
         position="absolute"
@@ -110,7 +109,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               [classes.rootError]: error,
               [classes.rootHasLabel]: label !== "",
               [classes.rootTyped]:
-                isTyped || props.defaultValue?.blocks?.length > 0,
+                isTyped || props.defaultValue?.blocks?.length! > 0,
             })}
             onFocus={() => setIsFocused(true)}
             onBlur={() => {

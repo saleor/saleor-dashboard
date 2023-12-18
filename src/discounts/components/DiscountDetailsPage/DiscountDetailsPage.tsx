@@ -1,90 +1,130 @@
 import { TopNav } from "@dashboard/components/AppLayout";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
-import { DiscoutFormData, Rule } from "@dashboard/discounts/types";
-import { saleListUrl } from "@dashboard/discounts/urls";
-import { ChannelFragment } from "@dashboard/graphql";
-import { RichTextContext } from "@dashboard/utils/richText/context";
-import useRichText from "@dashboard/utils/richText/useRichText";
+import { discountListUrl } from "@dashboard/discounts/discountsUrls";
+import { Rule } from "@dashboard/discounts/models";
+import { DiscoutFormData } from "@dashboard/discounts/types";
+import {
+  ChannelFragment,
+  PromotionDetailsFragment,
+  PromotionRuleCreateErrorFragment,
+  PromotionRuleUpdateErrorFragment,
+  PromotionUpdateErrorFragment,
+} from "@dashboard/graphql";
+import { getFormErrors } from "@dashboard/utils/errors";
+import {
+  CommonError,
+  getCommonFormFieldErrorMessage,
+} from "@dashboard/utils/errors/common";
 import React from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useIntl } from "react-intl";
 
 import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
+import { DiscountDetailsForm } from "../DiscountDetailsForm";
 import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
 
 export interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
+  ruleConditionsOptionsDetailsMap: Record<string, string>;
+  ruleConditionsOptionsDetailsLoading: boolean;
+  data: PromotionDetailsFragment | undefined | null;
   disabled: boolean;
-  onBack: () => void;
+  errors: PromotionUpdateErrorFragment[];
+  submitButtonState: ConfirmButtonTransitionState;
   onSubmit: (data: DiscoutFormData) => void;
-  onRuleSubmit: (ruleData: Rule) => void;
-  discount: any; // TODO: add type when handle API logic
+  onDelete: () => void;
+  onRuleUpdateSubmit: (
+    data: Rule,
+  ) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
+  ruleUpdateButtonState: ConfirmButtonTransitionState;
+  onRuleCreateSubmit: (
+    data: Rule,
+  ) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
+  ruleCreateButtonState: ConfirmButtonTransitionState;
+  onRuleDeleteSubmit: (id: string) => void;
+  ruleDeleteButtonState: ConfirmButtonTransitionState;
+  onBack: () => void;
 }
 
 export const DiscountDetailsPage = ({
   channels,
+  ruleConditionsOptionsDetailsMap,
+  ruleConditionsOptionsDetailsLoading,
   disabled,
+  data,
+  errors,
+  submitButtonState,
   onBack,
-  discount,
   onSubmit,
-  onRuleSubmit,
+  onDelete,
+  onRuleCreateSubmit,
+  onRuleUpdateSubmit,
+  onRuleDeleteSubmit,
+  ruleCreateButtonState,
+  ruleUpdateButtonState,
+  ruleDeleteButtonState,
 }: DiscountDetailsPageProps) => {
-  const methods = useForm<DiscoutFormData>({
-    mode: "onBlur",
-    values: {
-      dates: {
-        endDate: discount?.endDate,
-        startDate: discount?.startDate,
-        endTime: discount?.endTime,
-        hasEndDate: !!discount?.endDate,
-        startTime: discount?.startTime,
-      },
-      name: discount?.name,
-      description: discount?.description,
-      rules: discount?.rules,
-    },
-  });
+  const intl = useIntl();
 
-  const richText = useRichText({
-    initial: "",
-    loading: false,
-    triggerChange: methods.trigger,
-  });
-
-  const handleSubmit: SubmitHandler<DiscoutFormData> = data => onSubmit(data);
-
-  const handleRuleSubmit = (index: number) => {
-    const formData = methods.getValues();
-    onRuleSubmit(formData.rules[index]);
-  };
+  const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <RichTextContext.Provider value={richText}>
-      <DetailPageLayout gridTemplateColumns={1}>
-        <TopNav href={saleListUrl()} title={discount?.name} />
-        <DetailPageLayout.Content>
-          <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(handleSubmit)}>
-              <DiscountName />
-              <DiscountDescription />
-              <DiscountDatesWithController />
-              <DiscountRules
-                channels={channels}
-                onRuleSubmit={handleRuleSubmit}
-              />
-            </form>
-          </FormProvider>
-        </DetailPageLayout.Content>
-
-        <Savebar
+    <DetailPageLayout gridTemplateColumns={1}>
+      <TopNav href={discountListUrl()} title={data?.name} />
+      <DetailPageLayout.Content>
+        <DiscountDetailsForm
+          data={data}
           disabled={disabled}
-          onCancel={onBack}
-          onSubmit={methods.handleSubmit(onSubmit)}
-          state={"default"}
-        />
-      </DetailPageLayout>
-    </RichTextContext.Provider>
+          onSubmit={onSubmit}
+          ruleConditionsOptionsDetailsMap={ruleConditionsOptionsDetailsMap}
+          onRuleCreateSubmit={onRuleCreateSubmit}
+          onRuleDeleteSubmit={onRuleDeleteSubmit}
+          onRuleUpdateSubmit={onRuleUpdateSubmit}
+        >
+          {({ rulesErrors, rules, onDeleteRule, onRuleSubmit, onSubmit }) => (
+            <>
+              <DiscountName
+                error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
+                disabled={disabled}
+              />
+
+              <DiscountDescription disabled={disabled} />
+
+              <DiscountDatesWithController
+                errors={errors}
+                disabled={disabled}
+              />
+
+              <DiscountRules
+                errors={rulesErrors}
+                rules={rules}
+                loading={ruleConditionsOptionsDetailsLoading}
+                getRuleConfirmButtonState={ruleEditIndex =>
+                  ruleEditIndex !== null
+                    ? ruleUpdateButtonState
+                    : ruleCreateButtonState
+                }
+                deleteButtonState={ruleDeleteButtonState}
+                onRuleDelete={onDeleteRule}
+                onRuleSubmit={onRuleSubmit}
+                channels={channels}
+                disabled={disabled}
+              />
+
+              <Savebar
+                disabled={disabled}
+                onCancel={onBack}
+                onSubmit={onSubmit}
+                onDelete={onDelete}
+                state={submitButtonState}
+              />
+            </>
+          )}
+        </DiscountDetailsForm>
+      </DetailPageLayout.Content>
+    </DetailPageLayout>
   );
 };

@@ -229,3 +229,72 @@ export const voucherBulkDelete = gql`
     }
   }
 `;
+
+export const promotionCreate = gql`
+  mutation PromotionCreate($input: PromotionCreateInput!) {
+    promotionCreate(input: $input) {
+      errors {
+        ...PromotionCreateError
+      }
+      promotion {
+        id
+      }
+    }
+  }
+`;
+
+export const promotionUpdate = gql`
+  mutation PromotionUpdate($id: ID!, $input: PromotionUpdateInput!) {
+    promotionUpdate(id: $id, input: $input) {
+      errors {
+        ...PromotionUpdateError
+      }
+    }
+  }
+`;
+
+export const promotionDelete = gql`
+  mutation PromotionDelete($id: ID!) {
+    promotionDelete(id: $id) {
+      errors {
+        ...PromotionDeleteError
+      }
+    }
+  }
+`;
+
+export const promotionRuleUpdate = gql`
+  mutation PromotionRuleUpdate($id: ID!, $input: PromotionRuleUpdateInput!) {
+    promotionRuleUpdate(id: $id, input: $input) {
+      errors {
+        ...PromotionRuleUpdateError
+      }
+      promotionRule {
+        id
+      }
+    }
+  }
+`;
+
+export const promotinRuleCreate = gql`
+  mutation PromotionRuleCreate($input: PromotionRuleCreateInput!) {
+    promotionRuleCreate(input: $input) {
+      errors {
+        ...PromotionRuleCreateError
+      }
+      promotionRule {
+        id
+      }
+    }
+  }
+`;
+
+export const promotionRuleDelete = gql`
+  mutation PromotionRuleDelete($id: ID!) {
+    promotionRuleDelete(id: $id) {
+      errors {
+        ...PromotionRuleDeleteError
+      }
+    }
+  }
+`;

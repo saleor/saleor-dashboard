@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { categories } from "@dashboard/categories/fixtures";
 import { CategoryListUrlSortField } from "@dashboard/categories/urls";
 import {
@@ -15,7 +14,6 @@ import CategoryListPage, { CategoryTableProps } from "./CategoryListPage";
 
 const categoryTableProps: CategoryTableProps = {
   categories,
-  onAdd: undefined,
   ...listActionsProps,
   ...tabPageProps,
   ...pageListProps.default,
