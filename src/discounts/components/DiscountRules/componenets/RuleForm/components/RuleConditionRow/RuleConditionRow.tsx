@@ -94,11 +94,11 @@ export const RuleConditionRow = ({
           size="small"
           options={[
             {
-              value: intl.formatMessage({
+              value: "is",
+              label: intl.formatMessage({
                 id: "fXdkiI",
                 defaultMessage: "is",
               }),
-              label: "is",
             },
           ]}
           onChange={() => {}}
