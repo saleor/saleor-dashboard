@@ -36,7 +36,7 @@ export interface CategoryUpdatePageProps
   currentTab: CategoryPageTab;
   errors: ProductErrorFragment[];
   disabled: boolean;
-  category?: CategoryDetailsQuery["category"];
+  category: CategoryDetailsQuery["category"] | undefined | null;
   products?: RelayToFlat<
     NonNullable<CategoryDetailsQuery["category"]>["products"]
   >;
@@ -88,7 +88,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
 
   return (
     <CategoryUpdateForm
-      category={category!}
+      category={category}
       onSubmit={onSubmit}
       disabled={disabled}
     >
@@ -109,7 +109,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               data={data}
               onImageUpload={onImageUpload}
               onImageDelete={onImageDelete}
-              image={category!.backgroundImage}
+              image={category?.backgroundImage}
               onChange={change}
             />
 
@@ -180,7 +180,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
 
             {currentTab === CategoryPageTab.products && (
               <CategoryProducts
-                category={category!}
+                category={category}
                 categoryId={categoryId}
                 products={products!}
                 disabled={disabled}
