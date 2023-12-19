@@ -309,9 +309,9 @@ test("TC: SALEOR_61 As an admin I should be able to delete existing variant @bas
     "Message about how to add new variant should be visible in place of list of variants",
   ).toBeVisible();
   await expect(
-    productPage.productNameInput,
+    productPage.page.url(),
     "Deleting last variant from variant details page should redirect to product page",
-  ).toHaveText(PRODUCTS.singleVariantDeleteProduct.productName);
+  ).toContain(PRODUCTS.singleVariantDeleteProduct.productId);
 });
 
 test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variants @basic-regression @product @e2e", async () => {
