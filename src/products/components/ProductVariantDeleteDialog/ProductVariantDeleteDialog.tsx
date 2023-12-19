@@ -70,6 +70,7 @@ const ProductVariantDeleteDialog: React.FC<
           transitionState={confirmButtonState}
           className={classes.deleteButton}
           onClick={onConfirm}
+          data-test-id="delete-variant-button"
         >
           <FormattedMessage
             id="rbkmfG"
