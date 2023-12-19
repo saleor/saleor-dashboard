@@ -1,5 +1,56 @@
 # Changelog
 
+## 3.18.1
+
+### Patch Changes
+
+- ca6bec2a2: Introduce component for promotion create and edit page
+- 684a357d5: Introduce discount list page
+- ecac44925: Fix sentry upload and custom version scripts
+- 684dcc3dd: Auto cherry pick workflow by labels
+- fa38078b8: Use new promotion API to create and update discounts
+- d4f396d6c: Introduce intial component for catalog discounts
+- 620ec9a61: Add exemption labels to ignore stale issues
+- 1a7b05523: Fix duplicates when assigning reference attributes & eligible entities for vouchers and products
+- ee824f2e8: Rename env link to cloud
+- dd1d1db19: Add prices in grant refund view
+- e518ef0f7: Proceed with TS migration
+- e70720c63: update old versions and new home page e2e test - cypress
+- fbc1a922f: Use stale action instead of stalebot
+- 529362a42: Changing target of production deployments
+- a2549a064: Fix cancelled and ENVIRONMENT variable availability in workflow
+- 2d4c49c6b: Proceed with TS migration, decrease to 692
+- a0a24ba35: Fix categories cannot read property of undefined
+- 5a51e2b5e: fix pt-BR translactions
+- a95ae0e12: Refactor code smell many mon null assertions
+- 7781eba93: Implement fixture for handling grid events in Playwright
+- ea2b6c536: Emit release for sentry from workflow
+- 06fbb696d: Fix drag and drop in navigation configuration
+- 36b265a39: Fix loading shipping information
+- 0ed13e89b: Updated translation messages (english) for Apps content. Now "coming soon" apps are displayed as "upcoming"
+- f26a2e56a: Remove enum implicit value code smell
+- 629d900fb: Improve channel delete dialogs
+- 7cf51e639: Remove demo link from readme
+- 4a28f119d: Fix missing union types
+- ba106e24f: Add missing units for attributes
+- 33098f2e3: Bump @adobe/css-tools from 4.3.1 to 4.3.2
+- d40b45af7: Changing target of STAGING deployments
+- 815f1a112: Stop deploying dashboard to demos
+- e21cba5bf: Migrate box shadow to new tokens & fix selects overflow isssue for new filters
+- 909d43fa5: Bump macaw to pre.14
+- b8303e64b: Add link to the cloud environment
+- 09ccb0cd4: Fix sentry release. Using SENTRY_RELEASE variable to determine correct releasing for sourcemaps
+- 58ecc5a51: Create instance when it has been not created yet
+- 8d0c8c9eb: Fix changing channel in rule details form
+- 9f5e14e52: Proceed with TS migration, remove bunch of TS strict comments
+- 1da247690: Display warning for long branch names
+- eb1506427: Remove certain home screen statistics
+- 95d3274f4: Fix typing for form events
+- 6e3704eb6: Fix discount hasEndDate selector in tests
+- 2f27f6b35: Prevent empty subscription query for new webhooks
+- cf56dc303: Migrate to new MacawUI color tokens
+- 1b90e48b9: Fix base page fixture in playwright
+
 ## 3.18.0
 
 ### Minor Changes
