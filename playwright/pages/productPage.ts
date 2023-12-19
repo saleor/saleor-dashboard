@@ -15,9 +15,7 @@ import { FiltersPage } from "./pageElements/filtersPage";
 const productName = `e2e-productName-${faker.datatype.number()}`;
 const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
 
-export class ProductPage {
-  readonly page: Page;
-
+export class ProductPage extends BasePage {
   readonly metadataSeoPage: MetadataSeoPage;
   readonly exportProductsDialog: ExportProductsDialog;
   readonly rightSideDetailsPage: RightSideDetailsPage;
@@ -81,7 +79,7 @@ export class ProductPage {
     readonly sellingPriceInput = page.locator("[name*='channel-price']"),
     readonly firstRowDataGrid = page.locator("[data-testid='glide-cell-1-0']"),
   ) {
-    this.page = page;
+    super(page);
     this.basePage = new BasePage(page);
     this.exportProductsDialog = new ExportProductsDialog(page);
     this.deleteProductDialog = new DeleteProductDialog(page);
