@@ -59,7 +59,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
   const intl = useIntl();
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
-      {({ data, handlers, change, submit, isSaveDisabled }) => (
+      {({ data, handlers, change, submit, isSaveDisabled, isAmountDirty }) => (
         <DetailPageLayout>
           <TopNav
             href={orderUrl(order?.id)}
@@ -145,6 +145,8 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 disabled={isSaveDisabled}
                 onSubmit={submit}
                 submitStatus={submitStatus}
+                onAmountChange={handlers.handleAmountChange}
+                isAmountDirty={isAmountDirty}
               />
             ) : (
               <PaymentSubmitCard

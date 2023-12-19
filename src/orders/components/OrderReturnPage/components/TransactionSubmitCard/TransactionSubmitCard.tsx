@@ -17,7 +17,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderReturnData } from "../../form";
-import { canSendRefundDuringReturn } from "../../utils";
+import { canSendRefundDuringReturn, getReturnRefundValue } from "../../utils";
 import { submitCardMessages } from "./messages";
 import { SendRefundCheckbox } from "./SendRefundCheckbox";
 
@@ -36,6 +36,8 @@ interface TransactionSubmitCardProps {
   grantRefundErrors: OrderGrantRefundCreateErrorFragment[];
   sendRefundErrors: TransactionRequestRefundForGrantedRefundErrorFragment[];
   transactions: OrderDetailsFragment["transactions"];
+  isAmountDirty: boolean;
+  onAmountChange: (value: number) => void;
 }
 
 export const TransactionSubmitCard = ({
@@ -52,6 +54,8 @@ export const TransactionSubmitCard = ({
   grantRefundErrors,
   sendRefundErrors,
   transactions,
+  isAmountDirty,
+  onAmountChange,
 }: TransactionSubmitCardProps) => {
   const intl = useIntl();
 
@@ -135,14 +139,14 @@ export const TransactionSubmitCard = ({
             label={intl.formatMessage(
               submitCardMessages.returnRefundValueLabel,
             )}
-            onChange={onChange}
+            onChange={e => onAmountChange(e.target.value)}
             name="amount"
-            value={
-              autoGrantRefund
-                ? customRefundValue?.toString() ??
-                  amountData?.refundTotalAmount?.amount?.toString()
-                : ""
-            }
+            value={getReturnRefundValue({
+              autoGrantRefund,
+              isAmountDirty,
+              customRefundValue,
+              amountData,
+            })}
             currencySymbol={amountData?.refundTotalAmount?.currency}
             disabled={!autoGrantRefund}
           />

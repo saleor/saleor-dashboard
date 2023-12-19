@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import {
   FulfillmentStatus,
   OrderDetailsFragment,
@@ -8,6 +9,7 @@ import { getById } from "@dashboard/misc";
 import { Node } from "@dashboard/types";
 import { MessageDescriptor } from "react-intl";
 
+import { PaymentSubmitCardValuesProps } from "./components/PaymentSubmitCard/PaymentSubmitCardValues";
 import { submitCardMessages } from "./components/TransactionSubmitCard/messages";
 import {
   FormsetQuantityData,
@@ -224,4 +226,30 @@ export const canSendRefundDuringReturn = ({
     value: true,
     reason: null,
   };
+};
+
+export const getReturnRefundValue = ({
+  autoGrantRefund,
+  isAmountDirty,
+  customRefundValue,
+  amountData,
+}: {
+  autoGrantRefund: boolean | undefined;
+  isAmountDirty: boolean;
+  customRefundValue: number | undefined;
+  amountData: PaymentSubmitCardValuesProps | undefined;
+}) => {
+  if (!autoGrantRefund) {
+    return "";
+  }
+  if (isAmountDirty) {
+    return customRefundValue?.toString() ?? "";
+  }
+  return (
+    amountData?.refundTotalAmount.amount
+      .toFixed(
+        getCurrencyDecimalPoints(amountData?.refundTotalAmount?.currency) ?? 2,
+      )
+      .toString() ?? ""
+  );
 };

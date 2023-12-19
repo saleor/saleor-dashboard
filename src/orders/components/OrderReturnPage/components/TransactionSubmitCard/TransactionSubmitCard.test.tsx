@@ -31,6 +31,8 @@ describe("SubmitCard", () => {
           onSubmit={submitFn}
           disabled={false}
           submitStatus="default"
+          onAmountChange={() => {}}
+          isAmountDirty={false}
         />
       </Wrapper>,
     );
