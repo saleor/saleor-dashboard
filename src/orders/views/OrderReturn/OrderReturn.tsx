@@ -8,7 +8,6 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import OrderReturnPage from "@dashboard/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@dashboard/orders/components/OrderReturnPage/form";
@@ -17,9 +16,8 @@ import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { orderGrantRefundMessages } from "../OrderGrantRefund/messages";
 import { messages } from "./messages";
-import ReturnFormDataParser from "./utils";
+import ReturnFormDataParser, { getSuccessMessage } from "./utils";
 
 interface OrderReturnProps {
   orderId: string;
@@ -49,71 +47,24 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         orderFulfillmentReturnProducts: { errors, replaceOrder },
       }) => {
         if (!errors.length) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(messages.successAlert),
-          });
-
-          // navigate(orderUrl(replaceOrder?.id || orderId));
           if (replaceOrder?.id) {
             setReplacedOrder(replaceOrder?.id);
           }
-
-          return;
         }
-
-        if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
-          notify({
-            autohide: 5000,
-            status: "error",
-            text: intl.formatMessage(messages.cannotRefundDescription),
-            title: intl.formatMessage(messages.cannotRefundTitle),
-          });
-
-          return;
-        }
-
-        notify({
-          autohide: 5000,
-          status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong),
-        });
       },
     },
   );
 
-  const [grantRefund, grantRefundOpts] = useOrderGrantRefundAddMutation({
-    onCompleted: submitData => {
-      if (submitData.orderGrantRefundCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(orderGrantRefundMessages.formSubmitted, {
-            orderNumber: data?.order?.number,
-          }),
-        });
-      }
-    },
-  });
+  const [grantRefund, grantRefundOpts] = useOrderGrantRefundAddMutation();
 
   const [sendRefund, sendRefundOpts] =
-    useOrderSendRefundForGrantedRefundMutation({
-      onCompleted: submitData => {
-        if (
-          submitData.transactionRequestRefundForGrantedRefund.errors.length ===
-          0
-        ) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(messages.sendRefundSuccessAlert),
-          });
-        }
-      },
-    });
+    useOrderSendRefundForGrantedRefundMutation();
 
   const handleSubmit = async (formData: OrderReturnFormData) => {
     if (!data?.order) {
       return;
     }
+
     const returnErrors = await extractMutationErrors(
       returnCreate({
         variables: {
@@ -155,19 +106,20 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     const grantRefundErrors =
       grantRefundData.data?.orderGrantRefundCreate.errors ?? [];
 
-    const sendRefundErrors =
+    const isSendRefund =
       grantRefundData.data?.orderGrantRefundCreate.grantedRefund.id &&
-      formData.autoSendRefund
-        ? await extractMutationErrors(
-            sendRefund({
-              variables: {
-                grantedRefundId:
-                  grantRefundData.data?.orderGrantRefundCreate.grantedRefund.id,
-                transactionId: data?.order?.transactions[0].id,
-              },
-            }),
-          )
-        : [];
+      formData.autoSendRefund;
+    const sendRefundErrors = isSendRefund
+      ? await extractMutationErrors(
+          sendRefund({
+            variables: {
+              grantedRefundId:
+                grantRefundData.data?.orderGrantRefundCreate.grantedRefund.id,
+              transactionId: data?.order?.transactions[0].id,
+            },
+          }),
+        )
+      : [];
 
     // If return was successful, but grant/send refund failed, we need to refetch order details
     // to display updated order data affected by return mutation
@@ -176,7 +128,23 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     }
 
     const errors = [...returnErrors, ...grantRefundErrors, ...sendRefundErrors];
+
+    if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
+      notify({
+        autohide: 5000,
+        status: "error",
+        text: intl.formatMessage(messages.cannotRefundDescription),
+        title: intl.formatMessage(messages.cannotRefundTitle),
+      });
+    }
+
     if (!errors.length) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(
+          getSuccessMessage(formData.autoGrantRefund, isSendRefund),
+        ),
+      });
       navigate(orderUrl(replacedOrder ?? orderId));
     }
   };

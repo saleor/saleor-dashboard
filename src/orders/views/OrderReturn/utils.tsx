@@ -11,6 +11,9 @@ import {
   FormsetQuantityData,
   OrderReturnFormData,
 } from "@dashboard/orders/components/OrderReturnPage/form";
+import { MessageDescriptor } from "react-intl";
+
+import { messages } from "./messages";
 
 class ReturnFormDataParser {
   private readonly order: OrderDetailsFragment;
@@ -130,3 +133,16 @@ class ReturnFormDataParser {
 }
 
 export default ReturnFormDataParser;
+
+export const getSuccessMessage = (
+  isGrantRefund,
+  isSendRefund,
+): MessageDescriptor => {
+  if (isSendRefund) {
+    return messages.successAlertWithSend;
+  }
+  if (isGrantRefund) {
+    return messages.successAlertWithGrant;
+  }
+  return messages.successAlert;
+};
