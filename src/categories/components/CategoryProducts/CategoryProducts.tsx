@@ -11,7 +11,7 @@ import { FormattedMessage } from "react-intl";
 import { CategoryProductListDatagrid } from "../CategoryProductListDatagrid";
 
 interface CategoryProductsProps {
-  category: CategoryDetailsQuery["category"];
+  category: CategoryDetailsQuery["category"] | undefined | null;
   categoryId: string;
   products: RelayToFlat<
     NonNullable<CategoryDetailsQuery["category"]>["products"]
