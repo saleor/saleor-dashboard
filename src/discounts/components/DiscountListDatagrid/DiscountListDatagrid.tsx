@@ -5,6 +5,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import {
   DiscountListUrlSortField,
@@ -45,9 +46,11 @@ export const DiscountListDatagrid = ({
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
 
+  const emptyColumn = useEmptyColumn();
+
   const discountListStaticColumns = useMemo(
-    () => dicountListStaticColumnsAdapter(intl, sort),
-    [intl, sort],
+    () => dicountListStaticColumnsAdapter(intl, sort, emptyColumn),
+    [intl, sort, emptyColumn],
   );
 
   const onColumnChange = useCallback(
@@ -116,7 +119,7 @@ export const DiscountListDatagrid = ({
         hasRowHover={hasRowHover}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 0}
+        verticalBorder={col => col > 1}
         rows={promotions?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
