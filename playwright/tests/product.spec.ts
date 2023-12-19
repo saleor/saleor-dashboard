@@ -1,6 +1,5 @@
 import { MailpitService } from "@api/mailpit";
 import { PRODUCTS } from "@data/e2eTestData";
-import { BasePage } from "@pages/basePage";
 import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
 import { ProductPage } from "@pages/productPage";
 import { VariantsPage } from "@pages/variantsPage";
@@ -11,14 +10,12 @@ test.use({ storageState: "playwright/.auth/admin.json" });
 let productPage: ProductPage;
 let productCreateDialog: ProductCreateDialog;
 let variantsPage: VariantsPage;
-let basePage: BasePage;
 let mailpitService: MailpitService;
 
 test.beforeEach(({ page, request }) => {
   productPage = new ProductPage(page);
   productCreateDialog = new ProductCreateDialog(page);
   variantsPage = new VariantsPage(page);
-  basePage = new BasePage(page);
   mailpitService = new MailpitService(request);
 });
 
@@ -107,15 +104,15 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @produ
 test("TC: SALEOR_44 As an admin I should be able to delete a several products @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
 
-  await basePage.checkListRowsBasedOnContainingText(
+  await productPage.checkListRowsBasedOnContainingText(
     PRODUCTS.productsToBeBulkDeleted.names,
   );
   await productPage.clickBulkDeleteButton();
   await productPage.deleteProductDialog.clickDeleteButton();
-  await basePage.expectSuccessBanner();
-  await basePage.waitForGrid();
+  await productPage.expectSuccessBanner();
+  await productPage.waitForGrid();
   await expect(
-    await basePage.findRowIndexBasedOnText(
+    await productPage.findRowIndexBasedOnText(
       PRODUCTS.productsToBeBulkDeleted.names,
     ),
     `Given products: ${PRODUCTS.productsToBeBulkDeleted.names} should be deleted from the list`,
@@ -128,9 +125,9 @@ test("TC: SALEOR_45 As an admin I should be able to delete a single products @ba
   );
   await productPage.clickDeleteProductButton();
   await productPage.deleteProductDialog.clickDeleteButton();
-  await await basePage.expectSuccessBannerMessage("Product Removed");
+  await await productPage.expectSuccessBannerMessage("Product Removed");
   await expect(
-    basePage.gridCanvas.locator("table"),
+    productPage.gridCanvas.locator("table"),
     `Given product: ${PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name} should be deleted from the list`,
   ).not.toContainText(
     PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name,
@@ -150,14 +147,14 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
   const preSaveTax = await productPage.rightSideDetailsPage.taxInput
     .locator("input")
     .inputValue();
-  await productPage.basePage.waitForGrid();
+  await productPage.waitForGrid();
   await productPage.clickAddVariantButton();
   await productPage.editVariantButton.nth(1).scrollIntoViewIfNeeded();
   // click and fill variant name cell
-  await productPage.basePage.clickGridCell(1, 1);
-  await productPage.basePage.fillGridCell(1, 1, newVariantName);
+  await productPage.clickGridCell(1, 1);
+  await productPage.fillGridCell(1, 1, newVariantName);
   await productPage.clickSaveButton();
-  await productPage.basePage.expectSuccessBanner();
+  await productPage.expectSuccessBanner();
   const postSaveTax = await productPage.rightSideDetailsPage.taxInput
     .locator("input")
     .inputValue();
@@ -165,7 +162,7 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
     preSaveTax,
     "Pre save tax name should be equal as the one after save",
   ).toEqual(postSaveTax);
-  await productPage.basePage.gridCanvas
+  await productPage.gridCanvas
     .getByText(newVariantName)
     .waitFor({ state: "attached" });
   await expect(
@@ -188,7 +185,7 @@ test.skip("TC: SALEOR_56 As an admin, I should be able to export products from s
   await productPage.exportProductsDialog.clickNextButton();
   await productPage.exportProductsDialog.clickExportSearchedProductsRadioButton();
   await productPage.exportProductsDialog.clickSubmitButton();
-  await productPage.basePage.expectInfoBanner();
+  await productPage.expectInfoBanner();
   await mailpitService.checkDoesUserReceivedExportedData(
     process.env.E2E_USER_NAME!,
     "Your exported products data is ready",
@@ -197,68 +194,63 @@ test.skip("TC: SALEOR_56 As an admin, I should be able to export products from s
 
 test("TC: SALEOR_57 As an admin, I should be able to search products on list view @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
-  await productPage.basePage.typeInSearchOnListView(
-    PRODUCTS.productToAddVariants.name,
-  );
-  await productPage.basePage.waitForGrid();
-  await productPage.basePage.checkListRowsBasedOnContainingText([
+  await productPage.typeInSearchOnListView(PRODUCTS.productToAddVariants.name);
+  await productPage.waitForGrid();
+  await productPage.checkListRowsBasedOnContainingText([
     PRODUCTS.productToAddVariants.name,
   ]);
   expect(
-    await productPage.basePage.gridCanvas.locator("table tbody tr").count(),
+    await productPage.gridCanvas.locator("table tbody tr").count(),
     "There should be only one product visible on list",
   ).toEqual(1);
 });
 
 test("TC: SALEOR_58 As an admin I should be able use pagination on product list view @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
-  await productPage.basePage.waitForGrid();
-  const firstPageProductName = await productPage.basePage.getGridCellText(0, 0);
-  await productPage.basePage.clickNextPageButton();
-  await productPage.basePage.waitForGrid();
-  const secondPageProductName = await productPage.basePage.getGridCellText(
-    1,
-    1,
-  );
+  await productPage.waitForGrid();
+  const firstPageProductName = await productPage.getGridCellText(0, 0);
+  await productPage.clickNextPageButton();
+  await productPage.waitForGrid();
+  const secondPageProductName = await productPage.getGridCellText(1, 1);
 
   await expect(
     firstPageProductName,
     `Second side first product name: ${secondPageProductName} should be visible and be different than: ${firstPageProductName}`,
   ).not.toEqual(secondPageProductName);
   await expect(
-    productPage.basePage.gridCanvas,
+    productPage.gridCanvas,
     `Product from first page: ${firstPageProductName} should not be visible`,
   ).not.toContainText(firstPageProductName);
 
-  await productPage.basePage.clickPreviousPageButton();
-  await productPage.basePage.waitForGrid();
+  await productPage.clickPreviousPageButton();
+  await productPage.waitForGrid();
 
   await expect(
-    productPage.basePage.gridCanvas,
+    productPage.gridCanvas,
     `Product from first page: ${firstPageProductName} should be visible again`,
   ).toContainText(firstPageProductName);
 });
 
 test("TC: SALEOR_59 As an admin I should be able to filter products by channel on product list view @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
-  await productPage.basePage.waitForGrid();
+  await productPage.waitForGrid();
 
   await expect(
-    productPage.basePage.gridCanvas,
+    productPage.gridCanvas,
     `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should be visible on grid table`,
   ).toContainText(PRODUCTS.productAvailableOnlyInUsdChannel.name);
 
-  await productPage.basePage.clickFilterButton();
+  await productPage.clickFilterButton();
   await productPage.filtersPage.pickFilter("Channel", "Channel-PLN");
   await productPage.filtersPage.clickSaveFiltersButton();
-  await productPage.basePage.waitForGrid();
+  await productPage.waitForGrid();
 
   await expect(
-    productPage.basePage.gridCanvas,
+    productPage.gridCanvas,
     `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should not be visible on grid table`,
   ).not.toContainText(PRODUCTS.productAvailableOnlyInUsdChannel.name);
   await expect(
-    productPage.basePage.gridCanvas,
+    productPage.gridCanvas,
     `Product: ${PRODUCTS.productAvailableOnlyInPlnChannel.name} should be visible on grid table`,
   ).toContainText(PRODUCTS.productAvailableOnlyInPlnChannel.name);
 });
@@ -318,14 +310,13 @@ test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variant
   await productPage.gotoExistingProductPage(
     PRODUCTS.multipleVariantsBulkDeleteProduct.productId,
   );
-
-  await productPage.basePage.waitForGrid();
-  await productPage.basePage.gridCanvas.scrollIntoViewIfNeeded();
+  await productPage.waitForGrid();
+  await productPage.gridCanvas.scrollIntoViewIfNeeded();
   // there should be 3 variants present and checked in next steps
-  await productPage.basePage.clickGridCell(0, 0);
-  await productPage.basePage.clickGridCell(0, 1);
-  await productPage.basePage.clickGridCell(0, 2);
-  await productPage.basePage.clickBulkDeleteGridRowsButton();
+  await productPage.clickGridCell(0, 0);
+  await productPage.clickGridCell(0, 1);
+  await productPage.clickGridCell(0, 2);
+  await productPage.clickBulkDeleteGridRowsButton();
   await expect(
     productPage.noVariantsText,
     "Message about how to add new variant should be visible in place of list of variants",

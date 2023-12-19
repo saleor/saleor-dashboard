@@ -26,9 +26,9 @@ export class AddProductsDialog {
     await this.confirmButton.click();
   }
 
-  async selectVariantOnListAndConfirm(variantSku = "SKU 61630747") {
+  async selectVariantWithSkuOnListAndConfirm(variantSku = "61630747") {
     await this.variantRow
-      .filter({ has: this.page.locator(`text=${variantSku}`) })
+      .filter({ has: this.page.locator(`text=SKU ${variantSku}`) })
       .locator(this.productRowCheckbox)
       .click();
     await this.clickConfirmButton();
