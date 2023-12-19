@@ -17,6 +17,10 @@ export class OrdersPage extends BasePage {
   constructor(
     page: Page,
     readonly createOrderButton = page.getByTestId("create-order-button"),
+    readonly markAsPaidButton = page.getByTestId("markAsPaidButton"),
+    readonly orderSummarySection = page.getByTestId("OrderSummaryCard"),
+    readonly paymentSummarySection = page.getByTestId("payment-section"),
+    readonly fulfillButton = page.getByTestId("fulfill-button"),
     readonly addProducts = page.getByTestId("add-products-button"),
     readonly salesChannel = page.getByTestId("salesChannel"),
     readonly editCustomerButton = page.getByTestId("edit-customer"),

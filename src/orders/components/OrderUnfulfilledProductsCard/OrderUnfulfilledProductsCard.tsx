@@ -53,6 +53,7 @@ const OrderUnfulfilledProductsCard: React.FC<
           {showFulfillmentAction && (
             <CardActions className={classes.actions}>
               <Button
+                data-test-id="fulfill-button"
                 variant="primary"
                 onClick={onFulfill}
                 disabled={notAllowedToFulfillUnpaid}

@@ -79,7 +79,10 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
         !shouldDisplay.charged &&
         !shouldDisplay.authorized &&
         !hasGiftCards && (
-          <CardContent className={classes.noPaymentContent}>
+          <CardContent
+            className={classes.noPaymentContent}
+            data-test-id="payment-section"
+          >
             <Typography variant="h5" className={classes.noPaymentTitle}>
               <FormattedMessage {...orderPaymentMessages.noPayments} />
             </Typography>

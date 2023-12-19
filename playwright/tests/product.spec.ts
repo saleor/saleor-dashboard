@@ -19,7 +19,7 @@ test.beforeEach(({ page, request }) => {
   mailpitService = new MailpitService(request);
 });
 
-test.only("TC: SALEOR_3 Create basic product with variants @e2e @product", async () => {
+test("TC: SALEOR_3 Create basic product with variants @e2e @product", async () => {
   await productPage.gotoProductListPage();
   await productPage.clickCreateProductButton();
   await productCreateDialog.selectProductTypeWithVariants();

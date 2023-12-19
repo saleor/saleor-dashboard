@@ -50,4 +50,8 @@ test("TC: SALEOR_76 Create order with transaction flow activated @e2e @order", a
   await ordersPage.successBanner
     .filter({ hasText: "finalized" })
     .waitFor({ state: "visible" });
+  await expect(ordersPage.markAsPaidButton).toBeVisible();
+  await expect(ordersPage.paymentSummarySection).toBeVisible();
+  await expect(ordersPage.orderSummarySection).toBeVisible();
+  await expect(ordersPage.fulfillButton).toBeDisabled();
 });
