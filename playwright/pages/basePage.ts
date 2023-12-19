@@ -8,6 +8,7 @@ export class BasePage {
   constructor(
     page: Page,
     readonly pageHeader = page.getByTestId("page-header"),
+    readonly pageHeaderStatusInfo = page.getByTestId("status-info"),
     readonly bulkDeleteGridRowsButton = page.getByTestId("bulk-delete-button"),
     readonly gridCanvas = page.locator('[data-testid="data-grid-canvas"]'),
     readonly gridInput = page

@@ -64,6 +64,15 @@ export const PRODUCTS = {
   },
 };
 
+export const ORDERS = {
+  ordersWithinTransactionFlow: {
+    singleVariant: {
+      id: "T3JkZXI6MDE4ZWM0NGUtNTgwMC00NGM0LTliMzAtZDE3YTIxYjljOTgz",
+      info: "Order used to mark as paid and fulfill",
+    },
+  },
+};
+
 export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
     id: "U2hpcHBpbmdab25lOjIzNzg%3D",
