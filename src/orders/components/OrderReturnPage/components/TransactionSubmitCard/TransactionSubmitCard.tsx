@@ -4,23 +4,22 @@ import {
   ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
-import RequirePermissions from "@dashboard/components/RequirePermissions";
 import {
   OrderDetailsFragment,
   OrderGrantRefundCreateErrorFragment,
-  PermissionEnum,
   TransactionRequestRefundForGrantedRefundErrorFragment,
 } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { PaymentSubmitCardValuesProps } from "@dashboard/orders/components/OrderReturnPage/components/PaymentSubmitCard/PaymentSubmitCardValues";
 import { IMoney } from "@dashboard/utils/intl";
-import { Box, Checkbox, InfoIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, InfoIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderReturnData } from "../../form";
 import { canSendRefundDuringReturn } from "../../utils";
 import { submitCardMessages } from "./messages";
+import { SendRefundCheckbox } from "./SendRefundCheckbox";
 
 interface TransactionSubmitCardProps {
   disabled: boolean;
@@ -96,45 +95,12 @@ export const TransactionSubmitCard = ({
               <FormattedMessage {...submitCardMessages.autoGrantRefund} />
             </Text>
           </Checkbox>
-          <RequirePermissions
-            requiredPermissions={[PermissionEnum.HANDLE_PAYMENTS]}
-          >
-            {canSendRefund.value ? (
-              <Checkbox
-                checked={autoSendRefund}
-                error={sendRefundErrors.length > 0}
-                name={"autoSendRefund" satisfies keyof OrderReturnData}
-                onCheckedChange={checked => {
-                  onChange({
-                    target: {
-                      name: "autoSendRefund",
-                      value: checked,
-                    },
-                  });
-                }}
-              >
-                <Text color={sendRefundErrors.length ? "critical1" : undefined}>
-                  <FormattedMessage {...submitCardMessages.autoSendRefund} />
-                </Text>
-              </Checkbox>
-            ) : (
-              <Tooltip>
-                <Tooltip.Trigger>
-                  <Checkbox checked={false} disabled={true}>
-                    <Text color="defaultDisabled">
-                      <FormattedMessage
-                        {...submitCardMessages.autoSendRefund}
-                      />
-                    </Text>
-                  </Checkbox>
-                </Tooltip.Trigger>
-                <Tooltip.Content>
-                  <Tooltip.Arrow />
-                  <FormattedMessage {...canSendRefund.reason} />
-                </Tooltip.Content>
-              </Tooltip>
-            )}
-          </RequirePermissions>
+          <SendRefundCheckbox
+            canSendRefund={canSendRefund}
+            autoSendRefund={autoSendRefund}
+            sendRefundErrors={sendRefundErrors}
+            onChange={onChange}
+          />
           <Checkbox
             marginTop={4}
             checked={refundShipmentCosts}

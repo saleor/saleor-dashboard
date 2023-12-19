@@ -185,15 +185,17 @@ export function getReplacementDataFromItems(
   };
 }
 
+export type CanSendRefund =
+  | { value: false; reason: MessageDescriptor }
+  | { value: true; reason: null };
+
 export const canSendRefundDuringReturn = ({
   autoGrantRefund,
   transactions,
 }: {
   autoGrantRefund: boolean | undefined;
   transactions: OrderDetailsFragment["transactions"];
-}):
-  | { value: false; reason: MessageDescriptor }
-  | { value: true; reason: null } => {
+}): CanSendRefund => {
   if (!autoGrantRefund) {
     return {
       value: false,
