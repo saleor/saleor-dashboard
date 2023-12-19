@@ -39,12 +39,14 @@ export interface UseCategoryUpdateFormResult
 
 export interface CategoryUpdateFormProps {
   children: (props: UseCategoryUpdateFormResult) => React.ReactNode;
-  category?: CategoryDetailsFragment;
+  category: CategoryDetailsFragment | undefined | null;
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>;
   disabled: boolean;
 }
 
-const getInitialData = (category?: CategoryDetailsFragment) => ({
+const getInitialData = (
+  category: CategoryDetailsFragment | undefined | null,
+) => ({
   backgroundImageAlt: category?.backgroundImage?.alt || "",
   metadata: category?.metadata?.map(mapMetadataItemToInput),
   name: category?.name || "",
@@ -55,7 +57,7 @@ const getInitialData = (category?: CategoryDetailsFragment) => ({
 });
 
 function useCategoryUpdateForm(
-  category: CategoryDetailsFragment,
+  category: CategoryDetailsFragment | undefined | null,
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>,
   disabled: boolean,
 ): UseCategoryUpdateFormResult & { richText: RichTextContextValues } {
