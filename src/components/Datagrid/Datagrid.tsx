@@ -588,7 +588,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
             </>
           ) : (
             <Box padding={6} textAlign="center">
-              <Text size="small">{emptyText}</Text>
+              <Text data-test-id="empty-data-grid-text" size="small">
+                {emptyText}
+              </Text>
             </Box>
           )}
         </CardContent>

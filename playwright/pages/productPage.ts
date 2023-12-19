@@ -63,6 +63,7 @@ export class ProductPage {
     readonly saveUploadUrlButton = page.getByTestId("upload-url-button"),
     readonly editVariantButton = page.getByTestId("row-action-button"),
     readonly productUpdateFormSection = page.getByTestId("product-update-form"),
+    readonly noVariantsText = page.getByTestId("empty-data-grid-text"),
     readonly firstCategoryItem = page.locator("#downshift-0-item-0"),
     readonly visibleRadioBtn = page.locator("[name='isPublished']"),
     readonly channelAvailabilityItem = page.locator(
