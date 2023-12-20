@@ -99,6 +99,8 @@ export const RuleForm = <ErrorCode,>({
               data-test-id="channel-dropdown"
               label={intl.formatMessage(commonMessages.channel)}
               options={channelOptions}
+              error={!!formState.errors?.channel?.message}
+              helperText={formState.errors?.channel?.message}
               disabled={disabled || channelfield.disabled}
             />
           </RuleInputWrapper>
