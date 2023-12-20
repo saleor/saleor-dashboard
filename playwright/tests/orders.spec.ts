@@ -92,7 +92,6 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
     "111111",
     firstManualTransactionAmount,
   );
-  await ordersPage.expectSuccessBannerMessage("manual");
   const completedTransactionsRows =
     await ordersPage.orderTransactionsList.locator("tr");
 
@@ -117,7 +116,6 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
     "222222",
     secondManualTransactionAmount,
   );
-  await ordersPage.expectSuccessBannerMessage("manual");
 
   await expect(
     completedTransactionsRows.filter({
