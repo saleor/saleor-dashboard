@@ -14,8 +14,10 @@ import { useIntl } from "react-intl";
 import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
 import { Placeholder } from "../Placeholder";
-import { RuleSummary } from "../RuleForm/components/RuleSummary";
-import { RuleWrapper } from "../RuleForm/components/RuleWrapper";
+import { RuleListContainer } from "./components/RuleListContainer";
+import { RuleListLoading } from "./components/RuleListLoading";
+import { RuleSummary } from "./components/RuleSummary";
+import { RuleWrapper } from "./components/RuleWrapper";
 
 interface RulesListProps<ErrorCode> {
   rules: Rule[];
@@ -37,6 +39,11 @@ export const RulesList = <ErrorCode,>({
   loading,
 }: RulesListProps<ErrorCode>) => {
   const intl = useIntl();
+
+  if (loading) {
+    return <RuleListLoading />;
+  }
+
   if (rules.length === 0) {
     return <Placeholder />;
   }
@@ -49,11 +56,7 @@ export const RulesList = <ErrorCode,>({
   };
 
   return (
-    <Box
-      display="grid"
-      __gridTemplateColumns="repeat(auto-fill, minmax(600px, 1fr))"
-      gap={6}
-    >
+    <RuleListContainer>
       {rules.map((rule, index) => {
         const hasError = errors.some(error => error.index === index);
 
@@ -96,7 +99,6 @@ export const RulesList = <ErrorCode,>({
               <RuleSummary
                 rule={rule}
                 currencySymbol={getCurencySymbol(rule.channel, channels)}
-                loading={loading}
               />
               {hasError && (
                 <Text color="critical1">
@@ -107,6 +109,6 @@ export const RulesList = <ErrorCode,>({
           </RuleWrapper>
         );
       })}
-    </Box>
+    </RuleListContainer>
   );
 };

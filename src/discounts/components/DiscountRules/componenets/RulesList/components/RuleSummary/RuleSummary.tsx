@@ -1,5 +1,5 @@
 import { Rule } from "@dashboard/discounts/models";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -11,28 +11,15 @@ import { RuleValueChips } from "./components/RuleValueChips";
 interface RuleSummaryProps {
   rule: Rule;
   currencySymbol: string;
-  loading?: boolean;
 }
 
-export const RuleSummary = ({
-  rule,
-  currencySymbol,
-  loading,
-}: RuleSummaryProps) => {
+export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
   if (
     !rule.channel ||
     !rule.rewardValue ||
     rule.conditions.every(condition => !condition.values.length)
   ) {
     return null;
-  }
-
-  if (loading) {
-    return (
-      <Box paddingY={3}>
-        <Skeleton />
-      </Box>
-    );
   }
 
   return (
