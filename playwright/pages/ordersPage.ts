@@ -1,4 +1,5 @@
 import { URL_LIST } from "@data/url";
+import { ManualTransactionDialog } from "@dialogs/manualTransactionDialog";
 import { MarkOrderAsPaidDialog } from "@dialogs/markOrderAsPaidDialog";
 import { BasePage } from "@pages/basePage";
 import { AddProductsDialog } from "@pages/dialogs/addProductsDialog";
@@ -14,13 +15,18 @@ export class OrdersPage extends BasePage {
   addressDialog: AddressDialog;
   shippingAddressDialog: ShippingAddressDialog;
   basePage: BasePage;
+  manualTransactionDialog: ManualTransactionDialog;
 
   constructor(
     page: Page,
     readonly createOrderButton = page.getByTestId("create-order-button"),
     readonly markAsPaidButton = page.getByTestId("markAsPaidButton"),
+    readonly manualTransactionButton = page.getByTestId(
+      "captureManualTransactionButton",
+    ),
     readonly orderSummarySection = page.getByTestId("OrderSummaryCard"),
     readonly paymentSummarySection = page.getByTestId("payment-section"),
+    readonly paymentStatusInfo = page.getByTestId("payment-status"),
     readonly fulfillButton = page.getByTestId("fulfill-button"),
     readonly addProducts = page.getByTestId("add-products-button"),
     readonly orderTransactionsList = page
@@ -45,6 +51,7 @@ export class OrdersPage extends BasePage {
     this.addProductsDialog = new AddProductsDialog(page);
     this.addressDialog = new AddressDialog(page);
     this.shippingAddressDialog = new ShippingAddressDialog(page);
+    this.manualTransactionDialog = new ManualTransactionDialog(page);
   }
 
   async selectCustomer(customer = "allison.freeman@example.com") {
@@ -52,6 +59,9 @@ export class OrdersPage extends BasePage {
   }
   async clickCreateOrderButton() {
     await this.createOrderButton.click();
+  }
+  async clickManualTransactionButton() {
+    await this.manualTransactionButton.click();
   }
   async clickMarkAsPaidButton() {
     await this.markAsPaidButton.click();

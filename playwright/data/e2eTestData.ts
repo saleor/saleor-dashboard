@@ -66,9 +66,13 @@ export const PRODUCTS = {
 
 export const ORDERS = {
   ordersWithinTransactionFlow: {
-    singleVariant: {
-      id: "T3JkZXI6MDE4ZWM0NGUtNTgwMC00NGM0LTliMzAtZDE3YTIxYjljOTgz",
+    markAsPaidOrder: {
+      orderId: "T3JkZXI6MDE4ZWM0NGUtNTgwMC00NGM0LTliMzAtZDE3YTIxYjljOTgz",
       info: "Order used to mark as paid and fulfill",
+    },
+    captureManualTransactionOrder: {
+      orderId: "T3JkZXI6MmE1NTNkMzktOWU0OS00ZWE5LWIyNzEtNzk2ZWI5OGJhNzcz",
+      info: "Order used to capture manual transactions and fulfill",
     },
   },
 };
