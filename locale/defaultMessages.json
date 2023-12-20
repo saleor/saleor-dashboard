@@ -182,6 +182,10 @@
     "context": "header field value, header",
     "string": "Value"
   },
+  "/5csTX": {
+    "context": "order returned success message",
+    "string": "Successfully returned products and sent refund!"
+  },
   "/5r4he": {
     "context": "label for button",
     "string": "Add country"
@@ -6961,10 +6965,6 @@
   "kNK4es": {
     "string": "Discount value"
   },
-  "kOccZr": {
-    "context": "order returned success message",
-    "string": "Successfully requested refund!"
-  },
   "kPIZ65": {
     "context": "page header",
     "string": "Order #{orderNumber}"
@@ -7166,6 +7166,10 @@
   "lXq4EE": {
     "context": "checkbox",
     "string": "Refund shipment: {currency} {amount}"
+  },
+  "laax5C": {
+    "context": "order returned success message",
+    "string": "Successfully returned products and granted refund!"
   },
   "lct0qd": {
     "string": "This list shows all attributes that will be assigned to pages that have this page type assigned."
