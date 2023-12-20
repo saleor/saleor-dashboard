@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   OrderErrorCode,
   useFulfillmentReturnProductsMutation,
@@ -28,7 +27,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const [replacedOrder, setReplacedOrder] = React.useState(null);
+  const [replacedOrder, setReplacedOrder] = React.useState<string | null>(null);
 
   const {
     data,
@@ -43,10 +42,10 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
 
   const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation(
     {
-      onCompleted: ({
-        orderFulfillmentReturnProducts: { errors, replaceOrder },
-      }) => {
-        if (!errors.length) {
+      onCompleted: data => {
+        if (!data.orderFulfillmentReturnProducts?.errors.length) {
+          const replaceOrder =
+            data.orderFulfillmentReturnProducts?.replaceOrder;
           if (replaceOrder?.id) {
             setReplacedOrder(replaceOrder?.id);
           }
@@ -104,17 +103,16 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       : null;
 
     const grantRefundErrors =
-      grantRefundData.data?.orderGrantRefundCreate.errors ?? [];
+      grantRefundData?.data?.orderGrantRefundCreate?.errors ?? [];
 
-    const isSendRefund =
-      grantRefundData.data?.orderGrantRefundCreate.grantedRefund.id &&
-      formData.autoSendRefund;
+    const grantedRefundId =
+      grantRefundData?.data?.orderGrantRefundCreate?.grantedRefund?.id;
+    const isSendRefund = grantedRefundId && formData.autoSendRefund;
     const sendRefundErrors = isSendRefund
       ? await extractMutationErrors(
           sendRefund({
             variables: {
-              grantedRefundId:
-                grantRefundData.data?.orderGrantRefundCreate.grantedRefund.id,
+              grantedRefundId,
               transactionId: data?.order?.transactions[0].id,
             },
           }),
@@ -152,11 +150,11 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   return (
     <OrderReturnPage
       returnErrors={
-        returnCreateOpts.data?.orderFulfillmentReturnProducts.errors
+        returnCreateOpts.data?.orderFulfillmentReturnProducts?.errors
       }
-      grantRefundErrors={grantRefundOpts.data?.orderGrantRefundCreate.errors}
+      grantRefundErrors={grantRefundOpts.data?.orderGrantRefundCreate?.errors}
       sendRefundErrors={
-        sendRefundOpts.data?.transactionRequestRefundForGrantedRefund.errors
+        sendRefundOpts.data?.transactionRequestRefundForGrantedRefund?.errors
       }
       order={data?.order}
       loading={loading || returnCreateOpts.loading}

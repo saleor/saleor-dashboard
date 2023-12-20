@@ -31,7 +31,7 @@ import {
 } from "./utils";
 
 export interface OrderReturnPageProps {
-  order: OrderDetailsFragment;
+  order: OrderDetailsFragment | undefined | null;
   loading: boolean;
   returnErrors?: OrderErrorFragment[];
   grantRefundErrors?: OrderGrantRefundCreateErrorFragment[];
