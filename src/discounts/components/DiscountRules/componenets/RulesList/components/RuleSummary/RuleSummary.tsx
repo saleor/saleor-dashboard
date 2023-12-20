@@ -14,12 +14,27 @@ interface RuleSummaryProps {
 }
 
 export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
+  if (!rule.channel || !rule.rewardValue) {
+    return null;
+  }
+
   if (
-    !rule.channel ||
-    !rule.rewardValue ||
+    !rule.conditions.length ||
     rule.conditions.every(condition => !condition.values.length)
   ) {
-    return null;
+    return (
+      <Text>
+        <FormattedMessage
+          {...messages.ruleSummaryWithoutConditions}
+          values={{
+            value: (
+              <RuleValueChips rule={rule} currencySymbol={currencySymbol} />
+            ),
+            channel: <RuleChannelChips channel={rule.channel} />,
+          }}
+        />
+      </Text>
+    );
   }
 
   return (

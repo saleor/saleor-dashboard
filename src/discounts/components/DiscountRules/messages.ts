@@ -42,6 +42,10 @@ export const messages = defineMessages({
     defaultMessage:
       "Discount of {value} on the purchase of {items} through the {channel}",
   },
+  ruleSummaryWithoutConditions: {
+    id: "7MUx0T",
+    defaultMessage: "Discount of {value} through the {channel}",
+  },
   ruleSummaryMoreItems: {
     id: "B0fwAj",
     defaultMessage: "and {itemsLength} more",

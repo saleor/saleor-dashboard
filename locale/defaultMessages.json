@@ -1355,6 +1355,9 @@
     "context": "Payment card title",
     "string": "Payment balance"
   },
+  "7MUx0T": {
+    "string": "Discount of {value} through the {channel}"
+  },
   "7NFfmz": {
     "string": "Products"
   },
@@ -8811,6 +8814,9 @@
   },
   "y/UWBR": {
     "string": "There is no address to show for this customer"
+  },
+  "y08GTW": {
+    "string": "Channel is required"
   },
   "y7mfbl": {
     "string": "Currently, there are no countries assigned to this shipping zone"
