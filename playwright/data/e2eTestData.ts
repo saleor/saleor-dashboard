@@ -49,6 +49,12 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3NTc%3D",
     info: "Product that contains single variant - to be deleted from details view",
   },
+  productAvailableWithTransactionFlow: {
+    name: "Coconut Juice transaction flow",
+    id: "UHJvZHVjdDo3Ng%3D%3D",
+    variant1sku: "84725784",
+    info: "Product which is available within channel with activated transaction flow",
+  },
   productsToBeBulkDeleted: {
     names: [
       "a product to be deleted via bulk 1/3",

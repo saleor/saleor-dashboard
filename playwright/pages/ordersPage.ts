@@ -1,52 +1,45 @@
+import { URL_LIST } from "@data/url";
 import { AddProductsDialog } from "@pages/dialogs/addProductsDialog";
 import { AddressDialog } from "@pages/dialogs/addressDialog";
 import { OrderCreateDialog } from "@pages/dialogs/orderCreateDialog";
 import { ShippingAddressDialog } from "@pages/dialogs/shippingMethodDialog";
-import { Locator, Page } from "@playwright/test";
+import { Page } from "@playwright/test";
 
 import { BasePage } from "./basePage";
 
-export class OrdersPage {
-  readonly page: Page;
-  readonly createOrderButton: Locator;
-
-  readonly addProducts: Locator;
-  readonly salesChannel: Locator;
-  readonly editCustomerButton: Locator;
-  readonly searchCustomerInput: Locator;
-  readonly addShippingCarrierLink: Locator;
-  readonly finalizeButton: Locator;
-  readonly selectCustomerOption: Locator;
-
-  readonly editShippingAddress: Locator;
-  readonly editBillingAddress: Locator;
-  readonly customerEmail: Locator;
+export class OrdersPage extends BasePage {
   orderCreateDialog: OrderCreateDialog;
   addProductsDialog: AddProductsDialog;
   addressDialog: AddressDialog;
   shippingAddressDialog: ShippingAddressDialog;
   basePage: BasePage;
 
-  constructor(page: Page) {
-    this.page = page;
+  constructor(
+    page: Page,
+    readonly createOrderButton = page.getByTestId("create-order-button"),
+    readonly markAsPaidButton = page.getByTestId("markAsPaidButton"),
+    readonly orderSummarySection = page.getByTestId("OrderSummaryCard"),
+    readonly paymentSummarySection = page.getByTestId("payment-section"),
+    readonly fulfillButton = page.getByTestId("fulfill-button"),
+    readonly addProducts = page.getByTestId("add-products-button"),
+    readonly salesChannel = page.getByTestId("salesChannel"),
+    readonly editCustomerButton = page.getByTestId("edit-customer"),
+    readonly searchCustomerInput = page.getByTestId("select-customer"),
+    readonly addShippingCarrierLink = page.getByTestId("add-shipping-carrier"),
+    readonly finalizeButton = page.getByTestId("button-bar-confirm"),
+    readonly editShippingAddress = page.getByTestId("edit-shipping-address"),
+    readonly editBillingAddress = page.getByTestId("edit-billing-address"),
+    readonly customerEmail = page.getByTestId("customer-email"),
+    readonly selectCustomerOption = page.getByTestId(
+      "single-autocomplete-select-option",
+    ),
+  ) {
+    super(page);
     this.orderCreateDialog = new OrderCreateDialog(page);
     this.basePage = new BasePage(page);
     this.addProductsDialog = new AddProductsDialog(page);
     this.addressDialog = new AddressDialog(page);
     this.shippingAddressDialog = new ShippingAddressDialog(page);
-    this.createOrderButton = page.getByTestId("create-order-button");
-    this.addProducts = page.getByTestId("add-products-button");
-    this.salesChannel = page.getByTestId("salesChannel");
-    this.editCustomerButton = page.getByTestId("edit-customer");
-    this.searchCustomerInput = page.getByTestId("select-customer");
-    this.addShippingCarrierLink = page.getByTestId("add-shipping-carrier");
-    this.finalizeButton = page.getByTestId("button-bar-confirm");
-    this.editShippingAddress = page.getByTestId("edit-shipping-address");
-    this.editBillingAddress = page.getByTestId("edit-billing-address");
-    this.customerEmail = page.getByTestId("customer-email");
-    this.selectCustomerOption = page.getByTestId(
-      "single-autocomplete-select-option",
-    );
   }
 
   async selectCustomer(customer = "allison.freeman@example.com") {
@@ -72,5 +65,9 @@ export class OrdersPage {
   }
   async expectSuccessBanner() {
     await this.basePage.expectSuccessBanner();
+  }
+
+  async goToOrdersListView() {
+    await this.page.goto(URL_LIST.orders);
   }
 }
