@@ -5,10 +5,13 @@ import {
   useRuleConditionsSelectedOptionsDetailsQuery,
 } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { useEffect, useRef } from "react";
 
 export const useFetchConditionsOptionsDetails = (
   promotionData: PromotionDetailsQuery | undefined,
 ) => {
+  const hasBeenFetched = useRef(false);
+
   const conditionsOptionsIdsToFetch =
     getAllConditionsOptionsIdsToFetch(promotionData);
 
@@ -16,9 +19,15 @@ export const useFetchConditionsOptionsDetails = (
     useRuleConditionsSelectedOptionsDetailsQuery({
       variables: conditionsOptionsIdsToFetch,
       skip: Object.values(conditionsOptionsIdsToFetch).every(
-        idds => idds.length === 0,
+        idds => idds.length === 0 || hasBeenFetched.current,
       ),
     });
+
+  useEffect(() => {
+    if (ruleConditionsOptionsDetails && !hasBeenFetched.current) {
+      hasBeenFetched.current = true;
+    }
+  }, [ruleConditionsOptionsDetails]);
 
   return {
     ruleConditionsOptionsDetails,

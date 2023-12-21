@@ -7,6 +7,8 @@ import {
 import { CommonError } from "@dashboard/utils/errors/common";
 import { useEffect, useState } from "react";
 
+import { getCurrentConditionsValuesLabels } from "../utils";
+
 interface UseRulesHandlersProps {
   data: PromotionDetailsFragment | undefined | null;
   ruleConditionsOptionsDetailsMap: Record<string, string>;
@@ -28,31 +30,46 @@ export const useRulesHandlers = ({
 }: UseRulesHandlersProps) => {
   const [rules, setRules] = useState<Rule[]>([]);
   const [rulesErrors, setRulesErrors] = useState<Array<CommonError<any>>>([]);
+  const [labelsMap, setLabelMap] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (data?.rules) {
-      setRules(rules => {
-        const curretConditinLabels = rules
-          .flatMap(rule => rule.conditions)
-          .flatMap(condition => condition.values)
-          .reduce((acc, value) => {
-            if (value.value !== value.label) {
-              acc[value.value] = value.label;
-            }
-            return acc;
-          }, {} as Record<string, string>);
-
-        return (
-          data.rules.map(rule =>
-            Rule.fromAPI(rule, {
-              ...ruleConditionsOptionsDetailsMap,
-              ...curretConditinLabels,
-            }),
-          ) ?? []
-        );
-      });
+      setRules(data.rules.map(rule => Rule.fromAPI(rule, labelsMap)) ?? []);
     }
-  }, [data?.rules, ruleConditionsOptionsDetailsMap]);
+  }, [data?.rules, labelsMap]);
+
+  useEffect(() => {
+    setLabelMap(labels => {
+      return {
+        ...ruleConditionsOptionsDetailsMap,
+        ...labels,
+      };
+    });
+  }, [ruleConditionsOptionsDetailsMap]);
+
+  const updateRulesArray = (rule: Rule, index: number) => {
+    setLabelMap(labels => ({
+      ...labels,
+      ...getCurrentConditionsValuesLabels([rule]),
+    }));
+    setRules(prevRules => {
+      const newRules = [...prevRules];
+      newRules[index] = rule;
+      return newRules;
+    });
+  };
+
+  const addNewRuleToArray = (rule: Rule) => {
+    setRules(prevRules => [...prevRules, rule]);
+  };
+
+  const removeRuleFromArray = (index: number) => {
+    setRules(prevRules => {
+      const newRules = [...prevRules];
+      newRules.splice(index, 1);
+      return newRules;
+    });
+  };
 
   const onRuleSubmit = async (rule: Rule, ruleEditIndex: number | null) => {
     let errors: Array<
@@ -62,12 +79,9 @@ export const useRulesHandlers = ({
     > = [];
     const ruleObj = Rule.fromFormValues(rule);
     if (ruleEditIndex !== null) {
+      updateRulesArray(ruleObj, ruleEditIndex);
       errors = await onRuleUpdateSubmit(ruleObj);
-      setRules(prevRules => {
-        const newRules = [...prevRules];
-        newRules[ruleEditIndex] = ruleObj;
-        return newRules;
-      });
+
       if (errors.length > 0) {
         setRulesErrors(errors);
       }
@@ -75,6 +89,8 @@ export const useRulesHandlers = ({
       errors = await onRuleCreateSubmit(ruleObj);
       if (errors.length > 0) {
         setRulesErrors(errors);
+      } else {
+        addNewRuleToArray(ruleObj);
       }
     }
   };
@@ -90,6 +106,7 @@ export const useRulesHandlers = ({
     }
 
     await onRuleDeleteSubmit(ruleId);
+    removeRuleFromArray(ruleDeleteIndex);
   };
 
   return {
