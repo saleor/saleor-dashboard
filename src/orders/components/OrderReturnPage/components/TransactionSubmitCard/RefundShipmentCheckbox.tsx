@@ -20,35 +20,42 @@ const RefundShipmentCheckbox: React.FC<RefundShipmentCheckboxProps> = ({
   autoGrantRefund,
   shipmentCost,
   onChange,
-}) => (
-  <Checkbox
-    marginTop={4}
-    checked={refundShipmentCosts}
-    name={"refundShipmentCosts"}
-    onCheckedChange={checked => {
+}) => {
+  const handleRefundShipmentCosts = React.useCallback(
+    checked => {
       onChange({
         target: {
           name: "refundShipmentCosts",
           value: checked,
         },
       });
-    }}
-    disabled={!canRefundShipping || !autoGrantRefund}
-  >
-    <Text
-      color={
-        !canRefundShipping || !autoGrantRefund ? "defaultDisabled" : undefined
-      }
+    },
+    [onChange],
+  );
+
+  return (
+    <Checkbox
+      marginTop={4}
+      checked={refundShipmentCosts}
+      name={"refundShipmentCosts"}
+      onCheckedChange={handleRefundShipmentCosts}
+      disabled={!canRefundShipping || !autoGrantRefund}
     >
-      <FormattedMessage
-        {...submitCardMessages.refundShipment}
-        values={{
-          currency: shipmentCost?.currency,
-          amount: shipmentCost?.amount,
-        }}
-      />
-    </Text>
-  </Checkbox>
-);
+      <Text
+        color={
+          !canRefundShipping || !autoGrantRefund ? "defaultDisabled" : undefined
+        }
+      >
+        <FormattedMessage
+          {...submitCardMessages.refundShipment}
+          values={{
+            currency: shipmentCost?.currency,
+            amount: shipmentCost?.amount,
+          }}
+        />
+      </Text>
+    </Checkbox>
+  );
+};
 
 export default RefundShipmentCheckbox;
