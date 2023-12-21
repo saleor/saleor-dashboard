@@ -256,6 +256,9 @@ describe("DiscountRules", () => {
       await userEvent.click(screen.getAllByTestId("select-option")[0]);
     });
 
+    await userEvent.click(
+      screen.getByRole("button", { name: /add condition/i }),
+    );
     await userEvent.click(await screen.findByTestId(/rule-type/i));
     await userEvent.click(screen.getAllByTestId("select-option")[0]);
 
