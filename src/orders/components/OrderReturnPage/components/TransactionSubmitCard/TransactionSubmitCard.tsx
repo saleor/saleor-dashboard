@@ -12,13 +12,14 @@ import {
 import { FormChange } from "@dashboard/hooks/useForm";
 import { PaymentSubmitCardValuesProps } from "@dashboard/orders/components/OrderReturnPage/components/PaymentSubmitCard/PaymentSubmitCardValues";
 import { IMoney } from "@dashboard/utils/intl";
-import { Box, Checkbox, InfoIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, InfoIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderReturnData } from "../../form";
 import { canSendRefundDuringReturn, getReturnRefundValue } from "../../utils";
+import { GrantRefundCheckbox } from "./GrantRefundCheckbox";
 import { submitCardMessages } from "./messages";
+import RefundShipmentCheckbox from "./RefundShipmentCheckbox";
 import { SendRefundCheckbox } from "./SendRefundCheckbox";
 
 interface TransactionSubmitCardProps {
@@ -82,59 +83,24 @@ export const TransactionSubmitCard = ({
               <FormattedMessage {...submitCardMessages.descrption} />
             </Text>
           </Box>
-          <Checkbox
-            checked={autoGrantRefund}
-            error={grantRefundErrors.length > 0}
-            name={"autoGrantRefund" satisfies keyof OrderReturnData}
-            onCheckedChange={checked => {
-              onChange({
-                target: {
-                  name: "autoGrantRefund",
-                  value: checked,
-                },
-              });
-            }}
-          >
-            <Text color={grantRefundErrors.length ? "critical1" : undefined}>
-              <FormattedMessage {...submitCardMessages.autoGrantRefund} />
-            </Text>
-          </Checkbox>
+          <GrantRefundCheckbox
+            autoGrantRefund={autoGrantRefund}
+            grantRefundErrors={grantRefundErrors}
+            onChange={onChange}
+          />
           <SendRefundCheckbox
             canSendRefund={canSendRefund}
             autoSendRefund={autoSendRefund}
             sendRefundErrors={sendRefundErrors}
             onChange={onChange}
           />
-          <Checkbox
-            marginTop={4}
-            checked={refundShipmentCosts}
-            name={"refundShipmentCosts" satisfies keyof OrderReturnData}
-            onCheckedChange={checked => {
-              onChange({
-                target: {
-                  name: "refundShipmentCosts",
-                  value: checked,
-                },
-              });
-            }}
-            disabled={!canRefundShipping || !autoGrantRefund}
-          >
-            <Text
-              color={
-                !canRefundShipping || !autoGrantRefund
-                  ? "defaultDisabled"
-                  : undefined
-              }
-            >
-              <FormattedMessage
-                {...submitCardMessages.refundShipment}
-                values={{
-                  currency: amountData?.shipmentCost?.currency,
-                  amount: amountData?.shipmentCost?.amount,
-                }}
-              />
-            </Text>
-          </Checkbox>
+          <RefundShipmentCheckbox
+            refundShipmentCosts={refundShipmentCosts}
+            canRefundShipping={canRefundShipping}
+            autoGrantRefund={autoGrantRefund}
+            shipmentCost={amountData?.shipmentCost}
+            onChange={onChange}
+          />
           <PriceField
             label={intl.formatMessage(
               submitCardMessages.returnRefundValueLabel,
