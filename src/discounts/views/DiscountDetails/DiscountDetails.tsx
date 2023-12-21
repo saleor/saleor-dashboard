@@ -170,7 +170,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           ruleConditionsOptionsDetails,
         )}
         ruleConditionsOptionsDetailsLoading={
-          loading || ruleConditionsOptionsDetailsLoading
+          ruleConditionsOptionsDetailsLoading
         }
         onBack={() => {
           navigate(discountListUrl());
