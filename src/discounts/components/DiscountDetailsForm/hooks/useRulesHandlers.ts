@@ -47,11 +47,15 @@ export const useRulesHandlers = ({
     });
   }, [ruleConditionsOptionsDetailsMap]);
 
-  const updateRulesArray = (rule: Rule, index: number) => {
+  const updateLabels = (rule: Rule) => {
     setLabelMap(labels => ({
       ...labels,
       ...getCurrentConditionsValuesLabels([rule]),
     }));
+  };
+
+  const updateRulesArray = (rule: Rule, index: number) => {
+    updateLabels(rule);
     setRules(prevRules => {
       const newRules = [...prevRules];
       newRules[index] = rule;
@@ -60,6 +64,7 @@ export const useRulesHandlers = ({
   };
 
   const addNewRuleToArray = (rule: Rule) => {
+    updateLabels(rule);
     setRules(prevRules => [...prevRules, rule]);
   };
 
