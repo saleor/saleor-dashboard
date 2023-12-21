@@ -46,7 +46,7 @@ const Title: React.FC<TitleProps> = props => {
           { orderNumber: order?.number },
         )}
         <div className={classes.statusContainer}>
-          <Pill label={localized} color={status} />
+          <Pill data-test-id="status-info" label={localized} color={status} />
         </div>
       </Box>
 
