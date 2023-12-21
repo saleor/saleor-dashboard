@@ -12,3 +12,13 @@ export const getCurrentConditionsValuesLabels = (rules: Rule[]) => {
       return acc;
     }, {} as Record<string, string>);
 };
+
+export const ruleAlphabetically = (a: Rule, b: Rule) => {
+  if (a.name < b.name) {
+    return -1;
+  }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
+};

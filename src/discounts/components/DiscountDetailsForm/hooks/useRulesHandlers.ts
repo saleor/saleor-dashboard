@@ -7,7 +7,7 @@ import {
 import { CommonError } from "@dashboard/utils/errors/common";
 import { useEffect, useState } from "react";
 
-import { getCurrentConditionsValuesLabels } from "../utils";
+import { getCurrentConditionsValuesLabels, ruleAlphabetically } from "../utils";
 
 interface UseRulesHandlersProps {
   data: PromotionDetailsFragment | undefined | null;
@@ -65,7 +65,7 @@ export const useRulesHandlers = ({
 
   const addNewRuleToArray = (rule: Rule) => {
     updateLabels(rule);
-    setRules(prevRules => [...prevRules, rule]);
+    setRules(prevRules => [...prevRules, rule].sort(ruleAlphabetically));
   };
 
   const removeRuleFromArray = (index: number) => {
