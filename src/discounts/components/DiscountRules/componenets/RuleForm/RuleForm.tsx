@@ -75,7 +75,7 @@ export const RuleForm = <ErrorCode,>({
   }, [currencySymbol]);
 
   const handleChannelChange = (selectedChannel: Option) => {
-    channelfield.onChange(selectedChannel);
+    setValue("channel", selectedChannel, { shouldValidate: true });
 
     if (conditions.length > 0) {
       setValue("conditions", [Condition.empty()]);
