@@ -33,19 +33,17 @@ const RefundShipmentCheckbox: React.FC<RefundShipmentCheckboxProps> = ({
     [onChange],
   );
 
+  const isDisabled = !canRefundShipping || !autoGrantRefund;
+
   return (
     <Checkbox
       marginTop={4}
       checked={refundShipmentCosts}
       name={"refundShipmentCosts"}
       onCheckedChange={handleRefundShipmentCosts}
-      disabled={!canRefundShipping || !autoGrantRefund}
+      disabled={isDisabled}
     >
-      <Text
-        color={
-          !canRefundShipping || !autoGrantRefund ? "defaultDisabled" : undefined
-        }
-      >
+      <Text color={isDisabled ? "defaultDisabled" : undefined}>
         <FormattedMessage
           {...submitCardMessages.refundShipment}
           values={{
