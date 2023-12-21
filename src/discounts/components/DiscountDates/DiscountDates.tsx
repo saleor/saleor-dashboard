@@ -85,6 +85,7 @@ const DiscountDates = <ErrorCode,>({
         <Checkbox
           marginY={4}
           checked={data.hasEndDate}
+          data-test-id="has-end-date"
           name="hasEndDate"
           disabled={disabled}
           onCheckedChange={() => {

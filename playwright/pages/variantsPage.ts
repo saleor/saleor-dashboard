@@ -1,8 +1,9 @@
 import { URL_LIST } from "@data/url";
+import { ChannelSelectDialog } from "@dialogs/channelSelectDialog";
+import { DeleteVariantDialog } from "@dialogs/deleteVariantDialog";
 import type { Page } from "@playwright/test";
 
 import { BasePage } from "./basePage";
-import { ChannelSelectDialog } from "./dialogs/channelSelectDialog";
 import { MetadataSeoPage } from "./pageElements/metadataSeoPage";
 
 export class VariantsPage {
@@ -10,6 +11,7 @@ export class VariantsPage {
   channelSelectDialog: ChannelSelectDialog;
   metadataSeoPage: MetadataSeoPage;
   basePage: BasePage;
+  deleteVariantDialog: DeleteVariantDialog;
 
   constructor(
     page: Page,
@@ -22,6 +24,7 @@ export class VariantsPage {
     readonly addWarehouseButton = page.getByTestId("add-warehouse"),
     readonly chooseMediaButton = page.getByTestId("choose-media-button"),
     readonly addVariantButton = page.getByTestId("button-add-variant"),
+    readonly deleteVariantButton = page.getByTestId("button-bar-delete"),
     readonly warehouseOption = page.getByRole("menuitem"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly stockInput = page.getByTestId("stock-input"),
@@ -44,6 +47,7 @@ export class VariantsPage {
     this.basePage = new BasePage(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
+    this.deleteVariantDialog = new DeleteVariantDialog(page);
   }
 
   async typeVariantName(variantName = "XXL beverage") {
@@ -81,6 +85,9 @@ export class VariantsPage {
 
   async clickMageChannelsButton() {
     await this.manageChannels.click();
+  }
+  async clickDeleteVariantButton() {
+    await this.deleteVariantButton.click();
   }
   async clickChooseMediaButton() {
     await this.chooseMediaButton.click();

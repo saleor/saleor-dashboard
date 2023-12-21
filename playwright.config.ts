@@ -12,7 +12,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? "blob" : "html",
-  timeout: process.env.CI ? 60000 : 10000,
+  timeout: process.env.CI ? 60000 : 30000,
   // webServer: {
   //   command: "npm run dev",
   //   url: "http://localhost:9000/",

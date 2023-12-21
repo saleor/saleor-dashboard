@@ -8,6 +8,8 @@ export class BasePage {
   constructor(
     page: Page,
     readonly pageHeader = page.getByTestId("page-header"),
+    readonly pageHeaderStatusInfo = page.getByTestId("status-info"),
+    readonly bulkDeleteGridRowsButton = page.getByTestId("bulk-delete-button"),
     readonly gridCanvas = page.locator('[data-testid="data-grid-canvas"]'),
     readonly gridInput = page
       .locator('[class="clip-region"]')
@@ -42,17 +44,26 @@ export class BasePage {
   async clickFilterButton() {
     await this.filterButton.click();
   }
+  async clickBulkDeleteGridRowsButton() {
+    await this.bulkDeleteGridRowsButton.click();
+  }
 
   async typeInSearchOnListView(searchItem: string) {
     await this.searchInputListView.fill(searchItem);
   }
   async clickNextPageButton() {
     await this.nextPagePaginationButton.click();
-    await expect(this.errorBanner).not.toBeVisible();
+    await expect(
+      this.errorBanner,
+      "No error banner should be visible",
+    ).not.toBeVisible();
   }
   async clickPreviousPageButton() {
     await this.previousPagePaginationButton.click();
-    await expect(this.errorBanner).not.toBeVisible();
+    await expect(
+      this.errorBanner,
+      "No error banner should be visible",
+    ).not.toBeVisible();
   }
   async clickNumbersOfRowsButton() {
     await this.rowNumberButton.click();
@@ -66,17 +77,26 @@ export class BasePage {
     await this.successBanner
       .locator(`text=${msg}`)
       .waitFor({ state: "visible", timeout: 10000 });
-    await expect(this.errorBanner).not.toBeVisible();
+    await expect(
+      this.errorBanner,
+      "No error banner should be visible",
+    ).not.toBeVisible();
   }
   async expectSuccessBanner() {
     await this.successBanner
       .first()
       .waitFor({ state: "visible", timeout: 15000 });
-    await expect(this.errorBanner).not.toBeVisible();
+    await expect(
+      this.errorBanner,
+      "No error banner should be visible",
+    ).not.toBeVisible();
   }
   async expectInfoBanner() {
     await this.infoBanner.first().waitFor({ state: "visible", timeout: 15000 });
-    await expect(this.errorBanner).not.toBeVisible();
+    await expect(
+      this.errorBanner,
+      "No error banner should be visible",
+    ).not.toBeVisible();
   }
 
   async getRandomInt(max: number) {

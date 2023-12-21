@@ -26,6 +26,17 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3MzM%3D",
     info: "Product that contains single variant",
   },
+  singleVariantDeleteProduct: {
+    productId: "UHJvZHVjdDo3Njc%3D",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6MTIzNg%3D%3D",
+    productName: "beer with variant to be deleted",
+    info: "Delete variant via it details page product",
+  },
+  multipleVariantsBulkDeleteProduct: {
+    productId: "UHJvZHVjdDo3NjY%3D",
+    productName: "juice with variant to be deleted",
+    info: "Delete multiple variants via grid product page",
+  },
   productWithVariantWhichWillBeUpdated: {
     id: "UHJvZHVjdDo3NjU%3D",
     name: "product with variant which will be updated",
@@ -38,12 +49,31 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3NTc%3D",
     info: "Product that contains single variant - to be deleted from details view",
   },
+  productAvailableWithTransactionFlow: {
+    name: "Coconut Juice transaction flow",
+    id: "UHJvZHVjdDo3Ng%3D%3D",
+    variant1sku: "84725784",
+    info: "Product which is available within channel with activated transaction flow",
+  },
   productsToBeBulkDeleted: {
     names: [
       "a product to be deleted via bulk 1/3",
       "a product to be deleted via bulk 2/3",
       "a product to be deleted via bulk 3/3",
     ],
+  },
+};
+
+export const ORDERS = {
+  ordersWithinTransactionFlow: {
+    markAsPaidOrder: {
+      orderId: "T3JkZXI6MDE4ZWM0NGUtNTgwMC00NGM0LTliMzAtZDE3YTIxYjljOTgz",
+      info: "Order used to mark as paid and fulfill",
+    },
+    captureManualTransactionOrder: {
+      orderId: "T3JkZXI6MmE1NTNkMzktOWU0OS00ZWE5LWIyNzEtNzk2ZWI5OGJhNzcz",
+      info: "Order used to capture manual transactions and fulfill",
+    },
   },
 };
 

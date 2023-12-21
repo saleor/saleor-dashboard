@@ -25,4 +25,11 @@ export class OrderCreateDialog {
     await this.channelOption.first().click();
     await this.clickConfirmButton();
   }
+  async completeOrderCreateDialogWithTransactionChannel() {
+    await this.expandChannelsSearchList();
+    await this.channelOption
+      .filter({ hasText: "transaction flow channel" })
+      .click();
+    await this.clickConfirmButton();
+  }
 }

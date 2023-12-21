@@ -71,6 +71,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
             label={payment.localized}
             color={payment.status}
             className={classes.paymentStatus}
+            data-test-id="payment-status"
           />
         }
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
@@ -79,7 +80,10 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
         !shouldDisplay.charged &&
         !shouldDisplay.authorized &&
         !hasGiftCards && (
-          <CardContent className={classes.noPaymentContent}>
+          <CardContent
+            className={classes.noPaymentContent}
+            data-test-id="payment-section"
+          >
             <Typography variant="h5" className={classes.noPaymentTitle}>
               <FormattedMessage {...orderPaymentMessages.noPayments} />
             </Typography>
