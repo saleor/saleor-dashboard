@@ -26,6 +26,7 @@ jest.mock("react-intl", () => ({
 
 describe("TransactionSubmitCard", () => {
   it("submits on click", async () => {
+    // Arrange
     const submitFn = jest.fn();
     render(
       <TransactionSubmitCard
@@ -57,8 +58,10 @@ describe("TransactionSubmitCard", () => {
 
     const submitBtn = screen.getByTestId("return-submit-button");
 
+    // Act
     await userEvent.click(submitBtn);
 
+    // Assert
     expect(submitFn).toHaveBeenCalled();
   });
 });
