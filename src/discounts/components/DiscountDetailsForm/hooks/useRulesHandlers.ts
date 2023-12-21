@@ -31,11 +31,26 @@ export const useRulesHandlers = ({
 
   useEffect(() => {
     if (data?.rules) {
-      setRules(
-        data.rules.map(rule =>
-          Rule.fromAPI(rule, ruleConditionsOptionsDetailsMap),
-        ) ?? [],
-      );
+      setRules(rules => {
+        const curretConditinLabels = rules
+          .flatMap(rule => rule.conditions)
+          .flatMap(condition => condition.values)
+          .reduce((acc, value) => {
+            if (value.value !== value.label) {
+              acc[value.value] = value.label;
+            }
+            return acc;
+          }, {} as Record<string, string>);
+
+        return (
+          data.rules.map(rule =>
+            Rule.fromAPI(rule, {
+              ...ruleConditionsOptionsDetailsMap,
+              ...curretConditinLabels,
+            }),
+          ) ?? []
+        );
+      });
     }
   }, [data?.rules, ruleConditionsOptionsDetailsMap]);
 
@@ -46,9 +61,13 @@ export const useRulesHandlers = ({
       >
     > = [];
     const ruleObj = Rule.fromFormValues(rule);
-
     if (ruleEditIndex !== null) {
       errors = await onRuleUpdateSubmit(ruleObj);
+      setRules(prevRules => {
+        const newRules = [...prevRules];
+        newRules[ruleEditIndex] = ruleObj;
+        return newRules;
+      });
       if (errors.length > 0) {
         setRulesErrors(errors);
       }

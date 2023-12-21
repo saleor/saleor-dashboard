@@ -5,7 +5,6 @@ import {
   useRuleConditionsSelectedOptionsDetailsQuery,
 } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useEffect } from "react";
 
 export const useFetchConditionsOptionsDetails = (
   promotionData: PromotionDetailsQuery | undefined,
@@ -13,20 +12,13 @@ export const useFetchConditionsOptionsDetails = (
   const conditionsOptionsIdsToFetch =
     getAllConditionsOptionsIdsToFetch(promotionData);
 
-  const {
-    data: ruleConditionsOptionsDetails,
-    refetch,
-    loading,
-  } = useRuleConditionsSelectedOptionsDetailsQuery({
-    variables: conditionsOptionsIdsToFetch,
-    skip: Object.values(conditionsOptionsIdsToFetch).every(
-      idds => idds.length === 0,
-    ),
-  });
-
-  useEffect(() => {
-    refetch();
-  }, [promotionData?.promotion?.rules]);
+  const { data: ruleConditionsOptionsDetails, loading } =
+    useRuleConditionsSelectedOptionsDetailsQuery({
+      variables: conditionsOptionsIdsToFetch,
+      skip: Object.values(conditionsOptionsIdsToFetch).every(
+        idds => idds.length === 0,
+      ),
+    });
 
   return {
     ruleConditionsOptionsDetails,
