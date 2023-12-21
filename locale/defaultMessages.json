@@ -5208,6 +5208,9 @@
   "XtlUj6": {
     "string": "Add your first rule to set up a promotion"
   },
+  "Xu4ST7": {
+    "string": "No conditions added, click button bellow to create one"
+  },
   "Xu4ech": {
     "context": "deactivate app",
     "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app."

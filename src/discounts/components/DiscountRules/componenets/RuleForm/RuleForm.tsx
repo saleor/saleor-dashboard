@@ -48,6 +48,7 @@ export const RuleForm = <ErrorCode,>({
   });
 
   const selectedChannel = watch("channel");
+  const conditions = watch("conditions");
   const hasSelectedChannel = !!selectedChannel;
   const currencySymbol = getCurencySymbol(selectedChannel, channels);
 
@@ -73,6 +74,16 @@ export const RuleForm = <ErrorCode,>({
     }
   }, [currencySymbol]);
 
+  const handleChannelChange = (selectedChannel: Option) => {
+    channelfield.onChange(selectedChannel);
+
+    if (conditions.length > 0) {
+      setValue("conditions", [Condition.empty()]);
+    } else {
+      setValue("conditions", []);
+    }
+  };
+
   return (
     <RichTextContext.Provider value={richText}>
       <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
@@ -91,10 +102,7 @@ export const RuleForm = <ErrorCode,>({
           <RuleInputWrapper __flex={1}>
             <Select
               {...channelfield}
-              onChange={selectedChannel => {
-                channelfield.onChange(selectedChannel);
-                setValue("conditions", [Condition.empty()]);
-              }}
+              onChange={handleChannelChange}
               size="small"
               data-test-id="channel-dropdown"
               label={intl.formatMessage(commonMessages.channel)}
