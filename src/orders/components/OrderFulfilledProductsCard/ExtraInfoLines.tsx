@@ -57,6 +57,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
             values={{
               trackingNumber: (
                 <Typography
+                  data-test-id="tracking-number-set"
                   className={classes.infoLabel}
                   color="textPrimary"
                   variant="body2"
