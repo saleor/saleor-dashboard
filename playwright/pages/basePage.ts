@@ -103,9 +103,10 @@ export class BasePage {
     return Math.floor(Math.random() * (max + 1));
   }
 
-  async waitForGrid() {
+  async waitForGrid(gridIndex = 0) {
     await this.gridCanvas
       .locator("table")
+      .nth(gridIndex)
       .waitFor({ state: "attached", timeout: 10000 });
   }
 

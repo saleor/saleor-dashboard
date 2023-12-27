@@ -133,7 +133,7 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
   ).toContainText("Unfulfilled");
   expect(
     await ordersPage.paymentStatusInfo,
-    "Order should fully paid",
+    "Order should be fully paid",
   ).toContainText("Fully paid");
 
   await ordersPage.clickFulfillButton();
@@ -144,4 +144,35 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
     await ordersPage.pageHeaderStatusInfo,
     "Order should be yet fulfilled",
   ).toContainText("Fulfilled");
+});
+
+test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow @e2e @order", async () => {
+  await ordersPage.goToExistingOrderPage(ORDERS.orderToMarkAsPaidAndFulfill.id);
+  await ordersPage.waitForGrid();
+  await ordersPage.clickMarkAsPaidButton();
+  await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
+  await ordersPage.expectSuccessBannerMessage("paid");
+  const transactionsMadeRows = await ordersPage.orderTransactionsList.locator(
+    "tr",
+  );
+  await expect(ordersPage.balanceStatusInfo).toHaveText("Settled");
+  expect(
+    await ordersPage.paymentStatusInfo,
+    "Order should be fully paid",
+  ).toContainText("Fully paid");
+
+  await ordersPage.clickFulfillButton();
+  await fulfillmentPage.clickFulfillButton();
+  await ordersPage.expectSuccessBannerMessage("fulfilled");
+  expect(await ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
+});
+
+test("TC: SALEOR_80 Add tracking to order @e2e @order", async () => {
+  const trackingNumber = "123456789";
+  await ordersPage.goToExistingOrderPage(ORDERS.orderToAddTrackingNumberTo.id);
+  await ordersPage.waitForGrid();
+  await ordersPage.clickAddTrackingButton();
+  await ordersPage.addTrackingDialog.typeTrackingNumberAndSave(trackingNumber);
+  await ordersPage.expectSuccessBannerMessage("updated");
+  await expect(ordersPage.setTrackingNumber).toContainText(trackingNumber);
 });

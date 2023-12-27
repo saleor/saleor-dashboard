@@ -1,4 +1,5 @@
 import { URL_LIST } from "@data/url";
+import { AddTrackingDialog } from "@dialogs/addTrackingDialog";
 import { ManualTransactionDialog } from "@dialogs/manualTransactionDialog";
 import { MarkOrderAsPaidDialog } from "@dialogs/markOrderAsPaidDialog";
 import { BasePage } from "@pages/basePage";
@@ -16,17 +17,22 @@ export class OrdersPage extends BasePage {
   shippingAddressDialog: ShippingAddressDialog;
   basePage: BasePage;
   manualTransactionDialog: ManualTransactionDialog;
+  addTrackingDialog: AddTrackingDialog;
 
   constructor(
     page: Page,
     readonly createOrderButton = page.getByTestId("create-order-button"),
     readonly markAsPaidButton = page.getByTestId("markAsPaidButton"),
+    readonly addTrackingButton = page.getByTestId("add-tracking-button"),
+    readonly editTrackingButton = page.getByTestId("edit-tracking-button"),
+    readonly setTrackingNumber = page.getByTestId("tracking-number-set"),
     readonly manualTransactionButton = page.getByTestId(
       "captureManualTransactionButton",
     ),
     readonly orderSummarySection = page.getByTestId("OrderSummaryCard"),
     readonly paymentSummarySection = page.getByTestId("payment-section"),
     readonly paymentStatusInfo = page.getByTestId("payment-status"),
+    readonly balanceStatusInfo = page.getByTestId("order-balance-status"),
     readonly fulfillButton = page.getByTestId("fulfill-button"),
     readonly addProducts = page.getByTestId("add-products-button"),
     readonly orderTransactionsList = page
@@ -52,6 +58,7 @@ export class OrdersPage extends BasePage {
     this.addressDialog = new AddressDialog(page);
     this.shippingAddressDialog = new ShippingAddressDialog(page);
     this.manualTransactionDialog = new ManualTransactionDialog(page);
+    this.addTrackingDialog = new AddTrackingDialog(page);
   }
 
   async selectCustomer(customer = "allison.freeman@example.com") {
@@ -59,6 +66,9 @@ export class OrdersPage extends BasePage {
   }
   async clickCreateOrderButton() {
     await this.createOrderButton.click();
+  }
+  async clickAddTrackingButton() {
+    await this.addTrackingButton.click();
   }
   async clickManualTransactionButton() {
     await this.manualTransactionButton.click();
