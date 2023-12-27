@@ -88,6 +88,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 className={classes.rightmostLeftAlignedElement}
                 label={payment.localized}
                 color={payment.status}
+                data-test-id="payment-status"
               />
               {order?.status !== OrderStatus.CANCELED &&
                 (canCapture || canRefund || canVoid || canMarkAsPaid) && (
@@ -264,7 +265,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             )}
           >
             <FormattedMessage {...orderPaymentMessages.outstanding} />
-            <div className={classes.leftmostRightAlignedElement}>
+            <div
+              className={classes.leftmostRightAlignedElement}
+              data-test-id="order-balance-status"
+            >
               {order?.totalBalance.amount === 0 ? (
                 <FormattedMessage {...orderPaymentMessages.settled} />
               ) : (

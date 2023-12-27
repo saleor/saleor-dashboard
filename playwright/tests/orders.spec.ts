@@ -133,7 +133,7 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
   ).toContainText("Unfulfilled");
   expect(
     await ordersPage.paymentStatusInfo,
-    "Order should fully paid",
+    "Order should be fully paid",
   ).toContainText("Fully paid");
 
   await ordersPage.clickFulfillButton();
