@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": minor
+"saleor-dashboard": patch
 ---
 
-Dockerfile update
+Fix dockerfile build error caused by deleted file and bash script
