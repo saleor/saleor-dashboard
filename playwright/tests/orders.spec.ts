@@ -1,15 +1,21 @@
 import { CUSTOMER_ADDRESS, ORDERS, PRODUCTS } from "@data/e2eTestData";
+import { DraftOrderCreateDialog } from "@pages/dialogs/draftOrderCreateDialog";
+import { DraftOrdersPage } from "@pages/draftOrdersPage";
 import { FulfillmentPage } from "@pages/fulfillmentPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 let ordersPage: OrdersPage;
+let draftOrdersPage: DraftOrdersPage;
 let fulfillmentPage: FulfillmentPage;
+let draftOrderCreateDialog: DraftOrderCreateDialog;
 
 test.beforeEach(({ page }) => {
   ordersPage = new OrdersPage(page);
+  draftOrdersPage = new DraftOrdersPage(page);
   fulfillmentPage = new FulfillmentPage(page);
+  draftOrderCreateDialog = new DraftOrderCreateDialog(page);
 });
 
 test("TC: SALEOR_28 Create basic order @e2e @order", async () => {
@@ -18,9 +24,9 @@ test("TC: SALEOR_28 Create basic order @e2e @order", async () => {
   await ordersPage.orderCreateDialog.completeOrderCreateDialogWithFirstChannel();
   await ordersPage.clickAddProductsButton();
   await ordersPage.addProductsDialog.selectVariantWithSkuOnListAndConfirm();
-  await ordersPage.clickEditCustomerButton();
-  await ordersPage.clickSearchCustomerInput();
-  await ordersPage.selectCustomer();
+  await ordersPage.rightSideDetailsPage.clickEditCustomerButton();
+  await ordersPage.rightSideDetailsPage.clickSearchCustomerInput();
+  await ordersPage.rightSideDetailsPage.selectCustomer();
   await expect(
     ordersPage.addressDialog.existingAddressRadioButton,
   ).toBeVisible();
@@ -40,9 +46,9 @@ test("TC: SALEOR_76 Create order with transaction flow activated @e2e @order", a
   await ordersPage.addProductsDialog.selectVariantWithSkuOnListAndConfirm(
     PRODUCTS.productAvailableWithTransactionFlow.variant1sku,
   );
-  await ordersPage.clickEditCustomerButton();
-  await ordersPage.clickSearchCustomerInput();
-  await ordersPage.selectCustomer();
+  await ordersPage.rightSideDetailsPage.clickEditCustomerButton();
+  await ordersPage.rightSideDetailsPage.clickSearchCustomerInput();
+  await ordersPage.rightSideDetailsPage.selectCustomer();
   await expect(
     ordersPage.addressDialog.existingAddressRadioButton,
   ).toBeVisible();
@@ -210,4 +216,45 @@ test("TC: SALEOR_82 Change shipping address in not fulfilled order @e2e @order",
     ordersPage.rightSideDetailsPage.shippingAddressSection,
     CUSTOMER_ADDRESS.changeShippingAddress,
   );
+});
+test("TC: SALEOR_83 Draft orders bulk delete @e2e @draft", async () => {
+  await draftOrdersPage.goToDraftOrdersListView();
+  await draftOrdersPage.waitForGrid();
+  await draftOrdersPage.checkListRowsBasedOnContainingText(
+    ORDERS.draftOrdersToBeDeleted.ids,
+  );
+  await draftOrdersPage.clickBulkDeleteButton();
+  await draftOrdersPage.deleteDraftOrdersDialog.clickDeleteButton();
+  await draftOrdersPage.expectSuccessBanner();
+  await draftOrdersPage.waitForGrid();
+  await expect(
+    await draftOrdersPage.findRowIndexBasedOnText(
+      PRODUCTS.productsToBeBulkDeleted.names,
+    ),
+    `Given draft orders: ${ORDERS.draftOrdersToBeDeleted.ids} should be deleted from the list`,
+  ).toEqual([]);
+});
+test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
+  await draftOrdersPage.goToDraftOrdersListView();
+  await draftOrdersPage.waitForGrid();
+  await draftOrdersPage.clickCreateDraftOrderButton();
+  await draftOrdersPage.draftOrderCreateDialog.completeDraftOrderCreateDialogWithFirstChannel();
+  await draftOrdersPage.clickAddProductsButton();
+  await draftOrdersPage.addProductsDialog.selectVariantWithSkuOnListAndConfirm();
+  await draftOrdersPage.rightSideDetailsPage.clickEditCustomerButton();
+  await draftOrdersPage.rightSideDetailsPage.clickSearchCustomerInput();
+  await draftOrdersPage.rightSideDetailsPage.selectCustomer();
+
+  await expect(
+    draftOrdersPage.addressDialog.existingAddressRadioButton,
+  ).toBeVisible();
+
+  await draftOrdersPage.addressDialog.clickConfirmButton();
+  await draftOrdersPage.clickAddShippingCarrierButton();
+  await draftOrdersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
+  await draftOrdersPage.clickFinalizeButton();
+
+  await draftOrdersPage.successBanner
+    .filter({ hasText: "finalized" })
+    .waitFor({ state: "visible" });
 });

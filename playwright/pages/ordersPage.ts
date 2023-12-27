@@ -41,15 +41,10 @@ export class OrdersPage extends BasePage {
       .getByTestId("orderTransactionsList")
       .locator("table"),
     readonly salesChannel = page.getByTestId("salesChannel"),
-    readonly editCustomerButton = page.getByTestId("edit-customer"),
-    readonly searchCustomerInput = page.getByTestId("select-customer"),
     readonly addShippingCarrierLink = page.getByTestId("add-shipping-carrier"),
     readonly finalizeButton = page.getByTestId("button-bar-confirm"),
 
     readonly customerEmail = page.getByTestId("customer-email"),
-    readonly selectCustomerOption = page.getByTestId(
-      "single-autocomplete-select-option",
-    ),
   ) {
     super(page);
     this.markOrderAsPaidDialog = new MarkOrderAsPaidDialog(page);
@@ -63,9 +58,6 @@ export class OrdersPage extends BasePage {
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
   }
 
-  async selectCustomer(customer = "allison.freeman@example.com") {
-    await this.selectCustomerOption.locator(`text=${customer}`).click();
-  }
   async clickCreateOrderButton() {
     await this.createOrderButton.click();
   }
@@ -87,12 +79,7 @@ export class OrdersPage extends BasePage {
   async clickAddProductsButton() {
     await this.addProducts.click();
   }
-  async clickEditCustomerButton() {
-    await this.editCustomerButton.click();
-  }
-  async clickSearchCustomerInput() {
-    await this.searchCustomerInput.click();
-  }
+
   async clickFinalizeButton() {
     await this.finalizeButton.click();
   }

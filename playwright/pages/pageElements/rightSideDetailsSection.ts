@@ -53,6 +53,11 @@ export class RightSideDetailsPage {
     readonly billingAddressSection = page.getByTestId(
       "billing-address-section",
     ),
+    readonly editCustomerButton = page.getByTestId("edit-customer"),
+    readonly searchCustomerInput = page.getByTestId("select-customer"),
+    readonly selectCustomerOption = page.getByTestId(
+      "single-autocomplete-select-option",
+    ),
   ) {}
 
   async clickEditBillingAddressButton() {
@@ -105,5 +110,17 @@ export class RightSideDetailsPage {
   async selectFirstCollection() {
     await this.collectionInput.click();
     await this.selectOption.first().click();
+  }
+
+  async clickEditCustomerButton() {
+    await this.editCustomerButton.click();
+  }
+
+  async clickSearchCustomerInput() {
+    await this.searchCustomerInput.click();
+  }
+
+  async selectCustomer(customer = "allison.freeman@example.com") {
+    await this.selectCustomerOption.locator(`text=${customer}`).click();
   }
 }

@@ -90,6 +90,9 @@ export const PRODUCTS = {
 };
 
 export const ORDERS = {
+  draftOrdersToBeDeleted: {
+    ids: ["#3266", "#3265"],
+  },
   ordersWithinTransactionFlow: {
     markAsPaidOrder: {
       orderId: "T3JkZXI6MDE4ZWM0NGUtNTgwMC00NGM0LTliMzAtZDE3YTIxYjljOTgz",
