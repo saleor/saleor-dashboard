@@ -1,6 +1,7 @@
 import { URL_LIST } from "@data/url";
 import { ManualTransactionDialog } from "@dialogs/manualTransactionDialog";
 import { MarkOrderAsPaidDialog } from "@dialogs/markOrderAsPaidDialog";
+import { RightSideDetailsPage } from "@pageElements/rightSideDetailsSection";
 import { BasePage } from "@pages/basePage";
 import { AddProductsDialog } from "@pages/dialogs/addProductsDialog";
 import { AddressDialog } from "@pages/dialogs/addressDialog";
@@ -16,6 +17,8 @@ export class OrdersPage extends BasePage {
   shippingAddressDialog: ShippingAddressDialog;
   basePage: BasePage;
   manualTransactionDialog: ManualTransactionDialog;
+  addTrackingDialog: AddTrackingDialog;
+  rightSideDetailsPage: RightSideDetailsPage;
 
   constructor(
     page: Page,
@@ -37,8 +40,7 @@ export class OrdersPage extends BasePage {
     readonly searchCustomerInput = page.getByTestId("select-customer"),
     readonly addShippingCarrierLink = page.getByTestId("add-shipping-carrier"),
     readonly finalizeButton = page.getByTestId("button-bar-confirm"),
-    readonly editShippingAddress = page.getByTestId("edit-shipping-address"),
-    readonly editBillingAddress = page.getByTestId("edit-billing-address"),
+
     readonly customerEmail = page.getByTestId("customer-email"),
     readonly selectCustomerOption = page.getByTestId(
       "single-autocomplete-select-option",
@@ -52,6 +54,8 @@ export class OrdersPage extends BasePage {
     this.addressDialog = new AddressDialog(page);
     this.shippingAddressDialog = new ShippingAddressDialog(page);
     this.manualTransactionDialog = new ManualTransactionDialog(page);
+    this.addTrackingDialog = new AddTrackingDialog(page);
+    this.rightSideDetailsPage = new RightSideDetailsPage(page);
   }
 
   async selectCustomer(customer = "allison.freeman@example.com") {
@@ -59,6 +63,10 @@ export class OrdersPage extends BasePage {
   }
   async clickCreateOrderButton() {
     await this.createOrderButton.click();
+  }
+
+  async clickAddTrackingButton() {
+    await this.addTrackingButton.click();
   }
   async clickManualTransactionButton() {
     await this.manualTransactionButton.click();

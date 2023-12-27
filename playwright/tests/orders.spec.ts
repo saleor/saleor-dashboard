@@ -1,4 +1,4 @@
-import { ORDERS, PRODUCTS } from "@data/e2eTestData";
+import { CUSTOMER_ADDRESS, ORDERS, PRODUCTS } from "@data/e2eTestData";
 import { FulfillmentPage } from "@pages/fulfillmentPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { expect, test } from "@playwright/test";
@@ -144,4 +144,70 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
     await ordersPage.pageHeaderStatusInfo,
     "Order should be yet fulfilled",
   ).toContainText("Fulfilled");
+});
+
+test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow @e2e @order", async () => {
+  await ordersPage.goToExistingOrderPage(ORDERS.orderToMarkAsPaidAndFulfill.id);
+  await ordersPage.waitForGrid();
+  await ordersPage.clickMarkAsPaidButton();
+  await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
+  await ordersPage.expectSuccessBannerMessage("paid");
+  const transactionsMadeRows = await ordersPage.orderTransactionsList.locator(
+    "tr",
+  );
+  await expect(ordersPage.balanceStatusInfo).toHaveText("Settled");
+  expect(
+    await ordersPage.paymentStatusInfo,
+    "Order should be fully paid",
+  ).toContainText("Fully paid");
+
+  await ordersPage.clickFulfillButton();
+  await fulfillmentPage.clickFulfillButton();
+  await ordersPage.expectSuccessBannerMessage("fulfilled");
+  expect(await ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
+});
+
+test("TC: SALEOR_80 Add tracking to order @e2e @order", async () => {
+  const trackingNumber = "123456789";
+  await ordersPage.goToExistingOrderPage(ORDERS.orderToAddTrackingNumberTo.id);
+  await ordersPage.waitForGrid();
+  await ordersPage.clickAddTrackingButton();
+  await ordersPage.addTrackingDialog.typeTrackingNumberAndSave(trackingNumber);
+  await ordersPage.expectSuccessBannerMessage("updated");
+  await expect(ordersPage.setTrackingNumber).toContainText(trackingNumber);
+});
+test("TC: SALEOR_81 Change billing address in order @e2e @order", async () => {
+  await ordersPage.goToExistingOrderPage(
+    ORDERS.orderFulfilledToChangeBillingAddress.id,
+  );
+  await ordersPage.waitForGrid();
+  await ordersPage.rightSideDetailsPage.clickEditBillingAddressButton();
+  await ordersPage.addressDialog.clickNewAddressRadioButton();
+  await ordersPage.addressDialog.completeAddressFormAllFields(
+    CUSTOMER_ADDRESS.changeBillingAddress,
+  );
+  await ordersPage.expectSuccessBanner();
+
+  await ordersPage.expectElementContainsTextFromObjectValues(
+    ordersPage.rightSideDetailsPage.billingAddressSection,
+    CUSTOMER_ADDRESS.changeBillingAddress,
+  );
+});
+
+test("TC: SALEOR_82 Change shipping address in order @e2e @order", async () => {
+  await ordersPage.goToExistingOrderPage(
+    ORDERS.orderNotFulfilledToChangeShippingAddress.id,
+  );
+  await ordersPage.waitForGrid();
+  await ordersPage.rightSideDetailsPage.clickEditShippingAddressButton();
+  await ordersPage.addressDialog.clickNewAddressRadioButton();
+  await ordersPage.addressDialog.completeAddressFormAllFields(
+    CUSTOMER_ADDRESS.changeShippingAddress,
+  );
+  await ordersPage.expectSuccessBanner();
+
+  await ordersPage.expectElementContainsTextFromObjectValues(
+    ordersPage.rightSideDetailsPage.shippingAddressSection,
+    CUSTOMER_ADDRESS.changeShippingAddress,
+  );
 });

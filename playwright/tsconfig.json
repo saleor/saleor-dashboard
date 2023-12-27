@@ -13,7 +13,8 @@
       "@pages/*": ["./pages/*"],
       "@api/*": ["./api/*"],
       "@data/*": ["./data/*"],
-      "@dialogs/*": ["./pages/dialogs/*"]
+      "@dialogs/*": ["./pages/dialogs/*"],
+      "@pageElements/*": ["./pages/pageElements/*"]
     }
   }
 }
