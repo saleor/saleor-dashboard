@@ -176,7 +176,7 @@ test("TC: SALEOR_80 Add tracking to order @e2e @order", async () => {
   await ordersPage.expectSuccessBannerMessage("updated");
   await expect(ordersPage.setTrackingNumber).toContainText(trackingNumber);
 });
-test("TC: SALEOR_81 Change billing address in order @e2e @order", async () => {
+test("TC: SALEOR_81 Change billing address in fulfilled order @e2e @order", async () => {
   await ordersPage.goToExistingOrderPage(
     ORDERS.orderFulfilledToChangeBillingAddress.id,
   );
@@ -194,7 +194,7 @@ test("TC: SALEOR_81 Change billing address in order @e2e @order", async () => {
   );
 });
 
-test("TC: SALEOR_82 Change shipping address in order @e2e @order", async () => {
+test("TC: SALEOR_82 Change shipping address in not fulfilled order @e2e @order", async () => {
   await ordersPage.goToExistingOrderPage(
     ORDERS.orderNotFulfilledToChangeShippingAddress.id,
   );
