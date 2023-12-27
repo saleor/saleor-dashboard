@@ -75,6 +75,12 @@ export const ORDERS = {
       info: "Order used to capture manual transactions and fulfill",
     },
   },
+  orderToAddTrackingNumberTo: {
+    id: "T3JkZXI6M2NkYWE4NGItNzgxNi00ZWI2LWE1MGMtODE0NzY5YWM0MTEw",
+  },
+  orderToMarkAsPaidAndFulfill: {
+    id: "T3JkZXI6Yzg2ZDMzYmEtMTA5Yi00MzUyLTkzYWItOTljMGE3Zjk4ZGE5",
+  },
 };
 
 export const SHIPPING_METHODS = {
