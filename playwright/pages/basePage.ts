@@ -1,5 +1,5 @@
 import { LOCATORS } from "@data/commonLocators";
-import type { Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 export class BasePage {
@@ -207,5 +207,15 @@ export class BasePage {
     }
     // make sure all searched texts were found and checked
     await expect(searchText.length).toEqual(rowIndexes.length);
+  }
+
+  async expectElementContainsTextFromObjectValues(
+    locator: Locator,
+    object: object,
+  ) {
+    const objectValuesArray = await Object.values(object);
+    for (const objectProperty of objectValuesArray) {
+      expect(locator).toContainText(objectProperty);
+    }
   }
 }

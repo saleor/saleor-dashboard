@@ -1,4 +1,4 @@
-import { ORDERS, PRODUCTS } from "@data/e2eTestData";
+import { CUSTOMER_ADDRESS, ORDERS, PRODUCTS } from "@data/e2eTestData";
 import { FulfillmentPage } from "@pages/fulfillmentPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { expect, test } from "@playwright/test";
@@ -175,4 +175,39 @@ test("TC: SALEOR_80 Add tracking to order @e2e @order", async () => {
   await ordersPage.addTrackingDialog.typeTrackingNumberAndSave(trackingNumber);
   await ordersPage.expectSuccessBannerMessage("updated");
   await expect(ordersPage.setTrackingNumber).toContainText(trackingNumber);
+});
+test("TC: SALEOR_81 Change billing address in fulfilled order @e2e @order", async () => {
+  await ordersPage.goToExistingOrderPage(
+    ORDERS.orderFulfilledToChangeBillingAddress.id,
+  );
+  await ordersPage.waitForGrid();
+  await ordersPage.rightSideDetailsPage.clickEditBillingAddressButton();
+  await ordersPage.addressDialog.clickNewAddressRadioButton();
+  await ordersPage.addressDialog.completeAddressFormAllFields(
+    CUSTOMER_ADDRESS.changeBillingAddress,
+  );
+  await ordersPage.expectSuccessBanner();
+
+  await ordersPage.expectElementContainsTextFromObjectValues(
+    ordersPage.rightSideDetailsPage.billingAddressSection,
+    CUSTOMER_ADDRESS.changeBillingAddress,
+  );
+});
+
+test("TC: SALEOR_82 Change shipping address in not fulfilled order @e2e @order", async () => {
+  await ordersPage.goToExistingOrderPage(
+    ORDERS.orderNotFulfilledToChangeShippingAddress.id,
+  );
+  await ordersPage.waitForGrid();
+  await ordersPage.rightSideDetailsPage.clickEditShippingAddressButton();
+  await ordersPage.addressDialog.clickNewAddressRadioButton();
+  await ordersPage.addressDialog.completeAddressFormAllFields(
+    CUSTOMER_ADDRESS.changeShippingAddress,
+  );
+  await ordersPage.expectSuccessBanner();
+
+  await ordersPage.expectElementContainsTextFromObjectValues(
+    ordersPage.rightSideDetailsPage.shippingAddressSection,
+    CUSTOMER_ADDRESS.changeShippingAddress,
+  );
 });
