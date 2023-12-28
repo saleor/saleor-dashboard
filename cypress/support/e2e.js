@@ -163,7 +163,7 @@ Cypress.Commands.add(
   "deleteFirstRecordFromGridListAndValidate",
   (expectedName, deleteRequestName, listRequestName) => {
     ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
-    cy.get(SHARED_ELEMENTS.firstRowDataGrid)
+    cy.wait(1000).get(SHARED_ELEMENTS.firstRowDataGrid)
       .invoke("text")
       .then(firstOnListName => {
         expect(expectedName).to.eq(firstOnListName);
