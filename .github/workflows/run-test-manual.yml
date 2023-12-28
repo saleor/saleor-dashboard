@@ -19,6 +19,10 @@ jobs:
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ./.github/actions
+
       - name: Generate variables
         id: cloud_variables
         uses: ./.github/actions/prepare-tests-variables

@@ -20,10 +20,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
-      with:
-        sparse-checkout: ./.github/actions
-
     - name: Saleor login
       uses: ./.github/actions/cli-login
       with:

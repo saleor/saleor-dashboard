@@ -26,10 +26,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
-      with:
-        sparse-checkout: ./.github/actions
-
     - name: Saleor login
       uses: ./.github/actions/cli-login
       with:
@@ -54,9 +50,11 @@ runs:
         BACKUP_ID: ${{ inputs.BACKUP_ID }}
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
       run: |
-        npx saleor backup restore "$BACKUP_ID" \
-          --environment="$INSTANCE_NAME" \
-          --skip-webhooks-update
+        echo "reload snapshot"
+      # run: |
+      #   npx saleor backup restore "$BACKUP_ID" \
+      #     --environment="$INSTANCE_NAME" \
+      #     --skip-webhooks-update
 
     - name: Create new instance
       shell: bash
@@ -66,11 +64,13 @@ runs:
         BACKUP_ID: ${{ inputs.BACKUP_ID }}
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
       run: |
-         npx saleor env create "$INSTANCE_NAME" \
-          --project=project-for-pr-testing \
-          --database=snapshot \
-          --restore-from="$BACKUP_ID" \
-          --saleor=saleor-master-staging \
-          --domain="$INSTANCE_NAME" \
-          --skip-restrict \
-          --skip-webhooks-update
+        echo "create new instance"
+      # run: |
+      #    npx saleor env create "$INSTANCE_NAME" \
+      #     --project=project-for-pr-testing \
+      #     --database=snapshot \
+      #     --restore-from="$BACKUP_ID" \
+      #     --saleor=saleor-master-staging \
+      #     --domain="$INSTANCE_NAME" \
+      #     --skip-restrict \
+      #     --skip-webhooks-update
