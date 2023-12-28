@@ -31,7 +31,7 @@ describe("As a user I should be able to save selected filters with search querie
       ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
         cy.assertCanvasRowsNumber(PRODUCTS_LIST.dataGridTable, 21);
       });
-      const presetName = "hoodie";
+      const presetName = "Hoodie";
 
       searchItems(presetName);
       addPresetWithName(presetName);
