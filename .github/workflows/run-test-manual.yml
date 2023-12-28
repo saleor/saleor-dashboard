@@ -1,0 +1,67 @@
+name: Run test manually
+
+
+on: [pull_request]
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  initialize_cloud:
+    runs-on: ubuntu-22.04
+    outputs:
+      POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
+      POOL_INSTANCE: ${{ steps.pool_variables.outputs.POOL_INSTANCE }}
+      BASE_URL: ${{ steps.pool_variables.outputs.BASE_URL }}
+      API_URL: ${{ steps.pool_variables.outputs.API_URL }}
+      BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+      BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
+      BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
+    steps:
+      - name: Generate variables
+        id: cloud_variables
+        uses: ./.github/actions/prepare-tests-variables
+        with:
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          BACKUP_NAMESPACE: "snapshot-automation-tests"
+          MODE: pull-request
+
+      - name: Prepare instances
+        id: pool_variables
+        uses: ./.github/actions/prepare-instance
+        with:
+          STRATEGY: reload
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
+          POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
+          BACKUP_ID: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
+
+
+  # run-tests:
+  #   runs-on: ubuntu-latest
+  #   needs: initialize_cloud
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       shard: [1/2, 2/2]
+  #   steps:
+  #     - name: Run playwright tests
+  #       uses: ./.github/actions/run-pw-tests
+  #       with:
+  #         SHARD: ${{ matrix.shard }}
+  #         BASE_URL: ${{ needs.initialize_cloud.outputs.BASE_URL }}
+  #         API_URL: ${{ needs.initialize_cloud.outputs.API_URL }}
+  #         E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+  #         E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+  #         E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+
+  # merge-reports:
+  #   if: '!cancelled()'
+  #   needs: run-tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Merge playwright reports
+  #       uses: ./.github/actions/run-pw-tests

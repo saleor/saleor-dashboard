@@ -1,0 +1,56 @@
+name: Run Playwright tests
+description: Run e2e tests using Playwright
+inputs:
+  BASE_URL:
+    description: "Dashboard base url"
+    required: true
+  API_URL:
+    description: "API url"
+    required: true
+  E2E_USER_NAME:
+    description: "Username for e2e tests"
+    required: true
+  E2E_USER_PASSWORD:
+    description: "Password for e2e tests"
+    required: true
+  E2E_PERMISSIONS_USERS_PASSWORD:
+    description: "Permissions user password for e2e tests"
+    required: true
+  SHARD:
+    description: "Shard number"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: ".nvmrc"
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      shell: bash
+      run: npx playwright install --with-deps
+
+    - name: Run tests
+      shell: bash
+      env:
+        API_URI: ${{ inputs.API_URL }}
+        BASE_URL: ${{ inputs.BASE_URL }}
+        E2E_USER_NAME: ${{ inputs.E2E_USER_NAME }}
+        E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
+        E2E_PERMISSIONS_USERS_PASSWORD: ${{ inputs.E2E_PERMISSIONS_USERS_PASSWORD }}
+        SHARD_NUMBER: ${{ inputs.SHARD }}
+      run: npm run qa:pw-e2e -- --shard $SHARD_NUMBER
+
+    - name: Upload blob report to GitHub Actions Artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: all-blob-reports
+        path: blob-report
+        retention-days: 1

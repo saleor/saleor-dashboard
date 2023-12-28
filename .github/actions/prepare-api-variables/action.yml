@@ -1,0 +1,71 @@
+name: Prepare api variables
+description: Prepare env config for cloud
+
+inputs:
+  MODE:
+    description: "The mode of running tests (pull-request, release, main)"
+    required: true
+
+outputs:
+  BASE_URL:
+    description: "Dashboard base url"
+    value: ${{ steps.generate.outputs.BASE_URL }}
+  API_URL:
+    description: "API url"
+    value: ${{ steps.generate.outputs.API_URL }}
+  POOL_NAME:
+    description: "The name of the instance"
+    value: ${{ steps.generate.outputs.POOL_NAME }}
+  POOL_INSTANCE:
+    description: "The full URL of the instance"
+    value: ${{ steps.generate.outputs.POOL_INSTANCE }}
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: ./.github/actions
+
+    - name: Saleor login
+      uses: ./.github/actions/cli-login
+      with:
+        token: ${{ inputs.CLI_TOKEN }}
+
+    - name: Inject slug/short variables
+      if: ${{ inputs.MODE == 'pull-request' }}
+      uses: rlespinasse/github-slug-action@102b1a064a9b145e56556e22b18b19c624538d94
+
+    - name: Generate for pull request
+      if: ${{ inputs.MODE == 'pull-request' }}
+      id: generate
+      shell: bash
+      env:
+        PREFIX: pr-
+      run: |
+        echo "BASE_URL=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+        echo "API_URL=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+        echo "POOL_NAME=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
+        echo "POOL_INSTANCE=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+
+    - name: Generate for release branch
+      if: ${{ inputs.MODE == 'release' }}
+      id: generate
+      shell: bash
+      env:
+        BRANCH: ${{ github.ref_name }}
+      run: |
+        echo "BASE_URL=https://v${BRANCH}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
+        echo "API_URI=https://v${BRANCH}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+        echo "POOL_NAME=v${BRANCH}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+        echo "POOL_INSTANCE=https://v${BRANCH}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
+
+    - name: Generate for main
+      if: ${{ inputs.MODE == 'main' }}
+      id: generate
+      shell: bash
+      run: |
+        echo "BASE_URL=https://master.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
+        echo "API_URI=https://automation-dashboard.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+        echo "POOL_NAME=master.staging.saleor.cloud" >> $GITHUB_OUTPUT
+        echo "POOL_INSTANCE=https://master.staging.saleor.cloud >> $GITHUB_OUTPUT

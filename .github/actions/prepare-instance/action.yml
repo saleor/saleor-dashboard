@@ -1,0 +1,76 @@
+name: Prepare instance
+description: Prepare cloud instance for testing
+inputs:
+  STRATEGY:
+    description: "How to create the new instance (create|reload)"
+    required: false
+    default: "create"
+  CLI_TOKEN:
+    description: "Saleor cli token"
+    required: true
+  BASE_URL:
+    description: "Dashboard base url"
+    required: true
+  API_URL:
+    description: "API url"
+    required: true
+  POOL_NAME:
+    description: "The name of the instance"
+    required: true
+  POOL_INSTANCE:
+    description: "The full URL of the instance"
+    required: true
+  BACKUP_ID:
+    description: "The id of backup"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: ./.github/actions
+
+    - name: Saleor login
+      uses: ./.github/actions/cli-login
+      with:
+        token: ${{ inputs.CLI_TOKEN }}
+
+    - name: Instance check
+      if: ${{ inputs.STRATEGY == 'create' }}
+      shell: bash
+      id: instance_check
+      env:
+        SALEOR_CLI_ENV: staging
+        INSTANCE_NAME: ${{ inputs.POOL_NAME }}
+      run: |
+        INSTANCE_KEY=$(npx saleor env show "$INSTANCE_NAME" --json | jq .key)
+        echo "INSTANCE_KEY=$INSTANCE_KEY" >> $GITHUB_OUTPUT
+
+    - name: Reload snapshot
+      shell: bash
+      if: ${{ steps.instance_check.outputs.INSTANCE_KEY }}
+      env:
+        SALEOR_CLI_ENV: staging
+        BACKUP_ID: ${{ inputs.BACKUP_ID }}
+        INSTANCE_NAME: ${{ inputs.POOL_NAME }}
+      run: |
+        npx saleor backup restore "$BACKUP_ID" \
+          --environment="$INSTANCE_NAME" \
+          --skip-webhooks-update
+
+    - name: Create new instance
+      shell: bash
+      if: ${{ !steps.instance_check.outputs.INSTANCE_KEY }}
+      env:
+        SALEOR_CLI_ENV: staging
+        BACKUP_ID: ${{ inputs.BACKUP_ID }}
+        INSTANCE_NAME: ${{ inputs.POOL_NAME }}
+      run: |
+         npx saleor env create "$INSTANCE_NAME" \
+          --project=project-for-pr-testing \
+          --database=snapshot \
+          --restore-from="$BACKUP_ID" \
+          --saleor=saleor-master-staging \
+          --domain="$INSTANCE_NAME" \
+          --skip-restrict \
+          --skip-webhooks-update
