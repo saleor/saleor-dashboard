@@ -218,4 +218,22 @@ export class BasePage {
       expect(locator).toContainText(objectProperty);
     }
   }
+
+  async getNumberOfGridRowsWithText(expectedText: string) {
+    await this.gridCanvas
+      .locator("tr")
+      .filter({ hasText: expectedText })
+      .first()
+      .waitFor({ state: "attached" });
+    const gridRowsWithText = await this.gridCanvas
+      .locator("tr")
+      .filter({ hasText: expectedText })
+      .count();
+    return gridRowsWithText;
+  }
+  async getNumberOfGridRows() {
+    await this.gridCanvas.locator("tr").first().waitFor({ state: "attached" });
+    const gridRowsWithText = await this.gridCanvas.locator("tr").count();
+    return gridRowsWithText;
+  }
 }

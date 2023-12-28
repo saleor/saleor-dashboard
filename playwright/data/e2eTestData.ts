@@ -1,3 +1,13 @@
+export const VOUCHERS_AND_DISCOUNTS = {
+  vouchers: {
+    voucherToBeEditedWithFreeShipping: {
+      id: "Vm91Y2hlcjoyMDI%3D",
+    },
+    voucherToBeEditedUsageLimits: {
+      id: "Vm91Y2hlcjoyMDM%3D",
+    },
+  },
+};
 export const CUSTOMER_ADDRESS = {
   changeBillingAddress: {
     firstName: "Change Billing Address",
