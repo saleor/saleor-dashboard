@@ -41,7 +41,6 @@ runs:
       with:
         CLI_TOKEN: ${{ inputs.CLI_TOKEN }}
         BACKUP_NAMESPACE: ${{ inputs.BACKUP_NAMESPACE }}
-        MODE: ${{ inputs.MODE }}
 
     - name: Generate api
       id: api
