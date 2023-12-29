@@ -10,7 +10,7 @@ test.beforeEach(({ page }) => {
   vouchersPage = new VouchersPage(page);
 });
 
-test("TC: SALEOR_85 Create voucher with auto-generated codes and fixed amount discount @vouchers @e2e", async () => {
+test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount discount @vouchers @e2e", async () => {
   const codesQuantity = 5;
   const codesPrefix = "auto";
 
@@ -48,8 +48,8 @@ test("TC: SALEOR_85 Create voucher with auto-generated codes and fixed amount di
   ).toEqual(codesQuantity);
 });
 
-test("TC: SALEOR_86 Create voucher with manual code and percentage discount @vouchers @e2e", async () => {
-  const code = `code-TC: SALEOR_86 ${new Date().toISOString()}`;
+test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vouchers @e2e", async () => {
+  const code = `code-TC: SALEOR_85 ${new Date().toISOString()}`;
 
   await vouchersPage.gotoVoucherAddPage();
   await vouchersPage.typeVoucherName();
@@ -82,7 +82,7 @@ test("TC: SALEOR_86 Create voucher with manual code and percentage discount @vou
   ).toEqual(1);
 });
 
-test("TC: SALEOR_87 Edit voucher to have free shipping discount @vouchers @e2e", async () => {
+test("TC: SALEOR_86 Edit voucher to have free shipping discount @vouchers @e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(
     VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeEditedWithFreeShipping.id,
   );
@@ -107,7 +107,7 @@ test("TC: SALEOR_87 Edit voucher to have free shipping discount @vouchers @e2e",
     `Same amount of codes should have status Active displayed on grid after switching to free shipping`,
   ).toEqual(codesRowsAfterSave);
 });
-test("TC: SALEOR_88 Edit voucher Usage limit: used in total, per customer, staff only, code used once @vouchers @e2e", async () => {
+test("TC: SALEOR_87 Edit voucher Usage Limits: used in total, per customer, staff only, code used once @vouchers @e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(
     VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeEditedUsageLimits.id,
   );
