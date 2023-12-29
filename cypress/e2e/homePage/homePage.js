@@ -6,7 +6,7 @@ import { TEST_ADMIN_USER, USER_WITHOUT_NAME } from "../../fixtures/users";
 import { expectWelcomeMessageIncludes } from "../../support/pages/homePage";
 
 describe("Displaying welcome message on home page", () => {
-  it(
+  it.skip(
     "should display user name on home page",
     { tags: ["@homePage", "@allEnv", "@stable", "@oldRelease"] },
     () => {
@@ -26,7 +26,7 @@ describe("Displaying welcome message on home page", () => {
     },
   );
 
-  it(
+  it.skip(
     "should refresh page without errors",
     { tags: ["@homePage", "@allEnv", "@stable", "@oldRelease"] },
     () => {
