@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-22.04
     name: Cherry pick into release branch
     if: ${{ github.event.pull_request.merged == true }}
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Obtain release
         env:
