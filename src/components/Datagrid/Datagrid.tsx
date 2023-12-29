@@ -345,7 +345,13 @@ export const Datagrid: React.FC<DatagridProps> = ({
       }
 
       const overrideTheme: Partial<Theme> = {
-        bgCell: themeValues.colors.background.default1Hovered,
+        /*
+          Grid-specific colors. Transparency matters when we highlight entire row.
+        */
+        bgCell:
+          theme === "defaultLight"
+            ? "hsla(220, 18%, 97%, 1)"
+            : "hsla(211, 32%, 19%, 1)",
         bgCellMedium: themeValues.colors.background.default1Hovered,
       };
 

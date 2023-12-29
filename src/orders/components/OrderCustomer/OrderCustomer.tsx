@@ -263,7 +263,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         </>
       )}
       <Hr />
-      <CardContent>
+      <CardContent data-test-id="shipping-address-section">
         <div className={classes.sectionHeader}>
           <Typography className={classes.sectionHeaderTitle}>
             <FormattedMessage id="DP5VOH" defaultMessage="Shipping Address" />
@@ -306,7 +306,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         )}
       </CardContent>
       <Hr />
-      <CardContent>
+      <CardContent data-test-id="billing-address-section">
         <div className={classes.sectionHeader}>
           <Typography className={classes.sectionHeaderTitle}>
             <FormattedMessage id="c7/79+" defaultMessage="Billing Address" />
