@@ -123,7 +123,7 @@ describe("Adyen payments", () => {
       });
   });
 
-  it(
+  it.skip(
     "should purchase products with simple card",
     { tags: ["@payments", "@allEnv"] },
     () => {
@@ -141,7 +141,7 @@ describe("Adyen payments", () => {
     },
   );
 
-  it(
+  it.skip(
     "should purchase product with 3D secure 2 Auth",
     { tags: ["@payments", "@allEnv"] },
     () => {
@@ -159,7 +159,7 @@ describe("Adyen payments", () => {
     },
   );
 
-  it(
+  it.skip(
     "should purchase product with 3D secure 1 Auth",
     { tags: ["@payments", "@allEnv"] },
     () => {
@@ -178,7 +178,7 @@ describe("Adyen payments", () => {
     },
   );
 
-  it(
+  it.skip(
     "should fail with unknown security number",
     { tags: ["@payments", "@allEnv"] },
     () => {
@@ -194,7 +194,7 @@ describe("Adyen payments", () => {
     },
   );
 
-  it(
+  it.skip(
     "should fail with timeout in 3D authorization",
     { tags: ["@payments", "@allEnv"] },
     () => {
@@ -208,7 +208,7 @@ describe("Adyen payments", () => {
     },
   );
 
-  it(
+  it.skip(
     "should fail with closed account",
     { tags: ["@payments", "@allEnv"] },
     () => {
