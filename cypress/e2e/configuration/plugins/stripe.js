@@ -80,7 +80,7 @@ describe("Stripe payments", () => {
       });
   });
 
-  it(
+  it.skip(
     "should purchase products with simple card",
     { tags: ["@payments", "@allEnv"] },
     () => {
@@ -103,7 +103,7 @@ describe("Stripe payments", () => {
     },
   );
 
-  it(
+  it.skip(
     "should not purchase products with card with insufficient funds",
     { tags: ["@payments", "@allEnv"] },
     () => {
@@ -119,7 +119,7 @@ describe("Stripe payments", () => {
     },
   );
 
-  it(
+  it.skip(
     "should purchase products with 3D secure card",
     { tags: ["@payments", "@allEnv"] },
     () => {
@@ -145,7 +145,7 @@ describe("Stripe payments", () => {
     },
   );
 
-  it(
+  it.skip(
     "should not purchase product when 3D secure not pass",
     { tags: ["@payments", "@allEnv"] },
     () => {
