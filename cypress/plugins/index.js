@@ -36,6 +36,9 @@ module.exports = async (on, config) => {
   config.env.PERMISSIONS_USERS_PASSWORD =
     process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD;
   config.env.MAILPITURL = process.env.CYPRESS_MAILPITURL;
+  config.env.USER_EMAIL_SENDER = process.env.CYPRESS_USER_EMAIL_SENDER;
+  config.env.USER_EMAIL_HOST = process.env.CYPRESS_USER_EMAIL_HOST;
+  config.env.USER_EMAIL_PORT = process.env.CYPRESS_USER_EMAIL_PORT;
   config.env.grepTags = process.env.CYPRESS_grepTags;
   config.baseUrl = process.env.BASE_URL;
   config.env.LOCALE_CODE = process.env.LOCALE_CODE;

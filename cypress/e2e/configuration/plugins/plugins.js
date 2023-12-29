@@ -18,6 +18,29 @@ import {
   getMailWithResetPasswordLink,
 } from "../../../support/api/utils/users";
 
+function activateEmailPlugin({ id, channel, userEmailSender, userEmailHost, userEmailPort, active = true  }) {
+  const channelLine = channel ? `channelId: "${channel}"` : "";
+
+  const mutation = `mutation{
+    pluginUpdate(id: "${id}" ${channelLine} input:{
+      active:${active}, 
+      configuration: [
+        {name: "sender_address", value: "${userEmailSender}"}, 
+        {name: "host", value: "${userEmailHost}"}, 
+        {name: "port", value: "${userEmailPort}"}
+      ]
+    }){
+      errors{
+        field
+        message
+      }
+    } 
+  }`;
+  console.log(mutation);
+  return cy.sendRequestWithQuery(mutation);
+}
+
+
 describe("As an admin I want to manage plugins", () => {
   const startsWith = "Plugins";
   const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -29,9 +52,12 @@ describe("As an admin I want to manage plugins", () => {
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
       activatePlugin({ id: "mirumee.notifications.admin_email" });
-      activatePlugin({
+      activateEmailPlugin({
         id: "mirumee.notifications.user_email",
         channel: channel.id,
+        userEmailSender: Cypress.env("USER_EMAIL_SENDER"),
+        userEmailHost: Cypress.env("USER_EMAIL_HOST"),
+        userEmailPort: Cypress.env("USER_EMAIL_PORT"),
       });
     });
   });
