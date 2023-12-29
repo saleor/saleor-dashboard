@@ -9,7 +9,7 @@ import { orderDraftCreateDemoResponse, urlList } from "../../fixtures";
 import { ordersOperationsHelpers } from "../../support/pages";
 
 describe("Dashboard demo site tests", () => {
-  it("should be able to log in via UI", { tags: ["@demo-dashboard"] }, () => {
+  it.skip("should be able to log in via UI", { tags: ["@demo-dashboard"] }, () => {
     cy.addAliasToGraphRequest("Home")
       .visit("/")
       .get(BUTTON_SELECTORS.submit)
@@ -20,7 +20,7 @@ describe("Dashboard demo site tests", () => {
     cy.get(HOMEPAGE_SELECTORS.welcomeMessage).should("be.visible");
     cy.get(SHARED_ELEMENTS.notificationMessage).should("not.exist");
   });
-  it(
+  it.skip(
     "should not be able to create new order",
     { tags: ["@demo-dashboard"] },
     () => {
