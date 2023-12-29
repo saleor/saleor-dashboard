@@ -59,7 +59,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
   }));
 
   return (
-    <Card>
+    <Card data-test-id="value-section">
       <CardTitle
         title={intl.formatMessage({
           id: "/oaqFS",

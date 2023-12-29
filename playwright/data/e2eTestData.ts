@@ -6,6 +6,16 @@ export const VOUCHERS_AND_DISCOUNTS = {
     voucherToBeEditedUsageLimits: {
       id: "Vm91Y2hlcjoyMDM%3D",
     },
+    voucherToBeEditedMinimumQuantity: {
+      id: "Vm91Y2hlcjoyMDQ%3D",
+    },
+    voucherToBeBulkDeleted: {
+      names: ["Bulk delete voucher 1/2", "Bulk delete voucher 2/2"],
+    },
+    voucherToBeDeleted: {
+      name: "Delete voucher",
+      id: "Vm91Y2hlcjoyMDY%3D",
+    },
   },
 };
 export const CUSTOMER_ADDRESS = {

@@ -82,7 +82,7 @@ const VoucherRequirements = ({
   ];
 
   return (
-    <Card>
+    <Card data-test-id="minimum-requirements-section">
       <CardTitle
         title={intl.formatMessage({
           id: "yhv3HX",
@@ -137,7 +137,10 @@ const VoucherRequirements = ({
                         id => id === listing.id,
                       );
                       return (
-                        <TableRowLink key={listing?.id || `skeleton-${index}`}>
+                        <TableRowLink
+                          key={listing?.id || `skeleton-${index}`}
+                          data-test-id={listing?.name}
+                        >
                           <TableCell>
                             <Typography>
                               {listing?.name || <Skeleton />}
@@ -189,6 +192,7 @@ const VoucherRequirements = ({
           </>
         ) : data.requirementsPicker === RequirementsPicker.ITEM ? (
           <TextField
+            data-test-id="minimum-quantity-of-items-input"
             disabled={disabled}
             error={!!formErrors.minCheckoutItemsQuantity}
             helperText={getDiscountErrorMessage(

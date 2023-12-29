@@ -178,7 +178,10 @@ export class BasePage {
   }
 
   async findRowIndexBasedOnText(searchTextArray: string[]) {
-    await this.waitForGrid();
+    await this.gridCanvas
+      .locator("table tr")
+      .first()
+      .waitFor({ state: "attached" });
     let rowIndexes: number[] = [];
 
     const rows = await this.page.$$eval("table tr", rows =>

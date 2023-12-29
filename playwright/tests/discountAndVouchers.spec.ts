@@ -1,3 +1,4 @@
+import { AVAILABILITY } from "@data/copy";
 import { VOUCHERS_AND_DISCOUNTS } from "@data/e2eTestData";
 import { VouchersPage } from "@pages/vouchersPage";
 import { expect, test } from "@playwright/test";
@@ -67,7 +68,9 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
   ).toEqual(1);
 
   await vouchersPage.clickPercentDiscountTypeButton();
+  await vouchersPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected();
   await vouchersPage.typeDiscountValueInChannel("Channel-PLN", "50");
+
   await vouchersPage.clickSaveButton();
 
   await vouchersPage.expectSuccessBanner();
@@ -80,6 +83,9 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
     manualActiveCodesRows,
     `Given codes: ${code} should have status Active displayed on grid`,
   ).toEqual(1);
+  await vouchersPage.page
+    .getByText(AVAILABILITY.in1OutOf7Channels)
+    .waitFor({ state: "visible" });
 });
 
 test("TC: SALEOR_86 Edit voucher to have free shipping discount @vouchers @e2e", async () => {
@@ -128,4 +134,80 @@ test("TC: SALEOR_87 Edit voucher Usage Limits: used in total, per customer, staf
       .count(),
     "All usage limit checkboxes should be checked",
   ).toEqual(4);
+});
+
+test("TC: SALEOR_89 Create voucher with minimum value of order @vouchers @e2e", async () => {
+  const code = `code-TC: SALEOR_89 ${new Date().toISOString()}`;
+
+  await vouchersPage.gotoVoucherAddPage();
+  await vouchersPage.typeVoucherName();
+  await vouchersPage.clickAddCodeButton();
+  await vouchersPage.clickManualGeneratedCodesItem();
+  await vouchersPage.addVoucherCodeDialog.typeCode(code);
+  await vouchersPage.addVoucherCodeDialog.clickConfirmButton();
+  await vouchersPage.waitForGrid();
+  const manualCodesRows = await vouchersPage.getNumberOfGridRowsWithText(code);
+  await expect(
+    manualCodesRows,
+    `Manually added code: ${code} should be visible on grid`,
+  ).toEqual(1);
+
+  await vouchersPage.clickMinimalOrderValueButton();
+  await vouchersPage.typeMinimumOrderValue("Channel-PLN", "50");
+  await vouchersPage.clickSaveButton();
+
+  await vouchersPage.expectSuccessBanner();
+  await vouchersPage.waitForGrid();
+  const manualActiveCodesRows = await vouchersPage.getNumberOfGridRowsWithText(
+    "Active",
+  );
+
+  await expect(
+    manualActiveCodesRows,
+    `Given codes: ${code} should have status Active displayed on grid`,
+  ).toEqual(1);
+});
+test("TC: SALEOR_90 Edit voucher minimum quantity of items @vouchers @e2e", async () => {
+  await vouchersPage.gotoExistingVoucherPage(
+    VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeEditedMinimumQuantity.id,
+  );
+  await vouchersPage.clickMinimumQuantityOfItemsButton();
+  await vouchersPage.typeMinimumQuantityOfItems("4");
+  await vouchersPage.clickSaveButton();
+  await vouchersPage.expectSuccessBanner();
+  await vouchersPage.waitForGrid();
+});
+test("TC: SALEOR_91 Delete voucher @vouchers @e2e", async () => {
+  await vouchersPage.gotoExistingVoucherPage(
+    VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeDeleted.id,
+  );
+
+  await vouchersPage.clickDeleteSingleVoucherButton();
+  await vouchersPage.deleteVoucherDialog.clickDeleteButton();
+  await vouchersPage.expectSuccessBanner();
+  await vouchersPage.createVoucherButton.waitFor({ state: "visible" });
+  await vouchersPage.waitForGrid();
+  await expect(
+    await vouchersPage.findRowIndexBasedOnText([
+      VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeDeleted.name,
+    ]),
+    `Given vouchers: ${VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
+  ).toEqual([]);
+});
+test("TC: SALEOR_92 Bulk delete voucher @vouchers @e2e", async () => {
+  await vouchersPage.gotoVouchersListPage();
+  await vouchersPage.checkListRowsBasedOnContainingText(
+    VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names,
+  );
+
+  await vouchersPage.clickBulkDeleteButton();
+  await vouchersPage.deleteVouchersDialog.clickDeleteButton();
+  await vouchersPage.expectSuccessBanner();
+  await vouchersPage.waitForGrid();
+  await expect(
+    await vouchersPage.findRowIndexBasedOnText(
+      VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names,
+    ),
+    `Given vouchers: ${VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
+  ).toEqual([]);
 });
