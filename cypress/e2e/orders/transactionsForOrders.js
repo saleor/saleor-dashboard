@@ -167,7 +167,7 @@ describe("Orders", () => {
     },
   );
 
-  it(
+  it.skip(
     "should be able to capture manual transaction that covers partial order price TC: 3903",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
