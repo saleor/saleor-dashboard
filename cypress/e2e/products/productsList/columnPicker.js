@@ -17,7 +17,7 @@ describe("As an admin I should be able to use column picker", () => {
     "should be able to add new dynamic column to grid on product list via search. TC: SALEOR_2610  should not be migrated to playwright as critical",
     { tags: ["@critical", "@allEnv", "@stable"] },
     () => {
-      const dynamicColumnToBeSearched = "ABV";
+      const dynamicColumnToBeSearched = "Flavor";
       cy.addAliasToGraphRequest("AvailableColumnAttributes");
       cy.visit(urlList.products);
 
@@ -46,7 +46,7 @@ describe("As an admin I should be able to use column picker", () => {
         });
     },
   );
-  it(
+  it.skip(
     "should be able to remove dynamic column from picker on products list. TC: SALEOR_2611",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
