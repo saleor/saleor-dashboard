@@ -6,23 +6,10 @@ import {
   discountListUrl,
   DiscountUrlQueryParams,
 } from "@dashboard/discounts/discountsUrls";
-import { sortAPIRules } from "@dashboard/discounts/utils";
-import {
-  PromotionDetailsDocument,
-  PromotionDetailsFragment,
-  PromotionRuleDetailsFragment,
-  usePromotionDeleteMutation,
-  usePromotionDetailsQuery,
-  usePromotionRuleCreateMutation,
-  usePromotionRuleDeleteMutation,
-  usePromotionRuleUpdateMutation,
-  usePromotionUpdateMutation,
-} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -34,6 +21,12 @@ import {
   getRuleConditionsOptionsDetailsMap,
   useFetchConditionsOptionsDetails,
 } from "./hooks/useFetchConditionsOptionsDetails";
+import { usePromotionData } from "./hooks/usePromotionData";
+import { usePromotionDelete } from "./hooks/usePromotionDelete";
+import { usePromotionRuleCreate } from "./hooks/usePromotionRuleCreate";
+import { usePromotionRuleDelete } from "./hooks/usePromotionRuleDelete";
+import { usePromotionRuleUpdate } from "./hooks/usePromotionRuleUpdate";
+import { usePromotionUpdate } from "./hooks/usePromotionUpdate";
 
 interface DiscountDetailsProps {
   id: string;
@@ -41,25 +34,12 @@ interface DiscountDetailsProps {
 }
 
 export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
-  const notify = useNotifier();
   const { availableChannels } = useAppChannel(false);
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const initialLoading = useRef(true);
-
-  const { data: promotionData, loading } = usePromotionDetailsQuery({
-    variables: {
-      id,
-    },
-  });
-
-  useEffect(() => {
-    if (!initialLoading.current && !loading) {
-      initialLoading.current = false;
-    }
-  }, [loading]);
+  const { promotionData, loading } = usePromotionData(id);
 
   const { ruleConditionsOptionsDetails, ruleConditionsOptionsDetailsLoading } =
     useFetchConditionsOptionsDetails(promotionData);
@@ -68,184 +48,18 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
     ruleConditionsOptionsDetails,
   );
 
-  const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation({
-    update(cache, { data }) {
-      if (data?.promotionUpdate?.errors?.length === 0) {
-        const cachedPromotion = cache.readQuery<{
-          promotion: PromotionDetailsFragment;
-        }>({
-          query: PromotionDetailsDocument,
-          variables: {
-            id,
-          },
-        });
+  const { promotionUpdate, promotionUpdateOpts } = usePromotionUpdate(id);
 
-        if (!cachedPromotion?.promotion) {
-          return;
-        }
+  const { promotionDelete, promotionDeleteOpts } = usePromotionDelete();
 
-        cache.writeQuery({
-          query: PromotionDetailsDocument,
-          data: {
-            promotion: {
-              ...cachedPromotion.promotion,
-              ...data.promotionUpdate.promotion,
-            },
-          },
-        });
-      }
-    },
-    onCompleted(data) {
-      if (data?.promotionUpdate?.errors?.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+  const { promotionRuleUpdate, promotionRuleUpdateOpts } =
+    usePromotionRuleUpdate(id);
 
-  const [promotionDelete, promotionDeleteOpts] = usePromotionDeleteMutation({
-    onCompleted(data) {
-      if (data?.promotionDelete?.errors?.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "4LRapg",
-            defaultMessage: "Discount removed",
-          }),
-        });
-        navigate(discountListUrl());
-      }
-    },
-  });
+  const { promotionRuleCreate, promotionRuleCreateOpts } =
+    usePromotionRuleCreate(id);
 
-  const [promotionRuleUpdate, promotionRuleUpdateOpts] =
-    usePromotionRuleUpdateMutation({
-      update(cache, { data }) {
-        if (data?.promotionRuleUpdate?.errors?.length === 0) {
-          const cachedPromotion = cache.readQuery<{
-            promotion: PromotionDetailsFragment;
-          }>({
-            query: PromotionDetailsDocument,
-            variables: {
-              id,
-            },
-          });
-
-          if (!cachedPromotion?.promotion) {
-            return;
-          }
-
-          cache.writeQuery({
-            query: PromotionDetailsDocument,
-            data: {
-              promotion: {
-                ...cachedPromotion.promotion,
-                rules: sortAPIRules([
-                  ...(cachedPromotion.promotion.rules?.filter(
-                    rule =>
-                      rule.id !== data.promotionRuleUpdate?.promotionRule?.id,
-                  ) ?? []),
-                  data.promotionRuleUpdate?.promotionRule,
-                ] as PromotionRuleDetailsFragment[]),
-              },
-            },
-          });
-        }
-      },
-      onCompleted(data) {
-        if (data?.promotionRuleUpdate?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
-
-  const [promotionRuleCreate, promotionRuleCreateOpts] =
-    usePromotionRuleCreateMutation({
-      update(cache, { data }) {
-        if (data?.promotionRuleCreate?.errors?.length === 0) {
-          const cachedPromotion = cache.readQuery<{
-            promotion: PromotionDetailsFragment;
-          }>({
-            query: PromotionDetailsDocument,
-            variables: {
-              id,
-            },
-          });
-
-          if (!cachedPromotion?.promotion) {
-            return;
-          }
-
-          cache.writeQuery({
-            query: PromotionDetailsDocument,
-            data: {
-              promotion: {
-                ...cachedPromotion.promotion,
-                rules: sortAPIRules([
-                  ...(cachedPromotion.promotion?.rules ?? []),
-                  data.promotionRuleCreate.promotionRule,
-                ] as PromotionRuleDetailsFragment[]),
-              },
-            },
-          });
-        }
-      },
-      onCompleted(data) {
-        if (data?.promotionRuleCreate?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
-
-  const [promotionRuleDelete, promotionRuleDeleteOpts] =
-    usePromotionRuleDeleteMutation({
-      update(cache, { data }) {
-        if (data?.promotionRuleDelete?.errors?.length === 0) {
-          const cachedPromotion = cache.readQuery<{
-            promotion: PromotionDetailsFragment;
-          }>({
-            query: PromotionDetailsDocument,
-            variables: {
-              id,
-            },
-          });
-
-          if (!cachedPromotion?.promotion) {
-            return;
-          }
-
-          cache.writeQuery({
-            query: PromotionDetailsDocument,
-            data: {
-              promotion: {
-                ...cachedPromotion.promotion,
-                rules:
-                  cachedPromotion.promotion.rules?.filter(
-                    (rule: PromotionRuleDetailsFragment) =>
-                      rule.id !== data?.promotionRuleDelete?.promotionRule?.id,
-                  ) ?? [],
-              },
-            },
-          });
-        }
-      },
-      onCompleted(data) {
-        if (data?.promotionRuleDelete?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
+  const { promotionRuleDelete, promotionRuleDeleteOpts } =
+    usePromotionRuleDelete(id);
 
   const onSubmit = createUpdateHandler(promotionData?.promotion, variables =>
     promotionUpdate({ variables }),
