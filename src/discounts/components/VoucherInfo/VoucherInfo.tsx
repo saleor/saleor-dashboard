@@ -44,6 +44,7 @@ const VoucherInfo = ({
           })}
           value={data.name}
           onChange={onChange}
+          data-test-id="voucher-name-input"
         />
       </DashboardCard.Content>
     </DashboardCard>

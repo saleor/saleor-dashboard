@@ -1,6 +1,10 @@
+import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
 import { expect, Page } from "@playwright/test";
 
 export class RightSideDetailsPage {
+  readonly channelSelectDialog: ChannelSelectDialog;
+  readonly page: Page;
+
   constructor(
     page: Page,
     readonly selectWarehouseShippingMethodButton = page.getByTestId(
@@ -58,7 +62,10 @@ export class RightSideDetailsPage {
     readonly selectCustomerOption = page.getByTestId(
       "single-autocomplete-select-option",
     ),
-  ) {}
+  ) {
+    this.page = page;
+    this.channelSelectDialog = new ChannelSelectDialog(page);
+  }
 
   async clickEditBillingAddressButton() {
     await this.editBillingAddressButton.click();
@@ -122,5 +129,18 @@ export class RightSideDetailsPage {
 
   async selectCustomer(customer = "allison.freeman@example.com") {
     await this.selectCustomerOption.locator(`text=${customer}`).click();
+  }
+
+  async selectOneChannelAsAvailableWhenMoreSelected() {
+    await this.manageChannelsButton.click();
+    await this.channelSelectDialog.clickAllChannelsCheckbox();
+    await this.channelSelectDialog.selectFirstChannel();
+    await this.channelSelectDialog.clickConfirmButton();
+  }
+  async selectOneChannelAsAvailableWhenNoneSelected() {
+    await this.manageChannelsButton.click();
+    await this.channelSelectDialog.selectFirstChannel();
+    await this.channelSelectDialog.clickConfirmButton();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 }

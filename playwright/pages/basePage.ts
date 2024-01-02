@@ -178,7 +178,10 @@ export class BasePage {
   }
 
   async findRowIndexBasedOnText(searchTextArray: string[]) {
-    await this.waitForGrid();
+    await this.gridCanvas
+      .locator("table tr")
+      .first()
+      .waitFor({ state: "attached" });
     let rowIndexes: number[] = [];
 
     const rows = await this.page.$$eval("table tr", rows =>
@@ -217,5 +220,23 @@ export class BasePage {
     for (const objectProperty of objectValuesArray) {
       expect(locator).toContainText(objectProperty);
     }
+  }
+
+  async getNumberOfGridRowsWithText(expectedText: string) {
+    await this.gridCanvas
+      .locator("tr")
+      .filter({ hasText: expectedText })
+      .first()
+      .waitFor({ state: "attached" });
+    const gridRowsWithText = await this.gridCanvas
+      .locator("tr")
+      .filter({ hasText: expectedText })
+      .count();
+    return gridRowsWithText;
+  }
+  async getNumberOfGridRows() {
+    await this.gridCanvas.locator("tr").first().waitFor({ state: "attached" });
+    const gridRowsWithText = await this.gridCanvas.locator("tr").count();
+    return gridRowsWithText;
   }
 }
