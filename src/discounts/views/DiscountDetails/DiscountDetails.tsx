@@ -21,7 +21,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -48,14 +48,17 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
 
   const initialLoading = useRef(true);
 
-  const { data: promotionData } = usePromotionDetailsQuery({
+  const { data: promotionData, loading } = usePromotionDetailsQuery({
     variables: {
       id,
     },
-    onCompleted() {
-      initialLoading.current = false;
-    },
   });
+
+  useEffect(() => {
+    if (!initialLoading.current && !loading) {
+      initialLoading.current = false;
+    }
+  }, [loading]);
 
   const { ruleConditionsOptionsDetails, ruleConditionsOptionsDetailsLoading } =
     useFetchConditionsOptionsDetails(promotionData);
@@ -262,7 +265,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         data={promotionData?.promotion}
         errors={getMutationErrors(promotionUpdateOpts)}
         disabled={
-          initialLoading.current ||
+          loading ||
           promotionUpdateOpts.loading ||
           promotionDeleteOpts.loading ||
           promotionRuleUpdateOpts.loading ||
