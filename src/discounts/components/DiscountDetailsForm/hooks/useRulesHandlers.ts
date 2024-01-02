@@ -1,5 +1,4 @@
 import { Rule } from "@dashboard/discounts/models";
-import { sortRules } from "@dashboard/discounts/utils";
 import {
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,
@@ -29,15 +28,10 @@ export const useRulesHandlers = ({
   onRuleCreateSubmit,
   onRuleDeleteSubmit,
 }: UseRulesHandlersProps) => {
-  const [rules, setRules] = useState<Rule[]>([]);
   const [rulesErrors, setRulesErrors] = useState<Array<CommonError<any>>>([]);
   const [labelsMap, setLabelMap] = useState<Record<string, string>>({});
 
-  useEffect(() => {
-    if (data?.rules) {
-      setRules(data.rules.map(rule => Rule.fromAPI(rule, labelsMap)) ?? []);
-    }
-  }, [data?.rules, labelsMap]);
+  const rules = data?.rules?.map(rule => Rule.fromAPI(rule, labelsMap)) ?? [];
 
   useEffect(() => {
     setLabelMap(labels => {
@@ -55,28 +49,6 @@ export const useRulesHandlers = ({
     }));
   };
 
-  const updateRulesArray = (rule: Rule, index: number) => {
-    updateLabels(rule);
-    setRules(prevRules => {
-      const newRules = [...prevRules];
-      newRules[index] = rule;
-      return newRules;
-    });
-  };
-
-  const addNewRuleToArray = (rule: Rule) => {
-    updateLabels(rule);
-    setRules(prevRules => sortRules([...prevRules, rule]));
-  };
-
-  const removeRuleFromArray = (index: number) => {
-    setRules(prevRules => {
-      const newRules = [...prevRules];
-      newRules.splice(index, 1);
-      return newRules;
-    });
-  };
-
   const onRuleSubmit = async (rule: Rule, ruleEditIndex: number | null) => {
     let errors: Array<
       CommonError<
@@ -85,7 +57,7 @@ export const useRulesHandlers = ({
     > = [];
     const ruleObj = Rule.fromFormValues(rule);
     if (ruleEditIndex !== null) {
-      updateRulesArray(ruleObj, ruleEditIndex);
+      updateLabels(rule);
       errors = await onRuleUpdateSubmit(ruleObj);
 
       if (errors.length > 0) {
@@ -95,8 +67,6 @@ export const useRulesHandlers = ({
       errors = await onRuleCreateSubmit(ruleObj);
       if (errors.length > 0) {
         setRulesErrors(errors);
-      } else {
-        addNewRuleToArray(ruleObj);
       }
     }
   };
@@ -112,7 +82,6 @@ export const useRulesHandlers = ({
     }
 
     await onRuleDeleteSubmit(ruleId);
-    removeRuleFromArray(ruleDeleteIndex);
   };
 
   return {
