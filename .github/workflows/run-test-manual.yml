@@ -62,6 +62,10 @@ jobs:
       matrix:
         shard: [1/2, 2/2]
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ./.github/actions
+
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
