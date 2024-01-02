@@ -32,7 +32,7 @@ runs:
         token: ${{ inputs.CLI_TOKEN }}
 
     - name: Instance check
-      if: ${{ inputs.STRATEGY == 'create' }}
+      if: ${{ inputs.STRATEGY == 'reload' }}
       shell: bash
       id: instance_check
       env:

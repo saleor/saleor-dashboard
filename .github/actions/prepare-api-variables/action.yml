@@ -3,7 +3,7 @@ description: Prepare env config for cloud
 
 inputs:
   MODE:
-    description: "The mode of running tests (pr, release, main)"
+    description: "The mode of running tests (pull-request, release, main)"
     required: true
 
 outputs:
