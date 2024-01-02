@@ -53,7 +53,7 @@ runs:
 
         if [[ $MODE == 'release' ]]; then
           echo "BASE_URL=https://v${GITHUB_REF_SLUG}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
-          echo "API_URI=https://v${GITHUB_REF_SLUG}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "API_URL=https://v${GITHUB_REF_SLUG}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
           echo "POOL_NAME=v${GITHUB_REF_SLUG}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://v${GITHUB_REF_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${GITHUB_REF_SLUG}" >> $GITHUB_OUTPUT
@@ -63,7 +63,7 @@ runs:
 
         if [[ $MODE == 'main' ]]; then
           echo "BASE_URL=https://master.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
-          echo "API_URI=https://automation-dashboard.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "API_URL=https://automation-dashboard.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
           echo "POOL_NAME=master" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://master.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
