@@ -62,10 +62,10 @@ runs:
         fi
 
         if [[ $MODE == 'main' ]]; then
-          echo "BASE_URL=https://master.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
+          echo "BASE_URL=https://automation-dashboard.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
           echo "API_URL=https://automation-dashboard.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
-          echo "POOL_NAME=master" >> $GITHUB_OUTPUT
-          echo "POOL_INSTANCE=https://master.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=automation-dashboard" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://automation-dashboard.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
 
           exit 0
