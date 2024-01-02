@@ -1,8 +1,8 @@
 import { usePromotionDetailsQuery } from "@dashboard/graphql";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 export const usePromotionData = (id: string) => {
-  const isLoaded = useRef(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const { data: promotionData, loading } = usePromotionDetailsQuery({
     variables: {
@@ -11,13 +11,13 @@ export const usePromotionData = (id: string) => {
   });
 
   useEffect(() => {
-    if (!isLoaded.current && !loading && promotionData?.promotion) {
-      isLoaded.current = true;
+    if (!isLoaded && !loading && promotionData?.promotion) {
+      setIsLoaded(true);
     }
-  }, [loading, isLoaded.current, promotionData?.promotion]);
+  }, [loading, isLoaded, promotionData?.promotion]);
 
   return {
     promotionData,
-    loading: !isLoaded.current,
+    loading: !isLoaded,
   };
 };
