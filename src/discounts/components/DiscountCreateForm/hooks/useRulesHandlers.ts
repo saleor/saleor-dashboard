@@ -1,7 +1,6 @@
 import { Rule } from "@dashboard/discounts/models";
+import { sortRules } from "@dashboard/discounts/utils";
 import { useState } from "react";
-
-import { ruleAlphabetically } from "../../DiscountDetailsForm/utils";
 
 export const useRulesHandlers = () => {
   const [rules, setRules] = useState<Rule[]>([]);
@@ -19,7 +18,7 @@ export const useRulesHandlers = () => {
         return rules;
       });
     } else {
-      setRules([...rules, ruleObj].sort(ruleAlphabetically));
+      setRules(sortRules([...rules, ruleObj]));
     }
   };
 

@@ -1,6 +1,12 @@
-import { SaleDetailsQuery, VoucherDetailsQuery } from "@dashboard/graphql";
+import {
+  PromotionRuleDetailsFragment,
+  SaleDetailsQuery,
+  VoucherDetailsQuery,
+} from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { sortAlphabetically } from "@dashboard/utils/sort";
 
+import { Rule } from "./models";
 import {
   SearchCategoriesOpts,
   SearchCollectionOpts,
@@ -101,4 +107,12 @@ export function getFilteredProductVariants(
       variant => !excludedVariantsIds.includes(variant.id),
     ),
   }));
+}
+
+export function sortRules(rules: Rule[]) {
+  return rules.sort(sortAlphabetically("name"));
+}
+
+export function sortAPIRules(rules: PromotionRuleDetailsFragment[]) {
+  return rules.sort(sortAlphabetically("name"));
 }

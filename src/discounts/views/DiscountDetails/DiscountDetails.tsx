@@ -1,13 +1,12 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountDeleteModal } from "@dashboard/discounts/components/DiscountDeleteModal";
-import { ruleAlphabetically } from "@dashboard/discounts/components/DiscountDetailsForm/utils";
 import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage";
 import {
   discountListUrl,
   DiscountUrlQueryParams,
 } from "@dashboard/discounts/discountsUrls";
-import { Rule } from "@dashboard/discounts/models";
+import { sortAPIRules } from "@dashboard/discounts/utils";
 import {
   PromotionDetailsDocument,
   PromotionDetailsFragment,
@@ -22,7 +21,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -47,9 +46,14 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const { data: promotionData, loading } = usePromotionDetailsQuery({
+  const initialLoading = useRef(true);
+
+  const { data: promotionData } = usePromotionDetailsQuery({
     variables: {
       id,
+    },
+    onCompleted() {
+      initialLoading.current = false;
     },
   });
 
@@ -126,18 +130,13 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
             data: {
               promotion: {
                 ...promotion,
-                rules: (
-                  [
-                    ...promotion.rules?.filter(
-                      rule =>
-                        rule.id !== data.promotionRuleUpdate?.promotionRule?.id,
-                    ),
-                    Rule.fromAPI(
-                      data.promotionRuleUpdate?.promotionRule,
-                      ruleConditionsOptionsDetailsMap,
-                    ),
-                  ] as Rule[]
-                ).sort(ruleAlphabetically),
+                rules: sortAPIRules([
+                  ...promotion.rules?.filter(
+                    rule =>
+                      rule.id !== data.promotionRuleUpdate?.promotionRule?.id,
+                  ),
+                  data.promotionRuleUpdate?.promotionRule,
+                ]),
               },
             },
           });
@@ -171,15 +170,10 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
             data: {
               promotion: {
                 ...promotion,
-                rules: (
-                  [
-                    promotion.rules,
-                    Rule.fromAPI(
-                      data.promotionRuleCreate.promotionRule,
-                      ruleConditionsOptionsDetailsMap,
-                    ),
-                  ] as Rule[]
-                ).sort(ruleAlphabetically),
+                rules: sortAPIRules([
+                  ...promotion.rules,
+                  data.promotionRuleCreate.promotionRule,
+                ]),
               },
             },
           });
@@ -268,7 +262,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         data={promotionData?.promotion}
         errors={getMutationErrors(promotionUpdateOpts)}
         disabled={
-          loading ||
+          initialLoading.current ||
           promotionUpdateOpts.loading ||
           promotionDeleteOpts.loading ||
           promotionRuleUpdateOpts.loading ||
