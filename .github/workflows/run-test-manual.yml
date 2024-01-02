@@ -29,7 +29,7 @@ jobs:
         with:
           CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
           BACKUP_NAMESPACE: "snapshot-automation-tests"
-          MODE: release
+          MODE: main
 
       - name: Prepare instances
         id: pool_variables
