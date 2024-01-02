@@ -5,33 +5,34 @@ import {
   useRuleConditionsSelectedOptionsDetailsQuery,
 } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 export const useFetchConditionsOptionsDetails = (
   promotionData: PromotionDetailsQuery | undefined,
 ) => {
-  const hasBeenFetched = useRef(false);
-
   const conditionsOptionsIdsToFetch =
     getAllConditionsOptionsIdsToFetch(promotionData);
+
+  const [hasBeenLoaded, setHasBeenLoaded] = useState(false);
 
   const { data: ruleConditionsOptionsDetails, loading } =
     useRuleConditionsSelectedOptionsDetailsQuery({
       variables: conditionsOptionsIdsToFetch,
-      skip: Object.values(conditionsOptionsIdsToFetch).every(
-        idds => idds.length === 0 || hasBeenFetched.current,
-      ),
+      skip:
+        Object.values(conditionsOptionsIdsToFetch).every(
+          ids => ids.length === 0,
+        ) || hasBeenLoaded,
     });
 
   useEffect(() => {
-    if (ruleConditionsOptionsDetails && !hasBeenFetched.current) {
-      hasBeenFetched.current = true;
+    if (promotionData?.promotion && !loading) {
+      setHasBeenLoaded(true);
     }
-  }, [ruleConditionsOptionsDetails]);
+  }, [promotionData, loading]);
 
   return {
     ruleConditionsOptionsDetails,
-    ruleConditionsOptionsDetailsLoading: loading,
+    ruleConditionsOptionsDetailsLoading: !hasBeenLoaded,
   };
 };
 
@@ -56,44 +57,43 @@ export function getAllConditionsOptionsIdsToFetch(
     return initAllConditionsIds;
   }
 
-  return data.promotion.rules.reduce<AllConditionsIds>((acc, rule) => {
-    Object.entries(rule.cataloguePredicate as CataloguePredicateAPI).forEach(
-      ([key, predicate]) => {
-        // In case of OR or AND condition
-        if (Array.isArray(predicate)) {
-          predicate.forEach(item => {
-            if (item.productPredicate) {
-              acc.productsIds.push(...item.productPredicate.ids);
-            }
-            if (item.categoryPredicate) {
-              acc.categoriesIds.push(...item.categoryPredicate.ids);
-            }
-            if (item.collectionPredicate) {
-              acc.collectionsIds.push(...item.collectionPredicate.ids);
-            }
-            if (item.variantPredicate) {
-              acc.variantsIds.push(...item.variantPredicate.ids);
-            }
-          });
-        } else {
-          if (key === "productPredicate") {
-            acc.productsIds.push(...predicate.ids);
-          }
-          if (key === "categoryPredicate") {
-            acc.categoriesIds.push(...predicate.ids);
-          }
-          if (key === "collectionPredicate") {
-            acc.collectionsIds.push(...predicate.ids);
-          }
-          if (key === "variantPredicate") {
-            acc.variantsIds.push(...predicate.ids);
-          }
-        }
-      },
-    );
-
+  const allConditionsIds = data.promotion.rules.reduce((acc, rule) => {
+    reduceConditionsLabels(rule.cataloguePredicate, acc);
     return acc;
   }, initAllConditionsIds);
+
+  return {
+    productsIds: Array.from(new Set(allConditionsIds.productsIds)),
+    categoriesIds: Array.from(new Set(allConditionsIds.categoriesIds)),
+    collectionsIds: Array.from(new Set(allConditionsIds.collectionsIds)),
+    variantsIds: Array.from(new Set(allConditionsIds.variantsIds)),
+  };
+}
+
+function reduceConditionsLabels(
+  cataloguePredicate: CataloguePredicateAPI,
+  allConditionsIds: AllConditionsIds,
+) {
+  Object.entries(cataloguePredicate).forEach(([key, predicate]) => {
+    if (Array.isArray(predicate)) {
+      predicate.forEach(item => reduceConditionsLabels(item, allConditionsIds));
+    }
+
+    if (key === "productPredicate") {
+      allConditionsIds.productsIds.push(...predicate.ids);
+    }
+    if (key === "categoryPredicate") {
+      allConditionsIds.categoriesIds.push(...predicate.ids);
+    }
+    if (key === "collectionPredicate") {
+      allConditionsIds.collectionsIds.push(...predicate.ids);
+    }
+    if (key === "variantPredicate") {
+      allConditionsIds.variantsIds.push(...predicate.ids);
+    }
+
+    return allConditionsIds;
+  });
 }
 
 export function getRuleConditionsOptionsDetailsMap(
