@@ -1,12 +1,16 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountDeleteModal } from "@dashboard/discounts/components/DiscountDeleteModal";
+import { ruleAlphabetically } from "@dashboard/discounts/components/DiscountDetailsForm/utils";
 import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage";
 import {
   discountListUrl,
   DiscountUrlQueryParams,
 } from "@dashboard/discounts/discountsUrls";
+import { Rule } from "@dashboard/discounts/models";
 import {
+  PromotionDetailsDocument,
+  PromotionDetailsFragment,
   usePromotionDeleteMutation,
   usePromotionDetailsQuery,
   usePromotionRuleCreateMutation,
@@ -43,11 +47,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const {
-    data: promotionData,
-    loading,
-    refetch,
-  } = usePromotionDetailsQuery({
+  const { data: promotionData, loading } = usePromotionDetailsQuery({
     variables: {
       id,
     },
@@ -56,14 +56,39 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const { ruleConditionsOptionsDetails, ruleConditionsOptionsDetailsLoading } =
     useFetchConditionsOptionsDetails(promotionData);
 
+  const ruleConditionsOptionsDetailsMap = getRuleConditionsOptionsDetailsMap(
+    ruleConditionsOptionsDetails,
+  );
+
   const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation({
+    update(cache, { data }) {
+      if (data?.promotionUpdate?.errors?.length === 0) {
+        const { promotion } = cache.readQuery<{
+          promotion: PromotionDetailsFragment;
+        }>({
+          query: PromotionDetailsDocument,
+          variables: {
+            id,
+          },
+        });
+
+        cache.writeQuery({
+          query: PromotionDetailsDocument,
+          data: {
+            promotion: {
+              ...promotion,
+              ...data.promotionUpdate.promotion,
+            },
+          },
+        });
+      }
+    },
     onCompleted(data) {
       if (data?.promotionUpdate?.errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        refetch();
       }
     },
   });
@@ -85,39 +110,123 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
 
   const [promotionRuleUpdate, promotionRuleUpdateOpts] =
     usePromotionRuleUpdateMutation({
+      update(cache, { data }) {
+        if (data?.promotionRuleUpdate?.errors?.length === 0) {
+          const { promotion } = cache.readQuery<{
+            promotion: PromotionDetailsFragment;
+          }>({
+            query: PromotionDetailsDocument,
+            variables: {
+              id,
+            },
+          });
+
+          cache.writeQuery({
+            query: PromotionDetailsDocument,
+            data: {
+              promotion: {
+                ...promotion,
+                rules: (
+                  [
+                    ...promotion.rules?.filter(
+                      rule =>
+                        rule.id !== data.promotionRuleUpdate?.promotionRule?.id,
+                    ),
+                    Rule.fromAPI(
+                      data.promotionRuleUpdate?.promotionRule,
+                      ruleConditionsOptionsDetailsMap,
+                    ),
+                  ] as Rule[]
+                ).sort(ruleAlphabetically),
+              },
+            },
+          });
+        }
+      },
       onCompleted(data) {
         if (data?.promotionRuleUpdate?.errors?.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
           });
-          refetch();
         }
       },
     });
 
   const [promotionRuleCreate, promotionRuleCreateOpts] =
     usePromotionRuleCreateMutation({
+      update(cache, { data }) {
+        if (data?.promotionRuleCreate?.errors?.length === 0) {
+          const { promotion } = cache.readQuery<{
+            promotion: PromotionDetailsFragment;
+          }>({
+            query: PromotionDetailsDocument,
+            variables: {
+              id,
+            },
+          });
+
+          cache.writeQuery({
+            query: PromotionDetailsDocument,
+            data: {
+              promotion: {
+                ...promotion,
+                rules: (
+                  [
+                    promotion.rules,
+                    Rule.fromAPI(
+                      data.promotionRuleCreate.promotionRule,
+                      ruleConditionsOptionsDetailsMap,
+                    ),
+                  ] as Rule[]
+                ).sort(ruleAlphabetically),
+              },
+            },
+          });
+        }
+      },
       onCompleted(data) {
         if (data?.promotionRuleCreate?.errors?.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
           });
-          refetch();
         }
       },
     });
 
   const [promotionRuleDelete, promotionRuleDeleteOpts] =
     usePromotionRuleDeleteMutation({
+      update(cache, { data }) {
+        if (data?.promotionRuleDelete?.errors?.length === 0) {
+          const { promotion } = cache.readQuery<{
+            promotion: PromotionDetailsFragment;
+          }>({
+            query: PromotionDetailsDocument,
+            variables: {
+              id,
+            },
+          });
+
+          cache.writeQuery({
+            query: PromotionDetailsDocument,
+            data: {
+              promotion: {
+                ...promotion,
+                rules: promotion.rules.filter(
+                  rule => rule.id !== data.promotionRuleDelete.promotionRule.id,
+                ),
+              },
+            },
+          });
+        }
+      },
       onCompleted(data) {
         if (data?.promotionRuleDelete?.errors?.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
           });
-          refetch();
         }
       },
     });
@@ -166,9 +275,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           promotionRuleCreateOpts.loading ||
           promotionRuleDeleteOpts.loading
         }
-        ruleConditionsOptionsDetailsMap={getRuleConditionsOptionsDetailsMap(
-          ruleConditionsOptionsDetails,
-        )}
+        ruleConditionsOptionsDetailsMap={ruleConditionsOptionsDetailsMap}
         ruleConditionsOptionsDetailsLoading={
           ruleConditionsOptionsDetailsLoading
         }
