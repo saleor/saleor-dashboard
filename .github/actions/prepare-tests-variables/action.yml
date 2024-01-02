@@ -4,9 +4,6 @@ inputs:
   MODE:
     description: "The mode of running tests (pull-request, release, main)"
     required: true
-  BACKUP_NAMESPACE:
-    description: "The backups namespace"
-    required: true
   CLI_TOKEN:
     description: "Saleor cli token"
     required: true
@@ -32,21 +29,24 @@ outputs:
   BACKUP_NAME:
     description: "The name of backup"
     value: ${{ steps.backup.outputs.BACKUP_NAME }}
+  BACKUP_NAMESPACE:
+    description: "The name of backup"
+    value: ${{ steps.api.outputs.BACKUP_NAMESPACE }}
 runs:
   using: "composite"
   steps:
-    - name: Generate backup
-      id: backup
-      uses: ./.github/actions/prepare-backups-variables
-      with:
-        CLI_TOKEN: ${{ inputs.CLI_TOKEN }}
-        BACKUP_NAMESPACE: ${{ inputs.BACKUP_NAMESPACE }}
-
     - name: Generate api
       id: api
       uses: ./.github/actions/prepare-api-variables
       with:
         MODE: ${{ inputs.MODE }}
+  
+    - name: Generate backup
+      id: backup
+      uses: ./.github/actions/prepare-backups-variables
+      with:
+        CLI_TOKEN: ${{ inputs.CLI_TOKEN }}
+        BACKUP_NAMESPACE: ${{ steps.api.outputs.BACKUP_NAMESPACE }}
 
     - name: Print annotations
       shell: bash
@@ -58,9 +58,11 @@ runs:
         BACKUP_ID: ${{ steps.backup.outputs.BACKUP_ID }}
         BACKUP_VER: ${{ steps.backup.outputs.BACKUP_VER }}
         BACKUP_NAME: ${{ steps.backup.outputs.BACKUP_NAME }}
+        BACKUP_NAMESPACE: ${{ steps.backup.outputs.BACKUP_NAMESPACE }}
       run: |
         echo "::notice title=BASE_URL::${BASE_URL}"
         echo "::notice title=API_URL::${API_URL}"
         echo "::notice title=POOL_NAME::${POOL_NAME}"
         echo "::notice title=POOL_INSTANCE::${POOL_INSTANCE}"
+        echo "::notice title=BACKUP_NAMESPACE::${BACKUP_NAMESPACE}"
         echo "::notice title=SNAPSHOT::backup_id=${BACKUP_ID}, version=${BACKUP_VER}, name=${BACKUP_NAME}"
