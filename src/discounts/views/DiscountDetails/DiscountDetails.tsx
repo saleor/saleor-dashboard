@@ -10,6 +10,7 @@ import { sortAPIRules } from "@dashboard/discounts/utils";
 import {
   PromotionDetailsDocument,
   PromotionDetailsFragment,
+  PromotionRuleDetailsFragment,
   usePromotionDeleteMutation,
   usePromotionDetailsQuery,
   usePromotionRuleCreateMutation,
@@ -70,7 +71,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation({
     update(cache, { data }) {
       if (data?.promotionUpdate?.errors?.length === 0) {
-        const { promotion } = cache.readQuery<{
+        const cachedPromotion = cache.readQuery<{
           promotion: PromotionDetailsFragment;
         }>({
           query: PromotionDetailsDocument,
@@ -79,11 +80,15 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           },
         });
 
+        if (!cachedPromotion?.promotion) {
+          return;
+        }
+
         cache.writeQuery({
           query: PromotionDetailsDocument,
           data: {
             promotion: {
-              ...promotion,
+              ...cachedPromotion.promotion,
               ...data.promotionUpdate.promotion,
             },
           },
@@ -119,7 +124,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
     usePromotionRuleUpdateMutation({
       update(cache, { data }) {
         if (data?.promotionRuleUpdate?.errors?.length === 0) {
-          const { promotion } = cache.readQuery<{
+          const cachedPromotion = cache.readQuery<{
             promotion: PromotionDetailsFragment;
           }>({
             query: PromotionDetailsDocument,
@@ -128,18 +133,22 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
             },
           });
 
+          if (!cachedPromotion?.promotion) {
+            return;
+          }
+
           cache.writeQuery({
             query: PromotionDetailsDocument,
             data: {
               promotion: {
-                ...promotion,
+                ...cachedPromotion.promotion,
                 rules: sortAPIRules([
-                  ...promotion.rules?.filter(
+                  ...(cachedPromotion.promotion.rules?.filter(
                     rule =>
                       rule.id !== data.promotionRuleUpdate?.promotionRule?.id,
-                  ),
+                  ) ?? []),
                   data.promotionRuleUpdate?.promotionRule,
-                ]),
+                ] as PromotionRuleDetailsFragment[]),
               },
             },
           });
@@ -159,7 +168,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
     usePromotionRuleCreateMutation({
       update(cache, { data }) {
         if (data?.promotionRuleCreate?.errors?.length === 0) {
-          const { promotion } = cache.readQuery<{
+          const cachedPromotion = cache.readQuery<{
             promotion: PromotionDetailsFragment;
           }>({
             query: PromotionDetailsDocument,
@@ -168,15 +177,19 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
             },
           });
 
+          if (!cachedPromotion?.promotion) {
+            return;
+          }
+
           cache.writeQuery({
             query: PromotionDetailsDocument,
             data: {
               promotion: {
-                ...promotion,
+                ...cachedPromotion.promotion,
                 rules: sortAPIRules([
-                  ...promotion.rules,
+                  ...(cachedPromotion.promotion?.rules ?? []),
                   data.promotionRuleCreate.promotionRule,
-                ]),
+                ] as PromotionRuleDetailsFragment[]),
               },
             },
           });
@@ -196,7 +209,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
     usePromotionRuleDeleteMutation({
       update(cache, { data }) {
         if (data?.promotionRuleDelete?.errors?.length === 0) {
-          const { promotion } = cache.readQuery<{
+          const cachedPromotion = cache.readQuery<{
             promotion: PromotionDetailsFragment;
           }>({
             query: PromotionDetailsDocument,
@@ -205,14 +218,20 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
             },
           });
 
+          if (!cachedPromotion?.promotion) {
+            return;
+          }
+
           cache.writeQuery({
             query: PromotionDetailsDocument,
             data: {
               promotion: {
-                ...promotion,
-                rules: promotion.rules.filter(
-                  rule => rule.id !== data.promotionRuleDelete.promotionRule.id,
-                ),
+                ...cachedPromotion.promotion,
+                rules:
+                  cachedPromotion.promotion.rules?.filter(
+                    (rule: PromotionRuleDetailsFragment) =>
+                      rule.id !== data?.promotionRuleDelete?.promotionRule?.id,
+                  ) ?? [],
               },
             },
           });

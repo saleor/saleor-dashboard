@@ -25,7 +25,7 @@ export const DiscountSavebar = ({
     <Savebar
       disabled={disabled}
       onCancel={onCancel}
-      onSubmit={isDirty ? onSubmit : undefined}
+      onSubmit={isDirty ? onSubmit : () => {}}
       onDelete={onDelete}
       state={submitButtonState}
     />
