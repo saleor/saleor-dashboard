@@ -29,7 +29,6 @@ runs:
         token: ${{ inputs.CLI_TOKEN }}
 
     - name: Inject slug/short variables
-      if: ${{ inputs.MODE == 'pull-request' }}
       uses: rlespinasse/github-slug-action@102b1a064a9b145e56556e22b18b19c624538d94
 
     - name: Generate
@@ -37,7 +36,6 @@ runs:
       shell: bash
       env:
         MODE: ${{ inputs.MODE }}
-        BRANCH: ${{ github.ref_name }}
         PREFIX: pr-
       run: |
         if [[ $MODE == 'pull-request' ]]; then
@@ -50,10 +48,10 @@ runs:
         fi
 
         if [[ $MODE == 'release' ]]; then
-          echo "BASE_URL=https://v${BRANCH}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
-          echo "API_URI=https://v${BRANCH}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
-          echo "POOL_NAME=v${BRANCH}.staging.saleor.cloud" >> $GITHUB_OUTPUT
-          echo "POOL_INSTANCE=https://v${BRANCH}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
+          echo "BASE_URL=https://v${GITHUB_REF_SLUG}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
+          echo "API_URI=https://v${GITHUB_REF_SLUG}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=v${GITHUB_REF_SLUG}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://v${GITHUB_REF_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
 
           exit 0
         fi
