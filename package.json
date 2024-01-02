@@ -132,7 +132,7 @@
     "@graphql-codegen/typescript-operations": "^2.2.4",
     "@graphql-codegen/typescript-react-apollo": "^3.2.5",
     "@playwright/test": "^1.40.0",
-    "@saleor/app-sdk": "0.43.0",
+    "@saleor/app-sdk": "0.47.2",
     "@sentry/cli": "^2.22.3",
     "@swc/jest": "^0.2.26",
     "@types/apollo-upload-client": "^17.0.2",
