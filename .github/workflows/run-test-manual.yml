@@ -82,4 +82,4 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Merge playwright reports
-        uses: ./.github/actions/run-pw-tests
+        uses: ./.github/actions/merge-pw-reports
