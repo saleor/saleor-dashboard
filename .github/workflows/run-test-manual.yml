@@ -12,8 +12,8 @@ jobs:
     outputs:
       POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.pool_variables.outputs.POOL_INSTANCE }}
-      BASE_URL: ${{ steps.pool_variables.outputs.BASE_URL }}
-      API_URL: ${{ steps.pool_variables.outputs.API_URL }}
+      BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+      API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
       BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
@@ -63,8 +63,6 @@ jobs:
         shard: [1/2, 2/2]
     steps:
       - uses: actions/checkout@v4
-        with:
-          sparse-checkout: ./.github/actions
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
@@ -81,5 +79,7 @@ jobs:
     needs: run-tests
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Merge playwright reports
         uses: ./.github/actions/run-pw-tests
