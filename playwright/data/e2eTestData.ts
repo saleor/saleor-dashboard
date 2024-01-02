@@ -9,6 +9,10 @@ export const VOUCHERS_AND_DISCOUNTS = {
     voucherToBeEditedMinimumQuantity: {
       id: "Vm91Y2hlcjoyMDQ%3D",
     },
+    voucherToBeEditedAssignCategoryProductCollection: {
+      id: "Vm91Y2hlcjoyMDk%3D",
+      name: "Assign category, product, collection",
+    },
     voucherToBeBulkDeleted: {
       names: ["Bulk delete voucher 1/2", "Bulk delete voucher 2/2"],
     },

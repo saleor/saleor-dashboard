@@ -177,7 +177,8 @@ test("TC: SALEOR_90 Edit voucher minimum quantity of items @vouchers @e2e", asyn
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.waitForGrid();
 });
-test("TC: SALEOR_91 Delete voucher @vouchers @e2e", async () => {
+
+test("TC: SALEOR_92 Delete voucher @vouchers @e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(
     VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeDeleted.id,
   );
@@ -194,7 +195,7 @@ test("TC: SALEOR_91 Delete voucher @vouchers @e2e", async () => {
     `Given vouchers: ${VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
 });
-test("TC: SALEOR_92 Bulk delete voucher @vouchers @e2e", async () => {
+test("TC: SALEOR_93 Bulk delete voucher @vouchers @e2e", async () => {
   await vouchersPage.gotoVouchersListPage();
   await vouchersPage.checkListRowsBasedOnContainingText(
     VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names,
@@ -210,4 +211,75 @@ test("TC: SALEOR_92 Bulk delete voucher @vouchers @e2e", async () => {
     ),
     `Given vouchers: ${VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
+});
+
+test("TC: SALEOR_94 Edit voucher - assign voucher to specific category @vouchers @e2e", async () => {
+  const categoryToBeAssigned = "Accessories";
+
+  await vouchersPage.gotoExistingVoucherPage(
+    VOUCHERS_AND_DISCOUNTS.vouchers
+      .voucherToBeEditedAssignCategoryProductCollection.id,
+  );
+  await vouchersPage.clickSpecificProductsButton();
+  await vouchersPage.clickAssignCategoryButton();
+  await vouchersPage.assignSpecificProductsDialog.assignSpecificProductsByNameAndSave(
+    categoryToBeAssigned,
+  );
+
+  await vouchersPage.expectSuccessBanner();
+  await expect(
+    vouchersPage.assignedSpecificProductRow,
+    `Assigned category: ${categoryToBeAssigned} should be visible`,
+  ).toContainText(categoryToBeAssigned);
+  expect(
+    await vouchersPage.assignedSpecificProductRow.count(),
+    `Only 1 category should be visible in table`,
+  ).toEqual(1);
+});
+test("TC:SALEOR_95  Edit voucher - assign voucher to specific collection @vouchers @e2e", async () => {
+  const collectionToBeAssigned = "Featured Products";
+
+  await vouchersPage.gotoExistingVoucherPage(
+    VOUCHERS_AND_DISCOUNTS.vouchers
+      .voucherToBeEditedAssignCategoryProductCollection.id,
+  );
+  await vouchersPage.clickSpecificProductsButton();
+  await vouchersPage.clickCollectionsTab();
+  await vouchersPage.clickAssignCollectionButton();
+  await vouchersPage.assignSpecificProductsDialog.assignSpecificProductsByNameAndSave(
+    collectionToBeAssigned,
+  );
+
+  await vouchersPage.expectSuccessBanner();
+  await expect(
+    vouchersPage.assignedSpecificProductRow,
+    `Assigned collection: ${collectionToBeAssigned} should be visible`,
+  ).toContainText(collectionToBeAssigned);
+  expect(
+    await vouchersPage.assignedSpecificProductRow.count(),
+    `Only 1 collection should be visible in table`,
+  ).toEqual(1);
+});
+test("TC: SALEOR_96 Edit voucher - assign voucher to specific product @vouchers @e2e", async () => {
+  const productToBeAssigned = "Bean Juice";
+
+  await vouchersPage.gotoExistingVoucherPage(
+    VOUCHERS_AND_DISCOUNTS.vouchers
+      .voucherToBeEditedAssignCategoryProductCollection.id,
+  );
+  await vouchersPage.clickSpecificProductsButton();
+  await vouchersPage.clickProductsTab();
+  await vouchersPage.clickAssignProductButton();
+  await vouchersPage.assignSpecificProductsDialog.assignSpecificProductsByNameAndSave(
+    productToBeAssigned,
+  );
+  await vouchersPage.expectSuccessBanner();
+  await expect(
+    vouchersPage.assignedSpecificProductRow,
+    `Assigned collection: ${productToBeAssigned} should be visible`,
+  ).toContainText(productToBeAssigned);
+  expect(
+    await vouchersPage.assignedSpecificProductRow.count(),
+    `Only 1 product should be visible in table`,
+  ).toEqual(1);
 });

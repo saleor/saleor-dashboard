@@ -1,5 +1,6 @@
 import { URL_LIST } from "@data/url";
 import { AddVoucherCodeDialog } from "@dialogs/addVoucherCodeDialog";
+import { AssignSpecificProductsDialog } from "@dialogs/assignSpecificProductsDialog";
 import { DeleteVoucherDialog } from "@dialogs/deleteVoucherDialog";
 import { DeleteVouchersDialog } from "@dialogs/deleteVouchersDialog";
 import { RightSideDetailsPage } from "@pageElements/rightSideDetailsSection";
@@ -12,10 +13,14 @@ export class VouchersPage extends BasePage {
   readonly rightSideDetailsPage: RightSideDetailsPage;
   readonly deleteVoucherDialog: DeleteVoucherDialog;
   readonly deleteVouchersDialog: DeleteVouchersDialog;
+  readonly assignSpecificProductsDialog: AssignSpecificProductsDialog;
 
   constructor(
     page: Page,
     readonly createVoucherButton = page.getByTestId("create-voucher"),
+    readonly categoriesTab = page.getByTestId("categories-tab"),
+    readonly collectionsTab = page.getByTestId("collections-tab"),
+    readonly productsTab = page.getByTestId("products-tab"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteButton = page.getByTestId("button-bar-delete"),
     readonly addCodeButton = page.getByTestId("add-code-button"),
@@ -31,6 +36,12 @@ export class VouchersPage extends BasePage {
       "minimum-requirements-section",
     ),
     readonly usageLimitInput = page.getByTestId("usage-limit").locator("input"),
+    readonly assignedSpecificProductsTable = page.getByTestId(
+      "assigned-specific-products-table",
+    ),
+    readonly assignedSpecificProductRow = page.getByTestId(
+      "assigned-specific-product",
+    ),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly voucherNameInput = page.getByTestId("voucher-name-input"),
     readonly discountValueInput = page.getByTestId("discount-value-input"),
@@ -49,6 +60,19 @@ export class VouchersPage extends BasePage {
     readonly freeShippingDiscountTypeButton = page.getByTestId("SHIPPING"),
     readonly minimalOrderValueButton = page.getByTestId("ORDER"),
     readonly minimumQuantityOfItemsButton = page.getByTestId("ITEM"),
+    readonly specificProductsButton = page.getByTestId("SPECIFIC_PRODUCT"),
+    readonly assignCollectionButton = page.getByTestId(
+      "assign-collection-button",
+    ),
+    readonly assignCategoryButton = page.getByTestId("assign-category-button"),
+    readonly assignProductButton = page.getByTestId("assign-products"),
+    readonly assignCollectionSection = page.getByTestId(
+      "assign-collection-section",
+    ),
+    readonly assignCategoriesSection = page.getByTestId(
+      "assign-category-section",
+    ),
+    readonly assignProductSection = page.getByTestId("assign-product-section"),
   ) {
     super(page);
     this.page = page;
@@ -56,6 +80,7 @@ export class VouchersPage extends BasePage {
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
     this.deleteVoucherDialog = new DeleteVoucherDialog(page);
     this.deleteVouchersDialog = new DeleteVouchersDialog(page);
+    this.assignSpecificProductsDialog = new AssignSpecificProductsDialog(page);
   }
 
   async typeVoucherName(voucherName = "special voucher automation") {
@@ -70,6 +95,24 @@ export class VouchersPage extends BasePage {
 
   async clickCreateVoucherButton() {
     await this.createVoucherButton.click();
+  }
+  async clickAssignCollectionButton() {
+    await this.assignCollectionButton.click();
+  }
+  async clickAssignProductButton() {
+    await this.assignProductButton.click();
+  }
+  async clickCollectionsTab() {
+    await this.collectionsTab.click();
+  }
+  async clickProductsTab() {
+    await this.productsTab.click();
+  }
+  async clickAssignCategoryButton() {
+    await this.assignCategoryButton.click();
+  }
+  async clickSpecificProductsButton() {
+    await this.specificProductsButton.click();
   }
   async clickBulkDeleteButton() {
     await this.bulkDeleteButton.click();
