@@ -58,7 +58,7 @@ runs:
         BACKUP_ID: ${{ steps.backup.outputs.BACKUP_ID }}
         BACKUP_VER: ${{ steps.backup.outputs.BACKUP_VER }}
         BACKUP_NAME: ${{ steps.backup.outputs.BACKUP_NAME }}
-        BACKUP_NAMESPACE: ${{ steps.backup.outputs.BACKUP_NAMESPACE }}
+        BACKUP_NAMESPACE: ${{ steps.api.outputs.BACKUP_NAMESPACE }}
       run: |
         echo "::notice title=BASE_URL::${BASE_URL}"
         echo "::notice title=API_URL::${API_URL}"

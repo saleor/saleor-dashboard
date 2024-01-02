@@ -26,11 +26,14 @@ jobs:
         id: set_variables_mode
         shell: bash
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "MODE=main" >> $GITHUB_OUTPUT
-          else
-            echo "MODE=release" >> $GITHUB_OUTPUT
-          fi
+          echo "MODE=main" >> $GITHUB_OUTPUT
+
+        # run: |
+        #   if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+        #     echo "MODE=main" >> $GITHUB_OUTPUT
+        #   else
+        #     echo "MODE=release" >> $GITHUB_OUTPUT
+        #   fi
 
       - name: Generate variables
         id: cloud_variables
