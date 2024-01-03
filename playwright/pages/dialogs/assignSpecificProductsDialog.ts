@@ -22,5 +22,6 @@ export class AssignSpecificProductsDialog {
       .getByRole("checkbox");
     await specificProductCheckbox.click();
     await this.clickAssignAndSaveButton();
+    await this.assignAndSaveButton.waitFor({ state: "hidden" });
   }
 }
