@@ -39,7 +39,7 @@ const VoucherLimits = ({
   const usesLeft = data.usageLimit - data.used;
 
   return (
-    <Card>
+    <Card data-test-id="usage-limit-section">
       <CardTitle title={intl.formatMessage(messages.usageLimitsTitle)} />
       <CardContent className={classes.cardContent}>
         <ControlledCheckbox

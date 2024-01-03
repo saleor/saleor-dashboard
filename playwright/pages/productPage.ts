@@ -67,9 +67,6 @@ export class ProductPage extends BasePage {
     readonly channelAvailabilityItem = page.locator(
       "[data-test-id*='channel-availability-item']",
     ),
-    readonly manageChannelsButton = page.getByTestId(
-      "channels-availability-manage-button",
-    ),
     readonly addVariantButton = page.locator(
       "[data-test-id*='button-add-variant']",
     ),
@@ -176,18 +173,6 @@ export class ProductPage extends BasePage {
   }
   async expectSuccessBanner() {
     await this.basePage.expectSuccessBanner();
-  }
-  async selectOneChannelAsAvailableWhenMoreSelected() {
-    await this.manageChannelsButton.click();
-    await this.channelSelectDialog.clickAllChannelsCheckbox();
-    await this.channelSelectDialog.selectFirstChannel();
-    await this.channelSelectDialog.clickConfirmButton();
-  }
-  async selectOneChannelAsAvailableWhenNoneSelected() {
-    await this.manageChannelsButton.click();
-    await this.channelSelectDialog.selectFirstChannel();
-    await this.channelSelectDialog.clickConfirmButton();
-    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async clickCreateProductButton() {

@@ -79,6 +79,7 @@ export const VoucherCodesGenerateDialog = ({
             })}
             value={data.quantity}
             onChange={handleChange}
+            data-test-id="quantity-input"
           />
           <Input
             name="prefix"
@@ -90,13 +91,18 @@ export const VoucherCodesGenerateDialog = ({
                 [e.target.name]: e.target.value,
               }));
             }}
+            data-test-id="prefix-input"
           />
         </Box>
         <DashboardModal.Actions>
           <Button onClick={handleModalClose} variant="secondary">
             {intl.formatMessage(buttonMessages.back)}
           </Button>
-          <Button onClick={handleSubmit} disabled={Number(data.quantity) === 0}>
+          <Button
+            onClick={handleSubmit}
+            disabled={Number(data.quantity) === 0}
+            data-test-id="confirm-button"
+          >
             {intl.formatMessage(buttonMessages.confirm)}
           </Button>
         </DashboardModal.Actions>
