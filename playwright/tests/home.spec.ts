@@ -9,7 +9,7 @@ test("TC: SALEOR_29 Correct information on dashboard home page @e2e", async ({
 }) => {
   const homePage = new HomePage(page);
 
-  await page.goto(URL_LIST.home);
+  await page.goto(URL_LIST.homePage);
   await expect(homePage.channelSelect).toBeVisible({ timeout: 10000 });
 
   await homePage.expectHomePageElementsToBeVisible();

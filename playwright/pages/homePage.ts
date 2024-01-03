@@ -28,7 +28,7 @@ export class HomePage {
     this.productsOutOfStock = page.getByTestId("out-of-stock-analytics");
   }
   async goto() {
-    await this.page.goto(URL_LIST.home);
+    await this.page.goto(URL_LIST.homePage);
   }
 
   async clickChannelSelectButton() {
