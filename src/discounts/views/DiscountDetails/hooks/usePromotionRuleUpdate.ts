@@ -3,6 +3,7 @@ import {
   PromotionDetailsDocument,
   PromotionDetailsFragment,
   PromotionRuleDetailsFragment,
+  PromotionRuleUpdateMutation,
   usePromotionRuleUpdateMutation,
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -35,13 +36,9 @@ export const usePromotionRuleUpdate = (id: string) => {
             data: {
               promotion: {
                 ...cachedPromotion.promotion,
-                rules: sortAPIRules([
-                  ...(cachedPromotion.promotion.rules?.filter(
-                    rule =>
-                      rule.id !== data.promotionRuleUpdate?.promotionRule?.id,
-                  ) ?? []),
-                  data.promotionRuleUpdate?.promotionRule,
-                ] as PromotionRuleDetailsFragment[]),
+                rules: sortAPIRules(
+                  updateRulesCache(cachedPromotion.promotion, data),
+                ),
               },
             },
           });
@@ -62,3 +59,21 @@ export const usePromotionRuleUpdate = (id: string) => {
     promotionRuleUpdateOpts,
   };
 };
+
+function updateRulesCache(
+  cachedPromotion: PromotionDetailsFragment,
+  data: PromotionRuleUpdateMutation,
+) {
+  const cachedRules =
+    cachedPromotion.rules?.filter(byNoUpdatedRules(data)) ?? [];
+
+  return [
+    ...cachedRules,
+    data.promotionRuleUpdate?.promotionRule,
+  ] as PromotionRuleDetailsFragment[];
+}
+
+function byNoUpdatedRules(data: PromotionRuleUpdateMutation) {
+  return (rule: PromotionRuleDetailsFragment) =>
+    rule.id !== data.promotionRuleUpdate?.promotionRule?.id;
+}

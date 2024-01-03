@@ -1,6 +1,8 @@
+import { sortAPIRules } from "@dashboard/discounts/utils";
 import {
   PromotionDetailsDocument,
   PromotionDetailsFragment,
+  PromotionRuleDeleteMutation,
   PromotionRuleDetailsFragment,
   usePromotionRuleDeleteMutation,
 } from "@dashboard/graphql";
@@ -34,11 +36,9 @@ export const usePromotionRuleDelete = (id: string) => {
             data: {
               promotion: {
                 ...cachedPromotion.promotion,
-                rules:
-                  cachedPromotion.promotion.rules?.filter(
-                    (rule: PromotionRuleDetailsFragment) =>
-                      rule.id !== data?.promotionRuleDelete?.promotionRule?.id,
-                  ) ?? [],
+                rules: sortAPIRules(
+                  removeRuleFromCache(cachedPromotion.promotion, data),
+                ),
               },
             },
           });
@@ -59,3 +59,15 @@ export const usePromotionRuleDelete = (id: string) => {
     promotionRuleDeleteOpts,
   };
 };
+
+function removeRuleFromCache(
+  cachedPromotion: PromotionDetailsFragment,
+  data: PromotionRuleDeleteMutation,
+) {
+  return (
+    cachedPromotion.rules?.filter(
+      (rule: PromotionRuleDetailsFragment) =>
+        rule.id !== data?.promotionRuleDelete?.promotionRule?.id,
+    ) ?? []
+  );
+}

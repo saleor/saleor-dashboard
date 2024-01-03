@@ -2,7 +2,7 @@ import { sortAPIRules } from "@dashboard/discounts/utils";
 import {
   PromotionDetailsDocument,
   PromotionDetailsFragment,
-  PromotionRuleDetailsFragment,
+  PromotionRuleCreateMutation,
   usePromotionRuleCreateMutation,
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -35,10 +35,9 @@ export const usePromotionRuleCreate = (id: string) => {
             data: {
               promotion: {
                 ...cachedPromotion.promotion,
-                rules: sortAPIRules([
-                  ...(cachedPromotion.promotion?.rules ?? []),
-                  data.promotionRuleCreate.promotionRule,
-                ] as PromotionRuleDetailsFragment[]),
+                rules: sortAPIRules(
+                  addNewRuleToCache(cachedPromotion.promotion, data),
+                ),
               },
             },
           });
@@ -59,3 +58,12 @@ export const usePromotionRuleCreate = (id: string) => {
     promotionRuleCreateOpts,
   };
 };
+
+function addNewRuleToCache(
+  cachedPromotion: PromotionDetailsFragment,
+  data: PromotionRuleCreateMutation,
+) {
+  const cachedRules = cachedPromotion?.rules ?? [];
+
+  return [...cachedRules, data.promotionRuleCreate.promotionRule];
+}

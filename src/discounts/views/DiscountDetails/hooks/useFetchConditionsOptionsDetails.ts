@@ -18,10 +18,7 @@ export const useFetchConditionsOptionsDetails = (
   const { data: ruleConditionsOptionsDetails, loading } =
     useRuleConditionsSelectedOptionsDetailsQuery({
       variables: conditionsOptionsIdsToFetch,
-      skip:
-        Object.values(conditionsOptionsIdsToFetch).every(
-          ids => ids.length === 0,
-        ) || hasBeenLoaded,
+      skip: whenNoCondtionsIds(conditionsOptionsIdsToFetch) || hasBeenLoaded,
     });
 
   useEffect(() => {
@@ -114,4 +111,10 @@ export function getRuleConditionsOptionsDetailsMap(
 
     return acc;
   }, {});
+}
+
+function whenNoCondtionsIds(conditionsOptionsIdsToFetch: AllConditionsIds) {
+  return Object.values(conditionsOptionsIdsToFetch).every(
+    ids => ids.length === 0,
+  );
 }

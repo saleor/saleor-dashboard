@@ -7,6 +7,7 @@ import { messages } from "../../../../messages";
 import { RuleChannelChips } from "./components/RuleChannelChips/RuleChannelChips";
 import { RuleChips } from "./components/RuleChips";
 import { RuleValueChips } from "./components/RuleValueChips";
+import { hasNoRuleConditions } from "./utils";
 
 interface RuleSummaryProps {
   rule: Rule;
@@ -18,10 +19,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
     return null;
   }
 
-  if (
-    !rule.conditions.length ||
-    rule.conditions.every(condition => !condition.values.length)
-  ) {
+  if (hasNoRuleConditions(rule)) {
     return (
       <Text>
         <FormattedMessage
