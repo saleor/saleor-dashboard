@@ -51,7 +51,7 @@ export const CHANNELS = {
     id: "Q2hhbm5lbDoyMzkx",
   },
   channelToBeDeleted: {
-    name: "channel to be deleted",
+    name: "z - channel to be deleted",
   },
 };
 
