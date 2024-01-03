@@ -90,18 +90,19 @@ const useStyles = makeStyles(
   { name: "OrderTransactionEvents-EventItem" },
 );
 
+const eventsWithoutAmount = new Set([
+  TransactionEventTypeEnum.CANCEL_SUCCESS,
+  TransactionEventTypeEnum.CANCEL_REQUEST,
+  TransactionEventTypeEnum.CANCEL_FAILURE,
+]);
+
 const shouldShowAmount = (
   event: TransactionEventFragment | TransactionFakeEvent,
 ) => {
-  const eventsWithoutAmount = new Set([
-    TransactionEventTypeEnum.CANCEL_SUCCESS,
-    TransactionEventTypeEnum.CANCEL_REQUEST,
-    TransactionEventTypeEnum.CANCEL_FAILURE,
-  ]);
   if (!event || !event.amount?.currency) {
     return false;
   }
-  
+
   if (
     event.__typename === "TransactionEvent" &&
     event.type &&
@@ -109,7 +110,7 @@ const shouldShowAmount = (
   ) {
     return false;
   }
-  
+
   return true;
 };
 
