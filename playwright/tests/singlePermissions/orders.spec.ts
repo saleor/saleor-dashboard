@@ -1,6 +1,6 @@
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
-import { DraftsPage } from "@pages/draftsPage";
+import { DraftOrdersPage } from "@pages/draftOrdersPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { expect, test } from "@playwright/test";
@@ -25,11 +25,11 @@ test("TC: SALEOR_9 User should be able to navigate to draft list as a staff memb
 }) => {
   const basePage = new BasePage(page);
   const mainMenuPage = new MainMenuPage(page);
-  const draftsPage = new DraftsPage(page);
+  const draftOrdersPage = new DraftOrdersPage(page);
 
   await page.goto(URL_LIST.homePage);
   await mainMenuPage.openDrafts();
-  await expect(draftsPage.createDraftButton).toBeVisible();
+  await expect(draftOrdersPage.createDraftOrderButton).toBeVisible();
   await basePage.expectGridToBeAttached();
   await mainMenuPage.expectMenuItemsCount(3);
 });

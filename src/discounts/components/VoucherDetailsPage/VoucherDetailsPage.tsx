@@ -293,12 +293,14 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                     <CategoriesTab
                       isActive={activeTab === VoucherDetailsPageTab.categories}
                       changeTab={onTabClick}
+                      testId="categories-tab"
                     >
                       {intl.formatMessage(itemsQuantityMessages.categories, {
                         quantity: tabItemsCount.categories?.toString() || "…",
                       })}
                     </CategoriesTab>
                     <CollectionsTab
+                      testId="collections-tab"
                       isActive={activeTab === VoucherDetailsPageTab.collections}
                       changeTab={onTabClick}
                     >
@@ -307,6 +309,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       })}
                     </CollectionsTab>
                     <ProductsTab
+                      testId="products-tab"
                       isActive={activeTab === VoucherDetailsPageTab.products}
                       changeTab={onTabClick}
                     >

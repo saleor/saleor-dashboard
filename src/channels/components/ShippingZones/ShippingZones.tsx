@@ -36,7 +36,7 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card>
+    <Card data-test-id="shipping-zones-section">
       <CardTitle title={intl.formatMessage(sectionNames.shippingZones)} />
       <CardContent>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>

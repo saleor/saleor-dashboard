@@ -59,7 +59,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
   }));
 
   return (
-    <Card>
+    <Card data-test-id="value-section">
       <CardTitle
         title={intl.formatMessage({
           id: "/oaqFS",
@@ -98,13 +98,17 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                     id => id === listing.id,
                   );
                   return (
-                    <TableRowLink key={listing?.id || `skeleton-${index}`}>
+                    <TableRowLink
+                      key={listing?.id || `skeleton-${index}`}
+                      data-test-id={listing?.name}
+                    >
                       <TableCell>
                         <Text>{listing?.name || <Skeleton />}</Text>
                       </TableCell>
                       <TableCell className={classes.colPrice}>
                         {listing ? (
                           <Input
+                            data-test-id="discount-value-input"
                             disabled={disabled}
                             error={!!error?.length}
                             endAdornment={
