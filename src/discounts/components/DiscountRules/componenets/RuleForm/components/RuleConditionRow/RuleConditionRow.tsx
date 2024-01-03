@@ -65,7 +65,7 @@ export const RuleConditionRow = ({
     <Box
       display="grid"
       gap={0.5}
-      __gridTemplateColumns="2fr 1fr 3fr auto"
+      __gridTemplateColumns="2fr 1fr 3fr 35px"
       placeItems="center"
       alignItems="start"
     >
