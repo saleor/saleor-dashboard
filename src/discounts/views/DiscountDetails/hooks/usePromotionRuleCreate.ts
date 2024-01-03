@@ -3,6 +3,7 @@ import {
   PromotionDetailsDocument,
   PromotionDetailsFragment,
   PromotionRuleCreateMutation,
+  PromotionRuleDetailsFragment,
   usePromotionRuleCreateMutation,
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -65,5 +66,8 @@ function addNewRuleToCache(
 ) {
   const cachedRules = cachedPromotion?.rules ?? [];
 
-  return [...cachedRules, data.promotionRuleCreate.promotionRule];
+  return [
+    ...cachedRules,
+    data.promotionRuleCreate?.promotionRule,
+  ] as PromotionRuleDetailsFragment[];
 }
