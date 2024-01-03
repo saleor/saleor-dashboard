@@ -30,6 +30,10 @@ import cypressGrep from "../support/cypress-grep/support";
 commandTimings();
 cypressGrep();
 
+Cypress.Keyboard.defaults({
+  keystrokeDelay: 0,
+})
+
 Cypress.Commands.add("clearSessionData", () => {
   cy.clearCookies();
   cy.clearLocalStorage();
