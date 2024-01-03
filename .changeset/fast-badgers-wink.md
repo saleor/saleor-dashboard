@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-fix copy availability
+Change assertion text within channels checkbox in e2e tests
