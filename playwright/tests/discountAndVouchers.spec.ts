@@ -84,7 +84,7 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
     `Given codes: ${code} should have status Active displayed on grid`,
   ).toEqual(1);
   await vouchersPage.page
-    .getByText(AVAILABILITY.in1OutOf7Channels)
+    .getByText(AVAILABILITY.in1OutOf)
     .waitFor({ state: "visible" });
 });
 
