@@ -1,3 +1,4 @@
+import { URL_LIST } from "@data/url";
 import { expect, Locator, Page } from "@playwright/test";
 
 export class HomePage {
@@ -27,7 +28,7 @@ export class HomePage {
     this.productsOutOfStock = page.getByTestId("out-of-stock-analytics");
   }
   async goto() {
-    await this.page.goto("/");
+    await this.page.goto(URL_LIST.home);
   }
 
   async clickChannelSelectButton() {

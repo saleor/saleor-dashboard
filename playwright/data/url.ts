@@ -1,4 +1,5 @@
 export const URL_LIST = {
+  home: "",
   addProduct: "products/add",
   addPageType: "pages/add?page-type-id=",
   apps: "custom-apps/",

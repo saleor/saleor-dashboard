@@ -1,3 +1,4 @@
+import { URL_LIST } from "@data/url";
 import { HomePage } from "@pages/homePage";
 import { expect, test } from "@playwright/test";
 
@@ -8,7 +9,7 @@ test("TC: SALEOR_29 Correct information on dashboard home page @e2e", async ({
 }) => {
   const homePage = new HomePage(page);
 
-  await page.goto("/");
+  await page.goto(URL_LIST.home);
   await expect(homePage.channelSelect).toBeVisible({ timeout: 10000 });
 
   await homePage.expectHomePageElementsToBeVisible();
