@@ -142,7 +142,9 @@ export default defineConfig(({ command, mode }) => {
         ENVIRONMENT,
         DEMO_MODE,
         CUSTOM_VERSION,
+        LOCALE_CODE,
         SENTRY_RELEASE,
+        STATIC_URL
       },
     },
     build: {
