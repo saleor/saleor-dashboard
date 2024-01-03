@@ -101,6 +101,7 @@ const shouldShowAmount = (
   if (!event || !event.amount?.currency) {
     return false;
   }
+  
   if (
     event.__typename === "TransactionEvent" &&
     event.type &&
@@ -108,6 +109,7 @@ const shouldShowAmount = (
   ) {
     return false;
   }
+  
   return true;
 };
 
