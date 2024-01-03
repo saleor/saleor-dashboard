@@ -1,3 +1,4 @@
+import { URL_LIST } from "@data/url";
 import type { Locator, Page } from "@playwright/test";
 
 export class ConfigurationPage {
@@ -66,5 +67,9 @@ export class ConfigurationPage {
   }
   async openAttributes() {
     await this.attributesButton.click();
+  }
+
+  async gotoConfigurationView() {
+    await this.page.goto(URL_LIST.configuration);
   }
 }
