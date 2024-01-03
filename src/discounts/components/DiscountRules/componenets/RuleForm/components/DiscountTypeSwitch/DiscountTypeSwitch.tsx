@@ -22,7 +22,7 @@ export const DiscountTypeSwitch = ({
       disabled={disabled}
       value={selected}
       onValueChange={onChange}
-      __height="51px"
+      __height="52px"
       __width="fit-content"
       padding={1.5}
     >
