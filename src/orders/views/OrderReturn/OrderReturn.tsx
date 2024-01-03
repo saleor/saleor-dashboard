@@ -2,8 +2,6 @@ import {
   OrderErrorCode,
   useFulfillmentReturnProductsMutation,
   useOrderDetailsQuery,
-  useOrderGrantRefundAddMutation,
-  useOrderSendRefundForGrantedRefundMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -16,6 +14,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
+import { useReturnWithinReturn } from "./useRefundWithinReturn";
 import ReturnFormDataParser, { getSuccessMessage } from "./utils";
 
 interface OrderReturnProps {
@@ -29,11 +28,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
 
   const [replacedOrder, setReplacedOrder] = React.useState<string | null>(null);
 
-  const {
-    data,
-    loading,
-    refetch: refetchOrderDetails,
-  } = useOrderDetailsQuery({
+  const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId,
@@ -54,10 +49,15 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     },
   );
 
-  const [grantRefund, grantRefundOpts] = useOrderGrantRefundAddMutation();
-
-  const [sendRefund, sendRefundOpts] =
-    useOrderSendRefundForGrantedRefundMutation();
+  const {
+    sendMutations,
+    grantRefundErrors,
+    sendRefundErrors,
+    grantRefundResponseOrderData,
+  } = useReturnWithinReturn({
+    orderId,
+    transactionId: data?.order?.transactions[0]?.id,
+  });
 
   const handleSubmit = async (formData: OrderReturnFormData) => {
     if (!data?.order) {
@@ -81,49 +81,9 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       return;
     }
 
-    const grantRefundData = formData.autoGrantRefund
-      ? await grantRefund({
-          variables: {
-            orderId,
-            amount: formData.amount,
-            reason: "",
-            lines: [
-              ...formData.fulfilledItemsQuantities.map(line => ({
-                id: line.data.orderLineId,
-                quantity: line.value,
-              })),
-              ...formData.unfulfilledItemsQuantities.map(({ id, value }) => ({
-                id,
-                quantity: value,
-              })),
-            ],
-            grantRefundForShipping: formData.refundShipmentCosts,
-          },
-        })
-      : null;
-
-    const grantRefundErrors =
-      grantRefundData?.data?.orderGrantRefundCreate?.errors ?? [];
-
-    const grantedRefundId =
-      grantRefundData?.data?.orderGrantRefundCreate?.grantedRefund?.id;
-    const isSendRefund = grantedRefundId && formData.autoSendRefund;
-    const sendRefundErrors = isSendRefund
-      ? await extractMutationErrors(
-          sendRefund({
-            variables: {
-              grantedRefundId,
-              transactionId: data?.order?.transactions[0].id,
-            },
-          }),
-        )
-      : [];
-
-    // If return was successful, but grant/send refund failed, we need to refetch order details
-    // to display updated order data affected by return mutation
-    if (grantRefundErrors.length || sendRefundErrors.length) {
-      refetchOrderDetails();
-    }
+    const { grantRefundErrors, sendRefundErrors } = await sendMutations(
+      formData,
+    );
 
     const errors = [...returnErrors, ...grantRefundErrors, ...sendRefundErrors];
 
@@ -135,28 +95,34 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         title: intl.formatMessage(messages.cannotRefundTitle),
       });
     }
-
     if (!errors.length) {
       notify({
         status: "success",
         text: intl.formatMessage(
-          getSuccessMessage(formData.autoGrantRefund, isSendRefund),
+          getSuccessMessage(formData.autoGrantRefund, formData.autoSendRefund),
         ),
       });
       navigate(orderUrl(replacedOrder ?? orderId));
     }
   };
 
+  const returnCreateResponseOrderData =
+    returnCreateOpts.data?.orderFulfillmentReturnProducts?.order;
+
+  // order data from mutations responses if available
+  const orderData =
+    grantRefundResponseOrderData ??
+    returnCreateResponseOrderData ??
+    data?.order;
+
   return (
     <OrderReturnPage
       returnErrors={
         returnCreateOpts.data?.orderFulfillmentReturnProducts?.errors
       }
-      grantRefundErrors={grantRefundOpts.data?.orderGrantRefundCreate?.errors}
-      sendRefundErrors={
-        sendRefundOpts.data?.transactionRequestRefundForGrantedRefund?.errors
-      }
-      order={data?.order}
+      grantRefundErrors={grantRefundErrors}
+      sendRefundErrors={sendRefundErrors}
+      order={orderData}
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
       submitStatus={returnCreateOpts.status}

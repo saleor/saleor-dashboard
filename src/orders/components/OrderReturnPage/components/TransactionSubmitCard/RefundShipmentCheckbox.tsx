@@ -10,7 +10,7 @@ interface RefundShipmentCheckboxProps {
   refundShipmentCosts: boolean;
   canRefundShipping: boolean;
   autoGrantRefund: boolean;
-  shipmentCost: IMoney;
+  shipmentCost: IMoney | undefined;
   onChange: FormChange;
 }
 
