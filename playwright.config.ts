@@ -9,7 +9,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   // TODO hardcoded values should be extracted to ENVs
-  retries: 0,
+  retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? "blob" : "html",
   timeout: process.env.CI ? 60000 : 30000,
