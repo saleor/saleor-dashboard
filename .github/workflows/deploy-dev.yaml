@@ -1,0 +1,70 @@
+name: Deploy Dashboard to dev
+on:
+  workflow_dispatch:
+    inputs:
+      git_ref:
+        description: Git ref (tag, branch or commit hash) to deploy
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    env:
+      API_URI: /graphql/
+      APP_MOUNT_URI: /dashboard/
+      STATIC_URL: /dashboard/static/
+      SENTRY_ORG: saleor
+      SENTRY_PROJECT: dashboard
+      SENTRY_URL_PREFIX: "~/dashboard/static"
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+      IS_CLOUD_INSTANCE: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set custom version
+        run: |
+          HASH=$(git rev-parse --short HEAD)
+          CURRENT_VERSION=$(jq -r .version package.json)
+          RELEASE="${CURRENT_VERSION}-${HASH}"
+          echo "CUSTOM_VERSION=${RELEASE}" >> $GITHUB_ENV
+          echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+      - name: Package
+        timeout-minutes: 15
+        run: |
+          npm ci
+
+      - name: Build
+        run: |
+          npm run build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_CLOUD_DEV_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_CLOUD_DEV_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy dev
+        run: |
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev
+
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/"
+        env:
+          DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_DEV_DEPLOYMENT_BUCKET }}
+
+      - name: Invalidate cache
+        run: |
+          IFS=',' read -ra DISTRIBUTIONS_ARRAY <<< "$CDN_DISTRIBUTIONS"
+          for DISTRIBUTION in "${DISTRIBUTIONS_ARRAY[@]}"; do
+            echo "::add-mask::$DISTRIBUTION"
+            for i in {1..3}; do aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*" && break || sleep 5; done
+          done
+        env:
+          CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_DEV_CDN_DISTRIBUTIONS }}
