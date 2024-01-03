@@ -68,7 +68,9 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
   ).toEqual(1);
 
   await vouchersPage.clickPercentDiscountTypeButton();
-  await vouchersPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected();
+  await vouchersPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected(
+    "Channel-PLN",
+  );
   await vouchersPage.typeDiscountValueInChannel("Channel-PLN", "50");
 
   await vouchersPage.clickSaveButton();

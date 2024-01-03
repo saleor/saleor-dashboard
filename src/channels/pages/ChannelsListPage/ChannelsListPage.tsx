@@ -113,6 +113,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
               channelsList,
               channel => (
                 <TableRowLink
+                  data-test-id="channel-row"
                   hover={!!channel}
                   key={channel ? channel.id : "skeleton"}
                   className={classes.tableRow}
