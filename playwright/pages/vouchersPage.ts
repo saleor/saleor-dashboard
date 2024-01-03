@@ -174,10 +174,11 @@ export class VouchersPage extends BasePage {
     channel = "Channel-PLN",
     discountValue = "10",
   ) {
-    await this.valueSection
+    const valueInput = await this.valueSection
       .getByTestId(channel)
-      .locator(this.discountValueInput)
-      .fill(discountValue);
+      .locator(this.discountValueInput);
+    await valueInput.scrollIntoViewIfNeeded();
+    await valueInput.fill(discountValue);
   }
   async typeMinimumOrderValue(
     channel = "Channel-PLN",

@@ -46,6 +46,14 @@ export const CUSTOMER_ADDRESS = {
     country: "Poland",
   },
 };
+export const CHANNELS = {
+  channelToBeEditedSettings: {
+    id: "Q2hhbm5lbDoyMzkx",
+  },
+  channelToBeDeleted: {
+    name: "z - channel to be deleted",
+  },
+};
 
 export const PRODUCTS = {
   singleProductType: {
