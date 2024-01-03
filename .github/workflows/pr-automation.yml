@@ -33,7 +33,7 @@ jobs:
           PREFIX: pr-
         run: |
           echo "BASE_URL=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
-          echo "API_URI=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "API_URI=https://automation-dashboard.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
       - name: Saleor login
