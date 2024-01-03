@@ -32,6 +32,7 @@ export class RightSideDetailsPage {
     readonly manageChannelsButton = page.getByTestId(
       "channels-availability-manage-button",
     ),
+    readonly expandButton = page.getByTestId("expand-icon"),
     readonly assignedChannels = page.getByTestId("channel-availability-item"),
     readonly publishedRadioButtons = page.locator("[name*='isPublished'] > "),
     readonly availableForPurchaseRadioButtons = page.locator(
@@ -57,10 +58,23 @@ export class RightSideDetailsPage {
     readonly billingAddressSection = page.getByTestId(
       "billing-address-section",
     ),
+    readonly warehousesSection = page.getByTestId("warehouses-section"),
+    readonly shippingZoneSection = page.getByTestId("shipping-zones-section"),
     readonly editCustomerButton = page.getByTestId("edit-customer"),
     readonly searchCustomerInput = page.getByTestId("select-customer"),
     readonly selectCustomerOption = page.getByTestId(
       "single-autocomplete-select-option",
+    ),
+    readonly addShippingZonesButton = page.getByTestId("shipping-add-link"),
+    readonly addWarehousesButton = page.getByTestId("warehouse-add-link"),
+    readonly shippingZonesSelect = page.getByTestId(
+      "shipping-auto-complete-select",
+    ),
+    readonly warehouseSelect = page.getByTestId(
+      "warehouse-auto-complete-select",
+    ),
+    readonly allocationHighStockButton = page.getByTestId(
+      "PRIORITIZE_HIGH_STOCK",
     ),
   ) {
     this.page = page;
@@ -69,6 +83,9 @@ export class RightSideDetailsPage {
 
   async clickEditBillingAddressButton() {
     await this.editBillingAddressButton.click();
+  }
+  async clickAllocationHighStockButton() {
+    await this.allocationHighStockButton.click();
   }
   async clickEditShippingAddressButton() {
     await this.editShippingAddressButton.click();
@@ -122,24 +139,44 @@ export class RightSideDetailsPage {
   async clickEditCustomerButton() {
     await this.editCustomerButton.click();
   }
+  async expandShippingZonesSection() {
+    await this.shippingZoneSection.locator(this.expandButton).click();
+  }
+  async expandWarehousesSection() {
+    await this.warehousesSection.locator(this.expandButton).click();
+  }
 
   async clickSearchCustomerInput() {
     await this.searchCustomerInput.click();
+  }
+  async clickAddShippingZonesButton() {
+    await this.addShippingZonesButton.click();
+  }
+  async clickAddWarehousesButton() {
+    await this.addWarehousesButton.click();
+  }
+  async selectShippingZone(zoneName = "Asia") {
+    await this.shippingZonesSelect.click();
+    await this.page.getByRole("option", { name: zoneName });
+  }
+  async selectWarehouse(warehouseName = "Asia") {
+    await this.warehouseSelect.click();
+    await this.page.getByRole("option", { name: warehouseName });
   }
 
   async selectCustomer(customer = "allison.freeman@example.com") {
     await this.selectCustomerOption.locator(`text=${customer}`).click();
   }
 
-  async selectOneChannelAsAvailableWhenMoreSelected() {
+  async selectOneChannelAsAvailableWhenMoreSelected(channel: string) {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.clickAllChannelsCheckbox();
-    await this.channelSelectDialog.selectFirstChannel();
+    await this.channelSelectDialog.selectChannel(channel);
     await this.channelSelectDialog.clickConfirmButton();
   }
-  async selectOneChannelAsAvailableWhenNoneSelected() {
+  async selectOneChannelAsAvailableWhenNoneSelected(channel: string) {
     await this.manageChannelsButton.click();
-    await this.channelSelectDialog.selectFirstChannel();
+    await this.channelSelectDialog.selectChannel(channel);
     await this.channelSelectDialog.clickConfirmButton();
     await this.page.waitForLoadState("domcontentloaded");
   }
