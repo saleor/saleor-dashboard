@@ -1,58 +1,77 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
+import { expect, Page } from "@playwright/test";
 
 export class RightSideDetailsPage {
+  readonly channelSelectDialog: ChannelSelectDialog;
   readonly page: Page;
-  readonly manageChannelsButton: Locator;
-  readonly assignedChannels: Locator;
-  readonly publishedRadioButtons: Locator;
-  readonly availableForPurchaseRadioButtons: Locator;
-  readonly radioButtonsValueTrue: Locator;
-  readonly radioButtonsValueFalse: Locator;
-  readonly visibleInListingsButton: Locator;
-  readonly availableChannel: Locator;
-  readonly categoryInput: Locator;
-  readonly taxInput: Locator;
-  readonly categoryItem: Locator;
-  readonly collectionInput: Locator;
-  readonly autocompleteDropdown: Locator;
-  readonly categorySelectOption: Locator;
-  readonly taxSelectOption: Locator;
-  readonly selectOption: Locator;
-  readonly selectWarehouseShippingMethodButton: Locator;
-  readonly selectChannelShippingPageButton: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
-    this.selectWarehouseShippingMethodButton = page.getByTestId(
+  constructor(
+    page: Page,
+    readonly selectWarehouseShippingMethodButton = page.getByTestId(
       "select-warehouse-for-shipping-method",
-    );
-    this.selectChannelShippingPageButton = page.getByTestId(
+    ),
+    readonly selectChannelShippingPageButton = page.getByTestId(
       "select-channel-for-shipping-method",
-    );
+    ),
 
-    this.categorySelectOption = page.locator("[data-test-id*='select-option']");
-    this.taxSelectOption = page.locator("[data-test-id*='select-option']");
-    this.selectOption = page.getByTestId("multi-autocomplete-select-option");
-    this.categoryInput = page.getByTestId("category");
-    this.taxInput = page.getByTestId("taxes");
-    this.categoryItem = page.getByTestId("single-autocomplete-select-option");
-    this.collectionInput = page.getByTestId("collections");
-    this.autocompleteDropdown = page.getByTestId("autocomplete-dropdown");
+    readonly categorySelectOption = page.locator(
+      "[data-test-id*='select-option']",
+    ),
+    readonly taxSelectOption = page.locator("[data-test-id*='select-option']"),
+    readonly selectOption = page.getByTestId(
+      "multi-autocomplete-select-option",
+    ),
+    readonly categoryInput = page.getByTestId("category"),
+    readonly taxInput = page.getByTestId("taxes"),
+    readonly categoryItem = page.getByTestId(
+      "single-autocomplete-select-option",
+    ),
+    readonly collectionInput = page.getByTestId("collections"),
+    readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
 
-    this.manageChannelsButton = page.getByTestId(
+    readonly manageChannelsButton = page.getByTestId(
       "channels-availability-manage-button",
-    );
-    this.assignedChannels = page.getByTestId("channel-availability-item");
-    this.publishedRadioButtons = page.locator("[name*='isPublished'] > ");
-    this.availableForPurchaseRadioButtons = page.locator(
+    ),
+    readonly assignedChannels = page.getByTestId("channel-availability-item"),
+    readonly publishedRadioButtons = page.locator("[name*='isPublished'] > "),
+    readonly availableForPurchaseRadioButtons = page.locator(
       "[id*='isAvailableForPurchase']",
-    );
-    this.radioButtonsValueTrue = page.locator("[value='true']");
-    this.radioButtonsValueFalse = page.locator("[value='false']");
-    this.visibleInListingsButton = page.locator("[id*='visibleInListings']");
-    this.availableChannel = page.locator(
+    ),
+    readonly radioButtonsValueTrue = page.locator("[value='true']"),
+    readonly radioButtonsValueFalse = page.locator("[value='false']"),
+    readonly visibleInListingsButton = page.locator(
+      "[id*='visibleInListings']",
+    ),
+    readonly availableChannel = page.locator(
       "[data-test-id*='channel-availability-item']",
-    );
+    ),
+    readonly editShippingAddressButton = page.getByTestId(
+      "edit-shipping-address",
+    ),
+    readonly editBillingAddressButton = page.getByTestId(
+      "edit-billing-address",
+    ),
+    readonly shippingAddressSection = page.getByTestId(
+      "shipping-address-section",
+    ),
+    readonly billingAddressSection = page.getByTestId(
+      "billing-address-section",
+    ),
+    readonly editCustomerButton = page.getByTestId("edit-customer"),
+    readonly searchCustomerInput = page.getByTestId("select-customer"),
+    readonly selectCustomerOption = page.getByTestId(
+      "single-autocomplete-select-option",
+    ),
+  ) {
+    this.page = page;
+    this.channelSelectDialog = new ChannelSelectDialog(page);
+  }
+
+  async clickEditBillingAddressButton() {
+    await this.editBillingAddressButton.click();
+  }
+  async clickEditShippingAddressButton() {
+    await this.editShippingAddressButton.click();
   }
 
   async clickWarehouseSelectShippingPage() {
@@ -98,5 +117,30 @@ export class RightSideDetailsPage {
   async selectFirstCollection() {
     await this.collectionInput.click();
     await this.selectOption.first().click();
+  }
+
+  async clickEditCustomerButton() {
+    await this.editCustomerButton.click();
+  }
+
+  async clickSearchCustomerInput() {
+    await this.searchCustomerInput.click();
+  }
+
+  async selectCustomer(customer = "allison.freeman@example.com") {
+    await this.selectCustomerOption.locator(`text=${customer}`).click();
+  }
+
+  async selectOneChannelAsAvailableWhenMoreSelected() {
+    await this.manageChannelsButton.click();
+    await this.channelSelectDialog.clickAllChannelsCheckbox();
+    await this.channelSelectDialog.selectFirstChannel();
+    await this.channelSelectDialog.clickConfirmButton();
+  }
+  async selectOneChannelAsAvailableWhenNoneSelected() {
+    await this.manageChannelsButton.click();
+    await this.channelSelectDialog.selectFirstChannel();
+    await this.channelSelectDialog.clickConfirmButton();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 }

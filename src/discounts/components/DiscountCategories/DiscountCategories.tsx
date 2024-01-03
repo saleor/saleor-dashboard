@@ -49,11 +49,14 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card>
+    <Card data-test-id="assign-category-section">
       <CardTitle
         title={intl.formatMessage(messages.discountCategoriesHeader)}
         toolbar={
-          <Button onClick={onCategoryAssign}>
+          <Button
+            onClick={onCategoryAssign}
+            data-test-id="assign-category-button"
+          >
             <FormattedMessage {...messages.discountCategoriesButton} />
           </Button>
         }
@@ -92,7 +95,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
             <TablePaginationWithContext colSpan={numberOfColumns} />
           </TableRowLink>
         </TableFooter>
-        <TableBody>
+        <TableBody data-test-id="assigned-specific-products-table">
           {renderCollection(
             mapEdgesToItems(discount?.categories),
             category => {
@@ -105,6 +108,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                   href={category && categoryUrl(category.id)}
                   className={classes.tableRow}
                   selected={isSelected}
+                  data-test-id="assigned-specific-product"
                 >
                   <TableCell padding="checkbox">
                     <Checkbox

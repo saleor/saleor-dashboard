@@ -1,4 +1,5 @@
 import { MailpitService } from "@api/mailpit";
+import { AVAILABILITY } from "@data/copy";
 import { PRODUCTS } from "@data/e2eTestData";
 import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
 import { ProductPage } from "@pages/productPage";
@@ -34,7 +35,7 @@ test("TC: SALEOR_3 Create basic product with variants @e2e @product", async () =
 });
 test("TC: SALEOR_5 Create basic - single product type - product without variants @e2e @product", async () => {
   await productPage.gotoCreateProductPage(PRODUCTS.singleProductType.id);
-  await productPage.selectOneChannelAsAvailableWhenMoreSelected();
+  await productPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected();
   await productPage.typeNameDescAndRating();
   await productPage.addSeo();
   await productPage.addAllMetaData();
@@ -141,7 +142,7 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
   await productPage.clickUploadMediaButton();
   await productPage.uploadProductImage("beer.avif");
   await productPage.productImage.waitFor({ state: "visible" });
-  await productPage.selectOneChannelAsAvailableWhenNoneSelected();
+  await productPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenNoneSelected();
 
   await productPage.selectFirstTaxOption();
   const preSaveTax = await productPage.rightSideDetailsPage.taxInput
@@ -168,7 +169,7 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
   await expect(
     productPage.productAvailableInChannelsText,
     "Label copy shows 1 out of 7 channels ",
-  ).toContainText("In 1 out of 7 channels");
+  ).toContainText(AVAILABILITY.in1OutOf);
   expect(
     await productPage.productImage.count(),
     "Newly added single image should be present",

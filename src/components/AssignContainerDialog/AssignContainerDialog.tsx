@@ -136,7 +136,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
                 );
 
                 return (
-                  <TableRowLink key={container.id}>
+                  <TableRowLink key={container.id} data-test-id="dialog-row">
                     <TableCell
                       padding="checkbox"
                       className={classes.checkboxCell}
@@ -153,7 +153,10 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
                         }
                       />
                     </TableCell>
-                    <TableCell className={classes.wideCell}>
+                    <TableCell
+                      className={classes.wideCell}
+                      data-test-id={container.name}
+                    >
                       {container.name}
                     </TableCell>
                   </TableRowLink>
@@ -166,6 +169,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
       <DialogActions>
         <BackButton onClick={onClose} />
         <ConfirmButton
+          data-test-id="assign-and-save-button"
           transitionState={confirmButtonState}
           type="submit"
           onClick={handleSubmit}
