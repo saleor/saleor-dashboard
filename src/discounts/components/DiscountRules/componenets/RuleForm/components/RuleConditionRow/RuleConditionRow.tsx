@@ -82,6 +82,7 @@ export const RuleConditionRow = ({
             updateCondition(conditionIndex, condition);
             typeField.onChange(e.target.value);
           }}
+          size="medium"
           data-test-id="rule-type"
           onBlur={typeField.onBlur}
           disabled={disabled}
@@ -91,7 +92,7 @@ export const RuleConditionRow = ({
       <RuleInputWrapper>
         <Select
           value="is"
-          size="small"
+          size="medium"
           options={[
             {
               value: "is",
@@ -108,6 +109,7 @@ export const RuleConditionRow = ({
 
       <RuleInputWrapper>
         <Multiselect
+          size="medium"
           data-test-id="rule-values"
           value={condition.values}
           fetchOptions={fetch}
