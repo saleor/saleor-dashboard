@@ -18,9 +18,9 @@ export class ChannelSelectDialog {
   async clickAllChannelsCheckbox() {
     await this.allChannelsCheckbox.click();
   }
-  async selectFirstChannel() {
+  async selectChannel(channelName: string) {
     await this.displayedChannels
-      .first()
+      .filter({ hasText: channelName })
       .locator(this.displayedChannelsCheckboxes)
       .click();
   }

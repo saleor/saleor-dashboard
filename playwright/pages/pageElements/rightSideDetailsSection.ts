@@ -168,15 +168,15 @@ export class RightSideDetailsPage {
     await this.selectCustomerOption.locator(`text=${customer}`).click();
   }
 
-  async selectOneChannelAsAvailableWhenMoreSelected() {
+  async selectOneChannelAsAvailableWhenMoreSelected(channel: string) {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.clickAllChannelsCheckbox();
-    await this.channelSelectDialog.selectFirstChannel();
+    await this.channelSelectDialog.selectChannel(channel);
     await this.channelSelectDialog.clickConfirmButton();
   }
-  async selectOneChannelAsAvailableWhenNoneSelected() {
+  async selectOneChannelAsAvailableWhenNoneSelected(channel: string) {
     await this.manageChannelsButton.click();
-    await this.channelSelectDialog.selectFirstChannel();
+    await this.channelSelectDialog.selectChannel(channel);
     await this.channelSelectDialog.clickConfirmButton();
     await this.page.waitForLoadState("domcontentloaded");
   }

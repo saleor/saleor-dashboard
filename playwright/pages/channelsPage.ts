@@ -67,7 +67,7 @@ export class ChannelPage extends BasePage {
   async clickSaveButton() {
     await this.saveButton.click();
   }
-  async typeChannelName(channelName = "automation") {
+  async typeChannelName(channelName = "z - automation") {
     await this.channelNameInput.fill(channelName);
   }
   async typeSlugName(slugName: string) {
