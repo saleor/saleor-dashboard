@@ -158,6 +158,7 @@ export class ProductPage extends BasePage {
     const channel = this.page.locator(
       `[data-test-id="Channel-${channelName}"]`,
     );
+    await channel.locator(this.sellingPriceInput).scrollIntoViewIfNeeded();
     await channel.locator(this.sellingPriceInput).fill(sellingPriceValue);
   }
 
@@ -165,6 +166,7 @@ export class ProductPage extends BasePage {
     const channel = this.page.locator(
       `[data-test-id="Channel-${channelName}"]`,
     );
+    await channel.locator(this.costPriceInput).scrollIntoViewIfNeeded();
     await channel.locator(this.costPriceInput).fill(costPriceValue);
   }
 
