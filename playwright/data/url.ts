@@ -23,7 +23,7 @@ export const URL_LIST = {
   products: "products/",
   productsAdd: "add?product-type-id=",
   productTypes: "product-types/",
-  productTypesAdd: "/product-types/add",
+  productTypesAdd: "product-types/add",
   sales: "discounts/sales/",
   shippingMethods: "shipping/",
   siteSettings: "site-settings/",
