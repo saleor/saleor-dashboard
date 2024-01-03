@@ -169,7 +169,7 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
   await expect(
     productPage.productAvailableInChannelsText,
     "Label copy shows 1 out of 7 channels ",
-  ).toContainText(AVAILABILITY.in1OutOf7Channels);
+  ).toContainText(AVAILABILITY.in1OutOf);
   expect(
     await productPage.productImage.count(),
     "Newly added single image should be present",
