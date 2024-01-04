@@ -1,5 +1,8 @@
 import Money from "@dashboard/components/Money";
-import { TransactionEventFragment } from "@dashboard/graphql";
+import {
+  TransactionEventFragment,
+  TransactionEventTypeEnum,
+} from "@dashboard/graphql";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -87,6 +90,30 @@ const useStyles = makeStyles(
   { name: "OrderTransactionEvents-EventItem" },
 );
 
+const eventsWithoutAmount = new Set([
+  TransactionEventTypeEnum.CANCEL_SUCCESS,
+  TransactionEventTypeEnum.CANCEL_REQUEST,
+  TransactionEventTypeEnum.CANCEL_FAILURE,
+]);
+
+const shouldShowAmount = (
+  event: TransactionEventFragment | TransactionFakeEvent,
+) => {
+  if (!event || !event.amount?.currency) {
+    return false;
+  }
+
+  if (
+    event.__typename === "TransactionEvent" &&
+    event.type &&
+    eventsWithoutAmount.has(event.type)
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
 export const EventItem: React.FC<EventItemProps> = ({
   event,
   onHover,
@@ -109,7 +136,7 @@ export const EventItem: React.FC<EventItemProps> = ({
         <EventStatus status={status} />
       </TableCell>
       <TableCell>
-        {event.amount?.currency && <Money money={event.amount} />}
+        {shouldShowAmount(event) && <Money money={event.amount} />}
       </TableCell>
       <TableCell className={clsx(classes.colSmall, classes.colMessage)}>
         <EventType type={type} message={event.message} />
