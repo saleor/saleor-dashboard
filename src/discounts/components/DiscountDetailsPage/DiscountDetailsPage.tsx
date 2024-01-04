@@ -1,7 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
@@ -25,6 +24,7 @@ import { DiscountDescription } from "../DiscountDescription";
 import { DiscountDetailsForm } from "../DiscountDetailsForm";
 import { DiscountName } from "../DiscountName";
 import { DiscountRules } from "../DiscountRules";
+import { DiscountSavebar } from "../DiscountSavebar";
 
 export interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
@@ -114,12 +114,12 @@ export const DiscountDetailsPage = ({
                 disabled={disabled}
               />
 
-              <Savebar
+              <DiscountSavebar
                 disabled={disabled}
                 onCancel={onBack}
                 onSubmit={onSubmit}
                 onDelete={onDelete}
-                state={submitButtonState}
+                submitButtonState={submitButtonState}
               />
             </>
           )}

@@ -2,11 +2,10 @@ import { DashboardCard } from "@dashboard/components/Card";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { DiscoutFormData } from "@dashboard/discounts/types";
-import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import React from "react";
 import { useController } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 interface DiscountDescriptionProps {
   disabled?: boolean;
@@ -17,7 +16,6 @@ export const DiscountDescription = ({
   disabled = false,
   error = false,
 }: DiscountDescriptionProps) => {
-  const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } =
     useRichTextContext();
 
@@ -43,7 +41,7 @@ export const DiscountDescription = ({
             disabled={disabled}
             error={error}
             helperText=""
-            label={intl.formatMessage(commonMessages.optionalField)}
+            label=" "
             name="description"
           />
         ) : (
