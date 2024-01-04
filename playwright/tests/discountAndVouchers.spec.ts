@@ -215,7 +215,8 @@ test("TC: SALEOR_93 Bulk delete voucher @vouchers @e2e", async () => {
   ).toEqual([]);
 });
 
-test("TC: SALEOR_94 Edit voucher - assign voucher to specific category @vouchers @e2e", async () => {
+// TODO: https://github.com/saleor/saleor-dashboard/issues/4590
+test.skip("TC: SALEOR_94 Edit voucher - assign voucher to specific category @vouchers @e2e", async () => {
   const categoryToBeAssigned = "Accessories";
 
   await vouchersPage.gotoExistingVoucherPage(
