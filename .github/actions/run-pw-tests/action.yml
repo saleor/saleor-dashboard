@@ -43,7 +43,7 @@ runs:
         E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
         E2E_PERMISSIONS_USERS_PASSWORD: ${{ inputs.E2E_PERMISSIONS_USERS_PASSWORD }}
         SHARD_NUMBER: ${{ inputs.SHARD }}
-      run: npm run qa:pw-e2e -- --shard $SHARD_NUMBER
+      run: npm run qa:pw-e2e -- --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v3

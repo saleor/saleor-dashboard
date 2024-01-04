@@ -26,7 +26,7 @@ jobs:
         id: set_variables_mode
         shell: bash
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
             echo "MODE=main" >> $GITHUB_OUTPUT
           else
             echo "MODE=release" >> $GITHUB_OUTPUT
@@ -52,7 +52,7 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
   run-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: initialize_cloud
     strategy:
       fail-fast: false
@@ -74,9 +74,9 @@ jobs:
   merge-reports:
     if: '!cancelled()'
     needs: run-tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
