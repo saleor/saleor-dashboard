@@ -1,13 +1,13 @@
 name: Run test manually
 
-on: [pull_request]
+on: [workflow_dispatch]
 
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  initialize_cloud:
+  initialize-cloud:
     runs-on: ubuntu-22.04
     outputs:
       POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
@@ -26,14 +26,11 @@ jobs:
         id: set_variables_mode
         shell: bash
         run: |
-          echo "MODE=release" >> $GITHUB_OUTPUT
-
-        # run: |
-        #   if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-        #     echo "MODE=main" >> $GITHUB_OUTPUT
-        #   else
-        #     echo "MODE=release" >> $GITHUB_OUTPUT
-        #   fi
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "MODE=main" >> $GITHUB_OUTPUT
+          else
+            echo "MODE=release" >> $GITHUB_OUTPUT
+          fi
 
       - name: Generate variables
         id: cloud_variables
