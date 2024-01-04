@@ -47,6 +47,27 @@ export const RuleConditions = ({
     );
   }
 
+  if (hasSelectedChannels && !conditionsList.length) {
+    return (
+      <Box display="flex" flexDirection="column" gap={4}>
+        <Text>{intl.formatMessage(messages.conditions)}</Text>
+        <Text variant="caption" color="default2">
+          {intl.formatMessage(messages.noConditonsCreate)}
+        </Text>
+
+        <Button
+          variant="secondary"
+          size="small"
+          alignSelf="start"
+          disabled={disabled}
+          onClick={() => append(Condition.empty())}
+        >
+          <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
+        </Button>
+      </Box>
+    );
+  }
+
   return (
     <Box display="flex" flexDirection="column" gap={4}>
       <Text>{intl.formatMessage(messages.conditions)}</Text>

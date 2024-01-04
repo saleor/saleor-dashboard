@@ -6,16 +6,7 @@ import {
   discountListUrl,
   DiscountUrlQueryParams,
 } from "@dashboard/discounts/discountsUrls";
-import {
-  usePromotionDeleteMutation,
-  usePromotionDetailsQuery,
-  usePromotionRuleCreateMutation,
-  usePromotionRuleDeleteMutation,
-  usePromotionRuleUpdateMutation,
-  usePromotionUpdateMutation,
-} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
 import React, { useState } from "react";
@@ -30,6 +21,12 @@ import {
   getRuleConditionsOptionsDetailsMap,
   useFetchConditionsOptionsDetails,
 } from "./hooks/useFetchConditionsOptionsDetails";
+import { usePromotionData } from "./hooks/usePromotionData";
+import { usePromotionDelete } from "./hooks/usePromotionDelete";
+import { usePromotionRuleCreate } from "./hooks/usePromotionRuleCreate";
+import { usePromotionRuleDelete } from "./hooks/usePromotionRuleDelete";
+import { usePromotionRuleUpdate } from "./hooks/usePromotionRuleUpdate";
+import { usePromotionUpdate } from "./hooks/usePromotionUpdate";
 
 interface DiscountDetailsProps {
   id: string;
@@ -37,90 +34,32 @@ interface DiscountDetailsProps {
 }
 
 export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
-  const notify = useNotifier();
   const { availableChannels } = useAppChannel(false);
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const {
-    data: promotionData,
-    loading,
-    refetch,
-  } = usePromotionDetailsQuery({
-    variables: {
-      id,
-    },
-  });
+  const { promotionData, loading } = usePromotionData(id);
 
   const { ruleConditionsOptionsDetails, ruleConditionsOptionsDetailsLoading } =
     useFetchConditionsOptionsDetails(promotionData);
 
-  const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation({
-    onCompleted(data) {
-      if (data?.promotionUpdate?.errors?.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        refetch();
-      }
-    },
-  });
+  const ruleConditionsOptionsDetailsMap = getRuleConditionsOptionsDetailsMap(
+    ruleConditionsOptionsDetails,
+  );
 
-  const [promotionDelete, promotionDeleteOpts] = usePromotionDeleteMutation({
-    onCompleted(data) {
-      if (data?.promotionDelete?.errors?.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "4LRapg",
-            defaultMessage: "Discount removed",
-          }),
-        });
-        navigate(discountListUrl());
-      }
-    },
-  });
+  const { promotionUpdate, promotionUpdateOpts } = usePromotionUpdate(id);
 
-  const [promotionRuleUpdate, promotionRuleUpdateOpts] =
-    usePromotionRuleUpdateMutation({
-      onCompleted(data) {
-        if (data?.promotionRuleUpdate?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          refetch();
-        }
-      },
-    });
+  const { promotionDelete, promotionDeleteOpts } = usePromotionDelete();
 
-  const [promotionRuleCreate, promotionRuleCreateOpts] =
-    usePromotionRuleCreateMutation({
-      onCompleted(data) {
-        if (data?.promotionRuleCreate?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          refetch();
-        }
-      },
-    });
+  const { promotionRuleUpdate, promotionRuleUpdateOpts } =
+    usePromotionRuleUpdate(id);
 
-  const [promotionRuleDelete, promotionRuleDeleteOpts] =
-    usePromotionRuleDeleteMutation({
-      onCompleted(data) {
-        if (data?.promotionRuleDelete?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          refetch();
-        }
-      },
-    });
+  const { promotionRuleCreate, promotionRuleCreateOpts } =
+    usePromotionRuleCreate(id);
+
+  const { promotionRuleDelete, promotionRuleDeleteOpts } =
+    usePromotionRuleDelete(id);
 
   const onSubmit = createUpdateHandler(promotionData?.promotion, variables =>
     promotionUpdate({ variables }),
@@ -166,9 +105,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           promotionRuleCreateOpts.loading ||
           promotionRuleDeleteOpts.loading
         }
-        ruleConditionsOptionsDetailsMap={getRuleConditionsOptionsDetailsMap(
-          ruleConditionsOptionsDetails,
-        )}
+        ruleConditionsOptionsDetailsMap={ruleConditionsOptionsDetailsMap}
         ruleConditionsOptionsDetailsLoading={
           ruleConditionsOptionsDetailsLoading
         }

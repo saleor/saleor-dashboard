@@ -7,6 +7,8 @@ import {
 import { CommonError } from "@dashboard/utils/errors/common";
 import { useEffect, useState } from "react";
 
+import { getCurrentConditionsValuesLabels } from "../utils";
+
 interface UseRulesHandlersProps {
   data: PromotionDetailsFragment | undefined | null;
   ruleConditionsOptionsDetailsMap: Record<string, string>;
@@ -26,18 +28,26 @@ export const useRulesHandlers = ({
   onRuleCreateSubmit,
   onRuleDeleteSubmit,
 }: UseRulesHandlersProps) => {
-  const [rules, setRules] = useState<Rule[]>([]);
   const [rulesErrors, setRulesErrors] = useState<Array<CommonError<any>>>([]);
+  const [labelsMap, setLabelMap] = useState<Record<string, string>>({});
+
+  const rules = data?.rules?.map(rule => Rule.fromAPI(rule, labelsMap)) ?? [];
 
   useEffect(() => {
-    if (data?.rules) {
-      setRules(
-        data.rules.map(rule =>
-          Rule.fromAPI(rule, ruleConditionsOptionsDetailsMap),
-        ) ?? [],
-      );
-    }
-  }, [data?.rules, ruleConditionsOptionsDetailsMap]);
+    setLabelMap(labels => {
+      return {
+        ...ruleConditionsOptionsDetailsMap,
+        ...labels,
+      };
+    });
+  }, [ruleConditionsOptionsDetailsMap]);
+
+  const updateLabels = (rule: Rule) => {
+    setLabelMap(labels => ({
+      ...labels,
+      ...getCurrentConditionsValuesLabels([rule]),
+    }));
+  };
 
   const onRuleSubmit = async (rule: Rule, ruleEditIndex: number | null) => {
     let errors: Array<
@@ -46,9 +56,10 @@ export const useRulesHandlers = ({
       >
     > = [];
     const ruleObj = Rule.fromFormValues(rule);
-
     if (ruleEditIndex !== null) {
+      updateLabels(rule);
       errors = await onRuleUpdateSubmit(ruleObj);
+
       if (errors.length > 0) {
         setRulesErrors(errors);
       }

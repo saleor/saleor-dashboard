@@ -1355,6 +1355,9 @@
     "context": "Payment card title",
     "string": "Payment balance"
   },
+  "7MUx0T": {
+    "string": "Discount of {value} through the {channel}"
+  },
   "7NFfmz": {
     "string": "Products"
   },
@@ -5205,6 +5208,9 @@
   "XtlUj6": {
     "string": "Add your first rule to set up a promotion"
   },
+  "Xu4ST7": {
+    "string": "No conditions added, click button bellow to create one"
+  },
   "Xu4ech": {
     "context": "deactivate app",
     "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app."
@@ -8811,6 +8817,9 @@
   },
   "y/UWBR": {
     "string": "There is no address to show for this customer"
+  },
+  "y08GTW": {
+    "string": "Channel is required"
   },
   "y7mfbl": {
     "string": "Currently, there are no countries assigned to this shipping zone"
