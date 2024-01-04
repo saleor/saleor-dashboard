@@ -49,11 +49,14 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card>
+    <Card data-test-id="assign-collection-section">
       <CardTitle
         title={intl.formatMessage(messages.discountCollectionsHeader)}
         toolbar={
-          <Button onClick={onCollectionAssign}>
+          <Button
+            onClick={onCollectionAssign}
+            data-test-id="assign-collection-button"
+          >
             <FormattedMessage {...messages.discountCollectionsButton} />
           </Button>
         }
@@ -90,13 +93,14 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
             <TablePaginationWithContext colSpan={numberOfColumns} />
           </TableRowLink>
         </TableFooter>
-        <TableBody>
+        <TableBody data-test-id="assigned-specific-products-table">
           {renderCollection(
             mapEdgesToItems(sale?.collections),
             collection => {
               const isSelected = collection ? isChecked(collection.id) : false;
               return (
                 <TableRowLink
+                  data-test-id="assigned-specific-product"
                   selected={isSelected}
                   hover={!!collection}
                   key={collection ? collection.id : "skeleton"}

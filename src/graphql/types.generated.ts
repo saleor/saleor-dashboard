@@ -9563,7 +9563,7 @@ export type PromotionCreateMutationVariables = Exact<{
 }>;
 
 
-export type PromotionCreateMutation = { __typename: 'Mutation', promotionCreate: { __typename: 'PromotionCreate', errors: Array<{ __typename: 'PromotionCreateError', field: string | null, message: string | null, code: PromotionCreateErrorCode, index: number | null }>, promotion: { __typename: 'Promotion', id: string } | null } | null };
+export type PromotionCreateMutation = { __typename: 'Mutation', promotionCreate: { __typename: 'PromotionCreate', errors: Array<{ __typename: 'PromotionCreateError', field: string | null, message: string | null, code: PromotionCreateErrorCode, index: number | null }>, promotion: { __typename: 'Promotion', id: string, name: string, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null } | null } | null };
 
 export type PromotionUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9571,7 +9571,7 @@ export type PromotionUpdateMutationVariables = Exact<{
 }>;
 
 
-export type PromotionUpdateMutation = { __typename: 'Mutation', promotionUpdate: { __typename: 'PromotionUpdate', errors: Array<{ __typename: 'PromotionUpdateError', field: string | null, message: string | null, code: PromotionUpdateErrorCode }> } | null };
+export type PromotionUpdateMutation = { __typename: 'Mutation', promotionUpdate: { __typename: 'PromotionUpdate', errors: Array<{ __typename: 'PromotionUpdateError', field: string | null, message: string | null, code: PromotionUpdateErrorCode }>, promotion: { __typename: 'Promotion', id: string, name: string, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null } | null } | null };
 
 export type PromotionDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9586,21 +9586,21 @@ export type PromotionRuleUpdateMutationVariables = Exact<{
 }>;
 
 
-export type PromotionRuleUpdateMutation = { __typename: 'Mutation', promotionRuleUpdate: { __typename: 'PromotionRuleUpdate', errors: Array<{ __typename: 'PromotionRuleUpdateError', field: string | null, message: string | null, code: PromotionRuleUpdateErrorCode, channels: Array<string> | null }>, promotionRule: { __typename: 'PromotionRule', id: string } | null } | null };
+export type PromotionRuleUpdateMutation = { __typename: 'Mutation', promotionRuleUpdate: { __typename: 'PromotionRuleUpdate', errors: Array<{ __typename: 'PromotionRuleUpdateError', field: string | null, message: string | null, code: PromotionRuleUpdateErrorCode, channels: Array<string> | null }>, promotionRule: { __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null } | null } | null };
 
 export type PromotionRuleCreateMutationVariables = Exact<{
   input: PromotionRuleCreateInput;
 }>;
 
 
-export type PromotionRuleCreateMutation = { __typename: 'Mutation', promotionRuleCreate: { __typename: 'PromotionRuleCreate', errors: Array<{ __typename: 'PromotionRuleCreateError', field: string | null, message: string | null, code: PromotionRuleCreateErrorCode }>, promotionRule: { __typename: 'PromotionRule', id: string } | null } | null };
+export type PromotionRuleCreateMutation = { __typename: 'Mutation', promotionRuleCreate: { __typename: 'PromotionRuleCreate', errors: Array<{ __typename: 'PromotionRuleCreateError', field: string | null, message: string | null, code: PromotionRuleCreateErrorCode }>, promotionRule: { __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null } | null } | null };
 
 export type PromotionRuleDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type PromotionRuleDeleteMutation = { __typename: 'Mutation', promotionRuleDelete: { __typename: 'PromotionRuleDelete', errors: Array<{ __typename: 'PromotionRuleDeleteError', field: string | null, message: string | null, code: PromotionRuleDeleteErrorCode }> } | null };
+export type PromotionRuleDeleteMutation = { __typename: 'Mutation', promotionRuleDelete: { __typename: 'PromotionRuleDelete', errors: Array<{ __typename: 'PromotionRuleDeleteError', field: string | null, message: string | null, code: PromotionRuleDeleteErrorCode }>, promotionRule: { __typename: 'PromotionRule', id: string } | null } | null };
 
 export type SaleListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;

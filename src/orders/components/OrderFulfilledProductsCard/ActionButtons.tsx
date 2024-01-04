@@ -74,13 +74,21 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
 
   return hasTrackingNumber ? (
     <CardActions className={classes.actions}>
-      <Button variant="primary" onClick={onTrackingCodeAdd}>
+      <Button
+        data-test-id="edit-tracking-button"
+        variant="primary"
+        onClick={onTrackingCodeAdd}
+      >
         <FormattedMessage {...actionButtonsMessages.editTracking} />
       </Button>
     </CardActions>
   ) : (
     <CardActions className={classes.actions}>
-      <Button variant="primary" onClick={onTrackingCodeAdd}>
+      <Button
+        variant="primary"
+        onClick={onTrackingCodeAdd}
+        data-test-id="add-tracking-button"
+      >
         <FormattedMessage {...actionButtonsMessages.addTracking} />
       </Button>
     </CardActions>

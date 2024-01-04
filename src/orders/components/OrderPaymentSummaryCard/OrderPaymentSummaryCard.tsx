@@ -71,6 +71,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
             label={payment.localized}
             color={payment.status}
             className={classes.paymentStatus}
+            data-test-id="payment-status"
           />
         }
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}

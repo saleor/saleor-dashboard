@@ -41,8 +41,8 @@ export type ConditionType = "product" | "category" | "collection" | "variant";
 
 // Mimic API catalogue predicate structure because api scheme type return any
 export interface CataloguePredicateAPI {
-  OR: CataloguePredicateAPI[];
-  AND: CataloguePredicateAPI[];
+  OR?: CataloguePredicateAPI[];
+  AND?: CataloguePredicateAPI[];
   productPredicate?: {
     ids: string[];
   };

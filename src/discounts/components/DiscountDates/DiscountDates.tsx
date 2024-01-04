@@ -40,7 +40,7 @@ const DiscountDates = <ErrorCode,>({
   const apiErrors = getFormErrors(["startDate", "endDate"], errors);
 
   return (
-    <DashboardCard>
+    <DashboardCard data-test-id="active-dates-section">
       <DashboardCard.Title>
         <FormattedMessage
           id="zKOGkU"
@@ -52,6 +52,7 @@ const DiscountDates = <ErrorCode,>({
       <DashboardCard.Content>
         <Box display="flex" gap={4}>
           <Input
+            data-test-id="start-date-input"
             disabled={disabled}
             error={!!apiErrors.startDate || !!formErrors?.startDate}
             helperText={
@@ -67,6 +68,7 @@ const DiscountDates = <ErrorCode,>({
             width="100%"
           />
           <Input
+            data-test-id="start-hour-input"
             disabled={disabled}
             error={!!apiErrors.startDate}
             helperText={getCommonFormFieldErrorMessage(
@@ -109,6 +111,7 @@ const DiscountDates = <ErrorCode,>({
         {data.hasEndDate && (
           <Box display="flex" gap={4}>
             <Input
+              data-test-id="end-date-input"
               disabled={disabled}
               error={!!apiErrors.endDate}
               helperText={getCommonFormFieldErrorMessage(
@@ -124,6 +127,7 @@ const DiscountDates = <ErrorCode,>({
               width="100%"
             />
             <Input
+              data-test-id="end-hour-input"
               disabled={disabled}
               error={!!apiErrors.endDate}
               helperText={getCommonFormFieldErrorMessage(

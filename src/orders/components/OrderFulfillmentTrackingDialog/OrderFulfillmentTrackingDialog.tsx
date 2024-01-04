@@ -82,6 +82,7 @@ const OrderFulfillmentTrackingDialog: React.FC<
                 onChange={change}
                 value={data.trackingNumber}
                 fullWidth
+                data-test-id="tracking-number-input"
               />
               {errors.length > 0 && (
                 <>
@@ -99,6 +100,7 @@ const OrderFulfillmentTrackingDialog: React.FC<
             <DialogActions>
               <BackButton onClick={onClose} />
               <ConfirmButton
+                data-test-id="confirm-tracking-number-button"
                 transitionState={confirmButtonState}
                 onClick={submit}
               >

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { register } from "register-service-worker";
 
+const SW_PATH = `${process.env.STATIC_URL || "/"}sw.js`;
+
 export const useServiceWorker = (timeout: number) => {
   const [updateAvailable, setUpdateAvailable] = useState<boolean>(false);
   const registrationRef = useRef<ServiceWorkerRegistration>();
@@ -29,7 +31,7 @@ export const useServiceWorker = (timeout: number) => {
   }, [updateAvailable]);
 
   useEffect(() => {
-    register("/sw.js", {
+    register(SW_PATH, {
       registered: onRegistered,
       updated: onUpdate,
     });

@@ -3,7 +3,7 @@ import {
   hueToPillColorLight,
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
-import { Condition } from "@dashboard/discounts/models";
+import { Condition, Rule } from "@dashboard/discounts/models";
 import { ConditionType } from "@dashboard/discounts/types";
 import { DefaultTheme, Option } from "@saleor/macaw-ui-next";
 
@@ -48,4 +48,11 @@ export const conditionTypeToHue = (
   return theme === "defaultDark"
     ? hueToPillColorDark(hue)
     : hueToPillColorLight(hue);
+};
+
+export const hasNoRuleConditions = (rule: Rule) => {
+  return (
+    !rule.conditions.length ||
+    rule.conditions.every(condition => !condition.values.length)
+  );
 };

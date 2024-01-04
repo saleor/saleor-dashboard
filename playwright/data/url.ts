@@ -32,6 +32,7 @@ export const URL_LIST = {
   translations: "translations/",
   variants: "variant/",
   vouchers: "discounts/vouchers/",
+  vouchersAddPage: "discounts/vouchers/add",
   variant: "variant/",
   warehouses: "warehouses/",
   webhooksAndEvents: "custom-apps/",
