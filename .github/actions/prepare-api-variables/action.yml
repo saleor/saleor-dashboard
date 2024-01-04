@@ -58,7 +58,7 @@ runs:
 
           echo "BASE_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
           echo "API_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
-          echo "POOL_NAME=v${VERSION_SLUG}" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=3.18 Staging" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-3.18" >> $GITHUB_OUTPUT
 
