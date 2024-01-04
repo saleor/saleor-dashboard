@@ -1,3 +1,4 @@
+import { ExpressionFilters } from "@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -103,7 +104,7 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
 
       <DashboardCard>
         <Box __width="320px" marginLeft={4} marginBottom={2}>
-          {/* TODO: remove when new fileters will be implemented */}
+          <ExpressionFilters />
           <SearchInput
             initialSearch={initialSearch}
             placeholder={intl.formatMessage({

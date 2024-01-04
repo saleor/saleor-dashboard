@@ -11,6 +11,7 @@ import {
   DiscountListUrlQueryParams,
   DiscountListUrlSortField,
 } from "./discountsUrls";
+import { ConditionalDiscountFilterProvider } from "./filters/provider";
 import {
   saleAddPath,
   saleListPath,
@@ -45,7 +46,11 @@ const SaleListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
       qs,
       DiscountListUrlSortField,
     );
-    return <DiscountList params={params} />;
+    return (
+      <ConditionalDiscountFilterProvider locationSearch={location.search}>
+        <DiscountList params={params} />;
+      </ConditionalDiscountFilterProvider>
+    );
   }
 
   return <SaleListViewComponent params={params} />;
