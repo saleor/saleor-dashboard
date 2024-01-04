@@ -7,8 +7,6 @@ export const STATIC_CONDITIONS = {
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },
   ],
-  PLAIN_TEXT: [{ type: "text", label: "is", value: "input-1" }],
-  DATE: [{ type: "date", label: "is", value: "input-1" }],
   price: [
     { type: "number", label: "is", value: "input-1" },
     { type: "number", label: "lower", value: "input-2" },

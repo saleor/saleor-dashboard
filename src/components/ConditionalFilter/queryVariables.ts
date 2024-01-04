@@ -3,6 +3,7 @@ import {
   DecimalFilterInput,
   GlobalIdFilterInput,
   ProductWhereInput,
+  PromotionWhereInput,
 } from "@dashboard/graphql";
 
 import { FilterContainer } from "./FilterElement";
@@ -164,4 +165,16 @@ export const createProductQueryVariables = (
 
     return p;
   }, {} as ProductWhereInput);
+};
+
+export const creatDiscountsQueryVariables = (
+  value: FilterContainer,
+): PromotionWhereInput => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    p[c.value.value] = createStaticQueryPart(c.condition.selected);
+
+    return p;
+  }, {} as PromotionWhereInput);
 };

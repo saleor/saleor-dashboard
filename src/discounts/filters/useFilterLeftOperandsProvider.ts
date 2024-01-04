@@ -5,21 +5,15 @@ import { useState } from "react";
 
 export const STATIC_OPTIONS: LeftOperand[] = [
   {
-    value: "name",
-    label: "Name",
-    type: AttributeInputTypeEnum.PLAIN_TEXT,
-    slug: "name",
-  },
-  {
     value: "startDate",
     label: "Start date",
-    type: AttributeInputTypeEnum.DATE,
+    type: AttributeInputTypeEnum.DATE_TIME,
     slug: "startDate",
   },
   {
     value: "endDate",
     label: "End date",
-    type: AttributeInputTypeEnum.DATE,
+    type: AttributeInputTypeEnum.DATE_TIME,
     slug: "endDate",
   },
 ];
