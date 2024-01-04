@@ -1,7 +1,7 @@
 import { ConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/context";
+import { useContainerState } from "@dashboard/components/ConditionalFilter/useContainerState";
 import React, { FC } from "react";
 
-import { useContainerState } from "./useContainerState";
 import { useDiscountFilterAPIProvider } from "./useDiscountFilterAPIProvider";
 import { useFilterLeftOperandsProvider } from "./useFilterLeftOperandsProvider";
 import { useUrlValueProvider } from "./useUrlValueProvider";
