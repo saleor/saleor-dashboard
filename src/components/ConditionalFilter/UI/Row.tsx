@@ -37,7 +37,6 @@ export const RowComponent = ({
       gap={0.5}
       __gridTemplateColumns="200px 120px 200px auto"
       placeItems="center"
-      alignItems="start"
     >
       <DynamicCombobox
         data-test-id={`left-${index}`}
