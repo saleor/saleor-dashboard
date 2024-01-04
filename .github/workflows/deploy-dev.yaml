@@ -1,5 +1,7 @@
 name: Deploy Dashboard to dev
 on:
+  push:
+    branches: [dev-deployment-workflow, ]
   workflow_dispatch:
     inputs:
       git_ref:
