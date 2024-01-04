@@ -11,7 +11,7 @@ import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { ReactNode } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { getValidationSchema } from "../DiscountCreateForm/validationSchema";
@@ -75,13 +75,7 @@ export const DiscountDetailsForm = ({
     triggerChange: methods.trigger,
   });
 
-  const handleSubmit: SubmitHandler<DiscoutFormData> = formData => {
-    if (!methods.formState.isDirty) {
-      return;
-    }
-
-    return onSubmit(formData);
-  };
+  const handleSubmit = methods.handleSubmit(onSubmit);
 
   const { onDeleteRule, onRuleSubmit, rules, rulesErrors } = useRulesHandlers({
     data,
@@ -94,11 +88,11 @@ export const DiscountDetailsForm = ({
   return (
     <RichTextContext.Provider value={richText}>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(handleSubmit)}>
+        <form onSubmit={handleSubmit}>
           {children({
             rulesErrors,
             rules,
-            onSubmit: methods.handleSubmit(handleSubmit),
+            onSubmit: handleSubmit,
             onRuleSubmit,
             onDeleteRule,
           })}

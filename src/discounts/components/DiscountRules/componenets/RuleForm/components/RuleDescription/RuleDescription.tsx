@@ -46,7 +46,7 @@ export const RuleDescription = ({
             disabled={disabled}
             error={error}
             helperText=""
-            label={intl.formatMessage(commonMessages.optionalField)}
+            label=" "
             name="rule-description"
           />
         ) : (

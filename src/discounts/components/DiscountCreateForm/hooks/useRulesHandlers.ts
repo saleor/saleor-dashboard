@@ -1,4 +1,5 @@
 import { Rule } from "@dashboard/discounts/models";
+import { sortRules } from "@dashboard/discounts/utils";
 import { useState } from "react";
 
 export const useRulesHandlers = () => {
@@ -17,7 +18,7 @@ export const useRulesHandlers = () => {
         return rules;
       });
     } else {
-      setRules([...rules, ruleObj]);
+      setRules(sortRules([...rules, ruleObj]));
     }
   };
 
