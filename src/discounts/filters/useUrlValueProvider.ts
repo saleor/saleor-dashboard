@@ -65,7 +65,7 @@ export const useUrlValueProvider = (
     };
 
     setValue(tokenizedUrl.asFilterValuesFromResponse(emptyInitialState));
-  }, []);
+  }, [locationSearch]);
 
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
