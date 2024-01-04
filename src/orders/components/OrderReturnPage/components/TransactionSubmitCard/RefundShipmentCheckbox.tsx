@@ -37,6 +37,7 @@ const RefundShipmentCheckbox: React.FC<RefundShipmentCheckboxProps> = ({
 
   return (
     <Checkbox
+      data-test-id="refund-shipment-costs-checkbox"
       marginTop={4}
       checked={refundShipmentCosts}
       name={"refundShipmentCosts"}

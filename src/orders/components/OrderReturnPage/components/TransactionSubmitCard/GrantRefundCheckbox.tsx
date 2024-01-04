@@ -20,6 +20,7 @@ export const GrantRefundCheckbox = ({
 }: GrantRefundCheckboxProps) => {
   return (
     <Checkbox
+      data-test-id="auto-grant-refund-checkbox"
       checked={autoGrantRefund}
       error={grantRefundErrors.length > 0}
       name={"autoGrantRefund" satisfies keyof OrderReturnData}
