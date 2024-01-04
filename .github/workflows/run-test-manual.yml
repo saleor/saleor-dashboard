@@ -55,7 +55,7 @@ jobs:
 
   run-tests:
     runs-on: ubuntu-22.04
-    needs: initialize_cloud
+    needs: initialize-cloud
     strategy:
       fail-fast: false
       matrix:
