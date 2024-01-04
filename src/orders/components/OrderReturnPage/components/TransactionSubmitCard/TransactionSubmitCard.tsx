@@ -32,7 +32,7 @@ interface TransactionSubmitCardProps {
   canRefundShipping: boolean;
   shippingCosts: IMoney;
   amountData: PaymentSubmitCardValuesProps;
-  customRefundValue: number;
+  customRefundValue: number | undefined;
   onChange: FormChange;
   grantRefundErrors: OrderGrantRefundCreateErrorFragment[];
   sendRefundErrors: TransactionRequestRefundForGrantedRefundErrorFragment[];
