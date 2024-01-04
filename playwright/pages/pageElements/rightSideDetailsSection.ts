@@ -10,9 +10,12 @@ export class RightSideDetailsPage {
     readonly selectWarehouseShippingMethodButton = page.getByTestId(
       "select-warehouse-for-shipping-method",
     ),
+    readonly stockSettingsSection = page.getByTestId("stock-settings-section"),
     readonly selectChannelShippingPageButton = page.getByTestId(
       "select-channel-for-shipping-method",
     ),
+    readonly pickupDisabledButton = page.getByTestId("DISABLED"),
+    readonly pickupAllWarehousesButton = page.getByTestId("ALL"),
 
     readonly categorySelectOption = page.locator(
       "[data-test-id*='select-option']",
@@ -154,6 +157,18 @@ export class RightSideDetailsPage {
   }
   async clickAddWarehousesButton() {
     await this.addWarehousesButton.click();
+  }
+  async clickPublicStockButton() {
+    await this.stockSettingsSection.getByText("Public").click();
+  }
+  async clickPickupDisabledButton() {
+    await this.pickupDisabledButton.click();
+  }
+  async clickPickupAllWarehousesButton() {
+    await this.pickupAllWarehousesButton.click();
+  }
+  async clickPrivateStockButton() {
+    await this.stockSettingsSection.getByText("Private").click();
   }
   async selectShippingZone(zoneName = "Asia") {
     await this.shippingZonesSelect.click();

@@ -17,7 +17,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { WarehouseDetailsPageFormData } from "./../WarehouseDetailsPage";
+import { WarehouseDetailsPageFormData } from "../WarehouseDetailsPage";
 import messages from "./messages";
 
 export interface WarehouseSettingsProps {
@@ -175,7 +175,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       <CardTitle
         title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />}
       />
-      <CardContent>
+      <CardContent data-test-id="stock-settings-section">
         <RadioGroupField
           disabled={disabled}
           choices={isPrivateChoices}
