@@ -366,7 +366,9 @@
     "qa:artifact-move-screenshots": "find cypress/reports/*/mochareports -type d -name \"*.js\" -exec mv {} cypress/reports/mochareports \\;",
     "qa:artifact-move-videos": "find cypress/reports/*/mochareports/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
     "qa:basic-regression": "npx playwright test --grep @basic-regression",
-    "qa:full-regression": "npx playwright test"
+    "qa:full-regression": "npx playwright test",
+    "qa:pw-e2e": "npx playwright test --grep @e2e",
+    "qa:pw-ui": "npx playwright test --ui"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }

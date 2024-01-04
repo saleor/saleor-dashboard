@@ -1,3 +1,4 @@
+import { URL_LIST } from "@data/url";
 import { USER_PERMISSION } from "@data/userPermissions";
 import { LoginPage } from "@pages/loginPage";
 import { test as setup } from "@playwright/test";
