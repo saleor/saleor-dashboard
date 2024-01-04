@@ -54,7 +54,7 @@ jobs:
       - name: Deploy dev
         run: |
           aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev/static/"
-          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev/"
 
           aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/static/"
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/"
