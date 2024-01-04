@@ -74,7 +74,6 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: discountListUrl,
-    // TODO: implement getFilterQueryParam when new filter will be implemented
     getFilterQueryParam: () => 0,
     navigate,
     params,

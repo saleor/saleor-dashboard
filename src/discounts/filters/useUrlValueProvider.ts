@@ -1,3 +1,4 @@
+import { InitialStateResponse } from "@dashboard/components/ConditionalFilter/API/InitialStateResponse";
 import {
   FilterContainer,
   FilterElement,
@@ -6,7 +7,7 @@ import { FilterValueProvider } from "@dashboard/components/ConditionalFilter/Fil
 import { TokenArray } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray";
 import { UrlEntry } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
 import { stringify } from "qs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
 type Structure = Array<string | UrlEntry | Structure>;
@@ -43,6 +44,28 @@ export const useUrlValueProvider = (
   params.delete("after");
 
   const tokenizedUrl = new TokenArray(params.toString());
+
+  useEffect(() => {
+    const emptyInitialState = InitialStateResponse.empty();
+    emptyInitialState.attribute = {
+      startDate: {
+        choices: [],
+        inputType: "DATE_TIME",
+        label: "Start date",
+        slug: "start-date",
+        value: "start-date",
+      },
+      endDate: {
+        choices: [],
+        inputType: "DATE_TIME",
+        label: "End date",
+        slug: "end-date",
+        value: "end-date",
+      },
+    };
+
+    setValue(tokenizedUrl.asFilterValuesFromResponse(emptyInitialState));
+  }, []);
 
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
