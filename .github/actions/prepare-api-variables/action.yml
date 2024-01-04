@@ -54,11 +54,11 @@ runs:
         if [[ $MODE == 'release' ]]; then
           TEST=$(echo "${GITHUB_REF_SLUG}" | sed "s/\.//")
           VERSION_SLUG=$(echo "3.18" | sed "s/\.//")
-          echo "test: $TEST"
+          echo "test: $TEST, $VERSION_SLUG"
 
           echo "BASE_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
           echo "API_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
-          echo "POOL_NAME=v${GITHUB_REF_SLUG}" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=v${VERSION_SLUG}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-3.18" >> $GITHUB_OUTPUT
 
