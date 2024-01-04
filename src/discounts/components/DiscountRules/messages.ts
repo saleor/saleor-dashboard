@@ -42,6 +42,10 @@ export const messages = defineMessages({
     defaultMessage:
       "Discount of {value} on the purchase of {items} through the {channel}",
   },
+  ruleSummaryWithoutConditions: {
+    id: "7MUx0T",
+    defaultMessage: "Discount of {value} through the {channel}",
+  },
   ruleSummaryMoreItems: {
     id: "B0fwAj",
     defaultMessage: "and {itemsLength} more",
@@ -69,5 +73,9 @@ export const messages = defineMessages({
   noChannelsSelected: {
     id: "w7jT4W",
     defaultMessage: "No channels selected",
+  },
+  noConditonsCreate: {
+    id: "Xu4ST7",
+    defaultMessage: "No conditions added, click button bellow to create one",
   },
 });

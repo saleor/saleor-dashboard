@@ -7814,11 +7814,12 @@ export const PromotionCreateDocument = gql`
       ...PromotionCreateError
     }
     promotion {
-      id
+      ...PromotionDetails
     }
   }
 }
-    ${PromotionCreateErrorFragmentDoc}`;
+    ${PromotionCreateErrorFragmentDoc}
+${PromotionDetailsFragmentDoc}`;
 export type PromotionCreateMutationFn = Apollo.MutationFunction<Types.PromotionCreateMutation, Types.PromotionCreateMutationVariables>;
 
 /**
@@ -7851,9 +7852,13 @@ export const PromotionUpdateDocument = gql`
     errors {
       ...PromotionUpdateError
     }
+    promotion {
+      ...PromotionDetails
+    }
   }
 }
-    ${PromotionUpdateErrorFragmentDoc}`;
+    ${PromotionUpdateErrorFragmentDoc}
+${PromotionDetailsFragmentDoc}`;
 export type PromotionUpdateMutationFn = Apollo.MutationFunction<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>;
 
 /**
@@ -7923,11 +7928,12 @@ export const PromotionRuleUpdateDocument = gql`
       ...PromotionRuleUpdateError
     }
     promotionRule {
-      id
+      ...PromotionRuleDetails
     }
   }
 }
-    ${PromotionRuleUpdateErrorFragmentDoc}`;
+    ${PromotionRuleUpdateErrorFragmentDoc}
+${PromotionRuleDetailsFragmentDoc}`;
 export type PromotionRuleUpdateMutationFn = Apollo.MutationFunction<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>;
 
 /**
@@ -7962,11 +7968,12 @@ export const PromotionRuleCreateDocument = gql`
       ...PromotionRuleCreateError
     }
     promotionRule {
-      id
+      ...PromotionRuleDetails
     }
   }
 }
-    ${PromotionRuleCreateErrorFragmentDoc}`;
+    ${PromotionRuleCreateErrorFragmentDoc}
+${PromotionRuleDetailsFragmentDoc}`;
 export type PromotionRuleCreateMutationFn = Apollo.MutationFunction<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>;
 
 /**
@@ -7998,6 +8005,9 @@ export const PromotionRuleDeleteDocument = gql`
   promotionRuleDelete(id: $id) {
     errors {
       ...PromotionRuleDeleteError
+    }
+    promotionRule {
+      id
     }
   }
 }
