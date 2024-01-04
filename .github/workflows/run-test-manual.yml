@@ -26,7 +26,7 @@ jobs:
         id: set_variables_mode
         shell: bash
         run: |
-          echo "MODE=main" >> $GITHUB_OUTPUT
+          echo "MODE=release" >> $GITHUB_OUTPUT
 
         # run: |
         #   if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
