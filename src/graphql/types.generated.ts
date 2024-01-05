@@ -1147,6 +1147,15 @@ export type CheckoutAddressValidationRules = {
   enableFieldsNormalization?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type CheckoutAndOrderPredicateInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<CheckoutAndOrderPredicateInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<CheckoutAndOrderPredicateInput>>;
+  /** Defines the conditions related to checkout and order objects. */
+  discountedObjectPredicate?: InputMaybe<DiscountedObjectPredicateInput>;
+};
+
 /**
  * Determine a current authorize status for checkout.
  *
@@ -2039,6 +2048,17 @@ export enum DiscountValueTypeEnum {
   FIXED = 'FIXED',
   PERCENTAGE = 'PERCENTAGE'
 }
+
+export type DiscountedObjectPredicateInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<DiscountedObjectPredicateInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<DiscountedObjectPredicateInput>>;
+  /** Subtotal price range condition. */
+  subtotalPrice?: InputMaybe<DecimalFilterInput>;
+  /** Total price range condition. */
+  totalPrice?: InputMaybe<DecimalFilterInput>;
+};
 
 /** An enumeration. */
 export enum DistanceUnitsEnum {
@@ -3761,12 +3781,6 @@ export type OrderBulkCreateInput = {
   transactions?: InputMaybe<Array<TransactionCreateInput>>;
   /** Customer associated with the order. */
   user: OrderBulkCreateUserInput;
-  /**
-   * Code of a voucher associated with the order.
-   *
-   * DEPRECATED: this field will be removed in Saleor 3.19. Use `voucherCode` instead.
-   */
-  voucher?: InputMaybe<Scalars['String']>;
   /**
    * Code of a voucher associated with the order.
    *
@@ -5897,6 +5911,9 @@ export enum PromotionCreateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_PRECISION = 'INVALID_PRECISION',
+  MISSING_CHANNELS = 'MISSING_CHANNELS',
+  MIXED_PREDICATES = 'MIXED_PREDICATES',
+  MIXED_PROMOTION_PREDICATES = 'MIXED_PROMOTION_PREDICATES',
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED'
@@ -5937,6 +5954,9 @@ export enum PromotionRuleCreateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_PRECISION = 'INVALID_PRECISION',
+  MISSING_CHANNELS = 'MISSING_CHANNELS',
+  MIXED_PREDICATES = 'MIXED_PREDICATES',
+  MIXED_PROMOTION_PREDICATES = 'MIXED_PROMOTION_PREDICATES',
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED'
@@ -5947,12 +5967,28 @@ export type PromotionRuleCreateInput = {
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** List of channel ids to which the rule should apply to. */
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * Defines the conditions on the checkout/order level that must be met for the reward to be applied.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  checkoutAndOrderPredicate?: InputMaybe<CheckoutAndOrderPredicateInput>;
   /** Promotion rule description. */
   description?: InputMaybe<Scalars['JSON']>;
   /** Promotion rule name. */
   name?: InputMaybe<Scalars['String']>;
   /** The ID of the promotion that rule belongs to. */
   promotion: Scalars['ID'];
+  /**
+   * Defines the reward type of the promotion rule.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  rewardType?: InputMaybe<RewardTypeEnum>;
   /** Defines the discount value. Required when catalogue predicate is provided. */
   rewardValue?: InputMaybe<Scalars['PositiveDecimal']>;
   /** Defines the promotion rule reward value type. Must be provided together with reward value. */
@@ -5970,10 +6006,26 @@ export type PromotionRuleInput = {
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** List of channel ids to which the rule should apply to. */
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * Defines the conditions on the checkout/order level that must be met for the reward to be applied.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  checkoutAndOrderPredicate?: InputMaybe<CheckoutAndOrderPredicateInput>;
   /** Promotion rule description. */
   description?: InputMaybe<Scalars['JSON']>;
   /** Promotion rule name. */
   name?: InputMaybe<Scalars['String']>;
+  /**
+   * Defines the reward type of the promotion rule.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  rewardType?: InputMaybe<RewardTypeEnum>;
   /** Defines the discount value. Required when catalogue predicate is provided. */
   rewardValue?: InputMaybe<Scalars['PositiveDecimal']>;
   /** Defines the promotion rule reward value type. Must be provided together with reward value. */
@@ -5997,21 +6049,39 @@ export enum PromotionRuleUpdateErrorCode {
   INVALID = 'INVALID',
   INVALID_PRECISION = 'INVALID_PRECISION',
   MISSING_CHANNELS = 'MISSING_CHANNELS',
+  MIXED_PREDICATES = 'MIXED_PREDICATES',
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
-  NOT_FOUND = 'NOT_FOUND'
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
 }
 
 export type PromotionRuleUpdateInput = {
-  /** List of channel ids to remove. */
+  /** List of channel ids to add. */
   addChannels?: InputMaybe<Array<Scalars['ID']>>;
   /** Defines the conditions on the catalogue level that must be met for the reward to be applied. */
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
+  /**
+   * Defines the conditions on the checkout/order level that must be met for the reward to be applied.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  checkoutAndOrderPredicate?: InputMaybe<CheckoutAndOrderPredicateInput>;
   /** Promotion rule description. */
   description?: InputMaybe<Scalars['JSON']>;
   /** Promotion rule name. */
   name?: InputMaybe<Scalars['String']>;
   /** List of channel ids to remove. */
   removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * Defines the reward type of the promotion rule.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  rewardType?: InputMaybe<RewardTypeEnum>;
   /** Defines the discount value. Required when catalogue predicate is provided. */
   rewardValue?: InputMaybe<Scalars['PositiveDecimal']>;
   /** Defines the promotion rule reward value type. Must be provided together with reward value. */
@@ -6110,6 +6180,11 @@ export type ReorderInput = {
 export enum ReportingPeriod {
   THIS_MONTH = 'THIS_MONTH',
   TODAY = 'TODAY'
+}
+
+/** An enumeration. */
+export enum RewardTypeEnum {
+  SUBTOTAL_DISCOUNT = 'SUBTOTAL_DISCOUNT'
 }
 
 /** An enumeration. */
@@ -6994,7 +7069,8 @@ export enum TransactionFlowStrategyEnum {
 export enum TransactionInitializeErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
-  NOT_FOUND = 'NOT_FOUND'
+  NOT_FOUND = 'NOT_FOUND',
+  UNIQUE = 'UNIQUE'
 }
 
 /** An enumeration. */

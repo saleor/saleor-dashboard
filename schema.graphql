@@ -944,6 +944,13 @@ type App implements Node & ObjectWithMetadata {
   """The ID of the app."""
   id: ID!
 
+  """
+  Canonical app ID from the manifest
+  
+  Added in Saleor 3.19.
+  """
+  identifier: String
+
   """Determine if app will be set active or not."""
   isActive: Boolean
 
@@ -4717,6 +4724,17 @@ input CheckoutAddressValidationRules {
   enableFieldsNormalization: Boolean = true
 }
 
+input CheckoutAndOrderPredicateInput {
+  """List of conditions that must be met."""
+  AND: [CheckoutAndOrderPredicateInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [CheckoutAndOrderPredicateInput!]
+
+  """Defines the conditions related to checkout and order objects."""
+  discountedObjectPredicate: DiscountedObjectPredicateInput
+}
+
 """
 Determine a current authorize status for checkout.
 
@@ -7356,6 +7374,20 @@ enum DiscountValueTypeEnum {
   PERCENTAGE
 }
 
+input DiscountedObjectPredicateInput {
+  """List of conditions that must be met."""
+  AND: [DiscountedObjectPredicateInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [DiscountedObjectPredicateInput!]
+
+  """Subtotal price range condition."""
+  subtotalPrice: DecimalFilterInput
+
+  """Total price range condition."""
+  totalPrice: DecimalFilterInput
+}
+
 """An enumeration."""
 enum DistanceUnitsEnum {
   CM
@@ -8204,8 +8236,13 @@ type FileUpload {
 
 """Represents order fulfillment."""
 type Fulfillment implements Node & ObjectWithMetadata {
+  """Date and time when fulfillment was created."""
   created: DateTime!
+
+  """Sequence in which the fulfillments were created for an order."""
   fulfillmentOrder: Int!
+
+  """ID of the fulfillment."""
   id: ID!
 
   """List of lines for the fulfillment."""
@@ -8255,6 +8292,8 @@ type Fulfillment implements Node & ObjectWithMetadata {
   Added in Saleor 3.14.
   """
   shippingRefundedAmount: Money
+
+  """Status of fulfillment."""
   status: FulfillmentStatus!
 
   """User-friendly fulfillment status."""
@@ -8266,6 +8305,8 @@ type Fulfillment implements Node & ObjectWithMetadata {
   Added in Saleor 3.14.
   """
   totalRefundedAmount: Money
+
+  """Fulfillment tracking number."""
   trackingNumber: String!
 
   """Warehouse from fulfillment was fulfilled."""
@@ -8407,8 +8448,13 @@ type FulfillmentCreated implements Event {
 
 """Represents line of the fulfillment."""
 type FulfillmentLine implements Node {
+  """ID of the fulfillment line."""
   id: ID!
+
+  """The order line to which the fulfillment line is related."""
   orderLine: OrderLine
+
+  """The number of items included in the fulfillment line."""
   quantity: Int!
 }
 
@@ -8580,6 +8626,8 @@ type GiftCard implements Node & ObjectWithMetadata {
   Requires one of the following permissions: MANAGE_GIFT_CARD, OWNER.
   """
   code: String!
+
+  """Date and time when gift card was created."""
   created: DateTime!
 
   """
@@ -8616,13 +8664,19 @@ type GiftCard implements Node & ObjectWithMetadata {
     """Filtering options for gift card events."""
     filter: GiftCardEventFilterInput
   ): [GiftCardEvent!]!
+
+  """Expiry date of the gift card."""
   expiryDate: Date
+
+  """ID of the gift card."""
   id: ID!
   initialBalance: Money!
   isActive: Boolean!
 
   """Last 4 characters of gift card code."""
   last4CodeChars: String!
+
+  """Date and time when gift card was last used."""
   lastUsedOn: DateTime
 
   """List of public metadata items. Can be accessed without permissions."""
@@ -9049,6 +9103,8 @@ type GiftCardEvent implements Node {
 
   """The gift card expiry date."""
   expiryDate: Date
+
+  """ID of the event associated with a gift card."""
   id: ID!
 
   """Content of the event."""
@@ -9338,7 +9394,10 @@ The gift card tag.
 Added in Saleor 3.1.
 """
 type GiftCardTag implements Node {
+  """ID of the tag associated with a gift card."""
   id: ID!
+
+  """Name of the tag associated with a gift card."""
   name: String!
 }
 
@@ -15987,7 +16046,7 @@ type Mutation {
   ): StaffUpdate
 
   """
-  Updates stocks for a given variant and warehouse.
+  Updates stocks for a given variant and warehouse. Variant and warehouse selectors have to be the same for all stock inputs. Is not allowed to use 'variantId' in one input and 'variantExternalReference' in another.
   
   Added in Saleor 3.13.
   
@@ -16252,6 +16311,13 @@ type Mutation {
 
     """The ID of the checkout or order."""
     id: ID!
+
+    """
+    The idempotency key assigned to the action. It will be passed to the payment app to discover potential duplicate actions. If not provided, the default one will be generated. If empty string provided, INVALID error code will be raised.
+    
+    Added in Saleor 3.14.
+    """
+    idempotencyKey: String
 
     """Payment gateway used to initialize the transaction."""
     paymentGateway: PaymentGatewayToInitialize!
@@ -16734,6 +16800,8 @@ type Order implements Node & ObjectWithMetadata {
   Informs whether a draft order can be finalized(turned into a regular order).
   """
   canFinalize: Boolean!
+
+  """Channel through which the order was placed."""
   channel: Channel!
 
   """
@@ -16749,8 +16817,16 @@ type Order implements Node & ObjectWithMetadata {
   Added in Saleor 3.11.
   """
   checkoutId: ID
+
+  """
+  Name of the collection point where the order should be picked up by the customer.
+  """
   collectionPointName: String
+
+  """Date and time when the order was created."""
   created: DateTime!
+
+  """Additional information provided by the customer about the order."""
   customerNote: String!
 
   """
@@ -16809,6 +16885,8 @@ type Order implements Node & ObjectWithMetadata {
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   grantedRefunds: [OrderGrantedRefund!]!
+
+  """ID of the order."""
   id: ID!
 
   """
@@ -16884,6 +16962,8 @@ type Order implements Node & ObjectWithMetadata {
   Added in Saleor 3.3.
   """
   privateMetafields(keys: [String!]): Metadata
+
+  """URL to which user should be redirected after order is placed."""
   redirectUrl: String
 
   """
@@ -16893,6 +16973,8 @@ type Order implements Node & ObjectWithMetadata {
 
   """Shipping method for this order."""
   shippingMethod: ShippingMethod @deprecated(reason: "This field will be removed in Saleor 4.0. Use `deliveryMethod` instead.")
+
+  """Method used for shipping."""
   shippingMethodName: String
 
   """Shipping methods related to this order."""
@@ -16933,6 +17015,8 @@ type Order implements Node & ObjectWithMetadata {
 
   """The shipping tax rate value."""
   shippingTaxRate: Float!
+
+  """Status of the order."""
   status: OrderStatus!
 
   """User-friendly order status."""
@@ -17067,6 +17151,8 @@ type Order implements Node & ObjectWithMetadata {
 
   """Undiscounted total amount of the order."""
   undiscountedTotal: TaxedMoney!
+
+  """Date and time when the order was created."""
   updatedAt: DateTime!
 
   """
@@ -17078,6 +17164,8 @@ type Order implements Node & ObjectWithMetadata {
   Email address of the customer. The full data can be access for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.
   """
   userEmail: String
+
+  """Voucher linked to the order."""
   voucher: Voucher
 
   """
@@ -17086,6 +17174,8 @@ type Order implements Node & ObjectWithMetadata {
   Added in Saleor 3.18.
   """
   voucherCode: String
+
+  """Weight of the order."""
   weight: Weight!
 }
 
@@ -17346,13 +17436,6 @@ input OrderBulkCreateInput {
 
   """Customer associated with the order."""
   user: OrderBulkCreateUserInput!
-
-  """
-  Code of a voucher associated with the order.
-  
-  DEPRECATED: this field will be removed in Saleor 3.19. Use `voucherCode` instead.
-  """
-  voucher: String
 
   """
   Code of a voucher associated with the order.
@@ -17915,6 +17998,8 @@ type OrderEvent implements Node {
 
   """The lines fulfilled."""
   fulfilledItems: [FulfillmentLine!]
+
+  """ID of the event associated with an order."""
   id: ID!
 
   """Number of an invoice related to the order."""
@@ -18609,7 +18694,11 @@ type OrderLine implements Node & ObjectWithMetadata {
   """
   allocations: [Allocation!]
   digitalContentUrl: DigitalContentUrl
+
+  """ID of the order line."""
   id: ID!
+
+  """Whether the product variant requires shipping."""
   isShippingRequired: Boolean!
 
   """
@@ -18657,10 +18746,20 @@ type OrderLine implements Node & ObjectWithMetadata {
   Added in Saleor 3.5.
   """
   privateMetafields(keys: [String!]): Metadata
+
+  """Name of the product in order line."""
   productName: String!
+
+  """SKU of the product variant."""
   productSku: String
+
+  """The ID of the product variant."""
   productVariantId: String
+
+  """Number of variant items ordered."""
   quantity: Int!
+
+  """Number of variant items fulfilled."""
   quantityFulfilled: Int!
 
   """
@@ -18706,6 +18805,8 @@ type OrderLine implements Node & ObjectWithMetadata {
   Added in Saleor 3.9.
   """
   taxClassPrivateMetadata: [MetadataItem!]!
+
+  """Rate of tax applied on product variant."""
   taxRate: Float!
   thumbnail(
     """
@@ -18740,6 +18841,8 @@ type OrderLine implements Node & ObjectWithMetadata {
 
   """The discount applied to the single order line."""
   unitDiscount: Money!
+
+  """Reason for any discounts applied on a product in the order."""
   unitDiscountReason: String
 
   """Type of the discount: fixed or percent"""
@@ -18755,6 +18858,8 @@ type OrderLine implements Node & ObjectWithMetadata {
   A purchased product variant. Note: this field may be null if the variant has been removed from stock at all. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
   """
   variant: ProductVariant
+
+  """Name of the variant of product in order line."""
   variantName: String!
 
   """
@@ -24978,6 +25083,9 @@ enum PromotionCreateErrorCode {
   GRAPHQL_ERROR
   INVALID
   INVALID_PRECISION
+  MISSING_CHANNELS
+  MIXED_PREDICATES
+  MIXED_PROMOTION_PREDICATES
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   NOT_FOUND
   REQUIRED
@@ -25201,6 +25309,15 @@ type PromotionRule implements Node {
   """
   channels: [Channel!]
 
+  """
+  The checkout/order predicate that must be met to apply the rule reward.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  checkoutAndOrderPredicate: JSON
+
   """Description of the promotion rule."""
   description: JSON
   id: ID!
@@ -25210,6 +25327,15 @@ type PromotionRule implements Node {
 
   """Promotion to which the rule belongs."""
   promotion: Promotion
+
+  """
+  The reward type of the promotion rule.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  rewardType: RewardTypeEnum
 
   """
   The reward value of the promotion rule. Defines the discount value applied when the rule conditions are met.
@@ -25261,6 +25387,9 @@ enum PromotionRuleCreateErrorCode {
   GRAPHQL_ERROR
   INVALID
   INVALID_PRECISION
+  MISSING_CHANNELS
+  MIXED_PREDICATES
+  MIXED_PROMOTION_PREDICATES
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   NOT_FOUND
   REQUIRED
@@ -25275,6 +25404,15 @@ input PromotionRuleCreateInput {
   """List of channel ids to which the rule should apply to."""
   channels: [ID!]
 
+  """
+  Defines the conditions on the checkout/order level that must be met for the reward to be applied.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  checkoutAndOrderPredicate: CheckoutAndOrderPredicateInput
+
   """Promotion rule description."""
   description: JSON
 
@@ -25283,6 +25421,15 @@ input PromotionRuleCreateInput {
 
   """The ID of the promotion that rule belongs to."""
   promotion: ID!
+
+  """
+  Defines the reward type of the promotion rule.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  rewardType: RewardTypeEnum
 
   """
   Defines the discount value. Required when catalogue predicate is provided.
@@ -25452,11 +25599,29 @@ input PromotionRuleInput {
   """List of channel ids to which the rule should apply to."""
   channels: [ID!]
 
+  """
+  Defines the conditions on the checkout/order level that must be met for the reward to be applied.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  checkoutAndOrderPredicate: CheckoutAndOrderPredicateInput
+
   """Promotion rule description."""
   description: JSON
 
   """Promotion rule name."""
   name: String
+
+  """
+  Defines the reward type of the promotion rule.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  rewardType: RewardTypeEnum
 
   """
   Defines the discount value. Required when catalogue predicate is provided.
@@ -25580,18 +25745,29 @@ enum PromotionRuleUpdateErrorCode {
   INVALID
   INVALID_PRECISION
   MISSING_CHANNELS
+  MIXED_PREDICATES
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   NOT_FOUND
+  REQUIRED
 }
 
 input PromotionRuleUpdateInput {
-  """List of channel ids to remove."""
+  """List of channel ids to add."""
   addChannels: [ID!]
 
   """
   Defines the conditions on the catalogue level that must be met for the reward to be applied.
   """
   cataloguePredicate: CataloguePredicateInput
+
+  """
+  Defines the conditions on the checkout/order level that must be met for the reward to be applied.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  checkoutAndOrderPredicate: CheckoutAndOrderPredicateInput
 
   """Promotion rule description."""
   description: JSON
@@ -25601,6 +25777,15 @@ input PromotionRuleUpdateInput {
 
   """List of channel ids to remove."""
   removeChannels: [ID!]
+
+  """
+  Defines the reward type of the promotion rule.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  rewardType: RewardTypeEnum
 
   """
   Defines the discount value. Required when catalogue predicate is provided.
@@ -26575,7 +26760,7 @@ type Query {
     Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
     """
     last: Int
-  ): OrderEventCountableConnection
+  ): OrderEventCountableConnection @deprecated(reason: "This field will be removed in Saleor 4.0.")
 
   """Return the currently authenticated user."""
   me: User
@@ -26733,7 +26918,7 @@ type Query {
 
     """A period of time."""
     period: ReportingPeriod
-  ): TaxedMoney
+  ): TaxedMoney @deprecated(reason: "This field will be removed in Saleor 4.0.")
 
   """Look up a page by ID or slug."""
   page(
@@ -27149,7 +27334,7 @@ type Query {
 
     """Span of time."""
     period: ReportingPeriod!
-  ): ProductVariantCountableConnection
+  ): ProductVariantCountableConnection @deprecated(reason: "This field will be removed in Saleor 4.0.")
 
   """
   Look up a sale by ID.
@@ -27671,6 +27856,11 @@ Triggers the following webhook events:
 type RequestPasswordReset {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [AccountError!]!
+}
+
+"""An enumeration."""
+enum RewardTypeEnum {
+  SUBTOTAL_DISCOUNT
 }
 
 """An enumeration."""
@@ -30199,7 +30389,7 @@ type StockBulkResult {
 }
 
 """
-Updates stocks for a given variant and warehouse.
+Updates stocks for a given variant and warehouse. Variant and warehouse selectors have to be the same for all stock inputs. Is not allowed to use 'variantId' in one input and 'variantExternalReference' in another.
 
 Added in Saleor 3.13.
 
@@ -31495,6 +31685,13 @@ type TransactionEvent implements Node {
   id: ID!
 
   """
+  Idempotency key assigned to the event.
+  
+  Added in Saleor 3.14.
+  """
+  idempotencyKey: String
+
+  """
   Message related to the transaction's event.
   
   Added in Saleor 3.13.
@@ -31675,6 +31872,7 @@ enum TransactionInitializeErrorCode {
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
+  UNIQUE
 }
 
 """
@@ -31697,6 +31895,13 @@ type TransactionInitializeSession implements Event {
 
   """Payment gateway data in JSON format, received from storefront."""
   data: JSON
+
+  """
+  Idempotency key assigned to the transaction initialize.
+  
+  Added in Saleor 3.14.
+  """
+  idempotencyKey: String!
 
   """Time of the event."""
   issuedAt: DateTime
@@ -31766,6 +31971,13 @@ type TransactionItem implements Node & ObjectWithMetadata {
 
   """Total amount charged for this payment."""
   chargedAmount: Money!
+
+  """
+  The related checkout.
+  
+  Added in Saleor 3.14.
+  """
+  checkout: Checkout
 
   """Date and time at which payment transaction was created."""
   createdAt: DateTime!
