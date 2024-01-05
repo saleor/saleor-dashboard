@@ -26,21 +26,19 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Inject slug/short variables
-      uses: rlespinasse/github-slug-action@102b1a064a9b145e56556e22b18b19c624538d94
-
     - name: Generate
       id: generate
       shell: bash
       env:
         MODE: ${{ inputs.MODE }}
+        PULL_REQUEST_NUMBER: ${{ github.event.number }}
         PREFIX: pr-
       run: |
         if [[ "$MODE" == 'pull-request' ]]; then
-          echo "BASE_URL=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
-          echo "API_URL=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
-          echo "POOL_NAME=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
-          echo "POOL_INSTANCE=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "BASE_URL=${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+          echo "API_URL=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
           
           exit 0
