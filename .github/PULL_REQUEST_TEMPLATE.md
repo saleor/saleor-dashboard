@@ -3,7 +3,7 @@
 
   Before submitting your pull request, please ensure you've done the following:
 
-    📖 Read contribution guide: 
+    📖 Read contribution guide: https://github.com/saleor/saleor-dashboard/blob/main/.github/CONTRIBUTING.md
     🤓 Your pull request is small enough (otherwise please create smaller chunks)
     👀 You have added proper test coverage
     👜 The pull request's title is readable and meaningful
