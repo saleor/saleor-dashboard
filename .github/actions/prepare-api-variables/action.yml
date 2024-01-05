@@ -35,7 +35,7 @@ runs:
         PREFIX: pr-
       run: |
         if [[ "$MODE" == 'pull-request' ]]; then
-          echo "BASE_URL=${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+          echo "BASE_URL=https://${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
           echo "API_URL=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
