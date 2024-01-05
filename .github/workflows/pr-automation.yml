@@ -40,7 +40,7 @@ jobs:
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
-  deploy_dashboard:
+  deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-22.04
     needs: initialize-cloud
@@ -117,7 +117,7 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
-  deploy_storybook:
+  deploy-storybook:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-22.04
     needs: initialize-cloud
@@ -190,7 +190,7 @@ jobs:
 
   run-tests:
     runs-on: ubuntu-22.04
-    needs: initialize-cloud
+    needs: [initialize-cloud, deploy-dashboard]
     strategy:
       fail-fast: false
       matrix:
