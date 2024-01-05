@@ -91,6 +91,7 @@ export const DiscountRules = <ErrorCode,>({
           <AddButton
             disabled={disabled}
             onCatalogClick={() => setShowRuleModal(true)}
+            onCheckoutClick={() => setShowRuleModal(true)}
           />
         </Box>
       </DashboardCard.Title>

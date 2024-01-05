@@ -3,6 +3,7 @@ import {
   ArrowDownIcon,
   Box,
   Button,
+  OrdersIcon,
   PlusIcon,
   Popover,
   ProductsIcons,
@@ -15,10 +16,12 @@ import { messages } from "../../messages";
 interface AddButtonProps {
   disabled?: boolean;
   onCatalogClick: () => void;
+  onCheckoutClick: () => void;
 }
 
 export const AddButton = ({
   onCatalogClick,
+  onCheckoutClick,
   disabled = false,
 }: AddButtonProps) => {
   const intl = useIntl();
@@ -26,6 +29,11 @@ export const AddButton = ({
 
   const handleCatalogClick = () => {
     onCatalogClick();
+    setSubMenuOpen(false);
+  };
+
+  const handleCheckoutClick = () => {
+    onCheckoutClick();
     setSubMenuOpen(false);
   };
 
@@ -37,6 +45,13 @@ export const AddButton = ({
         description: intl.formatMessage(messages.catalogDescription),
         icon: <ProductsIcons />,
         onClick: handleCatalogClick,
+      },
+      {
+        id: "checkoutAndOrder",
+        title: intl.formatMessage(messages.checkoutAndOrders),
+        description: intl.formatMessage(messages.checkoutAndOrdersDescription),
+        icon: <OrdersIcon />,
+        onClick: handleCheckoutClick,
       },
     ],
     [],
