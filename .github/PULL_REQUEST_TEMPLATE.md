@@ -8,6 +8,7 @@
     👀 You have added proper test coverage
     👜 The pull request's title is readable and meaningful
     📜 You have added changeset file
+    📄 If you add/update some copy, they are extracted: run npm run extract-messages
   
   🧵 NOTE: Tests.
     Tests are MANDATORY, please follow these scenarios:
