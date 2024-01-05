@@ -80,7 +80,7 @@ jobs:
 
       - name: Build dashboard
         env:
-          API_URI: ${{ needs.initialize-cloud.outputs.API_URI }}
+          API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
           APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
           APP_MOUNT_URI: /
           STATIC_URL: /
@@ -113,7 +113,7 @@ jobs:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
-          env_url: https://${{ needs.initialize-cloud.outputs.BASE_URL }}/
+          env_url: https://${{ needs.initialize-cloud.outputs.BASE_URL }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
