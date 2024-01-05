@@ -1,0 +1,73 @@
+name: Prepare api variables
+description: Prepare env config for cloud
+
+inputs:
+  MODE:
+    description: "The mode of running tests (pull-request, release, main)"
+    required: true
+
+outputs:
+  BASE_URL:
+    description: "Dashboard base url"
+    value: ${{ steps.generate.outputs.BASE_URL }}
+  API_URL:
+    description: "API url"
+    value: ${{ steps.generate.outputs.API_URL }}
+  POOL_NAME:
+    description: "The name of the instance"
+    value: ${{ steps.generate.outputs.POOL_NAME }}
+  POOL_INSTANCE:
+    description: "The full URL of the instance"
+    value: ${{ steps.generate.outputs.POOL_INSTANCE }}
+  BACKUP_NAMESPACE:
+    description: "The backup namespace"
+    value: ${{ steps.generate.outputs.BACKUP_NAMESPACE }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Inject slug/short variables
+      uses: rlespinasse/github-slug-action@102b1a064a9b145e56556e22b18b19c624538d94
+
+    - name: Generate
+      id: generate
+      shell: bash
+      env:
+        MODE: ${{ inputs.MODE }}
+        PREFIX: pr-
+      run: |
+        if [[ "$MODE" == 'pull-request' ]]; then
+          echo "BASE_URL=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+          echo "API_URL=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
+          
+          exit 0
+        fi
+
+        if [[ "$MODE" == 'release' ]]; then
+          VERSION_SLUG=$(echo "${GITHUB_REF_SLUG}" | sed "s/\.//")
+
+          echo "BASE_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
+          echo "API_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=${GITHUB_REF_SLUG} Staging" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
+          echo "BACKUP_NAMESPACE=snapshot-automation-tests-${GITHUB_REF_SLUG}" >> $GITHUB_OUTPUT
+
+          exit 0
+        fi
+
+        if [[ "$MODE" == 'main' ]]; then
+          echo "BASE_URL=https://automation-dashboard.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
+          echo "API_URL=https://automation-dashboard.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=automation-dashboard" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://automation-dashboard.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
+
+          exit 0
+        fi
+
+        echo "Unknown mode: $MODE" >&2
+        exit 1
+
