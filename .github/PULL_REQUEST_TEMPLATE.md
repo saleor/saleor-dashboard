@@ -49,7 +49,7 @@
   - screenshots or videos if applicable
 -->
 
-## Test coverage
+## Have you written tests?
 - [ ] Yes!
 - [ ] No... here is why: _Writing tests are mandatory, please replace this text with why test are not included in this PR_
 
