@@ -1,5 +1,6 @@
 import {
   AttributeInput,
+  DateTimeFilterInput,
   DecimalFilterInput,
   GlobalIdFilterInput,
   ProductWhereInput,
@@ -173,7 +174,9 @@ export const creatDiscountsQueryVariables = (
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
-    p[c.value.value] = createStaticQueryPart(c.condition.selected);
+    p[c.value.value as "endDate" | "startDate"] = createStaticQueryPart(
+      c.condition.selected,
+    ) as DateTimeFilterInput;
 
     return p;
   }, {} as PromotionWhereInput);
