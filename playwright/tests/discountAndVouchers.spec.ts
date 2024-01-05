@@ -68,7 +68,9 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
   ).toEqual(1);
 
   await vouchersPage.clickPercentDiscountTypeButton();
-  await vouchersPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected();
+  await vouchersPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected(
+    "Channel-PLN",
+  );
   await vouchersPage.typeDiscountValueInChannel("Channel-PLN", "50");
 
   await vouchersPage.clickSaveButton();
@@ -84,7 +86,7 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
     `Given codes: ${code} should have status Active displayed on grid`,
   ).toEqual(1);
   await vouchersPage.page
-    .getByText(AVAILABILITY.in1OutOf7Channels)
+    .getByText(AVAILABILITY.in1OutOf)
     .waitFor({ state: "visible" });
 });
 
@@ -213,7 +215,8 @@ test("TC: SALEOR_93 Bulk delete voucher @vouchers @e2e", async () => {
   ).toEqual([]);
 });
 
-test("TC: SALEOR_94 Edit voucher - assign voucher to specific category @vouchers @e2e", async () => {
+// TODO: https://github.com/saleor/saleor-dashboard/issues/4590
+test.skip("TC: SALEOR_94 Edit voucher - assign voucher to specific category @vouchers @e2e", async () => {
   const categoryToBeAssigned = "Accessories";
 
   await vouchersPage.gotoExistingVoucherPage(

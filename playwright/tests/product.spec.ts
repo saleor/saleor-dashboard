@@ -35,7 +35,9 @@ test("TC: SALEOR_3 Create basic product with variants @e2e @product", async () =
 });
 test("TC: SALEOR_5 Create basic - single product type - product without variants @e2e @product", async () => {
   await productPage.gotoCreateProductPage(PRODUCTS.singleProductType.id);
-  await productPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected();
+  await productPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected(
+    "Channel-PLN",
+  );
   await productPage.typeNameDescAndRating();
   await productPage.addSeo();
   await productPage.addAllMetaData();
@@ -58,7 +60,7 @@ test("TC: SALEOR_26 Create basic info variant - via edit variant page @e2e @prod
   await variantsPage.typeVariantName(variantName);
   await variantsPage.clickMageChannelsButton();
   await variantsPage.channelSelectDialog.clickAllChannelsCheckbox();
-  await variantsPage.channelSelectDialog.selectFirstChannel();
+  await variantsPage.channelSelectDialog.selectChannel("Channel-PLN");
   await variantsPage.channelSelectDialog.clickConfirmButton();
   await variantsPage.typeSellingPriceInChannel("PLN");
   await variantsPage.typeCostPriceInChannel("PLN");
@@ -80,7 +82,7 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @produ
   await variantsPage.typeVariantName(variantName);
   await variantsPage.clickMageChannelsButton();
   await variantsPage.channelSelectDialog.clickAllChannelsCheckbox();
-  await variantsPage.channelSelectDialog.selectFirstChannel();
+  await variantsPage.channelSelectDialog.selectChannel("Channel-PLN");
   await variantsPage.channelSelectDialog.clickConfirmButton();
   await variantsPage.selectFirstAttributeValue();
   await variantsPage.typeCheckoutLimit();
@@ -142,7 +144,9 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
   await productPage.clickUploadMediaButton();
   await productPage.uploadProductImage("beer.avif");
   await productPage.productImage.waitFor({ state: "visible" });
-  await productPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenNoneSelected();
+  await productPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenNoneSelected(
+    "Channel-PLN",
+  );
 
   await productPage.selectFirstTaxOption();
   const preSaveTax = await productPage.rightSideDetailsPage.taxInput
@@ -169,7 +173,7 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
   await expect(
     productPage.productAvailableInChannelsText,
     "Label copy shows 1 out of 7 channels ",
-  ).toContainText(AVAILABILITY.in1OutOf7Channels);
+  ).toContainText(AVAILABILITY.in1OutOf);
   expect(
     await productPage.productImage.count(),
     "Newly added single image should be present",

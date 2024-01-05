@@ -237,7 +237,7 @@ export const promotionCreate = gql`
         ...PromotionCreateError
       }
       promotion {
-        id
+        ...PromotionDetails
       }
     }
   }
@@ -248,6 +248,9 @@ export const promotionUpdate = gql`
     promotionUpdate(id: $id, input: $input) {
       errors {
         ...PromotionUpdateError
+      }
+      promotion {
+        ...PromotionDetails
       }
     }
   }
@@ -270,7 +273,7 @@ export const promotionRuleUpdate = gql`
         ...PromotionRuleUpdateError
       }
       promotionRule {
-        id
+        ...PromotionRuleDetails
       }
     }
   }
@@ -283,7 +286,7 @@ export const promotinRuleCreate = gql`
         ...PromotionRuleCreateError
       }
       promotionRule {
-        id
+        ...PromotionRuleDetails
       }
     }
   }
@@ -294,6 +297,9 @@ export const promotionRuleDelete = gql`
     promotionRuleDelete(id: $id) {
       errors {
         ...PromotionRuleDeleteError
+      }
+      promotionRule {
+        id
       }
     }
   }

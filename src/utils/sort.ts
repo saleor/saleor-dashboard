@@ -93,3 +93,18 @@ export function createGetSortQueryVariables<
     return undefined;
   };
 }
+
+export const sortAlphabetically =
+  <T>(field: keyof T) =>
+  (a: T, b: T) => {
+    const aField = a[field];
+    const bField = b[field];
+
+    if (aField < bField) {
+      return -1;
+    }
+    if (aField > bField) {
+      return 1;
+    }
+    return 0;
+  };

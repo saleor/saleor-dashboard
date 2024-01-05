@@ -106,9 +106,11 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             name="name"
             value={data.name}
             onChange={onChange}
+            data-test-id="channel-name-input"
           />
           <FormSpacer />
           <Input
+            data-test-id="slug-name-input"
             error={!!formErrors.slug}
             helperText={getChannelsErrorMessage(formErrors?.slug, intl)}
             disabled={disabled}
