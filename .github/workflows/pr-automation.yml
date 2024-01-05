@@ -10,8 +10,8 @@ jobs:
   initialize-cloud:
     runs-on: ubuntu-22.04
     outputs:
-      POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
-      POOL_INSTANCE: ${{ steps.pool_variables.outputs.POOL_INSTANCE }}
+      POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
+      POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
       BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
       API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
       BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
@@ -30,7 +30,6 @@ jobs:
           MODE: pull-request
 
       - name: Prepare instances
-        id: pool_variables
         uses: ./.github/actions/prepare-instance
         with:
           STRATEGY: reload
