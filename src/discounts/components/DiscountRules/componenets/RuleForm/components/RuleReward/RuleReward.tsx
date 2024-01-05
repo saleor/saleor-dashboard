@@ -33,7 +33,7 @@ export const RuleReward = ({
   return (
     <>
       <Text as="p">{intl.formatMessage(messages.reward)}</Text>
-      <Box display="flex" gap={4} justifyContent="flex-end">
+      <Box display="flex" gap={4}>
         <DiscountTypeSwitch
           disabled={disabled}
           onChange={type => rewardTypeField.onChange(type)}

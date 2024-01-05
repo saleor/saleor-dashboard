@@ -1,3 +1,4 @@
+import { URL_LIST } from "@data/url";
 import { USER_PERMISSION } from "@data/userPermissions";
 import { LoginPage } from "@pages/loginPage";
 import { test as setup } from "@playwright/test";
@@ -32,7 +33,7 @@ setup("authenticate as admin", async ({ page }) => {
 });
 setup("unauthenticated user ", async ({ page }) => {
   const loginPage = await new LoginPage(page);
-  await page.goto("/");
+  await page.goto(URL_LIST.homePage);
   await loginPage.resetPasswordLink.waitFor({ state: "visible" });
   // End of authentication steps.
   await page

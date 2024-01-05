@@ -7,6 +7,10 @@ const validationMessages = defineMessages({
     id: "7Hdiw2",
     defaultMessage: "Rule name is required",
   },
+  channelRequired: {
+    id: "y08GTW",
+    defaultMessage: "Channel is required",
+  },
   rewardValueRequired: {
     id: "CFlmRP",
     defaultMessage: "Rule reword value is required",
@@ -24,7 +28,17 @@ export const getValidationSchema = (intl: IntlShape) =>
       name: z
         .string()
         .min(1, intl.formatMessage(validationMessages.nameRequired)),
-      channel: z.object({ label: z.string(), value: z.string() }).nullable(),
+      channel: z.object(
+        { label: z.string(), value: z.string() },
+        {
+          required_error: intl.formatMessage(
+            validationMessages.channelRequired,
+          ),
+          invalid_type_error: intl.formatMessage(
+            validationMessages.channelRequired,
+          ),
+        },
+      ),
       conditions: z.array(
         z
           .object({
@@ -34,10 +48,14 @@ export const getValidationSchema = (intl: IntlShape) =>
           })
           .optional(),
       ),
-      rewardValue: z.number({
-        required_error: intl.formatMessage(validationMessages.nameRequired),
-        invalid_type_error: intl.formatMessage(validationMessages.nameRequired),
-      }),
+      rewardValue: z
+        .number({
+          required_error: intl.formatMessage(validationMessages.nameRequired),
+          invalid_type_error: intl.formatMessage(
+            validationMessages.nameRequired,
+          ),
+        })
+        .min(1, intl.formatMessage(validationMessages.rewardValueRequired)),
       rewardValueType: z.string(),
       description: z.string().nullable(),
     })

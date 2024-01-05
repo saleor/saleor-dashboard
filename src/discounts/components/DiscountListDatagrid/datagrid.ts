@@ -16,8 +16,10 @@ import { columnsMessages } from "./messages";
 export const dicountListStaticColumnsAdapter = (
   intl: IntlShape,
   sort: Sort<DiscountListUrlSortField>,
+  emptyColumn: AvailableColumn,
 ) =>
   [
+    emptyColumn,
     {
       id: "name",
       title: intl.formatMessage(columnsMessages.name),
