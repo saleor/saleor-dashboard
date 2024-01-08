@@ -1,4 +1,9 @@
 // @ts-strict-ignore
+import {
+  ChannelPriceAndPreorderData,
+  IChannelPriceAndPreorderArgs,
+} from "@dashboard/channels/utils";
+import { FormsetData } from "@dashboard/hooks/useFormset";
 import React from "react";
 
 import { Channel, Product, Variant } from "./../types";
@@ -12,6 +17,10 @@ import { CreateVariantTitle } from "./CreateVariantTitle";
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;
+  listings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >;
   onManageClick?: () => void;
   disabled: boolean;
 }
@@ -39,7 +48,7 @@ const Wrapper: React.FC<WrapperProps> = ({ item, children }) => {
 
 export const VariantDetailsChannelsAvailabilityCard: React.FC<
   VariantDetailsChannelsAvailabilityCardProps
-> = ({ variant, onManageClick, disabled }) => (
+> = ({ variant, listings, onManageClick, disabled }) => (
   <Wrapper item={variant}>
     {({ channels }) => (
       <AvailabilityCard
@@ -49,7 +58,7 @@ export const VariantDetailsChannelsAvailabilityCard: React.FC<
         <CreateVariantTitle
           onManageClick={onManageClick}
           disabled={disabled}
-          availabilityCount={getAvailabilityCountForVariant(variant)}
+          availabilityCount={getAvailabilityCountForVariant(variant, listings)}
           isEmpty={channels.length === 0}
         />
       </AvailabilityCard>
