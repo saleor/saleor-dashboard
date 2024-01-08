@@ -11,7 +11,7 @@ export class Condition {
   ) {}
 
   public toAPI(): CataloguePredicateInput | undefined {
-    if (!this.type) {
+    if (!this.type || !this.values.length) {
       return undefined;
     }
 

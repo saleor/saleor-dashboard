@@ -31,4 +31,10 @@ describe("Condition model", () => {
       },
     });
   });
+
+  it("should return undefined when transforming domian object to API and values array is empty", () => {
+    const condition = new Condition("product", "is", []);
+
+    expect(condition.toAPI()).toBeUndefined();
+  });
 });
