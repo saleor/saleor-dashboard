@@ -15,7 +15,7 @@ outputs:
     value: ${{ steps.generate.outputs.API_URL }}
   BASE_URL_DOMAIN:
     description: "Dashboard domain"
-    value: ${{ steps.api.outputs.BASE_URL_DOMAIN }}
+    value: ${{ steps.generate.outputs.BASE_URL_DOMAIN }}
   POOL_NAME:
     description: "The name of the instance"
     value: ${{ steps.generate.outputs.POOL_NAME }}
