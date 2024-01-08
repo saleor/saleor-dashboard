@@ -8,7 +8,7 @@ import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./..
 interface CreateVariantTitleProps {
   onManageClick: () => void;
   disabled: boolean;
-  availabilityCount: Record<string, number>;
+  availabilityCount: Record<string, number | undefined>;
   isEmpty: boolean;
 }
 

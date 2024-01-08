@@ -15,7 +15,7 @@ export const getAvailabilityCountForVariant = (
     IChannelPriceAndPreorderArgs
   >,
 ) => {
-  const allAvailableChannelsListings = item.product.channelListings?.map(
+  const allAvailableChannelsListings = item?.product?.channelListings?.map(
     ({ channel: { id } }) => id,
   );
 
