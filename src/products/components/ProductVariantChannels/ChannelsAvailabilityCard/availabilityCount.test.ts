@@ -1,8 +1,12 @@
-import { variant } from "@dashboard/products/fixtures";
+import { product, variant } from "@dashboard/products/fixtures";
 
-import { getAvailabilityCountForVariant } from "./availabilityCount";
+import {
+  getAvailabilityCountForProduct,
+  getAvailabilityCountForVariant,
+} from "./availabilityCount";
 
-const mockedVariant = variant("");
+const variantFixture = variant("");
+const productFixture = product("");
 
 const mockedChannel = {
   __typename: "Channel" as const,
@@ -55,29 +59,51 @@ const mockedListings = [
   },
 ];
 
+const mockedVariant = {
+  ...variantFixture,
+  product: {
+    ...variantFixture.product,
+    channelListings: [
+      {
+        ...mockedProductListing,
+        channel: { id: "1", ...mockedChannel },
+        isPublished: true,
+      },
+      {
+        ...mockedProductListing,
+        channel: { id: "2", ...mockedChannel },
+        isPublished: true,
+      },
+    ],
+  },
+};
+
+const mockedProduct = {
+  ...productFixture,
+  channelListings: [
+    {
+      ...mockedProductListing,
+      channel: { id: "1", ...mockedChannel },
+      isPublished: true,
+    },
+    {
+      ...mockedProductListing,
+      channel: { id: "2", ...mockedChannel },
+      isPublished: true,
+    },
+  ],
+};
+
 describe("getAvailabilityCountForVariant", () => {
   it("should return correct counts when all channels are selected", () => {
-    const item = {
-      ...mockedVariant,
-      product: {
-        ...mockedVariant.product,
-        channelListings: [
-          {
-            ...mockedProductListing,
-            channel: { id: "1", ...mockedChannel },
-            isPublished: true,
-          },
-          {
-            ...mockedProductListing,
-            channel: { id: "2", ...mockedChannel },
-            isPublished: true,
-          },
-        ],
-      },
-    };
+    // Arrange
+    const item = mockedVariant;
+    const listings = mockedListings;
 
-    const result = getAvailabilityCountForVariant(item, mockedListings);
+    // Act
+    const result = getAvailabilityCountForVariant(item, listings);
 
+    // Assert
     expect(result).toEqual({
       publishedInChannelsCount: 2,
       availableChannelsCount: 2,
@@ -85,28 +111,14 @@ describe("getAvailabilityCountForVariant", () => {
   });
 
   it("should return correct counts when some channels are selected", () => {
-    const item = {
-      ...mockedVariant,
-      product: {
-        ...mockedVariant.product,
-        channelListings: [
-          {
-            ...mockedProductListing,
-            channel: { id: "1", ...mockedChannel },
-            isPublished: true,
-          },
-          {
-            ...mockedProductListing,
-            channel: { id: "2", ...mockedChannel },
-            isPublished: true,
-          },
-        ],
-      },
-    };
-    const mockedListingsSome = mockedListings.slice(0, 1);
+    // Arrange
+    const item = mockedVariant;
+    const listings = mockedListings.slice(0, 1);
 
-    const result = getAvailabilityCountForVariant(item, mockedListingsSome);
+    // Act
+    const result = getAvailabilityCountForVariant(item, listings);
 
+    // Assert
     expect(result).toEqual({
       publishedInChannelsCount: 1,
       availableChannelsCount: 2,
@@ -114,27 +126,61 @@ describe("getAvailabilityCountForVariant", () => {
   });
 
   it("should return correct counts when no channels are available", () => {
-    const item = {
-      ...mockedVariant,
-      product: {
-        ...mockedVariant.product,
-        channelListings: [
-          {
-            ...mockedProductListing,
-            channel: { id: "1", ...mockedChannel },
-            isPublished: true,
-          },
-          {
-            ...mockedProductListing,
-            channel: { id: "2", ...mockedChannel },
-            isPublished: true,
-          },
-        ],
-      },
-    };
+    // Arrange
+    const item = mockedVariant;
+    const listings = [];
 
-    const result = getAvailabilityCountForVariant(item, []);
+    // Act
+    const result = getAvailabilityCountForVariant(item, listings);
 
+    // Assert
+    expect(result).toEqual({
+      publishedInChannelsCount: 0,
+      availableChannelsCount: 2,
+    });
+  });
+});
+
+describe("getAvailabilityCountForProduct", () => {
+  it("should return correct counts when all channels are selected", () => {
+    // Arrange
+    const item = mockedProduct;
+    const listings = mockedListings;
+
+    // Act
+    const result = getAvailabilityCountForProduct(item, listings);
+
+    // Assert
+    expect(result).toEqual({
+      publishedInChannelsCount: 2,
+      availableChannelsCount: 2,
+    });
+  });
+
+  it("should return correct counts when some channels are selected", () => {
+    // Arrange
+    const item = mockedProduct;
+    const listings = mockedListings.slice(0, 1);
+
+    // Act
+    const result = getAvailabilityCountForProduct(item, listings);
+
+    // Assert
+    expect(result).toEqual({
+      publishedInChannelsCount: 1,
+      availableChannelsCount: 2,
+    });
+  });
+
+  it("should return correct counts when no channels are available", () => {
+    // Arrange
+    const item = mockedProduct;
+    const listings = [];
+
+    // Act
+    const result = getAvailabilityCountForProduct(item, listings);
+
+    // Assert
     expect(result).toEqual({
       publishedInChannelsCount: 0,
       availableChannelsCount: 2,

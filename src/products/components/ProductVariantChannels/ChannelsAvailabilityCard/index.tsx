@@ -27,6 +27,10 @@ interface VariantDetailsChannelsAvailabilityCardProps {
 
 interface ProductDetailsChannelsAvailabilityCardProps {
   product: Product;
+  listings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >;
   onManageClick?: () => void;
   disabled: boolean;
 }
@@ -68,7 +72,7 @@ export const VariantDetailsChannelsAvailabilityCard: React.FC<
 
 export const ProductDetailsChannelsAvailabilityCard: React.FC<
   ProductDetailsChannelsAvailabilityCardProps
-> = ({ product, onManageClick, disabled }) => (
+> = ({ product, listings, onManageClick, disabled }) => (
   <Wrapper item={product}>
     {({ channels }) => (
       <AvailabilityCard
@@ -78,7 +82,7 @@ export const ProductDetailsChannelsAvailabilityCard: React.FC<
         <CreateVariantTitle
           onManageClick={onManageClick}
           disabled={disabled}
-          availabilityCount={getAvailabilityCountForProduct(product)}
+          availabilityCount={getAvailabilityCountForProduct(product, listings)}
           isEmpty={channels.length === 0}
         />
       </AvailabilityCard>

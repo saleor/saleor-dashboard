@@ -31,9 +31,13 @@ export const getAvailabilityCountForVariant = (
 
 export const getAvailabilityCountForProduct = (
   item: ProductVariantCreateDataQuery["product"],
+  listings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >,
 ) => {
-  const publishedInChannelsListings = item?.channelListings?.filter(
-    ({ isPublished }) => isPublished,
+  const publishedInChannelsListings = item.channelListings?.filter(lst =>
+    listings.map(({ id }) => id).includes(lst.channel.id),
   );
 
   return {
