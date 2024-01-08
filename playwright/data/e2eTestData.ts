@@ -54,6 +54,15 @@ export const CHANNELS = {
     name: "z - channel to be deleted",
   },
 };
+export const WAREHOUSES = {
+  warehouseToBeEdited: {
+    id: "V2FyZWhvdXNlOjgzNGQwYjQwLWMwZGItNGRhZi04N2RjLWQ2ODBiYzY3NGVlMw%3D%3D",
+    name: "warehouse to be edited",
+  },
+  warehouseToBeDeleted: {
+    name: "warehouseto be deleted",
+  },
+};
 
 export const PRODUCTS = {
   singleProductType: {

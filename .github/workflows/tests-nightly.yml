@@ -433,7 +433,7 @@ jobs:
   test-complete:
     needs:
       [testmo-report-preparation, run-tests-in-parallel, run-tests-on-release]
-    if: always()
+    if: always() && !contains(needs.testmo-report-preparation.result, 'skipped') && !contains(needs.testmo-report-preparation.result, 'failure')
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4

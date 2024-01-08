@@ -1,17 +1,44 @@
-import { URL_LIST } from "@data/url";
+import { WAREHOUSES } from "@data/e2eTestData";
 import { WarehousePage } from "@pages/warehousePage";
-import { test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
+let warehousePage: WarehousePage;
+test.beforeEach(({ page }) => {
+  warehousePage = new WarehousePage(page);
+});
 
-test("TC: SALEOR_30 Create basic warehouse @e2e @warehouse", async ({
-  page,
-}) => {
-  const warehousePage = new WarehousePage(page);
-
-  await page.goto(URL_LIST.warehouses);
+test("TC: SALEOR_30 Create basic warehouse @e2e @warehouse", async () => {
+  await warehousePage.gotoWarehouseListView();
   await warehousePage.clickCreateNewWarehouseButton();
   await warehousePage.completeWarehouseForm();
   await warehousePage.clickSaveButton();
   await warehousePage.basePage.expectSuccessBanner();
+});
+test("TC: SALEOR_100 Edit warehouse @e2e @warehouse", async () => {
+  await warehousePage.gotoExistingWarehousePage(
+    WAREHOUSES.warehouseToBeEdited.id,
+  );
+
+  await warehousePage.typeWarehouseName("edited warehouse");
+  await warehousePage.typeCompanyName("Umbrella");
+  await warehousePage.typeAddressLine1("edited warehouse address 1");
+  await warehousePage.typeAddressLine2("edited warehouse address 2");
+  await warehousePage.typePhone("+48655922888");
+  await warehousePage.rightSideDetailsPage.clickPublicStockButton();
+  await warehousePage.rightSideDetailsPage.clickPickupAllWarehousesButton();
+  await warehousePage.clickSaveButton();
+  await warehousePage.basePage.expectSuccessBanner();
+});
+test("TC: SALEOR_101 Delete warehouse @e2e @warehouse", async () => {
+  await warehousePage.gotoWarehouseListView();
+  await warehousePage.clickDeleteWarehouseButton(
+    WAREHOUSES.warehouseToBeDeleted.name,
+  );
+
+  await warehousePage.deleteWarehouseDialog.clickDeleteButton();
+  await warehousePage.expectSuccessBanner();
+  await expect(warehousePage.warehousesList).not.toContainText(
+    WAREHOUSES.warehouseToBeDeleted.name,
+  );
 });
