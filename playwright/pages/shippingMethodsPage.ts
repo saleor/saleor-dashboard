@@ -1,5 +1,6 @@
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
+import { DeleteShippingMethodDialog } from "@dialogs/deleteShippingMethodDialog";
 import { AssignCountriesDialog } from "@pages/dialogs/assignCountriesDialog";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import type { Page } from "@playwright/test";
@@ -9,6 +10,7 @@ export class ShippingMethodsPage {
   readonly basePage: BasePage;
   readonly rightSideDetailsPage: RightSideDetailsPage;
   readonly assignCountriesDialog: AssignCountriesDialog;
+  readonly deleteShippingMethodDialog: DeleteShippingMethodDialog;
 
   constructor(
     page: Page,
@@ -21,11 +23,16 @@ export class ShippingMethodsPage {
       .getByTestId("shipping-zone-description")
       .locator("textarea"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
-  ) {
+    readonly shippingZoneName = page.getByTestId("page-header"),
+    readonly deleteShippingMethodButton = page.getByTestId("shipping-method-row").getByRole("button").getByTestId("delete-button"),
+    readonly priceBasedRatesSection = page.getByTestId("price-based-rates"),
+    readonly weightBasedRatesSection = page.getByTestId("weight-based-rates"),
+) {
     this.page = page;
     this.basePage = new BasePage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
     this.assignCountriesDialog = new AssignCountriesDialog(page);
+    this.deleteShippingMethodDialog = new DeleteShippingMethodDialog(page)
   }
 
   async clickAddWeightRateButton() {
@@ -76,4 +83,10 @@ export class ShippingMethodsPage {
   async clickCreateShippingZoneButton() {
     await this.createShippingZoneButton.click();
   }
+
+  async clickDeleteShippingMethod() {
+    await this.priceBasedRatesSection.locator(this.deleteShippingMethodButton).click();
+
+  }
+
 }

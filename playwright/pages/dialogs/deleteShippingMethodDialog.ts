@@ -1,6 +1,6 @@
 import type { Locator, Page } from "@playwright/test";
 
-export class DeleteProductDialog {
+export class DeleteShippingMethodDialog {
   readonly page: Page;
 
   readonly deleteButton: Locator;
