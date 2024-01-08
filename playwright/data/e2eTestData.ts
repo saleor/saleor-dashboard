@@ -172,7 +172,7 @@ export const ORDERS = {
 
 export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
-    id: "U2hpcHBpbmdab25lOjIzNzg%3D",
+    id: "U2hpcHBpbmdab25lOjIzOTA%3D",
     info: "Shipping method that is used to add rates",
   },
 };
