@@ -121,7 +121,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
           />
         </TableRowLink>
       </TableFooter>
-      <TableBody>
+      <TableBody data-test-id="warehouses-list">
         {renderCollection(
           warehouses,
           warehouse => (
@@ -158,6 +158,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                   </IconButton>
                   <TableButtonWrapper>
                     <IconButton
+                      data-test-id="delete-button"
                       variant="secondary"
                       color="primary"
                       onClick={stopPropagation(() => onRemove(warehouse?.id))}
