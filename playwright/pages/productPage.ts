@@ -86,17 +86,16 @@ export class ProductPage extends BasePage {
   }
 
   async gotoCreateProductPage(productTypeId: string) {
-    await this.page.goto(
-      `${URL_LIST.products}${URL_LIST.productsAdd}${productTypeId}`,
-    );
+    const createProductUrl = `${URL_LIST.products}${URL_LIST.productsAdd}${productTypeId}`;
+    await console.log("Navigating to create product view: " + createProductUrl);
+    await this.page.goto(createProductUrl);
     await expect(this.basePage.pageHeader).toBeVisible({ timeout: 10000 });
   }
 
   async gotoExistingProductPage(productId: string) {
-    console.log(
-      `Navigating to existing product: ${URL_LIST.products}${productId}`,
-    );
-    await this.page.goto(`${URL_LIST.products}${productId}`);
+    const existingProductUrl = `${URL_LIST.products}${productId}`;
+    console.log(`Navigating to existing product: ${existingProductUrl}`);
+    await this.page.goto(existingProductUrl);
     await expect(this.basePage.pageHeader).toBeVisible({ timeout: 10000 });
   }
 

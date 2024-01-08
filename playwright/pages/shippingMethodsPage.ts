@@ -61,8 +61,12 @@ export class ShippingMethodsPage {
       timeout: 10000,
     });
   }
-  async gotoShippingMethod(shippingMethodId: string) {
-    await this.page.goto(`${URL_LIST.shippingMethods}${shippingMethodId}`);
+  async gotoExistingShippingMethod(shippingMethodId: string) {
+    const existingShippingMethodUrl = `${URL_LIST.shippingMethods}${shippingMethodId}`;
+    await console.log(
+      `Navigates to existing shipping method page: ${existingShippingMethodUrl}`,
+    );
+    await this.page.goto(existingShippingMethodUrl);
     await this.shippingZoneNameInput.waitFor({
       state: "visible",
       timeout: 10000,

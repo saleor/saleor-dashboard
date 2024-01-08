@@ -43,6 +43,9 @@ export class ProductTypePage {
     await this.giftCardKindCheckbox.click();
   }
   async gotoAddProductTypePage() {
+    console.log(
+      `Navigating to add product type page: ${URL_LIST.productTypesAdd}`,
+    );
     await this.page.goto(URL_LIST.productTypesAdd);
   }
   async expectSuccessBanner() {

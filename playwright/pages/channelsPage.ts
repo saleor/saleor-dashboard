@@ -86,7 +86,9 @@ export class ChannelPage extends BasePage {
   }
 
   async gotoChannelDetails(channelId: string) {
-    await this.page.goto(URL_LIST.channels + channelId);
+    const channelDetailsUrl = URL_LIST.channels + channelId;
+    await console.log("Navigating to channel details: " + channelDetailsUrl);
+    await this.page.goto(channelDetailsUrl);
   }
   async gotoChannelList() {
     await this.page.goto(URL_LIST.channels);

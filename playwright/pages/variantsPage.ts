@@ -133,12 +133,9 @@ export class VariantsPage {
   }
 
   async gotoExistingVariantPage(productId: string, variantId: string) {
-    console.log(
-      `Navigating to existing variant: ${URL_LIST.products}${productId}/${URL_LIST.variant}${variantId}`,
-    );
-    await this.page.goto(
-      `${URL_LIST.products}${productId}/${URL_LIST.variant}${variantId}`,
-    );
+    const existingVariantUrl = `${URL_LIST.products}${productId}/${URL_LIST.variant}${variantId}`;
+    console.log(`Navigating to existing variant: ${existingVariantUrl}`);
+    await this.page.goto(existingVariantUrl);
     await this.variantNameInput.waitFor({ state: "visible" });
   }
 }

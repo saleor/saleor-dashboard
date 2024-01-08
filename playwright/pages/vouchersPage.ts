@@ -162,9 +162,12 @@ export class VouchersPage extends BasePage {
     await this.page.goto(URL_LIST.vouchers);
   }
   async gotoExistingVoucherPage(voucherId: string) {
-    await this.page.goto(`${URL_LIST.vouchers}${voucherId}`);
+    const existingVoucherUrl = `${URL_LIST.vouchers}${voucherId}`;
+    console.log(`Navigating to existing variant: ${existingVoucherUrl}`);
+    await this.page.goto(existingVoucherUrl);
   }
   async gotoVoucherAddPage() {
+    console.log(`Navigating to voucher add page: ${URL_LIST.vouchersAddPage}`);
     await this.page.goto(URL_LIST.vouchersAddPage);
   }
 
