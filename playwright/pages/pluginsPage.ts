@@ -1,11 +1,9 @@
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export class PluginsPage {
   readonly page: Page;
-  readonly pluginRow: Locator;
 
-  constructor(page: Page) {
+  constructor(page: Page, readonly pluginRow = page.getByTestId("plugin")) {
     this.page = page;
-    this.pluginRow = page.getByTestId("plugin");
   }
 }

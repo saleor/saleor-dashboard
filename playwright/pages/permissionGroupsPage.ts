@@ -1,13 +1,14 @@
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export class PermissionGroupsPage {
   readonly page: Page;
-  readonly createPermissionGroupButton: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
-    this.createPermissionGroupButton = page.getByTestId(
+  constructor(
+    page: Page,
+    readonly createPermissionGroupButton = page.getByTestId(
       "create-permission-group",
-    );
+    ),
+  ) {
+    this.page = page;
   }
 }

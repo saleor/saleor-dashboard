@@ -1,13 +1,13 @@
 import { URL_LIST } from "@data/url";
-import { DeleteChannelDialog } from "@dialogs/deleteChannelDialog";
 import { RightSideDetailsPage } from "@pageElements/rightSideDetailsSection";
 import { BasePage } from "@pages/basePage";
+import { DeleteDialog } from "@pages/dialogs/deleteDialog";
 import { Page } from "@playwright/test";
 
 export class ChannelPage extends BasePage {
   readonly page: Page;
   readonly rightSideDetailsPage: RightSideDetailsPage;
-  readonly deleteChannelDialog: DeleteChannelDialog;
+  readonly deleteChannelDialog: DeleteDialog;
 
   constructor(
     page: Page,
@@ -43,7 +43,7 @@ export class ChannelPage extends BasePage {
     super(page);
     this.page = page;
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
-    this.deleteChannelDialog = new DeleteChannelDialog(page);
+    this.deleteChannelDialog = new DeleteDialog(page);
   }
 
   async clickAuthorizeInsteadOfChargingCheckbox() {

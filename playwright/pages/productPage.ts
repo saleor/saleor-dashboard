@@ -2,15 +2,14 @@ import * as faker from "faker";
 import path from "path";
 
 import { URL_LIST } from "@data/url";
+import { DeleteDialog } from "@dialogs/deleteDialog";
+import { FiltersPage } from "@pageElements/filtersPage";
+import { BasePage } from "@pages/basePage";
 import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
 import { ExportProductsDialog } from "@pages/dialogs/exportProductsDialog";
 import { MetadataSeoPage } from "@pages/pageElements/metadataSeoPage";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import { expect, Page } from "@playwright/test";
-
-import { BasePage } from "./basePage";
-import { DeleteProductDialog } from "./dialogs/deleteProductDialog";
-import { FiltersPage } from "./pageElements/filtersPage";
 
 const productName = `e2e-productName-${faker.datatype.number()}`;
 const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
@@ -21,7 +20,7 @@ export class ProductPage extends BasePage {
   readonly rightSideDetailsPage: RightSideDetailsPage;
   readonly basePage: BasePage;
   readonly channelSelectDialog: ChannelSelectDialog;
-  readonly deleteProductDialog: DeleteProductDialog;
+  readonly deleteProductDialog: DeleteDialog;
   readonly filtersPage: FiltersPage;
 
   constructor(
@@ -79,7 +78,7 @@ export class ProductPage extends BasePage {
     super(page);
     this.basePage = new BasePage(page);
     this.exportProductsDialog = new ExportProductsDialog(page);
-    this.deleteProductDialog = new DeleteProductDialog(page);
+    this.deleteProductDialog = new DeleteDialog(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);

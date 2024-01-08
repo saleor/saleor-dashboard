@@ -1,37 +1,34 @@
+import { BasePage } from "@pages/basePage";
 import { AddValueDialog } from "@pages/dialogs/addValueDialog";
-import type { Locator, Page } from "@playwright/test";
-
-import { BasePage } from "./basePage";
+import type { Page } from "@playwright/test";
 
 export class AttributesPage {
   readonly page: Page;
   readonly addValueDialog: AddValueDialog;
   readonly basePage: BasePage;
-  readonly createAttributeButton: Locator;
-  readonly attributeSelect: Locator;
-  readonly attributesRows: Locator;
-  readonly attributeDefaultLabelInput: Locator;
-  readonly attributeCodeInput: Locator;
-  readonly assignAttributeValueButton: Locator;
-  readonly saveButton: Locator;
-  readonly valueRequiredCheckbox: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly createAttributeButton = page.getByTestId(
+      "create-attribute-button",
+    ),
+    readonly valueRequiredCheckbox = page.getByLabel("Value Required"),
+    readonly saveButton = page.getByTestId("button-bar-confirm"),
+    readonly attributesRows = page.getByTestId("attributes-rows"),
+    readonly assignAttributeValueButton = page.getByTestId(
+      "assign-value-button",
+    ),
+    readonly attributeSelect = page.getByTestId("attribute-type-select"),
+    readonly attributeDefaultLabelInput = page
+      .getByTestId("attribute-default-label-input")
+      .locator("input"),
+    readonly attributeCodeInput = page
+      .getByTestId("attribute-code-input")
+      .locator("input"),
+  ) {
     this.page = page;
     this.addValueDialog = new AddValueDialog(page);
     this.basePage = new BasePage(page);
-    this.createAttributeButton = page.getByTestId("create-attribute-button");
-    this.valueRequiredCheckbox = page.getByLabel("Value Required");
-    this.saveButton = page.getByTestId("button-bar-confirm");
-    this.attributesRows = page.getByTestId("attributes-rows");
-    this.assignAttributeValueButton = page.getByTestId("assign-value-button");
-    this.attributeSelect = page.getByTestId("attribute-type-select");
-    this.attributeDefaultLabelInput = page
-      .getByTestId("attribute-default-label-input")
-      .locator("input");
-    this.attributeCodeInput = page
-      .getByTestId("attribute-code-input")
-      .locator("input");
   }
 
   async clickCreateAttributeButton() {

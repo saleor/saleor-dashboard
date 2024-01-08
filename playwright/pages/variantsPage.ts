@@ -1,10 +1,9 @@
 import { URL_LIST } from "@data/url";
 import { ChannelSelectDialog } from "@dialogs/channelSelectDialog";
 import { DeleteVariantDialog } from "@dialogs/deleteVariantDialog";
+import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
+import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
-
-import { BasePage } from "./basePage";
-import { MetadataSeoPage } from "./pageElements/metadataSeoPage";
 
 export class VariantsPage {
   readonly page: Page;

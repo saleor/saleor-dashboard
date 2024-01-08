@@ -1,19 +1,20 @@
 import { MailpitService } from "@api/mailpit";
-import type { APIRequestContext, Locator, Page } from "@playwright/test";
+import type { APIRequestContext, Page } from "@playwright/test";
 
 export class SetUpNewPasswordPage {
   readonly page: Page;
-  readonly passwordInput: Locator;
-  readonly confirmPasswordInput: Locator;
-  readonly setNewPasswordButton: Locator;
+
   readonly mailpitService: MailpitService;
 
-  constructor(page: Page, request: APIRequestContext) {
+  constructor(
+    page: Page,
+    request: APIRequestContext,
+    readonly passwordInput = page.getByTestId("password"),
+    readonly confirmPasswordInput = page.getByTestId("confirm-password"),
+    readonly setNewPasswordButton = page.getByTestId("button-bar-confirm"),
+  ) {
     this.page = page;
     this.mailpitService = new MailpitService(request);
-    this.passwordInput = page.getByTestId("password");
-    this.confirmPasswordInput = page.getByTestId("confirm-password");
-    this.setNewPasswordButton = page.getByTestId("button-bar-confirm");
   }
 
   async typePassword(password: string) {

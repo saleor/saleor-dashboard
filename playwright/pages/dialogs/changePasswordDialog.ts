@@ -1,20 +1,19 @@
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export class ChangePasswordDialog {
   readonly page: Page;
-  readonly newPasswordInput: Locator;
-  readonly oldPasswordInput: Locator;
-  readonly saveButton: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
-    this.saveButton = page.getByTestId("submit");
-    this.newPasswordInput = page
+  constructor(
+    page: Page,
+    readonly saveButton = page.getByTestId("submit"),
+    readonly newPasswordInput = page
       .getByTestId("new-password-input")
-      .locator("input");
-    this.oldPasswordInput = page
+      .locator("input"),
+    readonly oldPasswordInput = page
       .getByTestId("old-password-input")
-      .locator("input");
+      .locator("input"),
+  ) {
+    this.page = page;
   }
 
   async clickSaveButton() {

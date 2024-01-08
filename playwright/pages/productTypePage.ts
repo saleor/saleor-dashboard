@@ -1,41 +1,32 @@
 import { URL_LIST } from "@data/url";
-import type { Locator, Page } from "@playwright/test";
-
-import { BasePage } from "./basePage";
+import { BasePage } from "@pages/basePage";
+import type { Page } from "@playwright/test";
 
 export class ProductTypePage {
   readonly page: Page;
   basePage: BasePage;
-  readonly nameInput: Locator;
-  readonly isShippingRequired: Locator;
-  readonly assignProductAttributeButton: Locator;
-  readonly hasVariantsButton: Locator;
-  readonly shippingWeightInput: Locator;
-  readonly giftCardKindCheckbox: Locator;
-  readonly variantSelectionCheckbox: Locator;
-  readonly saveButton: Locator;
-  readonly notificationSuccess: Locator;
-  readonly addProductTypeButton: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly addProductTypeButton = page.getByTestId("add-product-type"),
+    readonly notificationSuccess = page.getByTestId("notification-message"),
+    readonly nameInput = page.locator("[name='name']"),
+    readonly isShippingRequired = page.locator("[name='isShippingRequired']"),
+    readonly assignProductAttributeButton = page.getByTestId(
+      "assign-products-attributes",
+    ),
+    readonly hasVariantsButton = page.locator("[name='hasVariants']"),
+    readonly shippingWeightInput = page.locator("[name='weight']"),
+    readonly giftCardKindCheckbox = page.getByTestId(
+      "product-type-kind-option-GIFT_CARD",
+    ),
+    readonly variantSelectionCheckbox = page.getByTestId(
+      "variant-selection-checkbox",
+    ),
+    readonly saveButton = page.getByTestId("button-bar-confirm"),
+  ) {
     this.page = page;
     this.basePage = new BasePage(page);
-    this.addProductTypeButton = page.getByTestId("add-product-type");
-    this.notificationSuccess = page.getByTestId("notification-message");
-    this.nameInput = page.locator("[name='name']");
-    this.isShippingRequired = page.locator("[name='isShippingRequired']");
-    this.assignProductAttributeButton = page.getByTestId(
-      "assign-products-attributes",
-    );
-    this.hasVariantsButton = page.locator("[name='hasVariants']");
-    this.shippingWeightInput = page.locator("[name='weight']");
-    this.giftCardKindCheckbox = page.getByTestId(
-      "product-type-kind-option-GIFT_CARD",
-    );
-    this.variantSelectionCheckbox = page.getByTestId(
-      "variant-selection-checkbox",
-    );
-    this.saveButton = page.getByTestId("button-bar-confirm");
   }
 
   async typeProductTypeName(name: string) {

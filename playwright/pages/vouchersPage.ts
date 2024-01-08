@@ -1,18 +1,17 @@
 import { URL_LIST } from "@data/url";
 import { AddVoucherCodeDialog } from "@dialogs/addVoucherCodeDialog";
 import { AssignSpecificProductsDialog } from "@dialogs/assignSpecificProductsDialog";
-import { DeleteVoucherDialog } from "@dialogs/deleteVoucherDialog";
-import { DeleteVouchersDialog } from "@dialogs/deleteVouchersDialog";
 import { RightSideDetailsPage } from "@pageElements/rightSideDetailsSection";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
+
+import { DeleteDialog } from "./dialogs/deleteDialog";
 
 export class VouchersPage extends BasePage {
   readonly page: Page;
   readonly addVoucherCodeDialog: AddVoucherCodeDialog;
   readonly rightSideDetailsPage: RightSideDetailsPage;
-  readonly deleteVoucherDialog: DeleteVoucherDialog;
-  readonly deleteVouchersDialog: DeleteVouchersDialog;
+  readonly deleteVoucherDialog: DeleteDialog;
   readonly assignSpecificProductsDialog: AssignSpecificProductsDialog;
 
   constructor(
@@ -78,8 +77,7 @@ export class VouchersPage extends BasePage {
     this.page = page;
     this.addVoucherCodeDialog = new AddVoucherCodeDialog(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
-    this.deleteVoucherDialog = new DeleteVoucherDialog(page);
-    this.deleteVouchersDialog = new DeleteVouchersDialog(page);
+    this.deleteVoucherDialog = new DeleteDialog(page);
     this.assignSpecificProductsDialog = new AssignSpecificProductsDialog(page);
   }
 
