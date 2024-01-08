@@ -1,3 +1,8 @@
+import {
+  ChannelPriceAndPreorderData,
+  IChannelPriceAndPreorderArgs,
+} from "@dashboard/channels/utils";
+import { FormsetData } from "@dashboard/hooks/useFormset";
 import { product, variant } from "@dashboard/products/fixtures";
 
 import {
@@ -128,7 +133,10 @@ describe("getAvailabilityCountForVariant", () => {
   it("should return correct counts when no channels are available", () => {
     // Arrange
     const item = mockedVariant;
-    const listings = [];
+    const listings = [] as FormsetData<
+      ChannelPriceAndPreorderData,
+      IChannelPriceAndPreorderArgs
+    >;
 
     // Act
     const result = getAvailabilityCountForVariant(item, listings);
@@ -175,7 +183,10 @@ describe("getAvailabilityCountForProduct", () => {
   it("should return correct counts when no channels are available", () => {
     // Arrange
     const item = mockedProduct;
-    const listings = [];
+    const listings = [] as FormsetData<
+      ChannelPriceAndPreorderData,
+      IChannelPriceAndPreorderArgs
+    >;
 
     // Act
     const result = getAvailabilityCountForProduct(item, listings);
