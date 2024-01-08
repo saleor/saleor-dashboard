@@ -13,6 +13,9 @@ outputs:
   API_URL:
     description: "API url"
     value: ${{ steps.generate.outputs.API_URL }}
+  BASE_URL_DOMAIN:
+    description: "Dashboard domain"
+    value: ${{ steps.api.outputs.BASE_URL_DOMAIN }}
   POOL_NAME:
     description: "The name of the instance"
     value: ${{ steps.generate.outputs.POOL_NAME }}
@@ -37,6 +40,7 @@ runs:
         if [[ "$MODE" == 'pull-request' ]]; then
           echo "BASE_URL=https://${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
           echo "API_URL=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "BASE_URL_DOMAIN=${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
@@ -49,6 +53,7 @@ runs:
 
           echo "BASE_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
           echo "API_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "BASE_URL_DOMAIN=v${VERSION_SLUG}.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${GITHUB_REF_SLUG} Staging" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${GITHUB_REF_SLUG}" >> $GITHUB_OUTPUT
@@ -59,6 +64,7 @@ runs:
         if [[ "$MODE" == 'main' ]]; then
           echo "BASE_URL=https://automation-dashboard.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
           echo "API_URL=https://automation-dashboard.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "BASE_URL_DOMAIN=automation-dashboard.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "POOL_NAME=automation-dashboard" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://automation-dashboard.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
