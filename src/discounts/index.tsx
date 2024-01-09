@@ -1,3 +1,4 @@
+import { ConditionalDiscountFilterProvider } from "@dashboard/components/ConditionalFilter";
 import { useFlag } from "@dashboard/featureFlags";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -11,7 +12,6 @@ import {
   DiscountListUrlQueryParams,
   DiscountListUrlSortField,
 } from "./discountsUrls";
-import { ConditionalDiscountFilterProvider } from "./filters/provider";
 import {
   saleAddPath,
   saleListPath,
