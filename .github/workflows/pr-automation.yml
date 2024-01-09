@@ -13,6 +13,7 @@ jobs:
       POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
       BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+      BASE_URL_DOMAIN: ${{ steps.cloud_variables.outputs.BASE_URL_DOMAIN }}
       API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
       BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
@@ -97,14 +98,14 @@ jobs:
       - name: Deploy to S3
         env:
           AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
-          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-        run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}"
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}"
 
       - name: Invalidate cache
         env:
           AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
-          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL}/*"
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
 
       - name: Update deployment status
         uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
@@ -113,7 +114,7 @@ jobs:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
-          env_url: https://${{ needs.initialize-cloud.outputs.BASE_URL }}
+          env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
@@ -168,14 +169,14 @@ jobs:
       - name: Deploy to S3
         env:
           AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
-          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-        run: aws s3 sync ./build/storybook "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}/storybook"
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws s3 sync ./build/storybook "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}/storybook"
 
       - name: Invalidate cache
         env:
           AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
-          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL}/*"
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
 
       - name: Update storybook deployment status
         uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
@@ -184,7 +185,7 @@ jobs:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
-          env_url: https://${{ needs.initialize-cloud.outputs.BASE_URL }}/storybook/index.html
+          env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}/storybook/index.html
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
           env: storybook ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 

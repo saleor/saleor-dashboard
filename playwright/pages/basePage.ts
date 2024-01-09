@@ -107,6 +107,8 @@ export class BasePage {
     await this.gridCanvas
       .locator("table")
       .nth(gridIndex)
+      .locator("tbody tr")
+      .first()
       .waitFor({ state: "attached", timeout: 10000 });
   }
 

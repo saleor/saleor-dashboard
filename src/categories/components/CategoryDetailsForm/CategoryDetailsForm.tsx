@@ -41,6 +41,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
       <CardContent>
         <div>
           <TextField
+            data-test-id="category-name-input"
             label={intl.formatMessage({
               id: "vEYtiq",
               defaultMessage: "Category Name",
@@ -57,6 +58,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
         <FormSpacer />
         {isReadyForMount ? (
           <RichTextEditor
+            data-test-id="category-description-editor"
             defaultValue={defaultValue}
             editorRef={editorRef}
             onChange={handleChange}
