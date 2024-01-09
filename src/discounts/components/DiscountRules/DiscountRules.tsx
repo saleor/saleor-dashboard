@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 
 import { AddButton } from "./componenets/AddButton";
 import { RuleDeleteModal } from "./componenets/RuleDeleteModal/RuleDeleteModal";
-import { RuleFormModal } from "./componenets/RuleFormModal";
+import { RuleFormModal, RuleModalState } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
 import { messages } from "./messages";
 
@@ -44,7 +44,10 @@ export const DiscountRules = <ErrorCode,>({
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
 
-  const [showRuleModal, setShowRuleModal] = useState(false);
+  const [ruleModalState, setRuleModalState] = useState<RuleModalState>({
+    open: false,
+    type: "catalog",
+  });
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
   const isLoaded = useRef(false);
@@ -59,9 +62,12 @@ export const DiscountRules = <ErrorCode,>({
     return ruleEditIndex !== null ? rules[ruleEditIndex] : null;
   }, [ruleEditIndex]);
 
-  const handleOpenRuleModal = (editIndex: number) => {
+  const handleRuleEdit = (editIndex: number) => {
     setRuleEditIndex(editIndex);
-    setShowRuleModal(true);
+    setRuleModalState({
+      open: true,
+      type: "catalog",
+    });
   };
 
   const handleOpenRuleDeleteModal = (index: number) => {
@@ -69,7 +75,10 @@ export const DiscountRules = <ErrorCode,>({
   };
 
   const handleRuleModalClose = () => {
-    setShowRuleModal(false);
+    setRuleModalState({
+      open: false,
+      type: "catalog",
+    });
     setRuleEditIndex(null);
   };
 
@@ -90,8 +99,18 @@ export const DiscountRules = <ErrorCode,>({
           {intl.formatMessage(messages.title)}
           <AddButton
             disabled={disabled}
-            onCatalogClick={() => setShowRuleModal(true)}
-            onCheckoutClick={() => setShowRuleModal(true)}
+            onCatalogClick={() =>
+              setRuleModalState({
+                open: true,
+                type: "catalog",
+              })
+            }
+            onCheckoutClick={() =>
+              setRuleModalState({
+                open: true,
+                type: "checkout",
+              })
+            }
           />
         </Box>
       </DashboardCard.Title>
@@ -100,7 +119,7 @@ export const DiscountRules = <ErrorCode,>({
           disabled={disabled}
           loading={!isLoaded.current || loading}
           rules={rules}
-          onRuleEdit={handleOpenRuleModal}
+          onRuleEdit={handleRuleEdit}
           onRuleDelete={handleOpenRuleDeleteModal}
           channels={channels}
           errors={errors}
@@ -109,7 +128,7 @@ export const DiscountRules = <ErrorCode,>({
 
       <RuleFormModal
         disabled={disabled}
-        open={showRuleModal}
+        ruleModalState={ruleModalState}
         confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
         onClose={handleRuleModalClose}
         channels={channels}

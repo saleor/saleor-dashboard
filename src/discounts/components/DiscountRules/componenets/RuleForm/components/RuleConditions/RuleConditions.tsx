@@ -1,4 +1,4 @@
-import { Condition, Rule } from "@dashboard/discounts/models";
+import { CatalogCondition, Rule } from "@dashboard/discounts/models";
 import { ConditionType } from "@dashboard/discounts/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -60,7 +60,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(Condition.empty())}
+          onClick={() => append(CatalogCondition.empty())}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>
@@ -96,7 +96,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(Condition.empty())}
+          onClick={() => append(CatalogCondition.empty())}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>

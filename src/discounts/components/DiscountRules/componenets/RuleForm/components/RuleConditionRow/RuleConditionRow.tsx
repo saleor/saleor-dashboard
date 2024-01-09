@@ -1,5 +1,5 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
-import { Condition, Rule } from "@dashboard/discounts/models";
+import { CatalogCondition, Rule } from "@dashboard/discounts/models";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { Box, Button, Option, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -19,7 +19,7 @@ interface DiscountConditionRowProps {
   disabled?: boolean;
   conditionIndex: number;
   onRemove: () => void;
-  updateCondition: (index: number, value: Condition) => void;
+  updateCondition: (index: number, value: CatalogCondition) => void;
   fetchOptions: FetchOptions | undefined;
   isConditionTypeSelected: (conditionType: string) => boolean;
 }

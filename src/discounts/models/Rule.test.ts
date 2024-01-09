@@ -3,7 +3,7 @@ import {
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
-import { Condition } from "./Condition";
+import { CatalogCondition } from "./CatalogCondition";
 import { Rule } from "./Rule";
 
 describe("Rule model", () => {
@@ -16,19 +16,19 @@ describe("Rule model", () => {
       1,
       RewardValueTypeEnum.FIXED,
       [
-        new Condition("product", "is", [
+        new CatalogCondition("product", "is", [
           { value: "prod_1", label: "prod_1" },
           { value: "prod_2", label: "prod_2" },
         ]),
-        new Condition("category", "is", [
+        new CatalogCondition("category", "is", [
           { value: "cat_1", label: "cat_1" },
           { value: "cat_2", label: "cat_2" },
         ]),
-        new Condition("collection", "is", [
+        new CatalogCondition("collection", "is", [
           { value: "coll_1", label: "coll_1" },
           { value: "coll_2", label: "coll_2" },
         ]),
-        new Condition("variant", "is", [
+        new CatalogCondition("variant", "is", [
           { value: "var_1", label: "var_1" },
           { value: "var_2", label: "var_2" },
         ]),

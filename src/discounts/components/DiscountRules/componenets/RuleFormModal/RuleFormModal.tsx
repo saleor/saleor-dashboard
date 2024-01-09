@@ -23,8 +23,13 @@ import { useVariantOptions } from "../RuleForm/components/RuleConditions/hooks/u
 import { RuleForm } from "../RuleForm/RuleForm";
 import { getValidationSchema } from "./validationSchema";
 
-interface RuleFormModalProps<ErrorCode> {
+export interface RuleModalState {
   open: boolean;
+  type: "catalog" | "checkout";
+}
+
+interface RuleFormModalProps<ErrorCode> {
+  ruleModalState: RuleModalState;
   disabled: boolean;
   onClose: () => void;
   onSubmit: (data: Rule) => void;
@@ -35,7 +40,7 @@ interface RuleFormModalProps<ErrorCode> {
 }
 
 export const RuleFormModal = <ErrorCode,>({
-  open,
+  ruleModalState,
   disabled,
   onClose,
   channels,
@@ -46,7 +51,7 @@ export const RuleFormModal = <ErrorCode,>({
 }: RuleFormModalProps<ErrorCode>) => {
   const intl = useIntl();
 
-  const { toAPI, ...emptyRule } = Rule.empty();
+  const { toAPI, ...emptyRule } = Rule.empty(ruleModalState.type);
 
   const methods = useForm<Rule>({
     mode: "onBlur",
@@ -73,12 +78,12 @@ export const RuleFormModal = <ErrorCode,>({
   // Clear modal form
   useEffect(() => {
     if (!initialFormValues && open) {
-      methods.reset(Rule.empty());
+      methods.reset(Rule.empty(ruleModalState.type));
     }
   }, [open]);
 
   return (
-    <DashboardModal open={open} onChange={onClose}>
+    <DashboardModal open={ruleModalState.open} onChange={onClose}>
       <DashboardModal.Content>
         <DashboardModal.Title
           display="flex"

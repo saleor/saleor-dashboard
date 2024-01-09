@@ -37,6 +37,8 @@ export interface DiscoutFormData {
   rules: Rule[];
 }
 
+export type RuleType = "catalog" | "checkout";
+
 export type ConditionType = "product" | "category" | "collection" | "variant";
 
 // Mimic API catalogue predicate structure because api scheme type return any
@@ -55,4 +57,11 @@ export interface CataloguePredicateAPI {
   variantPredicate?: {
     ids: string[];
   };
+}
+
+export interface CheckoutPredicateAPI {
+  OR?: CataloguePredicateAPI[];
+  AND?: CataloguePredicateAPI[];
+  subtotalPrice?: any;
+  totalPrice?: any;
 }

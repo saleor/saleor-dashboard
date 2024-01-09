@@ -638,6 +638,7 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   channels {
     ...ChannelDetails
   }
+  rewardType
   rewardValueType
   rewardValue
   cataloguePredicate

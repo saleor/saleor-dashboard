@@ -3,7 +3,7 @@ import {
   hueToPillColorLight,
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
-import { Condition, Rule } from "@dashboard/discounts/models";
+import { CatalogCondition, Rule } from "@dashboard/discounts/models";
 import { ConditionType } from "@dashboard/discounts/types";
 import { DefaultTheme, Option } from "@saleor/macaw-ui-next";
 
@@ -26,7 +26,7 @@ export const splitConditions = (
 };
 
 export const mapConditionToOption = (
-  conditions: Condition[],
+  conditions: CatalogCondition[],
 ): OptionWithConditionType[] => {
   return conditions.reduce<OptionWithConditionType[]>((acc, condition) => {
     acc.push(
