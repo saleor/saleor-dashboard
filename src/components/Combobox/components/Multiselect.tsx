@@ -6,7 +6,13 @@ import {
   DynamicMultiselectProps,
   Option,
 } from "@saleor/macaw-ui-next";
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useIntl } from "react-intl";
 
 import { useCombbobxCustomOption } from "../hooks/useCombbobxCustomOption";
@@ -19,10 +25,11 @@ type MultiselectProps = Omit<DynamicMultiselectProps<Option>, "onChange"> & {
   alwaysFetchOnFocus?: boolean;
   allowCustomValues?: boolean;
   fetchMore?: FetchMoreProps;
+  children?: ReactNode;
   onChange: (event: ChangeEvent) => void;
 };
 
-export const Multiselect = forwardRef<HTMLInputElement, MultiselectProps>(
+const MultiselectRoot = forwardRef<HTMLInputElement, MultiselectProps>(
   (
     {
       disabled,
@@ -34,6 +41,7 @@ export const Multiselect = forwardRef<HTMLInputElement, MultiselectProps>(
       allowCustomValues = false,
       loading,
       fetchMore,
+      children,
       size = "small",
       ...rest
     },
@@ -100,9 +108,15 @@ export const Multiselect = forwardRef<HTMLInputElement, MultiselectProps>(
         }}
         size={size}
         {...rest}
-      />
+      >
+        {children}
+      </DynamicMultiselect>
     );
   },
 );
 
-Multiselect.displayName = "Multiselect";
+MultiselectRoot.displayName = "Multiselect";
+
+export const Multiselect = Object.assign(MultiselectRoot, {
+  NoOptions: DynamicMultiselect.NoOptions,
+});
