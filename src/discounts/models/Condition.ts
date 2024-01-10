@@ -17,6 +17,18 @@ export class Condition {
     public values: ConditionValue,
   ) {}
 
+  hasValue(): boolean {
+    return this.values !== null;
+  }
+
+  isString(): boolean {
+    return typeof this.values === "string";
+  }
+
+  isArrayOfOptions(): boolean {
+    return Array.isArray(this.values);
+  }
+
   public static empty(): Condition {
     return new Condition(null, "is", null);
   }

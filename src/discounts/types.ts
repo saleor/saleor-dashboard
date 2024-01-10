@@ -1,3 +1,4 @@
+import { DecimalFilterInput } from "@dashboard/graphql";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
@@ -37,7 +38,7 @@ export interface DiscoutFormData {
   rules: Rule[];
 }
 
-export type RuleType = "catalog" | "checkout";
+export type RuleType = "catalog" | "order";
 
 export type ConditionType = "product" | "category" | "collection" | "variant";
 
@@ -56,6 +57,17 @@ export interface CataloguePredicateAPI {
   };
   variantPredicate?: {
     ids: string[];
+  };
+}
+
+export interface OrderPredicateAPI {
+  OR?: OrderPredicateAPI[];
+  AND?: OrderPredicateAPI[];
+  discountedObjectPredicate: {
+    subtotalPrice?: DecimalFilterInput;
+    totalPrice?: DecimalFilterInput;
+    AND?: Array<OrderPredicateAPI["discountedObjectPredicate"]>;
+    OR?: Array<OrderPredicateAPI["discountedObjectPredicate"]>;
   };
 }
 

@@ -3,7 +3,7 @@ import {
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
-import { CatalogCondition } from "./CatalogCondition";
+import { CatalogCondition } from "./Catalog/CatalogCondition";
 import { Rule } from "./Rule";
 
 describe("Rule model", () => {
