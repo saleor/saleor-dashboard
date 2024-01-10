@@ -42,8 +42,8 @@ export const getValidationSchema = (intl: IntlShape) =>
       conditions: z.array(
         z
           .object({
-            type: z.string().nullable(),
-            condition: z.string(),
+            name: z.string().nullable(),
+            type: z.string(),
             values: z.array(z.object({ label: z.string(), value: z.string() })),
           })
           .optional(),

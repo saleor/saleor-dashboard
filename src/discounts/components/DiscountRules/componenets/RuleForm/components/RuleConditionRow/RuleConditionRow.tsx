@@ -25,13 +25,21 @@ export const RuleConditionRow = ({
   updateCondition,
   disabled = false,
 }: DiscountConditionRowProps) => {
-  const ruleConditionTypeFieldName =
+  const ruleConditionNameFieldName =
     `conditions.${conditionIndex}.name` as const;
+  const { field: nameField } = useController<
+    Rule,
+    typeof ruleConditionNameFieldName
+  >({
+    name: ruleConditionNameFieldName,
+  });
+
+  const ruleCondtionTypeFileName = `conditions.${conditionIndex}.type` as const;
   const { field: typeField } = useController<
     Rule,
-    typeof ruleConditionTypeFieldName
+    typeof ruleCondtionTypeFileName
   >({
-    name: ruleConditionTypeFieldName,
+    name: ruleCondtionTypeFileName,
   });
 
   const { watch } = useFormContext<Rule>();
@@ -55,7 +63,7 @@ export const RuleConditionRow = ({
       <RuleInputWrapper>
         <Combobox
           value={getConditionTypeValue(
-            typeField.name as any,
+            nameField.name as any,
             filteredConditionLeftOptions,
           )}
           fetchOptions={() => {}}
@@ -63,7 +71,7 @@ export const RuleConditionRow = ({
           onChange={e => {
             condition.values = [];
             updateCondition(conditionIndex, condition as any);
-            typeField.onChange(e.target.value);
+            nameField.onChange(e.target.value);
           }}
           size="medium"
           data-test-id="rule-type"
@@ -74,16 +82,19 @@ export const RuleConditionRow = ({
 
       <RuleInputWrapper>
         <Select
-          value="is"
+          value={typeField.value}
           size="medium"
           options={getConditionTypesOptions(condition.name as any)}
-          onChange={() => {}}
+          onChange={typeField.onChange}
           disabled={disabled}
         />
       </RuleInputWrapper>
 
       <RuleInputWrapper>
-        <RuleCondtionRightOperators conditionIndex={conditionIndex} />
+        <RuleCondtionRightOperators
+          conditionIndex={conditionIndex}
+          disabled={disabled}
+        />
       </RuleInputWrapper>
 
       <Button variant="tertiary" icon={<RemoveIcon />} onClick={onRemove} />

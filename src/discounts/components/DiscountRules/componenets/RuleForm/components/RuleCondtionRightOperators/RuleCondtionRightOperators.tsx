@@ -49,16 +49,16 @@ export const RuleCondtionRightOperators = ({
         />
       );
     }
-  } else {
-    return (
-      <Input
-        size="medium"
-        data-test-id="rule-values"
-        value={condition.values}
-        onChange={valuesField.onChange}
-        onBlur={valuesField.onBlur}
-        disabled={disabled}
-      />
-    );
   }
+
+  return (
+    <Input
+      size="medium"
+      data-test-id="rule-values"
+      value={condition.values[0] as string}
+      onChange={valuesField.onChange}
+      onBlur={valuesField.onBlur}
+      disabled={disabled}
+    />
+  );
 };
