@@ -6,7 +6,7 @@ import {
   DynamicComboboxProps,
   Option,
 } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useCombbobxCustomOption } from "../hooks/useCombbobxCustomOption";
@@ -18,6 +18,7 @@ type ComboboxProps = Omit<
   DynamicComboboxProps<Option | null>,
   "value" | "onChange"
 > & {
+  children?: ReactNode;
   fetchOptions: (data: string) => void;
   allowCustomValues?: boolean;
   alwaysFetchOnFocus?: boolean;
@@ -26,7 +27,7 @@ type ComboboxProps = Omit<
   onChange: (event: ChangeEvent) => void;
 };
 
-export const Combobox = ({
+const ComboboxRoot = ({
   value,
   fetchOptions,
   onChange,
@@ -35,6 +36,7 @@ export const Combobox = ({
   allowCustomValues = false,
   fetchMore,
   loading,
+  children,
   size = "small",
   ...rest
 }: ComboboxProps) => {
@@ -85,6 +87,12 @@ export const Combobox = ({
       }}
       size={size}
       {...rest}
-    />
+    >
+      {children}
+    </DynamicCombobox>
   );
 };
+
+export const Combobox = Object.assign(ComboboxRoot, {
+  NoOptions: DynamicCombobox.NoOptions,
+});

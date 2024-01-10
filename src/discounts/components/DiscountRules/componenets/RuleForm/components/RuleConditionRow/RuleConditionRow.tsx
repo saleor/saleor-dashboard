@@ -4,7 +4,7 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import { Box, Button, Option, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 import { initialDiscountConditionType } from "./initialDiscountConditionType";
@@ -118,7 +118,14 @@ export const RuleConditionRow = ({
           onChange={valuesField.onChange}
           onBlur={valuesField.onBlur}
           disabled={disabled}
-        />
+        >
+          <Multiselect.NoOptions size="small" padding={1}>
+            <FormattedMessage
+              defaultMessage="No options to select"
+              id="xTyg+p"
+            />
+          </Multiselect.NoOptions>
+        </Multiselect>
       </RuleInputWrapper>
 
       <Button variant="tertiary" icon={<RemoveIcon />} onClick={onRemove} />
