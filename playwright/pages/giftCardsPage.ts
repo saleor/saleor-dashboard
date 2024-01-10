@@ -12,6 +12,7 @@ export class GiftCardsPage extends BasePage {
   readonly resendGiftCardCodeDialog: ResendGiftCardCodeDialog;
   readonly metadataSeoPage: MetadataSeoPage;
   readonly deleteDialog: DeleteDialog;
+
   constructor(
     page: Page,
     readonly issueCardButton = page.getByTestId("issue-card-button"),
