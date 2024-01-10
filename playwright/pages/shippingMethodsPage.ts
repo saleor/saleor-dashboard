@@ -33,6 +33,7 @@ export class ShippingMethodsPage {
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
     this.assignCountriesDialog = new AssignCountriesDialog(page);
     this.deleteShippingMethodDialog = new DeleteShippingMethodDialog(page)
+    this.deleteShippingMethodDialog = new DeleteShippingMethodDialog(page);
   }
 
   async clickAddWeightRateButton() {
