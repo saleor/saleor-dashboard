@@ -1,3 +1,5 @@
+import { ExpressionFilters } from "@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters";
+import { LegacyFiltersPresetsAlert } from "@dashboard/components/AppLayout/ListFilters/components/LegacyFiltersPresetsAlert";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -102,17 +104,29 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
       </TopNav>
 
       <DashboardCard>
-        <Box __width="320px" marginLeft={4} marginBottom={2}>
-          {/* TODO: remove when new fileters will be implemented */}
-          <SearchInput
-            initialSearch={initialSearch}
-            placeholder={intl.formatMessage({
-              id: "+bhokL",
-              defaultMessage: "Search discounts...",
-            })}
-            onSearchChange={onSearchChange}
-          />
+        <LegacyFiltersPresetsAlert />
+        <Box
+          display="grid"
+          __gridTemplateColumns="auto 1fr"
+          gap={4}
+          paddingBottom={2}
+          paddingX={6}
+        >
+          <Box display="flex" alignItems="center" gap={4}>
+            <ExpressionFilters data-test-id="filters-button" />
+            <Box __width="320px">
+              <SearchInput
+                initialSearch={initialSearch}
+                placeholder={intl.formatMessage({
+                  id: "+bhokL",
+                  defaultMessage: "Search discounts...",
+                })}
+                onSearchChange={onSearchChange}
+              />
+            </Box>
+          </Box>
         </Box>
+
         <DiscountListDatagrid {...listProps} onRowClick={handleRowClick} />
       </DashboardCard>
     </ListPageLayout>
