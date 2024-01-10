@@ -14,7 +14,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
-import { useReturnWithinReturn } from "./useRefundWithinReturn";
+import { useRefundWithinReturn } from "./useRefundWithinReturn";
 import ReturnFormDataParser, { getSuccessMessage } from "./utils";
 
 interface OrderReturnProps {
@@ -54,7 +54,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     grantRefundErrors,
     sendRefundErrors,
     grantRefundResponseOrderData,
-  } = useReturnWithinReturn({
+  } = useRefundWithinReturn({
     orderId,
     transactionId: data?.order?.transactions[0]?.id,
   });

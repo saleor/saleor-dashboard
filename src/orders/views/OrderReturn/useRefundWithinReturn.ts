@@ -20,7 +20,7 @@ interface UseReturnWithinReturnResult {
   grantRefundResponseOrderData: OrderDetailsFragment | null | undefined;
 }
 
-export function useReturnWithinReturn({
+export function useRefundWithinReturn({
   orderId,
   transactionId,
 }: UseReturnWithinReturnOpts): UseReturnWithinReturnResult {
