@@ -1,2 +1,2 @@
-export * from "./CatalogCondition";
+export * from "./Condition";
 export * from "./Rule";
