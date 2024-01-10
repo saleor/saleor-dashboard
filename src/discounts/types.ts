@@ -40,7 +40,13 @@ export interface DiscoutFormData {
 
 export type RuleType = "catalog" | "order";
 
-export type ConditionType = "product" | "category" | "collection" | "variant";
+export type CatalogConditions =
+  | "product"
+  | "category"
+  | "collection"
+  | "variant";
+
+export type OrderConditions = "subtotal" | "total";
 
 // Mimic API catalogue predicate structure because api scheme type return any
 export interface CataloguePredicateAPI {

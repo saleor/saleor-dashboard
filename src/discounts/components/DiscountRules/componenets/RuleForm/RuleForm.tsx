@@ -1,7 +1,6 @@
-import {
-  CatalogCondition,
-  Rule as RuleType,
-} from "@dashboard/discounts/models";
+import { Rule as RuleType } from "@dashboard/discounts/models";
+import { CatalogCondition } from "@dashboard/discounts/models/Catalog/CatalogCondition";
+import { OrderCondition } from "@dashboard/discounts/models/Order/OrderCondition";
 import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -16,9 +15,8 @@ import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { ConditionType } from "../../../../types";
+import { useDiscountRulesContext } from "../../context/consumer";
 import { getCurencySymbol } from "../../utils";
-import { FetchOptions } from "./components/RuleConditionRow";
 import { RuleConditions } from "./components/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription";
 import { RuleInputWrapper } from "./components/RuleInputWrapper/RuleInputWrapper";
@@ -28,18 +26,20 @@ interface RuleFormProps<ErrorCode> {
   channels: ChannelFragment[];
   disabled?: boolean;
   errors: Array<CommonError<ErrorCode>>;
-  typeToFetchMap: Record<ConditionType, FetchOptions>;
 }
 
 export const RuleForm = <ErrorCode,>({
   channels,
   disabled = false,
   errors,
-  typeToFetchMap,
 }: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
   const { watch, getValues, setValue, formState } = useFormContext<RuleType>();
   const formErrors = getFormErrors(["rewardValue"], errors);
+  const { discountType } = useDiscountRulesContext();
+
+  const Condition =
+    discountType === "catalog" ? CatalogCondition : OrderCondition;
 
   const { trigger } = useFormContext<RuleType>();
   const { field: nameField } = useController<RuleType, "name">({
@@ -81,7 +81,7 @@ export const RuleForm = <ErrorCode,>({
     setValue("channel", selectedChannel, { shouldValidate: true });
 
     if (conditions.length > 0) {
-      setValue("conditions", [CatalogCondition.empty()]);
+      setValue("conditions", [Condition.empty() as any]);
     } else {
       setValue("conditions", []);
     }
@@ -120,7 +120,6 @@ export const RuleForm = <ErrorCode,>({
         <RuleConditions
           disabled={disabled}
           hasSelectedChannels={hasSelectedChannel}
-          typeToFetchMap={typeToFetchMap}
         />
 
         <RuleReward

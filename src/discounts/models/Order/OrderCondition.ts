@@ -1,6 +1,6 @@
 import { Condition, ConditionType } from "../Condition";
 
-export type OrderConditionName = "subtotalPrice" | "totalPrice";
+export type OrderConditionName = "subtotal" | "total";
 
 export class OrderCondition extends Condition {
   constructor(

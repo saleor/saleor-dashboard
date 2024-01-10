@@ -9,7 +9,7 @@ export const prepareOrderConditions = (
   if (orderPredicate.discountedObjectPredicate?.subtotalPrice) {
     return [
       new OrderCondition(
-        "subtotalPrice",
+        "subtotal",
         "is",
         orderPredicate.discountedObjectPredicate.subtotalPrice.eq,
       ),

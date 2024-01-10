@@ -13,19 +13,14 @@ import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ConditionType } from "../../../../types";
+import { useDiscountRulesContext } from "../../context/consumer";
 import { messages } from "../../messages";
-import { FetchOptions } from "../RuleForm/components/RuleConditionRow";
-import { useCategorieOptions } from "../RuleForm/components/RuleConditions/hooks/useCategorieOptions";
-import { useCollectionOptions } from "../RuleForm/components/RuleConditions/hooks/useCollectionOptions";
-import { useProductOptions } from "../RuleForm/components/RuleConditions/hooks/useProductOptions";
-import { useVariantOptions } from "../RuleForm/components/RuleConditions/hooks/useVariantOptions";
 import { RuleForm } from "../RuleForm/RuleForm";
 import { getValidationSchema } from "./validationSchema";
 
 export interface RuleModalState {
   open: boolean;
-  type: "catalog" | "checkout";
+  type: "catalog" | "order";
 }
 
 interface RuleFormModalProps<ErrorCode> {
@@ -51,6 +46,8 @@ export const RuleFormModal = <ErrorCode,>({
 }: RuleFormModalProps<ErrorCode>) => {
   const intl = useIntl();
 
+  const { setChannel } = useDiscountRulesContext();
+
   const { toAPI, ...emptyRule } = Rule.empty(ruleModalState.type);
 
   const methods = useForm<Rule>({
@@ -63,17 +60,9 @@ export const RuleFormModal = <ErrorCode,>({
   const channelSlug =
     channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
 
-  const productSearch = useProductOptions(channelSlug);
-  const collectionSearch = useCollectionOptions(channelSlug);
-  const categorySearch = useCategorieOptions();
-  const variantSearch = useVariantOptions(channelSlug);
-
-  const typeToFetchMap: Record<ConditionType, FetchOptions> = {
-    product: productSearch,
-    collection: collectionSearch,
-    category: categorySearch,
-    variant: variantSearch,
-  };
+  useEffect(() => {
+    setChannel(channelSlug);
+  }, [channelSlug]);
 
   // Clear modal form
   useEffect(() => {
@@ -107,7 +96,6 @@ export const RuleFormModal = <ErrorCode,>({
                 channels={channels}
                 errors={errors}
                 disabled={disabled}
-                typeToFetchMap={typeToFetchMap}
               />
             </Box>
           </form>

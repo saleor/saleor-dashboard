@@ -1,26 +1,29 @@
-import { CatalogCondition, Rule } from "@dashboard/discounts/models";
-import { ConditionType } from "@dashboard/discounts/types";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
+import { Rule } from "@dashboard/discounts/models";
+import { CatalogCondition } from "@dashboard/discounts/models/Catalog/CatalogCondition";
+import { OrderCondition } from "@dashboard/discounts/models/Order/OrderCondition";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
-import { FetchOptions, RuleConditionRow } from "../RuleConditionRow";
-import { initialDiscountConditionType } from "../RuleConditionRow/initialDiscountConditionType";
+import { RuleConditionRow } from "../RuleConditionRow";
 
 interface RuleConditionsProps {
   hasSelectedChannels: boolean;
   disabled?: boolean;
-  typeToFetchMap: Record<ConditionType, FetchOptions>;
 }
 
 export const RuleConditions = ({
   disabled = false,
   hasSelectedChannels,
-  typeToFetchMap,
 }: RuleConditionsProps) => {
   const intl = useIntl();
+  const { discountType, conditionLeftOptions } = useDiscountRulesContext();
+
+  const Condition =
+    discountType === "catalog" ? CatalogCondition : OrderCondition;
 
   const { watch } = useFormContext<Rule>();
 
@@ -31,7 +34,7 @@ export const RuleConditions = ({
   const conditionsList = watch("conditions");
 
   const allConditionsSelected =
-    conditionsList.length === initialDiscountConditionType.length;
+    conditionsList.length === conditionLeftOptions.length;
 
   const isConditionTypeSelected = (conditionType: string) =>
     conditionsList.some(condition => condition.type === conditionType);
@@ -60,7 +63,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(CatalogCondition.empty())}
+          onClick={() => append(Condition.empty() as any)}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>
@@ -76,9 +79,6 @@ export const RuleConditions = ({
         {fields.map((condition, conditionIndex) => (
           <RuleConditionRow
             disabled={disabled}
-            fetchOptions={
-              condition.type ? typeToFetchMap[condition.type] : undefined
-            }
             isConditionTypeSelected={isConditionTypeSelected}
             key={condition.type || conditionIndex}
             conditionIndex={conditionIndex}
@@ -96,7 +96,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(CatalogCondition.empty())}
+          onClick={() => append(Condition.empty() as any)}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>
