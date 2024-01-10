@@ -97,4 +97,8 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
       return element;
     });
   }
+
+  public asFilterValueFromEmpty(): FilterContainer {
+    return this.asFilterValuesFromResponse(InitialStateResponse.empty());
+  }
 }

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
-import { InitialStateResponse } from "../API/InitialStateResponse";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";
@@ -64,9 +63,7 @@ export const useUrlValueProvider = (
   useEffect(() => {
     if (initialState) return;
 
-    setValue(
-      tokenizedUrl.asFilterValuesFromResponse(InitialStateResponse.empty()),
-    );
+    setValue(tokenizedUrl.asFilterValueFromEmpty());
   }, [locationSearch]);
 
   const persist = (filterValue: FilterContainer) => {
