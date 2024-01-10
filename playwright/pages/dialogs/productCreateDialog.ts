@@ -1,19 +1,19 @@
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export class ProductCreateDialog {
   readonly page: Page;
-  readonly dialogProductTypeInput: Locator;
-  readonly promptedOptions: Locator;
-  readonly confirmButton: Locator;
-  constructor(page: Page) {
-    this.page = page;
-    this.dialogProductTypeInput = page.locator(
+
+  constructor(
+    page: Page,
+    readonly dialogProductTypeInput = page.locator(
       "[data-test-id='dialog-product-type'] input",
-    );
-    this.promptedOptions = page.getByTestId(
+    ),
+    readonly promptedOptions = page.getByTestId(
       "single-autocomplete-select-option",
-    );
-    this.confirmButton = page.getByTestId("submit");
+    ),
+    readonly confirmButton = page.getByTestId("submit"),
+  ) {
+    this.page = page;
   }
   async selectProductTypeWithVariants() {
     await this.dialogProductTypeInput.fill("beer");

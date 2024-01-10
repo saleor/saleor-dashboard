@@ -46,6 +46,18 @@ export const CUSTOMER_ADDRESS = {
     country: "Poland",
   },
 };
+export const CATEGORIES = {
+  categoryToBeUpdated: {
+    id: "Q2F0ZWdvcnk6NTA3",
+    name: "a category to be updated",
+  },
+  categoriesToBeBulkDeleted: {
+    names: [
+      "a cateogry to be bulk deleted 1/2",
+      "a cateogry to be bulk deleted 2/2",
+    ],
+  },
+};
 export const CHANNELS = {
   channelToBeEditedSettings: {
     id: "Q2hhbm5lbDoyMzkx",
@@ -160,7 +172,7 @@ export const ORDERS = {
 
 export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
-    id: "U2hpcHBpbmdab25lOjIzNzg%3D",
+    id: "U2hpcHBpbmdab25lOjIzOTA%3D",
     info: "Shipping method that is used to add rates",
   },
 };

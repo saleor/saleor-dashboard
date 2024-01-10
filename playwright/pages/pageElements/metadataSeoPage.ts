@@ -1,6 +1,6 @@
 import * as faker from "faker";
 
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 const metaDataName = `e2e-metaDataName-${faker.datatype.number()}`;
 const metaDataValue = `e2e-metaDataValue-${faker.datatype.number()}`;
@@ -12,58 +12,44 @@ const seoDescriptionText = `e2e-seoSlugDescription-${faker.datatype.number()}`;
 export class MetadataSeoPage {
   readonly page: Page;
   readonly seoSlugName: string;
-  readonly productNameInput: Locator;
-  readonly editSeoSettings: Locator;
-  readonly slugInput: Locator;
-  readonly seoTitleInput: Locator;
-  readonly seoDescriptionInput: Locator;
-  readonly expandMetadataButton: Locator;
-  readonly metadataForm: Locator;
-  readonly addMetaButton: Locator;
-  readonly addPrivateMetaButton: Locator;
-  readonly metaDataNameInput: Locator;
-  readonly privateMetaDataNameInput: Locator;
-  readonly metadataValueField: Locator;
-  readonly privateMetadataValueField: Locator;
-  readonly metaExpandButton: Locator;
-  readonly metaDeletedButton: Locator;
-  readonly privateMetaSection: Locator;
-  readonly publicMetaSection: Locator;
-  readonly fulfillmentMetaSection: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly productNameInput = page.locator("[name='name']"),
+    readonly editSeoSettings = page.getByTestId("edit-seo"),
+    readonly slugInput = page.locator("[name='slug']"),
+    readonly seoTitleInput = page.locator("[name='seoTitle']"),
+    readonly seoDescriptionInput = page.locator("[name='seoDescription']"),
+    readonly expandMetadataButton = page.getByTestId("expand"),
+    readonly metadataForm = page.locator("[data-test-id='metadata-editor']"),
+    readonly metaExpandButton = page.getByTestId("expand"),
+    readonly metaDeletedButton = page.getByTestId("delete-field-0"),
+    readonly privateMetaSection = page.locator("[data-test-is-private='true']"),
+    readonly publicMetaSection = page.locator("[data-test-is-private='false']"),
+    readonly fulfillmentMetaSection = page.getByTestId(
+      "fulfilled-order-section",
+    ),
+    readonly addMetaButton = page
+      .locator("[data-test-is-private='false']")
+      .getByTestId("add-field"),
+    readonly addPrivateMetaButton = page
+      .locator("[data-test-is-private='true']")
+      .getByTestId("add-field"),
+    readonly metaDataNameInput = page
+      .locator("[data-test-is-private='false']")
+      .locator("[name*='name']"),
+    readonly privateMetaDataNameInput = page
+      .locator("[data-test-is-private='true']")
+      .locator("[name*='name']"),
+    readonly metadataValueField = page
+      .locator("[data-test-is-private='false']")
+      .locator("[name*='value']"),
+    readonly privateMetadataValueField = page
+      .locator("[data-test-is-private='true']")
+      .locator("[name*='value']"),
+  ) {
     this.page = page;
     this.seoSlugName = `e2e-seoSlug-${Math.random().toString().substring(2)}`;
-    this.productNameInput = page.locator("[name='name']");
-    this.editSeoSettings = page.getByTestId("edit-seo");
-    this.slugInput = page.locator("[name='slug']");
-    this.seoTitleInput = page.locator("[name='seoTitle']");
-    this.seoDescriptionInput = page.locator("[name='seoDescription']");
-    this.expandMetadataButton = page.getByTestId("expand");
-    this.metadataForm = page.locator("[data-test-id='metadata-editor']");
-    this.addMetaButton = page
-      .locator("[data-test-is-private='false']")
-      .getByTestId("add-field");
-    this.addPrivateMetaButton = page
-      .locator("[data-test-is-private='true']")
-      .getByTestId("add-field");
-    this.metaDataNameInput = page
-      .locator("[data-test-is-private='false']")
-      .locator("[name*='name']");
-    this.privateMetaDataNameInput = page
-      .locator("[data-test-is-private='true']")
-      .locator("[name*='name']");
-    this.metadataValueField = page
-      .locator("[data-test-is-private='false']")
-      .locator("[name*='value']");
-    this.privateMetadataValueField = page
-      .locator("[data-test-is-private='true']")
-      .locator("[name*='value']");
-    this.metaExpandButton = page.getByTestId("expand");
-    this.metaDeletedButton = page.getByTestId("delete-field-0");
-    this.privateMetaSection = page.locator("[data-test-is-private='true']");
-    this.publicMetaSection = page.locator("[data-test-is-private='false']");
-    this.fulfillmentMetaSection = page.getByTestId("fulfilled-order-section");
   }
 
   async expandAndAddAllMetadata(
