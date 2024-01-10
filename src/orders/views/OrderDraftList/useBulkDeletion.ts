@@ -8,7 +8,7 @@ export const useBulkDeletion = (onComplete: () => void) => {
   const [orderDraftBulkDelete, orderDraftBulkDeleteOpts] =
     useOrderDraftBulkCancelMutation({
       onCompleted: data => {
-        if (data.draftOrderBulkDelete.errors.length === 0) {
+        if (data?.draftOrderBulkDelete?.errors.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage({

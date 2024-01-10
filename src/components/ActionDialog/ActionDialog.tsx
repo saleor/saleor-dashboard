@@ -16,7 +16,7 @@ export interface ActionDialogProps extends DialogProps {
   title: string;
   variant?: ActionDialogVariant;
   backButtonText?: string;
-  onConfirm: () => Promise<any>;
+  onConfirm: () => any;
 }
 
 const ActionDialog: React.FC<ActionDialogProps> = props => {
