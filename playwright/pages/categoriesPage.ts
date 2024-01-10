@@ -1,5 +1,5 @@
 import { URL_LIST } from "@data/url";
-import { DeleteCategoriesDialog } from "@dialogs/deleteCategoriesDialog";
+import { DeleteDialog } from "@dialogs/deleteDialog";
 import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
@@ -7,7 +7,7 @@ import type { Page } from "@playwright/test";
 export class CategoriesPage extends BasePage {
   readonly page: Page;
   readonly metadataSeoPage: MetadataSeoPage;
-  readonly deleteCategoriesDialog: DeleteCategoriesDialog;
+  readonly deleteCategoriesDialog: DeleteDialog;
 
   constructor(
     page: Page,
@@ -28,7 +28,7 @@ export class CategoriesPage extends BasePage {
     super(page);
     this.page = page;
     this.metadataSeoPage = new MetadataSeoPage(page);
-    this.deleteCategoriesDialog = new DeleteCategoriesDialog(page);
+    this.deleteCategoriesDialog = new DeleteDialog(page);
   }
 
   async gotoCategoryListView() {

@@ -1,8 +1,7 @@
 import { MailpitService } from "@api/mailpit";
+import { BasePage } from "@pages/basePage";
 import { InviteStaffMembersDialog } from "@pages/dialogs/inviteStaffMemberDialog";
-import type { APIRequestContext, Locator, Page } from "@playwright/test";
-
-import { BasePage } from "./basePage";
+import type { APIRequestContext, Page } from "@playwright/test";
 
 export class StaffMembersPage {
   readonly page: Page;
@@ -10,31 +9,30 @@ export class StaffMembersPage {
   readonly basePage: BasePage;
   readonly mailpitService: MailpitService;
   readonly inviteStaffMembersDialog: InviteStaffMembersDialog;
-  readonly inviteStaffMembersButton: Locator;
-  readonly saveButton: Locator;
-  readonly permissionsGroupSelectButton: Locator;
-  readonly permissionGroupOptions: Locator;
-  readonly assignedPermissionGroups: Locator;
-  readonly isActiveCheckbox: Locator;
 
-  constructor(page: Page, request: APIRequestContext) {
+  constructor(
+    page: Page,
+    request: APIRequestContext,
+    readonly inviteStaffMembersButton = page.getByTestId("invite-staff-member"),
+    readonly saveButton = page.getByTestId("button-bar-confirm"),
+    readonly permissionsGroupSelectButton = page.getByTestId(
+      "permission-groups",
+    ),
+    readonly permissionGroupOptions = page.getByTestId(
+      "multi-autocomplete-select-option",
+    ),
+    readonly assignedPermissionGroups = page.getByTestId(
+      "assigned-permission-group",
+    ),
+    readonly isActiveCheckbox = page
+      .getByTestId("is-active-checkbox")
+      .locator("input"),
+  ) {
     this.page = page;
     this.request = request;
     this.basePage = new BasePage(page);
     this.mailpitService = new MailpitService(request);
     this.inviteStaffMembersDialog = new InviteStaffMembersDialog(page);
-    this.inviteStaffMembersButton = page.getByTestId("invite-staff-member");
-    this.saveButton = page.getByTestId("button-bar-confirm");
-    this.permissionsGroupSelectButton = page.getByTestId("permission-groups");
-    this.permissionGroupOptions = page.getByTestId(
-      "multi-autocomplete-select-option",
-    );
-    this.assignedPermissionGroups = page.getByTestId(
-      "assigned-permission-group",
-    );
-    this.isActiveCheckbox = page
-      .getByTestId("is-active-checkbox")
-      .locator("input");
   }
 
   async clickIsActiveCheckbox() {

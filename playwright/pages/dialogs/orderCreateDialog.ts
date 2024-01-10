@@ -1,16 +1,17 @@
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export class OrderCreateDialog {
   readonly page: Page;
-  readonly channelNameInput: Locator;
-  readonly channelOption: Locator;
-  readonly confirmButton: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly channelNameInput = page.getByTestId("channel-autocomplete"),
+    readonly confirmButton = page.getByTestId("submit"),
+    readonly channelOption = page.locator(
+      "[data-test-id*='select-field-option']",
+    ),
+  ) {
     this.page = page;
-    this.channelNameInput = page.getByTestId("channel-autocomplete");
-    this.confirmButton = page.getByTestId("submit");
-    this.channelOption = page.locator("[data-test-id*='select-field-option']");
   }
 
   async expandChannelsSearchList() {

@@ -1,7 +1,7 @@
 import { URL_LIST } from "@data/url";
 import { AddProductsDialog } from "@dialogs/addProductsDialog";
 import { AddressDialog } from "@dialogs/addressDialog";
-import { DeleteDraftOrdersDialog } from "@dialogs/deleteDraftOrdersDialog";
+import { DeleteDialog } from "@dialogs/deleteDialog";
 import { DraftOrderCreateDialog } from "@dialogs/draftOrderCreateDialog";
 import { ShippingAddressDialog } from "@dialogs/shippingMethodDialog";
 import { RightSideDetailsPage } from "@pageElements/rightSideDetailsSection";
@@ -10,7 +10,7 @@ import type { Page } from "@playwright/test";
 
 export class DraftOrdersPage extends BasePage {
   readonly page: Page;
-  readonly deleteDraftOrdersDialog: DeleteDraftOrdersDialog;
+  readonly deleteDraftOrdersDialog: DeleteDialog;
   readonly draftOrderCreateDialog: DraftOrderCreateDialog;
   readonly addProductsDialog: AddProductsDialog;
   readonly rightSideDetailsPage: RightSideDetailsPage;
@@ -28,7 +28,7 @@ export class DraftOrdersPage extends BasePage {
   ) {
     super(page);
     this.page = page;
-    this.deleteDraftOrdersDialog = new DeleteDraftOrdersDialog(page);
+    this.deleteDraftOrdersDialog = new DeleteDialog(page);
     this.draftOrderCreateDialog = new DraftOrderCreateDialog(page);
     this.addProductsDialog = new AddProductsDialog(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);

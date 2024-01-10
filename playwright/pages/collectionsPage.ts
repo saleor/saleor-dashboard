@@ -1,11 +1,12 @@
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export class CollectionsPage {
   readonly page: Page;
-  readonly createCollectionButton: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly createCollectionButton = page.getByTestId("create-collection"),
+  ) {
     this.page = page;
-    this.createCollectionButton = page.getByTestId("create-collection");
   }
 }

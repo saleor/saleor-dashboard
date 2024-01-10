@@ -1,52 +1,33 @@
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 export class MainMenuPage {
   readonly page: Page;
 
-  readonly catalog: Locator;
-  readonly content: Locator;
-  readonly categories: Locator;
-  readonly configuration: Locator;
-  readonly home: Locator;
-  readonly orders: Locator;
-  readonly discounts: Locator;
-  readonly appSection: Locator;
-  readonly vouchers: Locator;
-  readonly app: Locator;
-  readonly translations: Locator;
-  readonly customers: Locator;
-  readonly list: Locator;
-  readonly listItem: Locator;
-  readonly products: Locator;
-  readonly menuItem: Locator;
-  readonly drafts: Locator;
-  readonly collections: Locator;
-  readonly accountSettings: Locator;
-  readonly userMenu: Locator;
-
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly userMenu = page.getByTestId("userMenu"),
+    readonly accountSettings = page.getByTestId("account-settings-button"),
+    readonly catalog = page.getByTestId("menu-item-label-catalogue"),
+    readonly content = page.getByTestId("menu-item-label-pages"),
+    readonly categories = page.getByTestId("menu-item-label-categories"),
+    readonly collections = page.getByTestId("menu-item-label-collections"),
+    readonly configuration = page.getByTestId("menu-item-label-configure"),
+    readonly home = page.getByTestId("menu-item-label-home"),
+    readonly orders = page.getByTestId("menu-item-label-orders"),
+    readonly drafts = page.getByTestId("menu-item-label-order-drafts"),
+    readonly discounts = page.getByTestId("menu-item-label-discounts"),
+    readonly vouchers = page.getByTestId("menu-item-label-vouchers"),
+    readonly appSection = page.getByTestId("menu-item-label-apps_section"),
+    readonly app = page.getByTestId("menu-item-label-apps"),
+    readonly translations = page.getByTestId("menu-item-label-translations"),
+    readonly customers = page.getByTestId("menu-item-label-customers"),
+    readonly list = page.getByTestId("menu-list"),
+    readonly listItem = page.getByTestId("menu-list-item"),
+    readonly products = page.getByTestId("menu-item-label-products"),
+    readonly menuItem = page.locator("[data-test-id*='menu-item-label-']"),
+  ) {
     this.page = page;
-    this.userMenu = page.getByTestId("userMenu");
-    this.accountSettings = page.getByTestId("account-settings-button");
-    this.catalog = page.getByTestId("menu-item-label-catalogue");
-    this.content = page.getByTestId("menu-item-label-pages");
-    this.categories = page.getByTestId("menu-item-label-categories");
-    this.collections = page.getByTestId("menu-item-label-collections");
-    this.configuration = page.getByTestId("menu-item-label-configure");
-    this.home = page.getByTestId("menu-item-label-home");
-    this.orders = page.getByTestId("menu-item-label-orders");
-    this.drafts = page.getByTestId("menu-item-label-order-drafts");
-    this.discounts = page.getByTestId("menu-item-label-discounts");
-    this.vouchers = page.getByTestId("menu-item-label-vouchers");
-    this.appSection = page.getByTestId("menu-item-label-apps_section");
-    this.app = page.getByTestId("menu-item-label-apps");
-    this.translations = page.getByTestId("menu-item-label-translations");
-    this.customers = page.getByTestId("menu-item-label-customers");
-    this.list = page.getByTestId("menu-list");
-    this.listItem = page.getByTestId("menu-list-item");
-    this.products = page.getByTestId("menu-item-label-products");
-    this.menuItem = page.locator("[data-test-id*='menu-item-label-']");
   }
 
   async gotoAccountSettings() {
