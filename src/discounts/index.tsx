@@ -1,3 +1,4 @@
+import { ConditionalDiscountFilterProvider } from "@dashboard/components/ConditionalFilter";
 import { useFlag } from "@dashboard/featureFlags";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -45,7 +46,11 @@ const SaleListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
       qs,
       DiscountListUrlSortField,
     );
-    return <DiscountList params={params} />;
+    return (
+      <ConditionalDiscountFilterProvider locationSearch={location.search}>
+        <DiscountList params={params} />;
+      </ConditionalDiscountFilterProvider>
+    );
   }
 
   return <SaleListViewComponent params={params} />;
