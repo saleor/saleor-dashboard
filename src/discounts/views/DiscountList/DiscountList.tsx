@@ -1,3 +1,5 @@
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { creatDiscountsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -44,11 +46,15 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
   usePaginationReset(discountListUrl, params, settings.rowNumber);
   const paginationState = createPaginationState(settings.rowNumber, params);
 
+  const { valueProvider } = useConditionalFilterContext();
+  const where = creatDiscountsQueryVariables(valueProvider.value);
+
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
       sort: getSortQueryVariables(params),
       where: {
+        ...where,
         ...(params?.query && {
           name: { eq: params.query },
         }),
@@ -68,7 +74,6 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: discountListUrl,
-    // TODO: implement getFilterQueryParam when new filter will be implemented
     getFilterQueryParam: () => 0,
     navigate,
     params,
