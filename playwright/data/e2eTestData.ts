@@ -66,6 +66,27 @@ export const CHANNELS = {
     name: "z - channel to be deleted",
   },
 };
+export const GIFT_CARDS = {
+  giftCardToBeEdited: {
+    id: "R2lmdENhcmQ6NTM%3D",
+    name: "Code ending with AD47",
+  },
+  giftCardsToBeDeleted: {
+    names: ["to be deleted 1/2", "to be deleted 2/2"],
+  },
+  giftCardToBeActivated: {
+    id: "R2lmdENhcmQ6NTQ%3D",
+    name: "Code ending with 7FF8",
+  },
+  giftCardToBeDeactivated: {
+    id: "R2lmdENhcmQ6NTU%3D",
+    name: "Code ending with F2DA",
+  },
+  giftCardToResendCode: {
+    id: "R2lmdENhcmQ6Ng%3D%3D",
+    name: "Code ending with d_10",
+  },
+};
 export const WAREHOUSES = {
   warehouseToBeEdited: {
     id: "V2FyZWhvdXNlOjgzNGQwYjQwLWMwZGItNGRhZi04N2RjLWQ2ODBiYzY3NGVlMw%3D%3D",

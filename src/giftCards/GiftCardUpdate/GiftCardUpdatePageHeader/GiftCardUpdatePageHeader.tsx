@@ -46,7 +46,11 @@ const GiftCardUpdatePageHeader: React.FC = () => {
         <GiftCardEnableDisableSection />
         <HorizontalSpacer />
         {!isExpired && (
-          <Button variant="primary" onClick={openResendCodeDialog}>
+          <Button
+            variant="primary"
+            onClick={openResendCodeDialog}
+            data-test-id="resend-code"
+          >
             {intl.formatMessage(messages.resendButtonLabel)}
           </Button>
         )}

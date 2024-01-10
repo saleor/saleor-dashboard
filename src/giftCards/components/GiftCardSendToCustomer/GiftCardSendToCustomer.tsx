@@ -44,6 +44,7 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
     <>
       <VerticalSpacer />
       <ControlledCheckbox
+        data-test-id="send-to-customer-section"
         name={"sendToCustomerSelected"}
         label={intl.formatMessage(messages.sendToCustomerSelectedLabel)}
         checked={sendToCustomerSelected}
