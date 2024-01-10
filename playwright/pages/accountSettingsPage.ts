@@ -1,21 +1,21 @@
-import type { Locator, Page } from "@playwright/test";
-
-import { BasePage } from "./basePage";
-import { ChangePasswordDialog } from "./dialogs/changePasswordDialog";
+import { ChangePasswordDialog } from "@dialogs/changePasswordDialog";
+import { BasePage } from "@pages/basePage";
+import type { Page } from "@playwright/test";
 
 export class AccountSettingsPage {
   readonly page: Page;
   readonly basePage: BasePage;
-  readonly changePasswordButton: Locator;
-  readonly saveButton: Locator;
+
   readonly changePasswordDialog: ChangePasswordDialog;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly changePasswordButton = page.getByTestId("changePasswordBtn"),
+    readonly saveButton = page.getByTestId("button-bar-confirm"),
+  ) {
     this.page = page;
     this.basePage = new BasePage(page);
     this.changePasswordDialog = new ChangePasswordDialog(page);
-    this.changePasswordButton = page.getByTestId("changePasswordBtn");
-    this.saveButton = page.getByTestId("button-bar-confirm");
   }
 
   async clickChangePasswordButton() {

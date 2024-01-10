@@ -1,5 +1,5 @@
 import { URL_LIST } from "@data/url";
-import { DeleteWarehouseDialog } from "@dialogs/deleteWarehouseDialog";
+import { DeleteDialog } from "@dialogs/deleteDialog";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
 
@@ -8,7 +8,7 @@ import { RightSideDetailsPage } from "./pageElements/rightSideDetailsSection";
 export class WarehousePage extends BasePage {
   readonly page: Page;
   readonly basePage: BasePage;
-  readonly deleteWarehouseDialog: DeleteWarehouseDialog;
+  readonly deleteWarehouseDialog: DeleteDialog;
   readonly rightSideDetailsPage: RightSideDetailsPage;
 
   constructor(
@@ -48,7 +48,7 @@ export class WarehousePage extends BasePage {
     super(page);
     this.page = page;
     this.basePage = new BasePage(page);
-    this.deleteWarehouseDialog = new DeleteWarehouseDialog(page);
+    this.deleteWarehouseDialog = new DeleteDialog(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
   }
 

@@ -11,6 +11,9 @@ outputs:
   BASE_URL:
     description: "Dashboard base url"
     value: ${{ steps.api.outputs.BASE_URL }}
+  BASE_URL_DOMAIN:
+    description: "Dashboard domain"
+    value: ${{ steps.api.outputs.BASE_URL_DOMAIN }}
   API_URL:
     description: "API url"
     value: ${{ steps.api.outputs.API_URL }}

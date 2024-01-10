@@ -1,6 +1,6 @@
 import type { Page } from "@playwright/test";
 
-export class DeleteVoucherDialog {
+export class DeleteCategoriesDialog {
   readonly page: Page;
 
   constructor(page: Page, readonly deleteButton = page.getByTestId("submit")) {
@@ -9,5 +9,6 @@ export class DeleteVoucherDialog {
 
   async clickDeleteButton() {
     await this.deleteButton.first().click();
+    await this.deleteButton.waitFor({ state: "hidden" });
   }
 }
