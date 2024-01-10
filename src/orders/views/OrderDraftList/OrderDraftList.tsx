@@ -7,7 +7,6 @@ import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
-  useOrderDraftBulkCancelMutation,
   useOrderDraftCreateMutation,
   useOrderDraftListQuery,
 } from "@dashboard/graphql";
@@ -47,6 +46,7 @@ import {
   storageUtils,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
+import { useBulkDeletion } from "./useBulkDeletion";
 
 interface OrderDraftListProps {
   params: OrderDraftListUrlQueryParams;
@@ -70,23 +70,13 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     setSelectedRowIds,
   } = useRowSelection(params);
 
-  const [orderDraftBulkDelete, orderDraftBulkDeleteOpts] =
-    useOrderDraftBulkCancelMutation({
-      onCompleted: data => {
-        if (data.draftOrderBulkDelete.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage({
-              id: "ra2O4j",
-              defaultMessage: "Deleted draft orders",
-            }),
-          });
-          refetch();
-          clearRowSelection();
-          closeModal();
-        }
-      },
-    });
+  const { onOrderDraftBulkDelete, orderDraftBulkDeleteOpts } = useBulkDeletion(
+    () => {
+      refetch();
+      clearRowSelection();
+      closeModal();
+    },
+  );
 
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: data => {
@@ -168,15 +158,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, orderDraftListUrl, params);
 
-  const onOrderDraftBulkDelete = useCallback(async () => {
-    await orderDraftBulkDelete({
-      variables: {
-        ids: selectedRowIds,
-      },
-    });
-    clearRowSelection();
-  }, []);
-
   const handleSetSelectedOrderDraftIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!orderDrafts) {
@@ -241,7 +222,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
       <ActionDialog
         confirmButtonState={orderDraftBulkDeleteOpts.status}
         onClose={closeModal}
-        onConfirm={onOrderDraftBulkDelete}
+        onConfirm={() => onOrderDraftBulkDelete(selectedRowIds)}
         open={params.action === "remove"}
         title={intl.formatMessage({
           id: "qbmeUI",
