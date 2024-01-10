@@ -1,13 +1,15 @@
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export class AppsPage {
   readonly page: Page;
-  readonly installExternalAppButton: Locator;
-  readonly appsLogosList: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly installExternalAppButton = page.getByTestId(
+      "add-app-from-manifest",
+    ),
+    readonly appsLogosList = page.getByTestId("app-logo"),
+  ) {
     this.page = page;
-    this.installExternalAppButton = page.getByTestId("add-app-from-manifest");
-    this.appsLogosList = page.getByTestId("app-logo");
   }
 }

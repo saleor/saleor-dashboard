@@ -1,24 +1,21 @@
 import { HomePage } from "@pages/homePage";
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class LoginPage {
   readonly page: Page;
-  readonly emailInput: Locator;
-  readonly passwordInput: Locator;
-  readonly signInButton: Locator;
-  readonly resetPasswordLink: Locator;
-  readonly sendEmailWithResetLinkButton: Locator;
-  readonly backToLoginPageButton: Locator;
-  homePage: HomePage;
-  constructor(page: Page) {
+
+  readonly homePage: HomePage;
+  constructor(
+    page: Page,
+    readonly emailInput = page.getByTestId("email"),
+    readonly passwordInput = page.getByTestId("password"),
+    readonly signInButton = page.getByTestId("submit"),
+    readonly resetPasswordLink = page.getByTestId("reset-password-link"),
+    readonly sendEmailWithResetLinkButton = page.getByTestId("submit"),
+    readonly backToLoginPageButton = page.getByTestId("back-to-login-button"),
+  ) {
     this.page = page;
     this.homePage = new HomePage(page);
-    this.emailInput = page.getByTestId("email");
-    this.passwordInput = page.getByTestId("password");
-    this.signInButton = page.getByTestId("submit");
-    this.resetPasswordLink = page.getByTestId("reset-password-link");
-    this.sendEmailWithResetLinkButton = page.getByTestId("submit");
-    this.backToLoginPageButton = page.getByTestId("back-to-login-button");
   }
 
   async clickBackToLoginPageButton() {

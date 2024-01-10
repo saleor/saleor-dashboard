@@ -1,18 +1,20 @@
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export class InviteStaffMembersDialog {
   readonly page: Page;
-  readonly firstNameInput: Locator;
-  readonly lastNameInput: Locator;
-  readonly emailInput: Locator;
-  readonly sendInviteButton: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly firstNameInput = page
+      .getByTestId("first-name-input")
+      .locator("input"),
+    readonly lastNameInput = page
+      .getByTestId("last-name-input")
+      .locator("input"),
+    readonly emailInput = page.getByTestId("email-input").locator("input"),
+    readonly sendInviteButton = page.getByTestId("submit"),
+  ) {
     this.page = page;
-    this.firstNameInput = page.getByTestId("first-name-input").locator("input");
-    this.lastNameInput = page.getByTestId("last-name-input").locator("input");
-    this.emailInput = page.getByTestId("email-input").locator("input");
-    this.sendInviteButton = page.getByTestId("submit");
   }
 
   async clickSendInviteButton() {
