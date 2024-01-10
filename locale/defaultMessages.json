@@ -8743,6 +8743,9 @@
     "context": "PluginChannelConfigurationCell global title",
     "string": "Global"
   },
+  "xTyg+p": {
+    "string": "No options to select"
+  },
   "xUvWaP": {
     "context": "subtotal price",
     "string": "Subtotal"
