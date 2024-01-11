@@ -4,6 +4,8 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Rule } from "@dashboard/discounts/models";
+import { createEmptyRule } from "@dashboard/discounts/models/factory";
+import { RuleType } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
@@ -20,7 +22,7 @@ import { getValidationSchema } from "./validationSchema";
 
 export interface RuleModalState {
   open: boolean;
-  type: "catalog" | "order";
+  type: RuleType;
 }
 
 interface RuleFormModalProps<ErrorCode> {
@@ -48,11 +50,9 @@ export const RuleFormModal = <ErrorCode,>({
 
   const { setChannel } = useDiscountRulesContext();
 
-  const { toAPI, ...emptyRule } = Rule.empty(ruleModalState.type);
-
   const methods = useForm<Rule>({
     mode: "onBlur",
-    values: initialFormValues || { ...emptyRule, toAPI },
+    values: initialFormValues || createEmptyRule(ruleModalState.type),
     resolver: zodResolver(getValidationSchema(intl)),
   });
 
@@ -67,7 +67,7 @@ export const RuleFormModal = <ErrorCode,>({
   // Clear modal form
   useEffect(() => {
     if (!initialFormValues && open) {
-      methods.reset(Rule.empty(ruleModalState.type));
+      methods.reset(createEmptyRule(ruleModalState.type));
     }
   }, [open]);
 

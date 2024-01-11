@@ -3,12 +3,14 @@ import {
   hueToPillColorLight,
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
-import { CatalogCondition, Rule } from "@dashboard/discounts/models";
-import { CatalogConditions } from "@dashboard/discounts/types";
+import { Condition, Rule } from "@dashboard/discounts/models";
+import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
 import { DefaultTheme, Option } from "@saleor/macaw-ui-next";
 
 const MAX_ITEMS_TO_SHOW = 3;
-export type OptionWithConditionType = Option & { type: CatalogConditions };
+export type OptionWithConditionType = Option & {
+  type: CatalogConditions | OrderConditions;
+};
 
 export const splitConditions = (
   conditions: OptionWithConditionType[],
@@ -26,13 +28,17 @@ export const splitConditions = (
 };
 
 export const mapConditionToOption = (
-  conditions: CatalogCondition[],
+  conditions: Condition[],
 ): OptionWithConditionType[] => {
   return conditions.reduce<OptionWithConditionType[]>((acc, condition) => {
+    const values = condition.isArrayOfOptions()
+      ? (condition.values as Option[])
+      : [];
+
     acc.push(
-      ...condition.values.map<OptionWithConditionType>(value => ({
+      ...values.map<OptionWithConditionType>(value => ({
         ...value,
-        type: condition.type!,
+        type: condition.name as CatalogConditions | OrderConditions,
       })),
     );
 
@@ -41,7 +47,7 @@ export const mapConditionToOption = (
 };
 
 export const conditionTypeToHue = (
-  type: CatalogConditions,
+  type: OrderConditions | CatalogConditions,
   theme: DefaultTheme,
 ) => {
   const hue = stringToHue(type);

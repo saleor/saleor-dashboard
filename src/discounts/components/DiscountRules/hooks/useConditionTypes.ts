@@ -54,9 +54,7 @@ export const conditionsTypes: Record<
 };
 
 export const useCondtionTypes = () => {
-  const getConditionTypesOptions = (
-    type: CatalogConditions | OrderConditions,
-  ): Option[] => {
+  const getConditionTypesOptions = (type: string): Option[] => {
     const conditionTypes = conditionsTypes[type];
 
     if (conditionTypes) {

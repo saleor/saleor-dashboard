@@ -7,10 +7,9 @@ import {
 import { Option } from "@saleor/macaw-ui-next";
 
 import { RuleType } from "../types";
-import { CatalogCondition } from "./Catalog/CatalogCondition";
-import { OrderCondition } from "./Order/OrderCondition";
+import { Condition } from "./Condition";
 
-export class Rule {
+export class BaseRule {
   constructor(
     public type: RuleType,
     public id: string,
@@ -20,7 +19,7 @@ export class Rule {
     public rewardType: RewardTypeEnum | null,
     public rewardValue: number,
     public rewardValueType: RewardValueTypeEnum,
-    public conditions: Array<CatalogCondition | OrderCondition>,
+    public conditions: Condition[],
   ) {}
 
   public toAPI(): PromotionRuleInput {
@@ -34,8 +33,8 @@ export class Rule {
     };
   }
 
-  public static empty(type: RuleType): Rule {
-    return new Rule(
+  public static empty(type: RuleType): BaseRule {
+    return new BaseRule(
       type,
       "",
       "",
@@ -50,10 +49,10 @@ export class Rule {
 
   public static fromAPI(
     rule: PromotionRuleDetailsFragment,
-    ruleConditionsOptionsDetailsMap: Record<string, string>,
-  ): Rule {
-    return new Rule(
-      getRuleType(rule),
+    _: Record<string, string>,
+  ): BaseRule {
+    return new BaseRule(
+      getRuleType(rule) as any,
       rule.id,
       rule.name ?? "",
       rule.description ? JSON.stringify(rule.description) : "",
@@ -67,8 +66,8 @@ export class Rule {
     );
   }
 
-  public static fromFormValues(data: Rule): Rule {
-    return new Rule(
+  public static fromFormValues(data: BaseRule): BaseRule {
+    return new BaseRule(
       data.type,
       data.id,
       data.name,
@@ -90,7 +89,7 @@ function getRuleType(rule: PromotionRuleDetailsFragment): RuleType {
   return "order";
 }
 
-function getRewardType(rule: Rule): RewardTypeEnum | null {
+function getRewardType(rule: BaseRule): RewardTypeEnum | null {
   if (rule.type === "order" && !rule.rewardType) {
     return RewardTypeEnum.SUBTOTAL_DISCOUNT;
   }

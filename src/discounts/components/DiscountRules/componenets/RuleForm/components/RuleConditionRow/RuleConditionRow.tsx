@@ -1,7 +1,6 @@
 import { Combobox } from "@dashboard/components/Combobox";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
-import { Rule } from "@dashboard/discounts/models";
-import { CatalogCondition } from "@dashboard/discounts/models/Catalog/CatalogCondition";
+import { Condition, Rule } from "@dashboard/discounts/models";
 import { Box, Button, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
@@ -14,7 +13,7 @@ interface DiscountConditionRowProps {
   disabled?: boolean;
   conditionIndex: number;
   onRemove: () => void;
-  updateCondition: (index: number, value: CatalogCondition) => void;
+  updateCondition: (index: number, value: Condition) => void;
   isConditionTypeSelected: (conditionType: string) => boolean;
 }
 

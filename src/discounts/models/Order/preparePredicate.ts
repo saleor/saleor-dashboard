@@ -1,9 +1,9 @@
 import { CheckoutAndOrderPredicateInput } from "@dashboard/graphql";
 
-import { OrderCondition } from "./OrderCondition";
+import { Condition } from "../Condition";
 
 export function prepareOrderPredicate(
-  conditions: OrderCondition[],
+  conditions: Condition[],
 ): CheckoutAndOrderPredicateInput {
   const ruleConditions = conditions
     .map(condition => {

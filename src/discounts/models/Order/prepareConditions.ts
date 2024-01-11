@@ -1,18 +1,22 @@
 import { OrderPredicateAPI } from "@dashboard/discounts/types";
 
-import { OrderCondition } from "./OrderCondition";
+import { Condition } from "../Condition";
 
 export const prepareOrderConditions = (
   orderPredicate: OrderPredicateAPI,
-  ruleConditionsOptionsDetailsMap: Record<string, string>,
-): OrderCondition[] => {
+  _: Record<string, string>,
+): Condition[] => {
+  const orderConditions = [];
+
   if (orderPredicate.discountedObjectPredicate?.subtotalPrice) {
-    return [
-      new OrderCondition(
+    orderConditions.push(
+      new Condition(
         "subtotal",
         "is",
         orderPredicate.discountedObjectPredicate.subtotalPrice.eq,
       ),
-    ];
+    );
   }
+
+  return orderConditions;
 };

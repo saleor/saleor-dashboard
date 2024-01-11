@@ -81,8 +81,8 @@ const rules = [
     channel: { label: "Test", value: "Q2hhbm5lcDoy" },
     conditions: [
       {
-        type: "category",
-        condition: "is",
+        name: "category",
+        type: "is",
         values: [{ label: "Category-1", value: "cat-1" }],
       },
     ],

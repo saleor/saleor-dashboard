@@ -1,5 +1,9 @@
 import { Rule } from "@dashboard/discounts/models";
 import {
+  createRuleFromAPI,
+  createRuleFromData,
+} from "@dashboard/discounts/models/factory";
+import {
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,
   PromotionRuleUpdateErrorFragment,
@@ -31,7 +35,9 @@ export const useRulesHandlers = ({
   const [rulesErrors, setRulesErrors] = useState<Array<CommonError<any>>>([]);
   const [labelsMap, setLabelMap] = useState<Record<string, string>>({});
 
-  const rules = data?.rules?.map(rule => Rule.fromAPI(rule, labelsMap)) ?? [];
+  const rules =
+    data?.rules?.map(rule => createRuleFromAPI("catalog", rule, labelsMap)) ??
+    [];
 
   useEffect(() => {
     setLabelMap(labels => {
@@ -55,7 +61,7 @@ export const useRulesHandlers = ({
         PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment
       >
     > = [];
-    const ruleObj = Rule.fromFormValues(rule);
+    const ruleObj = createRuleFromData(rule);
     if (ruleEditIndex !== null) {
       updateLabels(rule);
       errors = await onRuleUpdateSubmit(ruleObj);

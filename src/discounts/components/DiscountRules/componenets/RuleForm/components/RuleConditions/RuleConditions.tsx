@@ -1,7 +1,5 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
-import { Rule } from "@dashboard/discounts/models";
-import { CatalogCondition } from "@dashboard/discounts/models/Catalog/CatalogCondition";
-import { OrderCondition } from "@dashboard/discounts/models/Order/OrderCondition";
+import { Condition, Rule } from "@dashboard/discounts/models";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
@@ -20,10 +18,7 @@ export const RuleConditions = ({
   hasSelectedChannels,
 }: RuleConditionsProps) => {
   const intl = useIntl();
-  const { discountType, conditionLeftOptions } = useDiscountRulesContext();
-
-  const Condition =
-    discountType === "catalog" ? CatalogCondition : OrderCondition;
+  const { conditionLeftOptions } = useDiscountRulesContext();
 
   const { watch } = useFormContext<Rule>();
 
@@ -63,7 +58,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(Condition.empty() as any)}
+          onClick={() => append(Condition.empty())}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>
@@ -96,7 +91,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(Condition.empty() as any)}
+          onClick={() => append(Condition.empty())}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>

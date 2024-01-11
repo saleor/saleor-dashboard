@@ -1,6 +1,4 @@
-import { Rule as RuleType } from "@dashboard/discounts/models";
-import { CatalogCondition } from "@dashboard/discounts/models/Catalog/CatalogCondition";
-import { OrderCondition } from "@dashboard/discounts/models/Order/OrderCondition";
+import { Condition, Rule } from "@dashboard/discounts/models";
 import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -15,7 +13,6 @@ import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { useDiscountRulesContext } from "../../context/consumer";
 import { getCurencySymbol } from "../../utils";
 import { RuleConditions } from "./components/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription";
@@ -34,19 +31,15 @@ export const RuleForm = <ErrorCode,>({
   errors,
 }: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
-  const { watch, getValues, setValue, formState } = useFormContext<RuleType>();
+  const { watch, getValues, setValue, formState } = useFormContext<Rule>();
   const formErrors = getFormErrors(["rewardValue"], errors);
-  const { discountType } = useDiscountRulesContext();
 
-  const Condition =
-    discountType === "catalog" ? CatalogCondition : OrderCondition;
-
-  const { trigger } = useFormContext<RuleType>();
-  const { field: nameField } = useController<RuleType, "name">({
+  const { trigger } = useFormContext<Rule>();
+  const { field: nameField } = useController<Rule, "name">({
     name: "name",
   });
 
-  const { field: channelfield } = useController<RuleType, "channel">({
+  const { field: channelfield } = useController<Rule, "channel">({
     name: "channel",
   });
 
@@ -81,7 +74,7 @@ export const RuleForm = <ErrorCode,>({
     setValue("channel", selectedChannel, { shouldValidate: true });
 
     if (conditions.length > 0) {
-      setValue("conditions", [Condition.empty() as any]);
+      setValue("conditions", [Condition.empty()]);
     } else {
       setValue("conditions", []);
     }

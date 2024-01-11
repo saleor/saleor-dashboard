@@ -691,6 +691,7 @@ export const discount: PromotionDetailsFragment = {
       name: "Rule 1",
       rewardValue: "33",
       rewardValueType: RewardValueTypeEnum.FIXED,
+      rewardType: null,
       cataloguePredicate: {
         OR: [
           {

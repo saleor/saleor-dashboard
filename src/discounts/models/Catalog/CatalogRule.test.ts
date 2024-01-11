@@ -3,32 +3,34 @@ import {
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
-import { CatalogCondition } from "./Catalog/CatalogCondition";
-import { Rule } from "./Rule";
+import { Condition } from "../Condition";
+import { CatalogRule } from "./CatalogRule";
 
-describe("Rule model", () => {
+describe("CatalogRule model", () => {
   it("should transform domain object to API format", () => {
-    const rule = new Rule(
+    const rule = new CatalogRule(
+      "catalog",
       "rule_1",
       "name",
       '{"text":"description"}',
       { label: "Channel 1", value: "channel_1" },
+      null,
       1,
       RewardValueTypeEnum.FIXED,
       [
-        new CatalogCondition("product", "is", [
+        new Condition("product", "is", [
           { value: "prod_1", label: "prod_1" },
           { value: "prod_2", label: "prod_2" },
         ]),
-        new CatalogCondition("category", "is", [
+        new Condition("category", "is", [
           { value: "cat_1", label: "cat_1" },
           { value: "cat_2", label: "cat_2" },
         ]),
-        new CatalogCondition("collection", "is", [
+        new Condition("collection", "is", [
           { value: "coll_1", label: "coll_1" },
           { value: "coll_2", label: "coll_2" },
         ]),
-        new CatalogCondition("variant", "is", [
+        new Condition("variant", "is", [
           { value: "var_1", label: "var_1" },
           { value: "var_2", label: "var_2" },
         ]),
@@ -102,7 +104,7 @@ describe("Rule model", () => {
       },
     } as PromotionRuleDetailsFragment;
 
-    expect(Rule.fromAPI(rule, {})).toMatchObject({
+    expect(CatalogRule.fromAPI(rule, {})).toMatchObject({
       id: "rule_1",
       name: "name",
       channel: { label: "Channel 1", value: "channel_1" },

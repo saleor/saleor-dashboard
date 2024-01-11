@@ -1,11 +1,11 @@
 import { CataloguePredicateAPI } from "@dashboard/discounts/types";
 
-import { CatalogCondition } from "./CatalogCondition";
+import { Condition } from "../Condition";
 
 export function prepareCatalogueRuleConditions(
   cataloguePredicate: CataloguePredicateAPI,
   ruleConditionsOptionsDetailsMap: Record<string, string>,
-): CatalogCondition[] {
+): Condition[] {
   const toOptions = createToOptionMap(ruleConditionsOptionsDetailsMap);
 
   return Object.entries(cataloguePredicate)
@@ -24,7 +24,7 @@ export function prepareCatalogueRuleConditions(
       }
 
       if (value.productPredicate) {
-        return new CatalogCondition(
+        return new Condition(
           "product",
           "is",
           value.productPredicate.ids.map(toOptions),
@@ -32,7 +32,7 @@ export function prepareCatalogueRuleConditions(
       }
 
       if (value.categoryPredicate) {
-        return new CatalogCondition(
+        return new Condition(
           "category",
           "is",
           value.categoryPredicate.ids.map(toOptions),
@@ -40,7 +40,7 @@ export function prepareCatalogueRuleConditions(
       }
 
       if (value.collectionPredicate) {
-        return new CatalogCondition(
+        return new Condition(
           "collection",
           "is",
           value.collectionPredicate.ids.map(toOptions),
@@ -48,17 +48,17 @@ export function prepareCatalogueRuleConditions(
       }
 
       if (value.variantPredicate) {
-        return new CatalogCondition(
+        return new Condition(
           "variant",
           "is",
           value.variantPredicate.ids.map(toOptions),
         );
       }
 
-      return new CatalogCondition(null, "is", []);
+      return new Condition(null, "is", []);
     })
     .filter(Boolean)
-    .flat() as CatalogCondition[];
+    .flat() as Condition[];
 }
 
 function createToOptionMap(

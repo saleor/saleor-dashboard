@@ -1,9 +1,9 @@
 import { CataloguePredicateInput } from "@dashboard/graphql";
 
-import { CatalogCondition } from "./CatalogCondition";
+import { Condition } from "../Condition";
 
 export function prepareCataloguePredicate(
-  conditions: CatalogCondition[],
+  conditions: Condition[],
 ): CataloguePredicateInput {
   const ruleConditions = conditions
     .map(condition => {

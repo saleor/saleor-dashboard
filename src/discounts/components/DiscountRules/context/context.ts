@@ -1,4 +1,3 @@
-import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
 import { Option } from "@saleor/macaw-ui-next";
 import { createContext } from "react";
 
@@ -8,10 +7,8 @@ import { DiscountType } from "../types";
 export const discountRulesContext = createContext<{
   conditionLeftOptions: Option[];
   discountType: DiscountType;
-  getConditionTypesOptions: (
-    type: CatalogConditions | OrderConditions,
-  ) => Option[];
+  getConditionTypesOptions: (type: string) => Option[];
   getConditionInputTypeByLabel: (name: string, type: string) => string | null;
-  getFetchProps: (type: CatalogConditions | OrderConditions) => FetchOptions;
+  getFetchProps: (type: string) => FetchOptions;
   setChannel: (channel: string) => void;
 } | null>(null);

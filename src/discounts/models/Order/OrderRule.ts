@@ -6,14 +6,13 @@ import {
 } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
-import { Rule } from "../Rule";
-import { OrderCondition } from "./OrderCondition";
+import { Condition } from "../Condition";
+import { BaseRule } from "../Rule";
 import { prepareOrderConditions } from "./prepareConditions";
 import { prepareOrderPredicate } from "./preparePredicate";
 
-export class OrderRule extends Rule {
-  private constructor(
-    public type: "order",
+export class OrderRule extends BaseRule {
+  constructor(
     public id: string,
     public name: string,
     public description: string | null,
@@ -21,10 +20,10 @@ export class OrderRule extends Rule {
     public rewardType: RewardTypeEnum | null,
     public rewardValue: number,
     public rewardValueType: RewardValueTypeEnum,
-    public conditions: OrderCondition[],
+    public conditions: Condition[],
   ) {
     super(
-      type,
+      "order",
       id,
       name,
       description,
@@ -48,7 +47,7 @@ export class OrderRule extends Rule {
   public static fromAPI(
     rule: PromotionRuleDetailsFragment,
     ruleConditionsOptionsDetailsMap: Record<string, string>,
-  ): Rule {
+  ): BaseRule {
     const baseRule = super.fromAPI(rule, ruleConditionsOptionsDetailsMap);
 
     baseRule.conditions = prepareOrderConditions(
