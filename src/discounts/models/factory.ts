@@ -1,8 +1,8 @@
 import { PromotionRuleDetailsFragment } from "@dashboard/graphql";
 
 import { RuleType } from "../types";
-import { Rule } from ".";
 import { CatalogRule } from "./Catalog/CatalogRule";
+import { Rule } from "./index";
 import { OrderRule } from "./Order/OrderRule";
 
 export const createEmptyRule = (type: RuleType) => {

@@ -6,8 +6,8 @@ import {
 } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
+import { BaseRule } from "../BaseRule";
 import { Condition } from "../Condition";
-import { BaseRule } from "../Rule";
 import { prepareOrderConditions } from "./prepareConditions";
 import { prepareOrderPredicate } from "./preparePredicate";
 
@@ -42,6 +42,19 @@ export class OrderRule extends BaseRule {
       ...baseRule,
       checkoutAndOrderPredicate: prepareOrderPredicate(this.conditions),
     };
+  }
+
+  public static fromFormValues(data: BaseRule): OrderRule {
+    return new OrderRule(
+      data.id,
+      data.name,
+      data.description,
+      data.channel,
+      data.rewardType,
+      data.rewardValue,
+      data.rewardValueType,
+      [],
+    );
   }
 
   public static fromAPI(

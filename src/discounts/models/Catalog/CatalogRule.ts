@@ -6,14 +6,13 @@ import {
 } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
+import { BaseRule } from "../BaseRule";
 import { Condition } from "../Condition";
-import { BaseRule } from "../Rule";
 import { prepareCatalogueRuleConditions } from "./prepareConditions";
 import { prepareCataloguePredicate } from "./preparePredicate";
 
 export class CatalogRule extends BaseRule {
   constructor(
-    public type: "catalog",
     public id: string,
     public name: string,
     public description: string | null,
@@ -24,7 +23,7 @@ export class CatalogRule extends BaseRule {
     public conditions: Condition[],
   ) {
     super(
-      type,
+      "catalog",
       id,
       name,
       description,
@@ -38,11 +37,23 @@ export class CatalogRule extends BaseRule {
 
   public toAPI(): PromotionRuleInput {
     const baseRule = super.toAPI();
-
     return {
       ...baseRule,
       cataloguePredicate: prepareCataloguePredicate(this.conditions),
     };
+  }
+
+  public static fromFormValues(data: BaseRule): CatalogRule {
+    return new CatalogRule(
+      data.id,
+      data.name,
+      data.description,
+      data.channel,
+      data.rewardType,
+      data.rewardValue,
+      data.rewardValueType,
+      [],
+    );
   }
 
   public static fromAPI(
