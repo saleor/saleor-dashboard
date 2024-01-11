@@ -20,6 +20,11 @@ interface UseReturnWithinReturnResult {
   grantRefundResponseOrderData: OrderDetailsFragment | null | undefined;
 }
 
+interface InputLine {
+  id: string;
+  quantity: number;
+}
+
 export function useRefundWithinReturn({
   orderId,
   transactionId,
@@ -37,7 +42,7 @@ export function useRefundWithinReturn({
             orderId,
             amount: formData.amount,
             reason: "",
-            lines: [
+            lines: squashLines([
               ...formData.fulfilledItemsQuantities.map(line => ({
                 id: line.data.orderLineId,
                 quantity: line.value,
@@ -46,7 +51,7 @@ export function useRefundWithinReturn({
                 id,
                 quantity: value,
               })),
-            ],
+            ]),
             grantRefundForShipping: formData.refundShipmentCosts,
           },
         })
@@ -86,3 +91,16 @@ export function useRefundWithinReturn({
     grantRefundResponseOrderData,
   };
 }
+
+export const squashLines = (items: InputLine[]): InputLine[] =>
+  Object.values(
+    items.reduce<Record<string, InputLine>>(
+      (acc, item) => ({
+        ...acc,
+        [item.id]: acc[item.id]
+          ? { ...item, quantity: acc[item.id].quantity + item.quantity }
+          : item,
+      }),
+      {},
+    ),
+  );
