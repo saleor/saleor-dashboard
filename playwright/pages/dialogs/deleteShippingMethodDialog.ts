@@ -12,6 +12,6 @@ export class DeleteShippingMethodDialog {
   }
 
   async clickDeleteButton() {
-    await this.deleteButton.first().click();
+    await this.deleteButton.click();
   }
 }

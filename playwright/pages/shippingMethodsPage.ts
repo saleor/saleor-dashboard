@@ -1,6 +1,6 @@
 import { URL_LIST } from "@data/url";
-import { BasePage } from "@pages/basePage";
 import { DeleteShippingMethodDialog } from "@dialogs/deleteShippingMethodDialog";
+import { BasePage } from "@pages/basePage";
 import { AssignCountriesDialog } from "@pages/dialogs/assignCountriesDialog";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import type { Page } from "@playwright/test";
@@ -27,18 +27,18 @@ export class ShippingMethodsPage {
     readonly deleteShippingMethodButton = page.getByTestId("shipping-method-row").getByRole("button").getByTestId("delete-button"),
     readonly priceBasedRatesSection = page.getByTestId("price-based-rates"),
     readonly weightBasedRatesSection = page.getByTestId("weight-based-rates"),
-) {
+  ) {
     this.page = page;
     this.basePage = new BasePage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
     this.assignCountriesDialog = new AssignCountriesDialog(page);
-    this.deleteShippingMethodDialog = new DeleteShippingMethodDialog(page)
     this.deleteShippingMethodDialog = new DeleteShippingMethodDialog(page);
   }
 
   async clickAddWeightRateButton() {
     await this.addWeightRateButton.click();
   }
+
   async clickAddPriceRateButton() {
     await this.addPriceRateButton.click();
   }
@@ -52,6 +52,7 @@ export class ShippingMethodsPage {
       `${shippingZoneName} - ${new Date().toISOString()}`,
     );
   }
+
   async typeShippingZoneDescription(
     shippingDescription = "Biggest zone in e2e world",
   ) {
@@ -69,6 +70,7 @@ export class ShippingMethodsPage {
       timeout: 10000,
     });
   }
+
   async gotoExistingShippingMethod(shippingMethodId: string) {
     const existingShippingMethodUrl = `${URL_LIST.shippingMethods}${shippingMethodId}`;
     await console.log(
