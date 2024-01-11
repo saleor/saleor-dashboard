@@ -1,4 +1,4 @@
-import { squashLines } from "./useRefundWithinReturn";
+import { GrantRefundInputLine, squashLines } from "./useRefundWithinReturn";
 
 describe("squashLines", () => {
   it("merges items with the same ID", () => {
@@ -16,7 +16,7 @@ describe("squashLines", () => {
   });
 
   it("handles an empty array", () => {
-    const items = [];
+    const items = [] as GrantRefundInputLine[];
     const result = squashLines(items);
     expect(result).toEqual([]);
   });

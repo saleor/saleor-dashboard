@@ -20,7 +20,7 @@ interface UseReturnWithinReturnResult {
   grantRefundResponseOrderData: OrderDetailsFragment | null | undefined;
 }
 
-interface InputLine {
+export interface GrantRefundInputLine {
   id: string;
   quantity: number;
 }
@@ -92,9 +92,11 @@ export function useRefundWithinReturn({
   };
 }
 
-export const squashLines = (items: InputLine[]): InputLine[] =>
+export const squashLines = (
+  items: GrantRefundInputLine[],
+): GrantRefundInputLine[] =>
   Object.values(
-    items.reduce<Record<string, InputLine>>(
+    items.reduce<Record<string, GrantRefundInputLine>>(
       (acc, item) => ({
         ...acc,
         [item.id]: acc[item.id]
