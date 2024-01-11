@@ -11,6 +11,7 @@ export const discountRulesContext = createContext<{
   getConditionTypesOptions: (
     type: CatalogConditions | OrderConditions,
   ) => Option[];
+  getConditionInputTypeByLabel: (name: string, type: string) => string | null;
   getFetchProps: (type: CatalogConditions | OrderConditions) => FetchOptions;
   setChannel: (channel: string) => void;
 } | null>(null);

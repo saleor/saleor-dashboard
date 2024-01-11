@@ -36,8 +36,8 @@ export const RuleConditions = ({
   const allConditionsSelected =
     conditionsList.length === conditionLeftOptions.length;
 
-  const isConditionTypeSelected = (conditionType: string) =>
-    conditionsList.some(condition => condition.type === conditionType);
+  const isConditionNameSelected = (conditionType: string) =>
+    conditionsList.some(condition => condition.name === conditionType);
 
   if (!hasSelectedChannels) {
     return (
@@ -79,8 +79,8 @@ export const RuleConditions = ({
         {fields.map((condition, conditionIndex) => (
           <RuleConditionRow
             disabled={disabled}
-            isConditionTypeSelected={isConditionTypeSelected}
-            key={condition.type || conditionIndex}
+            isConditionTypeSelected={isConditionNameSelected}
+            key={condition.name || conditionIndex}
             conditionIndex={conditionIndex}
             updateCondition={update}
             onRemove={() => {

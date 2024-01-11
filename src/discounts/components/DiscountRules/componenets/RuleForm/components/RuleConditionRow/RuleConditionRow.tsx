@@ -8,7 +8,7 @@ import { useController, useFormContext } from "react-hook-form";
 
 import { RuleCondtionRightOperators } from "../RuleCondtionRightOperators";
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
-import { getConditionTypeValue } from "./utils";
+import { getConditionNameValue } from "./utils";
 
 interface DiscountConditionRowProps {
   disabled?: boolean;
@@ -48,6 +48,8 @@ export const RuleConditionRow = ({
   const { conditionLeftOptions, getConditionTypesOptions } =
     useDiscountRulesContext();
 
+  const conditionTypesOptions = getConditionTypesOptions(condition.name);
+
   const filteredConditionLeftOptions = conditionLeftOptions.filter(
     condition => !isConditionTypeSelected(condition.value),
   );
@@ -62,9 +64,9 @@ export const RuleConditionRow = ({
     >
       <RuleInputWrapper>
         <Combobox
-          value={getConditionTypeValue(
-            nameField.name as any,
-            filteredConditionLeftOptions,
+          value={getConditionNameValue(
+            nameField.value as any,
+            conditionLeftOptions,
           )}
           fetchOptions={() => {}}
           options={filteredConditionLeftOptions}
@@ -84,7 +86,7 @@ export const RuleConditionRow = ({
         <Select
           value={typeField.value}
           size="medium"
-          options={getConditionTypesOptions(condition.name as any)}
+          options={conditionTypesOptions}
           onChange={typeField.onChange}
           disabled={disabled}
         />

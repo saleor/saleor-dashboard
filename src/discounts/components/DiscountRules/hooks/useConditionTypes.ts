@@ -60,16 +60,42 @@ export const useCondtionTypes = () => {
     const conditionTypes = conditionsTypes[type];
 
     if (conditionTypes) {
-      return conditionTypes.map(condition => ({
-        label: condition.label,
-        value: condition.value,
+      return conditionTypes.map(({ label }) => ({
+        label,
+        value: label,
       }));
     }
 
     return [];
   };
 
+  const getConditionInputTypeByLabel = (
+    conditionName: string,
+    type: string,
+  ) => {
+    const conditionTypes = conditionsTypes[conditionName];
+
+    if (conditionTypes) {
+      const conditionType = conditionTypes.find(
+        ({ label }) => {
+          if (typeof type === "string") {
+            return label === type;
+          }
+
+          return label === (type as any).value;
+        }, // TODO: type shoudl be string not option
+      );
+
+      if (conditionType) {
+        return conditionType.type;
+      }
+    }
+
+    return null;
+  };
+
   return {
     getConditionTypesOptions,
+    getConditionInputTypeByLabel,
   };
 };

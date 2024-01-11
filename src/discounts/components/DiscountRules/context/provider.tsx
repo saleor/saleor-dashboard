@@ -15,7 +15,8 @@ export const DiscountRulesContextProvider = ({
 }) => {
   const { options: conditionLeftOptions } =
     useConditionLeftOptions(discountType);
-  const { getConditionTypesOptions } = useCondtionTypes();
+  const { getConditionTypesOptions, getConditionInputTypeByLabel } =
+    useCondtionTypes();
   const { getFetchProps, setChannel } = useCondtionRightOptions();
 
   return (
@@ -24,6 +25,7 @@ export const DiscountRulesContextProvider = ({
         conditionLeftOptions,
         discountType,
         getConditionTypesOptions,
+        getConditionInputTypeByLabel,
         getFetchProps,
         setChannel,
       }}
