@@ -44,6 +44,7 @@ export const RuleForm = <ErrorCode,>({
   });
 
   const selectedChannel = watch("channel");
+
   const conditions = watch("conditions");
   const hasSelectedChannel = !!selectedChannel;
   const currencySymbol = getCurencySymbol(selectedChannel, channels);
@@ -89,7 +90,7 @@ export const RuleForm = <ErrorCode,>({
               {...nameField}
               disabled={disabled || nameField.disabled}
               size="small"
-              label="Name"
+              label={intl.formatMessage(commonMessages.name)}
               error={!!formState.errors?.name?.message}
               helperText={formState.errors?.name?.message}
             />

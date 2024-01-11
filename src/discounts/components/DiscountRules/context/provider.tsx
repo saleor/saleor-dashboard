@@ -9,15 +9,17 @@ import { discountRulesContext } from "./context";
 export const DiscountRulesContextProvider = ({
   discountType,
   children,
+  channel,
 }: {
   children: ReactNode;
   discountType: DiscountType;
+  channel: string;
 }) => {
   const { options: conditionLeftOptions } =
     useConditionLeftOptions(discountType);
   const { getConditionTypesOptions, getConditionInputTypeByLabel } =
     useCondtionTypes();
-  const { getFetchProps, setChannel } = useCondtionRightOptions();
+  const { getFetchProps } = useCondtionRightOptions(channel);
 
   return (
     <discountRulesContext.Provider
@@ -27,7 +29,6 @@ export const DiscountRulesContextProvider = ({
         getConditionTypesOptions,
         getConditionInputTypeByLabel,
         getFetchProps,
-        setChannel,
       }}
     >
       {children}

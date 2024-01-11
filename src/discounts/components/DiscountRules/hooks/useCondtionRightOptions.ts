@@ -1,7 +1,6 @@
 import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { Option } from "@saleor/macaw-ui-next";
-import { useState } from "react";
 
 import { useCategorieOptions } from "./useCategorieOptions";
 import { useCollectionOptions } from "./useCollectionOptions";
@@ -14,9 +13,7 @@ export interface FetchOptions {
   options: Option[];
 }
 
-export const useCondtionRightOptions = () => {
-  const [channel, setChannel] = useState<string | undefined>(undefined);
-
+export const useCondtionRightOptions = (channel: string) => {
   const productSearch = useProductOptions(channel);
   const collectionSearch = useCollectionOptions(channel);
   const categorySearch = useCategorieOptions(channel);
@@ -40,6 +37,5 @@ export const useCondtionRightOptions = () => {
 
   return {
     getFetchProps,
-    setChannel: channel => setChannel(channel),
   };
 };

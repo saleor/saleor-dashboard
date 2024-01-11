@@ -35,6 +35,19 @@ export class CatalogRule extends BaseRule {
     );
   }
 
+  public static empty(): CatalogRule {
+    return new CatalogRule(
+      "",
+      "",
+      "",
+      null,
+      null,
+      0,
+      RewardValueTypeEnum.PERCENTAGE,
+      [],
+    );
+  }
+
   public toAPI(): PromotionRuleInput {
     const baseRule = super.toAPI();
     return {

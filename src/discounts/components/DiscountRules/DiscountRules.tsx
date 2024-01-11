@@ -11,7 +11,6 @@ import { AddButton } from "./componenets/AddButton";
 import { RuleDeleteModal } from "./componenets/RuleDeleteModal/RuleDeleteModal";
 import { RuleFormModal, RuleModalState } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
-import { DiscountRulesContextProvider } from "./context/provider";
 import { messages } from "./messages";
 
 export type DiscountRulesErrors<ErrorCode> = Array<
@@ -67,7 +66,7 @@ export const DiscountRules = <ErrorCode,>({
     setRuleEditIndex(editIndex);
     setRuleModalState({
       open: true,
-      type: "catalog",
+      type: "catalog", // TODO: check which rule type has discount
     });
   };
 
@@ -101,52 +100,46 @@ export const DiscountRules = <ErrorCode,>({
   };
 
   return (
-    <DiscountRulesContextProvider discountType={ruleModalState.type}>
-      <DashboardCard marginBottom={20}>
-        <DashboardCard.Title>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            {intl.formatMessage(messages.title)}
-            <AddButton
-              disabled={disabled}
-              onCatalogClick={() => handleOpenModal("catalog")}
-              onCheckoutClick={() => handleOpenModal("order")}
-            />
-          </Box>
-        </DashboardCard.Title>
-        <DashboardCard.Content>
-          <RulesList
+    <DashboardCard marginBottom={20}>
+      <DashboardCard.Title>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          {intl.formatMessage(messages.title)}
+          <AddButton
             disabled={disabled}
-            loading={!isLoaded.current || loading}
-            rules={rules}
-            onRuleEdit={handleRuleEdit}
-            onRuleDelete={handleOpenRuleDeleteModal}
-            channels={channels}
-            errors={errors}
+            onCatalogClick={() => handleOpenModal("catalog")}
+            onCheckoutClick={() => handleOpenModal("order")}
           />
-        </DashboardCard.Content>
-
-        <RuleFormModal
+        </Box>
+      </DashboardCard.Title>
+      <DashboardCard.Content>
+        <RulesList
           disabled={disabled}
-          ruleModalState={ruleModalState}
-          confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
-          onClose={handleRuleModalClose}
+          loading={!isLoaded.current || loading}
+          rules={rules}
+          onRuleEdit={handleRuleEdit}
+          onRuleDelete={handleOpenRuleDeleteModal}
           channels={channels}
-          initialFormValues={ruleInitialValues}
           errors={errors}
-          onSubmit={handleRuleModalSubmit}
         />
+      </DashboardCard.Content>
 
-        <RuleDeleteModal
-          open={ruleDeleteIndex !== null}
-          onClose={() => setRuleDeleteIndex(null)}
-          onSubmit={handleRuleDelete}
-          confimButtonState={deleteButtonState}
-        />
-      </DashboardCard>
-    </DiscountRulesContextProvider>
+      <RuleFormModal
+        disabled={disabled}
+        ruleModalState={ruleModalState}
+        confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
+        onClose={handleRuleModalClose}
+        channels={channels}
+        initialFormValues={ruleInitialValues}
+        errors={errors}
+        onSubmit={handleRuleModalSubmit}
+      />
+
+      <RuleDeleteModal
+        open={ruleDeleteIndex !== null}
+        onClose={() => setRuleDeleteIndex(null)}
+        onSubmit={handleRuleDelete}
+        confimButtonState={deleteButtonState}
+      />
+    </DashboardCard>
   );
 };

@@ -44,6 +44,19 @@ export class OrderRule extends BaseRule {
     };
   }
 
+  public static empty(): OrderRule {
+    return new OrderRule(
+      "",
+      "",
+      "",
+      null,
+      null,
+      0,
+      RewardValueTypeEnum.PERCENTAGE,
+      [],
+    );
+  }
+
   public static fromFormValues(data: BaseRule): OrderRule {
     return new OrderRule(
       data.id,

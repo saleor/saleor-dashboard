@@ -11,11 +11,11 @@ import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useDiscountRulesContext } from "../../context/consumer";
+import { DiscountRulesContextProvider } from "../../context/provider";
 import { messages } from "../../messages";
 import { RuleForm } from "../RuleForm/RuleForm";
 import { getValidationSchema } from "./validationSchema";
@@ -48,21 +48,20 @@ export const RuleFormModal = <ErrorCode,>({
 }: RuleFormModalProps<ErrorCode>) => {
   const intl = useIntl();
 
-  const { setChannel } = useDiscountRulesContext();
+  const emptyRule = useMemo(
+    () => createEmptyRule(ruleModalState.type),
+    [ruleModalState.type],
+  );
 
   const methods = useForm<Rule>({
     mode: "onBlur",
-    values: initialFormValues || createEmptyRule(ruleModalState.type),
+    values: initialFormValues || emptyRule,
     resolver: zodResolver(getValidationSchema(intl)),
   });
 
   const channel = methods.watch("channel");
   const channelSlug =
     channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
-
-  useEffect(() => {
-    setChannel(channelSlug);
-  }, [channelSlug]);
 
   // Clear modal form
   useEffect(() => {
@@ -72,47 +71,52 @@ export const RuleFormModal = <ErrorCode,>({
   }, [open]);
 
   return (
-    <DashboardModal open={ruleModalState.open} onChange={onClose}>
-      <DashboardModal.Content>
-        <DashboardModal.Title
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <FormattedMessage
-            {...(initialFormValues ? messages.editRule : messages.addRule)}
-          />
-          <DashboardModal.Close onClose={onClose} />
-        </DashboardModal.Title>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <Box
-              __width={650}
-              __minHeight={515}
-              __maxHeight="75vh"
-              overflowY="auto"
-            >
-              <RuleForm
-                channels={channels}
-                errors={errors}
-                disabled={disabled}
-              />
-            </Box>
-          </form>
-        </FormProvider>
-        <DashboardModal.Actions>
-          <Button onClick={onClose} variant="secondary">
-            <FormattedMessage {...buttonMessages.close} />
-          </Button>
-          <ConfirmButton
-            data-test-id="saveRuleButton"
-            transitionState={confimButtonState}
-            onClick={methods.handleSubmit(onSubmit)}
+    <DiscountRulesContextProvider
+      discountType={ruleModalState.type}
+      channel={channelSlug}
+    >
+      <DashboardModal open={ruleModalState.open} onChange={onClose}>
+        <DashboardModal.Content>
+          <DashboardModal.Title
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
           >
-            <FormattedMessage {...buttonMessages.save} />
-          </ConfirmButton>
-        </DashboardModal.Actions>
-      </DashboardModal.Content>
-    </DashboardModal>
+            <FormattedMessage
+              {...(initialFormValues ? messages.editRule : messages.addRule)}
+            />
+            <DashboardModal.Close onClose={onClose} />
+          </DashboardModal.Title>
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)}>
+              <Box
+                __width={650}
+                __minHeight={515}
+                __maxHeight="75vh"
+                overflowY="auto"
+              >
+                <RuleForm
+                  channels={channels}
+                  errors={errors}
+                  disabled={disabled}
+                />
+              </Box>
+            </form>
+          </FormProvider>
+          <DashboardModal.Actions>
+            <Button onClick={onClose} variant="secondary">
+              <FormattedMessage {...buttonMessages.close} />
+            </Button>
+            <ConfirmButton
+              data-test-id="saveRuleButton"
+              transitionState={confimButtonState}
+              onClick={methods.handleSubmit(onSubmit)}
+            >
+              <FormattedMessage {...buttonMessages.save} />
+            </ConfirmButton>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>
+    </DiscountRulesContextProvider>
   );
 };

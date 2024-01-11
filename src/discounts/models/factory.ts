@@ -7,11 +7,11 @@ import { OrderRule } from "./Order/OrderRule";
 
 export const createEmptyRule = (type: RuleType) => {
   if (type === "catalog") {
-    return CatalogRule.empty("catalog");
+    return CatalogRule.empty();
   }
 
   if (type === "order") {
-    return OrderRule.empty("order");
+    return OrderRule.empty();
   }
 
   return null;
