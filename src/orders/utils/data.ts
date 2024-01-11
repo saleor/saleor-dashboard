@@ -234,9 +234,9 @@ const getPartialProductsValue = ({
       });
 
       return (
-        resultAmount + partialProductsValue?.unitPrice?.gross.amount ??
-        0 * partialProductsValue?.selectedQuantity ??
-        0
+        resultAmount +
+        (partialProductsValue?.unitPrice?.gross.amount ?? 0) *
+          (partialProductsValue?.selectedQuantity ?? 0)
       );
     },
     0,
