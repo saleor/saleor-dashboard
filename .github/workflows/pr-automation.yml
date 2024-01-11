@@ -7,127 +7,44 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  prepare_variables:
+  initialize-cloud:
     runs-on: ubuntu-22.04
-    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     outputs:
-      POOL_NAME: ${{ steps.generate.outputs.POOL_NAME }}
-      POOL_INSTANCE: ${{ steps.generate.outputs.POOL_INSTANCE }}
-      BASE_URL: ${{ steps.generate.outputs.BASE_URL }}
-      API_URI: ${{ steps.generate.outputs.API_URI }}
-      BACKUP_ID: ${{ steps.backup.outputs.BACKUP_ID }}
-      BACKUP_VER: ${{ steps.backup.outputs.BACKUP_VER }}
-      BACKUP_NAME: ${{ steps.backup.outputs.BACKUP_NAME }}
-
+      POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
+      POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
+      BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+      BASE_URL_DOMAIN: ${{ steps.cloud_variables.outputs.BASE_URL_DOMAIN }}
+      API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+      BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+      BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
+      BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: ./.github/actions
-
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@102b1a064a9b145e56556e22b18b19c624538d94
-
-      - name: Generate
-        id: generate
-        env:
-          PREFIX: pr-
-        run: |
-          echo "BASE_URL=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
-          echo "API_URI=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
-          echo "POOL_NAME=${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}" >> $GITHUB_OUTPUT
-          echo "POOL_INSTANCE=https://${PREFIX}${GITHUB_HEAD_REF_SLUG_URL}.staging.saleor.cloud" >> $GITHUB_OUTPUT
-      - name: Saleor login
-        uses: ./.github/actions/cli-login
+    
+      - name: Generate variables
+        id: cloud_variables
+        uses: ./.github/actions/prepare-tests-variables
         with:
-          token: ${{ secrets.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          MODE: pull-request
 
-      - name: Obtain backup id
-        id: backup
-        env:
-          SALEOR_CLI_ENV: staging
-          BACKUP_NAME: snapshot-automation-tests
-        run: |
-          BACKUPS=$(npx saleor backup list --name=snapshot-automation-tests --latest --json)
-          BACKUP_ID=$(echo "$BACKUPS" | jq -r '.[0].key')
-          BACKUP_VER=$(echo "$BACKUPS" | jq -r '.[0].saleor_version')
-          BACKUP_NAME=$(echo "$BACKUPS" | jq -r '.[0].name')
-
-          echo "BACKUP_ID=$BACKUP_ID" >> $GITHUB_OUTPUT
-          echo "BACKUP_VER=$BACKUP_VER" >> $GITHUB_OUTPUT
-          echo "BACKUP_NAME=$BACKUP_NAME" >> $GITHUB_OUTPUT
-
-      - name: Print annotations
-        env:
-          BASE_URL: ${{ steps.generate.outputs.BASE_URL }}
-          API_URI: ${{ steps.generate.outputs.API_URI }}
-          POOL_NAME: ${{ steps.generate.outputs.POOL_NAME }}
-          POOL_INSTANCE: ${{ steps.generate.outputs.POOL_INSTANCE }}
-          BACKUP_ID: ${{ steps.backup.outputs.BACKUP_ID }}
-          BACKUP_VER: ${{ steps.backup.outputs.BACKUP_VER }}
-          BACKUP_NAME: ${{ steps.backup.outputs.BACKUP_NAME }}
-        run: |
-          echo "::notice title=BASE_URL::${BASE_URL}"
-          echo "::notice title=API_URI::${API_URI}"
-          echo "::notice title=POOL_NAME::${POOL_NAME}"
-          echo "::notice title=POOL_INSTANCE::${POOL_INSTANCE}"
-          echo "::notice title=SNAPSHOT::backup_id=${BACKUP_ID}, version=${BACKUP_VER}, name=${BACKUP_NAME}"
-
-  prepare_instance:
-    runs-on: ubuntu-22.04
-    needs: prepare_variables
-    steps:
-      - uses: actions/checkout@v4
+      - name: Prepare instances
+        uses: ./.github/actions/prepare-instance
         with:
-          sparse-checkout: ./.github/actions
+          STRATEGY: reload
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
+          POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
+          BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@102b1a064a9b145e56556e22b18b19c624538d94
-
-      - name: Saleor login
-        uses: ./.github/actions/cli-login
-        with:
-          token: ${{ secrets.STAGING_TOKEN }}
-
-      - name: Instance check
-        id: instance_check
-        env:
-          SALEOR_CLI_ENV: staging
-          INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
-        run: |
-          INSTANCE_KEY=$(npx saleor env show "$INSTANCE_NAME" --json | jq .key)
-          echo "INSTANCE_KEY=$INSTANCE_KEY" >> $GITHUB_OUTPUT
-
-      - name: Reload snapshot
-        if: ${{ steps.instance_check.outputs.INSTANCE_KEY }}
-        env:
-          SALEOR_CLI_ENV: staging
-          BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
-          INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
-        run: |
-          npx saleor backup restore "$BACKUP_ID" \
-            --environment="$INSTANCE_NAME" \
-            --skip-webhooks-update
-
-      - name: Create new instance
-        if: ${{ !steps.instance_check.outputs.INSTANCE_KEY }}
-        env:
-          SALEOR_CLI_ENV: staging
-          BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
-          INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
-        run: |
-          npx saleor env create "$INSTANCE_NAME" \
-            --project=project-for-pr-testing \
-            --database=snapshot \
-            --restore-from="$BACKUP_ID" \
-            --saleor=saleor-master-staging \
-            --domain="$INSTANCE_NAME" \
-            --skip-restrict \
-            --skip-webhooks-update
-
-  deploy_dashboard:
+  deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-22.04
-    needs: prepare_variables
+    needs: initialize-cloud
     permissions:
       deployments: write
     steps:
@@ -144,7 +61,7 @@ jobs:
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
+          env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
           ref: ${{ github.head_ref }}
 
       - name: Cache node modules
@@ -164,7 +81,7 @@ jobs:
 
       - name: Build dashboard
         env:
-          API_URI: ${{ needs.prepare_variables.outputs.API_URI }}
+          API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
           APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
           APP_MOUNT_URI: /
           STATIC_URL: /
@@ -181,14 +98,14 @@ jobs:
       - name: Deploy to S3
         env:
           AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
-          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
-        run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}"
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}"
 
       - name: Invalidate cache
         env:
           AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
-          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
-        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL}/*"
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
 
       - name: Update deployment status
         uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
@@ -197,14 +114,14 @@ jobs:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
-          env_url: https://${{ needs.prepare_variables.outputs.BASE_URL }}/
+          env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env: ${{ needs.prepare_variables.outputs.POOL_NAME }}
+          env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
-  deploy_storybook:
+  deploy-storybook:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-22.04
-    needs: prepare_variables
+    needs: initialize-cloud
     permissions:
       deployments: write
     steps:
@@ -221,7 +138,7 @@ jobs:
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: storybook ${{ needs.prepare_variables.outputs.POOL_NAME }}
+          env: storybook ${{ needs.initialize-cloud.outputs.POOL_NAME }}
           ref: ${{ github.head_ref }}
 
       - name: Cache node modules
@@ -252,14 +169,14 @@ jobs:
       - name: Deploy to S3
         env:
           AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
-          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
-        run: aws s3 sync ./build/storybook "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL}/storybook"
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws s3 sync ./build/storybook "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}/storybook"
 
       - name: Invalidate cache
         env:
           AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
-          BASE_URL: ${{ needs.prepare_variables.outputs.BASE_URL }}
-        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL}/*"
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
 
       - name: Update storybook deployment status
         uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
@@ -268,13 +185,13 @@ jobs:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
-          env_url: https://${{ needs.prepare_variables.outputs.BASE_URL }}/storybook/index.html
+          env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}/storybook/index.html
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
-          env: storybook ${{ needs.prepare_variables.outputs.POOL_NAME }}
+          env: storybook ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
   run-tests:
-    runs-on: ubuntu-latest
-    needs: [prepare_variables, deploy_dashboard, prepare_instance]
+    runs-on: ubuntu-22.04
+    needs: [initialize-cloud, deploy-dashboard]
     strategy:
       fail-fast: false
       matrix:
@@ -282,58 +199,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - name: Run playwright tests
+        uses: ./.github/actions/run-pw-tests
         with:
-          node-version-file: ".nvmrc"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
-      - name: Run tests
-        env:
-          API_URI: ${{ needs.prepare_variables.outputs.API_URI }}
-          BASE_URL: https://${{ needs.prepare_variables.outputs.BASE_URL }}/
+          SHARD: ${{ matrix.shard }}
+          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
           E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-        run: npm run qa:pw-e2e -- --shard ${{ matrix.shard }}
-
-      - name: Upload blob report to GitHub Actions Artifacts
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: all-blob-reports
-          path: blob-report
-          retention-days: 1
 
   merge-reports:
     if: '!cancelled()'
-    needs: [run-tests]
-
-    runs-on: ubuntu-latest
+    needs: run-tests
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - name: Install dependencies
-        run: npm ci
+      - uses: actions/checkout@v4
 
-      - name: Download blob reports from GitHub Actions Artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: all-blob-reports
-          path: all-blob-reports
-
-      - name: Merge into HTML Report
-        run: npx playwright merge-reports --reporter html ./all-blob-reports
-
-      - name: Upload HTML report
-        uses: actions/upload-artifact@v3
-        with:
-          name: html-report--attempt-${{ github.run_attempt }}
-          path: playwright-report
-          retention-days: 14
+      - name: Merge playwright reports
+        uses: ./.github/actions/merge-pw-reports

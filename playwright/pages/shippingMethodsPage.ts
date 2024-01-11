@@ -1,37 +1,31 @@
 import { URL_LIST } from "@data/url";
+import { BasePage } from "@pages/basePage";
 import { AssignCountriesDialog } from "@pages/dialogs/assignCountriesDialog";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
-import type { Locator, Page } from "@playwright/test";
-
-import { BasePage } from "./basePage";
+import type { Page } from "@playwright/test";
 
 export class ShippingMethodsPage {
   readonly page: Page;
   readonly basePage: BasePage;
   readonly rightSideDetailsPage: RightSideDetailsPage;
   readonly assignCountriesDialog: AssignCountriesDialog;
-  readonly createShippingZoneButton: Locator;
-  readonly shippingZoneNameInput: Locator;
-  readonly shippingZoneDescriptionField: Locator;
-  readonly saveButton: Locator;
-  readonly assignCountryButton: Locator;
-  readonly addPriceRateButton: Locator;
-  readonly addWeightRateButton: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly assignCountryButton = page.getByTestId("assign-country"),
+    readonly addPriceRateButton = page.getByTestId("add-price-rate"),
+    readonly addWeightRateButton = page.getByTestId("add-weight-rate"),
+    readonly createShippingZoneButton = page.getByTestId("add-shipping-zone"),
+    readonly shippingZoneNameInput = page.getByTestId("shipping-zone-name"),
+    readonly shippingZoneDescriptionField = page
+      .getByTestId("shipping-zone-description")
+      .locator("textarea"),
+    readonly saveButton = page.getByTestId("button-bar-confirm"),
+  ) {
     this.page = page;
     this.basePage = new BasePage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
     this.assignCountriesDialog = new AssignCountriesDialog(page);
-    this.assignCountryButton = page.getByTestId("assign-country");
-    this.addPriceRateButton = page.getByTestId("add-price-rate");
-    this.addWeightRateButton = page.getByTestId("add-weight-rate");
-    this.createShippingZoneButton = page.getByTestId("add-shipping-zone");
-    this.shippingZoneNameInput = page.getByTestId("shipping-zone-name");
-    this.shippingZoneDescriptionField = page
-      .getByTestId("shipping-zone-description")
-      .locator("textarea");
-    this.saveButton = page.getByTestId("button-bar-confirm");
   }
 
   async clickAddWeightRateButton() {
@@ -67,8 +61,12 @@ export class ShippingMethodsPage {
       timeout: 10000,
     });
   }
-  async gotoShippingMethod(shippingMethodId: string) {
-    await this.page.goto(`${URL_LIST.shippingMethods}${shippingMethodId}`);
+  async gotoExistingShippingMethod(shippingMethodId: string) {
+    const existingShippingMethodUrl = `${URL_LIST.shippingMethods}${shippingMethodId}`;
+    await console.log(
+      `Navigates to existing shipping method page: ${existingShippingMethodUrl}`,
+    );
+    await this.page.goto(existingShippingMethodUrl);
     await this.shippingZoneNameInput.waitFor({
       state: "visible",
       timeout: 10000,

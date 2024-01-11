@@ -32,7 +32,7 @@ test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes 
   const shippingMethodsPage = new ShippingMethodsPage(page);
   const shippingRatesPage = new ShippingRatesPage(page);
 
-  await shippingMethodsPage.gotoShippingMethod(
+  await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithoutRates.id,
   );
   await shippingMethodsPage.clickAddPriceRateButton();
@@ -61,7 +61,7 @@ test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes
   const shippingMethodsPage = new ShippingMethodsPage(page);
   const shippingRatesPage = new ShippingRatesPage(page);
 
-  await shippingMethodsPage.gotoShippingMethod(
+  await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithoutRates.id,
   );
   await shippingMethodsPage.clickAddWeightRateButton();

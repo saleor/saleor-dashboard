@@ -24,6 +24,16 @@ export const STATIC_CONDITIONS = {
   isVisibleInListing: [{ type: "select", label: "is", value: "input-1" }],
   hasCategory: [{ type: "select", label: "is", value: "input-1" }],
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
+  startDate: [
+    { type: "datetime", label: "lower", value: "input-1" },
+    { type: "datetime", label: "greater", value: "input-2" },
+    { type: "datetime.range", label: "between", value: "input-3" },
+  ],
+  endDate: [
+    { type: "datetime", label: "lower", value: "input-1" },
+    { type: "datetime", label: "greater", value: "input-2" },
+    { type: "datetime.range", label: "between", value: "input-3" },
+  ],
 };
 
 export const CONSTRAINTS = {
@@ -34,7 +44,7 @@ export const CONSTRAINTS = {
   },
 };
 
-export const STATIC_OPTIONS: LeftOperand[] = [
+export const STATIC_PRODUCT_OPTIONS: LeftOperand[] = [
   { value: "price", label: "Price", type: "price", slug: "price" },
   { value: "category", label: "Category", type: "category", slug: "category" },
   {
@@ -80,6 +90,26 @@ export const STATIC_OPTIONS: LeftOperand[] = [
     type: "giftCard",
     slug: "giftCard",
   },
+];
+
+export const STATIC_DISCOUNT_OPTIONS: LeftOperand[] = [
+  {
+    value: "startDate",
+    label: "Start date",
+    type: "startDate",
+    slug: "startDate",
+  },
+  {
+    value: "endDate",
+    label: "End date",
+    type: "endDate",
+    slug: "endDate",
+  },
+];
+
+export const STATIC_OPTIONS = [
+  ...STATIC_PRODUCT_OPTIONS,
+  ...STATIC_DISCOUNT_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {

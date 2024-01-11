@@ -204,7 +204,7 @@ test("TC: SALEOR_93 Bulk delete voucher @vouchers @e2e", async () => {
   );
 
   await vouchersPage.clickBulkDeleteButton();
-  await vouchersPage.deleteVouchersDialog.clickDeleteButton();
+  await vouchersPage.deleteVoucherDialog.clickDeleteButton();
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.waitForGrid();
   await expect(

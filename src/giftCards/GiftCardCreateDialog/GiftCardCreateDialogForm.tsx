@@ -147,7 +147,10 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
 
   return (
     <>
-      <DialogContent className={classes.dialogContent}>
+      <DialogContent
+        className={classes.dialogContent}
+        data-test-id="gift-card-dialog"
+      >
         <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
         <CardSpacer />
         <GiftCardTagInput
@@ -171,6 +174,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         <GiftCardCreateExpirySelect {...commonFormProps} />
         <VerticalSpacer />
         <TextField
+          data-test-id="note-field"
           name="note"
           onChange={change}
           multiline
