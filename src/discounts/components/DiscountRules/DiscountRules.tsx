@@ -93,6 +93,13 @@ export const DiscountRules = <ErrorCode,>({
     setRuleDeleteIndex(null);
   };
 
+  const handleOpenModal = (type: RuleModalState["type"]) => {
+    setRuleModalState({
+      open: true,
+      type,
+    });
+  };
+
   return (
     <DiscountRulesContextProvider discountType={ruleModalState.type}>
       <DashboardCard marginBottom={20}>
@@ -105,18 +112,8 @@ export const DiscountRules = <ErrorCode,>({
             {intl.formatMessage(messages.title)}
             <AddButton
               disabled={disabled}
-              onCatalogClick={() =>
-                setRuleModalState({
-                  open: true,
-                  type: "catalog",
-                })
-              }
-              onCheckoutClick={() =>
-                setRuleModalState({
-                  open: true,
-                  type: "order",
-                })
-              }
+              onCatalogClick={() => handleOpenModal("catalog")}
+              onCheckoutClick={() => handleOpenModal("order")}
             />
           </Box>
         </DashboardCard.Title>
