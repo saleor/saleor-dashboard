@@ -130,11 +130,19 @@ export function getDiscountType(
     return null;
   }
 
-  if (data.rules[0]?.cataloguePredicate !== null) {
+  const ruleData = data.rules[0];
+
+  if (
+    ruleData.cataloguePredicate !== null &&
+    Object.keys(ruleData.cataloguePredicate).length > 0
+  ) {
     return "catalog";
   }
 
-  if (data.rules[0].orderPredicate !== null) {
+  if (
+    ruleData.orderPredicate !== null &&
+    Object.keys(ruleData.orderPredicate).length > 0
+  ) {
     return "order";
   }
 

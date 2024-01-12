@@ -12,6 +12,7 @@ import { AddButton } from "./componenets/AddButton";
 import { RuleDeleteModal } from "./componenets/RuleDeleteModal/RuleDeleteModal";
 import { RuleFormModal, RuleModalState } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
+import { useDiscountType } from "./hooks/useDiscountType";
 import { messages } from "./messages";
 
 export type DiscountRulesErrors<ErrorCode> = Array<
@@ -41,11 +42,14 @@ export const DiscountRules = <ErrorCode,>({
   getRuleConfirmButtonState,
   deleteButtonState,
   loading,
-  discountType,
+  discountType: discountTypeFromAPI,
   onRuleSubmit,
   onRuleDelete,
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
+
+  const { discountType, setDiscountType } =
+    useDiscountType(discountTypeFromAPI);
 
   const [ruleModalState, setRuleModalState] = useState<RuleModalState>({
     open: false,
@@ -88,11 +92,19 @@ export const DiscountRules = <ErrorCode,>({
   const handleRuleModalSubmit = async (data: Rule) => {
     await onRuleSubmit(data, ruleEditIndex);
     handleRuleModalClose();
+
+    if (!discountType) {
+      setDiscountType(ruleModalState.type);
+    }
   };
 
   const handleRuleDelete = async () => {
     await onRuleDelete(ruleDeleteIndex!);
     setRuleDeleteIndex(null);
+
+    if (rules.length === 1) {
+      setDiscountType(null);
+    }
   };
 
   const handleOpenModal = (type: RuleModalState["type"]) => {

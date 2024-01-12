@@ -31,7 +31,7 @@ export const mapConditionToOption = (
   conditions: Condition[],
 ): OptionWithConditionType[] => {
   return conditions.reduce<OptionWithConditionType[]>((acc, condition) => {
-    const values = condition.isArrayOfOptions()
+    const values = Array.isArray(condition.values)
       ? (condition.values as Option[])
       : [];
 
