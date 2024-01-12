@@ -58,6 +58,15 @@ export const CATEGORIES = {
     ],
   },
 };
+export const COLLECTIONS = {
+  collectionToBeUpdated: {
+    id: "Q29sbGVjdGlvbjoxNjY%3D",
+    name: "Collection to be updated",
+  },
+  collectionsToBeBulkDeleted: {
+    names: ["Collection to be deleted 1/2", "Collection to be deleted 2/2"],
+  },
+};
 export const CHANNELS = {
   channelToBeEditedSettings: {
     id: "Q2hhbm5lbDoyMzkx",
