@@ -1,9 +1,9 @@
 import { PromotionRuleDetailsFragment } from "@dashboard/graphql";
 
 import { RuleType } from "../types";
-import { CatalogRule } from "./Catalog/CatalogRule";
-import { Rule } from "./index";
-import { OrderRule } from "./Order/OrderRule";
+import { CatalogRule } from "./CatalogRule/CatalogRule";
+import { OrderRule } from "./OrderRule/OrderRule";
+import { Rule } from "./types";
 
 export const createEmptyRule = (type: RuleType) => {
   if (type === "catalog") {

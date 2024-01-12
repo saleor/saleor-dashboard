@@ -6,13 +6,15 @@ import {
 } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
-import { BaseRule } from "../BaseRule";
 import { Condition } from "../Condition";
+import { createBaseAPIInput, createBaseRuleInputFromAPI } from "../helpers";
+import { BaseRule } from "../types";
 import { prepareCatalogueRuleConditions } from "./prepareConditions";
 import { prepareCataloguePredicate } from "./preparePredicate";
 
-export class CatalogRule extends BaseRule {
+export class CatalogRule implements BaseRule {
   constructor(
+    public type: "catalog",
     public id: string,
     public name: string,
     public description: string | null,
@@ -21,22 +23,11 @@ export class CatalogRule extends BaseRule {
     public rewardValue: number,
     public rewardValueType: RewardValueTypeEnum,
     public conditions: Condition[],
-  ) {
-    super(
-      "catalog",
-      id,
-      name,
-      description,
-      channel,
-      rewardType,
-      rewardValue,
-      rewardValueType,
-      conditions,
-    );
-  }
+  ) {}
 
   public static empty(): CatalogRule {
     return new CatalogRule(
+      "catalog",
       "",
       "",
       "",
@@ -49,7 +40,8 @@ export class CatalogRule extends BaseRule {
   }
 
   public toAPI(): PromotionRuleInput {
-    const baseRule = super.toAPI();
+    const baseRule = createBaseAPIInput(this);
+
     return {
       ...baseRule,
       cataloguePredicate: prepareCataloguePredicate(this.conditions),
@@ -58,6 +50,7 @@ export class CatalogRule extends BaseRule {
 
   public static fromFormValues(data: BaseRule): CatalogRule {
     return new CatalogRule(
+      "catalog",
       data.id,
       data.name,
       data.description,
@@ -73,7 +66,18 @@ export class CatalogRule extends BaseRule {
     rule: PromotionRuleDetailsFragment,
     ruleConditionsOptionsDetailsMap: Record<string, string>,
   ): BaseRule {
-    const baseRule = super.fromAPI(rule, ruleConditionsOptionsDetailsMap);
+    const baseRuleData = createBaseRuleInputFromAPI(rule);
+    const baseRule = new CatalogRule(
+      "catalog",
+      baseRuleData.id,
+      baseRuleData.name,
+      baseRuleData.description,
+      baseRuleData.channel,
+      baseRuleData.rewardType,
+      baseRuleData.rewardValue,
+      baseRuleData.rewardValueType,
+      [],
+    );
 
     baseRule.conditions = prepareCatalogueRuleConditions(
       rule.cataloguePredicate,

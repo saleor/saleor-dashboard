@@ -6,13 +6,15 @@ import {
 } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
-import { BaseRule } from "../BaseRule";
 import { Condition } from "../Condition";
+import { createBaseAPIInput, createBaseRuleInputFromAPI } from "../helpers";
+import { BaseRule } from "../types";
 import { prepareOrderConditions } from "./prepareConditions";
 import { prepareOrderPredicate } from "./preparePredicate";
 
-export class OrderRule extends BaseRule {
+export class OrderRule implements BaseRule {
   constructor(
+    public type: "order",
     public id: string,
     public name: string,
     public description: string | null,
@@ -21,22 +23,10 @@ export class OrderRule extends BaseRule {
     public rewardValue: number,
     public rewardValueType: RewardValueTypeEnum,
     public conditions: Condition[],
-  ) {
-    super(
-      "order",
-      id,
-      name,
-      description,
-      channel,
-      rewardType,
-      rewardValue,
-      rewardValueType,
-      conditions,
-    );
-  }
+  ) {}
 
   public toAPI(): PromotionRuleInput {
-    const baseRule = super.toAPI();
+    const baseRule = createBaseAPIInput(this);
 
     return {
       ...baseRule,
@@ -46,6 +36,7 @@ export class OrderRule extends BaseRule {
 
   public static empty(): OrderRule {
     return new OrderRule(
+      "order",
       "",
       "",
       "",
@@ -59,6 +50,7 @@ export class OrderRule extends BaseRule {
 
   public static fromFormValues(data: BaseRule): OrderRule {
     return new OrderRule(
+      "order",
       data.id,
       data.name,
       data.description,
@@ -74,7 +66,18 @@ export class OrderRule extends BaseRule {
     rule: PromotionRuleDetailsFragment,
     ruleConditionsOptionsDetailsMap: Record<string, string>,
   ): BaseRule {
-    const baseRule = super.fromAPI(rule, ruleConditionsOptionsDetailsMap);
+    const baseRuleData = createBaseRuleInputFromAPI(rule);
+    const baseRule = new OrderRule(
+      "order",
+      baseRuleData.id,
+      baseRuleData.name,
+      baseRuleData.description,
+      baseRuleData.channel,
+      baseRuleData.rewardType,
+      baseRuleData.rewardValue,
+      baseRuleData.rewardValueType,
+      [],
+    );
 
     baseRule.conditions = prepareOrderConditions(
       rule.cataloguePredicate,

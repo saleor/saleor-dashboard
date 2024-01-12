@@ -1,3 +1,3 @@
 export * from "./Condition";
 export * from "./factory";
-export * from "./Rule";
+export * from "./types";
