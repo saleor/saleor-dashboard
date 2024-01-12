@@ -4,6 +4,9 @@ import { FormattedMessage } from "react-intl";
 
 const UTM_PARAMS = "?utm_source=dashboard&utm_content=sidebar_button";
 
+const devLink = (hostname: string) =>
+  `https://dev-cloud.saleor.io/env/${hostname}${UTM_PARAMS}`;
+
 const stagingLink = (hostname: string) =>
   `https://staging-cloud.saleor.io/env/${hostname}${UTM_PARAMS}`;
 
@@ -15,6 +18,10 @@ const generateEnvLink = () => {
 
   if (hostname.includes(".staging.")) {
     return stagingLink(hostname);
+  }
+
+  if (hostname.includes(".dev.")) {
+    return devLink(hostname);
   }
 
   return prodLink(hostname);

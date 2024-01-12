@@ -49,4 +49,21 @@ describe("Sidebar menu", () => {
       return isMatchTestId && isMatchHref;
     });
   });
+
+  it("renders link to the cloud environment on dev", async () => {
+    // Arrange
+    const devHref =
+      "https://dev-cloud.saleor.io/env/test.dev.saleor.cloud?utm_source=dashboard&utm_content=sidebar_button";
+    delete (window as { location?: unknown }).location;
+    // @ts-expect-error
+    window.location = { hostname: "test.dev.saleor.cloud" };
+    render(<Menu />);
+
+    // Assert
+    await screen.findAllByTestId((content, element) => {
+      const isMatchTestId = content === "menu-item-label-env";
+      const isMatchHref = element?.getAttribute("href") === devHref;
+      return isMatchTestId && isMatchHref;
+    });
+  });
 });
