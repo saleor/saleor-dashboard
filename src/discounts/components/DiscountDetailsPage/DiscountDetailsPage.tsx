@@ -4,6 +4,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import { getDiscountType } from "@dashboard/discounts/utils";
 import {
   ChannelFragment,
   PromotionDetailsFragment,
@@ -99,6 +100,7 @@ export const DiscountDetailsPage = ({
               />
 
               <DiscountRules
+                discountType={getDiscountType(data)}
                 errors={rulesErrors}
                 rules={rules}
                 loading={ruleConditionsOptionsDetailsLoading}

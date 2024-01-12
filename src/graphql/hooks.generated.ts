@@ -642,6 +642,7 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   rewardValueType
   rewardValue
   cataloguePredicate
+  orderPredicate
 }
     ${ChannelDetailsFragmentDoc}`;
 export const PromotionDetailsFragmentDoc = gql`

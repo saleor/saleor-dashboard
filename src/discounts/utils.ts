@@ -1,4 +1,5 @@
 import {
+  PromotionDetailsFragment,
   PromotionRuleDetailsFragment,
   SaleDetailsQuery,
   VoucherDetailsQuery,
@@ -8,6 +9,7 @@ import { sortAlphabetically } from "@dashboard/utils/sort";
 
 import { Rule } from "./models";
 import {
+  DiscountType,
   SearchCategoriesOpts,
   SearchCollectionOpts,
   SearchProductsOpts,
@@ -115,4 +117,26 @@ export function sortRules(rules: Rule[]) {
 
 export function sortAPIRules(rules: PromotionRuleDetailsFragment[]) {
   return rules.sort(sortAlphabetically("name"));
+}
+
+export function getDiscountType(
+  data: PromotionDetailsFragment | null | undefined,
+): DiscountType | null {
+  if (!data) {
+    return null;
+  }
+
+  if (data.rules.length === 0) {
+    return null;
+  }
+
+  if (data.rules[0]?.cataloguePredicate !== null) {
+    return "catalog";
+  }
+
+  if (data.rules[0].orderPredicate !== null) {
+    return "order";
+  }
+
+  return null;
 }

@@ -1,6 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Rule } from "@dashboard/discounts/models";
+import { DiscountType } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
@@ -24,6 +25,7 @@ interface DiscountRulesProps<ErrorCode> {
   errors: Array<CommonError<ErrorCode>>;
   loading?: boolean;
   deleteButtonState: ConfirmButtonTransitionState;
+  discountType: DiscountType;
   getRuleConfirmButtonState: (
     ruleEditIndex: number | null,
   ) => ConfirmButtonTransitionState;
@@ -39,6 +41,7 @@ export const DiscountRules = <ErrorCode,>({
   getRuleConfirmButtonState,
   deleteButtonState,
   loading,
+  discountType,
   onRuleSubmit,
   onRuleDelete,
 }: DiscountRulesProps<ErrorCode>) => {
@@ -106,8 +109,9 @@ export const DiscountRules = <ErrorCode,>({
           {intl.formatMessage(messages.title)}
           <AddButton
             disabled={disabled}
+            discountType={discountType}
             onCatalogClick={() => handleOpenModal("catalog")}
-            onCheckoutClick={() => handleOpenModal("order")}
+            onOrderClick={() => handleOpenModal("order")}
           />
         </Box>
       </DashboardCard.Title>

@@ -1,4 +1,5 @@
 import { MenuItem, SubMenu } from "@dashboard/components/SubMenu";
+import { DiscountType } from "@dashboard/discounts/types";
 import {
   ArrowDownIcon,
   Box,
@@ -12,16 +13,19 @@ import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
+import { byDiscountType } from "./filter";
 
 interface AddButtonProps {
   disabled?: boolean;
+  discountType: DiscountType;
   onCatalogClick: () => void;
-  onCheckoutClick: () => void;
+  onOrderClick: () => void;
 }
 
 export const AddButton = ({
+  discountType,
   onCatalogClick,
-  onCheckoutClick,
+  onOrderClick,
   disabled = false,
 }: AddButtonProps) => {
   const intl = useIntl();
@@ -32,29 +36,32 @@ export const AddButton = ({
     setSubMenuOpen(false);
   };
 
-  const handleCheckoutClick = () => {
-    onCheckoutClick();
+  const handleOrderClick = () => {
+    onOrderClick();
     setSubMenuOpen(false);
   };
 
   const subMenuItems = useMemo<MenuItem[]>(
-    () => [
-      {
-        id: "catalog",
-        title: intl.formatMessage(messages.catalog),
-        description: intl.formatMessage(messages.catalogDescription),
-        icon: <ProductsIcons />,
-        onClick: handleCatalogClick,
-      },
-      {
-        id: "checkoutAndOrder",
-        title: intl.formatMessage(messages.checkoutAndOrders),
-        description: intl.formatMessage(messages.checkoutAndOrdersDescription),
-        icon: <OrdersIcon />,
-        onClick: handleCheckoutClick,
-      },
-    ],
-    [],
+    () =>
+      [
+        {
+          id: "catalog",
+          title: intl.formatMessage(messages.catalog),
+          description: intl.formatMessage(messages.catalogDescription),
+          icon: <ProductsIcons />,
+          onClick: handleCatalogClick,
+        },
+        {
+          id: "order",
+          title: intl.formatMessage(messages.checkoutAndOrders),
+          description: intl.formatMessage(
+            messages.checkoutAndOrdersDescription,
+          ),
+          icon: <OrdersIcon />,
+          onClick: handleOrderClick,
+        },
+      ].filter(byDiscountType(discountType)),
+    [discountType],
   );
 
   return (
