@@ -253,26 +253,6 @@ export const SHIPPING_METHODS = {
     id: "U2hpcHBpbmdab25lOjIzOTA%3D",
     info: "Shipping method that is used to add rates",
   },
-  shippingMethodToBeUpdated: {
-    id: "U2hpcHBpbmdab25lOjIzOTI=",
-    info: "Shipping zone to be updated",
-    name: "e2e-test-shippingZone-to-be-updated",
-  },
-  shippingMethodToBeBulkDeleted1: {
-    id: "U2hpcHBpbmdab25lOjIzOTM=",
-    info: "First shipping zone to be bulk deleted",
-    name: "e2e-test-shippingZone-to-be-bulk-deleted-1",
-  },
-  shippingMethodToBeBulkDeleted2: {
-    id: "U2hpcHBpbmdab25lOjIzOTQ=",
-    info: "Second shipping zone to be bulk deleted",
-    name: "e2e-test-shippingZone-to-be-bulk-deleted-2",
-  },
-  shippingMethodToBeBulkDeleted3: {
-    id: "U2hpcHBpbmdab25lOjIzOTU=",
-    info: "Third shipping zone to be bulk deleted",
-    name: "e2e-test-shippingZone-to-be-bulk-deleted-3",
-  },
   shippingMethodWithRatesToBeDeleted: {
     id: "U2hpcHBpbmdab25lOjIzODk%3D",
     info: "Shipping zone with methods to be deleted",
