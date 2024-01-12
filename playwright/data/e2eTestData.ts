@@ -205,6 +205,23 @@ export const SHIPPING_METHODS = {
     id: "U2hpcHBpbmdab25lOjIzOTA%3D",
     info: "Shipping method that is used to add rates",
   },
+  shippingMethodWithRatesToBeDeleted: {
+    id: "U2hpcHBpbmdab25lOjIzODk%3D",
+    info: "Shipping zone with methods to be deleted",
+    name: "e2e-test-shippingZone-to-be-deleted",
+    rates: {
+      priceBasedRateToBeDeleted: {
+        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMjA=",
+        info: "Price based shipping rate",
+        name: "shippingMEthod_to-be-deleted",
+      },
+      weightBasedRateToBeDeleted: {
+        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMjA=",
+        info: "Weight based shipping rate",
+        name: "shippingMethod_to_be_deleted",
+      },
+    },
+  },
 };
 export const USERS = {
   userToBeDeactivated: {
