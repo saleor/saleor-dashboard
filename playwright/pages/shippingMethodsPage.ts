@@ -5,11 +5,12 @@ import { AssignCountriesDialog } from "@pages/dialogs/assignCountriesDialog";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import type { Page } from "@playwright/test";
 
-export class ShippingMethodsPage extends BasePage {
-  rightSideDetailsPage: RightSideDetailsPage;
-  assignCountriesDialog: AssignCountriesDialog;
-  deleteShippingMethodDialog: DeleteShippingMethodDialog;
-
+export class ShippingMethodsPage {
+  readonly page: Page;
+  readonly basePage: BasePage;
+  readonly rightSideDetailsPage: RightSideDetailsPage;
+  readonly assignCountriesDialog: AssignCountriesDialog;
+  readonly deleteShippingMethodDialog: DeleteShippingMethodDialog;
 
   constructor(
     page: Page,
@@ -23,13 +24,12 @@ export class ShippingMethodsPage extends BasePage {
       .locator("textarea"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly shippingZoneName = page.getByTestId("page-header"),
-    readonly deleteShippingRateButton = page.getByTestId("button-bar-delete"),
-    readonly shippingRateNameInput = page.getByTestId("shipping-rate-name-input"),
-    readonly deleteShippingRateButtonOnList = page.getByTestId("shipping-method-row").getByRole("button").getByTestId("delete-button"),
+    readonly deleteShippingMethodButton = page.getByTestId("shipping-method-row").getByRole("button").getByTestId("delete-button"),
     readonly priceBasedRatesSection = page.getByTestId("price-based-rates"),
     readonly weightBasedRatesSection = page.getByTestId("weight-based-rates"),
   ) {
-    super(page);
+    this.page = page;
+    this.basePage = new BasePage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
     this.assignCountriesDialog = new AssignCountriesDialog(page);
     this.deleteShippingMethodDialog = new DeleteShippingMethodDialog(page);
@@ -105,15 +105,9 @@ export class ShippingMethodsPage extends BasePage {
     await this.createShippingZoneButton.click();
   }
 
-  async clickDeletePriceBasedShippingMethod() {
-    await this.priceBasedRatesSection.locator(this.deleteShippingRateButtonOnList).click();
+  async clickDeleteShippingMethod() {
+    await this.priceBasedRatesSection.locator(this.deleteShippingMethodButton).click();
 
   }
-
-  async clickDeleteShippingRateButton() {
-    await this.deleteShippingRateButton.click();
-  }
-
 
 }
-
