@@ -1,10 +1,13 @@
 // @ts-nocheck
 
-import R48846 from "./images/filters.png"
+import L10838 from "./images/discounts-list.png"
+import W33914 from "./images/filters.png"
 
-const discounts_rules = () => (<><p>New discount rules base on new promotion API</p>
+const discounts_rules = () => (<><p><img src={L10838} alt="Discount rules"/></p>
+<p>Apply the new discounts rules to narrow your promotions audience.
+Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const product_filters = () => (<><p><img src={R48846} alt="new filters"/></p>
+const product_filters = () => (<><p><img src={W33914} alt="new filters"/></p>
 <p>Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
@@ -13,7 +16,7 @@ export const AVAILABLE_FLAGS = [{
   name: "discounts_rules",
   displayName: "Discounts rules",
   component: discounts_rules,
-  visible: false,
+  visible: true,
   content: {
     enabled: false,
     payload: "default",
