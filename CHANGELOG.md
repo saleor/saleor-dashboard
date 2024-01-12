@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.18.2
+
+### Patch Changes
+
+- e165eed62: Show info text when no options to select in discount condtion, stop sending empty condtion
+- 6ba106f16: Fix height of multiselect for filters/promotions
+- 3018ed8d9: Fix loading service worker
+- 53ca848ba: Improvments for discount rules
+- b353cebd9: Fix deleting draft orders
+- 27d2a6032: Introduce filters to discount list page
+- 3cbfa647e: Make discount rules flag visible
+- f95e90f28: Amounts are now hidden on Transaction events list for `CHARGE_REQUST`, `CHARGE_SUCCESS` and `CHARGE_FAILURE` events.
+  These events don't support providing amounts, and they were always displayed as 0.
+- 1637e1213: Fix dockerfile build error caused by deleted file and bash script
+
 ## 3.18.1
 
 ### Patch Changes
