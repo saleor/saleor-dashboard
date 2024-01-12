@@ -3,7 +3,7 @@ import {
   ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { Rule } from "@dashboard/discounts/models";
+import { BaseRule, Rule } from "@dashboard/discounts/models";
 import { createEmptyRule } from "@dashboard/discounts/models/factory";
 import { RuleType } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
@@ -53,7 +53,7 @@ export const RuleFormModal = <ErrorCode,>({
     [ruleModalState.type],
   );
 
-  const methods = useForm<Rule>({
+  const methods = useForm<BaseRule>({
     mode: "onBlur",
     values: initialFormValues || emptyRule,
     resolver: zodResolver(getValidationSchema(intl)),
