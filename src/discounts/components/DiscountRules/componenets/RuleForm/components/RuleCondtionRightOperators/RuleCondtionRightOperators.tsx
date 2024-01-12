@@ -60,7 +60,7 @@ export const RuleCondtionRightOperators = ({
     return (
       <Input
         type="number"
-        value={(condition.values?.[0] || "") as string}
+        value={condition.values as string}
         onChange={valuesField.onChange}
         disabled={disabled}
       />

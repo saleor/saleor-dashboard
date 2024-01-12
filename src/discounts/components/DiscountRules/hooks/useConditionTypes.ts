@@ -39,13 +39,13 @@ export const conditionsTypes: Record<
       value: "input-1",
     },
   ],
-  subtotal: [
+  baseSubtotalPrice: [
     { type: "number", label: "is", value: "input-1" },
     { type: "number", label: "lower", value: "input-2" },
     { type: "number", label: "greater", value: "input-3" },
     { type: "number.range", label: "between", value: "input-4" },
   ],
-  total: [
+  baseTotalPrice: [
     { type: "number", label: "is", value: "input-1" },
     { type: "number", label: "lower", value: "input-2" },
     { type: "number", label: "greater", value: "input-3" },

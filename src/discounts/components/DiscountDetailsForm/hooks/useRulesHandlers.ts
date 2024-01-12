@@ -61,7 +61,9 @@ export const useRulesHandlers = ({
         PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment
       >
     > = [];
-    const ruleObj = createRuleFromData({ type: "catalog", ...rule } as any); // TODO: to be fixed;
+
+    const ruleObj = createRuleFromData(rule);
+
     if (ruleEditIndex !== null) {
       updateLabels(rule);
       errors = await onRuleUpdateSubmit(ruleObj);

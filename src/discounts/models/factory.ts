@@ -1,11 +1,11 @@
 import { PromotionRuleDetailsFragment } from "@dashboard/graphql";
 
-import { RuleType } from "../types";
+import { DiscountType } from "../types";
 import { CatalogRule } from "./CatalogRule/CatalogRule";
 import { OrderRule } from "./OrderRule/OrderRule";
 import { Rule } from "./types";
 
-export const createEmptyRule = (type: RuleType) => {
+export const createEmptyRule = (type: DiscountType) => {
   if (type === "catalog") {
     return CatalogRule.empty();
   }
@@ -30,7 +30,7 @@ export const createRuleFromData = (data: Rule) => {
 };
 
 export const createRuleFromAPI = (
-  type: RuleType,
+  type: DiscountType,
   ruleData: PromotionRuleDetailsFragment,
   labelMap: Record<string, string>,
 ) => {

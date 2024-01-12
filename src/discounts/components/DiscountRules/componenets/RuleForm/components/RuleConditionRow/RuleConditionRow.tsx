@@ -63,20 +63,17 @@ export const RuleConditionRow = ({
     >
       <RuleInputWrapper>
         <Combobox
-          value={getConditionNameValue(
-            nameField.value as any,
-            conditionLeftOptions,
-          )}
+          value={getConditionNameValue(nameField.value, conditionLeftOptions)}
           fetchOptions={() => {}}
           options={filteredConditionLeftOptions}
           onChange={e => {
             condition.values = [];
-            updateCondition(conditionIndex, condition as any);
+            updateCondition(conditionIndex, condition);
             nameField.onChange(e.target.value);
           }}
           size="medium"
           data-test-id="rule-type"
-          onBlur={typeField.onBlur}
+          onBlur={nameField.onBlur}
           disabled={disabled}
         />
       </RuleInputWrapper>
@@ -86,7 +83,15 @@ export const RuleConditionRow = ({
           value={typeField.value}
           size="medium"
           options={conditionTypesOptions}
-          onChange={typeField.onChange}
+          onChange={(condition: unknown) => {
+            if (typeof condition === "string") {
+              typeField.onChange(condition);
+            }
+
+            if (typeof condition === "object" && "value" in condition) {
+              typeField.onChange(condition.value);
+            }
+          }}
           disabled={disabled}
         />
       </RuleInputWrapper>

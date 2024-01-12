@@ -1,10 +1,11 @@
-import { CheckoutAndOrderPredicateInput } from "@dashboard/graphql";
+import { OrderPredicateInput } from "@dashboard/graphql";
 
 import { Condition } from "../Condition";
+import { createWhereInput } from "../helpers";
 
 export function prepareOrderPredicate(
   conditions: Condition[],
-): CheckoutAndOrderPredicateInput {
+): OrderPredicateInput {
   const ruleConditions = conditions
     .map(condition => {
       if (!condition.type) {
@@ -12,13 +13,15 @@ export function prepareOrderPredicate(
       }
 
       return {
-        [`${condition.name}`]: condition.values,
+        [`${condition.name}`]: createWhereInput(condition),
       };
     })
-    .filter(Boolean) as CheckoutAndOrderPredicateInput[];
+    .filter(Boolean);
 
   if (ruleConditions.length === 0) {
-    return {};
+    return {
+      discountedObjectPredicate: {},
+    };
   }
 
   if (ruleConditions.length === 1) {
@@ -30,6 +33,8 @@ export function prepareOrderPredicate(
   }
 
   return {
-    OR: ruleConditions,
+    discountedObjectPredicate: {
+      OR: ruleConditions,
+    },
   };
 }

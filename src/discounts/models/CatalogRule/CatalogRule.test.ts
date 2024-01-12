@@ -9,6 +9,7 @@ import { CatalogRule } from "./CatalogRule";
 describe("CatalogRule model", () => {
   it("should transform domain object to API format", () => {
     const rule = new CatalogRule(
+      "catalog",
       "rule_1",
       "name",
       '{"text":"description"}',

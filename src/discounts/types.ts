@@ -38,7 +38,7 @@ export interface DiscoutFormData {
   rules: Rule[];
 }
 
-export type RuleType = "catalog" | "order";
+export type DiscountType = "catalog" | "order";
 
 export type CatalogConditions =
   | "product"
@@ -46,7 +46,7 @@ export type CatalogConditions =
   | "collection"
   | "variant";
 
-export type OrderConditions = "subtotal" | "total";
+export type OrderConditions = "baseSubtotalPrice" | "baseTotalPrice";
 
 // Mimic API catalogue predicate structure because api scheme type return any
 export interface CataloguePredicateAPI {
@@ -70,16 +70,9 @@ export interface OrderPredicateAPI {
   OR?: OrderPredicateAPI[];
   AND?: OrderPredicateAPI[];
   discountedObjectPredicate: {
-    subtotalPrice?: DecimalFilterInput;
-    totalPrice?: DecimalFilterInput;
+    baseSubtotalPrice?: DecimalFilterInput;
+    baseTotalPrice?: DecimalFilterInput;
     AND?: Array<OrderPredicateAPI["discountedObjectPredicate"]>;
     OR?: Array<OrderPredicateAPI["discountedObjectPredicate"]>;
   };
-}
-
-export interface CheckoutPredicateAPI {
-  OR?: CataloguePredicateAPI[];
-  AND?: CataloguePredicateAPI[];
-  subtotalPrice?: any;
-  totalPrice?: any;
 }

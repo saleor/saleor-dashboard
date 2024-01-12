@@ -30,7 +30,7 @@ export class OrderRule implements BaseRule {
 
     return {
       ...baseRule,
-      checkoutAndOrderPredicate: prepareOrderPredicate(this.conditions),
+      orderPredicate: prepareOrderPredicate(this.conditions),
     };
   }
 
@@ -58,7 +58,7 @@ export class OrderRule implements BaseRule {
       data.rewardType,
       data.rewardValue,
       data.rewardValueType,
-      [],
+      data.conditions,
     );
   }
 

@@ -58,7 +58,7 @@ export class CatalogRule implements BaseRule {
       data.rewardType,
       data.rewardValue,
       data.rewardValueType,
-      [],
+      data.conditions,
     );
   }
 

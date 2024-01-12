@@ -25,6 +25,7 @@ export const getValidationSchema = (intl: IntlShape) =>
   z
     .object({
       id: z.string().optional(),
+      type: z.string().optional(),
       name: z
         .string()
         .min(1, intl.formatMessage(validationMessages.nameRequired)),
@@ -40,13 +41,13 @@ export const getValidationSchema = (intl: IntlShape) =>
         },
       ),
       conditions: z.array(
-        z
-          .object({
-            name: z.string().nullable(),
-            type: z.string(),
-            values: z.array(z.object({ label: z.string(), value: z.string() })),
-          })
-          .optional(),
+        z.object({
+          name: z.string().nullable(),
+          type: z.string(),
+          values: z
+            .array(z.object({ label: z.string(), value: z.string() }))
+            .or(z.string()),
+        }),
       ),
       rewardValue: z
         .number({

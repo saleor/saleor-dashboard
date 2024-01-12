@@ -5,13 +5,13 @@ import {
 } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
-import { RuleType } from "../types";
+import { DiscountType } from "../types";
 import { CatalogRule } from "./CatalogRule/CatalogRule";
 import { Condition } from "./Condition";
 import { OrderRule } from "./OrderRule/OrderRule";
 
 export interface BaseRule {
-  type: RuleType;
+  type: DiscountType;
   id: string;
   name: string;
   description: string | null;

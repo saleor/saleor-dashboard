@@ -8,12 +8,12 @@ export const prepareOrderConditions = (
 ): Condition[] => {
   const orderConditions = [];
 
-  if (orderPredicate.discountedObjectPredicate?.subtotalPrice) {
+  if (orderPredicate.discountedObjectPredicate?.baseSubtotalPrice) {
     orderConditions.push(
       new Condition(
-        "subtotal",
+        "baseSubtotalPrice",
         "is",
-        orderPredicate.discountedObjectPredicate.subtotalPrice.eq,
+        orderPredicate.discountedObjectPredicate.baseSubtotalPrice.eq,
       ),
     );
   }

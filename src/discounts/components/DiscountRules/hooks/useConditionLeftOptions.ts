@@ -1,8 +1,10 @@
-import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
+import {
+  CatalogConditions,
+  DiscountType,
+  OrderConditions,
+} from "@dashboard/discounts/types";
 import { Option } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
-
-import { DiscountType } from "../types";
 
 export const catalogConditionOptions: Array<{
   label: string;
@@ -32,11 +34,11 @@ export const orderConditionOptions: Array<{
 }> = [
   {
     label: "Subtotal price",
-    value: "subtotal",
+    value: "baseSubtotalPrice",
   },
   {
     label: "Total price",
-    value: "total",
+    value: "baseTotalPrice",
   },
 ];
 

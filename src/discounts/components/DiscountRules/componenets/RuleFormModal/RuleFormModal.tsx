@@ -5,7 +5,7 @@ import {
 import { DashboardModal } from "@dashboard/components/Modal";
 import { BaseRule, Rule } from "@dashboard/discounts/models";
 import { createEmptyRule } from "@dashboard/discounts/models/factory";
-import { RuleType } from "@dashboard/discounts/types";
+import { DiscountType } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
@@ -22,7 +22,7 @@ import { getValidationSchema } from "./validationSchema";
 
 export interface RuleModalState {
   open: boolean;
-  type: RuleType;
+  type: DiscountType;
 }
 
 interface RuleFormModalProps<ErrorCode> {

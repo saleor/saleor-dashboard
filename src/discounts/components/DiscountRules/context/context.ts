@@ -1,8 +1,8 @@
+import { DiscountType } from "@dashboard/discounts/types";
 import { Option } from "@saleor/macaw-ui-next";
 import { createContext } from "react";
 
 import { FetchOptions } from "../hooks/useCondtionRightOptions";
-import { DiscountType } from "../types";
 
 export const discountRulesContext = createContext<{
   conditionLeftOptions: Option[];

@@ -1147,15 +1147,6 @@ export type CheckoutAddressValidationRules = {
   enableFieldsNormalization?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type CheckoutAndOrderPredicateInput = {
-  /** List of conditions that must be met. */
-  AND?: InputMaybe<Array<CheckoutAndOrderPredicateInput>>;
-  /** A list of conditions of which at least one must be met. */
-  OR?: InputMaybe<Array<CheckoutAndOrderPredicateInput>>;
-  /** Defines the conditions related to checkout and order objects. */
-  discountedObjectPredicate?: InputMaybe<DiscountedObjectPredicateInput>;
-};
-
 /**
  * Determine a current authorize status for checkout.
  *
@@ -2049,15 +2040,15 @@ export enum DiscountValueTypeEnum {
   PERCENTAGE = 'PERCENTAGE'
 }
 
-export type DiscountedObjectPredicateInput = {
+export type DiscountedObjectWhereInput = {
   /** List of conditions that must be met. */
-  AND?: InputMaybe<Array<DiscountedObjectPredicateInput>>;
+  AND?: InputMaybe<Array<DiscountedObjectWhereInput>>;
   /** A list of conditions of which at least one must be met. */
-  OR?: InputMaybe<Array<DiscountedObjectPredicateInput>>;
-  /** Subtotal price range condition. */
-  subtotalPrice?: InputMaybe<DecimalFilterInput>;
-  /** Total price range condition. */
-  totalPrice?: InputMaybe<DecimalFilterInput>;
+  OR?: InputMaybe<Array<DiscountedObjectWhereInput>>;
+  /** Filter by the base subtotal price. */
+  baseSubtotalPrice?: InputMaybe<DecimalFilterInput>;
+  /** Filter by the base total price. */
+  baseTotalPrice?: InputMaybe<DecimalFilterInput>;
 };
 
 /** An enumeration. */
@@ -3938,6 +3929,7 @@ export type OrderDiscountCommonInput = {
 /** An enumeration. */
 export enum OrderDiscountType {
   MANUAL = 'MANUAL',
+  ORDER_PROMOTION = 'ORDER_PROMOTION',
   PROMOTION = 'PROMOTION',
   SALE = 'SALE',
   VOUCHER = 'VOUCHER'
@@ -4259,6 +4251,15 @@ export enum OrderOriginEnum {
   DRAFT = 'DRAFT',
   REISSUE = 'REISSUE'
 }
+
+export type OrderPredicateInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<OrderPredicateInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<OrderPredicateInput>>;
+  /** Defines the conditions related to checkout and order objects. */
+  discountedObjectPredicate?: InputMaybe<DiscountedObjectWhereInput>;
+};
 
 export type OrderRefundFulfillmentLineInput = {
   /** The ID of the fulfillment line to refund. */
@@ -5967,18 +5968,18 @@ export type PromotionRuleCreateInput = {
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** List of channel ids to which the rule should apply to. */
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  /** Promotion rule description. */
+  description?: InputMaybe<Scalars['JSON']>;
+  /** Promotion rule name. */
+  name?: InputMaybe<Scalars['String']>;
   /**
-   * Defines the conditions on the checkout/order level that must be met for the reward to be applied.
+   * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
    * Added in Saleor 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  checkoutAndOrderPredicate?: InputMaybe<CheckoutAndOrderPredicateInput>;
-  /** Promotion rule description. */
-  description?: InputMaybe<Scalars['JSON']>;
-  /** Promotion rule name. */
-  name?: InputMaybe<Scalars['String']>;
+  orderPredicate?: InputMaybe<OrderPredicateInput>;
   /** The ID of the promotion that rule belongs to. */
   promotion: Scalars['ID'];
   /**
@@ -6006,18 +6007,18 @@ export type PromotionRuleInput = {
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** List of channel ids to which the rule should apply to. */
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  /** Promotion rule description. */
+  description?: InputMaybe<Scalars['JSON']>;
+  /** Promotion rule name. */
+  name?: InputMaybe<Scalars['String']>;
   /**
-   * Defines the conditions on the checkout/order level that must be met for the reward to be applied.
+   * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
    * Added in Saleor 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  checkoutAndOrderPredicate?: InputMaybe<CheckoutAndOrderPredicateInput>;
-  /** Promotion rule description. */
-  description?: InputMaybe<Scalars['JSON']>;
-  /** Promotion rule name. */
-  name?: InputMaybe<Scalars['String']>;
+  orderPredicate?: InputMaybe<OrderPredicateInput>;
   /**
    * Defines the reward type of the promotion rule.
    *
@@ -6060,18 +6061,18 @@ export type PromotionRuleUpdateInput = {
   addChannels?: InputMaybe<Array<Scalars['ID']>>;
   /** Defines the conditions on the catalogue level that must be met for the reward to be applied. */
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
+  /** Promotion rule description. */
+  description?: InputMaybe<Scalars['JSON']>;
+  /** Promotion rule name. */
+  name?: InputMaybe<Scalars['String']>;
   /**
-   * Defines the conditions on the checkout/order level that must be met for the reward to be applied.
+   * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
    * Added in Saleor 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  checkoutAndOrderPredicate?: InputMaybe<CheckoutAndOrderPredicateInput>;
-  /** Promotion rule description. */
-  description?: InputMaybe<Scalars['JSON']>;
-  /** Promotion rule name. */
-  name?: InputMaybe<Scalars['String']>;
+  orderPredicate?: InputMaybe<OrderPredicateInput>;
   /** List of channel ids to remove. */
   removeChannels?: InputMaybe<Array<Scalars['ID']>>;
   /**
@@ -6184,7 +6185,8 @@ export enum ReportingPeriod {
 
 /** An enumeration. */
 export enum RewardTypeEnum {
-  SUBTOTAL_DISCOUNT = 'SUBTOTAL_DISCOUNT'
+  SUBTOTAL_DISCOUNT = 'SUBTOTAL_DISCOUNT',
+  TOTAL_DISCOUNT = 'TOTAL_DISCOUNT'
 }
 
 /** An enumeration. */
@@ -7999,6 +8001,8 @@ export enum WebhookEventTypeAsyncEnum {
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   /** A translation is updated. */
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
+  VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
   /**
    * A voucher code export is completed.
    *
@@ -8463,6 +8467,8 @@ export enum WebhookEventTypeEnum {
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   /** A translation is updated. */
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
+  VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
   /**
    * A voucher code export is completed.
    *
@@ -8695,6 +8701,8 @@ export enum WebhookSampleEventTypeEnum {
   TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
+  VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
   VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   VOUCHER_DELETED = 'VOUCHER_DELETED',

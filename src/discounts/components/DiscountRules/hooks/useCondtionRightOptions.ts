@@ -2,10 +2,10 @@ import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { Option } from "@saleor/macaw-ui-next";
 
-import { useCategorieOptions } from "./useCategorieOptions";
-import { useCollectionOptions } from "./useCollectionOptions";
-import { useProductOptions } from "./useProductOptions";
-import { useVariantOptions } from "./useVariantOptions";
+import { useCategorieOptions } from "./API/useCategorieOptions";
+import { useCollectionOptions } from "./API/useCollectionOptions";
+import { useProductOptions } from "./API/useProductOptions";
+import { useVariantOptions } from "./API/useVariantOptions";
 
 export interface FetchOptions {
   fetch: (query: string) => void;
@@ -27,8 +27,8 @@ export const useCondtionRightOptions = (channel: string) => {
     collection: collectionSearch,
     category: categorySearch,
     variant: variantSearch,
-    subtotal: undefined,
-    total: undefined,
+    baseSubtotalPrice: undefined,
+    baseTotalPrice: undefined,
   };
 
   const getFetchProps = (type: CatalogConditions) => {

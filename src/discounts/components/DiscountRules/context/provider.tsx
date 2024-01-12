@@ -1,9 +1,9 @@
+import { DiscountType } from "@dashboard/discounts/types";
 import React, { ReactNode } from "react";
 
 import { useConditionLeftOptions } from "../hooks/useConditionLeftOptions";
 import { useCondtionTypes } from "../hooks/useConditionTypes";
 import { useCondtionRightOptions } from "../hooks/useCondtionRightOptions";
-import { DiscountType } from "../types";
 import { discountRulesContext } from "./context";
 
 export const DiscountRulesContextProvider = ({
