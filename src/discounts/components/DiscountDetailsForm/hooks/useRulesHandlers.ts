@@ -3,6 +3,7 @@ import {
   createRuleFromAPI,
   createRuleFromData,
 } from "@dashboard/discounts/models/factory";
+import { getDiscountType } from "@dashboard/discounts/utils";
 import {
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,
@@ -36,8 +37,9 @@ export const useRulesHandlers = ({
   const [labelsMap, setLabelMap] = useState<Record<string, string>>({});
 
   const rules =
-    data?.rules?.map(rule => createRuleFromAPI("catalog", rule, labelsMap)) ??
-    [];
+    data?.rules?.map(rule =>
+      createRuleFromAPI(getDiscountType(data), rule, labelsMap),
+    ) ?? [];
 
   useEffect(() => {
     setLabelMap(labels => {

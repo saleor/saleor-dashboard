@@ -80,8 +80,8 @@ export class OrderRule implements BaseRule {
     );
 
     baseRule.conditions = prepareOrderConditions(
-      rule.cataloguePredicate,
-      ruleConditionsOptionsDetailsMap,
+      rule.orderPredicate,
+      // ruleConditionsOptionsDetailsMap,
     );
 
     return baseRule;
