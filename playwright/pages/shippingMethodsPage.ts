@@ -106,7 +106,7 @@ export class ShippingMethodsPage {
     await this.createShippingZoneButton.click();
   }
 
-  async clickDeleteShippingRateFromTheList() {
+  async clickDeletePriceBasedShippingMethod() {
     await this.priceBasedRatesSection.locator(this.deleteShippingRateButtonOnList).click();
 
   }

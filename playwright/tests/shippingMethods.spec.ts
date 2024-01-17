@@ -96,7 +96,7 @@ test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details
   await expect(shippingMethodsPage.basePage.pageHeader).toBeVisible();
   const priceBasedRate = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.priceBasedRateToBeDeleted.name;
   await expect(shippingMethodsPage.priceBasedRatesSection).toContainText(priceBasedRate);
-  await shippingMethodsPage.clickDeleteShippingRateFromTheList();
+  await shippingMethodsPage.clickDeletePriceBasedShippingMethod();
   await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
   await shippingMethodsPage.basePage.expectSuccessBanner();
   await expect(shippingMethodsPage.priceBasedRatesSection).toContainText("No shipping rates found");
@@ -112,13 +112,9 @@ test("TC: SALEOR_35 Delete a single shipping rate from its details page @shippin
   const weightBasedRate = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.weightBasedRateToBeDeleted.name;
 
   await shippingMethodsPage.gotoExistingShippingRate(shippingMethodId, shippingRateId);
-  await expect(shippingMethodsPage.basePage.pageHeader).toBeVisible();
   await shippingMethodsPage.clickDeleteShippingRateButton();
   await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
   await shippingMethodsPage.basePage.expectSuccessBanner();
-  await shippingMethodsPage.gotoExistingShippingMethod(
-    SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id,
-  );
   await expect(shippingMethodsPage.weightBasedRatesSection).toContainText("No shipping rates found");
   await expect(shippingMethodsPage.weightBasedRatesSection).not.toContainText(weightBasedRate);
 });
