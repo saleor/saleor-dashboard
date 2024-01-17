@@ -41,6 +41,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
             variant="secondary"
             onClick={onCreateNew}
             disabled={isCreatingNew}
+            data-test-id="create-class-button"
           >
             <FormattedMessage {...taxesMessages.addTaxClassLabel} />
           </Button>
@@ -61,6 +62,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
             {taxClasses?.map((taxClass, taxClassId) => (
               <React.Fragment key={taxClass.id}>
                 <ListItemLink
+                  data-test-id="class-list-rows"
                   className={clsx(classes.clickable, classes.tableRow, {
                     [classes.selected]: taxClass.id === selectedTaxClassId,
                   })}
@@ -71,6 +73,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
                       {taxClass.name}
                       {taxClass.id !== "new" && (
                         <Button
+                          data-test-id="class-delete-button"
                           icon={<TrashBinIcon />}
                           variant="tertiary"
                           onClick={event => {

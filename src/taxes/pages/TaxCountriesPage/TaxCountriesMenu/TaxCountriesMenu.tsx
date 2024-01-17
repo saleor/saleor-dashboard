@@ -35,7 +35,11 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
       <CardTitle
         title={intl.formatMessage(taxesMessages.countryList)}
         toolbar={
-          <Button onClick={onCountryAdd} variant="secondary">
+          <Button
+            onClick={onCountryAdd}
+            variant="secondary"
+            data-test-id="add-country-button"
+          >
             <FormattedMessage {...taxesMessages.addCountryLabel} />
           </Button>
         }
@@ -57,6 +61,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
           {configurations?.map((config, configIndex) => (
             <React.Fragment key={config.country.code}>
               <ListItemLink
+                data-test-id="countries-list-rows"
                 className={clsx(classes.clickable, classes.tableRow, {
                   [classes.selected]: config.country.code === selectedCountryId,
                 })}
