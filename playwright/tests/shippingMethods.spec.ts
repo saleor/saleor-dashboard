@@ -86,9 +86,9 @@ test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes
   );
 });
 
-test("TC: SALEOR_34 Delete a single shipping method from the shipping zone details page @shipping-method @e2e", async ({
-                                                                                                                         page,
-                                                                                                                       }) => {
+test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details page @shipping-method @e2e", async ({
+                                                                                                                       page,
+                                                                                                                     }) => {
   const shippingMethodsPage = new ShippingMethodsPage(page);
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id,
@@ -96,10 +96,25 @@ test("TC: SALEOR_34 Delete a single shipping method from the shipping zone detai
   await expect(shippingMethodsPage.basePage.pageHeader).toBeVisible();
   const priceBasedRate = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.priceBasedRateToBeDeleted.name;
   await expect(shippingMethodsPage.priceBasedRatesSection).toContainText(priceBasedRate);
-  await shippingMethodsPage.clickDeleteShippingMethod();
+  await shippingMethodsPage.clickDeletePriceBasedShippingMethod();
   await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
   await shippingMethodsPage.basePage.expectSuccessBanner();
   await expect(shippingMethodsPage.priceBasedRatesSection).toContainText("No shipping rates found");
   await expect(shippingMethodsPage.priceBasedRatesSection).not.toContainText(priceBasedRate);
 });
 
+test("TC: SALEOR_35 Delete a single shipping rate from its details page @shipping-method @e2e", async ({
+                                                                                                         page,
+                                                                                                       }) => {
+  const shippingMethodsPage = new ShippingMethodsPage(page);
+  const shippingMethodId = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id;
+  const shippingRateId = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.weightBasedRateToBeDeleted.id;
+  const weightBasedRate = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.weightBasedRateToBeDeleted.name;
+
+  await shippingMethodsPage.gotoExistingShippingRate(shippingMethodId, shippingRateId);
+  await shippingMethodsPage.clickDeleteShippingRateButton();
+  await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
+  await shippingMethodsPage.basePage.expectSuccessBanner();
+  await expect(shippingMethodsPage.weightBasedRatesSection).toContainText("No shipping rates found");
+  await expect(shippingMethodsPage.weightBasedRatesSection).not.toContainText(weightBasedRate);
+});

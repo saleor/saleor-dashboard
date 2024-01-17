@@ -12,6 +12,7 @@ export class ShippingMethodsPage {
   readonly assignCountriesDialog: AssignCountriesDialog;
   readonly deleteShippingMethodDialog: DeleteShippingMethodDialog;
 
+
   constructor(
     page: Page,
     readonly assignCountryButton = page.getByTestId("assign-country"),
@@ -24,7 +25,9 @@ export class ShippingMethodsPage {
       .locator("textarea"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly shippingZoneName = page.getByTestId("page-header"),
-    readonly deleteShippingMethodButton = page.getByTestId("shipping-method-row").getByRole("button").getByTestId("delete-button"),
+    readonly deleteShippingRateButton = page.getByTestId("button-bar-delete"),
+    readonly shippingRateNameInput = page.getByTestId("shipping-rate-name-input"),
+    readonly deleteShippingRateButtonOnList = page.getByTestId("shipping-method-row").getByRole("button").getByTestId("delete-button"),
     readonly priceBasedRatesSection = page.getByTestId("price-based-rates"),
     readonly weightBasedRatesSection = page.getByTestId("weight-based-rates"),
   ) {
@@ -83,13 +86,35 @@ export class ShippingMethodsPage {
     });
   }
 
+  async gotoExistingShippingRate(shippingMethodId: string, shippingRateId: string) {
+    const existingShippingRateUrl = `${URL_LIST.shippingMethods}${shippingMethodId}/${shippingRateId}`;
+
+    await console.log(
+      `Navigates to existing shipping rate page: ${existingShippingRateUrl}`,
+    );
+
+    await this.page.goto(existingShippingRateUrl);
+
+    await this.shippingRateNameInput.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
+  }
+
+
   async clickCreateShippingZoneButton() {
     await this.createShippingZoneButton.click();
   }
 
-  async clickDeleteShippingMethod() {
-    await this.priceBasedRatesSection.locator(this.deleteShippingMethodButton).click();
+  async clickDeletePriceBasedShippingMethod() {
+    await this.priceBasedRatesSection.locator(this.deleteShippingRateButtonOnList).click();
 
   }
 
+  async clickDeleteShippingRateButton() {
+    await this.deleteShippingRateButton.click();
+  }
+
+
 }
+
