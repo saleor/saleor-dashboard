@@ -4,6 +4,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { Input, RangeInput } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
 interface RuleCondtionRightOperatorsProps {
   conditionIndex: number;
@@ -51,7 +52,14 @@ export const RuleCondtionRightOperators = ({
           onChange={valuesField.onChange}
           onBlur={valuesField.onBlur}
           disabled={disabled}
-        />
+        >
+          <Multiselect.NoOptions size="small" padding={1}>
+            <FormattedMessage
+              defaultMessage="No options to select"
+              id="xTyg+p"
+            />
+          </Multiselect.NoOptions>
+        </Multiselect>
       );
     }
   }

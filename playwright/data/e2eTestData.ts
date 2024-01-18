@@ -58,12 +58,42 @@ export const CATEGORIES = {
     ],
   },
 };
+export const COLLECTIONS = {
+  collectionToBeUpdated: {
+    id: "Q29sbGVjdGlvbjoxNjY%3D",
+    name: "Collection to be updated",
+  },
+  collectionsToBeBulkDeleted: {
+    names: ["Collection to be deleted 1/2", "Collection to be deleted 2/2"],
+  },
+};
 export const CHANNELS = {
   channelToBeEditedSettings: {
     id: "Q2hhbm5lbDoyMzkx",
   },
   channelToBeDeleted: {
     name: "z - channel to be deleted",
+  },
+};
+export const GIFT_CARDS = {
+  giftCardToBeEdited: {
+    id: "R2lmdENhcmQ6NTM%3D",
+    name: "Code ending with AD47",
+  },
+  giftCardsToBeDeleted: {
+    names: ["to be deleted 1/2", "to be deleted 2/2"],
+  },
+  giftCardToBeActivated: {
+    id: "R2lmdENhcmQ6NTQ%3D",
+    name: "Code ending with 7FF8",
+  },
+  giftCardToBeDeactivated: {
+    id: "R2lmdENhcmQ6NTU%3D",
+    name: "Code ending with F2DA",
+  },
+  giftCardToResendCode: {
+    id: "R2lmdENhcmQ6Ng%3D%3D",
+    name: "Code ending with d_10",
   },
 };
 export const WAREHOUSES = {
@@ -174,6 +204,23 @@ export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
     id: "U2hpcHBpbmdab25lOjIzOTA%3D",
     info: "Shipping method that is used to add rates",
+  },
+  shippingMethodWithRatesToBeDeleted: {
+    id: "U2hpcHBpbmdab25lOjIzODk%3D",
+    info: "Shipping zone with methods to be deleted",
+    name: "e2e-test-shippingZone-to-be-deleted",
+    rates: {
+      priceBasedRateToBeDeleted: {
+        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMjA=",
+        info: "Price based shipping rate",
+        name: "shippingMEthod_to-be-deleted",
+      },
+      weightBasedRateToBeDeleted: {
+        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMjA=",
+        info: "Weight based shipping rate",
+        name: "shippingMethod_to_be_deleted",
+      },
+    },
   },
 };
 export const USERS = {

@@ -79,7 +79,11 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
         })}
         toolbar={
           <>
-            <Button variant="tertiary" onClick={handleImageUploadButtonClick}>
+            <Button
+              variant="tertiary"
+              onClick={handleImageUploadButtonClick}
+              data-test-id="upload-image-button"
+            >
               <FormattedMessage {...commonMessages.uploadImage} />
             </Button>
             <input

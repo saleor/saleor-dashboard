@@ -213,6 +213,10 @@ export class BasePage {
     // make sure all searched texts were found and checked
     await expect(searchText.length).toEqual(rowIndexes.length);
   }
+  async clickListRowBasedOnContainingText(searchText: string) {
+    const rowIndex = await this.findRowIndexBasedOnText([searchText]);
+    await this.clickGridCell(1, rowIndex[0]);
+  }
 
   async expectElementContainsTextFromObjectValues(
     locator: Locator,

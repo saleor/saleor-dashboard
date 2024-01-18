@@ -1,0 +1,75 @@
+name: Run test by cron
+
+on:
+  schedule:
+    # At 2:00 AM UTC on Monday, Wednesday, and Friday
+    - cron: "00 2 * * 1,3,5"
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  initialize-cloud:
+    runs-on: ubuntu-22.04
+    outputs:
+      POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
+      POOL_INSTANCE: ${{ steps.pool_variables.outputs.POOL_INSTANCE }}
+      BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+      API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+      BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+      BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
+      BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ./.github/actions
+
+      - name: Generate variables
+        id: cloud_variables
+        uses: ./.github/actions/prepare-tests-variables
+        with:
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          MODE: main
+
+      - name: Prepare instances
+        id: pool_variables
+        uses: ./.github/actions/prepare-instance
+        with:
+          STRATEGY: reload
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
+          POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
+          BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+
+  run-tests:
+    runs-on: ubuntu-22.04
+    needs: initialize-cloud
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1/2, 2/2]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run playwright tests
+        uses: ./.github/actions/run-pw-tests
+        with:
+          SHARD: ${{ matrix.shard }}
+          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
+          E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+
+  merge-reports:
+    if: '!cancelled()'
+    needs: run-tests
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Merge playwright reports
+        uses: ./.github/actions/merge-pw-reports

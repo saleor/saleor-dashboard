@@ -45,7 +45,7 @@ const GiftCardCreateDialogCodeContent: React.FC<
         <VerticalSpacer spacing={2} />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCopyCode}>
+        <Button onClick={onCopyCode} data-test-id="copy-code-button">
           {intl.formatMessage(messages.copyCodeLabel)}
         </Button>
         <HorizontalSpacer spacing={2} />
