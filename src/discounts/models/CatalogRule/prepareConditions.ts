@@ -26,7 +26,7 @@ export function prepareCatalogueRuleConditions(
       return new Condition(
         key.split("Predicate")[0],
         "is",
-        value.ids.map(toOptions),
+        value.ids?.map(toOptions) ?? [],
       );
     })
     .filter(Boolean)

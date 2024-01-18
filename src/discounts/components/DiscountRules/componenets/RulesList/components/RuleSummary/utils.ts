@@ -31,16 +31,20 @@ export const mapConditionToOption = (
   conditions: Condition[],
 ): OptionWithConditionType[] => {
   return conditions.reduce<OptionWithConditionType[]>((acc, condition) => {
-    const values = Array.isArray(condition.values)
-      ? (condition.values as Option[])
-      : [];
-
-    acc.push(
-      ...values.map<OptionWithConditionType>(value => ({
-        ...value,
+    if (Array.isArray(condition.values)) {
+      acc.push(
+        ...condition.values.map<OptionWithConditionType>(value => ({
+          ...value,
+          type: condition.name as CatalogConditions | OrderConditions,
+        })),
+      );
+    } else {
+      acc.push({
+        label: condition.values,
+        value: condition.values,
         type: condition.name as CatalogConditions | OrderConditions,
-      })),
-    );
+      });
+    }
 
     return acc;
   }, []);

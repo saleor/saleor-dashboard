@@ -4,7 +4,7 @@ import { Option } from "@saleor/macaw-ui-next";
 export const getCurrentConditionsValuesLabels = (rule: Rule[]) => {
   return rule
     .flatMap(rule => rule.conditions)
-    .filter(condition => condition.isArrayOfOptions())
+    .filter(condition => Array.isArray(condition))
     .flatMap(condition => condition.values as Option[])
     .reduce((acc, value) => {
       // Initali value and label might contain  id
