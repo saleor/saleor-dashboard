@@ -23,39 +23,11 @@ export function prepareCatalogueRuleConditions(
         );
       }
 
-      if (value.productPredicate) {
-        return new Condition(
-          "product",
-          "is",
-          value.productPredicate.ids.map(toOptions),
-        );
-      }
-
-      if (value.categoryPredicate) {
-        return new Condition(
-          "category",
-          "is",
-          value.categoryPredicate.ids.map(toOptions),
-        );
-      }
-
-      if (value.collectionPredicate) {
-        return new Condition(
-          "collection",
-          "is",
-          value.collectionPredicate.ids.map(toOptions),
-        );
-      }
-
-      if (value.variantPredicate) {
-        return new Condition(
-          "variant",
-          "is",
-          value.variantPredicate.ids.map(toOptions),
-        );
-      }
-
-      return new Condition(null, "is", []);
+      return new Condition(
+        key.split("Predicate")[0],
+        "is",
+        value.ids.map(toOptions),
+      );
     })
     .filter(Boolean)
     .flat() as Condition[];
