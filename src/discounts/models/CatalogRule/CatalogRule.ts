@@ -13,8 +13,9 @@ import { prepareCatalogueRuleConditions } from "./prepareConditions";
 import { prepareCataloguePredicate } from "./preparePredicate";
 
 export class CatalogRule implements BaseRule {
+  public type: "catalog";
+
   constructor(
-    public type: "catalog",
     public id: string,
     public name: string,
     public description: string | null,
@@ -23,11 +24,12 @@ export class CatalogRule implements BaseRule {
     public rewardValue: number,
     public rewardValueType: RewardValueTypeEnum,
     public conditions: Condition[],
-  ) {}
+  ) {
+    this.type = "catalog";
+  }
 
   public static empty(): CatalogRule {
     return new CatalogRule(
-      "catalog",
       "",
       "",
       "",
@@ -50,7 +52,6 @@ export class CatalogRule implements BaseRule {
 
   public static fromFormValues(data: BaseRule): CatalogRule {
     return new CatalogRule(
-      "catalog",
       data.id,
       data.name,
       data.description,
@@ -67,8 +68,8 @@ export class CatalogRule implements BaseRule {
     ruleConditionsOptionsDetailsMap: Record<string, string>,
   ): BaseRule {
     const baseRuleData = createBaseRuleInputFromAPI(rule);
-    const baseRule = new CatalogRule(
-      "catalog",
+
+    return new CatalogRule(
       baseRuleData.id,
       baseRuleData.name,
       baseRuleData.description,
@@ -76,14 +77,10 @@ export class CatalogRule implements BaseRule {
       baseRuleData.rewardType,
       baseRuleData.rewardValue,
       baseRuleData.rewardValueType,
-      [],
+      prepareCatalogueRuleConditions(
+        rule.cataloguePredicate,
+        ruleConditionsOptionsDetailsMap,
+      ),
     );
-
-    baseRule.conditions = prepareCatalogueRuleConditions(
-      rule.cataloguePredicate,
-      ruleConditionsOptionsDetailsMap,
-    );
-
-    return baseRule;
   }
 }

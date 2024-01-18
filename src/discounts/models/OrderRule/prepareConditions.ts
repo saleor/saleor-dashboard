@@ -2,15 +2,16 @@ import { OrderPredicateAPI } from "@dashboard/discounts/types";
 import { DecimalFilterInput } from "@dashboard/graphql";
 
 import { Condition } from "../Condition";
+import { getConditionType, getConditionValue } from "../helpers";
 
 export const prepareOrderConditions = (
   orderPredicate: OrderPredicateAPI,
 ): Condition[] => {
-  if (!orderPredicate?.discountedObjectPredicate) {
+  if (!orderPredicate) {
     return [];
   }
 
-  return Object.entries(orderPredicate.discountedObjectPredicate)
+  return Object.entries(orderPredicate)
     .map(([key, value]) => {
       if (key === "OR") {
         return prepareOrderConditions(
@@ -24,19 +25,11 @@ export const prepareOrderConditions = (
         );
       }
 
-      if (key === "baseSubtotalPrice") {
-        return new Condition(key, "is", (value as DecimalFilterInput).eq);
-      }
-
-      if (key === "baseTotalPrice") {
-        return new Condition(
-          key,
-          "is",
-          orderPredicate.discountedObjectPredicate.baseSubtotalPrice.eq,
-        );
-      }
-
-      return new Condition(null, "is", []);
+      return new Condition(
+        key,
+        getConditionType(value as DecimalFilterInput),
+        getConditionValue(value as DecimalFilterInput),
+      );
     })
     .filter(Boolean)
     .flat() as Condition[];

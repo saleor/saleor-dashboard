@@ -13,8 +13,9 @@ import { prepareOrderConditions } from "./prepareConditions";
 import { prepareOrderPredicate } from "./preparePredicate";
 
 export class OrderRule implements BaseRule {
+  public type: "order";
+
   constructor(
-    public type: "order",
     public id: string,
     public name: string,
     public description: string | null,
@@ -23,7 +24,9 @@ export class OrderRule implements BaseRule {
     public rewardValue: number,
     public rewardValueType: RewardValueTypeEnum,
     public conditions: Condition[],
-  ) {}
+  ) {
+    this.type = "order";
+  }
 
   public toAPI(): PromotionRuleInput {
     const baseRule = createBaseAPIInput(this);
@@ -36,7 +39,6 @@ export class OrderRule implements BaseRule {
 
   public static empty(): OrderRule {
     return new OrderRule(
-      "order",
       "",
       "",
       "",
@@ -50,7 +52,6 @@ export class OrderRule implements BaseRule {
 
   public static fromFormValues(data: BaseRule): OrderRule {
     return new OrderRule(
-      "order",
       data.id,
       data.name,
       data.description,
@@ -67,8 +68,8 @@ export class OrderRule implements BaseRule {
     ruleConditionsOptionsDetailsMap: Record<string, string>,
   ): BaseRule {
     const baseRuleData = createBaseRuleInputFromAPI(rule);
-    const baseRule = new OrderRule(
-      "order",
+
+    return new OrderRule(
       baseRuleData.id,
       baseRuleData.name,
       baseRuleData.description,
@@ -76,14 +77,10 @@ export class OrderRule implements BaseRule {
       baseRuleData.rewardType,
       baseRuleData.rewardValue,
       baseRuleData.rewardValueType,
-      [],
+      prepareOrderConditions(
+        rule.orderPredicate?.discountedObjectPredicate ?? {},
+        // ruleConditionsOptionsDetailsMap,
+      ),
     );
-
-    baseRule.conditions = prepareOrderConditions(
-      rule.orderPredicate,
-      // ruleConditionsOptionsDetailsMap,
-    );
-
-    return baseRule;
   }
 }

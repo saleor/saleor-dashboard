@@ -1,12 +1,13 @@
 import { isTuple } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
 import {
+  DecimalFilterInput,
   PromotionRuleDetailsFragment,
   PromotionRuleInput,
   RewardTypeEnum,
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
-import { Condition } from "./Condition";
+import { Condition, ConditionType } from "./Condition";
 import { BaseRule, Rule } from "./types";
 
 export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
@@ -72,4 +73,58 @@ function getRewardType(rule: Rule): RewardTypeEnum | null {
     return RewardTypeEnum.SUBTOTAL_DISCOUNT;
   }
   return rule.rewardType;
+}
+
+export function getConditionType(
+  conditionValue: DecimalFilterInput,
+): ConditionType {
+  if (conditionValue.eq) {
+    return "is";
+  }
+
+  if (conditionValue.oneOf) {
+    return "in";
+  }
+
+  if (conditionValue.range) {
+    if (conditionValue.range.lte && conditionValue.range.gte) {
+      return "between";
+    }
+
+    if (conditionValue.range.lte) {
+      return "lower";
+    }
+
+    if (conditionValue.range.gte) {
+      return "greater";
+    }
+  }
+
+  return "is";
+}
+
+export function getConditionValue(conditionValue: DecimalFilterInput) {
+  if (conditionValue.eq) {
+    return conditionValue.eq;
+  }
+
+  if (conditionValue.oneOf) {
+    return conditionValue.oneOf;
+  }
+
+  if (conditionValue.range) {
+    if (conditionValue.range.lte && conditionValue.range.gte) {
+      return [conditionValue.range.gte, conditionValue.range.lte];
+    }
+
+    if (conditionValue.range.lte) {
+      return conditionValue.range.lte;
+    }
+
+    if (conditionValue.range.gte) {
+      return conditionValue.range.gte;
+    }
+  }
+
+  return conditionValue.eq;
 }

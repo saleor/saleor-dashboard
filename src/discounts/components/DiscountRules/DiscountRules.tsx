@@ -73,7 +73,7 @@ export const DiscountRules = <ErrorCode,>({
     setRuleEditIndex(editIndex);
     setRuleModalState({
       open: true,
-      type: "catalog", // TODO: check which rule type has discount
+      type: discountType,
     });
   };
 
@@ -84,7 +84,7 @@ export const DiscountRules = <ErrorCode,>({
   const handleRuleModalClose = () => {
     setRuleModalState({
       open: false,
-      type: "catalog",
+      type: discountType,
     });
     setRuleEditIndex(null);
   };
