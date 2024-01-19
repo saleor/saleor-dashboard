@@ -83,15 +83,7 @@ export const RuleConditionRow = ({
           value={typeField.value}
           size="medium"
           options={conditionTypesOptions}
-          onChange={(condition: unknown) => {
-            if (typeof condition === "string") {
-              typeField.onChange(condition);
-            }
-
-            if (typeof condition === "object" && "value" in condition) {
-              typeField.onChange(condition.value);
-            }
-          }}
+          onChange={typeField.onChange}
           disabled={disabled}
         />
       </RuleInputWrapper>
