@@ -40,6 +40,7 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
       />
       <CardContent>
         <TextField
+          data-test-id="collection-name-input"
           label={intl.formatMessage({
             id: "/WXs6H",
             defaultMessage: "Name",
