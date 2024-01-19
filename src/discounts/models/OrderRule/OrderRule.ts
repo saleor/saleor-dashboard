@@ -8,11 +8,11 @@ import { Option } from "@saleor/macaw-ui-next";
 
 import { Condition } from "../Condition";
 import { createBaseAPIInput, createBaseRuleInputFromAPI } from "../helpers";
-import { BaseRule } from "../types";
+import { Rule } from "../types";
 import { prepareOrderConditions } from "./prepareConditions";
 import { prepareOrderPredicate } from "./preparePredicate";
 
-export class OrderRule implements BaseRule {
+export class OrderRule implements Rule {
   public type: "order";
 
   constructor(
@@ -50,7 +50,7 @@ export class OrderRule implements BaseRule {
     );
   }
 
-  public static fromFormValues(data: BaseRule): OrderRule {
+  public static fromFormValues(data: Rule): OrderRule {
     return new OrderRule(
       data.id,
       data.name,
@@ -66,7 +66,7 @@ export class OrderRule implements BaseRule {
   public static fromAPI(
     rule: PromotionRuleDetailsFragment,
     ruleConditionsOptionsDetailsMap: Record<string, string>,
-  ): BaseRule {
+  ): Rule {
     const baseRuleData = createBaseRuleInputFromAPI(rule);
 
     return new OrderRule(

@@ -6,11 +6,9 @@ import {
 import { Option } from "@saleor/macaw-ui-next";
 
 import { DiscountType } from "../types";
-import { CatalogRule } from "./CatalogRule/CatalogRule";
 import { Condition } from "./Condition";
-import { OrderRule } from "./OrderRule/OrderRule";
 
-export interface BaseRule {
+export interface Rule {
   type: DiscountType;
   id: string;
   name: string;
@@ -22,5 +20,3 @@ export interface BaseRule {
   conditions: Condition[];
   toAPI: () => PromotionRuleInput;
 }
-
-export type Rule = OrderRule | CatalogRule;
