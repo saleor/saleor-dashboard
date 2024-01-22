@@ -8,7 +8,7 @@ export type ConditionType =
   | "lower"
   | "greater";
 
-export type ConditionValue = Option[] | string | null;
+export type ConditionValue = Option[] | string | [string, string] | null;
 
 export class Condition {
   constructor(

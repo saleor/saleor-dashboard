@@ -1,4 +1,3 @@
-import { isTuple } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
 import {
   DecimalFilterInput,
   PromotionRuleDetailsFragment,
@@ -46,11 +45,7 @@ export const createWhereInput = (condition: Condition) => {
     return { range: { gte: value } };
   }
 
-  if (
-    Array.isArray(value) &&
-    isTuple(value.map(option => option.value)) &&
-    label === "between"
-  ) {
+  if (Array.isArray(value) && value.length === 2 && label === "between") {
     const [gte, lte] = value;
     return { range: { lte, gte } };
   }

@@ -1,7 +1,7 @@
 import { Multiselect } from "@dashboard/components/Combobox";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
 import { Rule } from "@dashboard/discounts/models";
-import { Input, RangeInput } from "@saleor/macaw-ui-next";
+import { Box, Input, RangeInput } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
@@ -77,13 +77,15 @@ export const RuleCondtionRightOperators = ({
 
   if (inputType === "number.range") {
     return (
-      <RangeInput
-        value={condition.values as any}
-        onChange={valuesField.onChange}
-        type="number"
-        disabled={disabled}
-        width="100%"
-      />
+      <Box display="grid" gap={1}>
+        <RangeInput
+          value={condition.values as [string, string]}
+          onChange={valuesField.onChange}
+          type="number"
+          disabled={disabled}
+          width="100%"
+        />
+      </Box>
     );
   }
 
