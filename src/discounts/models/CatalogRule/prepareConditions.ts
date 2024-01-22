@@ -10,22 +10,16 @@ export function prepareCatalogueRuleConditions(
 
   return Object.entries(cataloguePredicate)
     .map(([key, value]) => {
-      if (key === "OR") {
+      if (["OR", "AND"].includes(key)) {
         return prepareCatalogueRuleConditions(
-          value.reduce(
-            (acc: CataloguePredicateAPI, val: Record<string, unknown>) => {
-              acc = { ...acc, ...val };
-              return acc;
-            },
-            {} as CataloguePredicateAPI,
-          ),
+          value.reduce(toObject, {} as CataloguePredicateAPI),
           ruleConditionsOptionsDetailsMap,
         );
       }
 
       return new Condition(
         key.split("Predicate")[0],
-        "is",
+        "is", // Catalog predicate always has only "is" condition type
         value.ids?.map(toOptions) ?? [],
       );
     })
@@ -40,4 +34,9 @@ function createToOptionMap(
     label: ruleConditionsOptionsDetailsMap[id] || id,
     value: id,
   });
+}
+
+function toObject(acc: CataloguePredicateAPI, val: Record<string, unknown>) {
+  acc = { ...acc, ...val };
+  return acc;
 }

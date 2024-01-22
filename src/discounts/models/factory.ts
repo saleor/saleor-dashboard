@@ -14,7 +14,8 @@ export const createEmptyRule = (type: DiscountType) => {
     return OrderRule.empty();
   }
 
-  return null;
+  const _exhaustiveCheck: never = type;
+  return _exhaustiveCheck;
 };
 
 export const createRuleFromData = (data: Rule) => {
@@ -26,7 +27,8 @@ export const createRuleFromData = (data: Rule) => {
     return OrderRule.fromFormValues(data);
   }
 
-  return null;
+  const _exhaustiveCheck: never = data.type;
+  return _exhaustiveCheck;
 };
 
 export const createRuleFromAPI = (
@@ -39,8 +41,9 @@ export const createRuleFromAPI = (
   }
 
   if (type === "order") {
-    return OrderRule.fromAPI(ruleData, labelMap);
+    return OrderRule.fromAPI(ruleData);
   }
 
-  return null;
+  const _exhaustiveCheck: never = type;
+  return _exhaustiveCheck;
 };

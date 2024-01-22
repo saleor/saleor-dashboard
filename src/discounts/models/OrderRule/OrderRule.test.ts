@@ -70,7 +70,7 @@ describe("OrderRule model", () => {
       },
     } as PromotionRuleDetailsFragment;
 
-    expect(OrderRule.fromAPI(rule, {})).toMatchObject({
+    expect(OrderRule.fromAPI(rule)).toMatchObject({
       id: "rule_1",
       name: "name",
       channel: { label: "Channel 1", value: "channel_1" },

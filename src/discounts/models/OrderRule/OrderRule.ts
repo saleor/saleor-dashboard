@@ -63,10 +63,7 @@ export class OrderRule implements Rule {
     );
   }
 
-  public static fromAPI(
-    rule: PromotionRuleDetailsFragment,
-    ruleConditionsOptionsDetailsMap: Record<string, string>,
-  ): Rule {
+  public static fromAPI(rule: PromotionRuleDetailsFragment): Rule {
     const baseRuleData = createBaseRuleInputFromAPI(rule);
 
     return new OrderRule(
@@ -79,7 +76,6 @@ export class OrderRule implements Rule {
       baseRuleData.rewardValueType,
       prepareOrderConditions(
         rule.orderPredicate?.discountedObjectPredicate ?? {},
-        // ruleConditionsOptionsDetailsMap,
       ),
     );
   }

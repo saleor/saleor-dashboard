@@ -8,7 +8,7 @@ import {
 } from "@dashboard/graphql";
 
 import { Condition, ConditionType } from "./Condition";
-import { BaseRule, Rule } from "./types";
+import { Rule } from "./types";
 
 export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
   return {
@@ -23,7 +23,7 @@ export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
 
 export const createBaseRuleInputFromAPI = (
   data: PromotionRuleDetailsFragment,
-): Omit<BaseRule, "toAPI" | "type" | "conditions"> => {
+): Omit<Rule, "toAPI" | "type" | "conditions"> => {
   return {
     id: data.id,
     name: data.name ?? "",
