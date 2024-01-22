@@ -13,7 +13,7 @@ import { getMutationErrors } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { createHandler } from "./handlers";
+import { useDiscountCreate } from "./handlers";
 
 export const DiscountCreate = () => {
   const { availableChannels } = useAppChannel(false);
@@ -38,7 +38,7 @@ export const DiscountCreate = () => {
     },
   });
 
-  const handlePromotionCreate = createHandler(variables =>
+  const handlePromotionCreate = useDiscountCreate(variables =>
     promotionCreate({ variables }),
   );
 

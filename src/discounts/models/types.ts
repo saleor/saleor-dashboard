@@ -1,8 +1,4 @@
-import {
-  PromotionRuleInput,
-  RewardTypeEnum,
-  RewardValueTypeEnum,
-} from "@dashboard/graphql";
+import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
 import { DiscountType } from "../types";
@@ -18,5 +14,4 @@ export interface Rule {
   rewardValue: number;
   rewardValueType: RewardValueTypeEnum;
   conditions: Condition[];
-  toAPI: () => PromotionRuleInput;
 }

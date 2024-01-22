@@ -1,5 +1,4 @@
 import { Rule } from "@dashboard/discounts/models";
-import { createRuleFromData } from "@dashboard/discounts/models/factory";
 import { sortRules } from "@dashboard/discounts/utils";
 import { useState } from "react";
 
@@ -11,15 +10,13 @@ export const useRulesHandlers = () => {
   };
 
   const onRuleSubmit = async (data: Rule, ruleEditIndex: number | null) => {
-    const ruleObj = createRuleFromData(data);
-
-    if (ruleEditIndex !== null && ruleObj) {
+    if (ruleEditIndex !== null) {
       setRules(rules => {
-        rules[ruleEditIndex] = ruleObj;
+        rules[ruleEditIndex] = data;
         return rules;
       });
     } else {
-      setRules(sortRules([...rules, ruleObj]));
+      setRules(sortRules([...rules, data]));
     }
   };
 

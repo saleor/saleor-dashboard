@@ -1,8 +1,5 @@
 import { Rule } from "@dashboard/discounts/models";
-import {
-  createRuleFromAPI,
-  createRuleFromData,
-} from "@dashboard/discounts/models/factory";
+import { mapAPIRuleToForm } from "@dashboard/discounts/models/useRuleFromAPI";
 import { getDiscountType } from "@dashboard/discounts/utils";
 import {
   PromotionDetailsFragment,
@@ -38,7 +35,7 @@ export const useRulesHandlers = ({
 
   const rules =
     data?.rules?.map(rule =>
-      createRuleFromAPI(getDiscountType(data), rule, labelsMap),
+      mapAPIRuleToForm(getDiscountType(data), rule, labelsMap),
     ) ?? [];
 
   useEffect(() => {
@@ -64,17 +61,15 @@ export const useRulesHandlers = ({
       >
     > = [];
 
-    const ruleObj = createRuleFromData(rule);
-
     if (ruleEditIndex !== null) {
       updateLabels(rule);
-      errors = await onRuleUpdateSubmit(ruleObj);
+      errors = await onRuleUpdateSubmit(rule);
 
       if (errors.length > 0) {
         setRulesErrors(errors);
       }
     } else {
-      errors = await onRuleCreateSubmit(ruleObj);
+      errors = await onRuleCreateSubmit(rule);
       if (errors.length > 0) {
         setRulesErrors(errors);
       }

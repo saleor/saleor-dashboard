@@ -4,20 +4,20 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Rule } from "@dashboard/discounts/models";
-import { createEmptyRule } from "@dashboard/discounts/models/factory";
 import { DiscountType } from "@dashboard/discounts/types";
 import { ChannelFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { DiscountRulesContextProvider } from "../../context/provider";
 import { messages } from "../../messages";
 import { RuleForm } from "../RuleForm/RuleForm";
+import { defaultFormValues } from "./defaultFormValues";
 import { getValidationSchema } from "./validationSchema";
 
 export interface RuleModalState {
@@ -48,14 +48,12 @@ export const RuleFormModal = <ErrorCode,>({
 }: RuleFormModalProps<ErrorCode>) => {
   const intl = useIntl();
 
-  const emptyRule = useMemo(
-    () => createEmptyRule(ruleModalState.type),
-    [ruleModalState.type],
-  );
-
   const methods = useForm<Rule>({
     mode: "onBlur",
-    values: initialFormValues || emptyRule,
+    values: initialFormValues || {
+      type: ruleModalState.type,
+      ...defaultFormValues,
+    },
     resolver: zodResolver(getValidationSchema(intl)),
   });
 
@@ -66,7 +64,10 @@ export const RuleFormModal = <ErrorCode,>({
   // Clear modal form
   useEffect(() => {
     if (!initialFormValues && open) {
-      methods.reset(createEmptyRule(ruleModalState.type));
+      methods.reset({
+        type: ruleModalState.type,
+        ...defaultFormValues,
+      });
     }
   }, [open]);
 
