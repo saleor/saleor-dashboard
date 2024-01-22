@@ -45,6 +45,10 @@ export const messages = defineMessages({
     id: "A7W4KO",
     defaultMessage: "Catalog rule",
   },
+  orderRule: {
+    id: "HYK65C",
+    defaultMessage: "Order rule",
+  },
   ruleSummary: {
     id: "NgRa6m",
     defaultMessage:

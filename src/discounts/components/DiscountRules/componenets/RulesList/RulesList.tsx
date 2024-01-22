@@ -1,5 +1,5 @@
 import { Rule } from "@dashboard/discounts/models";
-import { ChannelFragment } from "@dashboard/graphql";
+import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import {
   Box,
@@ -8,7 +8,7 @@ import {
   Text,
   TrashBinIcon,
 } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
@@ -25,6 +25,7 @@ interface RulesListProps<ErrorCode> {
   channels: ChannelFragment[];
   errors: Array<CommonError<ErrorCode> & { index?: number }>;
   loading?: boolean;
+  discountType: PromotionTypeEnum;
   onRuleDelete: (index: number) => void;
   onRuleEdit: (index: number) => void;
 }
@@ -32,6 +33,7 @@ interface RulesListProps<ErrorCode> {
 export const RulesList = <ErrorCode,>({
   rules,
   errors,
+  discountType,
   onRuleEdit,
   onRuleDelete,
   channels,
@@ -40,13 +42,13 @@ export const RulesList = <ErrorCode,>({
 }: RulesListProps<ErrorCode>) => {
   const intl = useIntl();
 
-  if (loading) {
-    return <RuleListLoading />;
-  }
+  const ruleTypeLabel = useMemo(() => {
+    if (discountType === PromotionTypeEnum.CATALOGUE) {
+      return intl.formatMessage(messages.catalogRule);
+    }
 
-  if (rules.length === 0) {
-    return <Placeholder />;
-  }
+    return intl.formatMessage(messages.orderRule);
+  }, []);
 
   const getRuleName = (name: string | undefined) => {
     if (name) {
@@ -54,6 +56,14 @@ export const RulesList = <ErrorCode,>({
     }
     return "";
   };
+
+  if (loading) {
+    return <RuleListLoading />;
+  }
+
+  if (rules.length === 0) {
+    return <Placeholder />;
+  }
 
   return (
     <RuleListContainer>
@@ -68,8 +78,7 @@ export const RulesList = <ErrorCode,>({
                 justifyContent="space-between"
                 alignItems="center"
               >
-                {intl.formatMessage(messages.catalogRule) +
-                  getRuleName(rule.name)}
+                {ruleTypeLabel + getRuleName(rule.name)}
 
                 <Box display="flex">
                   <Button
