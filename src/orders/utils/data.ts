@@ -92,10 +92,10 @@ const getItemPriceAndQuantity = ({
   if (orderLines.length === 0) {
     return {};
   }
-  const { unitPrice } = orderLines.find(getById(id));
+  const selectedOrderLine = orderLines.find(getById(id));
   const selectedQuantity = itemsQuantities.find(getById(id))?.value;
 
-  return { selectedQuantity, unitPrice };
+  return { selectedQuantity, unitPrice: selectedOrderLine?.unitPrice };
 };
 
 const getFulfillmentByFulfillmentLineId = (order, fulfillmentLineId) => {
