@@ -1,8 +1,5 @@
-import {
-  CatalogConditions,
-  DiscountType,
-  OrderConditions,
-} from "@dashboard/discounts/types";
+import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
 
@@ -42,11 +39,11 @@ export const orderConditionOptions: Array<{
   },
 ];
 
-export const useConditionLeftOptions = (discountType: DiscountType) => {
+export const useConditionLeftOptions = (discountType: PromotionTypeEnum) => {
   const [options, setOptions] = useState<Option[]>([]);
 
   useEffect(() => {
-    if (discountType === "catalog") {
+    if (discountType === PromotionTypeEnum.CATALOGUE) {
       setOptions(catalogConditionOptions);
     } else {
       setOptions(orderConditionOptions);

@@ -4,7 +4,6 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
-import { getDiscountType } from "@dashboard/discounts/utils";
 import {
   ChannelFragment,
   PromotionDetailsFragment,
@@ -23,7 +22,7 @@ import { useIntl } from "react-intl";
 import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountDetailsForm } from "../DiscountDetailsForm";
-import { DiscountName } from "../DiscountName";
+import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
 import { DiscountRules } from "../DiscountRules";
 import { DiscountSavebar } from "../DiscountSavebar";
 
@@ -85,11 +84,19 @@ export const DiscountDetailsPage = ({
           onRuleDeleteSubmit={onRuleDeleteSubmit}
           onRuleUpdateSubmit={onRuleUpdateSubmit}
         >
-          {({ rulesErrors, rules, onDeleteRule, onRuleSubmit, onSubmit }) => (
+          {({
+            rulesErrors,
+            rules,
+            discountType,
+            onDeleteRule,
+            onRuleSubmit,
+            onSubmit,
+          }) => (
             <>
-              <DiscountName
+              <DiscountGeneralInfo
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
                 disabled={disabled}
+                typeDisabled={true}
               />
 
               <DiscountDescription disabled={disabled} />
@@ -100,7 +107,7 @@ export const DiscountDetailsPage = ({
               />
 
               <DiscountRules
-                discountType={getDiscountType(data)}
+                discountType={discountType}
                 errors={rulesErrors}
                 rules={rules}
                 loading={ruleConditionsOptionsDetailsLoading}

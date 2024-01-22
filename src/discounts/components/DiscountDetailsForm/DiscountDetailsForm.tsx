@@ -4,6 +4,7 @@ import {
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,
   PromotionRuleUpdateErrorFragment,
+  PromotionTypeEnum,
 } from "@dashboard/graphql";
 import { splitDateTime } from "@dashboard/misc";
 import { CommonError } from "@dashboard/utils/errors/common";
@@ -20,6 +21,7 @@ import { useRulesHandlers } from "./hooks/useRulesHandlers";
 interface DiscountDetailsFormRenderProps {
   rulesErrors: Array<CommonError<any>>;
   rules: Rule[];
+  discountType: PromotionTypeEnum;
   onSubmit: () => void;
   onRuleSubmit: (rule: Rule, ruleEditIndex: number | null) => Promise<void>;
   onDeleteRule: (ruleDeleteIndex: number) => Promise<void>;
@@ -55,6 +57,7 @@ export const DiscountDetailsForm = ({
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: {
+      type: data?.type ?? PromotionTypeEnum.CATALOGUE,
       dates: {
         startDate: splitDateTime(data?.startDate ?? "").date,
         startTime: splitDateTime(data?.startDate ?? "").time,
@@ -68,6 +71,8 @@ export const DiscountDetailsForm = ({
     },
     resolver: zodResolver(getValidationSchema(intl)),
   });
+
+  const discountType = methods.watch("type");
 
   const richText = useRichText({
     initial: JSON.stringify(data?.description),
@@ -92,6 +97,7 @@ export const DiscountDetailsForm = ({
           {children({
             rulesErrors,
             rules,
+            discountType,
             onSubmit: handleSubmit,
             onRuleSubmit,
             onDeleteRule,

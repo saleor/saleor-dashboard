@@ -1,5 +1,5 @@
 import { FetchResult } from "@apollo/client";
-import { mapRuleToAPI } from "@dashboard/discounts/models/useRuleToAPI";
+import { toAPI } from "@dashboard/discounts/models/useRuleToAPI";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
   PromotionCreateMutation,
@@ -16,12 +16,13 @@ export const useDiscountCreate = (
     const response = await create({
       input: {
         name: data.name,
+        type: data.type,
         description: data.description ? JSON.parse(data.description) : null,
         endDate: data.dates.hasEndDate
           ? joinDateTime(data.dates.endDate, data.dates.endTime)
           : null,
         startDate: joinDateTime(data.dates.startDate, data.dates.startTime),
-        rules: data.rules.map(mapRuleToAPI),
+        rules: data.rules.map(toAPI(data.type)),
       },
     });
 

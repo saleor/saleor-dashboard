@@ -4,13 +4,12 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Rule } from "@dashboard/discounts/models";
-import { DiscountType } from "@dashboard/discounts/types";
-import { ChannelFragment } from "@dashboard/graphql";
+import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -20,16 +19,11 @@ import { RuleForm } from "../RuleForm/RuleForm";
 import { defaultFormValues } from "./defaultFormValues";
 import { getValidationSchema } from "./validationSchema";
 
-export interface RuleModalState {
-  open: boolean;
-  type: DiscountType;
-}
-
 interface RuleFormModalProps<ErrorCode> {
-  ruleModalState: RuleModalState;
   disabled: boolean;
   onClose: () => void;
   onSubmit: (data: Rule) => void;
+  discountType: PromotionTypeEnum;
   confimButtonState: ConfirmButtonTransitionState;
   channels: ChannelFragment[];
   initialFormValues?: Rule | null;
@@ -37,8 +31,8 @@ interface RuleFormModalProps<ErrorCode> {
 }
 
 export const RuleFormModal = <ErrorCode,>({
-  ruleModalState,
   disabled,
+  discountType,
   onClose,
   channels,
   initialFormValues,
@@ -50,10 +44,7 @@ export const RuleFormModal = <ErrorCode,>({
 
   const methods = useForm<Rule>({
     mode: "onBlur",
-    values: initialFormValues || {
-      type: ruleModalState.type,
-      ...defaultFormValues,
-    },
+    values: initialFormValues || defaultFormValues,
     resolver: zodResolver(getValidationSchema(intl)),
   });
 
@@ -61,22 +52,12 @@ export const RuleFormModal = <ErrorCode,>({
   const channelSlug =
     channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
 
-  // Clear modal form
-  useEffect(() => {
-    if (!initialFormValues && open) {
-      methods.reset({
-        type: ruleModalState.type,
-        ...defaultFormValues,
-      });
-    }
-  }, [open]);
-
   return (
     <DiscountRulesContextProvider
-      discountType={ruleModalState.type}
+      discountType={discountType}
       channel={channelSlug}
     >
-      <DashboardModal open={ruleModalState.open} onChange={onClose}>
+      <DashboardModal open={true} onChange={onClose}>
         <DashboardModal.Content>
           <DashboardModal.Title
             display="flex"

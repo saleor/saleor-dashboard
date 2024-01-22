@@ -1,6 +1,6 @@
 import { FetchResult } from "@apollo/client";
 import { Rule } from "@dashboard/discounts/models";
-import { mapRuleToAPI } from "@dashboard/discounts/models/useRuleToAPI";
+import { toAPI } from "@dashboard/discounts/models/useRuleToAPI";
 import {
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,
@@ -70,7 +70,7 @@ export const createRuleUpdateHandler = (
     const ruleChannels: string[] =
       ruleData?.channels?.map(channel => channel.id) ?? [];
 
-    const { channels, ...input } = mapRuleToAPI(data);
+    const { channels, ...input } = toAPI(promotionData.type)(data);
 
     const response = await updateRule({
       id: data.id!,
@@ -98,7 +98,7 @@ export const createRuleCreateHandler = (
   ) => Promise<FetchResult<PromotionRuleCreateMutation>>,
 ) => {
   return async (data: Rule) => {
-    const ruleData = mapRuleToAPI(data);
+    const ruleData = toAPI(promotionData.type)(data);
 
     const response = await createRule({
       input: {

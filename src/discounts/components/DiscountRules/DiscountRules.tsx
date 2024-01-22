@@ -1,8 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Rule } from "@dashboard/discounts/models";
-import { DiscountType } from "@dashboard/discounts/types";
-import { ChannelFragment } from "@dashboard/graphql";
+import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -10,9 +9,8 @@ import { useIntl } from "react-intl";
 
 import { AddButton } from "./componenets/AddButton";
 import { RuleDeleteModal } from "./componenets/RuleDeleteModal/RuleDeleteModal";
-import { RuleFormModal, RuleModalState } from "./componenets/RuleFormModal";
+import { RuleFormModal } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
-import { useDiscountType } from "./hooks/useDiscountType";
 import { messages } from "./messages";
 
 export type DiscountRulesErrors<ErrorCode> = Array<
@@ -21,12 +19,12 @@ export type DiscountRulesErrors<ErrorCode> = Array<
 
 interface DiscountRulesProps<ErrorCode> {
   disabled: boolean;
+  discountType: PromotionTypeEnum;
   channels: ChannelFragment[];
   rules: Rule[];
   errors: Array<CommonError<ErrorCode>>;
   loading?: boolean;
   deleteButtonState: ConfirmButtonTransitionState;
-  discountType: DiscountType;
   getRuleConfirmButtonState: (
     ruleEditIndex: number | null,
   ) => ConfirmButtonTransitionState;
@@ -41,20 +39,14 @@ export const DiscountRules = <ErrorCode,>({
   errors,
   getRuleConfirmButtonState,
   deleteButtonState,
+  discountType,
   loading,
-  discountType: discountTypeFromAPI,
   onRuleSubmit,
   onRuleDelete,
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
 
-  const { discountType, setDiscountType } =
-    useDiscountType(discountTypeFromAPI);
-
-  const [ruleModalState, setRuleModalState] = useState<RuleModalState>({
-    open: false,
-    type: "catalog",
-  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
   const isLoaded = useRef(false);
@@ -71,10 +63,7 @@ export const DiscountRules = <ErrorCode,>({
 
   const handleRuleEdit = (editIndex: number) => {
     setRuleEditIndex(editIndex);
-    setRuleModalState({
-      open: true,
-      type: discountType,
-    });
+    setIsModalOpen(true);
   };
 
   const handleOpenRuleDeleteModal = (index: number) => {
@@ -82,36 +71,18 @@ export const DiscountRules = <ErrorCode,>({
   };
 
   const handleRuleModalClose = () => {
-    setRuleModalState({
-      open: false,
-      type: discountType,
-    });
+    setIsModalOpen(false);
     setRuleEditIndex(null);
   };
 
   const handleRuleModalSubmit = async (data: Rule) => {
     await onRuleSubmit(data, ruleEditIndex);
     handleRuleModalClose();
-
-    if (!discountType) {
-      setDiscountType(ruleModalState.type);
-    }
   };
 
   const handleRuleDelete = async () => {
     await onRuleDelete(ruleDeleteIndex!);
     setRuleDeleteIndex(null);
-
-    if (rules.length === 1) {
-      setDiscountType(null);
-    }
-  };
-
-  const handleOpenModal = (type: RuleModalState["type"]) => {
-    setRuleModalState({
-      open: true,
-      type,
-    });
   };
 
   return (
@@ -119,12 +90,7 @@ export const DiscountRules = <ErrorCode,>({
       <DashboardCard.Title>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {intl.formatMessage(messages.title)}
-          <AddButton
-            disabled={disabled}
-            discountType={discountType}
-            onCatalogClick={() => handleOpenModal("catalog")}
-            onOrderClick={() => handleOpenModal("order")}
-          />
+          <AddButton disabled={disabled} onClick={() => setIsModalOpen(true)} />
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
@@ -139,17 +105,18 @@ export const DiscountRules = <ErrorCode,>({
         />
       </DashboardCard.Content>
 
-      <RuleFormModal
-        disabled={disabled}
-        ruleModalState={ruleModalState}
-        confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
-        onClose={handleRuleModalClose}
-        channels={channels}
-        initialFormValues={ruleInitialValues}
-        errors={errors}
-        onSubmit={handleRuleModalSubmit}
-      />
-
+      {isModalOpen && (
+        <RuleFormModal
+          disabled={disabled}
+          discountType={discountType}
+          confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
+          onClose={handleRuleModalClose}
+          channels={channels}
+          initialFormValues={ruleInitialValues}
+          errors={errors}
+          onSubmit={handleRuleModalSubmit}
+        />
+      )}
       <RuleDeleteModal
         open={ruleDeleteIndex !== null}
         onClose={() => setRuleDeleteIndex(null)}

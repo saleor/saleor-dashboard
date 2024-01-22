@@ -17,7 +17,7 @@ import { useIntl } from "react-intl";
 import { DiscountCreateForm } from "../DiscountCreateForm";
 import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
-import { DiscountName } from "../DiscountName";
+import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
 import { DiscountRules, DiscountRulesErrors } from "../DiscountRules";
 
 export interface DiscountCreatePageProps {
@@ -52,9 +52,15 @@ export const DiscountCreatePage = ({
       />
       <DetailPageLayout.Content>
         <DiscountCreateForm onSubmit={onSubmit}>
-          {({ rules, onDeleteRule, onRuleSubmit, submitHandler }) => (
+          {({
+            rules,
+            discountType,
+            onDeleteRule,
+            onRuleSubmit,
+            submitHandler,
+          }) => (
             <>
-              <DiscountName
+              <DiscountGeneralInfo
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
                 disabled={disabled}
               />
@@ -67,7 +73,7 @@ export const DiscountCreatePage = ({
               />
 
               <DiscountRules
-                discountType={null}
+                discountType={discountType}
                 errors={errors as DiscountRulesErrors<PromotionCreateErrorCode>}
                 channels={channels}
                 disabled={disabled}

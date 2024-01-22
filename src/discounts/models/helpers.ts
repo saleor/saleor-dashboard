@@ -3,7 +3,6 @@ import {
   DecimalFilterInput,
   PromotionRuleDetailsFragment,
   PromotionRuleInput,
-  RewardTypeEnum,
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
@@ -15,7 +14,6 @@ export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
     name: data.name,
     description: data.description ? JSON.parse(data.description) : null,
     channels: data?.channel ? [data.channel.value] : [],
-    rewardType: getRewardType(data),
     rewardValue: data.rewardValue,
     rewardValueType: data.rewardValueType,
   };
@@ -67,13 +65,6 @@ export const createWhereInput = (condition: Condition) => {
 
   return value;
 };
-
-function getRewardType(rule: Rule): RewardTypeEnum | null {
-  if (rule.type === "order" && !rule.rewardType) {
-    return RewardTypeEnum.SUBTOTAL_DISCOUNT;
-  }
-  return rule.rewardType;
-}
 
 export function getConditionType(
   conditionValue: DecimalFilterInput,

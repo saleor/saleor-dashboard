@@ -1,23 +1,36 @@
-import { PromotionRuleInput } from "@dashboard/graphql";
+import {
+  PromotionRuleInput,
+  PromotionTypeEnum,
+  RewardTypeEnum,
+} from "@dashboard/graphql";
 
 import { prepareCataloguePredicate } from "./CatalogRule/preparePredicate";
 import { createBaseAPIInput } from "./helpers";
 import { prepareOrderPredicate } from "./OrderRule/preparePredicate";
 import { Rule } from "./types";
 
-export const mapRuleToAPI = (rule: Rule): PromotionRuleInput => {
-  const base = createBaseAPIInput(rule);
-  const orderPredicate =
-    rule.type === "order" ? prepareOrderPredicate(rule.conditions) : undefined;
+export const toAPI =
+  (discountType: PromotionTypeEnum) =>
+  (rule: Rule): PromotionRuleInput => {
+    const base = createBaseAPIInput(rule);
 
-  const cataloguePredicate =
-    rule.type === "catalog"
-      ? prepareCataloguePredicate(rule.conditions)
-      : undefined;
+    const orderPredicate =
+      discountType === PromotionTypeEnum.ORDER
+        ? prepareOrderPredicate(rule.conditions)
+        : undefined;
 
-  return {
-    ...base,
-    orderPredicate,
-    cataloguePredicate,
+    const cataloguePredicate =
+      discountType === PromotionTypeEnum.CATALOGUE
+        ? prepareCataloguePredicate(rule.conditions)
+        : undefined;
+
+    return {
+      ...base,
+      rewardType:
+        discountType === PromotionTypeEnum.ORDER && !rule.rewardType
+          ? RewardTypeEnum.SUBTOTAL_DISCOUNT
+          : rule.rewardType,
+      orderPredicate,
+      cataloguePredicate,
+    };
   };
-};

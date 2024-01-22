@@ -1,4 +1,4 @@
-import { DiscountType } from "@dashboard/discounts/types";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import React, { ReactNode } from "react";
 
 import { useConditionLeftOptions } from "../hooks/useConditionLeftOptions";
@@ -12,7 +12,7 @@ export const DiscountRulesContextProvider = ({
   channel,
 }: {
   children: ReactNode;
-  discountType: DiscountType;
+  discountType: PromotionTypeEnum;
   channel: string;
 }) => {
   const { options: conditionLeftOptions } =

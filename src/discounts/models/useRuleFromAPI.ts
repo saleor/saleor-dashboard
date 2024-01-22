@@ -1,13 +1,15 @@
-import { PromotionRuleDetailsFragment } from "@dashboard/graphql";
+import {
+  PromotionRuleDetailsFragment,
+  PromotionTypeEnum,
+} from "@dashboard/graphql";
 
-import { DiscountType } from "../types";
 import { prepareCatalogueRuleConditions } from "./CatalogRule/prepareConditions";
 import { createBaseRuleInputFromAPI } from "./helpers";
 import { prepareOrderConditions } from "./OrderRule/prepareConditions";
 import { Rule } from "./types";
 
 export const mapAPIRuleToForm = (
-  type: DiscountType,
+  type: PromotionTypeEnum,
   rule: PromotionRuleDetailsFragment,
   labelMap: Record<string, string>,
 ): Rule => {
@@ -22,7 +24,9 @@ export const mapAPIRuleToForm = (
 
   return {
     ...baseRuleData,
-    type,
-    conditions: type === "catalog" ? catalogueConditions : orderconditions,
+    conditions:
+      type === PromotionTypeEnum.CATALOGUE
+        ? catalogueConditions
+        : orderconditions,
   };
 };

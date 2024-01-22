@@ -1,11 +1,9 @@
 import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
-import { DiscountType } from "../types";
 import { Condition } from "./Condition";
 
 export interface Rule {
-  type: DiscountType;
   id: string;
   name: string;
   description: string | null;
