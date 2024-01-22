@@ -25007,6 +25007,11 @@ type Promotion implements Node & ObjectWithMetadata {
     languageCode: LanguageCodeEnum!
   ): PromotionTranslation
 
+  """
+  The type of the promotion. Implicate if the discount is applied on catalogue or order level.
+  """
+  type: PromotionTypeEnum
+
   """Date time of last update of promotion."""
   updatedAt: DateTime!
 }
@@ -25069,6 +25074,9 @@ type PromotionCreateError {
   """The error code."""
   code: PromotionCreateErrorCode!
 
+  """Number of rules with orderPredicate defined exceeding the limit."""
+  exceedBy: Int
+
   """
   Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
   """
@@ -25079,6 +25087,9 @@ type PromotionCreateError {
 
   """The error message."""
   message: String
+
+  """Limit of rules with orderPredicate defined."""
+  rulesLimit: Int
 }
 
 """An enumeration."""
@@ -25087,11 +25098,10 @@ enum PromotionCreateErrorCode {
   INVALID
   INVALID_PRECISION
   MISSING_CHANNELS
-  MIXED_PREDICATES
-  MIXED_PROMOTION_PREDICATES
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   NOT_FOUND
   REQUIRED
+  RULES_NUMBER_LIMIT
 }
 
 input PromotionCreateInput {
@@ -25109,6 +25119,17 @@ input PromotionCreateInput {
 
   """The start date of the promotion in ISO 8601 format."""
   startDate: DateTime
+
+  """
+  Defines the promotion type. Implicate the required promotion rules predicate type and whether the promotion rules will give the catalogue or order discount. 
+  
+  The default value is `Catalogue`.
+  
+  This field will be required from Saleor 3.20.
+  
+  Added in Saleor 3.19.
+  """
+  type: PromotionTypeEnum
 }
 
 """
@@ -25328,6 +25349,9 @@ type PromotionRule implements Node {
   """
   orderPredicate: JSON
 
+  """The type of the predicate that must be met to apply the reward."""
+  predicateType: PromotionTypeEnum
+
   """Promotion to which the rule belongs."""
   promotion: Promotion
 
@@ -25376,6 +25400,9 @@ type PromotionRuleCreateError {
   """The error code."""
   code: PromotionRuleCreateErrorCode!
 
+  """Number of rules with orderPredicate defined exceeding the limit."""
+  exceedBy: Int
+
   """
   Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
   """
@@ -25383,6 +25410,9 @@ type PromotionRuleCreateError {
 
   """The error message."""
   message: String
+
+  """Limit of rules with orderPredicate defined."""
+  rulesLimit: Int
 }
 
 """An enumeration."""
@@ -25391,11 +25421,10 @@ enum PromotionRuleCreateErrorCode {
   INVALID
   INVALID_PRECISION
   MISSING_CHANNELS
-  MIXED_PREDICATES
-  MIXED_PROMOTION_PREDICATES
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   NOT_FOUND
   REQUIRED
+  RULES_NUMBER_LIMIT
 }
 
 input PromotionRuleCreateInput {
@@ -25748,7 +25777,6 @@ enum PromotionRuleUpdateErrorCode {
   INVALID
   INVALID_PRECISION
   MISSING_CHANNELS
-  MIXED_PREDICATES
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   NOT_FOUND
   REQUIRED
@@ -25989,6 +26017,12 @@ input PromotionTranslationInput {
   """
   description: JSON
   name: String
+}
+
+"""An enumeration."""
+enum PromotionTypeEnum {
+  CATALOGUE
+  ORDER
 }
 
 """
@@ -27864,7 +27898,6 @@ type RequestPasswordReset {
 """An enumeration."""
 enum RewardTypeEnum {
   SUBTOTAL_DISCOUNT
-  TOTAL_DISCOUNT
 }
 
 """An enumeration."""

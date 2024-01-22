@@ -4806,7 +4806,7 @@ export type ProductVariantUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionKeySpecifier = ('createdAt' | 'description' | 'endDate' | 'events' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'rules' | 'startDate' | 'translation' | 'updatedAt' | PromotionKeySpecifier)[];
+export type PromotionKeySpecifier = ('createdAt' | 'description' | 'endDate' | 'events' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'rules' | 'startDate' | 'translation' | 'type' | 'updatedAt' | PromotionKeySpecifier)[];
 export type PromotionFieldPolicy = {
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4823,6 +4823,7 @@ export type PromotionFieldPolicy = {
 	rules?: FieldPolicy<any> | FieldReadFunction<any>,
 	startDate?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>,
+	type?: FieldPolicy<any> | FieldReadFunction<any>,
 	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionBulkDeleteKeySpecifier = ('count' | 'errors' | PromotionBulkDeleteKeySpecifier)[];
@@ -4846,12 +4847,14 @@ export type PromotionCreateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	promotion?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionCreateErrorKeySpecifier = ('code' | 'field' | 'index' | 'message' | PromotionCreateErrorKeySpecifier)[];
+export type PromotionCreateErrorKeySpecifier = ('code' | 'exceedBy' | 'field' | 'index' | 'message' | 'rulesLimit' | PromotionCreateErrorKeySpecifier)[];
 export type PromotionCreateErrorFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	exceedBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	index?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	rulesLimit?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionCreatedKeySpecifier = ('issuedAt' | 'issuingPrincipal' | 'promotion' | 'recipient' | 'version' | PromotionCreatedKeySpecifier)[];
 export type PromotionCreatedFieldPolicy = {
@@ -4909,7 +4912,7 @@ export type PromotionEventInterfaceFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionRuleKeySpecifier = ('cataloguePredicate' | 'channels' | 'description' | 'id' | 'name' | 'orderPredicate' | 'promotion' | 'rewardType' | 'rewardValue' | 'rewardValueType' | 'translation' | PromotionRuleKeySpecifier)[];
+export type PromotionRuleKeySpecifier = ('cataloguePredicate' | 'channels' | 'description' | 'id' | 'name' | 'orderPredicate' | 'predicateType' | 'promotion' | 'rewardType' | 'rewardValue' | 'rewardValueType' | 'translation' | PromotionRuleKeySpecifier)[];
 export type PromotionRuleFieldPolicy = {
 	cataloguePredicate?: FieldPolicy<any> | FieldReadFunction<any>,
 	channels?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4917,6 +4920,7 @@ export type PromotionRuleFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderPredicate?: FieldPolicy<any> | FieldReadFunction<any>,
+	predicateType?: FieldPolicy<any> | FieldReadFunction<any>,
 	promotion?: FieldPolicy<any> | FieldReadFunction<any>,
 	rewardType?: FieldPolicy<any> | FieldReadFunction<any>,
 	rewardValue?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4928,11 +4932,13 @@ export type PromotionRuleCreateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	promotionRule?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionRuleCreateErrorKeySpecifier = ('code' | 'field' | 'message' | PromotionRuleCreateErrorKeySpecifier)[];
+export type PromotionRuleCreateErrorKeySpecifier = ('code' | 'exceedBy' | 'field' | 'message' | 'rulesLimit' | PromotionRuleCreateErrorKeySpecifier)[];
 export type PromotionRuleCreateErrorFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	exceedBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	rulesLimit?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionRuleCreatedKeySpecifier = ('issuedAt' | 'issuingPrincipal' | 'promotionRule' | 'recipient' | 'version' | PromotionRuleCreatedKeySpecifier)[];
 export type PromotionRuleCreatedFieldPolicy = {
