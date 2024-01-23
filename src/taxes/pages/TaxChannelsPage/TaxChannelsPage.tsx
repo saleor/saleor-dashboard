@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
@@ -129,7 +130,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     return TaxCalculationStrategy.TAX_APP;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // @ts-expect-error: TODO: Remove when tax strategy is implemented
   const getTaxAppId = (taxCalculationStrategy: string) => {
     if (taxCalculationStrategy === TaxCalculationStrategy.FLAT_RATES) {
       return null;
