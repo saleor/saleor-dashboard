@@ -48,7 +48,7 @@ export const RulesList = <ErrorCode,>({
     }
 
     return intl.formatMessage(messages.orderRule);
-  }, []);
+  }, [discountType]);
 
   const getRuleName = (name: string | undefined) => {
     if (name) {

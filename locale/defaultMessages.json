@@ -427,6 +427,10 @@
     "context": "deprecated secret key toolbar label",
     "string": "Use RS256 signature instead."
   },
+  "0khVBN": {
+    "context": "discount type",
+    "string": "Catalog"
+  },
   "0krqBj": {
     "context": "page header",
     "string": "Order no. {orderNumber} - Refund"
@@ -7168,6 +7172,9 @@
     "context": "money",
     "string": "from {money}"
   },
+  "lZC/1a": {
+    "string": "greater than {value}"
+  },
   "lct0qd": {
     "string": "This list shows all attributes that will be assigned to pages that have this page type assigned."
   },
@@ -7796,6 +7803,9 @@
   "qPSWmL": {
     "string": "Enter usage"
   },
+  "qSCmIG": {
+    "string": "lower than {value}"
+  },
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
@@ -8346,10 +8356,6 @@
   "uUsZ7m": {
     "context": "order payment",
     "string": "Preauthorized amount"
-  },
-  "uVESNH": {
-    "context": "discount type",
-    "string": "Catalogue"
   },
   "ubasgL": {
     "context": "order history message",

@@ -1,4 +1,3 @@
-import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
 import { Chip, DefaultTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -9,7 +8,7 @@ export const RuleSummaryChips = ({
   theme,
   label,
 }: {
-  type: CatalogConditions | OrderConditions;
+  type: string;
   label: string;
   theme: DefaultTheme;
 }) => {

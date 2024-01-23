@@ -30,8 +30,8 @@ export const DiscountGeneralInfo = ({
     () => [
       {
         label: intl.formatMessage({
-          defaultMessage: "Catalogue",
-          id: "uVESNH",
+          defaultMessage: "Catalog",
+          id: "0khVBN",
           description: "discount type",
         }),
         value: PromotionTypeEnum.CATALOGUE,
