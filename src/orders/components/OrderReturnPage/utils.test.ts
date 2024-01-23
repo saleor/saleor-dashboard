@@ -1,4 +1,8 @@
-import { getReturnRefundValue } from "./utils";
+import { TransactionActionEnum } from "@dashboard/graphql";
+import { orderTransactions } from "@dashboard/orders/fixtures";
+
+import { submitCardMessages } from "./components/TransactionSubmitCard/messages";
+import { canSendRefundDuringReturn, getReturnRefundValue } from "./utils";
 
 describe("getReturnRefundValue", () => {
   it("should return empty string if autoGrantRefund is false", () => {
@@ -96,5 +100,97 @@ describe("getReturnRefundValue", () => {
 
     // Assert
     expect(result).toEqual("");
+  });
+});
+
+describe("canSendRefundDuringReturn", () => {
+  it("should return false when autoGrantRefund is false", () => {
+    // Arrange
+    const transactionMock = orderTransactions[0];
+    const autoGrantRefund = false;
+
+    // Act
+    const result = canSendRefundDuringReturn({
+      autoGrantRefund,
+      transactions: [transactionMock],
+    });
+
+    // Assert
+    expect(result).toEqual({
+      value: false,
+      reason: submitCardMessages.cantSendRefundGrantFirst,
+    });
+  });
+
+  it("should return false when there are no transactions", () => {
+    // Arrange
+    const autoGrantRefund = true;
+
+    // Act
+    const result = canSendRefundDuringReturn({
+      autoGrantRefund,
+      transactions: [],
+    });
+
+    // Assert
+    expect(result).toEqual({
+      value: false,
+      reason: submitCardMessages.cantSendRefundNoTransactions,
+    });
+  });
+
+  it("should return false when there are multiple transactions", () => {
+    // Arrange
+    const transactionMock = orderTransactions[0];
+    const autoGrantRefund = true;
+
+    // Act
+    const result = canSendRefundDuringReturn({
+      autoGrantRefund,
+      transactions: [transactionMock, transactionMock],
+    });
+
+    // Assert
+    expect(result).toEqual({
+      value: false,
+      reason: submitCardMessages.cantSendRefundMultipleTransactions,
+    });
+  });
+
+  it("should return false when the transaction does not include a refund action", () => {
+    // Arrange
+    const transactionMock = { ...orderTransactions[0], actions: [] };
+    const autoGrantRefund = true;
+
+    // Act
+    const result = canSendRefundDuringReturn({
+      autoGrantRefund,
+      transactions: [transactionMock],
+    });
+
+    // Assert
+    expect(result).toEqual({
+      value: false,
+      reason: submitCardMessages.cantSendRefundNonRefundable,
+    });
+  });
+
+  it("should return true when all conditions are met", () => {
+    // Arrange
+    const transactionMock = {
+      ...orderTransactions[0],
+      actions: [TransactionActionEnum.REFUND],
+    };
+    const autoGrantRefund = true;
+
+    const result = canSendRefundDuringReturn({
+      autoGrantRefund,
+      transactions: [transactionMock],
+    });
+
+    expect(result).toEqual({
+      value: true,
+      reason: null,
+    });
   });
 });

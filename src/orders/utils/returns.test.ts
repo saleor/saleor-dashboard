@@ -145,7 +145,7 @@ const mockedItemQuantities: FormsetData<LineItemData, number> = [
 ];
 
 describe("getItemPriceAndQuantity", () => {
-  it("returns empty object when ID is not found", () => {
+  it("returns undefined unitPrice when ID is not found", () => {
     // Arrange
     const orderLines = mockedOrderLines;
     const itemsQuantities = mockedItemQuantities;
@@ -153,6 +153,9 @@ describe("getItemPriceAndQuantity", () => {
     // Act
     const result = getItemPriceAndQuantity({ orderLines, itemsQuantities, id });
     // Assert
-    expect(result).toEqual({});
+    expect(result).toEqual({
+      selectedQuantity: 1,
+      unitPrice: undefined,
+    });
   });
 });
