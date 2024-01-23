@@ -1,5 +1,5 @@
 import { FetchResult } from "@apollo/client";
-import { toAPI } from "@dashboard/discounts/models/useRuleToAPI";
+import { toAPI } from "@dashboard/discounts/models/toAPI";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
   PromotionCreateMutation,

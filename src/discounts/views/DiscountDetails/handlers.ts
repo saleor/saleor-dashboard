@@ -1,6 +1,6 @@
 import { FetchResult } from "@apollo/client";
 import { Rule } from "@dashboard/discounts/models";
-import { toAPI } from "@dashboard/discounts/models/useRuleToAPI";
+import { toAPI } from "@dashboard/discounts/models/toAPI";
 import {
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,

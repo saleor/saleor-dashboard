@@ -68,10 +68,6 @@ export function getConditionType(
     return "is";
   }
 
-  if (conditionValue.oneOf) {
-    return "in";
-  }
-
   if (conditionValue.range) {
     if (conditionValue.range.lte && conditionValue.range.gte) {
       return "between";
