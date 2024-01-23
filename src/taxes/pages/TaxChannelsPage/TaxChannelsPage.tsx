@@ -108,23 +108,76 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
         configId =>
           !parsedUpdate.some(config => config.countryCode === configId),
       );
+
     onSubmit({
       chargeTaxes: data.chargeTaxes,
       taxCalculationStrategy: data.chargeTaxes
-        ? data.taxCalculationStrategy
+        ? getTaxCalculationStrategy(data.taxCalculationStrategy)
         : null,
       displayGrossPrices: data.displayGrossPrices,
       pricesEnteredWithTax: data.pricesEnteredWithTax,
       updateCountriesConfiguration: parsedUpdate,
       removeCountriesConfiguration: parsedRemove,
+      // taxAppId: getTaxAppId(data.taxCalculationStrategy)
     });
   };
 
-  const taxStrategyChoices = [
+  const getTaxCalculationStrategy = (taxCalculationStrategy: string) => {
+    if (taxCalculationStrategy === TaxCalculationStrategy.FLAT_RATES) {
+      return TaxCalculationStrategy.FLAT_RATES;
+    }
+    return TaxCalculationStrategy.TAX_APP;
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getTaxAppId = (taxCalculationStrategy: string) => {
+    if (taxCalculationStrategy === TaxCalculationStrategy.FLAT_RATES) {
+      return null;
+    }
+    return taxCalculationStrategy;
+  };
+
+  // TODO: Remove mockedTaxStrategyChoices when tax strategy is implemented
+  const mockedTaxStrategyChoices = [
     {
-      label: intl.formatMessage(taxesMessages.taxStrategyTaxApp),
-      value: TaxCalculationStrategy.TAX_APP,
+      name: "Taxes",
+
+      identifier: "saleor.app.taxes-1",
     },
+    {
+      name: "Taxes",
+      identifier: "saleor.app.taxes-2",
+    },
+    {
+      name: "Local",
+      identifier: "QXBwOjY2",
+    },
+    {
+      name: "Local",
+      identifier: "QXBwOjY3longlonglonglongOlong",
+    },
+  ];
+
+  const taxStrategyChoices = [
+    ...mockedTaxStrategyChoices.map(choice => ({
+      label: (
+        <div style={{ display: "flex", gap: 4 }}>
+          <span>Use {choice.name} app</span>
+          <span
+            style={{
+              color: "gray",
+              width: "150px",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {choice.identifier}
+          </span>
+        </div>
+      ),
+      value: choice.identifier,
+    })),
     {
       label: intl.formatMessage(taxesMessages.taxStrategyFlatRates),
       value: TaxCalculationStrategy.FLAT_RATES,

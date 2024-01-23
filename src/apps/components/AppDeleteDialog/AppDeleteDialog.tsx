@@ -2,6 +2,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { DialogContentText } from "@material-ui/core";
+import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -55,7 +56,22 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
       title={intl.formatMessage(msgs.deleteAppTitle)}
       variant="delete"
     >
-      <DialogContentText data-test-id="dialog-content">
+      <DialogContentText
+        data-test-id="dialog-content"
+        style={{ marginTop: "-12px" }}
+      >
+        {/* TODO: fix this in MacawUI */}
+        <Box
+          __backgroundColor={vars.colors.text.warning1}
+          padding={2}
+          borderRadius={2}
+          marginBottom={4}
+        >
+          <Text variant="caption">
+            Be extra careful with taxes and payment apps, ensure your
+            configuration selects other apps to be used.
+          </Text>
+        </Box>
         {getMainText()} <FormattedMessage {...msgs.deleteAppQuestion} />
       </DialogContentText>
     </ActionDialog>
