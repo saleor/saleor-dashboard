@@ -1,11 +1,11 @@
+import { messages } from "@dashboard/discounts/components/DiscountRules/messages";
 import { Rule } from "@dashboard/discounts/models";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { messages } from "../../../../messages";
-import { RuleChannelChips } from "./components/RuleChannelChips/RuleChannelChips";
-import { RuleChips } from "./components/RuleChips";
+import { RuleChannelChips } from "./components/RuleChannelChips";
+import { RuleConditionsChips } from "./components/RuleConditionsChips";
 import { RuleValueChips } from "./components/RuleValueChips";
 import { hasNoRuleConditions } from "./utils";
 
@@ -41,7 +41,9 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
         {...messages.ruleSummary}
         values={{
           value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
-          items: <RuleChips rule={rule} currencySymbol={currencySymbol} />,
+          conditions: (
+            <RuleConditionsChips rule={rule} currencySymbol={currencySymbol} />
+          ),
           channel: <RuleChannelChips channel={rule.channel} />,
         }}
       />

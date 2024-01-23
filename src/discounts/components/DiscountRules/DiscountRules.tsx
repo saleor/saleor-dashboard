@@ -105,7 +105,6 @@ export const DiscountRules = <ErrorCode,>({
         <DashboardCard.Content>
           <RulesList
             disabled={disabled}
-            discountType={discountType}
             loading={!isLoaded.current || loading}
             rules={rules}
             onRuleEdit={handleRuleEdit}

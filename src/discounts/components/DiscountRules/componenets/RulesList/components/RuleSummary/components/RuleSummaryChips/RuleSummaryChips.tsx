@@ -20,7 +20,7 @@ export const RuleSummaryChips = ({
       __borderColor={color.border}
       marginRight={1.5}
     >
-      {type.slice(0, 1).toLocaleUpperCase() + type.slice(1)}: {label}
+      {type}: {label}
     </Chip>
   );
 };

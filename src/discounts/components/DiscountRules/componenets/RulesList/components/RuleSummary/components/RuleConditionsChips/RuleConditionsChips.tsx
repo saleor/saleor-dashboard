@@ -14,7 +14,10 @@ interface RuleChipsProps {
   currencySymbol: string;
 }
 
-export const RuleChips = ({ rule, currencySymbol }: RuleChipsProps) => {
+export const RuleConditionsChips = ({
+  rule,
+  currencySymbol,
+}: RuleChipsProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
   const { locale } = useLocale();

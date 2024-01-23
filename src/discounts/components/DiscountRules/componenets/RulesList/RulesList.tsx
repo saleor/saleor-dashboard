@@ -1,19 +1,15 @@
 import { Rule } from "@dashboard/discounts/models";
-import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
+import { ChannelFragment } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
-import {
-  Box,
-  Button,
-  EditIcon,
-  Text,
-  TrashBinIcon,
-} from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
 import { Placeholder } from "../Placeholder";
+import { RuleActions } from "./components/RuleActions/RuleActions";
+import { RuleLabel } from "./components/RuleLabel";
 import { RuleListContainer } from "./components/RuleListContainer";
 import { RuleListLoading } from "./components/RuleListLoading";
 import { RuleSummary } from "./components/RuleSummary";
@@ -25,7 +21,6 @@ interface RulesListProps<ErrorCode> {
   channels: ChannelFragment[];
   errors: Array<CommonError<ErrorCode> & { index?: number }>;
   loading?: boolean;
-  discountType: PromotionTypeEnum;
   onRuleDelete: (index: number) => void;
   onRuleEdit: (index: number) => void;
 }
@@ -33,7 +28,6 @@ interface RulesListProps<ErrorCode> {
 export const RulesList = <ErrorCode,>({
   rules,
   errors,
-  discountType,
   onRuleEdit,
   onRuleDelete,
   channels,
@@ -41,21 +35,6 @@ export const RulesList = <ErrorCode,>({
   loading,
 }: RulesListProps<ErrorCode>) => {
   const intl = useIntl();
-
-  const ruleTypeLabel = useMemo(() => {
-    if (discountType === PromotionTypeEnum.CATALOGUE) {
-      return intl.formatMessage(messages.catalogRule);
-    }
-
-    return intl.formatMessage(messages.orderRule);
-  }, [discountType]);
-
-  const getRuleName = (name: string | undefined) => {
-    if (name) {
-      return `: ${name}`;
-    }
-    return "";
-  };
 
   if (loading) {
     return <RuleListLoading />;
@@ -78,32 +57,13 @@ export const RulesList = <ErrorCode,>({
                 justifyContent="space-between"
                 alignItems="center"
               >
-                {ruleTypeLabel + getRuleName(rule.name)}
+                <RuleLabel ruleName={rule.name} />
 
-                <Box display="flex">
-                  <Button
-                    size="small"
-                    variant="tertiary"
-                    onClick={() => onRuleEdit(index)}
-                    cursor={disabled ? "not-allowed" : "pointer"}
-                    disabled={disabled}
-                    data-test-id="rule-edit-button"
-                  >
-                    <EditIcon />
-                  </Button>
-                  <Button
-                    size="small"
-                    disabled={disabled}
-                    variant="tertiary"
-                    data-test-id="rule-delete-button"
-                    onClick={e => {
-                      e.stopPropagation();
-                      onRuleDelete(index);
-                    }}
-                  >
-                    <TrashBinIcon />
-                  </Button>
-                </Box>
+                <RuleActions
+                  onDelete={() => onRuleDelete(index)}
+                  onEdit={() => onRuleEdit(index)}
+                  disabled={disabled}
+                />
               </Box>
               <RuleSummary
                 rule={rule}
