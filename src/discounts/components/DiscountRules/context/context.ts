@@ -1,13 +1,14 @@
-import { DiscountType } from "@dashboard/discounts/types";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 
 import { FetchOptions } from "../hooks/useCondtionRightOptions";
 
 export const discountRulesContext = createContext<{
   conditionLeftOptions: Option[];
-  discountType: DiscountType;
+  discountType: PromotionTypeEnum;
   getConditionTypesOptions: (type: string) => Option[];
   getConditionInputTypeByLabel: (name: string, type: string) => string | null;
   getFetchProps: (type: string) => FetchOptions;
+  setChannel: Dispatch<SetStateAction<string | null>>;
 } | null>(null);

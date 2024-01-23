@@ -64,7 +64,7 @@ export const RuleCondtionRightOperators = ({
     }
   }
 
-  if (inputType === "number") {
+  if (inputType === "number" || inputType === "price") {
     return (
       <Input
         type="number"
@@ -75,7 +75,7 @@ export const RuleCondtionRightOperators = ({
     );
   }
 
-  if (inputType === "number.range") {
+  if (inputType === "price.range" || inputType === "number.range") {
     return (
       <Box display="grid" gap={1}>
         <RangeInput

@@ -370,6 +370,9 @@
     "context": "header",
     "string": "Tokens"
   },
+  "0OAE9q": {
+    "string": "Checkout and orders"
+  },
   "0OfZJA": {
     "context": "button",
     "string": "Back"
@@ -962,6 +965,9 @@
     "context": "product availability",
     "string": "Enabling this checkbox will remove product from search and category pages. It will be available on collection pages."
   },
+  "4VivsY": {
+    "string": "Total price"
+  },
   "4W/CKn": {
     "context": "modal button",
     "string": "Upload URL"
@@ -1187,6 +1193,9 @@
     "context": "weight",
     "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
   },
+  "6230rS": {
+    "string": "Discount rules for carts and draft orders."
+  },
   "62T585": {
     "context": "button",
     "string": "{languageName} - {languageCode}"
@@ -1284,6 +1293,9 @@
   "6iw4VR": {
     "context": "delete variant dialog title",
     "string": "Delete Product Variants"
+  },
+  "6pPMp9": {
+    "string": "Subtotal price"
   },
   "6sjBvJ": {
     "context": "input placeholder",
@@ -1952,6 +1964,9 @@
   },
   "BtErCZ": {
     "string": "Search Plugins..."
+  },
+  "BvGp1I": {
+    "string": "between"
   },
   "BvRyoX": {
     "context": "alert message",
@@ -2827,6 +2842,9 @@
     "context": "product field",
     "string": "Export Variant ID"
   },
+  "HYK65C": {
+    "string": "Order rule"
+  },
   "HaQ8cg": {
     "context": "button",
     "string": "Refund"
@@ -3331,6 +3349,9 @@
   "L2tvTm": {
     "context": "mark as paid strategy checkbox label",
     "string": "Use Transaction flow when marking order as paid"
+  },
+  "L5IuDw": {
+    "string": "lower"
   },
   "L5io1l": {
     "context": "returned products list title",
@@ -3892,6 +3913,9 @@
   },
   "PFXGaR": {
     "string": "Shipping Zones"
+  },
+  "PFnobO": {
+    "string": "greater"
   },
   "PHUcrU": {
     "context": "date when order was placed",
@@ -6479,6 +6503,9 @@
   "h2vipu": {
     "string": "Code"
   },
+  "h5P++h": {
+    "string": "Variants"
+  },
   "h65vZI": {
     "context": "times voucher used",
     "string": "Used"
@@ -7548,6 +7575,10 @@
     "context": "discount value label",
     "string": "discount value"
   },
+  "onUvP+": {
+    "context": "discount type",
+    "string": "Order"
+  },
   "opIDox": {
     "context": "unassign product from sale and save, button",
     "string": "Unassign and save"
@@ -8316,6 +8347,10 @@
     "context": "order payment",
     "string": "Preauthorized amount"
   },
+  "uVESNH": {
+    "context": "discount type",
+    "string": "Catalogue"
+  },
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
@@ -8947,6 +8982,9 @@
   "yzYXW/": {
     "context": "header, dialog",
     "string": "Create New Warehouse"
+  },
+  "z/2AZY": {
+    "string": "Discount type"
   },
   "z0gGP+": {
     "context": "number of attributes",

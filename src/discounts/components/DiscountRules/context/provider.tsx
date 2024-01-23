@@ -9,12 +9,12 @@ import { discountRulesContext } from "./context";
 export const DiscountRulesContextProvider = ({
   discountType,
   children,
-  channel,
 }: {
   children: ReactNode;
   discountType: PromotionTypeEnum;
-  channel: string;
 }) => {
+  const [channel, setChannel] = React.useState<string | null>(null);
+
   const { options: conditionLeftOptions } =
     useConditionLeftOptions(discountType);
   const { getConditionTypesOptions, getConditionInputTypeByLabel } =
@@ -29,6 +29,7 @@ export const DiscountRulesContextProvider = ({
         getConditionTypesOptions,
         getConditionInputTypeByLabel,
         getFetchProps,
+        setChannel,
       }}
     >
       {children}

@@ -1,12 +1,6 @@
 import { Option } from "@saleor/macaw-ui-next";
 
-export type ConditionType =
-  | "is"
-  | "equals"
-  | "in"
-  | "between"
-  | "lower"
-  | "greater";
+export type ConditionType = "is" | "between" | "lower" | "greater";
 
 export type ConditionValue = Option[] | string | [string, string] | null;
 

@@ -41,7 +41,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
         {...messages.ruleSummary}
         values={{
           value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
-          items: <RuleChips rule={rule} />,
+          items: <RuleChips rule={rule} currencySymbol={currencySymbol} />,
           channel: <RuleChannelChips channel={rule.channel} />,
         }}
       />
