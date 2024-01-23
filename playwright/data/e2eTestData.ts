@@ -93,6 +93,11 @@ export const CHANNELS = {
   plnChannel: {
     id: "VGF4Q29uZmlndXJhdGlvbjox",
   },
+  e2eChannelDoNotDelete: {
+    id: "Q2hhbm5lbDoyMzg2",
+    name: "e2e-channel-do-not-delete",
+    slug: "e2e-channel-do-not-delete",
+  },
 };
 export const GIFT_CARDS = {
   giftCardToBeEdited: {
@@ -223,6 +228,26 @@ export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
     id: "U2hpcHBpbmdab25lOjIzOTA%3D",
     info: "Shipping method that is used to add rates",
+  },
+  shippingMethodToBeUpdated: {
+    id: "U2hpcHBpbmdab25lOjIzNzY=",
+    info: "Shipping zone to be updated",
+    name: "e2e-test-shippingZone-to-be-updated",
+  },
+  shippingMethodToBeBulkDeleted1: {
+    id: "U2hpcHBpbmdab25lOjIzNzM=",
+    info: "First shipping zone to be bulk deleted",
+    name: "e2e-test-shippingZone-to-be-bulk-deleted-1",
+  },
+  shippingMethodToBeBulkDeleted2: {
+    id: "U2hpcHBpbmdab25lOjIzNzQ=",
+    info: "Second shipping zone to be bulk deleted",
+    name: "e2e-test-shippingZone-to-be-bulk-deleted-2",
+  },
+  shippingMethodToBeBulkDeleted3: {
+    id: "U2hpcHBpbmdab25lOjIzNzU=",
+    info: "Third shipping zone to be bulk deleted",
+    name: "e2e-test-shippingZone-to-be-bulk-deleted-3",
   },
   shippingMethodWithRatesToBeDeleted: {
     id: "U2hpcHBpbmdab25lOjIzODk%3D",

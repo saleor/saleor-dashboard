@@ -11,12 +11,13 @@ export class RightSideDetailsPage {
       "select-warehouse-for-shipping-method",
     ),
     readonly stockSettingsSection = page.getByTestId("stock-settings-section"),
+    readonly channelSection = page.getByTestId("channel-section"),
+    readonly warehouseSection = page.getByTestId("warehouse-section"),
     readonly selectChannelShippingPageButton = page.getByTestId(
       "select-channel-for-shipping-method",
     ),
     readonly pickupDisabledButton = page.getByTestId("DISABLED"),
     readonly pickupAllWarehousesButton = page.getByTestId("ALL"),
-
     readonly categorySelectOption = page.locator(
       "[data-test-id*='select-option']",
     ),
@@ -31,7 +32,6 @@ export class RightSideDetailsPage {
     ),
     readonly collectionInput = page.getByTestId("collections"),
     readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
-
     readonly manageChannelsButton = page.getByTestId(
       "channels-availability-manage-button",
     ),
@@ -87,15 +87,29 @@ export class RightSideDetailsPage {
   async clickEditBillingAddressButton() {
     await this.editBillingAddressButton.click();
   }
+
   async clickAllocationHighStockButton() {
     await this.allocationHighStockButton.click();
   }
+
   async clickEditShippingAddressButton() {
     await this.editShippingAddressButton.click();
   }
 
   async clickWarehouseSelectShippingPage() {
     await this.selectWarehouseShippingMethodButton.click();
+  }
+
+  async expectAddedWarehousesVisibleByNames(names: string[]) {
+    for (const name of names) {
+      await this.warehouseSection.getByTestId(`#selected-option-${name}`);
+    }
+  }
+
+  async expectAddedChannelsVisibleByNames(names: string[]) {
+    for (const name of names) {
+      await this.channelSection.getByTestId(`#selected-option-${name}`);
+    }
   }
 
   async typeAndSelectSingleWarehouseShippingPage(warehouse = "Europe") {
@@ -108,14 +122,34 @@ export class RightSideDetailsPage {
     this.clickWarehouseSelectShippingPage();
   }
 
+  async typeAndSelectMultipleWarehousesShippingPage(warehouses: string[]) {
+    for (const warehouse of warehouses) {
+      await this.selectWarehouseShippingMethodButton
+        .locator("input")
+        .fill(warehouse);
+
+      await this.selectOption.filter({ hasText: warehouse }).first().click();
+    }
+    this.clickWarehouseSelectShippingPage();
+  }
+
   async clickChannelsSelectShippingPage() {
     await this.selectChannelShippingPageButton.click();
   }
+
   async selectSingleChannelShippingPage(channel = "PLN") {
     await this.selectOption.filter({ hasText: `Channel-${channel}` }).click();
     // below click hides prompted options
     this.clickChannelsSelectShippingPage();
   }
+
+  async selectMultipleChannelsShippingPage(channels: string[]) {
+    for (const channel of channels) {
+      await this.selectOption.filter({ hasText: `${channel}` }).click();
+    }
+    this.clickChannelsSelectShippingPage();
+  }
+
 
   async openChannelsDialog() {
     await this.manageChannelsButton.click();
@@ -125,15 +159,18 @@ export class RightSideDetailsPage {
     await this.categoryInput.click();
     await this.categorySelectOption.first().click();
   }
+
   async selectFirstTax() {
     await expect(this.taxInput.locator("input")).not.toBeDisabled();
     await this.taxInput.click();
     await this.taxSelectOption.first().click();
   }
+
   async selectTaxIndex(taxIndexOnList: number) {
     await this.taxInput.click();
     await this.taxSelectOption.nth(taxIndexOnList).click();
   }
+
   async selectFirstCollection() {
     await this.collectionInput.click();
     await this.selectOption.first().click();
@@ -142,9 +179,11 @@ export class RightSideDetailsPage {
   async clickEditCustomerButton() {
     await this.editCustomerButton.click();
   }
+
   async expandShippingZonesSection() {
     await this.shippingZoneSection.locator(this.expandButton).click();
   }
+
   async expandWarehousesSection() {
     await this.warehousesSection.locator(this.expandButton).click();
   }
@@ -152,28 +191,36 @@ export class RightSideDetailsPage {
   async clickSearchCustomerInput() {
     await this.searchCustomerInput.click();
   }
+
   async clickAddShippingZonesButton() {
     await this.addShippingZonesButton.click();
   }
+
   async clickAddWarehousesButton() {
     await this.addWarehousesButton.click();
   }
+
   async clickPublicStockButton() {
     await this.stockSettingsSection.getByText("Public").click();
   }
+
   async clickPickupDisabledButton() {
     await this.pickupDisabledButton.click();
   }
+
   async clickPickupAllWarehousesButton() {
     await this.pickupAllWarehousesButton.click();
   }
+
   async clickPrivateStockButton() {
     await this.stockSettingsSection.getByText("Private").click();
   }
+
   async selectShippingZone(zoneName = "Asia") {
     await this.shippingZonesSelect.click();
     await this.page.getByRole("option", { name: zoneName });
   }
+
   async selectWarehouse(warehouseName = "Asia") {
     await this.warehouseSelect.click();
     await this.page.getByRole("option", { name: warehouseName });
@@ -189,6 +236,7 @@ export class RightSideDetailsPage {
     await this.channelSelectDialog.selectChannel(channel);
     await this.channelSelectDialog.clickConfirmButton();
   }
+
   async selectOneChannelAsAvailableWhenNoneSelected(channel: string) {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.selectChannel(channel);
