@@ -39,7 +39,10 @@ export class TaxesPage extends BasePage {
     readonly exceptionCountryGrossPriceCheckbox = page.getByTestId(
       "display-gross-prices-checkbox",
     ),
-    readonly checkBoxCheckedState = page.locator("[class*='Mui-checked']"),
+    readonly checkBoxCheckedState = page.locator("Mui-checked"),
+    readonly exceptionCountriesCheckBoxCheckedState = page.locator(
+      "[class*='Mui-checked']",
+    ),
     readonly searchTaxClassInput = page
       .getByTestId("search-tax-class-input")
       .locator("input"),

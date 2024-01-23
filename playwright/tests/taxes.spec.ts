@@ -33,7 +33,7 @@ test("TC: SALEOR_116 Change taxes in channel: enter prices without tax, do not s
   await expect(taxesPage.exceptionCountryRows).toContainText("Canada");
   expect(
     await taxesPage.exceptionCountryRows
-      .locator(taxesPage.checkBoxCheckedState)
+      .locator(taxesPage.exceptionCountriesCheckBoxCheckedState)
       .count(),
   ).toEqual(1);
   await taxesPage.clickSaveButton();
