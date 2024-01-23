@@ -80,12 +80,12 @@ export function getPreviouslyRefundedPrice(
   );
 }
 
-const getItemPriceAndQuantity = ({
+export const getItemPriceAndQuantity = ({
   orderLines,
   itemsQuantities,
   id,
 }: {
-  orderLines: OrderLineFragment[];
+  orderLines: Array<OrderLineFragment & { orderLineId?: string }>;
   itemsQuantities: FormsetData<LineItemData, number>;
   id: string;
 }) => {
