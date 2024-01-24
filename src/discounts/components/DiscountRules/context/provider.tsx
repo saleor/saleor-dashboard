@@ -1,9 +1,9 @@
 import { PromotionTypeEnum } from "@dashboard/graphql";
 import React, { ReactNode } from "react";
 
-import { useConditionLeftOptions } from "../hooks/useConditionLeftOptions";
+import { useConditionNameOptions } from "../hooks/useConditionNameOptions";
 import { useCondtionTypes } from "../hooks/useConditionTypes";
-import { useCondtionRightOptions } from "../hooks/useCondtionRightOptions";
+import { useCondtionValuesOptions } from "../hooks/useCondtionValues";
 import { discountRulesContext } from "./context";
 
 export const DiscountRulesContextProvider = ({
@@ -15,23 +15,23 @@ export const DiscountRulesContextProvider = ({
 }) => {
   const [channel, setChannel] = React.useState<string | null>(null);
 
-  const { options: conditionLeftOptions, getConditionByValue } =
-    useConditionLeftOptions(discountType);
+  const { conditionNameOptions, getConditionNameOptionByValue } =
+    useConditionNameOptions(discountType);
 
-  const { getConditionTypesOptions, getConditionInputTypeByLabel } =
+  const { getConditionTypesOptions, getConditionTypeByLabel } =
     useCondtionTypes();
 
-  const { getFetchProps } = useCondtionRightOptions(channel);
+  const { getConditionValuesFetchProps } = useCondtionValuesOptions(channel);
 
   return (
     <discountRulesContext.Provider
       value={{
-        conditionLeftOptions,
         discountType,
+        conditionNameOptions,
         getConditionTypesOptions,
-        getConditionInputTypeByLabel,
-        getConditionByValue,
-        getFetchProps,
+        getConditionTypeByLabel,
+        getConditionNameOptionByValue,
+        getConditionValuesFetchProps,
         setChannel,
       }}
     >

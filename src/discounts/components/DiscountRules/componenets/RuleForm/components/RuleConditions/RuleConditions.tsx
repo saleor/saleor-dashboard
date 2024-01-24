@@ -18,7 +18,7 @@ export const RuleConditions = ({
   hasSelectedChannels,
 }: RuleConditionsProps) => {
   const intl = useIntl();
-  const { conditionLeftOptions } = useDiscountRulesContext();
+  const { conditionNameOptions } = useDiscountRulesContext();
 
   const { watch } = useFormContext<Rule>();
 
@@ -29,7 +29,7 @@ export const RuleConditions = ({
   const conditionsList = watch("conditions");
 
   const allConditionsSelected =
-    conditionsList.length === conditionLeftOptions.length;
+    conditionsList.length === conditionNameOptions.length;
 
   const isConditionNameSelected = (conditionType: string) =>
     conditionsList.some(condition => condition.id === conditionType);

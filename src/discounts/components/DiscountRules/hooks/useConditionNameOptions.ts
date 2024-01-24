@@ -4,25 +4,27 @@ import { Option } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
-export const useConditionLeftOptions = (discountType: PromotionTypeEnum) => {
+export const useConditionNameOptions = (discountType: PromotionTypeEnum) => {
   const intl = useIntl();
-  const [options, setOptions] = useState<Option[]>([]);
+  const [conditionNameOptions, setConditionNameOptions] = useState<Option[]>(
+    [],
+  );
 
   useEffect(() => {
     if (discountType === PromotionTypeEnum.CATALOGUE) {
-      setOptions(getCatalogConditionOptions(intl));
+      setConditionNameOptions(getCatalogConditionOptions(intl));
     } else {
-      setOptions(getOrderConditionOptions(intl));
+      setConditionNameOptions(getOrderConditionOptions(intl));
     }
   }, [discountType]);
 
-  const getConditionByValue = (value: string) => {
-    return options.find(option => option.value === value);
+  const getConditionNameOptionByValue = (value: string) => {
+    return conditionNameOptions.find(option => option.value === value);
   };
 
   return {
-    options,
-    getConditionByValue,
+    conditionNameOptions,
+    getConditionNameOptionByValue,
   };
 };
 

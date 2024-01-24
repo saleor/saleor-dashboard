@@ -18,9 +18,9 @@ export const RuleCondtionRightOperators = ({
   const { watch } = useFormContext<Rule>();
   const condition = watch(`conditions.${conditionIndex}`);
 
-  const { getFetchProps, getConditionInputTypeByLabel } =
+  const { getConditionValuesFetchProps, getConditionTypeByLabel } =
     useDiscountRulesContext();
-  const inputType = getConditionInputTypeByLabel(condition.id, condition.type);
+  const inputType = getConditionTypeByLabel(condition.id, condition.type);
 
   const ruleConditionValuesFieldName =
     `conditions.${conditionIndex}.values` as const;
@@ -33,7 +33,7 @@ export const RuleCondtionRightOperators = ({
   });
 
   if (inputType === "multiselect") {
-    const fetchProps = getFetchProps(condition.id);
+    const fetchProps = getConditionValuesFetchProps(condition.id);
 
     if (fetchProps) {
       const { fetch, options, fetchMoreProps } = fetchProps;

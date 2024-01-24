@@ -1,7 +1,12 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
 import { Rule } from "@dashboard/discounts/models";
-import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
+import {
+  ChannelFragment,
+  PromotionTypeEnum,
+  RewardTypeEnum,
+  RewardValueTypeEnum,
+} from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
@@ -63,7 +68,7 @@ const rules = [
     channel: { label: "Test", value: "Q2hhbm5lcDoy" },
     conditions: [
       {
-        type: "product",
+        id: "product",
         condition: "is",
         values: [
           { label: "Product-1", value: "prod-1" },
@@ -72,6 +77,7 @@ const rules = [
       },
     ],
     rewardValue: 12,
+    rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
     rewardValueType: RewardValueTypeEnum.FIXED,
   },
   {
@@ -81,11 +87,12 @@ const rules = [
     channel: { label: "Test", value: "Q2hhbm5lcDoy" },
     conditions: [
       {
-        name: "category",
+        id: "category",
         type: "is",
         values: [{ label: "Category-1", value: "cat-1" }],
       },
     ],
+    rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
     rewardValue: 34,
     rewardValueType: RewardValueTypeEnum.PERCENTAGE,
   },
@@ -122,6 +129,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     const { rerender } = render(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={[]}
         errors={[]}
@@ -137,6 +145,7 @@ describe("DiscountRules", () => {
 
     rerender(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={[]}
         errors={[]}
@@ -159,6 +168,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     const { rerender } = render(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={rules}
         errors={[]}
@@ -174,6 +184,7 @@ describe("DiscountRules", () => {
 
     rerender(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={rules}
         errors={[]}
@@ -205,6 +216,7 @@ describe("DiscountRules", () => {
     const onRuleAdd = jest.fn();
     const { rerender } = render(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
         rules={[]}
         errors={[]}
@@ -220,6 +232,7 @@ describe("DiscountRules", () => {
 
     rerender(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
         rules={[]}
         errors={[]}
@@ -307,6 +320,7 @@ describe("DiscountRules", () => {
 
     const { rerender } = render(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={rules}
         errors={[]}
@@ -322,6 +336,7 @@ describe("DiscountRules", () => {
 
     rerender(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={rules}
         errors={[]}
@@ -356,6 +371,7 @@ describe("DiscountRules", () => {
 
     const { rerender } = render(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
         rules={rules}
         errors={[]}
@@ -371,6 +387,7 @@ describe("DiscountRules", () => {
 
     rerender(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
         rules={rules}
         errors={[]}
@@ -441,6 +458,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     const { rerender } = render(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={rules}
         errors={[
@@ -463,6 +481,7 @@ describe("DiscountRules", () => {
 
     rerender(
       <DiscountRules
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={rules}
         errors={[

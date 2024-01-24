@@ -43,12 +43,12 @@ export const RuleConditionRow = ({
   const { watch } = useFormContext<Rule>();
   const condition = watch(`conditions.${conditionIndex}`);
 
-  const { conditionLeftOptions, getConditionTypesOptions } =
+  const { conditionNameOptions, getConditionTypesOptions } =
     useDiscountRulesContext();
 
   const conditionTypesOptions = getConditionTypesOptions(condition.id);
 
-  const filteredConditionLeftOptions = conditionLeftOptions.filter(
+  const filteredConditionLeftOptions = conditionNameOptions.filter(
     condition => !isConditionTypeSelected(condition.value),
   );
 
@@ -62,7 +62,7 @@ export const RuleConditionRow = ({
     >
       <RuleInputWrapper>
         <Combobox
-          value={getConditionNameValue(nameField.value, conditionLeftOptions)}
+          value={getConditionNameValue(nameField.value, conditionNameOptions)}
           fetchOptions={() => {}}
           options={filteredConditionLeftOptions}
           onChange={e => {

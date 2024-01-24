@@ -115,10 +115,7 @@ export const useCondtionTypes = () => {
     return [];
   };
 
-  const getConditionInputTypeByLabel = (
-    conditionName: string,
-    type: string,
-  ) => {
+  const getConditionTypeByLabel = (conditionName: string, type: string) => {
     const conditionTypes = conditionsTypes[conditionName];
 
     if (conditionTypes) {
@@ -134,6 +131,6 @@ export const useCondtionTypes = () => {
 
   return {
     getConditionTypesOptions,
-    getConditionInputTypeByLabel,
+    getConditionTypeByLabel,
   };
 };

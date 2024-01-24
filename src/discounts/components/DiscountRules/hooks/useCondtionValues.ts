@@ -13,7 +13,7 @@ export interface FetchOptions {
   options: Option[];
 }
 
-export const useCondtionRightOptions = (channel: string) => {
+export const useCondtionValuesOptions = (channel: string) => {
   const productSearch = useProductOptions(channel);
   const collectionSearch = useCollectionOptions(channel);
   const categorySearch = useCategorieOptions(channel);
@@ -31,11 +31,11 @@ export const useCondtionRightOptions = (channel: string) => {
     baseTotalPrice: undefined,
   };
 
-  const getFetchProps = (type: CatalogConditions) => {
+  const getConditionValuesFetchProps = (type: CatalogConditions) => {
     return typeToFetchMap[type];
   };
 
   return {
-    getFetchProps,
+    getConditionValuesFetchProps,
   };
 };

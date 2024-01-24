@@ -22,15 +22,15 @@ export const useEnrichConditions = (
   const { locale } = useLocale();
   const intl = useIntl();
 
-  const { getConditionInputTypeByLabel, getConditionByValue } =
+  const { getConditionTypeByLabel, getConditionNameOptionByValue } =
     useDiscountRulesContext();
 
   return conditions.map(condition => {
-    const conditionInputType = getConditionInputTypeByLabel(
+    const conditionInputType = getConditionTypeByLabel(
       condition.id,
       condition.type,
     );
-    const conditionLabel = getConditionByValue(condition.id);
+    const conditionLabel = getConditionNameOptionByValue(condition.id);
 
     const enrichedCondition = {
       ...condition,
