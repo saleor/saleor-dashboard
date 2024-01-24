@@ -93,19 +93,6 @@ export const CHANNELS = {
   plnChannel: {
     id: "VGF4Q29uZmlndXJhdGlvbjox",
   },
-  e2eChannelDoNotDelete: {
-    id: "Q2hhbm5lbDoyMzk0",
-    name: "e2e-channel-do-not-delete",
-    slug: "e2e-channel-do-not-delete",
-  },
-  channelUSD: {
-    id: "Q2hhbm5lbDoyMjQz",
-    name: "Channel-USD",
-  },
-  channelPLN: {
-    id: "Q2hhbm5lbDoyMjQ0",
-    name: "Channel-PLN",
-  },
 };
 export const GIFT_CARDS = {
   giftCardToBeEdited: {
