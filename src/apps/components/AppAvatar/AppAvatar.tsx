@@ -3,6 +3,7 @@ import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 type Logo = AppLogo | undefined;
 type Size = 8 | 12;
+
 export const AppAvatar: React.FC<{
   logo?: Logo;
   size?: Size;

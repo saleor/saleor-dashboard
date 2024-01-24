@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // @ts-strict-ignore
+import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
+import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -11,6 +13,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import {
+  AppTypeEnum,
   CountryCode,
   CountryFragment,
   TaxCalculationStrategy,
@@ -32,7 +35,7 @@ import {
   PageTab,
   PageTabs,
 } from "@saleor/macaw-ui";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -141,46 +144,88 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
   // TODO: Remove mockedTaxStrategyChoices when tax strategy is implemented
   const mockedTaxStrategyChoices = [
     {
+      id: "QXBwOjEzMg==",
       name: "Taxes",
-
-      identifier: "saleor.app.taxes-1",
+      type: AppTypeEnum.THIRDPARTY,
+      version: "1.21.1",
+      identifier: "saleor.app.taxes",
+      brand: {
+        logo: {
+          default:
+            "https://master.staging.saleor.cloud/media/thumbnails/app-brand-data/logo_58ba3d77_thumbnail_64.webp",
+        },
+      },
     },
     {
-      name: "Taxes",
-      identifier: "saleor.app.taxes-2",
-    },
-    {
-      name: "Local",
-      identifier: "QXBwOjY2",
-    },
-    {
-      name: "Local",
-      identifier: "QXBwOjY3longlonglonglongOlong",
+      id: "QXBwOjE2NQ==",
+      name: "Local app",
+      type: "LOCAL",
+      version: null,
+      identifier: "QXBwOk5vbmU=",
+      brand: null,
+      __typename: "App",
     },
   ];
 
   const taxStrategyChoices = [
     ...mockedTaxStrategyChoices.map(choice => ({
       label: (
-        <div style={{ display: "flex", gap: 4 }}>
-          <span>Use {choice.name} app</span>
-          <span
-            style={{
-              color: "gray",
-              width: "150px",
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-            }}
+        <Box
+          gap={4}
+          alignItems="center"
+          display="grid"
+          __gridTemplateColumns="1fr auto"
+          width="100%"
+        >
+          <Box display="flex" alignItems="center" gap={3}>
+            <AppAvatar
+              logo={
+                choice.brand?.logo?.default
+                  ? { source: choice.brand?.logo?.default }
+                  : undefined
+              }
+              // @ts-expect-error: TODO: Remove when tax strategy is implemented
+              size={5}
+            />
+            <Box display="flex" alignItems="center" gap={1}>
+              <Text>Use app:</Text>
+              <Text variant="bodyStrong">{choice.name}</Text>
+              {choice.version && (
+                <Text variant="body" color="default2">
+                  {`v${choice.version}`}
+                </Text>
+              )}
+            </Box>
+          </Box>
+          <Box
+            as="a"
+            href={AppUrls.resolveAppDetailsUrl(choice.id)}
+            target="_blank"
+            textDecoration="underline"
+            display="flex"
+            alignItems="center"
+            gap={1}
           >
-            {choice.identifier}
-          </span>
-        </div>
+            <Text
+              color="default2"
+              variant="caption"
+              ellipsis
+              __maxWidth="150px"
+            >
+              {choice.identifier}
+            </Text>
+            <ExternalLinkIcon size="small" color="default2" />
+          </Box>
+        </Box>
       ),
-      value: choice.identifier,
+      value: choice.id,
     })),
     {
-      label: intl.formatMessage(taxesMessages.taxStrategyFlatRates),
+      label: (
+        <Box __height={22} display="flex" alignItems="center">
+          <Text>Use flat rates</Text>
+        </Box>
+      ),
       value: TaxCalculationStrategy.FLAT_RATES,
     },
   ];
