@@ -12,6 +12,9 @@ export type EnrichCondition = Condition & {
   label?: string;
 };
 
+// Add input type
+// Add label that map to condition type from context
+// Add values that format to proper format base on type, e.g.:  price, price.range
 export const useEnrichConditions = (
   conditions: Condition[],
   currencySymbol: string,
