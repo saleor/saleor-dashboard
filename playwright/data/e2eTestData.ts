@@ -67,12 +67,31 @@ export const COLLECTIONS = {
     names: ["Collection to be deleted 1/2", "Collection to be deleted 2/2"],
   },
 };
+export const COUNTRIES = {
+  afghanistan: {
+    countryCode: "AF",
+    name: "Afghanistan",
+  },
+  albania: {
+    countryCode: "AL",
+    name: "Albania",
+  },
+  countryToBeAddedInTaxes: {
+    name: "Bosnia and Herzegovina",
+  },
+};
 export const CHANNELS = {
   channelToBeEditedSettings: {
     id: "Q2hhbm5lbDoyMzkx",
   },
   channelToBeDeleted: {
     name: "z - channel to be deleted",
+  },
+  channelForTaxEdition: {
+    name: "a channel for tax tests",
+  },
+  plnChannel: {
+    id: "VGF4Q29uZmlndXJhdGlvbjox",
   },
 };
 export const GIFT_CARDS = {

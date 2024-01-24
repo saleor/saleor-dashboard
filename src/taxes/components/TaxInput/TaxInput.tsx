@@ -47,6 +47,7 @@ export const TaxInput: React.FC<TaxInputProps> = ({
 
   return (
     <TextField
+      data-test-id="tax-input"
       type="number"
       fullWidth
       placeholder={placeholder}

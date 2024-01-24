@@ -40,6 +40,9 @@ export class ConfigurationPage {
   async openShippingMethods() {
     await this.shippingMethodsButton.click();
   }
+  async openTaxes() {
+    await this.taxesButton.click();
+  }
   async openChannels() {
     await this.channelsButton.click();
   }
