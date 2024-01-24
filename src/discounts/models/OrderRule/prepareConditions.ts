@@ -12,8 +12,8 @@ export const prepareOrderConditions = (
   }
 
   return Object.entries(orderPredicate)
-    .map(([key, value]) => {
-      if (key === "OR") {
+    .map(([id, value]) => {
+      if (id === "OR") {
         return prepareOrderConditions(
           (value as any[]).reduce(
             (acc: OrderPredicateAPI, val: Record<string, unknown>) => {
@@ -26,7 +26,7 @@ export const prepareOrderConditions = (
       }
 
       return new Condition(
-        key,
+        id,
         getConditionType(value as DecimalFilterInput),
         getConditionValue(value as DecimalFilterInput),
       );

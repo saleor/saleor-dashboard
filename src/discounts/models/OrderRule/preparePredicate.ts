@@ -13,7 +13,7 @@ export function prepareOrderPredicate(
       }
 
       return {
-        [`${condition.name}`]: createWhereInput(condition),
+        [`${condition.id}`]: createWhereInput(condition),
       };
     })
     .filter(Boolean);

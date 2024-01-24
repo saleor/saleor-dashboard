@@ -11,4 +11,5 @@ export const discountRulesContext = createContext<{
   getConditionInputTypeByLabel: (name: string, type: string) => string | null;
   getFetchProps: (type: string) => FetchOptions;
   setChannel: Dispatch<SetStateAction<string | null>>;
+  getConditionByValue: (value: string) => Option | undefined;
 } | null>(null);

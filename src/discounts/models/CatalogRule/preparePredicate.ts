@@ -7,12 +7,12 @@ export function prepareCataloguePredicate(
 ): CataloguePredicateInput {
   const ruleConditions = conditions
     .map(condition => {
-      if (!condition.name) {
+      if (!condition.id) {
         return undefined;
       }
 
       return {
-        [`${condition.name}Predicate`]: {
+        [`${condition.id}Predicate`]: {
           ids: Array.isArray(condition.values)
             ? condition.values.map(val => val.value)
             : [condition.values],

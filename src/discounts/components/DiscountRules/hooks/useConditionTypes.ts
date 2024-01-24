@@ -12,87 +12,98 @@ export interface ConditionType {
 // Current support condition type field: multiselect, price, price.range, number, number.range
 export const getConditionsTypes = (
   intl: IntlShape,
-): Record<CatalogConditions | OrderConditions, ConditionType[]> => ({
-  product: [
-    {
-      type: "multiselect",
-      label: intl.formatMessage({ defaultMessage: "is", id: "fXdkiI" }),
-      value: "input-1",
-    },
-  ],
-  category: [
-    {
-      type: "multiselect",
-      label: intl.formatMessage({ defaultMessage: "is", id: "fXdkiI" }),
-      value: "input-1",
-    },
-  ],
-  collection: [
-    {
-      type: "multiselect",
-      label: intl.formatMessage({ defaultMessage: "is", id: "fXdkiI" }),
-      value: "input-1",
-    },
-  ],
-  variant: [
-    {
-      type: "multiselect",
-      label: intl.formatMessage({ defaultMessage: "is", id: "fXdkiI" }),
-      value: "input-1",
-    },
-  ],
-  baseSubtotalPrice: [
-    {
-      type: "price",
-      label: intl.formatMessage({ defaultMessage: "is", id: "fXdkiI" }),
-      value: "input-1",
-    },
-    {
-      type: "price",
-      label: intl.formatMessage({ defaultMessage: "lower", id: "L5IuDw" }),
-      value: "input-2",
-    },
-    {
-      type: "price",
-      label: intl.formatMessage({ defaultMessage: "greater", id: "PFnobO" }),
-      value: "input-3",
-    },
-    {
-      type: "price.range",
-      label: intl.formatMessage({ defaultMessage: "between", id: "BvGp1I" }),
-      value: "input-4",
-    },
-  ],
-  baseTotalPrice: [
-    {
-      type: "price",
-      label: intl.formatMessage({ defaultMessage: "is", id: "fXdkiI" }),
-      value: "input-1",
-    },
-    {
-      type: "price",
-      label: intl.formatMessage({ defaultMessage: "lower", id: "L5IuDw" }),
-      value: "input-2",
-    },
-    {
-      type: "price",
-      label: intl.formatMessage({ defaultMessage: "lower", id: "L5IuDw" }),
-      value: "input-3",
-    },
-    {
-      type: "price.range",
-      label: intl.formatMessage({ defaultMessage: "lower", id: "L5IuDw" }),
-      value: "input-4",
-    },
-  ],
-});
+): Record<CatalogConditions | OrderConditions, ConditionType[]> => {
+  const CONDITIONT_TYPES_LABELS = {
+    IS: intl.formatMessage({ defaultMessage: "is", id: "fXdkiI" }),
+    LOWER: intl.formatMessage({ defaultMessage: "lower", id: "L5IuDw" }),
+    GREATER: intl.formatMessage({ defaultMessage: "greater", id: "PFnobO" }),
+    BETWEEN: intl.formatMessage({ defaultMessage: "between", id: "BvGp1I" }),
+  };
+
+  return {
+    product: [
+      {
+        type: "multiselect",
+        label: CONDITIONT_TYPES_LABELS.IS,
+        value: "input-1",
+      },
+    ],
+    category: [
+      {
+        type: "multiselect",
+        label: CONDITIONT_TYPES_LABELS.IS,
+        value: "input-1",
+      },
+    ],
+    collection: [
+      {
+        type: "multiselect",
+        label: CONDITIONT_TYPES_LABELS.IS,
+        value: "input-1",
+      },
+    ],
+    variant: [
+      {
+        type: "multiselect",
+        label: CONDITIONT_TYPES_LABELS.IS,
+        value: "input-1",
+      },
+    ],
+    baseSubtotalPrice: [
+      {
+        type: "price",
+        label: CONDITIONT_TYPES_LABELS.IS,
+        value: "input-1",
+      },
+      {
+        type: "price",
+        label: CONDITIONT_TYPES_LABELS.LOWER,
+        value: "input-2",
+      },
+      {
+        type: "price",
+        label: CONDITIONT_TYPES_LABELS.GREATER,
+        value: "input-3",
+      },
+      {
+        type: "price.range",
+        label: CONDITIONT_TYPES_LABELS.BETWEEN,
+        value: "input-4",
+      },
+    ],
+    baseTotalPrice: [
+      {
+        type: "price",
+        label: CONDITIONT_TYPES_LABELS.IS,
+        value: "input-1",
+      },
+      {
+        type: "price",
+        label: CONDITIONT_TYPES_LABELS.LOWER,
+        value: "input-2",
+      },
+      {
+        type: "price",
+        label: CONDITIONT_TYPES_LABELS.GREATER,
+        value: "input-3",
+      },
+      {
+        type: "price.range",
+        label: CONDITIONT_TYPES_LABELS.BETWEEN,
+        value: "input-4",
+      },
+    ],
+  };
+};
 
 export const useCondtionTypes = () => {
   const intl = useIntl();
-  const conditionsTypes = useMemo(() => getConditionsTypes(intl), [intl]);
+  const conditionsTypes = useMemo<
+    Record<CatalogConditions | OrderConditions, ConditionType[]>
+  >(() => getConditionsTypes(intl), [intl]);
 
   const getConditionTypesOptions = (type: string): Option[] => {
-    const conditionTypes = conditionsTypes[type];
+    const conditionTypes = conditionsTypes[type] as ConditionType[] | undefined;
 
     if (conditionTypes) {
       return conditionTypes.map(({ label }) => ({

@@ -24,8 +24,7 @@ export const RuleConditionRow = ({
   updateCondition,
   disabled = false,
 }: DiscountConditionRowProps) => {
-  const ruleConditionNameFieldName =
-    `conditions.${conditionIndex}.name` as const;
+  const ruleConditionNameFieldName = `conditions.${conditionIndex}.id` as const;
   const { field: nameField } = useController<
     Rule,
     typeof ruleConditionNameFieldName
@@ -47,7 +46,7 @@ export const RuleConditionRow = ({
   const { conditionLeftOptions, getConditionTypesOptions } =
     useDiscountRulesContext();
 
-  const conditionTypesOptions = getConditionTypesOptions(condition.name);
+  const conditionTypesOptions = getConditionTypesOptions(condition.id);
 
   const filteredConditionLeftOptions = conditionLeftOptions.filter(
     condition => !isConditionTypeSelected(condition.value),

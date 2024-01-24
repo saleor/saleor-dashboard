@@ -15,10 +15,12 @@ export const DiscountRulesContextProvider = ({
 }) => {
   const [channel, setChannel] = React.useState<string | null>(null);
 
-  const { options: conditionLeftOptions } =
+  const { options: conditionLeftOptions, getConditionByValue } =
     useConditionLeftOptions(discountType);
+
   const { getConditionTypesOptions, getConditionInputTypeByLabel } =
     useCondtionTypes();
+
   const { getFetchProps } = useCondtionRightOptions(channel);
 
   return (
@@ -28,6 +30,7 @@ export const DiscountRulesContextProvider = ({
         discountType,
         getConditionTypesOptions,
         getConditionInputTypeByLabel,
+        getConditionByValue,
         getFetchProps,
         setChannel,
       }}

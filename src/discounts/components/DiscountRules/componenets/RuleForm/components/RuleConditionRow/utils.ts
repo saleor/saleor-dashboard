@@ -8,5 +8,5 @@ export const getConditionNameValue = (
     return null;
   }
 
-  return conditionTypes.find(type => type.label === conditionType) || null;
+  return conditionTypes.find(type => type.value === conditionType) || null;
 };

@@ -20,10 +20,7 @@ export const RuleCondtionRightOperators = ({
 
   const { getFetchProps, getConditionInputTypeByLabel } =
     useDiscountRulesContext();
-  const inputType = getConditionInputTypeByLabel(
-    condition.name,
-    condition.type,
-  );
+  const inputType = getConditionInputTypeByLabel(condition.id, condition.type);
 
   const ruleConditionValuesFieldName =
     `conditions.${conditionIndex}.values` as const;
@@ -36,7 +33,7 @@ export const RuleCondtionRightOperators = ({
   });
 
   if (inputType === "multiselect") {
-    const fetchProps = getFetchProps(condition.name);
+    const fetchProps = getFetchProps(condition.id);
 
     if (fetchProps) {
       const { fetch, options, fetchMoreProps } = fetchProps;

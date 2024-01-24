@@ -16,8 +16,13 @@ export const useConditionLeftOptions = (discountType: PromotionTypeEnum) => {
     }
   }, [discountType]);
 
+  const getConditionByValue = (value: string) => {
+    return options.find(option => option.value === value);
+  };
+
   return {
     options,
+    getConditionByValue,
   };
 };
 
