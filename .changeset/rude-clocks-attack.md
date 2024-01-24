@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": minot
+"saleor-dashboard": minor
 ---
 
 Migrated taxes tests:
