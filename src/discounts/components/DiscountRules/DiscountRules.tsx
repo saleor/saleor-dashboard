@@ -4,7 +4,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AddButton } from "./componenets/AddButton";
@@ -50,11 +50,11 @@ export const DiscountRules = <ErrorCode,>({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
-  const isLoaded = useRef(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (!isLoaded.current && !disabled) {
-      isLoaded.current = true;
+    if (!isLoaded && !disabled) {
+      setIsLoaded(true);
     }
   }, [disabled]);
 
@@ -105,7 +105,7 @@ export const DiscountRules = <ErrorCode,>({
         <DashboardCard.Content>
           <RulesList
             disabled={disabled}
-            loading={!isLoaded.current || loading}
+            loading={!isLoaded || loading}
             rules={rules}
             onRuleEdit={handleRuleEdit}
             onRuleDelete={handleOpenRuleDeleteModal}

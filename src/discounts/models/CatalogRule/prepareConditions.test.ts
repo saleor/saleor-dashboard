@@ -36,17 +36,17 @@ describe("prepareCataloguePredicate", () => {
 
     expect(result).toEqual([
       {
-        name: "product",
+        id: "product",
         type: "is",
-        values: [
+        value: [
           { label: "3", value: "3" },
           { label: "4", value: "4" },
         ],
       },
       {
-        name: "collection",
+        id: "collection",
         type: "is",
-        values: [
+        value: [
           { label: "5", value: "5" },
           { label: "6", value: "6" },
         ],

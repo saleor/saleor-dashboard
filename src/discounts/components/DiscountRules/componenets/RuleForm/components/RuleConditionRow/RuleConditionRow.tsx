@@ -5,7 +5,7 @@ import { Box, Button, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 
-import { RuleCondtionRightOperators } from "../RuleCondtionRightOperators";
+import { RuleConditionValues } from "../RuleConditionValues";
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 import { getConditionNameValue } from "./utils";
 
@@ -88,7 +88,7 @@ export const RuleConditionRow = ({
       </RuleInputWrapper>
 
       <RuleInputWrapper>
-        <RuleCondtionRightOperators
+        <RuleConditionValues
           conditionIndex={conditionIndex}
           disabled={disabled}
         />

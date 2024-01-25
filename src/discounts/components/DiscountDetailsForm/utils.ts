@@ -1,10 +1,10 @@
-import { Rule } from "@dashboard/discounts/models";
+import { isArrayOfOptions, Rule } from "@dashboard/discounts/models";
 import { Option } from "@saleor/macaw-ui-next";
 
 export const getCurrentConditionsValuesLabels = (rule: Rule[]) => {
   return rule
     .flatMap(rule => rule.conditions)
-    .filter(condition => Array.isArray(condition))
+    .filter(condition => isArrayOfOptions(condition.values))
     .flatMap(condition => condition.values as Option[])
     .reduce((acc, value) => {
       // Initali value and label might contain  id

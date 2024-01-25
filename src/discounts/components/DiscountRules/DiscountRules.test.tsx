@@ -69,7 +69,7 @@ const rules = [
     conditions: [
       {
         id: "product",
-        condition: "is",
+        type: "is",
         values: [
           { label: "Product-1", value: "prod-1" },
           { label: "Product-2", value: "prod-2" },
@@ -127,7 +127,7 @@ describe("DiscountRules", () => {
 
   it("should render placeholder when no rules", () => {
     // Arrange & Act
-    const { rerender } = render(
+    render(
       <DiscountRules
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
@@ -141,21 +141,6 @@ describe("DiscountRules", () => {
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
-    );
-
-    rerender(
-      <DiscountRules
-        discountType={PromotionTypeEnum.CATALOGUE}
-        channels={[]}
-        rules={[]}
-        errors={[]}
-        onRuleSubmit={jest.fn()}
-        onRuleDelete={jest.fn()}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
     );
 
     // Assert
@@ -164,9 +149,9 @@ describe("DiscountRules", () => {
     ).toBeInTheDocument();
   });
 
-  it("should render discount rules", () => {
+  it("should render discount rules", async () => {
     // Arrange & Act
-    const { rerender } = render(
+    render(
       <DiscountRules
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
@@ -182,20 +167,11 @@ describe("DiscountRules", () => {
       { wrapper: Wrapper },
     );
 
-    rerender(
-      <DiscountRules
-        discountType={PromotionTypeEnum.CATALOGUE}
-        channels={[]}
-        rules={rules}
-        errors={[]}
-        onRuleSubmit={jest.fn()}
-        onRuleDelete={jest.fn()}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
-    );
+    await waitFor(() => {
+      expect(
+        screen.getByText(/catalog rule: catalog rule 2/i),
+      ).toBeInTheDocument();
+    });
 
     // Assert
     expect(
@@ -206,7 +182,7 @@ describe("DiscountRules", () => {
     ).toBeInTheDocument();
     expect(
       screen.getAllByText(
-        /discount of {value} on the purchase of {items} through the {channel}/i,
+        /discount of {value} on the purchase of {conditions} through the {channel}/i,
       ).length,
     ).toBe(2);
   });
@@ -214,7 +190,7 @@ describe("DiscountRules", () => {
   it("should allow to add new rule", async () => {
     // Arrange
     const onRuleAdd = jest.fn();
-    const { rerender } = render(
+    render(
       <DiscountRules
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
@@ -230,32 +206,15 @@ describe("DiscountRules", () => {
       { wrapper: Wrapper },
     );
 
-    rerender(
-      <DiscountRules
-        discountType={PromotionTypeEnum.CATALOGUE}
-        channels={channels}
-        rules={[]}
-        errors={[]}
-        onRuleSubmit={onRuleAdd}
-        onRuleDelete={jest.fn()}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
-    );
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: /add rule/i }),
+      ).toBeInTheDocument();
+    });
 
     // Act
     await act(async () => {
       await userEvent.click(screen.getByRole("button", { name: /add rule/i }));
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText(/^catalog$/i)).toBeInTheDocument();
-    });
-
-    await act(async () => {
-      await userEvent.click(screen.getByText(/^catalog$/i));
     });
 
     await userEvent.type(
@@ -318,7 +277,7 @@ describe("DiscountRules", () => {
     // Arrange
     const onRuleDelete = jest.fn();
 
-    const { rerender } = render(
+    render(
       <DiscountRules
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
@@ -332,21 +291,6 @@ describe("DiscountRules", () => {
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
-    );
-
-    rerender(
-      <DiscountRules
-        discountType={PromotionTypeEnum.CATALOGUE}
-        channels={[]}
-        rules={rules}
-        errors={[]}
-        onRuleSubmit={jest.fn()}
-        onRuleDelete={onRuleDelete}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
     );
 
     // Act
@@ -369,7 +313,7 @@ describe("DiscountRules", () => {
     // Arrange
     const onRuleEdit = jest.fn();
 
-    const { rerender } = render(
+    render(
       <DiscountRules
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
@@ -385,20 +329,9 @@ describe("DiscountRules", () => {
       { wrapper: Wrapper },
     );
 
-    rerender(
-      <DiscountRules
-        discountType={PromotionTypeEnum.CATALOGUE}
-        channels={channels}
-        rules={rules}
-        errors={[]}
-        onRuleSubmit={onRuleEdit}
-        onRuleDelete={jest.fn()}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
-    );
+    await waitFor(() => {
+      expect(screen.getAllByTestId("rule-edit-button")[0]).toBeInTheDocument();
+    });
 
     // Act
     await act(async () => {
@@ -432,8 +365,8 @@ describe("DiscountRules", () => {
         },
         conditions: [
           {
-            condition: "is",
-            type: "product",
+            id: "product",
+            type: "is",
             values: [
               {
                 label: "Product-1",
@@ -456,7 +389,7 @@ describe("DiscountRules", () => {
 
   it("should show error in rule", async () => {
     // Arrange & Act
-    const { rerender } = render(
+    render(
       <DiscountRules
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
@@ -477,28 +410,6 @@ describe("DiscountRules", () => {
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
-    );
-
-    rerender(
-      <DiscountRules
-        discountType={PromotionTypeEnum.CATALOGUE}
-        channels={[]}
-        rules={rules}
-        errors={[
-          {
-            field: "rewardValue",
-            message: "Reward value is required",
-            code: "GRAPHQL_ERROR",
-            index: 0,
-          } as any,
-        ]}
-        onRuleSubmit={jest.fn()}
-        onRuleDelete={jest.fn()}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
     );
 
     // Assert

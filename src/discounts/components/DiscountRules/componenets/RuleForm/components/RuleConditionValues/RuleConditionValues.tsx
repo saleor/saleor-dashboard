@@ -1,20 +1,20 @@
 import { Multiselect } from "@dashboard/components/Combobox";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
 import { Rule } from "@dashboard/discounts/models";
-import { Box, Input, RangeInput } from "@saleor/macaw-ui-next";
+import { Box, Input, Option, RangeInput } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
-interface RuleCondtionRightOperatorsProps {
+interface RuleConditionValuesProps {
   conditionIndex: number;
   disabled: boolean;
 }
 
-export const RuleCondtionRightOperators = ({
+export const RuleConditionValues = ({
   conditionIndex,
   disabled,
-}: RuleCondtionRightOperatorsProps) => {
+}: RuleConditionValuesProps) => {
   const { watch } = useFormContext<Rule>();
   const condition = watch(`conditions.${conditionIndex}`);
 
@@ -44,8 +44,8 @@ export const RuleCondtionRightOperators = ({
       return (
         <Multiselect
           size="medium"
-          data-test-id="rule-values"
-          value={condition.values as any}
+          data-test-id="rule-value"
+          value={condition.values as Option[]}
           fetchOptions={fetch}
           fetchMore={fetchMoreProps}
           options={options ?? []}
@@ -67,6 +67,7 @@ export const RuleCondtionRightOperators = ({
   if (inputType === "number" || inputType === "price") {
     return (
       <Input
+        data-test-id="rule-value"
         type="number"
         value={condition.values as string}
         onChange={valuesField.onChange}
@@ -79,6 +80,7 @@ export const RuleCondtionRightOperators = ({
     return (
       <Box display="grid" gap={1}>
         <RangeInput
+          data-test-id="rule-value"
           value={condition.values as [string, string]}
           onChange={valuesField.onChange}
           type="number"
@@ -92,7 +94,7 @@ export const RuleCondtionRightOperators = ({
   return (
     <Input
       size="medium"
-      data-test-id="rule-values"
+      data-test-id="rule-value"
       value={(condition.values?.[0] || "") as string}
       onChange={valuesField.onChange}
       onBlur={valuesField.onBlur}
