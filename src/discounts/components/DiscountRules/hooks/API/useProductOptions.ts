@@ -4,7 +4,7 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-export const useProductOptions = (channel: string) => {
+export const useProductOptions = (channel: string | null) => {
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,

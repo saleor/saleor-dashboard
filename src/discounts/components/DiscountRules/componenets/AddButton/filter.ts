@@ -1,8 +1,8 @@
 import { MenuItem } from "@dashboard/components/SubMenu";
-import { DiscountType } from "@dashboard/discounts/types";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 
 export const byDiscountType =
-  (discountType: DiscountType) =>
+  (discountType: PromotionTypeEnum) =>
   (menuItem: MenuItem): boolean => {
     if (!discountType) {
       return true;

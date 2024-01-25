@@ -1,4 +1,7 @@
-import { OrderPredicateInput } from "@dashboard/graphql";
+import {
+  DiscountedObjectWhereInput,
+  OrderPredicateInput,
+} from "@dashboard/graphql";
 
 import { Condition } from "../Condition";
 import { createAPIWhereInput } from "../helpers";
@@ -34,7 +37,7 @@ export function prepareOrderPredicate(
 
   return {
     discountedObjectPredicate: {
-      OR: ruleConditions,
+      OR: ruleConditions as DiscountedObjectWhereInput["OR"],
     },
   };
 }

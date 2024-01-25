@@ -1,6 +1,6 @@
 import { CataloguePredicateInput } from "@dashboard/graphql";
 
-import { Condition } from "../Condition";
+import { Condition, isArrayOfOptions } from "../Condition";
 
 export function prepareCataloguePredicate(
   conditions: Condition[],
@@ -13,7 +13,7 @@ export function prepareCataloguePredicate(
 
       return {
         [`${condition.id}Predicate`]: {
-          ids: Array.isArray(condition.values)
+          ids: isArrayOfOptions(condition.values)
             ? condition.values.map(val => val.value)
             : [condition.values],
         },

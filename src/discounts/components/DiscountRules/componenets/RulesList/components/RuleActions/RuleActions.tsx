@@ -2,7 +2,7 @@ import { Box, Button, EditIcon, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface RuleActionsProps {
-  disabled: boolean;
+  disabled?: boolean;
   onEdit: () => void;
   onDelete: () => void;
 }

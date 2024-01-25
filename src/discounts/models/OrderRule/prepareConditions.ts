@@ -25,11 +25,11 @@ export const prepareOrderConditions = (
         );
       }
 
-      return new Condition(
+      return {
         id,
-        getConditionType(value as DecimalFilterInput),
-        getConditionValue(value as DecimalFilterInput),
-      );
+        type: getConditionType(value as DecimalFilterInput),
+        value: getConditionValue(value as DecimalFilterInput),
+      };
     })
     .filter(Boolean)
     .flat() as Condition[];

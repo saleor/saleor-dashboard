@@ -3,7 +3,7 @@ import {
   hueToPillColorLight,
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
-import { Rule } from "@dashboard/discounts/models";
+import { isArrayOfOptions, Rule } from "@dashboard/discounts/models";
 import { DefaultTheme, Option } from "@saleor/macaw-ui-next";
 
 import { EnrichCondition } from "./components/RuleConditionsChips/useEnrichConditions";
@@ -30,19 +30,20 @@ export const mapConditionToOption = (
 ): Option[] => {
   return conditions.reduce<Option[]>((acc, condition) => {
     if (
-      Array.isArray(condition.values) &&
+      isArrayOfOptions(condition.values) &&
       condition.inputType === "multiselect"
     ) {
+      // Flat each condition array of Options
       acc.push(
-        ...(condition.values as Option[]).map<Option>(conditionValue => ({
+        ...condition.values.map(conditionValue => ({
           value: conditionValue.label,
-          label: condition.label ?? condition.id,
+          label: condition.label ?? condition.id ?? "",
         })),
       );
     } else {
       acc.push({
-        label: condition.label,
-        value: condition.values.toString(),
+        label: condition.label ?? condition.id ?? "",
+        value: condition.values?.toString() ?? condition.id ?? "",
       });
     }
 
@@ -60,6 +61,6 @@ export const conditionTypeToHue = (type: string, theme: DefaultTheme) => {
 export const hasNoRuleConditions = (rule: Rule) => {
   return (
     !rule.conditions.length ||
-    rule.conditions.every(condition => !condition.values.length)
+    rule.conditions.every(condition => !condition?.values?.length)
   );
 };

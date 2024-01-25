@@ -9,8 +9,12 @@ export const formatMoneyRange = (
   condition: Condition,
   currencySymbol: string,
   locale: Locale,
-) =>
-  formatMoneyRangeUtils(
+) => {
+  if (!condition.values || !Array.isArray(condition.values)) {
+    return "";
+  }
+
+  return formatMoneyRangeUtils(
     {
       amount: Number(condition.values[0]),
       currency: currencySymbol,
@@ -21,6 +25,7 @@ export const formatMoneyRange = (
     },
     locale,
   );
+};
 
 export const formatMoney = (
   condition: Condition,

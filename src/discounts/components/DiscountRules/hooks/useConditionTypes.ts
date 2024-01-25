@@ -103,7 +103,8 @@ export const useCondtionTypes = () => {
   >(() => getConditionsTypes(intl), [intl]);
 
   const getConditionTypesOptions = (type: string): Option[] => {
-    const conditionTypes = conditionsTypes[type] as ConditionType[] | undefined;
+    const conditionTypes: ConditionType[] | undefined =
+      conditionsTypes[type as CatalogConditions | OrderConditions];
 
     if (conditionTypes) {
       return conditionTypes.map(({ label, value }) => ({
@@ -116,7 +117,8 @@ export const useCondtionTypes = () => {
   };
 
   const getConditionTypeByLabel = (conditionName: string, type: string) => {
-    const conditionTypes = conditionsTypes[conditionName];
+    const conditionTypes: ConditionType[] | undefined =
+      conditionsTypes[conditionName as CatalogConditions | OrderConditions];
 
     if (conditionTypes) {
       const conditionType = conditionTypes.find(({ label }) => label === type);

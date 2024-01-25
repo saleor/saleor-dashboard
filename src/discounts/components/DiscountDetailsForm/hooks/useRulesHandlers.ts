@@ -32,7 +32,7 @@ export const useRulesHandlers = ({
   const [labelsMap, setLabelMap] = useState<Record<string, string>>({});
 
   const rules =
-    data?.rules?.map(rule => mapAPIRuleToForm(data.type, rule, labelsMap)) ??
+    data?.rules?.map(rule => mapAPIRuleToForm(data?.type, rule, labelsMap)) ??
     [];
 
   useEffect(() => {

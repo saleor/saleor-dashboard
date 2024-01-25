@@ -1,4 +1,4 @@
-import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
+import { CatalogConditions } from "@dashboard/discounts/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { Option } from "@saleor/macaw-ui-next";
 
@@ -13,26 +13,23 @@ export interface FetchOptions {
   options: Option[];
 }
 
-export const useCondtionValuesOptions = (channel: string) => {
+export const useCondtionValuesOptions = (channel: string | null) => {
   const productSearch = useProductOptions(channel);
   const collectionSearch = useCollectionOptions(channel);
   const categorySearch = useCategorieOptions(channel);
   const variantSearch = useVariantOptions(channel);
 
-  const typeToFetchMap: Record<
-    CatalogConditions | OrderConditions,
-    FetchOptions
-  > = {
+  const typeToFetchMap: Record<CatalogConditions, FetchOptions> = {
     product: productSearch,
     collection: collectionSearch,
     category: categorySearch,
     variant: variantSearch,
-    baseSubtotalPrice: undefined,
-    baseTotalPrice: undefined,
   };
 
-  const getConditionValuesFetchProps = (type: CatalogConditions) => {
-    return typeToFetchMap[type];
+  const getConditionValuesFetchProps = (
+    type: string,
+  ): FetchOptions | undefined => {
+    return typeToFetchMap[type as CatalogConditions];
   };
 
   return {

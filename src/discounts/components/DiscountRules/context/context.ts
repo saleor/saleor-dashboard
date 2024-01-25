@@ -9,7 +9,7 @@ export const discountRulesContext = createContext<{
   conditionNameOptions: Option[];
   getConditionTypesOptions: (type: string) => Option[];
   getConditionTypeByLabel: (name: string, type: string) => string | null;
-  getConditionValuesFetchProps: (type: string) => FetchOptions;
+  getConditionValuesFetchProps: (type: string) => FetchOptions | undefined;
   getConditionNameOptionByValue: (value: string) => Option | undefined;
   setChannel: Dispatch<SetStateAction<string | null>>;
 } | null>(null);

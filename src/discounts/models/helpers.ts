@@ -5,7 +5,7 @@ import {
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
-import { Condition, ConditionType } from "./Condition";
+import { Condition, ConditionType, isTuple } from "./Condition";
 import { Rule } from "./Rule";
 
 export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
@@ -48,20 +48,12 @@ export const createAPIWhereInput = (condition: Condition) => {
     return { range: { gte: value } };
   }
 
-  if (Array.isArray(value) && value.length === 2 && label === "between") {
+  if (isTuple(value) && label === "between") {
     const [gte, lte] = value;
     return { range: { lte, gte } };
   }
 
-  if (typeof value === "string") {
-    return { eq: value };
-  }
-
-  if (Array.isArray(value)) {
-    return { eq: value };
-  }
-
-  return value;
+  return { eq: value };
 };
 
 export function getConditionType(

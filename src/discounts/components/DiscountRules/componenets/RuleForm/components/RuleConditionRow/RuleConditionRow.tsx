@@ -46,7 +46,7 @@ export const RuleConditionRow = ({
   const { conditionNameOptions, getConditionTypesOptions } =
     useDiscountRulesContext();
 
-  const conditionTypesOptions = getConditionTypesOptions(condition.id);
+  const conditionTypesOptions = getConditionTypesOptions(condition.id ?? "");
 
   const filteredConditionLeftOptions = conditionNameOptions.filter(
     condition => !isConditionTypeSelected(condition.value),

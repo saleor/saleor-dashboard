@@ -4,6 +4,7 @@ import {
   DiscountValueTypeEnum,
   PromotionDetailsFragment,
   PromotionFragment,
+  PromotionTypeEnum,
   RewardValueTypeEnum,
   SaleDetailsFragment,
   SaleFragment,
@@ -681,6 +682,7 @@ export const discount: PromotionDetailsFragment = {
   description: {},
   startDate: "2019-01-03",
   endDate: null,
+  type: PromotionTypeEnum.CATALOGUE,
   rules: [
     {
       __typename: "PromotionRule",

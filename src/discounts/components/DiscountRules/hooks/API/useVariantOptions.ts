@@ -4,7 +4,7 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import useVariantSearch from "@dashboard/searches/useVariantSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-export const useVariantOptions = (channel: string) => {
+export const useVariantOptions = (channel: string | null) => {
   const {
     loadMore: loadMoreVariants,
     search: searchVariants,

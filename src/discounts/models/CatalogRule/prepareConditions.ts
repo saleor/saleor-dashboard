@@ -17,11 +17,11 @@ export function prepareCatalogueRuleConditions(
         );
       }
 
-      return new Condition(
-        key.split("Predicate")[0],
-        "is", // Catalog predicate always has only "is" condition type
-        value.ids?.map(toOptions) ?? [],
-      );
+      return {
+        id: key.split("Predicate")[0],
+        type: "is", // Catalog predicate always has only "is" condition type
+        value: value.ids?.map(toOptions) ?? [],
+      };
     })
     .filter(Boolean)
     .flat() as Condition[];

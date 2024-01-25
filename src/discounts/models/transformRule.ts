@@ -13,11 +13,19 @@ import { prepareOrderPredicate } from "./OrderRule/preparePredicate";
 import { Rule } from "./Rule";
 
 export const mapAPIRuleToForm = (
-  type: PromotionTypeEnum,
+  type: PromotionTypeEnum | null | undefined,
   rule: PromotionRuleDetailsFragment,
   labelMap: Record<string, string>,
 ): Rule => {
   const baseRuleData = createBaseRuleInputFromAPI(rule);
+
+  if (!type) {
+    return {
+      ...baseRuleData,
+      conditions: [],
+    };
+  }
+
   const catalogueConditions = prepareCatalogueRuleConditions(
     rule.cataloguePredicate,
     labelMap,
@@ -36,9 +44,13 @@ export const mapAPIRuleToForm = (
 };
 
 export const toAPI =
-  (discountType: PromotionTypeEnum) =>
+  (discountType: PromotionTypeEnum | null | undefined) =>
   (rule: Rule): PromotionRuleInput => {
     const base = createBaseAPIInput(rule);
+
+    if (!discountType) {
+      return base;
+    }
 
     const orderPredicate =
       discountType === PromotionTypeEnum.ORDER
