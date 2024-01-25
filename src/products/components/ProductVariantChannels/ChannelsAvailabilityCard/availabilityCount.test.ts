@@ -2,102 +2,58 @@ import {
   ChannelPriceAndPreorderData,
   IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
+import {
+  ProductVariantCreateDataQuery,
+  ProductVariantFragment,
+} from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
-import { product, variant } from "@dashboard/products/fixtures";
 
 import {
   getAvailabilityCountForProduct,
   getAvailabilityCountForVariant,
 } from "./availabilityCount";
 
-const variantFixture = variant("");
-const productFixture = product("");
-
-const mockedChannel = {
-  __typename: "Channel" as const,
-  currencyCode: "USD",
-  name: "Channel",
-};
-
-const mockedProductListing = {
-  __typename: "ProductChannelListing" as const,
-  id: "UHJvZHVjdENoYW5uZWxMaXN0aW5nOjQ=",
-  publicationDate: "2020-01-01",
-};
-
 const mockedListings = [
   {
-    data: {
-      costPrice: "4",
-      currency: "PLN",
-      id: "1",
-      name: "Channel-PLN",
-      price: "20",
-      preorderThreshold: null,
-      soldUnits: 0,
-    },
     id: "1",
     label: "Channel-PLN",
-    value: {
-      costPrice: "4",
-      price: "20",
-      preorderThreshold: null,
-    },
   },
   {
-    data: {
-      costPrice: "",
-      currency: "USD",
-      id: "2",
-      name: "Channel-USD",
-      price: "4",
-      preorderThreshold: null,
-      soldUnits: 0,
-    },
     id: "2",
     label: "Channel-USD",
-    value: {
-      costPrice: "",
-      price: "4",
-      preorderThreshold: null,
-    },
   },
-];
+] as unknown as FormsetData<
+  ChannelPriceAndPreorderData,
+  IChannelPriceAndPreorderArgs
+>;
 
 const mockedVariant = {
-  ...variantFixture,
   product: {
-    ...variantFixture.product,
     channelListings: [
       {
-        ...mockedProductListing,
-        channel: { id: "1", ...mockedChannel },
+        channel: { id: "1" },
         isPublished: true,
       },
       {
-        ...mockedProductListing,
-        channel: { id: "2", ...mockedChannel },
+        channel: { id: "2" },
         isPublished: true,
       },
     ],
   },
-};
+} as unknown as ProductVariantFragment;
 
 const mockedProduct = {
-  ...productFixture,
   channelListings: [
     {
-      ...mockedProductListing,
-      channel: { id: "1", ...mockedChannel },
+      channel: { id: "1" },
       isPublished: true,
     },
     {
-      ...mockedProductListing,
-      channel: { id: "2", ...mockedChannel },
+      channel: { id: "2" },
       isPublished: true,
     },
   ],
-};
+} as unknown as ProductVariantCreateDataQuery["product"];
 
 describe("getAvailabilityCountForVariant", () => {
   it("should return correct counts when all channels are selected", () => {
