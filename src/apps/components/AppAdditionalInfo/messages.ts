@@ -11,4 +11,9 @@ export const messages = defineMessages({
     defaultMessage: "None",
     description: "app permissions label",
   },
+  createdAt: {
+    id: "wRvjoc",
+    defaultMessage: "Created at",
+    description: "app created at label",
+  },
 });

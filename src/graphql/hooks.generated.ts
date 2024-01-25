@@ -106,6 +106,7 @@ export const AppListItemFragmentDoc = gql`
   appUrl
   manifestUrl
   version
+  created
   brand {
     logo {
       default(format: WEBP, size: 64)

@@ -42,7 +42,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     installedApps,
     installableMarketplaceApps,
   );
-  const verifiedAppsIntallations = getVerifiedAppsInstallations(
+  const verifiedAppsInstallations = getVerifiedAppsInstallations(
     appsInstallations,
     installableMarketplaceApps,
   );
@@ -104,7 +104,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
               </Box>
               <InstalledAppList
                 appList={verifiedInstalledApps}
-                appInstallationList={verifiedAppsIntallations}
+                appInstallationList={verifiedAppsInstallations}
                 disabled={disabled}
                 settings={settings}
                 onUpdateListSettings={onUpdateListSettings}

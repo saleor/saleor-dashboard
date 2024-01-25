@@ -1,20 +1,15 @@
 import { AppPermissionFragment } from "@dashboard/graphql";
-import { Box, InfoIcon, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, InfoIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
+import moment from "moment";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 
-interface AppPermissionsProps {
+export const AppAdditionalInfo: React.FC<{
   permissions?: AppPermissionFragment[] | null;
-}
-
-export const AppPermissions: React.FC<AppPermissionsProps> = ({
-  permissions,
-}) => {
-  const classes = useStyles();
-
+  created: string | null;
+}> = ({ permissions, created }) => {
   return (
     <Tooltip>
       <Tooltip.Trigger>
@@ -27,20 +22,30 @@ export const AppPermissions: React.FC<AppPermissionsProps> = ({
         <Tooltip.ContentHeading>
           <FormattedMessage {...messages.appPermissions} />
         </Tooltip.ContentHeading>
-        <ul className={classes.list}>
+        <Box as="ul" marginTop={0}>
           {permissions?.length ? (
             permissions?.map(permission => (
-              <li key={permission.code}>{permission.name}</li>
+              <Box as="li" key={permission.code}>
+                {permission.name}
+              </Box>
             ))
           ) : (
-            <li>
+            <Box as="li">
               <FormattedMessage {...messages.noPermissions} />
-            </li>
+            </Box>
           )}
-        </ul>
+        </Box>
+        {created && (
+          <>
+            <Tooltip.ContentHeading>
+              <FormattedMessage {...messages.createdAt} />
+            </Tooltip.ContentHeading>
+            <Text variant="caption">
+              {moment(created).format("YYYY-MM-DD HH:mm")}
+            </Text>
+          </>
+        )}
       </Tooltip.Content>
     </Tooltip>
   );
 };
-AppPermissions.displayName = "AppPermissions";
-export default AppPermissions;

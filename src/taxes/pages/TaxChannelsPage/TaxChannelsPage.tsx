@@ -36,6 +36,7 @@ import {
   PageTabs,
 } from "@saleor/macaw-ui";
 import { Box, Button, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
+import moment from "moment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -149,6 +150,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
       type: AppTypeEnum.THIRDPARTY,
       version: "1.21.1",
       identifier: "saleor.app.taxes",
+      created: "2024-01-24T14:07:31.037634+00:00",
       brand: {
         logo: {
           default:
@@ -163,6 +165,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
       version: null,
       identifier: "QXBwOk5vbmU=",
       brand: null,
+      created: "2024-01-23T07:55:57.281597+00:00",
       __typename: "App",
     },
   ];
@@ -187,14 +190,19 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
               // @ts-expect-error: TODO: Remove when tax strategy is implemented
               size={5}
             />
-            <Box display="flex" alignItems="center" gap={1}>
-              <Text>Use app:</Text>
-              <Text variant="bodyStrong">{choice.name}</Text>
-              {choice.version && (
-                <Text variant="body" color="default2">
-                  {`v${choice.version}`}
-                </Text>
-              )}
+            <Box>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Text>Use app:</Text>
+                <Text variant="bodyStrong">{choice.name}</Text>
+                {choice.version && (
+                  <Text variant="body" color="default2">
+                    {`v${choice.version}`}
+                  </Text>
+                )}
+              </Box>
+              <Text variant="caption" color="default2">
+                Created at: {moment(choice.created).format("YYYY-MM-DD HH:mm")}
+              </Text>
             </Box>
           </Box>
           <Box
@@ -222,7 +230,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     })),
     {
       label: (
-        <Box __height={22} display="flex" alignItems="center">
+        <Box __height={40} display="flex" alignItems="center">
           <Text>Use flat rates</Text>
         </Box>
       ),
