@@ -44,7 +44,7 @@ export const useEnrichConditions = (
     ) {
       return {
         ...enrichedCondition,
-        values: formatPrice(enrichedCondition, currencySymbol, locale, intl),
+        value: formatPrice(enrichedCondition, currencySymbol, locale, intl),
       };
     }
 

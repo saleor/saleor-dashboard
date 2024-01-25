@@ -13,9 +13,9 @@ export function prepareCataloguePredicate(
 
       return {
         [`${condition.id}Predicate`]: {
-          ids: isArrayOfOptions(condition.values)
-            ? condition.values.map(val => val.value)
-            : [condition.values],
+          ids: isArrayOfOptions(condition.value)
+            ? condition.value.map(val => val.value)
+            : [condition.value],
         },
       };
     })

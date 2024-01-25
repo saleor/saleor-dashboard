@@ -39,7 +39,7 @@ export const createBaseRuleInputFromAPI = (
 
 export const createAPIWhereInput = (condition: Condition) => {
   const label = condition.type;
-  const value = condition.values;
+  const value = condition.value;
 
   if (label === "lower") {
     return { range: { lte: value } };

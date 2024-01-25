@@ -7,13 +7,13 @@ export type ConditionValue = Option[] | string | [string, string] | null;
 export interface Condition {
   id: string | null;
   type: ConditionType;
-  values: ConditionValue;
+  value: ConditionValue;
 }
 
 export const createEmptyCodition = (): Condition => ({
   id: null,
   type: "is",
-  values: null,
+  value: null,
 });
 
 export const isString = (

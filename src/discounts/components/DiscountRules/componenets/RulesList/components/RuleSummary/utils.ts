@@ -30,12 +30,12 @@ export const mapConditionToOption = (
 ): Option[] => {
   return conditions.reduce<Option[]>((acc, condition) => {
     if (
-      isArrayOfOptions(condition.values) &&
+      isArrayOfOptions(condition.value) &&
       condition.inputType === "multiselect"
     ) {
       // Flat each condition array of Options
       acc.push(
-        ...condition.values.map(conditionValue => ({
+        ...condition.value.map(conditionValue => ({
           value: conditionValue.label,
           label: condition.label ?? condition.id ?? "",
         })),
@@ -43,7 +43,7 @@ export const mapConditionToOption = (
     } else {
       acc.push({
         label: condition.label ?? condition.id ?? "",
-        value: condition.values?.toString() ?? condition.id ?? "",
+        value: condition.value?.toString() ?? condition.id ?? "",
       });
     }
 
@@ -61,6 +61,6 @@ export const conditionTypeToHue = (type: string, theme: DefaultTheme) => {
 export const hasNoRuleConditions = (rule: Rule) => {
   return (
     !rule.conditions.length ||
-    rule.conditions.every(condition => !condition?.values?.length)
+    rule.conditions.every(condition => !condition?.value?.length)
   );
 };

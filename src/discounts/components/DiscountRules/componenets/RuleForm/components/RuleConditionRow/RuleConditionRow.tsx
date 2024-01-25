@@ -66,7 +66,7 @@ export const RuleConditionRow = ({
           fetchOptions={() => {}}
           options={filteredConditionLeftOptions}
           onChange={e => {
-            condition.values = [];
+            condition.value = [];
             updateCondition(conditionIndex, condition);
             nameField.onChange(e.target.value);
           }}

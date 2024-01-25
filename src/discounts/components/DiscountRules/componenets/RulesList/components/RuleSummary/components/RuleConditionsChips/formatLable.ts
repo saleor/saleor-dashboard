@@ -3,24 +3,24 @@ import {
   formatMoney as formatMoneyUtils,
   formatMoneyRange as formatMoneyRangeUtils,
 } from "@dashboard/components/Money";
-import { Condition } from "@dashboard/discounts/models";
+import { Condition, isTuple } from "@dashboard/discounts/models";
 
 export const formatMoneyRange = (
   condition: Condition,
   currencySymbol: string,
   locale: Locale,
 ) => {
-  if (!condition.values || !Array.isArray(condition.values)) {
+  if (!isTuple(condition.value)) {
     return "";
   }
 
   return formatMoneyRangeUtils(
     {
-      amount: Number(condition.values[0]),
+      amount: Number(condition.value[0]),
       currency: currencySymbol,
     },
     {
-      amount: Number(condition.values[1]),
+      amount: Number(condition.value[1]),
       currency: currencySymbol,
     },
     locale,
@@ -34,7 +34,7 @@ export const formatMoney = (
 ) => {
   return formatMoneyUtils(
     {
-      amount: Number(condition.values),
+      amount: Number(condition.value),
       currency: currencySymbol,
     },
     locale,

@@ -70,7 +70,7 @@ const rules = [
       {
         id: "product",
         type: "is",
-        values: [
+        value: [
           { label: "Product-1", value: "prod-1" },
           { label: "Product-2", value: "prod-2" },
         ],
@@ -89,7 +89,7 @@ const rules = [
       {
         id: "category",
         type: "is",
-        values: [{ label: "Category-1", value: "cat-1" }],
+        value: [{ label: "Category-1", value: "cat-1" }],
       },
     ],
     rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,

@@ -26,7 +26,7 @@ export const RuleConditionValues = ({
   );
 
   const ruleConditionValuesFieldName =
-    `conditions.${conditionIndex}.values` as const;
+    `conditions.${conditionIndex}.value` as const;
 
   const { field: valuesField } = useController<
     Rule,
@@ -45,7 +45,7 @@ export const RuleConditionValues = ({
         <Multiselect
           size="medium"
           data-test-id="rule-value"
-          value={condition.values as Option[]}
+          value={condition.value as Option[]}
           fetchOptions={fetch}
           fetchMore={fetchMoreProps}
           options={options ?? []}
@@ -69,7 +69,7 @@ export const RuleConditionValues = ({
       <Input
         data-test-id="rule-value"
         type="number"
-        value={condition.values as string}
+        value={condition.value as string}
         onChange={valuesField.onChange}
         disabled={disabled}
       />
@@ -81,7 +81,7 @@ export const RuleConditionValues = ({
       <Box display="grid" gap={1}>
         <RangeInput
           data-test-id="rule-value"
-          value={condition.values as [string, string]}
+          value={condition.value as [string, string]}
           onChange={valuesField.onChange}
           type="number"
           disabled={disabled}
@@ -95,7 +95,7 @@ export const RuleConditionValues = ({
     <Input
       size="medium"
       data-test-id="rule-value"
-      value={(condition.values?.[0] || "") as string}
+      value={(condition.value?.[0] || "") as string}
       onChange={valuesField.onChange}
       onBlur={valuesField.onBlur}
       disabled={disabled}
