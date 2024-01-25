@@ -182,6 +182,10 @@
     "context": "header field value, header",
     "string": "Value"
   },
+  "/5csTX": {
+    "context": "order returned success message",
+    "string": "Successfully returned products and sent refund!"
+  },
   "/5r4he": {
     "context": "label for button",
     "string": "Add country"
@@ -1280,6 +1284,10 @@
   "6hLZNA": {
     "context": "delete app",
     "string": "Are you sure you want to delete this app?"
+  },
+  "6heBHt": {
+    "context": "tooltip, submit form",
+    "string": "Transaction is non-refundable. You have to send refund manually."
   },
   "6iw4VR": {
     "context": "delete variant dialog title",
@@ -3229,6 +3237,10 @@
     "context": "checkbox label",
     "string": "Rest of the World"
   },
+  "K1ycaD": {
+    "context": "input label",
+    "string": "Refund value"
+  },
   "K8xNLe": {
     "context": "products section name",
     "string": "Products"
@@ -3261,6 +3273,10 @@
   },
   "KN7zKn": {
     "string": "Error"
+  },
+  "KOqZv3": {
+    "context": "tooltip, submit form",
+    "string": "You have to grant refund first."
   },
   "KRqgfo": {
     "string": "User is out of your permissions scope"
@@ -4655,6 +4671,10 @@
     "context": "dialog header",
     "string": "Approve this fulfillment"
   },
+  "UR2wY+": {
+    "context": "tooltip, submit form",
+    "string": "Order has no transactions. You have to send refund manually."
+  },
   "US3IPU": {
     "string": "Search Engine Description"
   },
@@ -5980,6 +6000,10 @@
     "context": "volume units types",
     "string": "Volume"
   },
+  "d1PvC8": {
+    "context": "checkbox",
+    "string": "Grant refund for returned items"
+  },
   "d68yq7": {
     "string": "Delete gift cards"
   },
@@ -6463,6 +6487,10 @@
   },
   "gzM1em": {
     "string": "Add rule"
+  },
+  "h0IgEq": {
+    "context": "checkbox",
+    "string": "Automatically send granted refund"
   },
   "h1rPPg": {
     "context": "dialog content",
@@ -7140,6 +7168,14 @@
   "lW5uJO": {
     "context": "money",
     "string": "from {money}"
+  },
+  "lXq4EE": {
+    "context": "checkbox",
+    "string": "Refund shipment: {currency} {amount}"
+  },
+  "laax5C": {
+    "context": "order returned success message",
+    "string": "Successfully returned products and granted refund!"
   },
   "lct0qd": {
     "string": "This list shows all attributes that will be assigned to pages that have this page type assigned."
@@ -8920,6 +8956,10 @@
   },
   "yfhLcv": {
     "string": "We are working on replacing plugins with apps. Read more about"
+  },
+  "ygxco/": {
+    "context": "tooltip, submit form",
+    "string": "Client has made more than one transaction. You have to send refund manually."
   },
   "yhv3HX": {
     "context": "voucher requirements, header",

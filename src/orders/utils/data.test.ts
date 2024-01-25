@@ -1452,19 +1452,19 @@ describe("Get the total value of all replaced products", () => {
 
     const unfulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "1" },
         id: "1",
         label: null,
         value: 0,
       },
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "2" },
         id: "2",
         label: null,
         value: 2,
       },
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "3" },
         id: "3",
         label: null,
         value: 1,
@@ -1473,31 +1473,31 @@ describe("Get the total value of all replaced products", () => {
 
     const fulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "4" },
         id: "4",
         label: null,
         value: 4,
       },
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "5" },
         id: "5",
         label: null,
         value: 0,
       },
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "6" },
         id: "6",
         label: null,
         value: 3,
       },
       {
-        data: { isFulfillment: true, isRefunded: true },
+        data: { isFulfillment: true, isRefunded: true, orderLineId: "7" },
         id: "7",
         label: null,
         value: 4,
       },
       {
-        data: { isFulfillment: true, isRefunded: true },
+        data: { isFulfillment: true, isRefunded: true, orderLineId: "8" },
         id: "8",
         label: null,
         value: 3,
@@ -1506,49 +1506,49 @@ describe("Get the total value of all replaced products", () => {
 
     const itemsToBeReplaced: FormsetData<LineItemData, boolean> = [
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "1" },
         id: "1",
         label: null,
         value: true,
       },
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "2" },
         id: "2",
         label: null,
         value: false,
       },
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "3" },
         id: "3",
         label: null,
         value: true,
       },
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "4" },
         id: "4",
         label: null,
         value: false,
       },
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "5" },
         id: "5",
         label: null,
         value: true,
       },
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "6" },
         id: "6",
         label: null,
         value: true,
       },
       {
-        data: { isFulfillment: true, isRefunded: true },
+        data: { isFulfillment: true, isRefunded: true, orderLineId: "7" },
         id: "7",
         label: null,
         value: false,
       },
       {
-        data: { isFulfillment: true, isRefunded: true },
+        data: { isFulfillment: true, isRefunded: true, orderLineId: "8" },
         id: "8",
         label: null,
         value: true,
@@ -2280,19 +2280,19 @@ describe("Get the total value of all selected products", () => {
 
     const unfulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "1" },
         id: "1",
         label: null,
         value: 0,
       },
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "2" },
         id: "2",
         label: null,
         value: 2,
       },
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "3" },
         id: "3",
         label: null,
         value: 1,
@@ -2301,19 +2301,19 @@ describe("Get the total value of all selected products", () => {
 
     const fulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "4" },
         id: "4",
         label: null,
         value: 4,
       },
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "5" },
         id: "5",
         label: null,
         value: 0,
       },
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "6" },
         id: "6",
         label: null,
         value: 3,
@@ -2324,49 +2324,49 @@ describe("Get the total value of all selected products", () => {
 
     const itemsToBeReplaced: FormsetData<LineItemData, boolean> = [
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "1" },
         id: "1",
         label: null,
         value: true,
       },
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "2" },
         id: "2",
         label: null,
         value: false,
       },
       {
-        data: { isFulfillment: false, isRefunded: false },
+        data: { isFulfillment: false, isRefunded: false, orderLineId: "3" },
         id: "3",
         label: null,
         value: true,
       },
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "4" },
         id: "4",
         label: null,
         value: false,
       },
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "5" },
         id: "5",
         label: null,
         value: true,
       },
       {
-        data: { isFulfillment: true, isRefunded: false },
+        data: { isFulfillment: true, isRefunded: false, orderLineId: "6" },
         id: "6",
         label: null,
         value: true,
       },
       {
-        data: { isFulfillment: true, isRefunded: true },
+        data: { isFulfillment: true, isRefunded: true, orderLineId: "7" },
         id: "7",
         label: null,
         value: true,
       },
       {
-        data: { isFulfillment: true, isRefunded: true },
+        data: { isFulfillment: true, isRefunded: true, orderLineId: "8" },
         id: "8",
         label: null,
         value: true,

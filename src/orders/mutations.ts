@@ -146,7 +146,7 @@ export const orderReturnCreateMutation = gql`
         ...OrderError
       }
       order {
-        id
+        ...OrderDetails
       }
       replaceOrder {
         id
@@ -527,6 +527,39 @@ export const orderGrantRefundAddMutation = gql`
       errors {
         ...OrderGrantRefundCreateError
       }
+      grantedRefund {
+        id
+      }
+    }
+  }
+`;
+
+export const orderGrantRefundAddWithOrderMutation = gql`
+  mutation OrderGrantRefundAddWithOrder(
+    $orderId: ID!
+    $amount: Decimal
+    $reason: String
+    $lines: [OrderGrantRefundCreateLineInput!]
+    $grantRefundForShipping: Boolean
+  ) {
+    orderGrantRefundCreate(
+      id: $orderId
+      input: {
+        amount: $amount
+        reason: $reason
+        lines: $lines
+        grantRefundForShipping: $grantRefundForShipping
+      }
+    ) {
+      errors {
+        ...OrderGrantRefundCreateError
+      }
+      grantedRefund {
+        id
+      }
+      order {
+        ...OrderDetails
+      }
     }
   }
 `;
@@ -569,6 +602,25 @@ export const orderSendRefundMutation = gql`
       }
       errors {
         ...TransactionRequestActionError
+      }
+    }
+  }
+`;
+
+export const orderSendRefundForGrantedRefund = gql`
+  mutation OrderSendRefundForGrantedRefund(
+    $grantedRefundId: ID!
+    $transactionId: ID!
+  ) {
+    transactionRequestRefundForGrantedRefund(
+      grantedRefundId: $grantedRefundId
+      id: $transactionId
+    ) {
+      transaction {
+        ...TransactionItem
+      }
+      errors {
+        ...TransactionRequestRefundForGrantedRefundError
       }
     }
   }
