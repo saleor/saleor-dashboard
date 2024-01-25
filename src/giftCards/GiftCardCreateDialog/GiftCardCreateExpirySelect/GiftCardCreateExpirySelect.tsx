@@ -71,6 +71,7 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
   return (
     <>
       <ControlledCheckbox
+        data-test-id="expiry-section"
         name={"expirySelected"}
         label={intl.formatMessage(messages.expirySelectedLabel)}
         checked={expirySelected}

@@ -25,11 +25,12 @@ import {
   OrderRefundAmountCalculationMode,
   OrderRefundFormData,
   OrderRefundType,
-} from "../OrderRefundPage/form";
-import { OrderReturnFormData } from "../OrderReturnPage/form";
-import OrderRefundAmountValues, {
-  OrderRefundAmountValuesProps,
-} from "./OrderRefundReturnAmountValues";
+} from "../../../OrderRefundPage/form";
+import { OrderReturnFormData } from "../../form";
+import {
+  PaymentSubmitCardValues,
+  PaymentSubmitCardValuesProps,
+} from "./PaymentSubmitCardValues";
 import RefundAmountInput from "./RefundAmountInput";
 
 const useStyles = makeStyles(
@@ -61,7 +62,7 @@ const useStyles = makeStyles(
       textAlign: "right",
     },
   }),
-  { name: "OrderRefundAmount" },
+  { name: "PaymentSubmitCard" },
 );
 
 const messages = defineMessages({
@@ -87,20 +88,20 @@ const messages = defineMessages({
   },
 });
 
-interface OrderRefundAmountProps {
+interface PaymentSubmitCardProps {
   data: OrderRefundFormData | OrderReturnFormData;
   order: OrderRefundDataQuery["order"] | OrderDetailsFragment;
   disabled: boolean;
   disableSubmitButton?: boolean;
   isReturn?: boolean;
   errors: OrderErrorFragment[];
-  amountData: OrderRefundAmountValuesProps;
+  amountData: PaymentSubmitCardValuesProps;
   allowNoRefund?: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
   onRefund: () => void;
 }
 
-const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
+export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
   const {
     data,
     order,
@@ -210,7 +211,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
               OrderRefundAmountCalculationMode.NONE && (
               <>
                 <CardSpacer />
-                <OrderRefundAmountValues
+                <PaymentSubmitCardValues
                   authorizedAmount={authorizedAmount}
                   previouslyRefunded={previouslyRefunded}
                   maxRefund={maxRefund}
@@ -232,7 +233,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                   onChange={onChange}
                 />
                 <CardSpacer />
-                <OrderRefundAmountValues
+                <PaymentSubmitCardValues
                   authorizedAmount={authorizedAmount}
                   previouslyRefunded={previouslyRefunded}
                   maxRefund={maxRefund}
@@ -268,7 +269,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                   name="refundShipmentCosts"
                   onChange={onChange}
                 />
-                <OrderRefundAmountValues
+                <PaymentSubmitCardValues
                   authorizedAmount={authorizedAmount}
                   previouslyRefunded={previouslyRefunded}
                   maxRefund={maxRefund}
@@ -293,7 +294,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
         )}
         {type === OrderRefundType.MISCELLANEOUS && (
           <>
-            <OrderRefundAmountValues
+            <PaymentSubmitCardValues
               authorizedAmount={authorizedAmount}
               previouslyRefunded={previouslyRefunded}
               maxRefund={maxRefund}
@@ -351,5 +352,4 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
     </Card>
   );
 };
-OrderRefundAmount.displayName = "OrderRefundAmount";
-export default OrderRefundAmount;
+PaymentSubmitCard.displayName = "PaymentSubmitCard";

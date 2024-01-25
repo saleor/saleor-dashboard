@@ -1,6 +1,7 @@
 import {
   OrderDetailsGrantedRefundFragment,
   OrderDetailsGrantRefundFragment,
+  OrderGrantedRefundFragment,
   OrderGrantRefundCreateLineInput,
 } from "@dashboard/graphql";
 import currency from "currency.js";
@@ -35,8 +36,8 @@ export const getFulfilmentSubtitle = (
 export const prepareLineData = (lines: Map<string, ReducerOrderLine>): Line[] =>
   Array.from(lines.entries())
     .filter(([_, line]) => line.isDirty)
-    .map(([id, line]) => ({
-      id,
+    .map(([, line]) => ({
+      id: line.orderLineId,
       quantity: line.selectedQuantity,
     }));
 
@@ -94,7 +95,9 @@ export const getGrantedRefundData = (
 
 export const calculateCanRefundShipping = (
   editedGrantedRefund?: OrderGrantRefundData,
-  grantedRefunds?: OrderDetailsGrantedRefundFragment[],
+  grantedRefunds?: Array<
+    Pick<OrderGrantedRefundFragment, "id" | "shippingCostsIncluded">
+  >,
 ) => {
   if (editedGrantedRefund) {
     if (editedGrantedRefund.grantRefundForShipping) {

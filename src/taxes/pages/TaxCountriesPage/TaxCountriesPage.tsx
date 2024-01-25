@@ -100,14 +100,17 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                   <PageTab
                     label={intl.formatMessage(taxesMessages.channelsSection)}
                     value="channels"
+                    data-test-id="channels-tab"
                   />
                   <PageTab
                     label={intl.formatMessage(taxesMessages.countriesSection)}
                     value="countries"
+                    data-test-id="countries-tab"
                   />
                   <PageTab
                     label={intl.formatMessage(taxesMessages.taxClassesSection)}
                     value="tax-classes"
+                    data-test-id="tax-classes-tab"
                   />
                 </PageTabs>
                 <VerticalSpacer spacing={2} />
@@ -143,6 +146,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                       <>
                         <CardContent>
                           <TextField
+                            data-test-id="search-tax-class-input"
                             value={query}
                             variant="outlined"
                             onChange={e => setQuery(e.target.value)}
@@ -181,6 +185,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                               <ListItem
                                 hover={false}
                                 className={classes.noDivider}
+                                data-test-id={rate.label}
                               >
                                 <ListItemCell>{rate.label}</ListItemCell>
                                 <ListItemCell>

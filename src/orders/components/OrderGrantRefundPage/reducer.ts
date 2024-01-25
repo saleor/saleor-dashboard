@@ -8,6 +8,7 @@ import { exhaustiveCheck } from "@dashboard/utils/ts";
 import { getLineAvailableQuantity } from "./utils";
 
 export interface ReducerOrderLine {
+  orderLineId: string;
   selectedQuantity: number;
   availableQuantity: number;
   initialQuantity?: number;
@@ -150,6 +151,7 @@ function createToGrantRefundLineMap(
     return [
       line.id,
       {
+        orderLineId: "orderLine" in line ? line.orderLine.id : line.id,
         isDirty: false,
         availableQuantity: getLineAvailableQuantity({
           lineId: line.id,

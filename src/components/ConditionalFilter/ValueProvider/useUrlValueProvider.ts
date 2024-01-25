@@ -24,12 +24,12 @@ const prepareStructure = (filterValue: FilterContainer): Structure =>
   });
 
 export const useUrlValueProvider = (
-  initialState: InitialAPIState,
   locationSearch: string,
+  initialState?: InitialAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
-  const { data, loading, fetchQueries } = initialState;
+
   const [value, setValue] = useState<FilterContainer>([]);
 
   const activeTab = params.get("activeTab");
@@ -47,14 +47,24 @@ export const useUrlValueProvider = (
   const fetchingParams = tokenizedUrl.getFetchingParams();
 
   useEffect(() => {
-    fetchQueries(fetchingParams);
+    initialState?.fetchQueries(fetchingParams);
   }, [locationSearch]);
 
   useEffect(() => {
+    if (!initialState) return;
+
+    const { data, loading } = initialState;
+
     if (loading) return;
 
     setValue(tokenizedUrl.asFilterValuesFromResponse(data));
-  }, [data, loading]);
+  }, [initialState?.data, initialState?.loading]);
+
+  useEffect(() => {
+    if (initialState) return;
+
+    setValue(tokenizedUrl.asFilterValueFromEmpty());
+  }, [locationSearch]);
 
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
@@ -89,7 +99,7 @@ export const useUrlValueProvider = (
 
   return {
     value,
-    loading,
+    loading: initialState?.loading || false,
     persist,
     clear,
     isPersisted,

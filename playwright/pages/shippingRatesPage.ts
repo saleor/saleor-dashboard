@@ -2,7 +2,7 @@ import { BasePage } from "@pages/basePage";
 import { AddPostalCodeDialog } from "@pages/dialogs/addPostalCodeDialog";
 import { AddProductsDialog } from "@pages/dialogs/addProductsDialog";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
-import type { Locator, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 export class ShippingRatesPage {
   readonly page: Page;
@@ -10,57 +10,46 @@ export class ShippingRatesPage {
   readonly rightSideDetailsPage: RightSideDetailsPage;
   readonly addProductsDialog: AddProductsDialog;
   readonly addPostalCodeDialog: AddPostalCodeDialog;
-  readonly shippingRateNameInput: Locator;
-  readonly shippingRateDescriptionField: Locator;
-  readonly minDeliveryTimeInput: Locator;
-  readonly maxDeliveryTimeInput: Locator;
-  readonly priceInput: Locator;
-  readonly minValueInput: Locator;
-  readonly minWeightInput: Locator;
-  readonly maxValueInput: Locator;
-  readonly maxWeightInput: Locator;
-  readonly addPostalCodeRangeButton: Locator;
-  readonly saveButton: Locator;
-  readonly assignProductButton: Locator;
-  readonly includePostalCodesRadioButton: Locator;
-  readonly excludedProductsRows: Locator;
-  readonly assignedPostalCodesRows: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly shippingRateNameInput = page
+      .getByTestId("shipping-rate-name-input")
+      .locator("input"),
+    readonly shippingRateDescriptionField = page
+      .getByTestId("rich-text-editor-description")
+      .locator('[contenteditable="true"]'),
+    readonly maxDeliveryTimeInput = page
+      .getByTestId("max-delivery-time-input")
+      .locator("input"),
+    readonly minDeliveryTimeInput = page
+      .getByTestId("min-delivery-time-input")
+      .locator("input"),
+    readonly addPostalCodeRangeButton = page.getByTestId(
+      "add-postal-code-range",
+    ),
+    readonly saveButton = page.getByTestId("button-bar-confirm"),
+    readonly assignProductButton = page.getByTestId("assign-product-button"),
+    readonly priceInput = page.getByTestId("price-input"),
+    readonly minValueInput = page.getByTestId("min-value-price-input"),
+    readonly minWeightInput = page
+      .getByTestId("min-order-weight-input")
+      .locator("input"),
+    readonly maxValueInput = page.getByTestId("max-value-price-input"),
+    readonly maxWeightInput = page
+      .getByTestId("max-order-weight-input")
+      .locator("input"),
+    readonly excludedProductsRows = page.getByTestId("excluded-products-rows"),
+    readonly includePostalCodesRadioButton = page.getByTestId("INCLUDE"),
+    readonly assignedPostalCodesRows = page.getByTestId(
+      "assigned-postal-codes-rows",
+    ),
+  ) {
     this.page = page;
     this.basePage = new BasePage(page);
     this.addProductsDialog = new AddProductsDialog(page);
     this.addPostalCodeDialog = new AddPostalCodeDialog(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
-    this.shippingRateNameInput = page
-      .getByTestId("shipping-rate-name-input")
-      .locator("input");
-    this.shippingRateDescriptionField = page
-      .getByTestId("rich-text-editor-description")
-      .locator('[contenteditable="true"]');
-    this.maxDeliveryTimeInput = page
-      .getByTestId("max-delivery-time-input")
-      .locator("input");
-    this.minDeliveryTimeInput = page
-      .getByTestId("min-delivery-time-input")
-      .locator("input");
-    this.addPostalCodeRangeButton = page.getByTestId("add-postal-code-range");
-    this.saveButton = page.getByTestId("button-bar-confirm");
-    this.assignProductButton = page.getByTestId("assign-product-button");
-    this.priceInput = page.getByTestId("price-input");
-    this.minValueInput = page.getByTestId("min-value-price-input");
-    this.minWeightInput = page
-      .getByTestId("min-order-weight-input")
-      .locator("input");
-    this.maxValueInput = page.getByTestId("max-value-price-input");
-    this.maxWeightInput = page
-      .getByTestId("max-order-weight-input")
-      .locator("input");
-    this.excludedProductsRows = page.getByTestId("excluded-products-rows");
-    this.includePostalCodesRadioButton = page.getByTestId("INCLUDE");
-    this.assignedPostalCodesRows = page.getByTestId(
-      "assigned-postal-codes-rows",
-    );
   }
 
   async addFirstAvailableExcludedProduct() {

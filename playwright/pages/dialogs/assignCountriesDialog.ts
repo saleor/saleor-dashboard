@@ -1,22 +1,18 @@
-import { Locator, Page } from "@playwright/test";
+import { Page } from "@playwright/test";
 
 export class AssignCountriesDialog {
   readonly page: Page;
-  readonly searchCountryInput: Locator;
-  readonly countryRow: Locator;
-  readonly restOfTheWorldRow: Locator;
-  readonly assignAndSaveButton: Locator;
-  readonly backButton: Locator;
-  readonly rowCheckBox: Locator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    readonly searchCountryInput = page.getByTestId("search-country-input"),
+    readonly countryRow = page.getByTestId("country-row"),
+    readonly restOfTheWorldRow = page.getByTestId("rest-of-the-world-row"),
+    readonly assignAndSaveButton = page.getByTestId("assign-and-save-button"),
+    readonly backButton = page.getByTestId("back-button"),
+    readonly rowCheckBox = page.getByTestId("checkbox"),
+  ) {
     this.page = page;
-    this.searchCountryInput = page.getByTestId("search-country-input");
-    this.countryRow = page.getByTestId("country-row");
-    this.restOfTheWorldRow = page.getByTestId("rest-of-the-world-row");
-    this.assignAndSaveButton = page.getByTestId("assign-and-save-button");
-    this.backButton = page.getByTestId("back-button");
-    this.rowCheckBox = page.getByTestId("checkbox");
   }
 
   async searchCountry(countryName = "Canada") {

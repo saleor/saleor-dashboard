@@ -14,6 +14,7 @@ import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { squashLines } from "../OrderReturn/useRefundWithinReturn";
 import { updateGrantRefundMessages } from "./messages";
 
 interface OrderGrantRefundProps {
@@ -83,11 +84,13 @@ const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({
           amount,
           reason,
           grantRefundForShipping,
-          addLines: lines.map(line => ({
-            id: line.id,
-            quantity: line.quantity,
-            reason: line.reason ?? "",
-          })),
+          addLines: squashLines(
+            lines.map(line => ({
+              id: line.id,
+              quantity: line.quantity,
+              reason: line.reason ?? "",
+            })),
+          ),
           removeLines: [],
         },
       }),

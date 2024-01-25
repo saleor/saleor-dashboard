@@ -36,6 +36,7 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
         {configurations?.map((configuration, confIndex) => (
           <React.Fragment key={configuration.id}>
             <ListItemLink
+              data-test-id="channels-list-rows"
               className={clsx(classes.clickable, classes.tableRow, {
                 [classes.selected]:
                   configuration.id === selectedConfigurationId,

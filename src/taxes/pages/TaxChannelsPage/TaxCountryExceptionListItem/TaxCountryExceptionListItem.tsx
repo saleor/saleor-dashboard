@@ -29,7 +29,11 @@ export const TaxCountryExceptionListItem: React.FC<
   const classes = useStyles();
   return (
     <>
-      <ListItem hover={false} className={classes.noDivider}>
+      <ListItem
+        hover={false}
+        className={classes.noDivider}
+        data-test-id="exception-country"
+      >
         <ListItemCell>{country.country.country}</ListItemCell>
         <ListItemCell className={classes.center}>
           <ControlledCheckbox
@@ -47,7 +51,10 @@ export const TaxCountryExceptionListItem: React.FC<
             onChange={onChange}
           />
         </ListItemCell>
-        <ListItemCell className={classes.center}>
+        <ListItemCell
+          className={classes.center}
+          data-test-id="display-gross-prices-checkbox"
+        >
           <ControlledCheckbox
             className={classes.center}
             checked={country.displayGrossPrices}

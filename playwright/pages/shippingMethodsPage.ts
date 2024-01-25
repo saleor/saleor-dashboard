@@ -1,42 +1,47 @@
 import { URL_LIST } from "@data/url";
+import { DeleteShippingMethodDialog } from "@dialogs/deleteShippingMethodDialog";
+import { BasePage } from "@pages/basePage";
 import { AssignCountriesDialog } from "@pages/dialogs/assignCountriesDialog";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
-import type { Locator, Page } from "@playwright/test";
-
-import { BasePage } from "./basePage";
+import type { Page } from "@playwright/test";
 
 export class ShippingMethodsPage {
   readonly page: Page;
   readonly basePage: BasePage;
   readonly rightSideDetailsPage: RightSideDetailsPage;
   readonly assignCountriesDialog: AssignCountriesDialog;
-  readonly createShippingZoneButton: Locator;
-  readonly shippingZoneNameInput: Locator;
-  readonly shippingZoneDescriptionField: Locator;
-  readonly saveButton: Locator;
-  readonly assignCountryButton: Locator;
-  readonly addPriceRateButton: Locator;
-  readonly addWeightRateButton: Locator;
+  readonly deleteShippingMethodDialog: DeleteShippingMethodDialog;
 
-  constructor(page: Page) {
+
+  constructor(
+    page: Page,
+    readonly assignCountryButton = page.getByTestId("assign-country"),
+    readonly addPriceRateButton = page.getByTestId("add-price-rate"),
+    readonly addWeightRateButton = page.getByTestId("add-weight-rate"),
+    readonly createShippingZoneButton = page.getByTestId("add-shipping-zone"),
+    readonly shippingZoneNameInput = page.getByTestId("shipping-zone-name"),
+    readonly shippingZoneDescriptionField = page
+      .getByTestId("shipping-zone-description")
+      .locator("textarea"),
+    readonly saveButton = page.getByTestId("button-bar-confirm"),
+    readonly shippingZoneName = page.getByTestId("page-header"),
+    readonly deleteShippingRateButton = page.getByTestId("button-bar-delete"),
+    readonly shippingRateNameInput = page.getByTestId("shipping-rate-name-input"),
+    readonly deleteShippingRateButtonOnList = page.getByTestId("shipping-method-row").getByRole("button").getByTestId("delete-button"),
+    readonly priceBasedRatesSection = page.getByTestId("price-based-rates"),
+    readonly weightBasedRatesSection = page.getByTestId("weight-based-rates"),
+  ) {
     this.page = page;
     this.basePage = new BasePage(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
     this.assignCountriesDialog = new AssignCountriesDialog(page);
-    this.assignCountryButton = page.getByTestId("assign-country");
-    this.addPriceRateButton = page.getByTestId("add-price-rate");
-    this.addWeightRateButton = page.getByTestId("add-weight-rate");
-    this.createShippingZoneButton = page.getByTestId("add-shipping-zone");
-    this.shippingZoneNameInput = page.getByTestId("shipping-zone-name");
-    this.shippingZoneDescriptionField = page
-      .getByTestId("shipping-zone-description")
-      .locator("textarea");
-    this.saveButton = page.getByTestId("button-bar-confirm");
+    this.deleteShippingMethodDialog = new DeleteShippingMethodDialog(page);
   }
 
   async clickAddWeightRateButton() {
     await this.addWeightRateButton.click();
   }
+
   async clickAddPriceRateButton() {
     await this.addPriceRateButton.click();
   }
@@ -50,6 +55,7 @@ export class ShippingMethodsPage {
       `${shippingZoneName} - ${new Date().toISOString()}`,
     );
   }
+
   async typeShippingZoneDescription(
     shippingDescription = "Biggest zone in e2e world",
   ) {
@@ -67,15 +73,48 @@ export class ShippingMethodsPage {
       timeout: 10000,
     });
   }
-  async gotoShippingMethod(shippingMethodId: string) {
-    await this.page.goto(`${URL_LIST.shippingMethods}${shippingMethodId}`);
+
+  async gotoExistingShippingMethod(shippingMethodId: string) {
+    const existingShippingMethodUrl = `${URL_LIST.shippingMethods}${shippingMethodId}`;
+    await console.log(
+      `Navigates to existing shipping method page: ${existingShippingMethodUrl}`,
+    );
+    await this.page.goto(existingShippingMethodUrl);
     await this.shippingZoneNameInput.waitFor({
       state: "visible",
       timeout: 10000,
     });
   }
 
+  async gotoExistingShippingRate(shippingMethodId: string, shippingRateId: string) {
+    const existingShippingRateUrl = `${URL_LIST.shippingMethods}${shippingMethodId}/${shippingRateId}`;
+
+    await console.log(
+      `Navigates to existing shipping rate page: ${existingShippingRateUrl}`,
+    );
+
+    await this.page.goto(existingShippingRateUrl);
+
+    await this.shippingRateNameInput.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
+  }
+
+
   async clickCreateShippingZoneButton() {
     await this.createShippingZoneButton.click();
   }
+
+  async clickDeletePriceBasedShippingMethod() {
+    await this.priceBasedRatesSection.locator(this.deleteShippingRateButtonOnList).click();
+
+  }
+
+  async clickDeleteShippingRateButton() {
+    await this.deleteShippingRateButton.click();
+  }
+
+
 }
+

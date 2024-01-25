@@ -489,7 +489,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
             )}
           </Header>
         )}
-        <CardContent classes={{ root: classes.cardContentRoot }}>
+        <CardContent
+          classes={{ root: classes.cardContentRoot }}
+          data-test-id="list"
+        >
           {rowsTotal > 0 || showEmptyDatagrid ? (
             <>
               {selection?.rows &&

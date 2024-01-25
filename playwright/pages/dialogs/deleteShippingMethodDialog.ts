@@ -1,6 +1,6 @@
 import type { Locator, Page } from "@playwright/test";
 
-export class DeleteChannelDialog {
+export class DeleteShippingMethodDialog {
   readonly page: Page;
 
   readonly deleteButton: Locator;
@@ -12,7 +12,6 @@ export class DeleteChannelDialog {
   }
 
   async clickDeleteButton() {
-    await this.deleteButton.first().click();
-    await this.deleteButton.waitFor({ state: "hidden" });
+    await this.deleteButton.click();
   }
 }
