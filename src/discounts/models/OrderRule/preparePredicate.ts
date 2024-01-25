@@ -1,7 +1,7 @@
 import { OrderPredicateInput } from "@dashboard/graphql";
 
 import { Condition } from "../Condition";
-import { createWhereInput } from "../helpers";
+import { createAPIWhereInput } from "../helpers";
 
 export function prepareOrderPredicate(
   conditions: Condition[],
@@ -13,7 +13,7 @@ export function prepareOrderPredicate(
       }
 
       return {
-        [`${condition.id}`]: createWhereInput(condition),
+        [`${condition.id}`]: createAPIWhereInput(condition),
       };
     })
     .filter(Boolean);

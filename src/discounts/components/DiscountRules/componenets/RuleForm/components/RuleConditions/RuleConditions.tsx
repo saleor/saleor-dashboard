@@ -1,5 +1,5 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
-import { Condition, Rule } from "@dashboard/discounts/models";
+import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
@@ -58,7 +58,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(Condition.empty())}
+          onClick={() => append(createEmptyCodition())}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>
@@ -91,7 +91,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(Condition.empty())}
+          onClick={() => append(createEmptyCodition())}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>

@@ -25,72 +25,72 @@ export const getConditionsTypes = (
       {
         type: "multiselect",
         label: CONDITIONT_TYPES_LABELS.IS,
-        value: "input-1",
+        value: "is",
       },
     ],
     category: [
       {
         type: "multiselect",
         label: CONDITIONT_TYPES_LABELS.IS,
-        value: "input-1",
+        value: "is",
       },
     ],
     collection: [
       {
         type: "multiselect",
         label: CONDITIONT_TYPES_LABELS.IS,
-        value: "input-1",
+        value: "is",
       },
     ],
     variant: [
       {
         type: "multiselect",
         label: CONDITIONT_TYPES_LABELS.IS,
-        value: "input-1",
+        value: "is",
       },
     ],
     baseSubtotalPrice: [
       {
         type: "price",
         label: CONDITIONT_TYPES_LABELS.IS,
-        value: "input-1",
+        value: "is",
       },
       {
         type: "price",
         label: CONDITIONT_TYPES_LABELS.LOWER,
-        value: "input-2",
+        value: "lower",
       },
       {
         type: "price",
         label: CONDITIONT_TYPES_LABELS.GREATER,
-        value: "input-3",
+        value: "greater",
       },
       {
         type: "price.range",
         label: CONDITIONT_TYPES_LABELS.BETWEEN,
-        value: "input-4",
+        value: "between",
       },
     ],
     baseTotalPrice: [
       {
         type: "price",
         label: CONDITIONT_TYPES_LABELS.IS,
-        value: "input-1",
+        value: "is",
       },
       {
         type: "price",
         label: CONDITIONT_TYPES_LABELS.LOWER,
-        value: "input-2",
+        value: "lower",
       },
       {
         type: "price",
         label: CONDITIONT_TYPES_LABELS.GREATER,
-        value: "input-3",
+        value: "greater",
       },
       {
         type: "price.range",
         label: CONDITIONT_TYPES_LABELS.BETWEEN,
-        value: "input-4",
+        value: "between",
       },
     ],
   };
@@ -106,9 +106,9 @@ export const useCondtionTypes = () => {
     const conditionTypes = conditionsTypes[type] as ConditionType[] | undefined;
 
     if (conditionTypes) {
-      return conditionTypes.map(({ label }) => ({
+      return conditionTypes.map(({ label, value }) => ({
         label,
-        value: label,
+        value,
       }));
     }
 

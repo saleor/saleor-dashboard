@@ -6,7 +6,7 @@ import {
 } from "@dashboard/graphql";
 
 import { Condition, ConditionType } from "./Condition";
-import { Rule } from "./types";
+import { Rule } from "./Rule";
 
 export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
   return {
@@ -25,6 +25,9 @@ export const createBaseRuleInputFromAPI = (
     id: data.id,
     name: data.name ?? "",
     description: data.description ? JSON.stringify(data.description) : "",
+    // For now Dashboard supports only one channel per rule
+    // due to API product variant filtering limitations
+    // TODO: Add support for multiple channels
     channel: data?.channels?.length
       ? { label: data?.channels[0].name, value: data?.channels[0].id }
       : null,
@@ -34,7 +37,7 @@ export const createBaseRuleInputFromAPI = (
   };
 };
 
-export const createWhereInput = (condition: Condition) => {
+export const createAPIWhereInput = (condition: Condition) => {
   const label = condition.type;
   const value = condition.values;
 

@@ -1,5 +1,4 @@
-import { Rule } from "@dashboard/discounts/models";
-import { mapAPIRuleToForm } from "@dashboard/discounts/models/mapAPIRuleToForm";
+import { mapAPIRuleToForm, Rule } from "@dashboard/discounts/models";
 import {
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,

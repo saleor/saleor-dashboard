@@ -13,3 +13,14 @@ export interface Rule {
   rewardValueType: RewardValueTypeEnum;
   conditions: Condition[];
 }
+
+export const createEmptyRule = (): Rule => ({
+  id: "",
+  name: "",
+  description: "",
+  channel: null,
+  rewardType: null,
+  rewardValue: 0,
+  rewardValueType: RewardValueTypeEnum.FIXED,
+  conditions: [],
+});
