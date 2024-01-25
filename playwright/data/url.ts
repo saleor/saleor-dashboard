@@ -34,6 +34,8 @@ export const URL_LIST = {
   vouchers: "discounts/vouchers/",
   vouchersAddPage: "discounts/vouchers/add",
   variant: "variant/",
+  taxChannel: "taxes/channels/",
+  taxCountry: "taxes/countries/",
   warehouses: "warehouses/",
   webhooksAndEvents: "custom-apps/",
   resetPassword: "new-password/?email=",

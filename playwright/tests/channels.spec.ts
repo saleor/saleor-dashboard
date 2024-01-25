@@ -25,7 +25,7 @@ test("TC: SALEOR_97 Create basic channel @e2e @channels", async () => {
   await channelPage.clickSaveButton();
   await channelPage.expectSuccessBanner();
 });
-test("TC: SALEOR_98 Edit channel settings to contain transaction flow, allow unpaid orders, authorize instead of charging, prio high stock @e2e @channels", async () => {
+test("TC: SALEOR_98 Edit channel - transaction flow, allow unpaid, authorize, prio high stock @e2e @channels", async () => {
   await channelPage.gotoChannelDetails(CHANNELS.channelToBeEditedSettings.id);
   await channelPage.clickTransactionFlowCheckbox();
   await channelPage.clickAllowUnpaidOrdersCheckbox();
