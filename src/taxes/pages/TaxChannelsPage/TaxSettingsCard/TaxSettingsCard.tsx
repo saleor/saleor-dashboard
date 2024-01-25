@@ -45,12 +45,16 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
         </Typography>
         <div className={classes.taxStrategySection}>
           <ControlledCheckbox
+            data-test-id="charge-taxes-for-this-channel-checkbox"
             checked={values.chargeTaxes}
             name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
             onChange={onChange}
             label={intl.formatMessage(taxesMessages.chargeTaxes)}
           />
-          <div className={classes.singleSelectWrapper}>
+          <div
+            className={classes.singleSelectWrapper}
+            data-test-id="app-flat-select"
+          >
             <span className={classes.hint}>
               <FormattedMessage {...taxesMessages.taxStrategyHint} />{" "}
             </span>
@@ -68,7 +72,7 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
         </div>
       </CardContent>
       <Divider />
-      <CardContent>
+      <CardContent data-test-id="entered-rendered-prices-section">
         <Grid variant="uniform">
           <RadioGroup
             value={values.pricesEnteredWithTax}

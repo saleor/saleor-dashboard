@@ -3,7 +3,12 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import {
+  OrderDetailsFragment,
+  OrderErrorFragment,
+  OrderGrantRefundCreateErrorFragment,
+  TransactionRequestRefundForGrantedRefundErrorFragment,
+} from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import { orderHasTransactions } from "@dashboard/orders/types";
@@ -11,9 +16,10 @@ import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import OrderAmount from "../OrderRefundReturnAmount";
-import { getReturnProductsAmountValues } from "../OrderRefundReturnAmount/utils";
-import { SubmitCard } from "./components";
+import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
+import { TransactionSubmitCard } from "./components";
+import { PaymentSubmitCard } from "./components/PaymentSubmitCard";
+import { getReturnProductsAmountValues } from "./components/PaymentSubmitCard/utils";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
 import { orderReturnMessages } from "./messages";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
@@ -25,20 +31,35 @@ import {
 } from "./utils";
 
 export interface OrderReturnPageProps {
-  order: OrderDetailsFragment;
+  order: OrderDetailsFragment | undefined | null;
   loading: boolean;
-  errors?: OrderErrorFragment[];
+  returnErrors?: OrderErrorFragment[];
+  grantRefundErrors?: OrderGrantRefundCreateErrorFragment[];
+  sendRefundErrors?: TransactionRequestRefundForGrantedRefundErrorFragment[];
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
   submitStatus: ConfirmButtonTransitionState;
 }
 
 const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
-  const { order, loading, errors = [], onSubmit, submitStatus } = props;
+  const {
+    order,
+    loading,
+    returnErrors = [],
+    grantRefundErrors = [],
+    sendRefundErrors = [],
+    onSubmit,
+    submitStatus,
+  } = props;
+
+  const canRefundShipping = calculateCanRefundShipping(
+    null,
+    order?.grantedRefunds,
+  );
 
   const intl = useIntl();
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
-      {({ data, handlers, change, submit, isSaveDisabled }) => (
+      {({ data, handlers, change, submit, isSaveDisabled, isAmountDirty }) => (
         <DetailPageLayout>
           <TopNav
             href={orderUrl(order?.id)}
@@ -50,7 +71,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
             {!!data.unfulfilledItemsQuantities.length && (
               <>
                 <ItemsCard
-                  errors={errors}
+                  errors={returnErrors}
                   order={order}
                   lines={getUnfulfilledLines(order as OrderDetailsFragment)}
                   itemsQuantities={data.unfulfilledItemsQuantities}
@@ -69,7 +90,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               ({ id, lines }) => (
                 <React.Fragment key={id}>
                   <ItemsCard
-                    errors={errors}
+                    errors={returnErrors}
                     order={order}
                     fulfilmentId={id}
                     lines={getParsedLines(lines)}
@@ -90,7 +111,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               ({ id, lines }) => (
                 <React.Fragment key={id}>
                   <ItemsCard
-                    errors={errors}
+                    errors={returnErrors}
                     order={order}
                     fulfilmentId={id}
                     lines={getParsedLines(lines)}
@@ -109,13 +130,26 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             {orderHasTransactions(order) ? (
-              <SubmitCard
+              <TransactionSubmitCard
+                transactions={order.transactions}
+                grantRefundErrors={grantRefundErrors}
+                sendRefundErrors={sendRefundErrors}
+                customRefundValue={data.amount}
+                autoGrantRefund={data.autoGrantRefund}
+                autoSendRefund={data.autoSendRefund}
+                refundShipmentCosts={data.refundShipmentCosts}
+                canRefundShipping={canRefundShipping}
+                shippingCosts={order?.shippingPrice?.gross}
+                amountData={getReturnProductsAmountValues(order, data)}
+                onChange={change}
                 disabled={isSaveDisabled}
                 onSubmit={submit}
                 submitStatus={submitStatus}
+                onAmountChange={handlers.handleAmountChange}
+                isAmountDirty={isAmountDirty}
               />
             ) : (
-              <OrderAmount
+              <PaymentSubmitCard
                 allowNoRefund
                 isReturn
                 amountData={getReturnProductsAmountValues(order, data)}
@@ -123,7 +157,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 order={order}
                 disableSubmitButton={isSaveDisabled}
                 disabled={loading}
-                errors={errors}
+                errors={returnErrors}
                 onChange={change}
                 onRefund={submit}
               />
