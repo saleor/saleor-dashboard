@@ -13,11 +13,14 @@ export interface FetchOptions {
   options: Option[];
 }
 
-export const useCondtionValuesOptions = (channel: string | null) => {
-  const productSearch = useProductOptions(channel);
-  const collectionSearch = useCollectionOptions(channel);
-  const categorySearch = useCategorieOptions(channel);
-  const variantSearch = useVariantOptions(channel);
+export const useCondtionValuesOptions = (
+  channel: string | null,
+  conditionId: string | null,
+) => {
+  const productSearch = useProductOptions(channel, conditionId);
+  const collectionSearch = useCollectionOptions(channel, conditionId);
+  const categorySearch = useCategorieOptions(channel, conditionId);
+  const variantSearch = useVariantOptions(channel, conditionId);
 
   const typeToFetchMap: Record<CatalogConditions, FetchOptions> = {
     product: productSearch,

@@ -1,11 +1,10 @@
-import { Multiselect } from "@dashboard/components/Combobox";
-import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
-import { useCondtionValuesOptions } from "@dashboard/discounts/components/DiscountRules/hooks/useCondtionValues";
+import { useCondtionTypes } from "@dashboard/discounts/components/DiscountRules/hooks/useConditionTypes";
 import { Rule } from "@dashboard/discounts/models";
-import { Box, Input, Option, RangeInput } from "@saleor/macaw-ui-next";
+import { Box, Input, RangeInput } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
-import { FormattedMessage } from "react-intl";
+
+import { RuleConditionDynamicSelect } from "../RuleConditionDynamicSelect";
 
 interface RuleConditionValuesProps {
   conditionIndex: number;
@@ -17,21 +16,14 @@ export const RuleConditionValues = ({
   disabled,
 }: RuleConditionValuesProps) => {
   const { watch } = useFormContext<Rule>();
-  const { getConditionTypeByLabel, channels } = useDiscountRulesContext();
+  const { getConditionTypeByLabel } = useCondtionTypes();
 
   const condition = watch(`conditions.${conditionIndex}`);
-  const channel = watch("channel");
-
-  const channelSlug =
-    channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
 
   const inputType = getConditionTypeByLabel(
     condition.id ?? "",
     condition.type ?? "",
   );
-
-  const { getConditionValuesFetchProps } =
-    useCondtionValuesOptions(channelSlug);
 
   const ruleConditionValuesFieldName =
     `conditions.${conditionIndex}.value` as const;
@@ -44,32 +36,13 @@ export const RuleConditionValues = ({
   });
 
   if (inputType === "multiselect") {
-    const fetchProps = getConditionValuesFetchProps(condition.id ?? "");
-
-    if (fetchProps) {
-      const { fetch, options, fetchMoreProps } = fetchProps;
-
-      return (
-        <Multiselect
-          size="medium"
-          data-test-id="rule-value"
-          value={condition.value as Option[]}
-          fetchOptions={fetch}
-          fetchMore={fetchMoreProps}
-          options={options ?? []}
-          onChange={valuesField.onChange}
-          onBlur={valuesField.onBlur}
-          disabled={disabled}
-        >
-          <Multiselect.NoOptions size="small" padding={1}>
-            <FormattedMessage
-              defaultMessage="No options to select"
-              id="xTyg+p"
-            />
-          </Multiselect.NoOptions>
-        </Multiselect>
-      );
-    }
+    return (
+      <RuleConditionDynamicSelect
+        condition={condition}
+        conditionIndex={conditionIndex}
+        disabled={disabled}
+      />
+    );
   }
 
   if (inputType === "number" || inputType === "price") {

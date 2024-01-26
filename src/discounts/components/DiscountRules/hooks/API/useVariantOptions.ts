@@ -4,7 +4,10 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import useVariantSearch from "@dashboard/searches/useVariantSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-export const useVariantOptions = (channel: string | null) => {
+export const useVariantOptions = (
+  channel: string | null,
+  conditionId: string | null,
+) => {
   const {
     loadMore: loadMoreVariants,
     search: searchVariants,
@@ -14,7 +17,7 @@ export const useVariantOptions = (channel: string | null) => {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       channel,
     },
-    skip: !channel,
+    skip: !channel || !conditionId || conditionId !== "variant",
   });
 
   const fetchMoreVariants = getSearchFetchMoreProps(

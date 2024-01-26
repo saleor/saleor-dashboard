@@ -18,13 +18,8 @@ export const useConditionNameOptions = (discountType: PromotionTypeEnum) => {
     }
   }, [discountType]);
 
-  const getConditionNameOptionByValue = (value: string) => {
-    return conditionNameOptions.find(option => option.value === value);
-  };
-
   return {
     conditionNameOptions,
-    getConditionNameOptionByValue,
   };
 };
 

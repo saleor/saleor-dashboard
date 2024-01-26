@@ -1,4 +1,5 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
+import { useConditionNameOptions } from "@dashboard/discounts/components/DiscountRules/hooks/useConditionNameOptions";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -18,7 +19,8 @@ export const RuleConditions = ({
   hasSelectedChannels,
 }: RuleConditionsProps) => {
   const intl = useIntl();
-  const { conditionNameOptions } = useDiscountRulesContext();
+  const { discountType } = useDiscountRulesContext();
+  const { conditionNameOptions } = useConditionNameOptions(discountType);
 
   const { watch } = useFormContext<Rule>();
 

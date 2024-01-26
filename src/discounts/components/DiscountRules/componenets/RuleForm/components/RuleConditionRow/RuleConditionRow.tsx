@@ -1,13 +1,11 @@
-import { Combobox } from "@dashboard/components/Combobox";
-import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
-import { Condition, Rule } from "@dashboard/discounts/models";
-import { Box, Button, RemoveIcon, Select } from "@saleor/macaw-ui-next";
+import { Condition } from "@dashboard/discounts/models";
+import { Box, Button, RemoveIcon } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useController, useFormContext } from "react-hook-form";
 
+import { RuleConditionName } from "../RuleConditionName/RuleConditionName";
+import { RuleConditionType } from "../RuleConditionType/RuleConditionType";
 import { RuleConditionValues } from "../RuleConditionValues";
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
-import { getConditionNameValue } from "./utils";
 
 interface DiscountConditionRowProps {
   disabled?: boolean;
@@ -24,34 +22,6 @@ export const RuleConditionRow = ({
   updateCondition,
   disabled = false,
 }: DiscountConditionRowProps) => {
-  const ruleConditionNameFieldName = `conditions.${conditionIndex}.id` as const;
-  const { field: nameField } = useController<
-    Rule,
-    typeof ruleConditionNameFieldName
-  >({
-    name: ruleConditionNameFieldName,
-  });
-
-  const ruleCondtionTypeFileName = `conditions.${conditionIndex}.type` as const;
-  const { field: typeField } = useController<
-    Rule,
-    typeof ruleCondtionTypeFileName
-  >({
-    name: ruleCondtionTypeFileName,
-  });
-
-  const { watch } = useFormContext<Rule>();
-  const condition = watch(`conditions.${conditionIndex}`);
-
-  const { conditionNameOptions, getConditionTypesOptions } =
-    useDiscountRulesContext();
-
-  const conditionTypesOptions = getConditionTypesOptions(condition.id ?? "");
-
-  const filteredConditionLeftOptions = conditionNameOptions.filter(
-    condition => !isConditionTypeSelected(condition.value),
-  );
-
   return (
     <Box
       display="grid"
@@ -61,28 +31,17 @@ export const RuleConditionRow = ({
       alignItems="start"
     >
       <RuleInputWrapper>
-        <Combobox
-          value={getConditionNameValue(nameField.value, conditionNameOptions)}
-          fetchOptions={() => {}}
-          options={filteredConditionLeftOptions}
-          onChange={e => {
-            condition.value = [];
-            updateCondition(conditionIndex, condition);
-            nameField.onChange(e.target.value);
-          }}
-          size="medium"
-          data-test-id="rule-type"
-          onBlur={nameField.onBlur}
+        <RuleConditionName
+          conditionIndex={conditionIndex}
           disabled={disabled}
+          updateCondition={updateCondition}
+          isConditionTypeSelected={isConditionTypeSelected}
         />
       </RuleInputWrapper>
 
       <RuleInputWrapper>
-        <Select
-          value={typeField.value}
-          size="medium"
-          options={conditionTypesOptions}
-          onChange={typeField.onChange}
+        <RuleConditionType
+          conditionIndex={conditionIndex}
           disabled={disabled}
         />
       </RuleInputWrapper>
