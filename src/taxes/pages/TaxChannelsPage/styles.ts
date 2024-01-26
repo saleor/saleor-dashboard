@@ -21,6 +21,8 @@ export const useStyles = makeStyles(
     },
     noDivider: {
       "&::after, &::before": { display: "none" },
+      display: "grid",
+      gridTemplateColumns: "1fr 500px 1fr 1fr",
     },
     toolbarMargin: {
       "&:last-child": {
@@ -28,7 +30,7 @@ export const useStyles = makeStyles(
       },
     },
     selectField: {
-      textAlign: "left",
+      // textAlign: "left",
     },
   }),
   { name: "TaxChannelsPage" },

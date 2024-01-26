@@ -225,7 +225,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                           />
                         </CardContent>
                       ) : (
-                        <List gridTemplate={["4fr 3fr 3fr 1fr"]}>
+                        <List gridTemplate={["1fr 500px 1fr 1fr"]}>
                           <ListHeader>
                             <ListItem>
                               <ListItemCell>

@@ -47,7 +47,7 @@ export const TaxCountryExceptionListItem: React.FC<
             onChange={onChange}
           />
         </ListItemCell>
-        <ListItemCell className={classes.center}>
+        <ListItemCell>
           <ControlledCheckbox
             className={classes.center}
             checked={country.displayGrossPrices}

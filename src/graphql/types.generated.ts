@@ -9267,7 +9267,7 @@ export type SearchCatalogQuery = { __typename: 'Query', categories: { __typename
 export type ShopInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShopInfoQuery = { __typename: 'Query', shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null, name: string, trackInventoryByDefault: boolean | null, version: string, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, defaultCountry: { __typename: 'CountryDisplay', country: string, code: string } | null, domain: { __typename: 'Domain', host: string, url: string }, languages: Array<{ __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string }>, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }>, availableTaxApps: Array<{ __typename: 'App', id: string, name: string | null, version: string | null, identifier: string | null, created: any | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null }> } };
+export type ShopInfoQuery = { __typename: 'Query', shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null, name: string, trackInventoryByDefault: boolean | null, version: string, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, defaultCountry: { __typename: 'CountryDisplay', country: string, code: string } | null, domain: { __typename: 'Domain', host: string, url: string }, languages: Array<{ __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string }>, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> } };
 
 export type ShopCountriesQueryVariables = Exact<{
   filter?: InputMaybe<CountryFilterInput>;
@@ -11976,6 +11976,11 @@ export type TaxClassAssignQueryVariables = Exact<{
 
 
 export type TaxClassAssignQuery = { __typename: 'Query', taxClasses: { __typename: 'TaxClassCountableConnection', edges: Array<{ __typename: 'TaxClassCountableEdge', node: { __typename: 'TaxClass', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, endCursor: string | null } } | null };
+
+export type TaxStrategyChoicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TaxStrategyChoicesQuery = { __typename: 'Query', shop: { __typename: 'Shop', availableTaxApps: Array<{ __typename: 'App', id: string, name: string | null, version: string | null, identifier: string | null, created: any | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null }> } };
 
 export type UpdateProductTranslationsMutationVariables = Exact<{
   id: Scalars['ID'];

@@ -7,8 +7,8 @@ type Size = 8 | 12;
 export const AppAvatar: React.FC<{
   logo?: Logo;
   size?: Size;
-}> = ({ logo, size = 8 }) =>
-  logo ? (
+}> = ({ logo, size = 8 }) => {
+  return logo ? (
     <Box
       width={size}
       height={size}
@@ -20,7 +20,6 @@ export const AppAvatar: React.FC<{
     </Box>
   ) : (
     <Box
-      padding={1}
       backgroundColor="default2"
       width={size}
       height={size}
@@ -29,8 +28,9 @@ export const AppAvatar: React.FC<{
       borderRadius={2}
       borderWidth={1}
       borderColor="default1"
-      borderStyle={"solid"}
+      borderStyle="solid"
     >
-      <GenericAppIcon size="large" color="default2" />
+      <GenericAppIcon size="medium" color="default2" />
     </Box>
   );
+};
