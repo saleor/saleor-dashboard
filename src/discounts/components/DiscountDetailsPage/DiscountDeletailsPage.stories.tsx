@@ -8,7 +8,7 @@ import {
   searchCollectionsMock,
   searchProductsMock,
   searchVariantsMock,
-} from "../DiscountRules/componenets/RuleFormModal/mocks";
+} from "../DiscountRules/hooks/API/mocks";
 import {
   DiscountDetailsPage,
   DiscountDetailsPageProps,

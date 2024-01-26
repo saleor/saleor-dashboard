@@ -44,7 +44,7 @@ export const getValidationSchema = (intl: IntlShape) =>
         z.object({
           id: z.string().nullable(),
           type: z.string(),
-          values: z
+          value: z
             .array(z.object({ label: z.string(), value: z.string() }))
             .or(z.string())
             .or(z.tuple([z.string(), z.string()])),

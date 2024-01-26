@@ -13,13 +13,13 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React, { ReactNode } from "react";
 
+import { DiscountRules } from "./DiscountRules";
 import {
   searchCategoriesMock,
   searchCollectionsMock,
   searchProductsMock,
   searchVariantsMock,
-} from "./componenets/RuleFormModal/mocks";
-import { DiscountRules } from "./DiscountRules";
+} from "./hooks/API/mocks";
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
@@ -29,6 +29,11 @@ jest.mock("react-intl", () => ({
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => (
     <>{defaultMessage}</>
   ),
+}));
+
+jest.mock("@dashboard/hooks/useNotifier", () => ({
+  __esModule: true,
+  default: jest.fn(() => () => undefined),
 }));
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
@@ -253,12 +258,12 @@ describe("DiscountRules", () => {
         },
         conditions: [
           {
-            condition: "is",
-            type: "product",
-            values: [
+            id: "product",
+            type: "is",
+            value: [
               {
-                label: "Bean Juice",
-                value: "UHJvZHVjdDo3OQ==",
+                label: "Apple Juice",
+                value: "UHJvZHVjdDo3Mg==",
               },
             ],
           },
@@ -267,7 +272,7 @@ describe("DiscountRules", () => {
         id: "",
         name: "Name 123",
         rewardValue: 22,
-        rewardValueType: "PERCENTAGE",
+        rewardValueType: "FIXED",
       },
       null,
     );
@@ -367,7 +372,7 @@ describe("DiscountRules", () => {
           {
             id: "product",
             type: "is",
-            values: [
+            value: [
               {
                 label: "Product-1",
                 value: "prod-1",

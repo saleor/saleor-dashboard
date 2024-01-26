@@ -87,7 +87,10 @@ export const DiscountRules = <ErrorCode,>({
   };
 
   return (
-    <DiscountRulesContextProvider discountType={discountType}>
+    <DiscountRulesContextProvider
+      discountType={discountType}
+      channels={channels}
+    >
       <DashboardCard marginBottom={20}>
         <DashboardCard.Title>
           <Box

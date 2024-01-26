@@ -1,5 +1,6 @@
 import { Multiselect } from "@dashboard/components/Combobox";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
+import { useCondtionValuesOptions } from "@dashboard/discounts/components/DiscountRules/hooks/useCondtionValues";
 import { Rule } from "@dashboard/discounts/models";
 import { Box, Input, Option, RangeInput } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -16,14 +17,21 @@ export const RuleConditionValues = ({
   disabled,
 }: RuleConditionValuesProps) => {
   const { watch } = useFormContext<Rule>();
-  const condition = watch(`conditions.${conditionIndex}`);
+  const { getConditionTypeByLabel, channels } = useDiscountRulesContext();
 
-  const { getConditionValuesFetchProps, getConditionTypeByLabel } =
-    useDiscountRulesContext();
+  const condition = watch(`conditions.${conditionIndex}`);
+  const channel = watch("channel");
+
+  const channelSlug =
+    channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
+
   const inputType = getConditionTypeByLabel(
     condition.id ?? "",
     condition.type ?? "",
   );
+
+  const { getConditionValuesFetchProps } =
+    useCondtionValuesOptions(channelSlug);
 
   const ruleConditionValuesFieldName =
     `conditions.${conditionIndex}.value` as const;
