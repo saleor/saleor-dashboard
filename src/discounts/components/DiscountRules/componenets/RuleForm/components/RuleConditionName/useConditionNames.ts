@@ -1,16 +1,18 @@
 import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
 import { PromotionTypeEnum } from "@dashboard/graphql";
-import { useMemo } from "react";
+import { Option } from "@saleor/macaw-ui-next";
+import { useEffect, useState } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 export const useConditionNames = (discountType: PromotionTypeEnum) => {
   const intl = useIntl();
+  const [conditionNames, setConditionNames] = useState<Option[]>([]);
 
-  const conditionNames = useMemo(() => {
+  useEffect(() => {
     if (discountType === PromotionTypeEnum.CATALOGUE) {
-      return getCatalogConditionOptions(intl);
+      setConditionNames(getCatalogConditionOptions(intl));
     } else {
-      return getOrderConditionOptions(intl);
+      setConditionNames(getOrderConditionOptions(intl));
     }
   }, [discountType]);
 

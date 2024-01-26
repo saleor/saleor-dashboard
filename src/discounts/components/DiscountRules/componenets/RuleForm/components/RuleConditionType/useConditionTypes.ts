@@ -121,7 +121,7 @@ export const useCondtionTypes = () => {
       conditionsTypes[conditionName as CatalogConditions | OrderConditions];
 
     if (conditionTypes) {
-      const conditionType = conditionTypes.find(({ label }) => label === type);
+      const conditionType = conditionTypes.find(({ value }) => value === type);
 
       if (conditionType) {
         return conditionType.type;

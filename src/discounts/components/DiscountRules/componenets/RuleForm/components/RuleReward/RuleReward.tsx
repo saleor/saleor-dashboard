@@ -1,3 +1,4 @@
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Rule } from "@dashboard/discounts/models";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -9,18 +10,17 @@ import { DiscountTypeSwitch } from "../DiscountTypeSwitch";
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 
 interface RuleRewardProps {
-  disabled?: boolean;
   currencySymbol: string | null;
   error: string | undefined;
 }
 
-export const RuleReward = ({
-  currencySymbol,
-  disabled,
-  error,
-}: RuleRewardProps) => {
+export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
   const intl = useIntl();
+  const { disabled } = useDiscountRulesContext();
+
   const { watch, formState } = useFormContext<Rule>();
+  const discountType = watch("rewardValueType");
+
   const { field: rewardTypeField } = useController<Rule, "rewardValueType">({
     name: "rewardValueType",
   });
@@ -29,7 +29,6 @@ export const RuleReward = ({
     name: "rewardValue",
   });
 
-  const discountType = watch("rewardValueType");
   return (
     <>
       <Text as="p">{intl.formatMessage(messages.reward)}</Text>

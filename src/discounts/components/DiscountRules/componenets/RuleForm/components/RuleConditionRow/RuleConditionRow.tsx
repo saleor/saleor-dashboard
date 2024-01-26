@@ -2,10 +2,10 @@ import { Condition } from "@dashboard/discounts/models";
 import { Box, Button, RemoveIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { RuleConditionName } from "../RuleConditionName/RuleConditionName";
-import { RuleConditionType } from "../RuleConditionType/RuleConditionType";
+import { RuleConditionName } from "../RuleConditionName/";
+import { RuleConditionType } from "../RuleConditionType/";
 import { RuleConditionValues } from "../RuleConditionValues";
-import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
+import { RuleInputWrapper } from "../RuleInputWrapper";
 
 interface DiscountConditionRowProps {
   disabled?: boolean;
