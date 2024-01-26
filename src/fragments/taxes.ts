@@ -39,6 +39,7 @@ export const taxConfiguration = gql`
     pricesEnteredWithTax
     chargeTaxes
     taxCalculationStrategy
+    taxAppId
     countries {
       ...TaxConfigurationPerCountry
     }

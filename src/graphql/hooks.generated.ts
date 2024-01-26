@@ -2974,6 +2974,7 @@ export const TaxConfigurationFragmentDoc = gql`
   pricesEnteredWithTax
   chargeTaxes
   taxCalculationStrategy
+  taxAppId
   countries {
     ...TaxConfigurationPerCountry
   }
@@ -6402,6 +6403,18 @@ export const ShopInfoDocument = gql`
       ...Permission
     }
     version
+    availableTaxApps {
+      id
+      name
+      version
+      identifier
+      created
+      brand {
+        logo {
+          default
+        }
+      }
+    }
   }
 }
     ${CountryWithCodeFragmentDoc}

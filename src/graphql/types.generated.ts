@@ -3764,12 +3764,6 @@ export type OrderBulkCreateInput = {
   /**
    * Code of a voucher associated with the order.
    *
-   * DEPRECATED: this field will be removed in Saleor 3.19. Use `voucherCode` instead.
-   */
-  voucher?: InputMaybe<Scalars['String']>;
-  /**
-   * Code of a voucher associated with the order.
-   *
    * Added in Saleor 3.18.
    */
   voucherCode?: InputMaybe<Scalars['String']>;
@@ -6002,7 +5996,7 @@ export enum PromotionRuleUpdateErrorCode {
 }
 
 export type PromotionRuleUpdateInput = {
-  /** List of channel ids to remove. */
+  /** List of channel ids to add. */
   addChannels?: InputMaybe<Array<Scalars['ID']>>;
   /** Defines the conditions on the catalogue level that must be met for the reward to be applied. */
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
@@ -6764,6 +6758,8 @@ export type TaxConfigurationUpdateInput = {
   pricesEnteredWithTax?: InputMaybe<Scalars['Boolean']>;
   /** List of country codes for which to remove the tax configuration. */
   removeCountriesConfiguration?: InputMaybe<Array<CountryCode>>;
+  /** The tax app id that will be used to calculate the taxes for the given channel. Empty value when `taxCalculationStrategy` set is to `TAX_APP` means that Saleor will iterate over all installed tax apps. */
+  taxAppId?: InputMaybe<Scalars['String']>;
   /** The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated. */
   taxCalculationStrategy?: InputMaybe<TaxCalculationStrategy>;
   /** List of tax country configurations to create or update (identified by a country code). */
@@ -6994,7 +6990,8 @@ export enum TransactionFlowStrategyEnum {
 export enum TransactionInitializeErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
-  NOT_FOUND = 'NOT_FOUND'
+  NOT_FOUND = 'NOT_FOUND',
+  UNIQUE = 'UNIQUE'
 }
 
 /** An enumeration. */
@@ -7923,6 +7920,8 @@ export enum WebhookEventTypeAsyncEnum {
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   /** A translation is updated. */
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
+  VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
   /**
    * A voucher code export is completed.
    *
@@ -8387,6 +8386,8 @@ export enum WebhookEventTypeEnum {
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   /** A translation is updated. */
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
+  VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
   /**
    * A voucher code export is completed.
    *
@@ -8619,6 +8620,8 @@ export enum WebhookSampleEventTypeEnum {
   TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
+  VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
   VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   VOUCHER_DELETED = 'VOUCHER_DELETED',
@@ -9264,7 +9267,7 @@ export type SearchCatalogQuery = { __typename: 'Query', categories: { __typename
 export type ShopInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShopInfoQuery = { __typename: 'Query', shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null, name: string, trackInventoryByDefault: boolean | null, version: string, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, defaultCountry: { __typename: 'CountryDisplay', country: string, code: string } | null, domain: { __typename: 'Domain', host: string, url: string }, languages: Array<{ __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string }>, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> } };
+export type ShopInfoQuery = { __typename: 'Query', shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null, name: string, trackInventoryByDefault: boolean | null, version: string, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, defaultCountry: { __typename: 'CountryDisplay', country: string, code: string } | null, domain: { __typename: 'Domain', host: string, url: string }, languages: Array<{ __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string }>, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }>, availableTaxApps: Array<{ __typename: 'App', id: string, name: string | null, version: string | null, identifier: string | null, created: any | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null }> } };
 
 export type ShopCountriesQueryVariables = Exact<{
   filter?: InputMaybe<CountryFilterInput>;
@@ -10170,7 +10173,7 @@ export type CountryFragment = { __typename: 'CountryDisplay', country: string, c
 
 export type TaxConfigurationPerCountryFragment = { __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } };
 
-export type TaxConfigurationFragment = { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
+export type TaxConfigurationFragment = { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
 
 export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> };
 
@@ -11899,7 +11902,7 @@ export type TaxConfigurationUpdateMutationVariables = Exact<{
 }>;
 
 
-export type TaxConfigurationUpdateMutation = { __typename: 'Mutation', taxConfigurationUpdate: { __typename: 'TaxConfigurationUpdate', errors: Array<{ __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode, message: string | null }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+export type TaxConfigurationUpdateMutation = { __typename: 'Mutation', taxConfigurationUpdate: { __typename: 'TaxConfigurationUpdate', errors: Array<{ __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode, message: string | null }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
 
 export type TaxCountryConfigurationUpdateMutationVariables = Exact<{
   countryCode: CountryCode;
@@ -11947,7 +11950,7 @@ export type TaxConfigurationsListQueryVariables = Exact<{
 }>;
 
 
-export type TaxConfigurationsListQuery = { __typename: 'Query', taxConfigurations: { __typename: 'TaxConfigurationCountableConnection', edges: Array<{ __typename: 'TaxConfigurationCountableEdge', node: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
+export type TaxConfigurationsListQuery = { __typename: 'Query', taxConfigurations: { __typename: 'TaxConfigurationCountableConnection', edges: Array<{ __typename: 'TaxConfigurationCountableEdge', node: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
 
 export type TaxCountriesListQueryVariables = Exact<{ [key: string]: never; }>;
 

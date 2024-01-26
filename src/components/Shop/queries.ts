@@ -30,6 +30,18 @@ export const shopInfo = gql`
         ...Permission
       }
       version
+      availableTaxApps {
+        id
+        name
+        version
+        identifier
+        created
+        brand {
+          logo {
+            default
+          }
+        }
+      }
     }
   }
 `;
