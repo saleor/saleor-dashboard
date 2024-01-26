@@ -1,4 +1,4 @@
-import { SHIPPING_METHODS } from "@data/e2eTestData";
+import { CHANNELS, SHIPPING_METHODS, WAREHOUSES } from "@data/e2eTestData";
 import { ShippingMethodsPage } from "@pages/shippingMethodsPage";
 import { ShippingRatesPage } from "@pages/shippingRatesPage";
 import { expect, test } from "@playwright/test";
@@ -13,9 +13,7 @@ test.beforeEach(({ page }) => {
   shippingRatesPage = new ShippingRatesPage(page);
 });
 
-test("TC: SALEOR_31 Create basic shipping method @shipping-method @e2e", async ({
-                                                                                  page,
-                                                                                }) => {
+test("TC: SALEOR_31 Create basic shipping method @shipping-method @e2e", async () => {
 
   await shippingMethodsPage.gotoListView();
   await shippingMethodsPage.clickCreateShippingZoneButton();
@@ -24,18 +22,16 @@ test("TC: SALEOR_31 Create basic shipping method @shipping-method @e2e", async (
   await shippingMethodsPage.clickAssignCountryButton();
   await shippingMethodsPage.assignCountriesDialog.checkAndSaveSingleCountry();
   await shippingMethodsPage.saveShippingZone();
-  await shippingMethodsPage.basePage.expectSuccessBanner();
+  await shippingMethodsPage.expectSuccessBanner();
 
   await shippingMethodsPage.rightSideDetailsPage.clickChannelsSelectShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.selectSingleChannelShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.clickWarehouseSelectShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.typeAndSelectSingleWarehouseShippingPage();
   await shippingMethodsPage.saveShippingZone();
-  await shippingMethodsPage.basePage.expectSuccessBanner();
+  await shippingMethodsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes and excluded product @shipping-method @e2e", async ({
-                                                                                                                                      page,
-                                                                                                                                    }) => {
+test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes and excluded product @shipping-method @e2e", async () => {
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithoutRates.id,
   );
@@ -59,9 +55,7 @@ test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes 
     1,
   );
 });
-test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes and excluded product @shipping-method @e2e", async ({
-                                                                                                                                       page,
-                                                                                                                                     }) => {
+test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes and excluded product @shipping-method @e2e", async () => {
 
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithoutRates.id,
@@ -88,26 +82,22 @@ test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes
   );
 });
 
-test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details page @shipping-method @e2e", async ({
-                                                                                                                       page,
-                                                                                                                     }) => {
+test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details page @shipping-method @e2e", async () => {
 
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id,
   );
-  await expect(shippingMethodsPage.basePage.pageHeader).toBeVisible();
+  await expect(shippingMethodsPage.pageHeader).toBeVisible();
   const priceBasedRate = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.priceBasedRateToBeDeleted.name;
   await expect(shippingMethodsPage.priceBasedRatesSection).toContainText(priceBasedRate);
   await shippingMethodsPage.clickDeletePriceBasedShippingMethod();
   await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
-  await shippingMethodsPage.basePage.expectSuccessBanner();
+  await shippingMethodsPage.expectSuccessBanner();
   await expect(shippingMethodsPage.priceBasedRatesSection).toContainText("No shipping rates found");
   await expect(shippingMethodsPage.priceBasedRatesSection).not.toContainText(priceBasedRate);
 });
 
-test("TC: SALEOR_35 Delete a single shipping rate from its details page @shipping-method @e2e", async ({
-                                                                                                         page,
-                                                                                                       }) => {
+test("TC: SALEOR_35 Delete a single shipping rate from its details page @shipping-method @e2e", async () => {
 
   const shippingMethodId = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id;
   const shippingRateId = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.weightBasedRateToBeDeleted.id;
@@ -116,40 +106,45 @@ test("TC: SALEOR_35 Delete a single shipping rate from its details page @shippin
   await shippingMethodsPage.gotoExistingShippingRate(shippingMethodId, shippingRateId);
   await shippingMethodsPage.clickDeleteShippingRateButton();
   await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
-  await shippingMethodsPage.basePage.expectSuccessBanner();
+  await shippingMethodsPage.expectSuccessBanner();
   await expect(shippingMethodsPage.weightBasedRatesSection).toContainText("No shipping rates found");
   await expect(shippingMethodsPage.weightBasedRatesSection).not.toContainText(weightBasedRate);
 });
 
 test("TC: SALEOR_36 Delete shipping zones in bulk @shipping-method @e2e", async ({
-                                                                                   page,
-                                                                                 }) => {
+
+}) => {
 
   const shippingZone1 = SHIPPING_METHODS.shippingMethodToBeBulkDeleted1.name;
   const shippingZone2 = SHIPPING_METHODS.shippingMethodToBeBulkDeleted2.name;
   const shippingZone3 = SHIPPING_METHODS.shippingMethodToBeBulkDeleted3.name;
 
   await shippingMethodsPage.gotoListView();
-  await shippingMethodsPage.basePage.checkListRowsBasedOnContainingText([shippingZone1, shippingZone2, shippingZone3]);
-  await shippingMethodsPage.basePage.clickBulkDeleteGridRowsButton();
+  await shippingMethodsPage.checkListRowsBasedOnContainingText([shippingZone1, shippingZone2, shippingZone3]);
+  await shippingMethodsPage.clickBulkDeleteGridRowsButton();
   await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
-  await shippingMethodsPage.basePage.expectSuccessBanner();
+  await shippingMethodsPage.expectSuccessBanner();
 });
 
-test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async ({
-                                                                              page,
-                                                                            }) => {
-  await shippingMethodsPage.gotoListView();
+test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () => {
+  const channelSection = shippingMethodsPage.rightSideDetailsPage.channelSection
+  const warehouseSection = shippingMethodsPage.rightSideDetailsPage.warehouseSection
+  const alreadyAssignedChannels = [CHANNELS.channelUSD.name];
+  const channelsToBeAssigned = [CHANNELS.channelPLN.name];
+  const alreadyAssignedWarehouses = [WAREHOUSES.warehouseOceania.name, WAREHOUSES.warehouseAfrica.name];
+  const warehousesToBeAssigned = [WAREHOUSES.warehouseAmericas.name, WAREHOUSES.warehouseEurope.name];
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodToBeUpdated.id,
   );
   await shippingMethodsPage.rightSideDetailsPage.clickChannelsSelectShippingPage();
-  await shippingMethodsPage.rightSideDetailsPage.selectMultipleChannelsShippingPage(["Channel-PLN", "e2e-channel-do-not-delete"]);
+  await shippingMethodsPage.rightSideDetailsPage.selectSingleChannelShippingPage()
   await shippingMethodsPage.rightSideDetailsPage.clickWarehouseSelectShippingPage();
-  await shippingMethodsPage.rightSideDetailsPage.typeAndSelectMultipleWarehousesShippingPage(["Americas", "Europe"]);
+  await shippingMethodsPage.rightSideDetailsPage.typeAndSelectMultipleWarehousesShippingPage(warehousesToBeAssigned);
   await shippingMethodsPage.saveShippingZone();
-  await shippingMethodsPage.basePage.expectSuccessBanner();
-  await shippingMethodsPage.rightSideDetailsPage.expectAddedWarehousesVisibleByNames(["Oceania", "Americas", "Europe"]);
-  await shippingMethodsPage.rightSideDetailsPage.expectAddedChannelsVisibleByNames(["Channel-USD", "Channel-PLN", "z - automation"]);
-
+  await shippingMethodsPage.expectSuccessBanner();
+  const updatedChannelsList = alreadyAssignedChannels.concat(channelsToBeAssigned);
+  await shippingMethodsPage.rightSideDetailsPage.expectOptionsSelected(channelSection,updatedChannelsList);
+  const updatedWarehousesList = alreadyAssignedWarehouses.concat(warehousesToBeAssigned);
+  await shippingMethodsPage.rightSideDetailsPage.expectOptionsSelected(warehouseSection,updatedWarehousesList);
 });
+
