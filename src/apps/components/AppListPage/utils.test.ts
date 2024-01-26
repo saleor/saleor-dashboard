@@ -179,6 +179,7 @@ describe("App List verified installed apps util", () => {
         type: AppTypeEnum.THIRDPARTY,
         version: "1.0.0",
         appUrl: null,
+        created: "2020-06-02T12:24:26.818138+00:00",
         manifestUrl: "https://www.example.com/manifest",
         permissions: [
           {
@@ -197,6 +198,7 @@ describe("App List verified installed apps util", () => {
         type: AppTypeEnum.THIRDPARTY,
         version: "1.0.0",
         appUrl: "http://localhost:3000",
+        created: "2020-06-02T12:24:26.818138+00:00",
         manifestUrl: "http://localhost:3000/api/manifest",
         permissions: [
           {
@@ -269,6 +271,7 @@ describe("App List verified installable marketplace apps util", () => {
         version: "1.0.0",
         appUrl: null,
         manifestUrl: "https://www.example.com/manifest",
+        created: "2020-06-02T12:24:26.818138+00:00",
         permissions: [
           {
             __typename: "Permission",
@@ -287,6 +290,7 @@ describe("App List verified installable marketplace apps util", () => {
         version: "1.0.0",
         appUrl: "http://localhost:3000",
         manifestUrl: "http://localhost:3000/api/manifest",
+        created: "2020-06-02T12:24:26.818138+00:00",
         permissions: [
           {
             __typename: "Permission",

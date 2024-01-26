@@ -3,8 +3,7 @@ import {
   TaxConfigurationFragment,
 } from "@dashboard/graphql";
 
-// TODO: add unit tests
-const isStrategyFlatRates = (strategy: string) =>
+const isStrategyFlatRates = (strategy: string | null) =>
   strategy === TaxCalculationStrategy.FLAT_RATES;
 
 export const getTaxCalculationStrategy = (taxCalculationStrategy: string) =>

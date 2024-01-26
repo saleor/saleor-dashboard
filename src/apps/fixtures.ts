@@ -20,6 +20,7 @@ export const activeApp: AppListItemFragment = {
   version: "1.0.0",
   appUrl: "http://localhost:3000",
   manifestUrl: "http://localhost:3000/api/manifest",
+  created: "2020-06-02T12:24:26.818138+00:00",
   permissions: [
     {
       __typename: "Permission",
@@ -39,6 +40,7 @@ export const inactiveApp: AppListItemFragment = {
   version: "1.0.0",
   appUrl: null,
   manifestUrl: "http://localhost:3000/api/manifest",
+  created: "2020-06-02T12:24:26.818138+00:00",
   permissions: [
     {
       __typename: "Permission",
