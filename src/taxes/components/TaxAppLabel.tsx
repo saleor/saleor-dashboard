@@ -4,7 +4,7 @@ import { TaxStrategyChoicesQuery } from "@dashboard/graphql";
 import { Box, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 interface Props {
   app: TaxStrategyChoicesQuery["shop"]["availableTaxApps"][number];
@@ -67,21 +67,6 @@ export const TaxAppLabel: React.FC<Props> = ({ app }) => {
         </Text>
         <ExternalLinkIcon size="small" color="default2" />
       </Box>
-    </Box>
-  );
-};
-
-export const FlatTaxRateLabel: React.FC = () => {
-  const intl = useIntl();
-
-  return (
-    <Box display="flex" alignItems="center" __height="40px">
-      <Text>
-        {intl.formatMessage({
-          defaultMessage: "Use flat tax rate",
-          id: "zSDfq0",
-        })}
-      </Text>
     </Box>
   );
 };

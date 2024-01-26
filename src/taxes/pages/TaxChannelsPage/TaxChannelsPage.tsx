@@ -34,16 +34,16 @@ import { Box, Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "./styles";
-import TaxChannelsMenu from "./TaxChannelsMenu";
-import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
-import TaxSettingsCard from "./TaxSettingsCard";
 import {
   getSelectedTaxStrategy,
   getTaxAppId,
   getTaxCalculationStrategy,
-  useTaxStrategyChoices,
-} from "./useTaxStrategyChoices";
+} from "./helpers";
+import { useStyles } from "./styles";
+import TaxChannelsMenu from "./TaxChannelsMenu";
+import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
+import TaxSettingsCard from "./TaxSettingsCard";
+import { useTaxStrategyChoices } from "./useTaxStrategyChoices";
 
 interface TaxChannelsPageProps {
   taxConfigurations: TaxConfigurationFragment[] | undefined;

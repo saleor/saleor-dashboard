@@ -18,6 +18,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
     pricesEnteredWithTax: false,
     chargeTaxes: true,
     taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    taxAppId: null,
     countries: [
       {
         __typename: "TaxConfigurationPerCountry",
@@ -55,6 +56,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
     pricesEnteredWithTax: true,
     chargeTaxes: true,
     taxCalculationStrategy: TaxCalculationStrategy.TAX_APP,
+    taxAppId: "42",
     countries: [
       {
         __typename: "TaxConfigurationPerCountry",
