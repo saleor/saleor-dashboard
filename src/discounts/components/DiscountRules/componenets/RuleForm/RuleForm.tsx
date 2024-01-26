@@ -1,5 +1,5 @@
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
-import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
+import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import {
@@ -13,6 +13,7 @@ import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
+import { useDiscountRulesContext } from "../../context";
 import { getCurencySymbol } from "../../utils";
 import { RuleConditions } from "./components/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription";
@@ -20,17 +21,12 @@ import { RuleInputWrapper } from "./components/RuleInputWrapper/RuleInputWrapper
 import { RuleReward } from "./components/RuleReward";
 
 interface RuleFormProps<ErrorCode> {
-  channels: ChannelFragment[];
-  disabled?: boolean;
   errors: Array<CommonError<ErrorCode>>;
 }
 
-export const RuleForm = <ErrorCode,>({
-  channels,
-  disabled = false,
-  errors,
-}: RuleFormProps<ErrorCode>) => {
+export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
+  const { disabled, channels } = useDiscountRulesContext();
   const { watch, getValues, setValue, formState } = useFormContext<Rule>();
   const formErrors = getFormErrors(["rewardValue"], errors);
 
@@ -111,18 +107,14 @@ export const RuleForm = <ErrorCode,>({
           </RuleInputWrapper>
         </Box>
 
-        <RuleConditions
-          disabled={disabled}
-          hasSelectedChannels={hasSelectedChannel}
-        />
+        <RuleConditions hasSelectedChannels={hasSelectedChannel} />
 
         <RuleReward
-          disabled={disabled}
           currencySymbol={currencySymbol}
           error={getCommonFormFieldErrorMessage(formErrors.rewardValue, intl)}
         />
 
-        <RuleDescription disabled={disabled} />
+        <RuleDescription />
 
         <button type="submit" hidden>
           Submit

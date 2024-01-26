@@ -90,6 +90,7 @@ export const DiscountRules = <ErrorCode,>({
     <DiscountRulesContextProvider
       discountType={discountType}
       channels={channels}
+      disabled={disabled}
     >
       <DashboardCard marginBottom={20}>
         <DashboardCard.Title>
@@ -99,30 +100,23 @@ export const DiscountRules = <ErrorCode,>({
             alignItems="center"
           >
             {intl.formatMessage(messages.title)}
-            <AddButton
-              disabled={disabled}
-              onClick={() => setIsModalOpen(true)}
-            />
+            <AddButton onClick={() => setIsModalOpen(true)} />
           </Box>
         </DashboardCard.Title>
         <DashboardCard.Content>
           <RulesList
-            disabled={disabled}
             loading={!isLoaded || loading}
             rules={rules}
             onRuleEdit={handleRuleEdit}
             onRuleDelete={handleOpenRuleDeleteModal}
-            channels={channels}
             errors={errors}
           />
         </DashboardCard.Content>
 
         {isModalOpen && (
           <RuleFormModal
-            disabled={disabled}
             confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
             onClose={handleRuleModalClose}
-            channels={channels}
             initialFormValues={ruleInitialValues}
             errors={errors}
             onSubmit={handleRuleModalSubmit}

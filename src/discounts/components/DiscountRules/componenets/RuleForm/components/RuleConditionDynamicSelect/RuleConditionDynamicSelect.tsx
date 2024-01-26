@@ -1,6 +1,6 @@
 import { Multiselect } from "@dashboard/components/Combobox";
+import { useCondtionValues } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionValues/hooks/useCondtionValues";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
-import { useCondtionValuesOptions } from "@dashboard/discounts/components/DiscountRules/hooks/useCondtionValues";
 import { Condition, Rule } from "@dashboard/discounts/models";
 import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -35,7 +35,7 @@ export const RuleConditionDynamicSelect = ({
   const channelSlug =
     channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
 
-  const { getConditionValuesFetchProps } = useCondtionValuesOptions(
+  const { getConditionValuesFetchProps } = useCondtionValues(
     channelSlug,
     condition.id,
   );

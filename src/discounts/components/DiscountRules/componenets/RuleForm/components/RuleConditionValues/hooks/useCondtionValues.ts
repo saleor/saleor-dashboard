@@ -2,10 +2,10 @@ import { CatalogConditions } from "@dashboard/discounts/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { Option } from "@saleor/macaw-ui-next";
 
-import { useCategorieOptions } from "./API/useCategorieOptions";
-import { useCollectionOptions } from "./API/useCollectionOptions";
-import { useProductOptions } from "./API/useProductOptions";
-import { useVariantOptions } from "./API/useVariantOptions";
+import { useCategorieOptions } from "./options/useCategorieOptions";
+import { useCollectionOptions } from "./options/useCollectionOptions";
+import { useProductOptions } from "./options/useProductOptions";
+import { useVariantOptions } from "./options/useVariantOptions";
 
 export interface FetchOptions {
   fetch: (query: string) => void;
@@ -13,7 +13,7 @@ export interface FetchOptions {
   options: Option[];
 }
 
-export const useCondtionValuesOptions = (
+export const useCondtionValues = (
   channel: string | null,
   conditionId: string | null,
 ) => {

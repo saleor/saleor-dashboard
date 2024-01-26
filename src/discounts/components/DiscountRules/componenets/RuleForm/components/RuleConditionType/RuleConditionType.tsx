@@ -1,20 +1,20 @@
-import { useCondtionTypes } from "@dashboard/discounts/components/DiscountRules/hooks/useConditionTypes";
+import { useCondtionTypes } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionType/useConditionTypes";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Rule } from "@dashboard/discounts/models";
 import { Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 
 interface RuleConditionTypeProps {
-  disabled: boolean;
   conditionIndex: number;
 }
 
 export const RuleConditionType = ({
-  disabled,
   conditionIndex,
 }: RuleConditionTypeProps) => {
   const { watch } = useFormContext<Rule>();
   const condition = watch(`conditions.${conditionIndex}`);
+  const { disabled } = useDiscountRulesContext();
 
   const { getConditionTypesOptions } = useCondtionTypes();
   const conditionTypesOptions = getConditionTypesOptions(condition.id ?? "");

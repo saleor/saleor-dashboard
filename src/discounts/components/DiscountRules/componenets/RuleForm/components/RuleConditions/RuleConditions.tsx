@@ -1,5 +1,5 @@
+import { useConditionNames } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionName/useConditionNames";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
-import { useConditionNameOptions } from "@dashboard/discounts/components/DiscountRules/hooks/useConditionNameOptions";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -11,16 +11,14 @@ import { RuleConditionRow } from "../RuleConditionRow";
 
 interface RuleConditionsProps {
   hasSelectedChannels: boolean;
-  disabled?: boolean;
 }
 
 export const RuleConditions = ({
-  disabled = false,
   hasSelectedChannels,
 }: RuleConditionsProps) => {
   const intl = useIntl();
-  const { discountType } = useDiscountRulesContext();
-  const { conditionNameOptions } = useConditionNameOptions(discountType);
+  const { discountType, disabled } = useDiscountRulesContext();
+  const { conditionNames } = useConditionNames(discountType);
 
   const { watch } = useFormContext<Rule>();
 
@@ -30,8 +28,7 @@ export const RuleConditions = ({
 
   const conditionsList = watch("conditions");
 
-  const allConditionsSelected =
-    conditionsList.length === conditionNameOptions.length;
+  const allConditionsSelected = conditionsList.length === conditionNames.length;
 
   const isConditionNameSelected = (conditionType: string) =>
     conditionsList.some(condition => condition.id === conditionType);
@@ -75,7 +72,6 @@ export const RuleConditions = ({
       <Box display="flex" flexDirection="column" gap={4}>
         {fields.map((condition, conditionIndex) => (
           <RuleConditionRow
-            disabled={disabled}
             isConditionTypeSelected={isConditionNameSelected}
             key={condition.id || conditionIndex}
             conditionIndex={conditionIndex}

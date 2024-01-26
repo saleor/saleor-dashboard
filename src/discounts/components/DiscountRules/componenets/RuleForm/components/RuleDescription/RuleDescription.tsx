@@ -1,5 +1,6 @@
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Rule } from "@dashboard/discounts/models";
 import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
@@ -11,17 +12,14 @@ import { useIntl } from "react-intl";
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 
 interface RuleDescriptionProps {
-  disabled?: boolean;
   error?: boolean;
 }
 
-export const RuleDescription = ({
-  disabled = false,
-  error = false,
-}: RuleDescriptionProps) => {
+export const RuleDescription = ({ error = false }: RuleDescriptionProps) => {
   const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } =
     useRichTextContext();
+  const { disabled } = useDiscountRulesContext();
 
   const { field } = useController<Rule, "description">({
     name: "description",

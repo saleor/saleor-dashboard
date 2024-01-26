@@ -13,13 +13,13 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React, { ReactNode } from "react";
 
-import { DiscountRules } from "./DiscountRules";
 import {
   searchCategoriesMock,
   searchCollectionsMock,
   searchProductsMock,
   searchVariantsMock,
-} from "./hooks/API/mocks";
+} from "./componenets/RuleForm/components/RuleConditionValues/hooks/options/mocks";
+import { DiscountRules } from "./DiscountRules";
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({

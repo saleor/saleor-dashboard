@@ -1,10 +1,10 @@
 import { Rule } from "@dashboard/discounts/models";
-import { ChannelFragment } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { useDiscountRulesContext } from "../../context";
 import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
 import { Placeholder } from "../Placeholder";
@@ -18,7 +18,6 @@ import { RuleWrapper } from "./components/RuleWrapper";
 interface RulesListProps<ErrorCode> {
   rules: Rule[];
   disabled?: boolean;
-  channels: ChannelFragment[];
   errors: Array<CommonError<ErrorCode> & { index?: number }>;
   loading?: boolean;
   onRuleDelete: (index: number) => void;
@@ -30,11 +29,10 @@ export const RulesList = <ErrorCode,>({
   errors,
   onRuleEdit,
   onRuleDelete,
-  channels,
-  disabled,
   loading,
 }: RulesListProps<ErrorCode>) => {
   const intl = useIntl();
+  const { channels } = useDiscountRulesContext();
 
   if (loading) {
     return <RuleListLoading />;
@@ -62,7 +60,6 @@ export const RulesList = <ErrorCode,>({
                 <RuleActions
                   onDelete={() => onRuleDelete(index)}
                   onEdit={() => onRuleEdit(index)}
-                  disabled={disabled}
                 />
               </Box>
               <RuleSummary

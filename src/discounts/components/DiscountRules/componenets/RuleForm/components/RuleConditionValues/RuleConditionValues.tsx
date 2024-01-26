@@ -1,4 +1,5 @@
-import { useCondtionTypes } from "@dashboard/discounts/components/DiscountRules/hooks/useConditionTypes";
+import { useCondtionTypes } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionType/useConditionTypes";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Rule } from "@dashboard/discounts/models";
 import { Box, Input, RangeInput } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -8,15 +9,14 @@ import { RuleConditionDynamicSelect } from "../RuleConditionDynamicSelect";
 
 interface RuleConditionValuesProps {
   conditionIndex: number;
-  disabled: boolean;
 }
 
 export const RuleConditionValues = ({
   conditionIndex,
-  disabled,
 }: RuleConditionValuesProps) => {
   const { watch } = useFormContext<Rule>();
   const { getConditionTypeByLabel } = useCondtionTypes();
+  const { disabled } = useDiscountRulesContext();
 
   const condition = watch(`conditions.${conditionIndex}`);
 

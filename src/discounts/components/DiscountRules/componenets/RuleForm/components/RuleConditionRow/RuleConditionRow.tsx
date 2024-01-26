@@ -20,7 +20,6 @@ export const RuleConditionRow = ({
   onRemove,
   isConditionTypeSelected,
   updateCondition,
-  disabled = false,
 }: DiscountConditionRowProps) => {
   return (
     <Box
@@ -33,24 +32,17 @@ export const RuleConditionRow = ({
       <RuleInputWrapper>
         <RuleConditionName
           conditionIndex={conditionIndex}
-          disabled={disabled}
           updateCondition={updateCondition}
           isConditionTypeSelected={isConditionTypeSelected}
         />
       </RuleInputWrapper>
 
       <RuleInputWrapper>
-        <RuleConditionType
-          conditionIndex={conditionIndex}
-          disabled={disabled}
-        />
+        <RuleConditionType conditionIndex={conditionIndex} />
       </RuleInputWrapper>
 
       <RuleInputWrapper>
-        <RuleConditionValues
-          conditionIndex={conditionIndex}
-          disabled={disabled}
-        />
+        <RuleConditionValues conditionIndex={conditionIndex} />
       </RuleInputWrapper>
 
       <Button variant="tertiary" icon={<RemoveIcon />} onClick={onRemove} />

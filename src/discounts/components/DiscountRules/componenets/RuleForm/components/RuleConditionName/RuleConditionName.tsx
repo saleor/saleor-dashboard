@@ -1,28 +1,26 @@
 import { Combobox } from "@dashboard/components/Combobox";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
-import { useConditionNameOptions } from "@dashboard/discounts/components/DiscountRules/hooks/useConditionNameOptions";
 import { Condition, Rule } from "@dashboard/discounts/models";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 
+import { useConditionNames } from "./useConditionNames";
 import { getConditionNameValue } from "./utils";
 
 interface RuleConditionNameProps {
   conditionIndex: number;
-  disabled: boolean;
   updateCondition: (index: number, value: Condition) => void;
   isConditionTypeSelected: (conditionType: string) => boolean;
 }
 
 export const RuleConditionName = ({
   conditionIndex,
-  disabled,
   updateCondition,
   isConditionTypeSelected,
 }: RuleConditionNameProps) => {
   const { watch } = useFormContext<Rule>();
-  const { discountType } = useDiscountRulesContext();
-  const { conditionNameOptions } = useConditionNameOptions(discountType);
+  const { discountType, disabled } = useDiscountRulesContext();
+  const { conditionNames } = useConditionNames(discountType);
 
   const ruleConditionNameFieldName = `conditions.${conditionIndex}.id` as const;
   const { field: nameField } = useController<
@@ -33,13 +31,13 @@ export const RuleConditionName = ({
   });
   const condition = watch(`conditions.${conditionIndex}`);
 
-  const filteredConditionLeftOptions = conditionNameOptions.filter(
+  const filteredConditionLeftOptions = conditionNames.filter(
     condition => !isConditionTypeSelected(condition.value),
   );
 
   return (
     <Combobox
-      value={getConditionNameValue(nameField.value, conditionNameOptions)}
+      value={getConditionNameValue(nameField.value, conditionNames)}
       fetchOptions={() => {}}
       options={filteredConditionLeftOptions}
       onChange={e => {
