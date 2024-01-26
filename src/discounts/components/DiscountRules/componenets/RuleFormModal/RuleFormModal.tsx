@@ -5,33 +5,31 @@ import {
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Rule } from "@dashboard/discounts/models";
 import { buttonMessages } from "@dashboard/intl";
-import { CommonError } from "@dashboard/utils/errors/common";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "../../messages";
-import { RuleForm } from "../RuleForm/RuleForm";
 import { defaultFormValues } from "./defaultFormValues";
 import { getValidationSchema } from "./validationSchema";
 
-interface RuleFormModalProps<ErrorCode> {
+interface RuleFormModalProps {
+  children: React.ReactNode;
   onClose: () => void;
   onSubmit: (data: Rule) => void;
   confimButtonState: ConfirmButtonTransitionState;
   initialFormValues?: Rule | null;
-  errors: Array<CommonError<ErrorCode>>;
 }
 
-export const RuleFormModal = <ErrorCode,>({
+export const RuleFormModal = ({
   onClose,
   initialFormValues,
   confimButtonState,
+  children,
   onSubmit,
-  errors,
-}: RuleFormModalProps<ErrorCode>) => {
+}: RuleFormModalProps) => {
   const intl = useIntl();
 
   const methods = useForm<Rule>({
@@ -54,16 +52,7 @@ export const RuleFormModal = <ErrorCode,>({
           <DashboardModal.Close onClose={onClose} />
         </DashboardModal.Title>
         <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <Box
-              __width={650}
-              __minHeight={515}
-              __maxHeight="75vh"
-              overflowY="auto"
-            >
-              <RuleForm errors={errors} />
-            </Box>
-          </form>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
         </FormProvider>
         <DashboardModal.Actions>
           <Button onClick={onClose} variant="secondary">

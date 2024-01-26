@@ -9,6 +9,7 @@ import { useIntl } from "react-intl";
 
 import { AddButton } from "./componenets/AddButton";
 import { RuleDeleteModal } from "./componenets/RuleDeleteModal/RuleDeleteModal";
+import { RuleForm } from "./componenets/RuleForm";
 import { RuleFormModal } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
 import { DiscountRulesContextProvider } from "./context/provider";
@@ -118,9 +119,10 @@ export const DiscountRules = <ErrorCode,>({
             confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
             onClose={handleRuleModalClose}
             initialFormValues={ruleInitialValues}
-            errors={errors}
             onSubmit={handleRuleModalSubmit}
-          />
+          >
+            <RuleForm errors={errors} />
+          </RuleFormModal>
         )}
         <RuleDeleteModal
           open={ruleDeleteIndex !== null}
