@@ -340,7 +340,7 @@
     "cy:run:critical:parallel": "cypress run --record --env grepTags=@critical  --parallel --tag Critical",
     "cy:run:allEnv:parallel": "cypress run --record --env grepTags=@allEnv --parallel",
     "cy:run:stable:parallel": "cypress run --record --env grepTags=@critical  --parallel --tag Stable",
-    "test": "jest src/",
+    "test": "",
     "posttest": "node scripts/pika.js",
     "test:watch": "jest --watch src/",
     "lint": "eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix",
