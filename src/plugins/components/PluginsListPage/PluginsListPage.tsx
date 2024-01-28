@@ -1,12 +1,10 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import { getStatusColor } from "@dashboard/misc";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import {
   FilterPageProps,
@@ -15,7 +13,6 @@ import {
   TabPageProps,
 } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -25,10 +22,7 @@ import {
   PluginFilterKeys,
   PluginListFilterOpts,
 } from "./filters";
-import {
-  pluginsFilterErrorMessages,
-  pluginsListPageMessages,
-} from "./messages";
+import { pluginsFilterErrorMessages } from "./messages";
 
 export interface PluginsListPageProps
   extends PageListProps,
@@ -52,7 +46,6 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
-  const { theme: currentTheme } = useTheme();
 
   const filterStructure = createFilterStructure(intl, filterOpts);
 
@@ -63,30 +56,6 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
         title={intl.formatMessage(sectionNames.plugins)}
       />
       <Card>
-        <div>
-          <Box
-            paddingX={7}
-            paddingY={5}
-            marginBottom={5}
-            __backgroundColor={getStatusColor({
-              status: "warning",
-              currentTheme,
-            })}
-          >
-            <Text variant="heading" as="h2">
-              {intl.formatMessage(pluginsListPageMessages.warningHeadline)}
-            </Text>
-            <Text variant="body">
-              {intl.formatMessage(pluginsListPageMessages.appStoreWarning)}{" "}
-              <ExternalLinkNext
-                target="_blank"
-                href="https://docs.saleor.io/docs/3.x/developer/app-store/overview"
-              >
-                Saleor App Store.
-              </ExternalLinkNext>
-            </Text>
-          </Box>
-        </div>
         <FilterBar
           errorMessages={pluginsFilterErrorMessages}
           currentTab={currentTab}

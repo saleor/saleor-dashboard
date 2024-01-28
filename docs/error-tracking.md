@@ -1,6 +1,6 @@
 # Error Tracking
 
-Saleor Dashboard uses a generic error-tracking wrapper function that takes care of the most popular use cases:
+Tonserve Dashboard uses a generic error-tracking wrapper function that takes care of the most popular use cases:
 
 - initializing the tracker
 - capturing exceptions and (optionally) displaying the event id

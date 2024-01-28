@@ -9,7 +9,7 @@
   "env": {
     "API_URI": {
       "description": "URI of a running instance of Saleor GraphQL API",
-      "value": "https://demo.getsaleor.com/graphql/"
+      "value": "http://apitest.tonserve.com:8000/graphql/"
     },
     "APP_MOUNT_URI": {
       "description": "URI at which the Dashboard app will be mounted",

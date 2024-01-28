@@ -21,10 +21,43 @@ interface Connection<T> {
   edges: Array<Edge<T>> | undefined | null;
 }
 
+const filterObjects = (arrA: any[], arrB: any[]): any[] => {
+  return arrA.filter(objA => arrB.some(objB => objB.name === objA.name));
+};
+
 export function mapEdgesToItems<T>(
   data?: Connection<T> | undefined | null,
 ): T[] | undefined {
-  return data?.edges?.map(({ node }) => node);
+  const allowedPlugins = [
+    {
+      name: "Admin emails",
+    },
+    {
+      name: "Adyen",
+    },
+    {
+      name: "Authorize.Net",
+    },
+    {
+      name: "Dummy",
+    },
+    {
+      name: "Dummy Credit Card",
+    },
+    {
+      name: "OpenID Connect",
+    },
+    {
+      name: "Webhooks",
+    },
+  ];
+  const plugins = data?.edges?.map(({ node }) => node);
+  let newPlugins;
+  if (plugins) {
+    newPlugins = filterObjects(plugins, allowedPlugins);
+  }
+
+  return newPlugins;
 }
 
 export function mapCountriesToCountriesCodes(

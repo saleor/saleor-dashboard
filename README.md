@@ -1,7 +1,7 @@
 ![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)
 
 <div align="center">
-  <h1>Saleor Dashboard</h1>
+  <h1>Tonserve Dashboard</h1>
 </div>
 
 <div align="center">
