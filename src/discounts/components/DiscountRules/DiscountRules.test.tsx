@@ -127,7 +127,7 @@ describe("DiscountRules", () => {
 
   it("should render placeholder when no rules", () => {
     // Arrange & Act
-    const { rerender } = render(
+    render(
       <DiscountRules
         channels={[]}
         rules={[]}
@@ -140,20 +140,6 @@ describe("DiscountRules", () => {
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
-    );
-
-    rerender(
-      <DiscountRules
-        channels={[]}
-        rules={[]}
-        errors={[]}
-        onRuleSubmit={jest.fn()}
-        onRuleDelete={jest.fn()}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
     );
 
     // Assert
@@ -164,7 +150,7 @@ describe("DiscountRules", () => {
 
   it("should render discount rules", () => {
     // Arrange & Act
-    const { rerender } = render(
+    render(
       <DiscountRules
         channels={[]}
         rules={rules}
@@ -177,20 +163,6 @@ describe("DiscountRules", () => {
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
-    );
-
-    rerender(
-      <DiscountRules
-        channels={[]}
-        rules={rules}
-        errors={[]}
-        onRuleSubmit={jest.fn()}
-        onRuleDelete={jest.fn()}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
     );
 
     // Assert
@@ -210,7 +182,7 @@ describe("DiscountRules", () => {
   it("should allow to add new rule", async () => {
     // Arrange
     const onRuleAdd = jest.fn();
-    const { rerender } = render(
+    render(
       <DiscountRules
         channels={channels}
         rules={[]}
@@ -223,20 +195,6 @@ describe("DiscountRules", () => {
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
-    );
-
-    rerender(
-      <DiscountRules
-        channels={channels}
-        rules={[]}
-        errors={[]}
-        onRuleSubmit={onRuleAdd}
-        onRuleDelete={jest.fn()}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
     );
 
     // Act
@@ -294,7 +252,7 @@ describe("DiscountRules", () => {
         id: "",
         name: "Name 123",
         rewardValue: 22,
-        rewardValueType: "PERCENTAGE",
+        rewardValueType: "FIXED",
       },
       null,
     );
@@ -304,7 +262,7 @@ describe("DiscountRules", () => {
     // Arrange
     const onRuleDelete = jest.fn();
 
-    const { rerender } = render(
+    render(
       <DiscountRules
         channels={[]}
         rules={rules}
@@ -317,20 +275,6 @@ describe("DiscountRules", () => {
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
-    );
-
-    rerender(
-      <DiscountRules
-        channels={[]}
-        rules={rules}
-        errors={[]}
-        onRuleSubmit={jest.fn()}
-        onRuleDelete={onRuleDelete}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
     );
 
     // Act
@@ -353,7 +297,7 @@ describe("DiscountRules", () => {
     // Arrange
     const onRuleEdit = jest.fn();
 
-    const { rerender } = render(
+    render(
       <DiscountRules
         channels={channels}
         rules={rules}
@@ -366,20 +310,6 @@ describe("DiscountRules", () => {
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
-    );
-
-    rerender(
-      <DiscountRules
-        channels={channels}
-        rules={rules}
-        errors={[]}
-        onRuleSubmit={onRuleEdit}
-        onRuleDelete={jest.fn()}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
     );
 
     // Act
@@ -438,7 +368,7 @@ describe("DiscountRules", () => {
 
   it("should show error in rule", async () => {
     // Arrange & Act
-    const { rerender } = render(
+    render(
       <DiscountRules
         channels={[]}
         rules={rules}
@@ -458,27 +388,6 @@ describe("DiscountRules", () => {
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
       { wrapper: Wrapper },
-    );
-
-    rerender(
-      <DiscountRules
-        channels={[]}
-        rules={rules}
-        errors={[
-          {
-            field: "rewardValue",
-            message: "Reward value is required",
-            code: "GRAPHQL_ERROR",
-            index: 0,
-          } as any,
-        ]}
-        onRuleSubmit={jest.fn()}
-        onRuleDelete={jest.fn()}
-        disabled={false}
-        loading={false}
-        deleteButtonState="default"
-        getRuleConfirmButtonState={jest.fn(() => "default")}
-      />,
     );
 
     // Assert
