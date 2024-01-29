@@ -59,6 +59,9 @@
     "context": "tabel column header",
     "string": "Total"
   },
+  "+Ps1jL": {
+    "string": "Be extra careful with taxes and payment apps, ensure your configuration selects other apps to be used"
+  },
   "+RffqY": {
     "context": "Dry run dialog object title",
     "string": "Select object type to perform dry run on provided query"

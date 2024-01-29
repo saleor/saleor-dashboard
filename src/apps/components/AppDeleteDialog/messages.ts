@@ -35,4 +35,9 @@ export default defineMessages({
     defaultMessage: "Are you sure you want to delete this app?",
     description: "delete app",
   },
+  deleteAppWarning: {
+    id: "+Ps1jL",
+    defaultMessage:
+      "Be extra careful with taxes and payment apps, ensure your configuration selects other apps to be used",
+  },
 });

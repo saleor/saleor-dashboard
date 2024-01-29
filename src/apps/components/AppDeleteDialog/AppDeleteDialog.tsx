@@ -70,8 +70,7 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
           borderStyle="solid"
         >
           <Text variant="caption">
-            Be extra careful with taxes and payment apps, ensure your
-            configuration selects other apps to be used.
+            {intl.formatMessage(msgs.deleteAppWarning)}
           </Text>
         </Box>
         {getMainText()} <FormattedMessage {...msgs.deleteAppQuestion} />
