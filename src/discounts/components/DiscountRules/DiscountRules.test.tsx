@@ -4,7 +4,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React, { ReactNode } from "react";
 
@@ -242,14 +242,6 @@ describe("DiscountRules", () => {
     // Act
     await act(async () => {
       await userEvent.click(screen.getByRole("button", { name: /add rule/i }));
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText(/^catalog$/i)).toBeInTheDocument();
-    });
-
-    await act(async () => {
-      await userEvent.click(screen.getByText(/^catalog$/i));
     });
 
     await userEvent.type(
