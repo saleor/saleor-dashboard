@@ -176,14 +176,17 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                   <PageTab
                     label={intl.formatMessage(taxesMessages.channelsSection)}
                     value="channels"
+                    data-test-id="channels-tab"
                   />
                   <PageTab
                     label={intl.formatMessage(taxesMessages.countriesSection)}
                     value="countries"
+                    data-test-id="countries-tab"
                   />
                   <PageTab
                     label={intl.formatMessage(taxesMessages.taxClassesSection)}
                     value="tax-classes"
+                    data-test-id="tax-classes-tab"
                   />
                 </PageTabs>
                 <VerticalSpacer spacing={2} />
@@ -209,6 +212,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                         )}
                         toolbar={
                           <Button
+                            data-test-id="add-country-button"
                             variant="secondary"
                             onClick={() => openDialog("add-country")}
                           >

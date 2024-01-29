@@ -3341,6 +3341,7 @@ export const payments: Record<string, OrderPaymentFragment> = {
 export const grantedRefunds: OrderGrantedRefundFragment[] = [
   {
     id: "1234",
+    shippingCostsIncluded: true,
     amount: prepareMoney(),
     reason: "Products returned",
     app: { id: "123", name: "Saleor Checkout", __typename: "App" },
@@ -3350,6 +3351,7 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
   },
   {
     id: "12344",
+    shippingCostsIncluded: false,
     amount: prepareMoney(),
     reason: "Products arrived damaged",
     app: null,

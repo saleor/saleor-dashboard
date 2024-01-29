@@ -30,6 +30,7 @@ export interface LineItemOptions<T> {
 export interface LineItemData {
   isFulfillment: boolean;
   isRefunded: boolean;
+  orderLineId: string;
 }
 
 export type FormsetQuantityData = FormsetData<LineItemData, number>;
@@ -38,6 +39,8 @@ export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 export interface OrderReturnData {
   amount: number;
   refundShipmentCosts: boolean;
+  autoGrantRefund: boolean;
+  autoSendRefund: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
 }
 
@@ -48,6 +51,7 @@ export interface OrderReturnHandlers {
   changeItemsToBeReplaced: FormsetChange<boolean>;
   handleSetMaximalItemsQuantities;
   handleSetMaximalUnfulfiledItemsQuantities;
+  handleAmountChange: (value: number) => void;
 }
 
 export interface OrderReturnFormData extends OrderReturnData {
@@ -62,7 +66,7 @@ export type OrderRefundSubmitData = OrderReturnFormData;
 export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
   OrderReturnFormData,
   OrderReturnHandlers
->;
+> & { isAmountDirty: boolean };
 
 interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
@@ -74,6 +78,8 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
   amount: undefined,
   amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
   refundShipmentCosts: false,
+  autoGrantRefund: false,
+  autoSendRefund: false,
 });
 
 function useOrderReturnForm(
@@ -89,6 +95,8 @@ function useOrderReturnForm(
   } = useForm(getOrderRefundPageFormData(), undefined, {
     confirmLeave: true,
   });
+
+  const [isAmountDirty, setAmountDirty] = React.useState(false);
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
     formId,
@@ -217,6 +225,16 @@ function useOrderReturnForm(
     quantities.set(newQuantities);
   };
 
+  const handleAmountChange = (value: number) => {
+    setAmountDirty(true);
+    handleChange({
+      target: {
+        name: "amount",
+        value,
+      },
+    });
+  };
+
   const data: OrderReturnFormData = {
     fulfilledItemsQuantities: fulfiledItemsQuatities.data,
     waitingItemsQuantities: waitingItemsQuantities.data,
@@ -236,6 +254,7 @@ function useOrderReturnForm(
 
   function handleHandlerChange<T>(callback: (id: string, value: T) => void) {
     return (id: string, value: T) => {
+      setAmountDirty(false);
       triggerChange();
       callback(id, value);
     };
@@ -252,6 +271,7 @@ function useOrderReturnForm(
   return {
     change: handleChange,
     data,
+    isAmountDirty,
     handlers: {
       changeFulfiledItemsQuantity: handleHandlerChange(
         fulfiledItemsQuatities.change,
@@ -265,6 +285,7 @@ function useOrderReturnForm(
       ),
       handleSetMaximalItemsQuantities,
       handleSetMaximalUnfulfiledItemsQuantities,
+      handleAmountChange,
     },
     submit,
     isSaveDisabled,

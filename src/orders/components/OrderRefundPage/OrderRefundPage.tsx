@@ -12,12 +12,12 @@ import { useIntl } from "react-intl";
 
 import OrderRefund from "../OrderRefund";
 import OrderRefundFulfilledProducts from "../OrderRefundFulfilledProducts";
-import OrderRefundAmount from "../OrderRefundReturnAmount";
+import OrderRefundUnfulfilledProducts from "../OrderRefundUnfulfilledProducts";
+import { PaymentSubmitCard } from "../OrderReturnPage/components/PaymentSubmitCard";
 import {
   getMiscellaneousAmountValues,
   getRefundProductsAmountValues,
-} from "../OrderRefundReturnAmount/utils";
-import OrderRefundUnfulfilledProducts from "../OrderRefundUnfulfilledProducts";
+} from "../OrderReturnPage/components/PaymentSubmitCard/utils";
 import OrderRefundForm, {
   OrderRefundSubmitData,
   OrderRefundType,
@@ -125,7 +125,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
               )}
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
-              <OrderRefundAmount
+              <PaymentSubmitCard
                 amountData={
                   isProductRefund
                     ? getRefundProductsAmountValues(order, data)

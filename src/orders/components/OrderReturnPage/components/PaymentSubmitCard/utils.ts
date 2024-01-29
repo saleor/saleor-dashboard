@@ -12,13 +12,13 @@ import {
 } from "@dashboard/orders/utils/data";
 import { IMoney } from "@dashboard/utils/intl";
 
-import { OrderRefundFormData } from "../OrderRefundPage/form";
-import { LineItemData, OrderReturnFormData } from "../OrderReturnPage/form";
-import { OrderRefundAmountValuesProps } from "./OrderRefundReturnAmountValues";
+import { OrderRefundFormData } from "../../../OrderRefundPage/form";
+import { LineItemData, OrderReturnFormData } from "../../form";
+import { PaymentSubmitCardValuesProps } from "./PaymentSubmitCardValues";
 
 export const getMiscellaneousAmountValues = (
   order: OrderRefundSharedType,
-): OrderRefundAmountValuesProps => {
+): PaymentSubmitCardValuesProps => {
   const authorizedAmount = order?.total?.gross;
   const previouslyRefunded = getPreviouslyRefundedPrice(order);
   const maxRefund = getOrderCharged(order as OrderDetailsFragment);
@@ -52,7 +52,7 @@ export const getProductsAmountValues = ({
   waitingItemsQuantities: FormsetData<null | LineItemData, string | number>;
   unfulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>;
   refundShipmentCosts: any;
-}): OrderRefundAmountValuesProps => {
+}): PaymentSubmitCardValuesProps => {
   const authorizedAmount = getAuthorizedAmount(order);
   const shipmentCost = getShipmentCost(order);
 
