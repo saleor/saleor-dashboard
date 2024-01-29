@@ -26,6 +26,7 @@ export type SearchProductsOpts = ReturnType<typeof useProductSearch>["result"];
 
 export interface DiscoutFormData {
   name: string;
+  type: "catalog" | "order"; // to be replace by PromotionTypeEnum
   description: string;
   dates: {
     endDate: string;
