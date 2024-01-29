@@ -26,6 +26,11 @@ jest.mock("react-intl", () => ({
   ),
 }));
 
+jest.mock("@dashboard/hooks/useNotifier", () => ({
+  __esModule: true,
+  default: jest.fn(() => () => undefined),
+}));
+
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
     <MockedProvider
@@ -63,14 +68,15 @@ const rules = [
     channel: { label: "Test", value: "Q2hhbm5lcDoy" },
     conditions: [
       {
-        type: "product",
-        condition: "is",
-        values: [
+        id: "product",
+        type: "is",
+        value: [
           { label: "Product-1", value: "prod-1" },
           { label: "Product-2", value: "prod-2" },
         ],
       },
     ],
+    rewardType: null,
     rewardValue: 12,
     rewardValueType: RewardValueTypeEnum.FIXED,
   },
@@ -81,11 +87,12 @@ const rules = [
     channel: { label: "Test", value: "Q2hhbm5lcDoy" },
     conditions: [
       {
-        type: "category",
-        condition: "is",
-        values: [{ label: "Category-1", value: "cat-1" }],
+        id: "category",
+        type: "is",
+        value: [{ label: "Category-1", value: "cat-1" }],
       },
     ],
+    rewardType: null,
     rewardValue: 34,
     rewardValueType: RewardValueTypeEnum.PERCENTAGE,
   },
@@ -281,12 +288,12 @@ describe("DiscountRules", () => {
         },
         conditions: [
           {
-            condition: "is",
-            type: "product",
-            values: [
+            type: "is",
+            id: "product",
+            value: [
               {
-                label: "Bean Juice",
-                value: "UHJvZHVjdDo3OQ==",
+                label: "Apple Juice",
+                value: "UHJvZHVjdDo3Mg==",
               },
             ],
           },
@@ -415,9 +422,9 @@ describe("DiscountRules", () => {
         },
         conditions: [
           {
-            condition: "is",
-            type: "product",
-            values: [
+            type: "is",
+            id: "product",
+            value: [
               {
                 label: "Product-1",
                 value: "prod-1",

@@ -21,6 +21,7 @@ import { useCollectionOptions } from "../RuleForm/components/RuleConditions/hook
 import { useProductOptions } from "../RuleForm/components/RuleConditions/hooks/useProductOptions";
 import { useVariantOptions } from "../RuleForm/components/RuleConditions/hooks/useVariantOptions";
 import { RuleForm } from "../RuleForm/RuleForm";
+import { defaultFormValues } from "./defaultFormValues";
 import { getValidationSchema } from "./validationSchema";
 
 interface RuleFormModalProps<ErrorCode> {
@@ -46,11 +47,9 @@ export const RuleFormModal = <ErrorCode,>({
 }: RuleFormModalProps<ErrorCode>) => {
   const intl = useIntl();
 
-  const { toAPI, ...emptyRule } = Rule.empty();
-
   const methods = useForm<Rule>({
     mode: "onBlur",
-    values: initialFormValues || { ...emptyRule, toAPI },
+    values: initialFormValues || defaultFormValues,
     resolver: zodResolver(getValidationSchema(intl)),
   });
 
@@ -73,7 +72,7 @@ export const RuleFormModal = <ErrorCode,>({
   // Clear modal form
   useEffect(() => {
     if (!initialFormValues && open) {
-      methods.reset(Rule.empty());
+      methods.reset(defaultFormValues);
     }
   }, [open]);
 

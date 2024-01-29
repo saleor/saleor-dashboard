@@ -1,5 +1,6 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
-import { Condition, Rule } from "@dashboard/discounts/models";
+import { Condition, isArrayOfOptions, Rule } from "@dashboard/discounts/models";
+import { ConditionType } from "@dashboard/discounts/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { Box, Button, Option, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -20,22 +21,21 @@ interface DiscountConditionRowProps {
   conditionIndex: number;
   onRemove: () => void;
   updateCondition: (index: number, value: Condition) => void;
-  fetchOptions: FetchOptions | undefined;
+  typeToFetchMap: Record<ConditionType, FetchOptions>;
   isConditionTypeSelected: (conditionType: string) => boolean;
 }
 
 export const RuleConditionRow = ({
   conditionIndex,
   onRemove,
-  fetchOptions,
+  typeToFetchMap,
   isConditionTypeSelected,
   updateCondition,
   disabled = false,
 }: DiscountConditionRowProps) => {
   const intl = useIntl();
 
-  const ruleConditionTypeFieldName =
-    `conditions.${conditionIndex}.type` as const;
+  const ruleConditionTypeFieldName = `conditions.${conditionIndex}.id` as const;
   const { field: typeField } = useController<
     Rule,
     typeof ruleConditionTypeFieldName
@@ -44,7 +44,7 @@ export const RuleConditionRow = ({
   });
 
   const ruleConditionValuesFieldName =
-    `conditions.${conditionIndex}.values` as const;
+    `conditions.${conditionIndex}.value` as const;
   const { field: valuesField } = useController<
     Rule,
     typeof ruleConditionValuesFieldName
@@ -54,8 +54,11 @@ export const RuleConditionRow = ({
 
   const { watch } = useFormContext<Rule>();
   const condition = watch(`conditions.${conditionIndex}`);
-
-  const { fetch = () => {}, fetchMoreProps, options } = fetchOptions || {};
+  const {
+    fetch = () => {},
+    fetchMoreProps,
+    options,
+  } = typeToFetchMap[(condition?.id ?? "") as ConditionType] || {};
 
   const discountConditionType = initialDiscountConditionType.filter(
     condition => !isConditionTypeSelected(condition.value),
@@ -78,7 +81,7 @@ export const RuleConditionRow = ({
           fetchOptions={() => {}}
           options={discountConditionType}
           onChange={e => {
-            condition.values = [];
+            condition.value = [];
             updateCondition(conditionIndex, condition);
             typeField.onChange(e.target.value);
           }}
@@ -111,7 +114,7 @@ export const RuleConditionRow = ({
         <Multiselect
           size="medium"
           data-test-id="rule-values"
-          value={condition.values}
+          value={isArrayOfOptions(condition.value) ? condition.value : []}
           fetchOptions={fetch}
           fetchMore={fetchMoreProps}
           options={options ?? []}

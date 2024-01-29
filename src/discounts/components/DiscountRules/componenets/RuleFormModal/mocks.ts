@@ -138,41 +138,611 @@ export const searchProductsMock = {
         edges: [
           {
             node: {
+              id: "UHJvZHVjdDo3Mg==",
+              name: "Apple Juice",
+              thumbnail: {
+                url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
+                __typename: "Image",
+              },
+              variants: [
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
+                  name: "1l",
+                  sku: "43226647",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6MjA0",
+                  name: "2l",
+                  sku: "80884671",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 7,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 28,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6MjAy",
+                  name: "500ml",
+                  sku: "93855755",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+              ],
+              collections: [],
+              __typename: "Product",
+            },
+            __typename: "ProductCountableEdge",
+          },
+          {
+            node: {
+              id: "UHJvZHVjdDo3NA==",
+              name: "Banana Juice",
+              thumbnail: {
+                url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
+                __typename: "Image",
+              },
+              variants: [
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6MjA5",
+                  name: "1l",
+                  sku: "27512590",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6MjEw",
+                  name: "2l",
+                  sku: "40636347",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 7,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 28,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6MjA4",
+                  name: "500ml",
+                  sku: "45328412",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+              ],
+              collections: [],
+              __typename: "Product",
+            },
+            __typename: "ProductCountableEdge",
+          },
+          {
+            node: {
               id: "UHJvZHVjdDo3OQ==",
               name: "Bean Juice",
+              thumbnail: {
+                url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
+                __typename: "Image",
+              },
+              variants: [
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6MjI1",
+                  name: "2l",
+                  sku: "21438542",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 7,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 28,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6MjIz",
+                  name: "500ml",
+                  sku: "57211177",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6MjI0",
+                  name: "1l",
+                  sku: "57423879",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+              ],
+              collections: [],
+              __typename: "Product",
             },
+            __typename: "ProductCountableEdge",
           },
           {
             node: {
               id: "UHJvZHVjdDoxMTU=",
               name: "Black Hoodie",
+              thumbnail: {
+                url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
+                __typename: "Image",
+              },
+              variants: [
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6Mjk5",
+                  name: "XL",
+                  sku: "19230637",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6Mjk4",
+                  name: "L",
+                  sku: "22119503",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6MzAw",
+                  name: "XXL",
+                  sku: "61630747",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6Mjk2",
+                  name: "S",
+                  sku: "62783187",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+                {
+                  id: "UHJvZHVjdFZhcmlhbnQ6Mjk3",
+                  name: "M",
+                  sku: "91406604",
+                  channelListings: [
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDox",
+                        isActive: true,
+                        name: "Channel-USD",
+                        currencyCode: "USD",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 5,
+                        currency: "USD",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                    {
+                      channel: {
+                        id: "Q2hhbm5lbDoy",
+                        isActive: true,
+                        name: "Channel-PLN",
+                        currencyCode: "PLN",
+                        __typename: "Channel",
+                      },
+                      price: {
+                        amount: 20,
+                        currency: "PLN",
+                        __typename: "Money",
+                      },
+                      __typename: "ProductVariantChannelListing",
+                    },
+                  ],
+                  __typename: "ProductVariant",
+                },
+              ],
+              collections: [],
+              __typename: "Product",
             },
-          },
-          {
-            node: {
-              id: "UHJvZHVjdDo3Mw==",
-              name: "Carrot Juice",
-            },
-          },
-          {
-            node: {
-              id: "UHJvZHVjdDo4OQ==",
-              name: "Code Division T-shirt",
-            },
-          },
-          {
-            node: {
-              id: "UHJvZHVjdDo4NQ==",
-              name: "Colored Parrot Cushion",
-            },
+            __typename: "ProductCountableEdge",
           },
         ],
         pageInfo: {
-          endCursor: "WyJsYWtlLXR1bmVzIl0=",
-          hasNextPage: false,
+          endCursor: "WyJwaW5lYXBwbGUtanVpY2UiXQ==",
+          hasNextPage: true,
           hasPreviousPage: false,
-          startCursor: "WyJiZWFuLWp1aWNlIl0=",
+          startCursor: "WyJhcHBsZS1qdWljZSJd",
+          __typename: "PageInfo",
         },
+        __typename: "ProductCountableConnection",
+      },
+    },
+    extensions: {
+      cost: {
+        requestedQueryCost: 120,
+        maximumAvailable: 50000,
       },
     },
   },
