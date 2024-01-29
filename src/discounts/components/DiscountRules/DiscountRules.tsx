@@ -90,7 +90,7 @@ export const DiscountRules = <ErrorCode,>({
           {intl.formatMessage(messages.title)}
           <AddButton
             disabled={disabled}
-            onCatalogClick={() => setShowRuleModal(true)}
+            onClick={() => setShowRuleModal(true)}
           />
         </Box>
       </DashboardCard.Title>
