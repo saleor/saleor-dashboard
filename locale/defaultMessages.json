@@ -4917,6 +4917,9 @@
     "context": "dialog title",
     "string": "Add Address"
   },
+  "W2OIhn": {
+    "string": "Use app: {name}"
+  },
   "W32xfN": {
     "context": "staff member full name",
     "string": "Name"
@@ -5128,6 +5131,9 @@
   "XDBeA+": {
     "context": "discount type",
     "string": "Fixed amount"
+  },
+  "XFKV5Z": {
+    "string": "Created at: {date}"
   },
   "XFtKV5": {
     "context": "input placeholder tag",
@@ -8666,6 +8672,10 @@
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
   },
+  "wRvjoc": {
+    "context": "app created at label",
+    "string": "Created at"
+  },
   "wTHjt3": {
     "string": "Search Orders..."
   },
@@ -9057,6 +9067,9 @@
   "zRrcOG": {
     "context": "order history message",
     "string": "Order was cancelled"
+  },
+  "zSDfq0": {
+    "string": "Use flat tax rate"
   },
   "zSOvI0": {
     "string": "Filters"
