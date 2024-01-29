@@ -9,7 +9,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -66,13 +66,6 @@ export const RuleFormModal = <ErrorCode,>({
     category: categorySearch,
     variant: variantSearch,
   };
-
-  // Clear modal form
-  useEffect(() => {
-    if (!initialFormValues && open) {
-      methods.reset(defaultFormValues);
-    }
-  }, [open]);
 
   return (
     <DashboardModal open={true} onChange={onClose}>
