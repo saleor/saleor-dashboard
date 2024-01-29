@@ -1,6 +1,7 @@
 import {
   TaxCalculationStrategy,
   TaxConfigurationFragment,
+  TaxConfigurationPerCountryFragment,
 } from "@dashboard/graphql";
 
 const isStrategyFlatRates = (strategy: string | null) =>
@@ -15,7 +16,9 @@ export const getTaxAppId = (taxCalculationStrategy: string) =>
   isStrategyFlatRates(taxCalculationStrategy) ? null : taxCalculationStrategy;
 
 export const getSelectedTaxStrategy = (
-  currentTaxConfiguration: TaxConfigurationFragment,
+  currentTaxConfiguration:
+    | TaxConfigurationFragment
+    | TaxConfigurationPerCountryFragment,
 ) =>
   isStrategyFlatRates(currentTaxConfiguration?.taxCalculationStrategy)
     ? TaxCalculationStrategy.FLAT_RATES

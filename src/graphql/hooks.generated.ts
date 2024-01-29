@@ -2968,6 +2968,7 @@ export const TaxConfigurationPerCountryFragmentDoc = gql`
   }
   chargeTaxes
   taxCalculationStrategy
+  taxAppId
   displayGrossPrices
 }
     ${CountryWithCodeFragmentDoc}`;

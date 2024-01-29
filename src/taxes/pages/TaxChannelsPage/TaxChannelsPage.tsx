@@ -58,12 +58,19 @@ interface TaxChannelsPageProps {
   disabled: boolean;
 }
 
+export type TaxCountryConfiguration = Omit<
+  TaxConfigurationPerCountryFragment,
+  "taxCalculationStrategy"
+> & {
+  taxCalculationStrategy: string;
+};
+
 export interface TaxConfigurationFormData {
   chargeTaxes: boolean;
   taxCalculationStrategy: string;
   displayGrossPrices: boolean;
   pricesEnteredWithTax: boolean;
-  updateCountriesConfiguration: TaxConfigurationPerCountryFragment[];
+  updateCountriesConfiguration: TaxCountryConfiguration[];
   removeCountriesConfiguration: CountryCode[];
 }
 
@@ -97,12 +104,17 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     displayGrossPrices: currentTaxConfiguration?.displayGrossPrices ?? false,
     pricesEnteredWithTax:
       currentTaxConfiguration?.pricesEnteredWithTax ?? false,
-    updateCountriesConfiguration: currentTaxConfiguration?.countries ?? [],
+    updateCountriesConfiguration:
+      currentTaxConfiguration?.countries.map(country => ({
+        ...country,
+        taxCalculationStrategy: getSelectedTaxStrategy(country),
+      })) ?? [],
     removeCountriesConfiguration: [],
   };
 
   const handleSubmit = (data: TaxConfigurationFormData) => {
     const { updateCountriesConfiguration, removeCountriesConfiguration } = data;
+
     const parsedUpdate: TaxConfigurationUpdateInput["updateCountriesConfiguration"] =
       updateCountriesConfiguration.map(config => ({
         countryCode: config.country.code as CountryCode,
@@ -111,6 +123,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
           config.taxCalculationStrategy,
         ),
         displayGrossPrices: config.displayGrossPrices,
+        taxAppId: getTaxAppId(config.taxCalculationStrategy),
       }));
     const parsedRemove: TaxConfigurationUpdateInput["removeCountriesConfiguration"] =
       removeCountriesConfiguration.filter(
@@ -150,15 +163,13 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
         const handleCountryChange = (country: CountryFragment) => {
           closeDialog();
-          const input: TaxConfigurationPerCountryFragment = {
+          const input: TaxCountryConfiguration = {
             __typename: "TaxConfigurationPerCountry",
             country,
             chargeTaxes: data.chargeTaxes,
             displayGrossPrices: data.displayGrossPrices,
-            taxCalculationStrategy: getTaxCalculationStrategy(
-              data.taxCalculationStrategy,
-            ),
-            // taxAppId: getTaxAppId(data.taxCalculationStrategy),
+            taxCalculationStrategy: data.taxCalculationStrategy,
+            taxAppId: getTaxAppId(data.taxCalculationStrategy),
           };
           const currentExceptions = data.updateCountriesConfiguration;
           triggerChange();

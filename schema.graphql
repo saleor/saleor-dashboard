@@ -30957,6 +30957,11 @@ type TaxConfigurationPerCountry {
   displayGrossPrices: Boolean!
 
   """
+  The tax app id that will be used to calculate the taxes for the given channel. If not provided, use the value from the channel's tax configuration.
+  """
+  taxAppId: String
+
+  """
   A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration.
   """
   taxCalculationStrategy: TaxCalculationStrategy
@@ -30973,6 +30978,11 @@ input TaxConfigurationPerCountryInput {
   Determines whether displayed prices should include taxes for this country.
   """
   displayGrossPrices: Boolean!
+
+  """
+  The tax app id that will be used to calculate the taxes for the given channel. If not provided, use the value from the channel's tax configuration.
+  """
+  taxAppId: String
 
   """
   A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration.

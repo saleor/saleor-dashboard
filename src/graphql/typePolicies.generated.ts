@@ -5984,11 +5984,12 @@ export type TaxConfigurationCountableEdgeFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TaxConfigurationPerCountryKeySpecifier = ('chargeTaxes' | 'country' | 'displayGrossPrices' | 'taxCalculationStrategy' | TaxConfigurationPerCountryKeySpecifier)[];
+export type TaxConfigurationPerCountryKeySpecifier = ('chargeTaxes' | 'country' | 'displayGrossPrices' | 'taxAppId' | 'taxCalculationStrategy' | TaxConfigurationPerCountryKeySpecifier)[];
 export type TaxConfigurationPerCountryFieldPolicy = {
 	chargeTaxes?: FieldPolicy<any> | FieldReadFunction<any>,
 	country?: FieldPolicy<any> | FieldReadFunction<any>,
 	displayGrossPrices?: FieldPolicy<any> | FieldReadFunction<any>,
+	taxAppId?: FieldPolicy<any> | FieldReadFunction<any>,
 	taxCalculationStrategy?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TaxConfigurationUpdateKeySpecifier = ('errors' | 'taxConfiguration' | TaxConfigurationUpdateKeySpecifier)[];

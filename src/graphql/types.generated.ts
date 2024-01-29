@@ -6737,6 +6737,8 @@ export type TaxConfigurationPerCountryInput = {
   countryCode: CountryCode;
   /** Determines whether displayed prices should include taxes for this country. */
   displayGrossPrices: Scalars['Boolean'];
+  /** The tax app id that will be used to calculate the taxes for the given channel. If not provided, use the value from the channel's tax configuration. */
+  taxAppId?: InputMaybe<Scalars['String']>;
   /** A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration. */
   taxCalculationStrategy?: InputMaybe<TaxCalculationStrategy>;
 };
@@ -10173,9 +10175,9 @@ export type TaxedMoneyFragment = { __typename: 'TaxedMoney', net: { __typename: 
 
 export type CountryFragment = { __typename: 'CountryDisplay', country: string, code: string };
 
-export type TaxConfigurationPerCountryFragment = { __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } };
+export type TaxConfigurationPerCountryFragment = { __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } };
 
-export type TaxConfigurationFragment = { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
+export type TaxConfigurationFragment = { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
 
 export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> };
 
@@ -11923,7 +11925,7 @@ export type TaxConfigurationUpdateMutationVariables = Exact<{
 }>;
 
 
-export type TaxConfigurationUpdateMutation = { __typename: 'Mutation', taxConfigurationUpdate: { __typename: 'TaxConfigurationUpdate', errors: Array<{ __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode, message: string | null }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+export type TaxConfigurationUpdateMutation = { __typename: 'Mutation', taxConfigurationUpdate: { __typename: 'TaxConfigurationUpdate', errors: Array<{ __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode, message: string | null }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
 
 export type TaxCountryConfigurationUpdateMutationVariables = Exact<{
   countryCode: CountryCode;
@@ -11971,7 +11973,7 @@ export type TaxConfigurationsListQueryVariables = Exact<{
 }>;
 
 
-export type TaxConfigurationsListQuery = { __typename: 'Query', taxConfigurations: { __typename: 'TaxConfigurationCountableConnection', edges: Array<{ __typename: 'TaxConfigurationCountableEdge', node: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
+export type TaxConfigurationsListQuery = { __typename: 'Query', taxConfigurations: { __typename: 'TaxConfigurationCountableConnection', edges: Array<{ __typename: 'TaxConfigurationCountableEdge', node: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
 
 export type TaxCountriesListQueryVariables = Exact<{ [key: string]: never; }>;
 

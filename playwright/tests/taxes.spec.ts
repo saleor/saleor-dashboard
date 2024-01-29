@@ -21,6 +21,7 @@ test("TC: SALEOR_115 Change taxes in channel to use tax app  @taxes @e2e", async
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();
 });
+
 test("TC: SALEOR_116 Change taxes in channel: enter prices without tax, do not show gross price, add country exception @taxes @e2e", async () => {
   await taxesPage.gotoChannelsTabUrl();
   await taxesPage.selectChannel(CHANNELS.channelForTaxEdition.name);

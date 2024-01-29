@@ -3,10 +3,7 @@ import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import SingleSelectField, {
   Choice,
 } from "@dashboard/components/SingleSelectField";
-import {
-  TaxConfigurationPerCountryFragment,
-  TaxConfigurationUpdateInput,
-} from "@dashboard/graphql";
+import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Divider } from "@material-ui/core";
 import { ListItem, ListItemCell } from "@saleor/macaw-ui";
@@ -14,9 +11,10 @@ import { Button, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { useStyles } from "../styles";
+import { TaxCountryConfiguration } from "../TaxChannelsPage";
 
 interface TaxCountryExceptionListItemProps {
-  country: TaxConfigurationPerCountryFragment | undefined;
+  country: TaxCountryConfiguration | undefined;
   onDelete: () => void;
   onChange: FormChange;
   divider: boolean;
