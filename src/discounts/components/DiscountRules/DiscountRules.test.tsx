@@ -13,7 +13,7 @@ import {
   searchCollectionsMock,
   searchProductsMock,
   searchVariantsMock,
-} from "./componenets/RuleFormModal/mocks";
+} from "./componenets/RuleForm/components/RuleConditionValues/hooks/options/mocks";
 import { DiscountRules } from "./DiscountRules";
 
 jest.mock("react-intl", () => ({
@@ -76,8 +76,8 @@ const rules = [
         ],
       },
     ],
-    rewardType: null,
     rewardValue: 12,
+    rewardType: null,
     rewardValueType: RewardValueTypeEnum.FIXED,
   },
   {
@@ -129,6 +129,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        discountType="catalog"
         channels={[]}
         rules={[]}
         errors={[]}
@@ -152,6 +153,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        discountType="catalog"
         channels={[]}
         rules={rules}
         errors={[]}
@@ -190,6 +192,7 @@ describe("DiscountRules", () => {
     const onRuleAdd = jest.fn();
     render(
       <DiscountRules
+        discountType="catalog"
         channels={channels}
         rules={[]}
         errors={[]}
@@ -276,6 +279,7 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
+        discountType="catalog"
         channels={[]}
         rules={rules}
         errors={[]}
@@ -311,6 +315,7 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
+        discountType="catalog"
         channels={channels}
         rules={rules}
         errors={[]}
@@ -386,6 +391,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        discountType="catalog"
         channels={[]}
         rules={rules}
         errors={[

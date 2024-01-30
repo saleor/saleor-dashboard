@@ -1,7 +1,4 @@
-import {
-  createEmptyCodition,
-  Rule as RuleType,
-} from "@dashboard/discounts/models";
+import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -16,10 +13,8 @@ import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { ConditionType } from "../../../../types";
 import { useDiscountRulesContext } from "../../context";
 import { getCurencySymbol } from "../../utils";
-import { FetchOptions } from "./components/RuleConditionRow";
 import { RuleConditions } from "./components/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription";
 import { RuleInputWrapper } from "./components/RuleInputWrapper/RuleInputWrapper";
@@ -27,28 +22,25 @@ import { RuleReward } from "./components/RuleReward";
 
 interface RuleFormProps<ErrorCode> {
   errors: Array<CommonError<ErrorCode>>;
-  typeToFetchMap: Record<ConditionType, FetchOptions>;
 }
 
-export const RuleForm = <ErrorCode,>({
-  errors,
-  typeToFetchMap,
-}: RuleFormProps<ErrorCode>) => {
+export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
   const { disabled, channels } = useDiscountRulesContext();
-  const { watch, getValues, setValue, formState } = useFormContext<RuleType>();
+  const { watch, getValues, setValue, formState } = useFormContext<Rule>();
   const formErrors = getFormErrors(["rewardValue"], errors);
 
-  const { trigger } = useFormContext<RuleType>();
-  const { field: nameField } = useController<RuleType, "name">({
+  const { trigger } = useFormContext<Rule>();
+  const { field: nameField } = useController<Rule, "name">({
     name: "name",
   });
 
-  const { field: channelfield } = useController<RuleType, "channel">({
+  const { field: channelfield } = useController<Rule, "channel">({
     name: "channel",
   });
 
   const selectedChannel = watch("channel");
+
   const conditions = watch("conditions");
   const hasSelectedChannel = !!selectedChannel;
   const currencySymbol = getCurencySymbol(selectedChannel, channels);
@@ -87,49 +79,48 @@ export const RuleForm = <ErrorCode,>({
 
   return (
     <RichTextContext.Provider value={richText}>
-      <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
-        <Box display="flex" gap={4}>
-          <RuleInputWrapper __flex={1}>
-            <Input
-              {...nameField}
-              disabled={disabled || nameField.disabled}
-              size="small"
-              label="Name"
-              error={!!formState.errors?.name?.message}
-              helperText={formState.errors?.name?.message}
-            />
-          </RuleInputWrapper>
+      <Box __width={650} __minHeight={515} __maxHeight="75vh" overflowY="auto">
+        <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
+          <Box display="flex" gap={4}>
+            <RuleInputWrapper __flex={1}>
+              <Input
+                {...nameField}
+                disabled={disabled || nameField.disabled}
+                size="small"
+                label={intl.formatMessage(commonMessages.name)}
+                error={!!formState.errors?.name?.message}
+                helperText={formState.errors?.name?.message}
+              />
+            </RuleInputWrapper>
 
-          <RuleInputWrapper __flex={1}>
-            <Select
-              {...channelfield}
-              onChange={handleChannelChange}
-              size="small"
-              data-test-id="channel-dropdown"
-              label={intl.formatMessage(commonMessages.channel)}
-              options={channelOptions}
-              error={!!formState.errors?.channel?.message}
-              helperText={formState.errors?.channel?.message}
-              disabled={disabled || channelfield.disabled}
-            />
-          </RuleInputWrapper>
+            <RuleInputWrapper __flex={1}>
+              <Select
+                {...channelfield}
+                onChange={handleChannelChange}
+                size="small"
+                data-test-id="channel-dropdown"
+                label={intl.formatMessage(commonMessages.channel)}
+                options={channelOptions}
+                error={!!formState.errors?.channel?.message}
+                helperText={formState.errors?.channel?.message}
+                disabled={disabled || channelfield.disabled}
+              />
+            </RuleInputWrapper>
+          </Box>
+
+          <RuleConditions hasSelectedChannels={hasSelectedChannel} />
+
+          <RuleReward
+            currencySymbol={currencySymbol}
+            error={getCommonFormFieldErrorMessage(formErrors.rewardValue, intl)}
+          />
+
+          <RuleDescription />
+
+          <button type="submit" hidden>
+            Submit
+          </button>
         </Box>
-
-        <RuleConditions
-          hasSelectedChannels={hasSelectedChannel}
-          typeToFetchMap={typeToFetchMap}
-        />
-
-        <RuleReward
-          currencySymbol={currencySymbol}
-          error={getCommonFormFieldErrorMessage(formErrors.rewardValue, intl)}
-        />
-
-        <RuleDescription />
-
-        <button type="submit" hidden>
-          Submit
-        </button>
       </Box>
     </RichTextContext.Provider>
   );

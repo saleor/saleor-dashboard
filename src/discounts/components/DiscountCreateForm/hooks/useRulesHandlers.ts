@@ -12,7 +12,9 @@ export const useRulesHandlers = (
   }, [discountType]);
 
   const onDeleteRule = (ruleDeleteIndex: number) => {
-    setRules(rules => rules.filter((_, index) => index !== ruleDeleteIndex));
+    setRules(rules =>
+      sortRules(rules.filter((_, index) => index !== ruleDeleteIndex)),
+    );
   };
 
   const onRuleSubmit = async (data: Rule, ruleEditIndex: number | null) => {

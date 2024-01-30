@@ -4,11 +4,10 @@ import {
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
 import { Condition, isArrayOfOptions, Rule } from "@dashboard/discounts/models";
-import { ConditionType } from "@dashboard/discounts/types";
 import { DefaultTheme, Option } from "@saleor/macaw-ui-next";
 
 const MAX_ITEMS_TO_SHOW = 3;
-export type OptionWithConditionType = Option & { type: ConditionType };
+export type OptionWithConditionType = Option & { type: string };
 
 export const splitConditions = (
   conditions: OptionWithConditionType[],
@@ -33,7 +32,7 @@ export const mapConditionToOption = (
       acc.push(
         ...condition.value.map<OptionWithConditionType>(value => ({
           ...value,
-          type: condition.id as ConditionType,
+          type: condition.id ?? "",
         })),
       );
     }
@@ -42,10 +41,7 @@ export const mapConditionToOption = (
   }, []);
 };
 
-export const conditionTypeToHue = (
-  type: ConditionType,
-  theme: DefaultTheme,
-) => {
+export const conditionTypeToHue = (type: string, theme: DefaultTheme) => {
   const hue = stringToHue(type);
   return theme === "defaultDark"
     ? hueToPillColorDark(hue)
