@@ -182,7 +182,7 @@ describe("DiscountRules", () => {
     ).toBeInTheDocument();
     expect(
       screen.getAllByText(
-        /discount of {value} on the purchase of {items} through the {channel}/i,
+        /discount of {value} on the purchase of {conditions} through the {channel}/i,
       ).length,
     ).toBe(2);
   });
