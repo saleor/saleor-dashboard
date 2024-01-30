@@ -29,9 +29,9 @@ export const useProductOptions = (
     fetch: searchProducts,
     fetchMoreProps: fetchMoreProducts,
     options: (mapEdgesToItems(searchProductsOpts?.data?.search) ?? []).map(
-      product => ({
-        label: product.name,
-        value: product.id,
+      ({ name, id }) => ({
+        label: name,
+        value: id,
       }),
     ),
   };

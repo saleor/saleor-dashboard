@@ -29,9 +29,9 @@ export const useCollectionOptions = (
     fetch: searchCollections,
     fetchMoreProps: fetchMoreCollections,
     options: (mapEdgesToItems(searchCollectionsOpts?.data?.search) ?? []).map(
-      collection => ({
-        label: collection.name,
-        value: collection.id,
+      ({ name, id }) => ({
+        label: name,
+        value: id,
       }),
     ),
   };

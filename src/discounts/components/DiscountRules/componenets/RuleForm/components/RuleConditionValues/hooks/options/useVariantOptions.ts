@@ -29,9 +29,9 @@ export const useVariantOptions = (
     fetch: searchVariants,
     fetchMoreProps: fetchMoreVariants,
     options: (mapEdgesToItems(searchVariantsOpts?.data?.search) ?? []).map(
-      product => ({
-        label: product.name,
-        value: product.id,
+      ({ name, id }) => ({
+        label: name,
+        value: id,
       }),
     ),
   };
