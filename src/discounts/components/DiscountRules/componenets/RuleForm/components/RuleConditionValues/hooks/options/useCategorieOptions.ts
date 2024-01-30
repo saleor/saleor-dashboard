@@ -26,9 +26,9 @@ export const useCategorieOptions = (
     fetch: searchCategories,
     fetchMoreProps: fetchMoreCategories,
     options: (mapEdgesToItems(searchCategoriesOpts?.data?.search) ?? []).map(
-      category => ({
-        label: category.name,
-        value: category.id,
+      ({ name, id }) => ({
+        label: name,
+        value: id,
       }),
     ),
   };
