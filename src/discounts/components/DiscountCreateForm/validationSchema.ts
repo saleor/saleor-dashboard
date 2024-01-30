@@ -13,6 +13,7 @@ export const getValidationSchema = (intl: IntlShape) => {
     name: z
       .string()
       .min(1, intl.formatMessage(validationMessages.nameRequired)),
+    type: z.string().optional(),
     description: z.string().optional(),
     dates: z
       .object({

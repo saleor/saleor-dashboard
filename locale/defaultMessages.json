@@ -428,6 +428,10 @@
     "context": "deprecated secret key toolbar label",
     "string": "Use RS256 signature instead."
   },
+  "0khVBN": {
+    "context": "discount type",
+    "string": "Catalog"
+  },
   "0krqBj": {
     "context": "page header",
     "string": "Order no. {orderNumber} - Refund"
@@ -6231,6 +6235,9 @@
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
   },
+  "fKrRhF": {
+    "string": "General information"
+  },
   "fLCV/w": {
     "string": "Add new value"
   },
@@ -8987,6 +8994,9 @@
   "yzYXW/": {
     "context": "header, dialog",
     "string": "Create New Warehouse"
+  },
+  "z/2AZY": {
+    "string": "Discount type"
   },
   "z0gGP+": {
     "context": "number of attributes",
