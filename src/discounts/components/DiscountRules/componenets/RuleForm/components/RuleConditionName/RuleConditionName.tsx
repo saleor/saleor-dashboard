@@ -19,8 +19,8 @@ export const RuleConditionName = ({
   isConditionTypeSelected,
 }: RuleConditionNameProps) => {
   const { watch } = useFormContext<Rule>();
-  const { disabled } = useDiscountRulesContext();
-  const { conditionNames } = useConditionNames();
+  const { discountType, disabled } = useDiscountRulesContext();
+  const { conditionNames } = useConditionNames(discountType);
 
   const ruleConditionNameFieldName = `conditions.${conditionIndex}.id` as const;
   const { field: nameField } = useController<

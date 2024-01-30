@@ -638,15 +638,18 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   channels {
     ...ChannelDetails
   }
+  rewardType
   rewardValueType
   rewardValue
   cataloguePredicate
+  orderPredicate
 }
     ${ChannelDetailsFragmentDoc}`;
 export const PromotionDetailsFragmentDoc = gql`
     fragment PromotionDetails on Promotion {
   id
   name
+  type
   description
   startDate
   endDate

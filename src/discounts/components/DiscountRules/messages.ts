@@ -17,6 +17,14 @@ export const messages = defineMessages({
     defaultMessage: "Discount rules for products, collections or categories.",
     id: "ucLtY8",
   },
+  checkoutAndOrders: {
+    defaultMessage: "Checkout and orders",
+    id: "0OAE9q",
+  },
+  checkoutAndOrdersDescription: {
+    defaultMessage: "Discount rules for carts and draft orders.",
+    id: "6230rS",
+  },
   placeholder: {
     defaultMessage: "Add your first rule to set up a promotion",
     id: "XtlUj6",
@@ -36,6 +44,10 @@ export const messages = defineMessages({
   catalogRule: {
     id: "A7W4KO",
     defaultMessage: "Catalog rule",
+  },
+  orderRule: {
+    id: "HYK65C",
+    defaultMessage: "Order rule",
   },
   ruleSummary: {
     id: "Lrp9WW",

@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Rule } from "@dashboard/discounts/models";
-import { ChannelFragment } from "@dashboard/graphql";
+import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo, useState } from "react";
@@ -21,7 +21,7 @@ export type DiscountRulesErrors<ErrorCode> = Array<
 
 interface DiscountRulesProps<ErrorCode> {
   disabled: boolean;
-  discountType: "catalog";
+  discountType: PromotionTypeEnum;
   channels: ChannelFragment[];
   rules: Rule[];
   errors: Array<CommonError<ErrorCode>>;

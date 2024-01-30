@@ -1,4 +1,4 @@
-import { RewardValueTypeEnum } from "@dashboard/graphql";
+import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
 import { Condition } from "./Condition";
@@ -8,7 +8,7 @@ export interface Rule {
   name: string;
   description: string | null;
   channel: Option | null;
-  rewardType: null; // to be replaced by RewardTypeEnum when API return this field
+  rewardType: RewardTypeEnum | null;
   rewardValue: number;
   rewardValueType: RewardValueTypeEnum;
   conditions: Condition[];

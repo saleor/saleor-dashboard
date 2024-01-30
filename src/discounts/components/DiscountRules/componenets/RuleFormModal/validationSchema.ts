@@ -25,6 +25,7 @@ export const getValidationSchema = (intl: IntlShape) =>
   z
     .object({
       id: z.string().optional(),
+      type: z.string().optional(),
       name: z
         .string()
         .min(1, intl.formatMessage(validationMessages.nameRequired)),

@@ -31,7 +31,7 @@ export const createBaseRuleInputFromAPI = (
     channel: data?.channels?.length
       ? { label: data?.channels[0].name, value: data?.channels[0].id }
       : null,
-    rewardType: null, // to be replaced when API return this field
+    rewardType: data?.rewardType ?? null,
     rewardValue: data.rewardValue ?? null,
     rewardValueType: data.rewardValueType ?? RewardValueTypeEnum.FIXED,
   };

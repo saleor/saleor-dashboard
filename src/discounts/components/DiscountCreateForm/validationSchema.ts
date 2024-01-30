@@ -1,3 +1,4 @@
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 import * as z from "zod";
 
@@ -10,10 +11,10 @@ const validationMessages = defineMessages({
 
 export const getValidationSchema = (intl: IntlShape) => {
   return z.object({
+    type: z.enum([PromotionTypeEnum.CATALOGUE, PromotionTypeEnum.ORDER]),
     name: z
       .string()
       .min(1, intl.formatMessage(validationMessages.nameRequired)),
-    type: z.string().optional(),
     description: z.string().optional(),
     dates: z
       .object({

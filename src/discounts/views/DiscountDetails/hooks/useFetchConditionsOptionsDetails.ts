@@ -75,18 +75,19 @@ function reduceConditionsLabels(
     if (Array.isArray(predicate)) {
       predicate.forEach(item => reduceConditionsLabels(item, allConditionsIds));
     }
+    const ids = predicate?.ids ?? [];
 
     if (key === "productPredicate") {
-      allConditionsIds.productsIds.push(...predicate.ids);
+      allConditionsIds.productsIds.push(...ids);
     }
     if (key === "categoryPredicate") {
-      allConditionsIds.categoriesIds.push(...predicate.ids);
+      allConditionsIds.categoriesIds.push(...ids);
     }
     if (key === "collectionPredicate") {
-      allConditionsIds.collectionsIds.push(...predicate.ids);
+      allConditionsIds.collectionsIds.push(...ids);
     }
     if (key === "variantPredicate") {
-      allConditionsIds.variantsIds.push(...predicate.ids);
+      allConditionsIds.variantsIds.push(...ids);
     }
 
     return allConditionsIds;

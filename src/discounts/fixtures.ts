@@ -4,6 +4,7 @@ import {
   DiscountValueTypeEnum,
   PromotionDetailsFragment,
   PromotionFragment,
+  PromotionTypeEnum,
   RewardValueTypeEnum,
   SaleDetailsFragment,
   SaleFragment,
@@ -681,6 +682,7 @@ export const discount: PromotionDetailsFragment = {
   description: {},
   startDate: "2019-01-03",
   endDate: null,
+  type: PromotionTypeEnum.CATALOGUE,
   rules: [
     {
       __typename: "PromotionRule",
@@ -691,6 +693,8 @@ export const discount: PromotionDetailsFragment = {
       name: "Rule 1",
       rewardValue: "33",
       rewardValueType: RewardValueTypeEnum.FIXED,
+      rewardType: null,
+      orderPredicate: {},
       cataloguePredicate: {
         OR: [
           {

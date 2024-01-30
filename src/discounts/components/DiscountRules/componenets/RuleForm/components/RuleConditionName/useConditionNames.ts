@@ -1,16 +1,47 @@
-import { CatalogConditions } from "@dashboard/discounts/types";
+import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
-export const useConditionNames = () => {
+export const useConditionNames = (discountType: PromotionTypeEnum) => {
   const intl = useIntl();
-  const [conditionNames] = useState<Option[]>(getCatalogConditionOptions(intl));
+  const [conditionNames, setConditionNames] = useState<Option[]>([]);
+
+  useEffect(() => {
+    if (discountType === PromotionTypeEnum.CATALOGUE) {
+      setConditionNames(getCatalogConditionOptions(intl));
+    } else {
+      setConditionNames(getOrderConditionOptions(intl));
+    }
+  }, [discountType]);
 
   return {
     conditionNames,
   };
 };
+
+function getOrderConditionOptions(intl: IntlShape): Array<{
+  label: string;
+  value: OrderConditions;
+}> {
+  return [
+    {
+      label: intl.formatMessage({
+        id: "6pPMp9",
+        defaultMessage: "Subtotal price",
+      }),
+      value: "baseSubtotalPrice",
+    },
+    {
+      label: intl.formatMessage({
+        id: "4VivsY",
+        defaultMessage: "Total price",
+      }),
+      value: "baseTotalPrice",
+    },
+  ];
+}
 
 function getCatalogConditionOptions(intl: IntlShape): Array<{
   label: string;

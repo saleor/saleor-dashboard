@@ -17,8 +17,8 @@ export const RuleConditions = ({
   hasSelectedChannels,
 }: RuleConditionsProps) => {
   const intl = useIntl();
-  const { disabled } = useDiscountRulesContext();
-  const { conditionNames } = useConditionNames();
+  const { discountType, disabled } = useDiscountRulesContext();
+  const { conditionNames } = useConditionNames(discountType);
 
   const { watch } = useFormContext<Rule>();
 
