@@ -1,4 +1,4 @@
-import { Condition, Rule } from "@dashboard/discounts/models";
+import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { ConditionType } from "@dashboard/discounts/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -60,7 +60,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(Condition.empty())}
+          onClick={() => append(createEmptyCodition())}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>
@@ -75,12 +75,10 @@ export const RuleConditions = ({
       <Box display="flex" flexDirection="column" gap={4}>
         {fields.map((condition, conditionIndex) => (
           <RuleConditionRow
+            key={condition.id || conditionIndex}
             disabled={disabled}
-            fetchOptions={
-              condition.type ? typeToFetchMap[condition.type] : undefined
-            }
+            typeToFetchMap={typeToFetchMap}
             isConditionTypeSelected={isConditionTypeSelected}
-            key={condition.type || conditionIndex}
             conditionIndex={conditionIndex}
             updateCondition={update}
             onRemove={() => {
@@ -96,7 +94,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(Condition.empty())}
+          onClick={() => append(createEmptyCodition())}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>

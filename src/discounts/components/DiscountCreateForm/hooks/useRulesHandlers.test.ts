@@ -16,7 +16,7 @@ const rule = {
 describe("DiscountCreateForm useRulesHandlers", () => {
   it("should allow to add new rule ", () => {
     // Arrange
-    const { result } = renderHook(() => useRulesHandlers());
+    const { result } = renderHook(() => useRulesHandlers("catalog"));
 
     // Act
     act(() => {
@@ -29,7 +29,7 @@ describe("DiscountCreateForm useRulesHandlers", () => {
 
   it("should allow to edit rule at index", () => {
     // Arrange
-    const { result } = renderHook(() => useRulesHandlers());
+    const { result } = renderHook(() => useRulesHandlers("catalog"));
 
     const rule = {
       name: "Rule 1",
@@ -55,7 +55,7 @@ describe("DiscountCreateForm useRulesHandlers", () => {
 
   it("should allow to delete rule at index", () => {
     // Arrange
-    const { result } = renderHook(() => useRulesHandlers());
+    const { result } = renderHook(() => useRulesHandlers("catalog"));
 
     const rule = {
       name: "Rule 1",
