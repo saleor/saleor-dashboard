@@ -1,61 +1,26 @@
-import { MenuItem, SubMenu } from "@dashboard/components/SubMenu";
-import {
-  ArrowDownIcon,
-  Box,
-  Button,
-  PlusIcon,
-  Popover,
-  ProductsIcons,
-} from "@saleor/macaw-ui-next";
-import React, { useMemo, useState } from "react";
+import { Button, PlusIcon } from "@saleor/macaw-ui-next";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
 
 interface AddButtonProps {
+  onClick: () => void;
   disabled?: boolean;
-  onCatalogClick: () => void;
 }
 
-export const AddButton = ({
-  onCatalogClick,
-  disabled = false,
-}: AddButtonProps) => {
+export const AddButton = ({ onClick, disabled }: AddButtonProps) => {
   const intl = useIntl();
-  const [isSubMenuOpen, setSubMenuOpen] = useState(false);
-
-  const handleCatalogClick = () => {
-    onCatalogClick();
-    setSubMenuOpen(false);
-  };
-
-  const subMenuItems = useMemo<MenuItem[]>(
-    () => [
-      {
-        id: "catalog",
-        title: intl.formatMessage(messages.catalog),
-        description: intl.formatMessage(messages.catalogDescription),
-        icon: <ProductsIcons />,
-        onClick: handleCatalogClick,
-      },
-    ],
-    [],
-  );
 
   return (
-    <Popover open={isSubMenuOpen} onOpenChange={setSubMenuOpen}>
-      <Popover.Trigger>
-        <Button type="button" disabled={disabled} variant="primary">
-          <PlusIcon />
-          {intl.formatMessage(messages.addRule)}
-          <ArrowDownIcon />
-        </Button>
-      </Popover.Trigger>
-      <Popover.Content align="end">
-        <Box marginTop={1}>
-          <SubMenu menuItems={subMenuItems} />
-        </Box>
-      </Popover.Content>
-    </Popover>
+    <Button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      variant="primary"
+    >
+      <PlusIcon />
+      {intl.formatMessage(messages.addRule)}
+    </Button>
   );
 };
