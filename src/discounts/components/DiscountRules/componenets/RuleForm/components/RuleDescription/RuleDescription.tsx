@@ -11,15 +11,12 @@ import { useIntl } from "react-intl";
 import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 
 interface RuleDescriptionProps {
-  disabled?: boolean;
   error?: boolean;
 }
 
-export const RuleDescription = ({
-  disabled = false,
-  error = false,
-}: RuleDescriptionProps) => {
+export const RuleDescription = ({ error = false }: RuleDescriptionProps) => {
   const intl = useIntl();
+  const { disabled } = useDiscoutnRulesContext();
   const { defaultValue, editorRef, isReadyForMount, handleChange } =
     useRichTextContext();
 
@@ -56,3 +53,6 @@ export const RuleDescription = ({
     </Box>
   );
 };
+function useDiscoutnRulesContext(): { disabled: any } {
+  throw new Error("Function not implemented.");
+}

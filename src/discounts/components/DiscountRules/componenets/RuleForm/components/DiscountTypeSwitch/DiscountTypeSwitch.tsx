@@ -3,7 +3,6 @@ import { Box, Switch, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface DiscountTypeSwitchProps {
-  disabled?: boolean;
   selected: RewardValueTypeEnum;
   currencySymbol: string | null;
   onChange: (type: string) => void;
@@ -14,9 +13,10 @@ const PERCENT_SYMBOL = "%";
 export const DiscountTypeSwitch = ({
   selected,
   currencySymbol,
-  disabled,
   onChange,
 }: DiscountTypeSwitchProps) => {
+  const { disabled } = useDiscoutnRulesContext();
+
   return (
     <Switch
       disabled={disabled}
@@ -65,3 +65,6 @@ export const DiscountTypeSwitch = ({
     </Switch>
   );
 };
+function useDiscoutnRulesContext(): { disabled: any } {
+  throw new Error("Function not implemented.");
+}

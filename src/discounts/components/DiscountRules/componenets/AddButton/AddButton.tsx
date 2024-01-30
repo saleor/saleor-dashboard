@@ -2,15 +2,16 @@ import { Button, PlusIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { useDiscountRulesContext } from "../../context";
 import { messages } from "../../messages";
 
 interface AddButtonProps {
   onClick: () => void;
-  disabled?: boolean;
 }
 
-export const AddButton = ({ onClick, disabled }: AddButtonProps) => {
+export const AddButton = ({ onClick }: AddButtonProps) => {
   const intl = useIntl();
+  const { disabled = false } = useDiscountRulesContext();
 
   return (
     <Button
