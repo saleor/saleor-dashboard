@@ -12,7 +12,7 @@ import { RuleDeleteModal } from "./componenets/RuleDeleteModal/RuleDeleteModal";
 import { RuleForm } from "./componenets/RuleForm";
 import { RuleFormModal } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
-import { DiscountRulesContextProvider } from "./context/provider";
+import { DiscountRulesContextProvider } from "./context";
 import { messages } from "./messages";
 
 export type DiscountRulesErrors<ErrorCode> = Array<
