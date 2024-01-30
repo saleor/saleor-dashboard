@@ -9,9 +9,10 @@ import { useIntl } from "react-intl";
 
 import { AddButton } from "./componenets/AddButton";
 import { RuleDeleteModal } from "./componenets/RuleDeleteModal/RuleDeleteModal";
+import { RuleForm } from "./componenets/RuleForm";
 import { RuleFormModal } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
-import { DiscountRulesContextProvider } from "./context";
+import { DiscountRulesContextProvider } from "./context/provider";
 import { messages } from "./messages";
 
 export type DiscountRulesErrors<ErrorCode> = Array<
@@ -20,6 +21,7 @@ export type DiscountRulesErrors<ErrorCode> = Array<
 
 interface DiscountRulesProps<ErrorCode> {
   disabled: boolean;
+  discountType: "catalog";
   channels: ChannelFragment[];
   rules: Rule[];
   errors: Array<CommonError<ErrorCode>>;
@@ -39,6 +41,7 @@ export const DiscountRules = <ErrorCode,>({
   errors,
   getRuleConfirmButtonState,
   deleteButtonState,
+  discountType,
   loading,
   onRuleSubmit,
   onRuleDelete,
@@ -86,7 +89,7 @@ export const DiscountRules = <ErrorCode,>({
 
   return (
     <DiscountRulesContextProvider
-      discountType="catalog"
+      discountType={discountType}
       channels={channels}
       disabled={disabled}
     >
@@ -116,11 +119,11 @@ export const DiscountRules = <ErrorCode,>({
             confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
             onClose={handleRuleModalClose}
             initialFormValues={ruleInitialValues}
-            errors={errors}
             onSubmit={handleRuleModalSubmit}
-          />
+          >
+            <RuleForm errors={errors} />
+          </RuleFormModal>
         )}
-
         <RuleDeleteModal
           open={ruleDeleteIndex !== null}
           onClose={() => setRuleDeleteIndex(null)}
