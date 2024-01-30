@@ -20,7 +20,6 @@ export const RuleDescription = ({ error = false }: RuleDescriptionProps) => {
   const { disabled } = useDiscountRulesContext();
   const { defaultValue, editorRef, isReadyForMount, handleChange } =
     useRichTextContext();
-  const { disabled } = useDiscountRulesContext();
 
   const { field } = useController<Rule, "description">({
     name: "description",

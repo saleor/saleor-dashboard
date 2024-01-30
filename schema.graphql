@@ -25009,6 +25009,10 @@ type Promotion implements Node & ObjectWithMetadata {
 
   """
   The type of the promotion. Implicate if the discount is applied on catalogue or order level.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   type: PromotionTypeEnum
 
@@ -25349,7 +25353,13 @@ type PromotionRule implements Node {
   """
   orderPredicate: JSON
 
-  """The type of the predicate that must be met to apply the reward."""
+  """
+  The type of the predicate that must be met to apply the reward.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
   predicateType: PromotionTypeEnum
 
   """Promotion to which the rule belongs."""
@@ -25366,6 +25376,10 @@ type PromotionRule implements Node {
 
   """
   The reward value of the promotion rule. Defines the discount value applied when the rule conditions are met.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   rewardValue: PositiveDecimal
 
@@ -36103,7 +36117,7 @@ type Weight {
   """Weight unit."""
   unit: WeightUnitsEnum!
 
-  """Weight value."""
+  """Weight value. Returns a value with maximal three decimal places"""
   value: Float!
 }
 
