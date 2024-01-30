@@ -15,7 +15,7 @@ export const useTaxStrategyChoices = () => {
   const { data } = useTaxStrategyChoicesQuery();
   const taxAppsChoices =
     data?.shop.availableTaxApps.map(app => ({
-      value: app.id,
+      value: app.identifier,
       label: <TaxAppLabel app={app} />,
     })) ?? [];
 
