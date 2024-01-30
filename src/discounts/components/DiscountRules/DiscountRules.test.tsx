@@ -4,7 +4,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React, { ReactNode } from "react";
 
@@ -148,7 +148,7 @@ describe("DiscountRules", () => {
     ).toBeInTheDocument();
   });
 
-  it("should render discount rules", () => {
+  it("should render discount rules", async () => {
     // Arrange & Act
     render(
       <DiscountRules
@@ -164,6 +164,12 @@ describe("DiscountRules", () => {
       />,
       { wrapper: Wrapper },
     );
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/catalog rule: catalog rule 2/i),
+      ).toBeInTheDocument();
+    });
 
     // Assert
     expect(
@@ -196,6 +202,12 @@ describe("DiscountRules", () => {
       />,
       { wrapper: Wrapper },
     );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: /add rule/i }),
+      ).toBeInTheDocument();
+    });
 
     // Act
     await act(async () => {
@@ -238,8 +250,8 @@ describe("DiscountRules", () => {
         },
         conditions: [
           {
-            type: "is",
             id: "product",
+            type: "is",
             value: [
               {
                 label: "Apple Juice",
@@ -312,6 +324,10 @@ describe("DiscountRules", () => {
       { wrapper: Wrapper },
     );
 
+    await waitFor(() => {
+      expect(screen.getAllByTestId("rule-edit-button")[0]).toBeInTheDocument();
+    });
+
     // Act
     await act(async () => {
       await userEvent.click(screen.getAllByTestId("rule-edit-button")[0]);
@@ -344,8 +360,8 @@ describe("DiscountRules", () => {
         },
         conditions: [
           {
-            type: "is",
             id: "product",
+            type: "is",
             value: [
               {
                 label: "Product-1",

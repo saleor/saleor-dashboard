@@ -2,7 +2,7 @@ import {
   createEmptyCodition,
   Rule as RuleType,
 } from "@dashboard/discounts/models";
-import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
+import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import {
@@ -17,6 +17,7 @@ import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { ConditionType } from "../../../../types";
+import { useDiscountRulesContext } from "../../context";
 import { getCurencySymbol } from "../../utils";
 import { FetchOptions } from "./components/RuleConditionRow";
 import { RuleConditions } from "./components/RuleConditions";
@@ -25,19 +26,16 @@ import { RuleInputWrapper } from "./components/RuleInputWrapper/RuleInputWrapper
 import { RuleReward } from "./components/RuleReward";
 
 interface RuleFormProps<ErrorCode> {
-  channels: ChannelFragment[];
-  disabled?: boolean;
   errors: Array<CommonError<ErrorCode>>;
   typeToFetchMap: Record<ConditionType, FetchOptions>;
 }
 
 export const RuleForm = <ErrorCode,>({
-  channels,
-  disabled = false,
   errors,
   typeToFetchMap,
 }: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
+  const { disabled, channels } = useDiscountRulesContext();
   const { watch, getValues, setValue, formState } = useFormContext<RuleType>();
   const formErrors = getFormErrors(["rewardValue"], errors);
 
@@ -118,18 +116,16 @@ export const RuleForm = <ErrorCode,>({
         </Box>
 
         <RuleConditions
-          disabled={disabled}
           hasSelectedChannels={hasSelectedChannel}
           typeToFetchMap={typeToFetchMap}
         />
 
         <RuleReward
-          disabled={disabled}
           currencySymbol={currencySymbol}
           error={getCommonFormFieldErrorMessage(formErrors.rewardValue, intl)}
         />
 
-        <RuleDescription disabled={disabled} />
+        <RuleDescription />
 
         <button type="submit" hidden>
           Submit

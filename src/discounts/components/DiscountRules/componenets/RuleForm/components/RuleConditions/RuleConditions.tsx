@@ -1,3 +1,4 @@
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { ConditionType } from "@dashboard/discounts/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -16,11 +17,11 @@ interface RuleConditionsProps {
 }
 
 export const RuleConditions = ({
-  disabled = false,
   hasSelectedChannels,
   typeToFetchMap,
 }: RuleConditionsProps) => {
   const intl = useIntl();
+  const { disabled } = useDiscountRulesContext();
 
   const { watch } = useFormContext<Rule>();
 
@@ -76,7 +77,6 @@ export const RuleConditions = ({
         {fields.map((condition, conditionIndex) => (
           <RuleConditionRow
             key={condition.id || conditionIndex}
-            disabled={disabled}
             typeToFetchMap={typeToFetchMap}
             isConditionTypeSelected={isConditionTypeSelected}
             conditionIndex={conditionIndex}

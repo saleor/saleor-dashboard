@@ -1,4 +1,5 @@
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Condition, isArrayOfOptions, Rule } from "@dashboard/discounts/models";
 import { ConditionType } from "@dashboard/discounts/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
@@ -17,7 +18,6 @@ export interface FetchOptions {
   options: Option[];
 }
 interface DiscountConditionRowProps {
-  disabled?: boolean;
   conditionIndex: number;
   onRemove: () => void;
   updateCondition: (index: number, value: Condition) => void;
@@ -31,9 +31,9 @@ export const RuleConditionRow = ({
   typeToFetchMap,
   isConditionTypeSelected,
   updateCondition,
-  disabled = false,
 }: DiscountConditionRowProps) => {
   const intl = useIntl();
+  const { disabled } = useDiscountRulesContext();
 
   const ruleConditionTypeFieldName = `conditions.${conditionIndex}.id` as const;
   const { field: typeField } = useController<

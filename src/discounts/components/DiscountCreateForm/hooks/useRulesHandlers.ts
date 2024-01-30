@@ -1,6 +1,5 @@
 import { Rule } from "@dashboard/discounts/models";
 import { sortRules } from "@dashboard/discounts/utils";
-import {} from "@dashboard/graphql";
 import { useEffect, useState } from "react";
 
 export const useRulesHandlers = (
