@@ -9,7 +9,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -25,7 +25,6 @@ import { defaultFormValues } from "./defaultFormValues";
 import { getValidationSchema } from "./validationSchema";
 
 interface RuleFormModalProps<ErrorCode> {
-  open: boolean;
   disabled: boolean;
   onClose: () => void;
   onSubmit: (data: Rule) => void;
@@ -36,7 +35,6 @@ interface RuleFormModalProps<ErrorCode> {
 }
 
 export const RuleFormModal = <ErrorCode,>({
-  open,
   disabled,
   onClose,
   channels,
@@ -69,15 +67,8 @@ export const RuleFormModal = <ErrorCode,>({
     variant: variantSearch,
   };
 
-  // Clear modal form
-  useEffect(() => {
-    if (!initialFormValues && open) {
-      methods.reset(defaultFormValues);
-    }
-  }, [open]);
-
   return (
-    <DashboardModal open={open} onChange={onClose}>
+    <DashboardModal open={true} onChange={onClose}>
       <DashboardModal.Content>
         <DashboardModal.Title
           display="flex"

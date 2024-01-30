@@ -16,6 +16,7 @@ export const useDiscountCreate = (
     const response = await create({
       input: {
         name: data.name,
+        // type: data.type, TODO: uncomment when api will be ready
         description: data.description ? JSON.parse(data.description) : null,
         endDate: data.dates.hasEndDate
           ? joinDateTime(data.dates.endDate, data.dates.endTime)
