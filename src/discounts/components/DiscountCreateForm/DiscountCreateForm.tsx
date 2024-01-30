@@ -41,7 +41,7 @@ export const DiscountCreateForm = ({
     triggerChange: methods.trigger,
   });
 
-  const { rules, onDeleteRule, onRuleSubmit } = useRulesHandlers();
+  const { rules, onDeleteRule, onRuleSubmit } = useRulesHandlers("catalog");
 
   const handleSubmit: SubmitHandler<DiscoutFormData> = data => {
     onSubmit({

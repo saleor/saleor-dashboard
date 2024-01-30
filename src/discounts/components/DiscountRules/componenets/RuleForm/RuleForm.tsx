@@ -1,4 +1,7 @@
-import { Condition, Rule as RuleType } from "@dashboard/discounts/models";
+import {
+  createEmptyCodition,
+  Rule as RuleType,
+} from "@dashboard/discounts/models";
 import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -78,7 +81,7 @@ export const RuleForm = <ErrorCode,>({
     setValue("channel", selectedChannel, { shouldValidate: true });
 
     if (conditions.length > 0) {
-      setValue("conditions", [Condition.empty()]);
+      setValue("conditions", [createEmptyCodition()]);
     } else {
       setValue("conditions", []);
     }

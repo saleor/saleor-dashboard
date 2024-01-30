@@ -1,4 +1,5 @@
 import { FetchResult } from "@apollo/client";
+import { toAPI } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
   PromotionCreateMutation,
@@ -6,7 +7,7 @@ import {
 } from "@dashboard/graphql";
 import { getMutationErrors, joinDateTime } from "@dashboard/misc";
 
-export const createHandler = (
+export const useDiscountCreate = (
   create: (
     varaibles: PromotionCreateMutationVariables,
   ) => Promise<FetchResult<PromotionCreateMutation>>,
@@ -20,7 +21,7 @@ export const createHandler = (
           ? joinDateTime(data.dates.endDate, data.dates.endTime)
           : null,
         startDate: joinDateTime(data.dates.startDate, data.dates.startTime),
-        rules: data.rules.map(rule => rule.toAPI()),
+        rules: data.rules.map(toAPI("catalog")),
       },
     });
 

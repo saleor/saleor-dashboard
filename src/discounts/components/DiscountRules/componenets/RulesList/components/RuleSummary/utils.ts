@@ -3,7 +3,7 @@ import {
   hueToPillColorLight,
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
-import { Condition, Rule } from "@dashboard/discounts/models";
+import { Condition, isArrayOfOptions, Rule } from "@dashboard/discounts/models";
 import { ConditionType } from "@dashboard/discounts/types";
 import { DefaultTheme, Option } from "@saleor/macaw-ui-next";
 
@@ -29,12 +29,14 @@ export const mapConditionToOption = (
   conditions: Condition[],
 ): OptionWithConditionType[] => {
   return conditions.reduce<OptionWithConditionType[]>((acc, condition) => {
-    acc.push(
-      ...condition.values.map<OptionWithConditionType>(value => ({
-        ...value,
-        type: condition.type!,
-      })),
-    );
+    if (isArrayOfOptions(condition.value)) {
+      acc.push(
+        ...condition.value.map<OptionWithConditionType>(value => ({
+          ...value,
+          type: condition.id as ConditionType,
+        })),
+      );
+    }
 
     return acc;
   }, []);
@@ -53,6 +55,6 @@ export const conditionTypeToHue = (
 export const hasNoRuleConditions = (rule: Rule) => {
   return (
     !rule.conditions.length ||
-    rule.conditions.every(condition => !condition.values.length)
+    rule.conditions.every(condition => !condition.value?.length)
   );
 };
