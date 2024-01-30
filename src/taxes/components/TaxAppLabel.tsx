@@ -1,19 +1,28 @@
 import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppUrls } from "@dashboard/apps/urls";
-import { TaxStrategyChoicesQuery } from "@dashboard/graphql";
 import { Box, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 interface Props {
-  app: TaxStrategyChoicesQuery["shop"]["availableTaxApps"][number];
+  name: string;
+  logoUrl: string | undefined;
+  created: string;
+  version: string;
+  id: string;
+  identifier: string;
 }
 
-export const TaxAppLabel: React.FC<Props> = ({ app }) => {
-  const logo = app.brand?.logo?.default
-    ? { source: app.brand?.logo?.default }
-    : undefined;
+export const TaxAppLabel: React.FC<Props> = ({
+  name,
+  logoUrl,
+  created,
+  version,
+  id,
+  identifier,
+}) => {
+  const logo = logoUrl ? { source: logoUrl } : undefined;
 
   return (
     <Box
@@ -32,13 +41,13 @@ export const TaxAppLabel: React.FC<Props> = ({ app }) => {
                 defaultMessage="Use app: {name}"
                 id="W2OIhn"
                 values={{
-                  name: <Text variant="bodyStrong">{app.name}</Text>,
+                  name: <Text variant="bodyStrong">{name}</Text>,
                 }}
               />
             </Text>
-            {app.version && (
+            {version && (
               <Text variant="body" color="default2">
-                {`v${app.version}`}
+                {`v${version}`}
               </Text>
             )}
           </Box>
@@ -47,7 +56,7 @@ export const TaxAppLabel: React.FC<Props> = ({ app }) => {
               defaultMessage="Created at: {date}"
               id="XFKV5Z"
               values={{
-                date: moment(app.created).format("YYYY-MM-DD HH:mm"),
+                date: moment(created).format("YYYY-MM-DD HH:mm"),
               }}
             />
           </Text>
@@ -55,7 +64,7 @@ export const TaxAppLabel: React.FC<Props> = ({ app }) => {
       </Box>
       <Box
         as="a"
-        href={AppUrls.resolveAppDetailsUrl(app.id)}
+        href={AppUrls.resolveAppDetailsUrl(id)}
         target="_blank"
         textDecoration="underline"
         display="flex"
@@ -63,7 +72,7 @@ export const TaxAppLabel: React.FC<Props> = ({ app }) => {
         gap={1}
       >
         <Text color="default2" variant="caption" ellipsis __maxWidth="150px">
-          {app.identifier}
+          {identifier}
         </Text>
         <ExternalLinkIcon size="small" color="default2" />
       </Box>
