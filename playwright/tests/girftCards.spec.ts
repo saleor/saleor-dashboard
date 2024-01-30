@@ -1,6 +1,8 @@
 import { GIFT_CARDS } from "@data/e2eTestData";
 import { GiftCardsPage } from "@pages/giftCardsPage";
 import { expect, test } from "@playwright/test";
+import { MailpitService } from "@api/mailpit";
+
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 let giftCardsPage: GiftCardsPage;
@@ -99,4 +101,32 @@ test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
       GIFT_CARDS.giftCardsToBeDeleted.names,
     ),
   ).toEqual([]);
+});
+test("TC: SALEOR_112 Set gift card balance @e2e @gift", async () => {
+  await giftCardsPage.gotoExistingGiftCardView(GIFT_CARDS.giftCardToBeEdited.id);
+  await giftCardsPage.clickSetBalance();
+  await giftCardsPage.setGiftCardsBalanceDialog.setBalance("34")
+  await giftCardsPage.expectSuccessBanner();
+});
+test("TC: SALEOR_113 Export gift card codes in XLSX file @e2e @gift", async ({request}) => {
+  await giftCardsPage.gotoGiftCardsListView();
+  await giftCardsPage.clickExportGiftCards();
+  await giftCardsPage.exportGiftCardsDialog.exportGiftCardCodes("XLSX");
+  const mailpitService = new MailpitService(request);
+  await mailpitService.checkDoesUserReceivedExportedData(
+    process.env.E2E_USER_NAME!,
+    "Your exported gift cards data is ready",
+  );
+});
+test("TC: SALEOR_114 Export gift card codes in CSV file @e2e @gift", async ({
+  request,
+}) => {
+  await giftCardsPage.gotoGiftCardsListView();
+  await giftCardsPage.clickExportGiftCards();
+  await giftCardsPage.exportGiftCardsDialog.exportGiftCardCodes("CSV");
+  const mailpitService = new MailpitService(request);
+  await mailpitService.checkDoesUserReceivedExportedData(
+    process.env.E2E_USER_NAME!,
+    "Your exported gift cards data is ready",
+  );
 });

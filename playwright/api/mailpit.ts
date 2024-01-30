@@ -31,6 +31,19 @@ export class MailpitService {
     return latestEmailsJson;
   }
 
+  async getEmailsFromTime(fromTime = 10000){
+    const latestEmails = await this.getLastEmails()
+
+    latestEmails.messages = latestEmails.messages.filter(
+      (message: { Created: string }) => {
+        const timeMinusLastMs = Date.now() - fromTime;
+        const mailCreated = new Date(message.Created);
+        return mailCreated.getTime() > timeMinusLastMs;
+      },
+    );
+    return latestEmails;
+  }
+
   async getEmailDetails(mailId: string) {
     const emailDetails = await this.request.get(
       `${mailpitUrl}/api/v1/message/${mailId}`,
@@ -45,7 +58,7 @@ export class MailpitService {
     await expect
       .poll(
         async () => {
-          const emails = await this.getLastEmails();
+          const emails = await this.getEmailsFromTime();
           userEmails = await emails.messages.filter((mails: { To: any[] }) =>
             mails.To.map(
               (recipientObj: { Address: any }) => `${recipientObj.Address}`,
@@ -63,6 +76,7 @@ export class MailpitService {
       .toBeGreaterThanOrEqual(1);
     return userEmails;
   }
+
   async checkDoesUserReceivedExportedData(
     userEmail: string,
     mailSubject: string,
