@@ -57,9 +57,9 @@ export const useRulesHandlers = ({
         PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment
       >
     > = [];
+    updateLabels(rule);
 
     if (ruleEditIndex !== null) {
-      updateLabels(rule);
       errors = await onRuleUpdateSubmit(rule);
 
       if (errors.length > 0) {
