@@ -6,12 +6,12 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 interface Props {
-  name: string;
+  name: string | null;
   logoUrl: string | undefined;
-  created: string;
-  version: string;
+  created: string | null;
+  version: string | null;
   id: string;
-  identifier: string;
+  identifier: string | null;
 }
 
 export const TaxAppLabel: React.FC<Props> = ({
@@ -36,30 +36,34 @@ export const TaxAppLabel: React.FC<Props> = ({
         <AppAvatar logo={logo} />
         <Box>
           <Box display="flex" alignItems="center" gap={1}>
-            <Text>
-              <FormattedMessage
-                defaultMessage="Use app: {name}"
-                id="W2OIhn"
-                values={{
-                  name: <Text variant="bodyStrong">{name}</Text>,
-                }}
-              />
-            </Text>
+            {name && (
+              <Text>
+                <FormattedMessage
+                  defaultMessage="Use app: {name}"
+                  id="W2OIhn"
+                  values={{
+                    name: <Text variant="bodyStrong">{name}</Text>,
+                  }}
+                />
+              </Text>
+            )}
             {version && (
               <Text variant="body" color="default2">
                 {`v${version}`}
               </Text>
             )}
           </Box>
-          <Text variant="caption" color="default2">
-            <FormattedMessage
-              defaultMessage="Created at: {date}"
-              id="XFKV5Z"
-              values={{
-                date: moment(created).format("YYYY-MM-DD HH:mm"),
-              }}
-            />
-          </Text>
+          {created && (
+            <Text variant="caption" color="default2">
+              <FormattedMessage
+                defaultMessage="Created at: {date}"
+                id="XFKV5Z"
+                values={{
+                  date: moment(created).format("YYYY-MM-DD HH:mm"),
+                }}
+              />
+            </Text>
+          )}
         </Box>
       </Box>
       <Box
@@ -71,9 +75,11 @@ export const TaxAppLabel: React.FC<Props> = ({
         alignItems="center"
         gap={1}
       >
-        <Text color="default2" variant="caption" ellipsis __maxWidth="150px">
-          {identifier}
-        </Text>
+        {identifier && (
+          <Text color="default2" variant="caption" ellipsis __maxWidth="150px">
+            {identifier}
+          </Text>
+        )}
         <ExternalLinkIcon size="small" color="default2" />
       </Box>
     </Box>
