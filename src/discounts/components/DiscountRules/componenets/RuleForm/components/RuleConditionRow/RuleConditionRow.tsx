@@ -8,7 +8,6 @@ import { RuleConditionValues } from "../RuleConditionValues";
 import { RuleInputWrapper } from "../RuleInputWrapper";
 
 interface DiscountConditionRowProps {
-  disabled?: boolean;
   conditionIndex: number;
   onRemove: () => void;
   updateCondition: (index: number, value: Condition) => void;
