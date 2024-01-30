@@ -1965,6 +1965,9 @@
   "BtErCZ": {
     "string": "Search Plugins..."
   },
+  "BvGp1I": {
+    "string": "between"
+  },
   "BvRyoX": {
     "context": "alert message",
     "string": "There are no available shipping methods in this channel."
@@ -3352,6 +3355,9 @@
     "context": "mark as paid strategy checkbox label",
     "string": "Use Transaction flow when marking order as paid"
   },
+  "L5IuDw": {
+    "string": "lower"
+  },
   "L5io1l": {
     "context": "returned products list title",
     "string": "Products returned"
@@ -3912,6 +3918,9 @@
   },
   "PFXGaR": {
     "string": "Shipping Zones"
+  },
+  "PFnobO": {
+    "string": "greater"
   },
   "PHUcrU": {
     "context": "date when order was placed",
@@ -6513,6 +6522,9 @@
   },
   "h2vipu": {
     "string": "Code"
+  },
+  "h5P++h": {
+    "string": "Variants"
   },
   "h65vZI": {
     "context": "times voucher used",
