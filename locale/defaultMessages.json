@@ -6235,6 +6235,9 @@
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
   },
+  "fKrRhF": {
+    "string": "General information"
+  },
   "fLCV/w": {
     "string": "Add new value"
   },

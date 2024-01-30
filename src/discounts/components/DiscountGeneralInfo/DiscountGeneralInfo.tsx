@@ -51,7 +51,7 @@ export const DiscountGeneralInfo = ({
   return (
     <DashboardCard>
       <DashboardCard.Title>
-        <FormattedMessage defaultMessage="General Information" id="pkUbrL" />
+        <FormattedMessage defaultMessage="General information" id="fKrRhF" />
       </DashboardCard.Title>
       <DashboardCard.Content>
         <Box display="grid" gap={3}>
