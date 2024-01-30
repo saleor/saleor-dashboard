@@ -3455,6 +3455,9 @@
     "context": "attribute's editor component entity",
     "string": "Entity"
   },
+  "Lrp9WW": {
+    "string": "Discount of {value} on the purchase of {conditions} through the {channel}"
+  },
   "LsgHmZ": {
     "context": "delete shipping zone",
     "string": "Are you sure you want to delete {name}?"
@@ -3692,9 +3695,6 @@
   "NgCb99": {
     "context": "order line discount updated title",
     "string": "{productName} discount was updated by"
-  },
-  "NgRa6m": {
-    "string": "Discount of {value} on the purchase of {items} through the {channel}"
   },
   "NhQboB": {
     "context": "dialog header",
@@ -7192,6 +7192,9 @@
     "context": "checkbox",
     "string": "Refund shipment: {currency} {amount}"
   },
+  "lZC/1a": {
+    "string": "greater than {value}"
+  },
   "laax5C": {
     "context": "order returned success message",
     "string": "Successfully returned products and granted refund!"
@@ -7819,6 +7822,9 @@
   },
   "qPSWmL": {
     "string": "Enter usage"
+  },
+  "qSCmIG": {
+    "string": "lower than {value}"
   },
   "qT6YYk": {
     "context": "order line total price",
