@@ -11,5 +11,6 @@ export class ExportGiftCardsDialog {
     const fileExtensionCheckbox = this.page.getByTestId(fileExtension);
     await fileExtensionCheckbox.click();
     await this.submitButton.click();
+    await this.submitButton.waitFor({state: "hidden"})
   }
 }

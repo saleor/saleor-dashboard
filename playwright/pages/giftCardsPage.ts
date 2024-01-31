@@ -5,8 +5,8 @@ import { ResendGiftCardCodeDialog } from "@dialogs/resendGiftCardCodeDialog";
 import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
-import { ExportGiftCardsDialog } from "./dialogs/exportGiftCardsDialog";
-import { SetGiftCardsBalanceDialog } from "./dialogs/setGiftCardBalanceDialog";
+import { ExportGiftCardsDialog } from "@dialogs/exportGiftCardsDialog";
+import { SetGiftCardsBalanceDialog } from "@dialogs/setGiftCardBalanceDialog";
 
 export class GiftCardsPage extends BasePage {
   readonly page: Page;

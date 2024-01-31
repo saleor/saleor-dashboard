@@ -6,8 +6,10 @@ import { MailpitService } from "@api/mailpit";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 let giftCardsPage: GiftCardsPage;
-test.beforeEach(({ page }) => {
+let mailpitService: MailpitService;
+test.beforeEach(({ page, request }) => {
   giftCardsPage = new GiftCardsPage(page);
+  mailpitService = new MailpitService(request);
 });
 
 test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
@@ -108,23 +110,19 @@ test("TC: SALEOR_112 Set gift card balance @e2e @gift", async () => {
   await giftCardsPage.setGiftCardsBalanceDialog.setBalance("34")
   await giftCardsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_113 Export gift card codes in XLSX file @e2e @gift", async ({request}) => {
+test("TC: SALEOR_113 Export gift card codes in XLSX file @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.clickExportGiftCards();
   await giftCardsPage.exportGiftCardsDialog.exportGiftCardCodes("XLSX");
-  const mailpitService = new MailpitService(request);
   await mailpitService.checkDoesUserReceivedExportedData(
     process.env.E2E_USER_NAME!,
     "Your exported gift cards data is ready",
   );
 });
-test("TC: SALEOR_114 Export gift card codes in CSV file @e2e @gift", async ({
-  request,
-}) => {
+test("TC: SALEOR_114 Export gift card codes in CSV file @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.clickExportGiftCards();
   await giftCardsPage.exportGiftCardsDialog.exportGiftCardCodes("CSV");
-  const mailpitService = new MailpitService(request);
   await mailpitService.checkDoesUserReceivedExportedData(
     process.env.E2E_USER_NAME!,
     "Your exported gift cards data is ready",

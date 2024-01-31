@@ -19,6 +19,10 @@ inputs:
   SHARD:
     description: "Shard number"
     required: true
+  MAILPITURL:
+    description: "mailpit uri"
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -43,6 +47,7 @@ runs:
         E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
         E2E_PERMISSIONS_USERS_PASSWORD: ${{ inputs.E2E_PERMISSIONS_USERS_PASSWORD }}
         SHARD_NUMBER: ${{ inputs.SHARD }}
+        MAILPITURL: ${{ inputs.MAILPITURL }} 
       run: npm run qa:pw-e2e -- --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
