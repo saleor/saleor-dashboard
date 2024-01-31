@@ -11,7 +11,7 @@ import { ChannelsListItem } from "./ChannelsListItem";
 import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";
 
 interface AvailabilityCardProps {
-  listings: FormsetData<
+  allAvailableListings: FormsetData<
     ChannelPriceAndPreorderData,
     IChannelPriceAndPreorderArgs
   >;
@@ -19,17 +19,17 @@ interface AvailabilityCardProps {
 }
 
 export const AvailabilityCard: React.FC<AvailabilityCardProps> = ({
-  listings,
+  allAvailableListings,
   productChannelListings,
   children,
 }) => {
-  if (listings.length === 0) {
+  if (allAvailableListings.length === 0) {
     return <CardContainer cardTitle={children}>{}</CardContainer>;
   }
 
   const filteredListings: ProductChannelListing =
     productChannelListings?.filter((channel: ProductChannelListing[0]) =>
-      listings.map(lst => lst.id).includes(channel.channel.id),
+      allAvailableListings.map(lst => lst.id).includes(channel.channel.id),
     );
 
   return (

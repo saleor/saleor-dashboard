@@ -37,7 +37,7 @@ export const VariantDetailsChannelsAvailabilityCard: React.FC<
   VariantDetailsChannelsAvailabilityCardProps
 > = ({ variant, listings, onManageClick, disabled }) => (
   <AvailabilityCard
-    listings={listings}
+    allAvailableListings={listings}
     productChannelListings={variant?.product.channelListings}
   >
     <CreateVariantTitle
@@ -53,7 +53,7 @@ export const ProductDetailsChannelsAvailabilityCard: React.FC<
   ProductDetailsChannelsAvailabilityCardProps
 > = ({ product, listings, onManageClick, disabled }) => (
   <AvailabilityCard
-    listings={listings}
+    allAvailableListings={listings}
     productChannelListings={product?.channelListings}
   >
     <CreateVariantTitle
