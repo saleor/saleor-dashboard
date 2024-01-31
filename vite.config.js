@@ -7,6 +7,7 @@ import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { VitePWA } from "vite-plugin-pwa";
+import { CodeInspectorPlugin } from 'code-inspector-plugin';
 
 const copyOgImage = () => ({
   name: "copy-og-image",
@@ -56,6 +57,9 @@ export default defineConfig(({ command, mode }) => {
 
   const plugins = [
     react(),
+    CodeInspectorPlugin({
+      bundler: 'vite',
+    }),
     createHtmlPlugin({
       entry: path.resolve(__dirname, "src", "index.tsx"),
       template: "index.html",
