@@ -1,8 +1,7 @@
 import { URL_LIST } from "@data/url";
 import { APIRequestContext, expect } from "@playwright/test";
 
-const MAILPIT_URI = process.env.CYPRESS_MAILPITURL || "no mailpit url provided";
-const mailpitUrl = "https://" + MAILPIT_URI;
+const mailpitUrl = process.env.CYPRESS_MAILPITURL || "no mailpit url provided";
 export class MailpitService {
   readonly request: APIRequestContext;
 
