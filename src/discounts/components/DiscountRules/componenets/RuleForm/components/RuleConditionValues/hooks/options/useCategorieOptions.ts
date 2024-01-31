@@ -4,13 +4,17 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-export const useCategorieOptions = () => {
+export const useCategorieOptions = (
+  channel: string | null,
+  conditionId: string | null,
+) => {
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts,
   } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
+    skip: !channel || !conditionId || conditionId !== "category",
   });
 
   const fetchMoreCategories = getSearchFetchMoreProps(
@@ -22,9 +26,9 @@ export const useCategorieOptions = () => {
     fetch: searchCategories,
     fetchMoreProps: fetchMoreCategories,
     options: (mapEdgesToItems(searchCategoriesOpts?.data?.search) ?? []).map(
-      category => ({
-        label: category.name,
-        value: category.id,
+      ({ name, id }) => ({
+        label: name,
+        value: id,
       }),
     ),
   };

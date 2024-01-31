@@ -40,13 +40,14 @@ export const getValidationSchema = (intl: IntlShape) =>
         },
       ),
       conditions: z.array(
-        z
-          .object({
-            type: z.string().nullable(),
-            condition: z.string(),
-            values: z.array(z.object({ label: z.string(), value: z.string() })),
-          })
-          .optional(),
+        z.object({
+          id: z.string().nullable(),
+          type: z.string(),
+          value: z
+            .array(z.object({ label: z.string(), value: z.string() }))
+            .or(z.string())
+            .or(z.tuple([z.string(), z.string()])),
+        }),
       ),
       rewardValue: z
         .number({

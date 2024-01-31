@@ -1,82 +1,40 @@
-import { CataloguePredicateInput } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
-import { CataloguePredicateAPI, ConditionType } from "../types";
+export type ConditionType = "is" | "between" | "lower" | "greater";
 
-export class Condition {
-  constructor(
-    public type: ConditionType | null,
-    public condition: "is",
-    public values: Option[],
-  ) {}
+export type ConditionValue = Option[] | string | [string, string] | null;
 
-  public toAPI(): CataloguePredicateInput | undefined {
-    if (!this.type || !this.values.length) {
-      return undefined;
-    }
-
-    return {
-      [`${this.type}Predicate`]: {
-        ids: this.values.map(val => val.value),
-      },
-    };
-  }
-
-  public static empty(): Condition {
-    return new Condition(null, "is", []);
-  }
-
-  public static fromFormValues(data: Condition): Condition {
-    return new Condition(data.type, data.condition, data.values);
-  }
-
-  public static fromAPI(
-    condition: CataloguePredicateAPI,
-    ruleConditionsOptionsDetailsMap: Record<string, string>,
-  ): Condition {
-    const toOptions = createToOptionMap(ruleConditionsOptionsDetailsMap);
-
-    if (condition.productPredicate) {
-      return new Condition(
-        "product",
-        "is",
-        condition.productPredicate.ids.map(toOptions),
-      );
-    }
-
-    if (condition.categoryPredicate) {
-      return new Condition(
-        "category",
-        "is",
-        condition.categoryPredicate.ids.map(toOptions),
-      );
-    }
-
-    if (condition.collectionPredicate) {
-      return new Condition(
-        "collection",
-        "is",
-        condition.collectionPredicate.ids.map(toOptions),
-      );
-    }
-
-    if (condition.variantPredicate) {
-      return new Condition(
-        "variant",
-        "is",
-        condition.variantPredicate.ids.map(toOptions),
-      );
-    }
-
-    return new Condition(null, "is", []);
-  }
+export interface Condition {
+  id: string | null;
+  type: ConditionType;
+  value: ConditionValue;
 }
 
-function createToOptionMap(
-  ruleConditionsOptionsDetailsMap: Record<string, string>,
-) {
-  return (id: string) => ({
-    label: ruleConditionsOptionsDetailsMap[id] || id,
-    value: id,
-  });
-}
+export const createEmptyCodition = (): Condition => ({
+  id: null,
+  type: "is",
+  value: null,
+});
+
+export const isString = (
+  conditionValue: ConditionValue,
+): conditionValue is string => {
+  return typeof conditionValue === "string";
+};
+
+export const isTuple = (
+  conditionValue: ConditionValue,
+): conditionValue is [string, string] => {
+  return (
+    Array.isArray(conditionValue) &&
+    conditionValue.length === 2 &&
+    typeof conditionValue[0] === "string" &&
+    typeof conditionValue[1] === "string"
+  );
+};
+
+export const isArrayOfOptions = (
+  conditionValue: ConditionValue,
+): conditionValue is Option[] => {
+  return Array.isArray(conditionValue) && !isTuple(conditionValue);
+};

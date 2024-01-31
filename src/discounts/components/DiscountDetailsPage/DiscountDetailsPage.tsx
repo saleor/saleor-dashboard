@@ -22,7 +22,7 @@ import { useIntl } from "react-intl";
 import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountDetailsForm } from "../DiscountDetailsForm";
-import { DiscountName } from "../DiscountName";
+import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
 import { DiscountRules } from "../DiscountRules";
 import { DiscountSavebar } from "../DiscountSavebar";
 
@@ -86,9 +86,10 @@ export const DiscountDetailsPage = ({
         >
           {({ rulesErrors, rules, onDeleteRule, onRuleSubmit, onSubmit }) => (
             <>
-              <DiscountName
+              <DiscountGeneralInfo
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
                 disabled={disabled}
+                typeDisabled={true}
               />
 
               <DiscountDescription disabled={disabled} />
@@ -99,6 +100,7 @@ export const DiscountDetailsPage = ({
               />
 
               <DiscountRules
+                discountType="catalog"
                 errors={rulesErrors}
                 rules={rules}
                 loading={ruleConditionsOptionsDetailsLoading}

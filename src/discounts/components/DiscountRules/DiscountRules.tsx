@@ -4,13 +4,15 @@ import { Rule } from "@dashboard/discounts/models";
 import { ChannelFragment } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AddButton } from "./componenets/AddButton";
 import { RuleDeleteModal } from "./componenets/RuleDeleteModal/RuleDeleteModal";
+import { RuleForm } from "./componenets/RuleForm";
 import { RuleFormModal } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
+import { DiscountRulesContextProvider } from "./context";
 import { messages } from "./messages";
 
 export type DiscountRulesErrors<ErrorCode> = Array<
@@ -19,6 +21,7 @@ export type DiscountRulesErrors<ErrorCode> = Array<
 
 interface DiscountRulesProps<ErrorCode> {
   disabled: boolean;
+  discountType: "catalog";
   channels: ChannelFragment[];
   rules: Rule[];
   errors: Array<CommonError<ErrorCode>>;
@@ -38,20 +41,21 @@ export const DiscountRules = <ErrorCode,>({
   errors,
   getRuleConfirmButtonState,
   deleteButtonState,
+  discountType,
   loading,
   onRuleSubmit,
   onRuleDelete,
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
 
-  const [showRuleModal, setShowRuleModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
-  const isLoaded = useRef(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (!isLoaded.current && !disabled) {
-      isLoaded.current = true;
+    if (!isLoaded && !disabled) {
+      setIsLoaded(true);
     }
   }, [disabled]);
 
@@ -59,9 +63,9 @@ export const DiscountRules = <ErrorCode,>({
     return ruleEditIndex !== null ? rules[ruleEditIndex] : null;
   }, [ruleEditIndex]);
 
-  const handleOpenRuleModal = (editIndex: number) => {
+  const handleRuleEdit = (editIndex: number) => {
     setRuleEditIndex(editIndex);
-    setShowRuleModal(true);
+    setIsModalOpen(true);
   };
 
   const handleOpenRuleDeleteModal = (index: number) => {
@@ -69,7 +73,7 @@ export const DiscountRules = <ErrorCode,>({
   };
 
   const handleRuleModalClose = () => {
-    setShowRuleModal(false);
+    setIsModalOpen(false);
     setRuleEditIndex(null);
   };
 
@@ -84,45 +88,49 @@ export const DiscountRules = <ErrorCode,>({
   };
 
   return (
-    <DashboardCard marginBottom={20}>
-      <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          {intl.formatMessage(messages.title)}
-          <AddButton
-            disabled={disabled}
-            onCatalogClick={() => setShowRuleModal(true)}
+    <DiscountRulesContextProvider
+      discountType={discountType}
+      channels={channels}
+      disabled={disabled}
+    >
+      <DashboardCard marginBottom={20}>
+        <DashboardCard.Title>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            {intl.formatMessage(messages.title)}
+            <AddButton onClick={() => setIsModalOpen(true)} />
+          </Box>
+        </DashboardCard.Title>
+        <DashboardCard.Content>
+          <RulesList
+            loading={!isLoaded || loading}
+            rules={rules}
+            onRuleEdit={handleRuleEdit}
+            onRuleDelete={handleOpenRuleDeleteModal}
+            errors={errors}
           />
-        </Box>
-      </DashboardCard.Title>
-      <DashboardCard.Content>
-        <RulesList
-          disabled={disabled}
-          loading={!isLoaded.current || loading}
-          rules={rules}
-          onRuleEdit={handleOpenRuleModal}
-          onRuleDelete={handleOpenRuleDeleteModal}
-          channels={channels}
-          errors={errors}
+        </DashboardCard.Content>
+
+        {isModalOpen && (
+          <RuleFormModal
+            confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
+            onClose={handleRuleModalClose}
+            initialFormValues={ruleInitialValues}
+            onSubmit={handleRuleModalSubmit}
+          >
+            <RuleForm errors={errors} />
+          </RuleFormModal>
+        )}
+        <RuleDeleteModal
+          open={ruleDeleteIndex !== null}
+          onClose={() => setRuleDeleteIndex(null)}
+          onSubmit={handleRuleDelete}
+          confimButtonState={deleteButtonState}
         />
-      </DashboardCard.Content>
-
-      <RuleFormModal
-        disabled={disabled}
-        open={showRuleModal}
-        confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
-        onClose={handleRuleModalClose}
-        channels={channels}
-        initialFormValues={ruleInitialValues}
-        errors={errors}
-        onSubmit={handleRuleModalSubmit}
-      />
-
-      <RuleDeleteModal
-        open={ruleDeleteIndex !== null}
-        onClose={() => setRuleDeleteIndex(null)}
-        onSubmit={handleRuleDelete}
-        confimButtonState={deleteButtonState}
-      />
-    </DashboardCard>
+      </DashboardCard>
+    </DiscountRulesContextProvider>
   );
 };

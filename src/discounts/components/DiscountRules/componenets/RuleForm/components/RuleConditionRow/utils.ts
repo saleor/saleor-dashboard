@@ -1,8 +1,7 @@
-import { ConditionType } from "@dashboard/discounts/types";
 import { Option } from "@saleor/macaw-ui-next";
 
 export const getConditionTypeValue = (
-  conditionType: ConditionType | undefined | null,
+  conditionType: string | undefined | null,
   conditionTypes: Option[],
 ) => {
   if (!conditionType) {

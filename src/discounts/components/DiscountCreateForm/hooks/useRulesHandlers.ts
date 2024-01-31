@@ -1,24 +1,30 @@
 import { Rule } from "@dashboard/discounts/models";
 import { sortRules } from "@dashboard/discounts/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const useRulesHandlers = () => {
+export const useRulesHandlers = (
+  discountType: "catalog", // to be replaced by PromotionTypeEnum when API return this field
+) => {
   const [rules, setRules] = useState<Rule[]>([]);
 
+  useEffect(() => {
+    setRules([]);
+  }, [discountType]);
+
   const onDeleteRule = (ruleDeleteIndex: number) => {
-    setRules(rules => rules.filter((_, index) => index !== ruleDeleteIndex));
+    setRules(rules =>
+      sortRules(rules.filter((_, index) => index !== ruleDeleteIndex)),
+    );
   };
 
   const onRuleSubmit = async (data: Rule, ruleEditIndex: number | null) => {
-    const ruleObj = Rule.fromFormValues(data);
-
     if (ruleEditIndex !== null) {
       setRules(rules => {
-        rules[ruleEditIndex] = ruleObj;
+        rules[ruleEditIndex] = data;
         return rules;
       });
     } else {
-      setRules(sortRules([...rules, ruleObj]));
+      setRules(sortRules([...rules, data]));
     }
   };
 

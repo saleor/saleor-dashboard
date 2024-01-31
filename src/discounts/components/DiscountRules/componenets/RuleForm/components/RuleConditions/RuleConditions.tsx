@@ -1,26 +1,24 @@
-import { Condition, Rule } from "@dashboard/discounts/models";
-import { ConditionType } from "@dashboard/discounts/types";
+import { useConditionNames } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionName/useConditionNames";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
+import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
-import { FetchOptions, RuleConditionRow } from "../RuleConditionRow";
-import { initialDiscountConditionType } from "../RuleConditionRow/initialDiscountConditionType";
+import { RuleConditionRow } from "../RuleConditionRow";
 
 interface RuleConditionsProps {
   hasSelectedChannels: boolean;
-  disabled?: boolean;
-  typeToFetchMap: Record<ConditionType, FetchOptions>;
 }
 
 export const RuleConditions = ({
-  disabled = false,
   hasSelectedChannels,
-  typeToFetchMap,
 }: RuleConditionsProps) => {
   const intl = useIntl();
+  const { disabled } = useDiscountRulesContext();
+  const { conditionNames } = useConditionNames();
 
   const { watch } = useFormContext<Rule>();
 
@@ -30,11 +28,10 @@ export const RuleConditions = ({
 
   const conditionsList = watch("conditions");
 
-  const allConditionsSelected =
-    conditionsList.length === initialDiscountConditionType.length;
+  const allConditionsSelected = conditionsList.length === conditionNames.length;
 
-  const isConditionTypeSelected = (conditionType: string) =>
-    conditionsList.some(condition => condition.type === conditionType);
+  const isConditionNameSelected = (conditionType: string) =>
+    conditionsList.some(condition => condition.id === conditionType);
 
   if (!hasSelectedChannels) {
     return (
@@ -60,7 +57,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(Condition.empty())}
+          onClick={() => append(createEmptyCodition())}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>
@@ -75,12 +72,8 @@ export const RuleConditions = ({
       <Box display="flex" flexDirection="column" gap={4}>
         {fields.map((condition, conditionIndex) => (
           <RuleConditionRow
-            disabled={disabled}
-            fetchOptions={
-              condition.type ? typeToFetchMap[condition.type] : undefined
-            }
-            isConditionTypeSelected={isConditionTypeSelected}
-            key={condition.type || conditionIndex}
+            isConditionTypeSelected={isConditionNameSelected}
+            key={condition.id || conditionIndex}
             conditionIndex={conditionIndex}
             updateCondition={update}
             onRemove={() => {
@@ -96,7 +89,7 @@ export const RuleConditions = ({
           size="small"
           alignSelf="start"
           disabled={disabled}
-          onClick={() => append(Condition.empty())}
+          onClick={() => append(createEmptyCodition())}
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>
