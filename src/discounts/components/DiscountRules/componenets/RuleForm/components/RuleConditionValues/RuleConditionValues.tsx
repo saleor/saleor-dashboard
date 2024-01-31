@@ -48,7 +48,7 @@ export const RuleConditionValues = ({
   if (inputType === "number" || inputType === "price") {
     return (
       <Input
-        data-test-id="rule-value"
+        data-test-id={`condition-value-${conditionIndex}`}
         type="number"
         value={condition.value as string}
         onChange={valuesField.onChange}
@@ -61,7 +61,7 @@ export const RuleConditionValues = ({
     return (
       <Box display="grid" gap={1}>
         <RangeInput
-          data-test-id="rule-value"
+          data-test-id={`condition-value-${conditionIndex}`}
           value={condition.value as [string, string]}
           onChange={valuesField.onChange}
           type="number"
@@ -75,7 +75,7 @@ export const RuleConditionValues = ({
   return (
     <Input
       size="medium"
-      data-test-id="rule-value"
+      data-test-id={`condition-value-${conditionIndex}`}
       value={(condition.value?.[0] || "") as string}
       onChange={valuesField.onChange}
       onBlur={valuesField.onBlur}

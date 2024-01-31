@@ -44,7 +44,12 @@ export const RuleConditionRow = ({
         <RuleConditionValues conditionIndex={conditionIndex} />
       </RuleInputWrapper>
 
-      <Button variant="tertiary" icon={<RemoveIcon />} onClick={onRemove} />
+      <Button
+        data-test-id={`condition-remove-${conditionIndex}`}
+        variant="tertiary"
+        icon={<RemoveIcon />}
+        onClick={onRemove}
+      />
     </Box>
   );
 };

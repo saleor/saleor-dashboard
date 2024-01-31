@@ -46,7 +46,7 @@ export const RuleConditionName = ({
         nameField.onChange(e.target.value);
       }}
       size="medium"
-      data-test-id="rule-type"
+      data-test-id={`condition-name-${conditionIndex}`}
       onBlur={nameField.onBlur}
       disabled={disabled}
     />
