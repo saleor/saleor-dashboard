@@ -27,9 +27,10 @@ export const AvailabilityCard: React.FC<AvailabilityCardProps> = ({
     return <CardContainer cardTitle={children}>{}</CardContainer>;
   }
 
+  const listingIds = allAvailableListings.map(lst => lst.id);
   const filteredListings: ProductChannelListing =
     productChannelListings?.filter((channel: ProductChannelListing[0]) =>
-      allAvailableListings.map(lst => lst.id).includes(channel.channel.id),
+      listingIds.includes(channel.channel.id),
     );
 
   return (

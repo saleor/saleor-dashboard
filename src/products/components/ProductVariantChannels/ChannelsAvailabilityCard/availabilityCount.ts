@@ -36,8 +36,9 @@ export const getAvailabilityCountForProduct = (
     IChannelPriceAndPreorderArgs
   >,
 ) => {
+  const listingsIds = listings.map(({ id }) => id);
   const publishedInChannelsListings = item?.channelListings?.filter(lst =>
-    listings.map(({ id }) => id).includes(lst.channel.id),
+    listingsIds.includes(lst.channel.id),
   );
 
   return {
