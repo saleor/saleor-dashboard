@@ -163,6 +163,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-macros": "^3.1.0",
     "ci-info": "^3.7.0",
+    "code-inspector-plugin": "^0.6.1",
     "codecov": "^3.7.1",
     "core-js": "^3.7.0",
     "cross-env": "^6.0.3",
