@@ -20,7 +20,7 @@ export const RuleRewardSelect = ({
 }: RuleRewardSelectProps) => {
   const intl = useIntl();
   const { disabled } = useDiscountRulesContext();
-  const { formState } = useFormContext<Rule>();
+  const { formState, setValue } = useFormContext<Rule>();
 
   const rewardTypeOptions = getRewardTypeOptions(intl);
 
@@ -47,6 +47,8 @@ export const RuleRewardSelect = ({
         error={!!formState.errors.rewardType}
         helperText={formState.errors.rewardType?.message}
         onChange={type => {
+          setValue("rewardGifts", []);
+          setValue("rewardValue", null);
           rewardType.onChange((type as unknown as Option).value);
         }}
         data-test-id="reward-type-select"
