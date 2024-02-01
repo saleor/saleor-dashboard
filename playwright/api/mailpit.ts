@@ -1,12 +1,13 @@
 import { URL_LIST } from "@data/url";
 import { APIRequestContext, expect } from "@playwright/test";
 
-const mailpitUrl = process.env.CYPRESS_MAILPITURL || "no mailpit url provided";
+const mailpitUrl = process.env.MAILPITURL || "no mailpit url provided";
 export class MailpitService {
   readonly request: APIRequestContext;
 
   constructor(request: APIRequestContext) {
     this.request = request;
+    console.log(mailpitUrl.slice(0, 10))
   }
 
   async getLastEmails(getEmailsLimit = 50) {
