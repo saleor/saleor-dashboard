@@ -15,7 +15,7 @@ interface RuleSummaryProps {
 }
 
 export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
-  if (!rule.channel || !rule.rewardValue) {
+  if (!rule.channel || (!rule.rewardValue && rule.rewardType === null)) {
     return null;
   }
 
