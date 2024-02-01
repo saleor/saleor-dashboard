@@ -112,6 +112,7 @@ test("TC: SALEOR_112 Set gift card balance @e2e @gift", async () => {
 });
 test("TC: SALEOR_113 Export gift card codes in XLSX file @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
+  await giftCardsPage.clickShowMoreMenu();
   await giftCardsPage.clickExportGiftCards();
   await giftCardsPage.exportGiftCardsDialog.exportGiftCardCodes("XLSX");
   await mailpitService.checkDoesUserReceivedExportedData(
@@ -121,6 +122,7 @@ test("TC: SALEOR_113 Export gift card codes in XLSX file @e2e @gift", async () =
 });
 test("TC: SALEOR_114 Export gift card codes in CSV file @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
+  await giftCardsPage.clickShowMoreMenu();
   await giftCardsPage.clickExportGiftCards();
   await giftCardsPage.exportGiftCardsDialog.exportGiftCardCodes("CSV");
   await mailpitService.checkDoesUserReceivedExportedData(

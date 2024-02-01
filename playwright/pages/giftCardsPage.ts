@@ -55,7 +55,6 @@ export class GiftCardsPage extends BasePage {
     await this.deactivateButton.click();
   }
   async clickExportGiftCards() {
-    await this.showMoreMenuButton.click();
     await this.exportCardCodesButton.click();
   }
   async clickResendCodeButton() {
@@ -63,6 +62,9 @@ export class GiftCardsPage extends BasePage {
   }
   async clickSetBalance() {
     await this.setBalanceButton.click();
+  }
+  async clickShowMoreMenu(){
+      await this.showMoreMenuButton.click();
   }
   async gotoGiftCardsListView() {
     await this.page.goto(URL_LIST.giftCards);

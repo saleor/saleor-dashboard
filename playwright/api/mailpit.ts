@@ -67,9 +67,7 @@ export class MailpitService {
           return userEmails.length;
         },
         {
-          message: `User: ${userEmail} messages were not found. ${console.log(
-            mailpitUrl.slice(0, 10),
-          )}`,
+          message: `User: ${userEmail} messages were not found.`,
           intervals: [2000, 3000, 5000, 5000],
           timeout: 15000,
         },
