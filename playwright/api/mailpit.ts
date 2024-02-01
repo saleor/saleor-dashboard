@@ -7,7 +7,6 @@ export class MailpitService {
 
   constructor(request: APIRequestContext) {
     this.request = request;
-    console.log(mailpitUrl.slice(0, 10))
   }
 
   async getLastEmails(getEmailsLimit = 50) {
@@ -68,7 +67,9 @@ export class MailpitService {
           return userEmails.length;
         },
         {
-          message: `User: ${userEmail} messages were not found`,
+          message: `User: ${userEmail} messages were not found. ${console.log(
+            mailpitUrl.slice(0, 10),
+          )}`,
           intervals: [2000, 3000, 5000, 5000],
           timeout: 15000,
         },
