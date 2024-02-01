@@ -1187,9 +1187,10 @@ export type CheckoutLanguageCodeUpdateFieldPolicy = {
 	checkoutErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CheckoutLineKeySpecifier = ('id' | 'metadata' | 'metafield' | 'metafields' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'problems' | 'quantity' | 'requiresShipping' | 'totalPrice' | 'undiscountedTotalPrice' | 'undiscountedUnitPrice' | 'unitPrice' | 'variant' | CheckoutLineKeySpecifier)[];
+export type CheckoutLineKeySpecifier = ('id' | 'isGift' | 'metadata' | 'metafield' | 'metafields' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'problems' | 'quantity' | 'requiresShipping' | 'totalPrice' | 'undiscountedTotalPrice' | 'undiscountedUnitPrice' | 'unitPrice' | 'variant' | CheckoutLineKeySpecifier)[];
 export type CheckoutLineFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	isGift?: FieldPolicy<any> | FieldReadFunction<any>,
 	metadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	metafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	metafields?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3357,11 +3358,12 @@ export type OrderGrantedRefundLineFieldPolicy = {
 	quantity?: FieldPolicy<any> | FieldReadFunction<any>,
 	reason?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type OrderLineKeySpecifier = ('allocations' | 'digitalContentUrl' | 'id' | 'isShippingRequired' | 'metadata' | 'metafield' | 'metafields' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productName' | 'productSku' | 'productVariantId' | 'quantity' | 'quantityFulfilled' | 'quantityToFulfill' | 'saleId' | 'taxClass' | 'taxClassMetadata' | 'taxClassName' | 'taxClassPrivateMetadata' | 'taxRate' | 'thumbnail' | 'totalPrice' | 'translatedProductName' | 'translatedVariantName' | 'undiscountedTotalPrice' | 'undiscountedUnitPrice' | 'unitDiscount' | 'unitDiscountReason' | 'unitDiscountType' | 'unitDiscountValue' | 'unitPrice' | 'variant' | 'variantName' | 'voucherCode' | OrderLineKeySpecifier)[];
+export type OrderLineKeySpecifier = ('allocations' | 'digitalContentUrl' | 'id' | 'isGift' | 'isShippingRequired' | 'metadata' | 'metafield' | 'metafields' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productName' | 'productSku' | 'productVariantId' | 'quantity' | 'quantityFulfilled' | 'quantityToFulfill' | 'saleId' | 'taxClass' | 'taxClassMetadata' | 'taxClassName' | 'taxClassPrivateMetadata' | 'taxRate' | 'thumbnail' | 'totalPrice' | 'translatedProductName' | 'translatedVariantName' | 'undiscountedTotalPrice' | 'undiscountedUnitPrice' | 'unitDiscount' | 'unitDiscountReason' | 'unitDiscountType' | 'unitDiscountValue' | 'unitPrice' | 'variant' | 'variantName' | 'voucherCode' | OrderLineKeySpecifier)[];
 export type OrderLineFieldPolicy = {
 	allocations?: FieldPolicy<any> | FieldReadFunction<any>,
 	digitalContentUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	isGift?: FieldPolicy<any> | FieldReadFunction<any>,
 	isShippingRequired?: FieldPolicy<any> | FieldReadFunction<any>,
 	metadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	metafield?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4912,11 +4914,13 @@ export type PromotionEventInterfaceFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionRuleKeySpecifier = ('cataloguePredicate' | 'channels' | 'description' | 'id' | 'name' | 'orderPredicate' | 'predicateType' | 'promotion' | 'rewardType' | 'rewardValue' | 'rewardValueType' | 'translation' | PromotionRuleKeySpecifier)[];
+export type PromotionRuleKeySpecifier = ('cataloguePredicate' | 'channels' | 'description' | 'giftIds' | 'giftsLimit' | 'id' | 'name' | 'orderPredicate' | 'predicateType' | 'promotion' | 'rewardType' | 'rewardValue' | 'rewardValueType' | 'translation' | PromotionRuleKeySpecifier)[];
 export type PromotionRuleFieldPolicy = {
 	cataloguePredicate?: FieldPolicy<any> | FieldReadFunction<any>,
 	channels?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
+	giftIds?: FieldPolicy<any> | FieldReadFunction<any>,
+	giftsLimit?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderPredicate?: FieldPolicy<any> | FieldReadFunction<any>,

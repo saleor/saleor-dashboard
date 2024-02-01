@@ -638,6 +638,7 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   channels {
     ...ChannelDetails
   }
+  giftIds
   rewardType
   rewardValueType
   rewardValue
@@ -16262,6 +16263,60 @@ export function useSearchVariantsLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type SearchVariantsQueryHookResult = ReturnType<typeof useSearchVariantsQuery>;
 export type SearchVariantsLazyQueryHookResult = ReturnType<typeof useSearchVariantsLazyQuery>;
 export type SearchVariantsQueryResult = Apollo.QueryResult<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>;
+export const SearchVariantsWithProductDataDocument = gql`
+    query SearchVariantsWithProductData($after: String, $first: Int!, $query: String!, $channel: String) {
+  search: productVariants(
+    after: $after
+    first: $first
+    filter: {search: $query}
+    channel: $channel
+  ) {
+    edges {
+      node {
+        id
+        name
+        product {
+          name
+        }
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${PageInfoFragmentDoc}`;
+
+/**
+ * __useSearchVariantsWithProductDataQuery__
+ *
+ * To run a query within a React component, call `useSearchVariantsWithProductDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchVariantsWithProductDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchVariantsWithProductDataQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useSearchVariantsWithProductDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>(SearchVariantsWithProductDataDocument, options);
+      }
+export function useSearchVariantsWithProductDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>(SearchVariantsWithProductDataDocument, options);
+        }
+export type SearchVariantsWithProductDataQueryHookResult = ReturnType<typeof useSearchVariantsWithProductDataQuery>;
+export type SearchVariantsWithProductDataLazyQueryHookResult = ReturnType<typeof useSearchVariantsWithProductDataLazyQuery>;
+export type SearchVariantsWithProductDataQueryResult = Apollo.QueryResult<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>;
 export const SearchWarehousesDocument = gql`
     query SearchWarehouses($after: String, $first: Int!, $query: String!) {
   search: warehouses(

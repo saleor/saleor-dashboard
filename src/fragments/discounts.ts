@@ -238,6 +238,7 @@ export const promotionRuleDetailsFragment = gql`
     channels {
       ...ChannelDetails
     }
+    giftIds
     rewardType
     rewardValueType
     rewardValue

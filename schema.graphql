@@ -5057,6 +5057,8 @@ enum CheckoutErrorCode {
   INVALID
   INVALID_SHIPPING_METHOD
   MISSING_CHANNEL_SLUG
+  NON_EDITABLE_GIFT_LINE
+  NON_REMOVABLE_GIFT_LINE
   NOT_FOUND
   NO_LINES
   PAYMENT_ERROR
@@ -5156,6 +5158,15 @@ type CheckoutLanguageCodeUpdate {
 type CheckoutLine implements Node & ObjectWithMetadata {
   """The ID of the checkout line."""
   id: ID!
+
+  """
+  Determine if the line is a gift.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  isGift: Boolean
 
   """
   List of public metadata items. Can be accessed without permissions.
@@ -17945,6 +17956,8 @@ enum OrderErrorCode {
   INVALID_QUANTITY
   INVALID_VOUCHER
   INVALID_VOUCHER_CODE
+  NON_EDITABLE_GIFT_LINE
+  NON_REMOVABLE_GIFT_LINE
   NOT_AVAILABLE_IN_CHANNEL
   NOT_EDITABLE
   NOT_FOUND
@@ -18689,6 +18702,15 @@ type OrderLine implements Node & ObjectWithMetadata {
 
   """ID of the order line."""
   id: ID!
+
+  """
+  Determine if the line is a gift.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  isGift: Boolean
 
   """Whether the product variant requires shipping."""
   isShippingRequired: Boolean!
@@ -25100,6 +25122,7 @@ type PromotionCreateError {
 enum PromotionCreateErrorCode {
   GRAPHQL_ERROR
   INVALID
+  INVALID_GIFT_TYPE
   INVALID_PRECISION
   MISSING_CHANNELS
   MULTIPLE_CURRENCIES_NOT_ALLOWED
@@ -25339,6 +25362,24 @@ type PromotionRule implements Node {
 
   """Description of the promotion rule."""
   description: JSON
+
+  """
+  Product variant IDs available as a gift to choose.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  giftIds: [ID!]
+
+  """
+  Defines the maximum number of gifts to choose from the gifts list.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  giftsLimit: Int
   id: ID!
 
   """Name of the promotion rule."""
@@ -25433,6 +25474,7 @@ type PromotionRuleCreateError {
 enum PromotionRuleCreateErrorCode {
   GRAPHQL_ERROR
   INVALID
+  INVALID_GIFT_TYPE
   INVALID_PRECISION
   MISSING_CHANNELS
   MULTIPLE_CURRENCIES_NOT_ALLOWED
@@ -25452,6 +25494,15 @@ input PromotionRuleCreateInput {
 
   """Promotion rule description."""
   description: JSON
+
+  """
+  Product variant IDs available as a gift to choose.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  gifts: [ID!]
 
   """Promotion rule name."""
   name: String
@@ -25648,6 +25699,15 @@ input PromotionRuleInput {
   """Promotion rule description."""
   description: JSON
 
+  """
+  Product variant IDs available as a gift to choose.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  gifts: [ID!]
+
   """Promotion rule name."""
   name: String
 
@@ -25789,6 +25849,7 @@ enum PromotionRuleUpdateErrorCode {
   DUPLICATED_INPUT_ITEM
   GRAPHQL_ERROR
   INVALID
+  INVALID_GIFT_TYPE
   INVALID_PRECISION
   MISSING_CHANNELS
   MULTIPLE_CURRENCIES_NOT_ALLOWED
@@ -25807,6 +25868,15 @@ input PromotionRuleUpdateInput {
 
   """Promotion rule description."""
   description: JSON
+
+  """
+  Product variant IDs available as a gift to choose.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  gifts: [ID!]
 
   """Promotion rule name."""
   name: String
@@ -27911,6 +27981,7 @@ type RequestPasswordReset {
 
 """An enumeration."""
 enum RewardTypeEnum {
+  GIFT
   SUBTOTAL_DISCOUNT
 }
 

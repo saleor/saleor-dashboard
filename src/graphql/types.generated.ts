@@ -1246,6 +1246,8 @@ export enum CheckoutErrorCode {
   INVALID = 'INVALID',
   INVALID_SHIPPING_METHOD = 'INVALID_SHIPPING_METHOD',
   MISSING_CHANNEL_SLUG = 'MISSING_CHANNEL_SLUG',
+  NON_EDITABLE_GIFT_LINE = 'NON_EDITABLE_GIFT_LINE',
+  NON_REMOVABLE_GIFT_LINE = 'NON_REMOVABLE_GIFT_LINE',
   NOT_FOUND = 'NOT_FOUND',
   NO_LINES = 'NO_LINES',
   PAYMENT_ERROR = 'PAYMENT_ERROR',
@@ -3963,6 +3965,8 @@ export enum OrderErrorCode {
   INVALID_QUANTITY = 'INVALID_QUANTITY',
   INVALID_VOUCHER = 'INVALID_VOUCHER',
   INVALID_VOUCHER_CODE = 'INVALID_VOUCHER_CODE',
+  NON_EDITABLE_GIFT_LINE = 'NON_EDITABLE_GIFT_LINE',
+  NON_REMOVABLE_GIFT_LINE = 'NON_REMOVABLE_GIFT_LINE',
   NOT_AVAILABLE_IN_CHANNEL = 'NOT_AVAILABLE_IN_CHANNEL',
   NOT_EDITABLE = 'NOT_EDITABLE',
   NOT_FOUND = 'NOT_FOUND',
@@ -5911,6 +5915,7 @@ export type ProductWhereInput = {
 export enum PromotionCreateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  INVALID_GIFT_TYPE = 'INVALID_GIFT_TYPE',
   INVALID_PRECISION = 'INVALID_PRECISION',
   MISSING_CHANNELS = 'MISSING_CHANNELS',
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
@@ -5963,6 +5968,7 @@ export enum PromotionEventsEnum {
 export enum PromotionRuleCreateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  INVALID_GIFT_TYPE = 'INVALID_GIFT_TYPE',
   INVALID_PRECISION = 'INVALID_PRECISION',
   MISSING_CHANNELS = 'MISSING_CHANNELS',
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
@@ -5978,6 +5984,14 @@ export type PromotionRuleCreateInput = {
   channels?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule description. */
   description?: InputMaybe<Scalars['JSON']>;
+  /**
+   * Product variant IDs available as a gift to choose.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  gifts?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule name. */
   name?: InputMaybe<Scalars['String']>;
   /**
@@ -6017,6 +6031,14 @@ export type PromotionRuleInput = {
   channels?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule description. */
   description?: InputMaybe<Scalars['JSON']>;
+  /**
+   * Product variant IDs available as a gift to choose.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  gifts?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule name. */
   name?: InputMaybe<Scalars['String']>;
   /**
@@ -6056,6 +6078,7 @@ export enum PromotionRuleUpdateErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  INVALID_GIFT_TYPE = 'INVALID_GIFT_TYPE',
   INVALID_PRECISION = 'INVALID_PRECISION',
   MISSING_CHANNELS = 'MISSING_CHANNELS',
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
@@ -6070,6 +6093,14 @@ export type PromotionRuleUpdateInput = {
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** Promotion rule description. */
   description?: InputMaybe<Scalars['JSON']>;
+  /**
+   * Product variant IDs available as a gift to choose.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  gifts?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule name. */
   name?: InputMaybe<Scalars['String']>;
   /**
@@ -6198,6 +6229,7 @@ export enum ReportingPeriod {
 
 /** An enumeration. */
 export enum RewardTypeEnum {
+  GIFT = 'GIFT',
   SUBTOTAL_DISCOUNT = 'SUBTOTAL_DISCOUNT'
 }
 
@@ -9659,7 +9691,7 @@ export type PromotionCreateMutationVariables = Exact<{
 }>;
 
 
-export type PromotionCreateMutation = { __typename: 'Mutation', promotionCreate: { __typename: 'PromotionCreate', errors: Array<{ __typename: 'PromotionCreateError', field: string | null, message: string | null, code: PromotionCreateErrorCode, index: number | null }>, promotion: { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null } | null } | null };
+export type PromotionCreateMutation = { __typename: 'Mutation', promotionCreate: { __typename: 'PromotionCreate', errors: Array<{ __typename: 'PromotionCreateError', field: string | null, message: string | null, code: PromotionCreateErrorCode, index: number | null }>, promotion: { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null } | null } | null };
 
 export type PromotionUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9667,7 +9699,7 @@ export type PromotionUpdateMutationVariables = Exact<{
 }>;
 
 
-export type PromotionUpdateMutation = { __typename: 'Mutation', promotionUpdate: { __typename: 'PromotionUpdate', errors: Array<{ __typename: 'PromotionUpdateError', field: string | null, message: string | null, code: PromotionUpdateErrorCode }>, promotion: { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null } | null } | null };
+export type PromotionUpdateMutation = { __typename: 'Mutation', promotionUpdate: { __typename: 'PromotionUpdate', errors: Array<{ __typename: 'PromotionUpdateError', field: string | null, message: string | null, code: PromotionUpdateErrorCode }>, promotion: { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null } | null } | null };
 
 export type PromotionDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9682,14 +9714,14 @@ export type PromotionRuleUpdateMutationVariables = Exact<{
 }>;
 
 
-export type PromotionRuleUpdateMutation = { __typename: 'Mutation', promotionRuleUpdate: { __typename: 'PromotionRuleUpdate', errors: Array<{ __typename: 'PromotionRuleUpdateError', field: string | null, message: string | null, code: PromotionRuleUpdateErrorCode, channels: Array<string> | null }>, promotionRule: { __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null } | null } | null };
+export type PromotionRuleUpdateMutation = { __typename: 'Mutation', promotionRuleUpdate: { __typename: 'PromotionRuleUpdate', errors: Array<{ __typename: 'PromotionRuleUpdateError', field: string | null, message: string | null, code: PromotionRuleUpdateErrorCode, channels: Array<string> | null }>, promotionRule: { __typename: 'PromotionRule', id: string, name: string | null, description: any | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null } | null } | null };
 
 export type PromotionRuleCreateMutationVariables = Exact<{
   input: PromotionRuleCreateInput;
 }>;
 
 
-export type PromotionRuleCreateMutation = { __typename: 'Mutation', promotionRuleCreate: { __typename: 'PromotionRuleCreate', errors: Array<{ __typename: 'PromotionRuleCreateError', field: string | null, message: string | null, code: PromotionRuleCreateErrorCode }>, promotionRule: { __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null } | null } | null };
+export type PromotionRuleCreateMutation = { __typename: 'Mutation', promotionRuleCreate: { __typename: 'PromotionRuleCreate', errors: Array<{ __typename: 'PromotionRuleCreateError', field: string | null, message: string | null, code: PromotionRuleCreateErrorCode }>, promotionRule: { __typename: 'PromotionRule', id: string, name: string | null, description: any | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null } | null } | null };
 
 export type PromotionRuleDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9781,7 +9813,7 @@ export type PromotionDetailsQueryVariables = Exact<{
 }>;
 
 
-export type PromotionDetailsQuery = { __typename: 'Query', promotion: { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null } | null };
+export type PromotionDetailsQuery = { __typename: 'Query', promotion: { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null } | null };
 
 export type RuleConditionsSelectedOptionsDetailsQueryVariables = Exact<{
   categoriesIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
@@ -9868,9 +9900,9 @@ export type VoucherCodeFragment = { __typename: 'VoucherCode', code: string | nu
 
 export type VoucherDetailsFragment = { __typename: 'Voucher', usageLimit: number | null, used: number, applyOncePerOrder: boolean, applyOncePerCustomer: boolean, onlyForStaff: boolean, singleUse: boolean, id: string, name: string | null, startDate: any, endDate: any | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, productsCount: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, collectionsCount: { __typename: 'CollectionCountableConnection', totalCount: number | null } | null, categoriesCount: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, products?: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, collections?: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, categories?: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
-export type PromotionRuleDetailsFragment = { __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
+export type PromotionRuleDetailsFragment = { __typename: 'PromotionRule', id: string, name: string | null, description: any | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
 
-export type PromotionDetailsFragment = { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null };
+export type PromotionDetailsFragment = { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: any | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null }> | null };
 
 export type PromotionFragment = { __typename: 'Promotion', id: string, name: string, startDate: any, endDate: any | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
@@ -11781,6 +11813,16 @@ export type SearchVariantsQueryVariables = Exact<{
 
 
 export type SearchVariantsQuery = { __typename: 'Query', search: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchVariantsWithProductDataQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+  channel?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type SearchVariantsWithProductDataQuery = { __typename: 'Query', search: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, product: { __typename: 'Product', name: string } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchWarehousesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
