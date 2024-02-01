@@ -63,7 +63,7 @@ export const DiscountCreatePage = ({
               <DiscountGeneralInfo
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
                 disabled={disabled}
-                typeDisabled={true}
+                typeDisabled={false}
               />
 
               <DiscountDescription disabled={disabled} />
