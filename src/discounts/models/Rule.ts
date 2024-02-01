@@ -8,9 +8,10 @@ export interface Rule {
   name: string;
   description: string | null;
   channel: Option | null;
-  rewardType: RewardTypeEnum | null;
+  rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT | "GIFT" | null;
   rewardValue: number;
   rewardValueType: RewardValueTypeEnum;
+  rewardGifts: Option[];
   conditions: Condition[];
 }
 
@@ -21,6 +22,7 @@ export const createEmptyRule = (): Rule => ({
   channel: null,
   rewardType: null,
   rewardValue: 0,
+  rewardGifts: [],
   rewardValueType: RewardValueTypeEnum.FIXED,
   conditions: [],
 });
