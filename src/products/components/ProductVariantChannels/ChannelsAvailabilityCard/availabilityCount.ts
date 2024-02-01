@@ -1,39 +1,48 @@
-// @ts-strict-ignore
+import {
+  ChannelPriceAndPreorderData,
+  IChannelPriceAndPreorderArgs,
+} from "@dashboard/channels/utils";
 import {
   ProductVariantCreateDataQuery,
   ProductVariantFragment,
 } from "@dashboard/graphql";
+import { FormsetData } from "@dashboard/hooks/useFormset";
 
 export const getAvailabilityCountForVariant = (
   item: ProductVariantFragment,
+  listings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >,
 ) => {
-  const variantChannelListingsChannelsIds = item.channelListings.map(
+  const allAvailableChannelsListings = item?.product?.channelListings?.map(
     ({ channel: { id } }) => id,
   );
 
-  const allAvailableChannelsListings = item.product.channelListings.filter(
-    ({ channel }) => variantChannelListingsChannelsIds.includes(channel.id),
-  );
-
-  const publishedInChannelsListings = allAvailableChannelsListings.filter(
-    ({ isPublished }) => isPublished,
+  const selectedChannelListings = allAvailableChannelsListings?.filter(
+    listing => listings.some(lst => lst.id === listing),
   );
 
   return {
-    publishedInChannelsCount: publishedInChannelsListings.length,
-    availableChannelsCount: allAvailableChannelsListings.length,
+    publishedInChannelsCount: selectedChannelListings?.length,
+    availableChannelsCount: allAvailableChannelsListings?.length,
   };
 };
 
 export const getAvailabilityCountForProduct = (
   item: ProductVariantCreateDataQuery["product"],
+  listings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >,
 ) => {
-  const publishedInChannelsListings = item.channelListings.filter(
-    ({ isPublished }) => isPublished,
+  const listingsIds = listings.map(({ id }) => id);
+  const publishedInChannelsListings = item?.channelListings?.filter(lst =>
+    listingsIds.includes(lst.channel.id),
   );
 
   return {
-    publishedInChannelsCount: publishedInChannelsListings.length,
-    availableChannelsCount: item.channelListings.length,
+    publishedInChannelsCount: publishedInChannelsListings?.length,
+    availableChannelsCount: item?.channelListings?.length,
   };
 };
