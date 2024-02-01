@@ -47,6 +47,7 @@ export const toAPI =
   (discountType: PromotionTypeEnum | null | undefined) =>
   (rule: Rule): PromotionRuleInput => {
     const base = createBaseAPIInput(rule);
+    const rewardData = getRewardProperties(rule, discountType);
 
     if (!discountType) {
       return base;
@@ -64,14 +65,45 @@ export const toAPI =
 
     return {
       ...base,
-      rewardType:
-        discountType === PromotionTypeEnum.ORDER ? rule.rewardType : undefined,
-      gifts:
-        discountType === PromotionTypeEnum.ORDER &&
-        base.rewardType === RewardTypeEnum.GIFT
-          ? rule.rewardGifts.map(({ value }) => value)
-          : undefined,
+      ...rewardData,
       orderPredicate,
       cataloguePredicate,
     };
   };
+
+function getRewardProperties(
+  rule: Rule,
+  discountType: PromotionTypeEnum | null | undefined,
+) {
+  const isOrderDiscount = discountType === PromotionTypeEnum.ORDER;
+
+  if (isOrderDiscount) {
+    return getOrderReward(rule);
+  }
+
+  return {
+    rewardValue: rule.rewardValue,
+    rewardValueType: rule.rewardValueType,
+    rewardType: undefined,
+    rewardGifts: undefined,
+  };
+}
+
+function getOrderReward(rule: Rule) {
+  const isGiftReward = rule.rewardType === RewardTypeEnum.GIFT;
+  if (isGiftReward) {
+    return {
+      rewardValue: undefined,
+      rewardValueType: undefined,
+      rewardType: rule.rewardType,
+      rewardGifts: rule.rewardGifts.map(({ value }) => value),
+    };
+  }
+
+  return {
+    rewardValue: rule.rewardValue,
+    rewardType: rule.rewardType,
+    rewardValueType: rule.rewardValueType,
+    rewardGifts: undefined,
+  };
+}
