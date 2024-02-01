@@ -12,7 +12,7 @@ import { FormattedMessage } from "react-intl";
 
 export const RuleRewardGifts = () => {
   const { disabled, channels } = useDiscountRulesContext();
-  const { watch } = useFormContext<Rule>();
+  const { watch, formState } = useFormContext<Rule>();
 
   const channel = watch("channel");
   const channelSlug =
@@ -52,6 +52,8 @@ export const RuleRewardGifts = () => {
 
   return (
     <Multiselect
+      error={!!formState.errors?.rewardGifts}
+      helperText={formState.errors?.rewardGifts?.message}
       value={rewardGiftsField.value}
       onChange={rewardGiftsField.onChange}
       onBlur={rewardGiftsField.onBlur}
