@@ -15,11 +15,17 @@ const validationMessages = defineMessages({
     id: "CFlmRP",
     defaultMessage: "Rule reword value is required",
   },
-  rewordValueMustBeLessThan100: {
+  rewardValueMustBeLessThan100: {
     id: "JyaQcP",
     defaultMessage: "Rule reword value must be less than 100",
   },
+  rewardGiftRequired: {
+    id: "GxsQuO",
+    defaultMessage: "You must select at least one gift",
+  },
 });
+
+const option = z.object({ label: z.string(), value: z.string() });
 
 const getDefaultSchema = (intl: IntlShape) =>
   z.object({
@@ -42,7 +48,7 @@ const getDefaultSchema = (intl: IntlShape) =>
         id: z.string().nullable(),
         type: z.string(),
         value: z
-          .array(z.object({ label: z.string(), value: z.string() }))
+          .array(option)
           .or(z.string())
           .or(z.tuple([z.string(), z.string()])),
       }),
@@ -59,9 +65,7 @@ const getCatalogRewardValidation = (intl: IntlShape) =>
       .min(1, intl.formatMessage(validationMessages.rewardValueRequired)),
     rewardValueType: z.string(),
     rewardType: z.literal(null),
-    rewardGifts: z
-      .array(z.object({ label: z.string(), value: z.string() }))
-      .optional(),
+    rewardGifts: z.array(option).optional(),
   });
 
 const getOrderRewardSubtotalValidation = (intl: IntlShape) =>
@@ -74,26 +78,24 @@ const getOrderRewardSubtotalValidation = (intl: IntlShape) =>
       .min(1, intl.formatMessage(validationMessages.rewardValueRequired)),
     rewardValueType: z.string(),
     rewardType: z.literal(RewardTypeEnum.SUBTOTAL_DISCOUNT),
-    rewardGifts: z
-      .array(z.object({ label: z.string(), value: z.string() }))
-      .optional(),
+    rewardGifts: z.array(option).optional(),
   });
 
-const getOrderRewardGiftsValidation = () =>
+const getOrderRewardGiftsValidation = (intl: IntlShape) =>
   z.object({
     rewardValue: z.number().optional(),
     rewardValueType: z.string(),
     rewardType: z.literal(RewardTypeEnum.GIFT),
-    rewardGifts: z
-      .array(z.object({ label: z.string(), value: z.string() }))
-      .nonempty(),
+    rewardGifts: z.array(option).nonempty({
+      message: intl.formatMessage(validationMessages.rewardGiftRequired),
+    }),
   });
 
 export const getValidationSchema = (intl: IntlShape) => {
   const schemaCond = z.discriminatedUnion("rewardType", [
     getCatalogRewardValidation(intl),
     getOrderRewardSubtotalValidation(intl),
-    getOrderRewardGiftsValidation(),
+    getOrderRewardGiftsValidation(intl),
   ]);
 
   return z.intersection(schemaCond, getDefaultSchema(intl));

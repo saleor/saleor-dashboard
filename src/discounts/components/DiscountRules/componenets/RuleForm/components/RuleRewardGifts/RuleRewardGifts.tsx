@@ -8,9 +8,10 @@ import { userVariantWithProductDataSearch } from "@dashboard/searches/useVariant
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export const RuleRewardGifts = () => {
+  const intl = useIntl();
   const { disabled, channels } = useDiscountRulesContext();
   const { watch, formState } = useFormContext<Rule>();
 
@@ -50,10 +51,26 @@ export const RuleRewardGifts = () => {
     }),
   );
 
+  const getRewardGiftsHelperText = () => {
+    if (formState.errors?.rewardGifts?.message && !channel) {
+      return intl.formatMessage({
+        defaultMessage:
+          "You must select a channel first and select at least one gift",
+        id: "vAxm7u",
+      });
+    }
+
+    return formState.errors?.rewardGifts?.message;
+  };
+
   return (
     <Multiselect
       error={!!formState.errors?.rewardGifts}
-      helperText={formState.errors?.rewardGifts?.message}
+      helperText={getRewardGiftsHelperText()}
+      label={intl.formatMessage({
+        defaultMessage: "Select gifts",
+        id: "oX2TAb",
+      })}
       value={rewardGiftsField.value}
       onChange={rewardGiftsField.onChange}
       onBlur={rewardGiftsField.onBlur}

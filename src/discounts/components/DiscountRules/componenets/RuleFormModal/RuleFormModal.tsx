@@ -11,8 +11,9 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useDiscountRulesContext } from "../../context";
 import { messages } from "../../messages";
-import { defaultFormValues } from "./defaultFormValues";
+import { getDefaultValue } from "./defaultFormValues";
 import { getValidationSchema } from "./validationSchema";
 
 interface RuleFormModalProps {
@@ -31,10 +32,11 @@ export const RuleFormModal = ({
   onSubmit,
 }: RuleFormModalProps) => {
   const intl = useIntl();
+  const { discountType } = useDiscountRulesContext();
 
   const methods = useForm<Rule>({
     mode: "onBlur",
-    values: initialFormValues || defaultFormValues,
+    values: initialFormValues || getDefaultValue(discountType),
     resolver: zodResolver(getValidationSchema(intl)),
   });
 

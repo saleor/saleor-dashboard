@@ -85,7 +85,7 @@ function getRewardProperties(
     rewardValue: rule.rewardValue,
     rewardValueType: rule.rewardValueType,
     rewardType: undefined,
-    rewardGifts: undefined,
+    gifts: undefined,
   };
 }
 
@@ -96,7 +96,7 @@ function getOrderReward(rule: Rule) {
       rewardValue: undefined,
       rewardValueType: undefined,
       rewardType: rule.rewardType,
-      rewardGifts: rule.rewardGifts.map(({ value }) => value),
+      gifts: rule.rewardGifts.map(({ value }) => value),
     };
   }
 
@@ -104,6 +104,6 @@ function getOrderReward(rule: Rule) {
     rewardValue: rule.rewardValue,
     rewardType: rule.rewardType,
     rewardValueType: rule.rewardValueType,
-    rewardGifts: undefined,
+    gifts: undefined,
   };
 }
