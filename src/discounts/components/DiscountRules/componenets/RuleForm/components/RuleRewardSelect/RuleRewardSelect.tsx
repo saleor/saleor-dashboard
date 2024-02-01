@@ -1,6 +1,6 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Rule } from "@dashboard/discounts/models";
-import { Box, Select } from "@saleor/macaw-ui-next";
+import { Box, Option, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -35,6 +35,9 @@ export const RuleRewardSelect = ({
     <Box>
       <Select
         {...rewardType}
+        onChange={type => {
+          rewardType.onChange((type as unknown as Option).value);
+        }}
         data-test-id="reward-type-select"
         size="medium"
         options={rewardTypeOptions}
