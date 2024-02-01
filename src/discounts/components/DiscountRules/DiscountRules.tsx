@@ -1,6 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Rule } from "@dashboard/discounts/models";
+import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
 import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
@@ -25,7 +26,6 @@ interface DiscountRulesProps<ErrorCode> {
   channels: ChannelFragment[];
   rules: Rule[];
   errors: Array<CommonError<ErrorCode>>;
-  loading?: boolean;
   deleteButtonState: ConfirmButtonTransitionState;
   getRuleConfirmButtonState: (
     ruleEditIndex: number | null,
@@ -42,11 +42,12 @@ export const DiscountRules = <ErrorCode,>({
   getRuleConfirmButtonState,
   deleteButtonState,
   discountType,
-  loading,
   onRuleSubmit,
   onRuleDelete,
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
+
+  const { ruleConditionsValues } = useLabelMapsContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
@@ -106,7 +107,7 @@ export const DiscountRules = <ErrorCode,>({
         </DashboardCard.Title>
         <DashboardCard.Content>
           <RulesList
-            loading={!isLoaded || loading}
+            loading={!isLoaded || ruleConditionsValues.loading}
             rules={rules}
             onRuleEdit={handleRuleEdit}
             onRuleDelete={handleOpenRuleDeleteModal}

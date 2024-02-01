@@ -83,7 +83,7 @@ const getOrderRewardSubtotalValidation = (intl: IntlShape) =>
 
 const getOrderRewardGiftsValidation = (intl: IntlShape) =>
   z.object({
-    rewardValue: z.number().optional(),
+    rewardValue: z.null(),
     rewardValueType: z.string(),
     rewardType: z.literal(RewardTypeEnum.GIFT),
     rewardGifts: z.array(option).nonempty({

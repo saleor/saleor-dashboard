@@ -8398,7 +8398,7 @@ export type PromotionDetailsLazyQueryHookResult = ReturnType<typeof usePromotion
 export type PromotionDetailsQueryResult = Apollo.QueryResult<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>;
 export const RuleConditionsSelectedOptionsDetailsDocument = gql`
     query RuleConditionsSelectedOptionsDetails($categoriesIds: [ID!], $collectionsIds: [ID!], $productsIds: [ID!], $variantsIds: [ID!]) {
-  categories(first: 20, where: {ids: $categoriesIds}) {
+  categories(first: 100, where: {ids: $categoriesIds}) {
     edges {
       node {
         id
@@ -8406,7 +8406,7 @@ export const RuleConditionsSelectedOptionsDetailsDocument = gql`
       }
     }
   }
-  collections(first: 20, where: {ids: $collectionsIds}) {
+  collections(first: 100, where: {ids: $collectionsIds}) {
     edges {
       node {
         id
@@ -8414,7 +8414,7 @@ export const RuleConditionsSelectedOptionsDetailsDocument = gql`
       }
     }
   }
-  products(first: 20, where: {ids: $productsIds}) {
+  products(first: 100, where: {ids: $productsIds}) {
     edges {
       node {
         id
@@ -8422,7 +8422,7 @@ export const RuleConditionsSelectedOptionsDetailsDocument = gql`
       }
     }
   }
-  productVariants(first: 20, where: {ids: $variantsIds}) {
+  productVariants(first: 100, where: {ids: $variantsIds}) {
     edges {
       node {
         id
@@ -8463,6 +8463,49 @@ export function useRuleConditionsSelectedOptionsDetailsLazyQuery(baseOptions?: A
 export type RuleConditionsSelectedOptionsDetailsQueryHookResult = ReturnType<typeof useRuleConditionsSelectedOptionsDetailsQuery>;
 export type RuleConditionsSelectedOptionsDetailsLazyQueryHookResult = ReturnType<typeof useRuleConditionsSelectedOptionsDetailsLazyQuery>;
 export type RuleConditionsSelectedOptionsDetailsQueryResult = Apollo.QueryResult<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>;
+export const GiftLabelsDocument = gql`
+    query GiftLabels($ids: [ID!]) {
+  productVariants(first: 100, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        name
+        product {
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGiftLabelsQuery__
+ *
+ * To run a query within a React component, call `useGiftLabelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGiftLabelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGiftLabelsQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useGiftLabelsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>(GiftLabelsDocument, options);
+      }
+export function useGiftLabelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>(GiftLabelsDocument, options);
+        }
+export type GiftLabelsQueryHookResult = ReturnType<typeof useGiftLabelsQuery>;
+export type GiftLabelsLazyQueryHookResult = ReturnType<typeof useGiftLabelsLazyQuery>;
+export type GiftLabelsQueryResult = Apollo.QueryResult<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {

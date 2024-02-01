@@ -38,7 +38,7 @@ export const RuleRewardPrice = ({
         selected={discountType}
         currencySymbol={currencySymbol}
       />
-      <RuleInputWrapper __width={220}>
+      <RuleInputWrapper width="100%">
         <Input
           value={rewardValueType.value || ""}
           onBlur={rewardValueType.onBlur}

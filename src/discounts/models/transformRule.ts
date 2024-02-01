@@ -15,7 +15,10 @@ import { Rule } from "./Rule";
 export const mapAPIRuleToForm = (
   type: PromotionTypeEnum | null | undefined,
   rule: PromotionRuleDetailsFragment,
-  labelMap: Record<string, string>,
+  labelMaps: {
+    conditionsValues: Record<string, string>;
+    gifts: Record<string, string>;
+  },
 ): Rule => {
   const baseRuleData = createBaseRuleInputFromAPI(rule);
 
@@ -28,7 +31,7 @@ export const mapAPIRuleToForm = (
 
   const catalogueConditions = prepareCatalogueRuleConditions(
     rule.cataloguePredicate,
-    labelMap,
+    labelMaps.conditionsValues,
   );
   const orderconditions = prepareOrderConditions(
     rule.orderPredicate?.discountedObjectPredicate ?? {},
@@ -36,6 +39,12 @@ export const mapAPIRuleToForm = (
 
   return {
     ...baseRuleData,
+    rewardGifts:
+      rule.giftIds?.map(id => ({
+        value: id,
+        label: labelMaps.gifts[id],
+      })) ?? [],
+
     conditions:
       type === PromotionTypeEnum.CATALOGUE
         ? catalogueConditions

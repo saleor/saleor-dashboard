@@ -34,8 +34,8 @@ export const messages = defineMessages({
     id: "S8kqP9",
   },
   discountValue: {
-    defaultMessage: "Discount value",
-    id: "kNK4es",
+    defaultMessage: "Reward value",
+    id: "pAwBtz",
   },
   reward: {
     defaultMessage: "Reward",

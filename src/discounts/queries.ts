@@ -164,7 +164,7 @@ export const ruleConditionsSelectedOptionsDetails = gql`
     $productsIds: [ID!]
     $variantsIds: [ID!]
   ) {
-    categories(first: 20, where: { ids: $categoriesIds }) {
+    categories(first: 100, where: { ids: $categoriesIds }) {
       edges {
         node {
           id
@@ -173,7 +173,7 @@ export const ruleConditionsSelectedOptionsDetails = gql`
       }
     }
 
-    collections(first: 20, where: { ids: $collectionsIds }) {
+    collections(first: 100, where: { ids: $collectionsIds }) {
       edges {
         node {
           id
@@ -182,7 +182,7 @@ export const ruleConditionsSelectedOptionsDetails = gql`
       }
     }
 
-    products(first: 20, where: { ids: $productsIds }) {
+    products(first: 100, where: { ids: $productsIds }) {
       edges {
         node {
           id
@@ -191,11 +191,27 @@ export const ruleConditionsSelectedOptionsDetails = gql`
       }
     }
 
-    productVariants(first: 20, where: { ids: $variantsIds }) {
+    productVariants(first: 100, where: { ids: $variantsIds }) {
       edges {
         node {
           id
           name
+        }
+      }
+    }
+  }
+`;
+
+export const giftLabels = gql`
+  query GiftLabels($ids: [ID!]) {
+    productVariants(first: 100, where: { ids: $ids }) {
+      edges {
+        node {
+          id
+          name
+          product {
+            name
+          }
         }
       }
     }

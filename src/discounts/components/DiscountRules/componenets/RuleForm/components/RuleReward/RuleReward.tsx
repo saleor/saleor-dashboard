@@ -1,6 +1,6 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { PromotionTypeEnum } from "@dashboard/graphql";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -20,7 +20,9 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
     <>
       <Text as="p">{intl.formatMessage(messages.reward)}</Text>
       {discountType === PromotionTypeEnum.CATALOGUE ? (
-        <RuleRewardPrice currencySymbol={currencySymbol} error={error} />
+        <Box __width={350}>
+          <RuleRewardPrice currencySymbol={currencySymbol} error={error} />
+        </Box>
       ) : (
         <RuleRewardSelect currencySymbol={currencySymbol} error={error} />
       )}

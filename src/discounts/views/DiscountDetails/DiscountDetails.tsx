@@ -12,15 +12,12 @@ import { getMutationErrors } from "@dashboard/misc";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { LabelsMapsProovider } from "./context/provider";
 import {
   createRuleCreateHandler,
   createRuleUpdateHandler,
   createUpdateHandler,
 } from "./handlers";
-import {
-  getRuleConditionsOptionsDetailsMap,
-  useFetchConditionsOptionsDetails,
-} from "./hooks/useFetchConditionsOptionsDetails";
 import { usePromotionData } from "./hooks/usePromotionData";
 import { usePromotionDelete } from "./hooks/usePromotionDelete";
 import { usePromotionRuleCreate } from "./hooks/usePromotionRuleCreate";
@@ -40,13 +37,6 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const intl = useIntl();
 
   const { promotionData, loading } = usePromotionData(id);
-
-  const { ruleConditionsOptionsDetails, ruleConditionsOptionsDetailsLoading } =
-    useFetchConditionsOptionsDetails(promotionData);
-
-  const ruleConditionsOptionsDetailsMap = getRuleConditionsOptionsDetailsMap(
-    ruleConditionsOptionsDetails,
-  );
 
   const { promotionUpdate, promotionUpdateOpts } = usePromotionUpdate(id);
 
@@ -94,36 +84,33 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
-      <DiscountDetailsPage
-        data={promotionData?.promotion}
-        errors={getMutationErrors(promotionUpdateOpts)}
-        disabled={
-          loading ||
-          promotionUpdateOpts.loading ||
-          promotionDeleteOpts.loading ||
-          promotionRuleUpdateOpts.loading ||
-          promotionRuleCreateOpts.loading ||
-          promotionRuleDeleteOpts.loading
-        }
-        ruleConditionsOptionsDetailsMap={ruleConditionsOptionsDetailsMap}
-        ruleConditionsOptionsDetailsLoading={
-          ruleConditionsOptionsDetailsLoading
-        }
-        onBack={() => {
-          navigate(discountListUrl());
-        }}
-        channels={availableChannels}
-        onSubmit={onSubmit}
-        onDelete={() => setOpenModal(true)}
-        submitButtonState={promotionUpdateOpts.status}
-        onRuleUpdateSubmit={onRuleUpdateSubmit}
-        ruleUpdateButtonState={promotionRuleUpdateOpts.status}
-        onRuleCreateSubmit={onRuleCreateSubmit}
-        ruleCreateButtonState={promotionRuleCreateOpts.status}
-        onRuleDeleteSubmit={onRuleDeleteSubmit}
-        ruleDeleteButtonState={promotionRuleDeleteOpts.status}
-      />
-
+      <LabelsMapsProovider promotionData={promotionData}>
+        <DiscountDetailsPage
+          data={promotionData?.promotion}
+          errors={getMutationErrors(promotionUpdateOpts)}
+          disabled={
+            loading ||
+            promotionUpdateOpts.loading ||
+            promotionDeleteOpts.loading ||
+            promotionRuleUpdateOpts.loading ||
+            promotionRuleCreateOpts.loading ||
+            promotionRuleDeleteOpts.loading
+          }
+          onBack={() => {
+            navigate(discountListUrl());
+          }}
+          channels={availableChannels}
+          onSubmit={onSubmit}
+          onDelete={() => setOpenModal(true)}
+          submitButtonState={promotionUpdateOpts.status}
+          onRuleUpdateSubmit={onRuleUpdateSubmit}
+          ruleUpdateButtonState={promotionRuleUpdateOpts.status}
+          onRuleCreateSubmit={onRuleCreateSubmit}
+          ruleCreateButtonState={promotionRuleCreateOpts.status}
+          onRuleDeleteSubmit={onRuleDeleteSubmit}
+          ruleDeleteButtonState={promotionRuleDeleteOpts.status}
+        />
+      </LabelsMapsProovider>
       <DiscountDeleteModal
         confirmButtonTransitionState={promotionDeleteOpts.status}
         onChange={() => setOpenModal(false)}
