@@ -339,7 +339,8 @@ function useProductVariantCreateForm(
     !!form.errors.preorderEndDateTime;
 
   const formDisabled = invalidPreorder || invalidChannels;
-  const isSaveDisabled = disabled || formDisabled || !onSubmit;
+  const isSaveDisabled =
+    disabled || formDisabled || !data.variantName || !onSubmit;
 
   setIsSubmitDisabled(isSaveDisabled);
 
