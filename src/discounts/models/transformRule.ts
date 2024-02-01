@@ -65,9 +65,12 @@ export const toAPI =
     return {
       ...base,
       rewardType:
-        discountType === PromotionTypeEnum.ORDER && !rule.rewardType
-          ? RewardTypeEnum.SUBTOTAL_DISCOUNT
-          : rule.rewardType,
+        discountType === PromotionTypeEnum.ORDER ? rule.rewardType : undefined,
+      gifts:
+        discountType === PromotionTypeEnum.ORDER &&
+        base.rewardType === RewardTypeEnum.GIFT
+          ? rule.rewardGifts.map(({ value }) => value)
+          : undefined,
       orderPredicate,
       cataloguePredicate,
     };

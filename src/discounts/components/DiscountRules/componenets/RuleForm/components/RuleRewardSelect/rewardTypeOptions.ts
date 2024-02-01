@@ -12,6 +12,6 @@ export const getRewardTypeOptions = (intl: IntlShape): Option[] => [
   },
   {
     label: intl.formatMessage({ defaultMessage: "Gift", id: "ZBs2Pb" }),
-    value: "GIFT",
+    value: RewardTypeEnum.GIFT,
   },
 ];

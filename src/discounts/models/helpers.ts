@@ -33,6 +33,10 @@ export const createBaseRuleInputFromAPI = (
       : null,
     rewardType: data?.rewardType ?? null,
     rewardValue: data.rewardValue ?? null,
+    rewardGifts: data?.giftIds?.map(gift => ({
+      label: gift,
+      value: gift,
+    })),
     rewardValueType: data.rewardValueType ?? RewardValueTypeEnum.FIXED,
   };
 };

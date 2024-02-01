@@ -5,7 +5,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
-import { RuleRewardPrice } from "../../RuleRewardPrice";
+import { RuleRewardPrice } from "../RuleRewardPrice";
 import { RuleRewardSelect } from "../RuleRewardSelect/RuleRewardSelect";
 interface RuleRewardProps {
   currencySymbol: string | null;
@@ -22,7 +22,7 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
       {discountType === PromotionTypeEnum.CATALOGUE ? (
         <RuleRewardPrice currencySymbol={currencySymbol} error={error} />
       ) : (
-        <RuleRewardSelect />
+        <RuleRewardSelect currencySymbol={currencySymbol} error={error} />
       )}
     </>
   );

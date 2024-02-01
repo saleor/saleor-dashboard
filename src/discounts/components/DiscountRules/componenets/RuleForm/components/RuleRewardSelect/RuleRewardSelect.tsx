@@ -5,11 +5,19 @@ import React from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { RuleRewardPrice } from "../../RuleRewardPrice";
 import { RuleRewardGifts } from "../RuleRewardGifts";
+import { RuleRewardPrice } from "../RuleRewardPrice";
 import { getRewardTypeOptions } from "./rewardTypeOptions";
 
-export const RuleRewardSelect = () => {
+interface RuleRewardSelectProps {
+  currencySymbol: string | null;
+  error: string | undefined;
+}
+
+export const RuleRewardSelect = ({
+  error,
+  currencySymbol,
+}: RuleRewardSelectProps) => {
   const intl = useIntl();
   const { disabled } = useDiscountRulesContext();
 
@@ -35,7 +43,7 @@ export const RuleRewardSelect = () => {
       {rewardType.value === "GIFT" ? (
         <RuleRewardGifts />
       ) : (
-        <RuleRewardPrice currencySymbol="£" error={null} />
+        <RuleRewardPrice currencySymbol={currencySymbol} error={error} />
       )}
     </Box>
   );

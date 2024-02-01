@@ -8,7 +8,7 @@ export interface Rule {
   name: string;
   description: string | null;
   channel: Option | null;
-  rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT | "GIFT" | null;
+  rewardType: RewardTypeEnum | null;
   rewardValue: number;
   rewardValueType: RewardValueTypeEnum;
   rewardGifts: Option[];
