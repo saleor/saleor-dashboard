@@ -5,9 +5,9 @@ import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { messages } from "../../../messages";
-import { DiscountTypeSwitch } from "../components/DiscountTypeSwitch";
-import { RuleInputWrapper } from "../components/RuleInputWrapper";
+import { messages } from "../../../../messages";
+import { DiscountTypeSwitch } from "../DiscountTypeSwitch";
+import { RuleInputWrapper } from "../RuleInputWrapper";
 
 interface RuleRewardPriceProps {
   currencySymbol: string | null;
