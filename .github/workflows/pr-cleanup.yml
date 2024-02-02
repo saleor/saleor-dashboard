@@ -24,6 +24,5 @@ jobs:
 
       - name: Remove instance
         env:
-          SALEOR_CLI_ENV: staging
           PULL_REQUEST_NUMBER: ${{ github.event.number }}
         run: npx saleor env remove "pr-${PULL_REQUEST_NUMBER}" --force
