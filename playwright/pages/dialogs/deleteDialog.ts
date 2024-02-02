@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { isArray } from "lodash";
 
 export class DeleteDialog {
   readonly page: Page;
@@ -15,7 +16,6 @@ export class DeleteDialog {
 
   async clickDeleteButton() {
     await this.deleteButton.first().click();
-    await this.deleteButton.waitFor({ state: "hidden" });
   }
   async clickConfirmDeletionCheckbox() {
     await this.confirmDeletionCheckbox.click();
