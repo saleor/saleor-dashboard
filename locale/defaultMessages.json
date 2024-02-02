@@ -1584,6 +1584,10 @@
     "context": "modal button images upload",
     "string": "Upload Images"
   },
+  "9CW3TD": {
+    "context": "label",
+    "string": "Reward type"
+  },
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
   },
@@ -1922,6 +1926,9 @@
   },
   "BUKMzM": {
     "string": "Variant removed"
+  },
+  "BVDaKx": {
+    "string": "Subtotal discount"
   },
   "BWpuKl": {
     "string": "Update"
@@ -2756,6 +2763,9 @@
   "Gxm7Qx": {
     "context": "navigator notification title",
     "string": "Navigator is here to help"
+  },
+  "GxsQuO": {
+    "string": "You must select at least one gift"
   },
   "Gz+4CI": {
     "context": "info text",
@@ -5453,6 +5463,9 @@
     "context": "Taxes section title",
     "string": "Countries"
   },
+  "ZBs2Pb": {
+    "string": "Gift"
+  },
   "ZCSOaS": {
     "string": "Limit to voucher code use once"
   },
@@ -7002,9 +7015,6 @@
   "kN6SLs": {
     "string": "Min Value"
   },
-  "kNK4es": {
-    "string": "Discount value"
-  },
   "kPIZ65": {
     "context": "page header",
     "string": "Order #{orderNumber}"
@@ -7603,6 +7613,9 @@
     "context": "tab name",
     "string": "All Page Types"
   },
+  "oX2TAb": {
+    "string": "Select gifts"
+  },
   "oYGfnY": {
     "string": "ZIP / Postal code"
   },
@@ -7663,6 +7676,9 @@
   "pA8Mlv": {
     "context": "alert",
     "string": "Staff Member limit reached"
+  },
+  "pAwBtz": {
+    "string": "Reward value"
   },
   "pBTTtU": {
     "context": "product kind",
@@ -8504,6 +8520,9 @@
   },
   "v3WWK+": {
     "string": "Status is invalid"
+  },
+  "vAxm7u": {
+    "string": "You must select a channel first and select at least one gift"
   },
   "vC8vyb": {
     "context": "enabled status option label",
