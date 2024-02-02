@@ -62,6 +62,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
         </Typography>
         <Grid variant="uniform">
           <TextField
+            data-test-id="customer-first-name"
             disabled={disabled}
             error={!!formErrors.firstName}
             fullWidth
@@ -76,6 +77,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
             }}
           />
           <TextField
+            data-test-id="customer-last-name"
             disabled={disabled}
             error={!!formErrors.lastName}
             fullWidth
@@ -99,6 +101,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
           />
         </Typography>
         <TextField
+          data-test-id="customer-email"
           disabled={disabled}
           error={!!formErrors.email}
           fullWidth

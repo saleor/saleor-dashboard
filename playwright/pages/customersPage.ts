@@ -3,10 +3,12 @@ import { Page, expect } from "@playwright/test";
 import { AddressForm, customerAddress} from "@forms/addressForm";
 import { BasePage } from "@pages/basePage";
 import { DeleteDialog } from '@dialogs/deleteDialog';
+import { IssueGiftCardDialog } from "@dialogs/issueGiftCardDialog";
 
 export class CustomersPage extends BasePage {
   readonly addressForm: AddressForm;
   readonly deleteDialog: DeleteDialog;
+  readonly issueGiftCardDialog: IssueGiftCardDialog;
 
   constructor(
     page: Page,
@@ -24,11 +26,16 @@ export class CustomersPage extends BasePage {
       .getByTestId("customer-note")
       .locator("textarea[name='note']"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
-    readonly deleteButton = page.getByTestId("button-bar-delete")
+    readonly deleteButton = page.getByTestId("button-bar-delete"),
+    readonly issueNewGiftCardButton = page.getByTestId("issue-new-gift-card"),
+    readonly menageAddressButton = page.getByTestId("manage-addresses"),
+    readonly showMoreMenuButton = page.getByTestId("show-more-button"),
+    readonly editAddressButton = page.getByTestId("edit-address"),
   ) {
     super(page);
     this.addressForm = new AddressForm(page);
     this.deleteDialog = new DeleteDialog(page);
+    this.issueGiftCardDialog = new IssueGiftCardDialog(page);
   }
 
   async goToCustomersListView() {
@@ -61,5 +68,17 @@ export class CustomersPage extends BasePage {
   }
   async deleteCustomer() {
     await this.deleteButton.click();
+  }
+  async clickIssueNewGiftCard() {
+    await this.issueNewGiftCardButton.click();
+  }
+  async clickMenageAddresses() {
+    await this.menageAddressButton.click();
+  }
+  async clickShowMoreMenu() {
+    await this.showMoreMenuButton.click();
+  }
+  async clickEditAddress() {
+    await this.editAddressButton.click()
   }
 }

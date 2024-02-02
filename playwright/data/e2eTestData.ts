@@ -48,8 +48,10 @@ export const COUNTRIES = {
 };
 export const CUSTOMERS = {
   deleteCustomer: {
-    // id: "VXNlcjoxNzM=",
     id: "VXNlcjo5MTA=",
+  },
+  editCustomer: {
+    id: "VXNlcjo0Mjg=",
   },
 };
 export const CUSTOMER_ADDRESS = {
