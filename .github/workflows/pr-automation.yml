@@ -45,7 +45,6 @@ jobs:
       - name: Obtain backup id
         id: backup
         env:
-          SALEOR_CLI_ENV: staging
           BACKUP_NAME: snapshot-automation-tests
         run: |
           BACKUPS=$(npx saleor backup list --name=snapshot-automation-tests --latest --json)
@@ -92,7 +91,6 @@ jobs:
       - name: Instance check
         id: instance_check
         env:
-          SALEOR_CLI_ENV: staging
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
           INSTANCE_KEY=$(npx saleor env show "$INSTANCE_NAME" --json | jq .key)
@@ -101,7 +99,6 @@ jobs:
       - name: Reload snapshot
         if: ${{ steps.instance_check.outputs.INSTANCE_KEY }}
         env:
-          SALEOR_CLI_ENV: staging
           BACKUP_ID: ${{ needs.prepare_variables.outputs.BACKUP_ID }}
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
@@ -112,7 +109,6 @@ jobs:
       - name: Create new instance
         if: ${{ !steps.instance_check.outputs.INSTANCE_KEY }}
         env:
-          SALEOR_CLI_ENV: staging
           BACKUP_ID:  ${{ needs.prepare_variables.outputs.BACKUP_ID }}
           INSTANCE_NAME: ${{ needs.prepare_variables.outputs.POOL_NAME }}
         run: |
