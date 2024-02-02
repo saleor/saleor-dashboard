@@ -1,8 +1,8 @@
 name: Saleor CLI login
-description: Saleor CLI login
+description: Saleor CLI login to staging Saleor Cloud
 inputs:
   token:
-    description: "Cloud accces token"
+    description: "Cloud access token"
     required: true
 runs:
   using: "composite"
@@ -12,4 +12,7 @@ runs:
       id: write-config-file
       env:
         ACCESS_TOKEN: ${{ inputs.token }}
-      run: jq --null-input --arg token "Token $ACCESS_TOKEN" '{"token":$token,"telemetry":"false","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
+      run: |
+        jq --null-input \
+           --arg token "Token $ACCESS_TOKEN" \
+           '{"token":$token,"telemetry":"false","saleor_env":"staging","cloud_api_url":"https://staging-cloud.saleor.io/platform/api","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
