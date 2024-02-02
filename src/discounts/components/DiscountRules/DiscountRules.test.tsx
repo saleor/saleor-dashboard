@@ -19,6 +19,7 @@ import {
   searchProductsMock,
   searchVariantsMock,
 } from "./componenets/RuleForm/components/RuleConditionValues/hooks/options/mocks";
+import { variantsWithProductDataMock } from "./componenets/RuleForm/components/RuleRewardGifts/mock";
 import { DiscountRules } from "./DiscountRules";
 
 jest.mock("react-intl", () => ({
@@ -36,6 +37,20 @@ jest.mock("@dashboard/hooks/useNotifier", () => ({
   default: jest.fn(() => () => undefined),
 }));
 
+jest.mock("@dashboard/discounts/views/DiscountDetails/context/context", () => ({
+  __esModule: true,
+  useLabelMapsContext: jest.fn(() => ({
+    ruleConditionsValues: {
+      labels: {},
+      loading: false,
+    },
+    gifts: {
+      labels: [],
+      loading: false,
+    },
+  })),
+}));
+
 jest.setTimeout(30000); // Timeout was increased because of error throw in update test when run all tests
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
@@ -46,6 +61,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
         searchCollectionsMock,
         searchProductsMock,
         searchVariantsMock,
+        variantsWithProductDataMock,
       ]}
     >
       <LegacyThemeProvider>
@@ -90,7 +106,7 @@ const catalogRules = [
     ],
     rewardGifts: [],
     rewardValue: 12,
-    rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
+    rewardType: null,
     rewardValueType: RewardValueTypeEnum.FIXED,
   },
   {
@@ -106,7 +122,7 @@ const catalogRules = [
       },
     ],
     rewardGifts: [],
-    rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
+    rewardType: null,
     rewardValue: 34,
     rewardValueType: RewardValueTypeEnum.PERCENTAGE,
   },
@@ -310,7 +326,7 @@ describe("DiscountRules", () => {
     );
 
     // Select channel
-    await userEvent.click(screen.getByRole("combobox"));
+    await userEvent.click(screen.getByTestId("channel-dropdown"));
     expect(await screen.findByText(/test/i)).toBeInTheDocument();
 
     await act(async () => {
@@ -329,7 +345,7 @@ describe("DiscountRules", () => {
 
     // Add reward value
     await userEvent.type(
-      screen.getByRole("input", { name: "Discount value" }),
+      screen.getByRole("input", { name: "Reward value" }),
       "22",
     );
 
@@ -358,6 +374,8 @@ describe("DiscountRules", () => {
         id: "",
         name: "Name 123",
         rewardValue: 22,
+        rewardGifts: [],
+        rewardType: null,
         rewardValueType: "FIXED",
       },
       null,
@@ -399,7 +417,7 @@ describe("DiscountRules", () => {
     );
 
     // Channel select
-    await userEvent.click(screen.getByRole("combobox"));
+    await userEvent.click(screen.getByTestId("channel-dropdown"));
     expect(await screen.findByText(/test/i)).toBeInTheDocument();
 
     await act(async () => {
@@ -421,8 +439,10 @@ describe("DiscountRules", () => {
       "144",
     );
 
+    // Reward value
+    await userEvent.click(screen.getByRole("radio", { name: "$" }));
     await userEvent.type(
-      screen.getByRole("input", { name: "Discount value" }),
+      screen.getByRole("input", { name: "Reward value" }),
       "22",
     );
 
@@ -446,6 +466,8 @@ describe("DiscountRules", () => {
         id: "",
         name: "Order rule 123",
         rewardValue: 22,
+        rewardGifts: [],
+        rewardType: "SUBTOTAL_DISCOUNT",
         rewardValueType: "FIXED",
       },
       null,
@@ -514,7 +536,7 @@ describe("DiscountRules", () => {
     // Edit reward
     await userEvent.click(screen.getByRole("radio", { name: "$" }));
     const discountValueField = screen.getByRole("input", {
-      name: "Discount value",
+      name: "Reward value",
     });
     await userEvent.clear(discountValueField);
     await userEvent.type(discountValueField, "122");
@@ -554,6 +576,8 @@ describe("DiscountRules", () => {
         ],
         description: "",
         rewardValue: 122,
+        rewardGifts: [],
+        rewardType: null,
         rewardValueType: "FIXED",
       },
       0,
@@ -632,12 +656,13 @@ describe("DiscountRules", () => {
     );
 
     // Edit reward value
-    await userEvent.click(screen.getByRole("radio", { name: "$" }));
-    const discountValueField = screen.getByRole("input", {
-      name: "Discount value",
-    });
-    await userEvent.clear(discountValueField);
-    await userEvent.type(discountValueField, "122");
+    await userEvent.click(screen.getByTestId("reward-type-select"));
+    await userEvent.click(screen.getAllByTestId("select-option")[1]);
+
+    await userEvent.click(screen.getByTestId("reward-gifts-select"));
+    await userEvent.click(screen.getAllByTestId("select-option")[0]);
+    await userEvent.click(screen.getAllByTestId("select-option")[2]);
+    await userEvent.click(screen.getAllByTestId("select-option")[3]);
 
     await userEvent.click(screen.getByRole("button", { name: /save/i }));
 
@@ -663,7 +688,22 @@ describe("DiscountRules", () => {
           },
         ],
         description: "",
-        rewardValue: 122,
+        rewardType: "GIFT",
+        rewardGifts: [
+          {
+            label: "Code Division T-shirt - L",
+            value: "UHJvZHVjdFZhcmlhbnQ6MjUz",
+          },
+          {
+            label: "Blue Hoodie - S",
+            value: "UHJvZHVjdFZhcmlhbnQ6MzAx",
+          },
+          {
+            label: "Black Hoodie - XL",
+            value: "UHJvZHVjdFZhcmlhbnQ6Mjk5",
+          },
+        ],
+        rewardValue: null,
         rewardValueType: "FIXED",
       },
       0,

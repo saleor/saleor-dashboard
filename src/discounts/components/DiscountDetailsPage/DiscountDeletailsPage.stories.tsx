@@ -1,6 +1,12 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { channelsList } from "@dashboard/channels/fixtures";
-import { discount } from "@dashboard/discounts/fixtures";
+import { discount, orderDiscount } from "@dashboard/discounts/fixtures";
+import { LabelsMapsProovider } from "@dashboard/discounts/views/DiscountDetails/context/provider";
+import {
+  conditionsValuesLabelsMock,
+  emptyGiftsLabelsMock,
+  giftsLabelsMock,
+} from "@dashboard/discounts/views/DiscountDetails/hooks/mocks";
 import React from "react";
 
 import {
@@ -9,6 +15,7 @@ import {
   searchProductsMock,
   searchVariantsMock,
 } from "../DiscountRules/componenets/RuleForm/components/RuleConditionValues/hooks/options/mocks";
+import { variantsWithProductDataMock } from "../DiscountRules/componenets/RuleForm/components/RuleRewardGifts/mock";
 import {
   DiscountDetailsPage,
   DiscountDetailsPageProps,
@@ -44,8 +51,42 @@ export const Default = () => (
       searchProductsMock,
       searchCollectionsMock,
       searchVariantsMock,
+      emptyGiftsLabelsMock,
+      conditionsValuesLabelsMock,
     ]}
   >
-    <DiscountDetailsPage {...props} />
+    <LabelsMapsProovider
+      promotionData={{
+        __typename: "Query",
+        promotion: discount,
+      }}
+    >
+      <DiscountDetailsPage {...props} />
+    </LabelsMapsProovider>
+  </MockedProvider>
+);
+
+export const OrderDiscounts = () => (
+  <MockedProvider
+    mocks={[
+      searchCategoriesMock,
+      searchProductsMock,
+      searchProductsMock,
+      searchProductsMock,
+      searchCollectionsMock,
+      searchVariantsMock,
+      giftsLabelsMock,
+      conditionsValuesLabelsMock,
+      variantsWithProductDataMock,
+    ]}
+  >
+    <LabelsMapsProovider
+      promotionData={{
+        __typename: "Query",
+        promotion: orderDiscount,
+      }}
+    >
+      <DiscountDetailsPage {...props} data={orderDiscount} />
+    </LabelsMapsProovider>
   </MockedProvider>
 );

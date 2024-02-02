@@ -5,6 +5,7 @@ import {
   PromotionDetailsFragment,
   PromotionFragment,
   PromotionTypeEnum,
+  RewardTypeEnum,
   RewardValueTypeEnum,
   SaleDetailsFragment,
   SaleFragment,
@@ -710,6 +711,45 @@ export const discount: PromotionDetailsFragment = {
           },
         ],
       },
+    },
+  ],
+};
+
+export const orderDiscount: PromotionDetailsFragment = {
+  __typename: "Promotion",
+  id: "1",
+  name: "Discunt 1",
+  description: {},
+  startDate: "2019-01-03",
+  endDate: null,
+  type: PromotionTypeEnum.ORDER,
+  rules: [
+    {
+      __typename: "PromotionRule",
+      id: "1",
+      channels: [channelsList[0]],
+      description:
+        '{"time":1700126384046,"blocks":[{"id":"Sj7p30CLFo","type":"header","data":{"text":"Example title","level":1}}],"version":"2.24.3"}',
+      name: "Rule 1",
+      rewardValue: "33",
+      rewardValueType: RewardValueTypeEnum.FIXED,
+      rewardType: RewardTypeEnum.GIFT,
+      giftIds: [
+        "UHJvZHVjdFZhcmlhbnQ6MTkz",
+        "UHJvZHVjdFZhcmlhbnQ6Mjk5",
+        "UHJvZHVjdFZhcmlhbnQ6MjA2",
+      ],
+      orderPredicate: {
+        discountedObjectPredicate: {
+          baseSubtotalPrice: {
+            range: {
+              gte: "100",
+              lte: "200",
+            },
+          },
+        },
+      },
+      cataloguePredicate: {},
     },
   ],
 };

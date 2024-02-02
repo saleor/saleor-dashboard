@@ -68,7 +68,7 @@ export default makeTopLevelSearch<SearchData, SearchVariantsQueryVariables>(
   SearchVariantsDocument,
 );
 
-export const userVariantWithProductDataSearch = makeTopLevelSearch<
+export const useVariantWithProductDataSearch = makeTopLevelSearch<
   SearchData,
   SearchVariantsWithProductDataQueryVariables
 >(SearchVariantsWithProductDataDocument);

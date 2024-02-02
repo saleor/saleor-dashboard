@@ -5,7 +5,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { formatGiftsLabels } from "@dashboard/discounts/views/DiscountDetails/hooks/useFetchGiftLables";
 import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import { userVariantWithProductDataSearch } from "@dashboard/searches/useVariantSearch";
+import { useVariantWithProductDataSearch } from "@dashboard/searches/useVariantSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
@@ -32,7 +32,7 @@ export const RuleRewardGifts = () => {
     loadMore: loadMoreVariants,
     search: searchVariants,
     result: searchVariantsOpts,
-  } = userVariantWithProductDataSearch({
+  } = useVariantWithProductDataSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       channel: channelSlug,
