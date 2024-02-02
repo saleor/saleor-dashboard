@@ -88,6 +88,7 @@ const catalogRules = [
         value: [{ label: "Category-2", value: "cat-2" }],
       },
     ],
+    rewardGifts: [],
     rewardValue: 12,
     rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
     rewardValueType: RewardValueTypeEnum.FIXED,
@@ -104,6 +105,7 @@ const catalogRules = [
         value: [{ label: "Category-1", value: "cat-1" }],
       },
     ],
+    rewardGifts: [],
     rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
     rewardValue: 34,
     rewardValueType: RewardValueTypeEnum.PERCENTAGE,
@@ -193,7 +195,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -217,7 +218,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -255,7 +255,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -288,7 +287,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={onRuleAdd}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -378,7 +376,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={onRuleAdd}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -468,7 +465,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={onRuleEdit}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -577,7 +573,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={onRuleEdit}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -688,7 +683,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={onRuleDelete}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -729,7 +723,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,

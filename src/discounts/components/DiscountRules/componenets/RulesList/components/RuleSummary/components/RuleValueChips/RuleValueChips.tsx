@@ -36,13 +36,16 @@ export const RuleValueChips = ({
 function renderRuleValue(rule: Rule, currencySymbol: string, locale: Locale) {
   const rewardValueWithCurrency = formatMoney(
     {
-      amount: rule.rewardValue,
+      amount: rule.rewardValue ?? 0,
       currency: currencySymbol,
     },
     locale,
   );
 
-  const rewardValueWithPercentage = formatPercantage(rule.rewardValue, locale);
+  const rewardValueWithPercentage = formatPercantage(
+    rule.rewardValue ?? 0,
+    locale,
+  );
 
   return rule.rewardValueType === RewardValueTypeEnum.FIXED
     ? rewardValueWithCurrency

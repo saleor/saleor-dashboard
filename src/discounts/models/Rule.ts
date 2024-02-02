@@ -9,7 +9,7 @@ export interface Rule {
   description: string | null;
   channel: Option | null;
   rewardType: RewardTypeEnum | null;
-  rewardValue: number;
+  rewardValue: number | null;
   rewardValueType: RewardValueTypeEnum;
   rewardGifts: Option[];
   conditions: Condition[];

@@ -8,7 +8,7 @@ interface LabelsData {
 export const labelsMapsContext = createContext<{
   gifts: LabelsData;
   ruleConditionsValues: LabelsData;
-}>(null);
+} | null>(null);
 
 export const useLabelMapsContext = () => {
   const context = useContext(labelsMapsContext);

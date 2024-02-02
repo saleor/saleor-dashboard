@@ -59,8 +59,12 @@ const getCatalogRewardValidation = (intl: IntlShape) =>
   z.object({
     rewardValue: z
       .number({
-        required_error: intl.formatMessage(validationMessages.nameRequired),
-        invalid_type_error: intl.formatMessage(validationMessages.nameRequired),
+        required_error: intl.formatMessage(
+          validationMessages.rewardValueRequired,
+        ),
+        invalid_type_error: intl.formatMessage(
+          validationMessages.rewardValueRequired,
+        ),
       })
       .min(1, intl.formatMessage(validationMessages.rewardValueRequired)),
     rewardValueType: z.string(),
@@ -72,8 +76,12 @@ const getOrderRewardSubtotalValidation = (intl: IntlShape) =>
   z.object({
     rewardValue: z
       .number({
-        required_error: intl.formatMessage(validationMessages.nameRequired),
-        invalid_type_error: intl.formatMessage(validationMessages.nameRequired),
+        required_error: intl.formatMessage(
+          validationMessages.rewardValueRequired,
+        ),
+        invalid_type_error: intl.formatMessage(
+          validationMessages.rewardValueRequired,
+        ),
       })
       .min(1, intl.formatMessage(validationMessages.rewardValueRequired)),
     rewardValueType: z.string(),

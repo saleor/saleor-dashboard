@@ -21,7 +21,8 @@ export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
 
 export const createBaseRuleInputFromAPI = (
   data: PromotionRuleDetailsFragment,
-): Omit<Rule, "toAPI" | "type" | "conditions"> => {
+  giftsLabels: Record<string, string>,
+): Omit<Rule, "conditions"> => {
   return {
     id: data.id,
     name: data.name ?? "",
@@ -34,10 +35,11 @@ export const createBaseRuleInputFromAPI = (
       : null,
     rewardType: data?.rewardType ?? null,
     rewardValue: data.rewardValue ?? null,
-    rewardGifts: data?.giftIds?.map(gift => ({
-      label: gift,
-      value: gift,
-    })),
+    rewardGifts:
+      data.giftIds?.map(id => ({
+        value: id,
+        label: giftsLabels[id],
+      })) ?? [],
     rewardValueType: data.rewardValueType ?? RewardValueTypeEnum.FIXED,
   };
 };

@@ -695,6 +695,7 @@ export const discount: PromotionDetailsFragment = {
       rewardValueType: RewardValueTypeEnum.FIXED,
       rewardType: null,
       orderPredicate: {},
+      giftIds: [],
       cataloguePredicate: {
         OR: [
           {

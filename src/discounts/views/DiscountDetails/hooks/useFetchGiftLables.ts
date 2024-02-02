@@ -29,10 +29,10 @@ export const useFetchGiftLables = (
     loading: !hasBeenLoaded,
     giftsLabels: (mapEdgesToItems(data?.productVariants) ?? []).reduce(
       (acc, gift) => {
-        acc[gift.id] = `${gift.name} (${gift.product.name})`;
+        acc[gift.id] = formatGiftsLabels(gift);
         return acc;
       },
-      {},
+      {} as Record<string, string>,
     ),
   };
 };
@@ -47,9 +47,16 @@ function getAllGiftsIdsToFetch(
   const allGiftsIds = data.promotion.rules
     .filter(
       rule =>
-        rule.rewardType === RewardTypeEnum.GIFT && rule.giftIds.length > 0,
+        rule.rewardType === RewardTypeEnum.GIFT && !!rule?.giftIds?.length,
     )
     .flatMap(rule => rule.giftIds);
 
-  return Array.from(new Set(allGiftsIds));
+  return Array.from(new Set(allGiftsIds)) as string[];
+}
+
+export function formatGiftsLabels(gift: {
+  product: { name: string };
+  name: string;
+}): string {
+  return `${gift.product.name} - ${gift.name}`;
 }

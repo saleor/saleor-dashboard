@@ -2,6 +2,7 @@ import { Multiselect } from "@dashboard/components/Combobox";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Rule } from "@dashboard/discounts/models";
+import { formatGiftsLabels } from "@dashboard/discounts/views/DiscountDetails/hooks/useFetchGiftLables";
 import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { userVariantWithProductDataSearch } from "@dashboard/searches/useVariantSearch";
@@ -45,9 +46,9 @@ export const RuleRewardGifts = () => {
   );
 
   const options = (mapEdgesToItems(searchVariantsOpts?.data?.search) ?? []).map(
-    ({ name, id, product }) => ({
-      label: `${name} (${product?.name})`,
-      value: id,
+    product => ({
+      label: formatGiftsLabels(product),
+      value: product.id,
     }),
   );
 

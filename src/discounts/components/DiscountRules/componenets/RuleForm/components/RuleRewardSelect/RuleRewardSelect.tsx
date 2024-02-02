@@ -41,9 +41,10 @@ export const RuleRewardSelect = ({
           id: "9CW3TD",
           description: "label",
         })}
-        value={rewardTypeOptions.find(
-          option => option.value === rewardType.value,
-        )}
+        value={
+          rewardTypeOptions.find(option => option.value === rewardType.value) ??
+          ""
+        }
         error={!!formState.errors.rewardType}
         helperText={formState.errors.rewardType?.message}
         onChange={type => {

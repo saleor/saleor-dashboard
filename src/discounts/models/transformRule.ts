@@ -20,7 +20,7 @@ export const mapAPIRuleToForm = (
     gifts: Record<string, string>;
   },
 ): Rule => {
-  const baseRuleData = createBaseRuleInputFromAPI(rule);
+  const baseRuleData = createBaseRuleInputFromAPI(rule, labelMaps.gifts);
 
   if (!type) {
     return {
@@ -39,12 +39,6 @@ export const mapAPIRuleToForm = (
 
   return {
     ...baseRuleData,
-    rewardGifts:
-      rule.giftIds?.map(id => ({
-        value: id,
-        label: labelMaps.gifts[id],
-      })) ?? [],
-
     conditions:
       type === PromotionTypeEnum.CATALOGUE
         ? catalogueConditions
@@ -102,8 +96,8 @@ function getOrderReward(rule: Rule) {
   const isGiftReward = rule.rewardType === RewardTypeEnum.GIFT;
   if (isGiftReward) {
     return {
-      rewardValue: undefined,
-      rewardValueType: undefined,
+      rewardValue: null,
+      rewardValueType: null,
       rewardType: rule.rewardType,
       gifts: rule.rewardGifts.map(({ value }) => value),
     };
@@ -113,6 +107,6 @@ function getOrderReward(rule: Rule) {
     rewardValue: rule.rewardValue,
     rewardType: rule.rewardType,
     rewardValueType: rule.rewardValueType,
-    gifts: undefined,
+    gifts: null,
   };
 }
