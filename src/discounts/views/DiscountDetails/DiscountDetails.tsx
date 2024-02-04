@@ -12,7 +12,7 @@ import { getMutationErrors } from "@dashboard/misc";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { LabelsMapsProovider } from "./context/provider";
+import { LabelsMapsProvider } from "./context/provider";
 import {
   createRuleCreateHandler,
   createRuleUpdateHandler,
@@ -84,7 +84,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
-      <LabelsMapsProovider promotionData={promotionData}>
+      <LabelsMapsProvider promotionData={promotionData}>
         <DiscountDetailsPage
           data={promotionData?.promotion}
           errors={getMutationErrors(promotionUpdateOpts)}
@@ -110,7 +110,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           onRuleDeleteSubmit={onRuleDeleteSubmit}
           ruleDeleteButtonState={promotionRuleDeleteOpts.status}
         />
-      </LabelsMapsProovider>
+      </LabelsMapsProvider>
       <DiscountDeleteModal
         confirmButtonTransitionState={promotionDeleteOpts.status}
         onChange={() => setOpenModal(false)}

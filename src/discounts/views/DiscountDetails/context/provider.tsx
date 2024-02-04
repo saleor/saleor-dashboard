@@ -1,5 +1,5 @@
 import { PromotionDetailsQuery } from "@dashboard/graphql";
-import React from "react";
+import React, { ReactNode } from "react";
 
 import {
   getRuleConditionsOptionsDetailsMap,
@@ -13,7 +13,7 @@ interface LabelsMapsProoviderProps {
   promotionData: PromotionDetailsQuery | undefined;
 }
 
-export const LabelsMapsProovider = ({
+export const LabelsMapsProvider = ({
   children,
   promotionData,
 }: LabelsMapsProoviderProps) => {
@@ -40,6 +40,29 @@ export const LabelsMapsProovider = ({
 
   return (
     <labelsMapsContext.Provider value={contextValue}>
+      {children}
+    </labelsMapsContext.Provider>
+  );
+};
+
+export const EmpptyLabelsMapsProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  return (
+    <labelsMapsContext.Provider
+      value={{
+        ruleConditionsValues: {
+          labels: {},
+          loading: false,
+        },
+        gifts: {
+          labels: {},
+          loading: false,
+        },
+      }}
+    >
       {children}
     </labelsMapsContext.Provider>
   );

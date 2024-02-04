@@ -1,7 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { channelsList } from "@dashboard/channels/fixtures";
 import { discount, orderDiscount } from "@dashboard/discounts/fixtures";
-import { LabelsMapsProovider } from "@dashboard/discounts/views/DiscountDetails/context/provider";
+import { LabelsMapsProvider } from "@dashboard/discounts/views/DiscountDetails/context/provider";
 import {
   conditionsValuesLabelsMock,
   emptyGiftsLabelsMock,
@@ -55,14 +55,14 @@ export const Default = () => (
       conditionsValuesLabelsMock,
     ]}
   >
-    <LabelsMapsProovider
+    <LabelsMapsProvider
       promotionData={{
         __typename: "Query",
         promotion: discount,
       }}
     >
       <DiscountDetailsPage {...props} />
-    </LabelsMapsProovider>
+    </LabelsMapsProvider>
   </MockedProvider>
 );
 
@@ -80,13 +80,13 @@ export const OrderDiscounts = () => (
       variantsWithProductDataMock,
     ]}
   >
-    <LabelsMapsProovider
+    <LabelsMapsProvider
       promotionData={{
         __typename: "Query",
         promotion: orderDiscount,
       }}
     >
       <DiscountDetailsPage {...props} data={orderDiscount} />
-    </LabelsMapsProovider>
+    </LabelsMapsProvider>
   </MockedProvider>
 );

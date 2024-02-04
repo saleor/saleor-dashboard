@@ -17,6 +17,7 @@ export const useFetchGiftLables = (
     variables: {
       ids: giftsIds,
     },
+    skip: !giftsIds.length,
   });
 
   useEffect(() => {
