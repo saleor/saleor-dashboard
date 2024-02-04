@@ -558,8 +558,8 @@ describe("DiscountRules", () => {
             type: "is",
             value: [
               {
-                label: "55cm x 55cm",
-                value: "UHJvZHVjdFZhcmlhbnQ6OTg4",
+                label: "Carrot Juice - 1l",
+                value: "UHJvZHVjdFZhcmlhbnQ6MjA2",
               },
             ],
           },
