@@ -1,4 +1,4 @@
-import { RewardTypeEnum } from "@dashboard/graphql";
+import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 import * as z from "zod";
 
@@ -26,6 +26,17 @@ const validationMessages = defineMessages({
 });
 
 const option = z.object({ label: z.string(), value: z.string() });
+const rewardValueRequired = (intl: IntlShape) =>
+  z
+    .number({
+      required_error: intl.formatMessage(
+        validationMessages.rewardValueRequired,
+      ),
+      invalid_type_error: intl.formatMessage(
+        validationMessages.rewardValueRequired,
+      ),
+    })
+    .min(1, intl.formatMessage(validationMessages.rewardValueRequired));
 
 const getDefaultSchema = (intl: IntlShape) =>
   z.object({
@@ -57,37 +68,20 @@ const getDefaultSchema = (intl: IntlShape) =>
 
 const getCatalogRewardValidation = (intl: IntlShape) =>
   z.object({
-    rewardValue: z
-      .number({
-        required_error: intl.formatMessage(
-          validationMessages.rewardValueRequired,
-        ),
-        invalid_type_error: intl.formatMessage(
-          validationMessages.rewardValueRequired,
-        ),
-      })
-      .min(1, intl.formatMessage(validationMessages.rewardValueRequired)),
+    rewardValue: rewardValueRequired(intl),
     rewardValueType: z.string(),
     rewardType: z.literal(null),
     rewardGifts: z.array(option).optional(),
   });
 
-const getOrderRewardSubtotalValidation = (intl: IntlShape) =>
-  z.object({
-    rewardValue: z
-      .number({
-        required_error: intl.formatMessage(
-          validationMessages.rewardValueRequired,
-        ),
-        invalid_type_error: intl.formatMessage(
-          validationMessages.rewardValueRequired,
-        ),
-      })
-      .min(1, intl.formatMessage(validationMessages.rewardValueRequired)),
+const getOrderRewardSubtotalValidation = (intl: IntlShape) => {
+  return z.object({
+    rewardValue: rewardValueRequired(intl),
     rewardValueType: z.string(),
     rewardType: z.literal(RewardTypeEnum.SUBTOTAL_DISCOUNT),
     rewardGifts: z.array(option).optional(),
   });
+};
 
 const getOrderRewardGiftsValidation = (intl: IntlShape) =>
   z.object({
@@ -106,5 +100,23 @@ export const getValidationSchema = (intl: IntlShape) => {
     getOrderRewardGiftsValidation(intl),
   ]);
 
-  return z.intersection(schemaCond, getDefaultSchema(intl));
+  return z.intersection(schemaCond, getDefaultSchema(intl)).refine(
+    ({ rewardValue, rewardValueType, channel }) => {
+      if (
+        channel &&
+        rewardValueType === RewardValueTypeEnum.PERCENTAGE &&
+        Number(rewardValue) > 100
+      ) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: intl.formatMessage(
+        validationMessages.rewardValueMustBeLessThan100,
+      ),
+      path: ["rewardValue"],
+    },
+  );
 };
