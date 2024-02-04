@@ -1,7 +1,7 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import useVariantSearch from "@dashboard/searches/useVariantSearch";
+import { useVariantWithProductDataSearch } from "@dashboard/searches/useVariantSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export const useVariantOptions = (
@@ -12,7 +12,7 @@ export const useVariantOptions = (
     loadMore: loadMoreVariants,
     search: searchVariants,
     result: searchVariantsOpts,
-  } = useVariantSearch({
+  } = useVariantWithProductDataSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       channel,
@@ -29,8 +29,8 @@ export const useVariantOptions = (
     fetch: searchVariants,
     fetchMoreProps: fetchMoreVariants,
     options: (mapEdgesToItems(searchVariantsOpts?.data?.search) ?? []).map(
-      ({ name, id }) => ({
-        label: name,
+      ({ name, id, product }) => ({
+        label: `${product.name} - ${name}`,
         value: id,
       }),
     ),
