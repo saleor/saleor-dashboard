@@ -75,7 +75,7 @@ export function tagsCell(
 
 export function booleanCell(
   value: boolean,
-  options: Partial<GridCell>,
+  options: Partial<GridCell> = {},
 ): GridCell {
   return {
     ...common,
