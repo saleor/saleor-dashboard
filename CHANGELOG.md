@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.18.3
+
+### Patch Changes
+
+- 79a2c6d11: Fix action that configures login to staging Saleor Cloud for CLI
+
 ## 3.18.2
 
 ### Patch Changes
