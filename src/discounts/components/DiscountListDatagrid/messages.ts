@@ -16,6 +16,10 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Ends",
     description: "sale end date",
   },
+  type: {
+    id: "z/2AZY",
+    defaultMessage: "Discount type",
+  },
 });
 
 export const messages = defineMessages({
