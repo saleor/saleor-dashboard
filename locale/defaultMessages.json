@@ -3093,6 +3093,10 @@
     "context": "column label",
     "string": "Warehouse"
   },
+  "J3W5LI": {
+    "context": "order line is gift",
+    "string": "Is gift"
+  },
   "J3uE0t": {
     "context": "section header",
     "string": "Attribute Values"

@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import {
+  booleanCell,
   buttonCell,
   moneyCell,
   moneyDiscountedCell,
@@ -60,6 +61,11 @@ export const orderDraftDetailsStaticColumnsAdapter = (
   {
     id: "total",
     title: intl.formatMessage(columnsMessages.total),
+    width: 150,
+  },
+  {
+    id: "isGift",
+    title: intl.formatMessage(columnsMessages.isGift),
     width: 150,
   },
   {
@@ -165,7 +171,11 @@ export const useGetCellContent = ({
             allowOverlay: false,
           },
         );
-
+      case "isGift":
+        return booleanCell(rowData?.isGift, {
+          allowOverlay: false,
+          readonly: true,
+        });
       case "metadata":
         return buttonCell(
           intl.formatMessage(commonMessages.viewMetadata),

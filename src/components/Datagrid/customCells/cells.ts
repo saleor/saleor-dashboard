@@ -73,9 +73,13 @@ export function tagsCell(
   };
 }
 
-export function booleanCell(value: boolean): GridCell {
+export function booleanCell(
+  value: boolean,
+  options: Partial<GridCell>,
+): GridCell {
   return {
     ...common,
+    ...options,
     allowOverlay: false,
     kind: GridCellKind.Boolean,
     data: value,
