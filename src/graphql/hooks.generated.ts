@@ -1717,6 +1717,7 @@ export const OrderLineFragmentDoc = gql`
   }
   productName
   productSku
+  isGift
   quantity
   quantityFulfilled
   quantityToFulfill

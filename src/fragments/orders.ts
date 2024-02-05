@@ -99,6 +99,7 @@ export const fragmentOrderLine = gql`
     }
     productName
     productSku
+    isGift
     quantity
     quantityFulfilled
     quantityToFulfill
