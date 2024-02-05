@@ -36,7 +36,6 @@ runs:
       shell: bash
       id: instance_check
       env:
-        SALEOR_CLI_ENV: staging
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
       run: |
         set +o pipefail
@@ -47,7 +46,6 @@ runs:
       shell: bash
       if: ${{ steps.instance_check.outputs.INSTANCE_KEY }}
       env:
-        SALEOR_CLI_ENV: staging
         BACKUP_ID: ${{ inputs.BACKUP_ID }}
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
       run: |
@@ -59,7 +57,6 @@ runs:
       shell: bash
       if: ${{ !steps.instance_check.outputs.INSTANCE_KEY }}
       env:
-        SALEOR_CLI_ENV: staging
         BACKUP_ID: ${{ inputs.BACKUP_ID }}
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
       run: |
