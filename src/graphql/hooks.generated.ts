@@ -8427,6 +8427,9 @@ export const RuleConditionsSelectedOptionsDetailsDocument = gql`
       node {
         id
         name
+        product {
+          name
+        }
       }
     }
   }

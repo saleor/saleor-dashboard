@@ -196,6 +196,9 @@ export const ruleConditionsSelectedOptionsDetails = gql`
         node {
           id
           name
+          product {
+            name
+          }
         }
       }
     }
