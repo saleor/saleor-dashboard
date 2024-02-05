@@ -61,7 +61,8 @@ const getDefaultSchema = (intl: IntlShape) =>
         value: z
           .array(option)
           .or(z.string())
-          .or(z.tuple([z.string(), z.string()])),
+          .or(z.tuple([z.string(), z.string()]))
+          .or(z.null()),
       }),
     ),
   });
