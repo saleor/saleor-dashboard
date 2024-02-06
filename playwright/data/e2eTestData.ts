@@ -88,6 +88,17 @@ export const CUSTOMER_ADDRESS = {
     zip: "53-601",
     country: "Poland",
   },
+  editCustomerAddress: {
+    firstName: "Create customer address",
+    lastName: "Automation",
+    companyName: "Saleor",
+    phone: "123456789",
+    addressLine1: "Teczowa",
+    addressLine2: "7",
+    cityName: "WROCLAW",
+    zip: "53-601",
+    country: "Poland",
+  },
 };
 export const GIFT_CARDS = {
   giftCardToBeEdited: {

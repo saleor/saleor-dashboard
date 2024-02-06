@@ -4,11 +4,13 @@ import { AddressForm, customerAddress} from "@forms/addressForm";
 import { BasePage } from "@pages/basePage";
 import { DeleteDialog } from '@dialogs/deleteDialog';
 import { IssueGiftCardDialog } from "@dialogs/issueGiftCardDialog";
+import { AddressDialog } from "./dialogs/addressDialog";
 
 export class CustomersPage extends BasePage {
   readonly addressForm: AddressForm;
   readonly deleteDialog: DeleteDialog;
   readonly issueGiftCardDialog: IssueGiftCardDialog;
+  readonly addressDialog: AddressDialog;
 
   constructor(
     page: Page,
@@ -36,6 +38,7 @@ export class CustomersPage extends BasePage {
     this.addressForm = new AddressForm(page);
     this.deleteDialog = new DeleteDialog(page);
     this.issueGiftCardDialog = new IssueGiftCardDialog(page);
+    this.addressDialog = new AddressDialog(page)
   }
 
   async goToCustomersListView() {

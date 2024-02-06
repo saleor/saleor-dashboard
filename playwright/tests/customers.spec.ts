@@ -57,5 +57,7 @@ test("TC: SALEOR_123 Update address information @e2e @customer", async () => {
   await customersPage.gotoCustomerDetailsPage(CUSTOMERS.editCustomer.id);
   await customersPage.clickMenageAddresses()
   await customersPage.clickShowMoreMenu()
+  await customersPage.clickEditAddress()
+  await customersPage.addressDialog.completeAddressFormAllFields(CUSTOMER_ADDRESS.editCustomerAddress)
   await customersPage.successBanner.waitFor({ state: "visible" });
 });
