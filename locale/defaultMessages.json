@@ -2054,9 +2054,6 @@
     "context": "card header title",
     "string": "Country list"
   },
-  "CFlmRP": {
-    "string": "Rule reword value is required"
-  },
   "CG+awx": {
     "context": "dialog content",
     "string": "Which address would you like to use as shipping address for selected customer:"
@@ -2196,6 +2193,9 @@
   "DASYUF": {
     "context": "section title",
     "string": "Checkout Configuration"
+  },
+  "DDYrvn": {
+    "string": "Rule reward value must be less than 100"
   },
   "DEa1T1": {
     "context": "button",
@@ -3254,9 +3254,6 @@
   "JyQoES": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
-  },
-  "JyaQcP": {
-    "string": "Rule reword value must be less than 100"
   },
   "K+vjtE": {
     "string": "Search Variants"
@@ -8433,6 +8430,9 @@
   "udJUSa": {
     "context": "Authorize {app name}",
     "string": "Authorize"
+  },
+  "uf1ttM": {
+    "string": "Rule reward value is required"
   },
   "ufD5Jr": {
     "string": "Content type"
