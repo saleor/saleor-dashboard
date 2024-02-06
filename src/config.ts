@@ -128,7 +128,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.DISCOUNTS_LIST]: {
     rowNumber: PAGINATE_BY,
-    columns: ["name", "startDate", "endDate"],
+    columns: ["name", "type", "startDate", "endDate"],
   },
   [ListViews.SHIPPING_METHODS_LIST]: {
     columns: ["name", "countries"],

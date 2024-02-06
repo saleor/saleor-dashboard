@@ -1,5 +1,5 @@
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
-import { RewardValueTypeEnum } from "@dashboard/graphql";
+import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import {
@@ -26,7 +26,7 @@ interface RuleFormProps<ErrorCode> {
 
 export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
-  const { disabled, channels } = useDiscountRulesContext();
+  const { disabled, channels, discountType } = useDiscountRulesContext();
   const { watch, getValues, setValue, formState } = useFormContext<Rule>();
   const formErrors = getFormErrors(["rewardValue"], errors);
 
@@ -69,11 +69,13 @@ export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
 
   const handleChannelChange = (selectedChannel: Option) => {
     setValue("channel", selectedChannel, { shouldValidate: true });
+    setValue("rewardGifts", []);
 
-    if (conditions.length > 0) {
-      setValue("conditions", [createEmptyCodition()]);
-    } else {
-      setValue("conditions", []);
+    // Restart conditions when catalog promotion
+    if (discountType === PromotionTypeEnum.CATALOGUE) {
+      if (conditions.length > 0) {
+        setValue("conditions", [createEmptyCodition()]);
+      }
     }
   };
 

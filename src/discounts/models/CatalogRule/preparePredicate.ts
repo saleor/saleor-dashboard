@@ -7,7 +7,7 @@ export function prepareCataloguePredicate(
 ): CataloguePredicateInput {
   const ruleConditions = conditions
     .map(condition => {
-      if (!condition.id) {
+      if (!condition.id || !condition?.value?.length) {
         return undefined;
       }
 

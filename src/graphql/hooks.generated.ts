@@ -650,10 +650,10 @@ export const PromotionDetailsFragmentDoc = gql`
     fragment PromotionDetails on Promotion {
   id
   name
-  type
   description
   startDate
   endDate
+  type
   rules {
     ...PromotionRuleDetails
   }
@@ -666,6 +666,7 @@ export const PromotionFragmentDoc = gql`
   name
   startDate
   endDate
+  type
 }
     ${MetadataFragmentDoc}`;
 export const AttributeErrorFragmentDoc = gql`

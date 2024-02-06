@@ -12,12 +12,12 @@ const validationMessages = defineMessages({
     defaultMessage: "Channel is required",
   },
   rewardValueRequired: {
-    id: "CFlmRP",
-    defaultMessage: "Rule reword value is required",
+    id: "uf1ttM",
+    defaultMessage: "Rule reward value is required",
   },
   rewardValueMustBeLessThan100: {
-    id: "JyaQcP",
-    defaultMessage: "Rule reword value must be less than 100",
+    id: "DDYrvn",
+    defaultMessage: "Rule reward value must be less than 100",
   },
   rewardGiftRequired: {
     id: "GxsQuO",
@@ -61,7 +61,8 @@ const getDefaultSchema = (intl: IntlShape) =>
         value: z
           .array(option)
           .or(z.string())
-          .or(z.tuple([z.string(), z.string()])),
+          .or(z.tuple([z.string(), z.string()]))
+          .or(z.null()),
       }),
     ),
   });
