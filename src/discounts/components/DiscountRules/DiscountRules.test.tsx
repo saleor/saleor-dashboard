@@ -1,5 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
+import { DevModeProvider } from "@dashboard/components/DevModePanel/DevModeProvider";
 import { Rule } from "@dashboard/discounts/models";
 import {
   ChannelFragment,
@@ -49,7 +50,9 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
       ]}
     >
       <LegacyThemeProvider>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <DevModeProvider>{children}</DevModeProvider>
+        </ThemeProvider>
       </LegacyThemeProvider>
     </MockedProvider>
   );
