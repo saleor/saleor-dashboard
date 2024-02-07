@@ -203,7 +203,7 @@ export const ruleConditionsSelectedOptionsDetails = gql`
 `;
 
 export const PromotionDetailsQuery = /* GraphQL */ `
-  query PromotionDetails($id: ID!) {
+  query PromotionDetailsQuery($id: ID!) {
     promotion(id: $id) {
       id
       name

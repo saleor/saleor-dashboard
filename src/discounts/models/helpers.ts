@@ -125,15 +125,21 @@ export function hasPredicateNestedConditions(
 
 function checkNestedPredicate(
   nestedPredicate: OrderPredicateAPI | CataloguePredicateAPI,
-) {
+): boolean {
   const keys = Object.keys(nestedPredicate);
   if (keys.includes("AND") || keys.includes("OR")) {
     return true;
   }
 
+  type keyType = keyof typeof nestedPredicate;
+
   for (const key in nestedPredicate) {
-    if (typeof nestedPredicate[key] === "object") {
-      return checkNestedPredicate(nestedPredicate[key]);
+    if (typeof nestedPredicate[key as keyType] === "object") {
+      return checkNestedPredicate(
+        nestedPredicate[key as keyType] as
+          | OrderPredicateAPI
+          | CataloguePredicateAPI,
+      );
     }
   }
 
