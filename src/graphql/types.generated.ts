@@ -5913,6 +5913,7 @@ export type ProductWhereInput = {
 
 /** An enumeration. */
 export enum PromotionCreateErrorCode {
+  GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_GIFT_TYPE = 'INVALID_GIFT_TYPE',
@@ -5966,6 +5967,7 @@ export enum PromotionEventsEnum {
 
 /** An enumeration. */
 export enum PromotionRuleCreateErrorCode {
+  GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_GIFT_TYPE = 'INVALID_GIFT_TYPE',
@@ -6076,6 +6078,7 @@ export type PromotionRuleTranslationInput = {
 /** An enumeration. */
 export enum PromotionRuleUpdateErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_GIFT_TYPE = 'INVALID_GIFT_TYPE',
@@ -6089,18 +6092,18 @@ export enum PromotionRuleUpdateErrorCode {
 export type PromotionRuleUpdateInput = {
   /** List of channel ids to add. */
   addChannels?: InputMaybe<Array<Scalars['ID']>>;
-  /** Defines the conditions on the catalogue level that must be met for the reward to be applied. */
-  cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
-  /** Promotion rule description. */
-  description?: InputMaybe<Scalars['JSON']>;
   /**
-   * Product variant IDs available as a gift to choose.
+   * List of variant IDs available as a gift to add.
    *
    * Added in Saleor 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  gifts?: InputMaybe<Array<Scalars['ID']>>;
+  addGifts?: InputMaybe<Array<Scalars['ID']>>;
+  /** Defines the conditions on the catalogue level that must be met for the reward to be applied. */
+  cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
+  /** Promotion rule description. */
+  description?: InputMaybe<Scalars['JSON']>;
   /** Promotion rule name. */
   name?: InputMaybe<Scalars['String']>;
   /**
@@ -6113,6 +6116,14 @@ export type PromotionRuleUpdateInput = {
   orderPredicate?: InputMaybe<OrderPredicateInput>;
   /** List of channel ids to remove. */
   removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * List of variant IDs available as a gift to remove.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  removeGifts?: InputMaybe<Array<Scalars['ID']>>;
   /**
    * Defines the reward type of the promotion rule.
    *
@@ -6161,6 +6172,13 @@ export enum PromotionTypeEnum {
   ORDER = 'ORDER'
 }
 
+export type PromotionTypeEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<PromotionTypeEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<PromotionTypeEnum>>;
+};
+
 /** An enumeration. */
 export enum PromotionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6194,6 +6212,7 @@ export type PromotionWhereInput = {
   name?: InputMaybe<StringFilterInput>;
   /** Filter promotions by start date. */
   startDate?: InputMaybe<DateTimeFilterInput>;
+  type?: InputMaybe<PromotionTypeEnumFilterInput>;
 };
 
 export type PublishableChannelListingInput = {
