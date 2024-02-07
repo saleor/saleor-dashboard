@@ -25100,13 +25100,16 @@ type PromotionCreateError {
   """The error code."""
   code: PromotionCreateErrorCode!
 
-  """Number of rules with orderPredicate defined exceeding the limit."""
-  exceedBy: Int
-
   """
   Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
   """
   field: String
+
+  """Limit of gifts assigned to promotion rule."""
+  giftsLimit: Int
+
+  """Number of gifts defined for this promotion rule exceeding the limit."""
+  giftsLimitExceedBy: Int
 
   """Index of an input list item that caused the error."""
   index: Int
@@ -25116,10 +25119,14 @@ type PromotionCreateError {
 
   """Limit of rules with orderPredicate defined."""
   rulesLimit: Int
+
+  """Number of rules with orderPredicate defined exceeding the limit."""
+  rulesLimitExceedBy: Int
 }
 
 """An enumeration."""
 enum PromotionCreateErrorCode {
+  GIFTS_NUMBER_LIMIT
   GRAPHQL_ERROR
   INVALID
   INVALID_GIFT_TYPE
@@ -25455,23 +25462,30 @@ type PromotionRuleCreateError {
   """The error code."""
   code: PromotionRuleCreateErrorCode!
 
-  """Number of rules with orderPredicate defined exceeding the limit."""
-  exceedBy: Int
-
   """
   Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
   """
   field: String
+
+  """Limit of gifts assigned to promotion rule."""
+  giftsLimit: Int
+
+  """Number of gifts defined for this promotion rule exceeding the limit."""
+  giftsLimitExceedBy: Int
 
   """The error message."""
   message: String
 
   """Limit of rules with orderPredicate defined."""
   rulesLimit: Int
+
+  """Number of rules with orderPredicate defined exceeding the limit."""
+  rulesLimitExceedBy: Int
 }
 
 """An enumeration."""
 enum PromotionRuleCreateErrorCode {
+  GIFTS_NUMBER_LIMIT
   GRAPHQL_ERROR
   INVALID
   INVALID_GIFT_TYPE
@@ -25840,6 +25854,12 @@ type PromotionRuleUpdateError {
   """
   field: String
 
+  """Limit of gifts assigned to promotion rule."""
+  giftsLimit: Int
+
+  """Number of gifts defined for this promotion rule exceeding the limit."""
+  giftsLimitExceedBy: Int
+
   """The error message."""
   message: String
 }
@@ -25847,6 +25867,7 @@ type PromotionRuleUpdateError {
 """An enumeration."""
 enum PromotionRuleUpdateErrorCode {
   DUPLICATED_INPUT_ITEM
+  GIFTS_NUMBER_LIMIT
   GRAPHQL_ERROR
   INVALID
   INVALID_GIFT_TYPE
@@ -25862,21 +25883,21 @@ input PromotionRuleUpdateInput {
   addChannels: [ID!]
 
   """
+  List of variant IDs available as a gift to add.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addGifts: [ID!]
+
+  """
   Defines the conditions on the catalogue level that must be met for the reward to be applied.
   """
   cataloguePredicate: CataloguePredicateInput
 
   """Promotion rule description."""
   description: JSON
-
-  """
-  Product variant IDs available as a gift to choose.
-  
-  Added in Saleor 3.19.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
-  gifts: [ID!]
 
   """Promotion rule name."""
   name: String
@@ -25892,6 +25913,15 @@ input PromotionRuleUpdateInput {
 
   """List of channel ids to remove."""
   removeChannels: [ID!]
+
+  """
+  List of variant IDs available as a gift to remove.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  removeGifts: [ID!]
 
   """
   Defines the reward type of the promotion rule.
@@ -26109,6 +26139,14 @@ enum PromotionTypeEnum {
   ORDER
 }
 
+input PromotionTypeEnumFilterInput {
+  """The value equal to."""
+  eq: PromotionTypeEnum
+
+  """The value included in."""
+  oneOf: [PromotionTypeEnum!]
+}
+
 """
 Updates an existing promotion.
 
@@ -26228,6 +26266,7 @@ input PromotionWhereInput {
 
   """Filter promotions by start date."""
   startDate: DateTimeFilterInput
+  type: PromotionTypeEnumFilterInput
 }
 
 input PublishableChannelListingInput {

@@ -4849,14 +4849,16 @@ export type PromotionCreateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	promotion?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionCreateErrorKeySpecifier = ('code' | 'exceedBy' | 'field' | 'index' | 'message' | 'rulesLimit' | PromotionCreateErrorKeySpecifier)[];
+export type PromotionCreateErrorKeySpecifier = ('code' | 'field' | 'giftsLimit' | 'giftsLimitExceedBy' | 'index' | 'message' | 'rulesLimit' | 'rulesLimitExceedBy' | PromotionCreateErrorKeySpecifier)[];
 export type PromotionCreateErrorFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
-	exceedBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
+	giftsLimit?: FieldPolicy<any> | FieldReadFunction<any>,
+	giftsLimitExceedBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	index?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	rulesLimit?: FieldPolicy<any> | FieldReadFunction<any>
+	rulesLimit?: FieldPolicy<any> | FieldReadFunction<any>,
+	rulesLimitExceedBy?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionCreatedKeySpecifier = ('issuedAt' | 'issuingPrincipal' | 'promotion' | 'recipient' | 'version' | PromotionCreatedKeySpecifier)[];
 export type PromotionCreatedFieldPolicy = {
@@ -4936,13 +4938,15 @@ export type PromotionRuleCreateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	promotionRule?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionRuleCreateErrorKeySpecifier = ('code' | 'exceedBy' | 'field' | 'message' | 'rulesLimit' | PromotionRuleCreateErrorKeySpecifier)[];
+export type PromotionRuleCreateErrorKeySpecifier = ('code' | 'field' | 'giftsLimit' | 'giftsLimitExceedBy' | 'message' | 'rulesLimit' | 'rulesLimitExceedBy' | PromotionRuleCreateErrorKeySpecifier)[];
 export type PromotionRuleCreateErrorFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
-	exceedBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
+	giftsLimit?: FieldPolicy<any> | FieldReadFunction<any>,
+	giftsLimitExceedBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	rulesLimit?: FieldPolicy<any> | FieldReadFunction<any>
+	rulesLimit?: FieldPolicy<any> | FieldReadFunction<any>,
+	rulesLimitExceedBy?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionRuleCreatedKeySpecifier = ('issuedAt' | 'issuingPrincipal' | 'promotionRule' | 'recipient' | 'version' | PromotionRuleCreatedKeySpecifier)[];
 export type PromotionRuleCreatedFieldPolicy = {
@@ -5015,11 +5019,13 @@ export type PromotionRuleUpdateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	promotionRule?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionRuleUpdateErrorKeySpecifier = ('channels' | 'code' | 'field' | 'message' | PromotionRuleUpdateErrorKeySpecifier)[];
+export type PromotionRuleUpdateErrorKeySpecifier = ('channels' | 'code' | 'field' | 'giftsLimit' | 'giftsLimitExceedBy' | 'message' | PromotionRuleUpdateErrorKeySpecifier)[];
 export type PromotionRuleUpdateErrorFieldPolicy = {
 	channels?: FieldPolicy<any> | FieldReadFunction<any>,
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
+	giftsLimit?: FieldPolicy<any> | FieldReadFunction<any>,
+	giftsLimitExceedBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionRuleUpdatedKeySpecifier = ('issuedAt' | 'issuingPrincipal' | 'promotionRule' | 'recipient' | 'version' | PromotionRuleUpdatedKeySpecifier)[];
