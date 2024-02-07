@@ -6130,6 +6130,13 @@ export enum PromotionTypeEnum {
   ORDER = 'ORDER'
 }
 
+export type PromotionTypeEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<PromotionTypeEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<PromotionTypeEnum>>;
+};
+
 /** An enumeration. */
 export enum PromotionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6163,6 +6170,7 @@ export type PromotionWhereInput = {
   name?: InputMaybe<StringFilterInput>;
   /** Filter promotions by start date. */
   startDate?: InputMaybe<DateTimeFilterInput>;
+  type?: InputMaybe<PromotionTypeEnumFilterInput>;
 };
 
 export type PublishableChannelListingInput = {
