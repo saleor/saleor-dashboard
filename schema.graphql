@@ -26039,6 +26039,14 @@ enum PromotionTypeEnum {
   ORDER
 }
 
+input PromotionTypeEnumFilterInput {
+  """The value equal to."""
+  eq: PromotionTypeEnum
+
+  """The value included in."""
+  oneOf: [PromotionTypeEnum!]
+}
+
 """
 Updates an existing promotion.
 
@@ -26158,6 +26166,7 @@ input PromotionWhereInput {
 
   """Filter promotions by start date."""
   startDate: DateTimeFilterInput
+  type: PromotionTypeEnumFilterInput
 }
 
 input PublishableChannelListingInput {
