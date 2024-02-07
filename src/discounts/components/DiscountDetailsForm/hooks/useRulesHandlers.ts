@@ -1,4 +1,5 @@
 import { mapAPIRuleToForm, Rule } from "@dashboard/discounts/models";
+import { sortRules } from "@dashboard/discounts/utils";
 import {
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,
@@ -31,9 +32,10 @@ export const useRulesHandlers = ({
   const [rulesErrors, setRulesErrors] = useState<Array<CommonError<any>>>([]);
   const [labelsMap, setLabelMap] = useState<Record<string, string>>({});
 
-  const rules =
+  const rules = sortRules(
     data?.rules?.map(rule => mapAPIRuleToForm("catalog", rule, labelsMap)) ??
-    [];
+      [],
+  );
 
   useEffect(() => {
     setLabelMap(labels => {
@@ -57,9 +59,9 @@ export const useRulesHandlers = ({
         PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment
       >
     > = [];
+    updateLabels(rule);
 
     if (ruleEditIndex !== null) {
-      updateLabels(rule);
       errors = await onRuleUpdateSubmit(rule);
 
       if (errors.length > 0) {

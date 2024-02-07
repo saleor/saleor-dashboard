@@ -1968,6 +1968,9 @@
   "BtErCZ": {
     "string": "Search Plugins..."
   },
+  "BvGp1I": {
+    "string": "between"
+  },
   "BvRyoX": {
     "context": "alert message",
     "string": "There are no available shipping methods in this channel."
@@ -3355,6 +3358,9 @@
     "context": "mark as paid strategy checkbox label",
     "string": "Use Transaction flow when marking order as paid"
   },
+  "L5IuDw": {
+    "string": "lower"
+  },
   "L5io1l": {
     "context": "returned products list title",
     "string": "Products returned"
@@ -3451,6 +3457,9 @@
   "LnRlch": {
     "context": "attribute's editor component entity",
     "string": "Entity"
+  },
+  "Lrp9WW": {
+    "string": "Discount of {value} on the purchase of {conditions} through the {channel}"
   },
   "LsgHmZ": {
     "context": "delete shipping zone",
@@ -3690,9 +3699,6 @@
     "context": "order line discount updated title",
     "string": "{productName} discount was updated by"
   },
-  "NgRa6m": {
-    "string": "Discount of {value} on the purchase of {items} through the {channel}"
-  },
   "NhQboB": {
     "context": "dialog header",
     "string": "Saleor couldn’t cancel order"
@@ -3915,6 +3921,9 @@
   },
   "PFXGaR": {
     "string": "Shipping Zones"
+  },
+  "PFnobO": {
+    "string": "greater"
   },
   "PHUcrU": {
     "context": "date when order was placed",
@@ -6523,6 +6532,9 @@
   "h2vipu": {
     "string": "Code"
   },
+  "h5P++h": {
+    "string": "Variants"
+  },
   "h65vZI": {
     "context": "times voucher used",
     "string": "Used"
@@ -7189,6 +7201,9 @@
     "context": "checkbox",
     "string": "Refund shipment: {currency} {amount}"
   },
+  "lZC/1a": {
+    "string": "greater than {value}"
+  },
   "laax5C": {
     "context": "order returned success message",
     "string": "Successfully returned products and granted refund!"
@@ -7816,6 +7831,9 @@
   },
   "qPSWmL": {
     "string": "Enter usage"
+  },
+  "qSCmIG": {
+    "string": "lower than {value}"
   },
   "qT6YYk": {
     "context": "order line total price",

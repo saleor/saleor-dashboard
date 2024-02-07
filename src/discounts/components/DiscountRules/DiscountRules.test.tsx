@@ -4,7 +4,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React, { ReactNode } from "react";
 
@@ -13,7 +13,7 @@ import {
   searchCollectionsMock,
   searchProductsMock,
   searchVariantsMock,
-} from "./componenets/RuleFormModal/mocks";
+} from "./componenets/RuleForm/components/RuleConditionValues/hooks/options/mocks";
 import { DiscountRules } from "./DiscountRules";
 
 jest.mock("react-intl", () => ({
@@ -76,8 +76,8 @@ const rules = [
         ],
       },
     ],
-    rewardType: null,
     rewardValue: 12,
+    rewardType: null,
     rewardValueType: RewardValueTypeEnum.FIXED,
   },
   {
@@ -129,6 +129,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        discountType="catalog"
         channels={[]}
         rules={[]}
         errors={[]}
@@ -148,10 +149,11 @@ describe("DiscountRules", () => {
     ).toBeInTheDocument();
   });
 
-  it("should render discount rules", () => {
+  it("should render discount rules", async () => {
     // Arrange & Act
     render(
       <DiscountRules
+        discountType="catalog"
         channels={[]}
         rules={rules}
         errors={[]}
@@ -165,6 +167,12 @@ describe("DiscountRules", () => {
       { wrapper: Wrapper },
     );
 
+    await waitFor(() => {
+      expect(
+        screen.getByText(/catalog rule: catalog rule 2/i),
+      ).toBeInTheDocument();
+    });
+
     // Assert
     expect(
       screen.getByText(/catalog rule: catalog rule 2/i),
@@ -174,7 +182,7 @@ describe("DiscountRules", () => {
     ).toBeInTheDocument();
     expect(
       screen.getAllByText(
-        /discount of {value} on the purchase of {items} through the {channel}/i,
+        /discount of {value} on the purchase of {conditions} through the {channel}/i,
       ).length,
     ).toBe(2);
   });
@@ -184,6 +192,7 @@ describe("DiscountRules", () => {
     const onRuleAdd = jest.fn();
     render(
       <DiscountRules
+        discountType="catalog"
         channels={channels}
         rules={[]}
         errors={[]}
@@ -196,6 +205,12 @@ describe("DiscountRules", () => {
       />,
       { wrapper: Wrapper },
     );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: /add rule/i }),
+      ).toBeInTheDocument();
+    });
 
     // Act
     await act(async () => {
@@ -238,8 +253,8 @@ describe("DiscountRules", () => {
         },
         conditions: [
           {
-            type: "is",
             id: "product",
+            type: "is",
             value: [
               {
                 label: "Apple Juice",
@@ -264,6 +279,7 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
+        discountType="catalog"
         channels={[]}
         rules={rules}
         errors={[]}
@@ -299,6 +315,7 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
+        discountType="catalog"
         channels={channels}
         rules={rules}
         errors={[]}
@@ -311,6 +328,10 @@ describe("DiscountRules", () => {
       />,
       { wrapper: Wrapper },
     );
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId("rule-edit-button")[0]).toBeInTheDocument();
+    });
 
     // Act
     await act(async () => {
@@ -344,8 +365,8 @@ describe("DiscountRules", () => {
         },
         conditions: [
           {
-            type: "is",
             id: "product",
+            type: "is",
             value: [
               {
                 label: "Product-1",
@@ -370,6 +391,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        discountType="catalog"
         channels={[]}
         rules={rules}
         errors={[

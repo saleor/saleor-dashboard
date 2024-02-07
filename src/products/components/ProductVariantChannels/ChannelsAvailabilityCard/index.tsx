@@ -1,78 +1,66 @@
-// @ts-strict-ignore
+import {
+  ChannelPriceAndPreorderData,
+  IChannelPriceAndPreorderArgs,
+} from "@dashboard/channels/utils";
+import { FormsetData } from "@dashboard/hooks/useFormset";
 import React from "react";
 
-import { Channel, Product, Variant } from "./../types";
+import { Product, Variant } from "./../types";
 import { AvailabilityCard } from "./AvailabilityCard";
 import {
   getAvailabilityCountForProduct,
   getAvailabilityCountForVariant,
 } from "./availabilityCount";
-import { CardSkeleton } from "./CardSkeleton";
 import { CreateVariantTitle } from "./CreateVariantTitle";
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;
-  onManageClick?: () => void;
+  listings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >;
+  onManageClick: () => void;
   disabled: boolean;
 }
 
 interface ProductDetailsChannelsAvailabilityCardProps {
   product: Product;
-  onManageClick?: () => void;
+  listings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >;
+  onManageClick: () => void;
   disabled: boolean;
 }
 
-interface WrapperProps {
-  item: Product | Variant;
-  children: ({ channels }: { channels: Channel[] }) => React.ReactElement;
-}
-
-const Wrapper: React.FC<WrapperProps> = ({ item, children }) => {
-  if (!item) {
-    return <CardSkeleton />;
-  }
-
-  const channels = item.channelListings.map(({ channel }) => channel);
-
-  return children({ channels });
-};
-
 export const VariantDetailsChannelsAvailabilityCard: React.FC<
   VariantDetailsChannelsAvailabilityCardProps
-> = ({ variant, onManageClick, disabled }) => (
-  <Wrapper item={variant}>
-    {({ channels }) => (
-      <AvailabilityCard
-        items={channels}
-        productChannelListings={variant.product.channelListings}
-      >
-        <CreateVariantTitle
-          onManageClick={onManageClick}
-          disabled={disabled}
-          availabilityCount={getAvailabilityCountForVariant(variant)}
-          isEmpty={channels.length === 0}
-        />
-      </AvailabilityCard>
-    )}
-  </Wrapper>
+> = ({ variant, listings, onManageClick, disabled }) => (
+  <AvailabilityCard
+    allAvailableListings={listings}
+    productChannelListings={variant?.product.channelListings}
+  >
+    <CreateVariantTitle
+      onManageClick={onManageClick}
+      disabled={disabled}
+      availabilityCount={getAvailabilityCountForVariant(variant, listings)}
+      isEmpty={listings.length === 0}
+    />
+  </AvailabilityCard>
 );
 
 export const ProductDetailsChannelsAvailabilityCard: React.FC<
   ProductDetailsChannelsAvailabilityCardProps
-> = ({ product, onManageClick, disabled }) => (
-  <Wrapper item={product}>
-    {({ channels }) => (
-      <AvailabilityCard
-        items={channels}
-        productChannelListings={product.channelListings}
-      >
-        <CreateVariantTitle
-          onManageClick={onManageClick}
-          disabled={disabled}
-          availabilityCount={getAvailabilityCountForProduct(product)}
-          isEmpty={channels.length === 0}
-        />
-      </AvailabilityCard>
-    )}
-  </Wrapper>
+> = ({ product, listings, onManageClick, disabled }) => (
+  <AvailabilityCard
+    allAvailableListings={listings}
+    productChannelListings={product?.channelListings}
+  >
+    <CreateVariantTitle
+      onManageClick={onManageClick}
+      disabled={disabled}
+      availabilityCount={getAvailabilityCountForProduct(product, listings)}
+      isEmpty={listings.length === 0}
+    />
+  </AvailabilityCard>
 );

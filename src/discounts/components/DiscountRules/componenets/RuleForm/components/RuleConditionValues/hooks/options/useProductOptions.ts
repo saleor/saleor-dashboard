@@ -4,7 +4,10 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-export const useProductOptions = (channel: string) => {
+export const useProductOptions = (
+  channel: string | null,
+  conditionId: string | null,
+) => {
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -14,7 +17,7 @@ export const useProductOptions = (channel: string) => {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       channel,
     },
-    skip: !channel,
+    skip: !channel || !conditionId || conditionId !== "product",
   });
 
   const fetchMoreProducts = getSearchFetchMoreProps(
@@ -26,9 +29,9 @@ export const useProductOptions = (channel: string) => {
     fetch: searchProducts,
     fetchMoreProps: fetchMoreProducts,
     options: (mapEdgesToItems(searchProductsOpts?.data?.search) ?? []).map(
-      product => ({
-        label: product.name,
-        value: product.id,
+      ({ name, id }) => ({
+        label: name,
+        value: id,
       }),
     ),
   };

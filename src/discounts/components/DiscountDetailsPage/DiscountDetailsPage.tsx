@@ -100,6 +100,7 @@ export const DiscountDetailsPage = ({
               />
 
               <DiscountRules
+                discountType="catalog"
                 errors={rulesErrors}
                 rules={rules}
                 loading={ruleConditionsOptionsDetailsLoading}

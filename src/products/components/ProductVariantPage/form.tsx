@@ -231,6 +231,7 @@ function useProductVariantUpdateForm(
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(stockInput);
   const channels = useFormset(channelsInput);
+
   const {
     isMetadataModified,
     isPrivateMetadataModified,
