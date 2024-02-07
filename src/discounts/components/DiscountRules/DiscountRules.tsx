@@ -1,6 +1,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { Rule } from "@dashboard/discounts/models";
+import { PromotionDetailsQuery } from "@dashboard/discounts/queries";
 import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
@@ -24,6 +26,7 @@ interface DiscountRulesProps<ErrorCode> {
   discountType: PromotionTypeEnum;
   channels: ChannelFragment[];
   rules: Rule[];
+  promotionId: string | null;
   errors: Array<CommonError<ErrorCode>>;
   loading?: boolean;
   deleteButtonState: ConfirmButtonTransitionState;
@@ -45,8 +48,11 @@ export const DiscountRules = <ErrorCode,>({
   loading,
   onRuleSubmit,
   onRuleDelete,
+  promotionId,
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
+
+  const devContext = useDevModeContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
@@ -87,6 +93,13 @@ export const DiscountRules = <ErrorCode,>({
     setRuleDeleteIndex(null);
   };
 
+  const handleOpenPlayground = () => {
+    setIsModalOpen(false);
+    devContext.setDevModeContent(PromotionDetailsQuery);
+    devContext.setVariables(`{ "id": "${promotionId ?? ""}"}`);
+    devContext.setDevModeVisibility(true);
+  };
+
   return (
     <DiscountRulesContextProvider
       discountType={discountType}
@@ -121,7 +134,7 @@ export const DiscountRules = <ErrorCode,>({
             initialFormValues={ruleInitialValues}
             onSubmit={handleRuleModalSubmit}
           >
-            <RuleForm errors={errors} />
+            <RuleForm errors={errors} openPlayground={handleOpenPlayground} />
           </RuleFormModal>
         )}
         <RuleDeleteModal

@@ -186,6 +186,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={[]}
@@ -210,6 +211,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={catalogRules}
@@ -248,6 +250,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.ORDER}
         channels={[]}
         rules={orderRule}
@@ -281,6 +284,7 @@ describe("DiscountRules", () => {
     const onRuleAdd = jest.fn();
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
         rules={[]}
@@ -371,6 +375,7 @@ describe("DiscountRules", () => {
     const onRuleAdd = jest.fn();
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.ORDER}
         channels={channels}
         rules={[]}
@@ -461,6 +466,7 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
         rules={catalogRules}
@@ -570,6 +576,7 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.ORDER}
         channels={channels}
         rules={orderRule}
@@ -681,6 +688,7 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={catalogRules}
@@ -715,6 +723,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={catalogRules}

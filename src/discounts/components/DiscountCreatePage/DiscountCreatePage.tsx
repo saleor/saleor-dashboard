@@ -74,6 +74,7 @@ export const DiscountCreatePage = ({
               />
 
               <DiscountRules
+                promotionId={null}
                 discountType={discountType}
                 errors={errors as DiscountRulesErrors<PromotionCreateErrorCode>}
                 channels={channels}

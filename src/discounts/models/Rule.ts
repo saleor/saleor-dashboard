@@ -12,6 +12,7 @@ export interface Rule {
   rewardValue: number;
   rewardValueType: RewardValueTypeEnum;
   conditions: Condition[];
+  hasPredicateNestedConditions?: boolean;
 }
 
 export const createEmptyRule = (): Rule => ({
@@ -23,4 +24,5 @@ export const createEmptyRule = (): Rule => ({
   rewardValue: 0,
   rewardValueType: RewardValueTypeEnum.FIXED,
   conditions: [],
+  hasPredicateNestedConditions: false,
 });
