@@ -8462,6 +8462,79 @@ export function useRuleConditionsSelectedOptionsDetailsLazyQuery(baseOptions?: A
 export type RuleConditionsSelectedOptionsDetailsQueryHookResult = ReturnType<typeof useRuleConditionsSelectedOptionsDetailsQuery>;
 export type RuleConditionsSelectedOptionsDetailsLazyQueryHookResult = ReturnType<typeof useRuleConditionsSelectedOptionsDetailsLazyQuery>;
 export type RuleConditionsSelectedOptionsDetailsQueryResult = Apollo.QueryResult<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>;
+export const PromotionDetailsQueryDocument = gql`
+    query PromotionDetailsQuery($id: ID!) {
+  promotion(id: $id) {
+    id
+    name
+    description
+    startDate
+    endDate
+    type
+    rules {
+      id
+      name
+      description
+      channels {
+        id
+        isActive
+        name
+        slug
+        currencyCode
+        defaultCountry {
+          code
+          country
+        }
+        stockSettings {
+          allocationStrategy
+        }
+        hasOrders
+        orderSettings {
+          markAsPaidStrategy
+          deleteExpiredOrdersAfter
+          allowUnpaidOrders
+        }
+        paymentSettings {
+          defaultTransactionFlowStrategy
+        }
+      }
+      rewardType
+      rewardValueType
+      rewardValue
+      cataloguePredicate
+      orderPredicate
+    }
+  }
+}
+    `;
+
+/**
+ * __usePromotionDetailsQueryQuery__
+ *
+ * To run a query within a React component, call `usePromotionDetailsQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePromotionDetailsQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePromotionDetailsQueryQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePromotionDetailsQueryQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>(PromotionDetailsQueryDocument, options);
+      }
+export function usePromotionDetailsQueryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>(PromotionDetailsQueryDocument, options);
+        }
+export type PromotionDetailsQueryQueryHookResult = ReturnType<typeof usePromotionDetailsQueryQuery>;
+export type PromotionDetailsQueryLazyQueryHookResult = ReturnType<typeof usePromotionDetailsQueryLazyQuery>;
+export type PromotionDetailsQueryQueryResult = Apollo.QueryResult<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {

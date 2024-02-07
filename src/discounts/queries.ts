@@ -238,7 +238,7 @@ export const PromotionDetailsQuery = /* GraphQL */ `
             defaultTransactionFlowStrategy
           }
         }
-        giftIds
+        # giftIds TODO: add this when gifts will be implemented
         rewardType
         rewardValueType
         rewardValue
