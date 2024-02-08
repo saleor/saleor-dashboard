@@ -8546,6 +8546,7 @@ export const PromotionDetailsQueryDocument = gql`
           defaultTransactionFlowStrategy
         }
       }
+      giftIds
       rewardType
       rewardValueType
       rewardValue
