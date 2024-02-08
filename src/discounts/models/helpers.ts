@@ -116,14 +116,14 @@ export function hasPredicateNestedConditions(
     return true;
   }
 
-  if (predicate.OR && predicate.OR?.some(checkNestedPredicate)) {
+  if (predicate.OR && predicate.OR?.some(checkDeeplyNestedPredicate)) {
     return true;
   }
 
   return false;
 }
 
-function checkNestedPredicate(
+function checkDeeplyNestedPredicate(
   nestedPredicate: OrderPredicateAPI | CataloguePredicateAPI,
 ): boolean {
   const keys = Object.keys(nestedPredicate);
@@ -135,7 +135,7 @@ function checkNestedPredicate(
 
   for (const key in nestedPredicate) {
     if (typeof nestedPredicate[key as keyType] === "object") {
-      return checkNestedPredicate(
+      return checkDeeplyNestedPredicate(
         nestedPredicate[key as keyType] as
           | OrderPredicateAPI
           | CataloguePredicateAPI,

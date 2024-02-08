@@ -1,6 +1,6 @@
 import { CataloguePredicateAPI } from "@dashboard/discounts/types";
 
-import { Condition } from "../Condition";
+import { Condition, ConditionType } from "../Condition";
 
 export function prepareCatalogueRuleConditions(
   cataloguePredicate: CataloguePredicateAPI,
@@ -8,23 +8,31 @@ export function prepareCatalogueRuleConditions(
 ): Condition[] {
   const toOptions = createToOptionMap(ruleConditionsOptionsDetailsMap);
 
+  if (Array.isArray(cataloguePredicate)) {
+    return cataloguePredicate.flatMap(predicate =>
+      prepareCatalogueRuleConditions(
+        predicate,
+        ruleConditionsOptionsDetailsMap,
+      ),
+    );
+  }
+
   return Object.entries(cataloguePredicate)
-    .map(([key, value]) => {
+    .flatMap(([key, value]) => {
       if (["OR", "AND"].includes(key)) {
         return prepareCatalogueRuleConditions(
-          value.reduce(toObject, {} as CataloguePredicateAPI),
+          value,
           ruleConditionsOptionsDetailsMap,
         );
       }
 
       return {
         id: key.split("Predicate")[0],
-        type: "is", // Catalog predicate always has only "is" condition type
+        type: "is" as ConditionType, // Catalog predicate always has only "is" condition type
         value: value.ids?.map(toOptions) ?? [],
       };
     })
-    .filter(Boolean)
-    .flat() as Condition[];
+    .filter(Boolean);
 }
 
 function createToOptionMap(
@@ -34,9 +42,4 @@ function createToOptionMap(
     label: ruleConditionsOptionsDetailsMap[id] || id,
     value: id,
   });
-}
-
-function toObject(acc: CataloguePredicateAPI, val: Record<string, unknown>) {
-  acc = { ...acc, ...val };
-  return acc;
 }
