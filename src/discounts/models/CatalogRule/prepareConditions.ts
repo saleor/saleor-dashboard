@@ -10,7 +10,7 @@ export function prepareCatalogueRuleConditions(
 
   return Object.entries(cataloguePredicate)
     .map(([key, value]) => {
-      if (key === "OR") {
+      if (["OR", "AND"].includes(key)) {
         return prepareCatalogueRuleConditions(
           value.reduce(toObject, {} as CataloguePredicateAPI),
           ruleConditionsOptionsDetailsMap,
