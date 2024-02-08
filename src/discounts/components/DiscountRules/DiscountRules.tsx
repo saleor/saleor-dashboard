@@ -13,6 +13,7 @@ import { RuleForm } from "./componenets/RuleForm";
 import { RuleFormModal } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
 import { DiscountRulesContextProvider } from "./context";
+import { useGraphQLPlayground } from "./hooks/useGraphQLPlayground";
 import { messages } from "./messages";
 
 export type DiscountRulesErrors<ErrorCode> = Array<
@@ -24,6 +25,7 @@ interface DiscountRulesProps<ErrorCode> {
   discountType: PromotionTypeEnum;
   channels: ChannelFragment[];
   rules: Rule[];
+  promotionId: string | null;
   errors: Array<CommonError<ErrorCode>>;
   loading?: boolean;
   deleteButtonState: ConfirmButtonTransitionState;
@@ -45,6 +47,7 @@ export const DiscountRules = <ErrorCode,>({
   loading,
   onRuleSubmit,
   onRuleDelete,
+  promotionId,
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
 
@@ -52,6 +55,8 @@ export const DiscountRules = <ErrorCode,>({
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const { opepnGrapQLPlayground } = useGraphQLPlayground();
 
   useEffect(() => {
     if (!isLoaded && !disabled) {
@@ -85,6 +90,11 @@ export const DiscountRules = <ErrorCode,>({
   const handleRuleDelete = async () => {
     await onRuleDelete(ruleDeleteIndex!);
     setRuleDeleteIndex(null);
+  };
+
+  const handleOpenPlayground = () => {
+    setIsModalOpen(false);
+    opepnGrapQLPlayground(promotionId);
   };
 
   return (
@@ -121,7 +131,7 @@ export const DiscountRules = <ErrorCode,>({
             initialFormValues={ruleInitialValues}
             onSubmit={handleRuleModalSubmit}
           >
-            <RuleForm errors={errors} />
+            <RuleForm errors={errors} openPlayground={handleOpenPlayground} />
           </RuleFormModal>
         )}
         <RuleDeleteModal

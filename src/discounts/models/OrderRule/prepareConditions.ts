@@ -5,23 +5,21 @@ import { Condition } from "../Condition";
 import { getConditionType, getConditionValue } from "../helpers";
 
 export const prepareOrderConditions = (
-  orderPredicate: OrderPredicateAPI,
+  orderPredicate: OrderPredicateAPI["discountedObjectPredicate"],
 ): Condition[] => {
   if (!orderPredicate) {
     return [];
   }
 
+  if (Array.isArray(orderPredicate)) {
+    return orderPredicate.flatMap(prepareOrderConditions);
+  }
+
   return Object.entries(orderPredicate)
-    .map(([id, value]) => {
-      if (id === "OR") {
+    .flatMap(([id, value]) => {
+      if (["OR", "AND"].includes(id)) {
         return prepareOrderConditions(
-          (value as any[]).reduce(
-            (acc: OrderPredicateAPI, val: Record<string, unknown>) => {
-              acc = { ...acc, ...val };
-              return acc;
-            },
-            {} as OrderPredicateAPI,
-          ),
+          value as OrderPredicateAPI["discountedObjectPredicate"],
         );
       }
 
@@ -31,6 +29,5 @@ export const prepareOrderConditions = (
         value: getConditionValue(value as DecimalFilterInput),
       };
     })
-    .filter(Boolean)
-    .flat() as Condition[];
+    .filter(Boolean);
 };

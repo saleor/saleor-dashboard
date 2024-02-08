@@ -107,6 +107,7 @@ export const DiscountDetailsPage = ({
               />
 
               <DiscountRules
+                promotionId={data?.id ?? null}
                 discountType={discountType}
                 errors={rulesErrors}
                 rules={rules}

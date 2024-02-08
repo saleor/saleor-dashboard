@@ -5,6 +5,7 @@ import {
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
+import { CataloguePredicateAPI, OrderPredicateAPI } from "../types";
 import { Condition, ConditionType, isTuple } from "./Condition";
 import { Rule } from "./Rule";
 
@@ -104,4 +105,43 @@ export function getConditionValue(conditionValue: DecimalFilterInput) {
   }
 
   return conditionValue.eq;
+}
+
+export function hasPredicateNestedConditions(
+  predicate: OrderPredicateAPI | CataloguePredicateAPI,
+) {
+  const keys = Object.keys(predicate);
+
+  if (keys.includes("AND") || keys.length > 2) {
+    return true;
+  }
+
+  if (predicate.OR && predicate.OR?.some(checkDeeplyNestedPredicate)) {
+    return true;
+  }
+
+  return false;
+}
+
+function checkDeeplyNestedPredicate(
+  nestedPredicate: OrderPredicateAPI | CataloguePredicateAPI,
+): boolean {
+  const keys = Object.keys(nestedPredicate);
+  if (keys.includes("AND") || keys.includes("OR")) {
+    return true;
+  }
+
+  type keyType = keyof typeof nestedPredicate;
+
+  for (const key in nestedPredicate) {
+    if (typeof nestedPredicate[key as keyType] === "object") {
+      return checkDeeplyNestedPredicate(
+        nestedPredicate[key as keyType] as
+          | OrderPredicateAPI
+          | CataloguePredicateAPI,
+      );
+    }
+  }
+
+  return false;
 }
