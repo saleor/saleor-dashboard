@@ -1,4 +1,4 @@
-import { useConditionNames } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionName/useConditionNames";
+import { useConditionNames } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionName/hooks/useConditionNames";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -18,7 +18,7 @@ export const RuleConditions = ({
 }: RuleConditionsProps) => {
   const intl = useIntl();
   const { discountType, disabled } = useDiscountRulesContext();
-  const { conditionNames } = useConditionNames(discountType);
+  const conditionNames = useConditionNames(discountType);
 
   const { watch } = useFormContext<Rule>();
 

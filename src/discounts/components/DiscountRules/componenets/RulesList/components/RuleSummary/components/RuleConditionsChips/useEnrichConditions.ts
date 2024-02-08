@@ -1,5 +1,5 @@
 import { Locale } from "@dashboard/components/Locale";
-import { useConditionNames } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionName/useConditionNames";
+import { useConditionNames } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionName/hooks/useConditionNames";
 import { useCondtionTypes } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionType/useConditionTypes";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Condition } from "@dashboard/discounts/models";
@@ -25,7 +25,7 @@ export const useEnrichConditions = (
   const intl = useIntl();
   const { discountType } = useDiscountRulesContext();
   const { getConditionTypeByLabel } = useCondtionTypes();
-  const { conditionNames } = useConditionNames(discountType);
+  const conditionNames = useConditionNames(discountType);
 
   return conditions.map(condition => {
     const conditionInputType = getConditionTypeByLabel(
