@@ -108,9 +108,8 @@ const useHandleRedirectAction = (appId: string) => {
 
   const handleLocalDashboardPathChange = (action: RedirectAction) => {
     if (action.payload.newContext) {
-      const url = new URL(action.payload.to, getAppMountUri());
-
-      window.open(url.href);
+      const exactLocation = urlJoin(getAppMountUri(), action.payload.to);
+      window.open(exactLocation);
     } else {
       navigate(action.payload.to);
       closeApp();
@@ -149,7 +148,7 @@ const useHandleRedirectAction = (appId: string) => {
        * Assume failure if nothing catched
        */
       console.error(
-        "Couldnt handle Redirect action properly, this should not happen",
+        "Couldn't handle Redirect action properly, this should not happen",
       );
       return createResponseStatus(actionId, false);
     },
