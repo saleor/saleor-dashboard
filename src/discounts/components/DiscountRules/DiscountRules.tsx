@@ -1,8 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { Rule } from "@dashboard/discounts/models";
-import { PromotionDetailsQuery } from "@dashboard/discounts/queries";
 import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
@@ -15,6 +13,7 @@ import { RuleForm } from "./componenets/RuleForm";
 import { RuleFormModal } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
 import { DiscountRulesContextProvider } from "./context";
+import { useGraphQLPlayground } from "./hooks/useGraphQLPlayground";
 import { messages } from "./messages";
 
 export type DiscountRulesErrors<ErrorCode> = Array<
@@ -52,12 +51,12 @@ export const DiscountRules = <ErrorCode,>({
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
 
-  const devContext = useDevModeContext();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const { opepnGrapQLPlayground } = useGraphQLPlayground();
 
   useEffect(() => {
     if (!isLoaded && !disabled) {
@@ -95,9 +94,7 @@ export const DiscountRules = <ErrorCode,>({
 
   const handleOpenPlayground = () => {
     setIsModalOpen(false);
-    devContext.setDevModeContent(PromotionDetailsQuery);
-    devContext.setVariables(`{ "id": "${promotionId ?? ""}"}`);
-    devContext.setDevModeVisibility(true);
+    opepnGrapQLPlayground(promotionId);
   };
 
   return (

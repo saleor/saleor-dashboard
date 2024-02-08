@@ -1,6 +1,5 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
-import { DevModeProvider } from "@dashboard/components/DevModePanel/DevModeProvider";
 import { PromotionTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
@@ -37,6 +36,12 @@ jest.mock("@dashboard/hooks/useNotifier", () => ({
   default: jest.fn(() => () => undefined),
 }));
 
+jest.mock("./hooks/useGraphQLPlayground", () => ({
+  useGraphQLPlayground: jest.fn(() => ({
+    opepnGrapQLPlayground: jest.fn(),
+  })),
+}));
+
 jest.setTimeout(30000); // Timeout was increased because of error throw in update test when run all tests
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
@@ -50,9 +55,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
       ]}
     >
       <LegacyThemeProvider>
-        <ThemeProvider>
-          <DevModeProvider>{children}</DevModeProvider>
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </LegacyThemeProvider>
     </MockedProvider>
   );
