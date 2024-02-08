@@ -86,6 +86,11 @@ export const messages = defineMessages({
     id: "w7jT4W",
     defaultMessage: "No channels selected",
   },
+  noHanldedConditions: {
+    id: "feF0lB",
+    defaultMessage:
+      "Too complex conditions to display, use playground to see details",
+  },
   noConditonsCreate: {
     id: "Xu4ST7",
     defaultMessage: "No conditions added, click button bellow to create one",

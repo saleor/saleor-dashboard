@@ -1,3 +1,5 @@
+import { CataloguePredicateAPI } from "@dashboard/discounts/types";
+
 import { prepareCatalogueRuleConditions } from "./prepareConditions";
 
 describe("prepareCataloguePredicate", () => {
@@ -13,43 +15,52 @@ describe("prepareCataloguePredicate", () => {
     const cataloguePredicate = {
       OR: [
         {
-          productPredicate: {
-            ids: ["3", "4"],
-            AND: [
-              {
-                name: {
-                  eq: "test",
-                },
-              },
-            ],
+          collectionPredicate: {
+            ids: ["1"],
           },
         },
         {
-          collectionPredicate: {
-            ids: ["5", "6"],
+          productPredicate: {
+            ids: ["2"],
           },
+          AND: [
+            {
+              collectionPredicate: {
+                ids: ["3"],
+              },
+            },
+            {
+              productPredicate: {
+                giftCard: true,
+              },
+            },
+          ],
         },
       ],
-    };
+    } as CataloguePredicateAPI;
 
     const result = prepareCatalogueRuleConditions(cataloguePredicate, {});
 
     expect(result).toEqual([
       {
+        id: "collection",
+        type: "is",
+        value: [{ label: "1", value: "1" }],
+      },
+      {
         id: "product",
         type: "is",
-        value: [
-          { label: "3", value: "3" },
-          { label: "4", value: "4" },
-        ],
+        value: [{ label: "2", value: "2" }],
       },
       {
         id: "collection",
         type: "is",
-        value: [
-          { label: "5", value: "5" },
-          { label: "6", value: "6" },
-        ],
+        value: [{ label: "3", value: "3" }],
+      },
+      {
+        id: "product",
+        type: "is",
+        value: [],
       },
     ]);
   });

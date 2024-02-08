@@ -19,7 +19,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
     return null;
   }
 
-  if (hasNoRuleConditions(rule)) {
+  if (hasNoRuleConditions(rule) || rule.hasPredicateNestedConditions) {
     return (
       <Text>
         <FormattedMessage

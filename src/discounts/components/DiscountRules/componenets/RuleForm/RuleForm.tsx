@@ -22,9 +22,13 @@ import { RuleReward } from "./components/RuleReward";
 
 interface RuleFormProps<ErrorCode> {
   errors: Array<CommonError<ErrorCode>>;
+  openPlayground: () => void;
 }
 
-export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
+export const RuleForm = <ErrorCode,>({
+  errors,
+  openPlayground,
+}: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
   const { disabled, channels, discountType } = useDiscountRulesContext();
   const { watch, getValues, setValue, formState } = useFormContext<Rule>();
@@ -110,7 +114,10 @@ export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
             </RuleInputWrapper>
           </Box>
 
-          <RuleConditions hasSelectedChannels={hasSelectedChannel} />
+          <RuleConditions
+            hasSelectedChannels={hasSelectedChannel}
+            openPlayground={openPlayground}
+          />
 
           <RuleReward
             currencySymbol={currencySymbol}

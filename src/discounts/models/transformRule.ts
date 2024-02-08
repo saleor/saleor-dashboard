@@ -7,7 +7,11 @@ import {
 
 import { prepareCatalogueRuleConditions } from "./CatalogRule/prepareConditions";
 import { prepareCataloguePredicate } from "./CatalogRule/preparePredicate";
-import { createBaseAPIInput, createBaseRuleInputFromAPI } from "./helpers";
+import {
+  createBaseAPIInput,
+  createBaseRuleInputFromAPI,
+  hasPredicateNestedConditions,
+} from "./helpers";
 import { prepareOrderConditions } from "./OrderRule/prepareConditions";
 import { prepareOrderPredicate } from "./OrderRule/preparePredicate";
 import { Rule } from "./Rule";
@@ -26,23 +30,42 @@ export const mapAPIRuleToForm = (
     return {
       ...baseRuleData,
       conditions: [],
+      hasPredicateNestedConditions: false,
     };
   }
 
-  const catalogueConditions = prepareCatalogueRuleConditions(
-    rule.cataloguePredicate,
-    labelMaps.conditionsValues,
-  );
-  const orderconditions = prepareOrderConditions(
-    rule.orderPredicate?.discountedObjectPredicate ?? {},
-  );
+  if (type === PromotionTypeEnum.CATALOGUE) {
+    const catalogueConditions = prepareCatalogueRuleConditions(
+      rule.cataloguePredicate,
+      labelMaps.conditionsValues,
+    );
+
+    return {
+      ...baseRuleData,
+      conditions: catalogueConditions,
+      hasPredicateNestedConditions: hasPredicateNestedConditions(
+        rule.cataloguePredicate,
+      ),
+    };
+  }
+
+  if (type === PromotionTypeEnum.ORDER) {
+    const orderconditions = prepareOrderConditions(
+      rule.orderPredicate?.discountedObjectPredicate ?? {},
+    );
+
+    return {
+      ...baseRuleData,
+      conditions: orderconditions,
+      hasPredicateNestedConditions: hasPredicateNestedConditions(
+        rule.orderPredicate.discountedObjectPredicate,
+      ),
+    };
+  }
 
   return {
     ...baseRuleData,
-    conditions:
-      type === PromotionTypeEnum.CATALOGUE
-        ? catalogueConditions
-        : orderconditions,
+    conditions: [],
   };
 };
 
