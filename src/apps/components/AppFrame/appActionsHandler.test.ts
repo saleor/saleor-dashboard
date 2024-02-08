@@ -44,7 +44,8 @@ jest.spyOn(ExternalAppContext, "useExternalApp").mockImplementation(() => ({
 
 jest
   .spyOn(dashboardConfig, "getAppMountUri")
-  .mockImplementation(() => "http://localhost:3000");
+  // getAppMountUri is not an URI, it's a pathname
+  .mockImplementation(() => "/dashboard/");
 
 jest.spyOn(ReactIntl, "useIntl").mockImplementation(
   // @ts-expect-error - only mock required method
@@ -135,7 +136,7 @@ describe("AppActionsHandler", function () {
       expect(mockHistoryPushState).toHaveBeenCalledWith(
         null,
         "",
-        "http://localhost:3000/apps/XYZ/app/foo/bar",
+        "/dashboard/apps/XYZ/app/foo/bar",
       );
     });
   });
@@ -181,9 +182,7 @@ describe("AppActionsHandler", function () {
         });
 
         expect(mockWindowOpen).toHaveBeenCalledTimes(1);
-        expect(mockWindowOpen).toHaveBeenCalledWith(
-          "http://localhost:3000/orders",
-        );
+        expect(mockWindowOpen).toHaveBeenCalledWith("/dashboard/orders");
       });
 
       /**
@@ -203,7 +202,7 @@ describe("AppActionsHandler", function () {
 
         expect(mockWindowOpen).toHaveBeenCalledTimes(1);
         expect(mockWindowOpen).toHaveBeenCalledWith(
-          "http://localhost:3000/apps/XYZ/app/config",
+          "/dashboard/apps/XYZ/app/config",
         );
       });
     });
@@ -263,7 +262,7 @@ describe("AppActionsHandler", function () {
         expect(mockHistoryPushState).toHaveBeenCalledWith(
           null,
           "",
-          "http://localhost:3000/apps/XYZ/app/config",
+          "/dashboard/apps/XYZ/app/config",
         );
       });
     });
