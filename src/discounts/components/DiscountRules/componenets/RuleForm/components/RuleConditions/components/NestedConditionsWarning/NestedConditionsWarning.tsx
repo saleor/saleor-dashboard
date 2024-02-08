@@ -27,6 +27,7 @@ export const NestedConditionsWarning = ({
       </Box>
 
       <Button
+        data-test-id="openPlaygroundButton"
         variant="secondary"
         size="small"
         alignSelf="start"
