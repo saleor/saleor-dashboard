@@ -4,7 +4,7 @@ import { Condition, Rule } from "@dashboard/discounts/models";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 
-import { useConditionNames } from "./useConditionNames";
+import { useConditionNames } from "./hooks/useConditionNames";
 import { getConditionNameValue } from "./utils";
 
 interface RuleConditionNameProps {
@@ -20,7 +20,7 @@ export const RuleConditionName = ({
 }: RuleConditionNameProps) => {
   const { watch } = useFormContext<Rule>();
   const { discountType, disabled } = useDiscountRulesContext();
-  const { conditionNames } = useConditionNames(discountType);
+  const conditionNames = useConditionNames(discountType);
 
   const ruleConditionNameFieldName = `conditions.${conditionIndex}.id` as const;
   const { field: nameField } = useController<

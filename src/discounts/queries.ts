@@ -220,3 +220,50 @@ export const giftLabels = gql`
     }
   }
 `;
+
+export const PromotionDetailsQuery = /* GraphQL */ `
+  query PromotionDetailsQuery($id: ID!) {
+    promotion(id: $id) {
+      id
+      name
+      description
+      startDate
+      endDate
+      type
+      rules {
+        id
+        name
+        description
+        channels {
+          id
+          isActive
+          name
+          slug
+          currencyCode
+          defaultCountry {
+            code
+            country
+          }
+          stockSettings {
+            allocationStrategy
+          }
+          hasOrders
+          orderSettings {
+            markAsPaidStrategy
+            deleteExpiredOrdersAfter
+            allowUnpaidOrders
+          }
+          paymentSettings {
+            defaultTransactionFlowStrategy
+          }
+        }
+        giftIds
+        rewardType
+        rewardValueType
+        rewardValue
+        cataloguePredicate
+        orderPredicate
+      }
+    }
+  }
+`;

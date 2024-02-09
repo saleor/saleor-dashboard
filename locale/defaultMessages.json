@@ -4591,6 +4591,9 @@
     "context": "dialog subheading",
     "string": "Create a manual transaction for non-integrated payments"
   },
+  "TVR4E6": {
+    "string": "Open playground"
+  },
   "TWVx7O": {
     "context": "delete product dialog title",
     "string": "Delete Product"
@@ -6307,6 +6310,9 @@
   "fbH51z": {
     "context": "Amount error message",
     "string": "Amount cannot be bigger than max refund"
+  },
+  "feF0lB": {
+    "string": "Too complex conditions to display, use playground to see details"
   },
   "fehqPs": {
     "context": "order history message",

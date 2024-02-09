@@ -1,12 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
-import { Rule } from "@dashboard/discounts/models";
-import {
-  ChannelFragment,
-  PromotionTypeEnum,
-  RewardTypeEnum,
-  RewardValueTypeEnum,
-} from "@dashboard/graphql";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
@@ -21,6 +15,12 @@ import {
 } from "./componenets/RuleForm/components/RuleConditionValues/hooks/options/mocks";
 import { variantsWithProductDataMock } from "./componenets/RuleForm/components/RuleRewardGifts/mock";
 import { DiscountRules } from "./DiscountRules";
+import {
+  catalogComplexRules,
+  catalogRules,
+  channels,
+  orderRules,
+} from "./mocksData";
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
@@ -51,6 +51,12 @@ jest.mock("@dashboard/discounts/views/DiscountDetails/context/context", () => ({
   })),
 }));
 
+jest.mock("./hooks/useGraphQLPlayground", () => ({
+  useGraphQLPlayground: jest.fn(() => ({
+    opepnGrapQLPlayground: jest.fn(),
+  })),
+}));
+
 jest.setTimeout(30000); // Timeout was increased because of error throw in update test when run all tests
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
@@ -70,108 +76,6 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
     </MockedProvider>
   );
 };
-
-const channels = [
-  // Apollo mocks only work with test channel
-  // oif you want to use different channel, you need to update mocks
-  {
-    currencyCode: "$",
-    id: "Q2hhbm5lcDoy",
-    name: "Test",
-    slug: "test",
-    isActive: true,
-  },
-] as ChannelFragment[];
-
-const catalogRules = [
-  {
-    id: "cat-1",
-    name: "Catalog rule 1",
-    description: "",
-    channel: { label: "Test", value: "Q2hhbm5lcDoy" },
-    conditions: [
-      {
-        id: "product",
-        type: "is",
-        value: [
-          { label: "Product-1", value: "prod-1" },
-          { label: "Product-2", value: "prod-2" },
-        ],
-      },
-      {
-        id: "category",
-        type: "is",
-        value: [{ label: "Category-2", value: "cat-2" }],
-      },
-    ],
-    rewardGifts: [],
-    rewardValue: 12,
-    rewardType: null,
-    rewardValueType: RewardValueTypeEnum.FIXED,
-  },
-  {
-    id: "cat-2",
-    name: "Catalog rule 2",
-    description: "",
-    channel: { label: "Test", value: "Q2hhbm5lcDoy" },
-    conditions: [
-      {
-        id: "category",
-        type: "is",
-        value: [{ label: "Category-1", value: "cat-1" }],
-      },
-    ],
-    rewardGifts: [],
-    rewardType: null,
-    rewardValue: 34,
-    rewardValueType: RewardValueTypeEnum.PERCENTAGE,
-  },
-] as Rule[];
-
-const orderRule = [
-  {
-    id: "order-1",
-    name: "Order rule 1",
-    description: "",
-    channel: { label: "Test", value: "Q2hhbm5lcDoy" },
-    conditions: [
-      {
-        id: "baseSubtotalPrice",
-        type: "greater",
-        value: "33",
-      },
-      {
-        id: "baseTotalPrice",
-        type: "greater",
-        value: "55",
-      },
-    ],
-    rewardValue: 12,
-    rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
-    rewardValueType: RewardValueTypeEnum.FIXED,
-  },
-  {
-    id: "order-2",
-    name: "order rule 2",
-    description: "",
-    channel: { label: "Test", value: "Q2hhbm5lcDoy" },
-    conditions: [
-      {
-        id: "baseSubtotalPrice",
-        type: "between",
-        value: ["33", "44"],
-      },
-      {
-        id: "baseTotalPrice",
-        type: "between",
-        value: ["33", "44"],
-      },
-    ],
-    rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
-    rewardValue: 34,
-    rewardValueType: RewardValueTypeEnum.PERCENTAGE,
-  },
-] as Rule[];
 
 describe("DiscountRules", () => {
   beforeAll(() => {
@@ -204,6 +108,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={[]}
@@ -227,6 +132,7 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={catalogRules}
@@ -264,9 +170,10 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.ORDER}
         channels={[]}
-        rules={orderRule}
+        rules={orderRules}
         errors={[]}
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
@@ -296,6 +203,7 @@ describe("DiscountRules", () => {
     const onRuleAdd = jest.fn();
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
         rules={[]}
@@ -387,6 +295,7 @@ describe("DiscountRules", () => {
     const onRuleAdd = jest.fn();
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.ORDER}
         channels={channels}
         rules={[]}
@@ -480,6 +389,7 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
         rules={catalogRules}
@@ -590,9 +500,10 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.ORDER}
         channels={channels}
-        rules={orderRule}
+        rules={orderRules}
         errors={[]}
         onRuleSubmit={onRuleEdit}
         onRuleDelete={jest.fn()}
@@ -655,7 +566,7 @@ describe("DiscountRules", () => {
       "100",
     );
 
-    // Edit reward value
+    // Edit reward gifts
     await userEvent.click(screen.getByTestId("reward-type-select"));
     await userEvent.click(screen.getAllByTestId("select-option")[1]);
 
@@ -716,6 +627,7 @@ describe("DiscountRules", () => {
 
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={catalogRules}
@@ -745,10 +657,49 @@ describe("DiscountRules", () => {
     expect(screen.queryByText(/delete rule/i)).not.toBeInTheDocument();
   });
 
+  it("should display warning info when  rule is too complex", async () => {
+    // Arrange
+    render(
+      <DiscountRules
+        promotionId="1"
+        discountType={PromotionTypeEnum.CATALOGUE}
+        channels={[]}
+        rules={catalogComplexRules}
+        errors={[]}
+        onRuleSubmit={jest.fn()}
+        onRuleDelete={jest.fn()}
+        disabled={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId("rule-edit-button")[0]).toBeInTheDocument();
+    });
+
+    // Act
+    await act(async () => {
+      await userEvent.click(screen.getAllByTestId("rule-edit-button")[2]);
+    });
+
+    await screen.findAllByText(/edit rule/i);
+
+    // Assert
+    expect(
+      screen.getByText(
+        /too complex conditions to display, use playground to see details/i,
+      ),
+    ).toBeInTheDocument();
+    expect(screen.getByTestId("openPlaygroundButton")).toBeInTheDocument();
+  });
+
   it("should show error in rule", async () => {
     // Arrange & Act
     render(
       <DiscountRules
+        promotionId={null}
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={catalogRules}
