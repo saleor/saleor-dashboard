@@ -5057,6 +5057,8 @@ enum CheckoutErrorCode {
   INVALID
   INVALID_SHIPPING_METHOD
   MISSING_CHANNEL_SLUG
+  NON_EDITABLE_GIFT_LINE
+  NON_REMOVABLE_GIFT_LINE
   NOT_FOUND
   NO_LINES
   PAYMENT_ERROR
@@ -5156,6 +5158,15 @@ type CheckoutLanguageCodeUpdate {
 type CheckoutLine implements Node & ObjectWithMetadata {
   """The ID of the checkout line."""
   id: ID!
+
+  """
+  Determine if the line is a gift.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  isGift: Boolean
 
   """
   List of public metadata items. Can be accessed without permissions.
@@ -16255,8 +16266,8 @@ type Mutation {
     """
     externalUrl: String
 
-    """The ID of the transaction."""
-    id: ID!
+    """The ID of the transaction. One of field id or token is required."""
+    id: ID
 
     """The message related to the event."""
     message: String
@@ -16268,6 +16279,13 @@ type Mutation {
     The time of the event to report. If not provide, the current time will be used.
     """
     time: DateTime
+
+    """
+    The token of the transaction. One of field id or token is required.
+    
+    Added in Saleor 3.14.
+    """
+    token: UUID
 
     """Current status of the event to report."""
     type: TransactionEventTypeEnum!
@@ -16330,8 +16348,17 @@ type Mutation {
     """The data that will be passed to the payment gateway."""
     data: JSON
 
-    """The ID of the transaction to process."""
-    id: ID!
+    """
+    The ID of the transaction to process. One of field id or token is required.
+    """
+    id: ID
+
+    """
+    The token of the transaction to process. One of field id or token is required.
+    
+    Added in Saleor 3.14.
+    """
+    token: UUID
   ): TransactionProcess
 
   """
@@ -16352,8 +16379,15 @@ type Mutation {
     """
     amount: PositiveDecimal
 
-    """The ID of the transaction."""
-    id: ID!
+    """The ID of the transaction. One of field id or token is required."""
+    id: ID
+
+    """
+    The token of the transaction. One of field id or token is required.
+    
+    Added in Saleor 3.14.
+    """
+    token: UUID
   ): TransactionRequestAction
 
   """
@@ -16369,8 +16403,15 @@ type Mutation {
     """The ID of the granted refund."""
     grantedRefundId: ID!
 
-    """The ID of the transaction."""
-    id: ID!
+    """The ID of the transaction. One of field id or token is required."""
+    id: ID
+
+    """
+    The token of the transaction. One of field id or token is required.
+    
+    Added in Saleor 3.14.
+    """
+    token: UUID
   ): TransactionRequestRefundForGrantedRefund
 
   """
@@ -16383,8 +16424,15 @@ type Mutation {
   Requires the following permissions: OWNER and HANDLE_PAYMENTS for apps, HANDLE_PAYMENTS for staff users. Staff user cannot update a transaction that is owned by the app.
   """
   transactionUpdate(
-    """The ID of the transaction."""
-    id: ID!
+    """The ID of the transaction. One of field id or token is required."""
+    id: ID
+
+    """
+    The token of the transaction. One of field id or token is required.
+    
+    Added in Saleor 3.14.
+    """
+    token: UUID
 
     """Input data required to create a new transaction object."""
     transaction: TransactionUpdateInput
@@ -17945,6 +17993,8 @@ enum OrderErrorCode {
   INVALID_QUANTITY
   INVALID_VOUCHER
   INVALID_VOUCHER_CODE
+  NON_EDITABLE_GIFT_LINE
+  NON_REMOVABLE_GIFT_LINE
   NOT_AVAILABLE_IN_CHANNEL
   NOT_EDITABLE
   NOT_FOUND
@@ -18689,6 +18739,15 @@ type OrderLine implements Node & ObjectWithMetadata {
 
   """ID of the order line."""
   id: ID!
+
+  """
+  Determine if the line is a gift.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  isGift: Boolean
 
   """Whether the product variant requires shipping."""
   isShippingRequired: Boolean!
@@ -25078,13 +25137,16 @@ type PromotionCreateError {
   """The error code."""
   code: PromotionCreateErrorCode!
 
-  """Number of rules with orderPredicate defined exceeding the limit."""
-  exceedBy: Int
-
   """
   Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
   """
   field: String
+
+  """Limit of gifts assigned to promotion rule."""
+  giftsLimit: Int
+
+  """Number of gifts defined for this promotion rule exceeding the limit."""
+  giftsLimitExceedBy: Int
 
   """Index of an input list item that caused the error."""
   index: Int
@@ -25094,12 +25156,17 @@ type PromotionCreateError {
 
   """Limit of rules with orderPredicate defined."""
   rulesLimit: Int
+
+  """Number of rules with orderPredicate defined exceeding the limit."""
+  rulesLimitExceedBy: Int
 }
 
 """An enumeration."""
 enum PromotionCreateErrorCode {
+  GIFTS_NUMBER_LIMIT
   GRAPHQL_ERROR
   INVALID
+  INVALID_GIFT_TYPE
   INVALID_PRECISION
   MISSING_CHANNELS
   MULTIPLE_CURRENCIES_NOT_ALLOWED
@@ -25339,6 +25406,24 @@ type PromotionRule implements Node {
 
   """Description of the promotion rule."""
   description: JSON
+
+  """
+  Product variant IDs available as a gift to choose.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  giftIds: [ID!]
+
+  """
+  Defines the maximum number of gifts to choose from the gifts list.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  giftsLimit: Int
   id: ID!
 
   """Name of the promotion rule."""
@@ -25414,25 +25499,33 @@ type PromotionRuleCreateError {
   """The error code."""
   code: PromotionRuleCreateErrorCode!
 
-  """Number of rules with orderPredicate defined exceeding the limit."""
-  exceedBy: Int
-
   """
   Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
   """
   field: String
+
+  """Limit of gifts assigned to promotion rule."""
+  giftsLimit: Int
+
+  """Number of gifts defined for this promotion rule exceeding the limit."""
+  giftsLimitExceedBy: Int
 
   """The error message."""
   message: String
 
   """Limit of rules with orderPredicate defined."""
   rulesLimit: Int
+
+  """Number of rules with orderPredicate defined exceeding the limit."""
+  rulesLimitExceedBy: Int
 }
 
 """An enumeration."""
 enum PromotionRuleCreateErrorCode {
+  GIFTS_NUMBER_LIMIT
   GRAPHQL_ERROR
   INVALID
+  INVALID_GIFT_TYPE
   INVALID_PRECISION
   MISSING_CHANNELS
   MULTIPLE_CURRENCIES_NOT_ALLOWED
@@ -25452,6 +25545,15 @@ input PromotionRuleCreateInput {
 
   """Promotion rule description."""
   description: JSON
+
+  """
+  Product variant IDs available as a gift to choose.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  gifts: [ID!]
 
   """Promotion rule name."""
   name: String
@@ -25648,6 +25750,15 @@ input PromotionRuleInput {
   """Promotion rule description."""
   description: JSON
 
+  """
+  Product variant IDs available as a gift to choose.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  gifts: [ID!]
+
   """Promotion rule name."""
   name: String
 
@@ -25780,6 +25891,12 @@ type PromotionRuleUpdateError {
   """
   field: String
 
+  """Limit of gifts assigned to promotion rule."""
+  giftsLimit: Int
+
+  """Number of gifts defined for this promotion rule exceeding the limit."""
+  giftsLimitExceedBy: Int
+
   """The error message."""
   message: String
 }
@@ -25787,8 +25904,10 @@ type PromotionRuleUpdateError {
 """An enumeration."""
 enum PromotionRuleUpdateErrorCode {
   DUPLICATED_INPUT_ITEM
+  GIFTS_NUMBER_LIMIT
   GRAPHQL_ERROR
   INVALID
+  INVALID_GIFT_TYPE
   INVALID_PRECISION
   MISSING_CHANNELS
   MULTIPLE_CURRENCIES_NOT_ALLOWED
@@ -25799,6 +25918,15 @@ enum PromotionRuleUpdateErrorCode {
 input PromotionRuleUpdateInput {
   """List of channel ids to add."""
   addChannels: [ID!]
+
+  """
+  List of variant IDs available as a gift to add.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addGifts: [ID!]
 
   """
   Defines the conditions on the catalogue level that must be met for the reward to be applied.
@@ -25822,6 +25950,15 @@ input PromotionRuleUpdateInput {
 
   """List of channel ids to remove."""
   removeChannels: [ID!]
+
+  """
+  List of variant IDs available as a gift to remove.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  removeGifts: [ID!]
 
   """
   Defines the reward type of the promotion rule.
@@ -27669,8 +27806,15 @@ type Query {
   Requires one of the following permissions: HANDLE_PAYMENTS.
   """
   transaction(
-    """ID of a transaction."""
-    id: ID!
+    """
+    ID of a transaction. Either it or token is required to fetch the transaction data.
+    """
+    id: ID
+
+    """
+    Token of a transaction. Either it or ID is required to fetch the transaction data.
+    """
+    token: UUID
   ): TransactionItem
 
   """
@@ -27920,6 +28064,7 @@ type RequestPasswordReset {
 
 """An enumeration."""
 enum RewardTypeEnum {
+  GIFT
   SUBTOTAL_DISCOUNT
 }
 
@@ -32140,6 +32285,13 @@ type TransactionItem implements Node & ObjectWithMetadata {
 
   """Total amount refunded for this payment."""
   refundedAmount: Money!
+
+  """
+  The transaction token.
+  
+  Added in Saleor 3.14.
+  """
+  token: UUID!
 }
 
 """

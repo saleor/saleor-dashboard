@@ -1246,6 +1246,8 @@ export enum CheckoutErrorCode {
   INVALID = 'INVALID',
   INVALID_SHIPPING_METHOD = 'INVALID_SHIPPING_METHOD',
   MISSING_CHANNEL_SLUG = 'MISSING_CHANNEL_SLUG',
+  NON_EDITABLE_GIFT_LINE = 'NON_EDITABLE_GIFT_LINE',
+  NON_REMOVABLE_GIFT_LINE = 'NON_REMOVABLE_GIFT_LINE',
   NOT_FOUND = 'NOT_FOUND',
   NO_LINES = 'NO_LINES',
   PAYMENT_ERROR = 'PAYMENT_ERROR',
@@ -3963,6 +3965,8 @@ export enum OrderErrorCode {
   INVALID_QUANTITY = 'INVALID_QUANTITY',
   INVALID_VOUCHER = 'INVALID_VOUCHER',
   INVALID_VOUCHER_CODE = 'INVALID_VOUCHER_CODE',
+  NON_EDITABLE_GIFT_LINE = 'NON_EDITABLE_GIFT_LINE',
+  NON_REMOVABLE_GIFT_LINE = 'NON_REMOVABLE_GIFT_LINE',
   NOT_AVAILABLE_IN_CHANNEL = 'NOT_AVAILABLE_IN_CHANNEL',
   NOT_EDITABLE = 'NOT_EDITABLE',
   NOT_FOUND = 'NOT_FOUND',
@@ -5909,8 +5913,10 @@ export type ProductWhereInput = {
 
 /** An enumeration. */
 export enum PromotionCreateErrorCode {
+  GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  INVALID_GIFT_TYPE = 'INVALID_GIFT_TYPE',
   INVALID_PRECISION = 'INVALID_PRECISION',
   MISSING_CHANNELS = 'MISSING_CHANNELS',
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
@@ -5961,8 +5967,10 @@ export enum PromotionEventsEnum {
 
 /** An enumeration. */
 export enum PromotionRuleCreateErrorCode {
+  GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  INVALID_GIFT_TYPE = 'INVALID_GIFT_TYPE',
   INVALID_PRECISION = 'INVALID_PRECISION',
   MISSING_CHANNELS = 'MISSING_CHANNELS',
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
@@ -5978,6 +5986,14 @@ export type PromotionRuleCreateInput = {
   channels?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule description. */
   description?: InputMaybe<Scalars['JSON']>;
+  /**
+   * Product variant IDs available as a gift to choose.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  gifts?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule name. */
   name?: InputMaybe<Scalars['String']>;
   /**
@@ -6017,6 +6033,14 @@ export type PromotionRuleInput = {
   channels?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule description. */
   description?: InputMaybe<Scalars['JSON']>;
+  /**
+   * Product variant IDs available as a gift to choose.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  gifts?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule name. */
   name?: InputMaybe<Scalars['String']>;
   /**
@@ -6054,8 +6078,10 @@ export type PromotionRuleTranslationInput = {
 /** An enumeration. */
 export enum PromotionRuleUpdateErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  INVALID_GIFT_TYPE = 'INVALID_GIFT_TYPE',
   INVALID_PRECISION = 'INVALID_PRECISION',
   MISSING_CHANNELS = 'MISSING_CHANNELS',
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
@@ -6066,6 +6092,14 @@ export enum PromotionRuleUpdateErrorCode {
 export type PromotionRuleUpdateInput = {
   /** List of channel ids to add. */
   addChannels?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * List of variant IDs available as a gift to add.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  addGifts?: InputMaybe<Array<Scalars['ID']>>;
   /** Defines the conditions on the catalogue level that must be met for the reward to be applied. */
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** Promotion rule description. */
@@ -6082,6 +6116,14 @@ export type PromotionRuleUpdateInput = {
   orderPredicate?: InputMaybe<OrderPredicateInput>;
   /** List of channel ids to remove. */
   removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * List of variant IDs available as a gift to remove.
+   *
+   * Added in Saleor 3.19.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  removeGifts?: InputMaybe<Array<Scalars['ID']>>;
   /**
    * Defines the reward type of the promotion rule.
    *
@@ -6206,6 +6248,7 @@ export enum ReportingPeriod {
 
 /** An enumeration. */
 export enum RewardTypeEnum {
+  GIFT = 'GIFT',
   SUBTOTAL_DISCOUNT = 'SUBTOTAL_DISCOUNT'
 }
 
