@@ -112,7 +112,7 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
   });
 
-  it("hould return true if predicate has nested AND property", () => {
+  it("should return true if predicate has nested AND property", () => {
     const catalogPredicate = {
       OR: [
         {
