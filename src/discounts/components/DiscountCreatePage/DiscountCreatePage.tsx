@@ -52,12 +52,18 @@ export const DiscountCreatePage = ({
       />
       <DetailPageLayout.Content>
         <DiscountCreateForm onSubmit={onSubmit}>
-          {({ rules, onDeleteRule, onRuleSubmit, submitHandler }) => (
+          {({
+            rules,
+            discountType,
+            onDeleteRule,
+            onRuleSubmit,
+            submitHandler,
+          }) => (
             <>
               <DiscountGeneralInfo
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
                 disabled={disabled}
-                typeDisabled={true}
+                typeDisabled={false}
               />
 
               <DiscountDescription disabled={disabled} />
@@ -68,7 +74,8 @@ export const DiscountCreatePage = ({
               />
 
               <DiscountRules
-                discountType="catalog"
+                promotionId={null}
+                discountType={discountType}
                 errors={errors as DiscountRulesErrors<PromotionCreateErrorCode>}
                 channels={channels}
                 disabled={disabled}

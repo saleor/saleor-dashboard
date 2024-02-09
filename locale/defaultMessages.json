@@ -374,6 +374,9 @@
     "context": "header",
     "string": "Tokens"
   },
+  "0OAE9q": {
+    "string": "Checkout and orders"
+  },
   "0OfZJA": {
     "context": "button",
     "string": "Back"
@@ -970,6 +973,9 @@
     "context": "product availability",
     "string": "Enabling this checkbox will remove product from search and category pages. It will be available on collection pages."
   },
+  "4VivsY": {
+    "string": "Total price"
+  },
   "4W/CKn": {
     "context": "modal button",
     "string": "Upload URL"
@@ -1195,6 +1201,9 @@
     "context": "weight",
     "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
   },
+  "6230rS": {
+    "string": "Discount rules for carts and draft orders."
+  },
   "62T585": {
     "context": "button",
     "string": "{languageName} - {languageCode}"
@@ -1296,6 +1305,9 @@
   "6iw4VR": {
     "context": "delete variant dialog title",
     "string": "Delete Product Variants"
+  },
+  "6pPMp9": {
+    "string": "Subtotal price"
   },
   "6sjBvJ": {
     "context": "input placeholder",
@@ -2841,6 +2853,9 @@
   "HYHLsB": {
     "context": "product field",
     "string": "Export Variant ID"
+  },
+  "HYK65C": {
+    "string": "Order rule"
   },
   "HaQ8cg": {
     "context": "button",
@@ -4562,6 +4577,9 @@
     "context": "dialog subheading",
     "string": "Create a manual transaction for non-integrated payments"
   },
+  "TVR4E6": {
+    "string": "Open playground"
+  },
   "TWVx7O": {
     "context": "delete product dialog title",
     "string": "Delete Product"
@@ -6276,6 +6294,9 @@
     "context": "Amount error message",
     "string": "Amount cannot be bigger than max refund"
   },
+  "feF0lB": {
+    "string": "Too complex conditions to display, use playground to see details"
+  },
   "fehqPs": {
     "context": "order history message",
     "string": "Products were deleted from an order"
@@ -7605,6 +7626,10 @@
   "ojHyj3": {
     "context": "discount value label",
     "string": "discount value"
+  },
+  "onUvP+": {
+    "context": "discount type",
+    "string": "Order"
   },
   "opIDox": {
     "context": "unassign product from sale and save, button",

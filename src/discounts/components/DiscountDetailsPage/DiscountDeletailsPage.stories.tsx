@@ -47,6 +47,8 @@ export const Default = () => (
     mocks={[
       searchCategoriesMock,
       searchProductsMock,
+      searchProductsMock,
+      searchProductsMock,
       searchCollectionsMock,
       searchVariantsMock,
     ]}

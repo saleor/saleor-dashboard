@@ -33,7 +33,7 @@ export const useRulesHandlers = ({
   const [labelsMap, setLabelMap] = useState<Record<string, string>>({});
 
   const rules = sortRules(
-    data?.rules?.map(rule => mapAPIRuleToForm("catalog", rule, labelsMap)) ??
+    data?.rules?.map(rule => mapAPIRuleToForm(data?.type, rule, labelsMap)) ??
       [],
   );
 

@@ -48,7 +48,7 @@ export const RuleConditionDynamicSelect = ({
     return (
       <Multiselect
         size="medium"
-        data-test-id="rule-value"
+        data-test-id={`condition-value-${conditionIndex}`}
         value={condition.value as Option[]}
         fetchOptions={fetch}
         fetchMore={fetchMoreProps}

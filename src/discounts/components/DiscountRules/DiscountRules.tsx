@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Rule } from "@dashboard/discounts/models";
-import { ChannelFragment } from "@dashboard/graphql";
+import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo, useState } from "react";
@@ -13,6 +13,7 @@ import { RuleForm } from "./componenets/RuleForm";
 import { RuleFormModal } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
 import { DiscountRulesContextProvider } from "./context";
+import { useGraphQLPlayground } from "./hooks/useGraphQLPlayground";
 import { messages } from "./messages";
 
 export type DiscountRulesErrors<ErrorCode> = Array<
@@ -21,9 +22,10 @@ export type DiscountRulesErrors<ErrorCode> = Array<
 
 interface DiscountRulesProps<ErrorCode> {
   disabled: boolean;
-  discountType: "catalog";
+  discountType: PromotionTypeEnum;
   channels: ChannelFragment[];
   rules: Rule[];
+  promotionId: string | null;
   errors: Array<CommonError<ErrorCode>>;
   loading?: boolean;
   deleteButtonState: ConfirmButtonTransitionState;
@@ -45,6 +47,7 @@ export const DiscountRules = <ErrorCode,>({
   loading,
   onRuleSubmit,
   onRuleDelete,
+  promotionId,
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
 
@@ -52,6 +55,8 @@ export const DiscountRules = <ErrorCode,>({
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const { opepnGrapQLPlayground } = useGraphQLPlayground();
 
   useEffect(() => {
     if (!isLoaded && !disabled) {
@@ -85,6 +90,11 @@ export const DiscountRules = <ErrorCode,>({
   const handleRuleDelete = async () => {
     await onRuleDelete(ruleDeleteIndex!);
     setRuleDeleteIndex(null);
+  };
+
+  const handleOpenPlayground = () => {
+    setIsModalOpen(false);
+    opepnGrapQLPlayground(promotionId);
   };
 
   return (
@@ -121,7 +131,7 @@ export const DiscountRules = <ErrorCode,>({
             initialFormValues={ruleInitialValues}
             onSubmit={handleRuleModalSubmit}
           >
-            <RuleForm errors={errors} />
+            <RuleForm errors={errors} openPlayground={handleOpenPlayground} />
           </RuleFormModal>
         )}
         <RuleDeleteModal

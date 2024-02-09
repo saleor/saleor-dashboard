@@ -1,5 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import { Box, Input, Select } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
@@ -33,17 +34,16 @@ export const DiscountGeneralInfo = ({
           id: "0khVBN",
           description: "discount type",
         }),
-        value: "catalog",
+        value: PromotionTypeEnum.CATALOGUE,
       },
-      // Uncomment when API will support catalog discounts
-      // {
-      //   label: intl.formatMessage({
-      //     defaultMessage: "Order",
-      //     id: "onUvP+",
-      //     description: "discount type",
-      //   }),
-      //   value: "order",
-      // },
+      {
+        label: intl.formatMessage({
+          defaultMessage: "Order",
+          id: "onUvP+",
+          description: "discount type",
+        }),
+        value: PromotionTypeEnum.ORDER,
+      },
     ],
     [intl],
   );

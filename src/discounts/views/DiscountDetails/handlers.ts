@@ -69,7 +69,7 @@ export const createRuleUpdateHandler = (
     const ruleChannels: string[] =
       ruleData?.channels?.map(channel => channel.id) ?? [];
 
-    const { channels, ...input } = toAPI("catalog")(data);
+    const { channels, ...input } = toAPI(promotionData?.type)(data);
 
     const response = await updateRule({
       id: data.id!,
@@ -97,7 +97,7 @@ export const createRuleCreateHandler = (
   ) => Promise<FetchResult<PromotionRuleCreateMutation>>,
 ) => {
   return async (data: Rule) => {
-    const ruleData = toAPI("catalog")(data);
+    const ruleData = toAPI(promotionData?.type)(data);
 
     const response = await createRule({
       input: {

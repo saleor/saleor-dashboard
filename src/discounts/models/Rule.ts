@@ -1,4 +1,4 @@
-import { RewardValueTypeEnum } from "@dashboard/graphql";
+import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
 import { Condition } from "./Condition";
@@ -8,10 +8,11 @@ export interface Rule {
   name: string;
   description: string | null;
   channel: Option | null;
-  rewardType: null; // to be replaced by RewardTypeEnum when API return this field
+  rewardType: RewardTypeEnum | null;
   rewardValue: number;
   rewardValueType: RewardValueTypeEnum;
   conditions: Condition[];
+  hasPredicateNestedConditions?: boolean;
 }
 
 export const createEmptyRule = (): Rule => ({
@@ -23,4 +24,5 @@ export const createEmptyRule = (): Rule => ({
   rewardValue: 0,
   rewardValueType: RewardValueTypeEnum.FIXED,
   conditions: [],
+  hasPredicateNestedConditions: false,
 });

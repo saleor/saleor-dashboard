@@ -1,7 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
-import { Rule } from "@dashboard/discounts/models";
-import { ChannelFragment, RewardValueTypeEnum } from "@dashboard/graphql";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
@@ -15,6 +14,12 @@ import {
   searchVariantsMock,
 } from "./componenets/RuleForm/components/RuleConditionValues/hooks/options/mocks";
 import { DiscountRules } from "./DiscountRules";
+import {
+  catalogComplexRules,
+  catalogRules,
+  channels,
+  orderRules,
+} from "./mocksData";
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
@@ -30,6 +35,14 @@ jest.mock("@dashboard/hooks/useNotifier", () => ({
   __esModule: true,
   default: jest.fn(() => () => undefined),
 }));
+
+jest.mock("./hooks/useGraphQLPlayground", () => ({
+  useGraphQLPlayground: jest.fn(() => ({
+    opepnGrapQLPlayground: jest.fn(),
+  })),
+}));
+
+jest.setTimeout(30000); // Timeout was increased because of error throw in update test when run all tests
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
@@ -47,56 +60,6 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
     </MockedProvider>
   );
 };
-
-const channels = [
-  // Apollo mocks only work with test channel
-  // oif you want to use different channel, you need to update mocks
-  {
-    currencyCode: "$",
-    id: "Q2hhbm5lcDoy",
-    name: "Test",
-    slug: "test",
-    isActive: true,
-  },
-] as ChannelFragment[];
-
-const rules = [
-  {
-    id: "cat-1",
-    name: "Catalog rule 1",
-    description: "",
-    channel: { label: "Test", value: "Q2hhbm5lcDoy" },
-    conditions: [
-      {
-        id: "product",
-        type: "is",
-        value: [
-          { label: "Product-1", value: "prod-1" },
-          { label: "Product-2", value: "prod-2" },
-        ],
-      },
-    ],
-    rewardValue: 12,
-    rewardType: null,
-    rewardValueType: RewardValueTypeEnum.FIXED,
-  },
-  {
-    id: "cat-2",
-    name: "Catalog rule 2",
-    description: "",
-    channel: { label: "Test", value: "Q2hhbm5lcDoy" },
-    conditions: [
-      {
-        id: "category",
-        type: "is",
-        value: [{ label: "Category-1", value: "cat-1" }],
-      },
-    ],
-    rewardType: null,
-    rewardValue: 34,
-    rewardValueType: RewardValueTypeEnum.PERCENTAGE,
-  },
-] as Rule[];
 
 describe("DiscountRules", () => {
   beforeAll(() => {
@@ -129,7 +92,8 @@ describe("DiscountRules", () => {
     // Arrange & Act
     render(
       <DiscountRules
-        discountType="catalog"
+        promotionId={null}
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
         rules={[]}
         errors={[]}
@@ -149,13 +113,14 @@ describe("DiscountRules", () => {
     ).toBeInTheDocument();
   });
 
-  it("should render discount rules", async () => {
+  it("should render catalog discount rules", async () => {
     // Arrange & Act
     render(
       <DiscountRules
-        discountType="catalog"
+        promotionId={null}
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
-        rules={rules}
+        rules={catalogRules}
         errors={[]}
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
@@ -187,12 +152,46 @@ describe("DiscountRules", () => {
     ).toBe(2);
   });
 
-  it("should allow to add new rule", async () => {
+  it("should render order discount rules", async () => {
+    // Arrange & Act
+    render(
+      <DiscountRules
+        promotionId={null}
+        discountType={PromotionTypeEnum.ORDER}
+        channels={[]}
+        rules={orderRules}
+        errors={[]}
+        onRuleSubmit={jest.fn()}
+        onRuleDelete={jest.fn()}
+        disabled={false}
+        loading={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(/order rule: order rule 2/i)).toBeInTheDocument();
+    });
+
+    // Assert
+    expect(screen.getByText(/order rule: order rule 2/i)).toBeInTheDocument();
+    expect(screen.getByText(/order rule: order rule 1/i)).toBeInTheDocument();
+    expect(
+      screen.getAllByText(
+        /discount of {value} on the purchase of {conditions} through the {channel}/i,
+      ).length,
+    ).toBe(2);
+  });
+
+  it("should allow to add new catalog rule", async () => {
     // Arrange
     const onRuleAdd = jest.fn();
     render(
       <DiscountRules
-        discountType="catalog"
+        promotionId={null}
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={channels}
         rules={[]}
         errors={[]}
@@ -221,6 +220,8 @@ describe("DiscountRules", () => {
       screen.getByRole("input", { name: "Name" }),
       "Name 123",
     );
+
+    // Select channel
     await userEvent.click(screen.getByRole("combobox"));
     expect(await screen.findByText(/test/i)).toBeInTheDocument();
 
@@ -228,15 +229,17 @@ describe("DiscountRules", () => {
       await userEvent.click(screen.getAllByTestId("select-option")[0]);
     });
 
+    // Add condition
     await userEvent.click(
       screen.getByRole("button", { name: /add condition/i }),
     );
-    await userEvent.click(await screen.findByTestId(/rule-type/i));
+    await userEvent.click(await screen.findByTestId(/condition-name-0/i));
     await userEvent.click(screen.getAllByTestId("select-option")[0]);
 
-    await userEvent.click(await screen.findByTestId(/rule-value/i));
+    await userEvent.click(await screen.findByTestId(/condition-value-0/i));
     await userEvent.click(await screen.getAllByTestId("select-option")[0]);
 
+    // Add reward value
     await userEvent.type(
       screen.getByRole("input", { name: "Discount value" }),
       "22",
@@ -273,15 +276,328 @@ describe("DiscountRules", () => {
     );
   });
 
+  it("should allow to add new order rule", async () => {
+    // Arrange
+    const onRuleAdd = jest.fn();
+    render(
+      <DiscountRules
+        promotionId={null}
+        discountType={PromotionTypeEnum.ORDER}
+        channels={channels}
+        rules={[]}
+        errors={[]}
+        onRuleSubmit={onRuleAdd}
+        onRuleDelete={jest.fn()}
+        disabled={false}
+        loading={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: /add rule/i }),
+      ).toBeInTheDocument();
+    });
+
+    // Act
+    await act(async () => {
+      await userEvent.click(screen.getByRole("button", { name: /add rule/i }));
+    });
+
+    await userEvent.type(
+      screen.getByRole("input", { name: "Name" }),
+      "Order rule 123",
+    );
+
+    // Channel select
+    await userEvent.click(screen.getByRole("combobox"));
+    expect(await screen.findByText(/test/i)).toBeInTheDocument();
+
+    await act(async () => {
+      await userEvent.click(screen.getAllByTestId("select-option")[0]);
+    });
+
+    // Condition select
+    await userEvent.click(
+      screen.getByRole("button", { name: /add condition/i }),
+    );
+    await userEvent.click(await screen.findByTestId(/condition-name-0/i));
+    await userEvent.click(screen.getAllByTestId("select-option")[0]);
+
+    await userEvent.click(await screen.findByTestId(/condition-type-0/i));
+    await userEvent.click(screen.getAllByTestId("select-option")[2]);
+
+    await userEvent.type(
+      await screen.findByTestId(/condition-value-0/i),
+      "144",
+    );
+
+    await userEvent.type(
+      screen.getByRole("input", { name: "Discount value" }),
+      "22",
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: /save/i }));
+
+    // Assert
+    expect(onRuleAdd).toHaveBeenCalledWith(
+      {
+        channel: {
+          label: "Test",
+          value: "Q2hhbm5lcDoy",
+        },
+        conditions: [
+          {
+            id: "baseSubtotalPrice",
+            type: "greater",
+            value: "144",
+          },
+        ],
+        description: "",
+        id: "",
+        name: "Order rule 123",
+        rewardValue: 22,
+        rewardValueType: "FIXED",
+      },
+      null,
+    );
+  });
+
+  it("should allow to to handle update catalog rule", async () => {
+    // Arrange
+    const onRuleEdit = jest.fn();
+
+    render(
+      <DiscountRules
+        promotionId={null}
+        discountType={PromotionTypeEnum.CATALOGUE}
+        channels={channels}
+        rules={catalogRules}
+        errors={[]}
+        onRuleSubmit={onRuleEdit}
+        onRuleDelete={jest.fn()}
+        disabled={false}
+        loading={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId("rule-edit-button")[0]).toBeInTheDocument();
+    });
+
+    // Act
+    await act(async () => {
+      await userEvent.click(screen.getAllByTestId("rule-edit-button")[0]);
+    });
+
+    await screen.findAllByText(/edit rule/i);
+
+    // Edit name
+    const nameField = screen.getByRole("input", { name: "Name" });
+    await userEvent.clear(nameField);
+    await userEvent.type(nameField, "New name");
+
+    // Edit condition
+    await userEvent.click(await screen.findByTestId(/condition-name-0/i));
+    await userEvent.click(screen.getAllByTestId("select-option")[1]);
+
+    await userEvent.click(await screen.findByTestId(/condition-value-0/i));
+    await userEvent.click(await screen.getAllByTestId("select-option")[2]);
+
+    // Remove condition
+    await act(async () => {
+      await userEvent.click(await screen.findByTestId(/condition-remove-1/i));
+    });
+
+    // Add new condition
+    await act(async () => {
+      await userEvent.click(
+        screen.getByRole("button", { name: /add condition/i }),
+      );
+    });
+    await userEvent.click(await screen.findByTestId(/condition-name-1/i));
+    await userEvent.click(screen.getAllByTestId("select-option")[0]);
+
+    await userEvent.click(await screen.findByTestId(/condition-value-1/i));
+    await userEvent.click(await screen.getAllByTestId("select-option")[1]);
+
+    // Edit reward
+    await userEvent.click(screen.getByRole("radio", { name: "$" }));
+    const discountValueField = screen.getByRole("input", {
+      name: "Discount value",
+    });
+    await userEvent.clear(discountValueField);
+    await userEvent.type(discountValueField, "122");
+
+    await userEvent.click(screen.getByRole("button", { name: /save/i }));
+
+    // Assert
+    expect(onRuleEdit).toHaveBeenCalledWith(
+      {
+        id: "cat-1",
+        name: "New name",
+        channel: {
+          label: "Test",
+          value: "Q2hhbm5lcDoy",
+        },
+        conditions: [
+          {
+            id: "variant",
+            type: "is",
+            value: [
+              {
+                label: "55cm x 55cm",
+                value: "UHJvZHVjdFZhcmlhbnQ6OTg4",
+              },
+            ],
+          },
+          {
+            id: "product",
+            type: "is",
+            value: [
+              {
+                label: "Banana Juice",
+                value: "UHJvZHVjdDo3NA==",
+              },
+            ],
+          },
+        ],
+        description: "",
+        rewardValue: 122,
+        rewardValueType: "FIXED",
+      },
+      0,
+    );
+  });
+
+  it("should allow to to handle update order rule", async () => {
+    // Arrange
+    const onRuleEdit = jest.fn();
+
+    render(
+      <DiscountRules
+        promotionId={null}
+        discountType={PromotionTypeEnum.ORDER}
+        channels={channels}
+        rules={orderRules}
+        errors={[]}
+        onRuleSubmit={onRuleEdit}
+        onRuleDelete={jest.fn()}
+        disabled={false}
+        loading={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId("rule-edit-button")[0]).toBeInTheDocument();
+    });
+
+    // Act
+    await act(async () => {
+      await userEvent.click(screen.getAllByTestId("rule-edit-button")[0]);
+    });
+
+    await screen.findAllByText(/edit rule/i);
+
+    // Edit name
+    const nameField = screen.getByRole("input", { name: "Name" });
+    await userEvent.clear(nameField);
+    await userEvent.type(nameField, "New name");
+
+    // Remove condition
+    await act(async () => {
+      await userEvent.click(await screen.findByTestId(/condition-remove-1/i));
+    });
+
+    // Edit condition
+    await userEvent.click(await screen.findByTestId(/condition-name-0/i));
+    await userEvent.click(screen.getAllByTestId("select-option")[0]);
+
+    await userEvent.click(await screen.findByTestId(/condition-type-0/i));
+    await userEvent.click(screen.getAllByTestId("select-option")[2]);
+
+    await userEvent.clear(await screen.findByTestId(/condition-value-0/i));
+    await userEvent.type(
+      await screen.findByTestId(/condition-value-0/i),
+      "144",
+    );
+
+    // Add new condition
+    await act(async () => {
+      await userEvent.click(
+        screen.getByRole("button", { name: /add condition/i }),
+      );
+    });
+    await userEvent.click(await screen.findByTestId(/condition-name-1/i));
+    await userEvent.click(screen.getAllByTestId("select-option")[0]);
+
+    await userEvent.click(await screen.findByTestId(/condition-type-1/i));
+    await userEvent.click(screen.getAllByTestId("select-option")[1]);
+
+    await userEvent.clear(await screen.findByTestId(/condition-value-1/i));
+    await userEvent.type(
+      await screen.findByTestId(/condition-value-1/i),
+      "100",
+    );
+
+    // Edit reward value
+    await userEvent.click(screen.getByRole("radio", { name: "$" }));
+    const discountValueField = screen.getByRole("input", {
+      name: "Discount value",
+    });
+    await userEvent.clear(discountValueField);
+    await userEvent.type(discountValueField, "122");
+
+    await userEvent.click(screen.getByRole("button", { name: /save/i }));
+
+    // Assert
+    expect(onRuleEdit).toHaveBeenCalledWith(
+      {
+        id: "order-1",
+        name: "New name",
+        channel: {
+          label: "Test",
+          value: "Q2hhbm5lcDoy",
+        },
+        conditions: [
+          {
+            id: "baseTotalPrice",
+            type: "greater",
+            value: "144",
+          },
+          {
+            id: "baseSubtotalPrice",
+            type: "lower",
+            value: "100",
+          },
+        ],
+        description: "",
+        rewardValue: 122,
+        rewardValueType: "FIXED",
+      },
+      0,
+    );
+  });
+
   it("should allow to to handle delete rule", async () => {
     // Arrange
     const onRuleDelete = jest.fn();
 
     render(
       <DiscountRules
-        discountType="catalog"
+        promotionId={null}
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
-        rules={rules}
+        rules={catalogRules}
         errors={[]}
         onRuleSubmit={jest.fn()}
         onRuleDelete={onRuleDelete}
@@ -309,17 +625,16 @@ describe("DiscountRules", () => {
     expect(screen.queryByText(/delete rule/i)).not.toBeInTheDocument();
   });
 
-  it("should allow to to handle update rule", async () => {
+  it("should display warning info when  rule is too complex", async () => {
     // Arrange
-    const onRuleEdit = jest.fn();
-
     render(
       <DiscountRules
-        discountType="catalog"
-        channels={channels}
-        rules={rules}
+        promotionId="1"
+        discountType={PromotionTypeEnum.CATALOGUE}
+        channels={[]}
+        rules={catalogComplexRules}
         errors={[]}
-        onRuleSubmit={onRuleEdit}
+        onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
         disabled={false}
         loading={false}
@@ -335,65 +650,28 @@ describe("DiscountRules", () => {
 
     // Act
     await act(async () => {
-      await userEvent.click(screen.getAllByTestId("rule-edit-button")[0]);
+      await userEvent.click(screen.getAllByTestId("rule-edit-button")[2]);
     });
 
     await screen.findAllByText(/edit rule/i);
 
-    const nameField = screen.getByRole("input", { name: "Name" });
-    await userEvent.clear(nameField);
-    await userEvent.type(nameField, "New name");
-
-    await userEvent.click(screen.getByRole("radio", { name: "$" }));
-
-    const discountValueField = screen.getByRole("input", {
-      name: "Discount value",
-    });
-    await userEvent.clear(discountValueField);
-    await userEvent.type(discountValueField, "122");
-
-    await userEvent.click(screen.getByRole("button", { name: /save/i }));
-
     // Assert
-    expect(onRuleEdit).toHaveBeenCalledWith(
-      {
-        id: "cat-1",
-        name: "New name",
-        channel: {
-          label: "Test",
-          value: "Q2hhbm5lcDoy",
-        },
-        conditions: [
-          {
-            id: "product",
-            type: "is",
-            value: [
-              {
-                label: "Product-1",
-                value: "prod-1",
-              },
-              {
-                label: "Product-2",
-                value: "prod-2",
-              },
-            ],
-          },
-        ],
-        description: "",
-        rewardValue: 122,
-        rewardValueType: "FIXED",
-      },
-      0,
-    );
+    expect(
+      screen.getByText(
+        /too complex conditions to display, use playground to see details/i,
+      ),
+    ).toBeInTheDocument();
+    expect(screen.getByTestId("openPlaygroundButton")).toBeInTheDocument();
   });
 
   it("should show error in rule", async () => {
     // Arrange & Act
     render(
       <DiscountRules
-        discountType="catalog"
+        promotionId={null}
+        discountType={PromotionTypeEnum.CATALOGUE}
         channels={[]}
-        rules={rules}
+        rules={catalogRules}
         errors={[
           {
             field: "rewardValue",
