@@ -1,4 +1,4 @@
-import { CataloguePredicateAPI } from "../types";
+import { CataloguePredicateAPI, OrderPredicateAPI } from "../types";
 import { hasPredicateNestedConditions } from "./helpers";
 
 describe("Rule Model - hasPredicateCreatedViaApi", () => {
@@ -173,5 +173,31 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
     } as CataloguePredicateAPI;
 
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(false);
+  });
+
+  it("shouldd return false when order predicate with proper nesting", () => {
+    const orderPredicate = {
+      discountedObjectPredicate: {
+        OR: [
+          {
+            baseSubtotalPrice: {
+              range: {
+                gte: "33",
+              },
+            },
+          },
+          {
+            baseTotalPrice: {
+              range: {
+                gte: "33",
+                lte: "44",
+              },
+            },
+          },
+        ],
+      },
+    } as OrderPredicateAPI;
+
+    expect(hasPredicateNestedConditions(orderPredicate)).toBe(false);
   });
 });
