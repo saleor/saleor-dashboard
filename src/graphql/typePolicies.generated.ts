@@ -6216,7 +6216,7 @@ export type TransactionInitializeSessionFieldPolicy = {
 	transaction?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TransactionItemKeySpecifier = ('actions' | 'authorizePendingAmount' | 'authorizedAmount' | 'cancelPendingAmount' | 'canceledAmount' | 'chargePendingAmount' | 'chargedAmount' | 'checkout' | 'createdAt' | 'createdBy' | 'events' | 'externalUrl' | 'id' | 'message' | 'metadata' | 'metafield' | 'metafields' | 'modifiedAt' | 'name' | 'order' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'pspReference' | 'refundPendingAmount' | 'refundedAmount' | TransactionItemKeySpecifier)[];
+export type TransactionItemKeySpecifier = ('actions' | 'authorizePendingAmount' | 'authorizedAmount' | 'cancelPendingAmount' | 'canceledAmount' | 'chargePendingAmount' | 'chargedAmount' | 'checkout' | 'createdAt' | 'createdBy' | 'events' | 'externalUrl' | 'id' | 'message' | 'metadata' | 'metafield' | 'metafields' | 'modifiedAt' | 'name' | 'order' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'pspReference' | 'refundPendingAmount' | 'refundedAmount' | 'token' | TransactionItemKeySpecifier)[];
 export type TransactionItemFieldPolicy = {
 	actions?: FieldPolicy<any> | FieldReadFunction<any>,
 	authorizePendingAmount?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6243,7 +6243,8 @@ export type TransactionItemFieldPolicy = {
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
 	pspReference?: FieldPolicy<any> | FieldReadFunction<any>,
 	refundPendingAmount?: FieldPolicy<any> | FieldReadFunction<any>,
-	refundedAmount?: FieldPolicy<any> | FieldReadFunction<any>
+	refundedAmount?: FieldPolicy<any> | FieldReadFunction<any>,
+	token?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TransactionItemMetadataUpdatedKeySpecifier = ('issuedAt' | 'issuingPrincipal' | 'recipient' | 'transaction' | 'version' | TransactionItemMetadataUpdatedKeySpecifier)[];
 export type TransactionItemMetadataUpdatedFieldPolicy = {
