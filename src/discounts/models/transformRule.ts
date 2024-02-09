@@ -58,7 +58,7 @@ export const mapAPIRuleToForm = (
       ...baseRuleData,
       conditions: orderconditions,
       hasPredicateNestedConditions: hasPredicateNestedConditions(
-        rule.orderPredicate.discountedObjectPredicate,
+        rule.orderPredicate,
       ),
     };
   }

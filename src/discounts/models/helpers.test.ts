@@ -52,6 +52,35 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
   });
 
+  it("should return true if predicate is one and has not allow key", () => {
+    const catalogPredicate = {
+      productPredicate: {
+        giftCard: true,
+      },
+    } as any;
+
+    expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
+  });
+
+  it("should return true if predicate has many nested conditions and one  has not allow key", () => {
+    const catalogPredicate = {
+      OR: [
+        {
+          collectionPredicate: {
+            ids: ["Q2F0ZWdvcnk6OA=="],
+          },
+        },
+        {
+          productPredicate: {
+            slug: "test",
+          },
+        },
+      ],
+    } as CataloguePredicateAPI;
+
+    expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
+  });
+
   it("should return true if predicate has nested OR property", () => {
     const catalogPredicate = {
       OR: [
@@ -75,6 +104,35 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
                 },
               },
             ],
+          },
+        },
+      ],
+    } as CataloguePredicateAPI;
+
+    expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
+  });
+
+  it("should return true if predicate has nested AND property", () => {
+    const catalogPredicate = {
+      OR: [
+        {
+          collectionPredicate: {
+            ids: ["Q2F0ZWdvcnk6OA=="],
+          },
+        },
+        {
+          productPredicate: {
+            ids: ["Q2F0ZWdvcnk6FA=="],
+          },
+        },
+        {
+          AND: {
+            collectionPredicate: {
+              ids: ["Q2F0ZWdvcnk6OA=="],
+            },
+            productPredicate: {
+              ids: ["Q2F0ZWdvcnk6OA=="],
+            },
           },
         },
       ],

@@ -650,6 +650,7 @@ export const PromotionDetailsFragmentDoc = gql`
     fragment PromotionDetails on Promotion {
   id
   name
+  type
   description
   startDate
   endDate

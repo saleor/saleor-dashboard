@@ -114,17 +114,29 @@ export function getConditionValue(conditionValue: DecimalFilterInput) {
   return conditionValue.eq;
 }
 
+const ALLOW_KEYS = ["ids", "eq", "oneOf", "range"];
+
 export function hasPredicateNestedConditions(
   predicate: OrderPredicateAPI | CataloguePredicateAPI,
-) {
+): boolean {
   const keys = Object.keys(predicate);
-
   if (keys.includes("AND") || keys.length > 2) {
     return true;
   }
 
+  if (keys.length === 1 && keys[0] !== "OR") {
+    const innerKeys = Object.keys(
+      predicate[keys[0] as keyof typeof predicate] ?? {},
+    );
+    return innerKeys.every(key => !ALLOW_KEYS.includes(key));
+  }
+
   if (predicate.OR && predicate.OR?.some(checkDeeplyNestedPredicate)) {
     return true;
+  }
+
+  if ("discountedObjectPredicate" in predicate) {
+    return hasPredicateNestedConditions(predicate.discountedObjectPredicate);
   }
 
   return false;
@@ -141,6 +153,17 @@ function checkDeeplyNestedPredicate(
   type keyType = keyof typeof nestedPredicate;
 
   for (const key in nestedPredicate) {
+    if (ALLOW_KEYS.includes(key)) {
+      continue;
+    }
+
+    const innerKeys = Object.keys(nestedPredicate[key as keyType] ?? {});
+    const hasNotAllowedKeys = innerKeys.every(key => !ALLOW_KEYS.includes(key));
+
+    if (hasNotAllowedKeys) {
+      return true;
+    }
+
     if (typeof nestedPredicate[key as keyType] === "object") {
       return checkDeeplyNestedPredicate(
         nestedPredicate[key as keyType] as
@@ -149,6 +172,5 @@ function checkDeeplyNestedPredicate(
       );
     }
   }
-
   return false;
 }

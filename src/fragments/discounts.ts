@@ -251,6 +251,7 @@ export const promotionDetailsFragments = gql`
   fragment PromotionDetails on Promotion {
     id
     name
+    type
     description
     startDate
     endDate

@@ -566,7 +566,7 @@ describe("DiscountRules", () => {
       "100",
     );
 
-    // Edit reward value
+    // Edit reward gifts
     await userEvent.click(screen.getByTestId("reward-type-select"));
     await userEvent.click(screen.getAllByTestId("select-option")[1]);
 
