@@ -231,7 +231,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
           </Downshift>
         )}
       </DebounceAutocomplete>
-      <div className={classes.chipContainer}>
+      <div className={classes.chipContainer} data-test-id="selected-options">
         {displayValues.map(value => (
           <div
             className={classes.chip}

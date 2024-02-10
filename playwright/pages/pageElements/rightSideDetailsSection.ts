@@ -1,5 +1,5 @@
 import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
-import { expect, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 
 export class RightSideDetailsPage {
   readonly channelSelectDialog: ChannelSelectDialog;
@@ -11,12 +11,13 @@ export class RightSideDetailsPage {
       "select-warehouse-for-shipping-method",
     ),
     readonly stockSettingsSection = page.getByTestId("stock-settings-section"),
+    readonly channelSection = page.getByTestId("channel-section"),
+    readonly warehouseSection = page.getByTestId("warehouse-section"),
     readonly selectChannelShippingPageButton = page.getByTestId(
       "select-channel-for-shipping-method",
     ),
     readonly pickupDisabledButton = page.getByTestId("DISABLED"),
     readonly pickupAllWarehousesButton = page.getByTestId("ALL"),
-
     readonly categorySelectOption = page.locator(
       "[data-test-id*='select-option']",
     ),
@@ -31,7 +32,6 @@ export class RightSideDetailsPage {
     ),
     readonly collectionInput = page.getByTestId("collections"),
     readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
-
     readonly manageChannelsButton = page.getByTestId(
       "channels-availability-manage-button",
     ),
@@ -93,11 +93,14 @@ export class RightSideDetailsPage {
   async clickEditShippingAddressButton() {
     await this.editShippingAddressButton.click();
   }
-
   async clickWarehouseSelectShippingPage() {
     await this.selectWarehouseShippingMethodButton.click();
   }
-
+  async expectOptionsSelected(section: Locator, names: string[]) {
+    for (const name of names) {
+      await expect(section.getByText(name)).toBeVisible({timeout: 30000});
+    }
+  }
   async typeAndSelectSingleWarehouseShippingPage(warehouse = "Europe") {
     await this.selectWarehouseShippingMethodButton
       .locator("input")
@@ -107,7 +110,16 @@ export class RightSideDetailsPage {
     // below click hides prompted options
     this.clickWarehouseSelectShippingPage();
   }
+  async typeAndSelectMultipleWarehousesShippingPage(warehouses: string[]) {
+    for (const warehouse of warehouses) {
+      await this.selectWarehouseShippingMethodButton
+        .locator("input")
+        .fill(warehouse);
 
+      await this.selectOption.filter({ hasText: warehouse }).first().click();
+    }
+    this.clickWarehouseSelectShippingPage();
+  }
   async clickChannelsSelectShippingPage() {
     await this.selectChannelShippingPageButton.click();
   }
@@ -116,11 +128,9 @@ export class RightSideDetailsPage {
     // below click hides prompted options
     this.clickChannelsSelectShippingPage();
   }
-
   async openChannelsDialog() {
     await this.manageChannelsButton.click();
   }
-
   async selectFirstCategory() {
     await this.categoryInput.click();
     await this.categorySelectOption.first().click();
@@ -138,7 +148,6 @@ export class RightSideDetailsPage {
     await this.collectionInput.click();
     await this.selectOption.first().click();
   }
-
   async clickEditCustomerButton() {
     await this.editCustomerButton.click();
   }
@@ -148,7 +157,6 @@ export class RightSideDetailsPage {
   async expandWarehousesSection() {
     await this.warehousesSection.locator(this.expandButton).click();
   }
-
   async clickSearchCustomerInput() {
     await this.searchCustomerInput.click();
   }
@@ -178,11 +186,9 @@ export class RightSideDetailsPage {
     await this.warehouseSelect.click();
     await this.page.getByRole("option", { name: warehouseName });
   }
-
   async selectCustomer(customer = "allison.freeman@example.com") {
     await this.selectCustomerOption.locator(`text=${customer}`).click();
   }
-
   async selectOneChannelAsAvailableWhenMoreSelected(channel: string) {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.clickAllChannelsCheckbox();
