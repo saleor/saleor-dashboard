@@ -48,7 +48,7 @@ const SaleListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
     );
     return (
       <ConditionalDiscountFilterProvider locationSearch={location.search}>
-        <DiscountList params={params} />;
+        <DiscountList params={params} />
       </ConditionalDiscountFilterProvider>
     );
   }
