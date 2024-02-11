@@ -132,6 +132,6 @@ function getOrderReward(rule: Rule) {
     rewardValue: rule.rewardValue,
     rewardType: rule.rewardType,
     rewardValueType: rule.rewardValueType,
-    gifts: null,
+    gifts: undefined,
   };
 }
