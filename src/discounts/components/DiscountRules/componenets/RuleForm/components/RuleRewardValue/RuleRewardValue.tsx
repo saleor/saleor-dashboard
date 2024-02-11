@@ -14,7 +14,7 @@ interface RuleRewardPriceProps {
   error: string | undefined;
 }
 
-export const RuleRewardPrice = ({
+export const RuleRewardValue = ({
   currencySymbol,
   error,
 }: RuleRewardPriceProps) => {
