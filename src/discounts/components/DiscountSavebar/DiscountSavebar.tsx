@@ -1,7 +1,5 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Savebar from "@dashboard/components/Savebar";
-import { discountListUrl } from "@dashboard/discounts/discountsUrls";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import React from "react";
@@ -25,7 +23,6 @@ export const DiscountSavebar = ({
 }: DiscountSavebarProps) => {
   const { formState } = useFormContext();
   const intl = useIntl();
-  const navigate = useNavigator();
   const notify = useNotifier();
   const { isDirty } = formState;
 
@@ -36,7 +33,6 @@ export const DiscountSavebar = ({
     }
 
     // In case form has not been modified, on submit we redirect to discount list with success banner
-    navigate(discountListUrl());
     notify({
       status: "success",
       text: intl.formatMessage(commonMessages.savedChanges),
