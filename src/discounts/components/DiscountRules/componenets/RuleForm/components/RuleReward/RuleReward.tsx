@@ -22,12 +22,14 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
 
   if (discountType === PromotionTypeEnum.ORDER) {
     return (
-      <RuleRewardWrapper display="grid" __gridTemplateColumns="1fr 2fr" gap={4}>
-        <RuleRewardTypeSelect />;
-        {rewardType === RewardTypeEnum.GIFT && <RuleRewardGifts />}
-        {rewardType === RewardTypeEnum.SUBTOTAL_DISCOUNT && (
-          <RuleRewardValue currencySymbol={currencySymbol} error={error} />
-        )}
+      <RuleRewardWrapper>
+        <Box display="grid" __gridTemplateColumns="1fr 2fr" gap={4}>
+          <RuleRewardTypeSelect />
+          {rewardType === RewardTypeEnum.GIFT && <RuleRewardGifts />}
+          {rewardType === RewardTypeEnum.SUBTOTAL_DISCOUNT && (
+            <RuleRewardValue currencySymbol={currencySymbol} error={error} />
+          )}
+        </Box>
       </RuleRewardWrapper>
     );
   }
