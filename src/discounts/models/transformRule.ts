@@ -80,12 +80,14 @@ export const toAPI =
     }
 
     const orderPredicate =
-      discountType === PromotionTypeEnum.ORDER
+      discountType === PromotionTypeEnum.ORDER &&
+      !rule.hasPredicateNestedConditions
         ? prepareOrderPredicate(rule.conditions)
         : undefined;
 
     const cataloguePredicate =
-      discountType === PromotionTypeEnum.CATALOGUE
+      discountType === PromotionTypeEnum.CATALOGUE &&
+      !rule.hasPredicateNestedConditions
         ? prepareCataloguePredicate(rule.conditions)
         : undefined;
 
@@ -130,6 +132,6 @@ function getOrderReward(rule: Rule) {
     rewardValue: rule.rewardValue,
     rewardType: rule.rewardType,
     rewardValueType: rule.rewardValueType,
-    gifts: null,
+    gifts: undefined,
   };
 }

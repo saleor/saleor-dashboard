@@ -42,6 +42,7 @@ const getDefaultSchema = (intl: IntlShape) =>
   z.object({
     id: z.string().optional(),
     description: z.string().nullable(),
+    hasPredicateNestedConditions: z.boolean().optional(),
     name: z
       .string()
       .min(1, intl.formatMessage(validationMessages.nameRequired)),

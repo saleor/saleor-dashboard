@@ -124,7 +124,11 @@ export function hasPredicateNestedConditions(
     return true;
   }
 
-  if (keys.length === 1 && keys[0] !== "OR") {
+  if (
+    keys.length === 1 &&
+    keys[0] !== "OR" &&
+    keys[0] !== "discountedObjectPredicate"
+  ) {
     const innerKeys = Object.keys(
       predicate[keys[0] as keyof typeof predicate] ?? {},
     );

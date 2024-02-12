@@ -5,12 +5,10 @@ import { AssignCountriesDialog } from "@pages/dialogs/assignCountriesDialog";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import type { Page } from "@playwright/test";
 
-export class ShippingMethodsPage {
-  readonly page: Page;
-  readonly basePage: BasePage;
-  readonly rightSideDetailsPage: RightSideDetailsPage;
-  readonly assignCountriesDialog: AssignCountriesDialog;
-  readonly deleteShippingMethodDialog: DeleteShippingMethodDialog;
+export class ShippingMethodsPage extends BasePage {
+  rightSideDetailsPage: RightSideDetailsPage;
+  assignCountriesDialog: AssignCountriesDialog;
+  deleteShippingMethodDialog: DeleteShippingMethodDialog;
 
 
   constructor(
@@ -31,8 +29,7 @@ export class ShippingMethodsPage {
     readonly priceBasedRatesSection = page.getByTestId("price-based-rates"),
     readonly weightBasedRatesSection = page.getByTestId("weight-based-rates"),
   ) {
-    this.page = page;
-    this.basePage = new BasePage(page);
+    super(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
     this.assignCountriesDialog = new AssignCountriesDialog(page);
     this.deleteShippingMethodDialog = new DeleteShippingMethodDialog(page);
