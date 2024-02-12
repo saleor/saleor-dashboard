@@ -54,7 +54,18 @@ export const DiscountGeneralInfo = ({
         <FormattedMessage defaultMessage="General information" id="fKrRhF" />
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <Box display="grid" gap={3}>
+        <Box display="grid" __gridTemplateColumns="250px 1fr" gap={3}>
+          <Select
+            {...typeField}
+            size="medium"
+            options={discountTypes}
+            label={intl.formatMessage({
+              defaultMessage: "Discount type",
+              id: "z/2AZY",
+            })}
+            disabled={typeDisabled || typeField.disabled}
+          />
+
           <Input
             {...nameField}
             error={!!error || !!formState.errors?.name}
@@ -66,19 +77,6 @@ export const DiscountGeneralInfo = ({
             })}
             disabled={disabled || nameField.disabled}
           />
-
-          <Box __width={250}>
-            <Select
-              {...typeField}
-              size="medium"
-              options={discountTypes}
-              label={intl.formatMessage({
-                defaultMessage: "Discount type",
-                id: "z/2AZY",
-              })}
-              disabled={typeDisabled || typeField.disabled}
-            />
-          </Box>
         </Box>
       </DashboardCard.Content>
     </DashboardCard>
