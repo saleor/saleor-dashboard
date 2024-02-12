@@ -1,5 +1,7 @@
+import { Combobox } from "@dashboard/components/Combobox";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { RewardValueTypeEnum } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import {
@@ -8,7 +10,7 @@ import {
 } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { Box, Input, Option, Select } from "@saleor/macaw-ui-next";
+import { Box, Input, Option } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -71,8 +73,17 @@ export const RuleForm = <ErrorCode,>({
     }
   }, [currencySymbol]);
 
-  const handleChannelChange = (selectedChannel: Option) => {
-    setValue("channel", selectedChannel, { shouldValidate: true });
+  const handleChannelChange = (e: ChangeEvent) => {
+    const channelId = e.target.value;
+    const channel = channels.find(channel => channel.id === channelId);
+
+    if (channel) {
+      setValue(
+        "channel",
+        { value: channel.id, label: channel.name },
+        { shouldValidate: true },
+      );
+    }
 
     if (conditions.length > 0) {
       setValue("conditions", [createEmptyCodition()]);
@@ -98,9 +109,10 @@ export const RuleForm = <ErrorCode,>({
             </RuleInputWrapper>
 
             <RuleInputWrapper __flex={1}>
-              <Select
+              <Combobox
                 {...channelfield}
                 onChange={handleChannelChange}
+                fetchOptions={() => {}}
                 size="small"
                 data-test-id="channel-dropdown"
                 label={intl.formatMessage(commonMessages.channel)}
