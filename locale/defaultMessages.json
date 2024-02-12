@@ -2315,6 +2315,9 @@
     "context": "Order summary refunds header",
     "string": "Refunds"
   },
+  "E9E5Eh": {
+    "string": "Please remember that conditions will not be updated when you change the channel."
+  },
   "EA7rjI": {
     "context": "disabled status label",
     "string": "Disabled"
@@ -6012,6 +6015,9 @@
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
   },
+  "ckSjjv": {
+    "string": "Too complex conditions to display, use playground to see details."
+  },
   "cnvyqW": {
     "context": "ChannelsSection select field placeholder",
     "string": "Add Channel"
@@ -6313,9 +6319,6 @@
   "fbH51z": {
     "context": "Amount error message",
     "string": "Amount cannot be bigger than max refund"
-  },
-  "feF0lB": {
-    "string": "Too complex conditions to display, use playground to see details"
   },
   "fehqPs": {
     "context": "order history message",
