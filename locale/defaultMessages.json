@@ -6252,6 +6252,9 @@
     "context": "dialog header",
     "string": "Search Collection"
   },
+  "f1Pj99": {
+    "string": "Discount of {value} through the {channel} with {unknown} conditions"
+  },
   "f2F1NJ": {
     "context": "section title",
     "string": "Quick Pick"
@@ -8478,6 +8481,9 @@
   },
   "un+VWt": {
     "string": "Search products"
+  },
+  "uo8NOT": {
+    "string": "unknown"
   },
   "uoKAmI": {
     "string": "Add new order"
