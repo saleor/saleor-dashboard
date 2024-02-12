@@ -104,10 +104,14 @@ export function getRuleConditionsOptionsDetailsMap(
   return Object.values(data).reduce<Record<string, string>>((acc, value) => {
     const items =
       mapEdgesToItems(
-        value as RuleConditionsSelectedOptionsDetailsQuery["categories"],
+        value as RuleConditionsSelectedOptionsDetailsQuery["productVariants"],
       ) ?? [];
     items.forEach(item => {
-      acc[item.id] = item.name;
+      if (item.product) {
+        acc[item.id] = `${item.product.name} - ${item.name}`;
+      } else {
+        acc[item.id] = item.name;
+      }
     });
 
     return acc;

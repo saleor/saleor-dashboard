@@ -1224,6 +1224,7 @@ export const order = (
             quantity: 2,
             quantityFulfilled: 2,
             quantityToFulfill: 0,
+            isGift: false,
             allocations: [
               {
                 id: "allocation_test_id",
@@ -1353,6 +1354,7 @@ export const order = (
             quantity: 2,
             quantityFulfilled: 2,
             quantityToFulfill: 0,
+            isGift: false,
             allocations: [
               {
                 id: "allocation_test_id",
@@ -1488,6 +1490,7 @@ export const order = (
       quantity: 3,
       quantityFulfilled: 0,
       quantityToFulfill: 3,
+      isGift: false,
       allocations: [
         {
           id: "allocation_test_id",
@@ -1600,6 +1603,7 @@ export const order = (
       quantity: 2,
       quantityFulfilled: 2,
       quantityToFulfill: 0,
+      isGift: false,
       allocations: [
         {
           id: "allocation_test_id",
@@ -1879,6 +1883,7 @@ export const draftOrder = (
       quantity: 2,
       quantityFulfilled: 0,
       quantityToFulfill: 2,
+      isGift: false,
       allocations: [
         {
           id: "allocation_test_id",
@@ -1991,6 +1996,7 @@ export const draftOrder = (
       quantity: 2,
       quantityFulfilled: 0,
       quantityToFulfill: 2,
+      isGift: false,
       allocations: [
         {
           id: "allocation_test_id",

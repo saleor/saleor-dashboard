@@ -1,5 +1,6 @@
 import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
 import {
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,
@@ -32,7 +33,6 @@ interface DiscountDetailsFormProps {
   disabled: boolean;
   data: PromotionDetailsFragment | undefined | null;
   onSubmit: (data: DiscoutFormData) => void;
-  ruleConditionsOptionsDetailsMap: Record<string, string>;
   onRuleUpdateSubmit: (
     data: Rule,
   ) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
@@ -50,7 +50,6 @@ export const DiscountDetailsForm = ({
   onRuleCreateSubmit,
   onRuleDeleteSubmit,
   onRuleUpdateSubmit,
-  ruleConditionsOptionsDetailsMap,
 }: DiscountDetailsFormProps) => {
   const intl = useIntl();
 
@@ -82,12 +81,14 @@ export const DiscountDetailsForm = ({
 
   const handleSubmit = methods.handleSubmit(onSubmit);
 
+  const { ruleConditionsValues, gifts } = useLabelMapsContext();
   const { onDeleteRule, onRuleSubmit, rules, rulesErrors } = useRulesHandlers({
     data,
     onRuleCreateSubmit,
     onRuleDeleteSubmit,
     onRuleUpdateSubmit,
-    ruleConditionsOptionsDetailsMap,
+    ruleConditionsOptionsDetailsMap: ruleConditionsValues.labels,
+    giftsOptionsDetailsMap: gifts.labels,
   });
 
   return (

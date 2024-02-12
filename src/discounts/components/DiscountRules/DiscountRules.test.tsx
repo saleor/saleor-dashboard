@@ -13,6 +13,7 @@ import {
   searchProductsMock,
   searchVariantsMock,
 } from "./componenets/RuleForm/components/RuleConditionValues/hooks/options/mocks";
+import { variantsWithProductDataMock } from "./componenets/RuleForm/components/RuleRewardGifts/mock";
 import { DiscountRules } from "./DiscountRules";
 import {
   catalogComplexRules,
@@ -36,6 +37,20 @@ jest.mock("@dashboard/hooks/useNotifier", () => ({
   default: jest.fn(() => () => undefined),
 }));
 
+jest.mock("@dashboard/discounts/views/DiscountDetails/context/context", () => ({
+  __esModule: true,
+  useLabelMapsContext: jest.fn(() => ({
+    ruleConditionsValues: {
+      labels: {},
+      loading: false,
+    },
+    gifts: {
+      labels: [],
+      loading: false,
+    },
+  })),
+}));
+
 jest.mock("./hooks/useGraphQLPlayground", () => ({
   useGraphQLPlayground: jest.fn(() => ({
     opepnGrapQLPlayground: jest.fn(),
@@ -52,6 +67,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
         searchCollectionsMock,
         searchProductsMock,
         searchVariantsMock,
+        variantsWithProductDataMock,
       ]}
     >
       <LegacyThemeProvider>
@@ -100,7 +116,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -125,7 +140,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -164,7 +178,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -198,7 +211,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={onRuleAdd}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -222,7 +234,7 @@ describe("DiscountRules", () => {
     );
 
     // Select channel
-    await userEvent.click(screen.getByRole("combobox"));
+    await userEvent.click(screen.getByTestId("channel-dropdown"));
     expect(await screen.findByText(/test/i)).toBeInTheDocument();
 
     await act(async () => {
@@ -241,7 +253,7 @@ describe("DiscountRules", () => {
 
     // Add reward value
     await userEvent.type(
-      screen.getByRole("input", { name: "Discount value" }),
+      screen.getByRole("input", { name: "Reward value" }),
       "22",
     );
 
@@ -270,6 +282,8 @@ describe("DiscountRules", () => {
         id: "",
         name: "Name 123",
         rewardValue: 22,
+        rewardGifts: [],
+        rewardType: null,
         rewardValueType: "FIXED",
       },
       null,
@@ -289,7 +303,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={onRuleAdd}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -313,7 +326,7 @@ describe("DiscountRules", () => {
     );
 
     // Channel select
-    await userEvent.click(screen.getByRole("combobox"));
+    await userEvent.click(screen.getByTestId("channel-dropdown"));
     expect(await screen.findByText(/test/i)).toBeInTheDocument();
 
     await act(async () => {
@@ -335,8 +348,10 @@ describe("DiscountRules", () => {
       "144",
     );
 
+    // Reward value
+    await userEvent.click(screen.getByRole("radio", { name: "$" }));
     await userEvent.type(
-      screen.getByRole("input", { name: "Discount value" }),
+      screen.getByRole("input", { name: "Reward value" }),
       "22",
     );
 
@@ -360,6 +375,8 @@ describe("DiscountRules", () => {
         id: "",
         name: "Order rule 123",
         rewardValue: 22,
+        rewardGifts: [],
+        rewardType: "SUBTOTAL_DISCOUNT",
         rewardValueType: "FIXED",
       },
       null,
@@ -380,7 +397,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={onRuleEdit}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -430,7 +446,7 @@ describe("DiscountRules", () => {
     // Edit reward
     await userEvent.click(screen.getByRole("radio", { name: "$" }));
     const discountValueField = screen.getByRole("input", {
-      name: "Discount value",
+      name: "Reward value",
     });
     await userEvent.clear(discountValueField);
     await userEvent.type(discountValueField, "122");
@@ -452,8 +468,8 @@ describe("DiscountRules", () => {
             type: "is",
             value: [
               {
-                label: "55cm x 55cm",
-                value: "UHJvZHVjdFZhcmlhbnQ6OTg4",
+                label: "Carrot Juice - 1l",
+                value: "UHJvZHVjdFZhcmlhbnQ6MjA2",
               },
             ],
           },
@@ -470,6 +486,8 @@ describe("DiscountRules", () => {
         ],
         description: "",
         rewardValue: 122,
+        rewardGifts: [],
+        rewardType: null,
         rewardValueType: "FIXED",
       },
       0,
@@ -490,7 +508,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={onRuleEdit}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -549,13 +566,14 @@ describe("DiscountRules", () => {
       "100",
     );
 
-    // Edit reward value
-    await userEvent.click(screen.getByRole("radio", { name: "$" }));
-    const discountValueField = screen.getByRole("input", {
-      name: "Discount value",
-    });
-    await userEvent.clear(discountValueField);
-    await userEvent.type(discountValueField, "122");
+    // Edit reward gifts
+    await userEvent.click(screen.getByTestId("reward-type-select"));
+    await userEvent.click(screen.getAllByTestId("select-option")[1]);
+
+    await userEvent.click(screen.getByTestId("reward-gifts-select"));
+    await userEvent.click(screen.getAllByTestId("select-option")[0]);
+    await userEvent.click(screen.getAllByTestId("select-option")[2]);
+    await userEvent.click(screen.getAllByTestId("select-option")[3]);
 
     await userEvent.click(screen.getByRole("button", { name: /save/i }));
 
@@ -581,7 +599,22 @@ describe("DiscountRules", () => {
           },
         ],
         description: "",
-        rewardValue: 122,
+        rewardType: "GIFT",
+        rewardGifts: [
+          {
+            label: "Code Division T-shirt - L",
+            value: "UHJvZHVjdFZhcmlhbnQ6MjUz",
+          },
+          {
+            label: "Blue Hoodie - S",
+            value: "UHJvZHVjdFZhcmlhbnQ6MzAx",
+          },
+          {
+            label: "Black Hoodie - XL",
+            value: "UHJvZHVjdFZhcmlhbnQ6Mjk5",
+          },
+        ],
+        rewardValue: null,
         rewardValueType: "FIXED",
       },
       0,
@@ -602,7 +635,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={onRuleDelete}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -637,7 +669,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,
@@ -683,7 +714,6 @@ describe("DiscountRules", () => {
         onRuleSubmit={jest.fn()}
         onRuleDelete={jest.fn()}
         disabled={false}
-        loading={false}
         deleteButtonState="default"
         getRuleConfirmButtonState={jest.fn(() => "default")}
       />,

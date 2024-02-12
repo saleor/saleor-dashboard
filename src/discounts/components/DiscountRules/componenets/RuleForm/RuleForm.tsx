@@ -1,6 +1,6 @@
 import { Combobox } from "@dashboard/components/Combobox";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
-import { RewardValueTypeEnum } from "@dashboard/graphql";
+import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -32,7 +32,7 @@ export const RuleForm = <ErrorCode,>({
   openPlayground,
 }: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
-  const { disabled, channels } = useDiscountRulesContext();
+  const { disabled, channels, discountType } = useDiscountRulesContext();
   const { watch, getValues, setValue, formState } = useFormContext<Rule>();
   const formErrors = getFormErrors(["rewardValue"], errors);
 
@@ -84,11 +84,13 @@ export const RuleForm = <ErrorCode,>({
         { shouldValidate: true },
       );
     }
+    setValue("rewardGifts", []);
 
-    if (conditions.length > 0) {
-      setValue("conditions", [createEmptyCodition()]);
-    } else {
-      setValue("conditions", []);
+    // Restart conditions when catalog promotion
+    if (discountType === PromotionTypeEnum.CATALOGUE) {
+      if (conditions.length > 0) {
+        setValue("conditions", [createEmptyCodition()]);
+      }
     }
   };
 

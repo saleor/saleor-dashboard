@@ -9,8 +9,9 @@ export interface Rule {
   description: string | null;
   channel: Option | null;
   rewardType: RewardTypeEnum | null;
-  rewardValue: number;
+  rewardValue: number | null;
   rewardValueType: RewardValueTypeEnum;
+  rewardGifts: Option[];
   conditions: Condition[];
   hasPredicateNestedConditions?: boolean;
 }
@@ -22,6 +23,7 @@ export const createEmptyRule = (): Rule => ({
   channel: null,
   rewardType: null,
   rewardValue: 0,
+  rewardGifts: [],
   rewardValueType: RewardValueTypeEnum.FIXED,
   conditions: [],
   hasPredicateNestedConditions: false,

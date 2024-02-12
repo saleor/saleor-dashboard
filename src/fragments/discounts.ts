@@ -238,6 +238,7 @@ export const promotionRuleDetailsFragment = gql`
     channels {
       ...ChannelDetails
     }
+    giftIds
     rewardType
     rewardValueType
     rewardValue
@@ -254,6 +255,7 @@ export const promotionDetailsFragments = gql`
     description
     startDate
     endDate
+    type
     rules {
       ...PromotionRuleDetails
     }
@@ -267,5 +269,6 @@ export const promotionFragment = gql`
     name
     startDate
     endDate
+    type
   }
 `;

@@ -76,7 +76,7 @@ export const DiscountGeneralInfo = ({
                 defaultMessage: "Discount type",
                 id: "z/2AZY",
               })}
-              disabled={typeDisabled || nameField.disabled}
+              disabled={typeDisabled || typeField.disabled}
             />
           </Box>
         </Box>

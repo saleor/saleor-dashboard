@@ -68,8 +68,9 @@ export const createRuleUpdateHandler = (
     const ruleData = promotionData?.rules?.find(rule => rule.id === data.id);
     const ruleChannels: string[] =
       ruleData?.channels?.map(channel => channel.id) ?? [];
+    const ruleGifts: string[] = ruleData?.giftIds ?? [];
 
-    const { channels, ...input } = toAPI(promotionData?.type)(data);
+    const { channels, gifts, ...input } = toAPI(promotionData?.type)(data);
 
     const response = await updateRule({
       id: data.id!,
@@ -77,6 +78,8 @@ export const createRuleUpdateHandler = (
         ...input,
         addChannels: difference(channels, ruleChannels),
         removeChannels: difference(ruleChannels, channels ?? []),
+        addGifts: difference(gifts, ruleGifts),
+        removeGifts: difference(ruleGifts, gifts ?? []),
       },
     });
 

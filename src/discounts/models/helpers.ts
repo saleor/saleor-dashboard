@@ -14,6 +14,7 @@ export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
     name: data.name,
     description: data.description ? JSON.parse(data.description) : null,
     channels: data?.channel ? [data.channel.value] : [],
+    rewardType: data.rewardType,
     rewardValue: data.rewardValue,
     rewardValueType: data.rewardValueType,
   };
@@ -21,7 +22,8 @@ export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
 
 export const createBaseRuleInputFromAPI = (
   data: PromotionRuleDetailsFragment,
-): Omit<Rule, "toAPI" | "type" | "conditions"> => {
+  giftsLabels: Record<string, string>,
+): Omit<Rule, "conditions"> => {
   return {
     id: data.id,
     name: data.name ?? "",
@@ -34,6 +36,11 @@ export const createBaseRuleInputFromAPI = (
       : null,
     rewardType: data?.rewardType ?? null,
     rewardValue: data.rewardValue ?? null,
+    rewardGifts:
+      data.giftIds?.map(id => ({
+        value: id,
+        label: giftsLabels[id],
+      })) ?? [],
     rewardValueType: data.rewardValueType ?? RewardValueTypeEnum.FIXED,
   };
 };
@@ -117,7 +124,11 @@ export function hasPredicateNestedConditions(
     return true;
   }
 
-  if (keys.length === 1 && keys[0] !== "OR") {
+  if (
+    keys.length === 1 &&
+    keys[0] !== "OR" &&
+    keys[0] !== "discountedObjectPredicate"
+  ) {
     const innerKeys = Object.keys(
       predicate[keys[0] as keyof typeof predicate] ?? {},
     );

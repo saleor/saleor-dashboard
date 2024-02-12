@@ -847,6 +847,9 @@
     "context": "gift card export type label",
     "string": "gift cards"
   },
+  "3mvL2Q": {
+    "string": "and"
+  },
   "3oQzWR": {
     "context": "product availability",
     "string": "Set publication date"
@@ -1584,6 +1587,10 @@
     "context": "modal button images upload",
     "string": "Upload Images"
   },
+  "9CW3TD": {
+    "context": "label",
+    "string": "Reward type"
+  },
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
   },
@@ -1923,6 +1930,9 @@
   "BUKMzM": {
     "string": "Variant removed"
   },
+  "BVDaKx": {
+    "string": "Subtotal discount"
+  },
   "BWpuKl": {
     "string": "Update"
   },
@@ -2043,9 +2053,6 @@
   "CFT171": {
     "context": "card header title",
     "string": "Country list"
-  },
-  "CFlmRP": {
-    "string": "Rule reword value is required"
   },
   "CG+awx": {
     "context": "dialog content",
@@ -2186,6 +2193,9 @@
   "DASYUF": {
     "context": "section title",
     "string": "Checkout Configuration"
+  },
+  "DDYrvn": {
+    "string": "Rule reward value must be less than 100"
   },
   "DEa1T1": {
     "context": "button",
@@ -2757,6 +2767,9 @@
     "context": "navigator notification title",
     "string": "Navigator is here to help"
   },
+  "GxsQuO": {
+    "string": "You must select at least one gift"
+  },
   "Gz+4CI": {
     "context": "info text",
     "string": "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone."
@@ -3080,6 +3093,10 @@
     "context": "column label",
     "string": "Warehouse"
   },
+  "J3W5LI": {
+    "context": "order line is gift",
+    "string": "Is gift"
+  },
   "J3uE0t": {
     "context": "section header",
     "string": "Attribute Values"
@@ -3241,9 +3258,6 @@
   "JyQoES": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
-  },
-  "JyaQcP": {
-    "string": "Rule reword value must be less than 100"
   },
   "K+vjtE": {
     "string": "Search Variants"
@@ -5456,6 +5470,9 @@
     "context": "Taxes section title",
     "string": "Countries"
   },
+  "ZBs2Pb": {
+    "string": "Gift"
+  },
   "ZCSOaS": {
     "string": "Limit to voucher code use once"
   },
@@ -7008,9 +7025,6 @@
   "kN6SLs": {
     "string": "Min Value"
   },
-  "kNK4es": {
-    "string": "Discount value"
-  },
   "kPIZ65": {
     "context": "page header",
     "string": "Order #{orderNumber}"
@@ -7609,6 +7623,9 @@
     "context": "tab name",
     "string": "All Page Types"
   },
+  "oX2TAb": {
+    "string": "Select gifts"
+  },
   "oYGfnY": {
     "string": "ZIP / Postal code"
   },
@@ -7669,6 +7686,9 @@
   "pA8Mlv": {
     "context": "alert",
     "string": "Staff Member limit reached"
+  },
+  "pAwBtz": {
+    "string": "Reward value"
   },
   "pBTTtU": {
     "context": "product kind",
@@ -8421,6 +8441,9 @@
     "context": "Authorize {app name}",
     "string": "Authorize"
   },
+  "uf1ttM": {
+    "string": "Rule reward value is required"
+  },
   "ufD5Jr": {
     "string": "Content type"
   },
@@ -8510,6 +8533,9 @@
   },
   "v3WWK+": {
     "string": "Status is invalid"
+  },
+  "vAxm7u": {
+    "string": "You must select a channel first and select at least one gift"
   },
   "vC8vyb": {
     "context": "enabled status option label",

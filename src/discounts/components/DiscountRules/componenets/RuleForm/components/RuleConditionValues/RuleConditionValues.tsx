@@ -4,6 +4,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { Box, Input, RangeInput } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
 import { RuleConditionDynamicSelect } from "../RuleConditionDynamicSelect";
 
@@ -59,7 +60,7 @@ export const RuleConditionValues = ({
 
   if (inputType === "price.range" || inputType === "number.range") {
     return (
-      <Box display="grid" gap={1}>
+      <Box display="flex" gap={1} alignItems="center">
         <RangeInput
           data-test-id={`condition-value-${conditionIndex}`}
           value={condition.value as [string, string]}
@@ -67,7 +68,9 @@ export const RuleConditionValues = ({
           type="number"
           disabled={disabled}
           width="100%"
-        />
+        >
+          <FormattedMessage defaultMessage="and" id="3mvL2Q" />
+        </RangeInput>
       </Box>
     );
   }

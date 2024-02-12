@@ -13,6 +13,7 @@ import { getMutationErrors } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { EmpptyLabelsMapsProvider } from "../DiscountDetails/context/provider";
 import { useDiscountCreate } from "./handlers";
 
 export const DiscountCreate = () => {
@@ -45,16 +46,18 @@ export const DiscountCreate = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
-      <DiscountCreatePage
-        disabled={promotionCreateOpts.loading}
-        onBack={() => {
-          navigate(discountListUrl());
-        }}
-        errors={getMutationErrors(promotionCreateOpts)}
-        channels={availableChannels}
-        submitButtonState={promotionCreateOpts.status}
-        onSubmit={handlePromotionCreate}
-      />
+      <EmpptyLabelsMapsProvider>
+        <DiscountCreatePage
+          disabled={promotionCreateOpts.loading}
+          onBack={() => {
+            navigate(discountListUrl());
+          }}
+          errors={getMutationErrors(promotionCreateOpts)}
+          channels={availableChannels}
+          submitButtonState={promotionCreateOpts.status}
+          onSubmit={handlePromotionCreate}
+        />
+      </EmpptyLabelsMapsProvider>
     </>
   );
 };
