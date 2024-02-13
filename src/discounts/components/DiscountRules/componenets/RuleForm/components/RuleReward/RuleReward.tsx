@@ -23,7 +23,7 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
   if (discountType === PromotionTypeEnum.ORDER) {
     return (
       <RuleRewardWrapper>
-        <Box display="grid" __gridTemplateColumns="1fr 2fr" gap={4}>
+        <Box display="grid" __gridTemplateColumns="200px 1fr" gap={2}>
           <RuleRewardTypeSelect />
           {rewardType === RewardTypeEnum.GIFT && <RuleRewardGifts />}
           {rewardType === RewardTypeEnum.SUBTOTAL_DISCOUNT && (
@@ -35,7 +35,7 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
   }
 
   return (
-    <RuleRewardWrapper __width={350}>
+    <RuleRewardWrapper __width={315}>
       <RuleRewardValue currencySymbol={currencySymbol} error={error} />
     </RuleRewardWrapper>
   );
@@ -48,7 +48,7 @@ function RuleRewardWrapper({
   const intl = useIntl();
 
   return (
-    <Box {...props}>
+    <Box display="grid" gap={4} {...props}>
       <Text as="p">{intl.formatMessage(messages.reward)}</Text>
       {children}
     </Box>

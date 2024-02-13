@@ -58,6 +58,11 @@ export const messages = defineMessages({
     id: "7MUx0T",
     defaultMessage: "Discount of {value} through the {channel}",
   },
+  ruleSummaryWithComplexConditions: {
+    id: "f1Pj99",
+    defaultMessage:
+      "Discount of {value} through the {channel} with {unknown} conditions",
+  },
   ruleSummaryMoreItems: {
     id: "B0fwAj",
     defaultMessage: "and {itemsLength} more",
@@ -87,9 +92,14 @@ export const messages = defineMessages({
     defaultMessage: "No channels selected",
   },
   noHanldedConditions: {
-    id: "feF0lB",
+    id: "ckSjjv",
     defaultMessage:
-      "Too complex conditions to display, use playground to see details",
+      "Too complex conditions to display, use playground to see details.",
+  },
+  noHandledConditionsReminder: {
+    id: "E9E5Eh",
+    defaultMessage:
+      "Please remember that conditions will not be updated when you change the channel.",
   },
   noConditonsCreate: {
     id: "Xu4ST7",

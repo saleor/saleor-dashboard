@@ -98,8 +98,8 @@ export const RuleForm = <ErrorCode,>({
     <RichTextContext.Provider value={richText}>
       <Box __width={650} __minHeight={515} __maxHeight="75vh" overflowY="auto">
         <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
-          <Box display="flex" gap={4}>
-            <RuleInputWrapper __flex={1}>
+          <Box display="grid" __gridTemplateColumns="315px 1fr" gap={2}>
+            <RuleInputWrapper>
               <Input
                 {...nameField}
                 disabled={disabled || nameField.disabled}
@@ -110,7 +110,7 @@ export const RuleForm = <ErrorCode,>({
               />
             </RuleInputWrapper>
 
-            <RuleInputWrapper __flex={1}>
+            <RuleInputWrapper>
               <Combobox
                 {...channelfield}
                 onChange={handleChannelChange}

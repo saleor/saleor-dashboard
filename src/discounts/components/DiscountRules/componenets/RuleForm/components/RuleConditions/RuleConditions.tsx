@@ -71,7 +71,7 @@ export const RuleConditions = ({
     <Box display="flex" flexDirection="column" gap={4}>
       <Text>{intl.formatMessage(messages.conditions)}</Text>
 
-      <Box display="flex" flexDirection="column" gap={4}>
+      <Box display="flex" flexDirection="column" gap={2}>
         {fields.map((condition, conditionIndex) => (
           <RuleConditionRow
             isConditionTypeSelected={isConditionNameSelected}
