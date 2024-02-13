@@ -139,6 +139,36 @@ describe("AppActionsHandler", function () {
         "/dashboard/apps/XYZ/app/foo/bar",
       );
     });
+    it("replaces dashboard url properly", () => {
+      const mockHistoryReplaceState = jest.fn();
+      jest
+        .spyOn(window.history, "replaceState")
+        .mockImplementation(mockHistoryReplaceState);
+
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() =>
+        AppActionsHandler.useHandleUpdateRoutingAction("XYZ"),
+      );
+
+      handle({
+        type: "updateRouting",
+        payload: {
+          actionId: "123",
+          newRoute: "/foo/bar",
+          replace: true,
+        },
+      });
+
+      expect(mockHistoryReplaceState).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplaceState).toHaveBeenCalledWith(
+        null,
+        "",
+        "/dashboard/apps/XYZ/app/foo/bar",
+      );
+    });
   });
   describe("useHandleRedirectAction", () => {
     describe("Open in the new browser context", () => {

@@ -157,12 +157,13 @@ const useHandleRedirectAction = (appId: string) => {
 
 const useHandleUpdateRoutingAction = (appId: string) => ({
   handle: (action: UpdateRouting) => {
-    const { newRoute, actionId } = action.payload;
+    const { newRoute, replace, actionId } = action.payload;
 
     debug(
-      `Handling UpdateRouting action with ID: %s and new route: %s`,
+      `Handling UpdateRouting action with ID: %s and new route: %s (replace=%s)`,
       actionId,
       newRoute,
+      replace,
     );
 
     const exactLocation = urlJoin(
@@ -173,7 +174,11 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
 
     debug(`Update to new nested route:  %s`, exactLocation);
 
-    window.history.pushState(null, "", exactLocation);
+    if (replace) {
+      window.history.replaceState(null, "", exactLocation);
+    } else {
+      window.history.pushState(null, "", exactLocation);
+    }
 
     return createResponseStatus(actionId, true);
   },
