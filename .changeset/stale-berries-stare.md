@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-Use history API to notify about routing updates
+Handle `replace` in the app-bridge routing updates
