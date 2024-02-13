@@ -374,6 +374,9 @@
     "context": "header",
     "string": "Tokens"
   },
+  "0OAE9q": {
+    "string": "Checkout and orders"
+  },
   "0OfZJA": {
     "context": "button",
     "string": "Back"
@@ -427,6 +430,10 @@
   "0kPdlb": {
     "context": "deprecated secret key toolbar label",
     "string": "Use RS256 signature instead."
+  },
+  "0khVBN": {
+    "context": "discount type",
+    "string": "Catalog"
   },
   "0krqBj": {
     "context": "page header",
@@ -840,6 +847,9 @@
     "context": "gift card export type label",
     "string": "gift cards"
   },
+  "3mvL2Q": {
+    "string": "and"
+  },
   "3oQzWR": {
     "context": "product availability",
     "string": "Set publication date"
@@ -965,6 +975,9 @@
   "4VOIum": {
     "context": "product availability",
     "string": "Enabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+  },
+  "4VivsY": {
+    "string": "Total price"
   },
   "4W/CKn": {
     "context": "modal button",
@@ -1191,6 +1204,9 @@
     "context": "weight",
     "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
   },
+  "6230rS": {
+    "string": "Discount rules for carts and draft orders."
+  },
   "62T585": {
     "context": "button",
     "string": "{languageName} - {languageCode}"
@@ -1292,6 +1308,9 @@
   "6iw4VR": {
     "context": "delete variant dialog title",
     "string": "Delete Product Variants"
+  },
+  "6pPMp9": {
+    "string": "Subtotal price"
   },
   "6sjBvJ": {
     "context": "input placeholder",
@@ -1567,6 +1586,10 @@
   "9CEu8k": {
     "context": "modal button images upload",
     "string": "Upload Images"
+  },
+  "9CW3TD": {
+    "context": "label",
+    "string": "Reward type"
   },
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
@@ -1907,6 +1930,9 @@
   "BUKMzM": {
     "string": "Variant removed"
   },
+  "BVDaKx": {
+    "string": "Subtotal discount"
+  },
   "BWpuKl": {
     "string": "Update"
   },
@@ -1960,6 +1986,9 @@
   },
   "BtErCZ": {
     "string": "Search Plugins..."
+  },
+  "BvGp1I": {
+    "string": "between"
   },
   "BvRyoX": {
     "context": "alert message",
@@ -2024,9 +2053,6 @@
   "CFT171": {
     "context": "card header title",
     "string": "Country list"
-  },
-  "CFlmRP": {
-    "string": "Rule reword value is required"
   },
   "CG+awx": {
     "context": "dialog content",
@@ -2168,6 +2194,9 @@
     "context": "section title",
     "string": "Checkout Configuration"
   },
+  "DDYrvn": {
+    "string": "Rule reward value must be less than 100"
+  },
   "DEa1T1": {
     "context": "button",
     "string": "Save Search"
@@ -2285,6 +2314,9 @@
   "E9Dz18": {
     "context": "Order summary refunds header",
     "string": "Refunds"
+  },
+  "E9E5Eh": {
+    "string": "Please remember that conditions will not be updated when you change the channel."
   },
   "EA7rjI": {
     "context": "disabled status label",
@@ -2738,6 +2770,9 @@
     "context": "navigator notification title",
     "string": "Navigator is here to help"
   },
+  "GxsQuO": {
+    "string": "You must select at least one gift"
+  },
   "Gz+4CI": {
     "context": "info text",
     "string": "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone."
@@ -2834,6 +2869,9 @@
   "HYHLsB": {
     "context": "product field",
     "string": "Export Variant ID"
+  },
+  "HYK65C": {
+    "string": "Order rule"
   },
   "HaQ8cg": {
     "context": "button",
@@ -3058,6 +3096,10 @@
     "context": "column label",
     "string": "Warehouse"
   },
+  "J3W5LI": {
+    "context": "order line is gift",
+    "string": "Is gift"
+  },
   "J3uE0t": {
     "context": "section header",
     "string": "Attribute Values"
@@ -3220,9 +3262,6 @@
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
   },
-  "JyaQcP": {
-    "string": "Rule reword value must be less than 100"
-  },
   "K+vjtE": {
     "string": "Search Variants"
   },
@@ -3348,6 +3387,9 @@
     "context": "mark as paid strategy checkbox label",
     "string": "Use Transaction flow when marking order as paid"
   },
+  "L5IuDw": {
+    "string": "lower"
+  },
   "L5io1l": {
     "context": "returned products list title",
     "string": "Products returned"
@@ -3444,6 +3486,9 @@
   "LnRlch": {
     "context": "attribute's editor component entity",
     "string": "Entity"
+  },
+  "Lrp9WW": {
+    "string": "Discount of {value} on the purchase of {conditions} through the {channel}"
   },
   "LsgHmZ": {
     "context": "delete shipping zone",
@@ -3687,9 +3732,6 @@
     "context": "order line discount updated title",
     "string": "{productName} discount was updated by"
   },
-  "NgRa6m": {
-    "string": "Discount of {value} on the purchase of {items} through the {channel}"
-  },
   "NhQboB": {
     "context": "dialog header",
     "string": "Saleor couldn’t cancel order"
@@ -3912,6 +3954,9 @@
   },
   "PFXGaR": {
     "string": "Shipping Zones"
+  },
+  "PFnobO": {
+    "string": "greater"
   },
   "PHUcrU": {
     "context": "date when order was placed",
@@ -4548,6 +4593,9 @@
   "TTVPyd": {
     "context": "dialog subheading",
     "string": "Create a manual transaction for non-integrated payments"
+  },
+  "TVR4E6": {
+    "string": "Open playground"
   },
   "TWVx7O": {
     "context": "delete product dialog title",
@@ -5422,6 +5470,9 @@
     "context": "Taxes section title",
     "string": "Countries"
   },
+  "ZBs2Pb": {
+    "string": "Gift"
+  },
   "ZCSOaS": {
     "string": "Limit to voucher code use once"
   },
@@ -5965,6 +6016,9 @@
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
   },
+  "ckSjjv": {
+    "string": "Too complex conditions to display, use playground to see details."
+  },
   "cnvyqW": {
     "context": "ChannelsSection select field placeholder",
     "string": "Add Channel"
@@ -6205,6 +6259,9 @@
     "context": "dialog header",
     "string": "Search Collection"
   },
+  "f1Pj99": {
+    "string": "Discount of {value} through the {channel} with {unknown} conditions"
+  },
   "f2F1NJ": {
     "context": "section title",
     "string": "Quick Pick"
@@ -6231,6 +6288,9 @@
   "fExm0/": {
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
+  },
+  "fKrRhF": {
+    "string": "General information"
   },
   "fLCV/w": {
     "string": "Add new value"
@@ -6507,6 +6567,9 @@
   },
   "h2vipu": {
     "string": "Code"
+  },
+  "h5P++h": {
+    "string": "Variants"
   },
   "h65vZI": {
     "context": "times voucher used",
@@ -6969,9 +7032,6 @@
   "kN6SLs": {
     "string": "Min Value"
   },
-  "kNK4es": {
-    "string": "Discount value"
-  },
   "kPIZ65": {
     "context": "page header",
     "string": "Order #{orderNumber}"
@@ -7173,6 +7233,9 @@
   "lXq4EE": {
     "context": "checkbox",
     "string": "Refund shipment: {currency} {amount}"
+  },
+  "lZC/1a": {
+    "string": "greater than {value}"
   },
   "laax5C": {
     "context": "order returned success message",
@@ -7567,6 +7630,9 @@
     "context": "tab name",
     "string": "All Page Types"
   },
+  "oX2TAb": {
+    "string": "Select gifts"
+  },
   "oYGfnY": {
     "string": "ZIP / Postal code"
   },
@@ -7584,6 +7650,10 @@
   "ojHyj3": {
     "context": "discount value label",
     "string": "discount value"
+  },
+  "onUvP+": {
+    "context": "discount type",
+    "string": "Order"
   },
   "opIDox": {
     "context": "unassign product from sale and save, button",
@@ -7627,6 +7697,9 @@
   "pA8Mlv": {
     "context": "alert",
     "string": "Staff Member limit reached"
+  },
+  "pAwBtz": {
+    "string": "Reward value"
   },
   "pBTTtU": {
     "context": "product kind",
@@ -7805,6 +7878,9 @@
   },
   "qPSWmL": {
     "string": "Enter usage"
+  },
+  "qSCmIG": {
+    "string": "lower than {value}"
   },
   "qT6YYk": {
     "context": "order line total price",
@@ -8376,6 +8452,9 @@
     "context": "Authorize {app name}",
     "string": "Authorize"
   },
+  "uf1ttM": {
+    "string": "Rule reward value is required"
+  },
   "ufD5Jr": {
     "string": "Content type"
   },
@@ -8410,6 +8489,9 @@
   },
   "un+VWt": {
     "string": "Search products"
+  },
+  "uo8NOT": {
+    "string": "unknown"
   },
   "uoKAmI": {
     "string": "Add new order"
@@ -8465,6 +8547,9 @@
   },
   "v3WWK+": {
     "string": "Status is invalid"
+  },
+  "vAxm7u": {
+    "string": "You must select a channel first and select at least one gift"
   },
   "vC8vyb": {
     "context": "enabled status option label",
@@ -8996,6 +9081,9 @@
   "yzYXW/": {
     "context": "header, dialog",
     "string": "Create New Warehouse"
+  },
+  "z/2AZY": {
+    "string": "Discount type"
   },
   "z0gGP+": {
     "context": "number of attributes",

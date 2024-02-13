@@ -238,9 +238,12 @@ export const promotionRuleDetailsFragment = gql`
     channels {
       ...ChannelDetails
     }
+    giftIds
+    rewardType
     rewardValueType
     rewardValue
     cataloguePredicate
+    orderPredicate
   }
 `;
 
@@ -248,9 +251,11 @@ export const promotionDetailsFragments = gql`
   fragment PromotionDetails on Promotion {
     id
     name
+    type
     description
     startDate
     endDate
+    type
     rules {
       ...PromotionRuleDetails
     }
@@ -264,5 +269,6 @@ export const promotionFragment = gql`
     name
     startDate
     endDate
+    type
   }
 `;

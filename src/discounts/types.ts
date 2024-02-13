@@ -1,3 +1,4 @@
+import { DecimalFilterInput, PromotionTypeEnum } from "@dashboard/graphql";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
@@ -25,6 +26,7 @@ export type SearchCollectionOpts = ReturnType<
 export type SearchProductsOpts = ReturnType<typeof useProductSearch>["result"];
 
 export interface DiscoutFormData {
+  type: PromotionTypeEnum;
   name: string;
   description: string;
   dates: {
@@ -37,7 +39,13 @@ export interface DiscoutFormData {
   rules: Rule[];
 }
 
-export type ConditionType = "product" | "category" | "collection" | "variant";
+export type CatalogConditions =
+  | "product"
+  | "category"
+  | "collection"
+  | "variant";
+
+export type OrderConditions = "baseSubtotalPrice" | "baseTotalPrice";
 
 // Mimic API catalogue predicate structure because api scheme type return any
 export interface CataloguePredicateAPI {
@@ -54,5 +62,16 @@ export interface CataloguePredicateAPI {
   };
   variantPredicate?: {
     ids: string[];
+  };
+}
+
+export interface OrderPredicateAPI {
+  OR?: OrderPredicateAPI[];
+  AND?: OrderPredicateAPI[];
+  discountedObjectPredicate: {
+    baseSubtotalPrice?: DecimalFilterInput;
+    baseTotalPrice?: DecimalFilterInput;
+    AND?: Array<OrderPredicateAPI["discountedObjectPredicate"]>;
+    OR?: Array<OrderPredicateAPI["discountedObjectPredicate"]>;
   };
 }

@@ -1,6 +1,12 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { channelsList } from "@dashboard/channels/fixtures";
-import { discount } from "@dashboard/discounts/fixtures";
+import { discount, orderDiscount } from "@dashboard/discounts/fixtures";
+import { LabelsMapsProvider } from "@dashboard/discounts/views/DiscountDetails/context/provider";
+import {
+  conditionsValuesLabelsMock,
+  emptyGiftsLabelsMock,
+  giftsLabelsMock,
+} from "@dashboard/discounts/views/DiscountDetails/hooks/mocks";
 import React from "react";
 
 import {
@@ -8,7 +14,8 @@ import {
   searchCollectionsMock,
   searchProductsMock,
   searchVariantsMock,
-} from "../DiscountRules/componenets/RuleFormModal/mocks";
+} from "../DiscountRules/componenets/RuleForm/components/RuleConditionValues/hooks/options/mocks";
+import { variantsWithProductDataMock } from "../DiscountRules/componenets/RuleForm/components/RuleRewardGifts/mock";
 import {
   DiscountDetailsPage,
   DiscountDetailsPageProps,
@@ -20,17 +27,10 @@ const props: DiscountDetailsPageProps = {
   onBack: () => undefined,
   onSubmit: () => undefined,
   onDelete: () => undefined,
-  ruleConditionsOptionsDetailsMap: {
-    "UHJvZHVjdDo3OQ==": "Bean Juice",
-    "UHJvZHVjdDoxMTU=": "Black Hoodie",
-    UHJvZHVjdFZhcmlhbnQ6OTg3: "45cm x 45cm",
-    UHJvZHVjdFZhcmlhbnQ6MjE1: "1l",
-  },
   errors: [],
   onRuleCreateSubmit: () => Promise.resolve([]),
   onRuleDeleteSubmit: () => Promise.resolve([]),
   onRuleUpdateSubmit: () => Promise.resolve([]),
-  ruleConditionsOptionsDetailsLoading: false,
   ruleCreateButtonState: "default",
   ruleDeleteButtonState: "default",
   ruleUpdateButtonState: "default",
@@ -47,10 +47,46 @@ export const Default = () => (
     mocks={[
       searchCategoriesMock,
       searchProductsMock,
+      searchProductsMock,
+      searchProductsMock,
       searchCollectionsMock,
       searchVariantsMock,
+      emptyGiftsLabelsMock,
+      conditionsValuesLabelsMock,
     ]}
   >
-    <DiscountDetailsPage {...props} />
+    <LabelsMapsProvider
+      promotionData={{
+        __typename: "Query",
+        promotion: discount,
+      }}
+    >
+      <DiscountDetailsPage {...props} />
+    </LabelsMapsProvider>
+  </MockedProvider>
+);
+
+export const OrderDiscounts = () => (
+  <MockedProvider
+    mocks={[
+      searchCategoriesMock,
+      searchProductsMock,
+      searchProductsMock,
+      searchProductsMock,
+      searchCollectionsMock,
+      searchVariantsMock,
+      giftsLabelsMock,
+      conditionsValuesLabelsMock,
+      variantsWithProductDataMock,
+    ]}
+  >
+    <LabelsMapsProvider
+      promotionData={{
+        __typename: "Query",
+        promotion: orderDiscount,
+      }}
+    >
+      <DiscountDetailsPage {...props} data={orderDiscount} />
+    </LabelsMapsProvider>
   </MockedProvider>
 );
