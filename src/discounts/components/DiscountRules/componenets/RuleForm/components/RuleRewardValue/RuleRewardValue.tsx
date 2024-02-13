@@ -32,7 +32,7 @@ export const RuleRewardValue = ({
   });
 
   return (
-    <Box display="flex" gap={4}>
+    <Box display="flex" gap={2}>
       <DiscountTypeSwitch
         onChange={type => rewardTypeField.onChange(type)}
         selected={discountType}

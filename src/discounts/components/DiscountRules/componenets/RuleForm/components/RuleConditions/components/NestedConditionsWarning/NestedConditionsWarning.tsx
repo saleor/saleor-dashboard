@@ -21,9 +21,14 @@ export const NestedConditionsWarning = ({
       <Box display="flex" alignItems="center" gap={2}>
         <WarningIcon color="warning1" />
 
-        <Text variant="caption" color="default1">
-          {intl.formatMessage(messages.noHanldedConditions)}
-        </Text>
+        <Box display="flex" flexDirection="column">
+          <Text variant="caption" color="default1">
+            {intl.formatMessage(messages.noHanldedConditions)}
+          </Text>
+          <Text variant="caption" color="default1">
+            {intl.formatMessage(messages.noHandledConditionsReminder)}
+          </Text>
+        </Box>
       </Box>
 
       <Button

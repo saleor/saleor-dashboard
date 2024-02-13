@@ -60,7 +60,7 @@ export const RuleConditionValues = ({
 
   if (inputType === "price.range" || inputType === "number.range") {
     return (
-      <Box display="flex" gap={1} alignItems="center">
+      <Box display="flex" gap={2} alignItems="center">
         <RangeInput
           data-test-id={`condition-value-${conditionIndex}`}
           value={condition.value as [string, string]}
