@@ -12,7 +12,7 @@ const flatTaxRateChoice = {
 };
 
 export const useTaxStrategyChoices = () => {
-  const { data } = useTaxStrategyChoicesQuery();
+  const { data, loading } = useTaxStrategyChoicesQuery();
   const taxAppsChoices =
     data?.shop.availableTaxApps.map(app => ({
       value: app.identifier,
@@ -28,5 +28,6 @@ export const useTaxStrategyChoices = () => {
       ),
     })) ?? [];
 
-  return [...taxAppsChoices, flatTaxRateChoice];
+  const choices = [...taxAppsChoices, flatTaxRateChoice];
+  return [choices, loading] as const;
 };

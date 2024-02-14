@@ -26,12 +26,14 @@ export interface TaxSettingsCardProps {
   values: TaxConfigurationFormData;
   strategyChoices: Choice[];
   onChange: FormChange;
+  strategyChoicesLoading: boolean;
 }
 
 export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
   values,
   strategyChoices,
   onChange,
+  strategyChoicesLoading,
 }) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -61,7 +63,7 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
             <SingleSelectField
               className={classes.singleSelectField}
               choices={strategyChoices}
-              disabled={!values.chargeTaxes}
+              disabled={strategyChoicesLoading || !values.chargeTaxes}
               value={values.taxCalculationStrategy}
               name={
                 "taxCalculationStrategy" as keyof TaxConfigurationUpdateInput
