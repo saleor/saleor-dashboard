@@ -92,7 +92,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
   const classes = useStyles();
   const navigate = useNavigator();
 
-  const [taxStrategyChoices, loading] = useTaxStrategyChoices();
+  const { taxStrategyChoices, loading } = useTaxStrategyChoices();
 
   const currentTaxConfiguration = taxConfigurations?.find(
     taxConfigurations => taxConfigurations.id === selectedConfigurationId,
