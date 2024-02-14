@@ -1,4 +1,3 @@
-import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   TaxCalculationStrategy,
   useTaxStrategyChoicesQuery,
@@ -12,10 +11,7 @@ const flatTaxRateChoice = {
   value: TaxCalculationStrategy.FLAT_RATES,
 };
 
-export const useTaxStrategyChoices: () => {
-  taxStrategyChoices: Choice[];
-  loading: boolean;
-} = () => {
+export const useTaxStrategyChoices = () => {
   const { data, loading } = useTaxStrategyChoicesQuery();
   const taxAppsChoices =
     data?.shop.availableTaxApps.map(app => ({
