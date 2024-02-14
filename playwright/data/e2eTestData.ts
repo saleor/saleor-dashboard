@@ -93,6 +93,19 @@ export const CHANNELS = {
   plnChannel: {
     id: "VGF4Q29uZmlndXJhdGlvbjox",
   },
+  e2eChannelDoNotDelete: {
+    id: "Q2hhbm5lbDoyMzk0",
+    name: "e2e-channel-do-not-delete",
+    slug: "e2e-channel-do-not-delete",
+  },
+  channelUSD: {
+    id: "Q2hhbm5lbDoyMjQz",
+    name: "Channel-USD",
+  },
+  channelPLN: {
+    id: "Q2hhbm5lbDoyMjQ0",
+    name: "Channel-PLN",
+  },
 };
 export const GIFT_CARDS = {
   giftCardToBeEdited: {
@@ -122,6 +135,22 @@ export const WAREHOUSES = {
   },
   warehouseToBeDeleted: {
     name: "warehouseto be deleted",
+  },
+  warehouseEurope: {
+    id: "V2FyZWhvdXNlOjlkYjY4NWQxLWViMTktNDU2ZS05ODMyLTMxODA3ZWM0NDdhOQ==",
+    name: "Europe",
+  },
+  warehouseAmericas: {
+    id: "V2FyZWhvdXNlOjdmZDA0OGI0LWYwNzItNDZmMi1iMDMyLTc3ZWU3MDNiMzM3Yg==",
+    name: "Americas",
+  },
+  warehouseOceania: {
+    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+    name: "Oceania",
+  },
+  warehouseAfrica: {
+    id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+    name: "Africa",
   },
 };
 
@@ -223,6 +252,26 @@ export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
     id: "U2hpcHBpbmdab25lOjIzOTA%3D",
     info: "Shipping method that is used to add rates",
+  },
+  shippingMethodToBeUpdated: {
+    id: "U2hpcHBpbmdab25lOjIzOTI=",
+    info: "Shipping zone to be updated",
+    name: "e2e-test-shippingZone-to-be-updated",
+  },
+  shippingMethodToBeBulkDeleted1: {
+    id: "U2hpcHBpbmdab25lOjIzOTM=",
+    info: "First shipping zone to be bulk deleted",
+    name: "e2e-test-shippingZone-to-be-bulk-deleted-1",
+  },
+  shippingMethodToBeBulkDeleted2: {
+    id: "U2hpcHBpbmdab25lOjIzOTQ=",
+    info: "Second shipping zone to be bulk deleted",
+    name: "e2e-test-shippingZone-to-be-bulk-deleted-2",
+  },
+  shippingMethodToBeBulkDeleted3: {
+    id: "U2hpcHBpbmdab25lOjIzOTU=",
+    info: "Third shipping zone to be bulk deleted",
+    name: "e2e-test-shippingZone-to-be-bulk-deleted-3",
   },
   shippingMethodWithRatesToBeDeleted: {
     id: "U2hpcHBpbmdab25lOjIzODk%3D",

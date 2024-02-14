@@ -1,4 +1,4 @@
-import { RewardValueTypeEnum } from "@dashboard/graphql";
+import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 import * as z from "zod";
 
@@ -12,70 +12,113 @@ const validationMessages = defineMessages({
     defaultMessage: "Channel is required",
   },
   rewardValueRequired: {
-    id: "CFlmRP",
-    defaultMessage: "Rule reword value is required",
+    id: "uf1ttM",
+    defaultMessage: "Rule reward value is required",
   },
-  rewordValueMustBeLessThan100: {
-    id: "JyaQcP",
-    defaultMessage: "Rule reword value must be less than 100",
+  rewardValueMustBeLessThan100: {
+    id: "DDYrvn",
+    defaultMessage: "Rule reward value must be less than 100",
+  },
+  rewardGiftRequired: {
+    id: "GxsQuO",
+    defaultMessage: "You must select at least one gift",
   },
 });
 
-export const getValidationSchema = (intl: IntlShape) =>
+const option = z.object({ label: z.string(), value: z.string() });
+const rewardValueRequired = (intl: IntlShape) =>
   z
-    .object({
-      id: z.string().optional(),
-      name: z
-        .string()
-        .min(1, intl.formatMessage(validationMessages.nameRequired)),
-      channel: z.object(
-        { label: z.string(), value: z.string() },
-        {
-          required_error: intl.formatMessage(
-            validationMessages.channelRequired,
-          ),
-          invalid_type_error: intl.formatMessage(
-            validationMessages.channelRequired,
-          ),
-        },
+    .number({
+      required_error: intl.formatMessage(
+        validationMessages.rewardValueRequired,
       ),
-      conditions: z.array(
-        z.object({
-          id: z.string().nullable(),
-          type: z.string(),
-          value: z
-            .array(z.object({ label: z.string(), value: z.string() }))
-            .or(z.string())
-            .or(z.tuple([z.string(), z.string()])),
-        }),
+      invalid_type_error: intl.formatMessage(
+        validationMessages.rewardValueRequired,
       ),
-      rewardValue: z
-        .number({
-          required_error: intl.formatMessage(validationMessages.nameRequired),
-          invalid_type_error: intl.formatMessage(
-            validationMessages.nameRequired,
-          ),
-        })
-        .min(1, intl.formatMessage(validationMessages.rewardValueRequired)),
-      rewardValueType: z.string(),
-      description: z.string().nullable(),
     })
-    .refine(
-      ({ rewardValue, rewardValueType, channel }) => {
-        if (
-          channel &&
-          rewardValueType === RewardValueTypeEnum.PERCENTAGE &&
-          Number(rewardValue) > 100
-        ) {
-          return false;
-        }
+    .min(1, intl.formatMessage(validationMessages.rewardValueRequired));
 
-        return true;
-      },
+const getDefaultSchema = (intl: IntlShape) =>
+  z.object({
+    id: z.string().optional(),
+    description: z.string().nullable(),
+    hasPredicateNestedConditions: z.boolean().optional(),
+    name: z
+      .string()
+      .min(1, intl.formatMessage(validationMessages.nameRequired)),
+    channel: z.object(
+      { label: z.string(), value: z.string() },
       {
-        message: intl.formatMessage(
-          validationMessages.rewordValueMustBeLessThan100,
+        required_error: intl.formatMessage(validationMessages.channelRequired),
+        invalid_type_error: intl.formatMessage(
+          validationMessages.channelRequired,
         ),
-        path: ["rewardValue"],
       },
-    );
+    ),
+    conditions: z.array(
+      z.object({
+        id: z.string().nullable(),
+        type: z.string(),
+        value: z
+          .array(option)
+          .or(z.string())
+          .or(z.tuple([z.string(), z.string()]))
+          .or(z.null()),
+      }),
+    ),
+  });
+
+const getCatalogRewardValidation = (intl: IntlShape) =>
+  z.object({
+    rewardValue: rewardValueRequired(intl),
+    rewardValueType: z.string(),
+    rewardType: z.literal(null),
+    rewardGifts: z.array(option).optional(),
+  });
+
+const getOrderRewardSubtotalValidation = (intl: IntlShape) => {
+  return z.object({
+    rewardValue: rewardValueRequired(intl),
+    rewardValueType: z.string(),
+    rewardType: z.literal(RewardTypeEnum.SUBTOTAL_DISCOUNT),
+    rewardGifts: z.array(option).optional(),
+  });
+};
+
+const getOrderRewardGiftsValidation = (intl: IntlShape) =>
+  z.object({
+    rewardValue: z.null(),
+    rewardValueType: z.string(),
+    rewardType: z.literal(RewardTypeEnum.GIFT),
+    rewardGifts: z.array(option).nonempty({
+      message: intl.formatMessage(validationMessages.rewardGiftRequired),
+    }),
+  });
+
+export const getValidationSchema = (intl: IntlShape) => {
+  const schemaCond = z.discriminatedUnion("rewardType", [
+    getCatalogRewardValidation(intl),
+    getOrderRewardSubtotalValidation(intl),
+    getOrderRewardGiftsValidation(intl),
+  ]);
+
+  return z.intersection(schemaCond, getDefaultSchema(intl)).refine(
+    ({ rewardValue, rewardValueType, channel }) => {
+      if (
+        channel &&
+        rewardValueType === RewardValueTypeEnum.PERCENTAGE &&
+        Number(rewardValue) > 100
+      ) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: intl.formatMessage(
+        validationMessages.rewardValueMustBeLessThan100,
+      ),
+      path: ["rewardValue"],
+    },
+  );
+};

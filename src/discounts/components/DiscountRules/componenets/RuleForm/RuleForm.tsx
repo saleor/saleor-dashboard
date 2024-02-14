@@ -1,5 +1,7 @@
+import { Combobox } from "@dashboard/components/Combobox";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
-import { RewardValueTypeEnum } from "@dashboard/graphql";
+import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import {
@@ -8,7 +10,7 @@ import {
 } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { Box, Input, Option, Select } from "@saleor/macaw-ui-next";
+import { Box, Input, Option } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -22,11 +24,15 @@ import { RuleReward } from "./components/RuleReward";
 
 interface RuleFormProps<ErrorCode> {
   errors: Array<CommonError<ErrorCode>>;
+  openPlayground: () => void;
 }
 
-export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
+export const RuleForm = <ErrorCode,>({
+  errors,
+  openPlayground,
+}: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
-  const { disabled, channels } = useDiscountRulesContext();
+  const { disabled, channels, discountType } = useDiscountRulesContext();
   const { watch, getValues, setValue, formState } = useFormContext<Rule>();
   const formErrors = getFormErrors(["rewardValue"], errors);
 
@@ -67,13 +73,24 @@ export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
     }
   }, [currencySymbol]);
 
-  const handleChannelChange = (selectedChannel: Option) => {
-    setValue("channel", selectedChannel, { shouldValidate: true });
+  const handleChannelChange = (e: ChangeEvent) => {
+    const channelId = e.target.value;
+    const channel = channels.find(channel => channel.id === channelId);
 
-    if (conditions.length > 0) {
-      setValue("conditions", [createEmptyCodition()]);
-    } else {
-      setValue("conditions", []);
+    if (channel) {
+      setValue(
+        "channel",
+        { value: channel.id, label: channel.name },
+        { shouldValidate: true },
+      );
+    }
+    setValue("rewardGifts", []);
+
+    // Restart conditions when catalog promotion
+    if (discountType === PromotionTypeEnum.CATALOGUE) {
+      if (conditions.length > 0) {
+        setValue("conditions", [createEmptyCodition()]);
+      }
     }
   };
 
@@ -81,8 +98,8 @@ export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
     <RichTextContext.Provider value={richText}>
       <Box __width={650} __minHeight={515} __maxHeight="75vh" overflowY="auto">
         <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
-          <Box display="flex" gap={4}>
-            <RuleInputWrapper __flex={1}>
+          <Box display="grid" __gridTemplateColumns="315px 1fr" gap={2}>
+            <RuleInputWrapper>
               <Input
                 {...nameField}
                 disabled={disabled || nameField.disabled}
@@ -93,10 +110,11 @@ export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
               />
             </RuleInputWrapper>
 
-            <RuleInputWrapper __flex={1}>
-              <Select
+            <RuleInputWrapper>
+              <Combobox
                 {...channelfield}
                 onChange={handleChannelChange}
+                fetchOptions={() => {}}
                 size="small"
                 data-test-id="channel-dropdown"
                 label={intl.formatMessage(commonMessages.channel)}
@@ -108,7 +126,10 @@ export const RuleForm = <ErrorCode,>({ errors }: RuleFormProps<ErrorCode>) => {
             </RuleInputWrapper>
           </Box>
 
-          <RuleConditions hasSelectedChannels={hasSelectedChannel} />
+          <RuleConditions
+            hasSelectedChannels={hasSelectedChannel}
+            openPlayground={openPlayground}
+          />
 
           <RuleReward
             currencySymbol={currencySymbol}

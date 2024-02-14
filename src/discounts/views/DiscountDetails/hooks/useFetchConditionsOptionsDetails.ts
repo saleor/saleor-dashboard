@@ -75,18 +75,19 @@ function reduceConditionsLabels(
     if (Array.isArray(predicate)) {
       predicate.forEach(item => reduceConditionsLabels(item, allConditionsIds));
     }
+    const ids = predicate?.ids ?? [];
 
     if (key === "productPredicate") {
-      allConditionsIds.productsIds.push(...predicate.ids);
+      allConditionsIds.productsIds.push(...ids);
     }
     if (key === "categoryPredicate") {
-      allConditionsIds.categoriesIds.push(...predicate.ids);
+      allConditionsIds.categoriesIds.push(...ids);
     }
     if (key === "collectionPredicate") {
-      allConditionsIds.collectionsIds.push(...predicate.ids);
+      allConditionsIds.collectionsIds.push(...ids);
     }
     if (key === "variantPredicate") {
-      allConditionsIds.variantsIds.push(...predicate.ids);
+      allConditionsIds.variantsIds.push(...ids);
     }
 
     return allConditionsIds;
@@ -103,10 +104,14 @@ export function getRuleConditionsOptionsDetailsMap(
   return Object.values(data).reduce<Record<string, string>>((acc, value) => {
     const items =
       mapEdgesToItems(
-        value as RuleConditionsSelectedOptionsDetailsQuery["categories"],
+        value as RuleConditionsSelectedOptionsDetailsQuery["productVariants"],
       ) ?? [];
     items.forEach(item => {
-      acc[item.id] = item.name;
+      if (item.product) {
+        acc[item.id] = `${item.product.name} - ${item.name}`;
+      } else {
+        acc[item.id] = item.name;
+      }
     });
 
     return acc;

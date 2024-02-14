@@ -28,8 +28,6 @@ import { DiscountSavebar } from "../DiscountSavebar";
 
 export interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
-  ruleConditionsOptionsDetailsMap: Record<string, string>;
-  ruleConditionsOptionsDetailsLoading: boolean;
   data: PromotionDetailsFragment | undefined | null;
   disabled: boolean;
   errors: PromotionUpdateErrorFragment[];
@@ -51,8 +49,6 @@ export interface DiscountDetailsPageProps {
 
 export const DiscountDetailsPage = ({
   channels,
-  ruleConditionsOptionsDetailsMap,
-  ruleConditionsOptionsDetailsLoading,
   disabled,
   data,
   errors,
@@ -79,12 +75,18 @@ export const DiscountDetailsPage = ({
           data={data}
           disabled={disabled}
           onSubmit={onSubmit}
-          ruleConditionsOptionsDetailsMap={ruleConditionsOptionsDetailsMap}
           onRuleCreateSubmit={onRuleCreateSubmit}
           onRuleDeleteSubmit={onRuleDeleteSubmit}
           onRuleUpdateSubmit={onRuleUpdateSubmit}
         >
-          {({ rulesErrors, rules, onDeleteRule, onRuleSubmit, onSubmit }) => (
+          {({
+            rulesErrors,
+            rules,
+            discountType,
+            onDeleteRule,
+            onRuleSubmit,
+            onSubmit,
+          }) => (
             <>
               <DiscountGeneralInfo
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
@@ -100,10 +102,10 @@ export const DiscountDetailsPage = ({
               />
 
               <DiscountRules
-                discountType="catalog"
+                promotionId={data?.id ?? null}
+                discountType={discountType}
                 errors={rulesErrors}
                 rules={rules}
-                loading={ruleConditionsOptionsDetailsLoading}
                 getRuleConfirmButtonState={ruleEditIndex =>
                   ruleEditIndex !== null
                     ? ruleUpdateButtonState

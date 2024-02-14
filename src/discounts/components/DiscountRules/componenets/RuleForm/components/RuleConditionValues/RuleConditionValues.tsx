@@ -4,6 +4,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { Box, Input, RangeInput } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
 import { RuleConditionDynamicSelect } from "../RuleConditionDynamicSelect";
 
@@ -48,7 +49,7 @@ export const RuleConditionValues = ({
   if (inputType === "number" || inputType === "price") {
     return (
       <Input
-        data-test-id="rule-value"
+        data-test-id={`condition-value-${conditionIndex}`}
         type="number"
         value={condition.value as string}
         onChange={valuesField.onChange}
@@ -59,15 +60,17 @@ export const RuleConditionValues = ({
 
   if (inputType === "price.range" || inputType === "number.range") {
     return (
-      <Box display="grid" gap={1}>
+      <Box display="flex" gap={2} alignItems="center">
         <RangeInput
-          data-test-id="rule-value"
+          data-test-id={`condition-value-${conditionIndex}`}
           value={condition.value as [string, string]}
           onChange={valuesField.onChange}
           type="number"
           disabled={disabled}
           width="100%"
-        />
+        >
+          <FormattedMessage defaultMessage="and" id="3mvL2Q" />
+        </RangeInput>
       </Box>
     );
   }
@@ -75,7 +78,7 @@ export const RuleConditionValues = ({
   return (
     <Input
       size="medium"
-      data-test-id="rule-value"
+      data-test-id={`condition-value-${conditionIndex}`}
       value={(condition.value?.[0] || "") as string}
       onChange={valuesField.onChange}
       onBlur={valuesField.onBlur}

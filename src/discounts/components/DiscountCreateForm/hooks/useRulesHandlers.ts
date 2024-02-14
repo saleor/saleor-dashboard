@@ -1,9 +1,10 @@
 import { Rule } from "@dashboard/discounts/models";
 import { sortRules } from "@dashboard/discounts/utils";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import { useEffect, useState } from "react";
 
 export const useRulesHandlers = (
-  discountType: "catalog", // to be replaced by PromotionTypeEnum when API return this field
+  discountType: PromotionTypeEnum = PromotionTypeEnum.CATALOGUE,
 ) => {
   const [rules, setRules] = useState<Rule[]>([]);
 

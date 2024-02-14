@@ -78,6 +78,7 @@ export const DiscountListDatagrid = ({
     createGetCellContent({
       promotions,
       columns: visibleColumns,
+      intl,
     }),
     [promotions, visibleColumns],
   );

@@ -1,4 +1,4 @@
-import { ChannelFragment } from "@dashboard/graphql";
+import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import React, { ReactNode } from "react";
 
 import { discountRulesContext } from "./context";
@@ -11,7 +11,7 @@ export const DiscountRulesContextProvider = ({
 }: {
   children: ReactNode;
   channels: ChannelFragment[];
-  discountType: "catalog"; // TODO: to be replace by PromotionTypeEnum
+  discountType: PromotionTypeEnum;
   disabled: boolean;
 }) => {
   return (

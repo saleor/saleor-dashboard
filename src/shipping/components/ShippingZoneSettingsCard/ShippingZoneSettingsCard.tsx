@@ -54,7 +54,7 @@ export const ShippingZoneSettingsCard: React.FC<
   return (
     <Card>
       <CardTitle title={intl.formatMessage(messages.title)} />
-      <CardContent>
+      <CardContent data-test-id="channel-section">
         <ChannelsSection
           channelsDisplayValues={channelsDisplayValues}
           onChange={onChannelChange}
@@ -63,7 +63,7 @@ export const ShippingZoneSettingsCard: React.FC<
         />
       </CardContent>
       <Divider />
-      <CardContent>
+      <CardContent data-test-id="warehouse-section">
         <WarehousesSection
           onAdd={onWarehouseAdd}
           onSearchChange={onWarehousesSearchChange}

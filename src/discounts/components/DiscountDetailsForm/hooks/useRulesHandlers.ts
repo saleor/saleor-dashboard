@@ -13,6 +13,7 @@ import { getCurrentConditionsValuesLabels } from "../utils";
 interface UseRulesHandlersProps {
   data: PromotionDetailsFragment | undefined | null;
   ruleConditionsOptionsDetailsMap: Record<string, string>;
+  giftsOptionsDetailsMap: Record<string, string>;
   onRuleUpdateSubmit: (
     data: Rule,
   ) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
@@ -25,20 +26,27 @@ interface UseRulesHandlersProps {
 export const useRulesHandlers = ({
   data,
   ruleConditionsOptionsDetailsMap,
+  giftsOptionsDetailsMap,
   onRuleUpdateSubmit,
   onRuleCreateSubmit,
   onRuleDeleteSubmit,
 }: UseRulesHandlersProps) => {
   const [rulesErrors, setRulesErrors] = useState<Array<CommonError<any>>>([]);
-  const [labelsMap, setLabelMap] = useState<Record<string, string>>({});
+  const [conditionValuesLabelMap, setConditionValuesLabelMap] = useState<
+    Record<string, string>
+  >({});
 
   const rules = sortRules(
-    data?.rules?.map(rule => mapAPIRuleToForm("catalog", rule, labelsMap)) ??
-      [],
+    data?.rules?.map(rule =>
+      mapAPIRuleToForm(data?.type, rule, {
+        conditionsValues: conditionValuesLabelMap,
+        gifts: giftsOptionsDetailsMap,
+      }),
+    ) ?? [],
   );
 
   useEffect(() => {
-    setLabelMap(labels => {
+    setConditionValuesLabelMap(labels => {
       return {
         ...ruleConditionsOptionsDetailsMap,
         ...labels,
@@ -47,7 +55,7 @@ export const useRulesHandlers = ({
   }, [ruleConditionsOptionsDetailsMap]);
 
   const updateLabels = (rule: Rule) => {
-    setLabelMap(labels => ({
+    setConditionValuesLabelMap(labels => ({
       ...labels,
       ...getCurrentConditionsValuesLabels([rule]),
     }));

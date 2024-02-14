@@ -1,5 +1,7 @@
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
 import { messages } from "@dashboard/discounts/components/DiscountRules/messages";
-import React from "react";
+import { PromotionTypeEnum } from "@dashboard/graphql";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 interface RuleLabelProps {
@@ -8,6 +10,7 @@ interface RuleLabelProps {
 
 export const RuleLabel = ({ ruleName }: RuleLabelProps) => {
   const intl = useIntl();
+  const { discountType } = useDiscountRulesContext();
 
   const getRuleName = (name: string | undefined) => {
     if (name) {
@@ -16,15 +19,13 @@ export const RuleLabel = ({ ruleName }: RuleLabelProps) => {
     return "";
   };
 
-  // const ruleTypeLabel = useMemo(() => {
-  //   if (discountType === PromotionTypeEnum.CATALOGUE) {
-  //     return intl.formatMessage(messages.catalogRule);
-  //   }
+  const ruleTypeLabel = useMemo(() => {
+    if (discountType === PromotionTypeEnum.CATALOGUE) {
+      return intl.formatMessage(messages.catalogRule);
+    }
 
-  //   return intl.formatMessage(messages.orderRule);
-  // }, [discountType]);
+    return intl.formatMessage(messages.orderRule);
+  }, [discountType]);
 
-  return (
-    <>{intl.formatMessage(messages.catalogRule) + getRuleName(ruleName)}</>
-  );
+  return <>{ruleTypeLabel + getRuleName(ruleName)}</>;
 };
