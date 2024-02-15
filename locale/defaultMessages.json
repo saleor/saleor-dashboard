@@ -6688,6 +6688,9 @@
     "context": "button",
     "string": "Send invite"
   },
+  "hyAOPB": {
+    "string": "Use Avalara plugin"
+  },
   "hz+9ES": {
     "context": "bulk activate label",
     "string": "Activate"
@@ -6962,6 +6965,9 @@
   },
   "k0rGBI": {
     "string": "Access token is used to authenticate service accounts"
+  },
+  "k20lqw": {
+    "string": "Legacy flow detected - select tax strategy from dropdown"
   },
   "k3EI/U": {
     "context": "dialog header",
