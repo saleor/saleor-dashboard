@@ -13,12 +13,11 @@ test.beforeEach(({ page }) => {
   taxesPage = new TaxesPage(page);
 });
 
-// TODO: add tax app to snapshot https://linear.app/saleor/issue/SHOPX-98/update-e2e-for-taxes
-test.skip("TC: SALEOR_115 Change taxes in channel to use tax app  @taxes @e2e", async () => {
+test("TC: SALEOR_115 Change taxes in channel to use tax app  @taxes @e2e", async () => {
   await configurationPage.gotoConfigurationView();
   await configurationPage.openTaxes();
   await taxesPage.selectChannel(CHANNELS.channelForTaxEdition.name);
-  await taxesPage.selectTaxCalculationMethod("TAX_APP");
+  await taxesPage.selectTaxCalculationMethod("saleor.app.avatax");
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();
 });
