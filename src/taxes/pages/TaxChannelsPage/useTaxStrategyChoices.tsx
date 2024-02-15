@@ -4,11 +4,16 @@ import {
 } from "@dashboard/graphql";
 import React from "react";
 
-import { FlatTaxRateLabel, TaxAppLabel } from "../../components";
+import { FlatTaxRateLabel, PluginLabel, TaxAppLabel } from "../../components";
 
 const flatTaxRateChoice = {
   label: <FlatTaxRateLabel />,
   value: TaxCalculationStrategy.FLAT_RATES,
+};
+
+const pluginTaxChoice = {
+  label: <PluginLabel />,
+  value: "mirumee.taxes.avalara",
 };
 
 export const useTaxStrategyChoices = () => {
@@ -29,7 +34,7 @@ export const useTaxStrategyChoices = () => {
     })) ?? [];
 
   return {
-    taxStrategyChoices: [...taxAppsChoices, flatTaxRateChoice],
+    taxStrategyChoices: [...taxAppsChoices, flatTaxRateChoice, pluginTaxChoice],
     loading,
   };
 };

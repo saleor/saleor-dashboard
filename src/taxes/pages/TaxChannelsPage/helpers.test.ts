@@ -27,5 +27,13 @@ describe("Tax Channels Page helpers", () => {
       const result = getSelectedTaxStrategy(taxAppConfiguration);
       expect(result).toEqual("42");
     });
+
+    it("should return legacy-flow if strategy is not set - UI will show warning", () => {
+      const result = getSelectedTaxStrategy({
+        ...taxAppConfiguration,
+        taxAppId: null,
+      });
+      expect(result).toEqual("legacy-flow");
+    });
   });
 });

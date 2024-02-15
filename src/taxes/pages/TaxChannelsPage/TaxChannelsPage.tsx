@@ -148,7 +148,6 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     <Form initial={initialForm} onSubmit={handleSubmit} mergeData={false}>
       {({ data, change, submit, set, triggerChange }) => {
         const countryExceptions = data.updateCountriesConfiguration;
-
         const handleExceptionChange = (event, index) => {
           const { name, value } = event.target;
           const currentExceptions = [...data.updateCountriesConfiguration];

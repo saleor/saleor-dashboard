@@ -8,6 +8,9 @@ export const useStyles = makeStyles(
       placeContent: "center",
       textAlign: "center",
     },
+    cell: {
+      display: "grid",
+    },
     left: {
       margin: 0,
       display: "flex",

@@ -6,6 +6,7 @@ import SingleSelectField, {
 } from "@dashboard/components/SingleSelectField";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
+import { LegacyFlowWarning } from "@dashboard/taxes/components";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import {
   Card,
@@ -58,7 +59,10 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
             data-test-id="app-flat-select"
           >
             <span className={classes.hint}>
-              <FormattedMessage {...taxesMessages.taxStrategyHint} />{" "}
+              <FormattedMessage {...taxesMessages.taxStrategyHint} />
+              <LegacyFlowWarning
+                taxCalculationStrategy={values.taxCalculationStrategy}
+              />
             </span>
             <SingleSelectField
               className={classes.singleSelectField}

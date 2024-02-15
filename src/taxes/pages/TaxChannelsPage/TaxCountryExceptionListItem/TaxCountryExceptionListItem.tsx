@@ -5,9 +5,10 @@ import SingleSelectField, {
 } from "@dashboard/components/SingleSelectField";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
+import { LegacyFlowWarning } from "@dashboard/taxes/components";
 import { Divider } from "@material-ui/core";
 import { ListItem, ListItemCell } from "@saleor/macaw-ui";
-import { Button, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { useStyles } from "../styles";
@@ -25,6 +26,7 @@ export const TaxCountryExceptionListItem: React.FC<
   TaxCountryExceptionListItemProps
 > = ({ country, onDelete, onChange, strategyChoices, divider = true }) => {
   const classes = useStyles();
+
   return (
     <>
       <ListItem
@@ -33,20 +35,27 @@ export const TaxCountryExceptionListItem: React.FC<
         data-test-id="exception-country"
       >
         <ListItemCell>{country.country.country}</ListItemCell>
-        <ListItemCell className={classes.center}>
-          <ControlledCheckbox
-            className={classes.center}
-            checked={country.chargeTaxes}
-            name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
-            onChange={onChange}
+        <ListItemCell className={classes.cell}>
+          <LegacyFlowWarning
+            taxCalculationStrategy={country.taxCalculationStrategy}
           />
-          <SingleSelectField
-            choices={strategyChoices}
-            disabled={!country.chargeTaxes}
-            value={country.taxCalculationStrategy}
-            name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
-            onChange={onChange}
-          />
+          <Box display="flex">
+            <ControlledCheckbox
+              className={classes.center}
+              checked={country.chargeTaxes}
+              name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
+              onChange={onChange}
+            />
+            <SingleSelectField
+              choices={strategyChoices}
+              disabled={!country.chargeTaxes}
+              value={country.taxCalculationStrategy}
+              name={
+                "taxCalculationStrategy" as keyof TaxConfigurationUpdateInput
+              }
+              onChange={onChange}
+            />
+          </Box>
         </ListItemCell>
         <ListItemCell
           className={classes.center}
