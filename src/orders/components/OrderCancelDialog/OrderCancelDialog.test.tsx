@@ -1,6 +1,7 @@
 import { OrderErrorCode, OrderErrorFragment } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import { OrderCancelDialog } from "./OrderCancelDialog";
 
@@ -9,9 +10,7 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => (
-    <>{defaultMessage}</>
-  ),
+  FormattedMessage: jest.fn(() => <></>),
 }));
 
 const defaultProps = {
@@ -24,13 +23,23 @@ const defaultProps = {
 };
 
 describe("OrderCancelDialog", () => {
-  it("displays cancel order in the dialog title", () => {
-    // Arrange & Act
-    render(<OrderCancelDialog {...defaultProps} />);
+  it("displays order number in the dialog title", () => {
+    // Arrange
+    const orderNumber = "456";
+
+    // Act
+    render(<OrderCancelDialog {...defaultProps} number={orderNumber} />);
 
     // Assert
-    const dialogTitle = screen.getByTestId("dialog-title");
-    expect(dialogTitle).toHaveTextContent("Cancel order");
+    expect(FormattedMessage).toHaveBeenCalledWith(
+      {
+        defaultMessage: "Cancel order #{orderNumber}",
+        description: "dialog header",
+        id: "wmeRVH",
+        values: { orderNumber: "456" },
+      },
+      {},
+    );
   });
 
   it("displays error messages when provided", () => {
