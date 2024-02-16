@@ -1,7 +1,6 @@
 import { OrderErrorCode, OrderErrorFragment } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { FormattedMessageProps } from "react-intl";
 
 import { OrderCancelDialog } from "./OrderCancelDialog";
 
@@ -10,22 +9,9 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage, values }: FormattedMessageProps) => {
-    let formattedMessage = defaultMessage;
-
-    // Replace placeholders with corresponding values if values are provided
-    if (values) {
-      Object.keys(values).forEach(key => {
-        const valueRegex = new RegExp(`#{${key}}`, "g");
-        formattedMessage = formattedMessage.replace(
-          valueRegex,
-          values[key] as string,
-        );
-      });
-    }
-
-    return <>{formattedMessage}</>;
-  },
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => (
+    <>{defaultMessage}</>
+  ),
 }));
 
 const defaultProps = {
@@ -38,16 +24,13 @@ const defaultProps = {
 };
 
 describe("OrderCancelDialog", () => {
-  it("displays the order number in the dialog title", () => {
-    // Arrange
-    const orderNumber = "456";
-
-    // Act
-    render(<OrderCancelDialog {...defaultProps} number={orderNumber} />);
+  it("displays cancel order in the dialog title", () => {
+    // Arrange & Act
+    render(<OrderCancelDialog {...defaultProps} />);
 
     // Assert
     const dialogTitle = screen.getByTestId("dialog-title");
-    expect(dialogTitle).toHaveTextContent(orderNumber);
+    expect(dialogTitle).toHaveTextContent("Cancel order");
   });
 
   it("displays error messages when provided", () => {
