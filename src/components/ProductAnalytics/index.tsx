@@ -36,7 +36,7 @@ export const ProductAnalytics = ({ children }: ProductAnalyticsProps) => {
   const { canRenderAnalytics, config } = useConfig();
 
   if (!canRenderAnalytics()) {
-    return children;
+    return <>{children}</>;
   }
 
   return (
