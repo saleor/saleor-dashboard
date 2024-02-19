@@ -3713,6 +3713,10 @@
     "context": "attribute values list: slug column header",
     "string": "Swatch"
   },
+  "NWA+MK": {
+    "context": "dialog content",
+    "string": "<b>Important:</b> Refunds need to be issued <b>manually</b> after order cancelation."
+  },
   "NWxomz": {
     "string": "Fulfillment status"
   },
@@ -3972,10 +3976,6 @@
   "PLX6FH": {
     "context": "sum of all manual refunds for transaction",
     "string": "Manual refund"
-  },
-  "PRXpBm": {
-    "context": "dialog header",
-    "string": "Cancel Order"
   },
   "PTW56s": {
     "context": "alert",
@@ -4897,9 +4897,6 @@
     "context": "fulfill button label",
     "string": "Fulfill anyway"
   },
-  "VSztEE": {
-    "string": "Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. <b>Order will not be refunded when cancelling order - You need to do it manually.</b> Are you sure you want to cancel this order?"
-  },
   "VTITVe": {
     "context": "section header",
     "string": "Staff Member Information"
@@ -5775,6 +5772,10 @@
   "bHdFph": {
     "context": "subsection header",
     "string": "Address"
+  },
+  "bKTEnb": {
+    "context": "button to cancel order",
+    "string": "Cancel order"
   },
   "bL/Wrc": {
     "context": "plugin status",
@@ -7689,6 +7690,10 @@
     "context": "product no longer exists error title",
     "string": "Product no longer exists"
   },
+  "p6ugX0": {
+    "context": "button to keep order",
+    "string": "Keep order"
+  },
   "pA8Mlv": {
     "context": "alert",
     "string": "Staff Member limit reached"
@@ -8791,6 +8796,10 @@
   "wmdHhD": {
     "context": "button",
     "string": "Create Warehouse"
+  },
+  "wmeRVH": {
+    "context": "dialog header",
+    "string": "Cancel order #{orderNumber}"
   },
   "wn3di2": {
     "string": "This password is too commonly used"
