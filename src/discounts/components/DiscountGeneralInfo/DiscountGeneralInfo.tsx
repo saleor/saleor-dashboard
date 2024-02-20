@@ -1,5 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import { Box, Input, Select } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
@@ -33,17 +34,16 @@ export const DiscountGeneralInfo = ({
           id: "0khVBN",
           description: "discount type",
         }),
-        value: "catalog",
+        value: PromotionTypeEnum.CATALOGUE,
       },
-      // Uncomment when API will support catalog discounts
-      // {
-      //   label: intl.formatMessage({
-      //     defaultMessage: "Order",
-      //     id: "onUvP+",
-      //     description: "discount type",
-      //   }),
-      //   value: "order",
-      // },
+      {
+        label: intl.formatMessage({
+          defaultMessage: "Order",
+          id: "onUvP+",
+          description: "discount type",
+        }),
+        value: PromotionTypeEnum.ORDER,
+      },
     ],
     [intl],
   );
@@ -54,7 +54,18 @@ export const DiscountGeneralInfo = ({
         <FormattedMessage defaultMessage="General information" id="fKrRhF" />
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <Box display="grid" gap={3}>
+        <Box display="grid" __gridTemplateColumns="250px 1fr" gap={3}>
+          <Select
+            {...typeField}
+            size="medium"
+            options={discountTypes}
+            label={intl.formatMessage({
+              defaultMessage: "Discount type",
+              id: "z/2AZY",
+            })}
+            disabled={typeDisabled || typeField.disabled}
+          />
+
           <Input
             {...nameField}
             error={!!error || !!formState.errors?.name}
@@ -66,19 +77,6 @@ export const DiscountGeneralInfo = ({
             })}
             disabled={disabled || nameField.disabled}
           />
-
-          <Box __width={250}>
-            <Select
-              {...typeField}
-              size="medium"
-              options={discountTypes}
-              label={intl.formatMessage({
-                defaultMessage: "Discount type",
-                id: "z/2AZY",
-              })}
-              disabled={typeDisabled || nameField.disabled}
-            />
-          </Box>
         </Box>
       </DashboardCard.Content>
     </DashboardCard>

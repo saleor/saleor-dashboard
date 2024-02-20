@@ -6,6 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { RuleChannelChips } from "./components/RuleChannelChips";
 import { RuleConditionsChips } from "./components/RuleConditionsChips";
+import { RuleUnknownChips } from "./components/RuleUnknownChips";
 import { RuleValueChips } from "./components/RuleValueChips";
 import { hasNoRuleConditions } from "./utils";
 
@@ -15,8 +16,25 @@ interface RuleSummaryProps {
 }
 
 export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
-  if (!rule.channel || !rule.rewardValue) {
+  if (!rule.channel || (!rule.rewardValue && rule.rewardType === null)) {
     return null;
+  }
+
+  if (rule.hasPredicateNestedConditions) {
+    return (
+      <Text>
+        <FormattedMessage
+          {...messages.ruleSummaryWithComplexConditions}
+          values={{
+            value: (
+              <RuleValueChips rule={rule} currencySymbol={currencySymbol} />
+            ),
+            unknown: <RuleUnknownChips />,
+            channel: <RuleChannelChips channel={rule.channel} />,
+          }}
+        />
+      </Text>
+    );
   }
 
   if (hasNoRuleConditions(rule)) {

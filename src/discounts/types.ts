@@ -1,4 +1,4 @@
-import { DecimalFilterInput } from "@dashboard/graphql";
+import { DecimalFilterInput, PromotionTypeEnum } from "@dashboard/graphql";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
@@ -26,7 +26,7 @@ export type SearchCollectionOpts = ReturnType<
 export type SearchProductsOpts = ReturnType<typeof useProductSearch>["result"];
 
 export interface DiscoutFormData {
-  type: "catalog"; // TODO: to be replace by PromotionTypeEnum when API return this field
+  type: PromotionTypeEnum;
   name: string;
   description: string;
   dates: {

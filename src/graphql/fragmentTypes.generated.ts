@@ -170,6 +170,8 @@
       "TranslationCreated",
       "TranslationUpdated",
       "VoucherCodeExportCompleted",
+      "VoucherCodesCreated",
+      "VoucherCodesDeleted",
       "VoucherCreated",
       "VoucherDeleted",
       "VoucherMetadataUpdated",

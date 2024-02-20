@@ -29,6 +29,7 @@ export const RuleConditionType = ({
 
   return (
     <Select
+      data-test-id={`condition-type-${conditionIndex}`}
       value={typeField.value}
       size="medium"
       options={conditionTypesOptions}

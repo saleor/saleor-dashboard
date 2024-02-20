@@ -1,7 +1,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Rule } from "@dashboard/discounts/models";
-import { ChannelFragment } from "@dashboard/graphql";
+import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
+import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo, useState } from "react";
@@ -13,6 +14,7 @@ import { RuleForm } from "./componenets/RuleForm";
 import { RuleFormModal } from "./componenets/RuleFormModal";
 import { RulesList } from "./componenets/RulesList";
 import { DiscountRulesContextProvider } from "./context";
+import { useGraphQLPlayground } from "./hooks/useGraphQLPlayground";
 import { messages } from "./messages";
 
 export type DiscountRulesErrors<ErrorCode> = Array<
@@ -21,11 +23,11 @@ export type DiscountRulesErrors<ErrorCode> = Array<
 
 interface DiscountRulesProps<ErrorCode> {
   disabled: boolean;
-  discountType: "catalog";
+  discountType: PromotionTypeEnum;
   channels: ChannelFragment[];
   rules: Rule[];
+  promotionId: string | null;
   errors: Array<CommonError<ErrorCode>>;
-  loading?: boolean;
   deleteButtonState: ConfirmButtonTransitionState;
   getRuleConfirmButtonState: (
     ruleEditIndex: number | null,
@@ -42,16 +44,20 @@ export const DiscountRules = <ErrorCode,>({
   getRuleConfirmButtonState,
   deleteButtonState,
   discountType,
-  loading,
   onRuleSubmit,
   onRuleDelete,
+  promotionId,
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
+
+  const { ruleConditionsValues } = useLabelMapsContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const { opepnGrapQLPlayground } = useGraphQLPlayground();
 
   useEffect(() => {
     if (!isLoaded && !disabled) {
@@ -87,6 +93,11 @@ export const DiscountRules = <ErrorCode,>({
     setRuleDeleteIndex(null);
   };
 
+  const handleOpenPlayground = () => {
+    setIsModalOpen(false);
+    opepnGrapQLPlayground(promotionId);
+  };
+
   return (
     <DiscountRulesContextProvider
       discountType={discountType}
@@ -106,7 +117,7 @@ export const DiscountRules = <ErrorCode,>({
         </DashboardCard.Title>
         <DashboardCard.Content>
           <RulesList
-            loading={!isLoaded || loading}
+            loading={!isLoaded || ruleConditionsValues.loading}
             rules={rules}
             onRuleEdit={handleRuleEdit}
             onRuleDelete={handleOpenRuleDeleteModal}
@@ -121,7 +132,7 @@ export const DiscountRules = <ErrorCode,>({
             initialFormValues={ruleInitialValues}
             onSubmit={handleRuleModalSubmit}
           >
-            <RuleForm errors={errors} />
+            <RuleForm errors={errors} openPlayground={handleOpenPlayground} />
           </RuleFormModal>
         )}
         <RuleDeleteModal

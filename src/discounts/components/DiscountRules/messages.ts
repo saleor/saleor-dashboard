@@ -17,6 +17,14 @@ export const messages = defineMessages({
     defaultMessage: "Discount rules for products, collections or categories.",
     id: "ucLtY8",
   },
+  checkoutAndOrders: {
+    defaultMessage: "Checkout and orders",
+    id: "0OAE9q",
+  },
+  checkoutAndOrdersDescription: {
+    defaultMessage: "Discount rules for carts and draft orders.",
+    id: "6230rS",
+  },
   placeholder: {
     defaultMessage: "Add your first rule to set up a promotion",
     id: "XtlUj6",
@@ -26,8 +34,8 @@ export const messages = defineMessages({
     id: "S8kqP9",
   },
   discountValue: {
-    defaultMessage: "Discount value",
-    id: "kNK4es",
+    defaultMessage: "Reward value",
+    id: "pAwBtz",
   },
   reward: {
     defaultMessage: "Reward",
@@ -37,6 +45,10 @@ export const messages = defineMessages({
     id: "A7W4KO",
     defaultMessage: "Catalog rule",
   },
+  orderRule: {
+    id: "HYK65C",
+    defaultMessage: "Order rule",
+  },
   ruleSummary: {
     id: "Lrp9WW",
     defaultMessage:
@@ -45,6 +57,11 @@ export const messages = defineMessages({
   ruleSummaryWithoutConditions: {
     id: "7MUx0T",
     defaultMessage: "Discount of {value} through the {channel}",
+  },
+  ruleSummaryWithComplexConditions: {
+    id: "f1Pj99",
+    defaultMessage:
+      "Discount of {value} through the {channel} with {unknown} conditions",
   },
   ruleSummaryMoreItems: {
     id: "B0fwAj",
@@ -73,6 +90,16 @@ export const messages = defineMessages({
   noChannelsSelected: {
     id: "w7jT4W",
     defaultMessage: "No channels selected",
+  },
+  noHanldedConditions: {
+    id: "ckSjjv",
+    defaultMessage:
+      "Too complex conditions to display, use playground to see details.",
+  },
+  noHandledConditionsReminder: {
+    id: "E9E5Eh",
+    defaultMessage:
+      "Please remember that conditions will not be updated when you change the channel.",
   },
   noConditonsCreate: {
     id: "Xu4ST7",

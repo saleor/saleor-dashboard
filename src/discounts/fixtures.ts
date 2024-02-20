@@ -4,6 +4,8 @@ import {
   DiscountValueTypeEnum,
   PromotionDetailsFragment,
   PromotionFragment,
+  PromotionTypeEnum,
+  RewardTypeEnum,
   RewardValueTypeEnum,
   SaleDetailsFragment,
   SaleFragment,
@@ -681,6 +683,7 @@ export const discount: PromotionDetailsFragment = {
   description: {},
   startDate: "2019-01-03",
   endDate: null,
+  type: PromotionTypeEnum.CATALOGUE,
   rules: [
     {
       __typename: "PromotionRule",
@@ -691,6 +694,9 @@ export const discount: PromotionDetailsFragment = {
       name: "Rule 1",
       rewardValue: "33",
       rewardValueType: RewardValueTypeEnum.FIXED,
+      rewardType: null,
+      orderPredicate: {},
+      giftIds: [],
       cataloguePredicate: {
         OR: [
           {
@@ -709,11 +715,51 @@ export const discount: PromotionDetailsFragment = {
   ],
 };
 
+export const orderDiscount: PromotionDetailsFragment = {
+  __typename: "Promotion",
+  id: "1",
+  name: "Discunt 1",
+  description: {},
+  startDate: "2019-01-03",
+  endDate: null,
+  type: PromotionTypeEnum.ORDER,
+  rules: [
+    {
+      __typename: "PromotionRule",
+      id: "1",
+      channels: [channelsList[0]],
+      description:
+        '{"time":1700126384046,"blocks":[{"id":"Sj7p30CLFo","type":"header","data":{"text":"Example title","level":1}}],"version":"2.24.3"}',
+      name: "Rule 1",
+      rewardValue: "33",
+      rewardValueType: RewardValueTypeEnum.FIXED,
+      rewardType: RewardTypeEnum.GIFT,
+      giftIds: [
+        "UHJvZHVjdFZhcmlhbnQ6MTkz",
+        "UHJvZHVjdFZhcmlhbnQ6Mjk5",
+        "UHJvZHVjdFZhcmlhbnQ6MjA2",
+      ],
+      orderPredicate: {
+        discountedObjectPredicate: {
+          baseSubtotalPrice: {
+            range: {
+              gte: "100",
+              lte: "200",
+            },
+          },
+        },
+      },
+      cataloguePredicate: {},
+    },
+  ],
+};
+
 export const discountList: PromotionFragment[] = [
   {
     __typename: "Promotion",
     metadata: [],
     privateMetadata: [],
+    type: PromotionTypeEnum.CATALOGUE,
     id: "UHJvbW90aW9uOjNlYWM1OGMyLWU1OTEtNDI3OS05YzIwLWU3OTA0ZjhkYjhiZg==",
     name: "Promo 1",
     startDate: "2023-12-13T12:33:18.550840+00:00",
@@ -723,6 +769,7 @@ export const discountList: PromotionFragment[] = [
     __typename: "Promotion",
     metadata: [],
     privateMetadata: [],
+    type: PromotionTypeEnum.CATALOGUE,
     id: "UHJvbW90aW9uOmM2NjgzOGUxLTViZGQtNDJiZC04YzIyLTQ0YzlmYTYxNGM5OA==",
     name: "Promo 2",
     startDate: "2024-01-08T23:00:00+00:00",
@@ -732,6 +779,7 @@ export const discountList: PromotionFragment[] = [
     __typename: "Promotion",
     metadata: [],
     privateMetadata: [],
+    type: PromotionTypeEnum.ORDER,
     id: "UHJvbW90aW9uOmQyMmQ3NDUyLTAzNDYtNDJiYS1iMmY4LTEzMjJlNDg4ZDIzZA==",
     name: "Promo 3",
     startDate: "2023-12-13T12:32:13.272371+00:00",
@@ -742,6 +790,7 @@ export const discountList: PromotionFragment[] = [
     metadata: [],
     privateMetadata: [],
     id: "UHJvbW90aW9uOjk3ZDcxNDJjLWMyZjMtNDE5ZC1iNGM1LTUzNjBjNTNjYWM3Zg==",
+    type: PromotionTypeEnum.CATALOGUE,
     name: "Promo 4",
     startDate: "2023-12-13T15:18:22.922335+00:00",
     endDate: null,
@@ -750,6 +799,7 @@ export const discountList: PromotionFragment[] = [
     __typename: "Promotion",
     metadata: [],
     privateMetadata: [],
+    type: PromotionTypeEnum.CATALOGUE,
     id: "UHJvbW90aW9uOjI2YzUzNmQ5LTNmNzctNDExYy1hYjRkLWNiMzgzMDJmYWExNw==",
     name: "Promo 5",
     startDate: "2023-12-31T23:00:00+00:00",

@@ -23,8 +23,8 @@ export const RuleConditionRow = ({
   return (
     <Box
       display="grid"
-      gap={0.5}
-      __gridTemplateColumns="2fr 1fr 3fr 35px"
+      gap={2}
+      __gridTemplateColumns="200px 106px 1fr 35px"
       placeItems="center"
       alignItems="start"
     >
@@ -44,7 +44,12 @@ export const RuleConditionRow = ({
         <RuleConditionValues conditionIndex={conditionIndex} />
       </RuleInputWrapper>
 
-      <Button variant="tertiary" icon={<RemoveIcon />} onClick={onRemove} />
+      <Button
+        data-test-id={`condition-remove-${conditionIndex}`}
+        variant="tertiary"
+        icon={<RemoveIcon />}
+        onClick={onRemove}
+      />
     </Box>
   );
 };
