@@ -1,5 +1,5 @@
 import { CustomersPage } from "@pages/customersPage";
-import { expect, test } from "@playwright/test";
+import { test } from "@playwright/test";
 import * as faker from 'faker';
 import { CUSTOMERS, CUSTOMER_ADDRESS } from "@data/e2eTestData";
 

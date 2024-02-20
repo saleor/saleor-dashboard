@@ -4,7 +4,7 @@ import { AddressForm, customerAddress} from "@forms/addressForm";
 import { BasePage } from "@pages/basePage";
 import { DeleteDialog } from '@dialogs/deleteDialog';
 import { IssueGiftCardDialog } from "@dialogs/issueGiftCardDialog";
-import { AddressDialog } from "./dialogs/addressDialog";
+import { AddressDialog } from "@dialogs/addressDialog";
 
 export class CustomersPage extends BasePage {
   readonly addressForm: AddressForm;
