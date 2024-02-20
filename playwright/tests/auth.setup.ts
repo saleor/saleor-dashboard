@@ -31,15 +31,6 @@ setup("authenticate as admin", async ({ page }) => {
     adminFile,
   );
 });
-setup("unauthenticated user ", async ({ page }) => {
-  const loginPage = await new LoginPage(page);
-  await page.goto(URL_LIST.homePage);
-  await loginPage.resetPasswordLink.waitFor({ state: "visible" });
-  // End of authentication steps.
-  await page
-    .context()
-    .storageState({ path: unauthenticatedUserPermissionsFile });
-});
 setup("authenticate as user with discount permissions", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginAndSetStorageState(

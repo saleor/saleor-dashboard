@@ -123,6 +123,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                       !!getError(SeoField.slug) || slug.length > maxSlugLength
                     }
                     name={SeoField.slug}
+                    data-test-id="seo-slug-input"
                     label={
                       <Box display="flex" gap={1}>
                         <Box as="span">
@@ -155,6 +156,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                   size="small"
                   error={title?.length > maxTitleLength}
                   name={SeoField.title}
+                  data-test-id="seo-title-input"
                   value={title ?? ""}
                   disabled={loading || disabled}
                   onChange={onChange}
@@ -187,6 +189,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                 <Textarea
                   error={description?.length > maxDescriptionLength}
                   name={SeoField.description}
+                  data-test-id="seo-description-input"
                   value={description ?? ""}
                   disabled={loading || disabled}
                   onChange={onChange}

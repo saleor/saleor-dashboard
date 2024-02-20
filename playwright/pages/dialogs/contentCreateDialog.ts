@@ -6,16 +6,16 @@ export class ContentCreateDialog {
   constructor(
     page: Page,
     readonly pageTypeInput = page.getByTestId("dialog-page-type"),
-    readonly confirmButton = page.getByTestId("submit"),
+    readonly confirmButton = page.getByTestId("confirm-button"),
     readonly channelOption = page.locator(
-      "[data-test-id*='select-field-option']",
+      "[data-test-id*='option'][data-test-id*='select']",
     ),
   ) {
     this.page = page;
   }
 
   async expandPageTypeList() {
-    await this.pageTypeInput.click();
+    await this.pageTypeInput.click({ force: true });
   }
   async clickConfirmButton() {
     await this.confirmButton.click();

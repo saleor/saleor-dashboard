@@ -106,6 +106,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             helperText={getErrorMessage(error, intl)}
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
+            data-test-id={`attribute-${attribute.label}`}
             label=""
             onChange={e => onChange(attribute.id, e.target.value)}
             fetchOptions={query => {
@@ -139,6 +140,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             error={!!error}
             label=""
             name={`attribute:${attribute.label}`}
+            data-test-id={`attribute-${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
             type="text"
             value={attribute.value[0]}
@@ -168,6 +170,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                 editorRef={getMountEditor(attribute.id)}
                 onChange={getHandleChange(attribute.id)}
                 name={`attribute:${attribute.label}`}
+                data-test-id={`attribute-${attribute.label}`}
                 disabled={disabled}
                 error={!!error}
                 label=""
@@ -188,6 +191,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             label=""
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
+            data-test-id={`attribute-${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
             type="number"
             value={attribute.value[0]}
@@ -212,6 +216,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                   onPressedChange={checked => onChange(attribute.id, checked)}
                   pressed={JSON.parse(attribute.value[0] ?? "false")}
                   id={`attribute:${attribute.label}`}
+                  data-test-id={`attribute-${attribute.label}`}
                 />
                 <Text variant="caption" color="critical1">
                   {getErrorMessage(error, intl)}
@@ -231,6 +236,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             helperText={getErrorMessage(error, intl)}
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
+            data-test-id={`attribute-${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
             type="date"
             value={attribute.value[0]}
@@ -242,6 +248,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         <BasicAttributeRow label={attribute.label}>
           <DateTimeField
             name={`attribute:${attribute.label}`}
+            data-test-id={`attribute-${attribute.label}`}
             disabled={disabled}
             error={error}
             value={attribute.value[0]}
@@ -257,6 +264,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             alwaysFetchOnFocus
             disabled={disabled}
             name={`attribute:${attribute.label}`}
+            data-test-id={`attribute-${attribute.label}`}
             label=""
             error={!!error}
             helperText={getErrorMessage(error, intl)}
