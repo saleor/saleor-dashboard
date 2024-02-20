@@ -60,6 +60,7 @@ const PageInfo: React.FC<PageInfoProps> = props => {
           name={"title" as keyof PageData}
           value={data.title}
           onChange={onChange}
+          data-test-id="page-title"
         />
         <FormSpacer />
         {isReadyForMount ? (
@@ -76,6 +77,7 @@ const PageInfo: React.FC<PageInfoProps> = props => {
               description: "page content",
             })}
             name={"content" as keyof PageData}
+            data-test-id="page-content"
           />
         ) : (
           <RichTextEditorLoading
