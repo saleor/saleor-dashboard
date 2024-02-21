@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
@@ -11,6 +12,7 @@ import OrderAddTransaction from "../OrderAddTransaction";
 import { useStyles } from "../OrderDetailsPage/styles";
 import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderPaymentSummaryCard from "../OrderPaymentSummaryCard";
+import { OrderRefundDatagrid } from "../OrderRefundDatagrid";
 import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
@@ -45,6 +47,9 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
     () => getFilteredPayments(order),
     [order],
   );
+
+  const { enabled } = useFlag("improved_refunds");
+
   return (
     <>
       <div className={classes.cardGrid}>
@@ -52,12 +57,22 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
         <OrderPaymentSummaryCard order={order} onMarkAsPaid={onMarkAsPaid} />
       </div>
       <CardSpacer />
-      {order?.grantedRefunds?.length !== 0 ? (
-        <>
-          <OrderGrantedRefunds order={order} />
-          <CardSpacer />
-        </>
-      ) : null}
+      {
+        // Improved refunds mounting point
+        order?.grantedRefunds?.length !== 0 ? (
+          <>
+            {enabled ? (
+              <OrderRefundDatagrid
+                orderId={order?.id}
+                grantedRefunds={order?.grantedRefunds}
+              />
+            ) : (
+              <OrderGrantedRefunds order={order} />
+            )}
+            <CardSpacer />
+          </>
+        ) : null
+      }
       <div>
         {order?.transactions?.map(transaction => (
           <OrderTransaction

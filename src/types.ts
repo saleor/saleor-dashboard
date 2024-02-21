@@ -50,6 +50,7 @@ export enum ListViews {
   // Not strictly a list view, but there's a list of variants
   PRODUCT_DETAILS = "PRODUCT_DETAILS",
   VOUCHER_CODES = "VOUCHER_CODES",
+  ORDER_REFUNDS = "ORDER_REFUNDS",
 }
 
 export interface ListProps<TColumns extends string = string> {
