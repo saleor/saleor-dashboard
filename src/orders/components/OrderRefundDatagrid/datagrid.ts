@@ -85,11 +85,11 @@ export const createGetCellContent =
           readonly: true,
         });
       case "reason":
-        return readonlyTextCell(rowData.reason ?? "");
+        return readonlyTextCell(rowData.reason ?? "", false);
       case "date":
         return dateCell(rowData.createdAt);
       case "account":
-        return readonlyTextCell(rowData.user?.email ?? "");
+        return readonlyTextCell(rowData.user?.email ?? "", false);
       default:
         return readonlyTextCell("");
     }

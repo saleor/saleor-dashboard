@@ -9,13 +9,19 @@ import {
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
 import { ListViews } from "@dashboard/types";
-import { Item } from "@glideapps/glide-data-grid";
-import { Box, Button, PlusIcon, Text, useTheme } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  Button,
+  EditIcon,
+  PlusIcon,
+  Text,
+  useTheme,
+} from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import {
   createGetCellContent,
@@ -33,7 +39,6 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
   orderId,
 }) => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const datagrid = useDatagridChangeState();
 
   const { updateListSettings, settings } = useListSettings(
@@ -75,15 +80,19 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
     currentTheme,
   });
 
-  const handleRowClick = React.useCallback(
-    ([_, row]: Item) => {
-      if (!grantedRefunds) {
-        return;
-      }
-      const rowData = grantedRefunds[row];
-      navigate(orderGrantRefundEditUrl(orderId, rowData.id));
-    },
-    [grantedRefunds],
+  const getMenuItems = React.useCallback(
+    index => [
+      {
+        label: "test",
+        Icon: (
+          <Link to={orderGrantRefundEditUrl(orderId, grantedRefunds[index].id)}>
+            <EditIcon />
+          </Link>
+        ),
+        onSelect: () => false,
+      },
+    ],
+    [intl],
   );
 
   return (
@@ -107,11 +116,10 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
         <Datagrid
           readonly
           hasRowHover
-          onRowClick={handleRowClick}
           rowMarkers="none"
           columnSelect="none"
           freezeColumns={2}
-          menuItems={() => []}
+          menuItems={getMenuItems}
           verticalBorder={col => col > 1}
           availableColumns={visibleColumns}
           emptyText={""}
