@@ -43,6 +43,8 @@ export default defineConfig(({ command, mode }) => {
     CUSTOM_VERSION,
     FLAGS_SERVICE_ENABLED,
     LOCALE_CODE,
+    POSTHOG_KEY,
+    POSTHOG_HOST
   } = env;
 
   const base = STATIC_URL ?? "/";
@@ -65,6 +67,8 @@ export default defineConfig(({ command, mode }) => {
           APPS_TUNNEL_URL_KEYWORDS,
           IS_CLOUD_INSTANCE,
           LOCALE_CODE,
+          POSTHOG_KEY,
+          POSTHOG_HOST,
           injectOgTags:
             DEMO_MODE &&
             `
@@ -147,7 +151,9 @@ export default defineConfig(({ command, mode }) => {
         CUSTOM_VERSION,
         LOCALE_CODE,
         SENTRY_RELEASE,
-        STATIC_URL
+        STATIC_URL,
+        POSTHOG_KEY,
+        POSTHOG_HOST
       },
     },
     build: {

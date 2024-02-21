@@ -3,20 +3,15 @@ import {
   ConfirmButton,
   ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
-import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { cancelOrderDialogMessages } from "./messages";
 
 export interface OrderCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -27,7 +22,7 @@ export interface OrderCancelDialogProps {
   onSubmit: () => void;
 }
 
-const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
+export const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
   const {
     confirmButtonState,
     errors: apiErrors,
@@ -41,47 +36,45 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
   const errors = useModalDialogErrors(apiErrors, open);
 
   return (
-    <Dialog onClose={onClose} open={open} maxWidth="sm">
-      <DialogTitle disableTypography>
-        <FormattedMessage
-          id="PRXpBm"
-          defaultMessage="Cancel Order"
-          description="dialog header"
-        />
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText key="cancel">
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content>
+        <DashboardModal.Title data-test-id="dialog-title">
           <FormattedMessage
-            id="VSztEE"
-            defaultMessage="Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. <b>Order will not be refunded when cancelling order - You need to do it manually.</b> Are you sure you want to cancel this order?"
+            {...cancelOrderDialogMessages.dialogTitle}
+            values={{ orderNumber }}
+          />
+        </DashboardModal.Title>
+        <Text>
+          <FormattedMessage
+            {...cancelOrderDialogMessages.dialogContent}
             values={{
               b: (...chunks) => <b>{chunks}</b>,
-              orderNumber,
             }}
           />
-        </DialogContentText>
-        {errors.length > 0 && (
-          <>
-            <FormSpacer />
-            {errors.map((err, index) => (
-              <DialogContentText color="error" key={index}>
-                {getOrderErrorMessage(err, intl)}
-              </DialogContentText>
-            ))}
-          </>
-        )}
-      </DialogContent>
-      <DialogActions>
-        <BackButton onClick={onClose} />
-        <ConfirmButton
-          onClick={onSubmit}
-          transitionState={confirmButtonState}
-          type="submit"
-        >
-          <FormattedMessage {...buttonMessages.accept} />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+        </Text>
+        {errors.length > 0 &&
+          errors.map((err, index) => (
+            <Text color="critical1" key={index} data-test-id="dialog-error">
+              {getOrderErrorMessage(err, intl)}
+            </Text>
+          ))}
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose}>
+            <FormattedMessage {...cancelOrderDialogMessages.buttonKeepOrder} />
+          </BackButton>
+          <ConfirmButton
+            onClick={onSubmit}
+            transitionState={confirmButtonState}
+            type="submit"
+          >
+            <FormattedMessage
+              {...cancelOrderDialogMessages.buttonCancelOrder}
+            />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 OrderCancelDialog.displayName = "OrderCancelDialog";
