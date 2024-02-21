@@ -11,9 +11,9 @@ const flatTaxRateChoice = {
   value: TaxCalculationStrategy.FLAT_RATES,
 };
 
-const pluginTaxChoice = {
+const legacyPluginTaxChoice = {
   label: <PluginLabel />,
-  value: "mirumee.taxes.avalara",
+  value: "plugin:mirumee.taxes.avalara",
 };
 
 export const useTaxStrategyChoices = () => {
@@ -34,7 +34,11 @@ export const useTaxStrategyChoices = () => {
     })) ?? [];
 
   return {
-    taxStrategyChoices: [...taxAppsChoices, flatTaxRateChoice, pluginTaxChoice],
+    taxStrategyChoices: [
+      ...taxAppsChoices,
+      flatTaxRateChoice,
+      legacyPluginTaxChoice,
+    ],
     loading,
   };
 };

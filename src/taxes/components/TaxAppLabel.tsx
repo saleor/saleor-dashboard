@@ -5,7 +5,7 @@ import moment from "moment";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-interface Props {
+interface TaxAppLabelProps {
   name: string | null;
   logoUrl: string | undefined;
   created: string | null;
@@ -14,7 +14,7 @@ interface Props {
   identifier: string | null;
 }
 
-export const TaxAppLabel: React.FC<Props> = ({
+export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
   name,
   logoUrl,
   created,

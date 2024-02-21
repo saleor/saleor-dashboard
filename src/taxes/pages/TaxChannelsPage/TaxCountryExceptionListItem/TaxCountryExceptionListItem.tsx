@@ -20,11 +20,19 @@ interface TaxCountryExceptionListItemProps {
   onChange: FormChange;
   divider: boolean;
   strategyChoices: Choice[];
+  strategyChoicesLoading: boolean;
 }
 
 export const TaxCountryExceptionListItem: React.FC<
   TaxCountryExceptionListItemProps
-> = ({ country, onDelete, onChange, strategyChoices, divider = true }) => {
+> = ({
+  country,
+  onDelete,
+  onChange,
+  strategyChoices,
+  divider = true,
+  strategyChoicesLoading,
+}) => {
   const classes = useStyles();
 
   return (
@@ -36,9 +44,11 @@ export const TaxCountryExceptionListItem: React.FC<
       >
         <ListItemCell>{country.country.country}</ListItemCell>
         <ListItemCell className={classes.cell}>
-          <LegacyFlowWarning
-            taxCalculationStrategy={country.taxCalculationStrategy}
-          />
+          {!strategyChoicesLoading && (
+            <LegacyFlowWarning
+              taxCalculationStrategy={country.taxCalculationStrategy}
+            />
+          )}
           <Box display="flex">
             <ControlledCheckbox
               className={classes.center}
@@ -48,7 +58,7 @@ export const TaxCountryExceptionListItem: React.FC<
             />
             <SingleSelectField
               choices={strategyChoices}
-              disabled={!country.chargeTaxes}
+              disabled={!country.chargeTaxes || strategyChoicesLoading}
               value={country.taxCalculationStrategy}
               name={
                 "taxCalculationStrategy" as keyof TaxConfigurationUpdateInput

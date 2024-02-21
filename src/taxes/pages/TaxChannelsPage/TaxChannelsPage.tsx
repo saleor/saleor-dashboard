@@ -273,6 +273,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                               strategyChoices={taxStrategyChoices}
                               country={country}
                               key={country.country.code}
+                              strategyChoicesLoading={loading}
                               onDelete={() => {
                                 const currentRemovals =
                                   data.removeCountriesConfiguration;

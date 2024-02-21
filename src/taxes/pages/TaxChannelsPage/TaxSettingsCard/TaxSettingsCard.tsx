@@ -60,9 +60,11 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
           >
             <span className={classes.hint}>
               <FormattedMessage {...taxesMessages.taxStrategyHint} />
-              <LegacyFlowWarning
-                taxCalculationStrategy={values.taxCalculationStrategy}
-              />
+              {!strategyChoicesLoading && (
+                <LegacyFlowWarning
+                  taxCalculationStrategy={values.taxCalculationStrategy}
+                />
+              )}
             </span>
             <SingleSelectField
               className={classes.singleSelectField}
