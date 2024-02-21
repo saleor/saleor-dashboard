@@ -15,12 +15,13 @@ import { ListViews } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, Button, PlusIcon, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import {
   createGetCellContent,
   orderRefundStaticColumnsAdapter,
 } from "./datagrid";
+import { refundGridMessages } from "./messages";
 
 interface OrderRefundDatagridProps {
   grantedRefunds: OrderDetailsFragment["grantedRefunds"];
@@ -93,11 +94,13 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
         display="flex"
         justifyContent="space-between"
       >
-        <Text variant="heading">Refunds</Text>
+        <Text variant="heading">
+          <FormattedMessage {...refundGridMessages.refundSection} />
+        </Text>
         {/** TODO: Add modal */}
         <Button variant="secondary">
           <PlusIcon />
-          Add new refund
+          <FormattedMessage {...refundGridMessages.addNewRefund} />
         </Button>
       </Box>
       <DatagridChangeStateContext.Provider value={datagrid}>

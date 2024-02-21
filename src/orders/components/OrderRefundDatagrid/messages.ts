@@ -26,4 +26,14 @@ export const refundGridMessages = defineMessages({
     id: "JxWKvr",
     description: "refund datagrid account column",
   },
+  addNewRefund: {
+    defaultMessage: "Add new refund",
+    id: "4XRIV5",
+    description: "add new refund button",
+  },
+  refundSection: {
+    defaultMessage: "Refund",
+    id: "tZmVfa",
+    description: "refund section header",
+  },
 });

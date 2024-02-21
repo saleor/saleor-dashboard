@@ -987,6 +987,10 @@
     "context": "modal button",
     "string": "Upload URL"
   },
+  "4XRIV5": {
+    "context": "add new refund button",
+    "string": "Add new refund"
+  },
   "4XhJY+": {
     "context": "dialog header",
     "string": "Add product from {channelName}"
@@ -8302,6 +8306,10 @@
   "tXIgmR": {
     "context": "balance curreny missing error message",
     "string": "Balance currency is missing"
+  },
+  "tZmVfa": {
+    "context": "refund section header",
+    "string": "Refund"
   },
   "tZnV8L": {
     "context": "Header row stock label",
