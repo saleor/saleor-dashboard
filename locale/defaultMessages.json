@@ -741,6 +741,10 @@
     "context": "delete app",
     "string": "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace."
   },
+  "2v3tZ2": {
+    "context": "refund datagrid reason column",
+    "string": "Reason"
+  },
   "2x9ZgK": {
     "context": "card title",
     "string": "Refund balance"
@@ -1472,6 +1476,10 @@
   "8BBMRj": {
     "context": "default tax class name for new tax classes",
     "string": "New tax class"
+  },
+  "8DyXiQ": {
+    "context": "refund datagrid status column",
+    "string": "Status"
   },
   "8EGagh": {
     "context": "search box label",
@@ -3258,6 +3266,10 @@
     "context": "select product informations to be exported",
     "string": "Information exported:"
   },
+  "JxWKvr": {
+    "context": "refund datagrid account column",
+    "string": "Account"
+  },
   "JyQoES": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
@@ -4975,6 +4987,10 @@
   "W5hb5H": {
     "context": "warehouse input",
     "string": "Warehouse"
+  },
+  "W6VS7F": {
+    "context": "refund datagrid amount column",
+    "string": "Amount"
   },
   "W6nwjo": {
     "string": "Draft"
@@ -7768,6 +7784,10 @@
   "pkjXPD": {
     "context": "order status",
     "string": "Fulfilled"
+  },
+  "pnPj0b": {
+    "context": "refund datagrid date column",
+    "string": "Date"
   },
   "ppLwx3": {
     "context": "number of categories",
