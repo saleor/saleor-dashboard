@@ -57,22 +57,23 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
         <OrderPaymentSummaryCard order={order} onMarkAsPaid={onMarkAsPaid} />
       </div>
       <CardSpacer />
-      {
-        // Improved refunds mounting point
-        order?.grantedRefunds?.length !== 0 ? (
+      <>
+        {enabled && (
           <>
-            {enabled ? (
-              <OrderRefundDatagrid
-                orderId={order?.id}
-                grantedRefunds={order?.grantedRefunds}
-              />
-            ) : (
-              <OrderGrantedRefunds order={order} />
-            )}
+            <OrderRefundDatagrid
+              orderId={order?.id}
+              grantedRefunds={order?.grantedRefunds}
+            />
             <CardSpacer />
           </>
-        ) : null
-      }
+        )}
+        {order?.grantedRefunds?.length !== 0 && !enabled && (
+          <>
+            <OrderGrantedRefunds order={order} />
+            <CardSpacer />
+          </>
+        )}
+      </>
       <div>
         {order?.transactions?.map(transaction => (
           <OrderTransaction
