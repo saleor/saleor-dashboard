@@ -1,4 +1,5 @@
 * @saleor/guild-ui
 .github/workflows/* @saleor/sre
 cypress/* @saleor/qa
+playwright/* @saleor/qa
 src/apps/* @saleor/apps-guild
