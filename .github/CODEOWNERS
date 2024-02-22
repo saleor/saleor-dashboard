@@ -1,3 +1,4 @@
 * @saleor/guild-ui
 .github/workflows/* @saleor/sre
 cypress/* @saleor/qa
+src/apps/* @saleor/apps-guild
