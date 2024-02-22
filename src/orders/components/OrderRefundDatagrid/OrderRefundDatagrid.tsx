@@ -83,7 +83,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
   const getMenuItems = React.useCallback(
     index => [
       {
-        label: "test",
+        label: "",
         Icon: (
           <Link to={orderGrantRefundEditUrl(orderId, grantedRefunds[index].id)}>
             <EditIcon />
@@ -92,7 +92,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
         onSelect: () => false,
       },
     ],
-    [intl],
+    [],
   );
 
   return (
