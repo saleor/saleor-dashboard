@@ -71,3 +71,9 @@ export function getFormattedMoney(
 
   return placeholder;
 }
+
+export function hasDiscountValue(
+  value: number | null | undefined,
+): value is number {
+  return value !== undefined && value !== null;
+}
