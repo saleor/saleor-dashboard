@@ -4551,6 +4551,10 @@
     "context": "order subtotal price",
     "string": "Subtotal"
   },
+  "TBdxTP": {
+    "context": "promotion type order discount",
+    "string": "Promotion"
+  },
   "TBftMD": {
     "context": "button. form submit, grant refund edit",
     "string": "Edit granted refund"

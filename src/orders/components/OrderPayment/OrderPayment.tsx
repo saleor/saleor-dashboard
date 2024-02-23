@@ -9,7 +9,6 @@ import { giftCardPath } from "@dashboard/giftCards/urls";
 import {
   OrderAction,
   OrderDetailsFragment,
-  OrderDiscountType,
   OrderStatus,
 } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";
@@ -24,6 +23,7 @@ import { useStyles } from "./styles";
 import {
   extractOrderGiftCardUsedAmount,
   extractRefundedAmount,
+  getDiscountTypeLabel,
   obtainUsedGifrcard,
 } from "./utils";
 
@@ -136,11 +136,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               <FormattedMessage {...orderPaymentMessages.discount} />
               <HorizontalSpacer spacing={4} />
               <span className={classes.supportText}>
-                {discount.type === OrderDiscountType.MANUAL ? (
-                  <FormattedMessage {...orderPaymentMessages.staffAdded} />
-                ) : (
-                  <FormattedMessage {...orderPaymentMessages.voucher} />
-                )}
+                <FormattedMessage {...getDiscountTypeLabel(discount.type)} />
               </span>
               <span
                 className={clsx(
