@@ -77,10 +77,12 @@ export class ShippingMethodsPage extends BasePage {
       `Navigates to existing shipping method page: ${existingShippingMethodUrl}`,
     );
     await this.page.goto(existingShippingMethodUrl);
-    await this.shippingZoneNameInput.waitFor({
-      state: "visible",
-      timeout: 10000,
-    });
+    await this.rightSideDetailsPage.channelSection
+      .locator(this.page.getByTestId("selected-options"))
+      .waitFor({
+        state: "visible",
+        timeout: 10000,
+      });
   }
 
   async gotoExistingShippingRate(shippingMethodId: string, shippingRateId: string) {
