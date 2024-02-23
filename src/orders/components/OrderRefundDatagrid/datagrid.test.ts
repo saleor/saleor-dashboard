@@ -22,7 +22,7 @@ jest.mock("@dashboard/components/Datagrid/hooks/useEmptyColumn", () => ({
 }));
 
 describe("Order refund datagrid", () => {
-  it("presents user-created grant refund with status draft", () => {
+  it("presents grant refund with status draft created by user", () => {
     // Arrange
     const refunds = grantedRefunds;
     const columns = useOrderRefundStaticColumns();
@@ -84,7 +84,7 @@ describe("Order refund datagrid", () => {
       }),
     );
   });
-  it("presents app-created grant refund with status draft", () => {
+  it("presents grant refund with status draft created by app", () => {
     // Arrange
     const refunds = grantedRefunds;
     const columns = useOrderRefundStaticColumns();
