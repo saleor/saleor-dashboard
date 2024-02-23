@@ -154,6 +154,12 @@ export const WAREHOUSES = {
   },
 };
 
+export const PAGES = {
+  pageToDelete: {
+    id: "UGFnZToy",
+  },
+};
+
 export const PRODUCTS = {
   singleProductType: {
     id: "UHJvZHVjdFR5cGU6Njcy",

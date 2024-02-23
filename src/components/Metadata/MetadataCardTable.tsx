@@ -89,6 +89,7 @@ export const MetadataCardTable = ({
                     name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
                     onChange={onChange}
                     value={field.key}
+                    data-test-id="metadata-field-input"
                   />
                 )}
               </TableCell>
@@ -113,6 +114,7 @@ export const MetadataCardTable = ({
                     name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
                     onChange={onChange}
                     value={field.value}
+                    data-test-id="metadata-value-input"
                   />
                 )}
               </TableCell>
