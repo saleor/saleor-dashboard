@@ -4,12 +4,19 @@ import {
   readonlyTextCell,
   tagsCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
+import {
+  UseDatagridChangeState,
+  useDatagridChangeState,
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderDetailsFragment } from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
 import { getStatusColor } from "@dashboard/misc";
+import { ListSettings, ListViews } from "@dashboard/types";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme } from "@saleor/macaw-ui-next";
+import { DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { refundGridMessages } from "./messages";
@@ -100,3 +107,31 @@ export const createGetCellContent =
         return readonlyTextCell("");
     }
   };
+
+export const useDatagridOpts = (
+  view: ListViews,
+): {
+  datagrid: UseDatagridChangeState;
+  currentTheme: DefaultTheme;
+  settings: ListSettings;
+  handleColumnChange: (picked: string[]) => void;
+} => {
+  const datagrid = useDatagridChangeState();
+  const { theme: currentTheme } = useTheme();
+  const { updateListSettings, settings } = useListSettings(view);
+
+  const handleColumnChange = React.useCallback(
+    picked => {
+      if (updateListSettings) {
+        updateListSettings("columns", picked.filter(Boolean));
+      }
+    },
+    [updateListSettings],
+  );
+  return {
+    datagrid,
+    currentTheme,
+    settings,
+    handleColumnChange,
+  };
+};

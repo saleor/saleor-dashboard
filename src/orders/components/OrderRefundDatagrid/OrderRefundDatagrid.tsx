@@ -2,30 +2,19 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
-import {
-  DatagridChangeStateContext,
-  useDatagridChangeState,
-} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
+import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import useListSettings from "@dashboard/hooks/useListSettings";
 import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
 import { ListViews } from "@dashboard/types";
-import {
-  Box,
-  Button,
-  EditIcon,
-  PlusIcon,
-  Text,
-  useTheme,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, EditIcon, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
 import {
   createGetCellContent,
-  orderRefundStaticColumnsAdapter,
+  useDatagridOpts,
+  useOrderRefundStaticColumns,
 } from "./datagrid";
 import { refundGridMessages } from "./messages";
 
@@ -38,28 +27,10 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
   grantedRefunds,
   orderId,
 }) => {
-  const intl = useIntl();
-  const datagrid = useDatagridChangeState();
+  const { datagrid, currentTheme, settings, handleColumnChange } =
+    useDatagridOpts(ListViews.ORDER_REFUNDS);
 
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.ORDER_DRAFT_DETAILS_LIST,
-  );
-
-  const emptyColumn = useEmptyColumn();
-
-  const orderDraftDetailsStaticColumns = React.useMemo(
-    () => orderRefundStaticColumnsAdapter(emptyColumn, intl),
-    [emptyColumn, intl],
-  );
-
-  const handleColumnChange = React.useCallback(
-    picked => {
-      if (updateListSettings) {
-        updateListSettings("columns", picked.filter(Boolean));
-      }
-    },
-    [updateListSettings],
-  );
+  const orderDraftDetailsStaticColumns = useOrderRefundStaticColumns();
 
   const {
     handlers,
@@ -72,7 +43,6 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
     selectedColumns: settings?.columns ?? [],
     onSave: handleColumnChange,
   });
-  const { theme: currentTheme } = useTheme();
 
   const getCellContent = createGetCellContent({
     columns: visibleColumns,
