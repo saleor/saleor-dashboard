@@ -4,46 +4,52 @@ import {
   readonlyTextCell,
   tagsCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { getStatusColor } from "@dashboard/misc";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { DefaultTheme } from "@saleor/macaw-ui-next";
-import { IntlShape } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { refundGridMessages } from "./messages";
 
-export const orderRefundStaticColumnsAdapter = (
-  emptyColumn: AvailableColumn,
-  intl: IntlShape,
-) => [
-  emptyColumn,
-  {
-    id: "status",
-    title: intl.formatMessage(refundGridMessages.statusCell),
-    width: 80,
-  },
-  {
-    id: "amount",
-    title: intl.formatMessage(refundGridMessages.amountCell),
-    width: 150,
-  },
-  {
-    id: "reason",
-    title: intl.formatMessage(refundGridMessages.reasonCell),
-    width: 300,
-  },
-  {
-    id: "date",
-    title: intl.formatMessage(refundGridMessages.dateCell),
-    width: 300,
-  },
-  {
-    id: "account",
-    title: intl.formatMessage(refundGridMessages.accountCell),
-    width: 300,
-  },
-];
+const useOrderRefundConstantColumns = () => {
+  const intl = useIntl();
+  return [
+    {
+      id: "status",
+      title: intl.formatMessage(refundGridMessages.statusCell),
+      width: 80,
+    },
+    {
+      id: "amount",
+      title: intl.formatMessage(refundGridMessages.amountCell),
+      width: 150,
+    },
+    {
+      id: "reason",
+      title: intl.formatMessage(refundGridMessages.reasonCell),
+      width: 300,
+    },
+    {
+      id: "date",
+      title: intl.formatMessage(refundGridMessages.dateCell),
+      width: 300,
+    },
+    {
+      id: "account",
+      title: intl.formatMessage(refundGridMessages.accountCell),
+      width: 300,
+    },
+  ];
+};
+
+export const useOrderRefundStaticColumns = () => {
+  const emptyColumn = useEmptyColumn();
+  const constantColumns = useOrderRefundConstantColumns();
+  return [emptyColumn, ...constantColumns];
+};
 
 export const createGetCellContent =
   ({
