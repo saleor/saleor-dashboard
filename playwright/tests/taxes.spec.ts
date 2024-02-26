@@ -17,10 +17,11 @@ test("TC: SALEOR_115 Change taxes in channel to use tax app  @taxes @e2e", async
   await configurationPage.gotoConfigurationView();
   await configurationPage.openTaxes();
   await taxesPage.selectChannel(CHANNELS.channelForTaxEdition.name);
-  await taxesPage.selectTaxCalculationMethod("TAX_APP");
+  await taxesPage.selectTaxCalculationMethod("saleor.app.avatax");
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();
 });
+
 test("TC: SALEOR_116 Change taxes in channel: enter prices without tax, do not show gross price, add country exception @taxes @e2e", async () => {
   await taxesPage.gotoChannelsTabUrl();
   await taxesPage.selectChannel(CHANNELS.channelForTaxEdition.name);
