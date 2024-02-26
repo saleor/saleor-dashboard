@@ -8,8 +8,8 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
+import { AppAdditionalInfo } from "../AppAdditionalInfo";
 import { AppAvatar } from "../AppAvatar/AppAvatar";
-import AppPermissions from "../AppPermissions";
 import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
 
@@ -105,7 +105,10 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
                 <FormattedMessage {...messages.appDisabled} />
               </Text>
             )}
-            <AppPermissions permissions={app.permissions} />
+            <AppAdditionalInfo
+              permissions={app.permissions}
+              created={app.created}
+            />
           </Box>
         </Box>
       </List.Item>

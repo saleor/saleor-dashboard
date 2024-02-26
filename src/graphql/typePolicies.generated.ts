@@ -5638,13 +5638,14 @@ export type ShippingZoneUpdatedFieldPolicy = {
 	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ShopKeySpecifier = ('allowLoginWithoutConfirmation' | 'automaticFulfillmentDigitalProducts' | 'availableExternalAuthentications' | 'availablePaymentGateways' | 'availableShippingMethods' | 'channelCurrencies' | 'chargeTaxesOnShipping' | 'companyAddress' | 'countries' | 'customerSetPasswordUrl' | 'defaultCountry' | 'defaultDigitalMaxDownloads' | 'defaultDigitalUrlValidDays' | 'defaultMailSenderAddress' | 'defaultMailSenderName' | 'defaultWeightUnit' | 'description' | 'displayGrossPrices' | 'domain' | 'enableAccountConfirmationByEmail' | 'fulfillmentAllowUnpaid' | 'fulfillmentAutoApprove' | 'headerText' | 'id' | 'includeTaxesInPrices' | 'languages' | 'limitQuantityPerCheckout' | 'limits' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'permissions' | 'phonePrefixes' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'reserveStockDurationAnonymousUser' | 'reserveStockDurationAuthenticatedUser' | 'schemaVersion' | 'staffNotificationRecipients' | 'trackInventoryByDefault' | 'translation' | 'version' | ShopKeySpecifier)[];
+export type ShopKeySpecifier = ('allowLoginWithoutConfirmation' | 'automaticFulfillmentDigitalProducts' | 'availableExternalAuthentications' | 'availablePaymentGateways' | 'availableShippingMethods' | 'availableTaxApps' | 'channelCurrencies' | 'chargeTaxesOnShipping' | 'companyAddress' | 'countries' | 'customerSetPasswordUrl' | 'defaultCountry' | 'defaultDigitalMaxDownloads' | 'defaultDigitalUrlValidDays' | 'defaultMailSenderAddress' | 'defaultMailSenderName' | 'defaultWeightUnit' | 'description' | 'displayGrossPrices' | 'domain' | 'enableAccountConfirmationByEmail' | 'fulfillmentAllowUnpaid' | 'fulfillmentAutoApprove' | 'headerText' | 'id' | 'includeTaxesInPrices' | 'languages' | 'limitQuantityPerCheckout' | 'limits' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'permissions' | 'phonePrefixes' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'reserveStockDurationAnonymousUser' | 'reserveStockDurationAuthenticatedUser' | 'schemaVersion' | 'staffNotificationRecipients' | 'trackInventoryByDefault' | 'translation' | 'version' | ShopKeySpecifier)[];
 export type ShopFieldPolicy = {
 	allowLoginWithoutConfirmation?: FieldPolicy<any> | FieldReadFunction<any>,
 	automaticFulfillmentDigitalProducts?: FieldPolicy<any> | FieldReadFunction<any>,
 	availableExternalAuthentications?: FieldPolicy<any> | FieldReadFunction<any>,
 	availablePaymentGateways?: FieldPolicy<any> | FieldReadFunction<any>,
 	availableShippingMethods?: FieldPolicy<any> | FieldReadFunction<any>,
+	availableTaxApps?: FieldPolicy<any> | FieldReadFunction<any>,
 	channelCurrencies?: FieldPolicy<any> | FieldReadFunction<any>,
 	chargeTaxesOnShipping?: FieldPolicy<any> | FieldReadFunction<any>,
 	companyAddress?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -5972,7 +5973,7 @@ export type TaxClassUpdateErrorFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TaxConfigurationKeySpecifier = ('channel' | 'chargeTaxes' | 'countries' | 'displayGrossPrices' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'pricesEnteredWithTax' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'taxCalculationStrategy' | TaxConfigurationKeySpecifier)[];
+export type TaxConfigurationKeySpecifier = ('channel' | 'chargeTaxes' | 'countries' | 'displayGrossPrices' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'pricesEnteredWithTax' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'taxAppId' | 'taxCalculationStrategy' | TaxConfigurationKeySpecifier)[];
 export type TaxConfigurationFieldPolicy = {
 	channel?: FieldPolicy<any> | FieldReadFunction<any>,
 	chargeTaxes?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -5986,6 +5987,7 @@ export type TaxConfigurationFieldPolicy = {
 	privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
+	taxAppId?: FieldPolicy<any> | FieldReadFunction<any>,
 	taxCalculationStrategy?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TaxConfigurationCountableConnectionKeySpecifier = ('edges' | 'pageInfo' | 'totalCount' | TaxConfigurationCountableConnectionKeySpecifier)[];
@@ -5999,11 +6001,12 @@ export type TaxConfigurationCountableEdgeFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TaxConfigurationPerCountryKeySpecifier = ('chargeTaxes' | 'country' | 'displayGrossPrices' | 'taxCalculationStrategy' | TaxConfigurationPerCountryKeySpecifier)[];
+export type TaxConfigurationPerCountryKeySpecifier = ('chargeTaxes' | 'country' | 'displayGrossPrices' | 'taxAppId' | 'taxCalculationStrategy' | TaxConfigurationPerCountryKeySpecifier)[];
 export type TaxConfigurationPerCountryFieldPolicy = {
 	chargeTaxes?: FieldPolicy<any> | FieldReadFunction<any>,
 	country?: FieldPolicy<any> | FieldReadFunction<any>,
 	displayGrossPrices?: FieldPolicy<any> | FieldReadFunction<any>,
+	taxAppId?: FieldPolicy<any> | FieldReadFunction<any>,
 	taxCalculationStrategy?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TaxConfigurationUpdateKeySpecifier = ('errors' | 'taxConfiguration' | TaxConfigurationUpdateKeySpecifier)[];
