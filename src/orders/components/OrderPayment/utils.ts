@@ -3,10 +3,14 @@ import { subtractMoney } from "@dashboard/components/Money";
 import {
   GiftCardEventsEnum,
   OrderDetailsFragment,
+  OrderDiscountType,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { IMoney } from "@dashboard/utils/intl";
 import compact from "lodash/compact";
+import { MessageDescriptor } from "react-intl";
+
+import { orderPaymentMessages } from "./messages";
 
 export const obtainUsedGifrcard = (order?: OrderDetailsFragment) => {
   if (!order) return null;
@@ -71,4 +75,18 @@ export const extractRefundedAmount = (order: OrderDetailsFragment): IMoney => {
       currency: order.total.gross.currency,
     }
   );
+};
+
+export const getDiscountTypeLabel = (
+  discountType: OrderDiscountType,
+): MessageDescriptor => {
+  switch (discountType) {
+    case OrderDiscountType.MANUAL:
+      return orderPaymentMessages.staffAdded;
+    case OrderDiscountType.PROMOTION:
+    case OrderDiscountType.ORDER_PROMOTION:
+      return orderPaymentMessages.promotion;
+    default:
+      return orderPaymentMessages.voucher;
+  }
 };

@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Add cron job for PW tests
+Add product analytics on cloud

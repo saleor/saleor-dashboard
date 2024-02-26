@@ -39,6 +39,7 @@ import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
+import { ProductAnalytics } from "./components/ProductAnalytics";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
 import { DEMO_MODE, getAppMountUri, GTM_ID } from "./config";
@@ -121,7 +122,9 @@ const App: React.FC = () => (
                           <AppChannelProvider>
                             <ExitFormDialogProvider>
                               <DevModeProvider>
-                                <Routes />
+                                <ProductAnalytics>
+                                  <Routes />
+                                </ProductAnalytics>
                               </DevModeProvider>
                             </ExitFormDialogProvider>
                           </AppChannelProvider>
