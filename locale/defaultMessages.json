@@ -59,6 +59,9 @@
     "context": "tabel column header",
     "string": "Total"
   },
+  "+Ps1jL": {
+    "string": "Be extra careful with taxes and payment apps, ensure your configuration selects other apps to be used"
+  },
   "+RffqY": {
     "context": "Dry run dialog object title",
     "string": "Select object type to perform dry run on provided query"
@@ -4982,6 +4985,9 @@
     "context": "dialog title",
     "string": "Add Address"
   },
+  "W2OIhn": {
+    "string": "Use app: {name}"
+  },
   "W32xfN": {
     "context": "staff member full name",
     "string": "Name"
@@ -5197,6 +5203,9 @@
   "XDBeA+": {
     "context": "discount type",
     "string": "Fixed amount"
+  },
+  "XFKV5Z": {
+    "string": "Created at: {date}"
   },
   "XFtKV5": {
     "context": "input placeholder tag",
@@ -6704,6 +6713,9 @@
     "context": "button",
     "string": "Send invite"
   },
+  "hyAOPB": {
+    "string": "Use Avalara plugin"
+  },
   "hz+9ES": {
     "context": "bulk activate label",
     "string": "Activate"
@@ -6978,6 +6990,9 @@
   },
   "k0rGBI": {
     "string": "Access token is used to authenticate service accounts"
+  },
+  "k20lqw": {
+    "string": "Legacy flow detected - select tax strategy from dropdown"
   },
   "k3EI/U": {
     "context": "dialog header",
@@ -8788,6 +8803,10 @@
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
   },
+  "wRvjoc": {
+    "context": "app created at label",
+    "string": "Created at"
+  },
   "wTHjt3": {
     "string": "Search Orders..."
   },
@@ -9186,6 +9205,9 @@
   "zRrcOG": {
     "context": "order history message",
     "string": "Order was cancelled"
+  },
+  "zSDfq0": {
+    "string": "Use flat tax rate"
   },
   "zSOvI0": {
     "string": "Filters"

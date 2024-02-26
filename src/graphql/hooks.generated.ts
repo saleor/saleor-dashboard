@@ -106,6 +106,7 @@ export const AppListItemFragmentDoc = gql`
   appUrl
   manifestUrl
   version
+  created
   brand {
     logo {
       default(format: WEBP, size: 64)
@@ -2974,6 +2975,7 @@ export const TaxConfigurationPerCountryFragmentDoc = gql`
   }
   chargeTaxes
   taxCalculationStrategy
+  taxAppId
   displayGrossPrices
 }
     ${CountryWithCodeFragmentDoc}`;
@@ -2988,6 +2990,7 @@ export const TaxConfigurationFragmentDoc = gql`
   pricesEnteredWithTax
   chargeTaxes
   taxCalculationStrategy
+  taxAppId
   countries {
     ...TaxConfigurationPerCountry
   }
@@ -18073,6 +18076,51 @@ export function useTaxClassAssignLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type TaxClassAssignQueryHookResult = ReturnType<typeof useTaxClassAssignQuery>;
 export type TaxClassAssignLazyQueryHookResult = ReturnType<typeof useTaxClassAssignLazyQuery>;
 export type TaxClassAssignQueryResult = Apollo.QueryResult<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>;
+export const TaxStrategyChoicesDocument = gql`
+    query TaxStrategyChoices {
+  shop {
+    availableTaxApps {
+      id
+      name
+      version
+      identifier
+      created
+      brand {
+        logo {
+          default
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useTaxStrategyChoicesQuery__
+ *
+ * To run a query within a React component, call `useTaxStrategyChoicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTaxStrategyChoicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTaxStrategyChoicesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTaxStrategyChoicesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>(TaxStrategyChoicesDocument, options);
+      }
+export function useTaxStrategyChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>(TaxStrategyChoicesDocument, options);
+        }
+export type TaxStrategyChoicesQueryHookResult = ReturnType<typeof useTaxStrategyChoicesQuery>;
+export type TaxStrategyChoicesLazyQueryHookResult = ReturnType<typeof useTaxStrategyChoicesLazyQuery>;
+export type TaxStrategyChoicesQueryResult = Apollo.QueryResult<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>;
 export const UpdateProductTranslationsDocument = gql`
     mutation UpdateProductTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
   productTranslate(id: $id, input: $input, languageCode: $language) {
