@@ -2,7 +2,7 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import Link from "@dashboard/components/Link";
 import { giftCardPath } from "@dashboard/giftCards/urls";
-import { OrderDetailsFragment, OrderDiscountType } from "@dashboard/graphql";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -15,6 +15,7 @@ import { SummaryList } from "./SummaryList";
 import {
   extractOrderGiftCardUsedAmount,
   getDeliveryMethodName,
+  getDiscountTypeLabel,
   getTaxTypeText,
 } from "./utils";
 
@@ -71,11 +72,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
             <SummaryLine
               key={discount.id}
               text={<FormattedMessage {...orderSummaryMessages.discount} />}
-              subText={
-                discount.type === OrderDiscountType.MANUAL
-                  ? intl.formatMessage(orderSummaryMessages.staffAdded)
-                  : intl.formatMessage(orderSummaryMessages.voucher)
-              }
+              subText={intl.formatMessage(getDiscountTypeLabel(discount.type))}
               money={discount.amount}
             />
           ))}
