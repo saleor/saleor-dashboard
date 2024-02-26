@@ -70,6 +70,11 @@ export const orderSummaryMessages = defineMessages({
     defaultMessage: "Voucher",
     description: "voucher type order discount",
   },
+  promotion: {
+    id: "TBdxTP",
+    defaultMessage: "Promotion",
+    description: "promotion type order discount",
+  },
   total: {
     id: "zb4eBO",
     defaultMessage: "Total",
