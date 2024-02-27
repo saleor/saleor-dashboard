@@ -1,14 +1,10 @@
 // @ts-strict-ignore
 import { subtractMoney } from "@dashboard/components/Money";
-import {
-  GiftCardEventsEnum,
-  OrderDetailsFragment,
-  OrderDiscountType,
-} from "@dashboard/graphql";
+import { GiftCardEventsEnum, OrderDetailsFragment } from "@dashboard/graphql";
 import { getOrderCharged } from "@dashboard/orders/utils/data";
 import { IMoney } from "@dashboard/utils/intl";
 import compact from "lodash/compact";
-import { IntlShape, MessageDescriptor } from "react-intl";
+import { IntlShape } from "react-intl";
 
 import { orderSummaryMessages } from "./messages";
 
@@ -83,18 +79,4 @@ export const getTaxTypeText = (
     return intl.formatMessage(orderSummaryMessages.vatIncluded);
   }
   return intl.formatMessage(orderSummaryMessages.vatNotIncluded);
-};
-
-export const getDiscountTypeLabel = (
-  discountType: OrderDiscountType,
-): MessageDescriptor => {
-  switch (discountType) {
-    case OrderDiscountType.MANUAL:
-      return orderSummaryMessages.staffAdded;
-    case OrderDiscountType.PROMOTION:
-    case OrderDiscountType.ORDER_PROMOTION:
-      return orderSummaryMessages.promotion;
-    default:
-      return orderSummaryMessages.voucher;
-  }
 };
