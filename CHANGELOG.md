@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.19.1
+
+### Patch Changes
+
+- bb0b1a054: Fix showing empty price when value is zero
+  Improve showing discount type in order payment details
+- fda067f06: Add clarity to order cancel dialog
+- fea94f677: Add product analytics on cloud
+- a831b81d3: Previously we allowed user to select either flat rates or any tax app. To avoid problems if there are more tax apps installed this change adds ability to select tax app that will be used to calculated taxes per channel. User can also select tax app for country exception while configuring taxes. Related [RFC](https://github.com/saleor/saleor/issues/12942)
+- 14091954b: Fix showing promotion discount type in order summary
+- ad1fd3585: Set codeowners based on new GH groups
+- cbd9c469e: Improve error color on datagrid
+- 6e5528210: Show discount name for promotion discount type
+
 ## 3.19.0
 
 ### Minor Changes
