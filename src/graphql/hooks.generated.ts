@@ -1602,6 +1602,19 @@ export const OrderGrantedRefundFragmentDoc = gql`
   }
 }
     ${UserBaseAvatarFragmentDoc}`;
+export const OrderDiscountFragmentDoc = gql`
+    fragment OrderDiscount on OrderDiscount {
+  id
+  type
+  name
+  calculationMode: valueType
+  value
+  reason
+  amount {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1816,14 +1829,7 @@ export const OrderDetailsFragmentDoc = gql`
   created
   customerNote
   discounts {
-    id
-    type
-    calculationMode: valueType
-    value
-    reason
-    amount {
-      ...Money
-    }
+    ...OrderDiscount
   }
   events {
     ...OrderEvent
@@ -1964,10 +1970,11 @@ ${TransactionItemFragmentDoc}
 ${OrderPaymentFragmentDoc}
 ${OrderGiftCardFragmentDoc}
 ${OrderGrantedRefundFragmentDoc}
-${MoneyFragmentDoc}
+${OrderDiscountFragmentDoc}
 ${OrderEventFragmentDoc}
 ${FulfillmentFragmentDoc}
 ${OrderLineFragmentDoc}
+${MoneyFragmentDoc}
 ${InvoiceFragmentDoc}`;
 export const OrderLineWithMetadataFragmentDoc = gql`
     fragment OrderLineWithMetadata on OrderLine {

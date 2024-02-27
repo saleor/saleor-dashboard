@@ -11,6 +11,7 @@ import {
   OrderDetailsFragment,
   OrderStatus,
 } from "@dashboard/graphql";
+import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
 import { Card, CardContent } from "@material-ui/core";
 import { Divider } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -23,7 +24,6 @@ import { useStyles } from "./styles";
 import {
   extractOrderGiftCardUsedAmount,
   extractRefundedAmount,
-  getDiscountTypeLabel,
   obtainUsedGifrcard,
 } from "./utils";
 
@@ -136,7 +136,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               <FormattedMessage {...orderPaymentMessages.discount} />
               <HorizontalSpacer spacing={4} />
               <span className={classes.supportText}>
-                <FormattedMessage {...getDiscountTypeLabel(discount.type)} />
+                {getDiscountTypeLabel(discount, intl)}
               </span>
               <span
                 className={clsx(

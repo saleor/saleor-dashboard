@@ -212,6 +212,20 @@ export const invoiceFragment = gql`
   }
 `;
 
+export const orderDiscount = gql`
+  fragment OrderDiscount on OrderDiscount {
+    id
+    type
+    name
+    calculationMode: valueType
+    value
+    reason
+    amount {
+      ...Money
+    }
+  }
+`;
+
 export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id
@@ -238,14 +252,7 @@ export const fragmentOrderDetails = gql`
     created
     customerNote
     discounts {
-      id
-      type
-      calculationMode: valueType
-      value
-      reason
-      amount {
-        ...Money
-      }
+      ...OrderDiscount
     }
     events {
       ...OrderEvent
