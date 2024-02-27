@@ -3,17 +3,21 @@ import {
   FulfillmentStatus,
   OrderDetailsFragment,
   OrderDetailsWithMetadataFragment,
+  OrderDiscountFragment,
+  OrderDiscountType,
   OrderLineWithMetadataFragment,
   OrderRefundDataQuery,
   OrderStatus,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
+import { intlMock } from "@test/intl";
 
 import { LineItemData } from "../components/OrderReturnPage/form";
 import { OrderRefundSharedType } from "../types";
 import {
   getAllFulfillmentLinesPriceSum,
+  getDiscountTypeLabel,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
@@ -2786,5 +2790,47 @@ describe("Merge repeated order lines of fulfillment lines", () => {
         fulfillmentLine => fulfillmentLine.orderLine.id === "T3JkZXJMaW5lOjQ1",
       ).quantity,
     ).toBe(2);
+  });
+});
+
+describe("Get discount type lable", () => {
+  it("should return Staff added for manual discount", () => {
+    // Arrange
+    const discount = {
+      type: OrderDiscountType.MANUAL,
+    } as OrderDiscountFragment;
+
+    // Act
+    const result = getDiscountTypeLabel(discount, intlMock);
+
+    // Assert
+    expect(result).toBe("Staff added");
+  });
+
+  it("should return discount name for order promotion discount", () => {
+    // Arrange
+    const discount = {
+      type: OrderDiscountType.ORDER_PROMOTION,
+      name: "Subtotal discount: Test promotion",
+    } as OrderDiscountFragment;
+
+    // Act
+    const result = getDiscountTypeLabel(discount, intlMock);
+
+    // Assert
+    expect(result).toBe("Test promotion");
+  });
+
+  it("should return voucher when voucher discount type", () => {
+    // Arrange
+    const discount = {
+      type: OrderDiscountType.VOUCHER,
+    } as OrderDiscountFragment;
+
+    // Act
+    const result = getDiscountTypeLabel(discount, intlMock);
+
+    // Assert
+    expect(result).toBe("Voucher");
   });
 });

@@ -8,6 +8,8 @@ import {
   FulfillmentStatus,
   OrderDetailsFragment,
   OrderDetailsQuery,
+  OrderDiscountFragment,
+  OrderDiscountType,
   OrderFulfillLineFragment,
   OrderLineFragment,
   OrderLineStockDataFragment,
@@ -18,6 +20,7 @@ import {
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import { findInEnum, getById } from "@dashboard/misc";
 import { IMoney } from "@dashboard/utils/intl";
+import { IntlShape } from "react-intl";
 
 import {
   LineItemData,
@@ -27,6 +30,7 @@ import {
   getAllOrderFulfilledLines,
   getAllOrderWaitingLines,
 } from "../components/OrderReturnPage/utils";
+import { orderDiscountTypeLabelMessages } from "../messages";
 import { OrderRefundSharedType } from "../types";
 
 export type OrderWithTotalAndTotalCaptured = Pick<
@@ -463,3 +467,27 @@ export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
     "edit-shipping-address",
     "edit-billing-address",
   ].includes(uri);
+
+const NAME_SEPARATOR = ":";
+const getDiscountNameLabel = (name: string) => {
+  if (name.includes(NAME_SEPARATOR)) {
+    const splited = name.split(NAME_SEPARATOR);
+    return splited[1].trim();
+  }
+
+  return name;
+};
+
+export const getDiscountTypeLabel = (
+  discount: OrderDiscountFragment,
+  intl: IntlShape,
+) => {
+  switch (discount.type) {
+    case OrderDiscountType.MANUAL:
+      return intl.formatMessage(orderDiscountTypeLabelMessages.staffAdded);
+    case OrderDiscountType.ORDER_PROMOTION:
+      return getDiscountNameLabel(discount.name);
+    default:
+      return intl.formatMessage(orderDiscountTypeLabelMessages.voucher);
+  }
+};
