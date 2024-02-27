@@ -37,7 +37,16 @@ promotionWithoutRulesToBeDeleted: {
 promotionWithRulesToBeDeleted: {
   name: "e2e Catalog predicate promotion with rules",
   id: "UHJvbW90aW9uOjY0N2M2MzdhLTZjNTEtNDYxZC05MjQ2LTc0YTY0OGM0ZjAxNA==",
-}}
+},
+cataloguePromotion:{
+  name: "e2e Catalog promotion for adding rules",
+  id: "UHJvbW90aW9uOjNmODZjZDAwLTUwNWEtNGVkNC04ZTliLTJmOGI4NGM3NGNlOQ==",
+},
+orderPromotion: {
+  name: "e2e Order promotion for adding rules",
+  id: "UHJvbW90aW9uOjJlM2VhNDkyLTRhMTAtNDYzOS05MWVmLTc1YzQ1OTUxNGQyMQ==",
+  },
+}
 
 export const CUSTOMER_ADDRESS = {
   changeBillingAddress: {
@@ -74,6 +83,10 @@ export const CATEGORIES = {
       "a cateogry to be bulk deleted 2/2",
     ],
   },
+  e2eCategory: {
+   id: "Q2F0ZWdvcnk6NTEx",
+  name: "e2e category"
+  }
 };
 export const COLLECTIONS = {
   collectionToBeUpdated: {
@@ -83,6 +96,10 @@ export const COLLECTIONS = {
   collectionsToBeBulkDeleted: {
     names: ["Collection to be deleted 1/2", "Collection to be deleted 2/2"],
   },
+  e2eCollection: {
+    id: "Q29sbGVjdGlvbjoxNjc=",
+    name: "e2e collection"
+  }
 };
 export const COUNTRIES = {
   afghanistan: {
@@ -122,6 +139,7 @@ export const CHANNELS = {
   channelPLN: {
     id: "Q2hhbm5lbDoyMjQ0",
     name: "Channel-PLN",
+    currency: "PLN",
   },
 };
 export const GIFT_CARDS = {
@@ -180,6 +198,14 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3NjE%3D",
     info: "Single product type to be updated",
   },
+  e2eProduct1: {
+    id: "UHJvZHVjdDo3OQ==",
+    name: "Bean Juice"
+  },
+  e2eProduct2:{
+    id: "UHJvZHVjdDoxMTU=",
+    name: "Black Hoodie"
+  },
   productAvailableOnlyInPlnChannel: {
     id: "UHJvZHVjdDo3NjM%3D",
     name: "a beer available only in pln channel",
@@ -194,6 +220,18 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3Mjk%3D",
     name: "beer with variants",
     info: "Product that does not contain any variant yet",
+  },
+  e2eProductWithVariant1: {
+    id: "UHJvZHVjdDo4NQ==",
+    name: "Colored Parrot Cushion",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6OTgy",
+    variantName: "70 / 70",
+  },
+  e2eProductWithVariant2: {
+    id: "UHJvZHVjdDoxMTY=",
+    name: "Blue Hoodie 2",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6MzAx",
+    variantName: "S",
   },
   productWithOneVariant: {
     id: "UHJvZHVjdDo3MzM%3D",
