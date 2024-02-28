@@ -28,6 +28,7 @@ export class AddProductsDialog {
       .locator(this.productRowCheckbox)
       .click();
     await this.clickConfirmButton();
+    await this.productRow.first().waitFor({state:"hidden"})
     await expect(this.productRow.first()).not.toBeVisible();
   }
 }
