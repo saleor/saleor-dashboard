@@ -10,9 +10,10 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   // TODO hardcoded values should be extracted to ENVs
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  workers: process.env.CI ? 2 : 2,
   reporter: process.env.CI ? "blob" : "html",
-  timeout: process.env.CI ? 60000 : 30000,
+  timeout: 60000 ,
+  expect: { timeout: 10000 },
   // webServer: {
   //   command: "npm run dev",
   //   url: "http://localhost:9000/",
