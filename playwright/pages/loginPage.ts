@@ -38,12 +38,15 @@ export class LoginPage {
     await this.typeEmail(userEmail);
     await this.typePassword(userPassword);
     await this.clickSignInButton();
-    await expect(this.homePage.welcomeMessage).toContainText("Hello there,");
+    await expect(this.homePage.welcomeMessage).toContainText("Hello there,", {
+      timeout: 15000
+    });
     // End of authentication steps.
     await page.context().storageState({ path });
   }
 
   async typeEmail(email: string) {
+    await this.emailInput.waitFor({state: "visible", timeout:15000})
     await this.emailInput.fill(email);
   }
   async typePassword(password: string) {

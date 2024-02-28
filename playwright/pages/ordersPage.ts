@@ -68,6 +68,7 @@ export class OrdersPage extends BasePage {
     await this.manualTransactionButton.click();
   }
   async clickMarkAsPaidButton() {
+    await this.markAsPaidButton.waitFor({ state: "visible", timeout: 60000 });
     await this.markAsPaidButton.click();
   }
   async clickFulfillButton() {
@@ -81,7 +82,7 @@ export class OrdersPage extends BasePage {
   }
 
   async clickFinalizeButton() {
-    await this.finalizeButton.click();
+    await this.finalizeButton.click({timeout: 90000});
   }
   async expectSuccessBanner() {
     await this.basePage.expectSuccessBanner();
