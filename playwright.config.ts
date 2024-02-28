@@ -11,6 +11,10 @@ export default defineConfig({
   // TODO hardcoded values should be extracted to ENVs
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : 2,
+  reporter: process.env.CI ? "blob" : "html",
+  timeout: 60000 ,
+  expect: { timeout: 10000 },
+  workers: process.env.CI ? 2 : 2,
   reporter: process.env.CI
     ? [
         ["blob"],
