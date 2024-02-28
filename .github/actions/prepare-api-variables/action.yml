@@ -57,7 +57,7 @@ runs:
           echo "BASE_URL_DOMAIN=v${VERSION_SLUG}.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${CURRENT_BRANCH} Staging" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
-          echo "BACKUP_NAMESPACE=snapshot-automation-tests-${GITHUB_REF_SLUG}" >> $GITHUB_OUTPUT
+          echo "BACKUP_NAMESPACE=snapshot-automation-tests-${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
 
           exit 0
         fi
