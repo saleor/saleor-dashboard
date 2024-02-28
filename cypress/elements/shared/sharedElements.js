@@ -22,6 +22,7 @@ export const SHARED_ELEMENTS = {
   gridStaticPriceButton: '[data-test-id="stat-col-price"]',
   gridStaticStatusButton: '[data-test-id="stat-col-status"]',
   gridStaticTotalButton: '[data-test-id="stat-col-total"]',
+  gridStaticIsGiftButton: '[data-test-id="stat-col-isGift"]',
   gridStaticProductButton: '[data-test-id="stat-col-product"]',
   gridStaticMetadataButton: '[data-test-id="stat-col-metadata"]',
   dynamicColumnSearchInput: '[data-test-id="search-columns"]',
