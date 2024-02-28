@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { hasAnyPermissions } from "@dashboard/auth/misc";
+import { hasAllPermissions, hasAnyPermissions } from "@dashboard/auth/misc";
 import { PermissionEnum, UserFragment } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
@@ -22,5 +22,14 @@ export const getConfigMenuItemsPermissions = (
 export const hasUserMenuItemPermissions = (
   menuItem: MenuItem,
   user: UserFragment,
-): boolean =>
-  menuItem.permissions ? hasAnyPermissions(menuItem.permissions, user) : true;
+): boolean => {
+  if (menuItem.permissions) {
+    if (menuItem.requireAllPermissions) {
+      return hasAllPermissions(menuItem.permissions, user);
+    }
+
+    return hasAnyPermissions(menuItem.permissions, user);
+  }
+
+  return true;
+};
