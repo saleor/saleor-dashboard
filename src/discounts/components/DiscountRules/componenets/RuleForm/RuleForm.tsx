@@ -102,6 +102,7 @@ export const RuleForm = <ErrorCode,>({
             <RuleInputWrapper>
               <Input
                 {...nameField}
+                data-test-id="rule-name-input"
                 disabled={disabled || nameField.disabled}
                 size="small"
                 label={intl.formatMessage(commonMessages.name)}

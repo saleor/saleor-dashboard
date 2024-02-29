@@ -9,6 +9,7 @@ interface RuleWrapperProps {
 export const RuleWrapper = ({ children, hasError }: RuleWrapperProps) => {
   return (
     <Box
+      data-test-id="added-rule"
       borderRadius={4}
       borderColor={hasError ? "critical1" : "default1"}
       borderWidth={1}

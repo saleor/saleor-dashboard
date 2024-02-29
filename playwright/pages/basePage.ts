@@ -15,8 +15,10 @@ export class BasePage {
       .locator('[class="clip-region"]')
       .locator("textarea"),
     readonly successBanner = page.locator(LOCATORS.successBanner),
+    readonly deleteButton = page.locator(LOCATORS.deleteButton),
     readonly filterButton = page.getByTestId("filters-button"),
     readonly errorBanner = page.locator(LOCATORS.errorBanner),
+    readonly saveButton = page.locator(LOCATORS.saveButton),
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
     readonly previousPagePaginationButton = page.getByTestId(
       "button-pagination-back",
@@ -47,7 +49,9 @@ export class BasePage {
   async clickBulkDeleteGridRowsButton() {
     await this.bulkDeleteGridRowsButton.click();
   }
-
+  async clickDeleteButton() {
+    await this.deleteButton.click();
+  }
   async typeInSearchOnListView(searchItem: string) {
     await this.waitForNetworkIdleAfterAction(async () => {
       await this.searchInputListView.fill(searchItem);
@@ -76,6 +80,9 @@ export class BasePage {
     await expect(this.gridCanvas).toBeAttached({
       timeout: 10000,
     });
+  }
+  async clickSaveButton() {
+    await this.saveButton.click();
   }
   async expectSuccessBannerMessage(msg: string) {
     await this.successBanner
