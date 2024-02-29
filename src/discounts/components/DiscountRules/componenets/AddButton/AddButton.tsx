@@ -19,6 +19,7 @@ export const AddButton = ({ onClick }: AddButtonProps) => {
       onClick={onClick}
       disabled={disabled}
       variant="primary"
+      data-test-id="add-rule"
     >
       <PlusIcon />
       {intl.formatMessage(messages.addRule)}

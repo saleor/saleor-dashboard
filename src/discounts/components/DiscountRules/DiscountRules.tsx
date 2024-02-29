@@ -115,7 +115,7 @@ export const DiscountRules = <ErrorCode,>({
             <AddButton onClick={() => setIsModalOpen(true)} />
           </Box>
         </DashboardCard.Title>
-        <DashboardCard.Content>
+        <DashboardCard.Content data-test-id="rule-list">
           <RulesList
             loading={!isLoaded || ruleConditionsValues.loading}
             rules={rules}

@@ -57,6 +57,7 @@ export const DiscountGeneralInfo = ({
         <Box display="grid" __gridTemplateColumns="250px 1fr" gap={3}>
           <Select
             {...typeField}
+            data-test-id="discount-type-select"
             size="medium"
             options={discountTypes}
             label={intl.formatMessage({
@@ -70,6 +71,7 @@ export const DiscountGeneralInfo = ({
             {...nameField}
             error={!!error || !!formState.errors?.name}
             helperText={error || formState.errors?.name?.message}
+            data-test-id="discount-name-input"
             label={intl.formatMessage({
               defaultMessage: "Discount name",
               id: "lJXkFS",
