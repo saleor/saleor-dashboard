@@ -40,6 +40,7 @@ export const DiscountDeleteModal = ({
             <FormattedMessage {...buttonMessages.cancel} />
           </Button>
           <ConfirmButton
+            data-test-id="delete-confirmation-button"
             transitionState={confirmButtonTransitionState}
             onClick={onConfirm}
           >

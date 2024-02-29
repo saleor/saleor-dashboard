@@ -42,7 +42,7 @@ export const RuleFormModal = ({
 
   return (
     <DashboardModal open={true} onChange={onClose}>
-      <DashboardModal.Content>
+      <DashboardModal.Content data-test-id="add-rule-dialog">
         <DashboardModal.Title
           display="flex"
           justifyContent="space-between"

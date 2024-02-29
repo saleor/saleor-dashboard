@@ -1,5 +1,5 @@
 import { AVAILABILITY } from "@data/copy";
-import { VOUCHERS_AND_DISCOUNTS } from "@data/e2eTestData";
+import { VOUCHERS } from "@data/e2eTestData";
 import { VouchersPage } from "@pages/vouchersPage";
 import { expect, test } from "@playwright/test";
 
@@ -92,7 +92,7 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
 
 test("TC: SALEOR_86 Edit voucher to have free shipping discount @vouchers @e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(
-    VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeEditedWithFreeShipping.id,
+    VOUCHERS.vouchers.voucherToBeEditedWithFreeShipping.id,
   );
   await vouchersPage.waitForGrid();
   const codesRows = await vouchersPage.getNumberOfGridRows();
@@ -117,7 +117,7 @@ test("TC: SALEOR_86 Edit voucher to have free shipping discount @vouchers @e2e",
 });
 test("TC: SALEOR_87 Edit voucher Usage Limits: used in total, per customer, staff only, code used once @vouchers @e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(
-    VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeEditedUsageLimits.id,
+    VOUCHERS.vouchers.voucherToBeEditedUsageLimits.id,
   );
   await vouchersPage.waitForGrid();
 
@@ -171,7 +171,7 @@ test("TC: SALEOR_89 Create voucher with minimum value of order @vouchers @e2e", 
 });
 test("TC: SALEOR_90 Edit voucher minimum quantity of items @vouchers @e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(
-    VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeEditedMinimumQuantity.id,
+    VOUCHERS.vouchers.voucherToBeEditedMinimumQuantity.id,
   );
   await vouchersPage.clickMinimumQuantityOfItemsButton();
   await vouchersPage.typeMinimumQuantityOfItems("4");
@@ -182,7 +182,7 @@ test("TC: SALEOR_90 Edit voucher minimum quantity of items @vouchers @e2e", asyn
 
 test("TC: SALEOR_92 Delete voucher @vouchers @e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(
-    VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeDeleted.id,
+    VOUCHERS.vouchers.voucherToBeDeleted.id,
   );
 
   await vouchersPage.clickDeleteSingleVoucherButton();
@@ -192,15 +192,15 @@ test("TC: SALEOR_92 Delete voucher @vouchers @e2e", async () => {
   await vouchersPage.waitForGrid();
   await expect(
     await vouchersPage.findRowIndexBasedOnText([
-      VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeDeleted.name,
+      VOUCHERS.vouchers.voucherToBeDeleted.name,
     ]),
-    `Given vouchers: ${VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
+    `Given vouchers: ${VOUCHERS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
 });
 test("TC: SALEOR_93 Bulk delete voucher @vouchers @e2e", async () => {
   await vouchersPage.gotoVouchersListPage();
   await vouchersPage.checkListRowsBasedOnContainingText(
-    VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names,
+    VOUCHERS.vouchers.voucherToBeBulkDeleted.names,
   );
 
   await vouchersPage.clickBulkDeleteButton();
@@ -209,9 +209,9 @@ test("TC: SALEOR_93 Bulk delete voucher @vouchers @e2e", async () => {
   await vouchersPage.waitForGrid();
   await expect(
     await vouchersPage.findRowIndexBasedOnText(
-      VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names,
+      VOUCHERS.vouchers.voucherToBeBulkDeleted.names,
     ),
-    `Given vouchers: ${VOUCHERS_AND_DISCOUNTS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
+    `Given vouchers: ${VOUCHERS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
 });
 
@@ -220,7 +220,7 @@ test.skip("TC: SALEOR_94 Edit voucher - assign voucher to specific category @vou
   const categoryToBeAssigned = "Accessories";
 
   await vouchersPage.gotoExistingVoucherPage(
-    VOUCHERS_AND_DISCOUNTS.vouchers
+    VOUCHERS.vouchers
       .voucherToBeEditedAssignCategoryProductCollection.id,
   );
   await vouchersPage.clickSpecificProductsButton();
@@ -243,7 +243,7 @@ test("TC:SALEOR_95  Edit voucher - assign voucher to specific collection @vouche
   const collectionToBeAssigned = "Featured Products";
 
   await vouchersPage.gotoExistingVoucherPage(
-    VOUCHERS_AND_DISCOUNTS.vouchers
+    VOUCHERS.vouchers
       .voucherToBeEditedAssignCategoryProductCollection.id,
   );
   await vouchersPage.clickSpecificProductsButton();
@@ -267,7 +267,7 @@ test("TC: SALEOR_96 Edit voucher - assign voucher to specific product @vouchers 
   const productToBeAssigned = "Bean Juice";
 
   await vouchersPage.gotoExistingVoucherPage(
-    VOUCHERS_AND_DISCOUNTS.vouchers
+    VOUCHERS.vouchers
       .voucherToBeEditedAssignCategoryProductCollection.id,
   );
   await vouchersPage.clickSpecificProductsButton();
