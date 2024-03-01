@@ -2807,7 +2807,7 @@ describe("Get discount type lable", () => {
     expect(result).toBe("Staff added");
   });
 
-  it("should return discount name for order promotion discount", () => {
+  it("should return discount name when exists", () => {
     // Arrange
     const discount = {
       type: OrderDiscountType.ORDER_PROMOTION,
@@ -2818,7 +2818,21 @@ describe("Get discount type lable", () => {
     const result = getDiscountTypeLabel(discount, intlMock);
 
     // Assert
-    expect(result).toBe("Test promotion");
+    expect(result).toBe("Subtotal discount");
+  });
+
+  it("should return  - when no discount name", () => {
+    // Arrange
+    const discount = {
+      type: OrderDiscountType.ORDER_PROMOTION,
+      name: " :Test promotion",
+    } as OrderDiscountFragment;
+
+    // Act
+    const result = getDiscountTypeLabel(discount, intlMock);
+
+    // Assert
+    expect(result).toBe("-");
   });
 
   it("should return voucher when voucher discount type", () => {
