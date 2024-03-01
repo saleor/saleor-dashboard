@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.19.2
+
+### Patch Changes
+
+- c7f9be3ae: Fix backup namespace for manual workflow
+- e0967359e: Fix showing attribute config for use with only one permission
+- e49642758: Fix flaky PW tests
+- 5bd468633: "fix pt-BR locale"
+- abd9a966e: fix cypress tests for managing visibility of static columns in order view
+- e879c9e88: Fix obtaining version name in manual run workflow
+- 380538936: Disable autocapture events
+- 38c419104: Fix instance name for manual workflow
+- c8e8762ad: Show promotion name in order summary, show - when no promotion name
+
 ## 3.19.1
 
 ### Patch Changes
