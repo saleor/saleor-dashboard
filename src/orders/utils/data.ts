@@ -471,8 +471,9 @@ export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
 const NAME_SEPARATOR = ":";
 const getDiscountNameLabel = (name: string) => {
   if (name.includes(NAME_SEPARATOR)) {
-    const splited = name.split(NAME_SEPARATOR);
-    return splited[1].trim();
+    const [promotionName] = name.split(NAME_SEPARATOR);
+
+    return promotionName.trim() || "-";
   }
 
   return name;
