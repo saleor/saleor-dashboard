@@ -4,6 +4,9 @@ import React from "react";
 const useConfig = () => {
   const options = {
     api_host: process.env.POSTHOG_HOST,
+    capture_pageview: false,
+    autocapture: false,
+    advanced_disable_decide: true,
   };
   const apiKey = process.env.POSTHOG_KEY;
   const isCloudInstance = process.env.IS_CLOUD_INSTANCE;
