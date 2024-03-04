@@ -4,13 +4,14 @@ import { getFilterVariables } from "@dashboard/orders/views/OrderList/filters";
 import { LinearProgress } from "@material-ui/core";
 import { useActionBar } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import React from "react";
 import { useLocation } from "react-router";
 
 import { DevModePanel } from "../DevModePanel/DevModePanel";
 import { useDevModeContext } from "../DevModePanel/hooks";
 import { useDevModeKeyTrigger } from "../DevModePanel/useDevModeKeyTrigger";
 import Navigator from "../Navigator";
+import { useNavigatorContext } from "../Navigator/useNavigatorContext";
 import { Sidebar } from "../Sidebar";
 import { useStyles } from "./styles";
 import { extractQueryParams } from "./util";
@@ -24,7 +25,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles();
   const { anchor: appActionAnchor } = useActionBar();
   const [appState] = useAppState();
-  const [isNavigatorVisible, setNavigatorVisibility] = useState(false);
 
   const {
     isDevModeVisible,
@@ -32,6 +32,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     setDevModeContent,
     setVariables,
   } = useDevModeContext();
+
+  const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorContext();
 
   const params = extractQueryParams(useLocation().search);
 
