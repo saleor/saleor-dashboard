@@ -1,3 +1,4 @@
+import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -7,6 +8,8 @@ import { MountingPoint } from "./MountingPoint";
 import { UserInfo } from "./user";
 
 export const SidebarContent = () => {
+  const { isAuthenticatedViaCloud } = useCloud();
+
   return (
     <Box
       backgroundColor="default2"
@@ -18,15 +21,17 @@ export const SidebarContent = () => {
       <MountingPoint />
       <Menu />
       <Box>
-        <Box
-          paddingX={5}
-          paddingY={4}
-          borderTopWidth={1}
-          borderColor="default1"
-          borderTopStyle="solid"
-        >
-          <EnvironmentLink />
-        </Box>
+        {isAuthenticatedViaCloud && (
+          <Box
+            paddingX={5}
+            paddingY={4}
+            borderTopWidth={1}
+            borderColor="default1"
+            borderTopStyle="solid"
+          >
+            <EnvironmentLink />
+          </Box>
+        )}
         <UserInfo />
       </Box>
     </Box>
