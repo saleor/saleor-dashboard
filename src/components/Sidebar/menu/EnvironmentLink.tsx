@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, Box, List, Text } from "@saleor/macaw-ui-next";
+import { ArrowLeftIcon, Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -22,21 +22,30 @@ const generateEnvLink = () => {
 
 export const EnvironmentLink = () => {
   return (
-    <List.Item
-      borderRadius={3}
-      paddingX={2}
-      marginBottom={5}
-      data-test-id="menu-item-label-env"
+    <Box
       as="a"
       href={generateEnvLink()}
       target="__blank"
+      gap={3}
+      display="flex"
+      alignItems="center"
     >
-      <Box paddingY={1.5} gap={3} display="flex" alignItems="center">
+      <Box __width={20} __height={20}>
         <ArrowLeftIcon color="default2" size="medium" />
-        <Text size="small" variant="bodyEmp">
-          <FormattedMessage defaultMessage="Go to Saleor Cloud" id="EXqb2l" />
-        </Text>
       </Box>
-    </List.Item>
+      <Text
+        size="small"
+        variant="bodyEmp"
+        fontStyle="italic"
+        color="inherit"
+        textDecoration="underline"
+        __fontSize="12px"
+        style={{
+          textUnderlineOffset: "3px",
+        }}
+      >
+        <FormattedMessage defaultMessage="Go to Saleor Cloud" id="EXqb2l" />
+      </Text>
+    </Box>
   );
 };

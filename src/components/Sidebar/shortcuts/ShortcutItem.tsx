@@ -1,34 +1,42 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, List } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 
-interface ShortcutItemProps {
+interface ChildrenProps {
   children: ReactNode;
 }
 
-const ShortcutItemWrapper = ({ children }: ShortcutItemProps) => {
+interface ShortcutItemProps extends ChildrenProps {
+  onClick?: () => void;
+}
+
+const ShortcutItemWrapper = ({ children, onClick }: ShortcutItemProps) => {
   return (
-    <Box
+    <List.Item
+      onClick={onClick}
       display="flex"
       gap={3}
       alignItems="center"
       color="default1"
       fontSize="bodySmall"
-      fontWeight="bodySmall"
+      fontWeight="bodyEmpSmall"
+      borderRadius={3}
+      paddingX={2}
+      paddingY={1.5}
     >
       {children}
-    </Box>
+    </List.Item>
   );
 };
 
-const Icon = ({ children }: ShortcutItemProps) => {
+const Icon = ({ children }: ChildrenProps) => {
   return (
-    <Box __width={20} __height={20}>
+    <Box __width={20} __height={20} color="default2">
       {children}
     </Box>
   );
 };
 
-const KeyboardShortcut = ({ children }: ShortcutItemProps) => {
+const KeyboardShortcut = ({ children }: ChildrenProps) => {
   return (
     <Box
       borderColor="default1"
@@ -36,6 +44,7 @@ const KeyboardShortcut = ({ children }: ShortcutItemProps) => {
       borderWidth={1}
       paddingX={0.5}
       borderRadius={2}
+      boxShadow="defaultFocused"
     >
       {children}
     </Box>

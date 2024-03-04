@@ -8,9 +8,9 @@ export const ShortCusts = () => {
   const shortcuts = useShortcuts();
 
   return (
-    <Box display="grid" gap={3}>
-      {shortcuts.map(({ icon, id, name, shortcut }) => (
-        <ShortcutItem key={id}>
+    <Box display="grid" gap={1} marginTop={1}>
+      {shortcuts.map(({ icon, id, name, shortcut, action }) => (
+        <ShortcutItem key={id} onClick={action}>
           <ShortcutItem.Icon>{icon}</ShortcutItem.Icon>
           {name}
           <ShortcutItem.KeyboardShortcut>

@@ -2,23 +2,33 @@ import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { Menu } from "./menu";
+import { EnvironmentLink } from "./menu/EnvironmentLink";
 import { MountingPoint } from "./MountingPoint";
-import { ShortCusts } from "./shortcuts";
 import { UserInfo } from "./user";
 
-export const SidebarContent = () => (
-  <Box
-    backgroundColor="default2"
-    as="aside"
-    height="100%"
-    display="grid"
-    __gridTemplateRows="auto 1fr auto auto"
-  >
-    <MountingPoint />
-    <Menu />
-    <Box padding={5}>
-      <ShortCusts />
+export const SidebarContent = () => {
+  return (
+    <Box
+      backgroundColor="default2"
+      as="aside"
+      height="100%"
+      display="grid"
+      __gridTemplateRows="auto 1fr auto"
+    >
+      <MountingPoint />
+      <Menu />
+      <Box>
+        <Box
+          paddingX={5}
+          paddingY={4}
+          borderTopWidth={1}
+          borderColor="default1"
+          borderTopStyle="solid"
+        >
+          <EnvironmentLink />
+        </Box>
+        <UserInfo />
+      </Box>
     </Box>
-    <UserInfo />
-  </Box>
-);
+  );
+};
