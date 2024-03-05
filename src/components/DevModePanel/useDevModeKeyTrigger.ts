@@ -12,6 +12,8 @@ export const useDevModeKeyTrigger = (callback: DevModeKeyTriggerCallback) => {
         callback(null, { shift: true });
       } else if (event.metaKey && event.code === "Quote") {
         callback(null, { shift: false });
+      } else if (event.ctrlKey && event.code === "Quote") {
+        callback(null, { shift: false });
       }
     };
 
