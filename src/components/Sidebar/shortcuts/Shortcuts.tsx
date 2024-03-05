@@ -4,7 +4,7 @@ import React from "react";
 import { ShortcutItem } from "./ShortcutItem";
 import { useShortcuts } from "./useShortcuts";
 
-export const ShortCusts = () => {
+export const Shortcusts = () => {
   const shortcuts = useShortcuts();
 
   return (

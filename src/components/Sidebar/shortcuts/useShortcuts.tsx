@@ -6,11 +6,14 @@ import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { shortcutsMessages } from "./messages";
+import { getControlKey } from "./utils";
 
 export const useShortcuts = () => {
   const intl = useIntl();
   const devContext = useDevModeContext();
   const { setNavigatorVisibility } = useNavigatorContext();
+
+  const controlKey = getControlKey();
 
   const handleOpenPlayground = useCallback(() => {
     devContext.setDevModeContent("");
@@ -28,14 +31,14 @@ export const useShortcuts = () => {
         id: "search",
         name: intl.formatMessage(shortcutsMessages.search),
         icon: <SearchIcon />,
-        shortcut: "⌘ K",
+        shortcut: `${controlKey} + K`,
         action: handleOpenSearch,
       },
       {
         id: "playground",
         name: intl.formatMessage(shortcutsMessages.playground),
         icon: <Graphql />,
-        shortcut: '⌘ ""',
+        shortcut: `${controlKey} + '`,
         action: handleOpenPlayground,
       },
     ],

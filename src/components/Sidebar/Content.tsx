@@ -22,13 +22,7 @@ export const SidebarContent = () => {
       <Menu />
       <Box>
         {isAuthenticatedViaCloud && (
-          <Box
-            paddingX={5}
-            paddingY={4}
-            borderTopWidth={1}
-            borderColor="default1"
-            borderTopStyle="solid"
-          >
+          <Box paddingX={5} paddingBottom={2}>
             <EnvironmentLink />
           </Box>
         )}

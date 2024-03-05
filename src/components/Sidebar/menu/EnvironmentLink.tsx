@@ -30,19 +30,13 @@ export const EnvironmentLink = () => {
       display="flex"
       alignItems="center"
     >
-      <Box __width={20} __height={20}>
-        <ArrowLeftIcon color="default2" size="medium" />
-      </Box>
+      <ArrowLeftIcon color="default2" size="medium" />
       <Text
         size="small"
         variant="bodyEmp"
         fontStyle="italic"
-        color="inherit"
-        textDecoration="underline"
-        __fontSize="12px"
-        style={{
-          textUnderlineOffset: "3px",
-        }}
+        color="default2"
+        fontSize="captionSmall"
       >
         <FormattedMessage defaultMessage="Go to Saleor Cloud" id="EXqb2l" />
       </Text>
