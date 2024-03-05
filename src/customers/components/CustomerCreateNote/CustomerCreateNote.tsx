@@ -45,6 +45,7 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
         </Typography>
         <FormSpacer />
         <TextField
+          data-test-id="customer-note"
           disabled={disabled}
           error={!!formErrors.note}
           fullWidth

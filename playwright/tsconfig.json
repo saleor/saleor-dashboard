@@ -14,6 +14,7 @@
       "@api/*": ["./api/*"],
       "@data/*": ["./data/*"],
       "@dialogs/*": ["./pages/dialogs/*"],
+      "@forms/*": ["./pages/forms/*"],
       "@pageElements/*": ["./pages/pageElements/*"]
     }
   }

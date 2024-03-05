@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { isArray } from "lodash";
 
 export class DeleteDialog {
   readonly page: Page;

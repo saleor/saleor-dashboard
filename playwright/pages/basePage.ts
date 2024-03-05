@@ -28,6 +28,9 @@ export class BasePage {
       "button-pagination-next",
     ),
     readonly searchInputListView = page.getByTestId("search-input"),
+    readonly giftCardInTable = page.locator(
+      '[href*="/dashboard/gift-cards/.*]',
+    ),
   ) {
     this.page = page;
   }

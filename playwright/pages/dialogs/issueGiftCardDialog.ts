@@ -70,4 +70,8 @@ export class IssueGiftCardDialog {
   async clickRequiresActivationCheckbox() {
     await this.requiresActivationCheckbox.click();
   }
+  async getGiftCardCode(){
+    const allTexts = await this.cardCode.allTextContents()
+    return allTexts[0]
+  }
 }

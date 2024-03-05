@@ -1,68 +1,31 @@
-export const VOUCHERS = {
-  vouchers: {
-    voucherToBeEditedWithFreeShipping: {
-      id: "Vm91Y2hlcjoyMDI%3D",
-    },
-    voucherToBeEditedUsageLimits: {
-      id: "Vm91Y2hlcjoyMDM%3D",
-    },
-    voucherToBeEditedMinimumQuantity: {
-      id: "Vm91Y2hlcjoyMDQ%3D",
-    },
-    voucherToBeEditedAssignCategoryProductCollection: {
-      id: "Vm91Y2hlcjoyMDk%3D",
-      name: "Assign category, product, collection",
-    },
-    voucherToBeBulkDeleted: {
-      names: ["Bulk delete voucher 1/2", "Bulk delete voucher 2/2"],
-    },
-    voucherToBeDeleted: {
-      name: "Delete voucher",
-      id: "Vm91Y2hlcjoyMDY%3D",
-    },
+export const CHANNELS = {
+  channelToBeEditedSettings: {
+    id: "Q2hhbm5lbDoyMzkx",
+  },
+  channelToBeDeleted: {
+    name: "z - channel to be deleted",
+  },
+  channelForTaxEdition: {
+    name: "a channel for tax tests",
+  },
+  plnChannel: {
+    id: "VGF4Q29uZmlndXJhdGlvbjox",
+  },
+  e2eChannelDoNotDelete: {
+    id: "Q2hhbm5lbDoyMzk0",
+    name: "e2e-channel-do-not-delete",
+    slug: "e2e-channel-do-not-delete",
+  },
+  channelUSD: {
+    id: "Q2hhbm5lbDoyMjQz",
+    name: "Channel-USD",
+  },
+  channelPLN: {
+    id: "Q2hhbm5lbDoyMjQ0",
+    name: "Channel-PLN",
   },
 };
-export const DISCOUNTS = {
-  promotionToBeEdited: {
-    name: "e2e promotion to be edited",
-    type: "Catalog",
-    id: "UHJvbW90aW9uOjI0MGVkZGVkLWYzMTAtNGUzZi1iNTlmLTFlMGFkYWE2ZWFkYg=="
-},
-promotionWithoutRulesToBeDeleted: {
-  id: "UHJvbW90aW9uOjRmNTQwMDc1LTZlZGMtNDI1NC1hY2U2LTQ2MzdlMGYxZWJhOA==",
-  name: "e2e Order predicate promotion without rules",
-  type: "Order",
 
-},
-promotionWithRulesToBeDeleted: {
-  name: "e2e Catalog predicate promotion with rules",
-  id: "UHJvbW90aW9uOjY0N2M2MzdhLTZjNTEtNDYxZC05MjQ2LTc0YTY0OGM0ZjAxNA==",
-}}
-
-export const CUSTOMER_ADDRESS = {
-  changeBillingAddress: {
-    firstName: "Change Billing Address",
-    lastName: "Automation",
-    companyName: "Saleor",
-    phone: "123456789",
-    addressLine1: "Teczowa",
-    addressLine2: "7",
-    cityName: "WROCLAW",
-    zip: "53-601",
-    country: "Poland",
-  },
-  changeShippingAddress: {
-    firstName: "Change Shipping Address",
-    lastName: "Automation",
-    companyName: "Saleor",
-    phone: "123456789",
-    addressLine1: "Teczowa",
-    addressLine2: "7",
-    cityName: "WROCLAW",
-    zip: "53-601",
-    country: "Poland",
-  },
-};
 export const CATEGORIES = {
   categoryToBeUpdated: {
     id: "Q2F0ZWdvcnk6NTA3",
@@ -97,18 +60,60 @@ export const COUNTRIES = {
     name: "Bosnia and Herzegovina",
   },
 };
-export const CHANNELS = {
-  channelToBeEditedSettings: {
-    id: "Q2hhbm5lbDoyMzkx",
+export const CUSTOMERS = {
+  deleteCustomer: {
+    id: "VXNlcjo5MTA=",
+    email: "karen.davis@example.com",
   },
-  channelToBeDeleted: {
-    name: "z - channel to be deleted",
+  editCustomer: {
+    id: "VXNlcjo0Mjg=",
+    email: "jennifer.morgan@example.com",
   },
-  channelForTaxEdition: {
-    name: "a channel for tax tests",
+};
+export const CUSTOMER_ADDRESS = {
+  changeBillingAddress: {
+    firstName: "Change Billing Address",
+    lastName: "Automation",
+    companyName: "Saleor",
+    phone: "123456789",
+    addressLine1: "Teczowa",
+    addressLine2: "7",
+    cityName: "WROCLAW",
+    zip: "53-601",
+    country: "Poland",
   },
-  plnChannel: {
-    id: "VGF4Q29uZmlndXJhdGlvbjox",
+  changeShippingAddress: {
+    firstName: "Change Shipping Address",
+    lastName: "Automation",
+    companyName: "Saleor",
+    phone: "123456789",
+    addressLine1: "Teczowa",
+    addressLine2: "7",
+    cityName: "WROCLAW",
+    zip: "53-601",
+    country: "Poland",
+  },
+  createCustomerAddress: {
+    firstName: "Create customer address",
+    lastName: "Automation",
+    companyName: "Saleor",
+    phone: "123456789",
+    addressLine1: "Teczowa",
+    addressLine2: "7",
+    cityName: "WROCLAW",
+    zip: "53-601",
+    country: "Poland",
+  },
+  editCustomerAddress: {
+    firstName: "Create customer address",
+    lastName: "Automation",
+    companyName: "Saleor",
+    phone: "123456789",
+    addressLine1: "Teczowa",
+    addressLine2: "7",
+    cityName: "WROCLAW",
+    zip: "53-601",
+    country: "Poland",
   },
   e2eChannelDoNotDelete: {
     id: "Q2hhbm5lbDoyMzk0",
@@ -122,6 +127,22 @@ export const CHANNELS = {
   channelPLN: {
     id: "Q2hhbm5lbDoyMjQ0",
     name: "Channel-PLN",
+  },
+};
+export const DISCOUNTS = {
+  promotionToBeEdited: {
+    name: "e2e promotion to be edited",
+    type: "Catalog",
+    id: "UHJvbW90aW9uOjI0MGVkZGVkLWYzMTAtNGUzZi1iNTlmLTFlMGFkYWE2ZWFkYg==",
+  },
+  promotionWithoutRulesToBeDeleted: {
+    id: "UHJvbW90aW9uOjRmNTQwMDc1LTZlZGMtNDI1NC1hY2U2LTQ2MzdlMGYxZWJhOA==",
+    name: "e2e Order predicate promotion without rules",
+    type: "Order",
+  },
+  promotionWithRulesToBeDeleted: {
+    name: "e2e Catalog predicate promotion with rules",
+    id: "UHJvbW90aW9uOjY0N2M2MzdhLTZjNTEtNDYxZC05MjQ2LTc0YTY0OGM0ZjAxNA==",
   },
 };
 export const GIFT_CARDS = {
@@ -145,13 +166,31 @@ export const GIFT_CARDS = {
     name: "Code ending with d_10",
   },
 };
-export const WAREHOUSES = {
-  warehouseToBeEdited: {
-    id: "V2FyZWhvdXNlOjgzNGQwYjQwLWMwZGItNGRhZi04N2RjLWQ2ODBiYzY3NGVlMw%3D%3D",
-    name: "warehouse to be edited",
+export const ORDERS = {
+  draftOrdersToBeDeleted: {
+    ids: ["#3266", "#3265"],
   },
-  warehouseToBeDeleted: {
-    name: "warehouseto be deleted",
+  ordersWithinTransactionFlow: {
+    markAsPaidOrder: {
+      orderId: "T3JkZXI6MDE4ZWM0NGUtNTgwMC00NGM0LTliMzAtZDE3YTIxYjljOTgz",
+      info: "Order used to mark as paid and fulfill",
+    },
+    captureManualTransactionOrder: {
+      orderId: "T3JkZXI6MmE1NTNkMzktOWU0OS00ZWE5LWIyNzEtNzk2ZWI5OGJhNzcz",
+      info: "Order used to capture manual transactions and fulfill",
+    },
+  },
+  orderToAddTrackingNumberTo: {
+    id: "T3JkZXI6M2NkYWE4NGItNzgxNi00ZWI2LWE1MGMtODE0NzY5YWM0MTEw",
+  },
+  orderToMarkAsPaidAndFulfill: {
+    id: "T3JkZXI6Yzg2ZDMzYmEtMTA5Yi00MzUyLTkzYWItOTljMGE3Zjk4ZGE5",
+  },
+  orderFulfilledToChangeBillingAddress: {
+    id: "T3JkZXI6MDIzNDhmMjktNzJiOC00ZTBkLWI1ODYtY2U3OTYwZDI0Y2Q0",
+  },
+  orderNotFulfilledToChangeShippingAddress: {
+    id: "T3JkZXI6ZWFhZjA0MzgtNzkyYi00ZTdlLWIyODUtMTBkMjViMjM0MzRk",
   },
   warehouseEurope: {
     id: "V2FyZWhvdXNlOjlkYjY4NWQxLWViMTktNDU2ZS05ODMyLTMxODA3ZWM0NDdhOQ==",
@@ -170,7 +209,6 @@ export const WAREHOUSES = {
     name: "Africa",
   },
 };
-
 export const PRODUCTS = {
   singleProductType: {
     id: "UHJvZHVjdFR5cGU6Njcy",
@@ -236,35 +274,6 @@ export const PRODUCTS = {
     ],
   },
 };
-
-export const ORDERS = {
-  draftOrdersToBeDeleted: {
-    ids: ["#3266", "#3265"],
-  },
-  ordersWithinTransactionFlow: {
-    markAsPaidOrder: {
-      orderId: "T3JkZXI6MDE4ZWM0NGUtNTgwMC00NGM0LTliMzAtZDE3YTIxYjljOTgz",
-      info: "Order used to mark as paid and fulfill",
-    },
-    captureManualTransactionOrder: {
-      orderId: "T3JkZXI6MmE1NTNkMzktOWU0OS00ZWE5LWIyNzEtNzk2ZWI5OGJhNzcz",
-      info: "Order used to capture manual transactions and fulfill",
-    },
-  },
-  orderToAddTrackingNumberTo: {
-    id: "T3JkZXI6M2NkYWE4NGItNzgxNi00ZWI2LWE1MGMtODE0NzY5YWM0MTEw",
-  },
-  orderToMarkAsPaidAndFulfill: {
-    id: "T3JkZXI6Yzg2ZDMzYmEtMTA5Yi00MzUyLTkzYWItOTljMGE3Zjk4ZGE5",
-  },
-  orderFulfilledToChangeBillingAddress: {
-    id: "T3JkZXI6MDIzNDhmMjktNzJiOC00ZTBkLWI1ODYtY2U3OTYwZDI0Y2Q0",
-  },
-  orderNotFulfilledToChangeShippingAddress: {
-    id: "T3JkZXI6ZWFhZjA0MzgtNzkyYi00ZTdlLWIyODUtMTBkMjViMjM0MzRk",
-  },
-};
-
 export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
     id: "U2hpcHBpbmdab25lOjIzOTA%3D",
@@ -332,5 +341,55 @@ export const USERS = {
     info: "User used in change password test",
     name: "change password",
     lastName: "user",
+  },
+};
+export const WAREHOUSES = {
+  warehouseToBeEdited: {
+    id: "V2FyZWhvdXNlOjgzNGQwYjQwLWMwZGItNGRhZi04N2RjLWQ2ODBiYzY3NGVlMw%3D%3D",
+    name: "warehouse to be edited",
+  },
+  warehouseToBeDeleted: {
+    name: "warehouseto be deleted",
+  },
+  warehouseEurope: {
+    id: "V2FyZWhvdXNlOjlkYjY4NWQxLWViMTktNDU2ZS05ODMyLTMxODA3ZWM0NDdhOQ==",
+    name: "Europe",
+  },
+  warehouseAmericas: {
+    id: "V2FyZWhvdXNlOjdmZDA0OGI0LWYwNzItNDZmMi1iMDMyLTc3ZWU3MDNiMzM3Yg==",
+    name: "Americas",
+  },
+  warehouseOceania: {
+    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+    name: "Oceania",
+  },
+  warehouseAfrica: {
+    id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+    name: "Africa",
+  },
+};
+
+export const VOUCHERS = {
+  vouchers: {
+    voucherToBeEditedWithFreeShipping: {
+      id: "Vm91Y2hlcjoyMDI%3D",
+    },
+    voucherToBeEditedUsageLimits: {
+      id: "Vm91Y2hlcjoyMDM%3D",
+    },
+    voucherToBeEditedMinimumQuantity: {
+      id: "Vm91Y2hlcjoyMDQ%3D",
+    },
+    voucherToBeEditedAssignCategoryProductCollection: {
+      id: "Vm91Y2hlcjoyMDk%3D",
+      name: "Assign category, product, collection",
+    },
+    voucherToBeBulkDeleted: {
+      names: ["Bulk delete voucher 1/2", "Bulk delete voucher 2/2"],
+    },
+    voucherToBeDeleted: {
+      name: "Delete voucher",
+      id: "Vm91Y2hlcjoyMDY%3D",
+    },
   },
 };

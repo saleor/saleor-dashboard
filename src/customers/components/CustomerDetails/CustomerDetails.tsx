@@ -91,6 +91,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           onChange={onChange}
         />
         <TextField
+          data-test-id="customer-note"
           disabled={disabled}
           error={!!formErrors.note}
           fullWidth

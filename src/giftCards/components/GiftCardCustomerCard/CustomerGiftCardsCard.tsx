@@ -99,7 +99,11 @@ const CustomerGiftCardsCard: React.FC = () => {
           <Skeleton />
         )}
         <CardActions className={classes.cardActions}>
-          <Button variant="tertiary" onClick={handleCreateNewCardButton}>
+          <Button
+            variant="tertiary"
+            onClick={handleCreateNewCardButton}
+            data-test-id="issue-new-gift-card"
+          >
             <FormattedMessage
               {...messages.customerGiftCardsIssueNewCardButton}
             />

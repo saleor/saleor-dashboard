@@ -99,7 +99,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
 
   return (
     <>
-      <WindowTitle title={user?.email} />
+      <WindowTitle title={user?.email} data-test-id="user-email-title" />
       <CustomerDetailsPage
         customerId={id}
         customer={user}
