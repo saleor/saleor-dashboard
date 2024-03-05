@@ -2,32 +2,19 @@ import { ArrowLeftIcon, Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const UTM_PARAMS = "?utm_source=dashboard&utm_content=sidebar_button";
-
-const stagingLink = (hostname: string) =>
-  `https://staging-cloud.saleor.io/env/${hostname}${UTM_PARAMS}`;
-
-const prodLink = (hostname: string) =>
-  `https://cloud.saleor.io/env/${hostname}${UTM_PARAMS}`;
-
-const generateEnvLink = () => {
-  const { hostname } = window.location;
-
-  if (hostname.includes(".staging.")) {
-    return stagingLink(hostname);
-  }
-
-  return prodLink(hostname);
-};
+import { useEnvLink } from "./hooks/useEnvLink";
 
 export const EnvironmentLink = () => {
+  const envLink = useEnvLink();
+
   return (
     <Box
       as="a"
-      href={generateEnvLink()}
+      href={envLink}
       target="__blank"
       gap={3}
       display="flex"
+      data-test-id="menu-item-label-env"
       alignItems="center"
     >
       <ArrowLeftIcon color="default2" size="medium" />
