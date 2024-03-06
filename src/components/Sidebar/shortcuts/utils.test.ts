@@ -1,6 +1,6 @@
-import { getControlKey } from "./utils";
+import { getShortcutLeadingKey } from "./utils";
 
-describe("getControlKey", () => {
+describe("getShortcutLeadingKey", () => {
   it('should return "⌘" if navigator.appVersion includes "mac"', () => {
     // Arrange
     Object.defineProperty(navigator, "appVersion", {
@@ -10,7 +10,7 @@ describe("getControlKey", () => {
     });
 
     // Act
-    const result = getControlKey();
+    const result = getShortcutLeadingKey();
 
     // Assert
     expect(result).toBe("⌘");
@@ -25,7 +25,7 @@ describe("getControlKey", () => {
     });
 
     // Act
-    const result = getControlKey();
+    const result = getShortcutLeadingKey();
 
     // Assert
     expect(result).toBe("Ctrl");

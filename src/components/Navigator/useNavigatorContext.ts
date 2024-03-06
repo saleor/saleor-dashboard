@@ -11,7 +11,7 @@ export const useNavigatorContext = () => {
   const context = useContext(NavigatorContext);
 
   if (context === null) {
-    throw new Error("you are outside of context");
+    throw new Error("You are using useNavigatorContext of its provider");
   }
 
   return context;

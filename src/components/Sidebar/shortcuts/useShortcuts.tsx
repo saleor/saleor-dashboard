@@ -6,14 +6,14 @@ import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { shortcutsMessages } from "./messages";
-import { getControlKey } from "./utils";
+import { getShortcutLeadingKey } from "./utils";
 
 export const useShortcuts = () => {
   const intl = useIntl();
   const devContext = useDevModeContext();
   const { setNavigatorVisibility } = useNavigatorContext();
 
-  const controlKey = getControlKey();
+  const controlKey = getShortcutLeadingKey();
 
   const handleOpenPlayground = useCallback(() => {
     devContext.setDevModeContent("");
