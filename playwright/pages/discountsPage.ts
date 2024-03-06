@@ -1,12 +1,14 @@
 import type { Page } from "@playwright/test";
 import { URL_LIST } from "@data/url";
 import { DeleteDiscountDialog } from "@dialogs/deleteDiscountDialog";
+import { PromotionRuleDialog } from "@pages/dialogs/promotionRuleDialog";
 
 import { BasePage } from "@pages/basePage";
 import { date } from "faker";
 
 export class DiscountsPage extends BasePage {
   deleteDialog: DeleteDiscountDialog;
+  promotionRuleDialog: PromotionRuleDialog;
 
 
   constructor(
@@ -25,12 +27,14 @@ export class DiscountsPage extends BasePage {
     readonly addRuleButton = page.getByTestId("add-rule"),
     readonly editRuleButton = page.getByTestId("rule-edit-button"),
     readonly deleteRuleButton = page.getByTestId("rule-delete-button"),
-    readonly existingRule = page.getByTestId("added-rule"),
     readonly addRuleDialog = page.getByTestId("add-rule-dialog"),
     readonly ruleSection = page.getByTestId("rule-list"),
+    readonly existingRule = ruleSection.getByTestId("added-rule"),
+
   ) {
     super(page)
     this.deleteDialog = new DeleteDiscountDialog(page);
+    this.promotionRuleDialog = new PromotionRuleDialog(page);
 }
   async clickCreateDiscountButton() {
     await this.createDiscountButton.click();
@@ -89,15 +93,17 @@ export class DiscountsPage extends BasePage {
     });
   }
 
-  async clickEditRuleButton() {
-    await this.editRuleButton.click();
-  }
+  async clickAddRuleButton() {
+    await this.page.getByTestId('add-rule').click();}
+
+  async clickEditRuleButton(){
+    await this.page.getByTestId('rule-edit-button').click();}
+
   async clickDeleteRuleButton() {
     await this.deleteRuleButton.click() }
 
-  async openExistingPromotionRuleModal(promotionId: string) {
-    await this.gotoExistingDiscount(promotionId);
-    await this.editRuleButton.click();
+  async openPromotionRuleModal() {
+    await this.addRuleButton.click();
     await this.addRuleDialog.waitFor({
       state: "visible",
       timeout: 10000,

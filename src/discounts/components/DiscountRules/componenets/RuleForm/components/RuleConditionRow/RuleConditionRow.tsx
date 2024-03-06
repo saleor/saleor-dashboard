@@ -28,7 +28,7 @@ export const RuleConditionRow = ({
       placeItems="center"
       alignItems="start"
     >
-      <RuleInputWrapper>
+      <RuleInputWrapper data-test-id="rule-condition-predicate-dropdown">
         <RuleConditionName
           conditionIndex={conditionIndex}
           updateCondition={updateCondition}
@@ -36,11 +36,11 @@ export const RuleConditionRow = ({
         />
       </RuleInputWrapper>
 
-      <RuleInputWrapper>
+      <RuleInputWrapper data-test-id="rule-condition-type-dropdown">
         <RuleConditionType conditionIndex={conditionIndex} />
       </RuleInputWrapper>
 
-      <RuleInputWrapper>
+      <RuleInputWrapper data-test-id="rule-condition-value-dropdown">
         <RuleConditionValues conditionIndex={conditionIndex} />
       </RuleInputWrapper>
 
