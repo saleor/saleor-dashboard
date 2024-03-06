@@ -44,12 +44,15 @@ jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
   })),
 }));
 
-jest.mock("@dashboard/components/Navigator/useNavigatorContext", () => ({
-  useNavigatorContext: jest.fn(() => ({
-    isNavigatorVisible: false,
-    setNavigatorVisibility: jest.fn(),
-  })),
-}));
+jest.mock(
+  "@dashboard/components/NavigatorSearch/useNavigatorSearchContext",
+  () => ({
+    useNavigatorSearchContext: jest.fn(() => ({
+      isNavigatorVisible: false,
+      setNavigatorVisibility: jest.fn(),
+    })),
+  }),
+);
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
