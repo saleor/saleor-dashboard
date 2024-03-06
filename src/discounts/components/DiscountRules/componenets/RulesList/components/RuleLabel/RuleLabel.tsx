@@ -27,5 +27,9 @@ export const RuleLabel = ({ ruleName }: RuleLabelProps) => {
     return intl.formatMessage(messages.orderRule);
   }, [discountType]);
 
-  return <>{ruleTypeLabel + getRuleName(ruleName)}</>;
+  return (
+    <span data-test-id="rule-name">
+      {ruleTypeLabel + getRuleName(ruleName)}
+    </span>
+  );
 };

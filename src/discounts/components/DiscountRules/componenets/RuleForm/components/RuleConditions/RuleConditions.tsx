@@ -97,6 +97,7 @@ export const RuleConditions = ({
           alignSelf="start"
           disabled={disabled}
           onClick={() => append(createEmptyCodition())}
+          data-test-id="add-another-condition-button"
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>

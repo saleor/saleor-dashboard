@@ -24,6 +24,7 @@ export const RuleRewardTypeSelect = () => {
 
   return (
     <Select
+      data-test-id="reward-type-select"
       {...rewardType}
       label={intl.formatMessage({
         defaultMessage: "Reward type",
@@ -41,7 +42,6 @@ export const RuleRewardTypeSelect = () => {
         setValue("rewardValue", null);
         rewardType.onChange((type as unknown as Option).value);
       }}
-      data-test-id="reward-type-select"
       size="small"
       options={rewardTypeOptions}
       disabled={disabled}
