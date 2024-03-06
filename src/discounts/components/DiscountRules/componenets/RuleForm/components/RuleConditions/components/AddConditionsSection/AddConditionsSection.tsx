@@ -27,7 +27,7 @@ export const AddConditionsSection = ({
         alignSelf="start"
         disabled={disabled}
         onClick={addCondition}
-        data-test-id="add-rule-condition-button"
+        data-test-id="add-first-condition-button"
       >
         <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
       </Button>
