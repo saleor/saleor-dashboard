@@ -18,8 +18,8 @@ import {
   hasCustomers,
   hasViews,
 } from "./modes/utils";
-import NavigatorInput from "./NavigatorInput";
-import NavigatorSection from "./NavigatorSection";
+import NavigatorSearchInput from "./NavigatorSearchInput";
+import NavigatorSection from "./NavigatorSearchSection";
 import { QuickSearchAction } from "./types";
 import useQuickSearch from "./useQuickSearch";
 
@@ -55,16 +55,19 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: "Navigator",
+    name: "NavigatorSearch",
   },
 );
 
-export interface NavigatorProps {
+export interface NavigatorSearchProps {
   visible: boolean;
   setVisibility: (state: boolean) => void;
 }
 
-const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
+const NavigatorSearch: React.FC<NavigatorSearchProps> = ({
+  visible,
+  setVisibility,
+}) => {
   const input = React.useRef(null);
   const [query, mode, change, actions] = useQuickSearch(visible, input);
   const intl = useIntl();
@@ -146,7 +149,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
             >
               {({ getInputProps, getItemProps, highlightedIndex }) => (
                 <div>
-                  <NavigatorInput
+                  <NavigatorSearchInput
                     mode={mode}
                     value={query}
                     {...(getInputProps({
@@ -217,4 +220,4 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
   );
 };
 
-export default Navigator;
+export default NavigatorSearch;

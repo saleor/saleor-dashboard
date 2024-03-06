@@ -10,8 +10,8 @@ import { useLocation } from "react-router";
 import { DevModePanel } from "../DevModePanel/DevModePanel";
 import { useDevModeContext } from "../DevModePanel/hooks";
 import { useDevModeKeyTrigger } from "../DevModePanel/useDevModeKeyTrigger";
-import Navigator from "../Navigator";
-import { useNavigatorContext } from "../Navigator/useNavigatorContext";
+import NavigatorSearch from "../NavigatorSearch";
+import { useNavigatorSearchContext } from "../NavigatorSearch/useNavigatorSearchContext";
 import { Sidebar } from "../Sidebar";
 import { useStyles } from "./styles";
 import { extractQueryParams } from "./util";
@@ -33,7 +33,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     setVariables,
   } = useDevModeContext();
 
-  const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorContext();
+  const { isNavigatorVisible, setNavigatorVisibility } =
+    useNavigatorSearchContext();
 
   const params = extractQueryParams(useLocation().search);
 
@@ -61,7 +62,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         isDevModeVisible={isDevModeVisible}
         setDevModeVisibility={setDevModeVisibility}
       />
-      <Navigator
+      <NavigatorSearch
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />

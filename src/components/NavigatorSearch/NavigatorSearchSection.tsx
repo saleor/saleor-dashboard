@@ -5,7 +5,7 @@ import React from "react";
 
 import { QuickSearchAction } from "./types";
 
-interface NavigatorSectionProps {
+interface NavigatorSearchSectionProps {
   getItemProps: (options: GetItemPropsOptions<QuickSearchAction>) => any;
   highlightedIndex: number;
   label: string;
@@ -46,11 +46,11 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: "NavigatorSection",
+    name: "NavigatorSearchSection",
   },
 );
 
-const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
+const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
   const { getItemProps, highlightedIndex, label, items, offset } = props;
 
   const classes = useStyles(props);
@@ -96,5 +96,5 @@ const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
   );
 };
 
-NavigatorSection.displayName = "NavigatorSection";
-export default NavigatorSection;
+NavigatorSearchSection.displayName = "NavigatorSearchSection";
+export default NavigatorSearchSection;

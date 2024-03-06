@@ -5,10 +5,12 @@ interface NavigatorContext {
   setNavigatorVisibility: (visible: boolean) => void;
 }
 
-export const NavigatorContext = createContext<null | NavigatorContext>(null);
+export const NavigatorSearchContext = createContext<null | NavigatorContext>(
+  null,
+);
 
-export const useNavigatorContext = () => {
-  const context = useContext(NavigatorContext);
+export const useNavigatorSearchContext = () => {
+  const context = useContext(NavigatorSearchContext);
 
   if (context === null) {
     throw new Error("You are using useNavigatorContext of its provider");

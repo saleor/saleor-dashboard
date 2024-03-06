@@ -1,5 +1,5 @@
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import { useNavigatorContext } from "@dashboard/components/Navigator/useNavigatorContext";
+import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
 import { Graphql } from "@dashboard/icons/Graphql";
 import { SearchIcon } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
@@ -11,7 +11,7 @@ import { getShortcutLeadingKey } from "./utils";
 export const useShortcuts = () => {
   const intl = useIntl();
   const devContext = useDevModeContext();
-  const { setNavigatorVisibility } = useNavigatorContext();
+  const { setNavigatorVisibility } = useNavigatorSearchContext();
 
   const controlKey = getShortcutLeadingKey();
 
@@ -42,7 +42,7 @@ export const useShortcuts = () => {
         action: handleOpenPlayground,
       },
     ],
-    [intl, handleOpenPlayground],
+    [intl],
   );
 
   return shortcuts;

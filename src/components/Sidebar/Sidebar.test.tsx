@@ -1,6 +1,6 @@
 import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import { useNavigatorContext } from "@dashboard/components/Navigator/useNavigatorContext";
+import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
@@ -119,7 +119,7 @@ describe("Sidebar", () => {
   it("should call callback when click on search shortcut", async () => {
     // Arrange
     const actionCallback = jest.fn();
-    (useNavigatorContext as jest.Mock).mockImplementationOnce(() => ({
+    (useNavigatorSearchContext as jest.Mock).mockImplementationOnce(() => ({
       isNavigatorVisible: false,
       setNavigatorVisibility: actionCallback,
     }));

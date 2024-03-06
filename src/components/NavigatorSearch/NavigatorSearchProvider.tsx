@@ -1,18 +1,22 @@
 import React, { ReactNode, useState } from "react";
 
-import { NavigatorContext } from "./useNavigatorContext";
+import { NavigatorSearchContext } from "./useNavigatorSearchContext";
 
-export const NavigatorProvider = ({ children }: { children: ReactNode }) => {
+export const NavigatorSearchProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   const [isNavigatorVisible, setNavigatorVisibility] = useState(false);
 
   return (
-    <NavigatorContext.Provider
+    <NavigatorSearchContext.Provider
       value={{
         isNavigatorVisible,
         setNavigatorVisibility,
       }}
     >
       {children}
-    </NavigatorContext.Provider>
+    </NavigatorSearchContext.Provider>
   );
 };
