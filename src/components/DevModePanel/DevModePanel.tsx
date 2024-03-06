@@ -1,30 +1,54 @@
 // @ts-strict-ignore
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
+import { DevModeQuery } from "@dashboard/orders/queries";
+import { getFilterVariables } from "@dashboard/orders/views/OrderList/filters";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Dialog, DialogContent } from "@material-ui/core";
 import { DialogHeader } from "@saleor/macaw-ui";
 import { createFetch } from "@saleor/sdk";
 import React from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
+import { extractQueryParams } from "../AppLayout/util";
 import GraphiQL from "../GraphiQLPlain";
 import { useDevModeContext } from "./hooks";
 import { messages } from "./messages";
+import { useDevModeKeyTrigger } from "./useDevModeKeyTrigger";
 
 const authorizedFetch = createFetch();
 
-interface DevModePanelProps {
-  isDevModeVisible: boolean;
-  setDevModeVisibility: (value: boolean) => void;
-}
-
-export const DevModePanel: React.FC<DevModePanelProps> = ({
-  isDevModeVisible,
-  setDevModeVisibility,
-}) => {
+export const DevModePanel: React.FC = () => {
   const fetcher = createGraphiQLFetcher({
     url: process.env.API_URI,
     fetch: authorizedFetch,
+  });
+
+  const {
+    isDevModeVisible,
+    setDevModeVisibility,
+    setDevModeContent,
+    setVariables,
+  } = useDevModeContext();
+
+  const params = extractQueryParams(useLocation().search);
+
+  useDevModeKeyTrigger((_err, { shift }) => {
+    if (shift) {
+      setDevModeContent(DevModeQuery);
+      const variables = JSON.stringify(
+        {
+          filter: getFilterVariables(params),
+        },
+        null,
+        2,
+      );
+      setVariables(variables);
+    } else {
+      setDevModeContent("");
+      setVariables("");
+    }
+    setDevModeVisibility(!isDevModeVisible);
   });
 
   const intl = useIntl();

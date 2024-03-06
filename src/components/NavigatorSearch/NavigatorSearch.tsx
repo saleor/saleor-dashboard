@@ -21,6 +21,7 @@ import {
 import NavigatorSearchInput from "./NavigatorSearchInput";
 import NavigatorSection from "./NavigatorSearchSection";
 import { QuickSearchAction } from "./types";
+import { useNavigatorSearchContext } from "./useNavigatorSearchContext";
 import useQuickSearch from "./useQuickSearch";
 
 const navigatorHotkey = "ctrl+k, command+k";
@@ -59,17 +60,14 @@ const useStyles = makeStyles(
   },
 );
 
-export interface NavigatorSearchProps {
-  visible: boolean;
-  setVisibility: (state: boolean) => void;
-}
-
-const NavigatorSearch: React.FC<NavigatorSearchProps> = ({
-  visible,
-  setVisibility,
-}) => {
+const NavigatorSearch: React.FC = () => {
+  const { isNavigatorVisible, setNavigatorVisibility } =
+    useNavigatorSearchContext();
   const input = React.useRef(null);
-  const [query, mode, change, actions] = useQuickSearch(visible, input);
+  const [query, mode, change, actions] = useQuickSearch(
+    isNavigatorVisible,
+    input,
+  );
   const intl = useIntl();
   const notify = useNotifier();
   const [notifiedAboutNavigator, setNotifiedAboutNavigator] = useLocalStorage(
@@ -82,7 +80,7 @@ const NavigatorSearch: React.FC<NavigatorSearchProps> = ({
   React.useEffect(() => {
     hotkeys(navigatorHotkey, event => {
       event.preventDefault();
-      setVisibility(!visible);
+      setNavigatorVisibility(!isNavigatorVisible);
     });
 
     if (!notifiedAboutNavigator) {
@@ -121,10 +119,14 @@ const NavigatorSearch: React.FC<NavigatorSearchProps> = ({
   return (
     <Modal
       className={classes.modal}
-      open={visible}
-      onClose={() => setVisibility(false)}
+      open={isNavigatorVisible}
+      onClose={() => setNavigatorVisibility(false)}
     >
-      <Fade appear in={visible} timeout={theme.transitions.duration.short}>
+      <Fade
+        appear
+        in={isNavigatorVisible}
+        timeout={theme.transitions.duration.short}
+      >
         <div className={classes.root}>
           <Paper className={classes.paper}>
             <Downshift
@@ -134,7 +136,7 @@ const NavigatorSearch: React.FC<NavigatorSearchProps> = ({
               onSelect={(item: QuickSearchAction) => {
                 const shouldRemainVisible = item?.onClick();
                 if (!shouldRemainVisible) {
-                  setVisibility(false);
+                  setNavigatorVisibility(false);
                 }
               }}
               onInputValueChange={value =>

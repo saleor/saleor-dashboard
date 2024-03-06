@@ -1,20 +1,13 @@
 import useAppState from "@dashboard/hooks/useAppState";
-import { DevModeQuery } from "@dashboard/orders/queries";
-import { getFilterVariables } from "@dashboard/orders/views/OrderList/filters";
 import { LinearProgress } from "@material-ui/core";
 import { useActionBar } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useLocation } from "react-router";
 
 import { DevModePanel } from "../DevModePanel/DevModePanel";
-import { useDevModeContext } from "../DevModePanel/hooks";
-import { useDevModeKeyTrigger } from "../DevModePanel/useDevModeKeyTrigger";
 import NavigatorSearch from "../NavigatorSearch";
-import { useNavigatorSearchContext } from "../NavigatorSearch/useNavigatorSearchContext";
 import { Sidebar } from "../Sidebar";
 import { useStyles } from "./styles";
-import { extractQueryParams } from "./util";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -26,46 +19,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const { anchor: appActionAnchor } = useActionBar();
   const [appState] = useAppState();
 
-  const {
-    isDevModeVisible,
-    setDevModeVisibility,
-    setDevModeContent,
-    setVariables,
-  } = useDevModeContext();
-
-  const { isNavigatorVisible, setNavigatorVisibility } =
-    useNavigatorSearchContext();
-
-  const params = extractQueryParams(useLocation().search);
-
-  useDevModeKeyTrigger((_err, { shift }) => {
-    if (shift) {
-      setDevModeContent(DevModeQuery);
-      const variables = JSON.stringify(
-        {
-          filter: getFilterVariables(params),
-        },
-        null,
-        2,
-      );
-      setVariables(variables);
-    } else {
-      setDevModeContent("");
-      setVariables("");
-    }
-    setDevModeVisibility(!isDevModeVisible);
-  });
-
   return (
     <>
-      <DevModePanel
-        isDevModeVisible={isDevModeVisible}
-        setDevModeVisibility={setDevModeVisibility}
-      />
-      <NavigatorSearch
-        visible={isNavigatorVisible}
-        setVisibility={setNavigatorVisibility}
-      />
+      <DevModePanel />
+      <NavigatorSearch />
+
       <Box display="grid" __gridTemplateColumns="auto 1fr">
         {appState.loading && (
           <LinearProgress className={classes.appLoader} color="primary" />
