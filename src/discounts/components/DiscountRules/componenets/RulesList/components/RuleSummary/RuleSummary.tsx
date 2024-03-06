@@ -54,7 +54,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
   }
 
   return (
-    <Text>
+    <Text data-test-id="rule-summary">
       <FormattedMessage
         {...messages.ruleSummary}
         values={{
