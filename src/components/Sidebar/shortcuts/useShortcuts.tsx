@@ -8,7 +8,15 @@ import { useIntl } from "react-intl";
 import { shortcutsMessages } from "./messages";
 import { getShortcutLeadingKey } from "./utils";
 
-export const useShortcuts = () => {
+export interface Shortcut {
+  id: string;
+  name: string;
+  icon: React.ReactNode;
+  shortcut: string;
+  action: () => void;
+}
+
+export const useShortcuts = (): Shortcut[] => {
   const intl = useIntl();
   const devContext = useDevModeContext();
   const { setNavigatorVisibility } = useNavigatorSearchContext();
