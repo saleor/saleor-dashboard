@@ -70,6 +70,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                   intl.formatMessage(messages.title, { name })
                 )
               }
+              data-test-id="app-installation-page-header"
             />
             <CardContent className={classes.installCard}>
               {loading ? (
@@ -154,7 +155,11 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
             <Button variant="secondary" onClick={navigateToAppsList}>
               <FormattedMessage {...buttonMessages.cancel} />
             </Button>
-            <Button variant="primary" onClick={onSubmit}>
+            <Button
+              variant="primary"
+              onClick={onSubmit}
+              data-test-id="install-app-button"
+            >
               <FormattedMessage {...messages.installButton} />
             </Button>
           </Box>

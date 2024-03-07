@@ -27,24 +27,24 @@ export const DISCOUNTS = {
     name: "e2e promotion to be edited",
     type: "Catalog",
     id: "UHJvbW90aW9uOjI0MGVkZGVkLWYzMTAtNGUzZi1iNTlmLTFlMGFkYWE2ZWFkYg=="
-},
-promotionWithoutRulesToBeDeleted: {
-  id: "UHJvbW90aW9uOjRmNTQwMDc1LTZlZGMtNDI1NC1hY2U2LTQ2MzdlMGYxZWJhOA==",
-  name: "e2e Order predicate promotion without rules",
-  type: "Order",
+  },
+  promotionWithoutRulesToBeDeleted: {
+    id: "UHJvbW90aW9uOjRmNTQwMDc1LTZlZGMtNDI1NC1hY2U2LTQ2MzdlMGYxZWJhOA==",
+    name: "e2e Order predicate promotion without rules",
+    type: "Order",
 
-},
-promotionWithRulesToBeDeleted: {
-  name: "e2e Catalog predicate promotion with rules",
-  id: "UHJvbW90aW9uOjY0N2M2MzdhLTZjNTEtNDYxZC05MjQ2LTc0YTY0OGM0ZjAxNA==",
-},
-cataloguePromotion:{
-  name: "e2e Catalog promotion for adding rules",
-  id: "UHJvbW90aW9uOjNmODZjZDAwLTUwNWEtNGVkNC04ZTliLTJmOGI4NGM3NGNlOQ==",
-},
-orderPromotion: {
-  name: "e2e Order promotion for adding rules",
-  id: "UHJvbW90aW9uOjJlM2VhNDkyLTRhMTAtNDYzOS05MWVmLTc1YzQ1OTUxNGQyMQ==",
+  },
+  promotionWithRulesToBeDeleted: {
+    name: "e2e Catalog predicate promotion with rules",
+    id: "UHJvbW90aW9uOjY0N2M2MzdhLTZjNTEtNDYxZC05MjQ2LTc0YTY0OGM0ZjAxNA==",
+  },
+  cataloguePromotion: {
+    name: "e2e Catalog promotion for adding rules",
+    id: "UHJvbW90aW9uOjNmODZjZDAwLTUwNWEtNGVkNC04ZTliLTJmOGI4NGM3NGNlOQ==",
+  },
+  orderPromotion: {
+    name: "e2e Order promotion for adding rules",
+    id: "UHJvbW90aW9uOjJlM2VhNDkyLTRhMTAtNDYzOS05MWVmLTc1YzQ1OTUxNGQyMQ==",
   },
 }
 
@@ -84,8 +84,8 @@ export const CATEGORIES = {
     ],
   },
   e2eCategory: {
-   id: "Q2F0ZWdvcnk6NTEx",
-  name: "e2e category"
+    id: "Q2F0ZWdvcnk6NTEx",
+    name: "e2e category"
   }
 };
 export const COLLECTIONS = {
@@ -202,7 +202,7 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3OQ==",
     name: "Bean Juice"
   },
-  e2eProduct2:{
+  e2eProduct2: {
     id: "UHJvZHVjdDoxMTU=",
     name: "Black Hoodie"
   },
@@ -372,3 +372,11 @@ export const USERS = {
     lastName: "user",
   },
 };
+
+export const APPS = {
+  appToBeDeleted: {
+    id: "QXBwOjY2",
+    name: "Adyen",
+    info: "App used in delete app test",
+  }
+}
