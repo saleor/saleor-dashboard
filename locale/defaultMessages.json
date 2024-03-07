@@ -2145,6 +2145,10 @@
     "context": "window title",
     "string": "Grant refund"
   },
+  "Cn6l5R": {
+    "context": "playground shortcut",
+    "string": "Playground"
+  },
   "Co2U4u": {
     "string": "No plugins found"
   },
@@ -6567,6 +6571,10 @@
   "gx4wCT": {
     "context": "swatch attribute type",
     "string": "Swatch"
+  },
+  "gx6b6x": {
+    "context": "search shortcut",
+    "string": "Search"
   },
   "gxPjIQ": {
     "string": "Are you sure you want to delete {email} from staff members?"
