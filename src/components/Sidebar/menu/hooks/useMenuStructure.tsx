@@ -33,8 +33,8 @@ import isEmpty from "lodash/isEmpty";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { SidebarMenuItem } from "./types";
-import { mapToExtensionsItems } from "./utils";
+import { SidebarMenuItem } from "../types";
+import { mapToExtensionsItems } from "../utils";
 
 const iconSettings = {
   color: "default2",
