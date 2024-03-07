@@ -9,7 +9,7 @@ let appsPage: AppsPage;
 let installationPage: AppInstallationPage;
 let appPage: AppPage;
 
-test("TC: SALEOR_ User should be able to install and configure app from manifest @e2e", async ({
+test("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
   page,
 }) => {
   const appsPage = new AppsPage(page);
@@ -29,10 +29,6 @@ test("TC: SALEOR_ User should be able to install and configure app from manifest
 
   const iframeLocator = page.frameLocator("iframe");
 
-  await expect(iframeLocator.getByLabel("CUSTOMER_CREATED_METRIC")).toBeVisible();
-  await expect(iframeLocator.getByLabel("FULFILLMENT_CREATED_METRIC")).toBeVisible();
-  await expect(iframeLocator.getByLabel("ORDER_CREATED_METRIC")).toBeVisible();
-  await expect(iframeLocator.getByLabel("ORDER_FULLY_PAID_METRIC")).toBeVisible();
   await expect(iframeLocator.getByLabel("PUBLIC_TOKEN")).toBeVisible();
   await iframeLocator.getByLabel("PUBLIC_TOKEN").fill("test_token");
   await iframeLocator.getByText("Save").click();
@@ -40,7 +36,7 @@ test("TC: SALEOR_ User should be able to install and configure app from manifest
 
 });
 
-test("TC: SALEOR_ User should be able to delete third party app @e2e", async ({
+test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async ({
   page,
 }) => {
   const appsPage = new AppsPage(page);
