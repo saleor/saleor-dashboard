@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix: category in voucher is not visable after assiged
+Fix: assigned category in voucher details is not visible
