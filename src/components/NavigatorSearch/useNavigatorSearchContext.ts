@@ -13,7 +13,9 @@ export const useNavigatorSearchContext = () => {
   const context = useContext(NavigatorSearchContext);
 
   if (context === null) {
-    throw new Error("You are using useNavigatorContext of its provider");
+    throw new Error(
+      "You are using useNavigatorContext outisde of its provider",
+    );
   }
 
   return context;
