@@ -140,13 +140,15 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
+  const channelsIds = channels.map(channel => channel.id);
 
   const warehouses = useFetchAllWarehouses({
     displayLoader: true,
+    skip: !channelsIds.length,
     variables: {
       first: 100,
       filter: {
-        channels: channels.map(channel => channel.id),
+        channels: channelsIds,
       },
     },
   });
