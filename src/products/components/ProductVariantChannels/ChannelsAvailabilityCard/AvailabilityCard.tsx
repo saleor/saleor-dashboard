@@ -8,6 +8,7 @@ import React from "react";
 
 import { ProductChannelListing } from "./../types";
 import { ChannelsListItem } from "./ChannelsListItem";
+import { useFilteredChannelListing } from "./useFilteredChannelListing";
 import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";
 
 interface AvailabilityCardProps {
@@ -15,7 +16,7 @@ interface AvailabilityCardProps {
     ChannelPriceAndPreorderData,
     IChannelPriceAndPreorderArgs
   >;
-  productChannelListings: ProductChannelListing;
+  productChannelListings: ProductChannelListing | undefined;
 }
 
 export const AvailabilityCard: React.FC<AvailabilityCardProps> = ({
@@ -23,15 +24,14 @@ export const AvailabilityCard: React.FC<AvailabilityCardProps> = ({
   productChannelListings,
   children,
 }) => {
-  if (allAvailableListings.length === 0) {
-    return <CardContainer cardTitle={children}>{}</CardContainer>;
-  }
+  const filteredListings = useFilteredChannelListing({
+    allAvailableListings,
+    channelListing: productChannelListings,
+  });
 
-  const listingIds = allAvailableListings.map(lst => lst.id);
-  const filteredListings: ProductChannelListing =
-    productChannelListings?.filter((channel: ProductChannelListing[0]) =>
-      listingIds.includes(channel.channel.id),
-    );
+  if (allAvailableListings.length === 0) {
+    return <CardContainer cardTitle={children}>{null}</CardContainer>;
+  }
 
   return (
     <CardContainer cardTitle={children}>
