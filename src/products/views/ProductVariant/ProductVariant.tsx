@@ -29,7 +29,6 @@ import {
   useVariantMediaUnassignMutation,
   useVariantUpdateMutation,
 } from "@dashboard/graphql";
-import { useFetchAllWarehouses } from "@dashboard/hooks/useFetchAllWarehouse";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useOnSetDefaultVariant from "@dashboard/hooks/useOnSetDefaultVariant";
@@ -59,6 +58,7 @@ import {
 } from "../../urls";
 import { mapFormsetStockToStockInput } from "../../utils/data";
 import { createVariantReorderHandler } from "./../ProductUpdate/handlers";
+import { useAllWarehouses } from "./useAllWarehouses";
 import { useSubmitChannels } from "./useSubmitChannels";
 
 interface ProductUpdateProps {
@@ -141,15 +141,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
 
-  const warehouses = useFetchAllWarehouses({
-    displayLoader: true,
-    variables: {
-      first: 100,
-      filter: {
-        channels: channels.map(channel => channel.id),
-      },
-    },
-  });
+  const warehouses = useAllWarehouses(channels);
 
   const [deactivatePreorder, deactivatePreoderOpts] =
     useProductVariantPreorderDeactivateMutation({});
@@ -324,7 +316,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         placeholderImage={placeholderImg}
         variant={variant}
         header={variant?.name || variant?.sku}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
+        warehouses={warehouses}
         onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
