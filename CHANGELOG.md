@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.19.3
+
+### Patch Changes
+
+- 5592f674c: Fix: assigned category in voucher details is not visible
+- a98053b3b: Improve condtions filtering in discount rules to prevent sending empty conditions
+- 99d120b38: Add check if channel listing array is undefined before call filter on it to prevent Dashboard crash
+- deed62ee0: Prevent unnecessary warehouses fetch in product variant details when variant has not channel assigned
+
 ## 3.19.2
 
 ### Patch Changes
