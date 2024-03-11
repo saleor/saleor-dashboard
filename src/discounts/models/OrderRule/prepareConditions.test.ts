@@ -3,7 +3,7 @@ import { OrderPredicateAPI } from "@dashboard/discounts/types";
 import { prepareOrderConditions } from "./prepareConditions";
 
 describe("prepareOrderConditions", () => {
-  it("should return empty array when cataloguePredicate is empty", () => {
+  it("should return empty array when orderPredicate is empty", () => {
     const orderPredicate = {} as OrderPredicateAPI;
 
     const result = prepareOrderConditions(orderPredicate);
@@ -11,7 +11,7 @@ describe("prepareOrderConditions", () => {
     expect(result).toEqual([]);
   });
 
-  it("should return array of conditions when cataloguePredicate is not empty", () => {
+  it("should return array of conditions when orderPredicate is not empty", () => {
     const orderPredicate = {
       discountedObjectPredicate: {
         AND: [

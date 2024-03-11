@@ -11,7 +11,17 @@ export function prepareOrderPredicate(
 ): OrderPredicateInput {
   const ruleConditions = conditions
     .map(condition => {
-      if (!condition.type) {
+      if (!condition.id) {
+        return undefined;
+      }
+
+      if (!condition.id) {
+        return undefined;
+      }
+
+      if (Array.isArray(condition.value) && condition.value.length === 0) {
+        return undefined;
+      } else if (!condition.value) {
         return undefined;
       }
 
