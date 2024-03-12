@@ -1,4 +1,5 @@
-import { ArrowLeftIcon, Box, Text } from "@saleor/macaw-ui-next";
+import { Cloud } from "@dashboard/icons/Cloud";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -12,20 +13,22 @@ export const EnvironmentLink = () => {
       as="a"
       href={envLink}
       target="__blank"
+      color="default2"
       gap={3}
       display="flex"
       data-test-id="menu-item-label-env"
       alignItems="center"
     >
-      <ArrowLeftIcon color="default2" size="medium" />
+      <Box __width={20} __height={20}>
+        <Cloud />
+      </Box>
       <Text
         size="small"
         variant="bodyEmp"
         fontStyle="italic"
-        color="default2"
         fontSize="captionSmall"
       >
-        <FormattedMessage defaultMessage="Go to Saleor Cloud" id="EXqb2l" />
+        <FormattedMessage defaultMessage="Saleor Cloud" id="IF2KbT" />
       </Text>
     </Box>
   );
