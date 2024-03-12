@@ -1,7 +1,7 @@
 export const URL_LIST = {
   addProduct: "products/add",
   addPageType: "pages/add?page-type-id=",
-  apps: "custom-apps/",
+  apps: "apps/",
   attributes: "attributes/",
   addAttributes: "attributes/add",
   categories: "categories/",
