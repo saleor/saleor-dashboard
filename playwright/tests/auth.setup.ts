@@ -1,6 +1,7 @@
 import { test as setup } from "@playwright/test";
 import { BasicApiService } from "@api/basics";
-const adminFile = "../.auth/admin.json";
+import fs from 'fs';
+
 setup("Authenticate as admin via API", async ({ request, context }) => {
     const basicApiService = new BasicApiService(request);
 
@@ -11,9 +12,11 @@ setup("Authenticate as admin via API", async ({ request, context }) => {
         });
 
     const token = auth.data.tokenCreate.token
-
+    const tempFilePath = 'temp_admin.json';
+    fs.writeFileSync(tempFilePath, JSON.stringify({ token: token }));
     await context.storageState({
-        path: adminFile,
+        path: tempFilePath,
         Headers: [{ name: 'authorization-bearer', value: token, path: '/', domain: process.env.BASE_URL}],
     } as any);
+    fs.unlinkSync(tempFilePath);
 });
