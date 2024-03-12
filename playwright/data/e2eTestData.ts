@@ -380,3 +380,22 @@ export const APPS = {
     info: "App used in delete app test",
   }
 }
+
+export const TRANSLATIONS = {
+  translationsToBeAdded: {
+    id: "Q2F0ZWdvcnk6NTEy",
+    name: "CategoryToTranslate",
+    description: "{\"time\": 1710257354217, \"blocks\": [{\"id\": \"oAd10MhBm_\", \"type\": \"paragraph\", \"data\": {\"text\": \"Description of category to translate\"}}], \"version\": \"2.24.3\"}",
+    info: "Category used to add translation test",
+  },
+  translationsToBeEdited: {
+    id: "UHJvZHVjdDo3OA==",
+    name: "Green Juice",
+    info: "Product used to edit translation test",
+  },
+  translationsToBeCleared: {
+    id: "QXBwOjY2",
+    name: "xyz",
+    info: "Translation used in clear translation test",
+  }
+}
