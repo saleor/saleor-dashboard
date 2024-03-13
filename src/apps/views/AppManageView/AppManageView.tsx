@@ -36,7 +36,7 @@ export const AppManageView: React.FC<Props> = ({ id, params }) => {
   const client = useApolloClient();
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id },
+    variables: { id, hasManagedAppsPermission: true },
   });
 
   const appExists = data?.app !== null;

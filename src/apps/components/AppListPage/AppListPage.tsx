@@ -1,5 +1,8 @@
 import { AppUrls } from "@dashboard/apps/urls";
+import { useUser } from "@dashboard/auth";
+import { hasAnyPermissions } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { ListProps } from "@dashboard/types";
@@ -38,24 +41,29 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles();
+  const navigate = useNavigator();
+  const { user } = useUser();
+
   const verifiedInstalledApps = getVerifiedInstalledApps(
     installedApps,
     installableMarketplaceApps,
   );
+
   const verifiedAppsInstallations = getVerifiedAppsInstallations(
     appsInstallations,
     installableMarketplaceApps,
   );
+
   const verifiedInstallableMarketplaceApps =
     getVerifiedInstallableMarketplaceApps(
       installedApps,
       installableMarketplaceApps,
     );
+
   const sectionsAvailability = resolveSectionsAvailability({
     ...props,
     installableMarketplaceApps: verifiedInstallableMarketplaceApps,
   });
-  const navigate = useNavigator();
 
   const nothingInstalled =
     appsInstallations?.length === 0 && installedApps?.length === 0;
@@ -74,7 +82,11 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   return (
     <>
       <TopNav title={intl.formatMessage(sectionNames.apps)}>
-        <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+        {hasAnyPermissions([PermissionEnum.MANAGE_APPS], user) && (
+          <InstallWithManifestFormButton
+            onSubmitted={navigateToAppInstallPage}
+          />
+        )}
       </TopNav>
       <Box
         display="flex"

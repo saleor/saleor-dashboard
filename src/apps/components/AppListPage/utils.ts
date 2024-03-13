@@ -13,11 +13,7 @@ export const resolveSectionsAvailability = ({
   installableMarketplaceApps,
   comingSoonMarketplaceApps,
 }: AppListPageSections) => ({
-  installed:
-    !installedApps ||
-    !!installedApps.length ||
-    !appsInstallations ||
-    !!appsInstallations.length,
+  installed: !installedApps || !!installedApps.length,
   all: !installableMarketplaceApps || !!installableMarketplaceApps.length,
   comingSoon: !comingSoonMarketplaceApps || !!comingSoonMarketplaceApps.length,
 });

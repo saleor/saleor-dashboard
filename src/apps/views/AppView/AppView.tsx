@@ -1,8 +1,10 @@
 import AppPage from "@dashboard/apps/components/AppPage";
 import { appMessages } from "@dashboard/apps/messages";
 import { AppPaths, AppUrls } from "@dashboard/apps/urls";
+import { useUser } from "@dashboard/auth";
+import { hasAnyPermissions } from "@dashboard/auth/misc";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
-import { useAppQuery } from "@dashboard/graphql";
+import { PermissionEnum, useAppQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import React, { useCallback } from "react";
@@ -15,9 +17,15 @@ interface AppProps {
 
 export const AppView: React.FC<AppProps> = ({ id }) => {
   const location = useLocation();
+  const { user } = useUser();
+  const hasManageAppsPermission = hasAnyPermissions(
+    [PermissionEnum.MANAGE_APPS],
+    user,
+  );
+
   const { data, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id },
+    variables: { id, hasManagedAppsPermission: hasManageAppsPermission },
   });
 
   const appExists = data?.app !== null;

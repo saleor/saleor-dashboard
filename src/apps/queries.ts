@@ -42,7 +42,7 @@ export const appsInProgressList = gql`
 `;
 
 export const appDetails = gql`
-  query App($id: ID!) {
+  query App($id: ID!, $hasManagedAppsPermission: Boolean!) {
     app(id: $id) {
       ...App
       aboutApp

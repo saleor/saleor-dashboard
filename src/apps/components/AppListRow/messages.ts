@@ -21,4 +21,9 @@ export const messages = defineMessages({
     description: "description",
     id: "IEpmGQ",
   },
+  installationPermissionRequired: {
+    defaultMessage: "You need permission to install apps",
+    id: "Xo4tPo",
+    description: "description",
+  },
 });

@@ -1,11 +1,10 @@
 import { appInstallationStatusMessages } from "@dashboard/apps/messages";
-import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { AppInstallationFragment } from "@dashboard/graphql";
-import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
+import { AppListCardInstallButton } from "./AppListCardInstallButton";
 import InstallErrorAction from "./ErrorInstallAction";
 import { messages } from "./messages";
 
@@ -28,8 +27,6 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
   retryInstallHandler,
   removeInstallHandler,
 }) => {
-  const intl = useIntl();
-
   if (
     !installHandler &&
     !githubForkHandler &&
@@ -52,36 +49,9 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
           <FormattedMessage {...messages.forkOnGithub} />
         </Button>
       )}
-      {installHandler && IS_CLOUD_INSTANCE && (
-        <Button
-          variant="primary"
-          onClick={installHandler}
-          data-test-id="app-install-button"
-        >
-          <FormattedMessage {...buttonMessages.install} />
-        </Button>
-      )}
-      {installHandler && !IS_CLOUD_INSTANCE && (
-        <Tooltip>
-          <Tooltip.Trigger>
-            <span tabIndex={0}>
-              <Button
-                variant="primary"
-                onClick={installHandler}
-                data-test-id="app-install-button"
-                style={{ pointerEvents: "none" }}
-                disabled
-              >
-                <FormattedMessage {...buttonMessages.install} />
-              </Button>
-            </span>
-          </Tooltip.Trigger>
-          <Tooltip.Content>
-            <Tooltip.Arrow />
-            {intl.formatMessage(messages.installationCloudOnly)}
-          </Tooltip.Content>
-        </Tooltip>
-      )}
+
+      <AppListCardInstallButton installHandler={installHandler} />
+
       {installationPending && (
         <Text
           color="default2"
