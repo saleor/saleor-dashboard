@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
+import { StopPropagation } from "@dashboard/components/StopPropagation";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
@@ -70,54 +71,58 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
 
   return (
     <Box display="flex" gap={3} paddingTop={3} flexDirection="column">
-      <RadioGroup
-        value={String(isPublished)}
-        onValueChange={value => {
-          onChange(id, {
-            ...formData,
-            isPublished: value === "true",
-            publicationDate: value === "false" ? null : publicationDate,
-          });
-        }}
-        disabled={disabled}
-        display="flex"
-        flexDirection="column"
-        gap={3}
-      >
-        <RadioGroup.Item
-          id={`${id}-isPublished-true`}
-          value="true"
-          name="isPublished"
+      {/* StopProgation is used here to block onClick events from RadioGroup that cause throw error in datagrid */}
+      {/* Datagrid listing for all on click event but RadioGroup emitated couple events at onced */}
+      <StopPropagation>
+        <RadioGroup
+          value={String(isPublished)}
+          onValueChange={value => {
+            onChange(id, {
+              ...formData,
+              isPublished: value === "true",
+              publicationDate: value === "false" ? null : publicationDate,
+            });
+          }}
+          disabled={disabled}
+          display="flex"
+          flexDirection="column"
+          gap={3}
         >
-          <Box display="flex" alignItems="baseline" gap={2}>
-            <Text>{messages.visibleLabel}</Text>
-            {isPublished &&
-              publicationDate &&
-              Date.parse(publicationDate) < dateNow && (
-                <Text variant="caption" color="default2">
-                  {messages.visibleSecondLabel ||
-                    visibleMessage(publicationDate)}
-                </Text>
-              )}
-          </Box>
-        </RadioGroup.Item>
-        <RadioGroup.Item
-          id={`${id}-isPublished-false`}
-          value="false"
-          name="isPublished"
-        >
-          <Box display="flex" alignItems="baseline" gap={2}>
-            <Text>{messages.hiddenLabel}</Text>
-            {publicationDate &&
-              !isPublished &&
-              Date.parse(publicationDate) >= dateNow && (
-                <Text variant="caption" color="default2">
-                  {messages.hiddenSecondLabel}
-                </Text>
-              )}
-          </Box>
-        </RadioGroup.Item>
-      </RadioGroup>
+          <RadioGroup.Item
+            id={`${id}-isPublished-true`}
+            value="true"
+            name="isPublished"
+          >
+            <Box display="flex" alignItems="baseline" gap={2}>
+              <Text>{messages.visibleLabel}</Text>
+              {isPublished &&
+                publicationDate &&
+                Date.parse(publicationDate) < dateNow && (
+                  <Text variant="caption" color="default2">
+                    {messages.visibleSecondLabel ||
+                      visibleMessage(publicationDate)}
+                  </Text>
+                )}
+            </Box>
+          </RadioGroup.Item>
+          <RadioGroup.Item
+            id={`${id}-isPublished-false`}
+            value="false"
+            name="isPublished"
+          >
+            <Box display="flex" alignItems="baseline" gap={2}>
+              <Text>{messages.hiddenLabel}</Text>
+              {publicationDate &&
+                !isPublished &&
+                Date.parse(publicationDate) >= dateNow && (
+                  <Text variant="caption" color="default2">
+                    {messages.hiddenSecondLabel}
+                  </Text>
+                )}
+            </Box>
+          </RadioGroup.Item>
+        </RadioGroup>
+      </StopPropagation>
       {!isPublished && (
         <Box display="flex" flexDirection="column" alignItems="start" gap={1}>
           <Checkbox
