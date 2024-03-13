@@ -23,7 +23,7 @@ export const ColumnPickerDynamicColumns = ({
       alignItems="center"
       marginTop={3}
     >
-      <Text variant="caption" size="small" color="default2">
+      <Text typeSize={1} color="default2">
         <FormattedMessage {...messages.custom} />
       </Text>
       <Button
@@ -53,16 +53,10 @@ export const ColumnPickerDynamicColumns = ({
             __width="20px"
             __height="20px"
           />
-          <Text
-            variant="body"
-            size="small"
-            color="default2"
-            whiteSpace="nowrap"
-          >
+          <Text typeSize={3} color="default2" whiteSpace="nowrap">
             {`${column.metaGroup} /`}
           </Text>
           <Text
-            variant="body"
             size="small"
             color="default1"
             ellipsis

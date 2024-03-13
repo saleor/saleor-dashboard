@@ -69,8 +69,7 @@ export const ProductTile: React.FC<ProductTileProps> = ({
       <Text
         ellipsis
         color="default2"
-        variant="caption"
-        size="small"
+        typeSize={1}
         alignItems="center"
         className={sprinkles({ paddingY: 0.5 })}
       >

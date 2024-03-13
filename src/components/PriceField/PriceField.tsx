@@ -55,7 +55,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
       onKeyDown={onKeyDown}
       type="number"
       endAdornment={
-        <Text variant="caption" marginRight={2}>
+        <Text typeSize={2} marginRight={2}>
           {currencySymbol || ""}
         </Text>
       }

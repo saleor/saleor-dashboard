@@ -161,14 +161,14 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             />
           ) : (
             <Box display="flex" flexDirection="column">
-              <Text variant="caption">
+              <Text typeSize={2}>
                 <FormattedMessage {...messages.selectedCurrency} />
               </Text>
               <Text>{data.currencyCode}</Text>
             </Box>
           )}
         </Box>
-        <Text variant="caption" paddingX={6}>
+        <Text typeSize={2} paddingX={6}>
           <FormattedMessage {...messages.orderExpirationDescription} />
         </Text>
         <Box paddingX={6}>

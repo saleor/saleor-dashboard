@@ -16,9 +16,7 @@ export const PermissionsExceeded = ({
 
   return (
     <>
-      <Text as="p" variant="body">
-        {intl.formatMessage(messages.exeededPermission)}
-      </Text>
+      <Text as="p">{intl.formatMessage(messages.exeededPermission)}</Text>
 
       <Box
         width="100%"
@@ -30,9 +28,7 @@ export const PermissionsExceeded = ({
         marginBottom={6}
       />
 
-      <Text variant="body">
-        {intl.formatMessage(messages.availablePermissions)}
-      </Text>
+      <Text>{intl.formatMessage(messages.availablePermissions)}</Text>
 
       <List>
         {userPermissions.map(perm => (
@@ -45,7 +41,7 @@ export const PermissionsExceeded = ({
               hover: "default1Hovered",
             }}
           >
-            <Text variant="caption" size="large">{`- ${perm.name}`}</Text>
+            <Text typeSize={3}>{`- ${perm.name}`}</Text>
           </List.Item>
         ))}
       </List>

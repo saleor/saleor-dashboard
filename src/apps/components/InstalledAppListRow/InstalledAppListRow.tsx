@@ -74,14 +74,14 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
                   backgroundColor="default1"
                   borderColor="default1"
                 >
-                  <Text variant="caption" size="small">
+                  <Text typeSize={1}>
                     <FormattedMessage {...appsMessages.externalApp} />
                   </Text>
                 </Chip>
               )}
               {app.manifestUrl && isAppInTunnel(app.manifestUrl) ? (
                 <Text
-                  variant="caption"
+                  typeSize={2}
                   color="default2"
                   data-test-id="app-tunnel-label"
                 >
@@ -103,7 +103,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         >
           <Box marginLeft="auto" display="flex" alignItems="center" gap={5}>
             {!app.isActive && (
-              <Text variant="caption" color="default2">
+              <Text typeSize={2} color="default2">
                 <FormattedMessage {...messages.appDisabled} />
               </Text>
             )}

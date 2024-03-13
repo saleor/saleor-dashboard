@@ -9,7 +9,7 @@ interface Props {
 
 export const Divider: React.FC<Props> = ({ menuItem }) => (
   <List.Divider paddingY={menuItem.paddingY ?? 1.5} paddingX={1}>
-    <Text variant="caption" size="small" color="default2">
+    <Text typeSize={1} color="default2">
       {menuItem.label}
     </Text>
   </List.Divider>

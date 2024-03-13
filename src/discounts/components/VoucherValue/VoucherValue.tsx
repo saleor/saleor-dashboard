@@ -112,7 +112,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                             disabled={disabled}
                             error={!!error?.length}
                             endAdornment={
-                              <Text variant="caption">
+                              <Text typeSize={2}>
                                 {data.discountType ===
                                 DiscountTypeEnum.VALUE_FIXED
                                   ? listing.currency

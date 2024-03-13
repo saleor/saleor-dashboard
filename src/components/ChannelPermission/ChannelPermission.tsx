@@ -33,13 +33,13 @@ export const ChannelPermission = ({
 
   return (
     <Box height="100%">
-      <Text as="p" size="large" marginBottom={5}>
+      <Text as="p" size={5} marginBottom={5}>
         {intl.formatMessage(messages.title)}
       </Text>
 
       <Box height="100%">
         {description && (
-          <Text as="p" variant="body" size="small" marginBottom={5}>
+          <Text as="p" size={3} marginBottom={5}>
             {description}
           </Text>
         )}
@@ -51,9 +51,7 @@ export const ChannelPermission = ({
             onCheckedChange={onHasAllChannelsChange}
             tabIndex={-1}
           >
-            <Text variant="body">
-              {intl.formatMessage(messages.allowAllChannels)}
-            </Text>
+            <Text>{intl.formatMessage(messages.allowAllChannels)}</Text>
           </Checkbox>
         </Box>
 

@@ -215,7 +215,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                       />
                       <Box display="flex" flexDirection="column">
                         <Text>{getUserName(user) || <Skeleton />}</Text>
-                        <Text variant="caption" color="default2">
+                        <Text typeSize={2} color="default2">
                           {!user ? (
                             <Skeleton />
                           ) : user.isActive ? (

@@ -46,7 +46,7 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
         <strong>{app.name.en}</strong>
       </Text>
     </Box>
-    <Text size="small" variant="body" color="default2">
+    <Text typeSize={3} color="default2">
       {app.description.en}
     </Text>
   </Box>

@@ -68,11 +68,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
               <Text typeSize={5} fontWeight="bold">
                 {name}
               </Text>
-              <Text
-                variant="caption"
-                color="default2"
-                textTransform="uppercase"
-              >
+              <Text typeSize={2} color="default2" textTransform="uppercase">
                 {author && (
                   <FormattedMessage
                     defaultMessage="by {author}"

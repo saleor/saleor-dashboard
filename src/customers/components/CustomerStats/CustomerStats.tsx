@@ -26,7 +26,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
         })}
       </DashboardCard.Title>
       <DashboardCard.Content display="flex" flexDirection="column">
-        <Text variant="caption">
+        <Text typeSize={2}>
           <FormattedMessage id="FNAZoh" defaultMessage="Last login" />
         </Text>
         {customer ? (
@@ -44,7 +44,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
       <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
         <Divider />
         <DashboardCard.Content display="flex" flexDirection="column">
-          <Text variant="caption">
+          <Text typeSize={2}>
             <FormattedMessage id="HMD+ib" defaultMessage="Last order" />
           </Text>
           {customer && customer.lastPlacedOrder ? (

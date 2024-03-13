@@ -42,7 +42,7 @@ export const ColumnPickerAvailableNodes = ({
 
     if (areNodesEmpty) {
       return (
-        <Text size="small" color="default2">
+        <Text typeSize={3} color="default2">
           <FormattedMessage {...messages.noResultsFound} />
         </Text>
       );

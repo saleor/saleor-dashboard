@@ -130,7 +130,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                 marginTop={6}
                 marginBottom={6}
               />
-              <Text as="p" variant="body" color="critical1">
+              <Text as="p" color="critical1">
                 {errorMessage}
               </Text>
             </>

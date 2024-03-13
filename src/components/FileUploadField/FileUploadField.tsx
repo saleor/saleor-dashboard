@@ -59,7 +59,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
       <Box display="flex" justifyContent="flex-start" alignItems="center">
         {file.label ? (
           <Box display="flex" gap={2} alignItems="center">
-            <Text variant="caption">
+            <Text typeSize={2}>
               {loading ? (
                 <Skeleton />
               ) : (
@@ -89,7 +89,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
           </Button>
         )}
         {error && (
-          <Text variant="caption" color="critical1" paddingLeft={3}>
+          <Text typeSize={2} color="critical1" paddingLeft={3}>
             {helperText}
           </Text>
         )}

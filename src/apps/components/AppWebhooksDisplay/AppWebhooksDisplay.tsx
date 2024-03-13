@@ -24,7 +24,7 @@ const Wrapper = (boxProps: BoxProps) => {
 
   return (
     <Box {...boxProps}>
-      <Text variant={"heading"} marginBottom={4} as={"h2"}>
+      <Text typeSize={5} fontWeight="bold" marginBottom={4} as={"h2"}>
         {intl.formatMessage({
           defaultMessage: "App Webhooks",
           id: "eQ7bCN",
@@ -170,9 +170,7 @@ export const AppWebhooksDisplay = ({
                     <Text>{wh.name}</Text>
                     {!wh.isActive && <DisabledWebhookChip />}
                   </Box>
-                  <Text variant="caption" size="small">
-                    {events}
-                  </Text>
+                  <Text typeSize={1}>{events}</Text>
                 </Box>
                 {eventDeliveries.length > 0 && (
                   <Accordion.Item
@@ -186,7 +184,7 @@ export const AppWebhooksDisplay = ({
                     borderRadius={4}
                   >
                     <Accordion.Trigger alignItems="center">
-                      <Text variant="button" as="h2">
+                      <Text typeSize={4} fontWeight="bold" as="h2">
                         {formatMessage({
                           defaultMessage:
                             "Pending & failed deliveries (last 10)",

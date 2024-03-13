@@ -213,7 +213,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                   pressed={JSON.parse(attribute.value[0] ?? "false")}
                   id={`attribute:${attribute.label}`}
                 />
-                <Text variant="caption" color="critical1">
+                <Text typeSize={2} color="critical1">
                   {getErrorMessage(error, intl)}
                 </Text>
               </Box>

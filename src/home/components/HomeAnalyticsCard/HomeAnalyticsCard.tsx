@@ -25,10 +25,8 @@ export const HomeAnalyticsCard = ({
     data-test-id={testId}
   >
     <Box display="flex" flexDirection="column" gap={0.5}>
-      <Text size="large" variant="body">
-        {title}
-      </Text>
-      <Text size="medium" variant="caption" color="default1">
+      <Text typeSize={5}>{title}</Text>
+      <Text typeSize={2} color="default1">
         <FormattedMessage id="zWgbGg" defaultMessage="Today" />
       </Text>
     </Box>

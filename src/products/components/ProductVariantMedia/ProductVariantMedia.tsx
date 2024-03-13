@@ -70,7 +70,7 @@ export const ProductVariantMedia: React.FC<
                 );
               })
           ) : (
-            <Text __gridColumnEnd="span 4" variant="caption" size="large">
+            <Text __gridColumnEnd="span 4" typeSize={3}>
               {intl.formatMessage(messages.selectSpecificVariant)}
             </Text>
           )}

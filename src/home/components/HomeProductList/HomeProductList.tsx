@@ -109,13 +109,13 @@ export const HomeProductList = ({
                     />
 
                     <Box display="flex" flexDirection="column">
-                      <Text size="small">{variant.product.name}</Text>
+                      <Text typeSize={3}>{variant.product.name}</Text>
 
-                      <Text size="small" color="default2">
+                      <Text typeSize={3} color="default2">
                         {generateAttributesInfo(variant)}
                       </Text>
 
-                      <Text size="small" color="default2">
+                      <Text typeSize={3} color="default2">
                         <FormattedMessage
                           id="nII/qB"
                           defaultMessage="{amount, plural,one {One ordered}other {{amount} ordered}}"
@@ -148,7 +148,7 @@ export const HomeProductList = ({
               paddingY={5}
               borderBottomStyle="solid"
             >
-              <Text size="small">
+              <Text typeSize={3}>
                 <FormattedMessage
                   id="Q1Uzbb"
                   defaultMessage="No products found"

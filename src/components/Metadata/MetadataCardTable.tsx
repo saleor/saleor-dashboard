@@ -38,7 +38,7 @@ export const MetadataCardTable = ({
         <TableHead>
           <TableRowLink>
             <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-              <Text variant="caption" color="default2">
+              <Text typeSize={2} color="default2">
                 <FormattedMessage
                   id="nudPsY"
                   defaultMessage="Field"
@@ -47,7 +47,7 @@ export const MetadataCardTable = ({
               </Text>
             </TableCell>
             <TableCell style={{ paddingLeft: vars.spacing[8] }}>
-              <Text variant="caption" color="default2">
+              <Text typeSize={2} color="default2">
                 <FormattedMessage
                   id="LkuDEb"
                   defaultMessage="Value"
@@ -62,7 +62,7 @@ export const MetadataCardTable = ({
                   paddingRight: vars.spacing[6],
                 }}
               >
-                <Text variant="caption" color="default2">
+                <Text typeSize={2} color="default2">
                   <FormattedMessage
                     id="nEixpu"
                     defaultMessage="Actions"
@@ -78,7 +78,7 @@ export const MetadataCardTable = ({
             <TableRowLink data-test-id="field" key={fieldIndex}>
               <TableCell width="50%" style={{ paddingLeft: vars.spacing[6] }}>
                 {readonly ? (
-                  <Text variant="caption" size="large" color="default2">
+                  <Text typeSize={3} color="default2">
                     {field.key}
                   </Text>
                 ) : (
@@ -100,7 +100,7 @@ export const MetadataCardTable = ({
                 }}
               >
                 {readonly ? (
-                  <Text variant="caption" size="large" color="default2">
+                  <Text typeSize={3} color="default2">
                     {field.value}
                   </Text>
                 ) : (

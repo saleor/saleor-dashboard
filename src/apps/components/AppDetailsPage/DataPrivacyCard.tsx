@@ -44,7 +44,7 @@ export const DataPrivacyCard: React.FC<DataPrivacyCardProps> = ({
 
   return (
     <Box {...boxProps}>
-      <Text variant={"heading"} marginBottom={4} as={"h2"}>
+      <Text typeSize={5} fontWeight="bold" marginBottom={4} as={"h2"}>
         {intl.formatMessage(messages.dataPrivacyTitle)}
       </Text>
       <Box>{renderContent()}</Box>

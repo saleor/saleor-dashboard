@@ -89,7 +89,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
                 {intl.formatMessage(messages.installedApps)}
               </Text>
               <Box marginTop={3}>
-                <Text variant="caption">
+                <Text typeSize={2}>
                   {intl.formatMessage(messages.nothingInstalledPlaceholder)}
                 </Text>
               </Box>

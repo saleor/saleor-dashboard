@@ -35,7 +35,7 @@ export const TimelineEventHeader: React.FC<
       width="100%"
     >
       {title && (
-        <Text variant="caption" size="large" wordBreak="break-all">
+        <Text typeSize={3} wordBreak="break-all">
           {title}
         </Text>
       )}

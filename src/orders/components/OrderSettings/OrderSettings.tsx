@@ -42,7 +42,7 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
                   description="checkbox label"
                 />
               </Text>
-              <Text variant="caption" color="default2">
+              <Text typeSize={2} color="default2">
                 <FormattedMessage
                   id="wpAXKX"
                   defaultMessage="All orders will be automatically confirmed and all payments will be captured."
@@ -68,7 +68,7 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
                   description="checkbox gift cards label"
                 />
               </Text>
-              <Text variant="caption" color="default2">
+              <Text typeSize={2} color="default2">
                 <FormattedMessage
                   id="EewziG"
                   defaultMessage="When activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"

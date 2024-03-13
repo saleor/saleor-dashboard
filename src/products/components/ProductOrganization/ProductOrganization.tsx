@@ -126,13 +126,13 @@ export const ProductOrganization: React.FC<
                 <FormattedMessage id="anK7jD" defaultMessage="Product Type" />
               </Text>
               {productType?.id ? (
-                <Text variant="caption">
+                <Text typeSize={2}>
                   <Link href={productTypeUrl(productType?.id) ?? ""}>
                     {productType?.name ?? "..."}
                   </Link>
                 </Text>
               ) : (
-                <Text variant="caption">{productType?.name ?? "..."}</Text>
+                <Text typeSize={2}>{productType?.name ?? "..."}</Text>
               )}
             </Box>
           </Box>
