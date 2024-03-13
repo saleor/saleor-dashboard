@@ -36,7 +36,7 @@ export const Content = ({
         </Text>
         <ToggleButton isEnabled={isEnabled} flagSlug={flagSlug} />
       </Box>
-      <Box fontSize="bodyMedium" paddingBottom={12}>
+      <Box typeSize={4} paddingBottom={12}>
         <TabComponent />
       </Box>
     </Box>

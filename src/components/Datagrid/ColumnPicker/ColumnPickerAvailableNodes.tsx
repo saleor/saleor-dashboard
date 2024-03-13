@@ -57,7 +57,7 @@ export const ColumnPickerAvailableNodes = ({
         >
           <Text
             data-test-id={`dynamic-column-name-${node.title}`}
-            size="small"
+            typeSize={3}
             color="default2"
             ellipsis
           >

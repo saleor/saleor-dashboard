@@ -116,7 +116,7 @@ const useStyles = makeStyles(
       root: {
         border: `1px solid ${vars.colors.border.default1}`,
         borderRadius: vars.borderRadius[3],
-        fontSize: vars.fontSize.bodyMedium,
+        fontSize: vars.fontSize[4],
         position: "relative",
         transition: theme.transitions.duration.short + "ms",
         padding: theme.spacing(0, 2),

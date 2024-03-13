@@ -17,8 +17,8 @@ const ShortcutItemWrapper = ({ children, onClick }: ShortcutItemProps) => {
       gap={3}
       alignItems="center"
       color="default1"
-      fontSize="bodySmall"
-      fontWeight="bodyEmpSmall"
+      typeSize={3}
+      fontWeight="medium"
       borderRadius={3}
       paddingX={2}
       paddingY={1.5}

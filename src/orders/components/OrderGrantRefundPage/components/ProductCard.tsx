@@ -124,7 +124,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                       endAdornment={
                         line.quantity && (
                           <Box
-                            fontSize="bodySmall"
+                            typeSize={3}
                             whiteSpace="nowrap"
                             color="default2"
                           >

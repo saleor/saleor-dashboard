@@ -42,7 +42,7 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
           </Text>
         )}
       </AppLogo>
-      <Text typeSize={4} fontWeight="bold" size="medium" color="default1">
+      <Text typeSize={4} fontWeight="bold" color="default1">
         <strong>{app.name.en}</strong>
       </Text>
     </Box>

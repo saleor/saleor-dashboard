@@ -52,9 +52,7 @@ export const ExpressionFilters = () => {
             borderTopLeftRadius={2}
             borderTopRightRadius={2}
           >
-            <Text typeSize="medium">
-              {formatMessage(conditionalFilterMessages.popoverTitle)}
-            </Text>
+            <Text>{formatMessage(conditionalFilterMessages.popoverTitle)}</Text>
             <Box display="flex" alignItems="center" gap={2}>
               <Popover.Close>
                 <Button variant="tertiary" icon={<CloseIcon />} />

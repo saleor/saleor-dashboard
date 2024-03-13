@@ -94,11 +94,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
         </Tooltip>
       )}
       {installationPending && (
-        <Text
-          color="default2"
-          size="small"
-          data-test-id="app-installation-pending"
-        >
+        <Text color="default2" size={3} data-test-id="app-installation-pending">
           <FormattedMessage {...appInstallationStatusMessages.pending} />
         </Text>
       )}

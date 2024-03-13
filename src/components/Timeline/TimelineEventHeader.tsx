@@ -63,8 +63,7 @@ export const TimelineEventHeader: React.FC<
 
             return (
               <Text
-                variant="caption"
-                size="large"
+                typeSize={3}
                 marginRight={0.5}
                 key={`timeline-event-${text}`}
               >
@@ -76,12 +75,7 @@ export const TimelineEventHeader: React.FC<
       )}
       <Box display="flex" alignItems="center" gap={5} marginLeft="auto">
         {children}
-        <Text
-          variant="caption"
-          size="large"
-          color="default2"
-          whiteSpace="nowrap"
-        >
+        <Text typeSize={3} color="default2" whiteSpace="nowrap">
           <DateTime date={date} plain={hasPlainDate} />
         </Text>
       </Box>

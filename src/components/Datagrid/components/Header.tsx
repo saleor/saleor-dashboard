@@ -25,7 +25,7 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
       >
         <FullScreenIcon
           className={sprinkles({
-            fontSize: "buttonMedium",
+            fontSize: 4,
           })}
         />
       </Box>

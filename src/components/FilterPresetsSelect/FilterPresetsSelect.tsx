@@ -135,7 +135,7 @@ export const FilterPresetsSelect = ({
                 borderRadius={3}
                 onClick={onSelectAll}
               >
-                <Text variant={activePreset === 0 ? "bodyStrong" : "body"}>
+                <Text fontWeight={activePreset === 0 ? "bold" : "regular"}>
                   {selectAllLabel}
                 </Text>
               </List.Item>

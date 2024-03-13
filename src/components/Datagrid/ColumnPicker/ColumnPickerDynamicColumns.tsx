@@ -57,7 +57,7 @@ export const ColumnPickerDynamicColumns = ({
             {`${column.metaGroup} /`}
           </Text>
           <Text
-            size="small"
+            typeSize={3}
             color="default1"
             ellipsis
             data-test-id={`column-name-${column.title}`}
