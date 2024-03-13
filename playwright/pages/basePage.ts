@@ -16,6 +16,7 @@ export class BasePage {
       .locator("textarea"),
     readonly successBanner = page.locator(LOCATORS.successBanner),
     readonly deleteButton = page.locator(LOCATORS.deleteButton),
+    readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly filterButton = page.getByTestId("filters-button"),
     readonly errorBanner = page.locator(LOCATORS.errorBanner),
     readonly saveButton = page.locator(LOCATORS.saveButton),
@@ -45,6 +46,9 @@ export class BasePage {
 
   async clickFilterButton() {
     await this.filterButton.click();
+  }
+  async clickBulkDeleteButton() {
+    await this.bulkDeleteButton.click();
   }
   async clickBulkDeleteGridRowsButton() {
     await this.bulkDeleteGridRowsButton.click();

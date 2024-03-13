@@ -5,4 +5,5 @@ export const LOCATORS = {
   infoBanner: "[data-test-type=\"info\"]",
   dataGridTable: "[data-testid=\"data-grid-canvas\"]",
   deleteButton: "[data-test-id=\"button-bar-delete\"]",
+  bulkDeleteButton: "[data-test-id=\"bulk-delete-button\"]",
 };

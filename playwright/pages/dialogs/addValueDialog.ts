@@ -11,7 +11,7 @@ export class AddValueDialog {
     this.page = page;
   }
 
-  async typeAndSaveAttributeValue(value = "XXL") {
+  async typeAndSaveAttributeValue(value: string = "XXL") {
     await this.nameInput.fill(value);
     await this.saveButton.click();
   }

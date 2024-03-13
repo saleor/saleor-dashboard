@@ -11,7 +11,6 @@ export class CategoriesPage extends BasePage {
 
   constructor(
     page: Page,
-    readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly createCategoryButton = page.getByTestId("create-category"),
     readonly productsTabButton = page.getByTestId("products-tab"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
@@ -57,9 +56,6 @@ export class CategoriesPage extends BasePage {
       .fill(categoryDescription);
   }
 
-  async clickBulkDeleteButton() {
-    await this.bulkDeleteButton.click();
-  }
   async clickProductsTabButton() {
     await this.productsTabButton.click();
   }
