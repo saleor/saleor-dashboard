@@ -64,7 +64,9 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
             alignItems="flex-start"
           >
             <Box display="flex" gap={2}>
-              <Text variant="bodyStrong">{app.name}</Text>
+              <Text typeSize={4} fontWeight="bold">
+                {app.name}
+              </Text>
               {isExternal && (
                 <Chip
                   data-test-id="app-external-label"

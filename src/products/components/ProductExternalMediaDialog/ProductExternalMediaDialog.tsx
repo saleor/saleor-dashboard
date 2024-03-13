@@ -50,7 +50,7 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle disableTypography>
-        <Text variant="heading">
+        <Text typeSize={5} fontWeight="bold">
           {intl.formatMessage(messages.buttonMessage)}
         </Text>
       </DialogTitle>

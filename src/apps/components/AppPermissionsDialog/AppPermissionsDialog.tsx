@@ -134,7 +134,8 @@ export const AppPermissionsDialog = ({
               marginBottom={2}
               as={"p"}
               color="critical1"
-              variant="bodyStrong"
+              typeSize={4}
+              fontWeight="bold"
             >
               {formatMessage(messages.warningHeading)}
             </Text>

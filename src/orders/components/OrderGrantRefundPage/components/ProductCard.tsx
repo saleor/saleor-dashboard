@@ -58,7 +58,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
   return (
     <>
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Text variant="heading">
+        <Text typeSize={5} fontWeight="bold">
           {title}
           {subtitle}
         </Text>

@@ -3,6 +3,8 @@ import React from "react";
 
 export const Title: React.FC = ({ children }) => (
   <Box paddingX={6} paddingTop={6}>
-    <Text variant="heading">{children}</Text>
+    <Text typeSize={5} fontWeight="bold">
+      {children}
+    </Text>
   </Box>
 );

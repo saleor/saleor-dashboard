@@ -47,7 +47,9 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
         justifyContent={{ mobile: "space-between", desktop: "flex-start" }}
       >
         <AppAvatar logo={logo} />
-        <Text variant="bodyStrong">{appInstallation.appName}</Text>
+        <Text typeSize={4} fontWeight="bold">
+          {appInstallation.appName}
+        </Text>
         {isExternal && (
           <Chip
             data-test-id="app-external-label"

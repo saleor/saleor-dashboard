@@ -78,7 +78,7 @@ export const ProductTile: React.FC<ProductTileProps> = ({
       </Text>
     </Box>
     <Box display="flex" justifyContent="space-between" marginTop={0.5}>
-      <Text ellipsis color="default1" variant="bodyEmp" size="small">
+      <Text ellipsis color="default1" typeSize={3} fontWeight="medium">
         {product.name}
       </Text>
     </Box>

@@ -73,7 +73,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
               currentTheme,
             })}
           >
-            <Text variant="heading" as="h2">
+            <Text typeSize={5} fontWeight="bold" as="h2">
               {intl.formatMessage(pluginsListPageMessages.warningHeadline)}
             </Text>
             <Text variant="body">

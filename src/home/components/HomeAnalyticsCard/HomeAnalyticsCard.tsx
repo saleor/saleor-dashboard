@@ -32,7 +32,7 @@ export const HomeAnalyticsCard = ({
         <FormattedMessage id="zWgbGg" defaultMessage="Today" />
       </Text>
     </Box>
-    <Text as="h4" variant="heading">
+    <Text as="h4" typeSize={5} fontWeight="bold">
       {children}
     </Text>
   </Box>

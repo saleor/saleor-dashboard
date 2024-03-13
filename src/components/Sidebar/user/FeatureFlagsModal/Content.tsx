@@ -31,7 +31,9 @@ export const Content = ({
       padding={3}
     >
       <Box display="flex" justifyContent="space-between">
-        <Text variant="heading">{flagName}</Text>
+        <Text typeSize={5} fontWeight="bold">
+          {flagName}
+        </Text>
         <ToggleButton isEnabled={isEnabled} flagSlug={flagSlug} />
       </Box>
       <Box fontSize="bodyMedium" paddingBottom={12}>

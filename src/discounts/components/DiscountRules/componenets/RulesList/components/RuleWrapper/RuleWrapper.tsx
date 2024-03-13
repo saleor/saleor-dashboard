@@ -17,7 +17,9 @@ export const RuleWrapper = ({ children, hasError }: RuleWrapperProps) => {
       padding={4}
       backgroundColor="default1"
     >
-      <Text variant="heading">{children}</Text>
+      <Text typeSize={5} fontWeight="bold">
+        {children}
+      </Text>
     </Box>
   );
 };

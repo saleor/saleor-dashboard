@@ -211,7 +211,7 @@ export const AppWebhooksDisplay = ({
                               display="grid"
                               __gridTemplateColumns={"1fr 1fr"}
                             >
-                              <Text as="p" variant="bodyStrong">
+                              <Text as="p" typeSize={4} fontWeight="bold">
                                 <DateTime plain date={createdAt} />
                               </Text>
                               <Box marginLeft="auto">
@@ -225,7 +225,7 @@ export const AppWebhooksDisplay = ({
                                     defaultMessage: "Attempts:",
                                     id: "OFTsI1",
                                   })}{" "}
-                                  <Text variant="bodyStrong">
+                                  <Text typeSize={4} fontWeight="bold">
                                     {attemptsCount} / 6
                                   </Text>
                                 </Text>

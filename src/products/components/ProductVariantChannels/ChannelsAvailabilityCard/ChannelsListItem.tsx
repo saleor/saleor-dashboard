@@ -40,8 +40,8 @@ export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({
       <DashboardCard.Content paddingY={6}>
         <Text
           as="p"
-          variant="bodyStrong"
-          size="small"
+          typeSize={3}
+          fontWeight="bold"
           data-test-id={`channels-variant-availability-item-title-${id}`}
         >
           {name}

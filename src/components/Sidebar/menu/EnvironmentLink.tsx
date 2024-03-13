@@ -19,11 +19,10 @@ export const EnvironmentLink = () => {
     >
       <ArrowLeftIcon color="default2" size="medium" />
       <Text
-        size="small"
-        variant="bodyEmp"
+        typeSize={3}
+        fontWeight="medium"
         fontStyle="italic"
         color="default2"
-        fontSize="captionSmall"
       >
         <FormattedMessage defaultMessage="Go to Saleor Cloud" id="EXqb2l" />
       </Text>

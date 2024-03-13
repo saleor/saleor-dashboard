@@ -64,7 +64,7 @@ export const VoucherCodes = ({
           marginTop={8}
           paddingX={6}
         >
-          <Text variant="heading">
+          <Text typeSize={5} fontWeight="bold">
             <FormattedMessage defaultMessage="Voucher codes" id="kVL3LM" />
           </Text>
           <Box display="flex" gap={3}>

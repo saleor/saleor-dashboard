@@ -168,7 +168,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 flexDirection="column"
                 gap={5}
               >
-                <Text variant="bodyEmp" as="p" marginTop={5}>
+                <Text typeSize={4} fontWeight="medium" as="p" marginTop={5}>
                   <FormattedMessage {...grantRefundPageMessages.pageSubtitle} />
                 </Text>
 

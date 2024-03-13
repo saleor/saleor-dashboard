@@ -52,7 +52,9 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
           >
             <Accordion.Trigger>
               <Box display="flex" flexDirection="column" gap={2}>
-                <Text variant="heading">{intl.formatMessage(title)}</Text>
+                <Text typeSize={5} fontWeight="bold">
+                  {intl.formatMessage(title)}
+                </Text>
 
                 {data?.length > 0 && (
                   <Text variant="caption" color="default2">

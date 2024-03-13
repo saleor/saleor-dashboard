@@ -8,7 +8,7 @@ interface HeaderProps {
 
 export const Header = ({ children }: HeaderProps) => (
   <Box display="flex" justifyContent="space-between" paddingX={3} paddingY={4}>
-    <Text variant="heading">
+    <Text typeSize={5} fontWeight="bold">
       <FormattedMessage defaultMessage="Features preview" id="krer6Z" />
     </Text>
     {children}

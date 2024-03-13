@@ -91,7 +91,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
           <Accordion.Item value="seo-accordion">
             <Accordion.Trigger>
               <Box display="grid" gap={2}>
-                <Text variant="heading">
+                <Text typeSize={5} fontWeight="bold">
                   <FormattedMessage
                     defaultMessage="Search Engine Preview"
                     id="TGX4T1"

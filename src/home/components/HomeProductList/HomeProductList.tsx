@@ -28,7 +28,13 @@ export const HomeProductList = ({
   if (topProducts.hasError) {
     return (
       <Box data-test-id={testId}>
-        <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
+        <Text
+          typeSize={5}
+          fontWeight="bold"
+          display="block"
+          paddingTop={7}
+          marginBottom={2}
+        >
           {title}
         </Text>
         <Text color="default2">
@@ -44,7 +50,13 @@ export const HomeProductList = ({
   if (topProducts.loading) {
     return (
       <Box data-test-id={testId}>
-        <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
+        <Text
+          typeSize={5}
+          fontWeight="bold"
+          display="block"
+          paddingTop={7}
+          marginBottom={2}
+        >
           {title}
         </Text>
         <Box display="flex" flexDirection="column">
@@ -58,7 +70,13 @@ export const HomeProductList = ({
 
   return (
     <Box data-test-id={testId}>
-      <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
+      <Text
+        typeSize={5}
+        fontWeight="bold"
+        display="block"
+        paddingTop={7}
+        marginBottom={2}
+      >
         {title}
       </Text>
       <Box>

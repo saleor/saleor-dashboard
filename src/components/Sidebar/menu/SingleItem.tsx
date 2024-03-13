@@ -48,7 +48,7 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
           })}
         >
           {menuItem.icon}
-          <Text size="small" variant="bodyEmp">
+          <Text typeSize={3} fontWeight="medium">
             {menuItem.label}
           </Text>
         </Box>

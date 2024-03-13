@@ -42,7 +42,11 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
                   defaultMessage="Use app: {name}"
                   id="W2OIhn"
                   values={{
-                    name: <Text variant="bodyStrong">{name}</Text>,
+                    name: (
+                      <Text typeSize={4} fontWeight="bold">
+                        {name}
+                      </Text>
+                    ),
                   }}
                 />
               </Text>

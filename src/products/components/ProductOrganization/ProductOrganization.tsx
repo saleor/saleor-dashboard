@@ -122,7 +122,7 @@ export const ProductOrganization: React.FC<
         ) : (
           <Box display="flex" flexDirection="column" gap={3}>
             <Box display="flex" flexDirection="column">
-              <Text variant="bodyEmp">
+              <Text typeSize={4} fontWeight="bold">
                 <FormattedMessage id="anK7jD" defaultMessage="Product Type" />
               </Text>
               {productType?.id ? (

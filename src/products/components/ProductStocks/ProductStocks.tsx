@@ -139,7 +139,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           </Box>
           <Box display="grid" gap={2} marginTop={5}>
             <Box display="flex" flexDirection="column">
-              <Text variant="heading" size="small">
+              <Text typeSize={4} fontWeight="bold">
                 <FormattedMessage {...messages.stock} />
               </Text>
               {!productVariantChannelListings?.length && (
