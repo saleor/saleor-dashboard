@@ -34,3 +34,16 @@ test("TC: SALEOR_122 Should be able to edit translation  @e2e @translations", as
     await expect(translationsPage.successBanner).toBeVisible();
     await expect(translationsPage.page.getByText(newDescription)).toBeVisible();
 });
+
+test("TC: SALEOR_123 Should be able to clear translation  @e2e @translations", async () => {
+    const description = "Letnia kolekcja Saleor obejmuje gamę produktów, które cieszą się popularnością na rynku.Sklep demonstracyjny na każdą porę roku.Saleor uchwycił słońce open source, e-commerce."
+
+    await translationsPage.goToDirectTranslationPage("PL_PL", "collections", TRANSLATIONS.translationsToBeCleared.id);
+    await expect(translationsPage.page.getByText("Translation Collection \"Summer collection\" - PL_PL")).toBeVisible();
+    await expect(translationsPage.page.getByText(description)).toBeVisible();
+    await translationsPage.editTranslationDescriptionButton.click();
+    await translationsPage.translationRichText.clear();
+    await translationsPage.saveButton.click();
+    await expect(translationsPage.successBanner).toBeVisible();
+    await expect(translationsPage.page.getByText(description)).not.toBeVisible();
+});
