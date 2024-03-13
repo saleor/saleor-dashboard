@@ -2380,9 +2380,6 @@
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
   },
-  "EXqb2l": {
-    "string": "Go to Saleor Cloud"
-  },
   "EY/jqC": {
     "string": "Last delivery attempt:"
   },
@@ -2988,6 +2985,9 @@
   "IEpmGQ": {
     "context": "description",
     "string": "Use Saleor Cloud to access Saleor Apps"
+  },
+  "IF2KbT": {
+    "string": "Saleor Cloud"
   },
   "IFWHn0": {
     "context": "error message",

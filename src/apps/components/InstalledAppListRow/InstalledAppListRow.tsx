@@ -33,9 +33,9 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
       state={{ from: location.pathname }}
       className={sprinkles({ display: "contents" })}
       inline={false}
-      data-testid={"apps:installed-app-row"}
     >
       <List.Item
+        data-test-id={"apps:installed-app-row"}
         padding={4}
         borderTopStyle="solid"
         borderWidth={1}
@@ -64,7 +64,11 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
             alignItems="flex-start"
           >
             <Box display="flex" gap={2}>
-              <Text typeSize={4} fontWeight="bold">
+              <Text
+                typeSize={4}
+                fontWeight="bold"
+                data-test-id={"app-" + app.name?.toLowerCase().replace(" ", "")}
+              >
                 {app.name}
               </Text>
               {isExternal && (
