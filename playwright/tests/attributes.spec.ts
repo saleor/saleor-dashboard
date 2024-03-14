@@ -3,7 +3,7 @@ import { AttributesPage } from "@pages/attributesPage";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 test("TC: SALEOR_34 User should be able to create Dropdown attribute, required, Product attribute @e2e", async ({
   page,
