@@ -9,6 +9,7 @@ import {
 import React from "react";
 
 import { usePriceField } from "../../../PriceField/usePriceField";
+import { hasDiscountValue } from "./utils";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";
@@ -61,7 +62,7 @@ export const moneyCellRenderer = (
     const isRange = Array.isArray(value);
     const displayValue = isRange ? value[0] : value;
 
-    if (!displayValue || !currency) {
+    if (!hasDiscountValue(displayValue) || !currency) {
       return true;
     }
 

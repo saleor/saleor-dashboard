@@ -1323,6 +1323,13 @@ input AppFilterInput {
 }
 
 input AppInput {
+  """
+  Canonical app ID. If not provided, the identifier will be generated based on app.id.
+  
+  Added in Saleor 3.19.
+  """
+  identifier: String
+
   """Name of the app."""
   name: String
 
@@ -29733,6 +29740,15 @@ type Shop implements ObjectWithMetadata {
   ): [ShippingMethod!]
 
   """
+  List of tax apps that can be assigned to the channel. The list will be calculated by Saleor based on the apps that are subscribed to webhooks related to tax calculations: CHECKOUT_CALCULATE_TAXES
+  
+  Added in Saleor 3.19.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, MANAGE_APPS.
+  """
+  availableTaxApps: [App!]!
+
+  """
   List of all currencies supported by shop's channels.
   
   Added in Saleor 3.1.
@@ -31209,6 +31225,13 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   privateMetafields(keys: [String!]): Metadata
 
   """
+  The tax app id that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+  
+  Added in Saleor 3.19.
+  """
+  taxAppId: String
+
+  """
   The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated.
   """
   taxCalculationStrategy: TaxCalculationStrategy
@@ -31255,6 +31278,13 @@ type TaxConfigurationPerCountry {
   displayGrossPrices: Boolean!
 
   """
+  The tax app id that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
+  
+  Added in Saleor 3.19.
+  """
+  taxAppId: String
+
+  """
   A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration.
   """
   taxCalculationStrategy: TaxCalculationStrategy
@@ -31271,6 +31301,13 @@ input TaxConfigurationPerCountryInput {
   Determines whether displayed prices should include taxes for this country.
   """
   displayGrossPrices: Boolean!
+
+  """
+  The tax app identifier that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
+  
+  Added in Saleor 3.19.
+  """
+  taxAppId: String
 
   """
   A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration.
@@ -31326,6 +31363,13 @@ input TaxConfigurationUpdateInput {
 
   """List of country codes for which to remove the tax configuration."""
   removeCountriesConfiguration: [CountryCode!]
+
+  """
+  The tax app id that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+  
+  Added in Saleor 3.19.
+  """
+  taxAppId: String
 
   """
   The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated.

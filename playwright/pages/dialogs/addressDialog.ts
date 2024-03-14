@@ -96,8 +96,11 @@ export class AddressDialog {
     await this.typeCity(customerInfo.cityName);
     await this.typeZip(customerInfo.zip);
     await this.clickCountrySelect();
+    await this.countrySelect.locator("input").clear()
     await this.countrySelect.locator("input").fill(customerInfo.country);
-    await this.selectOptions.filter({ hasText: customerInfo.country }).click();
+    await this.selectOptions
+      .getByText(customerInfo.country)
+      .click();
     await this.clickConfirmButton();
     await this.submitButton.waitFor({ state: "hidden" });
   }

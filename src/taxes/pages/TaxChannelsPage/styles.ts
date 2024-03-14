@@ -8,6 +8,9 @@ export const useStyles = makeStyles(
       placeContent: "center",
       textAlign: "center",
     },
+    cell: {
+      display: "grid",
+    },
     left: {
       margin: 0,
       display: "flex",
@@ -21,14 +24,13 @@ export const useStyles = makeStyles(
     },
     noDivider: {
       "&::after, &::before": { display: "none" },
+      display: "grid",
+      gridTemplateColumns: "1fr 500px 1fr 1fr",
     },
     toolbarMargin: {
       "&:last-child": {
         marginRight: 0,
       },
-    },
-    selectField: {
-      textAlign: "left",
     },
   }),
   { name: "TaxChannelsPage" },

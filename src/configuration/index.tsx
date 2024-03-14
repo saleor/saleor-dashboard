@@ -52,6 +52,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Determine attributes used to create product types",
           }),
           icon: <Attributes />,
+          requireAllPermissions: true,
           permissions: [
             PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
             PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,

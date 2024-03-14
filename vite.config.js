@@ -7,6 +7,7 @@ import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { VitePWA } from "vite-plugin-pwa";
+import { CodeInspectorPlugin } from 'code-inspector-plugin';
 
 const copyOgImage = () => ({
   name: "copy-og-image",
@@ -43,6 +44,8 @@ export default defineConfig(({ command, mode }) => {
     CUSTOM_VERSION,
     FLAGS_SERVICE_ENABLED,
     LOCALE_CODE,
+    POSTHOG_KEY,
+    POSTHOG_HOST
   } = env;
 
   const base = STATIC_URL ?? "/";
@@ -54,6 +57,9 @@ export default defineConfig(({ command, mode }) => {
 
   const plugins = [
     react(),
+    CodeInspectorPlugin({
+      bundler: 'vite',
+    }),
     createHtmlPlugin({
       entry: path.resolve(__dirname, "src", "index.tsx"),
       template: "index.html",
@@ -65,6 +71,8 @@ export default defineConfig(({ command, mode }) => {
           APPS_TUNNEL_URL_KEYWORDS,
           IS_CLOUD_INSTANCE,
           LOCALE_CODE,
+          POSTHOG_KEY,
+          POSTHOG_HOST,
           injectOgTags:
             DEMO_MODE &&
             `
@@ -147,7 +155,9 @@ export default defineConfig(({ command, mode }) => {
         CUSTOM_VERSION,
         LOCALE_CODE,
         SENTRY_RELEASE,
-        STATIC_URL
+        STATIC_URL,
+        POSTHOG_KEY,
+        POSTHOG_HOST
       },
     },
     build: {

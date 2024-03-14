@@ -24,6 +24,7 @@ export const taxConfigurationPerCountry = gql`
     }
     chargeTaxes
     taxCalculationStrategy
+    taxAppId
     displayGrossPrices
   }
 `;
@@ -39,6 +40,7 @@ export const taxConfiguration = gql`
     pricesEnteredWithTax
     chargeTaxes
     taxCalculationStrategy
+    taxAppId
     countries {
       ...TaxConfigurationPerCountry
     }

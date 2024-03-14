@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.19.0-dev",
+  "version": "3.20.0-dev",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
@@ -76,6 +76,7 @@
     "marked": "^4.0.17",
     "moment-timezone": "^0.5.32",
     "pixelmatch": "^5.3.0",
+    "posthog-js": "^1.105.9",
     "qs": "^6.10.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -163,6 +164,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-macros": "^3.1.0",
     "ci-info": "^3.7.0",
+    "code-inspector-plugin": "^0.6.1",
     "codecov": "^3.7.1",
     "core-js": "^3.7.0",
     "cross-env": "^6.0.3",

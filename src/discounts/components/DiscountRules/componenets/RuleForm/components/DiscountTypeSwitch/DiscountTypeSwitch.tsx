@@ -34,6 +34,7 @@ export const DiscountTypeSwitch = ({
           value={RewardValueTypeEnum.FIXED}
           name="fixed"
           marginLeft={0.5}
+          data-test-id="fixed-reward-value-type"
         >
           <Box
             display="flex"
@@ -52,6 +53,7 @@ export const DiscountTypeSwitch = ({
         name="percentage"
         value={RewardValueTypeEnum.PERCENTAGE}
         marginRight={0.5}
+        data-test-id="percentage-reward-value-type"
       >
         <Box
           display="flex"

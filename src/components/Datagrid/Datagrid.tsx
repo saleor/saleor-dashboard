@@ -239,7 +239,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         ...(getCellError(item, opts)
           ? {
               themeOverride: {
-                bgCell: themeValues.colors.background.critical2,
+                bgCell: themeValues.colors.background.critical1,
               },
             }
           : {}),
@@ -254,7 +254,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       getCellContent,
       areCellsDirty,
       themeValues.colors.background.accent1,
-      themeValues.colors.background.critical2,
+      themeValues.colors.background.critical1,
       getCellError,
     ],
   );

@@ -68,7 +68,12 @@ export const RuleConditions = ({
   }
 
   return (
-    <Box display="flex" flexDirection="column" gap={4}>
+    <Box
+      data-test-id="conditions-section"
+      display="flex"
+      flexDirection="column"
+      gap={4}
+    >
       <Text>{intl.formatMessage(messages.conditions)}</Text>
 
       <Box display="flex" flexDirection="column" gap={2}>
@@ -92,6 +97,7 @@ export const RuleConditions = ({
           alignSelf="start"
           disabled={disabled}
           onClick={() => append(createEmptyCodition())}
+          data-test-id="add-another-condition-button"
         >
           <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
         </Button>

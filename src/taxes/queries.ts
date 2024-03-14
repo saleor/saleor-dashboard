@@ -74,3 +74,22 @@ export const taxClassAssign = gql`
     }
   }
 `;
+
+export const taxStrategyChoices = gql`
+  query TaxStrategyChoices {
+    shop {
+      availableTaxApps {
+        id
+        name
+        version
+        identifier
+        created
+        brand {
+          logo {
+            default
+          }
+        }
+      }
+    }
+  }
+`;
