@@ -94,7 +94,11 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
         </Tooltip>
       )}
       {installationPending && (
-        <Text color="default2" size={3} data-test-id="app-installation-pending">
+        <Text
+          color="default2"
+          typeSize={3}
+          data-test-id="app-installation-pending"
+        >
           <FormattedMessage {...appInstallationStatusMessages.pending} />
         </Text>
       )}
@@ -104,7 +108,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
         removeInstall={removeInstallHandler}
       />
       {releaseDate && (
-        <Text color="default2" size={3}>
+        <Text color="default2" typeSize={3}>
           <FormattedMessage
             {...messages.releaseComingSoon}
             values={{
