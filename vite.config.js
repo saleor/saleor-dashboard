@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react-swc";
+import { CodeInspectorPlugin } from "code-inspector-plugin";
 import { copyFileSync, mkdirSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { VitePWA } from "vite-plugin-pwa";
-import { CodeInspectorPlugin } from 'code-inspector-plugin';
 
 const copyOgImage = () => ({
   name: "copy-og-image",
@@ -45,7 +46,12 @@ export default defineConfig(({ command, mode }) => {
     FLAGS_SERVICE_ENABLED,
     LOCALE_CODE,
     POSTHOG_KEY,
-    POSTHOG_HOST
+    POSTHOG_HOST,
+    SENTRY_AUTH_TOKEN,
+    SENTRY_ORG,
+    SENTRY_PROJECT,
+    // eslint-disable-next-line camelcase
+    npm_package_version,
   } = env;
 
   const base = STATIC_URL ?? "/";
@@ -53,12 +59,12 @@ export default defineConfig(({ command, mode }) => {
     Object.entries(env).filter(([flagKey]) => flagKey.startsWith("FF_")),
   );
 
-  const sourcemap = SKIP_SOURCEMAPS ? false : true;
+  const sourcemap = !SKIP_SOURCEMAPS;
 
   const plugins = [
     react(),
     CodeInspectorPlugin({
-      bundler: 'vite',
+      bundler: "vite",
     }),
     createHtmlPlugin({
       entry: path.resolve(__dirname, "src", "index.tsx"),
@@ -92,8 +98,12 @@ export default defineConfig(({ command, mode }) => {
       },
     }),
     copyOgImage(),
+    sentryVitePlugin({
+      authToken: SENTRY_AUTH_TOKEN,
+      org: SENTRY_ORG,
+      project: SENTRY_PROJECT,
+    }),
   ];
-
 
   if (!isDev) {
     console.log("Enabling service worker...");
@@ -157,7 +167,9 @@ export default defineConfig(({ command, mode }) => {
         SENTRY_RELEASE,
         STATIC_URL,
         POSTHOG_KEY,
-        POSTHOG_HOST
+        POSTHOG_HOST,
+        // eslint-disable-next-line camelcase
+        RELEASE_NAME: npm_package_version,
       },
     },
     build: {
