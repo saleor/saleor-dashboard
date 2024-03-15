@@ -77,10 +77,8 @@ export const HomeActivityCard = ({
               >
                 {activity ? (
                   <>
-                    <Text typeSize={3}>
-                      {getActivityMessage(activity, intl)}
-                    </Text>
-                    <Text typeSize={3} color="default2">
+                    <Text size={3}>{getActivityMessage(activity, intl)}</Text>
+                    <Text size={3} color="default2">
                       <DateTime date={activity.date} plain />
                     </Text>
                   </>
@@ -93,7 +91,7 @@ export const HomeActivityCard = ({
             ),
             () => (
               <Box paddingY={4}>
-                <Text typeSize={3}>
+                <Text size={3}>
                   <FormattedMessage
                     id="wWTUrM"
                     defaultMessage="No activities found"

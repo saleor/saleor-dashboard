@@ -67,7 +67,7 @@ export const ProductVariantPrice: React.FC<
           })}
         </DashboardCard.Title>
         <DashboardCard.Content>
-          <Text typeSize={2}>
+          <Text size={2}>
             {intl.formatMessage(
               disabledMessage || {
                 id: "e48Igh",
@@ -95,7 +95,7 @@ export const ProductVariantPrice: React.FC<
         <TableHead>
           <TableRowLink>
             <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-              <Text typeSize={2} color="default2">
+              <Text size={2} color="default2">
                 <FormattedMessage
                   id="c8UT0c"
                   defaultMessage="Channel Name"
@@ -104,7 +104,7 @@ export const ProductVariantPrice: React.FC<
               </Text>
             </TableCell>
             <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-              <Text typeSize={2} color="default2">
+              <Text size={2} color="default2">
                 <FormattedMessage
                   id="JFtFgc"
                   defaultMessage="Selling Price"
@@ -113,7 +113,7 @@ export const ProductVariantPrice: React.FC<
               </Text>
             </TableCell>
             <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-              <Text typeSize={2} color="default2">
+              <Text size={2} color="default2">
                 <FormattedMessage
                   id="2zCmiR"
                   defaultMessage="Cost price"

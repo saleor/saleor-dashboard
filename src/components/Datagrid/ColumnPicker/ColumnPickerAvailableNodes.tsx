@@ -42,7 +42,7 @@ export const ColumnPickerAvailableNodes = ({
 
     if (areNodesEmpty) {
       return (
-        <Text typeSize={3} color="default2">
+        <Text size={3} color="default2">
           <FormattedMessage {...messages.noResultsFound} />
         </Text>
       );
@@ -57,7 +57,7 @@ export const ColumnPickerAvailableNodes = ({
         >
           <Text
             data-test-id={`dynamic-column-name-${node.title}`}
-            typeSize={3}
+            size={3}
             color="default2"
             ellipsis
           >

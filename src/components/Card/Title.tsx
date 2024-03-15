@@ -3,7 +3,7 @@ import React from "react";
 
 export const Title: React.FC = ({ children }) => (
   <Box paddingX={6} paddingTop={6}>
-    <Text typeSize={5} fontWeight="bold">
+    <Text size={5} fontWeight="bold">
       {children}
     </Text>
   </Box>

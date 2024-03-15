@@ -29,7 +29,7 @@ export const ColumnPickerStaticColumns = ({
             selectedColumns,
           )}
         >
-          <Text typeSize={3} color="default1">
+          <Text size={3} color="default1">
             {column.title}
           </Text>
         </Toggle>

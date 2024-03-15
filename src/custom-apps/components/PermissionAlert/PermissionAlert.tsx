@@ -41,7 +41,7 @@ const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
           <Box display="flex" gap={2}>
             {permissions.map(permission => (
               <Chip size="small" key={permission}>
-                <Text typeSize={1}>{permission}</Text>
+                <Text size={1}>{permission}</Text>
               </Chip>
             ))}
           </Box>

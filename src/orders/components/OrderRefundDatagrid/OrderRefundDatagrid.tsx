@@ -73,7 +73,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
         display="flex"
         justifyContent="space-between"
       >
-        <Text typeSize={5} fontWeight="bold">
+        <Text size={5} fontWeight="bold">
           <FormattedMessage {...refundGridMessages.refundSection} />
         </Text>
         {/** TODO: Add modal */}

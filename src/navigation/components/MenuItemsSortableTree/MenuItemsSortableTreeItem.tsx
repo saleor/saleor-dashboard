@@ -99,7 +99,7 @@ export const MenuItemsSortableTreeItem = ({
             justifyContent="center"
             borderRadius="50%"
             backgroundColor="accent1"
-            typeSize={3}
+            size={3}
             fontWeight="medium"
             color="default1"
           >

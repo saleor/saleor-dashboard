@@ -116,7 +116,7 @@ const ProductVariantNavigation: React.FC<
                       {variant ? variant.name || variant.sku : <Skeleton />}
                     </Text>
                     {isDefault && (
-                      <Text display="block" typeSize={2} color="default2">
+                      <Text display="block" size={2} color="default2">
                         {intl.formatMessage(messages.defaultVariant)}
                       </Text>
                     )}

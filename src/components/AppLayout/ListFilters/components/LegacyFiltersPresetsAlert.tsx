@@ -25,7 +25,7 @@ export const LegacyFiltersPresetsAlert = () => {
         <Text>
           {formatMessage(messages.alertText, {
             presetNames: (
-              <Text typeSize={4} fontWeight="bold">
+              <Text size={4} fontWeight="bold">
                 {legacyPresets.map(p => p.name).join(", ")}
               </Text>
             ),

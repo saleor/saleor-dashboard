@@ -31,7 +31,7 @@ export const MarkAsPaid = ({
       <PreviewPill />
     </Checkbox>
     <Box display="flex" flexDirection="column" paddingLeft={4}>
-      <Text typeSize={3} color="default2" paddingLeft={0.5}>
+      <Text size={3} color="default2" paddingLeft={0.5}>
         <FormattedMessage
           defaultMessage='"Mark as paid" feature creates a {link} - used by Payment Apps'
           id="Qb2XN5"
@@ -48,7 +48,7 @@ export const MarkAsPaid = ({
           }}
         />
       </Text>
-      <Text typeSize={3} color="default2" paddingLeft={0.5}>
+      <Text size={3} color="default2" paddingLeft={0.5}>
         <FormattedMessage
           defaultMessage="If left unchecked it creates a {link} - used by Payment Plugins"
           id="eR2vV/"

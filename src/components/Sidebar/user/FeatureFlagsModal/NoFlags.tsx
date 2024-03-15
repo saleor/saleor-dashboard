@@ -13,7 +13,7 @@ export const NoFlags = () => (
     borderColor="default1"
     paddingTop={52}
   >
-    <Text color="defaultDisabled" typeSize={5}>
+    <Text color="defaultDisabled" size={5}>
       <FormattedMessage
         id="pEf/m+"
         defaultMessage="There are no previews at the moment. Stay tuned!"

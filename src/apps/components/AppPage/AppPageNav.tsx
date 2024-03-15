@@ -65,10 +65,10 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
           <Box display="flex" gap={4} alignItems="center">
             <AppAvatar size={8} logo={logo} />
             <Box display="flex" flexDirection="column">
-              <Text typeSize={5} fontWeight="bold">
+              <Text size={5} fontWeight="bold">
                 {name}
               </Text>
-              <Text typeSize={2} color="default2" textTransform="uppercase">
+              <Text size={2} color="default2" textTransform="uppercase">
                 {author && (
                   <FormattedMessage
                     defaultMessage="by {author}"

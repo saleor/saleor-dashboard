@@ -88,7 +88,7 @@ export const ColumnPicker = ({
             overflow="scroll"
           >
             <Box marginBottom={3}>
-              <Text typeSize={1} color="default2">
+              <Text size={1} color="default2">
                 <FormattedMessage {...messages.column} />
               </Text>
             </Box>

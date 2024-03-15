@@ -35,7 +35,7 @@ export const DefaultTransactionFlowStrategy = ({
     </Checkbox>
     <Box paddingLeft={4}>
       {" "}
-      <Text typeSize={3} color="default2" paddingLeft={0.5}>
+      <Text size={3} color="default2" paddingLeft={0.5}>
         <FormattedMessage
           {...messages.defaultTransactionFlowStrategyDescription}
           values={{

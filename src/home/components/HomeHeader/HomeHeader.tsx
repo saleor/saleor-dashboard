@@ -11,7 +11,7 @@ export const HomeHeader: React.FC<HomeHeaderProps> = ({
   userName,
 }: HomeHeaderProps) => (
   <div data-test-id="home-header">
-    <Text typeSize={4} fontWeight="bold" as="h4" data-test-id="welcome-header">
+    <Text size={4} fontWeight="bold" as="h4" data-test-id="welcome-header">
       {userName ? (
         <FormattedMessage
           id="By5ZBp"
@@ -25,7 +25,7 @@ export const HomeHeader: React.FC<HomeHeaderProps> = ({
         <Skeleton style={{ width: "10em" }} />
       )}
     </Text>
-    <Text typeSize={3}>
+    <Text size={3}>
       {userName ? (
         <FormattedMessage
           id="aCX8rl"

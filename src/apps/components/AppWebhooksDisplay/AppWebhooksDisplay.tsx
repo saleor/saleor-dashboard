@@ -24,7 +24,7 @@ const Wrapper = (boxProps: BoxProps) => {
 
   return (
     <Box {...boxProps}>
-      <Text typeSize={5} fontWeight="bold" marginBottom={4} as={"h2"}>
+      <Text size={5} fontWeight="bold" marginBottom={4} as={"h2"}>
         {intl.formatMessage({
           defaultMessage: "App Webhooks",
           id: "eQ7bCN",
@@ -170,7 +170,7 @@ export const AppWebhooksDisplay = ({
                     <Text>{wh.name}</Text>
                     {!wh.isActive && <DisabledWebhookChip />}
                   </Box>
-                  <Text typeSize={1}>{events}</Text>
+                  <Text size={1}>{events}</Text>
                 </Box>
                 {eventDeliveries.length > 0 && (
                   <Accordion.Item
@@ -184,7 +184,7 @@ export const AppWebhooksDisplay = ({
                     borderRadius={4}
                   >
                     <Accordion.Trigger alignItems="center">
-                      <Text typeSize={4} fontWeight="bold" as="h2">
+                      <Text size={4} fontWeight="bold" as="h2">
                         {formatMessage({
                           defaultMessage:
                             "Pending & failed deliveries (last 10)",
@@ -209,7 +209,7 @@ export const AppWebhooksDisplay = ({
                               display="grid"
                               __gridTemplateColumns={"1fr 1fr"}
                             >
-                              <Text as="p" typeSize={4} fontWeight="bold">
+                              <Text as="p" size={4} fontWeight="bold">
                                 <DateTime plain date={createdAt} />
                               </Text>
                               <Box marginLeft="auto">
@@ -223,7 +223,7 @@ export const AppWebhooksDisplay = ({
                                     defaultMessage: "Attempts:",
                                     id: "OFTsI1",
                                   })}{" "}
-                                  <Text typeSize={4} fontWeight="bold">
+                                  <Text size={4} fontWeight="bold">
                                     {attemptsCount} / 6
                                   </Text>
                                 </Text>

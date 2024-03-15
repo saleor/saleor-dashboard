@@ -34,7 +34,7 @@ export const SubMenu = ({ menuItems }: SubMenuProps) => {
               {icon}
               <Text
                 data-test-id={String(title).toLowerCase()}
-                typeSize={4}
+                size={4}
                 fontWeight="bold"
               >
                 {title}

@@ -22,12 +22,7 @@ export const EnvironmentLink = () => {
       <Box __width={20} __height={20}>
         <Cloud />
       </Box>
-      <Text
-        typeSize={3}
-        fontWeight="medium"
-        fontStyle="italic"
-        color="default2"
-      >
+      <Text size={3} fontWeight="medium" fontStyle="italic" color="default2">
         <FormattedMessage defaultMessage="Saleor Cloud" id="IF2KbT" />
       </Text>
     </Box>

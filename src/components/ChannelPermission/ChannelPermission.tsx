@@ -33,13 +33,13 @@ export const ChannelPermission = ({
 
   return (
     <Box height="100%">
-      <Text as="p" typeSize={5} marginBottom={5}>
+      <Text as="p" size={5} marginBottom={5}>
         {intl.formatMessage(messages.title)}
       </Text>
 
       <Box height="100%">
         {description && (
-          <Text as="p" typeSize={3} marginBottom={5}>
+          <Text as="p" size={3} marginBottom={5}>
             {description}
           </Text>
         )}

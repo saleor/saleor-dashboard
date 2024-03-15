@@ -42,7 +42,7 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
                   description="checkbox label"
                 />
               </Text>
-              <Text typeSize={2} color="default2">
+              <Text size={2} color="default2">
                 <FormattedMessage
                   id="XwQQ1f"
                   defaultMessage="All fulfillments will be automatically approved"
@@ -68,7 +68,7 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
                   description="checkbox label"
                 />
               </Text>
-              <Text typeSize={2} color="default2">
+              <Text size={2} color="default2">
                 <FormattedMessage
                   id="l9ETHu"
                   defaultMessage="You will be able to fulfill products without capturing payment for the order."

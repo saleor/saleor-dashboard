@@ -33,7 +33,7 @@ export const AppPermissionsDialogConfirmation = ({
       </Text>
       {isPermissionsRemoved && (
         <Box marginBottom={4}>
-          <Text typeSize={4} fontWeight="bold">
+          <Text size={4} fontWeight="bold">
             {intl.formatMessage(messages.removePermissions)}
           </Text>
           {mapCodesToNames(removedPermissions).map(perm => (
@@ -45,7 +45,7 @@ export const AppPermissionsDialogConfirmation = ({
       )}
       {isPermissionsAdded && (
         <Box>
-          <Text typeSize={4} fontWeight="bold">
+          <Text size={4} fontWeight="bold">
             {intl.formatMessage(messages.addPermissions)}
           </Text>
           {mapCodesToNames(addedPermissions).map(perm => (

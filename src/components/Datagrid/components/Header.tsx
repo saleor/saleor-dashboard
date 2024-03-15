@@ -72,7 +72,7 @@ const Header: GridHeader = ({ title, children }) => {
       paddingX={6}
       paddingY={5}
     >
-      <Text typeSize={5} fontWeight="bold">
+      <Text size={5} fontWeight="bold">
         {title}
       </Text>
       <Box display="flex" __flexDirection="row-reverse" gap={2}>

@@ -9,7 +9,7 @@ import { giftCardListOrderCardMessages as messages } from "./messages";
 
 const GiftCardsListOrderInfoCard: React.FC = () => (
   <Alert variant="info" close={false}>
-    <Text typeSize={3}>
+    <Text size={3}>
       <FormattedMessage
         {...messages.giftCardOrderInfoMessage}
         values={{

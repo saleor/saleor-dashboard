@@ -23,7 +23,7 @@ export const ColumnPickerDynamicColumns = ({
       alignItems="center"
       marginTop={3}
     >
-      <Text typeSize={1} color="default2">
+      <Text size={1} color="default2">
         <FormattedMessage {...messages.custom} />
       </Text>
       <Button
@@ -53,11 +53,11 @@ export const ColumnPickerDynamicColumns = ({
             __width="20px"
             __height="20px"
           />
-          <Text typeSize={3} color="default2" whiteSpace="nowrap">
+          <Text size={3} color="default2" whiteSpace="nowrap">
             {`${column.metaGroup} /`}
           </Text>
           <Text
-            typeSize={3}
+            size={3}
             color="default1"
             ellipsis
             data-test-id={`column-name-${column.title}`}

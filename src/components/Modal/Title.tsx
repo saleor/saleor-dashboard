@@ -7,7 +7,7 @@ interface TitleProps extends TextProps {
 
 export const Title = ({ children, ...rest }: TitleProps) => {
   return (
-    <Text typeSize={6} fontWeight="bold" {...rest}>
+    <Text size={6} fontWeight="bold" {...rest}>
       {children}
     </Text>
   );

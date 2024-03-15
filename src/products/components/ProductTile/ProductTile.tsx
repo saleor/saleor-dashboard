@@ -69,7 +69,7 @@ export const ProductTile: React.FC<ProductTileProps> = ({
       <Text
         ellipsis
         color="default2"
-        typeSize={1}
+        size={1}
         alignItems="center"
         className={sprinkles({ paddingY: 0.5 })}
       >
@@ -77,7 +77,7 @@ export const ProductTile: React.FC<ProductTileProps> = ({
       </Text>
     </Box>
     <Box display="flex" justifyContent="space-between" marginTop={0.5}>
-      <Text ellipsis color="default1" typeSize={3} fontWeight="medium">
+      <Text ellipsis color="default1" size={3} fontWeight="medium">
         {product.name}
       </Text>
     </Box>

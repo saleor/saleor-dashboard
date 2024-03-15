@@ -41,7 +41,7 @@ export const PermissionsExceeded = ({
               hover: "default1Hovered",
             }}
           >
-            <Text typeSize={3}>{`- ${perm.name}`}</Text>
+            <Text size={3}>{`- ${perm.name}`}</Text>
           </List.Item>
         ))}
       </List>

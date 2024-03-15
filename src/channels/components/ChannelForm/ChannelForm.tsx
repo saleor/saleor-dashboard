@@ -130,10 +130,10 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
         </DashboardCard.Content>
       </DashboardCard>
       <Box display="grid" __gridTemplateColumns="2fr 1fr" rowGap={2}>
-        <Text typeSize={5} fontWeight="bold" margin={6}>
+        <Text size={5} fontWeight="bold" margin={6}>
           <FormattedMessage {...messages.channelSettings} />
         </Text>
-        <Text typeSize={5} fontWeight="bold" margin={6}>
+        <Text size={5} fontWeight="bold" margin={6}>
           <FormattedMessage {...messages.orderExpiration} />
         </Text>
         <Box paddingX={6}>
@@ -161,14 +161,14 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             />
           ) : (
             <Box display="flex" flexDirection="column">
-              <Text typeSize={2}>
+              <Text size={2}>
                 <FormattedMessage {...messages.selectedCurrency} />
               </Text>
               <Text>{data.currencyCode}</Text>
             </Box>
           )}
         </Box>
-        <Text typeSize={2} paddingX={6}>
+        <Text size={2} paddingX={6}>
           <FormattedMessage {...messages.orderExpirationDescription} />
         </Text>
         <Box paddingX={6}>

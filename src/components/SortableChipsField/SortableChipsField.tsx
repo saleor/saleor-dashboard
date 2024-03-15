@@ -82,7 +82,7 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
           />
         ))}
         {error && (
-          <Text typeSize={2} color="critical1">
+          <Text size={2} color="critical1">
             {helperText}
           </Text>
         )}

@@ -177,7 +177,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
             {hasLimits(limits, "productVariants") && (
-              <Text typeSize={2}>
+              <Text size={2}>
                 {intl.formatMessage(
                   {
                     id: "Kw0jHS",

@@ -29,7 +29,7 @@ export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
     <TopNavWrapper withoutBorder={withoutBorder}>
       {href && <TopNavLink to={href} />}
       <Box __flex={isAlignToRight ? 1 : 0} __minWidth="max-content">
-        <Text typeSize={6}>{title}</Text>
+        <Text size={6}>{title}</Text>
       </Box>
       <Box
         display="flex"

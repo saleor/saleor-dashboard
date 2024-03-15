@@ -47,7 +47,7 @@ export const ShippingIncluded = ({
       </Toggle>
 
       {!canRefundShipping && (
-        <Text typeSize={2} color="defaultDisabled">
+        <Text size={2} color="defaultDisabled">
           <FormattedMessage
             defaultMessage="Shipping has already been refunded"
             id="o/4OCR"

@@ -29,7 +29,7 @@ export const HomeProductList = ({
     return (
       <Box data-test-id={testId}>
         <Text
-          typeSize={5}
+          size={5}
           fontWeight="bold"
           display="block"
           paddingTop={7}
@@ -51,7 +51,7 @@ export const HomeProductList = ({
     return (
       <Box data-test-id={testId}>
         <Text
-          typeSize={5}
+          size={5}
           fontWeight="bold"
           display="block"
           paddingTop={7}
@@ -71,7 +71,7 @@ export const HomeProductList = ({
   return (
     <Box data-test-id={testId}>
       <Text
-        typeSize={5}
+        size={5}
         fontWeight="bold"
         display="block"
         paddingTop={7}
@@ -109,13 +109,13 @@ export const HomeProductList = ({
                     />
 
                     <Box display="flex" flexDirection="column">
-                      <Text typeSize={3}>{variant.product.name}</Text>
+                      <Text size={3}>{variant.product.name}</Text>
 
-                      <Text typeSize={3} color="default2">
+                      <Text size={3} color="default2">
                         {generateAttributesInfo(variant)}
                       </Text>
 
-                      <Text typeSize={3} color="default2">
+                      <Text size={3} color="default2">
                         <FormattedMessage
                           id="nII/qB"
                           defaultMessage="{amount, plural,one {One ordered}other {{amount} ordered}}"
@@ -148,7 +148,7 @@ export const HomeProductList = ({
               paddingY={5}
               borderBottomStyle="solid"
             >
-              <Text typeSize={3}>
+              <Text size={3}>
                 <FormattedMessage
                   id="Q1Uzbb"
                   defaultMessage="No products found"

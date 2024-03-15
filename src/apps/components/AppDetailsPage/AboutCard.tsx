@@ -35,7 +35,7 @@ export const AboutCard: React.FC<AboutCardProps> = ({
 
   return (
     <Box {...boxProps}>
-      <Text typeSize={5} fontWeight="bold" as={"h2"} marginBottom={4}>
+      <Text size={5} fontWeight="bold" as={"h2"} marginBottom={4}>
         {intl.formatMessage(messages.aboutAppTitle)}
       </Text>
       <Box>{renderContent()}</Box>

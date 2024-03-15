@@ -89,7 +89,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
             {isPublished &&
               publicationDate &&
               Date.parse(publicationDate) < dateNow && (
-                <Text typeSize={2} color="default2">
+                <Text size={2} color="default2">
                   {messages.visibleSecondLabel ||
                     visibleMessage(publicationDate)}
                 </Text>
@@ -106,7 +106,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
             {publicationDate &&
               !isPublished &&
               Date.parse(publicationDate) >= dateNow && (
-                <Text typeSize={2} color="default2">
+                <Text size={2} color="default2">
                   {messages.hiddenSecondLabel}
                 </Text>
               )}
@@ -176,7 +176,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
                 {isAvailable &&
                   availableForPurchase &&
                   Date.parse(availableForPurchase) < dateNow && (
-                    <Text typeSize={2} color="default2">
+                    <Text size={2} color="default2">
                       {visibleMessage(availableForPurchase)}
                     </Text>
                   )}
@@ -189,7 +189,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
               <Box display="flex" __alignItems="baseline" gap={2}>
                 <Text>{messages.unavailableLabel}</Text>
                 {availableForPurchase && !isAvailable && (
-                  <Text typeSize={2} color="default2">
+                  <Text size={2} color="default2">
                     {messages.availableSecondLabel}
                   </Text>
                 )}
@@ -264,7 +264,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
               {intl.formatMessage(availabilityItemMessages.hideInListings)}
             </Text>
           </Checkbox>
-          <Text typeSize={2} color="default2">
+          <Text size={2} color="default2">
             {intl.formatMessage(
               availabilityItemMessages.hideInListingsDescription,
             )}

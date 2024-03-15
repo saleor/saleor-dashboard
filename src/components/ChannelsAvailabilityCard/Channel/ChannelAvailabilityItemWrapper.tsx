@@ -18,7 +18,7 @@ export const ChannelAvailabilityItemWrapper: React.FC<
   <Accordion data-test-id="channel-availability-item">
     <Accordion.Item value="channel-availability-item" gap={9}>
       <Accordion.Trigger>
-        <Text typeSize={4} fontWeight="medium">
+        <Text size={4} fontWeight="medium">
           {name}
         </Text>
         <Label text={messages.availableDateText} />

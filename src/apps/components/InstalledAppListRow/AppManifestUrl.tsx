@@ -32,7 +32,7 @@ export const AppManifestUrl: React.FC<AppManifestUrlProps> = ({
       <Tooltip>
         <Tooltip.Trigger>
           <Box __maxWidth="300px" className="ellipsis">
-            <Text typeSize={2} color="default2">
+            <Text size={2} color="default2">
               {new URL(manifestUrl).host}
             </Text>
           </Box>

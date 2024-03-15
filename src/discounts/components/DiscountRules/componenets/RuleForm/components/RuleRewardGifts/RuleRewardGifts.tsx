@@ -82,7 +82,7 @@ export const RuleRewardGifts = () => {
       options={options ?? []}
       disabled={disabled}
     >
-      <Multiselect.NoOptions typeSize={3} padding={1}>
+      <Multiselect.NoOptions size={3} padding={1}>
         <FormattedMessage defaultMessage="No options to select" id="xTyg+p" />
       </Multiselect.NoOptions>
     </Multiselect>

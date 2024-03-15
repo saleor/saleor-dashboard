@@ -61,7 +61,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
               alt={integration.name}
             />
           </Box>
-          <Text typeSize={1} color="default2">
+          <Text size={1} color="default2">
             {integration.name}
           </Text>
         </Box>

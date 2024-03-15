@@ -15,10 +15,8 @@ import { useLocation, useParams } from "react-router";
 import { appPermissionsRequestViewMessages } from "./messages";
 import { usePermissionsRequestRedirects } from "./usePermissionsRequestRedirects";
 
-const SmallText = (props: TextProps) => <Text typeSize={3} {...props} />;
-const SmallHeading = (props: TextProps) => (
-  <Text as="h2" typeSize={4} {...props} />
-);
+const SmallText = (props: TextProps) => <Text size={3} {...props} />;
+const SmallHeading = (props: TextProps) => <Text as="h2" size={4} {...props} />;
 const WrapperBox = (props: BoxProps) => (
   <Box
     marginX="auto"
@@ -126,7 +124,7 @@ export const AppPermissionRequestView = () => {
 
   return (
     <Box padding={12}>
-      <Text as="h1" typeSize={9} fontWeight="medium" textAlign="center">
+      <Text as="h1" size={9} fontWeight="medium" textAlign="center">
         {formatMessage(appPermissionsRequestViewMessages.headerAuthorize)}{" "}
         {data.app.name}
       </Text>
@@ -137,7 +135,7 @@ export const AppPermissionRequestView = () => {
           )}
           <Box>
             <Text>
-              <Text typeSize={4} fontWeight="bold">
+              <Text size={4} fontWeight="bold">
                 {data.app.name}
               </Text>{" "}
               {formatMessage(appPermissionsRequestViewMessages.by)}{" "}

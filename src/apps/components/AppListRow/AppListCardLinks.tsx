@@ -28,7 +28,7 @@ const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ links }) => {
     >
       {links?.map(link => (
         <Box as="span" key={link.name}>
-          <Text typeSize={3} color="accent1">
+          <Text size={3} color="accent1">
             <Link href={link.url} target="_blank">
               {link.name}
             </Link>

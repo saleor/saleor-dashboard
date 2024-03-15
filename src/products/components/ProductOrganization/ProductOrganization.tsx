@@ -122,17 +122,17 @@ export const ProductOrganization: React.FC<
         ) : (
           <Box display="flex" flexDirection="column" gap={3}>
             <Box display="flex" flexDirection="column">
-              <Text typeSize={4} fontWeight="bold">
+              <Text size={4} fontWeight="bold">
                 <FormattedMessage id="anK7jD" defaultMessage="Product Type" />
               </Text>
               {productType?.id ? (
-                <Text typeSize={2}>
+                <Text size={2}>
                   <Link href={productTypeUrl(productType?.id) ?? ""}>
                     {productType?.name ?? "..."}
                   </Link>
                 </Text>
               ) : (
-                <Text typeSize={2}>{productType?.name ?? "..."}</Text>
+                <Text size={2}>{productType?.name ?? "..."}</Text>
               )}
             </Box>
           </Box>
