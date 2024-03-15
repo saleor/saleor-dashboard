@@ -5,10 +5,9 @@ export class DeleteDiscountDialog {
 
   constructor(
     page: Page,
-    readonly deleteButton = page.getByTestId(
-      "delete-confirmation-button",
-    ),
-  ) {
+    readonly deleteButton = page.getByTestId("delete-confirmation-button")
+
+     ) {
     this.page = page;
   }
 
