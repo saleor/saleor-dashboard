@@ -15,6 +15,7 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
         environment: config.environment,
         ignoreErrors: [
           "Editor's content can not be saved in read-only mode",
+          "ResizeObserver loop completed with undelivered notifications",
           // TODO: rmoeve after Cypress migation
           "ResizeObserver loop limit exceeded",
         ],
