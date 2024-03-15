@@ -65,7 +65,7 @@ export const AppPermissionsDialogPermissionPicker = ({
                   defaultChecked={isAssigned}
                   marginRight={4}
                 />
-                <Text variant={isAssigned ? "bodyStrong" : "body"}>
+                <Text fontWeight={isAssigned ? "bold" : "regular"}>
                   {perm.name}
                 </Text>
               </List.Item>

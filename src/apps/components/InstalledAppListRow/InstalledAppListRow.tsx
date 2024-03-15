@@ -65,7 +65,8 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           >
             <Box display="flex" gap={2}>
               <Text
-                variant="bodyStrong"
+                size={4}
+                fontWeight="bold"
                 data-test-id={"app-" + app.name?.toLowerCase().replace(" ", "")}
               >
                 {app.name}
@@ -77,17 +78,13 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
                   backgroundColor="default1"
                   borderColor="default1"
                 >
-                  <Text variant="caption" size="small">
+                  <Text size={1}>
                     <FormattedMessage {...appsMessages.externalApp} />
                   </Text>
                 </Chip>
               )}
               {app.manifestUrl && isAppInTunnel(app.manifestUrl) ? (
-                <Text
-                  variant="caption"
-                  color="default2"
-                  data-test-id="app-tunnel-label"
-                >
+                <Text size={2} color="default2" data-test-id="app-tunnel-label">
                   {`(${intl.formatMessage(messages.tunnelDevelopment)})`}
                 </Text>
               ) : null}
@@ -106,7 +103,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         >
           <Box marginLeft="auto" display="flex" alignItems="center" gap={5}>
             {!app.isActive && (
-              <Text variant="caption" color="default2">
+              <Text size={2} color="default2">
                 <FormattedMessage {...messages.appDisabled} />
               </Text>
             )}

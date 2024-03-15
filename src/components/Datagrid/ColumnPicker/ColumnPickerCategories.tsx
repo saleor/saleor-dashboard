@@ -57,7 +57,7 @@ export const ColumnPickerCategories = ({
             })}
             data-test-id="close-search"
           />
-          <Text size="small">
+          <Text size={3}>
             {currentCategory?.name ?? (
               <FormattedMessage {...messages.categories} />
             )}
