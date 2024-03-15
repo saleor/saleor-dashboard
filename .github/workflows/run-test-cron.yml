@@ -97,7 +97,7 @@ jobs:
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
-      
+
       - name: complete testmo report
         uses: ./.github/actions/testmo/testmo-finish
         with:
@@ -122,6 +122,6 @@ jobs:
           --slack_webhook_url "$slack_webhook_url" \
           --environment "$environment" \
           --url_to_action "$url_to_action" \
-          --ref_name "$ref_name" 
-        
+          --ref_name "$ref_name"
+
 
