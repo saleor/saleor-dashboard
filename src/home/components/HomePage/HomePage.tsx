@@ -11,7 +11,7 @@ import {
   Notifications,
   ProductTopToday,
 } from "@dashboard/home/types";
-import { Box, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -56,6 +56,13 @@ const HomePage: React.FC<HomePageProps> = props => {
               gap={5}
               marginBottom={5}
             >
+              <Button
+                onClick={() => {
+                  throw new Error("Test error");
+                }}
+              >
+                throw error
+              </Button>
               <HomeAnalyticsCard
                 title={intl.formatMessage(homePageMessages.salesCardTitle)}
                 testId="sales-analytics"
