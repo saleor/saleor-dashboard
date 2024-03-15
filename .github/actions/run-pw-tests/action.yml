@@ -38,6 +38,10 @@ runs:
       shell: bash
       run: npx playwright install --with-deps
 
+    - name: Copy auth setup file
+      run: cp './playwright/tests/auth.setup.ts' playwright/
+      shell: bash
+
     - name: Run tests
       shell: bash
       env:
