@@ -42,19 +42,19 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
                   defaultMessage="Use app: {name}"
                   id="W2OIhn"
                   values={{
-                    name: <Text variant="bodyStrong">{name}</Text>,
+                    name: (
+                      <Text size={4} fontWeight="bold">
+                        {name}
+                      </Text>
+                    ),
                   }}
                 />
               </Text>
             )}
-            {version && (
-              <Text variant="body" color="default2">
-                {`v${version}`}
-              </Text>
-            )}
+            {version && <Text color="default2">{`v${version}`}</Text>}
           </Box>
           {created && (
-            <Text variant="caption" color="default2">
+            <Text size={2} color="default2">
               <FormattedMessage
                 defaultMessage="Created at: {date}"
                 id="XFKV5Z"
@@ -76,7 +76,7 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
         gap={1}
       >
         {identifier && (
-          <Text color="default2" variant="caption" ellipsis __maxWidth="150px">
+          <Text color="default2" size={2} ellipsis __maxWidth="150px">
             {identifier}
           </Text>
         )}

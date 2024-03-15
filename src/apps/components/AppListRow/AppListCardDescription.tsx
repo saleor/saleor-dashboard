@@ -32,8 +32,8 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
           <img src={app.logo.source} alt="App logo" />
         ) : (
           <Text
-            variant="bodyEmp"
-            size="large"
+            size={5}
+            fontWeight="medium"
             as="h2"
             data-test-id="app-logo-placeholder"
             color="default1"
@@ -42,11 +42,11 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
           </Text>
         )}
       </AppLogo>
-      <Text variant="bodyStrong" size="medium" color="default1">
+      <Text size={4} fontWeight="bold" color="default1">
         <strong>{app.name.en}</strong>
       </Text>
     </Box>
-    <Text size="small" variant="body" color="default2">
+    <Text size={3} color="default2">
       {app.description.en}
     </Text>
   </Box>

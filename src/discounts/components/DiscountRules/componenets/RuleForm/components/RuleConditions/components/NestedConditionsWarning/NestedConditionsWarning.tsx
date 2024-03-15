@@ -22,10 +22,10 @@ export const NestedConditionsWarning = ({
         <WarningIcon color="warning1" />
 
         <Box display="flex" flexDirection="column">
-          <Text variant="caption" color="default1">
+          <Text size={2} color="default1">
             {intl.formatMessage(messages.noHanldedConditions)}
           </Text>
-          <Text variant="caption" color="default1">
+          <Text size={2} color="default1">
             {intl.formatMessage(messages.noHandledConditionsReminder)}
           </Text>
         </Box>

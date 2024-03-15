@@ -58,7 +58,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
   return (
     <>
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Text variant="heading">
+        <Text size={5} fontWeight="bold">
           {title}
           {subtitle}
         </Text>
@@ -123,11 +123,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                       onChange={getHandleAmountChange(line)}
                       endAdornment={
                         line.quantity && (
-                          <Box
-                            fontSize="bodySmall"
-                            whiteSpace="nowrap"
-                            color="default2"
-                          >
+                          <Box size={3} whiteSpace="nowrap" color="default2">
                             / {stateLine?.availableQuantity}
                           </Box>
                         )

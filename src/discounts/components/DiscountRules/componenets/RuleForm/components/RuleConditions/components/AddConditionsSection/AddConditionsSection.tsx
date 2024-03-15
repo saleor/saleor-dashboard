@@ -17,7 +17,7 @@ export const AddConditionsSection = ({
   return (
     <Box display="flex" flexDirection="column" gap={4}>
       <Text>{intl.formatMessage(messages.conditions)}</Text>
-      <Text variant="caption" color="default2">
+      <Text size={2} color="default2">
         {intl.formatMessage(messages.noConditonsCreate)}
       </Text>
 

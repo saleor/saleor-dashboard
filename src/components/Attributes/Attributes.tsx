@@ -87,10 +87,10 @@ export const Attributes: React.FC<AttributesProps> = ({
                 alignItems="flex-start"
               >
                 <Box display="flex" flexDirection="column" gap={2}>
-                  <Text variant="heading">
+                  <Text size={5} fontWeight="bold">
                     {title || intl.formatMessage(messages.header)}
                   </Text>
-                  <Text variant="caption" color="default2">
+                  <Text size={2} color="default2">
                     <FormattedMessage
                       {...messages.attributesNumber}
                       values={{

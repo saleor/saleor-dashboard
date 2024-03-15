@@ -21,7 +21,7 @@ export const Placeholder = () => {
       borderStyle="solid"
     >
       <PlusIcon size="large" color="default2" />
-      <Text size="large">{intl.formatMessage(messages.placeholder)}</Text>
+      <Text size={5}>{intl.formatMessage(messages.placeholder)}</Text>
     </Box>
   );
 };

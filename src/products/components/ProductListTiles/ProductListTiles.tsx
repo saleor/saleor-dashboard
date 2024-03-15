@@ -59,7 +59,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
 
     return (
       <Box padding={6} textAlign="center">
-        <Text size="small">{intl.formatMessage(messages.emptyText)}</Text>
+        <Text size={3}>{intl.formatMessage(messages.emptyText)}</Text>
       </Box>
     );
   }, [intl, loading, onTileClick, products]);
