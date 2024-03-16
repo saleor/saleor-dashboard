@@ -13,8 +13,15 @@ interface TokenCreateResponse {
   tokenCreate: {
     token: string;
     refreshToken: string;
-    errors: [];
-    user: { [key: string]: any };
+    errors: [
+      {
+        message: string;
+        code: string;
+      },
+    ];
+    user: {
+      id: string;
+    };
   };
 }
 
@@ -28,15 +35,12 @@ export class BasicApiService {
   constructor(request: APIRequestContext) {
     this.request = request;
   }
-
-  async logInUserViaApi(user: User, authorization: string = "auth"): Promise<ApiResponse<TokenCreateResponse>> {
-    const headers = { Authorization: `Bearer ${authorization}` };
-
-    const query = `mutation TokenAuth {
+  async logInUserViaApi(user: User) {
+    const query = `mutation TokenAuth{
         tokenCreate(email: "${user.email}", password: "${user.password}") {
           token
           refreshToken
-          errors {
+          errors: errors {
             code
             message
           }
@@ -46,25 +50,10 @@ export class BasicApiService {
         }
       }`;
 
-    const data: Data = {
-      query: query,
-    };
 
-    const loginResponse = await this.request.post(URL, { data, headers });
-
-    if (!loginResponse.ok()) {
-      throw new Error(`Failed to log in. Status: ${loginResponse.status()}`);
-    }
-
+    const loginResponse = await this.request.post(URL, { data: {query} });
     const loginResponseJson = await loginResponse.json();
-    console.log("loginResponseJson", loginResponseJson);
-
+    
     return loginResponseJson as ApiResponse<TokenCreateResponse>;
-  }
-
-  async loginViaApi(userEmail: string, userPassword: string): Promise<string> {
-    const authResponse = await this.logInUserViaApi({ email: userEmail, password: userPassword });
-    const token = authResponse.data.tokenCreate.token;
-    return token;
   }
 }
