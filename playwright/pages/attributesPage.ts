@@ -36,6 +36,7 @@ export class AttributesPage extends BasePage {
       .locator("input"),
     readonly bulkDeleteAttributesDialog = page.getByTestId("attribute-bulk-delete-dialog"),
     readonly deleteSingleAttributeDialog = page.getByTestId("delete-single-attr-dialog"),
+    readonly dialog = page.getByRole("dialog"),
     readonly deleteAttributeValueButton = page.getByTestId("delete-attribute-value-button"),
     readonly attributeValueRows = page.getByTestId("attributes-rows"),
     readonly attributeValueName = page.getByTestId("attribute-value-name"),
@@ -46,8 +47,8 @@ export class AttributesPage extends BasePage {
     readonly attrVisibleInStorefrontSwitch = page.locator(`[name = "visibleInStorefront"]`),
     readonly metadataSectionAccordionButton = page.getByTestId("metadata-item").getByTestId("expand"),
     readonly metadataAddFieldButton = page.getByTestId("metadata-item").getByTestId("add-field"),
-    readonly metadataKeyInput = page.getByTestId("metadata-key-input"),
-    readonly metadataValueInput = page.getByTestId("metadata-value-input"),
+    readonly metadataKeyInput = page.getByTestId("metadata-key-input").first(),
+    readonly metadataValueInput = page.getByTestId("metadata-value-input").first(),
   ) {
     super(page)
     this.addValueDialog = new AddValueDialog(page);
@@ -64,17 +65,42 @@ export class AttributesPage extends BasePage {
       state: "visible",
       timeout: 10000,
     });
+    await this.gridCanvas.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
+  }
+async assertSearchResultsVisibility(searchText:string) {
+    // Wait for all elements containing searchText to appear
+    const elements = await this.page.$$('text=' + searchText);
+
+    // Wait for all elements not containing searchText to disappear
+    const otherElements = await this.page.$$('text!=' + searchText);
+
+    // Assert that all elements containing searchText are visible
+    for (const element of elements) {
+        await element.waitForElementState('visible');
+    }
+
+    // Assert that all elements not containing searchText are not visible
+    for (const element of otherElements) {
+        await element.waitForElementState('hidden');
+    }
+}
+  async searchForAttribute(attributeName: string) {
+    await this.searchInputListView.click();
+
   }
   async gotoExistingAttributePage(attributeId: string, attributeName: string) {
     const existingAttributeUrl = `${URL_LIST.attributes}${attributeId}`;
       await console.log(
-        `Navigates to existing discount page: ${existingAttributeUrl}`,
+        `Navigates to existing attribute page: ${existingAttributeUrl}`,
       );
     await this.page.goto(existingAttributeUrl);
 
-    await this.page.locator(`text=${this.pageHeader}:has-text("${attributeName}")`).waitFor({
+    await this.pageHeader.getByText(attributeName).waitFor({
       state: "visible",
-      timeout: 10000,
+      timeout: 30000,
     });
     }
   async clickCreateAttributeButton() {
@@ -104,6 +130,10 @@ export class AttributesPage extends BasePage {
   }
   async clickOnExistingAttrValue(attrName: string) {
     await this.attributeValueRows.filter({ hasText: attrName }).click();
+    await this.editAttrValueDialog.waitFor({
+      state: "visible",
+      timeout: 30000,
+    });
   }
   async typeAttributeDefaultLabel(attributeDefaultLabel: string) {
     await this.attributeDefaultLabelInput.fill(attributeDefaultLabel);
@@ -116,7 +146,7 @@ export class AttributesPage extends BasePage {
     await this.attrVisibleInStorefrontSwitch.click();
   }
   async expandMetadataSection() {
-    await this.metadataSectionAccordionButton.click();
+    await this.metadataSectionAccordionButton.first().click();
   }
   async addMetadataField() {
     await this.metadataAddFieldButton.click();

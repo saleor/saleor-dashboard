@@ -27,7 +27,6 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
 
   return (
     <ActionDialog
-      data-test-id="delete-attribute-value-dialog"
       open={open}
       onClose={onClose}
       confirmButtonState={confirmButtonState}

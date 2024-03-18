@@ -27,7 +27,6 @@ const AttributeDeleteDialog: React.FC<AttributeDeleteDialogProps> = ({
       onClose={onClose}
       confirmButtonState={confirmButtonState}
       onConfirm={onConfirm}
-      data-test-id="delete-single-attr-dialog"
       variant="delete"
       title={intl.formatMessage({
         id: "JI2Xwp",

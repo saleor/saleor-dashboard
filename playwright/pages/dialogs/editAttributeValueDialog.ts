@@ -9,7 +9,7 @@ export class EditAttributeValueDialog {
         page: Page,
         readonly saveButton = page.getByTestId("submit"),
         readonly cancelButton = page.getByTestId("back"),
-        readonly valueInput = page.getByTestId("value-name"),
+        readonly valueInput = page.getByTestId("value-name").locator("input"),
     ) {
         this.page = page;
     }

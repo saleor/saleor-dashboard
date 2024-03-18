@@ -6,4 +6,5 @@ export const LOCATORS = {
   dataGridTable: "[data-testid=\"data-grid-canvas\"]",
   deleteButton: "[data-test-id=\"button-bar-delete\"]",
   bulkDeleteButton: "[data-test-id=\"bulk-delete-button\"]",
+  loader: "[data-test-id=\"loader\"]",
 };
