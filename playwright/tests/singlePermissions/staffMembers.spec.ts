@@ -6,7 +6,7 @@ import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { StaffMembersPage } from "@pages/staffMembersPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/staff-member.json" });
+test.use({ storageState: "playwright/.auth/staff.json" });
 
 test("TC: SALEOR_19 User should be able to navigate to staff members list page as a staff member using STAFF permission @e2e", async ({
   page,

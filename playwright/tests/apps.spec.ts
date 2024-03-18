@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 import { AppPage } from "@pages/appPageThirdparty";
 import { APPS } from "@data/e2eTestData";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 let appsPage: AppsPage;
 let installationPage: AppInstallationPage;
 let appPage: AppPage;
