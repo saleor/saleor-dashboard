@@ -218,11 +218,6 @@
     "workbox-strategies": "^6.1.2"
   },
   "optionalDependencies": {
-    "@storybook/addon-essentials": "^7.5.1",
-    "@storybook/addon-interactions": "^7.0.8",
-    "@storybook/addon-links": "^7.0.8",
-    "@storybook/react": "^7.0.8",
-    "@storybook/react-vite": "^7.5.1",
     "@swc/core-darwin-arm64": "1.3.40",
     "@swc/core-darwin-x64": "1.3.40",
     "@swc/core-linux-arm-gnueabihf": "1.3.40",
@@ -261,7 +256,6 @@
     "mochawesome-report-generator": "^6.0.1",
     "prettier": "^2.8.4",
     "setup-polly-jest": "^0.9.1",
-    "storybook": "^7.5.1",
     "ts-jest": "^27.1.5"
   },
   "//@swc/*": "swc packages are required until https://github.com/npm/cli/issues/4828 is fixed",
@@ -320,7 +314,6 @@
     "sentry:inject": "sentry-cli sourcemaps inject build/dashboard",
     "sentry:upload": "sentry-cli sourcemaps upload build/dashboard",
     "sentry:clean": "node scripts/removeSourcemaps.js",
-    "build-storybook": "cross-env NODE_OPTIONS=--max-old-space-size=6144 storybook build -o build/storybook",
     "build-types": "node scripts/build-types.js",
     "build-flags": "node scripts/build-flags.js",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
@@ -333,7 +326,6 @@
     "heroku-postbuild": "npm run build",
     "serve:lhci": "cross-env NODE_ENV=production npm run server",
     "prestart": "npm run build-types",
-    "storybook": "storybook dev --port 3000",
     "cy:run": "cypress run",
     "cy:run:dashboard": "cypress run --record",
     "cy:open": "cypress open",
@@ -353,7 +345,6 @@
     "release": "echo $npm_package_version | xargs git tag && git push --follow-tags",
     "prepare": "is-ci || husky install",
     "dep-status": "depcruise --config .dependency-cruiser.js src",
-    "chromatic": "chromatic --exit-zero-on-changes",
     "change:add": "changeset add",
     "change:status": "changeset status",
     "release:cleanup": "./scripts/release-cleanup.sh",
