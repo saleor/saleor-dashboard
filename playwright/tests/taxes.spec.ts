@@ -3,7 +3,7 @@ import { ConfigurationPage } from "@pages/configurationPage";
 import { TaxesPage } from "@pages/taxesPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 let configurationPage: ConfigurationPage;
 let taxesPage: TaxesPage;

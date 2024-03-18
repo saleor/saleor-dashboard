@@ -3,7 +3,7 @@ import { VOUCHERS } from "@data/e2eTestData";
 import { VouchersPage } from "@pages/vouchersPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 let vouchersPage: VouchersPage;
 

@@ -6,7 +6,7 @@ import { ProductPage } from "@pages/productPage";
 import { VariantsPage } from "@pages/variantsPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 let productPage: ProductPage;
 let productCreateDialog: ProductCreateDialog;

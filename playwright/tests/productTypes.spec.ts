@@ -3,7 +3,7 @@ import * as faker from "faker";
 import { ProductTypePage } from "@pages/productTypePage";
 import { test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 const productTypeName = `e2e-product-type-${faker.datatype.number()}`;
 
 test("TC: SALEOR_1 Create basic product type @e2e @product-type", async ({
