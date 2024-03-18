@@ -189,15 +189,6 @@ jobs:
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
           env: storybook ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
-  create-run-on-testmo:
-    runs-on: ubuntu-22.04
-    needs: initialize-cloud
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Merge playwright reports
-        uses: .github/actions/testmo/testmo-init
-
   run-tests:
     runs-on: ubuntu-22.04
     needs: [initialize-cloud, deploy-dashboard]
@@ -218,40 +209,13 @@ jobs:
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
-          URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-
-  tests-complete:
+  merge-reports:
     if: '!cancelled()'
-    needs: ["initialize-cloud", "run-tests", "create-run-on-testmo"]
+    needs: run-tests
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
-
-      - name: complete testmo report
-        uses: ./.github/actions/testmo/testmo-finish
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
-
-      - name: send message on slack
-        working-directory: ".github"
-        env:
-          run_id: ${{ needs.test-setup.outputs.testmo-run-id }}
-          url_to_action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          testmo_token: ${{ secrets.TESTMO_TOKEN }}
-          environment: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-          slack_webhook_url: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-        run: |
-          node workflows/postTestsResults.js \
-          --run_id "$run_id" \
-          --testmo_token "$testmo_token" \
-          --slack_webhook_url "$slack_webhook_url" \
-          --environment "$environment" \
-          --url_to_action "$url_to_action"         

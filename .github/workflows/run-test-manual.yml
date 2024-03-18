@@ -58,7 +58,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Merge playwright reports
-        uses: .github/actions/testmo/testmo-init
+        uses: ./.github/actions/testmo/testmo-init
     
   run-tests:
     runs-on: ubuntu-22.04
@@ -123,4 +123,3 @@ jobs:
           --slack_webhook_url "$slack_webhook_url" \
           --environment "$environment" \
           --url_to_action "$url_to_action"         
-          
