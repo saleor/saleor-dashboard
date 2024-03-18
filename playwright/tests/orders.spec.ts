@@ -5,7 +5,7 @@ import { FulfillmentPage } from "@pages/fulfillmentPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 let ordersPage: OrdersPage;
 let draftOrdersPage: DraftOrdersPage;
 let fulfillmentPage: FulfillmentPage;
