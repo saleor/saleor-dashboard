@@ -24,7 +24,7 @@ export const UserInfo = () => {
       <Box display="flex" gap={3} alignItems="center">
         <UserAvatar initials={getUserInitials(user!)} url={user?.avatar?.url} />
         <Box __width={128} className="ellipsis">
-          <Text variant="bodyStrong" size="small">
+          <Text size={3} fontWeight="bold">
             {getUserName(user!, true)}
           </Text>
         </Box>

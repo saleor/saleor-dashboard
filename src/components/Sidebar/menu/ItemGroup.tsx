@@ -49,7 +49,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
             borderRadius={3}
           >
             {menuItem.icon}
-            <Text size="small" variant="bodyEmp">
+            <Text size={3} fontWeight="medium">
               {menuItem.label}
             </Text>
           </Box>

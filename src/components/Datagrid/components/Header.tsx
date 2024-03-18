@@ -25,7 +25,7 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
       >
         <FullScreenIcon
           className={sprinkles({
-            fontSize: "buttonMedium",
+            fontSize: 4,
           })}
         />
       </Box>
@@ -72,7 +72,9 @@ const Header: GridHeader = ({ title, children }) => {
       paddingX={6}
       paddingY={5}
     >
-      <Text variant="heading">{title}</Text>
+      <Text size={5} fontWeight="bold">
+        {title}
+      </Text>
       <Box display="flex" __flexDirection="row-reverse" gap={2}>
         {children}
       </Box>

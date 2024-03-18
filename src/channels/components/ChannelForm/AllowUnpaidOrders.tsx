@@ -34,7 +34,7 @@ export const AllowUnpaidOrders = ({
     </Checkbox>
     <Box paddingLeft={4}>
       {" "}
-      <Text variant="caption" color="default2" size="large" paddingLeft={0.5}>
+      <Text size={3} color="default2" paddingLeft={0.5}>
         <FormattedMessage {...messages.allowUnpaidOrdersDescription} />
       </Text>
     </Box>

@@ -56,11 +56,11 @@ export const themeOverrides: Partial<Theme> = {
         backgroundColor: vars.colors.background.default1,
       },
       title: {
-        fontSize: vars.fontSize.bodyEmpLarge,
+        fontSize: vars.fontSize[5],
         // MUI it strictly typed to be a number, but we are passing CSS variable here
-        fontWeight: vars.fontWeight.bodyEmpLarge as unknown as number,
-        lineHeight: vars.lineHeight.bodyEmpLarge,
-        letterSpacing: vars.letterSpacing.bodyEmpLarge,
+        fontWeight: vars.fontWeight.medium as unknown as number,
+        lineHeight: vars.lineHeight[5],
+        letterSpacing: vars.letterSpacing[5],
       },
     },
     MuiCardContent: {
@@ -103,11 +103,11 @@ export const themeOverrides: Partial<Theme> = {
     },
     MuiDialogTitle: {
       root: {
-        fontSize: vars.fontSize.bodyEmpLarge,
+        fontSize: vars.fontSize[5],
         // MUI it strictly typed to be a number, but we are passing CSS variable here
-        fontWeight: vars.fontWeight.bodyEmpLarge as unknown as number,
-        lineHeight: vars.lineHeight.bodyEmpLarge,
-        letterSpacing: vars.letterSpacing.bodyEmpLarge,
+        fontWeight: vars.fontWeight.medium as unknown as number,
+        lineHeight: vars.lineHeight[5],
+        letterSpacing: vars.letterSpacing[5],
       },
     },
   },

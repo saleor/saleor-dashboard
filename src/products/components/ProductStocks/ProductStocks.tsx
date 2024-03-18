@@ -133,17 +133,17 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
               </Box>
             </Checkbox>
 
-            <Text marginLeft={5} variant="caption" color="default2">
+            <Text marginLeft={5} size={2} color="default2">
               <FormattedMessage {...messages.trackInventoryDescription} />
             </Text>
           </Box>
           <Box display="grid" gap={2} marginTop={5}>
             <Box display="flex" flexDirection="column">
-              <Text variant="heading" size="small">
+              <Text size={4} fontWeight="bold">
                 <FormattedMessage {...messages.stock} />
               </Text>
               {!productVariantChannelListings?.length && (
-                <Text variant="caption" color="default2">
+                <Text size={2} color="default2">
                   <FormattedMessage
                     {...messages.noChannelWarehousesAllocation}
                   />
@@ -182,17 +182,17 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
               <TableHead>
                 <TableRowLink>
                   <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-                    <Text variant="caption" color="default2">
+                    <Text size={2} color="default2">
                       <FormattedMessage {...messages.warehouseName} />
                     </Text>
                   </TableCell>
                   <TableCell style={{ width: 100, verticalAlign: "middle" }}>
-                    <Text variant="caption" color="default2">
+                    <Text size={2} color="default2">
                       <FormattedMessage {...messages.allocated} />
                     </Text>
                   </TableCell>
                   <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-                    <Text variant="caption" color="default2">
+                    <Text size={2} color="default2">
                       <FormattedMessage {...messages.quantity} />
                     </Text>
                   </TableCell>

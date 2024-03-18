@@ -214,7 +214,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                         checked={data.emailConfirmation}
                         onCheckedChange={handleEmailConfirmationChange}
                       >
-                        <Text variant="body">
+                        <Text>
                           {intl.formatMessage(
                             messages.sectionEmailConfirmationHeader,
                           )}

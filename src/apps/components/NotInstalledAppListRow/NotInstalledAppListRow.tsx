@@ -47,7 +47,9 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
         justifyContent={{ mobile: "space-between", desktop: "flex-start" }}
       >
         <AppAvatar logo={logo} />
-        <Text variant="bodyStrong">{appInstallation.appName}</Text>
+        <Text size={4} fontWeight="bold">
+          {appInstallation.appName}
+        </Text>
         {isExternal && (
           <Chip
             data-test-id="app-external-label"
@@ -55,7 +57,7 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
             backgroundColor="default1"
             borderColor="default1"
           >
-            <Text variant="caption" size="small">
+            <Text size={1}>
               <FormattedMessage {...appsMessages.externalApp} />
             </Text>
           </Chip>
@@ -65,7 +67,7 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
         {appInstallation?.status === JobStatusEnum.PENDING && (
           <>
             <Text
-              variant="caption"
+              size={2}
               className={classes.pending}
               data-test-id="app-pending-label"
             >
@@ -83,8 +85,7 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
                 <Box display="flex" placeItems="center" gap={1} marginX={1}>
                   <WarningIcon size="small" color="critical1" />
                   <Text
-                    variant="caption"
-                    size="small"
+                    size={1}
                     color="critical2"
                     data-test-id="app-failed-label"
                   >
