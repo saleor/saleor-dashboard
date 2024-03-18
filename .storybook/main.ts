@@ -22,7 +22,14 @@ const config: StorybookConfig = {
   },
 
   async viteFinal(config) {
-    config.plugins = await withoutVitePlugins(config.plugins, ["vite:html"]);
+    config.plugins = await withoutVitePlugins(config.plugins, [
+      "vite:html",
+      "sentry-telemetry-plugin",
+      "sentry-vite-release-injection-plugin",
+      "sentry-debug-id-upload-plugin",
+      "sentry-vite-debug-id-injection-plugin",
+      "sentry-vite-debug-id-upload-plugin",
+    ]);
 
     return mergeConfig(config, {
       build: {

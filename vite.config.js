@@ -98,11 +98,6 @@ export default defineConfig(({ command, mode }) => {
       },
     }),
     copyOgImage(),
-    sentryVitePlugin({
-      authToken: SENTRY_AUTH_TOKEN,
-      org: SENTRY_ORG,
-      project: SENTRY_PROJECT,
-    }),
   ];
 
   if (!isDev) {
@@ -122,6 +117,11 @@ export default defineConfig(({ command, mode }) => {
         */
         srcDir: path.resolve(__dirname),
         filename: "sw.js",
+      }),
+      sentryVitePlugin({
+        authToken: SENTRY_AUTH_TOKEN,
+        org: SENTRY_ORG,
+        project: SENTRY_PROJECT,
       }),
     );
   }
