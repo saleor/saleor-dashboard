@@ -5,32 +5,35 @@ const { Octokit } = require("@octokit/core");
 program
   .name("Send tests results")
   .description(
-    "Get tests results from testmo and post message to slack or on release PR"
+    "Get tests results from testmo and post message to slack or on release PR",
   )
   .option("--run_id <run_id>", "Testmo run id")
   .option(
     "--testmo_token <testmo_token>",
-    "Bearer token for authorization in testmo"
+    "Bearer token for authorization in testmo",
   )
   .option(
     "--slack_webhook_url <slack_webhook_url>",
-    "Should send notification on slack"
+    "Should send notification on slack",
   )
   .option("--environment <environment>", "Environment")
   .option("--url_to_action <url_to_action>", "Url to enter github action")
-  .action(async (options) => {
+  .option("--ref_name <ref_name>", "Ref to point where tests where run")
+  .action(async options => {
     const runId = options.run_id;
     const testmoAuthToken = options.testmo_token;
     const testsResults = await getTestsStatus(runId, testmoAuthToken);
-    const testsStatus = convertResults(testsResults, options.environment);
+    const testsStatus = convertResults(
+      testsResults,
+      options.environment,
+      options.ref_name,
+    );
 
-    if (options.slack_webhook_url) {
-      await sendMessageOnSlack(
-        testsStatus,
-        options.slack_webhook_url,
-        options.url_to_action
-      );
-    }
+    await sendMessageOnSlack(
+      testsStatus,
+      options.slack_webhook_url,
+      options.url_to_action,
+    );
   })
   .parse();
 
@@ -41,28 +44,28 @@ async function getTestsStatus(runId, testmoToken) {
       headers: {
         Authorization: `Bearer ${testmoToken}`,
       },
-    }
+    },
   );
   return await runResult.json();
 }
 
-function convertResults(results, environment) {
+function convertResults(results, environment, refName) {
   let status = results?.result?.status === 2 ? "SUCCESS" : "FAILURE";
-  let message = "";
+  let message = `Tests run on environment: \n${environment}\n`;
   const linkToResults = `https:\/\/saleor.testmo.net\/automation\/runs\/view\/${results.result.id}`;
   const threads = results.result.threads;
 
   if (Array.isArray(threads)) {
     const failureCount = threads
-      .map((thread) => thread.failure_count)
+      .map(thread => thread.failure_count)
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     const successCount = threads
-      .map((thread) => thread.success_count)
+      .map(thread => thread.success_count)
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     const skippedCount = threads
-      .map((thread) => thread.total_count - thread.completed_count)
+      .map(thread => thread.total_count - thread.completed_count)
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     if (failureCount > 0) {
@@ -84,7 +87,7 @@ function convertResults(results, environment) {
   return {
     status,
     message,
-    title: `Automation tests run on ${environment}`,
+    title: `Playwright tests run on ${refName}`,
     linkToResults,
   };
 }
