@@ -82,7 +82,7 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
         />
       )}
       <Box {...boxProps}>
-        <Text variant={"heading"} marginBottom={4} as={"h2"}>
+        <Text size={5} fontWeight="bold" marginBottom={4} as={"h2"}>
           {intl.formatMessage(messages.appPermissionsTitle)}
         </Text>
         <Box>{renderContent()}</Box>

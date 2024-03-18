@@ -75,9 +75,7 @@ export const FilterPresetsSelect = ({
         <Box display="flex" alignItems="center">
           <Tooltip>
             <Tooltip.Trigger>
-              <Text variant="title" size="small">
-                {selectAllLabel}
-              </Text>
+              <Text size={6}>{selectAllLabel}</Text>
             </Tooltip.Trigger>
             <Tooltip.Content>
               <Tooltip.Arrow />
@@ -107,7 +105,7 @@ export const FilterPresetsSelect = ({
             }}
           >
             <Box __maxWidth="200px">
-              <Text ellipsis variant="title" size="small" display="block">
+              <Text ellipsis size={6} display="block">
                 {getLabel()}
               </Text>
             </Box>
@@ -137,7 +135,7 @@ export const FilterPresetsSelect = ({
                 borderRadius={3}
                 onClick={onSelectAll}
               >
-                <Text variant={activePreset === 0 ? "bodyStrong" : "body"}>
+                <Text fontWeight={activePreset === 0 ? "bold" : "regular"}>
                   {selectAllLabel}
                 </Text>
               </List.Item>

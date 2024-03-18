@@ -23,7 +23,7 @@ const CannotDefineChannelsAvailabilityCard: React.FC = () => (
       <FormattedMessage {...messages.title} />
     </DashboardCard.Title>
     <DashboardCard.Content>
-      <Text variant="caption" color="default2">
+      <Text size={2} color="default2">
         <FormattedMessage {...messages.subtitle} />
       </Text>
     </DashboardCard.Content>

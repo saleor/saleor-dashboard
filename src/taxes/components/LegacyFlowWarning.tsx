@@ -23,7 +23,7 @@ export const LegacyFlowWarning: React.FC<{
       marginBottom={1}
     >
       <WarningIcon size="small" color="warning1" />
-      <Text variant="caption">
+      <Text size={2}>
         {intl.formatMessage({
           defaultMessage:
             "Legacy flow detected -  select tax strategy from dropdown",

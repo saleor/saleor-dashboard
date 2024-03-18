@@ -140,7 +140,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
         />
       </DialogTitle>
       <DialogContent className={classes.subtitle}>
-        <Text variant="caption" color="default2">
+        <Text size={2} color="default2">
           <FormattedMessage {...messages.subtitle} />
         </Text>
       </DialogContent>

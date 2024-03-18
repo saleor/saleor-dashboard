@@ -22,7 +22,7 @@ export const ColumnPickerCategoryList = ({
           onClick={() => setCurrentCategory(category.name)}
           data-test-id={`dynamic-category-${category.prefix}`}
         >
-          <Text size="small">{category.name}</Text>
+          <Text size={3}>{category.name}</Text>
         </List.Item>
       ))}
   </List>

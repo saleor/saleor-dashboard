@@ -80,13 +80,13 @@ export const useDashboardTheme = () => {
   const match = background.default1.match(/hsla\(([^)]+)\)/);
 
   const rootStyle = {
-    "--font-size-body": vars.fontSize.bodyMedium,
-    "--font-size-h2": vars.fontSize.headingLarge,
-    "--font-size-h3": vars.fontSize.headingMedium,
-    "--font-size-h4": vars.fontSize.headingSmall,
-    "--font-weight-regular": vars.fontWeight.bodyLarge,
-    "--font-size-hint": vars.fontSize.bodyEmpLarge,
-    "--font-size-inline-code": vars.fontSize.bodySmall,
+    "--font-size-body": vars.fontSize[4],
+    "--font-size-h2": vars.fontSize[6],
+    "--font-size-h3": vars.fontSize[5],
+    "--font-size-h4": vars.fontSize[4],
+    "--font-weight-regular": vars.fontWeight.regular,
+    "--font-size-hint": vars.fontSize[5],
+    "--font-size-inline-code": vars.fontSize[3],
     "--color-base": match ? match[1] : background.default1,
   } as React.CSSProperties;
 

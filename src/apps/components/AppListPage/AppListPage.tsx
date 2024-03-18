@@ -97,11 +97,11 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         <Box className={classes.appContent} marginY={5}>
           {nothingInstalled && (
             <Box paddingY={3}>
-              <Text as="h3" variant="heading" color="default2">
+              <Text as="h3" size={5} fontWeight="bold" color="default2">
                 {intl.formatMessage(messages.installedApps)}
               </Text>
               <Box marginTop={3}>
-                <Text variant="caption">
+                <Text size={2}>
                   {intl.formatMessage(messages.nothingInstalledPlaceholder)}
                 </Text>
               </Box>
@@ -110,7 +110,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           {sectionsAvailability.installed && (
             <>
               <Box paddingX={5} paddingY={3}>
-                <Text as="h3" variant="heading" color="default2">
+                <Text as="h3" size={5} fontWeight="bold" color="default2">
                   {intl.formatMessage(messages.installedApps)}
                 </Text>
               </Box>
@@ -128,7 +128,8 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             <Box marginTop={7}>
               <Text
                 as="h3"
-                variant="heading"
+                size={5}
+                fontWeight="bold"
                 color="default2"
                 className={sprinkles({ paddingX: 8 })}
               >
@@ -146,7 +147,8 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             <Box marginTop={7}>
               <Text
                 as="h3"
-                variant="heading"
+                size={5}
+                fontWeight="bold"
                 color="default2"
                 className={sprinkles({ paddingX: 8 })}
               >
