@@ -3,7 +3,7 @@ import { ShippingMethodsPage } from "@pages/shippingMethodsPage";
 import { ShippingRatesPage } from "@pages/shippingRatesPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 let shippingMethodsPage: ShippingMethodsPage;
 let shippingRatesPage: ShippingRatesPage;
 
