@@ -3,7 +3,7 @@ import { DiscountsPage } from "@pages/discountsPage";
 import { expect, test } from "@playwright/test";
 import faker from "faker";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 let discounts: DiscountsPage;
 
 

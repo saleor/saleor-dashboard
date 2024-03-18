@@ -3,7 +3,7 @@ import { ChannelPage } from "@pages/channelsPage";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 let configurationPage: ConfigurationPage;
 let channelPage: ChannelPage;
 

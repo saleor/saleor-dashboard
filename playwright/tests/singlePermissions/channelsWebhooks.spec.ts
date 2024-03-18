@@ -5,7 +5,7 @@ import { MainMenuPage } from "@pages/mainMenuPage";
 import { WebhooksEventsPage } from "@pages/webhooksEventsPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/channels-webhooks.json" });
+test.use({ storageState: "playwright/.auth/channel.json" });
 
 test("TC: SALEOR_11 User should be able to navigate to channel list as a staff member using CHANNEL permission @e2e", async ({
   page,
