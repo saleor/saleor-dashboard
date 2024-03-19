@@ -5,32 +5,30 @@ const { Octokit } = require("@octokit/core");
 program
   .name("Send tests results")
   .description(
-    "Get tests results from testmo and post message to slack or on release PR"
+    "Get tests results from testmo and post message to slack or on release PR",
   )
   .option("--run_id <run_id>", "Testmo run id")
   .option(
     "--testmo_token <testmo_token>",
-    "Bearer token for authorization in testmo"
+    "Bearer token for authorization in testmo",
   )
   .option(
     "--slack_webhook_url <slack_webhook_url>",
-    "Should send notification on slack"
+    "Should send notification on slack",
   )
   .option("--environment <environment>", "Environment")
   .option("--url_to_action <url_to_action>", "Url to enter github action")
-  .action(async (options) => {
+  .action(async options => {
     const runId = options.run_id;
     const testmoAuthToken = options.testmo_token;
     const testsResults = await getTestsStatus(runId, testmoAuthToken);
     const testsStatus = convertResults(testsResults, options.environment);
 
-    if (options.slack_webhook_url) {
-      await sendMessageOnSlack(
-        testsStatus,
-        options.slack_webhook_url,
-        options.url_to_action
-      );
-    }
+    await sendMessageOnSlack(
+      testsStatus,
+      options.slack_webhook_url,
+      options.url_to_action,
+    );
   })
   .parse();
 
@@ -41,7 +39,7 @@ async function getTestsStatus(runId, testmoToken) {
       headers: {
         Authorization: `Bearer ${testmoToken}`,
       },
-    }
+    },
   );
   return await runResult.json();
 }
@@ -54,15 +52,15 @@ function convertResults(results, environment) {
 
   if (Array.isArray(threads)) {
     const failureCount = threads
-      .map((thread) => thread.failure_count)
+      .map(thread => thread.failure_count)
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     const successCount = threads
-      .map((thread) => thread.success_count)
+      .map(thread => thread.success_count)
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     const skippedCount = threads
-      .map((thread) => thread.total_count - thread.completed_count)
+      .map(thread => thread.total_count - thread.completed_count)
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     if (failureCount > 0) {

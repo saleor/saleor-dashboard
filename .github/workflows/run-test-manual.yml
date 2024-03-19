@@ -64,6 +64,8 @@ jobs:
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunName: "Playwright run triggered manually"
+          tag: ${{ github.ref }}
         id: init-testmo
     
   run-tests:
