@@ -21,7 +21,6 @@
 !.travis*
 !.tx
 !.husky
-!.storybook
 !.changeset
 *.log
 *.pyc
