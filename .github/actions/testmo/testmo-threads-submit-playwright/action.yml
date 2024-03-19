@@ -44,7 +44,7 @@ runs:
       if: always() && ${{ inputs.browsers }} == 'all'
       shell: bash
       run: |
-          pnpm dlx @testmo/testmo-cli automation:run:submit-thread \
+          npx testmo automation:run:submit-thread \
             --instance "$TESTMO_URL" \
             --run-id "$TESTMO_RUN_ID" \
             --results testmo/testmo.xml \
