@@ -1,7 +1,5 @@
 import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
-import { useUser } from "@dashboard/auth";
-import { hasAnyPermissions } from "@dashboard/auth/misc";
-import { PermissionEnum } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { ListProps } from "@dashboard/types";
 import { Skeleton } from "@material-ui/lab";
 import { List } from "@saleor/macaw-ui-next";
@@ -19,13 +17,9 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
   appList,
   appInstallationList,
 }) => {
-  const { user } = useUser();
-  const hasAppManagedPermissions = hasAnyPermissions(
-    [PermissionEnum.MANAGE_APPS],
-    user,
-  );
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
-  if (!appList || (hasAppManagedPermissions && !appInstallationList)) {
+  if (!appList || (hasManagedAppsPermission && !appInstallationList)) {
     return <Skeleton />;
   }
 

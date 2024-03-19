@@ -22,6 +22,12 @@ jest.mock("@dashboard/apps/context", () => ({
   })),
 }));
 
+jest.mock("@dashboard/hooks/useHasManagedAppsPermission", () => ({
+  useHasManagedAppsPermission: jest.fn(() => ({
+    hasManagedAppsPermission: true,
+  })),
+}));
+
 jest.mock("@dashboard/config", () => {
   const original = jest.requireActual("@dashboard/config");
 

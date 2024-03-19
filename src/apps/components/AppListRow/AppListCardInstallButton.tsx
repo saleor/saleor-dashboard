@@ -1,7 +1,5 @@
-import { useUser } from "@dashboard/auth";
-import { hasAnyPermissions } from "@dashboard/auth/misc";
 import { IS_CLOUD_INSTANCE } from "@dashboard/config";
-import { PermissionEnum } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -17,13 +15,9 @@ export const AppListCardInstallButton = ({
   installHandler,
 }: AppListCardInstallButtonProps) => {
   const intl = useIntl();
-  const { user } = useUser();
-  const hasManageAppsPermission = hasAnyPermissions(
-    [PermissionEnum.MANAGE_APPS],
-    user,
-  );
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
-  if (!hasManageAppsPermission) {
+  if (!hasManagedAppsPermission) {
     return (
       <Tooltip>
         <Tooltip.Trigger>

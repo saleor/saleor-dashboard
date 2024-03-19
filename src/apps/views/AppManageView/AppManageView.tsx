@@ -2,16 +2,14 @@ import { useApolloClient } from "@apollo/client";
 import AppDeleteDialog from "@dashboard/apps/components/AppDeleteDialog";
 import { appMessages } from "@dashboard/apps/messages";
 import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
-import { useUser } from "@dashboard/auth";
-import { hasAnyPermissions } from "@dashboard/auth/misc";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import {
-  PermissionEnum,
   useAppActivateMutation,
   useAppDeactivateMutation,
   useAppDeleteMutation,
   useAppQuery,
 } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
@@ -37,11 +35,7 @@ interface Props {
 
 export const AppManageView: React.FC<Props> = ({ id, params }) => {
   const client = useApolloClient();
-  const { user } = useUser();
-  const hasManagedAppsPermission = hasAnyPermissions(
-    [PermissionEnum.MANAGE_APPS],
-    user,
-  );
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
     variables: { id, hasManagedAppsPermission },

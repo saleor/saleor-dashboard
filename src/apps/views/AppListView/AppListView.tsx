@@ -12,18 +12,16 @@ import {
   getAppInProgressName,
   getAppstoreAppsLists,
 } from "@dashboard/apps/utils";
-import { useUser } from "@dashboard/auth";
-import { hasAnyPermissions } from "@dashboard/auth/misc";
 import { getAppsConfig } from "@dashboard/config";
 import {
   AppInstallationFragment,
   AppSortField,
   AppTypeEnum,
   OrderDirection,
-  PermissionEnum,
   useAppsInstallationsQuery,
   useAppsListQuery,
 } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState,
@@ -47,7 +45,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const { user } = useUser();
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     AppListUrlDialog,
@@ -90,7 +88,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
   const { data: appsInProgressData, refetch: appsInProgressRefetch } =
     useAppsInstallationsQuery({
       displayLoader: false,
-      skip: !hasAnyPermissions([PermissionEnum.MANAGE_APPS], user),
+      skip: !hasManagedAppsPermission,
     });
 
   const installedAppNotify = (name: string) => {

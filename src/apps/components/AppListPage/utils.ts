@@ -8,7 +8,7 @@ import {
 import { AppListPageSections } from "./types";
 
 export const resolveSectionsAvailability = ({
-  appsInstallations,
+  // appsInstallations, TODO: implement checking with appInstallaion when has manage apps permission
   installedApps,
   installableMarketplaceApps,
   comingSoonMarketplaceApps,

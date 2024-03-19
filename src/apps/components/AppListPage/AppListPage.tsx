@@ -1,8 +1,6 @@
 import { AppUrls } from "@dashboard/apps/urls";
-import { useUser } from "@dashboard/auth";
-import { hasAnyPermissions } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { PermissionEnum } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { ListProps } from "@dashboard/types";
@@ -42,7 +40,8 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
-  const { user } = useUser();
+
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const verifiedInstalledApps = getVerifiedInstalledApps(
     installedApps,
@@ -82,7 +81,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   return (
     <>
       <TopNav title={intl.formatMessage(sectionNames.apps)}>
-        {hasAnyPermissions([PermissionEnum.MANAGE_APPS], user) && (
+        {hasManagedAppsPermission && (
           <InstallWithManifestFormButton
             onSubmitted={navigateToAppInstallPage}
           />
