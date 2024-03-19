@@ -56,11 +56,15 @@ jobs:
   create-run-on-testmo:
     runs-on: ubuntu-22.04
     needs: initialize-cloud
+    outputs:
+      testmo-run-id: ${{ steps.init-testmo.outputs.testmo-run-id }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Merge playwright reports
-        uses: ./.github/actions/testmo/testmo-init
+      - uses: ./.github/actions/testmo/testmo-init
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+        id: init-testmo
     
   run-tests:
     runs-on: ubuntu-22.04
@@ -106,12 +110,12 @@ jobs:
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
+          testmoRunId: ${{ needs.create-run-on-testmo.outputs.testmo-run-id }}
 
       - name: send message on slack
         working-directory: ".github"
         env:
-          run_id: ${{ needs.test-setup.outputs.testmo-run-id }}
+          run_id: ${{ needs.create-run-on-testmo.outputs.testmo-run-id }}
           url_to_action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           testmo_token: ${{ secrets.TESTMO_TOKEN }}
           environment: ${{ needs.initialize-cloud.outputs.BASE_URL }}
