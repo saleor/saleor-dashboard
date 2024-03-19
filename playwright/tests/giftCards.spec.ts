@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 import { MailpitService } from "@api/mailpit";
 
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 let giftCardsPage: GiftCardsPage;
 let mailpitService: MailpitService;
 test.beforeEach(({ page, request }) => {

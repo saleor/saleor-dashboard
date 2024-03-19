@@ -5,7 +5,7 @@ import { MainMenuPage } from "@pages/mainMenuPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/orders.json" });
+test.use({ storageState: "playwright/.auth/order.json" });
 
 test("TC: SALEOR_8 User should be able to navigate to order list as a staff member using ORDER permission @e2e", async ({
   page,
