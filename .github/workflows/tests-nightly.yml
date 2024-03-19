@@ -91,8 +91,7 @@ jobs:
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunName: "Cypress run triggered by ${{github.event_name}}"
-          tag: ${{ github.ref }}
+          testmoRunName: "Cypress run &{{github.ref_name}}"
         id: init-testmo
 
   run-tests-in-parallel:

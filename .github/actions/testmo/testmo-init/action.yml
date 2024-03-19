@@ -10,9 +10,6 @@ inputs:
   testmoRunName:
     description: "Displayed name in testmo"
     required: true
-  tag:
-    description: "Tag to add to testmo"
-    required: true
 
 outputs:
   testmo-run-id:
@@ -37,7 +34,6 @@ runs:
           --instance "$TESTMO_URL" \
           --project-id 1 \
           --name "$RUN_NAME" \
-          --tags "$TAG" \
           --source frontend-e2e-tests)
         echo "TESTMO_RUN_ID=$ID" >> $GITHUB_OUTPUT
       env:
