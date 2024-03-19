@@ -37,7 +37,7 @@ runs:
           --instance "$TESTMO_URL" \
           --project-id 1 \
           --name "$RUN_NAME" \
-          --tags "$TAG"
+          --tags "$TAG" \
           --source frontend-e2e-tests)
         echo "TESTMO_RUN_ID=$ID" >> $GITHUB_OUTPUT
       env:
