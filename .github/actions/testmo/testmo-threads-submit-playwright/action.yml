@@ -42,12 +42,13 @@ runs:
 
     - name: Submit results
       if: always() && ${{ inputs.browsers }} == 'all'
+      working-directory: .github/workflows
       shell: bash
       run: |
           npx testmo automation:run:submit-thread \
             --instance "$TESTMO_URL" \
             --run-id "$TESTMO_RUN_ID" \
-            --results testmo/testmo.xml \
+            --results ../../testmo/testmo.xml \
       env:
         TESTMO_URL: ${{ inputs.testmoUrl }}
         TESTMO_TOKEN: ${{ inputs.testmoToken }}
