@@ -39,7 +39,6 @@ const OrderUnfulfilledProductsCard: React.FC<
     <>
       <Card>
         <OrderCardTitle
-          lines={lines}
           withStatus
           status="unfulfilled"
           className={classes.cardTitle}

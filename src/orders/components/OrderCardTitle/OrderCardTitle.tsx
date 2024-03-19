@@ -9,7 +9,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { orderTitleMessages } from "./messages";
 import { useStyles } from "./styles";
-import { getFulfillmentTotalQuantity, getOrderTitleMessage } from "./utils";
+import { getOrderTitleMessage } from "./utils";
 
 export type CardTitleStatus = FulfillmentStatus | "unfulfilled";
 
@@ -19,7 +19,6 @@ export type CardTitleLines = Array<{
 }>;
 
 interface OrderCardTitleProps {
-  lines?: CardTitleLines;
   fulfillmentOrder?: number;
   status: CardTitleStatus;
   toolbar?: React.ReactNode;
@@ -51,7 +50,6 @@ const selectStatus = (status: CardTitleStatus) => {
 };
 
 const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
-  lines = [],
   status,
   warehouseName,
   withStatus = false,
@@ -62,8 +60,6 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
   const classes = useStyles({});
 
   const messageForStatus = getOrderTitleMessage(status);
-
-  const totalQuantity = getFulfillmentTotalQuantity(lines, status);
 
   return (
     <DefaultCardTitle
@@ -78,7 +74,7 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
           )}
           <HorizontalSpacer spacing={2} />
           <Typography className={classes.cardHeader}>
-            {intl.formatMessage(messageForStatus)} ({totalQuantity})
+            {intl.formatMessage(messageForStatus)}
           </Typography>
           {!!warehouseName && (
             <Typography className={classes.warehouseName} variant="caption">
