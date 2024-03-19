@@ -1,6 +1,9 @@
+import { useUser } from "@dashboard/auth";
+import { hasAnyPermissions } from "@dashboard/auth/misc";
 import { DateTime } from "@dashboard/components/Date";
 import {
   EventDeliveryStatusEnum,
+  PermissionEnum,
   useAppWebhookDeliveriesQuery,
 } from "@dashboard/graphql";
 import {
@@ -122,9 +125,16 @@ export const AppWebhooksDisplay = ({
   ...boxProps
 }: AppWebhooksDisplayProps) => {
   const { formatMessage } = useIntl();
+  const { user } = useUser();
+
+  const hasManageAppsPermission = hasAnyPermissions(
+    [PermissionEnum.MANAGE_APPS],
+    user,
+  );
 
   const { data: webhooksData, loading } = useAppWebhookDeliveriesQuery({
     variables: { appId },
+    skip: !hasManageAppsPermission,
     pollInterval: REFRESH_INTERVAL,
   });
 

@@ -1,4 +1,6 @@
 import { AppPermissionsDialog } from "@dashboard/apps/components/AppPermissionsDialog";
+import { useUser } from "@dashboard/auth";
+import { hasAnyPermissions } from "@dashboard/auth/misc";
 import Skeleton from "@dashboard/components/Skeleton";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
@@ -25,10 +27,16 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
   const [editPermissionDialogOpen, setEditPermissionDialogOpen] =
     useState(false);
   const intl = useIntl();
+  const { user } = useUser();
+  const hasManageAppsPermission = hasAnyPermissions(
+    [PermissionEnum.MANAGE_APPS],
+    user,
+  );
 
   const editPermissionsButton = (
     <Button
       variant={"secondary"}
+      disabled={!hasManageAppsPermission}
       onClick={() => setEditPermissionDialogOpen(true)}
     >
       {intl.formatMessage(messages.editPermissionsButton)}

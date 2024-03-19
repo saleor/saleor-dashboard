@@ -80,4 +80,6 @@ export const AppListCardInstallButton = ({
       </Tooltip>
     );
   }
+
+  return null;
 };
