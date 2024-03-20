@@ -1,5 +1,6 @@
 import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppUrls } from "@dashboard/apps/urls";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
 import React from "react";
@@ -23,6 +24,12 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
   identifier,
 }) => {
   const logo = logoUrl ? { source: logoUrl } : undefined;
+
+  const navigate = useNavigator();
+
+  const navigateToAppScreen = () => {
+    navigate(AppUrls.resolveAppDetailsUrl(id));
+  };
 
   return (
     <Box
@@ -68,12 +75,11 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
       </Box>
       <Box
         as="a"
-        href={AppUrls.resolveAppDetailsUrl(id)}
-        target="_blank"
         textDecoration="underline"
         display="flex"
         alignItems="center"
         gap={1}
+        onClick={navigateToAppScreen}
       >
         {identifier && (
           <Text color="default2" size={2} ellipsis __maxWidth="150px">
