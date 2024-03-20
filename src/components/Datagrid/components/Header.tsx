@@ -1,5 +1,11 @@
-import FullScreenIcon from "@dashboard/icons/FullScreenIcon";
-import { Box, Button, PlusIcon, sprinkles, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  Button,
+  FullscreenOffIcon,
+  FullscreenOnIcon,
+  PlusIcon,
+  Text,
+} from "@saleor/macaw-ui-next";
 import React, { FC, PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {
@@ -18,16 +24,8 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
       variant="secondary"
       onClick={onToggle}
     >
-      <Box
-        as="span"
-        display="flex"
-        __transform={isOpen ? "rotate(180deg)" : undefined}
-      >
-        <FullScreenIcon
-          className={sprinkles({
-            fontSize: 4,
-          })}
-        />
+      <Box as="span" display="flex">
+        {isOpen ? <FullscreenOffIcon /> : <FullscreenOnIcon />}
       </Box>
       {children}
     </Button>
