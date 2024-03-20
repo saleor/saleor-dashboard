@@ -90,6 +90,7 @@ jobs:
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: submit-results-to-testmo
+        if: always()
         uses: ./.github/actions/testmo/testmo-threads-submit-playwright
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
@@ -122,6 +123,7 @@ jobs:
           environment: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           slack_webhook_url: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ref_name: ${{github.ref_name}}
 
         run: |
           node workflows/postTestsResults.js \
@@ -129,4 +131,5 @@ jobs:
           --testmo_token "$testmo_token" \
           --slack_webhook_url "$slack_webhook_url" \
           --environment "$environment" \
-          --url_to_action "$url_to_action"         
+          --url_to_action "$url_to_action" \
+          --ref_name "$ref_name" 

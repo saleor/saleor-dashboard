@@ -24,7 +24,9 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   await installationPage.installAppButton.click();
   await appsPage.expectSuccessBanner();
   await expect(appsPage.installedAppRow.first()).toBeVisible();
-  await expect(appsPage.appKlaviyo).toContainText("Klaviyo");
+  // await expect(appsPage.appKlaviyo).toContainText("Klaviyo");
+  // TODO remove after testing slack notifications
+  await expect(appsPage.appKlaviyo).toContainText("Testowanie slacka");
   await appsPage.appKlaviyo.click();
 
   const iframeLocator = page.frameLocator("iframe");
