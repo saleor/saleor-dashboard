@@ -28,7 +28,7 @@ describe("InstalledAppList utils", () => {
         const appList = undefined;
         const appInstallationList = [
           {
-            appInstallation: null,
+            isExternal: false,
           },
         ] as AppInstallation[];
 
@@ -61,8 +61,8 @@ describe("InstalledAppList utils", () => {
 
       it("should return false when has  apps installations and   app installed", () => {
         // Arrange
-        const appList = [];
-        const appInstallationList = [];
+        const appList: InstalledApp[] = [];
+        const appInstallationList: AppInstallation[] = [];
 
         // Act
         const isLoading = appsIsLoading({
@@ -82,7 +82,7 @@ describe("InstalledAppList utils", () => {
       it("should return true when has apps installed", () => {
         // Arrange
         const appList = undefined;
-        const appInstallationList = [];
+        const appInstallationList: AppInstallation[] = [];
 
         // Act
         const isLoading = appsIsLoading({
@@ -97,7 +97,7 @@ describe("InstalledAppList utils", () => {
 
       it("should return false when has  apps installed", () => {
         // Arrange
-        const appList = [];
+        const appList: InstalledApp[] = [];
         const appInstallationList = undefined;
 
         // Act
@@ -118,8 +118,8 @@ describe("InstalledAppList utils", () => {
       const hasManagedAppsPermission = true;
       it("should return true when has empty apps installed and empty app installations", () => {
         // Arrange
-        const appList = [];
-        const appInstallationList = [];
+        const appList: InstalledApp[] = [];
+        const appInstallationList: AppInstallation[] = [];
 
         // Act
         const showInstalledApps = hasEmptyAppList({
@@ -150,10 +150,10 @@ describe("InstalledAppList utils", () => {
 
       it("should return false when has apps installations and no app installed", () => {
         // Arrange
-        const appList = [];
+        const appList: InstalledApp[] = [];
         const appInstallationList = [
           {
-            appInstallation: null,
+            isExternal: false,
           },
         ] as AppInstallation[];
 
@@ -172,10 +172,10 @@ describe("InstalledAppList utils", () => {
         // Arrange
         const appList = [
           {
-            app: null,
+            isExternal: false,
           },
         ] as InstalledApp[];
-        const appInstallationList = [];
+        const appInstallationList: AppInstallation[] = [];
 
         // Act
         const showInstalledApps = hasEmptyAppList({
@@ -194,7 +194,7 @@ describe("InstalledAppList utils", () => {
 
       it("should return true when has empty apps installed", () => {
         // Arrange
-        const appList = [];
+        const appList: InstalledApp[] = [];
         const appInstallationList = undefined;
 
         // Act
@@ -228,10 +228,10 @@ describe("InstalledAppList utils", () => {
         // Arrange
         const appList = [
           {
-            app: null,
+            isExternal: false,
           },
         ] as InstalledApp[];
-        const appInstallationList = [];
+        const appInstallationList: AppInstallation[] = [];
 
         // Act
         const showInstalledApps = hasEmptyAppList({

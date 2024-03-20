@@ -55,7 +55,7 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
           }
         />
       ))}
-      {appList.map(({ app, isExternal, logo }) => (
+      {appList?.map(({ app, isExternal, logo }) => (
         <InstalledAppListRow
           key={app.id}
           app={app}
