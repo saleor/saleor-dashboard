@@ -8,7 +8,7 @@ concurrency:
 
 jobs:
   initialize-cloud:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     outputs:
       POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
@@ -43,7 +43,7 @@ jobs:
 
   deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: initialize-cloud
     permissions:
       deployments: write
@@ -119,12 +119,12 @@ jobs:
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
   run-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: [initialize-cloud, deploy-dashboard]
     strategy:
       fail-fast: false
       matrix:
-        shard: [1/2, 2/2]
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
 
@@ -134,15 +134,15 @@ jobs:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
+          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          MAILPITURL: ${{ secrets.MAILPITURL }}
 
   merge-reports:
     if: "!cancelled()"
     needs: run-tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
