@@ -20,6 +20,7 @@ import {
   getVerifiedInstallableMarketplaceApps,
   getVerifiedInstalledApps,
   resolveSectionsAvailability,
+  shouldShowInstalledApps,
 } from "./utils";
 
 export interface AppListPageProps extends AppListPageSections, ListProps {
@@ -64,8 +65,11 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     installableMarketplaceApps: verifiedInstallableMarketplaceApps,
   });
 
-  const nothingInstalled =
-    appsInstallations?.length === 0 && installedApps?.length === 0;
+  const showAppInstalledSection = shouldShowInstalledApps(
+    appsInstallations,
+    installedApps,
+    hasManagedAppsPermission,
+  );
 
   const navigateToAppInstallPage = useCallback(
     (manifestUrl: string) => {
@@ -94,7 +98,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         marginY={5}
       >
         <Box className={classes.appContent} marginY={5}>
-          {nothingInstalled && (
+          {!showAppInstalledSection && (
             <Box paddingY={3}>
               <Text as="h3" size={5} fontWeight="bold" color="default2">
                 {intl.formatMessage(messages.installedApps)}
@@ -106,7 +110,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
               </Box>
             </Box>
           )}
-          {sectionsAvailability.installed && (
+          {showAppInstalledSection && (
             <>
               <Box paddingX={5} paddingY={3}>
                 <Text as="h3" size={5} fontWeight="bold" color="default2">

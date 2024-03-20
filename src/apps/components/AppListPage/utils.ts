@@ -8,15 +8,24 @@ import {
 import { AppListPageSections } from "./types";
 
 export const resolveSectionsAvailability = ({
-  // appsInstallations, TODO: implement checking with appInstallaion when has manage apps permission
-  installedApps,
   installableMarketplaceApps,
   comingSoonMarketplaceApps,
 }: AppListPageSections) => ({
-  installed: !installedApps || !!installedApps.length,
   all: !installableMarketplaceApps || !!installableMarketplaceApps.length,
   comingSoon: !comingSoonMarketplaceApps || !!comingSoonMarketplaceApps.length,
 });
+
+export const shouldShowInstalledApps = (
+  appsInstallations?: AppInstallationFragment[],
+  installedApps?: AppListItemFragment[],
+  hasManagedAppsPermission?: boolean,
+) => {
+  if (!hasManagedAppsPermission) {
+    return !!installedApps?.length;
+  }
+
+  return !!installedApps?.length || !!appsInstallations?.length;
+};
 
 const findAppInMarketplace = (
   manifestUrl: string | null,
