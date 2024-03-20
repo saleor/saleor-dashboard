@@ -41,7 +41,6 @@ runs:
       run: npm ci
 
     - name: Submit results
-      if: always() && ${{ inputs.browsers }} == 'all'
       working-directory: .github/workflows
       shell: bash
       run: |

@@ -40,5 +40,4 @@ runs:
         TESTMO_URL: ${{ inputs.testmoUrl }}
         TESTMO_TOKEN: ${{ inputs.testmoToken }}
         RUN_NAME: ${{inputs.testmoRunName}}
-        TAG: ${{inputs.tag}}
       id: run-tests
