@@ -1,7 +1,8 @@
+import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
 import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
-import { Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -17,29 +18,23 @@ export const AppListCardInstallButton = ({
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
+  if (!installHandler) {
+    return null;
+  }
+
   if (!hasManagedAppsPermission) {
     return (
-      <Tooltip>
-        <Tooltip.Trigger>
-          <span tabIndex={0}>
-            <Button
-              variant="primary"
-              style={{ pointerEvents: "none" }}
-              disabled
-            >
-              <FormattedMessage {...buttonMessages.install} />
-            </Button>
-          </span>
-        </Tooltip.Trigger>
-        <Tooltip.Content>
-          <Tooltip.Arrow />
-          {intl.formatMessage(messages.installationPermissionRequired)}
-        </Tooltip.Content>
-      </Tooltip>
+      <ButtonWithTooltip
+        variant="primary"
+        disabled
+        tooltip={intl.formatMessage(buttonMessages.noPermission)}
+      >
+        <FormattedMessage {...buttonMessages.install} />
+      </ButtonWithTooltip>
     );
   }
 
-  if (installHandler && IS_CLOUD_INSTANCE) {
+  if (IS_CLOUD_INSTANCE) {
     return (
       <Button
         variant="primary"
@@ -51,29 +46,16 @@ export const AppListCardInstallButton = ({
     );
   }
 
-  if (installHandler && !IS_CLOUD_INSTANCE) {
-    return (
-      <Tooltip>
-        <Tooltip.Trigger>
-          <span tabIndex={0}>
-            <Button
-              variant="primary"
-              onClick={installHandler}
-              data-test-id="app-install-button"
-              style={{ pointerEvents: "none" }}
-              disabled
-            >
-              <FormattedMessage {...buttonMessages.install} />
-            </Button>
-          </span>
-        </Tooltip.Trigger>
-        <Tooltip.Content>
-          <Tooltip.Arrow />
-          {intl.formatMessage(messages.installationCloudOnly)}
-        </Tooltip.Content>
-      </Tooltip>
-    );
-  }
-
-  return null;
+  return (
+    <span tabIndex={0}>
+      <ButtonWithTooltip
+        tooltip={intl.formatMessage(messages.installationCloudOnly)}
+        onClick={installHandler}
+        data-test-id="app-install-button"
+        disabled
+      >
+        <FormattedMessage {...buttonMessages.install} />
+      </ButtonWithTooltip>
+    </span>
+  );
 };

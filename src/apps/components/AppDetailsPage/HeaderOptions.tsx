@@ -36,14 +36,16 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
       borderColor="default1"
       borderBottomWidth={1}
     >
-      <Box display="flex" gap={3} paddingY={2}>
+      <Box display="flex" gap={1} paddingY={2}>
         <ButtonWithTooltip
           variant="tertiary"
           tooltip={tooltipContent}
           disabled={!hasManagedAppsPermission}
           onClick={isActive ? onAppDeactivateOpen : onAppActivateOpen}
         >
-          <SVG src={activateIcon} />
+          <Box marginRight={1}>
+            <SVG src={activateIcon} />
+          </Box>
           {isActive ? (
             <FormattedMessage {...buttonMessages.deactivate} />
           ) : (
@@ -57,7 +59,9 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
           disabled={!hasManagedAppsPermission}
           onClick={onAppDeleteOpen}
         >
-          <SVG src={deleteIcon} />
+          <Box marginRight={1}>
+            <SVG src={deleteIcon} />
+          </Box>
           <FormattedMessage {...buttonMessages.delete} />
         </ButtonWithTooltip>
       </Box>

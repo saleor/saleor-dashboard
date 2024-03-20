@@ -1,8 +1,10 @@
 import { AppPermissionsDialog } from "@dashboard/apps/components/AppPermissionsDialog";
+import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
 import Skeleton from "@dashboard/components/Skeleton";
 import { PermissionEnum } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
-import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
+import { buttonMessages } from "@dashboard/intl";
+import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -29,13 +31,18 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const editPermissionsButton = (
-    <Button
-      variant={"secondary"}
+    <ButtonWithTooltip
+      tooltip={
+        !hasManagedAppsPermission
+          ? intl.formatMessage(buttonMessages.noPermission)
+          : undefined
+      }
+      variant="secondary"
       disabled={!hasManagedAppsPermission}
       onClick={() => setEditPermissionDialogOpen(true)}
     >
       {intl.formatMessage(messages.editPermissionsButton)}
-    </Button>
+    </ButtonWithTooltip>
   );
 
   const renderContent = () => {

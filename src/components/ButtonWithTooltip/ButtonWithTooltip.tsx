@@ -2,7 +2,7 @@ import { Button, ButtonProps, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface ButtonWithTooltipProps extends ButtonProps {
-  tooltip?: string;
+  tooltip?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -20,7 +20,10 @@ export const ButtonWithTooltip = ({
       <Tooltip.Trigger>
         <Button {...props}>{children}</Button>
       </Tooltip.Trigger>
-      <Tooltip.Content>{tooltip}</Tooltip.Content>
+      <Tooltip.Content>
+        <Tooltip.Arrow />
+        {tooltip}
+      </Tooltip.Content>
     </Tooltip>
   );
 };
