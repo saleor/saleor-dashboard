@@ -6,7 +6,6 @@ import {
   releasedApp,
 } from "@dashboard/apps/fixtures";
 import {
-  AppInstallationFragment,
   AppListItemFragment,
   AppTypeEnum,
   PermissionEnum,
@@ -17,7 +16,6 @@ import {
   getVerifiedInstallableMarketplaceApps,
   getVerifiedInstalledApps,
   resolveSectionsAvailability,
-  shouldShowInstalledApps,
 } from "./utils";
 
 describe("App List available sections util", () => {
@@ -159,190 +157,6 @@ describe("App List available sections util", () => {
       comingSoon: false,
     };
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
-  });
-});
-
-describe("App List should show installed apps util", () => {
-  describe("has MANAGE_APPS permission", () => {
-    const hasManagedAppsPermission = true;
-
-    it("should return true when has apps installed and no app installations", () => {
-      // Arrange
-      const installedApps = [
-        {
-          id: "1",
-        },
-      ] as AppListItemFragment[];
-      const appsInstallations = [];
-
-      // Act
-      const showInstalledApps = shouldShowInstalledApps(
-        appsInstallations,
-        installedApps,
-        hasManagedAppsPermission,
-      );
-
-      // Assert
-      expect(showInstalledApps).toBe(true);
-    });
-
-    it("should return true when has apps installations and no app installed", () => {
-      // Arrange
-      const installedApps = [];
-      const appsInstallations = [
-        {
-          id: "1",
-        },
-      ] as AppInstallationFragment[];
-
-      // Act
-      const showInstalledApps = shouldShowInstalledApps(
-        appsInstallations,
-        installedApps,
-        hasManagedAppsPermission,
-      );
-
-      // Assert
-      expect(showInstalledApps).toBe(true);
-    });
-
-    it("should return true when has apps installed and empty app installations", () => {
-      // Arrange
-      const installedApps = [
-        {
-          id: "1",
-        },
-      ] as AppListItemFragment[];
-      const appsInstallations = [];
-
-      // Act
-      const showInstalledApps = shouldShowInstalledApps(
-        appsInstallations,
-        installedApps,
-        hasManagedAppsPermission,
-      );
-
-      // Assert
-      expect(showInstalledApps).toBe(true);
-    });
-
-    it("should return true when has apps installations and empty app installed", () => {
-      // Arrange
-      const installedApps = [];
-      const appsInstallations = [
-        {
-          id: "1",
-        },
-      ] as AppInstallationFragment[];
-
-      // Act
-      const showInstalledApps = shouldShowInstalledApps(
-        appsInstallations,
-        installedApps,
-        hasManagedAppsPermission,
-      );
-
-      // Assert
-      expect(showInstalledApps).toBe(true);
-    });
-
-    it("should return false when has empty apps installations and  empty app installed", () => {
-      // Arrange
-      const installedApps = [];
-      const appsInstallations = [];
-
-      // Act
-      const showInstalledApps = shouldShowInstalledApps(
-        appsInstallations,
-        installedApps,
-        hasManagedAppsPermission,
-      );
-
-      // Assert
-      expect(showInstalledApps).toBe(false);
-    });
-
-    it("should return false when has no apps installations and  no app installed", () => {
-      // Arrange
-      const installedApps = undefined;
-      const appsInstallations = undefined;
-
-      // Act
-      const showInstalledApps = shouldShowInstalledApps(
-        appsInstallations,
-        installedApps,
-        hasManagedAppsPermission,
-      );
-
-      // Assert
-      expect(showInstalledApps).toBe(false);
-    });
-  });
-
-  describe("has not MANAGE_APPS permission", () => {
-    const hasManagedAppsPermission = false;
-
-    it("should return true when has apps installed", () => {
-      // Arrange
-      const installedApps = [
-        {
-          id: "1",
-        },
-      ] as AppListItemFragment[];
-      const appsInstallations = [
-        {
-          id: "1",
-        },
-      ] as AppInstallationFragment[];
-
-      // Act
-      const showInstalledApps = shouldShowInstalledApps(
-        appsInstallations,
-        installedApps,
-        hasManagedAppsPermission,
-      );
-
-      // Assert
-      expect(showInstalledApps).toBe(true);
-    });
-
-    it("should return false when has no apps installed", () => {
-      // Arrange
-      const installedApps = undefined;
-      const appsInstallations = [
-        {
-          id: "1",
-        },
-      ] as AppInstallationFragment[];
-      // Act
-      const showInstalledApps = shouldShowInstalledApps(
-        appsInstallations,
-        installedApps,
-        hasManagedAppsPermission,
-      );
-
-      // Assert
-      expect(showInstalledApps).toBe(false);
-    });
-
-    it("should return false when has empty apps installed", () => {
-      // Arrange
-      const installedApps = [];
-      const appsInstallations = [
-        {
-          id: "1",
-        },
-      ] as AppInstallationFragment[];
-      // Act
-      const showInstalledApps = shouldShowInstalledApps(
-        appsInstallations,
-        installedApps,
-        hasManagedAppsPermission,
-      );
-
-      // Assert
-      expect(showInstalledApps).toBe(false);
-    });
   });
 });
 

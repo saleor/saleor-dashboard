@@ -20,7 +20,6 @@ import {
   getVerifiedInstallableMarketplaceApps,
   getVerifiedInstalledApps,
   resolveSectionsAvailability,
-  shouldShowInstalledApps,
 } from "./utils";
 
 export interface AppListPageProps extends AppListPageSections, ListProps {
@@ -65,12 +64,6 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     installableMarketplaceApps: verifiedInstallableMarketplaceApps,
   });
 
-  const showAppInstalledSection = shouldShowInstalledApps(
-    appsInstallations,
-    installedApps,
-    hasManagedAppsPermission,
-  );
-
   const navigateToAppInstallPage = useCallback(
     (manifestUrl: string) => {
       navigate(AppUrls.resolveAppInstallUrl(manifestUrl));
@@ -98,34 +91,19 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         marginY={5}
       >
         <Box className={classes.appContent} marginY={5}>
-          {!showAppInstalledSection && (
-            <Box paddingY={3}>
-              <Text as="h3" size={5} fontWeight="bold" color="default2">
-                {intl.formatMessage(messages.installedApps)}
-              </Text>
-              <Box marginTop={3}>
-                <Text size={2}>
-                  {intl.formatMessage(messages.nothingInstalledPlaceholder)}
-                </Text>
-              </Box>
-            </Box>
-          )}
-          {showAppInstalledSection && (
-            <>
-              <Box paddingX={5} paddingY={3}>
-                <Text as="h3" size={5} fontWeight="bold" color="default2">
-                  {intl.formatMessage(messages.installedApps)}
-                </Text>
-              </Box>
-              <InstalledAppList
-                appList={verifiedInstalledApps}
-                appInstallationList={verifiedAppsInstallations}
-                disabled={disabled}
-                settings={settings}
-                onUpdateListSettings={onUpdateListSettings}
-              />
-            </>
-          )}
+          <Box paddingX={5} paddingY={3}>
+            <Text as="h3" size={5} fontWeight="bold" color="default2">
+              {intl.formatMessage(messages.installedApps)}
+            </Text>
+          </Box>
+          <InstalledAppList
+            appList={verifiedInstalledApps}
+            appInstallationList={verifiedAppsInstallations}
+            disabled={disabled}
+            settings={settings}
+            onUpdateListSettings={onUpdateListSettings}
+          />
+
           <MarketplaceAlert error={marketplaceError} />
           {sectionsAvailability.all && !marketplaceError && (
             <Box marginTop={7}>

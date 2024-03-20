@@ -15,18 +15,6 @@ export const resolveSectionsAvailability = ({
   comingSoon: !comingSoonMarketplaceApps || !!comingSoonMarketplaceApps.length,
 });
 
-export const shouldShowInstalledApps = (
-  appsInstallations?: AppInstallationFragment[],
-  installedApps?: AppListItemFragment[],
-  hasManagedAppsPermission?: boolean,
-) => {
-  if (!hasManagedAppsPermission) {
-    return !!installedApps?.length;
-  }
-
-  return !!installedApps?.length || !!appsInstallations?.length;
-};
-
 const findAppInMarketplace = (
   manifestUrl: string | null,
   installableMarketplaceApps?: AppstoreApi.ReleasedSaleorApp[],
