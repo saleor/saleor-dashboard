@@ -18,11 +18,16 @@ program
   )
   .option("--environment <environment>", "Environment")
   .option("--url_to_action <url_to_action>", "Url to enter github action")
+  .option("--ref_name <ref_name>", "Ref to point where tests where run")
   .action(async options => {
     const runId = options.run_id;
     const testmoAuthToken = options.testmo_token;
     const testsResults = await getTestsStatus(runId, testmoAuthToken);
-    const testsStatus = convertResults(testsResults, options.environment);
+    const testsStatus = convertResults(
+      testsResults,
+      options.environment,
+      options.ref_name,
+    );
 
     await sendMessageOnSlack(
       testsStatus,
@@ -44,9 +49,9 @@ async function getTestsStatus(runId, testmoToken) {
   return await runResult.json();
 }
 
-function convertResults(results, environment) {
+function convertResults(results, environment, refName) {
   let status = results?.result?.status === 2 ? "SUCCESS" : "FAILURE";
-  let message = "";
+  let message = `Tests run on environment: ${environment}"\n"`;
   const linkToResults = `https:\/\/saleor.testmo.net\/automation\/runs\/view\/${results.result.id}`;
   const threads = results.result.threads;
 
@@ -82,7 +87,7 @@ function convertResults(results, environment) {
   return {
     status,
     message,
-    title: `Automation tests run on ${environment}`,
+    title: `Playwright tests run on ${refName}`,
     linkToResults,
   };
 }
