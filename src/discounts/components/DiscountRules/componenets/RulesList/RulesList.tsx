@@ -51,11 +51,12 @@ export const RulesList = <ErrorCode,>({
           <RuleWrapper key={rule.id || index} hasError={hasError}>
             <Box display="flex" flexDirection="column" gap={2}>
               <Box
+                data-test-id="rule-label-with-actions"
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <RuleLabel ruleName={rule.name} />
+                <RuleLabel ruleName={rule.name} data-test-id="rule-name" />
 
                 <RuleActions
                   onDelete={() => onRuleDelete(index)}
