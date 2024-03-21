@@ -11,8 +11,7 @@ export class PromotionRuleDialog {
             "select-option",
         ),
         readonly ruleDescriptionInput = page.getByTestId("rich-text-editor-rule-description"),
-        readonly addFirstRuleConditionButton = page.getByTestId("add-first-condition-button"),
-        readonly addAnotherRuleConditionButton = page.getByTestId("add-another-condition-button"),
+        readonly addRuleConditionButton = page.getByTestId("add-condition-button"),
         readonly addRuleConditionSection = page.getByTestId("conditions-section"),
         readonly addRuleConditionPredicateDropdown = page.getByTestId("rule-condition-predicate-dropdown"),
         readonly addRuleConditionTypeDropdown = page.getByTestId("rule-condition-type-dropdown"),
@@ -23,8 +22,11 @@ export class PromotionRuleDialog {
         readonly percentageRewardValueTypeOption = page.getByTestId("percentage-reward-value-type"),
         readonly fixedRewardValueTypeOption = page.getByTestId("fixed-reward-value-type"),
         readonly saveRuleButton = page.getByTestId("saveRuleButton"),
+        readonly ruleConfirmationButton = page.getByTestId("saveRuleButton"),
         readonly gteConditionValueInput = page.getByTestId("condition-value-0").first(),
         readonly lteConditionValueInput = page.getByTestId("condition-value-0").last(),
+        readonly ruleConditionRow = page.getByTestId("rule-condition-row"),
+
 
     ) {
         this.page = page;
@@ -47,20 +49,16 @@ export class PromotionRuleDialog {
         await this.ruleNameInput.fill(name);
     }
 
-    async clickFirstAddRuleConditionButton() {
-        await this.addFirstRuleConditionButton.click();
-        await this.addRuleConditionSection.waitFor({
+    async clickAddRuleConditionButton() {
+        await this.addRuleConditionButton.click({force: true});
+        await this.ruleConditionRow.last().waitFor({
             state: "visible",
             timeout: 10000,
         });
     }
 
-    async clickAnotherAddRuleConditionButton() {
-        await this.addAnotherRuleConditionButton.click();
-        await this.addRuleConditionSection.waitFor({
-            state: "visible",
-            timeout: 10000,
-        });
+    async removeExistingGiftReward(giftRewardId: string, index: number = 0) {
+        await this.page.getByTestId(`selected-option-${giftRewardId}-${index}`).getByText('✕').click();
     }
 
     async selectPercentageRewardValueType() {
@@ -73,7 +71,7 @@ export class PromotionRuleDialog {
 
     async selectOrderRewardType(type: string) {
         await this.rewardTypeSelect.click();
-        await this.selectOption.filter({hasText:type}).click()
+        await this.selectOption.filter({ hasText: type }).click()
     }
 
     async selectSubtotalDiscountType() {
@@ -90,25 +88,15 @@ export class PromotionRuleDialog {
 
     async selectPredicate(predicate: string, index: number = 0) {
         await this.page.getByTestId(`condition-name-${index}`).click();
-        await this.page.getByRole("listbox").waitFor({
-            state: "visible",
-            timeout: 10000,
-        });
-        await this.page.getByTestId('select-option').getByText(predicate, { exact: true }).click();
+        await this.page.getByRole('option', { name: predicate, exact: true }).click();
     }
 
     async selectRuleConditionType(type: string) {
         await this.addRuleConditionTypeDropdown.last().click();
-        await this.page.getByRole("listbox").waitFor({
-            state: "visible",
-            timeout: 10000,
-        });
-        await this.page.getByTestId('select-option').getByText(type).click();
+        await this.page.getByTestId("select-option").filter({hasText:type}).click();
     }
 
     async typeRuleConditionValue(value: string, index: number = 0) {
-        await this.addRuleConditionValueDropdown.locator('[contenteditable="true"]')
-        await this.page.getByTestId(`condition-value-${index}`).click();
         await this.page.getByTestId(`condition-value-${index}`).fill(value);
     }
 
@@ -118,7 +106,7 @@ export class PromotionRuleDialog {
     }
 
 
-    async clickRuleConditionPredicateDropdown(){
+    async clickRuleConditionPredicateDropdown() {
         await this.addRuleConditionPredicateDropdown.last().click();
         await this.page.getByRole("listbox").waitFor({
             state: "visible",
@@ -128,21 +116,19 @@ export class PromotionRuleDialog {
 
     async selectGiftReward(giftName: string) {
         await this.rewardGiftSelect.fill(giftName);
-        await this.page.getByRole("listbox").waitFor({
-            state: "visible",
-            timeout: 10000,
-        });
-        await this.page.getByTestId('select-option').getByText(giftName).first().click();
+        await this.page.getByText(giftName).first().click();
     }
 
     async selectRuleConditionValue(name: string) {
-            await this.addRuleConditionValueDropdown.locator('[contenteditable="true"]')
-            await this.page.getByTestId('condition-value-0').click();
-            await this.page.getByTestId('condition-value-0').fill(name);
-        await this.page.getByTestId('select-option').getByText(name, { exact: false }).first().click();
+        await this.page.getByTestId("condition-value-0").click()
+        await this.page.getByRole('option', { name, }).first().click();
     }
 
     async clickSaveRuleButton() {
         await this.saveRuleButton.click();
+    }
+
+    async clickSaveEditedRuleButton() {
+        await this.ruleConfirmationButton.click();
     }
 }
