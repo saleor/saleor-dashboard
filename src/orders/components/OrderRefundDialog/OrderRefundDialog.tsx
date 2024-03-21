@@ -1,8 +1,11 @@
 import { DashboardModal } from "@dashboard/components/Modal";
+import { buttonMessages } from "@dashboard/intl";
 import * as RadixRadioGroup from "@radix-ui/react-radio-group";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { useIntl } from "react-intl";
 
+import { orderRefundDialogMesages } from "./messages";
 import { RadioTile } from "./RadioTile";
 
 interface OrderRefundDialogProps {
@@ -17,6 +20,7 @@ export const OrderRefundDialog = ({
   onChange,
 }: OrderRefundDialogProps) => {
   const [selected, setSelected] = React.useState<RefundType>("standard");
+  const intl = useIntl();
 
   const handleClose = () => {
     setSelected("standard");
@@ -25,8 +29,10 @@ export const OrderRefundDialog = ({
   return (
     <DashboardModal open={open} onChange={handleClose}>
       <DashboardModal.Content __width="400px">
-        <DashboardModal.Title>Create a new refund</DashboardModal.Title>
-        <Text>How do you want to make a refund?</Text>
+        <DashboardModal.Title>
+          {intl.formatMessage(orderRefundDialogMesages.title)}
+        </DashboardModal.Title>
+        <Text>{intl.formatMessage(orderRefundDialogMesages.subtitle)}</Text>
         <RadixRadioGroup.Root
           asChild
           value={selected}
@@ -44,27 +50,35 @@ export const OrderRefundDialog = ({
             <RadioTile
               value={"standard"}
               checked={selected === "standard"}
-              title="Refund with line items"
-              description="The purchased product list will be sent and used to suggest amount to refund."
+              title={intl.formatMessage(
+                orderRefundDialogMesages.standardRefundTitle,
+              )}
+              description={intl.formatMessage(
+                orderRefundDialogMesages.standardRefundSubtitle,
+              )}
             />
             <RadioTile
               value={"misc"}
               checked={selected === "misc"}
-              title="Refund with manual amount"
-              description="Do not use information about the products and rely on amount provided manually."
+              title={intl.formatMessage(
+                orderRefundDialogMesages.miscRefundTitle,
+              )}
+              description={intl.formatMessage(
+                orderRefundDialogMesages.miscRefundSubtitle,
+              )}
             />
           </Box>
         </RadixRadioGroup.Root>
-
-        {/* </Box> */}
         <DashboardModal.Actions>
           <Button onClick={onChange} variant="secondary">
-            <Text fontWeight="medium">Back</Text>
+            <Text fontWeight="medium">
+              {intl.formatMessage(buttonMessages.confirm)}
+            </Text>
           </Button>
           <Button onClick={onChange}>
             {" "}
             <Text fontWeight="medium" color="buttonDefaultPrimary">
-              Confirm
+              {intl.formatMessage(buttonMessages.cancel)}
             </Text>
           </Button>
         </DashboardModal.Actions>
