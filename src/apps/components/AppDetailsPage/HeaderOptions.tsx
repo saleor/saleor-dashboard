@@ -42,10 +42,11 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
           tooltip={tooltipContent}
           disabled={!hasManagedAppsPermission}
           onClick={isActive ? onAppDeactivateOpen : onAppActivateOpen}
+          display="flex"
+          alignItems="center"
+          gap={1}
         >
-          <Box marginRight={1}>
-            <SVG src={activateIcon} />
-          </Box>
+          <SVG src={activateIcon} width={18} height={18} />
           {isActive ? (
             <FormattedMessage {...buttonMessages.deactivate} />
           ) : (
@@ -58,10 +59,11 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
           tooltip={tooltipContent}
           disabled={!hasManagedAppsPermission}
           onClick={onAppDeleteOpen}
+          display="flex"
+          alignItems="center"
+          gap={1}
         >
-          <Box marginRight={1}>
-            <SVG src={deleteIcon} />
-          </Box>
+          <SVG src={deleteIcon} width={16} height={16} />
           <FormattedMessage {...buttonMessages.delete} />
         </ButtonWithTooltip>
       </Box>
