@@ -16,7 +16,6 @@
     "node": ">=18 <19",
     "npm": ">=7"
   },
-  "//@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.1.1",
   "dependencies": {
     "@apollo/client": "3.4.17",
     "@dnd-kit/core": "^6.0.8",
