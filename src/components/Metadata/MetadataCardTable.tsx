@@ -83,6 +83,7 @@ export const MetadataCardTable = ({
                   </Text>
                 ) : (
                   <Input
+                    data-test-id="metadata-key-input"
                     width="100%"
                     size="small"
                     aria-label={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
@@ -105,6 +106,7 @@ export const MetadataCardTable = ({
                   </Text>
                 ) : (
                   <Textarea
+                    data-test-id="metadata-value-input"
                     disabled={readonly}
                     width="100%"
                     rows={1}
