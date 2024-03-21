@@ -3371,7 +3371,7 @@ export const WebhookDetailsFragmentDoc = gql`
 }
     ${WebhookFragmentDoc}`;
 export const AppCreateDocument = gql`
-    mutation AppCreate($input: AppInput!, $hasManagedAppsPermission: Boolean! = true) {
+    mutation AppCreate($input: AppInput!, $hasManagedAppsPermission: Boolean = true) {
   appCreate(input: $input) {
     authToken
     app {
@@ -3412,7 +3412,7 @@ export type AppCreateMutationHookResult = ReturnType<typeof useAppCreateMutation
 export type AppCreateMutationResult = Apollo.MutationResult<Types.AppCreateMutation>;
 export type AppCreateMutationOptions = Apollo.BaseMutationOptions<Types.AppCreateMutation, Types.AppCreateMutationVariables>;
 export const AppDeleteDocument = gql`
-    mutation AppDelete($id: ID!, $hasManagedAppsPermission: Boolean! = true) {
+    mutation AppDelete($id: ID!, $hasManagedAppsPermission: Boolean = true) {
   appDelete(id: $id) {
     app {
       ...App
@@ -3614,7 +3614,7 @@ export type AppRetryInstallMutationHookResult = ReturnType<typeof useAppRetryIns
 export type AppRetryInstallMutationResult = Apollo.MutationResult<Types.AppRetryInstallMutation>;
 export type AppRetryInstallMutationOptions = Apollo.BaseMutationOptions<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>;
 export const AppUpdateDocument = gql`
-    mutation AppUpdate($id: ID!, $input: AppInput!, $hasManagedAppsPermission: Boolean! = true) {
+    mutation AppUpdate($id: ID!, $input: AppInput!, $hasManagedAppsPermission: Boolean = true) {
   appUpdate(id: $id, input: $input) {
     app {
       ...App

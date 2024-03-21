@@ -8861,7 +8861,7 @@ export enum WeightUnitsEnum {
 
 export type AppCreateMutationVariables = Exact<{
   input: AppInput;
-  hasManagedAppsPermission?: Scalars['Boolean'];
+  hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
@@ -8869,7 +8869,7 @@ export type AppCreateMutation = { __typename: 'Mutation', appCreate: { __typenam
 
 export type AppDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
-  hasManagedAppsPermission?: Scalars['Boolean'];
+  hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
@@ -8906,7 +8906,7 @@ export type AppRetryInstallMutation = { __typename: 'Mutation', appRetryInstall:
 export type AppUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
   input: AppInput;
-  hasManagedAppsPermission?: Scalars['Boolean'];
+  hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 

@@ -123,7 +123,7 @@ export const AppManageView: React.FC<Props> = ({ id, params }) => {
 
   const handleActivateConfirm = () => activateApp(mutationOpts);
   const handleDeactivateConfirm = () => deactivateApp(mutationOpts);
-  const handleRemoveConfirm = () => deleteApp(mutationOpts);
+  const handleRemoveConfirm = () => deleteApp({ ...mutationOpts });
 
   if (!appExists) {
     return <NotFoundPage backHref={AppPaths.appListPath} />;
