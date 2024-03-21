@@ -5,26 +5,28 @@ import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { RadioTile } from "../../../components/RadioTile/RadioTile";
 import { orderRefundDialogMesages } from "./messages";
-import { RadioTile } from "./RadioTile";
 
 interface OrderRefundDialogProps {
   open: boolean;
-  onChange: () => void;
+  onClose: () => void;
+  onConfirm: () => void;
 }
 
 type RefundType = "standard" | "misc";
 
 export const OrderRefundDialog = ({
   open,
-  onChange,
+  onClose,
+  onConfirm,
 }: OrderRefundDialogProps) => {
   const [selected, setSelected] = React.useState<RefundType>("standard");
   const intl = useIntl();
 
   const handleClose = () => {
     setSelected("standard");
-    onChange();
+    onClose();
   };
   return (
     <DashboardModal open={open} onChange={handleClose}>
@@ -70,15 +72,15 @@ export const OrderRefundDialog = ({
           </Box>
         </RadixRadioGroup.Root>
         <DashboardModal.Actions>
-          <Button onClick={onChange} variant="secondary">
+          <Button onClick={onClose} variant="secondary">
             <Text fontWeight="medium">
-              {intl.formatMessage(buttonMessages.confirm)}
+              {intl.formatMessage(buttonMessages.cancel)}
             </Text>
           </Button>
-          <Button onClick={onChange}>
+          <Button onClick={onConfirm}>
             {" "}
             <Text fontWeight="medium" color="buttonDefaultPrimary">
-              {intl.formatMessage(buttonMessages.cancel)}
+              {intl.formatMessage(buttonMessages.confirm)}
             </Text>
           </Button>
         </DashboardModal.Actions>

@@ -461,7 +461,9 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderRefundDialog
         open={params.action === "add-refund"}
-        onChange={closeModal}
+        onClose={closeModal}
+        // TODO: Add redirect to refund view
+        onConfirm={() => null}
       />
 
       <OrderAddressFields

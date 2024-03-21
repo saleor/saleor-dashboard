@@ -2,47 +2,14 @@ import * as RadixRadioGroup from "@radix-ui/react-radio-group";
 import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
-interface RadioTileProps {
+import { getBgColor, getBorderColor, getHoverState } from "./utils";
+
+export interface RadioTileProps {
   checked: boolean;
   title: string;
   description: string;
   value: string;
 }
-
-interface RadioTileState {
-  checked: boolean;
-  isHoverState: boolean;
-}
-
-const getHoverState = ({ checked, isHoverState }: RadioTileState) => {
-  if (checked && isHoverState) {
-    return "accent1Hovered";
-  }
-  if (isHoverState) {
-    return "default1Hovered";
-  }
-  return "transparent";
-};
-
-const getBorderColor = ({ checked, isHoverState }: RadioTileState) => {
-  if (checked) {
-    return "accent1";
-  }
-  if (isHoverState) {
-    return "default1Hovered";
-  }
-  return "default1";
-};
-
-const getBgColor = ({ checked, isHoverState }: RadioTileState) => {
-  if (checked) {
-    return "accent1";
-  }
-  if (isHoverState) {
-    return "default1Hovered";
-  }
-  return "transparent";
-};
 
 export const RadioTile = ({
   checked,
@@ -50,7 +17,6 @@ export const RadioTile = ({
   description,
   value,
 }: RadioTileProps) => {
-  // State to track hover status
   const [isHoverState, setHoverState] = React.useState(false);
 
   return (
