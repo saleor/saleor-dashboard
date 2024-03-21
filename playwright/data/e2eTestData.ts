@@ -27,24 +27,102 @@ export const DISCOUNTS = {
     name: "e2e promotion to be edited",
     type: "Catalog",
     id: "UHJvbW90aW9uOjI0MGVkZGVkLWYzMTAtNGUzZi1iNTlmLTFlMGFkYWE2ZWFkYg=="
-  },
-  promotionWithoutRulesToBeDeleted: {
-    id: "UHJvbW90aW9uOjRmNTQwMDc1LTZlZGMtNDI1NC1hY2U2LTQ2MzdlMGYxZWJhOA==",
-    name: "e2e Order predicate promotion without rules",
-    type: "Order",
+},
+promotionWithoutRulesToBeDeleted: {
+  id: "UHJvbW90aW9uOjRmNTQwMDc1LTZlZGMtNDI1NC1hY2U2LTQ2MzdlMGYxZWJhOA==",
+  name: "e2e Order predicate promotion without rules",
+  type: "Order",
+},
+catalogPromotionWithRulesToBeDeleted: {
+  id: "UHJvbW90aW9uOmYyY2VjMDhkLTVkYmUtNGVjNC05NTNjLWMzMmQ5ZGQ2MTExYw==",
+  name: "e2e Catalog promo with rules to be deleted",
+  type: "Catalog",
+  rules: [
+    {
+      id: "UHJvbW90aW9uUnVsZTo3NDk4MGVhNS0zNDA2LTQxZGYtOTc3Mi1jMzg3MjNhMWEwOWM=",
+      name: "rule 1"
+    },
 
+    {
+      id: "UHJvbW90aW9uUnVsZTozMTEyMTE0Yy1hYjFkLTQ3OTktODY0My1jZDhlODMwYzllZmE=",
+      name: "rule 2"
+    },
+
+    {
+      id: "UHJvbW90aW9uUnVsZTozOWE3Zjc1Zi1jYTdmLTQ4ODgtOGE4NC02NzdjMTVhOGQ4Yjc=",
+      name: "rule 3"
+    }
+
+  ],
+},
+orderPromotionWithRulesToBeDeleted: {
+  id: "UHJvbW90aW9uOjA1MDllZjhjLTc0ZTEtNGMyMC1iZDk5LWRhYWU1YWJlZDM1Nw==",
+  name: "e2e Order promo with rules to be deleted",
+  type: "Order",
+  rules: [
+  {id: "UHJvbW90aW9uUnVsZTo2ZTdlODNkOS1kNjJlLTQ2YmQtOGE2ZS03OTdlYTZiODk2NmQ=",
+name: "rule #1"},
+
+{id: "UHJvbW90aW9uUnVsZTo1MzQwNjEyYy0wOWJhLTQxYzUtYmY2Yy1lYmUzZTQ3MjY0MjY=",
+name: "rule #2"},
+
+{id: "UHJvbW90aW9uUnVsZTpjMzk5ZTM1Ni04OWFhLTQ0MTUtYWE0Zi01NThlZDQ2M2IwNTM=",
+name: "rule #3"}
+
+  ],
   },
-  promotionWithRulesToBeDeleted: {
-    name: "e2e Catalog predicate promotion with rules",
-    id: "UHJvbW90aW9uOjY0N2M2MzdhLTZjNTEtNDYxZC05MjQ2LTc0YTY0OGM0ZjAxNA==",
+  orderPromotionWithRulesToBeUpdated: {
+    id: "UHJvbW90aW9uOjI0Njg3NmM5LWM1ZWMtNDBiYi1iMzExLWE3YWQ2YzBiZDc4NQ==",
+    name: "e2e Order promo with rules to be updated",
+    type: "Order",
+    rules: [
+      {
+        id: "UHJvbW90aW9uUnVsZTo3NmEwOGYzZi0xMzZhLTRmNTUtYTc0NS1kZmIxNDZkOWI4ZGQ=",
+        name: "rule 1",
+        channel: "Channel-PLN",
+        channelCurrency: "PLN",
+      },
+
+      {
+        id: "UHJvbW90aW9uUnVsZTpjODIxMWJhNS05ZGRmLTRhYzQtOTdlMS04YmM0MzNhZjRlOTM=",
+        name: "rule 2",
+        channel: "Channel-PLN",
+        channelCurrency: "PLN",
+        giftRewardToBeDeleted:"UHJvZHVjdFZhcmlhbnQ6MjE0"
+      },
+    ],
   },
-  cataloguePromotion: {
-    name: "e2e Catalog promotion for adding rules",
-    id: "UHJvbW90aW9uOjNmODZjZDAwLTUwNWEtNGVkNC04ZTliLTJmOGI4NGM3NGNlOQ==",
+  catalogPromotionWithRulesToBeUpdated: {
+    id: "UHJvbW90aW9uOmJkZTgyNGQ4LTk4ZTktNDM1NC04ODE4LTE1YzVjNmI2MWU2NQ==",
+    name: "e2e Catalog promo with rules to be updated",
+    type: "Catalog",
+    rules: [
+      {
+        id: "UHJvbW90aW9uUnVsZTplOWZjNjc2NS1kNzM2LTRhMzMtYjBiMy1hZWMxY2FmNGVkMDE=",
+        name: "rule #1",
+        channel: "Channel-USD",
+        channelCurrency: "USD",
+      },
+
+      {
+        id: "UHJvbW90aW9uUnVsZToyZjM3ZjRhOS01NjY0LTQzMDEtOWU4Zi0zZTliZGFjNmUyYjE=",
+        name: "rule 2",
+        channel: "Channel-USD",
+        channelCurrency: "USD",
+      },
+    ],
   },
-  orderPromotion: {
-    name: "e2e Order promotion for adding rules",
-    id: "UHJvbW90aW9uOjJlM2VhNDkyLTRhMTAtNDYzOS05MWVmLTc1YzQ1OTUxNGQyMQ==",
+promotionWithRulesToBeDeleted: {
+  name: "e2e Catalog predicate promotion with rules",
+  id: "UHJvbW90aW9uOjY0N2M2MzdhLTZjNTEtNDYxZC05MjQ2LTc0YTY0OGM0ZjAxNA==",
+},
+cataloguePromotion:{
+  name: "e2e Catalog promotion for adding rules",
+  id: "UHJvbW90aW9uOjNmODZjZDAwLTUwNWEtNGVkNC04ZTliLTJmOGI4NGM3NGNlOQ==",
+},
+orderPromotion: {
+  name: "e2e Order promotion for adding rules",
+  id: "UHJvbW90aW9uOjJlM2VhNDkyLTRhMTAtNDYzOS05MWVmLTc1YzQ1OTUxNGQyMQ==",
   },
 }
 

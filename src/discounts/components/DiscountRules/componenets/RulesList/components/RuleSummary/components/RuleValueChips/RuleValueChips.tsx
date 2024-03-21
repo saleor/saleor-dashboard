@@ -25,6 +25,7 @@ export const RuleValueChips = ({
       backgroundColor="accent1Pressed"
       borderColor="accent1"
       color="default1"
+      data-test-id="rule-value-chip"
     >
       {rule.rewardType === RewardTypeEnum.GIFT
         ? intl.formatMessage({ defaultMessage: "Gift", id: "ZBs2Pb" })
