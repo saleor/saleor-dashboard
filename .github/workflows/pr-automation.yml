@@ -7,18 +7,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  setup_cache:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Cache Playwright downloads
-        uses: actions/cache@v3
-        with:
-          path: ~/.playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
   initialize-cloud:
     runs-on: ubuntu-latest
     outputs:
@@ -132,7 +120,7 @@ jobs:
 
   run-tests:
     runs-on: ubuntu-latest
-    needs: [initialize-cloud, deploy-dashboard, setup_cache]
+    needs: [initialize-cloud, deploy-dashboard]
     strategy:
       fail-fast: false
       matrix:
