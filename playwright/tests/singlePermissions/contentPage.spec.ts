@@ -18,7 +18,7 @@ test("TC: SALEOR_14 User should be able to navigate to content list as a staff m
   await page.goto(URL_LIST.homePage);
   await mainMenuPage.openContent();
   await expect(contentPage.createContentButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(3);
+  await mainMenuPage.expectMenuItemsCount(4);
   await basePage.expectGridToBeAttached();
 });
 test("TC: SALEOR_15 User should be able to navigate to page types list as a staff member using CONTENT aka PAGE permission @e2e", async ({
@@ -36,5 +36,5 @@ test("TC: SALEOR_15 User should be able to navigate to page types list as a staf
 
   await configurationPage.openPageTypes();
   await expect(pageTypesPage.createPageTypeButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(3);
+  await mainMenuPage.expectMenuItemsCount(4);
 });
