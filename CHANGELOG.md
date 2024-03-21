@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.19.4
+
+### Patch Changes
+
+- dd4e5f113: Fix "TypeError: Cannot read properties of undefined (reading '0')" error thrown by datagrid by stop propagating events from RadioGroup component in ChannelsAvailability. RadioGroup fires couple events at onec and datagrid listing to global onClick event, that cause error in datagrid.
+- e153911cb: Remove storybook
+- 1a0f38092: Add "ResizeObserver loop limit exceeded" to ignored in Sentry. Error is thrown only during Cypress tests that will be soon migrated and we could remove error from ignored.
+- 1b06dcfa7: Fixed broken link that points to app details when user selects method of tax calculation.
+- c153168e2: Enable sourcemaps export to Senty
+- cdd6faeee: Add "ResizeObserver loop completed with undelivered notifications" to ignored in Sentry.
+
 ## 3.19.3
 
 ### Patch Changes
