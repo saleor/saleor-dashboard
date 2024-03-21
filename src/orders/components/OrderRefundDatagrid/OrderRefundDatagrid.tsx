@@ -85,33 +85,35 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
           <FormattedMessage {...refundGridMessages.addNewRefund} />
         </Button>
       </Box>
-      <DatagridChangeStateContext.Provider value={datagrid}>
-        <Datagrid
-          readonly
-          hasRowHover
-          rowMarkers="none"
-          columnSelect="none"
-          freezeColumns={2}
-          menuItems={getMenuItems}
-          verticalBorder={col => col > 1}
-          availableColumns={visibleColumns}
-          emptyText={""}
-          getCellContent={getCellContent}
-          getCellError={() => false}
-          rows={grantedRefunds.length}
-          selectionActions={() => null}
-          onColumnResize={handlers.onResize}
-          onColumnMoved={handlers.onMove}
-          recentlyAddedColumn={recentlyAddedColumn}
-          renderColumnPicker={() => (
-            <ColumnPicker
-              selectedColumns={selectedColumns}
-              staticColumns={staticColumns}
-              onToggle={handlers.onToggle}
-            />
-          )}
-        />
-      </DatagridChangeStateContext.Provider>
+      {grantedRefunds.length !== 0 && (
+        <DatagridChangeStateContext.Provider value={datagrid}>
+          <Datagrid
+            readonly
+            hasRowHover
+            rowMarkers="none"
+            columnSelect="none"
+            freezeColumns={2}
+            menuItems={getMenuItems}
+            verticalBorder={col => col > 1}
+            availableColumns={visibleColumns}
+            emptyText={""}
+            getCellContent={getCellContent}
+            getCellError={() => false}
+            rows={grantedRefunds.length}
+            selectionActions={() => null}
+            onColumnResize={handlers.onResize}
+            onColumnMoved={handlers.onMove}
+            recentlyAddedColumn={recentlyAddedColumn}
+            renderColumnPicker={() => (
+              <ColumnPicker
+                selectedColumns={selectedColumns}
+                staticColumns={staticColumns}
+                onToggle={handlers.onToggle}
+              />
+            )}
+          />
+        </DatagridChangeStateContext.Provider>
+      )}
     </DashboardCard>
   );
 };

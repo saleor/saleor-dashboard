@@ -8363,10 +8363,6 @@
     "context": "balance curreny missing error message",
     "string": "Balance currency is missing"
   },
-  "tZmVfa": {
-    "context": "refund section header",
-    "string": "Refund"
-  },
   "tZnV8L": {
     "context": "Header row stock label",
     "string": "Stock"
@@ -8778,6 +8774,10 @@
   "w+8BfK": {
     "context": "button",
     "string": "Edit Address"
+  },
+  "w067gF": {
+    "context": "refund section header",
+    "string": "Refunds"
   },
   "w2Cewo": {
     "string": "Search engine title"
