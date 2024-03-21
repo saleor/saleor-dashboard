@@ -21,11 +21,13 @@ import { refundGridMessages } from "./messages";
 interface OrderRefundDatagridProps {
   grantedRefunds: OrderDetailsFragment["grantedRefunds"];
   orderId: string;
+  onRefundAdd: () => void;
 }
 
 export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
   grantedRefunds,
   orderId,
+  onRefundAdd,
 }) => {
   const { datagrid, currentTheme, settings, handleColumnChange } =
     useDatagridOpts(ListViews.ORDER_REFUNDS);
@@ -55,7 +57,9 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
       {
         label: "",
         Icon: (
-          <Link to={orderGrantRefundEditUrl(orderId, grantedRefunds[index].id)}>
+          <Link
+            to={orderGrantRefundEditUrl(orderId, grantedRefunds[index]?.id)}
+          >
             <EditIcon />
           </Link>
         ),
@@ -76,8 +80,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
         <Text size={5} fontWeight="bold">
           <FormattedMessage {...refundGridMessages.refundSection} />
         </Text>
-        {/** TODO: Add modal */}
-        <Button variant="secondary">
+        <Button variant="secondary" onClick={onRefundAdd}>
           <PlusIcon />
           <FormattedMessage {...refundGridMessages.addNewRefund} />
         </Button>

@@ -278,6 +278,7 @@ export const OrderUnconfirmedDetails: React.FC<
               })
             }
             onInvoiceSend={id => openModal("invoice-send", { id })}
+            onRefundAdd={() => openModal("add-refund")}
             onSubmit={handleSubmit}
           />
         </OrderLineDiscountProvider>

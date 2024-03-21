@@ -38,6 +38,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onShippingAddressEdit: undefined,
   onSubmit: () => undefined,
   onAddManualTransaction: () => undefined,
+  onRefundAdd: () => undefined,
   order: order(null),
   errors: [],
   shop,
