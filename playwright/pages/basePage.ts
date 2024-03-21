@@ -20,6 +20,7 @@ export class BasePage {
     readonly errorBanner = page.locator(LOCATORS.errorBanner),
     readonly saveButton = page.locator(LOCATORS.saveButton),
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
+    readonly loader = page.locator(LOCATORS.loader),
     readonly previousPagePaginationButton = page.getByTestId(
       "button-pagination-back",
     ),
@@ -28,6 +29,7 @@ export class BasePage {
       "button-pagination-next",
     ),
     readonly searchInputListView = page.getByTestId("search-input"),
+    readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
   ) {
     this.page = page;
   }
@@ -46,6 +48,7 @@ export class BasePage {
   async clickFilterButton() {
     await this.filterButton.click();
   }
+
   async clickBulkDeleteGridRowsButton() {
     await this.bulkDeleteGridRowsButton.click();
   }
@@ -105,6 +108,12 @@ export class BasePage {
       "No error banner should be visible",
     ).not.toBeVisible();
   }
+  async resizeWindow(w: number, h: number) {
+    await this.page.setViewportSize({width: w, height: h,});
+  }
+  async clickOnSpecificPositionOnPage(x:number, y: number){
+    await this.page.mouse.click(x,y)
+}
 
   async getRandomInt(max: number) {
     return Math.floor(Math.random() * (max + 1));

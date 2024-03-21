@@ -1,3 +1,53 @@
+export const ATTRIBUTES = {
+  productAttributeWithValuesToBeUpdated: {
+    id: "QXR0cmlidXRlOjczMg==",
+    name: "e2e product attribute to be updated",
+    valueToBeDeleted: "e2e product attribute value to be deleted",
+    valueToBeUpdated: "e2e product attribute value to be updated",
+  },
+  contentAttributeWithValuesToBeUpdated: {
+    id: "QXR0cmlidXRlOjczMw==",
+    name: "e2e content attribute to be updated",
+    valueToBeDeleted: "e2e content attribute value to be deleted",
+    valueToBeUpdated: "e2e content attribute value to be updated",
+  },
+  productAttributeToBeDeleted: {
+    id: "QXR0cmlidXRlOjczNA==",
+    name: "e2e product attribute to be deleted",
+  },
+  contentAttributeToBeDeleted: {
+    id: "QXR0cmlidXRlOjczNQ==",
+    name: "e2e content attribute to be deleted",
+  },
+  attributesToBeBulkDeleted: {
+    names: [
+      "e2e attribute to be bulk deleted 1/3",
+      "e2e attribute to be bulk deleted 2/3",
+      "e2e attribute to be bulk deleted 3/3",
+    ],
+  },
+  attributesToBeUpdated:
+    [ {name:
+      "e2e product attribute to be updated 1",
+      id: "QXR0cmlidXRlOjc0MA=="
+      },
+      { name: "e2e content attribute to be updated 2", id: "QXR0cmlidXRlOjczOQ==" }
+    ],
+    attributeTypesWithAbilityToAddValues:{names:
+    ["DROPDOWN","MULTISELECT","SWATCH",]
+  },
+  attributeTypesWithoutAbilityToAddValues: {
+    names:
+      ["FILE",
+        "NUMERIC",
+        "RICH_TEXT",
+        "PLAIN_TEXT",
+        "BOOLEAN",
+        "DATE",
+        "DATE_TIME",]
+  },
+  attributeReferencesEntities: {names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"]},
+  }
 export const VOUCHERS = {
   vouchers: {
     voucherToBeEditedWithFreeShipping: {
