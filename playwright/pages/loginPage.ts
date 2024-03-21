@@ -28,11 +28,9 @@ export class LoginPage {
     await this.sendEmailWithResetLinkButton.click();
   }
 
-  async loginAndSetStorageState(
+  async loginViaUI(
     userEmail: string,
     userPassword: string,
-    page: Page,
-    path: string,
   ) {
     await this.page.goto(process.env.BASE_URL!);
     await this.typeEmail(userEmail);
@@ -41,8 +39,6 @@ export class LoginPage {
     await expect(this.homePage.welcomeMessage).toContainText("Hello there,", {
       timeout: 15000
     });
-    // End of authentication steps.
-    await page.context().storageState({ path });
   }
 
   async typeEmail(email: string) {
