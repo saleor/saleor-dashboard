@@ -1,6 +1,7 @@
 import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppUrls } from "@dashboard/apps/urls";
-import { Box, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { Box, Button, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -23,6 +24,12 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
   identifier,
 }) => {
   const logo = logoUrl ? { source: logoUrl } : undefined;
+
+  const navigate = useNavigator();
+
+  const navigateToAppScreen = () => {
+    navigate(AppUrls.resolveAppDetailsUrl(id));
+  };
 
   return (
     <Box
@@ -66,22 +73,22 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
           )}
         </Box>
       </Box>
-      <Box
-        as="a"
-        href={AppUrls.resolveAppDetailsUrl(id)}
-        target="_blank"
-        textDecoration="underline"
-        display="flex"
-        alignItems="center"
-        gap={1}
-      >
-        {identifier && (
-          <Text color="default2" size={2} ellipsis __maxWidth="150px">
-            {identifier}
-          </Text>
-        )}
-        <ExternalLinkIcon size="small" color="default2" />
-      </Box>
+      <Button onClick={navigateToAppScreen} variant="tertiary">
+        <Box display="flex" alignItems="center" gap={1}>
+          {identifier && (
+            <Text
+              color="default2"
+              size={2}
+              ellipsis
+              __maxWidth="150px"
+              textDecoration="underline"
+            >
+              {identifier}
+            </Text>
+          )}
+          <ExternalLinkIcon size="small" color="default2" />
+        </Box>
+      </Button>
     </Box>
   );
 };
