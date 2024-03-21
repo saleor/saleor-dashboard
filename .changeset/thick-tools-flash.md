@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-Add tests for thirdparty apps
+Adding e2e tests for attributes
