@@ -1,6 +1,6 @@
 import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
 
-export function appsIsLoading({
+export function appsAreLoading({
   appInstallationList,
   appList,
   hasManagedAppsPermission,

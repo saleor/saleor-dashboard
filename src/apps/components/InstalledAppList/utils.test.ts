@@ -1,9 +1,9 @@
 import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
 
-import { appsIsLoading, hasEmptyAppList } from "./utils";
+import { appsAreLoading, hasEmptyAppList } from "./utils";
 
 describe("InstalledAppList utils", () => {
-  describe("appsIsLoading", () => {
+  describe("appsAreLoading", () => {
     describe("has MANAGE_APPS permission", () => {
       const hasManagedAppsPermission = true;
 
@@ -13,7 +13,7 @@ describe("InstalledAppList utils", () => {
         const appInstallationList = undefined;
 
         // Act
-        const isLoading = appsIsLoading({
+        const isLoading = appsAreLoading({
           appList,
           appInstallationList,
           hasManagedAppsPermission,
@@ -33,7 +33,7 @@ describe("InstalledAppList utils", () => {
         ] as AppInstallation[];
 
         // Act
-        const isLoading = appsIsLoading({
+        const isLoading = appsAreLoading({
           appList,
           appInstallationList,
           hasManagedAppsPermission,
@@ -49,7 +49,7 @@ describe("InstalledAppList utils", () => {
         const appInstallationList = undefined;
 
         // Act
-        const isLoading = appsIsLoading({
+        const isLoading = appsAreLoading({
           appList,
           appInstallationList,
           hasManagedAppsPermission,
@@ -65,7 +65,7 @@ describe("InstalledAppList utils", () => {
         const appInstallationList: AppInstallation[] = [];
 
         // Act
-        const isLoading = appsIsLoading({
+        const isLoading = appsAreLoading({
           appList,
           appInstallationList,
           hasManagedAppsPermission,
@@ -85,7 +85,7 @@ describe("InstalledAppList utils", () => {
         const appInstallationList: AppInstallation[] = [];
 
         // Act
-        const isLoading = appsIsLoading({
+        const isLoading = appsAreLoading({
           appList,
           appInstallationList,
           hasManagedAppsPermission,
@@ -101,7 +101,7 @@ describe("InstalledAppList utils", () => {
         const appInstallationList = undefined;
 
         // Act
-        const isLoading = appsIsLoading({
+        const isLoading = appsAreLoading({
           appList,
           appInstallationList,
           hasManagedAppsPermission,

@@ -18,10 +18,6 @@ export const AppListCardInstallButton = ({
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
-  if (!installHandler) {
-    return null;
-  }
-
   if (!hasManagedAppsPermission) {
     return (
       <ButtonWithTooltip

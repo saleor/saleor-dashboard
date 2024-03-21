@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 import InstalledAppListRow from "../InstalledAppListRow";
 import NotInstalledAppListRow from "../NotInstalledAppListRow";
 import { messages } from "./messages";
-import { appsIsLoading, hasEmptyAppList } from "./utils";
+import { appsAreLoading, hasEmptyAppList } from "./utils";
 
 interface InstalledAppListProps extends ListProps {
   appList?: InstalledApp[];
@@ -24,7 +24,7 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   if (
-    appsIsLoading({ appList, appInstallationList, hasManagedAppsPermission })
+    appsAreLoading({ appList, appInstallationList, hasManagedAppsPermission })
   ) {
     return <Skeleton />;
   }
