@@ -1,7 +1,7 @@
 import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppUrls } from "@dashboard/apps/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -73,21 +73,22 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
           )}
         </Box>
       </Box>
-      <Box
-        as="a"
-        textDecoration="underline"
-        display="flex"
-        alignItems="center"
-        gap={1}
-        onClick={navigateToAppScreen}
-      >
-        {identifier && (
-          <Text color="default2" size={2} ellipsis __maxWidth="150px">
-            {identifier}
-          </Text>
-        )}
-        <ExternalLinkIcon size="small" color="default2" />
-      </Box>
+      <Button onClick={navigateToAppScreen} variant="tertiary">
+        <Box display="flex" alignItems="center" gap={1}>
+          {identifier && (
+            <Text
+              color="default2"
+              size={2}
+              ellipsis
+              __maxWidth="150px"
+              textDecoration="underline"
+            >
+              {identifier}
+            </Text>
+          )}
+          <ExternalLinkIcon size="small" color="default2" />
+        </Box>
+      </Button>
     </Box>
   );
 };
