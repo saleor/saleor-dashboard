@@ -1,7 +1,8 @@
 import * as RadixRadioGroup from "@radix-ui/react-radio-group";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import { RadioTileIndicator } from "./RadioTileIndicator";
 import { getBgColor, getBorderColor, getHoverStateBgColor } from "./utils";
 
 export interface RadioTileProps {
@@ -60,27 +61,7 @@ export const RadioTile = ({
             justifyContent="center"
             alignItems="center"
           >
-            <RadixRadioGroup.Indicator
-              className={sprinkles({
-                position: "relative",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "buttonDefaultPrimary",
-                height: "100%",
-                width: "100%",
-                borderRadius: "100%",
-              })}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="6"
-                height="6"
-                fill="white"
-              >
-                <circle cx="3" cy="3" r="3" fill="currentColor" />
-              </svg>
-            </RadixRadioGroup.Indicator>
+            <RadioTileIndicator />
           </Box>
         </Box>
         <Text size={5}>{title}</Text>
