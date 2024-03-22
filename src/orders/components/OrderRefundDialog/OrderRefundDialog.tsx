@@ -77,7 +77,6 @@ export const OrderRefundDialog = ({
             </Text>
           </Button>
           <Button onClick={onConfirm}>
-            {" "}
             <Text fontWeight="medium" color="buttonDefaultPrimary">
               {intl.formatMessage(buttonMessages.confirm)}
             </Text>

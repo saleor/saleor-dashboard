@@ -8,7 +8,7 @@ import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
 import { ListViews } from "@dashboard/types";
 import { Box, Button, EditIcon, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import {
@@ -29,6 +29,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
   orderId,
   onRefundAdd,
 }) => {
+  const intl = useIntl();
   const { datagrid, currentTheme, settings, handleColumnChange } =
     useDatagridOpts(ListViews.ORDER_REFUNDS);
 
@@ -85,41 +86,33 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
           <FormattedMessage {...refundGridMessages.addNewRefund} />
         </Button>
       </Box>
-      {grantedRefunds.length ? (
-        <DatagridChangeStateContext.Provider value={datagrid}>
-          <Datagrid
-            readonly
-            hasRowHover
-            rowMarkers="none"
-            columnSelect="none"
-            freezeColumns={2}
-            menuItems={getMenuItems}
-            verticalBorder={col => col > 1}
-            availableColumns={visibleColumns}
-            emptyText={""}
-            getCellContent={getCellContent}
-            getCellError={() => false}
-            rows={grantedRefunds.length}
-            selectionActions={() => null}
-            onColumnResize={handlers.onResize}
-            onColumnMoved={handlers.onMove}
-            recentlyAddedColumn={recentlyAddedColumn}
-            renderColumnPicker={() => (
-              <ColumnPicker
-                selectedColumns={selectedColumns}
-                staticColumns={staticColumns}
-                onToggle={handlers.onToggle}
-              />
-            )}
-          />
-        </DatagridChangeStateContext.Provider>
-      ) : (
-        <Box paddingX={6}>
-          <Text size={2} color="default2">
-            <FormattedMessage {...refundGridMessages.noRefunds} />
-          </Text>
-        </Box>
-      )}
+      <DatagridChangeStateContext.Provider value={datagrid}>
+        <Datagrid
+          readonly
+          hasRowHover
+          rowMarkers="none"
+          columnSelect="none"
+          freezeColumns={2}
+          menuItems={getMenuItems}
+          verticalBorder={col => col > 1}
+          availableColumns={visibleColumns}
+          emptyText={intl.formatMessage(refundGridMessages.noRefunds)}
+          getCellContent={getCellContent}
+          getCellError={() => false}
+          rows={grantedRefunds.length}
+          selectionActions={() => null}
+          onColumnResize={handlers.onResize}
+          onColumnMoved={handlers.onMove}
+          recentlyAddedColumn={recentlyAddedColumn}
+          renderColumnPicker={() => (
+            <ColumnPicker
+              selectedColumns={selectedColumns}
+              staticColumns={staticColumns}
+              onToggle={handlers.onToggle}
+            />
+          )}
+        />
+      </DatagridChangeStateContext.Provider>
     </DashboardCard>
   );
 };
