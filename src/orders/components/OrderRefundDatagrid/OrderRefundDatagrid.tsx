@@ -85,7 +85,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
           <FormattedMessage {...refundGridMessages.addNewRefund} />
         </Button>
       </Box>
-      {grantedRefunds.length !== 0 && (
+      {grantedRefunds.length ? (
         <DatagridChangeStateContext.Provider value={datagrid}>
           <Datagrid
             readonly
@@ -113,6 +113,12 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
             )}
           />
         </DatagridChangeStateContext.Provider>
+      ) : (
+        <Box paddingX={6}>
+          <Text size={2} color="default2">
+            <FormattedMessage {...refundGridMessages.noRefunds} />
+          </Text>
+        </Box>
       )}
     </DashboardCard>
   );

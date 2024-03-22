@@ -1014,6 +1014,10 @@
     "context": "order history message",
     "string": "Payment confirmation was sent to customer"
   },
+  "4Z6Z3F": {
+    "context": "empty state message",
+    "string": "No refunds made for this order."
+  },
   "4fJ17F": {
     "context": "Charge in progress transaction amount, data display header",
     "string": "Pending charge"

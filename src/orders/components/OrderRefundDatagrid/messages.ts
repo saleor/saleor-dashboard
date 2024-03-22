@@ -36,4 +36,9 @@ export const refundGridMessages = defineMessages({
     id: "w067gF",
     description: "refund section header",
   },
+  noRefunds: {
+    defaultMessage: "No refunds made for this order.",
+    id: "ZU1Kz8",
+    description: "empty state message",
+  },
 });
