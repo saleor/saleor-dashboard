@@ -39,6 +39,7 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
       <Box display="flex" gap={1} paddingY={2}>
         <ButtonWithTooltip
           variant="tertiary"
+          data-test-id="app-activate-button"
           tooltip={tooltipContent}
           disabled={!hasManagedAppsPermission}
           onClick={isActive ? onAppDeactivateOpen : onAppActivateOpen}
@@ -56,6 +57,7 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
 
         <ButtonWithTooltip
           variant="tertiary"
+          data-test-id="app-delete-button"
           tooltip={tooltipContent}
           disabled={!hasManagedAppsPermission}
           onClick={onAppDeleteOpen}

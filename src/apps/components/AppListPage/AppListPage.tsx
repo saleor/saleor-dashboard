@@ -106,7 +106,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
 
           <MarketplaceAlert error={marketplaceError} />
           {sectionsAvailability.all && !marketplaceError && (
-            <Box marginTop={7}>
+            <Box marginTop={7} data-test-id="apps-available">
               <Text
                 as="h3"
                 size={5}
@@ -125,7 +125,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             </Box>
           )}
           {sectionsAvailability.comingSoon && !marketplaceError && (
-            <Box marginTop={7}>
+            <Box marginTop={7} data-test-id="apps-upcoming">
               <Text
                 as="h3"
                 size={5}
@@ -136,6 +136,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
                 {intl.formatMessage(messages.comingSoonApps)}
               </Text>
               <AllAppList
+                data-test-id="app-list-coming-soon"
                 appList={comingSoonMarketplaceApps}
                 appInstallationList={appsInstallations}
               />
