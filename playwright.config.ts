@@ -1,36 +1,36 @@
 import dotenv from "dotenv";
-
 import { defineConfig, devices } from "@playwright/test";
 
 dotenv.config();
-
+const env = process.env;
+const DEFAULT_RETRIES = '0';
+const DEFAULT_WORKERS = '2';
 export default defineConfig({
   testDir: "playwright/tests",
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 4 : 2,
-  reporter: process.env.CI ? "blob" : "html",
+  forbidOnly: !!env.CI,
+  retries: parseInt(env.RETRIES || DEFAULT_RETRIES),
+  workers: parseInt(env.WORKERS || DEFAULT_WORKERS),
+  reporter: env.CI ? "blob" : "html",
   maxFailures: 5,
-  timeout: process.env.CI ? 45000 : 60000,
+  timeout: env.CI ? 45000 : 60000,
   use: {
-    baseURL: process.env.BASE_URL,
-    trace: process.env.CI ? "on-first-retry" : "off",
+    baseURL: env.BASE_URL || '',
+    trace: env.CI ? "on-first-retry" : "off",
     screenshot: "only-on-failure",
     testIdAttribute: "data-test-id",
-    video: process.env.CI ? "retain-on-failure" : "off",
+    video: env.CI ? "retain-on-failure" : "off",
     headless: true,
   },
   projects: [
     {
-    name: "setup",
-    testMatch: /.*\.setup\.ts/
+      name: "setup",
+      testMatch: /.*\.setup\.ts/
     },
     {
-      dependencies: ["setup"],
       name: "chromium",
+      dependencies: ["setup"],
       use: { ...devices["Desktop Chrome"] },
     },
   ],
 });
-
