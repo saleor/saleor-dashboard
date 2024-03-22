@@ -1,11 +1,10 @@
 import { DashboardModal } from "@dashboard/components/Modal";
+import { RadioTiles } from "@dashboard/components/RadioTiles/RadioTiles";
 import { buttonMessages } from "@dashboard/intl";
-import * as RadixRadioGroup from "@radix-ui/react-radio-group";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { RadioTile } from "../../../components/RadioTile/RadioTile";
 import { orderRefundDialogMesages } from "./messages";
 
 interface OrderRefundDialogProps {
@@ -35,7 +34,7 @@ export const OrderRefundDialog = ({
           {intl.formatMessage(orderRefundDialogMesages.title)}
         </DashboardModal.Title>
         <Text>{intl.formatMessage(orderRefundDialogMesages.subtitle)}</Text>
-        <RadixRadioGroup.Root
+        <RadioTiles
           asChild
           value={selected}
           onValueChange={val => setSelected(val as RefundType)}
@@ -49,7 +48,7 @@ export const OrderRefundDialog = ({
             display="flex"
             flexDirection="column"
           >
-            <RadioTile
+            <RadioTiles.RadioTile
               value={"standard"}
               checked={selected === "standard"}
               title={intl.formatMessage(
@@ -59,7 +58,7 @@ export const OrderRefundDialog = ({
                 orderRefundDialogMesages.standardRefundSubtitle,
               )}
             />
-            <RadioTile
+            <RadioTiles.RadioTile
               value={"misc"}
               checked={selected === "misc"}
               title={intl.formatMessage(
@@ -70,7 +69,7 @@ export const OrderRefundDialog = ({
               )}
             />
           </Box>
-        </RadixRadioGroup.Root>
+        </RadioTiles>
         <DashboardModal.Actions>
           <Button onClick={onClose} variant="secondary">
             <Text fontWeight="medium">
