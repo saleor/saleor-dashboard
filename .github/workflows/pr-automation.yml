@@ -8,7 +8,7 @@ concurrency:
 
 jobs:
   initialize-cloud:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
@@ -43,7 +43,7 @@ jobs:
 
   deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: initialize-cloud
     permissions:
       deployments: write
@@ -118,8 +118,9 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
+
   run-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [initialize-cloud, deploy-dashboard]
     strategy:
       fail-fast: false
@@ -138,11 +139,13 @@ jobs:
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
           MAILPITURL: ${{ secrets.MAILPITURL }}
+          PW_WORKERS: ${{ vars.PW_WORKERS }}
+          PW_RETRIES: ${{ vars.PW_RETRIES }}
 
   merge-reports:
     if: "!cancelled()"
     needs: run-tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
