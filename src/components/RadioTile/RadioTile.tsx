@@ -2,7 +2,7 @@ import * as RadixRadioGroup from "@radix-ui/react-radio-group";
 import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { getBgColor, getBorderColor, getHoverState } from "./utils";
+import { getBgColor, getBorderColor, getHoverStateBgColor } from "./utils";
 
 export interface RadioTileProps {
   checked: boolean;
@@ -44,7 +44,7 @@ export const RadioTile = ({
           display="flex"
           justifyContent="center"
           alignItems="center"
-          backgroundColor={getHoverState({ checked, isHoverState })}
+          backgroundColor={getHoverStateBgColor({ checked, isHoverState })}
         >
           <Box
             width={3}
