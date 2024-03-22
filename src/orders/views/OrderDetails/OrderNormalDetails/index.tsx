@@ -30,6 +30,7 @@ import OrderFulfillStockExceededDialog from "@dashboard/orders/components/OrderF
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
 import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog";
+import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import {
   isAnyAddressEditModalOpen,
@@ -276,6 +277,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           })
         }
         onInvoiceSend={id => openModal("invoice-send", { id })}
+        onRefundAdd={() => openModal("add-refund")}
         onSubmit={handleSubmit}
       />
       <OrderCannotCancelOrderDialog
@@ -457,6 +459,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           })
         }
       />
+      <OrderRefundDialog
+        open={params.action === "add-refund"}
+        onClose={closeModal}
+        // TODO: Add redirect to refund view
+        onConfirm={() => null}
+      />
+
       <OrderAddressFields
         action={params?.action}
         orderShippingAddress={order?.shippingAddress}
