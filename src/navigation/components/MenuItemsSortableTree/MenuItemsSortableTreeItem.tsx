@@ -99,8 +99,8 @@ export const MenuItemsSortableTreeItem = ({
             justifyContent="center"
             borderRadius="50%"
             backgroundColor="accent1"
-            fontSize="bodyEmpSmall"
-            fontWeight="bodyEmpSmall"
+            size={3}
+            fontWeight="medium"
             color="default1"
           >
             {childCount}

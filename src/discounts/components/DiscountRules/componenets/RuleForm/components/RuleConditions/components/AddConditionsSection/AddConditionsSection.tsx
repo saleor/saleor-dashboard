@@ -17,7 +17,7 @@ export const AddConditionsSection = ({
   return (
     <Box display="flex" flexDirection="column" gap={4}>
       <Text>{intl.formatMessage(messages.conditions)}</Text>
-      <Text variant="caption" color="default2">
+      <Text size={2} color="default2">
         {intl.formatMessage(messages.noConditonsCreate)}
       </Text>
 
@@ -27,7 +27,7 @@ export const AddConditionsSection = ({
         alignSelf="start"
         disabled={disabled}
         onClick={addCondition}
-        data-test-id="add-first-condition-button"
+        data-test-id="add-condition-button"
       >
         <FormattedMessage defaultMessage="Add condition" id="fg8dzN" />
       </Button>

@@ -1,3 +1,53 @@
+export const ATTRIBUTES = {
+  productAttributeWithValuesToBeUpdated: {
+    id: "QXR0cmlidXRlOjczMg==",
+    name: "e2e product attribute to be updated",
+    valueToBeDeleted: "e2e product attribute value to be deleted",
+    valueToBeUpdated: "e2e product attribute value to be updated",
+  },
+  contentAttributeWithValuesToBeUpdated: {
+    id: "QXR0cmlidXRlOjczMw==",
+    name: "e2e content attribute to be updated",
+    valueToBeDeleted: "e2e content attribute value to be deleted",
+    valueToBeUpdated: "e2e content attribute value to be updated",
+  },
+  productAttributeToBeDeleted: {
+    id: "QXR0cmlidXRlOjczNA==",
+    name: "e2e product attribute to be deleted",
+  },
+  contentAttributeToBeDeleted: {
+    id: "QXR0cmlidXRlOjczNQ==",
+    name: "e2e content attribute to be deleted",
+  },
+  attributesToBeBulkDeleted: {
+    names: [
+      "e2e attribute to be bulk deleted 1/3",
+      "e2e attribute to be bulk deleted 2/3",
+      "e2e attribute to be bulk deleted 3/3",
+    ],
+  },
+  attributesToBeUpdated:
+    [ {name:
+      "e2e product attribute to be updated 1",
+      id: "QXR0cmlidXRlOjc0MA=="
+      },
+      { name: "e2e content attribute to be updated 2", id: "QXR0cmlidXRlOjczOQ==" }
+    ],
+    attributeTypesWithAbilityToAddValues:{names:
+    ["DROPDOWN","MULTISELECT","SWATCH",]
+  },
+  attributeTypesWithoutAbilityToAddValues: {
+    names:
+      ["FILE",
+        "NUMERIC",
+        "RICH_TEXT",
+        "PLAIN_TEXT",
+        "BOOLEAN",
+        "DATE",
+        "DATE_TIME",]
+  },
+  attributeReferencesEntities: {names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"]},
+  }
 export const VOUCHERS = {
   vouchers: {
     voucherToBeEditedWithFreeShipping: {
@@ -32,8 +82,86 @@ promotionWithoutRulesToBeDeleted: {
   id: "UHJvbW90aW9uOjRmNTQwMDc1LTZlZGMtNDI1NC1hY2U2LTQ2MzdlMGYxZWJhOA==",
   name: "e2e Order predicate promotion without rules",
   type: "Order",
-
 },
+catalogPromotionWithRulesToBeDeleted: {
+  id: "UHJvbW90aW9uOmYyY2VjMDhkLTVkYmUtNGVjNC05NTNjLWMzMmQ5ZGQ2MTExYw==",
+  name: "e2e Catalog promo with rules to be deleted",
+  type: "Catalog",
+  rules: [
+    {
+      id: "UHJvbW90aW9uUnVsZTo3NDk4MGVhNS0zNDA2LTQxZGYtOTc3Mi1jMzg3MjNhMWEwOWM=",
+      name: "rule 1"
+    },
+
+    {
+      id: "UHJvbW90aW9uUnVsZTozMTEyMTE0Yy1hYjFkLTQ3OTktODY0My1jZDhlODMwYzllZmE=",
+      name: "rule 2"
+    },
+
+    {
+      id: "UHJvbW90aW9uUnVsZTozOWE3Zjc1Zi1jYTdmLTQ4ODgtOGE4NC02NzdjMTVhOGQ4Yjc=",
+      name: "rule 3"
+    }
+
+  ],
+},
+orderPromotionWithRulesToBeDeleted: {
+  id: "UHJvbW90aW9uOjA1MDllZjhjLTc0ZTEtNGMyMC1iZDk5LWRhYWU1YWJlZDM1Nw==",
+  name: "e2e Order promo with rules to be deleted",
+  type: "Order",
+  rules: [
+  {id: "UHJvbW90aW9uUnVsZTo2ZTdlODNkOS1kNjJlLTQ2YmQtOGE2ZS03OTdlYTZiODk2NmQ=",
+name: "rule #1"},
+
+{id: "UHJvbW90aW9uUnVsZTo1MzQwNjEyYy0wOWJhLTQxYzUtYmY2Yy1lYmUzZTQ3MjY0MjY=",
+name: "rule #2"},
+
+{id: "UHJvbW90aW9uUnVsZTpjMzk5ZTM1Ni04OWFhLTQ0MTUtYWE0Zi01NThlZDQ2M2IwNTM=",
+name: "rule #3"}
+
+  ],
+  },
+  orderPromotionWithRulesToBeUpdated: {
+    id: "UHJvbW90aW9uOjI0Njg3NmM5LWM1ZWMtNDBiYi1iMzExLWE3YWQ2YzBiZDc4NQ==",
+    name: "e2e Order promo with rules to be updated",
+    type: "Order",
+    rules: [
+      {
+        id: "UHJvbW90aW9uUnVsZTo3NmEwOGYzZi0xMzZhLTRmNTUtYTc0NS1kZmIxNDZkOWI4ZGQ=",
+        name: "rule 1",
+        channel: "Channel-PLN",
+        channelCurrency: "PLN",
+      },
+
+      {
+        id: "UHJvbW90aW9uUnVsZTpjODIxMWJhNS05ZGRmLTRhYzQtOTdlMS04YmM0MzNhZjRlOTM=",
+        name: "rule 2",
+        channel: "Channel-PLN",
+        channelCurrency: "PLN",
+        giftRewardToBeDeleted:"UHJvZHVjdFZhcmlhbnQ6MjE0"
+      },
+    ],
+  },
+  catalogPromotionWithRulesToBeUpdated: {
+    id: "UHJvbW90aW9uOmJkZTgyNGQ4LTk4ZTktNDM1NC04ODE4LTE1YzVjNmI2MWU2NQ==",
+    name: "e2e Catalog promo with rules to be updated",
+    type: "Catalog",
+    rules: [
+      {
+        id: "UHJvbW90aW9uUnVsZTplOWZjNjc2NS1kNzM2LTRhMzMtYjBiMy1hZWMxY2FmNGVkMDE=",
+        name: "rule #1",
+        channel: "Channel-USD",
+        channelCurrency: "USD",
+      },
+
+      {
+        id: "UHJvbW90aW9uUnVsZToyZjM3ZjRhOS01NjY0LTQzMDEtOWU4Zi0zZTliZGFjNmUyYjE=",
+        name: "rule 2",
+        channel: "Channel-USD",
+        channelCurrency: "USD",
+      },
+    ],
+  },
 promotionWithRulesToBeDeleted: {
   name: "e2e Catalog predicate promotion with rules",
   id: "UHJvbW90aW9uOjY0N2M2MzdhLTZjNTEtNDYxZC05MjQ2LTc0YTY0OGM0ZjAxNA==",
@@ -84,8 +212,8 @@ export const CATEGORIES = {
     ],
   },
   e2eCategory: {
-   id: "Q2F0ZWdvcnk6NTEx",
-  name: "e2e category"
+    id: "Q2F0ZWdvcnk6NTEx",
+    name: "e2e category"
   }
 };
 export const COLLECTIONS = {
@@ -202,7 +330,7 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3OQ==",
     name: "Bean Juice"
   },
-  e2eProduct2:{
+  e2eProduct2: {
     id: "UHJvZHVjdDoxMTU=",
     name: "Black Hoodie"
   },
@@ -372,3 +500,29 @@ export const USERS = {
     lastName: "user",
   },
 };
+
+export const APPS = {
+  appToBeDeleted: {
+    id: "QXBwOjY2",
+    name: "Adyen",
+    info: "App used in delete app test",
+  }
+}
+
+export const TRANSLATIONS = {
+  translationsToBeAdded: {
+    id: "Q2F0ZWdvcnk6NTEy",
+    name: "CategoryToTranslate",
+    info: "Category used to add translation test",
+  },
+  translationsToBeEdited: {
+    id: "UHJvZHVjdDo3OA==",
+    name: "Green Juice",
+    info: "Product used to edit translation test",
+  },
+  translationsToBeCleared: {
+    id: "Q29sbGVjdGlvbjox",
+    name: "Summer collection",
+    info: "Translation used in clear translation test",
+  }
+}

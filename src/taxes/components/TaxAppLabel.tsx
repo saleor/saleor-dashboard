@@ -1,6 +1,7 @@
 import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppUrls } from "@dashboard/apps/urls";
-import { Box, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { Box, Button, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -24,6 +25,12 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
 }) => {
   const logo = logoUrl ? { source: logoUrl } : undefined;
 
+  const navigate = useNavigator();
+
+  const navigateToAppScreen = () => {
+    navigate(AppUrls.resolveAppDetailsUrl(id));
+  };
+
   return (
     <Box
       gap={4}
@@ -42,19 +49,19 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
                   defaultMessage="Use app: {name}"
                   id="W2OIhn"
                   values={{
-                    name: <Text variant="bodyStrong">{name}</Text>,
+                    name: (
+                      <Text size={4} fontWeight="bold">
+                        {name}
+                      </Text>
+                    ),
                   }}
                 />
               </Text>
             )}
-            {version && (
-              <Text variant="body" color="default2">
-                {`v${version}`}
-              </Text>
-            )}
+            {version && <Text color="default2">{`v${version}`}</Text>}
           </Box>
           {created && (
-            <Text variant="caption" color="default2">
+            <Text size={2} color="default2">
               <FormattedMessage
                 defaultMessage="Created at: {date}"
                 id="XFKV5Z"
@@ -66,22 +73,22 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
           )}
         </Box>
       </Box>
-      <Box
-        as="a"
-        href={AppUrls.resolveAppDetailsUrl(id)}
-        target="_blank"
-        textDecoration="underline"
-        display="flex"
-        alignItems="center"
-        gap={1}
-      >
-        {identifier && (
-          <Text color="default2" variant="caption" ellipsis __maxWidth="150px">
-            {identifier}
-          </Text>
-        )}
-        <ExternalLinkIcon size="small" color="default2" />
-      </Box>
+      <Button onClick={navigateToAppScreen} variant="tertiary">
+        <Box display="flex" alignItems="center" gap={1}>
+          {identifier && (
+            <Text
+              color="default2"
+              size={2}
+              ellipsis
+              __maxWidth="150px"
+              textDecoration="underline"
+            >
+              {identifier}
+            </Text>
+          )}
+          <ExternalLinkIcon size="small" color="default2" />
+        </Box>
+      </Button>
     </Box>
   );
 };

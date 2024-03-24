@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: ./.github/actions
-    
+
       - name: Generate variables
         id: cloud_variables
         uses: ./.github/actions/prepare-tests-variables
@@ -118,77 +118,6 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
-  deploy-storybook:
-    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
-    runs-on: ubuntu-22.04
-    needs: initialize-cloud
-    permissions:
-      deployments: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-
-      - name: Start storybook deployment
-        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
-        id: storybook-deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: storybook ${{ needs.initialize-cloud.outputs.POOL_NAME }}
-          ref: ${{ github.head_ref }}
-
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-
-      - name: Install deps
-        run: npm ci
-
-      - name: Build storybook
-        run: npm run build-storybook
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-
-      - name: Deploy to S3
-        env:
-          AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
-          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
-        run: aws s3 sync ./build/storybook "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}/storybook"
-
-      - name: Invalidate cache
-        env:
-          AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
-          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
-        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
-
-      - name: Update storybook deployment status
-        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
-        if: always()
-        with:
-          step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
-          env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}/storybook/index.html
-          deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
-          env: storybook ${{ needs.initialize-cloud.outputs.POOL_NAME }}
-
   run-tests:
     runs-on: ubuntu-22.04
     needs: [initialize-cloud, deploy-dashboard]
@@ -208,9 +137,10 @@ jobs:
           E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
 
   merge-reports:
-    if: '!cancelled()'
+    if: "!cancelled()"
     needs: run-tests
     runs-on: ubuntu-22.04
     steps:

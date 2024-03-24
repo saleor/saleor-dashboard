@@ -6,7 +6,7 @@ import { MainMenuPage } from "@pages/mainMenuPage";
 import { PageTypesPage } from "@pages/pageTypesPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/content.json" });
+test.use({ storageState: "playwright/.auth/page.json" });
 
 test("TC: SALEOR_14 User should be able to navigate to content list as a staff member using CONTENT aka PAGE permission @e2e", async ({
   page,

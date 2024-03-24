@@ -3,7 +3,7 @@ import { DiscountsPage } from "@pages/discountsPage";
 import { expect, test } from "@playwright/test";
 import faker from "faker";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 let discounts: DiscountsPage;
 
 
@@ -65,23 +65,25 @@ for (const promotion of promotions) {
     });
     await expect(discounts.discountNameInput).toHaveValue(promotion.name, {timeout: 30000});
     await discounts.clickDeleteButton();
-    await discounts.deleteDialog.clickConfirmDeleteButton();
+    await discounts.deleteDiscountDialog.clickConfirmDeleteButton();
     await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
     })};
 
 const promotion = DISCOUNTS.cataloguePromotion
-const products = { promotionRule: "Products", predicateValue: PRODUCTS.e2eProductWithVariant1.name, predicate: PRODUCTS.e2eProductWithVariant1.name };
-const categories = { promotionRule: "Categories", predicateValue: CATEGORIES.e2eCategory.name, predicate: CATEGORIES.e2eCategory.name };
-const collections = { promotionRule: "Collections", predicateValue: COLLECTIONS.e2eCollection.name, predicate: COLLECTIONS.e2eCollection.name };
 const variant = PRODUCTS.e2eProductWithVariant1.variantName
 const productWithVariant = PRODUCTS.e2eProductWithVariant1.name
 const productWithVariantName = `${ productWithVariant }` + ` - ` + `${ variant }`
-const variants = {promotionRule: "Variants", predicateValue: `${productWithVariant}`, predicate: `${productWithVariantName}`}
+const variants = {promotionRule: "Variants", predicateValue: productWithVariantName}
+const products = { promotionRule: "Products", predicateValue: PRODUCTS.e2eProductWithVariant1.name };
+const categories = { promotionRule: "Categories", predicateValue: CATEGORIES.e2eCategory.name };
+const collections = { promotionRule: "Collections", predicateValue: COLLECTIONS.e2eCollection.name};
+
+
 const predicateValues = [categories, collections, products, variants];
 const rewardValue = "10";
 const channelName = CHANNELS.channelPLN.name
-for (const { promotionRule, predicateValue, predicate } of predicateValues) {
-  test(`TC: SALEOR_100 Create ${promotionRule} rule for ${predicate} in a catalogue promotion @discounts @e2e`, async () => {
+for (const { promotionRule, predicateValue } of predicateValues) {
+  test(`TC: SALEOR_100 Create ${promotionRule} rule for ${predicateValue} in a catalogue promotion @discounts @e2e`, async () => {
     await discounts.gotoExistingDiscount(promotion.id);
     await discounts.ruleSection.waitFor({
     state: "visible",
@@ -94,7 +96,7 @@ for (const { promotionRule, predicateValue, predicate } of predicateValues) {
     await discounts.promotionRuleDialog.selectSingleChannel(channelName);
     await discounts.promotionRuleDialog.selectPercentageRewardValueType()
     await discounts.promotionRuleDialog.typeRewardValue(rewardValue);
-    await discounts.promotionRuleDialog.clickFirstAddRuleConditionButton();
+    await discounts.promotionRuleDialog.clickAddRuleConditionButton();
     await discounts.promotionRuleDialog.clickRuleConditionPredicateDropdown();
     await discounts.promotionRuleDialog.selectPredicate(promotionRule);
     await discounts.promotionRuleDialog.selectRuleConditionValue(predicateValue);
@@ -102,7 +104,7 @@ for (const { promotionRule, predicateValue, predicate } of predicateValues) {
     await discounts.promotionRuleDialog.typeRewardValue(rewardValue);
     await discounts.promotionRuleDialog.clickSaveRuleButton();
     await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
-    await expect(discounts.existingRule.filter({ hasText: `Catalog rule: ${name}` })).toContainText(`Catalog rule: ${name}Discount of ${rewardValue}% on the purchase of ${promotionRule}: ${predicate} through the ${channelName}`)
+    await expect(discounts.existingRule.filter({ hasText: `Catalog rule: ${name}` }).first()).toContainText(`Catalog rule: ${name}Discount of ${rewardValue}% on the purchase of ${promotionRule}: ${predicateValue} through the ${channelName}`)
     }
 )};
 
@@ -127,21 +129,21 @@ for (const { conditionType, value, conditionDesc } of notEqConditions) {
     await discounts.promotionRuleDialog.selectSubtotalDiscountType()
     await discounts.promotionRuleDialog.selectFixedRewardValueType()
     await discounts.promotionRuleDialog.typeRewardValue(rewardValueFixed);
-    await discounts.promotionRuleDialog.clickFirstAddRuleConditionButton();
+    await discounts.promotionRuleDialog.clickAddRuleConditionButton();
     await discounts.promotionRuleDialog.clickRuleConditionPredicateDropdown();
     await discounts.promotionRuleDialog.selectPredicate("Subtotal price");
     await discounts.promotionRuleDialog.selectRuleConditionType("is")
     await discounts.promotionRuleDialog.typeRuleConditionValue("100.00");
-    await discounts.promotionRuleDialog.clickAnotherAddRuleConditionButton();
+    await discounts.promotionRuleDialog.clickAddRuleConditionButton();
     await discounts.promotionRuleDialog.clickRuleConditionPredicateDropdown();
     await discounts.promotionRuleDialog.selectPredicate("Total price", 1);
     await discounts.promotionRuleDialog.selectRuleConditionType(conditionType)
     await discounts.promotionRuleDialog.typeRuleConditionValue(value, 1);
     await discounts.promotionRuleDialog.clickSaveRuleButton();
     await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
-    await expect(discounts.existingRule.filter({ hasText: `Order rule: ${name}` })).toContainText(`Order rule: ${name}Discount of ${currency} ${rewardValueFixed} on the purchase of Subtotal price: ${currency} 100.00Total price: ${conditionDesc} ${currency} ${value} through the ${channelName}`)
+    await expect(discounts.existingRule.filter({ hasText: `Order rule: ${name}` }).first()).toContainText(`Order rule: ${name}Discount of ${currency} ${rewardValueFixed} on the purchase of Subtotal price: ${currency} 100.00Total price: ${conditionDesc} ${currency} ${value} through the ${channelName}`)
   ;}
-)}
+)};
 
 
 const condition1 = { condition: "Subtotal", gte:"150.00", lte: "170.00"}
@@ -161,15 +163,97 @@ for (const { condition, lte, gte } of conditionsBetween) {
     await discounts.promotionRuleDialog.selectSingleChannel(channelName);
     await discounts.promotionRuleDialog.selectGiftRewardDiscountType()
     await discounts.promotionRuleDialog.selectGiftReward("Polo Shirt")
-    await discounts.promotionRuleDialog.clickFirstAddRuleConditionButton();
+    await discounts.promotionRuleDialog.clickAddRuleConditionButton();
     await discounts.promotionRuleDialog.clickRuleConditionPredicateDropdown();
     await discounts.promotionRuleDialog.selectPredicate(`${condition} price`);
     await discounts.promotionRuleDialog.selectRuleConditionType("between")
     await discounts.promotionRuleDialog.typeRuleConditionBoundaryValues(gte, lte);
     await discounts.promotionRuleDialog.clickSaveRuleButton();
     await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
-    await expect(discounts.existingRule.filter({ hasText: `Order rule: ${name}` })).toContainText(
+    await expect(discounts.existingRule.filter({ hasText: `Order rule: ${name}` }).first()).toContainText(
       `Order rule: ${name}Discount of Gift on the purchase of ${condition} price: PLN ${ gte }–${ lte } through the ${ channelName }`);
   }
   )
 }
+
+const orderRules = [DISCOUNTS.orderPromotionWithRulesToBeUpdated.rules[0], DISCOUNTS.orderPromotionWithRulesToBeUpdated.rules[1]]
+for (const rule of orderRules) {
+  test(`TC: SALEOR_103 Update promotion ${rule.name} from Order promotion @discounts @e2e`, async () => {
+    await discounts.gotoExistingDiscount(DISCOUNTS.orderPromotionWithRulesToBeUpdated.id);
+    await discounts.ruleSection.waitFor({
+      state: "visible",
+      timeout: 10000,
+    })
+    await expect(discounts.existingRule.filter({ hasText: `Order rule: ${rule.name}` })).toBeVisible();
+    await discounts.clickEditRuleButton(`Order rule: ${rule.name}`);
+    if ((await (discounts.promotionRuleDialog.ruleConditionRow).isVisible())) {
+      await discounts.promotionRuleDialog.clickAddRuleConditionButton();
+      await discounts.promotionRuleDialog.selectPredicate("Total price",1);
+      await discounts.promotionRuleDialog.typeRuleConditionValue("13.33", 1);
+      await discounts.promotionRuleDialog.typeRewardValue("1.00");
+      await discounts.promotionRuleDialog.clickSaveEditedRuleButton();
+      await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+      await expect(discounts.existingRule.filter({ hasText: `Order rule: ${orderRules[0].name}` }).first()).toContainText(`Order rule: ${orderRules[0].name}Discount of ${orderRules[0].channelCurrency} 1.00 on the purchase of Subtotal price: ${orderRules[0].channelCurrency} 25.00Total price: ${orderRules[0].channelCurrency} 13.33 through the ${orderRules[0].channel}`)
+}
+    else {
+      const giftRewardToBeDeleted = orderRules[1].giftRewardToBeDeleted ?? '';
+      await discounts.promotionRuleDialog.clickAddRuleConditionButton();
+      await expect(discounts.promotionRuleDialog.ruleConditionRow.last()).toBeAttached();
+      await discounts.promotionRuleDialog.clickRuleConditionPredicateDropdown();
+      await discounts.promotionRuleDialog.selectPredicate("Subtotal price");
+      await discounts.promotionRuleDialog.selectRuleConditionType("is")
+      await discounts.promotionRuleDialog.typeRuleConditionValue("100.00");
+      await discounts.promotionRuleDialog.removeExistingGiftReward(giftRewardToBeDeleted);
+      await discounts.promotionRuleDialog.selectGiftReward("Blue Hoodie")
+      await discounts.promotionRuleDialog.clickSaveEditedRuleButton();
+      await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+      await expect(discounts.existingRule.filter({ hasText: `Order rule: ${orderRules[1].name}` }).first()).toContainText(`Order rule: ${orderRules[1].name}Discount of Gift on the purchase of Subtotal price: ${orderRules[1].channelCurrency} 100.00 through the ${orderRules[1].channel}`);
+    }
+  })}
+
+const catalogRules = [DISCOUNTS.catalogPromotionWithRulesToBeUpdated.rules[0], DISCOUNTS.catalogPromotionWithRulesToBeUpdated.rules[1]]
+for (const rule of catalogRules)  {
+      test(`TC: SALEOR_104 Update promotion ${rule.name} from Catalog promotion @discounts @e2e`, async () => {
+        await discounts.gotoExistingDiscount(DISCOUNTS.catalogPromotionWithRulesToBeUpdated.id);
+        await discounts.ruleSection.waitFor({
+          state: "visible",
+          timeout: 10000,
+        })
+        await expect(discounts.existingRule.filter({ hasText: `Catalog rule: ${rule.name}` })).toBeVisible();
+        const ruleChips = await discounts.existingRule.filter({ hasText: `Catalog rule: ${rule.name}` }).locator(discounts.ruleSummaryChip).count();
+        await discounts.clickEditRuleButton(`Catalog rule: ${rule.name}`);
+        if (await (discounts.promotionRuleDialog.ruleConditionRow).isVisible()) {
+          await discounts.promotionRuleDialog.selectRuleConditionValue(PRODUCTS.e2eProductWithVariant1.name);
+          await discounts.promotionRuleDialog.rewardValueInput.clear();
+          await expect (discounts.promotionRuleDialog.rewardValueInput).not.toHaveValue("10.00");
+          await discounts.promotionRuleDialog.typeRewardValue("15.00");
+        } else {
+          await discounts.promotionRuleDialog.clickAddRuleConditionButton();
+          await discounts.promotionRuleDialog.clickRuleConditionPredicateDropdown();
+          await discounts.promotionRuleDialog.selectPredicate("Collections");
+          await discounts.promotionRuleDialog.selectRuleConditionValue(COLLECTIONS.e2eCollection.name);
+        }
+        await discounts.promotionRuleDialog.clickSaveEditedRuleButton();
+        await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+        await expect(discounts.existingRule.filter({ hasText: `Catalog rule: ${rule.name}` }).locator(discounts.ruleSummaryChip)).toHaveCount(ruleChips + 1);
+      })
+
+}
+
+  const promotionsWithRules = [DISCOUNTS.orderPromotionWithRulesToBeDeleted, DISCOUNTS.catalogPromotionWithRulesToBeDeleted]
+    for (const promotion of promotionsWithRules) {
+      for (const rule of promotion.rules) {
+        test(`TC: SALEOR_105 Delete promotion ${rule.name} from ${promotion.type} promotion @discounts @e2e`, async () => {
+          await discounts.gotoExistingDiscount(promotion.id);
+          await discounts.ruleSection.waitFor({
+            state: "visible",
+            timeout: 10000,
+          })
+          await discounts.clickDeleteRuleButton(`${promotion.type} rule: ${rule.name}`);
+          await expect(discounts.deleteRuleModal).toBeVisible({ timeout: 10000 });
+          await discounts.deleteRuleDialog.clickConfirmDeleteButton();
+          await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+          await expect(discounts.ruleSection).not.toHaveText(`${promotion.type}: ${rule.name}`);
+        })
+      }
+    }

@@ -40,9 +40,7 @@ export const AppAdditionalInfo: React.FC<{
             <Tooltip.ContentHeading>
               <FormattedMessage {...messages.createdAt} />
             </Tooltip.ContentHeading>
-            <Text variant="caption">
-              {moment(created).format("YYYY-MM-DD HH:mm")}
-            </Text>
+            <Text size={2}>{moment(created).format("YYYY-MM-DD HH:mm")}</Text>
           </>
         )}
       </Tooltip.Content>

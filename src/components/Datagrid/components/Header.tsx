@@ -1,5 +1,11 @@
-import FullScreenIcon from "@dashboard/icons/FullScreenIcon";
-import { Box, Button, PlusIcon, sprinkles, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  Button,
+  FullscreenOffIcon,
+  FullscreenOnIcon,
+  PlusIcon,
+  Text,
+} from "@saleor/macaw-ui-next";
 import React, { FC, PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {
@@ -18,16 +24,8 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
       variant="secondary"
       onClick={onToggle}
     >
-      <Box
-        as="span"
-        display="flex"
-        __transform={isOpen ? "rotate(180deg)" : undefined}
-      >
-        <FullScreenIcon
-          className={sprinkles({
-            fontSize: "buttonMedium",
-          })}
-        />
+      <Box as="span" display="flex">
+        {isOpen ? <FullscreenOffIcon /> : <FullscreenOnIcon />}
       </Box>
       {children}
     </Button>
@@ -72,7 +70,9 @@ const Header: GridHeader = ({ title, children }) => {
       paddingX={6}
       paddingY={5}
     >
-      <Text variant="heading">{title}</Text>
+      <Text size={5} fontWeight="bold">
+        {title}
+      </Text>
       <Box display="flex" __flexDirection="row-reverse" gap={2}>
         {children}
       </Box>

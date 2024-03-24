@@ -129,7 +129,6 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
     <Card>
       <OrderCardTitle
         orderNumber={order?.number}
-        lines={lines}
         fulfillmentOrder={fulfillment?.fulfillmentOrder}
         status={fulfillment?.status}
       />

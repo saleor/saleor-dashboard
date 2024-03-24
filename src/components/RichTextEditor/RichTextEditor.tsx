@@ -75,8 +75,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       <Box
         as="label"
         color={error ? "critical2" : "default2"}
-        fontWeight="bodySmall"
-        fontSize="captionSmall"
+        fontWeight="regular"
+        size={1}
         position="absolute"
         htmlFor={id}
         zIndex="2"

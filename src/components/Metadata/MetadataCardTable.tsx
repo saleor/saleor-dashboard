@@ -38,7 +38,7 @@ export const MetadataCardTable = ({
         <TableHead>
           <TableRowLink>
             <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-              <Text variant="caption" color="default2">
+              <Text size={2} color="default2">
                 <FormattedMessage
                   id="nudPsY"
                   defaultMessage="Field"
@@ -47,7 +47,7 @@ export const MetadataCardTable = ({
               </Text>
             </TableCell>
             <TableCell style={{ paddingLeft: vars.spacing[8] }}>
-              <Text variant="caption" color="default2">
+              <Text size={2} color="default2">
                 <FormattedMessage
                   id="LkuDEb"
                   defaultMessage="Value"
@@ -62,7 +62,7 @@ export const MetadataCardTable = ({
                   paddingRight: vars.spacing[6],
                 }}
               >
-                <Text variant="caption" color="default2">
+                <Text size={2} color="default2">
                   <FormattedMessage
                     id="nEixpu"
                     defaultMessage="Actions"
@@ -78,11 +78,12 @@ export const MetadataCardTable = ({
             <TableRowLink data-test-id="field" key={fieldIndex}>
               <TableCell width="50%" style={{ paddingLeft: vars.spacing[6] }}>
                 {readonly ? (
-                  <Text variant="caption" size="large" color="default2">
+                  <Text size={3} color="default2">
                     {field.key}
                   </Text>
                 ) : (
                   <Input
+                    data-test-id="metadata-key-input"
                     width="100%"
                     size="small"
                     aria-label={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
@@ -100,11 +101,12 @@ export const MetadataCardTable = ({
                 }}
               >
                 {readonly ? (
-                  <Text variant="caption" size="large" color="default2">
+                  <Text size={3} color="default2">
                     {field.value}
                   </Text>
                 ) : (
                   <Textarea
+                    data-test-id="metadata-value-input"
                     disabled={readonly}
                     width="100%"
                     rows={1}

@@ -50,7 +50,7 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle disableTypography>
-        <Text variant="heading">
+        <Text size={5} fontWeight="bold">
           {intl.formatMessage(messages.buttonMessage)}
         </Text>
       </DialogTitle>
@@ -58,7 +58,7 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
         {({ change, data, submit }) => (
           <>
             <DialogContent>
-              <Text variant="caption">
+              <Text size={2}>
                 <FormattedMessage
                   id="zDvDnG"
                   defaultMessage="Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."

@@ -168,7 +168,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 flexDirection="column"
                 gap={5}
               >
-                <Text variant="bodyEmp" as="p" marginTop={5}>
+                <Text size={4} fontWeight="medium" as="p" marginTop={5}>
                   <FormattedMessage {...grantRefundPageMessages.pageSubtitle} />
                 </Text>
 
@@ -192,11 +192,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                           getOrderTitleMessage(fulfillment.status),
                         )}
                         subtitle={
-                          <Text
-                            variant="body"
-                            display="inline-block"
-                            marginLeft={1}
-                          >
+                          <Text display="inline-block" marginLeft={1}>
                             {getFulfilmentSubtitle(order, fulfillment)}
                           </Text>
                         }

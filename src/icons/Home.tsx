@@ -1,13 +1,16 @@
-import { createSvgIcon } from "@material-ui/core/utils";
 import React from "react";
 
-const Home = createSvgIcon(
-  <>
-    <rect width="24" height="24" fill="black" fillOpacity={0} />
-    <rect width="20" height="17" fillOpacity={0} transform="translate(2 3)" />
-    <path d="M12 5.69L17 10.19V12V18H15V14V12H13H11H9V14V18H7V12V10.19L12 5.69ZM12 3L2 12H5V20H11V14H13V20H19V12H22L12 3Z" />
-  </>,
-  "Home",
+export const HomeIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    data-macaw-ui-candidate
+  >
+    <path
+      d="M4.999 15.833h2.5v-4.166c0-.236.08-.434.24-.594.16-.16.357-.24.593-.24h3.333c.237 0 .435.08.595.24.16.16.24.358.239.594v4.166h2.5v-7.5l-5-3.75-5 3.75v7.5Zm-1.667 0v-7.5c0-.263.06-.513.178-.75.118-.236.28-.43.489-.583l5-3.75a1.606 1.606 0 0 1 1-.333c.375 0 .708.11 1 .333l5 3.75a1.645 1.645 0 0 1 .667 1.333v7.5c0 .459-.164.851-.49 1.178-.327.327-.72.49-1.177.49h-3.334a.807.807 0 0 1-.594-.24.803.803 0 0 1-.239-.594V12.5H9.165v4.167c0 .236-.08.434-.24.594a.803.803 0 0 1-.593.24H4.999c-.459 0-.851-.164-1.178-.49a1.602 1.602 0 0 1-.489-1.178Z"
+      fill="currentColor"
+    />
+  </svg>
 );
-
-export default Home;

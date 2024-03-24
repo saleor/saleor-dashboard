@@ -28,7 +28,7 @@ const Item = SortableElement(
                 data-test-id="button-drag-handle"
               />
             )}
-            <Text size="small">{name}</Text>
+            <Text size={3}>{name}</Text>
           </div>
           <DeletableItem id={id} onDelete={onDelete} />
         </div>

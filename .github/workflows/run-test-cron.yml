@@ -63,6 +63,7 @@ jobs:
           E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
 
   merge-reports:
     if: '!cancelled()'

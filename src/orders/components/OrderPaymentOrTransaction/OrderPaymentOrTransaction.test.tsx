@@ -67,6 +67,7 @@ describe("OrderPaymentOrTransaction", () => {
     onPaymentCapture: () => undefined,
     onTransactionAction: () => undefined,
     onPaymentVoid: () => undefined,
+    onRefundAdd: () => undefined,
   } as OrderPaymentOrTransactionProps;
 
   it("renders OrderPayment when transactions are disabled in channel", () => {

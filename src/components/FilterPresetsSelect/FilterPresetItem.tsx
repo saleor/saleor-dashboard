@@ -32,7 +32,7 @@ export const FilterPresetItem = ({
         onMouseLeave={() => setHasHover(false)}
         data-test-id="preset"
       >
-        <Text ellipsis variant={isActive ? "bodyStrong" : "body"}>
+        <Text ellipsis fontWeight={isActive ? "bold" : "regular"}>
           {children}
         </Text>
         {hasHover && (

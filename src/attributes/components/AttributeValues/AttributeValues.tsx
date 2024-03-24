@@ -101,7 +101,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
   const numberOfColumns = isSwatch ? 5 : 4;
 
   return (
-    <Card>
+    <Card data-test-id="attribute-values-section">
       <CardTitle
         title={intl.formatMessage({
           id: "J3uE0t",
@@ -189,7 +189,10 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                     />
                   </TableCell>
                 )}
-                <TableCell className={classes.columnAdmin}>
+                <TableCell
+                  className={classes.columnAdmin}
+                  data-test-id="attribute-value-name"
+                >
                   {value?.slug ?? <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.columnStore}>
@@ -197,6 +200,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                 </TableCell>
                 <TableCell className={classes.iconCell}>
                   <IconButton
+                    data-test-id="delete-attribute-value-button"
                     variant="secondary"
                     disabled={disabled}
                     onClick={stopPropagation(() =>
