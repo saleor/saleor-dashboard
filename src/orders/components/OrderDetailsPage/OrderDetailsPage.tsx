@@ -88,6 +88,7 @@ export interface OrderDetailsPageProps {
     actionType: TransactionActionEnum,
   ) => any;
   onAddManualTransaction: () => any;
+  onRefundAdd: () => void;
   onSubmit: (data: MetadataIdSchema) => SubmitPromise;
 }
 
@@ -122,6 +123,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onAddManualTransaction,
     onShowMetadata,
     onMarkAsPaid,
+    onRefundAdd,
     onSubmit,
   } = props;
   const navigate = useNavigator();
@@ -282,6 +284,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 onPaymentRefund={onPaymentRefund}
                 onMarkAsPaid={onMarkAsPaid}
                 onAddManualTransaction={onAddManualTransaction}
+                onRefundAdd={onRefundAdd}
               />
               <Metadata
                 isLoading={loading}

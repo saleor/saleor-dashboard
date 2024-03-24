@@ -19,6 +19,10 @@
     "context": "order, button",
     "string": "Mark as paid"
   },
+  "+6liDh": {
+    "context": "radio button label",
+    "string": "The purchased product list will be sent and used to suggest amount to refund."
+  },
   "+7OsyM": {
     "context": "button",
     "string": "Set as default shipping address"
@@ -2213,6 +2217,10 @@
     "context": "section title",
     "string": "Checkout Configuration"
   },
+  "DAgLzp": {
+    "context": "radio button label",
+    "string": "Do not use information about the products and rely on amount provided manually."
+  },
   "DDYrvn": {
     "string": "Rule reward value must be less than 100"
   },
@@ -3822,6 +3830,10 @@
     "context": "window title",
     "string": "Fulfill Order"
   },
+  "O+w1k0": {
+    "context": "dialog subtitle",
+    "string": "How do you want to make a refund?"
+  },
   "O22NIZ": {
     "context": "deletion error message",
     "string": "Cant's delete group which is out of your permission scope"
@@ -4279,6 +4291,10 @@
   "RH+aOF": {
     "context": "use attribute in filtering",
     "string": "Use in Filtering"
+  },
+  "RK6l3Z": {
+    "context": "radio button label",
+    "string": "Refund with manual amount"
   },
   "RLBLPQ": {
     "context": "no warehouses info",
@@ -5556,6 +5572,10 @@
   "ZTG+Dv": {
     "string": "Draft order will be automatically created for replaced products"
   },
+  "ZU1Kz8": {
+    "context": "empty state message",
+    "string": "No refunds made for this order."
+  },
   "ZWIjvr": {
     "context": "dialog header",
     "string": "Delete Sales"
@@ -6000,6 +6020,10 @@
   "cMov2n": {
     "context": "error message",
     "string": "Error loading apps marketplace"
+  },
+  "cN8pa0": {
+    "context": "radio button label",
+    "string": "Refund with line items"
   },
   "cNSLLO": {
     "context": "button",
@@ -6918,6 +6942,10 @@
   },
   "jHJmjf": {
     "string": "No results"
+  },
+  "jIVn80": {
+    "context": "dialog title",
+    "string": "Create a new refund"
   },
   "jMzyU8": {
     "context": "tax classes card header",
@@ -8346,10 +8374,6 @@
     "context": "balance curreny missing error message",
     "string": "Balance currency is missing"
   },
-  "tZmVfa": {
-    "context": "refund section header",
-    "string": "Refund"
-  },
   "tZnV8L": {
     "context": "Header row stock label",
     "string": "Stock"
@@ -8761,6 +8785,10 @@
   "w+8BfK": {
     "context": "button",
     "string": "Edit Address"
+  },
+  "w067gF": {
+    "context": "refund section header",
+    "string": "Refunds"
   },
   "w2Cewo": {
     "string": "Search engine title"
