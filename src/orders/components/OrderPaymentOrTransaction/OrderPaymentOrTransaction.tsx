@@ -23,6 +23,7 @@ export interface OrderPaymentOrTransactionProps {
   onPaymentRefund: () => any;
   onMarkAsPaid: () => any;
   onAddManualTransaction: () => any;
+  onRefundAdd: () => void;
 }
 
 export const OrderPaymentOrTransaction: React.FC<
@@ -36,6 +37,7 @@ export const OrderPaymentOrTransaction: React.FC<
   onPaymentRefund,
   onMarkAsPaid,
   onAddManualTransaction,
+  onRefundAdd,
 }) => {
   if (orderShouldUseTransactions(order)) {
     return (
@@ -47,6 +49,7 @@ export const OrderPaymentOrTransaction: React.FC<
         onMarkAsPaid={onMarkAsPaid}
         onPaymentVoid={onPaymentVoid}
         onAddManualTransaction={onAddManualTransaction}
+        onRefundAdd={onRefundAdd}
       />
     );
   }

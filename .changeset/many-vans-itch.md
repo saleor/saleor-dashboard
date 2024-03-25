@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-Add tests for thirdparty apps
+Implement refund add modal

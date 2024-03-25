@@ -36,7 +36,6 @@ export class ConfigurationPage {
   ) {
     this.page = page;
   }
-
   async openShippingMethods() {
     await this.shippingMethodsButton.click();
   }

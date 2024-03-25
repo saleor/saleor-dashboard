@@ -27,6 +27,7 @@ export const RuleConditionRow = ({
       __gridTemplateColumns="200px 106px 1fr 35px"
       placeItems="center"
       alignItems="start"
+      data-test-id="rule-condition-row"
     >
       <RuleInputWrapper data-test-id="rule-condition-predicate-dropdown">
         <RuleConditionName

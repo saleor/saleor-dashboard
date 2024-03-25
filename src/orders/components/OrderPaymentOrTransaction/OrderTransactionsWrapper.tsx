@@ -30,6 +30,7 @@ interface OrderTransactionsWrapper {
   onMarkAsPaid: () => any;
   onPaymentVoid: () => any;
   onAddManualTransaction: () => any;
+  onRefundAdd: () => void;
 }
 
 export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
@@ -40,6 +41,7 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
   onMarkAsPaid,
   onPaymentVoid,
   onAddManualTransaction,
+  onRefundAdd,
 }) => {
   const classes = useStyles();
 
@@ -63,6 +65,7 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
             <OrderRefundDatagrid
               orderId={order?.id}
               grantedRefunds={order?.grantedRefunds}
+              onRefundAdd={onRefundAdd}
             />
             <CardSpacer />
           </>
