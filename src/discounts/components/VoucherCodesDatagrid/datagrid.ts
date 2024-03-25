@@ -2,6 +2,7 @@ import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import {
   readonlyTextCell,
   tagsCell,
+  textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
@@ -48,7 +49,10 @@ export const createGetCellContent =
 
     switch (columnId) {
       case "code":
-        return readonlyTextCell(rowData?.code ?? "", false);
+        return textCell(rowData?.code ?? "", {
+          readonly: true,
+          allowOverlay: true,
+        });
       case "usage":
         return readonlyTextCell(
           rowData?.used?.toString() ?? PLACEHOLDER,
