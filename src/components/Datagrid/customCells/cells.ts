@@ -32,12 +32,13 @@ const common = {
   readonly: false,
 };
 
-export function textCell(value: string): GridCell {
+export function textCell(value: string, opts?: Partial<TextCell>): GridCell {
   return {
     ...common,
     data: value,
     displayData: value,
     kind: GridCellKind.Text,
+    ...opts,
   };
 }
 
