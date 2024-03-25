@@ -53,7 +53,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
       })}
       variant="delete"
     >
-      <DialogContentText>
+      <DialogContentText data-testid="permission-group-delete-dialog-text">
         <FormattedMessage
           id="sR0urA"
           defaultMessage="Are you sure you want to delete {name}?"

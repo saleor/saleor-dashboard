@@ -46,6 +46,7 @@ export const ChannelPermission = ({
 
         <Box __width="fit-content">
           <Checkbox
+            data-test-id="all-channel-permissions-checkbox"
             disabled={disabled || disabledSelectAllChannels}
             checked={hasAllChannels}
             onCheckedChange={onHasAllChannelsChange}

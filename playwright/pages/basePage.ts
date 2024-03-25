@@ -25,6 +25,7 @@ export class BasePage {
       "button-pagination-back",
     ),
     readonly rowNumberButton = page.getByTestId("PaginationRowNumberSelect"),
+    readonly rowNumberOption = page.getByTestId("rowNumberOption"),
     readonly nextPagePaginationButton = page.getByTestId(
       "button-pagination-next",
     ),
@@ -43,6 +44,10 @@ export class BasePage {
       .innerText();
 
     return cellText;
+  }
+
+  async clickPaginationRowNumberOption(value: string) {
+    await this.rowNumberOption.filter({hasText: value}).click();
   }
 
   async clickFilterButton() {
