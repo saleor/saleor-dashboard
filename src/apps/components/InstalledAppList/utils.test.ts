@@ -9,7 +9,11 @@ describe("InstalledAppList utils", () => {
 
       it("should return true when has apps installed and no app installations", () => {
         // Arrange
-        const appList = undefined;
+        const appList = [
+          {
+            isExternal: false,
+          },
+        ] as InstalledApp[];
         const appInstallationList = undefined;
 
         // Act
@@ -59,7 +63,7 @@ describe("InstalledAppList utils", () => {
         expect(isLoading).toBe(true);
       });
 
-      it("should return false when has  apps installations and   app installed", () => {
+      it("should return false when has apps installations and app installed", () => {
         // Arrange
         const appList: InstalledApp[] = [];
         const appInstallationList: AppInstallation[] = [];
@@ -79,7 +83,7 @@ describe("InstalledAppList utils", () => {
     describe("has no MANAGE_APPS permission", () => {
       const hasManagedAppsPermission = false;
 
-      it("should return true when has apps installed", () => {
+      it("should return true when has apps installed and ignore app installation", () => {
         // Arrange
         const appList = undefined;
         const appInstallationList: AppInstallation[] = [];
@@ -95,7 +99,7 @@ describe("InstalledAppList utils", () => {
         expect(isLoading).toBe(true);
       });
 
-      it("should return false when has  apps installed", () => {
+      it("should return false when has apps installed and ignore app installtion", () => {
         // Arrange
         const appList: InstalledApp[] = [];
         const appInstallationList = undefined;
