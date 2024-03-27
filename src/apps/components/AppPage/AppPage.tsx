@@ -43,6 +43,7 @@ export const AppPage: React.FC<AppPageProps> = ({
         homepageUrl={data?.homepageUrl}
         author={data?.author}
         appLogoUrl={data?.brand?.logo.default}
+        showMangeAppButton={true}
       />
       <DetailPageLayout.Content>
         <Box

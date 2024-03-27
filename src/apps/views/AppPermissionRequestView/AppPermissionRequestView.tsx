@@ -66,6 +66,7 @@ export const AppPermissionRequestView = () => {
   const { data } = useAppQuery({
     variables: {
       id: appId,
+      hasManagedAppsPermission: true,
     },
   });
   const [updatePermissions, { loading }] = useAppUpdatePermissionsMutation();

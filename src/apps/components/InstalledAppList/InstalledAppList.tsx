@@ -1,11 +1,15 @@
 import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { ListProps } from "@dashboard/types";
 import { Skeleton } from "@material-ui/lab";
-import { List } from "@saleor/macaw-ui-next";
+import { Box, List, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import InstalledAppListRow from "../InstalledAppListRow";
 import NotInstalledAppListRow from "../NotInstalledAppListRow";
+import { messages } from "./messages";
+import { appsAreLoading, hasEmptyAppList } from "./utils";
 
 interface InstalledAppListProps extends ListProps {
   appList?: InstalledApp[];
@@ -16,8 +20,25 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
   appList,
   appInstallationList,
 }) => {
-  if (!appList || !appInstallationList) {
+  const intl = useIntl();
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
+
+  if (
+    appsAreLoading({ appList, appInstallationList, hasManagedAppsPermission })
+  ) {
     return <Skeleton />;
+  }
+
+  if (
+    hasEmptyAppList({ appList, appInstallationList, hasManagedAppsPermission })
+  ) {
+    return (
+      <Box marginTop={3}>
+        <Text variant="caption">
+          {intl.formatMessage(messages.nothingInstalledPlaceholder)}
+        </Text>
+      </Box>
+    );
   }
 
   return (
@@ -34,7 +55,7 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
           }
         />
       ))}
-      {appList.map(({ app, isExternal, logo }) => (
+      {appList?.map(({ app, isExternal, logo }) => (
         <InstalledAppListRow
           key={app.id}
           app={app}

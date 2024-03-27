@@ -16,7 +16,7 @@ test("TC: SALEOR_11 User should be able to navigate to channel list as a staff m
 
   await page.goto(URL_LIST.homePage);
   await mainMenuPage.openConfiguration();
-  await mainMenuPage.expectMenuItemsCount(2);
+  await mainMenuPage.expectMenuItemsCount(3);
   await configurationPage.openChannels();
 
   await expect(channelPage.createChannelButton).toBeVisible();
@@ -30,7 +30,7 @@ test("TC: SALEOR_12 User should be able to navigate to webhooks and events as a 
   const configurationPage = new ConfigurationPage(page);
 
   await page.goto(URL_LIST.configuration);
-  await mainMenuPage.expectMenuItemsCount(2);
+  await mainMenuPage.expectMenuItemsCount(3);
   await configurationPage.openWebhooksAndEvents();
   await expect(webhooksEventsPage.createAppButton).toBeVisible();
 });

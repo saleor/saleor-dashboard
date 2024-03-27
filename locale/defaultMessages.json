@@ -3859,6 +3859,9 @@
     "context": "header",
     "string": "{webhookName} Details"
   },
+  "ORQvOg": {
+    "string": "You don't have permission to perform this action"
+  },
   "OTDo9I": {
     "context": "tab name",
     "string": "All staff members"
@@ -4403,6 +4406,10 @@
   },
   "S8kqP9": {
     "string": "Conditions"
+  },
+  "S90DJO": {
+    "context": "Button with  app settings label",
+    "string": "App settings"
   },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",

@@ -411,6 +411,10 @@ export const buttonMessages = defineMessages({
     id: "rbrahO",
     defaultMessage: "Close",
   },
+  noPermission: {
+    id: "ORQvOg",
+    defaultMessage: "You don't have permission to perform this action",
+  },
 });
 
 export const sectionNames = defineMessages({

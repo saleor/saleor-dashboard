@@ -284,7 +284,7 @@ const Routes: React.FC = () => {
                     matchPermission="any"
                   />
                   <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_APPS]}
+                    permissions={[]}
                     path={AppSections.appsSection}
                     component={AppsSectionRoot}
                   />
