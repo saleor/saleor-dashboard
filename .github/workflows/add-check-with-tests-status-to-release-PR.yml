@@ -14,7 +14,7 @@ jobs:
       - name: Create Check
         id: checkrun                    # An ID to allow the step to be referenced
         env:
-          GH_TOKEN: ${{ github.token }} # Expose the token for GH CLI
+          GH_TOKEN: ${{ github.token }} # Expose the token for GH CLI g
         run: |
           ##########################################################
           # Create a Check Run and indicate that it is being queued
