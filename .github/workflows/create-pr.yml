@@ -14,7 +14,7 @@ jobs:
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
-          
+
           gh api \
           --method POST \
           -H "Accept: application/vnd.github+json" \
@@ -22,5 +22,5 @@ jobs:
           /repos/saleor/saleor-dashboard/pulls \
           -f title='Pr created b' \
           -f body='Please pull these awesome changes in!' \
-          -f head='Test-add-tests-check-to-release-PR' \
+          -f head='saleor:Test-add-tests-check-to-release-PR' \
           -f base='main' 
