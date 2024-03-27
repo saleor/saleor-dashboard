@@ -3,7 +3,6 @@ import { GiftCardsPage } from "@pages/giftCardsPage";
 import { expect, test } from "@playwright/test";
 import { MailpitService } from "@api/mailpit";
 
-
 test.use({ storageState: "./playwright/.auth/admin.json" });
 let giftCardsPage: GiftCardsPage;
 let mailpitService: MailpitService;
@@ -48,7 +47,6 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
   const actualNumberOfRows = await giftCardsPage.getNumberOfGridRows();
   const expectedNumberOfRows = originalNumberOfGiftCards + 1;
   await expect(actualNumberOfRows).toEqual(expectedNumberOfRows);
-
 });
 test("TC: SALEOR_107 Resend code @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
@@ -90,7 +88,6 @@ test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForGrid();
   const originalNumberOfGiftCards = await giftCardsPage.getNumberOfGridRows();
-
   await giftCardsPage.checkListRowsBasedOnContainingText(
     GIFT_CARDS.giftCardsToBeDeleted.names,
   );
