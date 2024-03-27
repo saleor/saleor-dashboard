@@ -22,6 +22,8 @@ import {
   orderReturnPath,
   orderSendRefundPath,
   orderSettingsPath,
+  orderTransactionRefundEditPath,
+  orderTransactionRefundPath,
   OrderUrlQueryParams,
 } from "./urls";
 import OrderDetailsComponent from "./views/OrderDetails";
@@ -34,6 +36,7 @@ import OrderRefundComponent from "./views/OrderRefund";
 import OrderReturnComponent from "./views/OrderReturn";
 import OrderSendRefundComponent from "./views/OrderSendRefund";
 import OrderSettings from "./views/OrderSettings";
+import OrderTransactionRefundComponent from "./views/OrderTransactionRefund";
 
 interface MatchParams {
   id?: string;
@@ -121,6 +124,22 @@ const OrderGrantRefundEdit: React.FC<RouteComponentProps<any>> = ({
   />
 );
 
+const OrderTransactionRefund: React.FC<RouteComponentProps<MatchParams>> = ({
+  match,
+}) => (
+  <OrderTransactionRefundComponent
+    orderId={decodeURIComponent(match.params.id ?? "")}
+  />
+);
+
+const OrderTransactionRefundEdit: React.FC<RouteComponentProps<any>> = ({
+  match,
+}) => (
+  <OrderTransactionRefundComponent
+    orderId={decodeURIComponent(match.params.orderId)}
+    refundId={decodeURIComponent(match.params.refundId)}
+  />
+);
 const Component = () => {
   const intl = useIntl();
 
@@ -145,6 +164,14 @@ const Component = () => {
         <Route
           path={orderGrantRefundPath(":id")}
           component={OrderGrantRefund}
+        />
+        <Route
+          path={orderTransactionRefundPath(":id")}
+          component={OrderTransactionRefund}
+        />
+        <Route
+          path={orderTransactionRefundEditPath(":orderId", ":refundId")}
+          component={OrderTransactionRefundEdit}
         />
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>

@@ -2156,11 +2156,15 @@ export const OrderDetailsGrantRefundFragmentDoc = gql`
   grantedRefunds {
     ...OrderDetailsGrantedRefund
   }
+  transactions {
+    ...TransactionItem
+  }
 }
     ${OrderLineGrantRefundFragmentDoc}
 ${OrderFulfillmentGrantRefundFragmentDoc}
 ${MoneyFragmentDoc}
-${OrderDetailsGrantedRefundFragmentDoc}`;
+${OrderDetailsGrantedRefundFragmentDoc}
+${TransactionItemFragmentDoc}`;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id

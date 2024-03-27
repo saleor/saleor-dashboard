@@ -687,5 +687,8 @@ export const fragmentOrderDetailsGrantRefund = gql`
     grantedRefunds {
       ...OrderDetailsGrantedRefund
     }
+    transactions {
+      ...TransactionItem
+    }
   }
 `;
