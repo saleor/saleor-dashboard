@@ -3,6 +3,10 @@ name: Create Check
 # To trigger the check
 on:  
   pull_request:
+    types: ["opened"]
+  push:
+    branches:
+      - '.*tests-check.*'
 
 jobs:
   start-check:
