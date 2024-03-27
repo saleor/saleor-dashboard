@@ -15,7 +15,7 @@ test.beforeEach(({ page, request }) => {
 test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForGrid();
-  const numberOfGiftCards = await giftCardsPage.getNumberOfGridRows();
+  const originalNumberOfGiftCards = await giftCardsPage.getNumberOfGridRows();
   await giftCardsPage.clickIssueCardButton();
   await giftCardsPage.issueGiftCardDialog.typeAmount("50");
   await giftCardsPage.issueGiftCardDialog.typeTag(
@@ -28,14 +28,14 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
   await giftCardsPage.expectSuccessBanner();
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.waitForGrid();
-  const numberOfGiftCardsAfterCreation =
-    await giftCardsPage.getNumberOfGridRows();
-  expect(numberOfGiftCardsAfterCreation - numberOfGiftCards).toEqual(1);
+  const actualNumberOfRows = await giftCardsPage.getNumberOfGridRows();
+  const expectedNumberOfRows = originalNumberOfGiftCards + 1;
+  await expect(actualNumberOfRows).toEqual(expectedNumberOfRows);
 });
 test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForGrid();
-  const numberOfGiftCards = await giftCardsPage.getNumberOfGridRows();
+  const originalNumberOfGiftCards = await giftCardsPage.getNumberOfGridRows();
   await giftCardsPage.clickIssueCardButton();
   await giftCardsPage.issueGiftCardDialog.clickSendToCustomerCheckbox();
   await giftCardsPage.issueGiftCardDialog.typeCustomer("Allison Freeman");
@@ -45,9 +45,10 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.waitForGrid();
-  const numberOfGiftCardsAfterCreation =
-    await giftCardsPage.getNumberOfGridRows();
-  expect(numberOfGiftCardsAfterCreation - numberOfGiftCards).toEqual(1);
+  const actualNumberOfRows = await giftCardsPage.getNumberOfGridRows();
+  const expectedNumberOfRows = originalNumberOfGiftCards + 1;
+  await expect(actualNumberOfRows).toEqual(expectedNumberOfRows);
+
 });
 test("TC: SALEOR_107 Resend code @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
@@ -88,16 +89,19 @@ test("TC: SALEOR_110 Edit gift card @e2e @gift", async () => {
 test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForGrid();
-  const numberOfGiftCards = await giftCardsPage.getNumberOfGridRows();
+  const originalNumberOfGiftCards = await giftCardsPage.getNumberOfGridRows();
 
   await giftCardsPage.checkListRowsBasedOnContainingText(
     GIFT_CARDS.giftCardsToBeDeleted.names,
   );
+  const numberOfGiftCardsToBeDeleted = GIFT_CARDS.giftCardsToBeDeleted.names.length;
   await giftCardsPage.clickBulkDeleteButton();
   await giftCardsPage.deleteDialog.clickConfirmDeletionCheckbox();
   await giftCardsPage.deleteDialog.clickDeleteButton();
   await giftCardsPage.waitForGrid();
-
+  const actualNumberOfRows = await giftCardsPage.getNumberOfGridRows();
+  const expectedNumberOfRows = originalNumberOfGiftCards - numberOfGiftCardsToBeDeleted;
+  await expect(actualNumberOfRows).toEqual(expectedNumberOfRows);
   expect(
     await giftCardsPage.findRowIndexBasedOnText(
       GIFT_CARDS.giftCardsToBeDeleted.names,
