@@ -15,22 +15,20 @@ import AppListCardIntegrations from "./AppListCardIntegrations";
 import AppListCardLinks from "./AppListCardLinks";
 
 interface AppListRowProps {
-  appPair: AppstoreApi.SaleorApp[];
+  app: AppstoreApi.SaleorApp;
   appInstallationList?: AppInstallationFragment[];
   navigateToAppInstallPage?: (manifestUrl: string) => void;
   navigateToGithubForkPage?: (githubForkUrl: string) => void;
 }
 
 const AppListRow: React.FC<AppListRowProps> = ({
-  appPair,
+  app,
   appInstallationList,
   navigateToAppInstallPage,
   navigateToGithubForkPage,
 }) => {
   const intl = useIntl();
   const { retryAppInstallation, removeAppInstallation } = useAppListContext();
-
-  const isSingleApp = appPair.length === 1;
 
   const appDetails = React.useCallback(
     (app: AppstoreApi.SaleorApp) =>
@@ -56,56 +54,48 @@ const AppListRow: React.FC<AppListRowProps> = ({
     ],
   );
 
+  const {
+    releaseDate,
+    installationPending,
+    installHandler,
+    githubForkHandler,
+    retryInstallHandler,
+    removeInstallHandler,
+  } = appDetails(app);
+
   return (
     <Box
-      display="grid"
-      gridTemplateColumns={2}
-      __gridTemplateRows="repeat(4, auto)"
-      gridAutoFlow={isSingleApp ? "column" : "row"}
-      columnGap={5}
       padding={5}
+      borderStyle="solid"
+      borderWidth={1}
+      borderRadius={3}
+      borderColor="default1"
+      display="grid"
+      __gridTemplateRows="subgrid"
+      __gridRow="auto / span 4"
+      marginBottom={8}
     >
-      {appPair.map(app => (
-        <AppListCardDescription key={app.name.en + "description"} app={app} />
-      ))}
-      {appPair.map(app => (
-        <AppListCardLinks
-          key={app.name.en + "links"}
-          links={appDetails(app).links}
-        />
-      ))}
-      {appPair.map(app => {
-        if (appPair.every(app => !app.integrations?.length)) {
-          return null;
-        }
-        return (
-          <AppListCardIntegrations
-            key={app.name.en + "integrations"}
-            integrations={app.integrations}
-          />
-        );
-      })}
-      {appPair.map(app => {
-        const {
-          releaseDate,
-          installationPending,
-          installHandler,
-          githubForkHandler,
-          retryInstallHandler,
-          removeInstallHandler,
-        } = appDetails(app);
-        return (
-          <AppListCardActions
-            key={app.name.en + "actions"}
-            releaseDate={releaseDate}
-            installationPending={installationPending}
-            installHandler={installHandler}
-            githubForkHandler={githubForkHandler}
-            retryInstallHandler={retryInstallHandler}
-            removeInstallHandler={removeInstallHandler}
-          />
-        );
-      })}
+      <AppListCardDescription key={app.name.en + "description"} app={app} />
+
+      <AppListCardLinks
+        key={app.name.en + "links"}
+        links={appDetails(app).links}
+      />
+
+      <AppListCardIntegrations
+        key={app.name.en + "integrations"}
+        integrations={app.integrations}
+      />
+
+      <AppListCardActions
+        key={app.name.en + "actions"}
+        releaseDate={releaseDate}
+        installationPending={installationPending}
+        installHandler={installHandler}
+        githubForkHandler={githubForkHandler}
+        retryInstallHandler={retryInstallHandler}
+        removeInstallHandler={removeInstallHandler}
+      />
     </Box>
   );
 };

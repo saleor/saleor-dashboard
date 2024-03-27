@@ -22,6 +22,12 @@ jest.mock("@dashboard/apps/context", () => ({
   })),
 }));
 
+jest.mock("@dashboard/hooks/useHasManagedAppsPermission", () => ({
+  useHasManagedAppsPermission: jest.fn(() => ({
+    hasManagedAppsPermission: true,
+  })),
+}));
+
 jest.mock("@dashboard/config", () => {
   const original = jest.requireActual("@dashboard/config");
 
@@ -32,9 +38,6 @@ jest.mock("@dashboard/config", () => {
   };
 });
 
-const releasedAppPair = [releasedApp, releasedApp];
-const comingSoonAppPair = [comingSoonApp, comingSoonApp];
-
 describe("Apps AppListRow", () => {
   it("displays released app details when released app data passed", () => {
     // Arrange
@@ -43,7 +46,7 @@ describe("Apps AppListRow", () => {
     );
     render(
       <Wrapper>
-        <AppListRow appPair={releasedAppPair} />
+        <AppListRow app={releasedApp} />
       </Wrapper>,
     );
     const name = screen.queryAllByText(releasedApp.name.en);
@@ -75,7 +78,7 @@ describe("Apps AppListRow", () => {
     render(
       <Wrapper>
         <AppListRow
-          appPair={releasedAppPair}
+          app={releasedApp}
           navigateToAppInstallPage={navigateToAppInstallPage}
           navigateToGithubForkPage={navigateToVercelDeploymentPage}
         />
@@ -103,7 +106,7 @@ describe("Apps AppListRow", () => {
     );
     render(
       <Wrapper>
-        <AppListRow appPair={comingSoonAppPair} />
+        <AppListRow app={comingSoonApp} />
       </Wrapper>,
     );
     const name = screen.queryAllByText(comingSoonApp.name.en);
@@ -136,7 +139,7 @@ describe("Apps AppListRow", () => {
     };
     render(
       <Wrapper>
-        <AppListRow appPair={[app, app]} />
+        <AppListRow app={app} />
       </Wrapper>,
     );
     const logo = screen.getAllByTestId("app-logo");
@@ -162,7 +165,7 @@ describe("Apps AppListRow", () => {
     };
     render(
       <Wrapper>
-        <AppListRow appPair={[app, app]} />
+        <AppListRow app={app} />
       </Wrapper>,
     );
     const logo = screen.getAllByTestId("app-logo");
@@ -182,7 +185,7 @@ describe("Apps AppListRow", () => {
     render(
       <Wrapper>
         <AppListRow
-          appPair={releasedAppPair}
+          app={releasedApp}
           appInstallationList={[failedAppInProgress]}
         />
       </Wrapper>,
@@ -201,7 +204,7 @@ describe("Apps AppListRow", () => {
     render(
       <Wrapper>
         <AppListRow
-          appPair={releasedAppPair}
+          app={releasedApp}
           appInstallationList={[pendingAppInProgress]}
         />
       </Wrapper>,
@@ -228,7 +231,7 @@ describe("Apps AppListRow", () => {
     render(
       <Wrapper>
         <AppListRow
-          appPair={releasedAppPair}
+          app={releasedApp}
           appInstallationList={[failedAppInProgress]}
         />
       </Wrapper>,

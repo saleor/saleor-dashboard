@@ -33,7 +33,6 @@ describe("App List available sections util", () => {
 
     // Assert
     const expectedSectionsAvailability = {
-      installed: true,
       all: true,
       comingSoon: true,
     };
@@ -54,7 +53,6 @@ describe("App List available sections util", () => {
 
     // Assert
     const expectedSectionsAvailability = {
-      installed: false,
       all: false,
       comingSoon: false,
     };
@@ -75,7 +73,6 @@ describe("App List available sections util", () => {
 
     // Assert
     const expectedSectionsAvailability = {
-      installed: true,
       all: false,
       comingSoon: false,
     };
@@ -96,7 +93,6 @@ describe("App List available sections util", () => {
 
     // Assert
     const expectedSectionsAvailability = {
-      installed: true,
       all: false,
       comingSoon: false,
     };
@@ -117,7 +113,6 @@ describe("App List available sections util", () => {
 
     // Assert
     const expectedSectionsAvailability = {
-      installed: true,
       all: true,
       comingSoon: true,
     };
@@ -138,7 +133,6 @@ describe("App List available sections util", () => {
 
     // Assert
     const expectedSectionsAvailability = {
-      installed: true,
       all: false,
       comingSoon: false,
     };
@@ -159,7 +153,6 @@ describe("App List available sections util", () => {
 
     // Assert
     const expectedSectionsAvailability = {
-      installed: true,
       all: false,
       comingSoon: false,
     };

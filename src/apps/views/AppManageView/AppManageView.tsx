@@ -9,6 +9,7 @@ import {
   useAppDeleteMutation,
   useAppQuery,
 } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
@@ -34,9 +35,10 @@ interface Props {
 
 export const AppManageView: React.FC<Props> = ({ id, params }) => {
   const client = useApolloClient();
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id },
+    variables: { id, hasManagedAppsPermission },
   });
 
   const appExists = data?.app !== null;
@@ -121,7 +123,7 @@ export const AppManageView: React.FC<Props> = ({ id, params }) => {
 
   const handleActivateConfirm = () => activateApp(mutationOpts);
   const handleDeactivateConfirm = () => deactivateApp(mutationOpts);
-  const handleRemoveConfirm = () => deleteApp(mutationOpts);
+  const handleRemoveConfirm = () => deleteApp({ ...mutationOpts });
 
   if (!appExists) {
     return <NotFoundPage backHref={AppPaths.appListPath} />;

@@ -18,7 +18,7 @@ test("TC: SALEOR_6 User should be able to navigate to discount list as a staff m
   await mainMenuPage.openDiscounts();
   await expect(discountsPage.createDiscountButton).toBeVisible();
   await basePage.expectGridToBeAttached();
-  await mainMenuPage.expectMenuItemsCount(3);
+  await mainMenuPage.expectMenuItemsCount(4);
 });
 
 test("TC: SALEOR_7 User should be able to navigate to voucher list as a staff member using DISCOUNTS permission @e2e", async ({
@@ -32,5 +32,5 @@ test("TC: SALEOR_7 User should be able to navigate to voucher list as a staff me
   await mainMenuPage.openVouchers();
   await expect(vouchersPage.createVoucherButton).toBeVisible();
   await basePage.expectGridToBeAttached();
-  await mainMenuPage.expectMenuItemsCount(3);
+  await mainMenuPage.expectMenuItemsCount(4);
 });

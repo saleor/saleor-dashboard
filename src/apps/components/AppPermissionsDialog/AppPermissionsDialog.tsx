@@ -40,7 +40,10 @@ export const AppPermissionsDialog = ({
     onApprove,
   } = useAppPermissionsDialogState(assignedPermissions);
 
-  const { refetch } = useAppQuery({ variables: { id: appId }, skip: true });
+  const { refetch } = useAppQuery({
+    variables: { id: appId, hasManagedAppsPermission: true },
+    skip: true,
+  });
 
   const notify = useNotifier();
 

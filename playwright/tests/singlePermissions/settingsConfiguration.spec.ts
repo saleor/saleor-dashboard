@@ -17,5 +17,5 @@ test("TC: SALEOR_18 User should be able to navigate to configuration as a staff 
   await mainMenuPage.openConfiguration();
   await configurationPage.openSiteSettings();
   await expect(siteSettingsPage.companyInfoSection).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(2);
+  await mainMenuPage.expectMenuItemsCount(3);
 });

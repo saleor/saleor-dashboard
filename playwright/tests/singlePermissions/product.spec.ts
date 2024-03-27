@@ -18,7 +18,7 @@ test("TC: SALEOR_23 User should be able to navigate to product list as a staff m
   await page.goto(URL_LIST.homePage);
   await mainMenuPage.openProducts();
   await expect(productPage.addProductButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(5);
+  await mainMenuPage.expectMenuItemsCount(6);
   await basePage.expectGridToBeAttached();
 });
 test("TC: SALEOR_24 User should be able to navigate to collections list as a staff member using PRODUCT permission @e2e", async ({
@@ -31,7 +31,7 @@ test("TC: SALEOR_24 User should be able to navigate to collections list as a sta
   await page.goto(URL_LIST.homePage);
   await mainMenuPage.openCollections();
   await expect(collectionsPage.createCollectionButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(5);
+  await mainMenuPage.expectMenuItemsCount(6);
   await basePage.expectGridToBeAttached();
 });
 test("TC: SALEOR_25 User should be able to navigate to categories list as a staff member using PRODUCT permission @e2e", async ({
@@ -44,6 +44,6 @@ test("TC: SALEOR_25 User should be able to navigate to categories list as a staf
   await page.goto(URL_LIST.homePage);
   await mainMenuPage.openCategories();
   await expect(categoriesPage.createCategoryButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(5);
+  await mainMenuPage.expectMenuItemsCount(6);
   await basePage.expectGridToBeAttached();
 });
