@@ -2,6 +2,8 @@ import {
   AppDetailsUrlQueryParams,
   AppInstallUrlQueryParams,
 } from "@dashboard/apps/urls";
+import SectionRoute from "@dashboard/auth/components/SectionRoute";
+import { PermissionEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
@@ -55,8 +57,9 @@ export const AppsSectionRoot = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.apps)} />
       <Switch>
         <Route exact path={AppPaths.appListPath} component={AppListRoute} />
-        <Route
+        <SectionRoute
           exact
+          permissions={[PermissionEnum.MANAGE_APPS]}
           path={AppPaths.appInstallPath}
           component={AppInstallRoute}
         />
@@ -65,8 +68,9 @@ export const AppsSectionRoot = () => {
           path={AppPaths.resolveAppDetailsPath(":id")}
           component={AppManageRoute}
         />
-        <Route
+        <SectionRoute
           exact
+          permissions={[PermissionEnum.MANAGE_APPS]}
           path={AppPaths.resolveRequestPermissionsPath(":id")}
           component={AppPermissionRequestView}
         />

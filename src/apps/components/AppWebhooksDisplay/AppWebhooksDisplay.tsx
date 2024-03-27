@@ -3,6 +3,7 @@ import {
   EventDeliveryStatusEnum,
   useAppWebhookDeliveriesQuery,
 } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import {
   Accordion,
   Box,
@@ -123,8 +124,11 @@ export const AppWebhooksDisplay = ({
 }: AppWebhooksDisplayProps) => {
   const { formatMessage } = useIntl();
 
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
+
   const { data: webhooksData, loading } = useAppWebhookDeliveriesQuery({
     variables: { appId },
+    skip: !hasManagedAppsPermission,
     pollInterval: REFRESH_INTERVAL,
   });
 

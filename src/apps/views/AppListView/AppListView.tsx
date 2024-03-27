@@ -21,6 +21,7 @@ import {
   useAppsInstallationsQuery,
   useAppsListQuery,
 } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState,
@@ -44,6 +45,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     AppListUrlDialog,
@@ -86,6 +88,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
   const { data: appsInProgressData, refetch: appsInProgressRefetch } =
     useAppsInstallationsQuery({
       displayLoader: false,
+      skip: !hasManagedAppsPermission,
     });
 
   const installedAppNotify = (name: string) => {

@@ -11,4 +11,9 @@ export const messages = defineMessages({
     defaultMessage: "Tunnel - development",
     description: "label",
   },
+  nothingInstalledPlaceholder: {
+    defaultMessage: "Nothing installed yet.",
+    description: "placeholder",
+    id: "9g6Y7a",
+  },
 });

@@ -28,7 +28,9 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
 
-  const { data } = useAppQuery({ variables: { id: appId } });
+  const { data } = useAppQuery({
+    variables: { id: appId, hasManagedAppsPermission: true },
+  });
 
   const availableEvents = useAvailableEvents();
 
