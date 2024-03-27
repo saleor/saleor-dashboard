@@ -16,5 +16,5 @@ test("TC: SALEOR_17 User should be able to navigate to product type list as a st
   await page.goto(URL_LIST.configuration);
   await configurationPage.openProductTypes();
   await expect(productTypePage.addProductTypeButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(2);
+  await mainMenuPage.expectMenuItemsCount(3);
 });

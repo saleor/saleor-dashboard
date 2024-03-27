@@ -49,7 +49,7 @@ export function useMenuStructure() {
   const getAppSection = (): SidebarMenuItem => ({
     icon: renderIcon(<MarketplaceIcon />),
     label: intl.formatMessage(sectionNames.apps),
-    permissions: [PermissionEnum.MANAGE_APPS],
+    permissions: [],
     id: "apps",
     url: AppPaths.appListPath,
     type: "item",
