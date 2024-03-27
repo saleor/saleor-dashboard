@@ -3,7 +3,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 dotenv.config();
 const env = process.env;
-const DEFAULT_RETRIES = '0';
+const DEFAULT_RETRIES = '1';
 const DEFAULT_WORKERS = '2';
 export default defineConfig({
   testDir: "playwright/tests",
@@ -12,11 +12,11 @@ export default defineConfig({
   retries: parseInt(env.RETRIES || DEFAULT_RETRIES),
   workers: parseInt(env.WORKERS || DEFAULT_WORKERS),
   reporter: env.CI ? "blob" : "html",
-  maxFailures: 5,
+  maxFailures: 0,
   timeout: env.CI ? 45000 : 60000,
   use: {
     baseURL: env.BASE_URL || '',
-    trace: env.CI ? "on-first-retry" : "off",
+    trace: env.CI ? "on-all-retries" : "on",
     screenshot: "only-on-failure",
     testIdAttribute: "data-test-id",
     video: env.CI ? "retain-on-failure" : "off",
