@@ -1,39 +1,39 @@
 import { APIRequestContext } from "@playwright/test";
 
 interface User {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 interface TokenCreateResponse {
-    tokenCreate: {
-        token: string;
-        refreshToken: string;
-        errors: [
-            {
-                message: string;
-                code: string;
-            },
-        ];
-        user: {
-            id: string;
-        };
+  tokenCreate: {
+    token: string;
+    refreshToken: string;
+    errors: [
+      {
+        message: string;
+        code: string;
+      },
+    ];
+    user: {
+      id: string;
     };
+  };
 }
 
 interface ApiResponse<T> {
-    data: T;
+  data: T;
 }
 
 export class BasicApiService {
-    readonly request: APIRequestContext;
+  readonly request: APIRequestContext;
 
-    constructor(request: APIRequestContext) {
-        this.request = request;
-    }
+  constructor(request: APIRequestContext) {
+    this.request = request;
+  }
 
-    async logInUserViaApi(user: User): Promise<ApiResponse<TokenCreateResponse>> {
-        const query = `mutation TokenAuth{
+  async logInUserViaApi(user: User): Promise<ApiResponse<TokenCreateResponse>> {
+    const query = `mutation TokenAuth{
             tokenCreate(email: "${user.email}", password: "${user.password}") {
                 token
                 refreshToken
@@ -47,9 +47,11 @@ export class BasicApiService {
             }
         }`;
 
-        const loginResponse = await this.request.post(process.env.API_URI || "", { data: { query } });
-        const loginResponseJson = await loginResponse.json();
+    const loginResponse = await this.request.post(process.env.API_URI || "", {
+      data: { query },
+    });
+    const loginResponseJson = await loginResponse.json();
 
-        return loginResponseJson as ApiResponse<TokenCreateResponse>;
-    }
+    return loginResponseJson as ApiResponse<TokenCreateResponse>;
+  }
 }
