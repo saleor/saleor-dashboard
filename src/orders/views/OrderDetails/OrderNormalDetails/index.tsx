@@ -59,6 +59,7 @@ import {
   orderFulfillUrl,
   orderPaymentRefundUrl,
   orderReturnUrl,
+  orderTransactionRefundUrl,
   orderUrl,
   OrderUrlDialog,
   OrderUrlQueryParams,
@@ -462,8 +463,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       <OrderRefundDialog
         open={params.action === "add-refund"}
         onClose={closeModal}
-        // TODO: Add redirect to refund view
-        onConfirm={() => null}
+        // TODO: Add redirect to manual refund view
+        onConfirm={() => navigate(orderTransactionRefundUrl(id))}
       />
 
       <OrderAddressFields

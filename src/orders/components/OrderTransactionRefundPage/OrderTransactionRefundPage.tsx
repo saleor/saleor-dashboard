@@ -2,17 +2,19 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
 import {
   OrderDetailsGrantedRefundFragment,
   OrderDetailsGrantRefundFragment,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Text } from "@saleor/macaw-ui-next";
+import * as Portal from "@radix-ui/react-portal";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
 import { OrderTransactionRefundDatagrid } from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
+import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
 
 export interface OrderTransactionRefundPageProps {
@@ -25,8 +27,8 @@ export interface OrderTransactionRefundPageProps {
 
 const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   order,
-  loading,
-  submitState,
+  // loading,
+  // submitState,
 }) => {
   // const intl = useIntl();
   // const { locale } = useLocale();
@@ -58,35 +60,37 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
         <OrderTransactionTiles transactions={order?.transactions} />
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>
-        <DashboardCard>
-          <DashboardCard.Content
-            __width="400px"
-            display="flex"
-            flexDirection="column"
-            gap={5}
-          >
-            <Text fontWeight="medium" marginTop={6}>
-              Amount
-            </Text>
-            <Text as="p">
-              Amount is calculated automatically based on the items selected,
-              but you can modify it manually.
-            </Text>
-            {/* TODO: add amount / shipment / calculation Card */}
-            {/* TODO: add reason input */}
-          </DashboardCard.Content>
-        </DashboardCard>
+        <Box
+          __width="400px"
+          display="flex"
+          flexDirection="column"
+          height="100%"
+          justifyContent="space-between"
+        >
+          <OrderTransactionSummary selectedProductsValue={20} />
+          <OrderTransactionReason reason="" />
+        </Box>
       </DetailPageLayout.RightSidebar>
-      {/* TODO: need custom savebar because of two buttons - do we migrate all savebars? */}
-      <Savebar
-        labels={{
-          confirm: "Transfer funds",
-        }}
-        onCancel={() => navigate(orderUrl(order?.id))}
-        onSubmit={() => null}
-        state={submitState}
-        disabled={loading}
-      />
+      {/* TODO: need custom savebar because of three buttons - do we migrate all savebars? */}
+      <Portal.Root>
+        <Box
+          display="flex"
+          position="absolute"
+          gap={2}
+          bottom={0}
+          right={0}
+          padding={4}
+        >
+          <Button
+            variant="secondary"
+            onClick={() => navigate(orderUrl(order?.id))}
+          >
+            Cancel
+          </Button>
+          <Button>Save draft</Button>
+          <Button>Transfer funds</Button>
+        </Box>
+      </Portal.Root>
     </DetailPageLayout>
   );
 };

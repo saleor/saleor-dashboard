@@ -199,12 +199,12 @@ export const orderTransactionRefundPath = (id: string) =>
   urlJoin(orderPath(id), "refund");
 
 export const orderTransactionRefundUrl = (id: string) =>
-  orderGrantRefundPath(encodeURIComponent(id));
+  orderTransactionRefundPath(encodeURIComponent(id));
 
 export const orderTransactionRefundEditPath = (
   orderId: string,
   refundId: string,
-) => urlJoin(orderGrantRefundPath(orderId), refundId);
+) => urlJoin(orderTransactionRefundPath(orderId), refundId);
 
 export const orderTransactionRefundEditUrl = (
   orderId: string,
