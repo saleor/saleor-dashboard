@@ -148,8 +148,8 @@ test("TC: SALEOR_130 Bulk delete attributes @e2e @attributes", async () => {
   await attributesPage.gotoListView();
   await attributesPage.resizeWindow(800,600);
   await attributesPage.typeInSearchOnListView("e2e attribute to be bulk deleted")
-  await expect(attributesPage.loader).toBeVisible({ timeout: 30000});
-  await expect(attributesPage.loader).not.toBeVisible({ timeout: 30000});
+  await attributesPage.loader.waitFor({ state: "visible", timeout: 30000});
+  await attributesPage.loader.waitFor({ state: "hidden", timeout: 30000});
   await attributesPage.clickOnSpecificPositionOnPage(60, 136)
   await attributesPage.clickBulkDeleteGridRowsButton();
   await attributesPage.deleteAttributesInBulkDialog.deleteSelectedAttributes();
