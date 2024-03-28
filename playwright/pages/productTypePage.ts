@@ -32,6 +32,11 @@ export class ProductTypePage {
   async typeProductTypeName(name: string) {
     await this.nameInput.fill(name);
   }
+
+  async updateProductTypeName(name: string) {
+    await this.nameInput.clear();
+    await this.nameInput.fill(name);
+  }
   async makeProductShippableWithWeight(weight: string = "10") {
     await this.isShippingRequired.click();
     await this.shippingWeightInput.fill(weight);
@@ -58,5 +63,13 @@ export class ProductTypePage {
 
   async clickCreateProductTypeButton() {
     await this.addProductTypeButton.click();
+  }
+
+  async gotoExistingProductTypePage(productTypeId: string) {
+    const existingProductTypeUrl = URL_LIST.productTypes + productTypeId;
+    await console.log(
+      "Navigating to product type details: " + existingProductTypeUrl,
+    );
+    await this.page.goto(existingProductTypeUrl);
   }
 }
