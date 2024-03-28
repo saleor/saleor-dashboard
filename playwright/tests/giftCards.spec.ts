@@ -27,6 +27,7 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
   await giftCardsPage.expectSuccessBanner();
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.waitForGrid();
+  await giftCardsPage.successBanner.waitFor({ state: "hidden" })
   const actualNumberOfRows = await giftCardsPage.getNumberOfGridRows();
   const expectedNumberOfRows = originalNumberOfGiftCards + 1;
   await expect(actualNumberOfRows).toEqual(expectedNumberOfRows);
@@ -44,6 +45,7 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.waitForGrid();
+  await giftCardsPage.successBanner.waitFor({ state: "hidden" });
   const actualNumberOfRows = await giftCardsPage.getNumberOfGridRows();
   const expectedNumberOfRows = originalNumberOfGiftCards + 1;
   await expect(actualNumberOfRows).toEqual(expectedNumberOfRows);
@@ -56,7 +58,6 @@ test("TC: SALEOR_107 Resend code @e2e @gift", async () => {
   );
   await giftCardsPage.clickResendCodeButton();
   await giftCardsPage.resendGiftCardCodeDialog.clickResendButton();
-
   await giftCardsPage.expectSuccessBanner();
 });
 test("TC: SALEOR_108 Deactivate gift card @e2e @gift", async () => {
@@ -87,6 +88,7 @@ test("TC: SALEOR_110 Edit gift card @e2e @gift", async () => {
 test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForGrid();
+  await giftCardsPage.successBanner.waitFor({ state: "hidden" })
   const originalNumberOfGiftCards = await giftCardsPage.getNumberOfGridRows();
   await giftCardsPage.checkListRowsBasedOnContainingText(
     GIFT_CARDS.giftCardsToBeDeleted.names,
@@ -96,6 +98,7 @@ test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
   await giftCardsPage.deleteDialog.clickConfirmDeletionCheckbox();
   await giftCardsPage.deleteDialog.clickDeleteButton();
   await giftCardsPage.waitForGrid();
+  await giftCardsPage.successBanner.waitFor({ state: "hidden" })
   const actualNumberOfRows = await giftCardsPage.getNumberOfGridRows();
   const expectedNumberOfRows = originalNumberOfGiftCards - numberOfGiftCardsToBeDeleted;
   await expect(actualNumberOfRows).toEqual(expectedNumberOfRows);
