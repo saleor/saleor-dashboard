@@ -526,3 +526,32 @@ export const TRANSLATIONS = {
     info: "Translation used in clear translation test",
   }
 }
+
+export const PERMISSION_GROUPS = {
+  permissionGroupToBeEdited: {
+    id: "R3JvdXA6MTEx",
+    name: "e2e_permission_group_to_be_updated",
+    assignedMembers: {
+      names: ["e2e_permission_group_member_1 test", "e2e_permission_group_member_2 test", "e2e_permission_group_member_3 test"]
+    },
+    assignedPermissions: { names:["MANAGE_PRODUCTS", "MANAGE_PLUGINS", "MANAGE_STAFF"]},
+  },
+  permissionGroupToBeDeleted: {
+    id: "R3JvdXA6MTEw",
+    name:"e2e_permission_group_to_be_deleted"
+},
+  permissionGroupMembers:[
+  {
+    name: "e2e_permission_group_member_1 test",
+    email: "e2e_permission_group_member_1@grr.la"
+  },
+  {
+    name: "e2e_permission_group_member_2 test",
+    email: "e2e_permission_group_member_2@grr.la"
+  },
+    {
+    name: "e2e_permission_group_member_3 test",
+    email: "e2e_permission_group_member_3@grr.la"
+  }
+]
+}
