@@ -38,6 +38,7 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
           : undefined
       }
       variant="secondary"
+      data-test-id="app-edit-permissions-button"
       disabled={!hasManagedAppsPermission}
       onClick={() => setEditPermissionDialogOpen(true)}
     >

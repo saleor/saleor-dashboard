@@ -13,6 +13,7 @@ export class AppPage extends BasePage {
     constructor(
         page: Page,
         readonly deleteButton = page.getByText("Delete"),
+        readonly appSettingsButton = page.getByTestId("app-settings-button"),
     ) {
         super(page);
         this.page = page;
@@ -25,4 +26,9 @@ export class AppPage extends BasePage {
         await this.page.goto(appUrl);
     }
 
+    async clickAppSettingsButton() {
+        await this.appSettingsButton.click();
+    }
+
 }
+
