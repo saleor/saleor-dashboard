@@ -199,14 +199,15 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
                   </Button>
                 )}
               </Tooltip.Trigger>
-              <Tooltip.Content>
-                {!hasAccessibleChannels && (
+
+              {!hasAccessibleChannels && (
+                <Tooltip.Content>
                   <FormattedMessage
                     defaultMessage="You don't have access to any channels"
                     id="grkY2V"
                   />
-                )}
-              </Tooltip.Content>
+                </Tooltip.Content>
+              )}
             </Tooltip>
 
             {hasLimits(limits, "orders") && (
