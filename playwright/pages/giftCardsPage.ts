@@ -17,6 +17,7 @@ export class GiftCardsPage extends BasePage {
   readonly exportGiftCardsDialog: ExportGiftCardsDialog;
   readonly setGiftCardsBalanceDialog: SetGiftCardsBalanceDialog;
 
+
   constructor(
     page: Page,
     readonly issueCardButton = page.getByTestId("issue-card-button"),
@@ -28,6 +29,7 @@ export class GiftCardsPage extends BasePage {
     readonly exportCardCodesButton = page.getByTestId("exportCodesMenuItem"),
     readonly setBalanceButton = page.getByTestId("set-balance-button"),
     readonly showMoreMenuButton = page.getByTestId("show-more-button"),
+    readonly exportGiftCardsBanner = page.getByText("We are currently exporting your gift card codes. As soon as your file is available it will be sent to your email address")
   ) {
     super(page);
     this.page = page;
