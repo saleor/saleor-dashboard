@@ -27,6 +27,7 @@ const AllAppList: React.FC<AllAppListProps> = ({
 
   return (
     <Box
+      data-test-id="all-app-list"
       display="grid"
       __gridTemplateColumns="repeat(2, 1fr)"
       __gap={`${themeValues.spacing[8]} ${themeValues.spacing[5]}`}

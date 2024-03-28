@@ -14,6 +14,6 @@ test("TC: SALEOR_10 User should be able to navigate to apps list as a staff memb
   await page.goto(URL_LIST.homePage);
   await mainMenuPage.openApps();
   await expect(appsPage.installExternalAppButton).toBeVisible();
-  await expect(appsPage.appsLogosList.first()).toBeVisible();
+  await expect(appsPage.installedAppsList).toBeVisible();
   await mainMenuPage.expectMenuItemsCount(2);
 });
