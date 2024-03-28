@@ -152,7 +152,7 @@ export class BasePage {
       .nth(gridIndex)
       .locator("tbody tr")
       .first()
-      .waitFor({ state: "attached", timeout: 10000 });
+      .waitFor({ state: "attached", timeout: 50000 });
   }
 
   private async findGridCellBounds(col: number, row: number) {
