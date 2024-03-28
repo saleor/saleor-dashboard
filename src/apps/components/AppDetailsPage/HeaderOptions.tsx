@@ -38,6 +38,7 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
     >
       <Box display="flex" gap={1} paddingY={2}>
         <ButtonWithTooltip
+          data-test-id="app-activate-button"
           variant="tertiary"
           tooltip={tooltipContent}
           disabled={!hasManagedAppsPermission}
@@ -55,6 +56,7 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
         </ButtonWithTooltip>
 
         <ButtonWithTooltip
+          data-test-id="app-delete-button"
           variant="tertiary"
           tooltip={tooltipContent}
           disabled={!hasManagedAppsPermission}
