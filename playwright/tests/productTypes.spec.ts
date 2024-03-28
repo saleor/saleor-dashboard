@@ -1,5 +1,5 @@
 import * as faker from "faker";
-
+import { PRODUCT_TYPES } from "@data/e2eTestData";
 import { ProductTypePage } from "@pages/productTypePage";
 import { test } from "@playwright/test";
 
@@ -18,6 +18,7 @@ test("TC: SALEOR_1 Create basic product type @e2e @product-type", async ({
   await productTypePage.clickSaveButton();
   await productTypePage.expectSuccessBanner();
 });
+
 test("TC: SALEOR_2 Create gift card product type @e2e @product-type", async ({
   page,
 }) => {
@@ -26,6 +27,18 @@ test("TC: SALEOR_2 Create gift card product type @e2e @product-type", async ({
   await productTypePage.gotoAddProductTypePage();
   await productTypePage.typeProductTypeName(productTypeName);
   await productTypePage.selectGiftCardButton();
+  await productTypePage.clickSaveButton();
+  await productTypePage.expectSuccessBanner();
+});
+
+test("TC: SALEOR_137 As a admin I can edit product type @e2e @product-type", async ({
+  page,
+}) => {
+  const productTypePage = new ProductTypePage(page);
+
+  await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeEdited.id);
+  await productTypePage.typeProductTypeName(productTypeName);
+  await productTypePage.makeProductShippableWithWeight();
   await productTypePage.clickSaveButton();
   await productTypePage.expectSuccessBanner();
 });
