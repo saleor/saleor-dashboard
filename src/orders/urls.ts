@@ -194,3 +194,23 @@ export const orderGiftCardBoughtPath = () =>
   orderListUrl({
     giftCard: [OrderFilterGiftCard.paid],
   });
+
+export const orderTransactionRefundPath = (id: string) =>
+  urlJoin(orderPath(id), "refund");
+
+export const orderTransactionRefundUrl = (id: string) =>
+  orderTransactionRefundPath(encodeURIComponent(id));
+
+export const orderTransactionRefundEditPath = (
+  orderId: string,
+  refundId: string,
+) => urlJoin(orderTransactionRefundPath(orderId), refundId);
+
+export const orderTransactionRefundEditUrl = (
+  orderId: string,
+  refundId: string,
+) =>
+  orderGrantRefundEditPath(
+    encodeURIComponent(orderId),
+    encodeURIComponent(refundId),
+  );

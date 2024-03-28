@@ -69,6 +69,7 @@ export interface AppListViewSettings {
   [ListViews.PRODUCT_DETAILS]: ListSettings;
   [ListViews.VOUCHER_CODES]: ListSettings;
   [ListViews.ORDER_REFUNDS]: ListSettings;
+  [ListViews.ORDER_TRANSACTION_REFUNDS]: ListSettings;
 }
 // TODO: replace with
 // type AppListViewSettings = Record<ListViews, ListSettings>;
@@ -200,6 +201,10 @@ export const defaultListSettings: AppListViewSettings = {
   [ListViews.ORDER_REFUNDS]: {
     rowNumber: PAGINATE_BY,
     columns: ["status", "amount", "reason", "date", "account"],
+  },
+  [ListViews.ORDER_TRANSACTION_REFUNDS]: {
+    rowNumber: PAGINATE_BY,
+    columns: ["product", "unitPrice", "qtyOrdered", "qtyToRefund"],
   },
 };
 
