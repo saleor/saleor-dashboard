@@ -40,7 +40,7 @@ jobs:
           echo "last_month_tag=$(date -d "last month" +%Y-%m)" >> "$GITHUB_ENV"
 
       - name: Create issue
-        uses: peter-evans/create-issue-from-file@v5
+        uses: peter-evans/create-issue-from-file@24452a72d85239eacf1468b0f1982a9f3fec4c94 # v5.0.0
         with:
           title: Monthly issue metrics report for ${{ env.last_month_tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
