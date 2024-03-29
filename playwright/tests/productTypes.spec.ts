@@ -31,7 +31,7 @@ test("TC: SALEOR_2 Create gift card product type @e2e @product-type", async ({
   await productTypePage.expectSuccessBanner();
 });
 
-test("TC: SALEOR_137 As a admin I can edit product type @e2e @product-type", async ({
+test("TC: SALEOR_184 As a admin I can edit product type @e2e @product-type", async ({
   page,
 }) => {
   const productTypePage = new ProductTypePage(page);
@@ -43,11 +43,11 @@ test("TC: SALEOR_137 As a admin I can edit product type @e2e @product-type", asy
   await productTypePage.expectSuccessBanner();
 });
 
-test("TC: SALEOR_138 As a admin user I can delete product type with assigned products @e2e @product-type", async ({
+test("TC: SALEOR_185 As a admin user I can delete product type with assigned products @e2e @product-type", async ({
   page,
 }) => {
   const productTypePage = new ProductTypePage(page);
-  const productTypeNames = [PRODUCT_TYPES.productTypeToBeRemoved.name];
+  const productTypeName = PRODUCT_TYPES.productTypeToBeRemoved.name;
 
   await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeRemoved.id);
   await productTypePage.clickDeleteButton();
@@ -55,12 +55,10 @@ test("TC: SALEOR_138 As a admin user I can delete product type with assigned pro
   await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
   await productTypePage.expectSuccessBanner();
   await productTypePage.productTypeList.waitFor({ state: "visible", timeout: 50000 });
-  await expect(
-    productTypePage.checkProductTypesListBasedOnContainingText(productTypeNames))
-    .not.toBeTruthy();
+  await expect(productTypePage.productTypeList).not.toContainText(productTypeName);
 });
 
-test("TC: SALEOR_139 As a admin user I can delete several product types@e2e @product-type", async ({
+test("TC: SALEOR_186 As a admin user I can delete several product types @e2e @product-type", async ({
   page,
 }) => {
   const productTypePage = new ProductTypePage(page);
@@ -73,8 +71,6 @@ test("TC: SALEOR_139 As a admin user I can delete several product types@e2e @pro
   await productTypePage.clickBulkDeleteButton();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
   await productTypePage.expectSuccessBanner();
-  await productTypePage.productTypeList.waitFor({ state: "visible", timeout: 50000 });
-  await expect(
-    productTypePage.checkProductTypesListBasedOnContainingText(productTypeNames))
-    .not.toBeTruthy();
+  await expect(productTypePage.productTypeList).not.toContainText(productTypeNames[0]);
+  await expect(productTypePage.productTypeList).not.toContainText(productTypeNames[1]);
 });
