@@ -32,9 +32,19 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SEARCH_QUERY: 'saleor-dashboard:saleor/repo is:issue created:${{ env.last_month }} -reason:"not planned"'
 
-      - name: Create issue
-        uses: peter-evans/create-issue-from-file@v5
-        with:
-          title: Monthly issue metrics report
-          token: ${{ secrets.GITHUB_TOKEN }}
-          content-filepath: ./issue_metrics.md
+          - name: Create issue metrics report
+          run: |
+            # Generate issue_metrics.md file with current date in name
+            report_filename="issue_metrics_$(date +'%Y-%m').md"
+            echo "This is the monthly issue metrics report." > "$report_filename"
+            echo "Add your metrics data here." >> "$report_filename"
+    
+            # Store the filename in an environment variable
+            echo "report_filename=$report_filename" >> "$GITHUB_ENV"
+    
+        - name: Create issue
+          uses: peter-evans/create-issue-from-file@v5
+          with:
+            title: Monthly issue metrics report
+            token: ${{ secrets.GITHUB_TOKEN }}
+            content-filepath: ${{ env.report_filename }}
