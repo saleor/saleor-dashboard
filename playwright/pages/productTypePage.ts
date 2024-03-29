@@ -1,10 +1,12 @@
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
+import { DeleteDialog } from "@pages/dialogs/deleteDialog";
 import type { Page } from "@playwright/test";
 
-export class ProductTypePage {
+export class ProductTypePage extends BasePage {
   readonly page: Page;
-  basePage: BasePage;
+  readonly basePage: BasePage;
+  readonly deleteProductTypeDialog: DeleteDialog;
 
   constructor(
     page: Page,
@@ -24,9 +26,14 @@ export class ProductTypePage {
       "variant-selection-checkbox",
     ),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
+    readonly bulkDeleteButton = page.getByTestId("bulk-delete-product-types"),
+    readonly productTypeList = page.getByTestId("product-types-list"),
+    readonly rowCheckbox = page.getByTestId("checkbox"),
   ) {
+    super(page);
     this.page = page;
     this.basePage = new BasePage(page);
+    this.deleteProductTypeDialog = new DeleteDialog(page);
   }
 
   async typeProductTypeName(name: string) {
@@ -72,4 +79,31 @@ export class ProductTypePage {
     );
     await this.page.goto(existingProductTypeUrl);
   }
+  async clickBulkDeleteButton() {
+    await this.bulkDeleteButton.click();
+  }
+
+  async checkProductTypesOnList(listRows: string[]) {
+    for (const row of listRows) {
+      const rowLocator = this.page.getByTestId(`id-${row}`);
+      await rowLocator.locator("input").click();
+    }
+  }
+
+
+  async checkProductTypesListBasedOnNotContainingText(productTypeNames: string[]) {
+    const rows = await this.page.$$('tbody tr');
+
+    let notFound = true;
+
+    for (const row of rows) {
+      const name = await row.$eval('[data-test-id="name"]', element => element.textContent);
+      if (name && productTypeNames.includes(name)) {
+        notFound = false; // Change variable value when name is found
+        break;
+      }
+    }
+    return notFound;
+  }
+
 }

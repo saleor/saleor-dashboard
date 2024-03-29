@@ -120,7 +120,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
           <TablePaginationWithContext colSpan={numberOfColumns} />
         </TableRowLink>
       </TableFooter>
-      <TableBody>
+      <TableBody data-test-id="product-types-list">
         {renderCollection(
           productTypes,
           productType => {

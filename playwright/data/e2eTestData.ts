@@ -587,8 +587,20 @@ export const PAGE_TYPES = {
 }
 export const PRODUCT_TYPES = {
   productTypeToBeEdited: {
-    id: "UHJvZHVjdFR5cGU6NzAw",
-    name: "Product to be edited",
+    id: "UHJvZHVjdFR5cGU6Njk4",
+    name: "A product to be edited",
     info: "Product type used in edit product type test",
-  }
+  },
+  productTypeToBeRemoved: {
+    id: "UHJvZHVjdFR5cGU6Njk5",
+    name: "A product to be removed",
+    info: "Product type used in delete product type test",
+  },
+  productTypesToBeBulkDeleted: {
+    names: [
+      "a product type to be bulk deleted 1/2",
+      "a product type to be bulk deleted 2/2",
+    ],
+    ids: ["UHJvZHVjdFR5cGU6NzAw", "UHJvZHVjdFR5cGU6NzAx"]
+  },
 }
