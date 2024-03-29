@@ -1,8 +1,5 @@
 name: Monthly issue metrics
-on:
-  pull_request:
-    types: [opened, reopened]
-
+on: repository_dispatch
 permissions:
   contents: read
 
