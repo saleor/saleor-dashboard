@@ -90,16 +90,15 @@ export class ProductTypePage extends BasePage {
     }
   }
 
-
-  async checkProductTypesListBasedOnNotContainingText(productTypeNames: string[]) {
+  async checkProductTypesListBasedOnContainingText(productTypeNames: string[]) {
     const rows = await this.page.$$('tbody tr');
 
-    let notFound = true;
+    let notFound = false;
 
     for (const row of rows) {
       const name = await row.$eval('[data-test-id="name"]', element => element.textContent);
       if (name && productTypeNames.includes(name)) {
-        notFound = false; // Change variable value when name is found
+        notFound = true; // Change variable value when name is found
         break;
       }
     }

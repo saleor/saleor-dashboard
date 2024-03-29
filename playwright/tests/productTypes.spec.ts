@@ -35,22 +35,30 @@ test("TC: SALEOR_137 As a admin I can edit product type @e2e @product-type", asy
   page,
 }) => {
   const productTypePage = new ProductTypePage(page);
-
+  const updatedProductTypeName = `updated-e2e-product-type-${faker.datatype.number()}`;
   await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeEdited.id);
-  await productTypePage.typeProductTypeName(productTypeName);
+  await productTypePage.updateProductTypeName(updatedProductTypeName);
   await productTypePage.makeProductShippableWithWeight();
   await productTypePage.clickSaveButton();
   await productTypePage.expectSuccessBanner();
 });
 
-// test("TC: SALEOR_138 As a admin user I can delete product type with assigned products @e2e @product-type", async ({
-//   page,
-// }) => {
-//   const productTypePage = new ProductTypePage(page);
+test("TC: SALEOR_138 As a admin user I can delete product type with assigned products @e2e @product-type", async ({
+  page,
+}) => {
+  const productTypePage = new ProductTypePage(page);
+  const productTypeNames = [PRODUCT_TYPES.productTypeToBeRemoved.name];
 
-//   await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeRemoved.id);
-
-// });
+  await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeRemoved.id);
+  await productTypePage.clickDeleteButton();
+  await productTypePage.deleteProductTypeDialog.clickConfirmDeletionCheckbox();
+  await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
+  await productTypePage.expectSuccessBanner();
+  await productTypePage.productTypeList.waitFor({ state: "visible", timeout: 50000 });
+  await expect(
+    productTypePage.checkProductTypesListBasedOnContainingText(productTypeNames))
+    .not.toBeTruthy();
+});
 
 test("TC: SALEOR_139 As a admin user I can delete several product types@e2e @product-type", async ({
   page,
@@ -65,8 +73,8 @@ test("TC: SALEOR_139 As a admin user I can delete several product types@e2e @pro
   await productTypePage.clickBulkDeleteButton();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
   await productTypePage.expectSuccessBanner();
-  await expect(productTypePage.productTypeList).toBeVisible();
+  await productTypePage.productTypeList.waitFor({ state: "visible", timeout: 50000 });
   await expect(
-    productTypePage.checkProductTypesListBasedOnNotContainingText(productTypeNames))
-    .toBeTruthy();
+    productTypePage.checkProductTypesListBasedOnContainingText(productTypeNames))
+    .not.toBeTruthy();
 });
