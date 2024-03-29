@@ -89,3 +89,4 @@ export class ProductTypePage extends BasePage {
       await rowLocator.locator("input").click();
     }
   }
+}
