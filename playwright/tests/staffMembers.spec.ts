@@ -6,7 +6,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
 
-test("TC: SALEOR_37 Admin User should be able to deactivate other user @e2e @staff-members", async ({
+test("TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @staff-members", async ({
   page,
   request,
 }) => {
