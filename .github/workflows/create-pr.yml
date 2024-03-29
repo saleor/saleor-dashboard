@@ -23,4 +23,5 @@ jobs:
           -f title='Add check with release tests results to PR' \
           -f body='Please pull these awesome changes in!' \
           -f head='saleor:Test-add-tests-check-to-release-PR' \
-          -f base='main' 
+          -f base='main' \
+          -f draft=true
