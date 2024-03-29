@@ -1,9 +1,7 @@
 name: Run test manually
 
 on: 
-  pull_request:
-    types:
-      - "labeled"
+  repository_dispatch:
 
 concurrency:
   group: ${{ github.ref }}
