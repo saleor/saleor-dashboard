@@ -944,6 +944,13 @@ type App implements Node & ObjectWithMetadata {
   """The ID of the app."""
   id: ID!
 
+  """
+  Canonical app ID from the manifest
+  
+  Added in Saleor 3.19.
+  """
+  identifier: String
+
   """Determine if app will be set active or not."""
   isActive: Boolean
 
@@ -8204,8 +8211,13 @@ type FileUpload {
 
 """Represents order fulfillment."""
 type Fulfillment implements Node & ObjectWithMetadata {
+  """Date and time when fulfillment was created."""
   created: DateTime!
+
+  """Sequence in which the fulfillments were created for an order."""
   fulfillmentOrder: Int!
+
+  """ID of the fulfillment."""
   id: ID!
 
   """List of lines for the fulfillment."""
@@ -8255,6 +8267,8 @@ type Fulfillment implements Node & ObjectWithMetadata {
   Added in Saleor 3.14.
   """
   shippingRefundedAmount: Money
+
+  """Status of fulfillment."""
   status: FulfillmentStatus!
 
   """User-friendly fulfillment status."""
@@ -8266,6 +8280,8 @@ type Fulfillment implements Node & ObjectWithMetadata {
   Added in Saleor 3.14.
   """
   totalRefundedAmount: Money
+
+  """Fulfillment tracking number."""
   trackingNumber: String!
 
   """Warehouse from fulfillment was fulfilled."""
@@ -8407,8 +8423,13 @@ type FulfillmentCreated implements Event {
 
 """Represents line of the fulfillment."""
 type FulfillmentLine implements Node {
+  """ID of the fulfillment line."""
   id: ID!
+
+  """The order line to which the fulfillment line is related."""
   orderLine: OrderLine
+
+  """The number of items included in the fulfillment line."""
   quantity: Int!
 }
 
@@ -8580,6 +8601,8 @@ type GiftCard implements Node & ObjectWithMetadata {
   Requires one of the following permissions: MANAGE_GIFT_CARD, OWNER.
   """
   code: String!
+
+  """Date and time when gift card was created."""
   created: DateTime!
 
   """
@@ -8616,13 +8639,19 @@ type GiftCard implements Node & ObjectWithMetadata {
     """Filtering options for gift card events."""
     filter: GiftCardEventFilterInput
   ): [GiftCardEvent!]!
+
+  """Expiry date of the gift card."""
   expiryDate: Date
+
+  """ID of the gift card."""
   id: ID!
   initialBalance: Money!
   isActive: Boolean!
 
   """Last 4 characters of gift card code."""
   last4CodeChars: String!
+
+  """Date and time when gift card was last used."""
   lastUsedOn: DateTime
 
   """List of public metadata items. Can be accessed without permissions."""
@@ -9049,6 +9078,8 @@ type GiftCardEvent implements Node {
 
   """The gift card expiry date."""
   expiryDate: Date
+
+  """ID of the event associated with a gift card."""
   id: ID!
 
   """Content of the event."""
@@ -9338,7 +9369,10 @@ The gift card tag.
 Added in Saleor 3.1.
 """
 type GiftCardTag implements Node {
+  """ID of the tag associated with a gift card."""
   id: ID!
+
+  """Name of the tag associated with a gift card."""
   name: String!
 }
 
@@ -14425,6 +14459,39 @@ type Mutation {
   ): PageDelete
 
   """
+  Create a media object (image or video URL) associated with page. For image, this mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
+  
+  Requires one of the following permissions: MANAGE_PAGES.
+  """
+  pageMediaCreate(
+    """Fields required to create a page media."""
+    input: PageMediaCreateInput!
+  ): PageMediaCreate
+
+  """
+  Deletes a page media. 
+  
+  Requires one of the following permissions: MANAGE_PAGES.
+  """
+  pageMediaDelete(
+    """ID of a page media to delete."""
+    id: ID!
+  ): PageMediaDelete
+
+  """
+  Updates a page media. 
+  
+  Requires one of the following permissions: MANAGE_PAGES.
+  """
+  pageMediaUpdate(
+    """ID of a page media to update."""
+    id: ID!
+
+    """Fields required to update a page media."""
+    input: PageMediaUpdateInput!
+  ): PageMediaUpdate
+
+  """
   Reorder page attribute values. 
   
   Requires one of the following permissions: MANAGE_PAGES.
@@ -15987,7 +16054,7 @@ type Mutation {
   ): StaffUpdate
 
   """
-  Updates stocks for a given variant and warehouse.
+  Updates stocks for a given variant and warehouse. Variant and warehouse selectors have to be the same for all stock inputs. Is not allowed to use 'variantId' in one input and 'variantExternalReference' in another.
   
   Added in Saleor 3.13.
   
@@ -16252,6 +16319,13 @@ type Mutation {
 
     """The ID of the checkout or order."""
     id: ID!
+
+    """
+    The idempotency key assigned to the action. It will be passed to the payment app to discover potential duplicate actions. If not provided, the default one will be generated. If empty string provided, INVALID error code will be raised.
+    
+    Added in Saleor 3.14.
+    """
+    idempotencyKey: String
 
     """Payment gateway used to initialize the transaction."""
     paymentGateway: PaymentGatewayToInitialize!
@@ -16518,7 +16592,7 @@ type Mutation {
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   
   Triggers the following webhook events:
-  - VOUCHER_UPDATED (async): A voucher was updated.
+  - VOUCHER_CODES_DELETED (async): A voucher codes were deleted.
   """
   voucherCodeBulkDelete(
     """List of voucher codes IDs to delete."""
@@ -16532,6 +16606,7 @@ type Mutation {
   
   Triggers the following webhook events:
   - VOUCHER_CREATED (async): A voucher was created.
+  - VOUCHER_CODES_CREATED (async): A voucher codes were created.
   """
   voucherCreate(
     """Fields required to create a voucher."""
@@ -16574,6 +16649,7 @@ type Mutation {
   
   Triggers the following webhook events:
   - VOUCHER_UPDATED (async): A voucher was updated.
+  - VOUCHER_CODES_CREATED (async): A voucher code was created.
   """
   voucherUpdate(
     """ID of a voucher to update."""
@@ -16734,6 +16810,8 @@ type Order implements Node & ObjectWithMetadata {
   Informs whether a draft order can be finalized(turned into a regular order).
   """
   canFinalize: Boolean!
+
+  """Channel through which the order was placed."""
   channel: Channel!
 
   """
@@ -16749,8 +16827,16 @@ type Order implements Node & ObjectWithMetadata {
   Added in Saleor 3.11.
   """
   checkoutId: ID
+
+  """
+  Name of the collection point where the order should be picked up by the customer.
+  """
   collectionPointName: String
+
+  """Date and time when the order was created."""
   created: DateTime!
+
+  """Additional information provided by the customer about the order."""
   customerNote: String!
 
   """
@@ -16809,6 +16895,8 @@ type Order implements Node & ObjectWithMetadata {
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   grantedRefunds: [OrderGrantedRefund!]!
+
+  """ID of the order."""
   id: ID!
 
   """
@@ -16884,6 +16972,8 @@ type Order implements Node & ObjectWithMetadata {
   Added in Saleor 3.3.
   """
   privateMetafields(keys: [String!]): Metadata
+
+  """URL to which user should be redirected after order is placed."""
   redirectUrl: String
 
   """
@@ -16893,6 +16983,8 @@ type Order implements Node & ObjectWithMetadata {
 
   """Shipping method for this order."""
   shippingMethod: ShippingMethod @deprecated(reason: "This field will be removed in Saleor 4.0. Use `deliveryMethod` instead.")
+
+  """Method used for shipping."""
   shippingMethodName: String
 
   """Shipping methods related to this order."""
@@ -16933,6 +17025,8 @@ type Order implements Node & ObjectWithMetadata {
 
   """The shipping tax rate value."""
   shippingTaxRate: Float!
+
+  """Status of the order."""
   status: OrderStatus!
 
   """User-friendly order status."""
@@ -17067,6 +17161,8 @@ type Order implements Node & ObjectWithMetadata {
 
   """Undiscounted total amount of the order."""
   undiscountedTotal: TaxedMoney!
+
+  """Date and time when the order was created."""
   updatedAt: DateTime!
 
   """
@@ -17078,6 +17174,8 @@ type Order implements Node & ObjectWithMetadata {
   Email address of the customer. The full data can be access for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.
   """
   userEmail: String
+
+  """Voucher linked to the order."""
   voucher: Voucher
 
   """
@@ -17086,6 +17184,8 @@ type Order implements Node & ObjectWithMetadata {
   Added in Saleor 3.18.
   """
   voucherCode: String
+
+  """Weight of the order."""
   weight: Weight!
 }
 
@@ -17346,13 +17446,6 @@ input OrderBulkCreateInput {
 
   """Customer associated with the order."""
   user: OrderBulkCreateUserInput!
-
-  """
-  Code of a voucher associated with the order.
-  
-  DEPRECATED: this field will be removed in Saleor 3.19. Use `voucherCode` instead.
-  """
-  voucher: String
 
   """
   Code of a voucher associated with the order.
@@ -17915,6 +18008,8 @@ type OrderEvent implements Node {
 
   """The lines fulfilled."""
   fulfilledItems: [FulfillmentLine!]
+
+  """ID of the event associated with an order."""
   id: ID!
 
   """Number of an invoice related to the order."""
@@ -18609,7 +18704,11 @@ type OrderLine implements Node & ObjectWithMetadata {
   """
   allocations: [Allocation!]
   digitalContentUrl: DigitalContentUrl
+
+  """ID of the order line."""
   id: ID!
+
+  """Whether the product variant requires shipping."""
   isShippingRequired: Boolean!
 
   """
@@ -18657,10 +18756,20 @@ type OrderLine implements Node & ObjectWithMetadata {
   Added in Saleor 3.5.
   """
   privateMetafields(keys: [String!]): Metadata
+
+  """Name of the product in order line."""
   productName: String!
+
+  """SKU of the product variant."""
   productSku: String
+
+  """The ID of the product variant."""
   productVariantId: String
+
+  """Number of variant items ordered."""
   quantity: Int!
+
+  """Number of variant items fulfilled."""
   quantityFulfilled: Int!
 
   """
@@ -18706,6 +18815,8 @@ type OrderLine implements Node & ObjectWithMetadata {
   Added in Saleor 3.9.
   """
   taxClassPrivateMetadata: [MetadataItem!]!
+
+  """Rate of tax applied on product variant."""
   taxRate: Float!
   thumbnail(
     """
@@ -18740,6 +18851,8 @@ type OrderLine implements Node & ObjectWithMetadata {
 
   """The discount applied to the single order line."""
   unitDiscount: Money!
+
+  """Reason for any discounts applied on a product in the order."""
   unitDiscountReason: String
 
   """Type of the discount: fixed or percent"""
@@ -18755,6 +18868,8 @@ type OrderLine implements Node & ObjectWithMetadata {
   A purchased product variant. Note: this field may be null if the variant has been removed from stock at all. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
   """
   variant: ProductVariant
+
+  """Name of the variant of product in order line."""
   variantName: String!
 
   """
@@ -19452,7 +19567,7 @@ type OrderVoid {
 A static page that can be manually added by a shop operator through the dashboard.
 """
 type Page implements Node & ObjectWithMetadata {
-  """List of attributes assigned to this product."""
+  """List of attributes assigned to this page."""
   attributes: [SelectedAttribute!]!
 
   """
@@ -19477,6 +19592,22 @@ type Page implements Node & ObjectWithMetadata {
 
   """Determines if the page is published."""
   isPublished: Boolean!
+
+  """List of media for the page."""
+  media(
+    """
+    Sort media. 
+    
+    Added in Saleor 3.9.
+    """
+    sortBy: PageMediaSortingInput
+  ): [PageMedia!]
+
+  """Get a single page media by ID."""
+  mediaById(
+    """ID of a page media."""
+    id: ID
+  ): PageMedia
 
   """List of public metadata items. Can be accessed without permissions."""
   metadata: [MetadataItem!]!
@@ -19812,6 +19943,166 @@ input PageInput {
 
   """Page title."""
   title: String
+}
+
+"""Represents a page media."""
+type PageMedia implements Node & ObjectWithMetadata {
+  """The alt text of the media."""
+  alt: String!
+
+  """The unique ID of the page media."""
+  id: ID!
+
+  """
+  List of public metadata items. Can be accessed without permissions.
+  
+  Added in Saleor 3.12.
+  """
+  metadata: [MetadataItem!]!
+
+  """
+  A single key from public metadata.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  
+  Added in Saleor 3.12.
+  """
+  metafield(key: String!): String
+
+  """
+  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
+  
+  Added in Saleor 3.12.
+  """
+  metafields(keys: [String!]): Metadata
+
+  """The oEmbed data of the media."""
+  oembedData: JSONString!
+
+  """
+  Page id the media refers to.
+  
+  Added in Saleor 3.12.
+  """
+  pageId: ID
+
+  """
+  List of private metadata items. Requires staff permissions to access.
+  
+  Added in Saleor 3.12.
+  """
+  privateMetadata: [MetadataItem!]!
+
+  """
+  A single key from private metadata. Requires staff permissions to access.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  
+  Added in Saleor 3.12.
+  """
+  privateMetafield(key: String!): String
+
+  """
+  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
+  
+  Added in Saleor 3.12.
+  """
+  privateMetafields(keys: [String!]): Metadata
+
+  """The sort order of the media."""
+  sortOrder: Int
+
+  """The type of the media."""
+  type: PageMediaType!
+
+  """The URL of the media."""
+  url(
+    """
+    The format of the image. When not provided, format of the original image will be used.
+    
+    Added in Saleor 3.6.
+    """
+    format: ThumbnailFormatEnum
+
+    """
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    """
+    size: Int
+  ): String!
+}
+
+enum PageMediaChoicesSortField {
+  """Sort media by ID."""
+  ID
+}
+
+"""
+Create a media object (image or video URL) associated with page. For image, this mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
+
+Requires one of the following permissions: MANAGE_PAGES.
+"""
+type PageMediaCreate {
+  errors: [PageError!]!
+  media: PageMedia
+  page: Page
+  pageErrors: [PageError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
+}
+
+input PageMediaCreateInput {
+  """Alt text for a page media."""
+  alt: String
+
+  """Represents an image file in a multipart request."""
+  image: Upload
+
+  """Represents an URL to an external media."""
+  mediaUrl: String
+
+  """ID of an page."""
+  page: ID!
+}
+
+"""
+Deletes a page media. 
+
+Requires one of the following permissions: MANAGE_PAGES.
+"""
+type PageMediaDelete {
+  errors: [PageError!]!
+  media: PageMedia
+  page: Page
+  pageErrors: [PageError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
+}
+
+input PageMediaSortingInput {
+  """Specifies the direction in which to sort media."""
+  direction: OrderDirection!
+
+  """Sort media by the selected field."""
+  field: PageMediaChoicesSortField!
+}
+
+"""An enumeration."""
+enum PageMediaType {
+  IMAGE
+  VIDEO
+}
+
+"""
+Updates a page media. 
+
+Requires one of the following permissions: MANAGE_PAGES.
+"""
+type PageMediaUpdate {
+  errors: [PageError!]!
+  media: PageMedia
+  page: Page
+  pageErrors: [PageError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
+}
+
+input PageMediaUpdateInput {
+  """Alt text for a page media."""
+  alt: String
 }
 
 """
@@ -25585,7 +25876,7 @@ enum PromotionRuleUpdateErrorCode {
 }
 
 input PromotionRuleUpdateInput {
-  """List of channel ids to remove."""
+  """List of channel ids to add."""
   addChannels: [ID!]
 
   """
@@ -26575,7 +26866,7 @@ type Query {
     Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
     """
     last: Int
-  ): OrderEventCountableConnection
+  ): OrderEventCountableConnection @deprecated(reason: "This field will be removed in Saleor 4.0.")
 
   """Return the currently authenticated user."""
   me: User
@@ -26733,7 +27024,7 @@ type Query {
 
     """A period of time."""
     period: ReportingPeriod
-  ): TaxedMoney
+  ): TaxedMoney @deprecated(reason: "This field will be removed in Saleor 4.0.")
 
   """Look up a page by ID or slug."""
   page(
@@ -27149,7 +27440,7 @@ type Query {
 
     """Span of time."""
     period: ReportingPeriod!
-  ): ProductVariantCountableConnection
+  ): ProductVariantCountableConnection @deprecated(reason: "This field will be removed in Saleor 4.0.")
 
   """
   Look up a sale by ID.
@@ -30199,7 +30490,7 @@ type StockBulkResult {
 }
 
 """
-Updates stocks for a given variant and warehouse.
+Updates stocks for a given variant and warehouse. Variant and warehouse selectors have to be the same for all stock inputs. Is not allowed to use 'variantId' in one input and 'variantExternalReference' in another.
 
 Added in Saleor 3.13.
 
@@ -31495,6 +31786,13 @@ type TransactionEvent implements Node {
   id: ID!
 
   """
+  Idempotency key assigned to the event.
+  
+  Added in Saleor 3.14.
+  """
+  idempotencyKey: String
+
+  """
   Message related to the transaction's event.
   
   Added in Saleor 3.13.
@@ -31675,6 +31973,7 @@ enum TransactionInitializeErrorCode {
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
+  UNIQUE
 }
 
 """
@@ -31697,6 +31996,13 @@ type TransactionInitializeSession implements Event {
 
   """Payment gateway data in JSON format, received from storefront."""
   data: JSON
+
+  """
+  Idempotency key assigned to the transaction initialize.
+  
+  Added in Saleor 3.14.
+  """
+  idempotencyKey: String!
 
   """Time of the event."""
   issuedAt: DateTime
@@ -31766,6 +32072,13 @@ type TransactionItem implements Node & ObjectWithMetadata {
 
   """Total amount charged for this payment."""
   chargedAmount: Money!
+
+  """
+  The related checkout.
+  
+  Added in Saleor 3.14.
+  """
+  checkout: Checkout
 
   """Date and time at which payment transaction was created."""
   createdAt: DateTime!
@@ -33240,7 +33553,7 @@ Added in Saleor 3.18.
 Requires one of the following permissions: MANAGE_DISCOUNTS.
 
 Triggers the following webhook events:
-- VOUCHER_UPDATED (async): A voucher was updated.
+- VOUCHER_CODES_DELETED (async): A voucher codes were deleted.
 """
 type VoucherCodeBulkDelete {
   """Returns how many codes were deleted."""
@@ -33311,6 +33624,50 @@ type VoucherCodeExportCompleted implements Event {
   version: String
 }
 
+"""
+Event sent when new voucher codes were created.
+
+Added in Saleor 3.19.
+"""
+type VoucherCodesCreated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The voucher codes the event relates to."""
+  voucherCodes: [VoucherCode!]
+}
+
+"""
+Event sent when voucher codes were deleted.
+
+Added in Saleor 3.19.
+"""
+type VoucherCodesDeleted implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The voucher codes the event relates to."""
+  voucherCodes: [VoucherCode!]
+}
+
 type VoucherCountableConnection {
   edges: [VoucherCountableEdge!]!
 
@@ -33336,6 +33693,7 @@ Requires one of the following permissions: MANAGE_DISCOUNTS.
 
 Triggers the following webhook events:
 - VOUCHER_CREATED (async): A voucher was created.
+- VOUCHER_CODES_CREATED (async): A voucher codes were created.
 """
 type VoucherCreate {
   discountErrors: [DiscountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -33657,6 +34015,7 @@ Requires one of the following permissions: MANAGE_DISCOUNTS.
 
 Triggers the following webhook events:
 - VOUCHER_UPDATED (async): A voucher was updated.
+- VOUCHER_CODES_CREATED (async): A voucher code was created.
 """
 type VoucherUpdate {
   discountErrors: [DiscountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -34805,6 +35164,8 @@ enum WebhookEventTypeAsyncEnum {
 
   """A translation is updated."""
   TRANSLATION_UPDATED
+  VOUCHER_CODES_CREATED
+  VOUCHER_CODES_DELETED
 
   """
   A voucher code export is completed.
@@ -35429,6 +35790,8 @@ enum WebhookEventTypeEnum {
 
   """A translation is updated."""
   TRANSLATION_UPDATED
+  VOUCHER_CODES_CREATED
+  VOUCHER_CODES_DELETED
 
   """
   A voucher code export is completed.
@@ -35684,6 +36047,8 @@ enum WebhookSampleEventTypeEnum {
   TRANSACTION_ITEM_METADATA_UPDATED
   TRANSLATION_CREATED
   TRANSLATION_UPDATED
+  VOUCHER_CODES_CREATED
+  VOUCHER_CODES_DELETED
   VOUCHER_CODE_EXPORT_COMPLETED
   VOUCHER_CREATED
   VOUCHER_DELETED
@@ -35802,7 +36167,7 @@ type Weight {
   """Weight unit."""
   unit: WeightUnitsEnum!
 
-  """Weight value."""
+  """Weight value. Returns a value with maximal three decimal places"""
   value: Float!
 }
 
