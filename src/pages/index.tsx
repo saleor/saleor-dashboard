@@ -1,3 +1,4 @@
+import { PageMediaCreateMutationVariables } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -18,6 +19,18 @@ import {
 import PageCreateComponent from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";
 import PageListComponent from "./views/PageList";
+
+export function createImageUploadHandler(
+  id: string,
+  createPageImage: (variables: PageMediaCreateMutationVariables) => void,
+) {
+  return (file: File) =>
+    createPageImage({
+      alt: "",
+      image: file,
+      page: id,
+    });
+}
 
 const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
