@@ -43,8 +43,7 @@ const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 };
 
 const PageCreate: React.FC<RouteComponentProps<any>> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: PageCreateUrlQueryParams = qs;
+  const params: PageCreateUrlQueryParams = parseQs(location.search.substr(1));
 
   return (
     <PageCreateComponent
@@ -55,8 +54,7 @@ const PageCreate: React.FC<RouteComponentProps<any>> = ({ match }) => {
 };
 
 const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: PageUrlQueryParams = qs;
+  const params: PageUrlQueryParams = parseQs(location.search.substr(1));
 
   return (
     <PageDetailsComponent
