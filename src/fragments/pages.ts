@@ -9,6 +9,17 @@ export const pageFragment = gql`
   }
 `;
 
+export const pageMediaFragment = gql`
+  fragment PageMedia on PageMedia {
+    id
+    alt
+    sortOrder
+    url(size: 1024)
+    type
+    oembedData
+  }
+`;
+
 export const pageSelectedAttribute = gql`
   fragment PageSelectedAttribute on SelectedAttribute {
     attribute {
@@ -70,5 +81,8 @@ export const pageDetailsFragment = gql`
     seoTitle
     seoDescription
     publicationDate
+    media {
+      ...PageMedia
+    }
   }
 `;
