@@ -125,8 +125,7 @@ export class TaxesPage extends BasePage {
   async clickCreateClassButton() {
     await this.createClassButton.click();
   }
-
-  async selectTaxCalculationMethod(method: "FLAT_RATES" | "TAX_APP") {
+  async selectTaxCalculationMethod(method: "FLAT_RATES" | "saleor.app.avatax") {
     await this.clickSelectMethodField();
     await this.page.getByTestId(`select-field-option-${method}`).click();
   }

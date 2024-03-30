@@ -63,7 +63,13 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
+    <Dialog
+      onClose={onClose}
+      open={open}
+      fullWidth
+      maxWidth="sm"
+      data-test-id="edit-attribute-value-dialog"
+    >
       <DialogTitle disableTypography>
         {attributeValue === null ? (
           <FormattedMessage

@@ -24,12 +24,6 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
       flexWrap="wrap"
       gap={5}
       margin={0}
-      borderColor="default1"
-      borderLeftStyle="solid"
-      borderRightStyle="solid"
-      borderWidth={1}
-      paddingY={2}
-      paddingX={5}
       alignItems="start"
     >
       {integrations.map(integration => (
@@ -61,7 +55,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
               alt={integration.name}
             />
           </Box>
-          <Text variant="caption" size="small" color="default2">
+          <Text size={1} color="default2">
             {integration.name}
           </Text>
         </Box>

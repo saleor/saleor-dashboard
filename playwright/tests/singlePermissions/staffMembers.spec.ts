@@ -6,7 +6,7 @@ import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { StaffMembersPage } from "@pages/staffMembersPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/staff-member.json" });
+test.use({ storageState: "playwright/.auth/staff.json" });
 
 test("TC: SALEOR_19 User should be able to navigate to staff members list page as a staff member using STAFF permission @e2e", async ({
   page,
@@ -20,7 +20,7 @@ test("TC: SALEOR_19 User should be able to navigate to staff members list page a
   await page.goto(URL_LIST.configuration);
   await configurationPage.openStaffMembers();
   await expect(staffMembersPage.inviteStaffMembersButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(2);
+  await mainMenuPage.expectMenuItemsCount(3);
   await basePage.expectGridToBeAttached();
 });
 
@@ -35,6 +35,6 @@ test("TC: SALEOR_20 User should be able to navigate to permission group list pag
   await page.goto(URL_LIST.configuration);
   await configurationPage.openPermissionGroups();
   await expect(permissionGroupsPage.createPermissionGroupButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(2);
+  await mainMenuPage.expectMenuItemsCount(3);
   await basePage.expectGridToBeAttached();
 });

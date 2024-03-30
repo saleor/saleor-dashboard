@@ -60,16 +60,6 @@ export const orderSummaryMessages = defineMessages({
     defaultMessage: "Discount",
     description: "order discount",
   },
-  staffAdded: {
-    id: "QJG+d/",
-    defaultMessage: "Staff added",
-    description: "staff added type order discount",
-  },
-  voucher: {
-    id: "sEjRyz",
-    defaultMessage: "Voucher",
-    description: "voucher type order discount",
-  },
   total: {
     id: "zb4eBO",
     defaultMessage: "Total",

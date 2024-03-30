@@ -1,9 +1,11 @@
 import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
 import {
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,
   PromotionRuleUpdateErrorFragment,
+  PromotionTypeEnum,
 } from "@dashboard/graphql";
 import { splitDateTime } from "@dashboard/misc";
 import { CommonError } from "@dashboard/utils/errors/common";
@@ -20,6 +22,7 @@ import { useRulesHandlers } from "./hooks/useRulesHandlers";
 interface DiscountDetailsFormRenderProps {
   rulesErrors: Array<CommonError<any>>;
   rules: Rule[];
+  discountType: PromotionTypeEnum;
   onSubmit: () => void;
   onRuleSubmit: (rule: Rule, ruleEditIndex: number | null) => Promise<void>;
   onDeleteRule: (ruleDeleteIndex: number) => Promise<void>;
@@ -30,7 +33,6 @@ interface DiscountDetailsFormProps {
   disabled: boolean;
   data: PromotionDetailsFragment | undefined | null;
   onSubmit: (data: DiscoutFormData) => void;
-  ruleConditionsOptionsDetailsMap: Record<string, string>;
   onRuleUpdateSubmit: (
     data: Rule,
   ) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
@@ -48,13 +50,13 @@ export const DiscountDetailsForm = ({
   onRuleCreateSubmit,
   onRuleDeleteSubmit,
   onRuleUpdateSubmit,
-  ruleConditionsOptionsDetailsMap,
 }: DiscountDetailsFormProps) => {
   const intl = useIntl();
 
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: {
+      type: data?.type ?? PromotionTypeEnum.CATALOGUE,
       dates: {
         startDate: splitDateTime(data?.startDate ?? "").date,
         startTime: splitDateTime(data?.startDate ?? "").time,
@@ -69,6 +71,8 @@ export const DiscountDetailsForm = ({
     resolver: zodResolver(getValidationSchema(intl)),
   });
 
+  const discountType = methods.watch("type");
+
   const richText = useRichText({
     initial: JSON.stringify(data?.description),
     loading: disabled,
@@ -77,21 +81,24 @@ export const DiscountDetailsForm = ({
 
   const handleSubmit = methods.handleSubmit(onSubmit);
 
+  const { ruleConditionsValues, gifts } = useLabelMapsContext();
   const { onDeleteRule, onRuleSubmit, rules, rulesErrors } = useRulesHandlers({
     data,
     onRuleCreateSubmit,
     onRuleDeleteSubmit,
     onRuleUpdateSubmit,
-    ruleConditionsOptionsDetailsMap,
+    ruleConditionsOptionsDetailsMap: ruleConditionsValues.labels,
+    giftsOptionsDetailsMap: gifts.labels,
   });
 
   return (
     <RichTextContext.Provider value={richText}>
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} data-test-id="discount-form">
           {children({
             rulesErrors,
             rules,
+            discountType,
             onSubmit: handleSubmit,
             onRuleSubmit,
             onDeleteRule,

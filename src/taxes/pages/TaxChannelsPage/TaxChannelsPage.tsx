@@ -12,7 +12,6 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import {
   CountryCode,
   CountryFragment,
-  TaxCalculationStrategy,
   TaxConfigurationFragment,
   TaxConfigurationPerCountryFragment,
   TaxConfigurationUpdateInput,
@@ -35,10 +34,16 @@ import { Box, Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import {
+  getSelectedTaxStrategy,
+  getTaxAppId,
+  getTaxCalculationStrategy,
+} from "./helpers";
 import { useStyles } from "./styles";
 import TaxChannelsMenu from "./TaxChannelsMenu";
 import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
 import TaxSettingsCard from "./TaxSettingsCard";
+import { useTaxStrategyChoices } from "./useTaxStrategyChoices";
 
 interface TaxChannelsPageProps {
   taxConfigurations: TaxConfigurationFragment[] | undefined;
@@ -53,12 +58,19 @@ interface TaxChannelsPageProps {
   disabled: boolean;
 }
 
+export type TaxCountryConfiguration = Omit<
+  TaxConfigurationPerCountryFragment,
+  "taxCalculationStrategy"
+> & {
+  taxCalculationStrategy: string;
+};
+
 export interface TaxConfigurationFormData {
   chargeTaxes: boolean;
-  taxCalculationStrategy: TaxCalculationStrategy;
+  taxCalculationStrategy: string;
   displayGrossPrices: boolean;
   pricesEnteredWithTax: boolean;
-  updateCountriesConfiguration: TaxConfigurationPerCountryFragment[];
+  updateCountriesConfiguration: TaxCountryConfiguration[];
   removeCountriesConfiguration: CountryCode[];
 }
 
@@ -80,62 +92,62 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
   const classes = useStyles();
   const navigate = useNavigator();
 
+  const { taxStrategyChoices, loading } = useTaxStrategyChoices();
+
   const currentTaxConfiguration = taxConfigurations?.find(
     taxConfigurations => taxConfigurations.id === selectedConfigurationId,
   );
 
   const initialForm: TaxConfigurationFormData = {
     chargeTaxes: currentTaxConfiguration?.chargeTaxes ?? false,
-    taxCalculationStrategy: currentTaxConfiguration?.taxCalculationStrategy,
+    taxCalculationStrategy: getSelectedTaxStrategy(currentTaxConfiguration),
     displayGrossPrices: currentTaxConfiguration?.displayGrossPrices ?? false,
     pricesEnteredWithTax:
       currentTaxConfiguration?.pricesEnteredWithTax ?? false,
-    updateCountriesConfiguration: currentTaxConfiguration?.countries ?? [],
+    updateCountriesConfiguration:
+      currentTaxConfiguration?.countries.map(country => ({
+        ...country,
+        taxCalculationStrategy: getSelectedTaxStrategy(country),
+      })) ?? [],
     removeCountriesConfiguration: [],
   };
 
   const handleSubmit = (data: TaxConfigurationFormData) => {
     const { updateCountriesConfiguration, removeCountriesConfiguration } = data;
+
     const parsedUpdate: TaxConfigurationUpdateInput["updateCountriesConfiguration"] =
       updateCountriesConfiguration.map(config => ({
         countryCode: config.country.code as CountryCode,
         chargeTaxes: config.chargeTaxes,
-        taxCalculationStrategy: config.taxCalculationStrategy,
+        taxCalculationStrategy: getTaxCalculationStrategy(
+          config.taxCalculationStrategy,
+        ),
         displayGrossPrices: config.displayGrossPrices,
+        taxAppId: getTaxAppId(config.taxCalculationStrategy),
       }));
     const parsedRemove: TaxConfigurationUpdateInput["removeCountriesConfiguration"] =
       removeCountriesConfiguration.filter(
         configId =>
           !parsedUpdate.some(config => config.countryCode === configId),
       );
+
     onSubmit({
       chargeTaxes: data.chargeTaxes,
       taxCalculationStrategy: data.chargeTaxes
-        ? data.taxCalculationStrategy
+        ? getTaxCalculationStrategy(data.taxCalculationStrategy)
         : null,
       displayGrossPrices: data.displayGrossPrices,
       pricesEnteredWithTax: data.pricesEnteredWithTax,
       updateCountriesConfiguration: parsedUpdate,
       removeCountriesConfiguration: parsedRemove,
+      taxAppId: getTaxAppId(data.taxCalculationStrategy),
     });
   };
-
-  const taxStrategyChoices = [
-    {
-      label: intl.formatMessage(taxesMessages.taxStrategyTaxApp),
-      value: TaxCalculationStrategy.TAX_APP,
-    },
-    {
-      label: intl.formatMessage(taxesMessages.taxStrategyFlatRates),
-      value: TaxCalculationStrategy.FLAT_RATES,
-    },
-  ];
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit} mergeData={false}>
       {({ data, change, submit, set, triggerChange }) => {
         const countryExceptions = data.updateCountriesConfiguration;
-
         const handleExceptionChange = (event, index) => {
           const { name, value } = event.target;
           const currentExceptions = [...data.updateCountriesConfiguration];
@@ -150,12 +162,13 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
         const handleCountryChange = (country: CountryFragment) => {
           closeDialog();
-          const input: TaxConfigurationPerCountryFragment = {
+          const input: TaxCountryConfiguration = {
             __typename: "TaxConfigurationPerCountry",
             country,
             chargeTaxes: data.chargeTaxes,
             displayGrossPrices: data.displayGrossPrices,
             taxCalculationStrategy: data.taxCalculationStrategy,
+            taxAppId: getTaxAppId(data.taxCalculationStrategy),
           };
           const currentExceptions = data.updateCountriesConfiguration;
           triggerChange();
@@ -199,6 +212,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                       values={data}
                       strategyChoices={taxStrategyChoices}
                       onChange={change}
+                      strategyChoicesLoading={loading}
                     />
                     <VerticalSpacer spacing={3} />
                     <Card>
@@ -226,7 +240,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                           />
                         </CardContent>
                       ) : (
-                        <List gridTemplate={["4fr 3fr 3fr 1fr"]}>
+                        <List gridTemplate={["1fr 500px 1fr 1fr"]}>
                           <ListHeader>
                             <ListItem>
                               <ListItemCell>
@@ -259,6 +273,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                               strategyChoices={taxStrategyChoices}
                               country={country}
                               key={country.country.code}
+                              strategyChoicesLoading={loading}
                               onDelete={() => {
                                 const currentRemovals =
                                   data.removeCountriesConfiguration;

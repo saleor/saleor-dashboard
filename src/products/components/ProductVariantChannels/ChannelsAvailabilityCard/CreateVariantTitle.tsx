@@ -8,7 +8,7 @@ import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./..
 interface CreateVariantTitleProps {
   onManageClick: () => void;
   disabled: boolean;
-  availabilityCount: Record<string, number>;
+  availabilityCount: Record<string, number | undefined>;
   isEmpty: boolean;
 }
 
@@ -39,7 +39,7 @@ export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
         <Accordion.Trigger>
           <Box display="grid" gap={2}>
             {intl.formatMessage(messages.title)}
-            <Text variant="caption" color="default2">
+            <Text size={2} color="default2">
               {getCaptionText()}
             </Text>
           </Box>

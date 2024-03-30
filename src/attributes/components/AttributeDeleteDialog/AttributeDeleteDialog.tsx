@@ -39,6 +39,7 @@ const AttributeDeleteDialog: React.FC<AttributeDeleteDialogProps> = ({
           id="h1rPPg"
           defaultMessage="Are you sure you want to delete {attributeName}?"
           description="dialog content"
+          data-test-id="delete-single-attr-dialog-text"
           values={{
             attributeName: <strong>{name}</strong>,
           }}

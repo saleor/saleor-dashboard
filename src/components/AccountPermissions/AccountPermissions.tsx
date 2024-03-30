@@ -85,7 +85,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
 
   return (
     <Box paddingX={9} paddingY={9} paddingBottom={0}>
-      <Text as="p" variant="bodyEmp" size="large" marginBottom={7}>
+      <Text as="p" size={5} fontWeight="medium" marginBottom={7}>
         {intl.formatMessage(messages.title)}
       </Text>
 
@@ -130,7 +130,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                 marginTop={6}
                 marginBottom={6}
               />
-              <Text as="p" variant="body" color="critical1">
+              <Text as="p" color="critical1">
                 {errorMessage}
               </Text>
             </>

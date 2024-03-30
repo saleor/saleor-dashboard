@@ -22,14 +22,12 @@ import { useIntl } from "react-intl";
 import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountDetailsForm } from "../DiscountDetailsForm";
-import { DiscountName } from "../DiscountName";
+import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
 import { DiscountRules } from "../DiscountRules";
 import { DiscountSavebar } from "../DiscountSavebar";
 
 export interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
-  ruleConditionsOptionsDetailsMap: Record<string, string>;
-  ruleConditionsOptionsDetailsLoading: boolean;
   data: PromotionDetailsFragment | undefined | null;
   disabled: boolean;
   errors: PromotionUpdateErrorFragment[];
@@ -51,8 +49,6 @@ export interface DiscountDetailsPageProps {
 
 export const DiscountDetailsPage = ({
   channels,
-  ruleConditionsOptionsDetailsMap,
-  ruleConditionsOptionsDetailsLoading,
   disabled,
   data,
   errors,
@@ -79,16 +75,23 @@ export const DiscountDetailsPage = ({
           data={data}
           disabled={disabled}
           onSubmit={onSubmit}
-          ruleConditionsOptionsDetailsMap={ruleConditionsOptionsDetailsMap}
           onRuleCreateSubmit={onRuleCreateSubmit}
           onRuleDeleteSubmit={onRuleDeleteSubmit}
           onRuleUpdateSubmit={onRuleUpdateSubmit}
         >
-          {({ rulesErrors, rules, onDeleteRule, onRuleSubmit, onSubmit }) => (
+          {({
+            rulesErrors,
+            rules,
+            discountType,
+            onDeleteRule,
+            onRuleSubmit,
+            onSubmit,
+          }) => (
             <>
-              <DiscountName
+              <DiscountGeneralInfo
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
                 disabled={disabled}
+                typeDisabled={true}
               />
 
               <DiscountDescription disabled={disabled} />
@@ -99,9 +102,10 @@ export const DiscountDetailsPage = ({
               />
 
               <DiscountRules
+                promotionId={data?.id ?? null}
+                discountType={discountType}
                 errors={rulesErrors}
                 rules={rules}
-                loading={ruleConditionsOptionsDetailsLoading}
                 getRuleConfirmButtonState={ruleEditIndex =>
                   ruleEditIndex !== null
                     ? ruleUpdateButtonState

@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react-swc";
+import { CodeInspectorPlugin } from "code-inspector-plugin";
 import { copyFileSync, mkdirSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
@@ -43,6 +45,13 @@ export default defineConfig(({ command, mode }) => {
     CUSTOM_VERSION,
     FLAGS_SERVICE_ENABLED,
     LOCALE_CODE,
+    POSTHOG_KEY,
+    POSTHOG_HOST,
+    SENTRY_AUTH_TOKEN,
+    SENTRY_ORG,
+    SENTRY_PROJECT,
+    // eslint-disable-next-line camelcase
+    npm_package_version,
   } = env;
 
   const base = STATIC_URL ?? "/";
@@ -50,10 +59,13 @@ export default defineConfig(({ command, mode }) => {
     Object.entries(env).filter(([flagKey]) => flagKey.startsWith("FF_")),
   );
 
-  const sourcemap = SKIP_SOURCEMAPS ? false : true;
+  const sourcemap = !SKIP_SOURCEMAPS;
 
   const plugins = [
     react(),
+    CodeInspectorPlugin({
+      bundler: "vite",
+    }),
     createHtmlPlugin({
       entry: path.resolve(__dirname, "src", "index.tsx"),
       template: "index.html",
@@ -65,6 +77,8 @@ export default defineConfig(({ command, mode }) => {
           APPS_TUNNEL_URL_KEYWORDS,
           IS_CLOUD_INSTANCE,
           LOCALE_CODE,
+          POSTHOG_KEY,
+          POSTHOG_HOST,
           injectOgTags:
             DEMO_MODE &&
             `
@@ -86,7 +100,6 @@ export default defineConfig(({ command, mode }) => {
     copyOgImage(),
   ];
 
-
   if (!isDev) {
     console.log("Enabling service worker...");
 
@@ -104,6 +117,11 @@ export default defineConfig(({ command, mode }) => {
         */
         srcDir: path.resolve(__dirname),
         filename: "sw.js",
+      }),
+      sentryVitePlugin({
+        authToken: SENTRY_AUTH_TOKEN,
+        org: SENTRY_ORG,
+        project: SENTRY_PROJECT,
       }),
     );
   }
@@ -147,7 +165,11 @@ export default defineConfig(({ command, mode }) => {
         CUSTOM_VERSION,
         LOCALE_CODE,
         SENTRY_RELEASE,
-        STATIC_URL
+        STATIC_URL,
+        POSTHOG_KEY,
+        POSTHOG_HOST,
+        // eslint-disable-next-line camelcase
+        RELEASE_NAME: npm_package_version,
       },
     },
     build: {

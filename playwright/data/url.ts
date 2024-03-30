@@ -1,7 +1,7 @@
 export const URL_LIST = {
   addProduct: "products/add",
   addPageType: "pages/add?page-type-id=",
-  apps: "custom-apps/",
+  apps: "apps/",
   attributes: "attributes/",
   addAttributes: "attributes/add",
   categories: "categories/",
@@ -24,7 +24,8 @@ export const URL_LIST = {
   productsAdd: "add?product-type-id=",
   productTypes: "product-types/",
   productTypesAdd: "product-types/add",
-  sales: "discounts/sales/",
+  discounts: "discounts/sales/",
+  discountAddPage: "discounts/sales/add",
   shippingMethods: "shipping/",
   siteSettings: "site-settings/",
   staffMembers: "staff/",

@@ -6,6 +6,7 @@ import SingleSelectField, {
 } from "@dashboard/components/SingleSelectField";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
+import { LegacyFlowWarning } from "@dashboard/taxes/components";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import {
   Card,
@@ -26,12 +27,14 @@ export interface TaxSettingsCardProps {
   values: TaxConfigurationFormData;
   strategyChoices: Choice[];
   onChange: FormChange;
+  strategyChoicesLoading: boolean;
 }
 
 export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
   values,
   strategyChoices,
   onChange,
+  strategyChoicesLoading,
 }) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -56,12 +59,17 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
             data-test-id="app-flat-select"
           >
             <span className={classes.hint}>
-              <FormattedMessage {...taxesMessages.taxStrategyHint} />{" "}
+              <FormattedMessage {...taxesMessages.taxStrategyHint} />
+              {!strategyChoicesLoading && (
+                <LegacyFlowWarning
+                  taxCalculationStrategy={values.taxCalculationStrategy}
+                />
+              )}
             </span>
             <SingleSelectField
               className={classes.singleSelectField}
               choices={strategyChoices}
-              disabled={!values.chargeTaxes}
+              disabled={strategyChoicesLoading || !values.chargeTaxes}
               value={values.taxCalculationStrategy}
               name={
                 "taxCalculationStrategy" as keyof TaxConfigurationUpdateInput

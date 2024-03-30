@@ -1,31 +1,46 @@
+import {
+  ChannelPriceAndPreorderData,
+  IChannelPriceAndPreorderArgs,
+} from "@dashboard/channels/utils";
 import { Divider } from "@dashboard/components/Divider";
+import { FormsetData } from "@dashboard/hooks/useFormset";
 import React from "react";
 
-import { Channel, ProductChannelListing } from "./../types";
+import { ProductChannelListing } from "./../types";
 import { ChannelsListItem } from "./ChannelsListItem";
+import { useFilteredChannelListing } from "./useFilteredChannelListing";
 import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";
 
 interface AvailabilityCardProps {
-  items: Channel[];
-  productChannelListings: ProductChannelListing;
+  allAvailableListings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >;
+  productChannelListings: ProductChannelListing | undefined;
 }
 
 export const AvailabilityCard: React.FC<AvailabilityCardProps> = ({
-  items,
+  allAvailableListings,
   productChannelListings,
   children,
 }) => {
-  if (items.length === 0) {
-    return <CardContainer cardTitle={children}>{}</CardContainer>;
+  const filteredListings = useFilteredChannelListing({
+    allAvailableListings,
+    channelListing: productChannelListings,
+  });
+
+  if (allAvailableListings.length === 0) {
+    return <CardContainer cardTitle={children}>{null}</CardContainer>;
   }
 
   return (
     <CardContainer cardTitle={children}>
-      {items.map(channel => (
+      {filteredListings.map((listing: ProductChannelListing[0]) => (
         <ChannelsListItem
-          {...channel}
-          listings={productChannelListings}
-          key={channel.id}
+          {...listing}
+          id={listing.channel.id}
+          name={listing.channel.name}
+          key={listing.channel.id}
         />
       ))}
       <Divider />

@@ -19,6 +19,24 @@ export const orderMessages = defineMessages({
   },
 });
 
+export const orderDiscountTypeLabelMessages = defineMessages({
+  staffAdded: {
+    id: "QJG+d/",
+    defaultMessage: "Staff added",
+    description: "staff added type order discount",
+  },
+  voucher: {
+    id: "sEjRyz",
+    defaultMessage: "Voucher",
+    description: "voucher type order discount",
+  },
+  promotion: {
+    id: "TBdxTP",
+    defaultMessage: "Promotion",
+    description: "promotion type order discount",
+  },
+});
+
 export const transactionEventTypeMap = defineMessages<
   Exclude<TransactionEventType, "INFO">
 >({

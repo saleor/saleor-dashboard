@@ -17,7 +17,7 @@ export const Header = ({
   onFullAccessChange,
 }: HeaderProps) => (
   <Box>
-    <Text variant="body">{description}</Text>
+    <Text>{description}</Text>
     <Box marginTop={6} marginBottom={7}>
       <Checkbox
         disabled={disabled}
@@ -25,7 +25,7 @@ export const Header = ({
         onCheckedChange={onFullAccessChange}
         tabIndex={-1}
       >
-        <Text variant="body">{fullAccessLabel}</Text>
+        <Text>{fullAccessLabel}</Text>
       </Checkbox>
     </Box>
   </Box>

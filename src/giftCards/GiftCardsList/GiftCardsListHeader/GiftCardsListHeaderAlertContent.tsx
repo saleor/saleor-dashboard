@@ -14,7 +14,7 @@ interface GiftCardsListHeaderAlertContentProps {
 }
 
 const alertLinkClassName = sprinkles({
-  fontSize: "captionSmall",
+  fontSize: 1,
 });
 
 const GiftCardsListHeaderAlertContent: React.FC<

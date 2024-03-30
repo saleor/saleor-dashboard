@@ -121,7 +121,7 @@
     },
     "ojHyj3": {
         "context": "discount value label",
-        "string": "valor do desconto"
+        "string": "Valor do desconto"
     },
     "sHON47": {
         "context": "refunded products list title",
@@ -195,7 +195,7 @@
     },
     "rr8fyf": {
         "context": "header",
-        "string": "Principais Produtos"
+        "string": "Principais produtos"
     },
     "Q1Uzbb": {
         "string": "Nenhum produto encontrado."
@@ -223,7 +223,7 @@
         "string": "Criar Menu"
     },
     "jhh/D6": {
-        "string": "Menu Título"
+        "string": "Menu título"
     },
     "G/SYtU": {
         "string": "Tem certeza de que deseja excluir o menu {menuName}?"
@@ -318,7 +318,7 @@
     },
     "5Jo3C5": {
         "context": "vat not included in order price",
-        "string": "não aplica"
+        "string": "Não aplica"
     },
     "BftZHy": {
         "context": "window title",
@@ -377,11 +377,11 @@
     },
     "5kvaFR": {
         "context": "product field",
-        "string": "Exportar SKU de Variação"
+        "string": "Exportar SKU de variação"
     },
     "XBwpUv": {
         "context": "product field",
-        "string": "Exportar Peso da Variação"
+        "string": "Exportar peso da variação"
     },
     "4qe6hO": {
         "context": "product stock, section header",
@@ -389,7 +389,7 @@
     },
     "SSWFo8": {
         "context": "window title",
-        "string": "Criar Tipo de Produto"
+        "string": "Criar tipo de produto"
     },
     "bq1eEx": {
         "context": "header",
@@ -447,7 +447,7 @@
     },
     "HVlMK2": {
         "context": "number of variants",
-        "string": "Variants ({quantity})"
+        "string": "Variantes ({quantity})"
     },
     "YFQBs1": {
         "context": "product availability date label",
@@ -519,7 +519,7 @@
     },
     "yMi8I8": {
         "context": "dialog header",
-        "string": "Desativar Aplicativo"
+        "string": "Desativar aplicativo"
     },
     "73RU3R": {
         "context": "deactivate app",
@@ -877,7 +877,7 @@
     },
     "LnRlch": {
         "context": "attribute's editor component entity",
-        "string": "Entity"
+        "string": "Entidade"
     },
     "z1y9oL": {
         "context": "file attribute type",
@@ -893,7 +893,7 @@
     },
     "ZayvsI": {
         "context": "metric unit system",
-        "string": "Metric"
+        "string": "Métrico"
     },
     "cKjFfl": {
         "context": "product attribute type",
@@ -901,7 +901,7 @@
     },
     "SNiyXb": {
         "context": "numeric attribute type",
-        "string": "Numeric"
+        "string": "Numérico"
     },
     "Iafyt5": {
         "context": "page attribute entity type",
@@ -917,7 +917,7 @@
     },
     "5dLpx0": {
         "context": "references attribute type",
-        "string": "References"
+        "string": "Referências"
     },
     "PiSXjb": {
         "context": "check to require numeric attribute unit",
@@ -933,15 +933,15 @@
     },
     "Orgqv4": {
         "context": "numeric attribute unit",
-        "string": "Unit"
+        "string": "Unidade"
     },
     "zWM89r": {
         "context": "numeric attribute units of",
-        "string": "Units of"
+        "string": "Unidades de"
     },
     "ghje1I": {
         "context": "numeric attribute unit system",
-        "string": "System"
+        "string": "Sistema"
     },
     "njBulj": {
         "context": "check to require attribute to have value",
@@ -1064,7 +1064,7 @@
     },
     "0DgA8v": {
         "context": "swatch attribute color picker label",
-        "string": "Picker"
+        "string": "Seletor"
     },
     "JyQoES": {
         "context": "delete attribute value",
@@ -1133,7 +1133,7 @@
     },
     "vzgZ3U": {
         "context": "card header",
-        "string": "Sign In"
+        "string": "Entrar"
     },
     "AubJ/S": {
         "context": "button",
@@ -1148,7 +1148,7 @@
     },
     "ENBELI": {
         "context": "description",
-        "string": "or login using"
+        "string": "ou faça login usando"
     },
     "M4q0Ye": {
         "context": "error message",
@@ -1351,7 +1351,7 @@
         "string": "Tem certeza de que deseja excluir {categoryName}?"
     },
     "KeO51o": {
-        "string": "Channel"
+        "string": "Canais"
     },
     "NlSJMM": {
         "context": "channels section name",
@@ -1414,7 +1414,7 @@
         "string": "Moeda"
     },
     "tV+Dcm": {
-        "string": "Default country"
+        "string": "País padrão"
     },
     "UymotP": {
         "context": "channel name",
@@ -1526,7 +1526,7 @@
         "string": "Limpar"
     },
     "Qox+kb": {
-        "string": "on field {fieldName}"
+        "string": "em campo {fieldName}"
     },
     "NNT3Lp": {
         "context": "collections section name",
@@ -1804,7 +1804,7 @@
     },
     "QZVD+5": {
         "context": "button, unassign attribute from object",
-        "string": "Unassign and save"
+        "string": "Cancelar atribuição e salvar"
     },
     "8uLHBY": {
         "context": "unassign attribute from object",
@@ -1839,7 +1839,7 @@
     },
     "B2LE7A": {
         "context": "menu item loading",
-        "string": "working..."
+        "string": "trabalhando..."
     },
     "5A6/2C": {
         "context": "section header",
@@ -1891,11 +1891,11 @@
     },
     "/lBLBI": {
         "context": "channels alphabetically title",
-        "string": "Channels from A to Z"
+        "string": "Canais de A a Z"
     },
     "PctLol": {
         "context": "no channels found title",
-        "string": "No Channels Found"
+        "string": "Nenhum canal encontrado"
     },
     "zR9Ozi": {
         "context": "select all channels label",
@@ -1915,7 +1915,7 @@
     },
     "JgXBAw": {
         "context": "dropdown label when there are no channels assigned",
-        "string": "No channels"
+        "string": "Nenhum canal"
     },
     "sdA14A": {
         "context": "Status label when object is published in a channel",
@@ -1923,7 +1923,7 @@
     },
     "GzbSQk": {
         "context": "Status label when object is scheduled to publish in a channel",
-        "string": "Scheduled to publish"
+        "string": "Programado para publicação"
     },
     "s2y5eG": {
         "context": "Status label",
@@ -1931,7 +1931,7 @@
     },
     "rHoRbE": {
         "context": "Status label when object is unpublished in a channel",
-        "string": "Unpublished"
+        "string": "Não publicado"
     },
     "TOMgXz": {
         "context": "button",
@@ -1974,17 +1974,17 @@
     },
     "ypW4Mi": {
         "context": "button refreshing page",
-        "string": "Refresh page"
+        "string": "Atualizar a página"
     },
     "p0SUJj": {
         "string": "Não se preocupe, vamos consertar isso em breve. Tente atualizar a página ou voltar ao painel."
     },
     "AQ+9Ez": {
-        "string": "We’ve encountered an unexpected error"
+        "string": "Encontramos um erro inesperado"
     },
     "OA+fw+": {
         "context": "conjunction, choice between going to dashboard or refreshing page",
-        "string": "or"
+        "string": "ou"
     },
     "QCwBUI": {
         "context": "button",
@@ -2014,7 +2014,7 @@
     },
     "erC44f": {
         "context": "filters error messages dependencies missing",
-        "string": "Filter requires other filters: {dependencies}"
+        "string": "O filtro requer outros filtros: {dependencies}"
     },
     "34F7Jk": {
         "context": "filter range separator",
@@ -2022,7 +2022,7 @@
     },
     "USS3Q7": {
         "context": "filters error messages unknown error",
-        "string": "Unknown error occurred"
+        "string": "Ocorreu um erro desconhecido"
     },
     "XkX56I": {
         "context": "filters error messages value required",
@@ -2078,7 +2078,7 @@
     },
     "cY6H2C": {
         "context": "empty metadata text",
-        "string": "No metadata created for this element. Use the button below to add new metadata field."
+        "string": "Nenhum metadado criado para este elemento. Use o botão abaixo para adicionar um novo campo de metadados."
     },
     "GiDxS4": {
         "context": "add metadata field,button",
@@ -2240,7 +2240,7 @@
     },
     "p3eRUm": {
         "context": "indicator that feature is in preview mode",
-        "string": "Preview"
+        "string": "Visualização"
     },
     "KGsaGO": {
         "context": "tooltip",
@@ -2337,11 +2337,11 @@
     },
     "s8FlDW": {
         "context": "hide error log label in notification",
-        "string": "Hide log"
+        "string": "Ocultar registro"
     },
     "w9xgN9": {
         "context": "see error log label in notification",
-        "string": "See error log"
+        "string": "Ver log de erros"
     },
     "xfGZsi": {
         "context": "configuration section name",
@@ -2534,7 +2534,7 @@
     },
     "4v5gfh": {
         "context": "account information, header",
-        "string": "Account Information"
+        "string": "Informação da conta"
     },
     "2mRLis": {
         "string": "Pesquisar Cliente"
@@ -2642,7 +2642,7 @@
         "string": "Data"
     },
     "JqiqNj": {
-        "string": "Something went wrong"
+        "string": "Algo deu errado"
     },
     "ufmuTp": {
         "context": "button",
@@ -2656,7 +2656,7 @@
         "string": "Descrição"
     },
     "bZenNC": {
-        "string": "Description (optional)"
+        "string": "Descrição (opcional)"
     },
     "n+Gwbu": {
         "string": "Descontos"
@@ -2746,11 +2746,11 @@
     },
     "ySqrUU": {
         "context": "button",
-        "string": "Assign variants"
+        "string": "Atribuir variantes"
     },
     "lehGc9": {
         "context": "section header",
-        "string": "Eligible Variants"
+        "string": "Variantes elegíveis"
     },
     "/oyr6M": {
         "context": "no variants",
@@ -2762,7 +2762,7 @@
     },
     "lHccsy": {
         "context": "table head",
-        "string": "Variant Name"
+        "string": "Nome da variante"
     },
     "2E1xZ0": {
         "context": "page header",
@@ -2789,7 +2789,7 @@
     },
     "1BNKCZ": {
         "context": "sale channel",
-        "string": "Channel"
+        "string": "Canal"
     },
     "RBxYJf": {
         "context": "sale status",
@@ -2892,7 +2892,7 @@
     },
     "+jHXT3": {
         "context": "limit voucher",
-        "string": "Limit to staff only"
+        "string": "Limitar apenas ao pessoal"
     },
     "s51tHd": {
         "context": "limit voucher",
@@ -2904,7 +2904,7 @@
     },
     "o8S0Ac": {
         "context": "usage limit uses left caption",
-        "string": "Uses left"
+        "string": "Usos restantes"
     },
     "pNrF72": {
         "context": "tab name",
@@ -2923,7 +2923,7 @@
     },
     "NLybdq": {
         "context": "voucher channel",
-        "string": "Channel"
+        "string": "Canal"
     },
     "t7UwLY": {
         "context": "voucher status",
@@ -3108,7 +3108,7 @@
     },
     "opIDox": {
         "context": "unassign product from sale and save, button",
-        "string": "Unassign and save"
+        "string": "Cancelar atribuição e salvar"
     },
     "AHK0K9": {
         "context": "dialog content",
@@ -3116,7 +3116,7 @@
     },
     "n7GIKB": {
         "context": "dialog header",
-        "string": "Unassign Product From Sale"
+        "string": "Cancelar atribuição de produto da venda"
     },
     "Uj2hj8": {
         "context": "unassign variant from sale and save, button",
@@ -3124,11 +3124,11 @@
     },
     "iWyoZn": {
         "context": "dialog content",
-        "string": "{counter,plural,one {Are you sure you want to unassign this variant?} other {Are you sure you want to unassign {displayQuantity} variants?}}"
+        "string": "{counter,plural,one {Tem certeza de que deseja cancelar a atribuição desta variante?} other {Tem certeza de que deseja cancelar a atribuição de variantes {displayQuantity}?}}"
     },
     "Kyyr7D": {
         "context": "dialog header",
-        "string": "Unassign Variant From Sale"
+        "string": "Cancelar atribuição de variante da venda"
     },
     "ZWIjvr": {
         "context": "dialog header",
@@ -3230,7 +3230,7 @@
     },
     "mbj1J5": {
         "context": "bulk issue gift cards success alert description",
-        "string": "Requested {cardsAmount} were successfully issued"
+        "string": "Os {cardsAmount} solicitados foram emitidos com sucesso"
     },
     "3bQz2o": {
         "context": "bulk issue gift cards success alert title",
@@ -3242,7 +3242,7 @@
     },
     "YBqLHs": {
         "context": "expiry date label",
-        "string": "Exact date"
+        "string": "Data exata"
     },
     "fzl482": {
         "context": "expires on label",
@@ -3258,7 +3258,7 @@
     },
     "n9JOI3": {
         "context": "money amount input label",
-        "string": "Enter amount"
+        "string": "Insira o valor"
     },
     "vDnheO": {
         "context": "gift card bulk create success dialog accept button",
@@ -3270,19 +3270,19 @@
     },
     "IVOjqW": {
         "context": "gift card bulk create success dialog export button",
-        "string": "Export To Email"
+        "string": "Exportar para e-mail"
     },
     "WyPitj": {
         "context": "gift card bulk create success dialog title",
-        "string": "Bulk Issue Gift Cards"
+        "string": "Cartões-presente de emissão em massa"
     },
     "hnBvH7": {
         "context": "copied to clipboard alert title",
-        "string": "Copied to clipboard"
+        "string": "Copiado para a área de transferência"
     },
     "RXbkle": {
         "context": "copy code button label",
-        "string": "Copy code"
+        "string": "Copiar código"
     },
     "zjZuhM": {
         "context": "created gift card code label",
@@ -3298,7 +3298,7 @@
     },
     "uilt7q": {
         "context": "issued cards amount label",
-        "string": "Cards Issued"
+        "string": "Cartões emitidos"
     },
     "PilTI6": {
         "context": "issue gift card button label",
@@ -3318,7 +3318,7 @@
     },
     "vCw7BP": {
         "context": "requires activation checkbox label",
-        "string": "Requires activation"
+        "string": "Requer ativação"
     },
     "JftRtx": {
         "context": "issue gift card dialog title",
@@ -3326,15 +3326,15 @@
     },
     "uQk8gB": {
         "context": "export all items to csv file",
-        "string": "All gift cards ({number})"
+        "string": "Todos os cartões-presente ({number})"
     },
     "n97Ii0": {
         "context": "export selected items to csv file",
-        "string": "Selected giftCards ({number})"
+        "string": "Vales-presente selecionados ({number})"
     },
     "CRAfpd": {
         "context": "gift card export dialog confirm button label",
-        "string": "Export codes"
+        "string": "Exportar códigos"
     },
     "dsJ+Wv": {
         "context": "note on export gift cards",
@@ -3354,15 +3354,15 @@
     },
     "DQJnB4": {
         "context": "gift card export dialog title",
-        "string": "Export Gift Card Codes"
+        "string": "Exportar códigos de vale-presente"
     },
     "KqbfFa": {
         "context": "expiry date selection info message",
-        "string": "You can set gift cards to expire after a certain time after their purchase. Remember that in some countries, gift cards expiry is prohibited by law."
+        "string": "Você pode definir que os cartões-presente expirem após um determinado período após a compra. Lembre-se de que em alguns países a expiração dos cartões-presente é proibida por lei."
     },
     "1J/bhZ": {
         "context": "expiry date section header",
-        "string": "Expiry date"
+        "string": "Data de validade"
     },
     "xHj9Qe": {
         "context": "gift card settings header",
@@ -3374,43 +3374,43 @@
     },
     "pCy5EP": {
         "context": "gift card history message",
-        "string": "Gift card was activated"
+        "string": "O vale-presente foi ativado"
     },
     "aEc9Ar": {
         "context": "gift card history message",
-        "string": "Gift card balance was reset by {resetBy}"
+        "string": "O saldo do vale-presente foi zerado por {resetBy}"
     },
     "PcQRxi": {
         "context": "gift card history message",
-        "string": "Gift card was bought in order {orderNumber}"
+        "string": "O vale-presente foi comprado em ordem {orderNumber}"
     },
     "gAqkrG": {
         "context": "gift card history message",
-        "string": "Gift card was deactivated by {deactivatedBy}"
+        "string": "O vale-presente foi desativado por {deactivatedBy}"
     },
     "NvwS/N": {
         "context": "gift card history message",
-        "string": "Gift card was deactivated"
+        "string": "O vale-presente foi desativado"
     },
     "vQunFc": {
         "context": "gift card history message",
-        "string": "Gift card expiry date was updated by {expiryUpdatedBy}"
+        "string": "A data de validade do vale-presente foi atualizada por {expiryUpdatedBy}"
     },
     "fLhj3a": {
         "context": "gift card history message",
-        "string": "Gift card expiry date was updated"
+        "string": "A data de validade do vale-presente foi atualizada"
     },
     "4Z0O2B": {
         "context": "section header title",
-        "string": "Gift Card Timeline"
+        "string": "Cronograma do vale-presente"
     },
     "30X9S8": {
         "context": "gift card history message",
-        "string": "Gift card was issued by {issuedBy}"
+        "string": "O vale-presente foi emitido por {issuedBy}"
     },
     "jDovoJ": {
         "context": "gift card history message",
-        "string": "Gift card was issued"
+        "string": "O vale-presente foi emitido"
     },
     "JgNb8X": {
         "context": "notifier message",
@@ -3418,19 +3418,19 @@
     },
     "WS4ov0": {
         "context": "notifier message",
-        "string": "Note was added sucessfully"
+        "string": "A nota foi adicionada com sucesso"
     },
     "gj3MUg": {
         "context": "gift card history message",
-        "string": "Gift card was resent"
+        "string": "O vale-presente foi reenviado"
     },
     "tsL3IW": {
         "context": "gift card history message",
-        "string": "Gift card was sent to customer"
+        "string": "O vale-presente foi enviado ao cliente"
     },
     "vkAWwY": {
         "context": "gift card history message",
-        "string": "Gift card tags were updated"
+        "string": "As tags dos vales-presente foram atualizadas"
     },
     "Uu2B2G": {
         "context": "gift card history message",
@@ -3450,15 +3450,15 @@
     },
     "AqHafs": {
         "context": "provided email input placeholder",
-        "string": "Provided email address"
+        "string": "Endereço de e-mail fornecido"
     },
     "NLNonj": {
         "context": "send to channel select label",
-        "string": "Send to channel"
+        "string": "Enviar para o canal"
     },
     "s1IQuN": {
         "context": "resend button label",
-        "string": "Resend"
+        "string": "Reenviar"
     },
     "JQH+Iy": {
         "context": "resent code success message",
@@ -3466,7 +3466,7 @@
     },
     "mslSpp": {
         "context": "resend code to customer title",
-        "string": "Resend code to customer"
+        "string": "Reenviar código ao cliente"
     },
     "STJx8N": {
         "context": "change button label",
@@ -3478,23 +3478,23 @@
     },
     "tKxCld": {
         "context": "set balance dialog title label",
-        "string": "Set balance"
+        "string": "Definir saldo"
     },
     "XAPFHP": {
         "context": "card update success alert title",
-        "string": "Successfully updated card balance"
+        "string": "Saldo do cartão atualizado com sucesso"
     },
     "Z/7hyu": {
         "context": "card balance label",
-        "string": "Card Balance"
+        "string": "Saldo do cartão"
     },
     "PJDcQs": {
         "context": "set balance button label",
-        "string": "Set Balance"
+        "string": "Definir saldo"
     },
     "a+kgkq": {
         "context": "tag label",
-        "string": "Card Tag"
+        "string": "Etiqueta de cartão"
     },
     "Zj/7QZ": {
         "context": "details title",
@@ -3502,27 +3502,27 @@
     },
     "//k1GX": {
         "context": "expired on label",
-        "string": "Expired on {date}"
+        "string": "Expirou em {date}"
     },
     "JKbpH9": {
         "context": "expiry date checkbox label",
-        "string": "Gift card expires"
+        "string": "O vale-presente expira"
     },
     "nFTvQW": {
         "context": "expiration date label",
-        "string": "Expiration date"
+        "string": "Data de validade"
     },
     "Jo01VZ": {
         "context": "bought by label",
-        "string": "Bought by"
+        "string": "Comprado por"
     },
     "/AbHy4": {
         "context": "creation label",
-        "string": "Creation"
+        "string": "Criação"
     },
     "+pLi+M": {
         "context": "issued by app label",
-        "string": "Issued by app"
+        "string": "Emitido por aplicativo"
     },
     "V+h02n": {
         "context": "issued by label",
@@ -3538,11 +3538,11 @@
     },
     "Eh6KYS": {
         "context": "info card title",
-        "string": "Card information"
+        "string": "Informações do cartão"
     },
     "kS5Qgk": {
         "context": "used by label",
-        "string": "Used by"
+        "string": "Usado por"
     },
     "EA7rjI": {
         "context": "disabled status label",
@@ -3554,11 +3554,11 @@
     },
     "lCPxtT": {
         "context": "resend code label",
-        "string": "Resend code"
+        "string": "Reenviar código"
     },
     "GibKGn": {
         "context": "success gift card disable message",
-        "string": "Successfully disabled gift card"
+        "string": "Vale-presente desativado com sucesso"
     },
     "bDO9DN": {
         "context": "success gift card enable message",
@@ -3566,7 +3566,7 @@
     },
     "29L5Yq": {
         "context": "gift card not found message",
-        "string": "Couldn't find gift card"
+        "string": "Não foi possível encontrar o vale-presente"
     },
     "xPnZ0R": {
         "context": "title",
@@ -3574,7 +3574,7 @@
     },
     "kcMVsB": {
         "context": "balance amound missing error message",
-        "string": "Balance amount is missing"
+        "string": "O valor do saldo está faltando"
     },
     "bVbEZ/": {
         "context": "amount filter label",
@@ -3582,7 +3582,7 @@
     },
     "tXIgmR": {
         "context": "balance curreny missing error message",
-        "string": "Balance currency is missing"
+        "string": "A moeda do saldo está faltando"
     },
     "osPBn1": {
         "context": "currency filter label",
@@ -3590,23 +3590,23 @@
     },
     "e/61NZ": {
         "context": "current balance filter label",
-        "string": "Current balance"
+        "string": "Saldo atual"
     },
     "tTuCYj": {
         "context": "all gift cards label",
-        "string": "All Gift Cards"
+        "string": "Todos os vales-presente"
     },
     "+WTmpr": {
         "context": "disabled status option label",
-        "string": "Disabled"
+        "string": "Desabilitado"
     },
     "vC8vyb": {
         "context": "enabled status option label",
-        "string": "Enabled"
+        "string": "Habilitado"
     },
     "VceXrc": {
         "context": "initial balance filter label",
-        "string": "Initial balance"
+        "string": "Balanço inicial"
     },
     "Sjd7wm": {
         "context": "product filter label",
@@ -3614,7 +3614,7 @@
     },
     "labkPK": {
         "context": "search gift card placeholder",
-        "string": "Search Gift Cards, e.g {exampleGiftCardCode}"
+        "string": "Pesquisar cartões-presente, e.g {exampleGiftCardCode}"
     },
     "D4CsYK": {
         "context": "status filter label",
@@ -3626,11 +3626,11 @@
     },
     "WMGoqz": {
         "context": "used by filter label",
-        "string": "Used by"
+        "string": "Usado por"
     },
     "31hYP2": {
         "context": "alert card message",
-        "string": "Gift cards will appear after their order is fullfilled. <link>View Orders with Gift Cards</link>"
+        "string": "Os cartões-presente aparecerão após o pedido ser atendido. <link>Ver pedidos com cartões-presente</link>"
     },
     "qkt/Km": {
         "context": "bulk delete label",
@@ -3646,59 +3646,59 @@
     },
     "KcsJKm": {
         "context": "error with activatation alert message",
-        "string": "Error activating gift {count,plural,one{card} other{cards}}"
+        "string": "Erro ao ativar o presente {count,plural,one{card} other{cards}}"
     },
     "C90nKP": {
         "context": "error with deactivatation alert message",
-        "string": "Errors deactivating gift {count,plural,one{card} other{cards}}"
+        "string": "Erros ao desativar presente {count,plural,one{card} other{cards}}"
     },
     "IwEQvz": {
         "context": "success activate alert message",
-        "string": "Successfully activated gift {count,plural,one{card} other{cards}}"
+        "string": "Presente ativado com sucesso {count,plural,one{card} other{cards}}"
     },
     "SO56cv": {
         "context": "success deactivate alert message",
-        "string": "Successfully deactivated gift {count,plural,one{card} other{cards}}"
+        "string": "Presente desativado com sucesso {count,plural,one{card} other{cards}}"
     },
     "9hab/1": {
         "context": "bulk issue menu item",
-        "string": "Bulk Issue"
+        "string": "Emissão em massa"
     },
     "38dS1A": {
         "context": "code ending with label",
-        "string": "Code ending with {last4CodeChars}"
+        "string": "Código terminando com {last4CodeChars}"
     },
     "HqeqEV": {
         "context": "create gift card product alert message",
-        "string": "Create a gift card product"
+        "string": "Crie um produto de cartão-presente"
     },
     "8Hq18g": {
         "context": "create gift card product type alert message",
-        "string": "Create a gift card product type"
+        "string": "Crie um tipo de produto de vale-presente"
     },
     "exvX+Z": {
         "context": "export card codes menu item",
-        "string": "Export card codes"
+        "string": "Exportar códigos de cartão"
     },
     "rCy3Fe": {
         "context": "invalid date in expirydate field content",
-        "string": "Gift Card with past expiration date cannot be created"
+        "string": "Não é possível criar vale-presente com data de validade vencida"
     },
     "l1/Hwb": {
         "context": "invalid date in expirydate field header",
-        "string": "Incorrect date entered"
+        "string": "Data incorreta inserida"
     },
     "AJgl5u": {
         "context": "gift card product message",
-        "string": "gift card product"
+        "string": "produto de vale-presente"
     },
     "MbZHXE": {
         "context": "column title balance",
-        "string": "Balance"
+        "string": "Equilíbrio"
     },
     "MJBAqv": {
         "context": "column title used by/customer",
-        "string": "Used by"
+        "string": "Usado por"
     },
     "eLJQSh": {
         "context": "column title gift card",
@@ -3722,19 +3722,19 @@
     },
     "Rd0s80": {
         "context": "no cards found title message",
-        "string": "No gift cards found"
+        "string": "Nenhum vale-presente encontrado"
     },
     "VI+X8H": {
         "context": "no gift card product types alert message",
-        "string": "{createGiftCardProductType} to start selling gift cards in your store."
+        "string": "{createGiftCardProductType} para começar a vender cartões-presente em sua loja."
     },
     "jmh0rV": {
         "context": "no gift card products alert message",
-        "string": "{createGiftCardProduct} to start selling gift cards in your store."
+        "string": "{createGiftCardProduct} para começar a vender cartões-presente em sua loja."
     },
     "U9o2bV": {
         "context": "no gift card products and types alert message",
-        "string": "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store."
+        "string": "{createGiftCardProductType} e {giftCardProduct} para começar a vender cartões-presente em sua loja."
     },
     "F69lwk": {
         "context": "settings menu item",
@@ -3742,7 +3742,7 @@
     },
     "vWTM6Y": {
         "context": "customer gift cards card no cards subtitle",
-        "string": "There are no gift cards assigned to this customer"
+        "string": "Não há cartões-presente atribuídos a este cliente"
     },
     "Utq1fE": {
         "context": "customer gift cards card title",
@@ -3754,55 +3754,55 @@
     },
     "vzce9B": {
         "context": "customer gift cards card subtitle",
-        "string": "Only five newest gift cards are shown here"
+        "string": "Apenas cinco cartões-presente mais recentes são mostrados aqui"
     },
     "FQc5z6": {
         "context": "customer gift cards card view all button",
-        "string": "View All"
+        "string": "Ver tudo"
     },
     "Yxihwg": {
         "context": "consent removal of gift cards with balance button label",
-        "string": "{selectedItemsCount,plural,one {I am aware that I am removing a gift card with balance} other {I am aware that I am removing gift cards with balance}}"
+        "string": "{selectedItemsCount,plural,one {Estou ciente de que estou retirando um vale-presente com saldo} other {Estou ciente de que estou removendo vales-presente com saldo}}"
     },
     "S52JMl": {
         "context": "default gift card delete description",
-        "string": "{selectedItemsCount,plural,one {Are you sure you want to delete this gift card?} other {Are you sure you want to delete {selectedItemsCount} giftCards?}}"
+        "string": "{selectedItemsCount,plural,one {Tem certeza de que deseja excluir este vale-presente?} other {Tem certeza de que deseja excluir {selected Items Count} vales-presente?}}"
     },
     "zLtb4N": {
         "context": "gift card removed success alert message",
-        "string": "{selectedItemsCount,plural,one {Successfully deleted gift card} other {Successfully deleted gift cards}}"
+        "string": "{selectedItemsCount,plural,one {Vale-presente excluído com sucesso} other {Vales-presente excluídos com sucesso}}"
     },
     "a+iRI1": {
         "context": "single gift card title",
-        "string": "{selectedItemsCount,plural,one {Delete Gift Card} other {Delete Gift Cards}}"
+        "string": "{selectedItemsCount,plural,one {Excluir vale-presente} other {Excluir vales-presente}}"
     },
     "RLZ1jd": {
         "context": "delete gift cards with balance description",
-        "string": "{selectedItemsCount,plural,one {The gift card you are about to delete has available balance. By deleting this card you may remove balance available to your customer.} other {You are about to delete gift cards with available balance. Are you sure you want to do that?}}"
+        "string": "{selectedItemsCount,plural,one {O vale-presente que você está prestes a excluir tem saldo disponível. Ao excluir este cartão você poderá remover o saldo disponível para seu cliente.} other {O vale-presente que você está prestes a excluir tem saldo disponível. Ao excluir este cartão você poderá remover o saldo disponível para seu cliente.}}"
     },
     "LA13a5": {
         "context": "channel select label",
-        "string": "Channel"
+        "string": "Canal"
     },
     "0sd4ez": {
         "context": "selected customer channel subtitle",
-        "string": "Customer will be sent the gift card code via this channels email address"
+        "string": "O cliente receberá o código do vale-presente por meio do endereço de e-mail deste canal"
     },
     "FRJRmi": {
         "context": "selected customer gift card is sent to subtitle",
-        "string": "Selected customer will be sent the generated gift card code. Someone else can redeem the gift card code. Gift card will be assigned to account which redeemed the code."
+        "string": "O cliente selecionado receberá o código do vale-presente gerado. Outra pessoa pode resgatar o código do vale-presente. O vale-presente será atribuído à conta que resgatou o código."
     },
     "Um3g00": {
         "context": "send to customer selected label",
-        "string": "Send gift card to customer"
+        "string": "Enviar vale-presente ao cliente"
     },
     "ps+h1G": {
         "context": "checkbox label description",
-        "string": "Expiration date will be automatically set, once gift card is issued"
+        "string": "A data de validade será definida automaticamente assim que o cartão-presente for emitido"
     },
     "j2l6cL": {
         "context": "checkbox label",
-        "string": "Set gift card expiration period"
+        "string": "Definir período de validade do vale-presente"
     },
     "XFtKV5": {
         "context": "input placeholder tag",
@@ -3810,23 +3810,23 @@
     },
     "mzASqs": {
         "context": "days after label",
-        "string": "days after issue"
+        "string": "Dias após a emissão"
     },
     "54KYgS": {
         "context": "months after label",
-        "string": "months after issue"
+        "string": "Meses após a emissão"
     },
     "15fg+o": {
         "context": "weeks after label",
-        "string": "weeks after issue"
+        "string": "Semanas após a emissão"
     },
     "Qe4XHv": {
         "context": "years after label",
-        "string": "years after issue"
+        "string": "Anos após a emissão"
     },
     "4JW9iJ": {
         "context": "home section name",
-        "string": "juca"
+        "string": "Início"
     },
     "sjRXXz": {
         "string": "O pedido nº {orderId} foi feito a partir do rascunho por {userEmail}"
@@ -3850,34 +3850,34 @@
         "string": "Sem pagamentos para serem realizados."
     },
     "bFhzRX": {
-        "string": "No products are out of stock"
+        "string": "Nenhum produto está fora de estoque"
     },
     "c0H45L": {
-        "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
+        "string": "{amount, plural,one {Um pedido está pronto para ser atendido} other {{amount} os pedidos estão prontos para serem atendidos}}"
     },
     "md326v": {
-        "string": "{amount, plural,one {One payment to capture} other {{amount} payments to capture}}"
+        "string": "{amount, plural,one {Um pagamento para capturar} other {{amount} pagamentos para capturar}}"
     },
     "cdxwA8": {
-        "string": "{amount, plural,one {One product out of stock} other {{amount} products out of stock}}"
+        "string": "{amount, plural,one {Um produto fora de estoque} other {{amount} produtos fora de estoque}}"
     },
     "gSQ0Ge": {
         "string": "Variação {name} foi configurada como padrão."
     },
     "26+K4N": {
-        "string": "There was a poblem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+        "string": "Houve um problema com o arquivo que você enviou como imagem e ele não pôde ser usado. Por favor, tente um arquivo diferente."
     },
     "Yo2kC+": {
-        "string": "Couldn't process image"
+        "string": "Não foi possível processar a imagem"
     },
     "DOkfyZ": {
-        "string": "Insufficient permissions"
+        "string": "Permissões insuficientes"
     },
     "aheQdn": {
         "string": "Sobrenome"
     },
     "8oIbMI": {
-        "string": "Reached limit for this plan"
+        "string": "Limite atingido para este plano"
     },
     "IbVKSH": {
         "context": "button",
@@ -3911,7 +3911,7 @@
         "string": "Order limit reached"
     },
     "TPW2tP": {
-        "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
+        "string": "Você atingiu o limite do seu pedido. Você será cobrado extra por pedidos acima do limite. Se desejar aumentar seu limite, entre em contato com a equipe administrativa sobre como aumentar seus limites."
     },
     "aY0HAT": {
         "context": "section header",
@@ -3936,15 +3936,15 @@
     },
     "FIZvTx": {
         "context": "dialog content",
-        "string": "Select method you want to use to change address"
+        "string": "Selecione o método que deseja usar para alterar o endereço"
     },
     "D4W/LE": {
         "context": "dialog header",
-        "string": "Change customer billing address"
+        "string": "Alterar endereço de cobrança do cliente"
     },
     "RzDYi8": {
         "context": "checkbox label",
-        "string": "Set the same for billing address"
+        "string": "Defina o mesmo para o endereço de cobrança"
     },
     "r4g/vD": {
         "context": "search modal billing title",
@@ -3952,19 +3952,19 @@
     },
     "vf56In": {
         "context": "address type",
-        "string": "Use one of customer addresses"
+        "string": "Use um dos endereços do cliente"
     },
     "qov29K": {
         "context": "dialog content",
-        "string": "Select one of customer addresses or add a new address:"
+        "string": "Selecione um dos endereços do cliente ou adicione um novo endereço: "
     },
     "CG+awx": {
         "context": "dialog content",
-        "string": "Which address would you like to use as shipping address for selected customer:"
+        "string": "Qual endereço você gostaria de usar como endereço de entrega para o cliente selecionado: "
     },
     "PBd/e+": {
         "context": "dialog header",
-        "string": "Change address for order"
+        "string": "Alterar endereço para pedido"
     },
     "9gb9b4": {
         "context": "address type",
@@ -3972,11 +3972,11 @@
     },
     "Qph0GE": {
         "context": "dialog content",
-        "string": "Add a new address:"
+        "string": "Adicione um novo endereço:"
     },
     "xWEFrR": {
         "context": "dialog content",
-        "string": "This customer doesn't have any addresses in the address book. Provide address for order:"
+        "string": "Este cliente não possui nenhum endereço no catálogo de endereços. Forneça o endereço para pedido:"
     },
     "kQq6/o": {
         "context": "info when addresses search is unsuccessful",
@@ -3984,15 +3984,15 @@
     },
     "zqarUF": {
         "context": "modal information under title",
-        "string": "Select an address you want to use from the list below"
+        "string": "Selecione um endereço que deseja usar na lista abaixo"
     },
     "129wyQ": {
         "context": "dialog header",
-        "string": "Change customer shipping address"
+        "string": "Alterar endereço de entrega do cliente"
     },
     "txOXvy": {
         "context": "checkbox label",
-        "string": "Set the same for shipping address"
+        "string": "Defina o mesmo para endereço de entrega"
     },
     "2OH46U": {
         "context": "search modal shipping title",
@@ -4000,11 +4000,11 @@
     },
     "s6lW8R": {
         "context": "option label",
-        "string": "Change address"
+        "string": "Alterar endereço"
     },
     "Zg0dRo": {
         "context": "dialog description",
-        "string": "You have changed customer assigned to this order. What would you like to do with the shipping address?"
+        "string": "Você alterou o cliente atribuído a este pedido. O que você gostaria de fazer com o endereço de entrega?"
     },
     "iue6mV": {
         "context": "option label",
@@ -4051,11 +4051,11 @@
     },
     "R98JLZ": {
         "context": "OrderCustomer Fulfillment from All Warehouses",
-        "string": "Fulfill from All Warehouses"
+        "string": "Cumprir de todos os armazéns"
     },
     "/w919H": {
         "context": "OrderCustomer Fulfillment from Local Warehouse",
-        "string": "Fulfill from Local Stock"
+        "string": "Atender a partir do estoque local"
     },
     "AqXzM2": {
         "string": "Pedido  #{orderNumber}"
@@ -4066,11 +4066,11 @@
     },
     "maxT+q": {
         "context": "save button",
-        "string": "Confirm order"
+        "string": "Confirmar pedido"
     },
     "+RjQjs": {
         "context": "return button",
-        "string": "Return / Replace order"
+        "string": "Pedido de devolução/substituição"
     },
     "QSnh4Y": {
         "context": "add button label",
@@ -4078,7 +4078,7 @@
     },
     "nvSJNR": {
         "context": "discount reason input lavel",
-        "string": "Reason"
+        "string": "Razão"
     },
     "GAmGog": {
         "context": "value input label",
@@ -4094,11 +4094,11 @@
     },
     "WTj17Z": {
         "context": "dialog title item discount",
-        "string": "Discount Item"
+        "string": "Item com desconto"
     },
     "YFDAaX": {
         "context": "dialog title order discount",
-        "string": "Discount this Order by:"
+        "string": "Desconto neste pedido por:"
     },
     "WUf3Iu": {
         "context": "percentage option",
@@ -4128,11 +4128,11 @@
     },
     "Myx1Qp": {
         "context": "add discount button",
-        "string": "Add Discount"
+        "string": "Adicionar desconto"
     },
     "BjxQ3u": {
         "context": "add shipping address first label",
-        "string": "add shipping address first"
+        "string": "adicione o endereço de entrega primeiro"
     },
     "Jb1/3V": {
         "context": "add shipping carrier button",
@@ -4276,7 +4276,7 @@
     },
     "EHsnZX": {
         "context": "dialog description",
-        "string": "Are you sure you want to approve this fullfillment?"
+        "string": "Tem certeza de que deseja aprovar este cumprimento?"
     },
     "SqhC7g": {
         "context": "checkbox label, fulfillment approval",
@@ -4299,23 +4299,23 @@
     },
     "2MKkgX": {
         "context": "checkbox label",
-        "string": "Allow fulfillment without payment"
+        "string": "Permitir atendimento sem pagamento"
     },
     "XwQQ1f": {
         "context": "checkbox label description",
-        "string": "All fulfillments will be automatically approved"
+        "string": "Todos os cumprimentos serão aprovados automaticamente"
     },
     "05hqq6": {
         "context": "checkbox label",
-        "string": "Automatically approve all fulfillments"
+        "string": "Aprovar automaticamente todos os cumprimentos"
     },
     "l9ETHu": {
         "context": "checkbox label description",
-        "string": "You will be able to fulfill products without capturing payment for the order."
+        "string": "Você poderá entregar produtos sem capturar o pagamento do pedido."
     },
     "G3ay2p": {
         "context": "section header",
-        "string": "Fulfillment settings"
+        "string": "Configurações de atendimento"
     },
     "yT/GAp": {
         "string": "Código de rastreamento"
@@ -4382,7 +4382,7 @@
     },
     "fehqPs": {
         "context": "order history message",
-        "string": "Products were deleted from an order"
+        "string": "Os produtos foram excluídos de um pedido"
     },
     "P/EDn1": {
         "context": "order history message",
@@ -4422,11 +4422,11 @@
     },
     "U1eJIw": {
         "context": "order history message",
-        "string": "Products were added to an order"
+        "string": "Os produtos foram adicionados a um pedido"
     },
     "PcPMjC": {
         "context": "order history message",
-        "string": "Fulfillment awaits approval"
+        "string": "O cumprimento aguarda aprovação"
     },
     "6RQKxH": {
         "context": "order history message",
@@ -4473,15 +4473,15 @@
     },
     "kVOslW": {
         "context": "reason for discount label",
-        "string": "Reason for discount"
+        "string": "Motivo do desconto"
     },
     "kvSYZh": {
         "context": "replacement created order history message description",
-        "string": "was created for replaced products"
+        "string": "foi criado para produtos substituídos"
     },
     "A0Wlg7": {
         "context": "product discount removed title",
-        "string": "{productName} discount was removed by"
+        "string": "{productName} desconto foi removido por"
     },
     "MPfyne": {
         "string": "Tem certeza de que deseja enviar esta fatura: {invoiceNumber} para o cliente?"
@@ -4511,7 +4511,7 @@
     },
     "zyceue": {
         "context": "placed order counter",
-        "string": "{count}/{max} orders"
+        "string": "{count}/{max} pedidos"
     },
     "WbV1Xm": {
         "context": "button",
@@ -4526,7 +4526,7 @@
     },
     "lJP1iw": {
         "context": "order",
-        "string": "Channel"
+        "string": "Canal"
     },
     "biAxKR": {
         "context": "click and collect",
@@ -4542,11 +4542,11 @@
     },
     "s5v6m0": {
         "context": "order",
-        "string": "Gift Card ordered"
+        "string": "Vale-presente solicitado"
     },
     "Kgxlsf": {
         "context": "order",
-        "string": "Paid with Gift Card"
+        "string": "Pago com vale-presente"
     },
     "a4qX2+": {
         "context": "order",
@@ -4741,11 +4741,11 @@
     },
     "H/f9KR": {
         "context": "section header returned",
-        "string": "Fulfillment returned"
+        "string": "Cumprimento retornado"
     },
     "i/ZhxL": {
         "context": "section header returned",
-        "string": "Fulfillment waiting for approval"
+        "string": "Cumprimento aguardando aprovação"
     },
     "0krqBj": {
         "context": "page header",
@@ -4813,7 +4813,7 @@
     },
     "AKv2BI": {
         "context": "order refund subtitle",
-        "string": "Refunded items can't be fulfilled"
+        "string": "Itens reembolsados não podem ser processados"
     },
     "C6bb6x": {
         "context": "order refund amount",
@@ -4821,23 +4821,23 @@
     },
     "i56GGQ": {
         "context": "order refund amount",
-        "string": "Replaced Products Value"
+        "string": "Valor dos produtos substituídos"
     },
     "bgO+7G": {
         "context": "order return amount button",
-        "string": "Return & Replace products"
+        "string": "Devolver e substituir produtos"
     },
     "Uo5/Ov": {
         "context": "order return subtitle",
-        "string": "Returned items can't be fulfilled"
+        "string": "Itens devolvidos não podem ser processados"
     },
     "kak5vT": {
         "context": "order refund amount",
-        "string": "Selected Products Value"
+        "string": "Valor dos produtos selecionados"
     },
     "WGp+Fw": {
         "context": "order refund amount",
-        "string": "Shipment Cost"
+        "string": "Custo de transporte"
     },
     "B/y6LC": {
         "context": "section header",
@@ -4881,7 +4881,7 @@
     },
     "RlbhwF": {
         "context": "product no longer exists error description",
-        "string": "This product is no longer in database so it can’t be replaced, nor returned"
+        "string": "Este produto não está mais no banco de dados, portanto não pode ser substituído nem devolvido"
     },
     "iJrw63": {
         "context": "section header",
@@ -4889,7 +4889,7 @@
     },
     "ZPOyI1": {
         "context": "fulfilled fulfillment, section header",
-        "string": "Fulfilled from {warehouseName}"
+        "string": "Cumprido a partir de {warehouseName}"
     },
     "oQhFlK": {
         "context": "refunded fulfillment, section header",
@@ -4897,27 +4897,27 @@
     },
     "jNSOSu": {
         "context": "cancelled fulfillment, section header",
-        "string": "Refunded and Returned ({quantity})"
+        "string": "Reembolsado e Devolvido ({quantity})"
     },
     "3stu21": {
         "context": "refunded fulfillment, section header",
-        "string": "Replaced ({quantity})"
+        "string": "Substituído ({quantity})"
     },
     "eCRaHe": {
         "context": "refunded fulfillment, section header",
-        "string": "Returned ({quantity})"
+        "string": "Devolvido ({quantity})"
     },
     "p4zuQp": {
         "context": "product no longer exists error title",
-        "string": "Product no longer exists"
+        "string": "O produto não existe mais"
     },
     "NxRsHQ": {
         "context": "section header",
-        "string": "Fulfillment - #{fulfilmentId}"
+        "string": "Cumprimento - #{fulfilmentId}"
     },
     "BkFke9": {
         "context": "section header",
-        "string": "Unfulfilled Items"
+        "string": "Itens não cumpridos"
     },
     "/xXvjF": {
         "context": "section header",
@@ -4925,11 +4925,11 @@
     },
     "9ssWj+": {
         "context": "unapproved fulfillment, section header",
-        "string": "Waiting for approval ({quantity})"
+        "string": "Esperando aprovação ({quantity})"
     },
     "BBIQxQ": {
         "context": "page header",
-        "string": "Order no. {orderNumber} - Replace/Return"
+        "string": "Pedido nº. {orderNumber} - Substituir/Devolver"
     },
     "Vu9nol": {
         "context": "header",
@@ -4944,11 +4944,11 @@
     },
     "7UG1Lx": {
         "context": "checkbox gift cards label",
-        "string": "Automatically fulfill non shippable gift cards"
+        "string": "Processar automaticamente cartões-presente que não podem ser enviados"
     },
     "Nfh9QM": {
         "context": "checkbox gift cards label description",
-        "string": "when activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
+        "string": "quando ativados, os cartões-presente não entregáveis serão automaticamente definidos como cumpridos e enviados ao cliente"
     },
     "wpAXKX": {
         "context": "checkbox label description",
@@ -4976,7 +4976,7 @@
         "string": "Rascunho do pedido finalizado com sucesso"
     },
     "9OtpHt": {
-        "string": " Linha de pedido excluída"
+        "string": "Linha de pedido excluída"
     },
     "CZmloB": {
         "string": "Faturamento atualizado com sucesso"
@@ -5003,7 +5003,7 @@
         "string": "Pedido atualizado com sucesso"
     },
     "+sX7yS": {
-        "string": "Fulfillment successfully approved"
+        "string": "Cumprimento aprovado com sucesso"
     },
     "3u+4NZ": {
         "string": "E-mail da fatura enviado"
@@ -5057,15 +5057,15 @@
     },
     "XQBVEJ": {
         "context": "order return error description when cannot refund",
-        "string": "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again."
+        "string": "Encontramos um problema ao reembolsar os produtos. Os produtos não foram reembolsados. Por favor, tente novamente."
     },
     "l9Lwjh": {
         "context": "order return error title when cannot refund",
-        "string": "Couldn't refund products"
+        "string": "Não foi possível reembolsar produtos"
     },
     "/z9uo1": {
         "context": "order returned success message",
-        "string": "Successfully returned products!"
+        "string": "Produtos devolvidos com sucesso!"
     },
     "a9S9Je": {
         "context": "page types section name",
@@ -5135,7 +5135,7 @@
     },
     "oHbgcK": {
         "context": "PageTypeDeleteWarningDialog title",
-        "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
+        "string": "Excluir página {selectedTypesCount,plural,one{type} other{types}}"
     },
     "I8mqqj": {
         "context": "PageTypeDeleteWarningDialog single assigned items button label",
@@ -5200,7 +5200,7 @@
     },
     "UW1fLs": {
         "context": "search pages placeholder",
-        "string": "Search Pages"
+        "string": "Páginas de pesquisa"
     },
     "V2+HTM": {
         "context": "dialog header",
@@ -5305,14 +5305,14 @@
     },
     "26BKkX": {
         "context": "order status",
-        "string": "Partially returned"
+        "string": "Parcialmente devolvido"
     },
     "6D+yYX": {
         "string": "Status do pagamento"
     },
     "hLUYBt": {
         "context": "payment status",
-        "string": "Pending"
+        "string": "Pendente"
     },
     "DNTxWr": {
         "context": "permission groups section name",
@@ -5368,7 +5368,7 @@
     },
     "O22NIZ": {
         "context": "deletion error message",
-        "string": " Não é possível excluir o grupo que está fora do seu escopo de permissão"
+        "string": "Não é possível excluir o grupo que está fora do seu escopo de permissão"
     },
     "rs815i": {
         "context": "text field label",
@@ -5441,7 +5441,7 @@
     },
     "Aeq79M": {
         "context": "PluginDetailsChannelsCard no channels subtitle",
-        "string": "Plugin’s settings are set common across all channels"
+        "string": "As configurações do plug-in são comuns a todos os canais"
     },
     "IUeGzv": {
         "context": "plugin name",
@@ -5483,23 +5483,23 @@
     },
     "T/dYnE": {
         "context": "plugin filters error messages status",
-        "string": "Status is not selected"
+        "string": "O status não está selecionado"
     },
     "zQnYKn": {
         "context": "status section subtitle",
-        "string": "Channel status"
+        "string": "Status do canal"
     },
     "TC/EOG": {
         "context": "status section title",
-        "string": "Status in channel"
+        "string": "Status no canal"
     },
     "gZHmaV": {
         "context": "plugin filters error messages channels",
-        "string": "No channels selected"
+        "string": "Nenhum canal selecionado"
     },
     "cwoN25": {
         "context": "config type section title",
-        "string": "Configuration Type"
+        "string": "Tipo de configuração"
     },
     "Co2U4u": {
         "string": "Nenhuma extensão encontrada"
@@ -5538,7 +5538,7 @@
     },
     "8u7els": {
         "context": "channel config plugin status popup title",
-        "string": "Assigned to {activeChannelsCount} of {allChannelsCount} channels"
+        "string": "Atribuído a {activeChannelsCount} de {allChannelsCount} canais"
     },
     "N6lfS/": {
         "context": "header",
@@ -5548,7 +5548,7 @@
         "string": "O plugin pode parar de funcionar depois que este campo for limpo. Tem certeza de que deseja continuar?"
     },
     "6QjMei": {
-        "string": "Preorder end time needs to be set in the future"
+        "string": "O horário de término da encomenda precisa ser definido no futuro"
     },
     "YQ3EXR": {
         "context": "product types section name",
@@ -5651,7 +5651,7 @@
     },
     "4k9rMQ": {
         "context": "variant attribute checkbox",
-        "string": "Variant Selection"
+        "string": "Seleção de variante"
     },
     "skEK/i": {
         "context": "section header",
@@ -5659,7 +5659,7 @@
     },
     "x3leH4": {
         "context": "ProductTypeDeleteWarningDialog title",
-        "string": "Deletar prodtuo {selectedTypesCount,plural,one{type} other{types}}"
+        "string": "Deletar produto {selectedTypesCount,plural,one{type} other{types}}"
     },
     "GCPzKf": {
         "context": "ProductTypeDeleteWarningDialog single assigned items button label",
@@ -5835,7 +5835,7 @@
     },
     "pbGIUg": {
         "context": "sales channel",
-        "string": "Channel"
+        "string": "Canal"
     },
     "Bx367s": {
         "context": "product is hidden",
@@ -5843,7 +5843,7 @@
     },
     "pBTTtU": {
         "context": "product kind",
-        "string": "Product Kind"
+        "string": "Tipo de produto"
     },
     "Sna+WK": {
         "context": "product status",
@@ -5874,35 +5874,35 @@
     },
     "Sd0Ppm": {
         "context": "product publication date",
-        "string": "Published on {date}"
+        "string": "publicado em {date}"
     },
     "qpQ0uB": {
         "context": "product publication date",
-        "string": "Unpublished"
+        "string": "Não publicado"
     },
     "kVTWtR": {
         "context": "product updated at",
-        "string": "Last updated"
+        "string": "Ultima atualização"
     },
     "r0hgpM": {
         "context": "product publication date",
-        "string": "Becomes published on {date}"
+        "string": "Será publicado em {date}"
     },
     "XUU9sU": {
         "context": "section header",
-        "string": "All Media"
+        "string": "Todas as mídias"
     },
     "Ihp4D3": {
         "context": "header",
-        "string": "Edit Media"
+        "string": "Editar mídia"
     },
     "9RvXNg": {
         "context": "section header",
-        "string": "Media Information"
+        "string": "Informações sobre mídia"
     },
     "cW1RIo": {
         "context": "section header",
-        "string": "Media View"
+        "string": "Visualização de mídia"
     },
     "9CEu8k": {
         "context": "modal button images upload",
@@ -5944,24 +5944,24 @@
     },
     "eAFU/E": {
         "context": "product inventory, checkbox",
-        "string": "Variant currently in preorder"
+        "string": "Variante atualmente em pré-encomenda"
     },
     "2qJc9y": {
-        "string": "CANCEL END DATE"
+        "string": "CANCELAR DATA DE TÉRMINO"
     },
     "7wkGxW": {
         "context": "app has been installed",
-        "string": "{unitsLeft} units left"
+        "string": "{unitsLeft} unidades restantes"
     },
     "xB7BTp": {
-        "string": "SKU (Stock Keeping Unit)"
+        "string": "SKU (Unidade de Manutenção de Estoque)"
     },
     "KTAg0f": {
         "context": "tabel column header",
         "string": "Nome do Depósito"
     },
     "7Ii5ZQ": {
-        "string": "SETUP END DATE"
+        "string": "DATA DE TÉRMINO DA CONFIGURAÇÃO"
     },
     "bp/i0x": {
         "context": "header",
@@ -5988,7 +5988,7 @@
     },
     "REVk27": {
         "context": "info text",
-        "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
+        "string": "Configure uma data de término da pré-encomenda. Quando a data de término for atingida, o produto será automaticamente transferido da pré-encomenda para a venda padrão"
     },
     "ekXood": {
         "string": "Unlimited"
@@ -6075,7 +6075,7 @@
         "string": "Os valores selecionados serão usados ​​para criar variações para o produto configurável."
     },
     "Xr5zxu": {
-        "string": "You choices will add {variantsNumber} SKUs to your catalog which will exceed your limit by {aboveLimitVariantsNumber}. If you would like to up your limit, contact your administration staff about raising your limits."
+        "string": "Suas escolhas adicionarão {variantsNumber} SKUs ao seu catálogo que excederão seu limite em {aboveLimitVariantsNumber}. Se desejar aumentar seu limite, entre em contato com a equipe administrativa sobre como aumentar seus limites."
     },
     "lVZ5n7": {
         "context": "variant attribute",
@@ -6181,26 +6181,26 @@
     },
     "XMvH/d": {
         "context": "button label",
-        "string": "ACCEPT"
+        "string": "ACEITAR"
     },
     "dTCWqt": {
         "string": "Você está prestes a encerrar a pré-encomenda de seus produtos. Você vendeu {variantGlobalSoldUnits} unidades desta variante. As unidades vendidas serão alocadas em armazéns apropriados. Lembre-se de adicionar estoque limite restante aos armazéns."
     },
     "Y4cy0i": {
         "context": "dialog header",
-        "string": "Ending preorder"
+        "string": "Encerrando a pré-encomenda"
     },
     "iPk640": {
         "context": "dialog header",
-        "string": "Media Selection"
+        "string": "Seleção de mídia"
     },
     "2J6EFz": {
         "context": "button",
-        "string": "Choose media"
+        "string": "Escolha a mídia"
     },
     "JfKvrV": {
         "context": "select variant media",
-        "string": "Select a specific variant media from product media"
+        "string": "Selecione uma mídia variante específica na mídia do produto"
     },
     "vZMs8f": {
         "context": "default product variant indicator",
@@ -6224,15 +6224,15 @@
     },
     "rJ3lkW": {
         "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
-        "string": "Published since {publicationDate}"
+        "string": "Publicado desde {publicationDate}"
     },
     "jqJqdE": {
         "context": "VariantDetailsChannelsAvailabilityCard no items available",
-        "string": "This variant is not available at any of the channels"
+        "string": "Esta variante não está disponível em nenhum dos canais"
     },
     "3+KwtP": {
         "context": "VariantDetailsChannelsAvailabilityCard subtitle",
-        "string": "Available in {publishedInChannelsCount} out of {availableChannelsCount}"
+        "string": "Disponível em {publishedInChannelsCount} fora de {availableChannelsCount}"
     },
     "sedoZ3": {
         "context": "VariantDetailsChannelsAvailabilityCard title",
@@ -6292,7 +6292,7 @@
     },
     "qbqMpk": {
         "context": "product variant preorder threshold",
-        "string": "In preorder"
+        "string": "Em pré-encomenda"
     },
     "wWYYBR": {
         "context": "product variant inventory",
@@ -6319,7 +6319,7 @@
     },
     "80FeaT": {
         "context": "product variant preorder threshold",
-        "string": "{globalThreshold} Global threshold"
+        "string": "{globalThreshold} Limite global"
     },
     "OTek3r": {
         "context": "product variant name",
@@ -6439,7 +6439,7 @@
     },
     "4Dc2j0": {
         "context": "order status",
-        "string": "Returned"
+        "string": "Devolvida"
     },
     "kJQczl": {
         "context": "sales section name",
@@ -6454,14 +6454,14 @@
     },
     "a+x05s": {
         "context": "select option, button",
-        "string": "Select"
+        "string": "Selecione"
     },
     "rfvBAF": {
         "context": "select all options, button",
         "string": "Selecionar Tudo"
     },
     "byP6IC": {
-        "string": "Selected"
+        "string": "Selecionado"
     },
     "hqVMLQ": {
         "context": "button",
@@ -6539,7 +6539,7 @@
     },
     "FzEew9": {
         "context": "assign products to shipping rate and save, button",
-        "string": "Assign and save"
+        "string": "Atribuir e salvar"
     },
     "xZhxBJ": {
         "context": "dialog header",
@@ -6557,15 +6557,15 @@
     },
     "TLYeo5": {
         "context": "label",
-        "string": "Shipping Rate Description"
+        "string": "Descrição da taxa de envio"
     },
     "v17Lly": {
         "context": "label",
-        "string": "Max Delivery Time"
+        "string": "Prazo máximo de entrega"
     },
     "GD/bom": {
         "context": "label",
-        "string": "Min Delivery Time"
+        "string": "Prazo mínimo de entrega"
     },
     "FkDObY": {
         "context": "label",
@@ -6586,7 +6586,7 @@
     },
     "LHPVg/": {
         "context": "assign countries to shipping zone and save, button",
-        "string": "Assign and save"
+        "string": "Atribuir e salvar"
     },
     "AjInNW": {
         "context": "dialog description",
@@ -6625,11 +6625,11 @@
     },
     "G0+gAp": {
         "context": "shipping section header",
-        "string": "Shipping"
+        "string": "Envio"
     },
     "FkRNk+": {
         "context": "field placeholder",
-        "string": "Description of a shipping zone."
+        "string": "Descrição de uma zona de expedição."
     },
     "YpukUN": {
         "context": "label",
@@ -6645,43 +6645,43 @@
     },
     "1T1fP8": {
         "context": "range input label",
-        "string": "Postal codes (start)"
+        "string": "Códigos postais (start)"
     },
     "8InCjD": {
-        "string": "Please provide range of postal codes you want to add to the include/exclude list."
+        "string": "Forneça o intervalo de códigos postais que você deseja adicionar à lista de inclusão/exclusão.Please provide range of postal codes you want to add to the include/exclude list."
     },
     "2Xt+sw": {
         "context": "dialog header",
-        "string": "Add postal codes"
+        "string": "Adicionar códigos postais"
     },
     "Pyjarj": {
-        "string": "This shipping rate has no postal codes assigned"
+        "string": "Esta taxa de envio não tem códigos postais atribuídos"
     },
     "7qsOwa": {
         "context": "action",
-        "string": "Include postal codes"
+        "string": "Incluir códigos postais"
     },
     "ju8zHP": {
         "string": "Os códigos postais adicionados serão excluídos do uso destes métodos de entrega. Se nenhum for adicionado, todos os códigos postais poderão usar essa taxa de envio"
     },
     "1lk/oS": {
         "context": "button",
-        "string": "Add postal code range"
+        "string": "Adicionar intervalo de códigos postais"
     },
     "ud0w8h": {
         "context": "number of postal code ranges",
-        "string": "{number} postal code ranges"
+        "string": "{number} intervalos de códigos postais"
     },
     "/Zee1r": {
-        "string": "Only added postal codes will be able to use this shipping rate"
+        "string": "Somente códigos postais adicionados poderão usar esta taxa de envio"
     },
     "FcTTvh": {
         "context": "postal codes, header",
-        "string": "Postal codes"
+        "string": "Códigos postais"
     },
     "YpLVVc": {
         "context": "action",
-        "string": "Exclude postal codes"
+        "string": "Excluir código postal"
     },
     "RXPGi/": {
         "context": "page title",
@@ -6769,7 +6769,7 @@
     },
     "p/Fd7s": {
         "context": "unassign products from shipping rate and save, button",
-        "string": "Unassign and save"
+        "string": "Cancelar atribuição e salvar"
     },
     "57IYpr": {
         "context": "error message",
@@ -6800,15 +6800,15 @@
     },
     "1zuQ2P": {
         "context": "unassign country",
-        "string": "Are you sure you want to remove {countryName} from this shipping zone?"
+        "string": "Tem certeza de que deseja remover {countryName} desta zona de envio?"
     },
     "M6s/9e": {
         "context": "unassign country, dialog header",
-        "string": "Remove from Shipping Zone"
+        "string": "Remover da zona de envio"
     },
     "MXZuVP": {
         "context": "remove country from shipping zone and save, button",
-        "string": "Remove and save"
+        "string": "Remover e salvar"
     },
     "H27/Gy": {
         "context": "error message",
@@ -6824,31 +6824,31 @@
     },
     "+do3gl": {
         "context": "input helper text",
-        "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
+        "string": "Este número define a quantidade de itens na linha de checkout que podem ser comprados. Você pode substituir essa configuração por variante. Deixar esta configuração vazia significa que não há limites."
     },
     "QclvqG": {
         "context": "input label",
-        "string": "Checkout line limit"
+        "string": "Limite de fila de checkout"
     },
     "X7fqfM": {
         "context": "title",
-        "string": "Reserved stock"
+        "string": "Estoque reservado"
     },
     "C4aDMy": {
         "context": "description",
-        "string": "Set up time amount that stock in checkout is reserved for the customer. You can set separate values for authenticated and anonymous customers."
+        "string": "Configure o tempo que o estoque no checkout fica reservado para o cliente. Você pode definir valores separados para clientes autenticados e anônimos."
     },
     "+T0oJ7": {
         "context": "input label",
-        "string": "Stock reservation for anonymous user (in minutes)"
+        "string": "Reserva de estoque para usuário anônimo (em minutos)"
     },
     "OaKyz4": {
         "context": "input label",
-        "string": "Stock reservation for authenticated user (in minutes)"
+        "string": "Reserva de estoque para usuário autenticado (em minutos)"
     },
     "YEv+6G": {
         "context": "input helper text",
-        "string": "Leaving this setting empty will mean that stock won’t be reserved"
+        "string": "Deixar esta configuração vazia significa que o estoque não será reservado"
     },
     "+jCDvp": {
         "context": "section header",
@@ -6856,15 +6856,15 @@
     },
     "Av74Fa": {
         "context": "section description",
-        "string": "You can set basic checkout rules that will be applied globally to all your channels"
+        "string": "Você pode definir regras básicas de checkout que serão aplicadas globalmente a todos os seus canais"
     },
     "DASYUF": {
         "context": "section title",
-        "string": "Checkout Configuration"
+        "string": "Configuração de check-out"
     },
     "pRYGUR": {
         "context": "section description",
-        "string": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers."
+        "string": "Este endereço será usado para gerar faturas e calcular taxas de envio. O endereço de e-mail fornecido aqui será usado como endereço de contato para seus clientes."
     },
     "rPX1f2": {
         "context": "section title",
@@ -6982,7 +6982,7 @@
         "string": "Excluir"
     },
     "K/gnGg": {
-        "string": "If you want to disable this User please uncheck the box below."
+        "string": "Se você deseja desativar este usuário, desmarque a caixa abaixo."
     },
     "7yKZvp": {
         "context": "section header",
@@ -7172,7 +7172,7 @@
     },
     "PajjqE": {
         "context": "attribute list",
-        "string": "Attribute {number}"
+        "string": "Atributo {number}"
     },
     "gvOzOl": {
         "string": "Título da Página"
@@ -7211,7 +7211,7 @@
         "string": "Nome do Cupom"
     },
     "MKtgZB": {
-        "string": "Only staff users can access the dashboard"
+        "string": "Somente usuários da equipe podem acessar o painel"
     },
     "+x84Ji": {
         "context": "order status",
@@ -7308,7 +7308,7 @@
     },
     "d9UqaJ": {
         "context": "error message",
-        "string": "Cannot change the quantity because of insufficient stock"
+        "string": "Não é possível alterar a quantidade devido ao estoque insuficiente"
     },
     "577R2r": {
         "string": "Valor inválido"
@@ -7337,7 +7337,7 @@
     },
     "3AqOxp": {
         "context": "no category set error",
-        "string": "Product category not set"
+        "string": "Categoria do produto não definida"
     },
     "Wlc67M": {
         "context": "error message",
@@ -7416,7 +7416,7 @@
         "string": "Erro desconhecido"
     },
     "DILs4b": {
-        "string": "Unsupported media provider or incorrect URL"
+        "string": "Provedor de mídia incompatível ou URL incorreto"
     },
     "vP7g2+": {
         "context": "error message",
@@ -7455,7 +7455,7 @@
     },
     "YkOzse": {
         "context": "used warehouses counter",
-        "string": "{count}/{max} warehouses used"
+        "string": "{count}/{max} armazéns usados"
     },
     "caMMWN": {
         "string": "Pesquisar Depósito"
@@ -7466,10 +7466,10 @@
     },
     "5HwLx9": {
         "context": "alert",
-        "string": "Warehouse limit reached"
+        "string": "Limite de armazém atingido"
     },
     "kFQvXv": {
-        "string": "You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+        "string": "Você atingiu o limite do seu armazém, não poderá mais adicionar armazéns à sua loja. Se desejar aumentar seu limite, entre em contato com a equipe administrativa sobre como aumentar seus limites."
     },
     "wmdHhD": {
         "context": "button",
@@ -7487,7 +7487,7 @@
     },
     "16PGt9": {
         "context": "WarehouseSettings all warehouses label",
-        "string": "All warehouses"
+        "string": "Todos os armazéns"
     },
     "LEZZkK": {
         "context": "WarehouseSettings all warehouses description",
@@ -7495,19 +7495,19 @@
     },
     "OBQ+th": {
         "context": "WarehouseSettings disabled warehouse label",
-        "string": "Disabled"
+        "string": "Desabilitada"
     },
     "M8z5WZ": {
         "context": "WarehouseSettings disabled warehouse description",
-        "string": "If selected customer won't be able to choose this warehouse as pickup point"
+        "string": "Se o cliente selecionado não poderá escolher este armazém como ponto de coleta"
     },
     "tVybuM": {
         "context": "WarehouseSettings local warehouse label",
-        "string": "Local stock only"
+        "string": "Somente estoque local"
     },
     "6G41zU": {
         "context": "WarehouseSettings local warehouse description",
-        "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock"
+        "string": "Se selecionado o cliente poderá escolher este armazém como ponto de recolha. Os produtos encomendados serão atendidos apenas a partir deste estoque em armazém"
     },
     "cdiRSf": {
         "context": "WarehouseSettings no shipping zones assigned",
@@ -7519,19 +7519,19 @@
     },
     "wpli4O": {
         "context": "WarehouseSettings private stock label",
-        "string": "Private Stock"
+        "string": "Estoque Privado"
     },
     "XlPKAR": {
         "context": "WarehouseSettings private stock description",
-        "string": "If enabled stock in this warehouse won't be shown"
+        "string": "Se ativado, o estoque neste armazém não será mostrado"
     },
     "86pLaG": {
         "context": "WarehouseSettings public stock label",
-        "string": "Public Stock"
+        "string": "Estoque Público"
     },
     "Ff+Gsm": {
         "context": "WarehouseSettings public stock description",
-        "string": "If enabled stock in this warehouse will be shown"
+        "string": "Se ativado, o estoque neste armazém será mostrado"
     },
     "//iaFx": {
         "context": "WarehouseSettings title",
@@ -7567,15 +7567,15 @@
     },
     "QEvH8Q": {
         "context": "section description",
-        "string": "Assign permissions to register asynchronous events for this webhook."
+        "string": "Atribua permissões para registrar eventos assíncronos para este webhook."
     },
     "fHopox": {
         "context": "section description",
-        "string": "Assign permissions to register synchronous events for this webhook."
+        "string": "Atribua permissões para registrar eventos síncronos para este webhook."
     },
     "TjbB4Y": {
         "context": "section subheader",
-        "string": "Asynchronous events"
+        "string": "Eventos assíncronos"
     },
     "GLewww": {
         "context": "section header",
@@ -7583,15 +7583,15 @@
     },
     "9Yhddc": {
         "context": "input label",
-        "string": "Registered events"
+        "string": "Eventos registrados"
     },
     "dQdxLT": {
         "context": "section subheader",
-        "string": "Synchronous events"
+        "string": "Eventos síncronos"
     },
     "NPfmdK": {
         "context": "webhook input label",
-        "string": "Secret Key"
+        "string": "Chave secreta"
     },
     "tA5HJx": {
         "context": "webhook input help text",
@@ -7660,7 +7660,7 @@
     },
     "MNZY28": {
         "context": "table column header",
-        "string": "Channel threshold"
+        "string": "Limite do canal"
     },
     "ge/xFX": {
         "context": "table column header",
@@ -7680,7 +7680,7 @@
     },
     "CEavJt": {
         "context": "section header",
-        "string": "Unlimited"
+        "string": "Ilimitada"
     },
     "Gkip05": {
         "context": "button",

@@ -1,27 +1,27 @@
-import { ConditionType } from "@dashboard/discounts/types";
-import { Chip, DefaultTheme } from "@saleor/macaw-ui-next";
+import { Chip, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { conditionTypeToHue } from "../../utils";
 
 export const RuleSummaryChips = ({
-  type,
-  theme,
+  value,
   label,
 }: {
-  type: ConditionType;
+  value: string;
   label: string;
-  theme: DefaultTheme;
 }) => {
-  const color = conditionTypeToHue(type, theme);
+  const { theme } = useTheme();
+  const color = conditionTypeToHue(label, theme);
+
   return (
     <Chip
       __backgroundColor={color.base}
       __color={color.text}
       __borderColor={color.border}
       marginRight={1.5}
+      data-test-id="rule-summary-chip"
     >
-      {type.slice(0, 1).toLocaleUpperCase() + type.slice(1)}: {label}
+      {label}: {value}
     </Chip>
   );
 };

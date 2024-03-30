@@ -15,9 +15,12 @@ export class BasePage {
       .locator('[class="clip-region"]')
       .locator("textarea"),
     readonly successBanner = page.locator(LOCATORS.successBanner),
+    readonly deleteButton = page.locator(LOCATORS.deleteButton),
     readonly filterButton = page.getByTestId("filters-button"),
     readonly errorBanner = page.locator(LOCATORS.errorBanner),
+    readonly saveButton = page.locator(LOCATORS.saveButton),
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
+    readonly loader = page.locator(LOCATORS.loader),
     readonly previousPagePaginationButton = page.getByTestId(
       "button-pagination-back",
     ),
@@ -26,6 +29,7 @@ export class BasePage {
       "button-pagination-next",
     ),
     readonly searchInputListView = page.getByTestId("search-input"),
+    readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
   ) {
     this.page = page;
   }
@@ -44,10 +48,13 @@ export class BasePage {
   async clickFilterButton() {
     await this.filterButton.click();
   }
+
   async clickBulkDeleteGridRowsButton() {
     await this.bulkDeleteGridRowsButton.click();
   }
-
+  async clickDeleteButton() {
+    await this.deleteButton.click();
+  }
   async typeInSearchOnListView(searchItem: string) {
     await this.searchInputListView.fill(searchItem);
   }
@@ -72,6 +79,9 @@ export class BasePage {
     await expect(this.gridCanvas).toBeAttached({
       timeout: 10000,
     });
+  }
+  async clickSaveButton() {
+    await this.saveButton.click();
   }
   async expectSuccessBannerMessage(msg: string) {
     await this.successBanner
@@ -98,6 +108,12 @@ export class BasePage {
       "No error banner should be visible",
     ).not.toBeVisible();
   }
+  async resizeWindow(w: number, h: number) {
+    await this.page.setViewportSize({width: w, height: h,});
+  }
+  async clickOnSpecificPositionOnPage(x:number, y: number){
+    await this.page.mouse.click(x,y)
+}
 
   async getRandomInt(max: number) {
     return Math.floor(Math.random() * (max + 1));
@@ -109,7 +125,7 @@ export class BasePage {
       .nth(gridIndex)
       .locator("tbody tr")
       .first()
-      .waitFor({ state: "attached", timeout: 10000 });
+      .waitFor({ state: "attached", timeout: 50000 });
   }
 
   private async findGridCellBounds(col: number, row: number) {
@@ -121,7 +137,7 @@ export class BasePage {
 
         if (!fiberKey || !node.parentNode) return null;
 
-        /* 
+        /*
         We seek over the fiber node (hack), ignore typings for it.
       */
         const fiberParent = node.parentNode[

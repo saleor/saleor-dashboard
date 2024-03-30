@@ -68,7 +68,10 @@ export interface AppListViewSettings {
   [ListViews.ORDER_DRAFT_DETAILS_LIST]: ListSettings;
   [ListViews.PRODUCT_DETAILS]: ListSettings;
   [ListViews.VOUCHER_CODES]: ListSettings;
+  [ListViews.ORDER_REFUNDS]: ListSettings;
 }
+// TODO: replace with
+// type AppListViewSettings = Record<ListViews, ListSettings>;
 
 export const defaultListSettings: AppListViewSettings = {
   [ListViews.APPS_LIST]: {
@@ -128,7 +131,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.DISCOUNTS_LIST]: {
     rowNumber: PAGINATE_BY,
-    columns: ["name", "startDate", "endDate"],
+    columns: ["name", "type", "startDate", "endDate"],
   },
   [ListViews.SHIPPING_METHODS_LIST]: {
     columns: ["name", "countries"],
@@ -169,6 +172,7 @@ export const defaultListSettings: AppListViewSettings = {
       "quantity",
       "price",
       "total",
+      "isGift",
       "metadata",
     ],
   },
@@ -182,6 +186,7 @@ export const defaultListSettings: AppListViewSettings = {
       "quantity",
       "price",
       "total",
+      "isGift",
       "metadata",
     ],
   },
@@ -191,6 +196,10 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.VOUCHER_CODES]: {
     rowNumber: PAGINATE_BY,
+  },
+  [ListViews.ORDER_REFUNDS]: {
+    rowNumber: PAGINATE_BY,
+    columns: ["status", "amount", "reason", "date", "account"],
   },
 };
 

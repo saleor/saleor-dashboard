@@ -5,7 +5,7 @@ import { MainMenuPage } from "@pages/mainMenuPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/orders.json" });
+test.use({ storageState: "playwright/.auth/order.json" });
 
 test("TC: SALEOR_8 User should be able to navigate to order list as a staff member using ORDER permission @e2e", async ({
   page,
@@ -18,7 +18,7 @@ test("TC: SALEOR_8 User should be able to navigate to order list as a staff memb
   await mainMenuPage.openOrders();
   await expect(ordersPage.createOrderButton).toBeVisible();
   await basePage.expectGridToBeAttached();
-  await mainMenuPage.expectMenuItemsCount(3);
+  await mainMenuPage.expectMenuItemsCount(4);
 });
 test("TC: SALEOR_9 User should be able to navigate to draft list as a staff member using ORDER permission @e2e", async ({
   page,
@@ -31,5 +31,5 @@ test("TC: SALEOR_9 User should be able to navigate to draft list as a staff memb
   await mainMenuPage.openDrafts();
   await expect(draftOrdersPage.createDraftOrderButton).toBeVisible();
   await basePage.expectGridToBeAttached();
-  await mainMenuPage.expectMenuItemsCount(3);
+  await mainMenuPage.expectMenuItemsCount(4);
 });

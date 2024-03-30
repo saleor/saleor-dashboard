@@ -946,7 +946,7 @@ type App implements Node & ObjectWithMetadata {
 
   """
   Canonical app ID from the manifest
-  
+
   Added in Saleor 3.19.
   """
   identifier: String
@@ -1323,6 +1323,13 @@ input AppFilterInput {
 }
 
 input AppInput {
+  """
+  Canonical app ID. If not provided, the identifier will be generated based on app.id.
+
+  Added in Saleor 3.19.
+  """
+  identifier: String
+
   """Name of the app."""
   name: String
 
@@ -5057,6 +5064,8 @@ enum CheckoutErrorCode {
   INVALID
   INVALID_SHIPPING_METHOD
   MISSING_CHANNEL_SLUG
+  NON_EDITABLE_GIFT_LINE
+  NON_REMOVABLE_GIFT_LINE
   NOT_FOUND
   NO_LINES
   PAYMENT_ERROR
@@ -5156,6 +5165,15 @@ type CheckoutLanguageCodeUpdate {
 type CheckoutLine implements Node & ObjectWithMetadata {
   """The ID of the checkout line."""
   id: ID!
+
+  """
+  Determine if the line is a gift.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  isGift: Boolean
 
   """
   List of public metadata items. Can be accessed without permissions.
@@ -7361,6 +7379,20 @@ enum DiscountStatusEnum {
 enum DiscountValueTypeEnum {
   FIXED
   PERCENTAGE
+}
+
+input DiscountedObjectWhereInput {
+  """List of conditions that must be met."""
+  AND: [DiscountedObjectWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [DiscountedObjectWhereInput!]
+
+  """Filter by the base subtotal price."""
+  baseSubtotalPrice: DecimalFilterInput
+
+  """Filter by the base total price."""
+  baseTotalPrice: DecimalFilterInput
 }
 
 """An enumeration."""
@@ -14459,8 +14491,8 @@ type Mutation {
   ): PageDelete
 
   """
-  Create a media object (image or video URL) associated with page. For image, this mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
-  
+  Create a media object (image or video URL) associated with page. For image, this mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
+
   Requires one of the following permissions: MANAGE_PAGES.
   """
   pageMediaCreate(
@@ -14469,8 +14501,8 @@ type Mutation {
   ): PageMediaCreate
 
   """
-  Deletes a page media. 
-  
+  Deletes a page media.
+
   Requires one of the following permissions: MANAGE_PAGES.
   """
   pageMediaDelete(
@@ -14479,8 +14511,8 @@ type Mutation {
   ): PageMediaDelete
 
   """
-  Updates a page media. 
-  
+  Updates a page media.
+
   Requires one of the following permissions: MANAGE_PAGES.
   """
   pageMediaUpdate(
@@ -16274,8 +16306,8 @@ type Mutation {
     """
     externalUrl: String
 
-    """The ID of the transaction."""
-    id: ID!
+    """The ID of the transaction. One of field id or token is required."""
+    id: ID
 
     """The message related to the event."""
     message: String
@@ -16287,6 +16319,13 @@ type Mutation {
     The time of the event to report. If not provide, the current time will be used.
     """
     time: DateTime
+
+    """
+    The token of the transaction. One of field id or token is required.
+
+    Added in Saleor 3.14.
+    """
+    token: UUID
 
     """Current status of the event to report."""
     type: TransactionEventTypeEnum!
@@ -16322,7 +16361,7 @@ type Mutation {
 
     """
     The idempotency key assigned to the action. It will be passed to the payment app to discover potential duplicate actions. If not provided, the default one will be generated. If empty string provided, INVALID error code will be raised.
-    
+
     Added in Saleor 3.14.
     """
     idempotencyKey: String
@@ -16349,8 +16388,17 @@ type Mutation {
     """The data that will be passed to the payment gateway."""
     data: JSON
 
-    """The ID of the transaction to process."""
-    id: ID!
+    """
+    The ID of the transaction to process. One of field id or token is required.
+    """
+    id: ID
+
+    """
+    The token of the transaction to process. One of field id or token is required.
+
+    Added in Saleor 3.14.
+    """
+    token: UUID
   ): TransactionProcess
 
   """
@@ -16371,8 +16419,15 @@ type Mutation {
     """
     amount: PositiveDecimal
 
-    """The ID of the transaction."""
-    id: ID!
+    """The ID of the transaction. One of field id or token is required."""
+    id: ID
+
+    """
+    The token of the transaction. One of field id or token is required.
+
+    Added in Saleor 3.14.
+    """
+    token: UUID
   ): TransactionRequestAction
 
   """
@@ -16388,8 +16443,15 @@ type Mutation {
     """The ID of the granted refund."""
     grantedRefundId: ID!
 
-    """The ID of the transaction."""
-    id: ID!
+    """The ID of the transaction. One of field id or token is required."""
+    id: ID
+
+    """
+    The token of the transaction. One of field id or token is required.
+
+    Added in Saleor 3.14.
+    """
+    token: UUID
   ): TransactionRequestRefundForGrantedRefund
 
   """
@@ -16402,8 +16464,15 @@ type Mutation {
   Requires the following permissions: OWNER and HANDLE_PAYMENTS for apps, HANDLE_PAYMENTS for staff users. Staff user cannot update a transaction that is owned by the app.
   """
   transactionUpdate(
-    """The ID of the transaction."""
-    id: ID!
+    """The ID of the transaction. One of field id or token is required."""
+    id: ID
+
+    """
+    The token of the transaction. One of field id or token is required.
+
+    Added in Saleor 3.14.
+    """
+    token: UUID
 
     """Input data required to create a new transaction object."""
     transaction: TransactionUpdateInput
@@ -17449,7 +17518,7 @@ input OrderBulkCreateInput {
 
   """
   Code of a voucher associated with the order.
-  
+
   Added in Saleor 3.18.
   """
   voucherCode: String
@@ -17892,6 +17961,7 @@ type OrderDiscountDelete {
 """An enumeration."""
 enum OrderDiscountType {
   MANUAL
+  ORDER_PROMOTION
   PROMOTION
   SALE
   VOUCHER
@@ -17963,6 +18033,8 @@ enum OrderErrorCode {
   INVALID_QUANTITY
   INVALID_VOUCHER
   INVALID_VOUCHER_CODE
+  NON_EDITABLE_GIFT_LINE
+  NON_REMOVABLE_GIFT_LINE
   NOT_AVAILABLE_IN_CHANNEL
   NOT_EDITABLE
   NOT_FOUND
@@ -18708,6 +18780,15 @@ type OrderLine implements Node & ObjectWithMetadata {
   """ID of the order line."""
   id: ID!
 
+  """
+  Determine if the line is a gift.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  isGift: Boolean
+
   """Whether the product variant requires shipping."""
   isShippingRequired: Boolean!
 
@@ -19136,6 +19217,17 @@ type OrderPaid implements Event {
 
   """Saleor version that triggered the event."""
   version: String
+}
+
+input OrderPredicateInput {
+  """List of conditions that must be met."""
+  AND: [OrderPredicateInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [OrderPredicateInput!]
+
+  """Defines the conditions related to checkout and order objects."""
+  discountedObjectPredicate: DiscountedObjectWhereInput
 }
 
 """
@@ -19596,8 +19688,8 @@ type Page implements Node & ObjectWithMetadata {
   """List of media for the page."""
   media(
     """
-    Sort media. 
-    
+    Sort media.
+
     Added in Saleor 3.9.
     """
     sortBy: PageMediaSortingInput
@@ -19955,23 +20047,23 @@ type PageMedia implements Node & ObjectWithMetadata {
 
   """
   List of public metadata items. Can be accessed without permissions.
-  
+
   Added in Saleor 3.12.
   """
   metadata: [MetadataItem!]!
 
   """
   A single key from public metadata.
-  
+
   Tip: Use GraphQL aliases to fetch multiple keys.
-  
+
   Added in Saleor 3.12.
   """
   metafield(key: String!): String
 
   """
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
-  
+
   Added in Saleor 3.12.
   """
   metafields(keys: [String!]): Metadata
@@ -19981,30 +20073,30 @@ type PageMedia implements Node & ObjectWithMetadata {
 
   """
   Page id the media refers to.
-  
+
   Added in Saleor 3.12.
   """
   pageId: ID
 
   """
   List of private metadata items. Requires staff permissions to access.
-  
+
   Added in Saleor 3.12.
   """
   privateMetadata: [MetadataItem!]!
 
   """
   A single key from private metadata. Requires staff permissions to access.
-  
+
   Tip: Use GraphQL aliases to fetch multiple keys.
-  
+
   Added in Saleor 3.12.
   """
   privateMetafield(key: String!): String
 
   """
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
-  
+
   Added in Saleor 3.12.
   """
   privateMetafields(keys: [String!]): Metadata
@@ -20019,7 +20111,7 @@ type PageMedia implements Node & ObjectWithMetadata {
   url(
     """
     The format of the image. When not provided, format of the original image will be used.
-    
+
     Added in Saleor 3.6.
     """
     format: ThumbnailFormatEnum
@@ -20037,7 +20129,7 @@ enum PageMediaChoicesSortField {
 }
 
 """
-Create a media object (image or video URL) associated with page. For image, this mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
+Create a media object (image or video URL) associated with page. For image, this mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
 
 Requires one of the following permissions: MANAGE_PAGES.
 """
@@ -20063,7 +20155,7 @@ input PageMediaCreateInput {
 }
 
 """
-Deletes a page media. 
+Deletes a page media.
 
 Requires one of the following permissions: MANAGE_PAGES.
 """
@@ -20089,7 +20181,7 @@ enum PageMediaType {
 }
 
 """
-Updates a page media. 
+Updates a page media.
 
 Requires one of the following permissions: MANAGE_PAGES.
 """
@@ -25190,6 +25282,15 @@ type Promotion implements Node & ObjectWithMetadata {
     languageCode: LanguageCodeEnum!
   ): PromotionTranslation
 
+  """
+  The type of the promotion. Implicate if the discount is applied on catalogue or order level.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  type: PromotionTypeEnum
+
   """Date time of last update of promotion."""
   updatedAt: DateTime!
 }
@@ -25257,21 +25358,37 @@ type PromotionCreateError {
   """
   field: String
 
+  """Limit of gifts assigned to promotion rule."""
+  giftsLimit: Int
+
+  """Number of gifts defined for this promotion rule exceeding the limit."""
+  giftsLimitExceedBy: Int
+
   """Index of an input list item that caused the error."""
   index: Int
 
   """The error message."""
   message: String
+
+  """Limit of rules with orderPredicate defined."""
+  rulesLimit: Int
+
+  """Number of rules with orderPredicate defined exceeding the limit."""
+  rulesLimitExceedBy: Int
 }
 
 """An enumeration."""
 enum PromotionCreateErrorCode {
+  GIFTS_NUMBER_LIMIT
   GRAPHQL_ERROR
   INVALID
+  INVALID_GIFT_TYPE
   INVALID_PRECISION
+  MISSING_CHANNELS
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   NOT_FOUND
   REQUIRED
+  RULES_NUMBER_LIMIT
 }
 
 input PromotionCreateInput {
@@ -25289,6 +25406,17 @@ input PromotionCreateInput {
 
   """The start date of the promotion in ISO 8601 format."""
   startDate: DateTime
+
+  """
+  Defines the promotion type. Implicate the required promotion rules predicate type and whether the promotion rules will give the catalogue or order discount.
+
+  The default value is `Catalogue`.
+
+  This field will be required from Saleor 3.20.
+
+  Added in Saleor 3.19.
+  """
+  type: PromotionTypeEnum
 }
 
 """
@@ -25494,16 +25622,65 @@ type PromotionRule implements Node {
 
   """Description of the promotion rule."""
   description: JSON
+
+  """
+  Product variant IDs available as a gift to choose.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  giftIds: [ID!]
+
+  """
+  Defines the maximum number of gifts to choose from the gifts list.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  giftsLimit: Int
   id: ID!
 
   """Name of the promotion rule."""
   name: String
 
+  """
+  The checkout/order predicate that must be met to apply the rule reward.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderPredicate: JSON
+
+  """
+  The type of the predicate that must be met to apply the reward.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  predicateType: PromotionTypeEnum
+
   """Promotion to which the rule belongs."""
   promotion: Promotion
 
   """
+  The reward type of the promotion rule.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  rewardType: RewardTypeEnum
+
+  """
   The reward value of the promotion rule. Defines the discount value applied when the rule conditions are met.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   rewardValue: PositiveDecimal
 
@@ -25543,18 +25720,34 @@ type PromotionRuleCreateError {
   """
   field: String
 
+  """Limit of gifts assigned to promotion rule."""
+  giftsLimit: Int
+
+  """Number of gifts defined for this promotion rule exceeding the limit."""
+  giftsLimitExceedBy: Int
+
   """The error message."""
   message: String
+
+  """Limit of rules with orderPredicate defined."""
+  rulesLimit: Int
+
+  """Number of rules with orderPredicate defined exceeding the limit."""
+  rulesLimitExceedBy: Int
 }
 
 """An enumeration."""
 enum PromotionRuleCreateErrorCode {
+  GIFTS_NUMBER_LIMIT
   GRAPHQL_ERROR
   INVALID
+  INVALID_GIFT_TYPE
   INVALID_PRECISION
+  MISSING_CHANNELS
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   NOT_FOUND
   REQUIRED
+  RULES_NUMBER_LIMIT
 }
 
 input PromotionRuleCreateInput {
@@ -25569,11 +25762,38 @@ input PromotionRuleCreateInput {
   """Promotion rule description."""
   description: JSON
 
+  """
+  Product variant IDs available as a gift to choose.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  gifts: [ID!]
+
   """Promotion rule name."""
   name: String
 
+  """
+  Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderPredicate: OrderPredicateInput
+
   """The ID of the promotion that rule belongs to."""
   promotion: ID!
+
+  """
+  Defines the reward type of the promotion rule.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  rewardType: RewardTypeEnum
 
   """
   Defines the discount value. Required when catalogue predicate is provided.
@@ -25746,8 +25966,35 @@ input PromotionRuleInput {
   """Promotion rule description."""
   description: JSON
 
+  """
+  Product variant IDs available as a gift to choose.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  gifts: [ID!]
+
   """Promotion rule name."""
   name: String
+
+  """
+  Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderPredicate: OrderPredicateInput
+
+  """
+  Defines the reward type of the promotion rule.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  rewardType: RewardTypeEnum
 
   """
   Defines the discount value. Required when catalogue predicate is provided.
@@ -25860,6 +26107,12 @@ type PromotionRuleUpdateError {
   """
   field: String
 
+  """Limit of gifts assigned to promotion rule."""
+  giftsLimit: Int
+
+  """Number of gifts defined for this promotion rule exceeding the limit."""
+  giftsLimitExceedBy: Int
+
   """The error message."""
   message: String
 }
@@ -25867,17 +26120,29 @@ type PromotionRuleUpdateError {
 """An enumeration."""
 enum PromotionRuleUpdateErrorCode {
   DUPLICATED_INPUT_ITEM
+  GIFTS_NUMBER_LIMIT
   GRAPHQL_ERROR
   INVALID
+  INVALID_GIFT_TYPE
   INVALID_PRECISION
   MISSING_CHANNELS
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   NOT_FOUND
+  REQUIRED
 }
 
 input PromotionRuleUpdateInput {
   """List of channel ids to add."""
   addChannels: [ID!]
+
+  """
+  List of variant IDs available as a gift to add.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addGifts: [ID!]
 
   """
   Defines the conditions on the catalogue level that must be met for the reward to be applied.
@@ -25890,8 +26155,35 @@ input PromotionRuleUpdateInput {
   """Promotion rule name."""
   name: String
 
+  """
+  Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderPredicate: OrderPredicateInput
+
   """List of channel ids to remove."""
   removeChannels: [ID!]
+
+  """
+  List of variant IDs available as a gift to remove.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  removeGifts: [ID!]
+
+  """
+  Defines the reward type of the promotion rule.
+
+  Added in Saleor 3.19.
+
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  rewardType: RewardTypeEnum
 
   """
   Defines the discount value. Required when catalogue predicate is provided.
@@ -26094,6 +26386,20 @@ input PromotionTranslationInput {
   name: String
 }
 
+"""An enumeration."""
+enum PromotionTypeEnum {
+  CATALOGUE
+  ORDER
+}
+
+input PromotionTypeEnumFilterInput {
+  """The value equal to."""
+  eq: PromotionTypeEnum
+
+  """The value included in."""
+  oneOf: [PromotionTypeEnum!]
+}
+
 """
 Updates an existing promotion.
 
@@ -26213,6 +26519,7 @@ input PromotionWhereInput {
 
   """Filter promotions by start date."""
   startDate: DateTimeFilterInput
+  type: PromotionTypeEnumFilterInput
 }
 
 input PublishableChannelListingInput {
@@ -27715,8 +28022,15 @@ type Query {
   Requires one of the following permissions: HANDLE_PAYMENTS.
   """
   transaction(
-    """ID of a transaction."""
-    id: ID!
+    """
+    ID of a transaction. Either it or token is required to fetch the transaction data.
+    """
+    id: ID
+
+    """
+    Token of a transaction. Either it or ID is required to fetch the transaction data.
+    """
+    token: UUID
   ): TransactionItem
 
   """
@@ -27962,6 +28276,12 @@ Triggers the following webhook events:
 type RequestPasswordReset {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [AccountError!]!
+}
+
+"""An enumeration."""
+enum RewardTypeEnum {
+  GIFT
+  SUBTOTAL_DISCOUNT
 }
 
 """An enumeration."""
@@ -29629,6 +29949,15 @@ type Shop implements ObjectWithMetadata {
   ): [ShippingMethod!]
 
   """
+  List of tax apps that can be assigned to the channel. The list will be calculated by Saleor based on the apps that are subscribed to webhooks related to tax calculations: CHECKOUT_CALCULATE_TAXES
+
+  Added in Saleor 3.19.
+
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, MANAGE_APPS.
+  """
+  availableTaxApps: [App!]!
+
+  """
   List of all currencies supported by shop's channels.
   
   Added in Saleor 3.1.
@@ -31105,6 +31434,13 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   privateMetafields(keys: [String!]): Metadata
 
   """
+  The tax app id that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+
+  Added in Saleor 3.19.
+  """
+  taxAppId: String
+
+  """
   The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated.
   """
   taxCalculationStrategy: TaxCalculationStrategy
@@ -31151,6 +31487,13 @@ type TaxConfigurationPerCountry {
   displayGrossPrices: Boolean!
 
   """
+  The tax app id that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
+
+  Added in Saleor 3.19.
+  """
+  taxAppId: String
+
+  """
   A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration.
   """
   taxCalculationStrategy: TaxCalculationStrategy
@@ -31167,6 +31510,13 @@ input TaxConfigurationPerCountryInput {
   Determines whether displayed prices should include taxes for this country.
   """
   displayGrossPrices: Boolean!
+
+  """
+  The tax app identifier that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
+
+  Added in Saleor 3.19.
+  """
+  taxAppId: String
 
   """
   A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration.
@@ -31222,6 +31572,13 @@ input TaxConfigurationUpdateInput {
 
   """List of country codes for which to remove the tax configuration."""
   removeCountriesConfiguration: [CountryCode!]
+
+  """
+  The tax app id that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+
+  Added in Saleor 3.19.
+  """
+  taxAppId: String
 
   """
   The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated.
@@ -31787,7 +32144,7 @@ type TransactionEvent implements Node {
 
   """
   Idempotency key assigned to the event.
-  
+
   Added in Saleor 3.14.
   """
   idempotencyKey: String
@@ -31999,7 +32356,7 @@ type TransactionInitializeSession implements Event {
 
   """
   Idempotency key assigned to the transaction initialize.
-  
+
   Added in Saleor 3.14.
   """
   idempotencyKey: String!
@@ -32075,7 +32432,7 @@ type TransactionItem implements Node & ObjectWithMetadata {
 
   """
   The related checkout.
-  
+
   Added in Saleor 3.14.
   """
   checkout: Checkout
@@ -32181,6 +32538,13 @@ type TransactionItem implements Node & ObjectWithMetadata {
 
   """Total amount refunded for this payment."""
   refundedAmount: Money!
+
+  """
+  The transaction token.
+
+  Added in Saleor 3.14.
+  """
+  token: UUID!
 }
 
 """

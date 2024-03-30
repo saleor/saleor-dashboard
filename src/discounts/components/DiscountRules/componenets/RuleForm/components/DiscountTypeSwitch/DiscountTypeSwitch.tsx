@@ -1,9 +1,9 @@
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { Box, Switch, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface DiscountTypeSwitchProps {
-  disabled?: boolean;
   selected: RewardValueTypeEnum;
   currencySymbol: string | null;
   onChange: (type: string) => void;
@@ -14,9 +14,10 @@ const PERCENT_SYMBOL = "%";
 export const DiscountTypeSwitch = ({
   selected,
   currencySymbol,
-  disabled,
   onChange,
 }: DiscountTypeSwitchProps) => {
+  const { disabled } = useDiscountRulesContext();
+
   return (
     <Switch
       disabled={disabled}
@@ -33,6 +34,7 @@ export const DiscountTypeSwitch = ({
           value={RewardValueTypeEnum.FIXED}
           name="fixed"
           marginLeft={0.5}
+          data-test-id="fixed-reward-value-type"
         >
           <Box
             display="flex"
@@ -51,6 +53,7 @@ export const DiscountTypeSwitch = ({
         name="percentage"
         value={RewardValueTypeEnum.PERCENTAGE}
         marginRight={0.5}
+        data-test-id="percentage-reward-value-type"
       >
         <Box
           display="flex"

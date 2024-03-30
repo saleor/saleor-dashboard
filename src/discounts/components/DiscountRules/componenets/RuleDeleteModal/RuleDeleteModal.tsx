@@ -27,7 +27,7 @@ export const RuleDeleteModal = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content>
+      <DashboardModal.Content data-test-id="delete-rule-dialog">
         <DashboardModal.Title
           display="flex"
           justifyContent="space-between"
@@ -44,10 +44,18 @@ export const RuleDeleteModal = ({
         </Box>
 
         <DashboardModal.Actions>
-          <Button onClick={onClose} variant="secondary">
+          <Button
+            onClick={onClose}
+            variant="secondary"
+            data-test-id="cancel-delete-rule-button"
+          >
             <FormattedMessage {...buttonMessages.close} />
           </Button>
-          <ConfirmButton transitionState={confimButtonState} onClick={onSubmit}>
+          <ConfirmButton
+            transitionState={confimButtonState}
+            onClick={onSubmit}
+            data-test-id="delete-rule-button"
+          >
             <FormattedMessage {...buttonMessages.delete} />
           </ConfirmButton>
         </DashboardModal.Actions>

@@ -28,7 +28,13 @@ export const HomeProductList = ({
   if (topProducts.hasError) {
     return (
       <Box data-test-id={testId}>
-        <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
+        <Text
+          size={5}
+          fontWeight="bold"
+          display="block"
+          paddingTop={7}
+          marginBottom={2}
+        >
           {title}
         </Text>
         <Text color="default2">
@@ -44,7 +50,13 @@ export const HomeProductList = ({
   if (topProducts.loading) {
     return (
       <Box data-test-id={testId}>
-        <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
+        <Text
+          size={5}
+          fontWeight="bold"
+          display="block"
+          paddingTop={7}
+          marginBottom={2}
+        >
           {title}
         </Text>
         <Box display="flex" flexDirection="column">
@@ -58,7 +70,13 @@ export const HomeProductList = ({
 
   return (
     <Box data-test-id={testId}>
-      <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
+      <Text
+        size={5}
+        fontWeight="bold"
+        display="block"
+        paddingTop={7}
+        marginBottom={2}
+      >
         {title}
       </Text>
       <Box>
@@ -91,13 +109,13 @@ export const HomeProductList = ({
                     />
 
                     <Box display="flex" flexDirection="column">
-                      <Text size="small">{variant.product.name}</Text>
+                      <Text size={3}>{variant.product.name}</Text>
 
-                      <Text size="small" color="default2">
+                      <Text size={3} color="default2">
                         {generateAttributesInfo(variant)}
                       </Text>
 
-                      <Text size="small" color="default2">
+                      <Text size={3} color="default2">
                         <FormattedMessage
                           id="nII/qB"
                           defaultMessage="{amount, plural,one {One ordered}other {{amount} ordered}}"
@@ -130,7 +148,7 @@ export const HomeProductList = ({
               paddingY={5}
               borderBottomStyle="solid"
             >
-              <Text size="small">
+              <Text size={3}>
                 <FormattedMessage
                   id="Q1Uzbb"
                   defaultMessage="No products found"

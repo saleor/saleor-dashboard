@@ -2,7 +2,7 @@ import { CATEGORIES } from "@data/e2eTestData";
 import { CategoriesPage } from "@pages/categoriesPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 let categoriesPage: CategoriesPage;
 test.beforeEach(({ page }) => {
   categoriesPage = new CategoriesPage(page);

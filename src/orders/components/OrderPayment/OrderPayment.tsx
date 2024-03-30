@@ -9,9 +9,9 @@ import { giftCardPath } from "@dashboard/giftCards/urls";
 import {
   OrderAction,
   OrderDetailsFragment,
-  OrderDiscountType,
   OrderStatus,
 } from "@dashboard/graphql";
+import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
 import { Card, CardContent } from "@material-ui/core";
 import { Divider } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -136,11 +136,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               <FormattedMessage {...orderPaymentMessages.discount} />
               <HorizontalSpacer spacing={4} />
               <span className={classes.supportText}>
-                {discount.type === OrderDiscountType.MANUAL ? (
-                  <FormattedMessage {...orderPaymentMessages.staffAdded} />
-                ) : (
-                  <FormattedMessage {...orderPaymentMessages.voucher} />
-                )}
+                {getDiscountTypeLabel(discount, intl)}
               </span>
               <span
                 className={clsx(

@@ -45,6 +45,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         onAppDeleteOpen={onAppDeleteOpen}
       />
       <Box
+        data-test-id="app-details-section"
         display="grid"
         gridTemplateColumns={{ desktop: 2, tablet: 2, mobile: 1 }}
       >

@@ -3,6 +3,7 @@ import {
   EventDeliveryStatusEnum,
   useAppWebhookDeliveriesQuery,
 } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import {
   Accordion,
   Box,
@@ -24,7 +25,7 @@ const Wrapper = (boxProps: BoxProps) => {
 
   return (
     <Box {...boxProps}>
-      <Text variant={"heading"} marginBottom={4} as={"h2"}>
+      <Text size={5} fontWeight="bold" marginBottom={4} as={"h2"}>
         {intl.formatMessage({
           defaultMessage: "App Webhooks",
           id: "eQ7bCN",
@@ -123,8 +124,11 @@ export const AppWebhooksDisplay = ({
 }: AppWebhooksDisplayProps) => {
   const { formatMessage } = useIntl();
 
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
+
   const { data: webhooksData, loading } = useAppWebhookDeliveriesQuery({
     variables: { appId },
+    skip: !hasManagedAppsPermission,
     pollInterval: REFRESH_INTERVAL,
   });
 
@@ -170,9 +174,7 @@ export const AppWebhooksDisplay = ({
                     <Text>{wh.name}</Text>
                     {!wh.isActive && <DisabledWebhookChip />}
                   </Box>
-                  <Text variant="caption" size="small">
-                    {events}
-                  </Text>
+                  <Text size={1}>{events}</Text>
                 </Box>
                 {eventDeliveries.length > 0 && (
                   <Accordion.Item
@@ -186,7 +188,7 @@ export const AppWebhooksDisplay = ({
                     borderRadius={4}
                   >
                     <Accordion.Trigger alignItems="center">
-                      <Text variant="button" as="h2">
+                      <Text size={4} fontWeight="bold" as="h2">
                         {formatMessage({
                           defaultMessage:
                             "Pending & failed deliveries (last 10)",
@@ -211,7 +213,7 @@ export const AppWebhooksDisplay = ({
                               display="grid"
                               __gridTemplateColumns={"1fr 1fr"}
                             >
-                              <Text as="p" variant="bodyStrong">
+                              <Text as="p" size={4} fontWeight="bold">
                                 <DateTime plain date={createdAt} />
                               </Text>
                               <Box marginLeft="auto">
@@ -225,7 +227,7 @@ export const AppWebhooksDisplay = ({
                                     defaultMessage: "Attempts:",
                                     id: "OFTsI1",
                                   })}{" "}
-                                  <Text variant="bodyStrong">
+                                  <Text size={4} fontWeight="bold">
                                     {attemptsCount} / 6
                                   </Text>
                                 </Text>

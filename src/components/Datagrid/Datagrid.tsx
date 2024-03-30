@@ -239,7 +239,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         ...(getCellError(item, opts)
           ? {
               themeOverride: {
-                bgCell: themeValues.colors.background.critical2,
+                bgCell: themeValues.colors.background.critical1,
               },
             }
           : {}),
@@ -254,7 +254,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       getCellContent,
       areCellsDirty,
       themeValues.colors.background.accent1,
-      themeValues.colors.background.critical2,
+      themeValues.colors.background.critical1,
       getCellError,
     ],
   );
@@ -453,7 +453,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" marginY={9}>
+      <Box
+        data-test-id="loader"
+        display="flex"
+        justifyContent="center"
+        marginY={9}
+      >
         <CircularProgress />
       </Box>
     );
@@ -597,7 +602,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
             </>
           ) : (
             <Box padding={6} textAlign="center">
-              <Text data-test-id="empty-data-grid-text" size="small">
+              <Text data-test-id="empty-data-grid-text" size={3}>
                 {emptyText}
               </Text>
             </Box>

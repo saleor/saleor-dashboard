@@ -1,8 +1,10 @@
 import { AppLogo } from "@dashboard/apps/types";
 import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
 import React from "react";
+
 type Logo = AppLogo | undefined;
 type Size = 8 | 12;
+
 export const AppAvatar: React.FC<{
   logo?: Logo;
   size?: Size;
@@ -15,11 +17,10 @@ export const AppAvatar: React.FC<{
       placeItems="center"
       borderRadius={2}
     >
-      <Box as="img" src={logo.source} width={"100%"} />
+      <Box as="img" src={logo.source} width="100%" />
     </Box>
   ) : (
     <Box
-      padding={1}
       backgroundColor="default2"
       width={size}
       height={size}
@@ -28,8 +29,8 @@ export const AppAvatar: React.FC<{
       borderRadius={2}
       borderWidth={1}
       borderColor="default1"
-      borderStyle={"solid"}
+      borderStyle="solid"
     >
-      <GenericAppIcon size="large" color="default2" />
+      <GenericAppIcon size="medium" color="default2" />
     </Box>
   );

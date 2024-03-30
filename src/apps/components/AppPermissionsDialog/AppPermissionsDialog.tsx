@@ -40,7 +40,10 @@ export const AppPermissionsDialog = ({
     onApprove,
   } = useAppPermissionsDialogState(assignedPermissions);
 
-  const { refetch } = useAppQuery({ variables: { id: appId }, skip: true });
+  const { refetch } = useAppQuery({
+    variables: { id: appId, hasManagedAppsPermission: true },
+    skip: true,
+  });
 
   const notify = useNotifier();
 
@@ -134,7 +137,8 @@ export const AppPermissionsDialog = ({
               marginBottom={2}
               as={"p"}
               color="critical1"
-              variant="bodyStrong"
+              size={4}
+              fontWeight="bold"
             >
               {formatMessage(messages.warningHeading)}
             </Text>

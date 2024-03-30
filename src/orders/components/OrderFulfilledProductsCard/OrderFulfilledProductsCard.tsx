@@ -69,7 +69,6 @@ const OrderFulfilledProductsCard: React.FC<
     <Box data-test-id={dataTestId}>
       <OrderCardTitle
         withStatus
-        lines={fulfillment?.lines}
         fulfillmentOrder={fulfillment?.fulfillmentOrder}
         status={fulfillment?.status}
         warehouseName={fulfillment?.warehouse?.name}

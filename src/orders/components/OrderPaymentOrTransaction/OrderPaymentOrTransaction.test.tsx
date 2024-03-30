@@ -52,6 +52,10 @@ jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ to, ...props }) => <a href={to} {...props} />),
 }));
 
+jest.mock("@dashboard/featureFlags", () => ({
+  useFlag: jest.fn(() => ({ enabled: false })),
+}));
+
 describe("OrderPaymentOrTransaction", () => {
   const order = orderFixture(undefined);
   const sharedProps = {
@@ -63,6 +67,7 @@ describe("OrderPaymentOrTransaction", () => {
     onPaymentCapture: () => undefined,
     onTransactionAction: () => undefined,
     onPaymentVoid: () => undefined,
+    onRefundAdd: () => undefined,
   } as OrderPaymentOrTransactionProps;
 
   it("renders OrderPayment when transactions are disabled in channel", () => {

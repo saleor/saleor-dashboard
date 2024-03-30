@@ -5,6 +5,7 @@ export interface MenuItem {
   description: string;
   icon: React.ReactElement<IconProps>;
   permissions?: PermissionEnum[];
+  requireAllPermissions?: boolean;
   title: string;
   url?: string;
   testId?: string;

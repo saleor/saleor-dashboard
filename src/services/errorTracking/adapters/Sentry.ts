@@ -5,6 +5,7 @@ import { TrackerMethods } from "../types";
 interface Config {
   dsn: string;
   environment?: string;
+  release?: string;
 }
 
 export const SentryAdapter = (config: Config): TrackerMethods => {
@@ -13,7 +14,13 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
       Sentry.init({
         dsn: config.dsn,
         environment: config.environment,
-        ignoreErrors: ["Editor's content can not be saved in read-only mode"],
+        release: config.release,
+        ignoreErrors: [
+          "Editor's content can not be saved in read-only mode",
+          "ResizeObserver loop completed with undelivered notifications",
+          // TODO: rmoeve after Cypress migation
+          "ResizeObserver loop limit exceeded",
+        ],
       });
       return true;
     }

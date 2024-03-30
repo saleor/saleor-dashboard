@@ -2,10 +2,14 @@ import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppLogo } from "@dashboard/apps/types";
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
+
+import { messages } from "./message";
+
 type Logo = AppLogo | undefined;
 
 interface AppPageNavProps {
@@ -37,6 +41,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
   showMangeAppButton = true,
 }) => {
   const navigate = useNavigator();
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const navigateToManageAppScreen = () => {
     navigate(AppUrls.resolveAppDetailsUrl(appId));
@@ -65,12 +70,10 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
           <Box display="flex" gap={4} alignItems="center">
             <AppAvatar size={8} logo={logo} />
             <Box display="flex" flexDirection="column">
-              <Text variant="heading">{name}</Text>
-              <Text
-                variant="caption"
-                color="default2"
-                textTransform="uppercase"
-              >
+              <Text size={5} fontWeight="bold">
+                {name}
+              </Text>
+              <Text size={2} color="default2" textTransform="uppercase">
                 {author && (
                   <FormattedMessage
                     defaultMessage="by {author}"
@@ -92,9 +95,9 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
             data-test-id="app-settings-button"
           >
             <FormattedMessage
-              defaultMessage="Manage app"
-              id="LwX0Ug"
-              description="Button with Manage app label"
+              {...(hasManagedAppsPermission
+                ? messages.manageApp
+                : messages.appSettings)}
             />
           </Button>
         )}

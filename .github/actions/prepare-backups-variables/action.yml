@@ -29,7 +29,6 @@ runs:
       id: backup
       shell: bash
       env:
-        SALEOR_CLI_ENV: staging
         BACKUP_NAME: ${{ inputs.BACKUP_NAMESPACE }}
       run: |
         BACKUPS=$(npx saleor backup list --name="$BACKUP_NAME" --latest --json)

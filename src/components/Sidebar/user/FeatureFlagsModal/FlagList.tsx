@@ -36,7 +36,7 @@ export const FlagList = ({ selectedName, onItemClick }: FlagListProps) => {
             borderBottomStyle="solid"
             onClick={() => onItemClick(flag.name)}
           >
-            <Text variant="body">{flag.displayName}</Text>
+            <Text>{flag.displayName}</Text>
           </List.Item>
         ))}
     </List>

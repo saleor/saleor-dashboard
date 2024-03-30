@@ -18,6 +18,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
     pricesEnteredWithTax: false,
     chargeTaxes: true,
     taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    taxAppId: null,
     countries: [
       {
         __typename: "TaxConfigurationPerCountry",
@@ -29,6 +30,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
         chargeTaxes: false,
         taxCalculationStrategy: null,
         displayGrossPrices: false,
+        taxAppId: null,
       },
       {
         __typename: "TaxConfigurationPerCountry",
@@ -40,6 +42,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
         chargeTaxes: true,
         taxCalculationStrategy: TaxCalculationStrategy.TAX_APP,
         displayGrossPrices: true,
+        taxAppId: "42",
       },
     ],
   },
@@ -55,6 +58,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
     pricesEnteredWithTax: true,
     chargeTaxes: true,
     taxCalculationStrategy: TaxCalculationStrategy.TAX_APP,
+    taxAppId: "42",
     countries: [
       {
         __typename: "TaxConfigurationPerCountry",
@@ -66,6 +70,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
         chargeTaxes: true,
         taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
         displayGrossPrices: true,
+        taxAppId: null,
       },
       {
         __typename: "TaxConfigurationPerCountry",
@@ -77,6 +82,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
         chargeTaxes: false,
         taxCalculationStrategy: null,
         displayGrossPrices: false,
+        taxAppId: null,
       },
     ],
   },
