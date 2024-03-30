@@ -50,6 +50,7 @@ export interface PageDetailsPageProps {
     SearchAttributeValuesQuery["attribute"]["choices"]
   >;
   onRemove: () => void;
+  onImageUpload: (file: File) => any;
   onSubmit: (data: PageData) => SubmitPromise;
   fetchPageTypes?: (data: string) => void;
   fetchMorePageTypes?: FetchMoreProps;
@@ -77,6 +78,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   selectedPageType,
   attributeValues,
   onRemove,
+  onImageUpload,
   onSubmit,
   fetchPageTypes,
   fetchMorePageTypes,
@@ -167,6 +169,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 disabled={loading}
                 errors={errors}
                 onChange={change}
+                onImageUpload={onImageUpload}
               />
               <CardSpacer />
               <SeoForm

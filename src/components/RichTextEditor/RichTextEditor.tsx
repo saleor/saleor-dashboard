@@ -27,6 +27,7 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   // onChange with value shouldn't be used due to issues with React and EditorJS integration
   onChange?: (data?: OutputData) => void;
   onBlur?: () => void;
+  onImageUpload: (file: File) => any;
 }
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
@@ -39,6 +40,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   editorRef,
   onInitialize,
   onChange,
+  onImageUpload,
   onBlur,
   ...props
 }) => {
@@ -98,6 +100,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             setHasValue(editorJsValue.blocks.length > 0);
             return onChange?.(editorJsValue);
           }}
+          onImageUpload={onImageUpload}
           {...props}
         >
           <div

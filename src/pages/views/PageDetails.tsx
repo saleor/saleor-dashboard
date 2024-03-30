@@ -22,10 +22,12 @@ import {
   PageDetailsFragment,
   PageErrorFragment,
   PageInput,
+  PageMediaCreateMutationVariables,
   UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   usePageDetailsQuery,
+  usePageMediaCreateMutation,
   usePageRemoveMutation,
   usePageUpdateMutation,
   useUpdateMetadataMutation,
@@ -33,7 +35,8 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { commonMessages, errorMessages } from "@dashboard/intl";
+import { createImageUploadHandler } from "@dashboard/pages";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
@@ -108,6 +111,26 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       }
     },
   });
+
+  const [createPageMedia, createPageMediaOpts] = usePageMediaCreateMutation({
+    onCompleted: data => {
+      const imageError = data.pageMediaCreate.errors.find(
+        error =>
+          error.field === ("image" as keyof PageMediaCreateMutationVariables),
+      );
+      if (imageError) {
+        notify({
+          status: "error",
+          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+          text: intl.formatMessage(errorMessages.imageUploadErrorText),
+        });
+      }
+    },
+  });
+
+  const handleImageUpload = createImageUploadHandler(id, variables =>
+    createPageMedia({ variables }),
+  );
 
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
@@ -219,7 +242,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
           pageDetails.loading ||
           pageUpdateOpts.loading ||
           uploadFileOpts.loading ||
-          deleteAttributeValueOpts.loading
+          deleteAttributeValueOpts.loading ||
+          createPageMediaOpts.loading
         }
         errors={pageUpdateOpts.data?.pageUpdate.errors || []}
         saveButtonBarState={pageUpdateOpts.status}
@@ -232,6 +256,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
             }),
           )
         }
+        onImageUpload={handleImageUpload}
         onSubmit={handleSubmit}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
