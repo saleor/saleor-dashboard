@@ -1,4 +1,4 @@
 module.exports = {
   directory: "build/dashboard/",
-  port: 9000
+  port: 9005
 };
