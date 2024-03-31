@@ -946,7 +946,7 @@ type App implements Node & ObjectWithMetadata {
 
   """
   Canonical app ID from the manifest
-  
+
   Added in Saleor 3.19.
   """
   identifier: String
@@ -1325,7 +1325,7 @@ input AppFilterInput {
 input AppInput {
   """
   Canonical app ID. If not provided, the identifier will be generated based on app.id.
-  
+
   Added in Saleor 3.19.
   """
   identifier: String
@@ -5168,9 +5168,9 @@ type CheckoutLine implements Node & ObjectWithMetadata {
 
   """
   Determine if the line is a gift.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   isGift: Boolean
@@ -14491,6 +14491,39 @@ type Mutation {
   ): PageDelete
 
   """
+  Create a media object (image or video URL) associated with page. For image, this mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
+
+  Requires one of the following permissions: MANAGE_PAGES.
+  """
+  pageMediaCreate(
+    """Fields required to create a page media."""
+    input: PageMediaCreateInput!
+  ): PageMediaCreate
+
+  """
+  Deletes a page media.
+
+  Requires one of the following permissions: MANAGE_PAGES.
+  """
+  pageMediaDelete(
+    """ID of a page media to delete."""
+    id: ID!
+  ): PageMediaDelete
+
+  """
+  Updates a page media.
+
+  Requires one of the following permissions: MANAGE_PAGES.
+  """
+  pageMediaUpdate(
+    """ID of a page media to update."""
+    id: ID!
+
+    """Fields required to update a page media."""
+    input: PageMediaUpdateInput!
+  ): PageMediaUpdate
+
+  """
   Reorder page attribute values. 
   
   Requires one of the following permissions: MANAGE_PAGES.
@@ -16289,7 +16322,7 @@ type Mutation {
 
     """
     The token of the transaction. One of field id or token is required.
-    
+
     Added in Saleor 3.14.
     """
     token: UUID
@@ -16328,7 +16361,7 @@ type Mutation {
 
     """
     The idempotency key assigned to the action. It will be passed to the payment app to discover potential duplicate actions. If not provided, the default one will be generated. If empty string provided, INVALID error code will be raised.
-    
+
     Added in Saleor 3.14.
     """
     idempotencyKey: String
@@ -16362,7 +16395,7 @@ type Mutation {
 
     """
     The token of the transaction to process. One of field id or token is required.
-    
+
     Added in Saleor 3.14.
     """
     token: UUID
@@ -16391,7 +16424,7 @@ type Mutation {
 
     """
     The token of the transaction. One of field id or token is required.
-    
+
     Added in Saleor 3.14.
     """
     token: UUID
@@ -16415,7 +16448,7 @@ type Mutation {
 
     """
     The token of the transaction. One of field id or token is required.
-    
+
     Added in Saleor 3.14.
     """
     token: UUID
@@ -16436,7 +16469,7 @@ type Mutation {
 
     """
     The token of the transaction. One of field id or token is required.
-    
+
     Added in Saleor 3.14.
     """
     token: UUID
@@ -17485,7 +17518,7 @@ input OrderBulkCreateInput {
 
   """
   Code of a voucher associated with the order.
-  
+
   Added in Saleor 3.18.
   """
   voucherCode: String
@@ -18749,9 +18782,9 @@ type OrderLine implements Node & ObjectWithMetadata {
 
   """
   Determine if the line is a gift.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   isGift: Boolean
@@ -19626,7 +19659,7 @@ type OrderVoid {
 A static page that can be manually added by a shop operator through the dashboard.
 """
 type Page implements Node & ObjectWithMetadata {
-  """List of attributes assigned to this product."""
+  """List of attributes assigned to this page."""
   attributes: [SelectedAttribute!]!
 
   """
@@ -19651,6 +19684,22 @@ type Page implements Node & ObjectWithMetadata {
 
   """Determines if the page is published."""
   isPublished: Boolean!
+
+  """List of media for the page."""
+  media(
+    """
+    Sort media.
+
+    Added in Saleor 3.9.
+    """
+    sortBy: PageMediaSortingInput
+  ): [PageMedia!]
+
+  """Get a single page media by ID."""
+  mediaById(
+    """ID of a page media."""
+    id: ID
+  ): PageMedia
 
   """List of public metadata items. Can be accessed without permissions."""
   metadata: [MetadataItem!]!
@@ -19986,6 +20035,166 @@ input PageInput {
 
   """Page title."""
   title: String
+}
+
+"""Represents a page media."""
+type PageMedia implements Node & ObjectWithMetadata {
+  """The alt text of the media."""
+  alt: String!
+
+  """The unique ID of the page media."""
+  id: ID!
+
+  """
+  List of public metadata items. Can be accessed without permissions.
+
+  Added in Saleor 3.12.
+  """
+  metadata: [MetadataItem!]!
+
+  """
+  A single key from public metadata.
+
+  Tip: Use GraphQL aliases to fetch multiple keys.
+
+  Added in Saleor 3.12.
+  """
+  metafield(key: String!): String
+
+  """
+  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
+
+  Added in Saleor 3.12.
+  """
+  metafields(keys: [String!]): Metadata
+
+  """The oEmbed data of the media."""
+  oembedData: JSONString!
+
+  """
+  Page id the media refers to.
+
+  Added in Saleor 3.12.
+  """
+  pageId: ID
+
+  """
+  List of private metadata items. Requires staff permissions to access.
+
+  Added in Saleor 3.12.
+  """
+  privateMetadata: [MetadataItem!]!
+
+  """
+  A single key from private metadata. Requires staff permissions to access.
+
+  Tip: Use GraphQL aliases to fetch multiple keys.
+
+  Added in Saleor 3.12.
+  """
+  privateMetafield(key: String!): String
+
+  """
+  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
+
+  Added in Saleor 3.12.
+  """
+  privateMetafields(keys: [String!]): Metadata
+
+  """The sort order of the media."""
+  sortOrder: Int
+
+  """The type of the media."""
+  type: PageMediaType!
+
+  """The URL of the media."""
+  url(
+    """
+    The format of the image. When not provided, format of the original image will be used.
+
+    Added in Saleor 3.6.
+    """
+    format: ThumbnailFormatEnum
+
+    """
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    """
+    size: Int
+  ): String!
+}
+
+enum PageMediaChoicesSortField {
+  """Sort media by ID."""
+  ID
+}
+
+"""
+Create a media object (image or video URL) associated with page. For image, this mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
+
+Requires one of the following permissions: MANAGE_PAGES.
+"""
+type PageMediaCreate {
+  errors: [PageError!]!
+  media: PageMedia
+  page: Page
+  pageErrors: [PageError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
+}
+
+input PageMediaCreateInput {
+  """Alt text for a page media."""
+  alt: String
+
+  """Represents an image file in a multipart request."""
+  image: Upload
+
+  """Represents an URL to an external media."""
+  mediaUrl: String
+
+  """ID of an page."""
+  page: ID!
+}
+
+"""
+Deletes a page media.
+
+Requires one of the following permissions: MANAGE_PAGES.
+"""
+type PageMediaDelete {
+  errors: [PageError!]!
+  media: PageMedia
+  page: Page
+  pageErrors: [PageError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
+}
+
+input PageMediaSortingInput {
+  """Specifies the direction in which to sort media."""
+  direction: OrderDirection!
+
+  """Sort media by the selected field."""
+  field: PageMediaChoicesSortField!
+}
+
+"""An enumeration."""
+enum PageMediaType {
+  IMAGE
+  VIDEO
+}
+
+"""
+Updates a page media.
+
+Requires one of the following permissions: MANAGE_PAGES.
+"""
+type PageMediaUpdate {
+  errors: [PageError!]!
+  media: PageMedia
+  page: Page
+  pageErrors: [PageError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
+}
+
+input PageMediaUpdateInput {
+  """Alt text for a page media."""
+  alt: String
 }
 
 """
@@ -25075,9 +25284,9 @@ type Promotion implements Node & ObjectWithMetadata {
 
   """
   The type of the promotion. Implicate if the discount is applied on catalogue or order level.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   type: PromotionTypeEnum
@@ -25199,12 +25408,12 @@ input PromotionCreateInput {
   startDate: DateTime
 
   """
-  Defines the promotion type. Implicate the required promotion rules predicate type and whether the promotion rules will give the catalogue or order discount. 
-  
+  Defines the promotion type. Implicate the required promotion rules predicate type and whether the promotion rules will give the catalogue or order discount.
+
   The default value is `Catalogue`.
-  
+
   This field will be required from Saleor 3.20.
-  
+
   Added in Saleor 3.19.
   """
   type: PromotionTypeEnum
@@ -25416,18 +25625,18 @@ type PromotionRule implements Node {
 
   """
   Product variant IDs available as a gift to choose.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   giftIds: [ID!]
 
   """
   Defines the maximum number of gifts to choose from the gifts list.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   giftsLimit: Int
@@ -25438,18 +25647,18 @@ type PromotionRule implements Node {
 
   """
   The checkout/order predicate that must be met to apply the rule reward.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   orderPredicate: JSON
 
   """
   The type of the predicate that must be met to apply the reward.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   predicateType: PromotionTypeEnum
@@ -25459,18 +25668,18 @@ type PromotionRule implements Node {
 
   """
   The reward type of the promotion rule.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   rewardType: RewardTypeEnum
 
   """
   The reward value of the promotion rule. Defines the discount value applied when the rule conditions are met.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   rewardValue: PositiveDecimal
@@ -25555,9 +25764,9 @@ input PromotionRuleCreateInput {
 
   """
   Product variant IDs available as a gift to choose.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   gifts: [ID!]
@@ -25567,9 +25776,9 @@ input PromotionRuleCreateInput {
 
   """
   Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   orderPredicate: OrderPredicateInput
@@ -25579,9 +25788,9 @@ input PromotionRuleCreateInput {
 
   """
   Defines the reward type of the promotion rule.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   rewardType: RewardTypeEnum
@@ -25759,9 +25968,9 @@ input PromotionRuleInput {
 
   """
   Product variant IDs available as a gift to choose.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   gifts: [ID!]
@@ -25771,18 +25980,18 @@ input PromotionRuleInput {
 
   """
   Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   orderPredicate: OrderPredicateInput
 
   """
   Defines the reward type of the promotion rule.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   rewardType: RewardTypeEnum
@@ -25928,9 +26137,9 @@ input PromotionRuleUpdateInput {
 
   """
   List of variant IDs available as a gift to add.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   addGifts: [ID!]
@@ -25948,9 +26157,9 @@ input PromotionRuleUpdateInput {
 
   """
   Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   orderPredicate: OrderPredicateInput
@@ -25960,18 +26169,18 @@ input PromotionRuleUpdateInput {
 
   """
   List of variant IDs available as a gift to remove.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   removeGifts: [ID!]
 
   """
   Defines the reward type of the promotion rule.
-  
+
   Added in Saleor 3.19.
-  
+
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   rewardType: RewardTypeEnum
@@ -29741,9 +29950,9 @@ type Shop implements ObjectWithMetadata {
 
   """
   List of tax apps that can be assigned to the channel. The list will be calculated by Saleor based on the apps that are subscribed to webhooks related to tax calculations: CHECKOUT_CALCULATE_TAXES
-  
+
   Added in Saleor 3.19.
-  
+
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER, MANAGE_APPS.
   """
   availableTaxApps: [App!]!
@@ -31226,7 +31435,7 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
 
   """
   The tax app id that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
-  
+
   Added in Saleor 3.19.
   """
   taxAppId: String
@@ -31279,7 +31488,7 @@ type TaxConfigurationPerCountry {
 
   """
   The tax app id that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
-  
+
   Added in Saleor 3.19.
   """
   taxAppId: String
@@ -31304,7 +31513,7 @@ input TaxConfigurationPerCountryInput {
 
   """
   The tax app identifier that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
-  
+
   Added in Saleor 3.19.
   """
   taxAppId: String
@@ -31366,7 +31575,7 @@ input TaxConfigurationUpdateInput {
 
   """
   The tax app id that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
-  
+
   Added in Saleor 3.19.
   """
   taxAppId: String
@@ -31935,7 +32144,7 @@ type TransactionEvent implements Node {
 
   """
   Idempotency key assigned to the event.
-  
+
   Added in Saleor 3.14.
   """
   idempotencyKey: String
@@ -32147,7 +32356,7 @@ type TransactionInitializeSession implements Event {
 
   """
   Idempotency key assigned to the transaction initialize.
-  
+
   Added in Saleor 3.14.
   """
   idempotencyKey: String!
@@ -32223,7 +32432,7 @@ type TransactionItem implements Node & ObjectWithMetadata {
 
   """
   The related checkout.
-  
+
   Added in Saleor 3.14.
   """
   checkout: Checkout
@@ -32332,7 +32541,7 @@ type TransactionItem implements Node & ObjectWithMetadata {
 
   """
   The transaction token.
-  
+
   Added in Saleor 3.14.
   """
   token: UUID!

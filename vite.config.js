@@ -142,7 +142,7 @@ export default defineConfig(({ command, mode }) => {
     base,
     envDir: "..",
     server: {
-      port: 9000,
+      port: 9005,
       fs: {
         allow: [searchForWorkspaceRoot(process.cwd()), "../.."],
       },

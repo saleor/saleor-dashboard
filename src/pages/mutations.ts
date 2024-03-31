@@ -13,6 +13,61 @@ export const pageCreate = gql`
   }
 `;
 
+export const pageMediaCreate = gql`
+  mutation PageMediaCreate(
+    $page: ID!
+    $image: Upload
+    $alt: String
+    $mediaUrl: String
+  ) {
+    pageMediaCreate(
+      input: { alt: $alt, image: $image, page: $page, mediaUrl: $mediaUrl }
+    ) {
+      errors {
+        ...PageError
+      }
+      page {
+        id
+        media {
+          ...PageMedia
+        }
+      }
+    }
+  }
+`;
+
+export const pageMediaDelete = gql`
+  mutation PageMediaDelete($id: ID!) {
+    pageMediaDelete(id: $id) {
+      errors {
+        ...PageError
+      }
+      page {
+        id
+        media {
+          id
+        }
+      }
+    }
+  }
+`;
+
+export const pageMediaUpdate = gql`
+  mutation PageMediaUpdate($id: ID!, $alt: String!) {
+    pageMediaUpdate(id: $id, input: { alt: $alt }) {
+      errors {
+        ...PageError
+      }
+      page {
+        id
+        media {
+          ...PageMedia
+        }
+      }
+    }
+  }
+`;
+
 export const pageUpdate = gql`
   mutation PageUpdate(
     $id: ID!

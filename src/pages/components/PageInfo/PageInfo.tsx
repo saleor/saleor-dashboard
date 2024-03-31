@@ -20,6 +20,7 @@ export interface PageInfoProps {
   disabled: boolean;
   errors: PageErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
+  onImageUpload: (file: File) => any;
 }
 
 const useStyles = makeStyles(
@@ -32,7 +33,7 @@ const useStyles = makeStyles(
 );
 
 const PageInfo: React.FC<PageInfoProps> = props => {
-  const { data, disabled, errors, onChange } = props;
+  const { data, disabled, errors, onChange, onImageUpload } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -76,6 +77,7 @@ const PageInfo: React.FC<PageInfoProps> = props => {
               description: "page content",
             })}
             name={"content" as keyof PageData}
+            onImageUpload={onImageUpload}
           />
         ) : (
           <RichTextEditorLoading

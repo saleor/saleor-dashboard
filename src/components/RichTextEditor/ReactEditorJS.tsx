@@ -1,8 +1,12 @@
+import { apolloClient } from "@dashboard/graphql/client";
+import { pageMediaUrlQuery } from "@dashboard/pages/queries";
+import createFileUploadHandler from "@dashboard/utils/handlers/fileUploadHandler";
 import EditorJS, {
   EditorConfig,
   OutputData,
   ToolConstructable,
 } from "@editorjs/editorjs";
+import ImageTool from "@editorjs/image";
 import Paragraph from "@editorjs/paragraph";
 import {
   EditorCore,
@@ -15,9 +19,46 @@ import React from "react";
 class ClientEditorCore implements EditorCore {
   private readonly _editorJS: EditorJS;
 
-  constructor({ tools, ...config }: EditorConfig) {
+  constructor({ tools, ...config }: EditorConfig, upload) {
+    const handleImageUpload = createFileUploadHandler(upload, {});
+
     const extendTools = {
       // default tools
+      image: {
+        class: ImageTool,
+        config: {
+          uploader: {
+            uploadByFile(file: File) {
+              return handleImageUpload(file)
+                .then(resp => {
+                  return resp.data.pageMediaCreate.page.id;
+                })
+                .then((id: string) => {
+                  return apolloClient.query({
+                    fetchPolicy: "network-only",
+                    query: pageMediaUrlQuery,
+                    variables: {
+                      id,
+                      size: 0,
+                    },
+                  });
+                })
+                .then(query => {
+                  return {
+                    success: 1,
+                    file: {
+                      url: query.data.page.media.slice(-1)[0].url,
+                    },
+                  };
+                })
+                .catch(() => {
+                  return { success: 0, file: { url: null } };
+                });
+            },
+          },
+        },
+        inlineToolbar: true,
+      },
       paragraph: {
         class: Paragraph,
         inlineToolbar: true,
@@ -59,8 +100,9 @@ class ClientEditorCore implements EditorCore {
 export type Props = Omit<ReactEditorJSProps, "factory">;
 
 function ReactEditorJSClient(props: Props) {
+  const { onImageUpload } = props;
   const factory = React.useCallback(
-    (config: EditorConfig) => new ClientEditorCore(config),
+    (config: EditorConfig) => new ClientEditorCore(config, onImageUpload),
     [],
   );
 
