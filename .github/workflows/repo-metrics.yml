@@ -1,9 +1,11 @@
 name: Monthly issue metrics
 on:
+  workflow_dispatch:
   pull_request:
     types:
       - opened
-  workflow_dispatch:
+      - edited
+
 permissions:
   contents: read
 
@@ -34,18 +36,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SEARCH_QUERY: 'repo:saleor/saleor-dashboard is:pr created:${{ env.last_month }} -reason:"not planned"'
 
-      - name: Create issue metrics report
-        run: |
-          report_filename="issue_metrics_$(date +'%Y-%m').md"
-          echo "This is the monthly issue metrics report." > "$report_filename"
-          echo "Add your metrics data here." >> "$report_filename"
-          echo "report_filename=$report_filename" >> "$GITHUB_ENV"
-          # Set an environment variable with the tag which we append to the title of GH issue.
-          echo "last_month_tag=$(date -d "last month" +%Y-%m)" >> "$GITHUB_ENV"
-
       - name: Create issue
         uses: peter-evans/create-issue-from-file@24452a72d85239eacf1468b0f1982a9f3fec4c94 # v5.0.0
         with:
-          title: Monthly issue metrics report for ${{ env.last_month_tag }}
+          title: Monthly issue metrics report
           token: ${{ secrets.GITHUB_TOKEN }}
-          content-filepath: ${{ env.report_filename }}
+          content-filepath: ./issue_metrics.md
