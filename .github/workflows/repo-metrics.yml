@@ -1,5 +1,9 @@
 name: Monthly issue metrics
-on: workflow_dispatch
+on:
+  pull_request:
+    types:
+      - opened
+  workflow_dispatch:
 permissions:
   contents: read
 
