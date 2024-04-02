@@ -1,5 +1,5 @@
 name: Monthly issue metrics
-on: repository_dispatch
+on: workflow_dispatch
 permissions:
   contents: read
 
