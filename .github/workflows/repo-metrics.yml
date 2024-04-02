@@ -32,7 +32,7 @@ jobs:
         uses: github/issue-metrics@v3
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SEARCH_QUERY: 'repo:saleor/saleor-dashboard is:issue created:${{ env.last_month }} -reason:"not planned"'
+          SEARCH_QUERY: 'repo:saleor/saleor-dashboard is:pr created:${{ env.last_month }} -reason:"not planned"'
 
       - name: Create issue metrics report
         run: |
