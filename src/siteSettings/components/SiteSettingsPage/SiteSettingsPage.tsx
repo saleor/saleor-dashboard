@@ -211,6 +211,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                     </DashboardCard.Title>
                     <DashboardCard.Content>
                       <Checkbox
+                        data-test-id="require-email-confirmation-checkbox"
                         checked={data.emailConfirmation}
                         onCheckedChange={handleEmailConfirmationChange}
                       >
