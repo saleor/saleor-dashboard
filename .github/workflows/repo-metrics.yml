@@ -1,6 +1,5 @@
 name: Github metrics
 on:
-  push:
   workflow_dispatch:
 
 permissions:
@@ -26,6 +25,8 @@ jobs:
           #Set an environment variable with the date range
           echo "$first_day..$last_day"
           echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
+
+          #Set an environment variable containing month and year for issue name
           echo "last_month_tag=$(date -d "last month" +%Y-%m)" >> "$GITHUB_ENV"
 
       - name: Run metrics tool
