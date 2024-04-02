@@ -537,12 +537,12 @@ export const TRANSLATIONS = {
 
 export const PAGE_TYPES = {
   pageTypeToBeEdited: {
-    id: "UGFnZVR5cGU6Mzc=",
+    id: "UGFnZVR5cGU6MzQ=",
     name: "A page type to be edited",
     info: "Page type used in edit page type test",
   },
   pageTypeToBeRemoved: {
-    id: "UGFnZVR5cGU6Mzc=",
+    id: "UGFnZVR5cGU6MzU=",
     name: "A page type to be removed",
     info: "Page type used in delete page type test",
   },
