@@ -1,18 +1,14 @@
-name: Monthly issue metrics
+name: Github metrics
 on:
   push:
   workflow_dispatch:
-  pull_request:
-    types:
-      - opened
-      - edited
 
 permissions:
   contents: read
 
 jobs:
   build:
-    name: issue metrics
+    name: github metrics
     runs-on: ubuntu-22.04
     permissions:
       issues: write
@@ -30,8 +26,9 @@ jobs:
           #Set an environment variable with the date range
           echo "$first_day..$last_day"
           echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
+          echo "last_month_tag=$(date -d "last month" +%Y-%m)" >> "$GITHUB_ENV"
 
-      - name: Run issue-metrics tool
+      - name: Run metrics tool
         uses: github/issue-metrics@v3
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,6 +37,6 @@ jobs:
       - name: Create issue
         uses: peter-evans/create-issue-from-file@24452a72d85239eacf1468b0f1982a9f3fec4c94 # v5.0.0
         with:
-          title: Monthly issue metrics report
+          title: Monthly pr metrics report for ${{ env.last_month_tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
           content-filepath: ./issue_metrics.md
