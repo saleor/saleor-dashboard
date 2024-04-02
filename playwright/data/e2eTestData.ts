@@ -588,12 +588,12 @@ export const PAGE_TYPES = {
 export const PRODUCT_TYPES = {
   productTypeToBeEdited: {
     id: "UHJvZHVjdFR5cGU6Njk4",
-    name: "A product to be edited",
+    name: "A product type to be edited",
     info: "Product type used in edit product type test",
   },
   productTypeToBeRemoved: {
     id: "UHJvZHVjdFR5cGU6Njk5",
-    name: "A product to be removed",
+    name: "A product type to be removed",
     info: "Product type used in delete product type test",
   },
   productTypesToBeBulkDeleted: {
