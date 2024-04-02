@@ -33,6 +33,7 @@ for (const type of ATTRIBUTES.attributeTypesWithAbilityToAddValues.names) {
     await attributesPage.clickSaveButton();
     await attributesPage.expectSuccessBanner();
     await expect(await attributesPage.attributesRows.count()).toEqual(1);
+    await (attributesPage.valueRequiredCheckbox).waitFor({ state: "visible", timeout: 10000});
     await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
     await expect(attributesPage.attrVisibleInStorefrontSwitch).toBeChecked();
     await expect(attributesPage.valueRequiredCheckbox).toBeChecked();
@@ -58,6 +59,7 @@ for (const attr of attributeClasses) {
       await attributesPage.changeAttributeVisibility();
       await attributesPage.clickSaveButton();
       await attributesPage.expectSuccessBanner();
+      await (attributesPage.valueRequiredCheckbox).waitFor({ state: "visible", timeout: 10000});
       await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
       await expect(attributesPage.attrVisibleInStorefrontSwitch).not.toBeChecked();
       await expect(attributesPage.valueRequiredCheckbox).not.toBeChecked();
@@ -82,6 +84,8 @@ for (const attr of attributeClasses) {
       await attributesPage.clickValueRequiredCheckbox();
       await attributesPage.clickSaveButton();
       await attributesPage.expectSuccessBanner();
+          await (attributesPage.valueRequiredCheckbox).waitFor({ state: "visible", timeout: 10000});
+
       await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
       await expect(attributesPage.attrVisibleInStorefrontSwitch).toBeChecked();
       await expect(attributesPage.valueRequiredCheckbox).not.toBeChecked();
@@ -148,8 +152,8 @@ test("TC: SALEOR_130 Bulk delete attributes @e2e @attributes", async () => {
   await attributesPage.gotoListView();
   await attributesPage.resizeWindow(800,600);
   await attributesPage.typeInSearchOnListView("e2e attribute to be bulk deleted")
-  await expect(attributesPage.loader).toBeVisible({ timeout: 30000});
-  await expect(attributesPage.loader).not.toBeVisible({ timeout: 30000});
+  await attributesPage.loader.waitFor({ state: "visible", timeout: 30000});
+  await attributesPage.loader.waitFor({ state: "hidden", timeout: 30000});
   await attributesPage.clickOnSpecificPositionOnPage(60, 136)
   await attributesPage.clickBulkDeleteGridRowsButton();
   await attributesPage.deleteAttributesInBulkDialog.deleteSelectedAttributes();

@@ -1,0 +1,47 @@
+name: Monthly issue metrics
+on: repository_dispatch
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: issue metrics
+    runs-on: ubuntu-22.04
+    permissions:
+      issues: write
+      pull-requests: read
+    steps:
+      - name: Get dates for last month
+        shell: bash
+        run: |
+          # Calculate the first day of the previous month
+          first_day=$(date -d "last month" +%Y-%m-01)
+
+          # Calculate the last day of the previous month
+          last_day=$(date -d "$first_day +1 month -1 day" +%Y-%m-%d)
+
+          #Set an environment variable with the date range
+          echo "$first_day..$last_day"
+          echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
+
+      - name: Run issue-metrics tool
+        uses: github/issue-metrics@v3
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SEARCH_QUERY: 'repo:saleor/saleor-dashboard is:issue created:${{ env.last_month }} -reason:"not planned"'
+
+      - name: Create issue metrics report
+        run: |
+          report_filename="issue_metrics_$(date +'%Y-%m').md"
+          echo "This is the monthly issue metrics report." > "$report_filename"
+          echo "Add your metrics data here." >> "$report_filename"
+          echo "report_filename=$report_filename" >> "$GITHUB_ENV"
+          # Set an environment variable with the tag which we append to the title of GH issue.
+          echo "last_month_tag=$(date -d "last month" +%Y-%m)" >> "$GITHUB_ENV"
+
+      - name: Create issue
+        uses: peter-evans/create-issue-from-file@24452a72d85239eacf1468b0f1982a9f3fec4c94 # v5.0.0
+        with:
+          title: Monthly issue metrics report for ${{ env.last_month_tag }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          content-filepath: ${{ env.report_filename }}
