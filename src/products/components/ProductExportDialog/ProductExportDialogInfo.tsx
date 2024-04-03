@@ -423,6 +423,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           data-test-id="attributes"
         >
           <TextField
+            data-test-id="attribute-search-input"
             name="query"
             value={query}
             onChange={onQueryChange}
