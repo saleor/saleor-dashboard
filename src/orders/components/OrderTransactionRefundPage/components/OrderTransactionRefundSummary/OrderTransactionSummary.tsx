@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
-import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, useController } from "react-hook-form";
 
@@ -9,11 +9,16 @@ import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefund
 interface OrderTransactionSummaryProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
   selectedProductsValue: number;
+  canRefundShipping: boolean;
 }
 
 export const OrderTransactionSummary: React.FC<
   OrderTransactionSummaryProps
-> = ({ control, selectedProductsValue }: OrderTransactionSummaryProps) => {
+> = ({
+  control,
+  selectedProductsValue,
+  canRefundShipping,
+}: OrderTransactionSummaryProps) => {
   const { field: shippingField } = useController({
     name: "includeShipping",
     control,
@@ -60,12 +65,31 @@ export const OrderTransactionSummary: React.FC<
             borderColor="default1"
             paddingY={4}
           >
-            <Checkbox
-              checked={shippingField.value}
-              onCheckedChange={shippingField.onChange}
-            >
-              <Text size={3}>Shipping</Text>
-            </Checkbox>
+            {canRefundShipping ? (
+              <Checkbox
+                checked={shippingField.value}
+                onCheckedChange={shippingField.onChange}
+              >
+                <Text size={3}>Shipping</Text>
+              </Checkbox>
+            ) : (
+              <Tooltip>
+                <Tooltip.Trigger>
+                  <Checkbox
+                    disabled
+                    checked={shippingField.value}
+                    onCheckedChange={shippingField.onChange}
+                  >
+                    <Text size={3} color="defaultDisabled">
+                      Shipping
+                    </Text>
+                  </Checkbox>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  <Text size={2}>Shipping has already been refunded.</Text>
+                </Tooltip.Content>
+              </Tooltip>
+            )}
 
             <Money money={{ currency: "USD", amount: 15 }}></Money>
           </Box>

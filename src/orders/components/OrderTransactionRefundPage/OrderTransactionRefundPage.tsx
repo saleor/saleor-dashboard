@@ -44,6 +44,11 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   // const { locale } = useLocale();
   const navigate = useNavigator();
 
+  const canRefundShipping = () => {
+    // TODO: add case when editing refund
+    return !order?.grantedRefunds?.some(refund => refund.shippingCostsIncluded);
+  };
+
   const { control, setValue, handleSubmit, watch, getValues } =
     useForm<OrderTransactionRefundPageFormData>({
       defaultValues: {
@@ -122,6 +127,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             <OrderTransactionSummary
               control={control}
               selectedProductsValue={selectedProductsValue}
+              canRefundShipping={canRefundShipping()}
             />
             <OrderTransactionReason control={control} />
           </Box>
