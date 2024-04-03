@@ -186,6 +186,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
           <IconButton
             variant="secondary"
             color="primary"
+            data-test-id="bulk-delete-page-types"
             onClick={() =>
               openModal("remove", {
                 ids: selectedPageTypes,
