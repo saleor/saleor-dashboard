@@ -128,13 +128,10 @@ test("TC: SALEOR_45 As an admin I should be able to delete a single products @ba
   );
   await productPage.clickDeleteProductButton();
   await productPage.deleteProductDialog.clickDeleteButton();
-  await await productPage.expectSuccessBannerMessage("Product Removed");
-  await expect(
-    productPage.gridCanvas.locator("table"),
-    `Given product: ${PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name} should be deleted from the list`,
-  ).not.toContainText(
-    PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name,
-  );
+  await productPage.expectSuccessBannerMessage("Product Removed");
+  await productPage.waitForGrid();
+  await productPage.searchforProduct(PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name)
+  await expect(productPage.gridCanvas.filter({hasText: PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name})).not.toBeVisible();
 });
 test("TC: SALEOR_46 As an admin, I should be able to update a product by uploading media, assigning channels, assigning tax, and adding a new variant   @basic-regression @product @e2e", async () => {
   const newVariantName = "variant 2";
@@ -317,7 +314,6 @@ test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variant
   );
   await productPage.waitForGrid();
   await productPage.gridCanvas.scrollIntoViewIfNeeded();
-  // there should be 3 variants present and checked in next steps
   await productPage.clickGridCell(0, 0);
   await productPage.clickGridCell(0, 1);
   await productPage.clickGridCell(0, 2);
