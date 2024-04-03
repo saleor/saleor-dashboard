@@ -12,7 +12,10 @@ import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, Controller } from "react-hook-form";
 
-import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
+import {
+  OrderTransactionRefundPageFormData,
+  QuantityToRefund,
+} from "../../OrderTransactionRefundPage";
 // import { useIntl } from "react-intl";
 import {
   createGetCellContent,
@@ -24,11 +27,13 @@ interface OrderTransactionRefundDatagridProps {
   order: OrderDetailsGrantRefundFragment;
   control: Control<OrderTransactionRefundPageFormData, any>;
   onChange: (data: DatagridChangeOpts) => void;
+  onMaxQtySet: (rows: number[]) => void;
+  qtyToRefund: QuantityToRefund[];
 }
 
 export const OrderTransactionRefundDatagrid: React.FC<
   OrderTransactionRefundDatagridProps
-> = ({ order, control, onChange }) => {
+> = ({ order, control, onChange, qtyToRefund, onMaxQtySet }) => {
   // const intl = useIntl();
   const { datagrid, settings, handleColumnChange } = useDatagridOpts(
     ListViews.ORDER_TRANSACTION_REFUNDS,
@@ -52,6 +57,7 @@ export const OrderTransactionRefundDatagrid: React.FC<
   const getCellContent = createGetCellContent({
     columns: visibleColumns,
     lines: order?.lines,
+    qtyToRefund,
   });
 
   //   const getMenuItems = React.useCallback(
@@ -85,9 +91,16 @@ export const OrderTransactionRefundDatagrid: React.FC<
               getCellContent={getCellContent}
               getCellError={() => false}
               rows={order?.lines.length}
-              selectionActions={() => (
+              selectionActions={values => (
                 // I think this is better to put above datagrid
-                <Button variant="secondary">Set maximum qty</Button>
+                <>
+                  <Button
+                    variant="secondary"
+                    onClick={() => onMaxQtySet(values)}
+                  >
+                    Set maximum qty
+                  </Button>
+                </>
               )}
               onChange={onChange}
               actionButtonPosition="right"

@@ -1,10 +1,9 @@
 import {
   moneyCell,
+  numberCell,
   readonlyTextCell,
-  textCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import {
   UseDatagridChangeState,
   useDatagridChangeState,
@@ -18,6 +17,7 @@ import { DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { QuantityToRefund } from "../../OrderTransactionRefundPage";
 import { transactionRefundGridMessages } from "./messages";
 
 export const useOrderTransactionRefundStaticColumns = () => {
@@ -57,11 +57,13 @@ export const createGetCellContent =
   ({
     lines,
     columns,
+    qtyToRefund,
   }: {
     lines: OrderDetailsGrantRefundFragment["lines"] | undefined;
     columns: AvailableColumn[];
+    qtyToRefund: QuantityToRefund[];
   }) =>
-  ([column, row]: Item, opts: GetCellContentOpts): GridCell => {
+  ([column, row]: Item): GridCell => {
     const rowData = lines?.[row];
     const columnId = columns[column]?.id;
 
@@ -85,9 +87,8 @@ export const createGetCellContent =
       case "qtyOrdered":
         return readonlyTextCell(rowData.quantity.toString(), false);
       case "qtyToRefund": {
-        const { changes, getChangeIndex } = opts;
-        const change = changes.current[getChangeIndex(columnId, row)]?.data;
-        return textCell(change?.toString() ?? "");
+        const qty = qtyToRefund?.find(q => q.row === row);
+        return numberCell(qty?.value ?? 0);
       }
       default:
         return readonlyTextCell("", false);

@@ -27,8 +27,13 @@ export interface OrderTransactionRefundPageProps {
   initialData?: OrderDetailsGrantedRefundFragment;
 }
 
+export interface QuantityToRefund {
+  row: number;
+  value: number;
+}
+
 export interface OrderTransactionRefundPageFormData {
-  qtyToRefund: DatagridChangeOpts["updates"];
+  qtyToRefund: QuantityToRefund[];
   transactionId: string | undefined;
   amount: number;
   includeShipping: boolean;
@@ -49,18 +54,35 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     return !order?.grantedRefunds?.some(refund => refund.shippingCostsIncluded);
   };
 
-  const { control, setValue, handleSubmit, watch, getValues } =
+  const { control, setValue, handleSubmit, watch, getValues, reset } =
     useForm<OrderTransactionRefundPageFormData>({
       defaultValues: {
         qtyToRefund: [],
-        transactionId: undefined,
+        transactionId: order?.transactions[0]?.id,
         includeShipping: false,
         amount: 0,
         reason: "",
       },
     });
+
+  React.useEffect(() => {
+    reset({
+      qtyToRefund: [],
+      transactionId: order?.transactions[0]?.id,
+      includeShipping: false,
+      amount: 0,
+      reason: "",
+    });
+  }, [order]);
+
   const handleQtyToRefundChange = (data: DatagridChangeOpts) => {
-    setValue("qtyToRefund", data.updates);
+    setValue(
+      "qtyToRefund",
+      data.updates.map(update => ({
+        row: update.row,
+        value: parseInt(update.data.value) || 0,
+      })),
+    );
   };
   const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = () =>
     null;
@@ -68,16 +90,27 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const qtyToRefund = watch("qtyToRefund");
   const includeShipping = watch("includeShipping");
 
-  const selectedProductsValue = qtyToRefund.reduce((acc, curr) => {
+  const selectedProductsValue = qtyToRefund?.reduce((acc, curr) => {
     const unitPrice = order.lines[curr.row].unitPrice.gross.amount;
-    const totalPrice = unitPrice * parseInt(curr.data);
+    const totalPrice = unitPrice * curr.value;
     return acc + totalPrice;
   }, 0);
+
+  const handleSetMaximumQty = (rows: number[]) => {
+    const unchangedQuantites = qtyToRefund.filter(
+      qty => !rows.includes(qty.row),
+    );
+    const newQtyToRefund = rows.map(row => ({
+      row,
+      value: order.lines[row].quantity,
+    }));
+    setValue("qtyToRefund", [...unchangedQuantites, ...newQtyToRefund]);
+  };
 
   React.useEffect(() => {
     const customAmount = getValues("amount");
     if (includeShipping) {
-      const shippingPrice = order.shippingPrice.gross.amount;
+      const shippingPrice = order?.shippingPrice.gross.amount;
       const totalAmount = selectedProductsValue + shippingPrice;
       if (totalAmount !== customAmount) {
         setValue("amount", totalAmount);
@@ -106,6 +139,8 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             order={order}
             control={control}
             onChange={handleQtyToRefundChange}
+            onMaxQtySet={handleSetMaximumQty}
+            qtyToRefund={qtyToRefund}
           />
           <DashboardCard marginBottom={5}>
             <DashboardCard.Content>
@@ -114,7 +149,10 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
               </Text>
             </DashboardCard.Content>
           </DashboardCard>
-          <OrderTransactionTiles transactions={order?.transactions} />
+          <OrderTransactionTiles
+            transactions={order?.transactions}
+            control={control}
+          />
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar>
           <Box
@@ -128,8 +166,8 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
               control={control}
               selectedProductsValue={selectedProductsValue}
               canRefundShipping={canRefundShipping()}
-              shippingCost={order.shippingPrice.gross}
-              currency={order.total.gross.currency}
+              shippingCost={order?.shippingPrice.gross}
+              currency={order?.total.gross.currency}
             />
             <OrderTransactionReason control={control} />
           </Box>

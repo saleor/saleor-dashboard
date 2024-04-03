@@ -10,22 +10,27 @@ import { EventType } from "@dashboard/orders/components/OrderTransaction/compone
 import { mapTransactionEvent } from "@dashboard/orders/components/OrderTransaction/utils";
 import { Box, RadioGroup, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { Control, useController } from "react-hook-form";
+
+import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
 
 interface OrderTransactionTilesProps {
   transactions: OrderDetailsGrantRefundFragment["transactions"];
+  control: Control<OrderTransactionRefundPageFormData, any>;
 }
 
 export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
   transactions,
+  control,
 }: OrderTransactionTilesProps) => {
+  const { field } = useController({ name: "transactionId", control });
   if (!transactions) {
     return <Skeleton marginTop={5} />;
   }
-  // console.log(transactions);
   return (
     <DashboardCard>
       <DashboardCard.Content>
-        <RadioGroup>
+        <RadioGroup value={field.value} onValueChange={field.onChange}>
           {/* TODO: filter out non-refundable transactions (see SendRefund view) */}
           {transactions.map(transaction => (
             <Box
