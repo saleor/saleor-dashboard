@@ -295,6 +295,9 @@
     "context": "input label",
     "string": "Global threshold"
   },
+  "/jJLYy": {
+    "string": "Transactions"
+  },
   "/kWzY1": {
     "string": "Are you sure you want to delete this address from users address book?"
   },
@@ -1995,6 +1998,9 @@
     "context": "no webhooks message",
     "string": "No webhooks found"
   },
+  "Bl6896": {
+    "string": "Refund amount"
+  },
   "BooQvo": {
     "context": "navigator placeholder",
     "string": "Type {key} to see available actions"
@@ -2095,6 +2101,9 @@
   "CLeDae": {
     "context": "section header",
     "string": "Preferences"
+  },
+  "CNblvR": {
+    "string": "Refund fullfilling"
   },
   "CRAfpd": {
     "context": "gift card export dialog confirm button label",
@@ -4537,6 +4546,9 @@
     "context": "checkbox label, fulfillment approval",
     "string": "Send shipment details to customer"
   },
+  "SuqHws": {
+    "string": "You are now selecting which granted refund you want to fullfill and send to a customer."
+  },
   "Sxzua5": {
     "context": "order payment",
     "string": "Settled"
@@ -6163,6 +6175,9 @@
   },
   "dM86a2": {
     "string": "No categories found"
+  },
+  "dO05fh": {
+    "string": "Select a refund you want to fullfill"
   },
   "dOQB9o": {
     "context": "payment status",

@@ -12131,44 +12131,50 @@ export function useOrderRefundDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type OrderRefundDataQueryHookResult = ReturnType<typeof useOrderRefundDataQuery>;
 export type OrderRefundDataLazyQueryHookResult = ReturnType<typeof useOrderRefundDataLazyQuery>;
 export type OrderRefundDataQueryResult = Apollo.QueryResult<Types.OrderRefundDataQuery, Types.OrderRefundDataQueryVariables>;
-export const OrderManualRefundDocument = gql`
-    query OrderManualRefund($orderId: ID!) {
+export const OrderTransationsDataDocument = gql`
+    query OrderTransationsData($orderId: ID!) {
   order(id: $orderId) {
     id
     transactions {
       ...TransactionItem
     }
+    total {
+      gross {
+        ...Money
+      }
+    }
   }
 }
-    ${TransactionItemFragmentDoc}`;
+    ${TransactionItemFragmentDoc}
+${MoneyFragmentDoc}`;
 
 /**
- * __useOrderManualRefundQuery__
+ * __useOrderTransationsDataQuery__
  *
- * To run a query within a React component, call `useOrderManualRefundQuery` and pass it any options that fit your needs.
- * When your component renders, `useOrderManualRefundQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useOrderTransationsDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderTransationsDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useOrderManualRefundQuery({
+ * const { data, loading, error } = useOrderTransationsDataQuery({
  *   variables: {
  *      orderId: // value for 'orderId'
  *   },
  * });
  */
-export function useOrderManualRefundQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderManualRefundQuery, Types.OrderManualRefundQueryVariables>) {
+export function useOrderTransationsDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderManualRefundQuery, Types.OrderManualRefundQueryVariables>(OrderManualRefundDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>(OrderTransationsDataDocument, options);
       }
-export function useOrderManualRefundLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderManualRefundQuery, Types.OrderManualRefundQueryVariables>) {
+export function useOrderTransationsDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderManualRefundQuery, Types.OrderManualRefundQueryVariables>(OrderManualRefundDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>(OrderTransationsDataDocument, options);
         }
-export type OrderManualRefundQueryHookResult = ReturnType<typeof useOrderManualRefundQuery>;
-export type OrderManualRefundLazyQueryHookResult = ReturnType<typeof useOrderManualRefundLazyQuery>;
-export type OrderManualRefundQueryResult = Apollo.QueryResult<Types.OrderManualRefundQuery, Types.OrderManualRefundQueryVariables>;
+export type OrderTransationsDataQueryHookResult = ReturnType<typeof useOrderTransationsDataQuery>;
+export type OrderTransationsDataLazyQueryHookResult = ReturnType<typeof useOrderTransationsDataLazyQuery>;
+export type OrderTransationsDataQueryResult = Apollo.QueryResult<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>;
 export const ChannelUsabilityDataDocument = gql`
     query ChannelUsabilityData($channel: String!) {
   products(channel: $channel) {

@@ -1,11 +1,13 @@
 import {
   OrderTransactionRequestActionMutation,
   TransactionActionEnum,
-  useOrderManualRefundQuery,
   useOrderTransactionRequestActionMutation,
+  useOrderTransationsDataQuery,
 } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { OrderManualTransationRefundPage } from "@dashboard/orders/components/OrderManualTransationRefundPage";
+import { orderUrl } from "@dashboard/orders/urls";
 import {
   getOrderTransactionErrorMessage,
   transactionRequestMessages,
@@ -13,11 +15,20 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
-const OrderManualTransationRefund = ({ orderId }) => {
+import { filterRefundTransactions } from "./filter";
+
+interface OrderManualTransationRefundProps {
+  orderId: string;
+}
+
+const OrderManualTransationRefund = ({
+  orderId,
+}: OrderManualTransationRefundProps) => {
   const notify = useNotifier();
+  const navigate = useNavigator();
   const intl = useIntl();
 
-  const { data, loading } = useOrderManualRefundQuery({
+  const { data, loading } = useOrderTransationsDataQuery({
     displayLoader: true,
     variables: {
       orderId,
@@ -27,21 +38,20 @@ const OrderManualTransationRefund = ({ orderId }) => {
   const [manualRefund, manualRefundOpts] =
     useOrderTransactionRequestActionMutation({
       onCompleted: (data: OrderTransactionRequestActionMutation) => {
-        const {
-          transactionRequestAction: { errors },
-        } = data;
-        const isError = !!errors.length;
-
-        if (isError) {
+        if (data.transactionRequestAction?.errors) {
           notify({
             status: "error",
-            text: getOrderTransactionErrorMessage(errors[0], intl),
+            text: getOrderTransactionErrorMessage(
+              data.transactionRequestAction?.errors[0],
+              intl,
+            ),
           });
         } else {
           notify({
             status: "success",
             text: intl.formatMessage(transactionRequestMessages.success),
           });
+          navigate(orderUrl(orderId));
         }
       },
     });
@@ -58,10 +68,12 @@ const OrderManualTransationRefund = ({ orderId }) => {
 
   return (
     <OrderManualTransationRefundPage
-      data={data}
+      orderId={data?.order?.id ?? ""}
+      transactions={filterRefundTransactions(data?.order?.transactions ?? [])}
       loading={loading}
       submitLoading={manualRefundOpts.loading}
       onSubmit={handleSubmit}
+      currency={data?.order?.total?.gross?.currency ?? ""}
     />
   );
 };

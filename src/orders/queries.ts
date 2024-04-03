@@ -232,12 +232,17 @@ export const orderRefundData = gql`
   }
 `;
 
-export const orderManualRefund = gql`
-  query OrderManualRefund($orderId: ID!) {
+export const orderTransationsData = gql`
+  query OrderTransationsData($orderId: ID!) {
     order(id: $orderId) {
       id
       transactions {
         ...TransactionItem
+      }
+      total {
+        gross {
+          ...Money
+        }
       }
     }
   }

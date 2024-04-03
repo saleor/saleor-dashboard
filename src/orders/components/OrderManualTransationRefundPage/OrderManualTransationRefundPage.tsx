@@ -1,101 +1,86 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { TransactionItemFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
+import { OrderManualTransationRefundAmount } from "./components/OrderManualTransationRefundAmount";
+import { OrderManualTransationRefundForm } from "./components/OrderManualTransationRefundForm";
 import { OrderTransactionTiles } from "./components/OrderTransactionTile";
+import { messages } from "./messages";
 
 interface OrderManualTransationRefundProps {
-  data: any;
+  orderId: string;
+  transactions: TransactionItemFragment[];
   loading: boolean;
+  currency: string;
   submitLoading: boolean;
   onSubmit: (transationId: string, amount: number) => void;
 }
 
 export const OrderManualTransationRefundPage = ({
-  data,
+  orderId,
+  transactions,
+  currency,
   loading,
   submitLoading,
   onSubmit,
 }: OrderManualTransationRefundProps) => {
-  const methods = useForm();
+  const navigate = useNavigator();
 
-  const handleSubmit = data => {
-    onSubmit(data.transaction, data.amount);
-  };
-
-  if (loading) {
-    return <div>loading.</div>;
-  }
+  const onCancel = () => navigate(orderUrl(orderId));
 
   return (
-    <FormProvider {...methods}>
-      <form
-        id="manual-refund-form"
-        onSubmit={methods.handleSubmit(handleSubmit)}
-      >
-        <DetailPageLayout gridTemplateColumns={1}>
-          <TopNav href={orderUrl(data?.order?.id)} title={"Transactions"} />
-          <DetailPageLayout.Content>
+    <OrderManualTransationRefundForm
+      onSubmit={onSubmit}
+      onCancel={onCancel}
+      loading={submitLoading}
+      initialValues={{
+        amount: 0,
+        transationId: transactions?.[0]?.id ?? "",
+      }}
+    >
+      <DetailPageLayout gridTemplateColumns={1}>
+        <TopNav
+          href={orderUrl(orderId)}
+          title={<FormattedMessage {...messages.transactions} />}
+        />
+
+        <DetailPageLayout.Content>
+          <DashboardCard>
+            <DashboardCard.Content>
+              <Text size={4} marginY={5} display="block" fontWeight="bold">
+                <FormattedMessage {...messages.selectTransation} />
+              </Text>
+
+              <OrderTransactionTiles
+                loading={loading}
+                transactions={transactions}
+              />
+            </DashboardCard.Content>
+          </DashboardCard>
+        </DetailPageLayout.Content>
+        <DetailPageLayout.RightSidebar>
+          <Box __maxWidth={400}>
             <DashboardCard>
+              <DashboardCard.Title>
+                <FormattedMessage {...messages.sidebarTitle} />
+              </DashboardCard.Title>
               <DashboardCard.Content>
-                <Text size={4} marginY={5} display="block" fontWeight="bold">
-                  Select a refund you want to fullfill
+                <Text marginBottom={6} as="p">
+                  <FormattedMessage {...messages.sidebardDescription} />
                 </Text>
+
+                <OrderManualTransationRefundAmount currency={currency} />
               </DashboardCard.Content>
             </DashboardCard>
-
-            <OrderTransactionTiles transactions={data?.order?.transactions} />
-          </DetailPageLayout.Content>
-          <DetailPageLayout.RightSidebar>
-            <Box
-              __maxWidth={400}
-              height="100%"
-              display="flex"
-              flexDirection="column"
-              justifyContent="space-between"
-            >
-              <DashboardCard>
-                <DashboardCard.Title>Refund fullfilling</DashboardCard.Title>
-                <DashboardCard.Content>
-                  <Text as="p">
-                    You are now selecting which granted refund you want to
-                    fullfill and send to a customer.
-                  </Text>
-                </DashboardCard.Content>
-              </DashboardCard>
-
-              <DashboardCard>
-                <DashboardCard.Content>
-                  <Box display="grid" gap={4} marginTop="auto">
-                    <Controller
-                      name="amount"
-                      render={({
-                        field: { value, onChange, ...field },
-                        fieldState: { error },
-                      }) => (
-                        <Input
-                          {...field}
-                          value={value}
-                          label="Refund amount"
-                          type="number"
-                          endAdornment={"USD"}
-                          onChange={e => onChange(e.target.value)}
-                          error={!!error}
-                        />
-                      )}
-                    />
-                  </Box>
-                </DashboardCard.Content>
-              </DashboardCard>
-            </Box>
-          </DetailPageLayout.RightSidebar>
-          <Button type="submit">Submit</Button>
-        </DetailPageLayout>
-      </form>
-    </FormProvider>
+          </Box>
+        </DetailPageLayout.RightSidebar>
+      </DetailPageLayout>
+    </OrderManualTransationRefundForm>
   );
 };
