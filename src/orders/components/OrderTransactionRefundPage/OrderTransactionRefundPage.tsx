@@ -44,7 +44,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   // const { locale } = useLocale();
   const navigate = useNavigator();
 
-  const { control, setValue, handleSubmit, watch } =
+  const { control, setValue, handleSubmit, watch, getValues } =
     useForm<OrderTransactionRefundPageFormData>({
       defaultValues: {
         qtyToRefund: [],
@@ -60,11 +60,30 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = () =>
     null;
 
-  const selectedProductsValue = watch("qtyToRefund").reduce((acc, curr) => {
+  const qtyToRefund = watch("qtyToRefund");
+  const includeShipping = watch("includeShipping");
+
+  const selectedProductsValue = qtyToRefund.reduce((acc, curr) => {
     const unitPrice = order.lines[curr.row].unitPrice.gross.amount;
     const totalPrice = unitPrice * parseInt(curr.data);
     return acc + totalPrice;
   }, 0);
+
+  React.useEffect(() => {
+    const customAmount = getValues("amount");
+    if (includeShipping) {
+      const shippingPrice = order.shippingPrice.gross.amount;
+      const totalAmount = selectedProductsValue + shippingPrice;
+      if (totalAmount !== customAmount) {
+        setValue("amount", totalAmount);
+      }
+      return;
+    }
+
+    if (selectedProductsValue !== customAmount) {
+      setValue("amount", selectedProductsValue);
+    }
+  }, [qtyToRefund, includeShipping]);
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
