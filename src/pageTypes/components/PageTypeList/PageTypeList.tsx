@@ -89,7 +89,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
           />
         </TableRowLink>
       </TableFooter>
-      <TableBody>
+      <TableBody data-test-id="page-types-list">
         {renderCollection(
           pageTypes,
           pageType => {
