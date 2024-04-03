@@ -1,5 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
+import { IMoney } from "@dashboard/utils/intl";
 import { Box, Checkbox, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, useController } from "react-hook-form";
@@ -10,6 +11,8 @@ interface OrderTransactionSummaryProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
   selectedProductsValue: number;
   canRefundShipping: boolean;
+  shippingCost: IMoney;
+  currency: string;
 }
 
 export const OrderTransactionSummary: React.FC<
@@ -18,6 +21,8 @@ export const OrderTransactionSummary: React.FC<
   control,
   selectedProductsValue,
   canRefundShipping,
+  shippingCost,
+  currency,
 }: OrderTransactionSummaryProps) => {
   const { field: shippingField } = useController({
     name: "includeShipping",
@@ -53,9 +58,7 @@ export const OrderTransactionSummary: React.FC<
             paddingY={4}
           >
             <Text size={3}>Selected products</Text>
-            <Money
-              money={{ currency: "USD", amount: selectedProductsValue }}
-            ></Money>
+            <Money money={{ currency, amount: selectedProductsValue }}></Money>
           </Box>
           <Box
             display="flex"
@@ -91,7 +94,7 @@ export const OrderTransactionSummary: React.FC<
               </Tooltip>
             )}
 
-            <Money money={{ currency: "USD", amount: 15 }}></Money>
+            <Money money={shippingCost} />
           </Box>
           <Box display="flex" justifyContent="space-between" paddingY={4}>
             <Text size={5} display="flex" alignItems="center">
@@ -102,7 +105,7 @@ export const OrderTransactionSummary: React.FC<
               value={amountField.value}
               onChange={amountField.onChange}
               __width="100px"
-              endAdornment="USD"
+              endAdornment={currency}
             />
           </Box>
         </Box>

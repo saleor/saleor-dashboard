@@ -128,6 +128,8 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
               control={control}
               selectedProductsValue={selectedProductsValue}
               canRefundShipping={canRefundShipping()}
+              shippingCost={order.shippingPrice.gross}
+              currency={order.total.gross.currency}
             />
             <OrderTransactionReason control={control} />
           </Box>
