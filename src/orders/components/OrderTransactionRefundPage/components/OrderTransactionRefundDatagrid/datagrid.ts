@@ -4,6 +4,7 @@ import {
   textCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
+import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import {
   UseDatagridChangeState,
   useDatagridChangeState,
@@ -60,7 +61,7 @@ export const createGetCellContent =
     lines: OrderDetailsGrantRefundFragment["lines"] | undefined;
     columns: AvailableColumn[];
   }) =>
-  ([column, row]: Item): GridCell => {
+  ([column, row]: Item, opts: GetCellContentOpts): GridCell => {
     const rowData = lines?.[row];
     const columnId = columns[column]?.id;
 
@@ -83,9 +84,11 @@ export const createGetCellContent =
         );
       case "qtyOrdered":
         return readonlyTextCell(rowData.quantity.toString(), false);
-      case "qtyToRefund":
-        return textCell("");
-
+      case "qtyToRefund": {
+        const { changes, getChangeIndex } = opts;
+        const change = changes.current[getChangeIndex(columnId, row)]?.data;
+        return textCell(change?.toString() ?? "");
+      }
       default:
         return readonlyTextCell("", false);
     }

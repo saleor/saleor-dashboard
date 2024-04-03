@@ -2,14 +2,26 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { Control, useController } from "react-hook-form";
+
+import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
 
 interface OrderTransactionSummaryProps {
+  control: Control<OrderTransactionRefundPageFormData, any>;
   selectedProductsValue: number;
 }
 
 export const OrderTransactionSummary: React.FC<
   OrderTransactionSummaryProps
-> = ({ selectedProductsValue }: OrderTransactionSummaryProps) => {
+> = ({ control, selectedProductsValue }: OrderTransactionSummaryProps) => {
+  const { field: shippingField } = useController({
+    name: "includeShipping",
+    control,
+  });
+  const { field: amountField } = useController({
+    name: "amount",
+    control,
+  });
   return (
     <DashboardCard>
       <DashboardCard.Content display="flex" flexDirection="column" gap={5}>
@@ -48,9 +60,13 @@ export const OrderTransactionSummary: React.FC<
             borderColor="default1"
             paddingY={4}
           >
-            <Checkbox>
+            <Checkbox
+              checked={shippingField.value}
+              onCheckedChange={shippingField.onChange}
+            >
               <Text size={3}>Shipping</Text>
             </Checkbox>
+
             <Money money={{ currency: "USD", amount: 15 }}></Money>
           </Box>
           <Box display="flex" justifyContent="space-between" paddingY={4}>
@@ -59,7 +75,8 @@ export const OrderTransactionSummary: React.FC<
             </Text>
             <Input
               type="number"
-              value={20}
+              value={amountField.value}
+              onChange={amountField.onChange}
               __width="100px"
               endAdornment="USD"
             />
