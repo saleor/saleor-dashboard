@@ -26,6 +26,7 @@ test("TC: SALEOR_188 As an admin user I can update page type@e2e @page-type", as
     page,
 }) => {
     const pageTypePage = new PageTypesPage(page);
+
     const updatedPageTypeName = `updated-e2e-page-type-${faker.datatype.number()}`;
     const attributeName = ATTRIBUTES.attributeToBeAssignedToPageType.name;
 
@@ -43,6 +44,7 @@ test("TC: SALEOR_189 As an admin user I can delete page type with assigned conte
     page,
 }) => {
     const pageTypePage = new PageTypesPage(page);
+
     const pageType = PAGE_TYPES.pageTypeToBeRemoved;
 
     await pageTypePage.gotoExistingPageTypePage(pageType.id);
@@ -58,6 +60,7 @@ test("TC: SALEOR_190 As an admin user I can delete several page types@e2e @page-
     page,
 }) => {
     const pageTypePage = new PageTypesPage(page);
+
     const rowsToBeDeleted = PAGE_TYPES.pageTypesToBeBulkDeleted.ids;
     const pageTypeNames = PAGE_TYPES.pageTypesToBeBulkDeleted.names;
 
