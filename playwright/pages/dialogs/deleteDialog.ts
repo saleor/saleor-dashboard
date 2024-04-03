@@ -9,6 +9,7 @@ export class DeleteDialog {
     readonly confirmDeletionCheckbox = page.locator(
       "[name='delete-assigned-items-consent']",
     ),
+    readonly confirmDeleteButton = page.getByTestId("confirm-delete")
   ) {
     this.page = page;
   }
@@ -19,5 +20,10 @@ export class DeleteDialog {
   }
   async clickConfirmDeletionCheckbox() {
     await this.confirmDeletionCheckbox.click();
+  }
+
+  async clickConfirmDeleteButton() {
+    await this.confirmDeleteButton.click();
+    await this.confirmDeleteButton.waitFor({ state: "hidden" });
   }
 }
