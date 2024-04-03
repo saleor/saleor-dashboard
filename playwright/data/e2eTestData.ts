@@ -49,6 +49,7 @@ export const ATTRIBUTES = {
         "DATE_TIME",]
   },
   attributeReferencesEntities: { names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"] },
+  attributeToBeAssignedToPageType: { name: "Attribute to be assigned to page type" },
 }
 export const VOUCHERS = {
   vouchers: {

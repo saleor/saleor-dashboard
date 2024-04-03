@@ -1,5 +1,5 @@
 import * as faker from "faker";
-import { PAGE_TYPES } from "@data/e2eTestData";
+import { PAGE_TYPES, ATTRIBUTES } from "@data/e2eTestData";
 import { PageTypesPage } from "@pages/pageTypesPage";
 import { test, expect } from "@playwright/test";
 
@@ -16,6 +16,9 @@ test("TC: SALEOR_187 As an admin user I can create page type @e2e @page-type", a
     await pageTypePage.typePageTypeName(pageTypeName);
     await pageTypePage.clickSaveButton();
     await pageTypePage.expectSuccessBanner();
+    await expect(pageTypePage.nameInput).toHaveValue(pageTypeName);
+    await pageTypePage.gotoPageTypeListPage();
+    await expect(pageTypePage.pageTypeList).toContainText(pageTypeName);
 });
 
 
@@ -24,10 +27,16 @@ test("TC: SALEOR_188 As an admin user I can update page type@e2e @page-type", as
 }) => {
     const pageTypePage = new PageTypesPage(page);
     const updatedPageTypeName = `updated-e2e-page-type-${faker.datatype.number()}`;
+    const attributeName = ATTRIBUTES.attributeToBeAssignedToPageType.name;
+
     await pageTypePage.gotoExistingPageTypePage(PAGE_TYPES.pageTypeToBeEdited.id);
     await pageTypePage.updatePageTypeName(updatedPageTypeName);
     await pageTypePage.clickSaveButton();
     await pageTypePage.expectSuccessBanner();
+    await expect(pageTypePage.nameInput).toHaveValue(updatedPageTypeName);
+    await pageTypePage.assignAttributes(attributeName);
+    await pageTypePage.expectSuccessBanner();
+    await expect(pageTypePage.pageAttributes).toContainText(attributeName);
 });
 
 test("TC: SALEOR_189 As an admin user I can delete page type with assigned content@e2e @page-type", async ({
@@ -41,7 +50,7 @@ test("TC: SALEOR_189 As an admin user I can delete page type with assigned conte
     await pageTypePage.deletePageTypeDialog.clickConfirmDeletionCheckbox();
     await pageTypePage.deletePageTypeDialog.clickConfirmDeleteButton();
     await pageTypePage.expectSuccessBanner();
-    await pageTypePage.pageTypeList.waitFor({ state: "visible", timeout: 50000 });
+    await pageTypePage.gotoPageTypeListPage();
     await expect(pageTypePage.pageTypeList).not.toContainText(pageType.name);
 });
 

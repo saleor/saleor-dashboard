@@ -2,25 +2,34 @@ import type { Page } from "@playwright/test";
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import { DeleteDialog } from "@pages/dialogs/deleteDialog";
+import { AssignAttributeDialog } from "@pages/dialogs/assignAttributeDialog";
 
 export class PageTypesPage extends BasePage {
   readonly page: Page;
   readonly basePage: BasePage;
   readonly deletePageTypeDialog: DeleteDialog;
+  readonly attributeDialog: AssignAttributeDialog;
 
   constructor(
     page: Page,
     readonly createPageTypeButton = page.getByTestId("create-page-type"),
-    readonly nameInput = page.locator("[name='name']"),
+    readonly nameInput = page.getByTestId("page-type-name").locator("input"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-page-types"),
     readonly pageTypeList = page.getByTestId("page-types-list"),
     readonly rowCheckbox = page.getByTestId("checkbox"),
+    readonly assignAttributesButton = page.getByTestId("assign-attributes"),
+    readonly pageAttributes = page.getByTestId("page-attributes"),
   ) {
     super(page);
     this.page = page;
     this.basePage = new BasePage(page);
     this.deletePageTypeDialog = new DeleteDialog(page);
+    this.attributeDialog = new AssignAttributeDialog(page);
+  }
+  async assignAttributes(attributeName: string) {
+    await this.assignAttributesButton.click();
+    await this.attributeDialog.assignSpecificAttributeByNameAndSave(attributeName)
   }
 
   async gotoPageTypeListPage() {
