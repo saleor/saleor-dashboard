@@ -10,6 +10,7 @@ import { EventType } from "@dashboard/orders/components/OrderTransaction/compone
 import { mapTransactionEvent } from "@dashboard/orders/components/OrderTransaction/utils";
 import { Box, RadioGroup, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { Controller } from "react-hook-form";
 
 interface OrderTransactionTilesProps {
   transactions: OrderDetailsGrantRefundFragment["transactions"];
@@ -39,16 +40,37 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
               flexDirection="column"
               marginBottom={3}
             >
-              <RadioGroup.Item
-                id={transaction.id}
-                value={transaction.id}
-                padding={4}
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                paddingRight={4}
               >
-                <Text size={5} fontWeight="medium" padding={4}>
-                  {transaction.name === "" ? "Transaction" : transaction.name}
-                </Text>
-              </RadioGroup.Item>
-
+                <Controller
+                  name="transaction"
+                  render={({
+                    field: { onChange, ...field },
+                    fieldState: { error },
+                  }) => (
+                    <RadioGroup.Item
+                      {...field}
+                      id={transaction.id}
+                      value={transaction.id}
+                      error={!!error}
+                      onChange={value => {
+                        onChange(value);
+                      }}
+                      padding={4}
+                    >
+                      <Text size={5} fontWeight="medium" padding={4}>
+                        {transaction.name === ""
+                          ? "Transaction"
+                          : transaction.name}
+                      </Text>
+                    </RadioGroup.Item>
+                  )}
+                />
+              </Box>
               <Box>
                 {transaction.events.map((event, eventIndex) => {
                   const { type, status } = mapTransactionEvent(event);
