@@ -10890,6 +10890,7 @@ export type OrderSettingsUpdateMutation = { __typename: 'Mutation', orderSetting
 export type OrderTransactionRequestActionMutationVariables = Exact<{
   action: TransactionActionEnum;
   transactionId: Scalars['ID'];
+  amount?: InputMaybe<Scalars['PositiveDecimal']>;
 }>;
 
 

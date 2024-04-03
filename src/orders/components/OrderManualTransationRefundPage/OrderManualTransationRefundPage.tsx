@@ -1,9 +1,8 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Box, Input, Text, Textarea } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
@@ -12,16 +11,20 @@ import { OrderTransactionTiles } from "./components/OrderTransactionTile";
 interface OrderManualTransationRefundProps {
   data: any;
   loading: boolean;
+  submitLoading: boolean;
+  onSubmit: (transationId: string, amount: number) => void;
 }
 
 export const OrderManualTransationRefundPage = ({
   data,
   loading,
+  submitLoading,
+  onSubmit,
 }: OrderManualTransationRefundProps) => {
   const methods = useForm();
 
   const handleSubmit = data => {
-    // console.log(data);
+    onSubmit(data.transaction, data.amount);
   };
 
   if (loading) {
@@ -85,49 +88,12 @@ export const OrderManualTransationRefundPage = ({
                         />
                       )}
                     />
-
-                    <Controller
-                      name="psp-referance"
-                      render={({
-                        field: { value, onChange, ...field },
-                        fieldState: { error },
-                      }) => (
-                        <Input
-                          {...field}
-                          value={value}
-                          label="PSP referance"
-                          onChange={e => onChange(e.target.value)}
-                          error={!!error}
-                        />
-                      )}
-                    />
-
-                    <Controller
-                      name="psp-referance"
-                      render={({
-                        field: { value, onChange, ...field },
-                        fieldState: { error },
-                      }) => (
-                        <Textarea
-                          {...field}
-                          value={value}
-                          label="Description"
-                          onChange={e => onChange(e.target.value)}
-                          error={!!error}
-                        />
-                      )}
-                    />
                   </Box>
                 </DashboardCard.Content>
               </DashboardCard>
             </Box>
           </DetailPageLayout.RightSidebar>
-          <Savebar
-            disabled={false}
-            onCancel={() => {}}
-            onSubmit={() => {}}
-            state="default"
-          />
+          <Button type="submit">Submit</Button>
         </DetailPageLayout>
       </form>
     </FormProvider>

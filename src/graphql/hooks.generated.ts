@@ -11270,8 +11270,12 @@ export type OrderSettingsUpdateMutationHookResult = ReturnType<typeof useOrderSe
 export type OrderSettingsUpdateMutationResult = Apollo.MutationResult<Types.OrderSettingsUpdateMutation>;
 export type OrderSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderSettingsUpdateMutation, Types.OrderSettingsUpdateMutationVariables>;
 export const OrderTransactionRequestActionDocument = gql`
-    mutation OrderTransactionRequestAction($action: TransactionActionEnum!, $transactionId: ID!) {
-  transactionRequestAction(actionType: $action, id: $transactionId) {
+    mutation OrderTransactionRequestAction($action: TransactionActionEnum!, $transactionId: ID!, $amount: PositiveDecimal) {
+  transactionRequestAction(
+    actionType: $action
+    id: $transactionId
+    amount: $amount
+  ) {
     errors {
       ...TransactionRequestActionError
     }
@@ -11295,6 +11299,7 @@ export type OrderTransactionRequestActionMutationFn = Apollo.MutationFunction<Ty
  *   variables: {
  *      action: // value for 'action'
  *      transactionId: // value for 'transactionId'
+ *      amount: // value for 'amount'
  *   },
  * });
  */
