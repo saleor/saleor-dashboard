@@ -2476,6 +2476,9 @@
     "context": "error message",
     "string": "Error details: {message}"
   },
+  "F2kF9e": {
+    "string": "You must select transaction that you want to refund"
+  },
   "F3Upht": {
     "string": "Product type deleted"
   },
@@ -9213,6 +9216,9 @@
   "z3GGbZ": {
     "context": "deleted multiple attributes",
     "string": "Attributes successfully deleted"
+  },
+  "z3w/oL": {
+    "string": "You must provide amount value"
   },
   "z8jo8h": {
     "context": "button",
