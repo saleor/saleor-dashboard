@@ -1,5 +1,6 @@
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { ListProps } from "@dashboard/types";
@@ -38,27 +39,30 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles();
+  const navigate = useNavigator();
+
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
+
   const verifiedInstalledApps = getVerifiedInstalledApps(
     installedApps,
     installableMarketplaceApps,
   );
+
   const verifiedAppsInstallations = getVerifiedAppsInstallations(
     appsInstallations,
     installableMarketplaceApps,
   );
+
   const verifiedInstallableMarketplaceApps =
     getVerifiedInstallableMarketplaceApps(
       installedApps,
       installableMarketplaceApps,
     );
+
   const sectionsAvailability = resolveSectionsAvailability({
     ...props,
     installableMarketplaceApps: verifiedInstallableMarketplaceApps,
   });
-  const navigate = useNavigator();
-
-  const nothingInstalled =
-    appsInstallations?.length === 0 && installedApps?.length === 0;
 
   const navigateToAppInstallPage = useCallback(
     (manifestUrl: string) => {
@@ -74,7 +78,11 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   return (
     <>
       <TopNav title={intl.formatMessage(sectionNames.apps)}>
-        <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+        {hasManagedAppsPermission && (
+          <InstallWithManifestFormButton
+            onSubmitted={navigateToAppInstallPage}
+          />
+        )}
       </TopNav>
       <Box
         display="flex"
@@ -83,37 +91,22 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         marginY={5}
       >
         <Box className={classes.appContent} marginY={5}>
-          {nothingInstalled && (
-            <Box paddingY={3}>
-              <Text as="h3" size={5} fontWeight="bold" color="default2">
-                {intl.formatMessage(messages.installedApps)}
-              </Text>
-              <Box marginTop={3}>
-                <Text size={2}>
-                  {intl.formatMessage(messages.nothingInstalledPlaceholder)}
-                </Text>
-              </Box>
-            </Box>
-          )}
-          {sectionsAvailability.installed && (
-            <>
-              <Box paddingX={5} paddingY={3}>
-                <Text as="h3" size={5} fontWeight="bold" color="default2">
-                  {intl.formatMessage(messages.installedApps)}
-                </Text>
-              </Box>
-              <InstalledAppList
-                appList={verifiedInstalledApps}
-                appInstallationList={verifiedAppsInstallations}
-                disabled={disabled}
-                settings={settings}
-                onUpdateListSettings={onUpdateListSettings}
-              />
-            </>
-          )}
+          <Box paddingX={5} paddingY={3}>
+            <Text as="h3" size={5} fontWeight="bold" color="default2">
+              {intl.formatMessage(messages.installedApps)}
+            </Text>
+          </Box>
+          <InstalledAppList
+            appList={verifiedInstalledApps}
+            appInstallationList={verifiedAppsInstallations}
+            disabled={disabled}
+            settings={settings}
+            onUpdateListSettings={onUpdateListSettings}
+          />
+
           <MarketplaceAlert error={marketplaceError} />
           {sectionsAvailability.all && !marketplaceError && (
-            <Box marginTop={7}>
+            <Box marginTop={7} data-test-id="apps-available">
               <Text
                 as="h3"
                 size={5}
@@ -132,7 +125,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             </Box>
           )}
           {sectionsAvailability.comingSoon && !marketplaceError && (
-            <Box marginTop={7}>
+            <Box marginTop={7} data-test-id="apps-upcoming">
               <Text
                 as="h3"
                 size={5}

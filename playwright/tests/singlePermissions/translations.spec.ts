@@ -14,5 +14,5 @@ test("TC: SALEOR_22 User should be able to navigate to translations page as a st
   await page.goto(URL_LIST.homePage);
   await mainMenuPage.openTranslations();
   await expect(basePage.pageHeader).toHaveText("Languages");
-  await mainMenuPage.expectMenuItemsCount(2);
+  await mainMenuPage.expectMenuItemsCount(3);
 });

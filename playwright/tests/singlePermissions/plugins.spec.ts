@@ -16,5 +16,5 @@ test("TC: SALEOR_16 User should be able to navigate to plugin list as a staff me
   await page.goto(URL_LIST.configuration);
   await configurationPage.openPlugins();
   await expect(pluginsPage.pluginRow.first()).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(2);
+  await mainMenuPage.expectMenuItemsCount(3);
 });

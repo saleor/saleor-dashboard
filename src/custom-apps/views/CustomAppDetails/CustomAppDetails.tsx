@@ -67,7 +67,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
 
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id },
+    variables: { id, hasManagedAppsPermission: true },
   });
   const [activateApp, activateAppResult] = useAppActivateMutation({
     onCompleted: data => {

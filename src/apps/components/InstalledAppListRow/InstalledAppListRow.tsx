@@ -8,7 +8,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
-import { AppAdditionalInfo } from "../AppAdditionalInfo";
+import { AppAdditionalInfo } from "../AppAdditionalInfo/AppAdditionalInfo";
 import { AppAvatar } from "../AppAvatar/AppAvatar";
 import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
