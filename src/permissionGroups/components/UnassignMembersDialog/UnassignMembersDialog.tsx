@@ -36,6 +36,7 @@ const UnassignMembersDialog: React.FC<UnassignMembersDialogProps> = ({
     >
       <DialogContentText>
         <FormattedMessage
+          data-test-id="unassign-members-dialog-text"
           id="XGBsoK"
           defaultMessage="Are you sure you want to unassign {counter,plural,one{this member} other{{displayQuantity} members}}?"
           description="dialog content"

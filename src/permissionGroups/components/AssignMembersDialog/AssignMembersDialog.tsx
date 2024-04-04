@@ -177,6 +177,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
       </DialogTitle>
       <DialogContent className={classes.inputContainer}>
         <TextField
+          data-test-id="search-members-input"
           name="query"
           value={query}
           onChange={onQueryChange}
@@ -207,7 +208,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           height={400}
         >
           <ResponsiveTable className={classes.table}>
-            <TableBody>
+            <TableBody data-test-id="search-results">
               {renderCollection(
                 staffMembers,
                 member => {
