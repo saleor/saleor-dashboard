@@ -1,8 +1,11 @@
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
 import {
+  OrderTransactionRequestActionDocument,
   TransactionActionEnum,
   TransactionItemFragment,
 } from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import {
   SavebarProps,
   ThemeProvider as LegacyThemeProvider,
@@ -40,22 +43,49 @@ jest.mock("react-intl", () => ({
   ),
 }));
 
+jest.mock("@dashboard/hooks/useNotifier", () => ({
+  __esModule: true,
+  default: jest.fn(() => () => undefined),
+}));
+
 mockResizeObserver();
 
-const Wrapper = ({ children }: { children: ReactNode }) => {
-  return (
-    <BrowserRouter>
-      <LegacyThemeProvider>
-        <ThemeProvider>{children}</ThemeProvider>
-      </LegacyThemeProvider>
-    </BrowserRouter>
-  );
+const getWrapper = (mocks: MockedResponse[] = []) => {
+  const WrapperComponent = ({ children }: { children: ReactNode }) => {
+    return (
+      <BrowserRouter>
+        <MockedProvider mocks={mocks}>
+          <LegacyThemeProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </LegacyThemeProvider>
+        </MockedProvider>
+      </BrowserRouter>
+    );
+  };
+
+  return WrapperComponent;
 };
 
 describe("OrderManualTransationRefundPage", () => {
   it("should select transaction, set amount and submit form", async () => {
     // Arrange
-    const mockSubmit = jest.fn();
+    const mockNofitication = jest.fn();
+    (useNotifier as jest.Mock).mockImplementation(() => mockNofitication);
+
+    const mocks = [
+      {
+        request: {
+          query: OrderTransactionRequestActionDocument,
+          variables: {
+            action: "REFUND",
+            transactionId: "2",
+            amount: 5,
+          },
+        },
+        result: { data: { transactionRequestAction: { errors: [] } } },
+      },
+    ];
+
     const transactions = [
       {
         id: "1",
@@ -75,12 +105,10 @@ describe("OrderManualTransationRefundPage", () => {
       <OrderManualTransationRefundPage
         currency="USD"
         loading={false}
-        onSubmit={mockSubmit}
         orderId="1"
-        submitStatus="default"
         transactions={transactions}
       />,
-      { wrapper: Wrapper },
+      { wrapper: getWrapper(mocks) },
     );
 
     // Act
@@ -89,7 +117,10 @@ describe("OrderManualTransationRefundPage", () => {
     await userEvent.click(screen.getByRole("button", { name: "save" }));
 
     // Assert
-    expect(mockSubmit).toHaveBeenCalledWith("2", 5);
+    expect(mockNofitication).toHaveBeenCalledWith({
+      status: "success",
+      text: "Transaction action requested successfully",
+    });
   });
 
   it("should display info when not transactions and submit button disabled", async () => {
@@ -98,12 +129,10 @@ describe("OrderManualTransationRefundPage", () => {
       <OrderManualTransationRefundPage
         currency="USD"
         loading={false}
-        onSubmit={jest.fn()}
         orderId="1"
-        submitStatus="default"
         transactions={[]}
       />,
-      { wrapper: Wrapper },
+      { wrapper: getWrapper() },
     );
 
     // Assert
@@ -118,12 +147,10 @@ describe("OrderManualTransationRefundPage", () => {
       <OrderManualTransationRefundPage
         currency="USD"
         loading={false}
-        onSubmit={jest.fn()}
         orderId="1"
-        submitStatus="default"
         transactions={[]}
       />,
-      { wrapper: Wrapper },
+      { wrapper: getWrapper() },
     );
 
     // Assert
@@ -139,12 +166,10 @@ describe("OrderManualTransationRefundPage", () => {
       <OrderManualTransationRefundPage
         currency="USD"
         loading={true}
-        onSubmit={jest.fn()}
         orderId="1"
-        submitStatus="default"
         transactions={[]}
       />,
-      { wrapper: Wrapper },
+      { wrapper: getWrapper() },
     );
 
     // Assert

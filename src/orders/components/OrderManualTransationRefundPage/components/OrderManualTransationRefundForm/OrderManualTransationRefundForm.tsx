@@ -1,7 +1,16 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Savebar from "@dashboard/components/Savebar";
+import {
+  OrderTransactionRequestActionMutation,
+  TransactionActionEnum,
+  useOrderTransactionRequestActionMutation,
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import { orderUrl } from "@dashboard/orders/urls";
+import {
+  getOrderTransactionErrorMessage,
+  transactionRequestMessages,
+} from "@dashboard/utils/errors/transaction";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -15,22 +24,19 @@ import {
 interface OrderManualTransationRefundFormProps {
   children: ReactNode;
   disabled: boolean;
-  submitStatus: ConfirmButtonTransitionState;
   initialValues: ManualRefundForm;
   orderId: string;
-  onSubmit: (transationId: string, amount: number) => void;
 }
 
 export const OrderManualTransationRefundForm = ({
-  onSubmit,
   disabled,
   orderId,
   initialValues,
-  submitStatus,
   children,
 }: OrderManualTransationRefundFormProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const notify = useNotifier();
 
   const methods = useForm<ManualRefundForm>({
     mode: "onBlur",
@@ -38,8 +44,35 @@ export const OrderManualTransationRefundForm = ({
     resolver: zodResolver(getValidationSchema(intl)),
   });
 
+  const [manualRefund, manualRefundOpts] =
+    useOrderTransactionRequestActionMutation({
+      onCompleted: (data: OrderTransactionRequestActionMutation) => {
+        if (data.transactionRequestAction?.errors?.length) {
+          notify({
+            status: "error",
+            text: getOrderTransactionErrorMessage(
+              data.transactionRequestAction?.errors[0],
+              intl,
+            ),
+          });
+        } else {
+          notify({
+            status: "success",
+            text: intl.formatMessage(transactionRequestMessages.success),
+          });
+          navigate(orderUrl(orderId));
+        }
+      },
+    });
+
   const handleSubmit = (data: ManualRefundForm) => {
-    onSubmit(data.transationId, data.amount);
+    manualRefund({
+      variables: {
+        action: TransactionActionEnum.REFUND,
+        transactionId: data.transationId,
+        amount: data.amount,
+      },
+    });
   };
 
   return (
@@ -54,7 +87,7 @@ export const OrderManualTransationRefundForm = ({
           disabled={disabled}
           onCancel={() => navigate(orderUrl(orderId))}
           onSubmit={methods.handleSubmit(handleSubmit)}
-          state={submitStatus}
+          state={manualRefundOpts.status}
         />
       </form>
     </FormProvider>
