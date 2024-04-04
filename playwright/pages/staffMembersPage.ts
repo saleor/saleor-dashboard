@@ -1,10 +1,10 @@
 import { MailpitService } from "@api/mailpit";
+import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import { InviteStaffMembersDialog } from "@pages/dialogs/inviteStaffMemberDialog";
 import type { APIRequestContext, Page } from "@playwright/test";
 
-export class StaffMembersPage {
-  readonly page: Page;
+export class StaffMembersPage extends BasePage {
   readonly request: APIRequestContext;
   readonly basePage: BasePage;
   readonly mailpitService: MailpitService;
@@ -28,7 +28,7 @@ export class StaffMembersPage {
       .getByTestId("is-active-checkbox")
       .locator("input"),
   ) {
-    this.page = page;
+    super(page);
     this.request = request;
     this.basePage = new BasePage(page);
     this.mailpitService = new MailpitService(request);
@@ -53,5 +53,9 @@ export class StaffMembersPage {
   }
   async clickSaveButton() {
     await this.saveButton.click();
+  }
+  async gotToExistingStaffMemberPage(staffMemberId: string) {
+    const staffMemberUrl = `${URL_LIST.staffMembers}${staffMemberId}`;
+    await this.page.goto(staffMemberUrl);
   }
 }
