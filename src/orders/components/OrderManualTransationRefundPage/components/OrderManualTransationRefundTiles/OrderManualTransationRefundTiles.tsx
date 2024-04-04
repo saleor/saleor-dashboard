@@ -21,7 +21,7 @@ export const OrderManualTransationRefundTiles = ({
   const error = formState.errors.transationId;
 
   if (loading) {
-    return <Skeleton marginTop={5} />;
+    return <Skeleton marginTop={5} data-test-id="loading-skeleton" />;
   }
 
   if (!transactions.length) {
