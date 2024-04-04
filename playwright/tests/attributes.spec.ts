@@ -84,8 +84,7 @@ for (const attr of attributeClasses) {
       await attributesPage.clickValueRequiredCheckbox();
       await attributesPage.clickSaveButton();
       await attributesPage.expectSuccessBanner();
-          await (attributesPage.valueRequiredCheckbox).waitFor({ state: "visible", timeout: 10000});
-
+      await (attributesPage.valueRequiredCheckbox).waitFor({ state: "visible", timeout: 10000});
       await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
       await expect(attributesPage.attrVisibleInStorefrontSwitch).toBeChecked();
       await expect(attributesPage.valueRequiredCheckbox).not.toBeChecked();
@@ -108,6 +107,7 @@ for (const attribute of attributesWithValuesToBeUpdated) {
     await attributesPage.editAttributeValueDialog.saveNewAttributeValue();
     await attributesPage.clickAssignAttributeValueButton();
     await attributesPage.addValueDialog.typeAndSaveAttributeValue(`new value for ${attribute.name}`);
+    await attributesPage.expectSuccessBanner()
     await attributesPage.clickSaveButton();
     await attributesPage.expectSuccessBanner();
     await expect(attributesPage.attrValuesSection).not.toContainText(attribute.valueToBeDeleted);
@@ -157,5 +157,6 @@ test("TC: SALEOR_130 Bulk delete attributes @e2e @attributes", async () => {
   await attributesPage.clickOnSpecificPositionOnPage(60, 136)
   await attributesPage.clickBulkDeleteGridRowsButton();
   await attributesPage.deleteAttributesInBulkDialog.deleteSelectedAttributes();
+  await attributesPage.expectSuccessBanner();
   await expect(attributesPage.emptyDataGridListView).toBeVisible();
   });

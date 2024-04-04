@@ -26,6 +26,7 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
   await giftCardsPage.issueGiftCardDialog.clickCopyCodeButton();
   await giftCardsPage.expectSuccessBanner();
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
+  await giftCardsPage.waitForGrid();
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForGrid();
   const actualNumberOfRows = await giftCardsPage.getNumberOfGridRows();
@@ -44,7 +45,7 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
   await giftCardsPage.issueGiftCardDialog.clickIssueButton();
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
-
+  await giftCardsPage.waitForGrid();
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForGrid();
   const actualNumberOfRows = await giftCardsPage.getNumberOfGridRows();
