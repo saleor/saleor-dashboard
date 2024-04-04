@@ -2,7 +2,6 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { TransactionItemFragment } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -10,7 +9,7 @@ import { FormattedMessage } from "react-intl";
 
 import { OrderManualTransationRefundAmount } from "./components/OrderManualTransationRefundAmount";
 import { OrderManualTransationRefundForm } from "./components/OrderManualTransationRefundForm";
-import { OrderTransactionTiles } from "./components/OrderTransactionTile";
+import { OrderManualTransationRefundTiles } from "./components/OrderManualTransationRefundTiles";
 import { messages } from "./messages";
 
 interface OrderManualTransationRefundProps {
@@ -30,14 +29,10 @@ export const OrderManualTransationRefundPage = ({
   submitLoading,
   onSubmit,
 }: OrderManualTransationRefundProps) => {
-  const navigate = useNavigator();
-
-  const onCancel = () => navigate(orderUrl(orderId));
-
   return (
     <OrderManualTransationRefundForm
+      orderId={orderId}
       onSubmit={onSubmit}
-      onCancel={onCancel}
       loading={submitLoading}
       initialValues={{
         amount: 0,
@@ -57,7 +52,7 @@ export const OrderManualTransationRefundPage = ({
                 <FormattedMessage {...messages.selectTransation} />
               </Text>
 
-              <OrderTransactionTiles
+              <OrderManualTransationRefundTiles
                 loading={loading}
                 transactions={transactions}
               />

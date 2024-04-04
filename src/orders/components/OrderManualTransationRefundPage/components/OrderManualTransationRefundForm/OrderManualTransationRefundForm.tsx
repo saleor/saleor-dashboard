@@ -1,4 +1,6 @@
 import Savebar from "@dashboard/components/Savebar";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { orderUrl } from "@dashboard/orders/urls";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -13,18 +15,19 @@ interface OrderManualTransationRefundFormProps {
   children: ReactNode;
   loading: boolean;
   initialValues: ManualRefundForm;
-  onCancel: () => void;
+  orderId: string;
   onSubmit: (transationId: string, amount: number) => void;
 }
 
 export const OrderManualTransationRefundForm = ({
   onSubmit,
-  onCancel,
+  orderId,
   initialValues,
   loading,
   children,
 }: OrderManualTransationRefundFormProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const methods = useForm<ManualRefundForm>({
     mode: "onBlur",
@@ -46,7 +49,7 @@ export const OrderManualTransationRefundForm = ({
 
         <Savebar
           disabled={false}
-          onCancel={onCancel}
+          onCancel={() => navigate(orderUrl(orderId))}
           onSubmit={methods.handleSubmit(handleSubmit)}
           state={loading ? "loading" : "default"}
         />

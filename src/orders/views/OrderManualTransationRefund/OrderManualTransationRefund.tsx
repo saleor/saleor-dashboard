@@ -38,7 +38,7 @@ const OrderManualTransationRefund = ({
   const [manualRefund, manualRefundOpts] =
     useOrderTransactionRequestActionMutation({
       onCompleted: (data: OrderTransactionRequestActionMutation) => {
-        if (data.transactionRequestAction?.errors) {
+        if (data.transactionRequestAction?.errors?.length) {
           notify({
             status: "error",
             text: getOrderTransactionErrorMessage(
