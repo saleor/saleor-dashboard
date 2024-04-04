@@ -1,0 +1,34 @@
+name: Create check
+on:
+  push:
+
+jobs:
+  add-check-to-PR:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Get Pull Request head_sha
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/saleor/saleor-dashboard/pulls \
+          -f head=saleor:Test-add-tests-check-to-release-PR > data.json
+          echo "PULL_REQUEST_HEAD_SHA=$(jq '.[0] | .head.sha' data.json)" >> $GITHUB_ENV
+
+      - name: Create check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PULL_REQUEST_HEAD_SHA: ${steps.outputs.PULL_REQUEST_HEAD_SHA}
+        run: |
+          curl -L \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/saleor/saleor-dashboard/check-runs \
+          -d '{"name":"Automation_tests_check","head_sha":"${{ env.PULL_REQUEST_HEAD_SHA }}","status":"in_progress","output":{"title":"Automation tests","summary":"","text":""}}'
+
+
