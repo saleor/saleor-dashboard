@@ -1,11 +1,10 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import {
-  OrderDetailsGrantedRefundFragment,
   OrderDetailsGrantRefundFragment,
+  TransactionActionEnum,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
@@ -22,9 +21,6 @@ import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderT
 export interface OrderTransactionRefundPageProps {
   order: OrderDetailsGrantRefundFragment | null | undefined;
   loading: boolean;
-  submitState?: ConfirmButtonTransitionState;
-  isEdit?: boolean;
-  initialData?: OrderDetailsGrantedRefundFragment;
 }
 
 export interface QuantityToRefund {
@@ -45,6 +41,21 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   // loading,
   // submitState,
 }) => {
+  const getDefaultTransaction = (
+    transactions: OrderDetailsGrantRefundFragment["transactions"] | undefined,
+  ) =>
+    transactions?.find(transaction =>
+      transaction.actions.includes(TransactionActionEnum.REFUND),
+    )?.id;
+
+  const defaultValues: OrderTransactionRefundPageFormData = {
+    qtyToRefund: [],
+    transactionId: getDefaultTransaction(order?.transactions),
+    includeShipping: false,
+    amount: 0,
+    reason: "",
+  };
+
   // const intl = useIntl();
   // const { locale } = useLocale();
   const navigate = useNavigator();
@@ -56,23 +67,11 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
 
   const { control, setValue, handleSubmit, watch, getValues, reset } =
     useForm<OrderTransactionRefundPageFormData>({
-      defaultValues: {
-        qtyToRefund: [],
-        transactionId: order?.transactions[0]?.id,
-        includeShipping: false,
-        amount: 0,
-        reason: "",
-      },
+      defaultValues,
     });
 
   React.useEffect(() => {
-    reset({
-      qtyToRefund: [],
-      transactionId: order?.transactions[0]?.id,
-      includeShipping: false,
-      amount: 0,
-      reason: "",
-    });
+    reset(defaultValues);
   }, [order]);
 
   const handleQtyToRefundChange = (data: DatagridChangeOpts) => {

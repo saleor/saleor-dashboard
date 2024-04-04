@@ -1,14 +1,23 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import EventTime from "@dashboard/components/EventTime";
 import Money from "@dashboard/components/Money";
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import {
+  OrderDetailsGrantRefundFragment,
+  TransactionActionEnum,
+} from "@dashboard/graphql";
 import {
   EventStatus,
   PspReference,
 } from "@dashboard/orders/components/OrderTransaction/components/TransactionEvents/components";
 import { EventType } from "@dashboard/orders/components/OrderTransaction/components/TransactionEvents/components/EventType";
 import { mapTransactionEvent } from "@dashboard/orders/components/OrderTransaction/utils";
-import { Box, RadioGroup, Skeleton, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  RadioGroup,
+  Skeleton,
+  Text,
+  Tooltip,
+} from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, useController } from "react-hook-form";
 
@@ -31,72 +40,107 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
     <DashboardCard>
       <DashboardCard.Content>
         <RadioGroup value={field.value} onValueChange={field.onChange}>
-          {/* TODO: filter out non-refundable transactions (see SendRefund view) */}
-          {transactions.map(transaction => (
-            <Box
-              key={transaction.id}
-              borderStyle="solid"
-              borderWidth={1}
-              borderColor="default1"
-              borderRadius={3}
-              // padding={4}
-              display="flex"
-              flexDirection="column"
-              marginBottom={3}
-            >
-              <RadioGroup.Item
-                id={transaction.id}
-                value={transaction.id}
-                padding={4}
+          {transactions.map(transaction => {
+            const isDisabled = !transaction.actions.includes(
+              TransactionActionEnum.REFUND,
+            );
+            return (
+              <Box
+                key={transaction.id}
+                borderStyle="solid"
+                borderWidth={1}
+                borderColor="default1"
+                borderRadius={3}
+                display="flex"
+                flexDirection="column"
+                marginBottom={3}
               >
-                <Text size={5} fontWeight="medium" padding={4}>
-                  {transaction.name === "" ? "Transaction" : transaction.name}
-                </Text>
-              </RadioGroup.Item>
-
-              <Box>
-                {transaction.events.map((event, eventIndex) => {
-                  const { type, status } = mapTransactionEvent(event);
-                  return (
-                    <Box
-                      key={event.id}
-                      display="grid"
-                      gridTemplateColumns={5}
-                      alignItems="center"
-                      gap={8}
-                      // marginBottom={4}
-                      borderBottomStyle={
-                        eventIndex === transaction.events.length - 1
-                          ? "none"
-                          : "solid"
-                      }
-                      borderBottomWidth={1}
-                      borderColor="default1"
+                {isDisabled ? (
+                  <Tooltip>
+                    <Tooltip.Trigger>
+                      <RadioGroup.Item
+                        id={transaction.id}
+                        value={transaction.id}
+                        padding={4}
+                        disabled={isDisabled}
+                      >
+                        <Text
+                          size={5}
+                          fontWeight="medium"
+                          padding={4}
+                          color={isDisabled ? "defaultDisabled" : "default1"}
+                        >
+                          {transaction.name === ""
+                            ? "Transaction"
+                            : transaction.name}
+                        </Text>
+                      </RadioGroup.Item>
+                    </Tooltip.Trigger>
+                    <Tooltip.Content side="left">
+                      This transaction is non-refundable.
+                    </Tooltip.Content>
+                  </Tooltip>
+                ) : (
+                  <RadioGroup.Item
+                    id={transaction.id}
+                    value={transaction.id}
+                    padding={4}
+                    disabled={isDisabled}
+                  >
+                    <Text
+                      size={5}
+                      fontWeight="medium"
                       padding={4}
+                      color={isDisabled ? "defaultDisabled" : "default1"}
                     >
-                      {/* TODO: figure out how much of a macaw migration is needed */}
-                      {/* TODO: Add justifyItems to sprinkles */}
-                      <Box justifySelf="start" marginLeft={4}>
-                        <EventStatus status={status} />
-                      </Box>
+                      {transaction.name === ""
+                        ? "Transaction"
+                        : transaction.name}
+                    </Text>
+                  </RadioGroup.Item>
+                )}
 
-                      <Money money={event.amount} />
-                      <EventType type={type} message={event.message} />
-                      {event.pspReference ? (
-                        <PspReference
-                          reference={event.pspReference}
-                          url={event.externalUrl}
-                        />
-                      ) : (
-                        <Box />
-                      )}
-                      <EventTime date={event.createdAt} />
-                    </Box>
-                  );
-                })}
+                <Box>
+                  {transaction.events.map((event, eventIndex) => {
+                    const { type, status } = mapTransactionEvent(event);
+                    return (
+                      <Box
+                        key={event.id}
+                        display="grid"
+                        gridTemplateColumns={5}
+                        alignItems="center"
+                        gap={8}
+                        borderBottomStyle={
+                          eventIndex === transaction.events.length - 1
+                            ? "none"
+                            : "solid"
+                        }
+                        borderBottomWidth={1}
+                        borderColor="default1"
+                        padding={4}
+                      >
+                        <Box justifySelf="start" marginLeft={4}>
+                          <EventStatus status={status} />
+                        </Box>
+
+                        <Money money={event.amount} />
+                        <EventType type={type} message={event.message} />
+                        {event.pspReference ? (
+                          <PspReference
+                            reference={event.pspReference}
+                            url={event.externalUrl}
+                          />
+                        ) : (
+                          <Box />
+                        )}
+                        <EventTime date={event.createdAt} />
+                      </Box>
+                    );
+                  })}
+                </Box>
               </Box>
-            </Box>
-          ))}
+            );
+          })}
         </RadioGroup>
       </DashboardCard.Content>
     </DashboardCard>
