@@ -29,7 +29,7 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           https://api.github.com/repos/saleor/saleor-dashboard/check-runs \
           -d '{
-            "name":"Automation_tests_check",
+            "name":"Automation_tests_run",
             "head_sha":${{ env.PULL_REQUEST_HEAD_SHA }},
             "status":"in_progress",
             "output":{
@@ -51,7 +51,7 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           https://api.github.com/repos/saleor/saleor-dashboard/check-runs/${{env.CHECK_ID}} \
           -d '{
-            "name":"Automation_tests",
+            "name":"Automation_tests_run",
             "status":"completed",
             "conclusion":"success",
             "output":{
