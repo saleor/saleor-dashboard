@@ -24,7 +24,7 @@ import {
 } from "./datagrid";
 
 interface OrderTransactionRefundDatagridProps {
-  order: OrderDetailsGrantRefundFragment;
+  order: OrderDetailsGrantRefundFragment | undefined | null;
   control: Control<OrderTransactionRefundPageFormData, any>;
   onChange: (data: DatagridChangeOpts) => void;
   onMaxQtySet: (rows: number[]) => void;
@@ -90,7 +90,7 @@ export const OrderTransactionRefundDatagrid: React.FC<
               emptyText={""}
               getCellContent={getCellContent}
               getCellError={() => false}
-              rows={order?.lines.length}
+              rows={order?.lines.length ?? 0}
               selectionActions={values => (
                 // I think this is better to put above datagrid
                 <>

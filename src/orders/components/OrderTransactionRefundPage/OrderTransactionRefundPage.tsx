@@ -20,7 +20,7 @@ import { OrderTransactionSummary } from "./components/OrderTransactionRefundSumm
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
 
 export interface OrderTransactionRefundPageProps {
-  order: OrderDetailsGrantRefundFragment;
+  order: OrderDetailsGrantRefundFragment | null | undefined;
   loading: boolean;
   submitState?: ConfirmButtonTransitionState;
   isEdit?: boolean;
@@ -76,27 +76,40 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   }, [order]);
 
   const handleQtyToRefundChange = (data: DatagridChangeOpts) => {
-    setValue(
-      "qtyToRefund",
-      data.updates.map(update => ({
-        row: update.row,
-        value: parseInt(update.data.value) || 0,
-      })),
+    const unchangedQuantites = qtyToRefund.filter(
+      qty => qty.row !== data.currentUpdate?.row,
     );
+    const validateQty = (update: DatagridChangeOpts["currentUpdate"]) => {
+      if (!update?.data.value || !order) {
+        return 0;
+      }
+      const value = parseInt(update.data.value);
+      if (isNaN(value)) {
+        return 0;
+      }
+      if (value < 0) {
+        return 0;
+      }
+      if (value > order.lines[update.row].quantity) {
+        return order.lines[update.row].quantity;
+      }
+      return value;
+    };
+    if (data.currentUpdate) {
+      setValue("qtyToRefund", [
+        ...unchangedQuantites,
+        {
+          row: data.currentUpdate.row,
+          value: validateQty(data.currentUpdate),
+        },
+      ]);
+    }
   };
-  const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = () =>
-    null;
-
-  const qtyToRefund = watch("qtyToRefund");
-  const includeShipping = watch("includeShipping");
-
-  const selectedProductsValue = qtyToRefund?.reduce((acc, curr) => {
-    const unitPrice = order.lines[curr.row].unitPrice.gross.amount;
-    const totalPrice = unitPrice * curr.value;
-    return acc + totalPrice;
-  }, 0);
 
   const handleSetMaximumQty = (rows: number[]) => {
+    if (!order) {
+      return;
+    }
     const unchangedQuantites = qtyToRefund.filter(
       qty => !rows.includes(qty.row),
     );
@@ -107,11 +120,23 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     setValue("qtyToRefund", [...unchangedQuantites, ...newQtyToRefund]);
   };
 
+  const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = () =>
+    null;
+
+  const qtyToRefund = watch("qtyToRefund");
+  const includeShipping = watch("includeShipping");
+
+  const selectedProductsValue = qtyToRefund?.reduce((acc, curr) => {
+    const unitPrice = order?.lines[curr.row].unitPrice.gross.amount;
+    const totalPrice = unitPrice ?? 0 * curr.value;
+    return acc + totalPrice;
+  }, 0);
+
   React.useEffect(() => {
     const customAmount = getValues("amount");
     if (includeShipping) {
       const shippingPrice = order?.shippingPrice.gross.amount;
-      const totalAmount = selectedProductsValue + shippingPrice;
+      const totalAmount = selectedProductsValue + (shippingPrice ?? 0);
       if (totalAmount !== customAmount) {
         setValue("amount", totalAmount);
       }
@@ -126,7 +151,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   return (
     <DetailPageLayout gridTemplateColumns={1}>
       <Box as="form" display="contents" onSubmit={handleSubmit(onSubmit)}>
-        <TopNav href={orderUrl(order?.id)} title={"Edit refund"}></TopNav>
+        <TopNav href={orderUrl(order?.id ?? "")} title={"Edit refund"}></TopNav>
         <DetailPageLayout.Content>
           <DashboardCard>
             <DashboardCard.Content marginBottom={5}>
@@ -184,7 +209,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           >
             <Button
               variant="secondary"
-              onClick={() => navigate(orderUrl(order?.id))}
+              onClick={() => navigate(orderUrl(order?.id ?? ""))}
             >
               Cancel
             </Button>

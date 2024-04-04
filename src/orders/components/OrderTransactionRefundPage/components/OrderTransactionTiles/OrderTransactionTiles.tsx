@@ -15,7 +15,7 @@ import { Control, useController } from "react-hook-form";
 import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
 
 interface OrderTransactionTilesProps {
-  transactions: OrderDetailsGrantRefundFragment["transactions"];
+  transactions: OrderDetailsGrantRefundFragment["transactions"] | undefined;
   control: Control<OrderTransactionRefundPageFormData, any>;
 }
 
