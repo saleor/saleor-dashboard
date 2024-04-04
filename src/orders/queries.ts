@@ -237,7 +237,7 @@ export const orderTransationsData = gql`
     order(id: $orderId) {
       id
       transactions {
-        ...TransactionItem
+        ...TransactionBaseItem
       }
       total {
         gross {

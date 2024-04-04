@@ -1,5 +1,5 @@
 import Money from "@dashboard/components/Money";
-import { TransactionItemFragment } from "@dashboard/graphql";
+import { TransactionBaseEventFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -12,7 +12,7 @@ import { EventType } from "../OrderTransaction/components/TransactionEvents/comp
 import { mapTransactionEvent } from "../OrderTransaction/utils";
 
 interface OrderTransactionTileEventProps {
-  event: TransactionItemFragment["events"][number];
+  event: TransactionBaseEventFragment;
 }
 
 export const OrderTransactionTileEvent = ({

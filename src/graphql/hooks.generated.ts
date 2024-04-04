@@ -1433,6 +1433,29 @@ export const RefundOrderLineFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
+export const TransactionBaseEventFragmentDoc = gql`
+    fragment TransactionBaseEvent on TransactionEvent {
+  id
+  pspReference
+  amount {
+    ...Money
+  }
+  externalUrl
+  type
+  message
+  createdAt
+}
+    ${MoneyFragmentDoc}`;
+export const TransactionBaseItemFragmentDoc = gql`
+    fragment TransactionBaseItem on TransactionItem {
+  id
+  name
+  actions
+  events {
+    ...TransactionBaseEvent
+  }
+}
+    ${TransactionBaseEventFragmentDoc}`;
 export const StaffMemberFragmentDoc = gql`
     fragment StaffMember on User {
   id
@@ -1458,14 +1481,7 @@ export const AppAvatarFragmentDoc = gql`
     `;
 export const TransactionEventFragmentDoc = gql`
     fragment TransactionEvent on TransactionEvent {
-  id
-  pspReference
-  amount {
-    ...Money
-  }
-  type
-  message
-  createdAt
+  ...TransactionBaseEvent
   createdBy {
     ... on User {
       ...StaffMemberAvatar
@@ -1476,15 +1492,13 @@ export const TransactionEventFragmentDoc = gql`
   }
   externalUrl
 }
-    ${MoneyFragmentDoc}
+    ${TransactionBaseEventFragmentDoc}
 ${StaffMemberAvatarFragmentDoc}
 ${AppAvatarFragmentDoc}`;
 export const TransactionItemFragmentDoc = gql`
     fragment TransactionItem on TransactionItem {
-  id
+  ...TransactionBaseItem
   pspReference
-  actions
-  name
   externalUrl
   events {
     ...TransactionEvent
@@ -1514,7 +1528,8 @@ export const TransactionItemFragmentDoc = gql`
     ...Money
   }
 }
-    ${TransactionEventFragmentDoc}
+    ${TransactionBaseItemFragmentDoc}
+${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
 export const OrderPaymentFragmentDoc = gql`
     fragment OrderPayment on Payment {
@@ -12136,7 +12151,7 @@ export const OrderTransationsDataDocument = gql`
   order(id: $orderId) {
     id
     transactions {
-      ...TransactionItem
+      ...TransactionBaseItem
     }
     total {
       gross {
@@ -12145,7 +12160,7 @@ export const OrderTransationsDataDocument = gql`
     }
   }
 }
-    ${TransactionItemFragmentDoc}
+    ${TransactionBaseItemFragmentDoc}
 ${MoneyFragmentDoc}`;
 
 /**

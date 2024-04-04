@@ -1,4 +1,4 @@
-import { TransactionItemFragment } from "@dashboard/graphql";
+import { TransactionBaseItemFragment } from "@dashboard/graphql";
 import { OrderTransactionTile } from "@dashboard/orders/components/OrderTransactionTile";
 import { RadioGroup, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -10,7 +10,7 @@ import { ManualRefundForm } from "../OrderManualTransationRefundForm/manualRefun
 
 interface OrderManualTransationRefundTilesProps {
   loading: boolean;
-  transactions: TransactionItemFragment[];
+  transactions: TransactionBaseItemFragment[];
 }
 
 export const OrderManualTransationRefundTiles = ({

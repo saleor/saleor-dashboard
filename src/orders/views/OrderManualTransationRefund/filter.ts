@@ -1,10 +1,10 @@
 import {
   TransactionActionEnum,
-  TransactionItemFragment,
+  TransactionBaseItemFragment,
 } from "@dashboard/graphql";
 
 export const filterRefundTransactions = (
-  transactions: TransactionItemFragment[],
+  transactions: TransactionBaseItemFragment[],
 ) => {
   return transactions.filter(transaction =>
     transaction.actions.includes(TransactionActionEnum.REFUND),

@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import {
   TransactionActionEnum,
+  TransactionBaseEventFragment,
   TransactionEventFragment,
   TransactionEventTypeEnum,
   TransactionItemFragment,
@@ -112,7 +113,11 @@ const typeMap: Record<TransactionEventTypeEnum, TransactionMappingResult> = {
 };
 
 export const mapTransactionEvent = (
-  event: TransactionEventFragment | TransactionFakeEvent | undefined,
+  event:
+    | TransactionEventFragment
+    | TransactionFakeEvent
+    | TransactionBaseEventFragment
+    | undefined,
 ): TransactionMappingResult => {
   if (!event) {
     return {

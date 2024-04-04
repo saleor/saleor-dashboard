@@ -2,7 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { TransactionItemFragment } from "@dashboard/graphql";
+import { TransactionBaseItemFragment } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -15,7 +15,7 @@ import { messages } from "./messages";
 
 interface OrderManualTransationRefundProps {
   orderId: string;
-  transactions: TransactionItemFragment[];
+  transactions: TransactionBaseItemFragment[];
   loading: boolean;
   currency: string;
   submitStatus: ConfirmButtonTransitionState;
