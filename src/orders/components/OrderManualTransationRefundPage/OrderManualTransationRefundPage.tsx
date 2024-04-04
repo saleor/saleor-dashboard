@@ -30,9 +30,11 @@ export const OrderManualTransationRefundPage = ({
   submitStatus,
   onSubmit,
 }: OrderManualTransationRefundProps) => {
+  const hasTransactionsToRefund = transactions.length > 0;
+
   return (
     <OrderManualTransationRefundForm
-      disabled={loading}
+      disabled={loading || !hasTransactionsToRefund}
       orderId={orderId}
       onSubmit={onSubmit}
       submitStatus={submitStatus}

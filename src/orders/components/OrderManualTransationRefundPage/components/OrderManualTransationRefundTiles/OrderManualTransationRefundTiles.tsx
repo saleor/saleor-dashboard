@@ -3,7 +3,9 @@ import { OrderTransactionTile } from "@dashboard/orders/components/OrderTransact
 import { RadioGroup, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
+import { messages } from "../../messages";
 import { ManualRefundForm } from "../OrderManualTransationRefundForm/manualRefundValidationSchema";
 
 interface OrderManualTransationRefundTilesProps {
@@ -20,6 +22,14 @@ export const OrderManualTransationRefundTiles = ({
 
   if (loading) {
     return <Skeleton marginTop={5} />;
+  }
+
+  if (!transactions.length) {
+    return (
+      <Text color="default2">
+        <FormattedMessage {...messages.noTransactions} />
+      </Text>
+    );
   }
 
   return (
