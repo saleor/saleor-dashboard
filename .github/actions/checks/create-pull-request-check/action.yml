@@ -51,7 +51,7 @@ runs:
         https://api.github.com/repos/saleor/saleor-dashboard/check-runs \
         -d '{
           "name":"${{env.NAME}}",
-          "head_sha":"${{ env.PULL_REQUEST_HEAD_SHA }}",
+          "head_sha":${{ env.PULL_REQUEST_HEAD_SHA }},
           "status":"${{env.STATUS}}",
           "output":{
             "title":"${{env.TITLE}}",
