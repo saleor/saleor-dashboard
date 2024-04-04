@@ -35,6 +35,7 @@ const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
       ></CardTitle>
       <CardContent>
         <TextField
+          data-test-id="permission-group-name-input"
           name="name"
           label={intl.formatMessage({
             id: "rs815i",
