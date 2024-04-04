@@ -16,6 +16,9 @@ jobs:
           STATUS: "in_progress"
           TITLE: "Automation tests run"
 
+      - name: Print PR HEAD_SHA
+        run: echo "&{{ steps.create-check.outputs.PR_EXIST }}"
+
       - id: update-check
         if: ${{ steps.create-check.outputs.PR_EXIST }}
         uses: ./.github/actions/checks/update-pull-request-check
