@@ -20,7 +20,6 @@ jobs:
       - name: Create check
         env:
           GH_TOKEN: ${{ github.token }}
-          PULL_REQUEST_HEAD_SHA: ${steps.outputs.PULL_REQUEST_HEAD_SHA}
         run: |
           echo ${env.PULL_REQUEST_HEAD_SHA} 
 
