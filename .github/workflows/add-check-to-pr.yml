@@ -55,7 +55,8 @@ jobs:
             "status":"completed",
             "conclusion":"success",
             "output":{
-              "title":"Automation tests run","summary":"There are 0 failures, 2 warnings, and 1 notices.",
-              "text":"",
+              "title":"Automation tests run",
+              "summary":"There are 0 failures, 2 warnings, and 1 notices.",
+              "text":""
             }
           }'
