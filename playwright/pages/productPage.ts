@@ -74,6 +74,8 @@ export class ProductPage extends BasePage {
     readonly costPriceInput = page.locator("[name*='costPrice']"),
     readonly sellingPriceInput = page.locator("[name*='channel-price']"),
     readonly firstRowDataGrid = page.locator("[data-testid='glide-cell-1-0']"),
+    readonly searchInput = page.getByTestId("search-input"),
+    readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
   ) {
     super(page);
     this.basePage = new BasePage(page);
@@ -89,21 +91,16 @@ export class ProductPage extends BasePage {
     const createProductUrl = `${URL_LIST.products}${URL_LIST.productsAdd}${productTypeId}`;
     await console.log("Navigating to create product view: " + createProductUrl);
     await this.page.goto(createProductUrl);
-    await this.waitForDOMToFullyLoad();
     await this.pageHeader.waitFor({ state: "visible", timeout: 50000 });
   }
-
   async searchforProduct(productName: string) {
     await this.searchInput.fill(productName);
     await this.waitForGrid();
-    await this.waitForDOMToFullyLoad();
   }
-
   async gotoExistingProductPage(productId: string) {
     const existingProductUrl = `${URL_LIST.products}${productId}`;
     console.log(`Navigating to existing product: ${existingProductUrl}`);
     await this.page.goto(existingProductUrl);
-    await this.waitForDOMToFullyLoad();
     await this.pageHeader.waitFor({ state: "visible", timeout: 50000 });
   }
 

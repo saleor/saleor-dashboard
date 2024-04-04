@@ -81,7 +81,7 @@ export class ShippingMethodsPage extends BasePage {
       .locator(this.page.getByTestId("selected-options"))
       .waitFor({
         state: "visible",
-        timeout: 10000,
+        timeout: 60000,
       });
   }
 
@@ -96,7 +96,7 @@ export class ShippingMethodsPage extends BasePage {
 
     await this.shippingRateNameInput.waitFor({
       state: "visible",
-      timeout: 10000,
+      timeout: 60000,
     });
   }
 

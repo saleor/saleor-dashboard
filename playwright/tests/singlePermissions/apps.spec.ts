@@ -1,19 +1,22 @@
 import { URL_LIST } from "@data/url";
 import { AppsPage } from "@pages/appsPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
+import { HomePage } from "@pages/homePage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/app.json" });
-
-test("TC: SALEOR_10 User should be able to navigate to apps list as a staff member using APP permission @e2e", async ({
-  page,
-}) => {
-  const mainMenuPage = new MainMenuPage(page);
-  const appsPage = new AppsPage(page);
-
-  await page.goto(URL_LIST.homePage);
+let mainMenuPage: MainMenuPage
+let appsPage: AppsPage
+let home:HomePage
+test.beforeEach(async ({ page }) => {
+  mainMenuPage = new MainMenuPage(page);
+  appsPage = new AppsPage(page);
+home = new HomePage(page)})
+test("TC: SALEOR_10 User should be able to navigate to apps list as a staff member using APP permission @e2e", async () => {
+  await home.goto();
+  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
   await mainMenuPage.openApps();
+  await appsPage.installedAppsList.waitFor({ state: "visible", timeout: 30000 });
   await expect(appsPage.installExternalAppButton).toBeVisible();
-  await expect(appsPage.installedAppsList).toBeVisible();
   await mainMenuPage.expectMenuItemsCount(2);
 });
