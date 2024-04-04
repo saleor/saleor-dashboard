@@ -7,13 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/checks/create-pull-request-check
+      
+      - id: create-check
+        uses: ./.github/actions/checks/create-pull-request-check
         with:
           PR_HEAD: "Test-add-tests-check-to-release-PR"
           CHECK_NAME: "Automation_tests_run"
           STATUS: "in_progress"
           TITLE: "Automation tests run"
-        id: create-check
       # - name: Get Pull Request head_sha
       #   env:
       #     GH_TOKEN: ${{ github.token }}
