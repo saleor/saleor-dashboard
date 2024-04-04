@@ -21,8 +21,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo ${env.PULL_REQUEST_HEAD_SHA} 
-
           curl -L \
           -X POST \
           -H "Accept: application/vnd.github+json" \
