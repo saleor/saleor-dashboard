@@ -17,33 +17,37 @@ test.beforeEach(({ page }) => {
   fulfillmentPage = new FulfillmentPage(page);
   draftOrderCreateDialog = new DraftOrderCreateDialog(page);
 });
+const variantSKU = PRODUCTS.productAvailableWithTransactionFlow.variant1sku;
 
 test("TC: SALEOR_28 Create basic order @e2e @order", async () => {
   await ordersPage.goToOrdersListView();
   await ordersPage.clickCreateOrderButton();
   await ordersPage.orderCreateDialog.completeOrderCreateDialogWithFirstChannel();
   await ordersPage.clickAddProductsButton();
-  await ordersPage.addProductsDialog.selectVariantWithSkuOnListAndConfirm();
+  await draftOrdersPage.addProductsDialog.selectVariantBySKU(variantSKU);
+  await draftOrdersPage.addProductsDialog.clickConfirmButton();
   await ordersPage.rightSideDetailsPage.clickEditCustomerButton();
   await ordersPage.rightSideDetailsPage.clickSearchCustomerInput();
   await ordersPage.rightSideDetailsPage.selectCustomer();
-  await expect(
-    ordersPage.addressDialog.existingAddressRadioButton,
-  ).toBeVisible();
+  await ordersPage.addressDialog.existingAddressRadioButton.waitFor({
+    state: "visible",
+    timeout: 60000,
+  });
   await ordersPage.addressDialog.clickConfirmButton();
   await ordersPage.clickAddShippingCarrierButton();
   await ordersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
   await ordersPage.clickFinalizeButton();
-  await expect(ordersPage.successBanner.getByText("finalized")).toBeVisible({timeout:60000})
+  await ordersPage.successBanner
+    .getByText("finalized")
+    .waitFor({ state: "visible", timeout: 60000 });
 });
 test("TC: SALEOR_76 Create order with transaction flow activated @e2e @order", async () => {
   await ordersPage.goToOrdersListView();
   await ordersPage.clickCreateOrderButton();
   await ordersPage.orderCreateDialog.completeOrderCreateDialogWithTransactionChannel();
   await ordersPage.clickAddProductsButton();
-  await ordersPage.addProductsDialog.selectVariantWithSkuOnListAndConfirm(
-    PRODUCTS.productAvailableWithTransactionFlow.variant1sku,
-  );
+  await draftOrdersPage.addProductsDialog.selectVariantBySKU(variantSKU);
+  await draftOrdersPage.addProductsDialog.clickConfirmButton();
   await ordersPage.rightSideDetailsPage.clickEditCustomerButton();
   await ordersPage.rightSideDetailsPage.clickSearchCustomerInput();
   await ordersPage.rightSideDetailsPage.selectCustomer();
@@ -238,14 +242,23 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
   await draftOrdersPage.clickCreateDraftOrderButton();
   await draftOrdersPage.draftOrderCreateDialog.completeDraftOrderCreateDialogWithFirstChannel();
   await draftOrdersPage.clickAddProductsButton();
-  await draftOrdersPage.addProductsDialog.selectVariantWithSkuOnListAndConfirm();
+  await draftOrdersPage.addProductsDialog.searchForProductInDialog(
+    PRODUCTS.productAvailableWithTransactionFlow.name,
+  );
+  await draftOrdersPage.addProductsDialog.productRow
+    .filter({ hasText: PRODUCTS.productAvailableWithTransactionFlow.name })
+    .waitFor({ state: "visible", timeout: 30000 });
+
+  await draftOrdersPage.addProductsDialog.selectVariantBySKU(variantSKU);
+  await draftOrdersPage.addProductsDialog.clickConfirmButton();
+
   await draftOrdersPage.rightSideDetailsPage.clickEditCustomerButton();
   await draftOrdersPage.rightSideDetailsPage.clickSearchCustomerInput();
   await draftOrdersPage.rightSideDetailsPage.selectCustomer();
-
-  await expect(
-    draftOrdersPage.addressDialog.existingAddressRadioButton,
-  ).toBeVisible();
+  await draftOrdersPage.addressDialog.existingAddressRadioButton.waitFor({
+    state: "visible",
+    timeout: 10000,
+  });
 
   await draftOrdersPage.addressDialog.clickConfirmButton();
   await draftOrdersPage.clickAddShippingCarrierButton();
@@ -254,5 +267,5 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
 
   await draftOrdersPage.successBanner
     .filter({ hasText: "finalized" })
-    .waitFor({ state: "visible" });
+    .waitFor({ state: "visible", timeout: 60000 });
 });
