@@ -1,3 +1,4 @@
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Savebar from "@dashboard/components/Savebar";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
@@ -13,7 +14,8 @@ import {
 
 interface OrderManualTransationRefundFormProps {
   children: ReactNode;
-  loading: boolean;
+  disabled: boolean;
+  submitStatus: ConfirmButtonTransitionState;
   initialValues: ManualRefundForm;
   orderId: string;
   onSubmit: (transationId: string, amount: number) => void;
@@ -21,9 +23,10 @@ interface OrderManualTransationRefundFormProps {
 
 export const OrderManualTransationRefundForm = ({
   onSubmit,
+  disabled,
   orderId,
   initialValues,
-  loading,
+  submitStatus,
   children,
 }: OrderManualTransationRefundFormProps) => {
   const intl = useIntl();
@@ -48,10 +51,10 @@ export const OrderManualTransationRefundForm = ({
         {children}
 
         <Savebar
-          disabled={false}
+          disabled={disabled}
           onCancel={() => navigate(orderUrl(orderId))}
           onSubmit={methods.handleSubmit(handleSubmit)}
-          state={loading ? "loading" : "default"}
+          state={submitStatus}
         />
       </form>
     </FormProvider>

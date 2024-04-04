@@ -18,7 +18,6 @@ export const OrderTransactionTileRoot = ({
       borderRadius={3}
       display="flex"
       flexDirection="column"
-      marginBottom={3}
     >
       {children}
     </Box>

@@ -1,5 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { TransactionItemFragment } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
@@ -17,7 +18,7 @@ interface OrderManualTransationRefundProps {
   transactions: TransactionItemFragment[];
   loading: boolean;
   currency: string;
-  submitLoading: boolean;
+  submitStatus: ConfirmButtonTransitionState;
   onSubmit: (transationId: string, amount: number) => void;
 }
 
@@ -26,14 +27,15 @@ export const OrderManualTransationRefundPage = ({
   transactions,
   currency,
   loading,
-  submitLoading,
+  submitStatus,
   onSubmit,
 }: OrderManualTransationRefundProps) => {
   return (
     <OrderManualTransationRefundForm
+      disabled={loading}
       orderId={orderId}
       onSubmit={onSubmit}
-      loading={submitLoading}
+      submitStatus={submitStatus}
       initialValues={{
         amount: 0,
         transationId: transactions?.[0]?.id ?? "",

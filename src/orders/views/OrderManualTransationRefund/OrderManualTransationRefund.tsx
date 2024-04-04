@@ -71,7 +71,7 @@ const OrderManualTransationRefund = ({
       orderId={data?.order?.id ?? ""}
       transactions={filterRefundTransactions(data?.order?.transactions ?? [])}
       loading={loading}
-      submitLoading={manualRefundOpts.loading}
+      submitStatus={manualRefundOpts.status}
       onSubmit={handleSubmit}
       currency={data?.order?.total?.gross?.currency ?? ""}
     />

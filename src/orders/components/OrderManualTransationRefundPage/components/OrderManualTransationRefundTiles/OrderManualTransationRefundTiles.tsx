@@ -15,8 +15,7 @@ export const OrderManualTransationRefundTiles = ({
   transactions,
   loading,
 }: OrderManualTransationRefundTilesProps) => {
-  const { watch, formState } = useFormContext<ManualRefundForm>();
-  const transationId = watch("transationId");
+  const { formState } = useFormContext<ManualRefundForm>();
   const error = formState.errors.transationId;
 
   if (loading) {
@@ -31,43 +30,43 @@ export const OrderManualTransationRefundTiles = ({
         </Text>
       )}
 
-      <RadioGroup value={transationId}>
-        {transactions.map(transaction => (
-          <OrderTransactionTile error={!!error} key={transaction.id}>
-            <OrderTransactionTile.Header>
-              <Controller
-                name="transationId"
-                render={({
-                  field: { onChange, value, ...field },
-                  fieldState: { error },
-                }) => (
+      <Controller
+        name="transationId"
+        render={({
+          field: { onChange, value, ...field },
+          fieldState: { error },
+        }) => (
+          <RadioGroup
+            value={value}
+            onValueChange={onChange}
+            display="grid"
+            gap={3}
+          >
+            {transactions.map(transaction => (
+              <OrderTransactionTile error={!!error} key={transaction.id}>
+                <OrderTransactionTile.Header>
                   <RadioGroup.Item
                     {...field}
                     id={transaction.id}
                     value={transaction.id}
                     error={!!error}
-                    onChange={value => {
-                      onChange(value);
-                    }}
                     padding={4}
                   >
                     <Text size={5} fontWeight="medium" padding={4}>
-                      {transaction.name === ""
-                        ? "Transaction"
-                        : transaction.name}
+                      {transaction?.name || "Transaction"}
                     </Text>
                   </RadioGroup.Item>
-                )}
-              />
-            </OrderTransactionTile.Header>
-            <OrderTransactionTile.Events>
-              {transaction.events.map(event => (
-                <OrderTransactionTile.Event event={event} key={event.id} />
-              ))}
-            </OrderTransactionTile.Events>
-          </OrderTransactionTile>
-        ))}
-      </RadioGroup>
+                </OrderTransactionTile.Header>
+                <OrderTransactionTile.Events>
+                  {transaction.events.map(event => (
+                    <OrderTransactionTile.Event event={event} key={event.id} />
+                  ))}
+                </OrderTransactionTile.Events>
+              </OrderTransactionTile>
+            ))}
+          </RadioGroup>
+        )}
+      />
     </>
   );
 };
