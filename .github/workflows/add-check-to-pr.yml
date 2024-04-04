@@ -6,6 +6,7 @@ jobs:
   add-check-to-PR:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/checks/create-pull-request-check
         with:
           PR_HEAD: "Test-add-tests-check-to-release-PR"
