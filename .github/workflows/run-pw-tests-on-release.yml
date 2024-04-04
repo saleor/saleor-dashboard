@@ -1,0 +1,51 @@
+name: Run automation tests on release
+on:
+  push:
+
+jobs:
+  add-check-and-prepare-instance:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: "3.18"
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: create-check
+        uses: ./.github/actions/checks/create-pull-request-check
+        with:
+          PR_HEAD: "Test-add-tests-check-to-release-PR"
+          CHECK_NAME: "Automation_tests_run"
+          STATUS: "in_progress"
+          TITLE: "Automation tests run"
+
+      - name: Generate variables
+        id: cloud_variables
+        uses: ./.github/actions/prepare-tests-variables
+        with:
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          MODE: "from-version"
+          VERSION: ${{ env.VERSION }}
+
+      - name: Prepare instances
+        id: pool_variables
+        uses: ./.github/actions/prepare-instance
+        with:
+          STRATEGY: reload
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
+          POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
+          BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+
+      - id: update-check
+        if: ${{ steps.create-check.outputs.CHECK_ID }}
+        uses: ./.github/actions/checks/update-pull-request-check
+        with:
+          CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
+          CHECK_NAME: "Automation_tests_run"
+          STATUS: "completed"
+          CONCLUSION: "success"
+          TITLE: "Automation tests run"
+          SUMMARY: "There are 0 failures, 2 warnings, and 1 notices."
+          DETAILS_URL: ""

@@ -5,6 +5,9 @@ inputs:
   MODE:
     description: "The mode of running tests (pull-request, release, main)"
     required: true
+  VERSION:
+    description: "Version if you want to run from different branch"
+    required: false
 
 outputs:
   BASE_URL:
@@ -36,6 +39,7 @@ runs:
         MODE: ${{ inputs.MODE }}
         PULL_REQUEST_NUMBER: ${{ github.event.number }}
         PREFIX: pr-
+
       run: |
         if [[ "$MODE" == 'pull-request' ]]; then
           echo "BASE_URL=https://${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
@@ -69,6 +73,19 @@ runs:
           echo "POOL_NAME=automation-dashboard" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://automation-dashboard.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
+
+          exit 0
+        fi
+
+        if [[ "$MODE" == 'from-version' ]]; then
+          VERSION_SLUG=$(echo "${VERSION/./}")
+
+          echo "BASE_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
+          echo "API_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+          echo "BASE_URL_DOMAIN=v${VERSION_SLUG}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=${VERSION} Staging" >> $GITHUB_OUTPUT
+          echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
+          echo "BACKUP_NAMESPACE=snapshot-automation-tests-${VERSION}" >> $GITHUB_OUTPUT
 
           exit 0
         fi
