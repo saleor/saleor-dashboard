@@ -15,6 +15,9 @@ inputs:
     required: true
 
 outputs:
+  PR_EXIST:
+    description: PR HEAD_SHA
+    value: ${{ env.PULL_REQUEST_HEAD_SHA }}
   CHECK_ID:
     description: "CHECK_ID"
     value: ${{ steps.create-check.outputs.check_id }}
@@ -35,6 +38,7 @@ runs:
         echo "PULL_REQUEST_HEAD_SHA=$(jq '.[0] | .head.sha' data.json)" >> $GITHUB_ENV
 
     - name: Create check
+      if: ${{ env.PULL_REQUEST_HEAD_SHA }}
       shell: bash
       id: create-check
       env:
@@ -59,7 +63,3 @@ runs:
             ,"text":""
           }
         }'  | jq -r '.id') ; echo "check_id=$check_id" >> $GITHUB_OUTPUT
-
-    - name: Print check id
-      shell: bash
-      run: echo ${{ steps.create-check.outputs.check_id }}

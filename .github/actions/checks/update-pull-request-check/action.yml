@@ -1,61 +1,57 @@
 name: Create-check
 description: "Creates check for PR"
 inputs:
-  PR_HEAD:
-    description: "Head of PR on which create check"
+  CHECK_ID:
+    description: "Check id"
     required: true
   CHECK_NAME:
-    description: "Name of check"
+    description: "Name of check - must be the same here and in create check"
     required: true
   STATUS:
     description: "Status of check"
     required: true
+  CONCLUSION:
+    description: "Conclusion of check, required if status completed"
+    required: false
   TITLE: 
     description: "Title of check"
     required: true
-
-outputs:
-  CHECK_ID:
-    description: "CHECK_ID"
-    value: ${{ steps.create-check.outputs.check_id }}
+  SUMMARY:
+    description: "Summary of check"
+    required: true
+  DETAILS_URL:
+    description: "Url with details to check"
+    required: true
 
 runs:
   using: composite
   steps:
-    - name: Get Pull Request head_sha
+    - name: Update check
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
-        PR_HEAD: ${{ inputs.PR_HEAD }}
-      run: |
-        gh api \
-        -H "Accept: application/vnd.github+json" \
-        -H "X-GitHub-Api-Version: 2022-11-28" \
-        /repos/saleor/saleor-dashboard/pulls?head=saleor:${{env.PR_HEAD}} > data.json
-        echo "PULL_REQUEST_HEAD_SHA=$(jq '.[0] | .head.sha' data.json)" >> $GITHUB_ENV
-
-    - name: Create check
-      shell: bash
-      id: create-check
-      env:
-        GH_TOKEN: ${{ github.token }}
+        CHECK_ID: ${{ inputs.CHECK_ID }}
         NAME: ${{ inputs.CHECK_NAME }}
         STATUS: ${{ inputs.STATUS }}
+        CONCLUSION: '"conclusion":"${{inputs.CONCLUSION}}"'
         TITLE: ${{ inputs.TITLE }}
+        SUMMARY: ${{ inputs.SUMMARY }}
+        DETAILS_URL: ${{ inputs.DETAILS_URL }}
       run: |
-        check_id=$(curl -L \
-        -X POST \
+        curl -L \
+        -X PATCH \
         -H "Accept: application/vnd.github+json" \
         -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
         -H "X-GitHub-Api-Version: 2022-11-28" \
-        https://api.github.com/repos/saleor/saleor-dashboard/check-runs \
+        https://api.github.com/repos/saleor/saleor-dashboard/check-runs/${{env.CHECK_ID}} \
         -d '{
-          "name":${{env.NAME}},
-          "head_sha":${{ env.PULL_REQUEST_HEAD_SHA }},
-          "status":${{env.STATUS}},
+          "name":"${{env.NAME}}",
+          "status":"${{env.STATUS}}",
+          ${{ env.CONCLUSION }},
           "output":{
-            "title":${{env.TITLE}},
-            "summary":""
-            ,"text":""
+            "title":"${{ env.TITLE }}",
+            "summary":"${{ env.SUMMARY }}",
+            "text":"",
+            details_url:""${{ env.DETAILS_URL }}""
           }
-        }'  | jq -r '.id') ; echo "check_id=$check_id" >> $GITHUB_OUTPUT
+        }'

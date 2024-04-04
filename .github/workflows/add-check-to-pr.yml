@@ -15,56 +15,36 @@ jobs:
           CHECK_NAME: "Automation_tests_run"
           STATUS: "in_progress"
           TITLE: "Automation tests run"
-      # - name: Get Pull Request head_sha
-      #   env:
-      #     GH_TOKEN: ${{ github.token }}
-      #   run: |
-      #     gh api \
-      #     -H "Accept: application/vnd.github+json" \
-      #     -H "X-GitHub-Api-Version: 2022-11-28" \
-      #     /repos/saleor/saleor-dashboard/pulls?head=saleor:Test-add-tests-check-to-release-PR > data.json
-      #     echo "PULL_REQUEST_HEAD_SHA=$(jq '.[0] | .head.sha' data.json)" >> $GITHUB_ENV
 
-      # - name: Create check
-      #   id: create-check
-      #   env:
-      #     GH_TOKEN: ${{ github.token }}
-      #   run: |
-      #     check_id=$(curl -L \
-      #     -X POST \
-      #     -H "Accept: application/vnd.github+json" \
-      #     -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
-      #     -H "X-GitHub-Api-Version: 2022-11-28" \
-      #     https://api.github.com/repos/saleor/saleor-dashboard/check-runs \
-      #     -d '{
-      #       "name":"Automation_tests_run",
-      #       "head_sha":${{ env.PULL_REQUEST_HEAD_SHA }},
-      #       "status":"in_progress",
-      #       "output":{
-      #         "title":"Automation tests run",
-      #         "summary":""
-      #         ,"text":""
-      #       }
-      #     }'  | jq -r '.id') ; echo "check_id=$check_id" >> $GITHUB_OUTPUT
-
-      - name: Update check
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - id: update-check
+        if: ${{ steps.create-check.outputs.PR_EXIST }}
+        uses: ./.github/actions/checks/update-pull-request-check
+        with:
           CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
-        run: |
-          curl -L \
-          -X PATCH \
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/saleor/saleor-dashboard/check-runs/${{env.CHECK_ID}} \
-          -d '{
-            "name":"Automation_tests_run",
-            "status":"completed",
-            "conclusion":"success",
-            "output":{
-              "title":"Automation tests run",
-              "summary":"There are 0 failures, 2 warnings, and 1 notices.",
-              "text":""
-            }
-          }'
+          CHECK_NAME: "Automation_tests_run"
+          STATUS: "completed"
+          CONCLUSION: "success"
+          TITLE: "Automation tests run"
+          SUMMARY: "There are 0 failures, 2 warnings, and 1 notices."
+          DETAILS_URL: ""
+
+        # env:
+        #   GH_TOKEN: ${{ github.token }}
+        #   CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
+        # run: |
+        #   curl -L \
+        #   -X PATCH \
+        #   -H "Accept: application/vnd.github+json" \
+        #   -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
+        #   -H "X-GitHub-Api-Version: 2022-11-28" \
+        #   https://api.github.com/repos/saleor/saleor-dashboard/check-runs/${{env.CHECK_ID}} \
+        #   -d '{
+        #     "name":"Automation_tests_run",
+        #     "status":"completed",
+        #     "conclusion":"success",
+        #     "output":{
+        #       "title":"Automation tests run",
+        #       "summary":"There are 0 failures, 2 warnings, and 1 notices.",
+        #       "text":""
+        #     }
+        #   }'
