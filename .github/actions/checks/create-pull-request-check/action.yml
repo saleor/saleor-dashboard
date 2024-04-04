@@ -61,4 +61,5 @@ runs:
         }'  | jq -r '.id') ; echo "check_id=$check_id" >> $GITHUB_OUTPUT
 
     - name: Print check id
+      shell: bash
       run: echo ${{ steps.create-check.outputs.check_id }}
