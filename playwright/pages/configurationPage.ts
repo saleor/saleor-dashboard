@@ -63,6 +63,10 @@ export class ConfigurationPage {
   async openPlugins() {
     await this.pluginsButton.click();
   }
+
+  async goToConfirgurationView() {
+    await this.page.goto(URL_LIST.configuration);
+  }
   async openWebhooksAndEvents() {
     await this.webhooksAndEventsButton.click();
   }
