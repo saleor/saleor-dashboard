@@ -234,6 +234,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         sort={getSortParams(params)}
         toolbar={
           <Button
+          data-test-id="unassign-members-button"
             variant="secondary"
             onClick={() => openModal("unassign", { ids: listElements })}
           >

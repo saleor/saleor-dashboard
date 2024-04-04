@@ -37,9 +37,10 @@ export const PermissionList = ({
   }
 
   return (
-    <Box>
+    <Box data-test-id="permission-group-list">
       {permissions.map(perm => (
         <ListItem
+          data-test-id="permission-group-list-item"
           key={perm.code}
           disabled={disabled || perm.disabled}
           role={undefined}
@@ -54,6 +55,7 @@ export const PermissionList = ({
         >
           <ListItemIcon>
             <Checkbox
+              data-test-id="permission-group-checkbox"
               color="secondary"
               edge="start"
               checked={hasPermissionSelected(selectedPermissions, perm.code)}
