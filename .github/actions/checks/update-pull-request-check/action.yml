@@ -1,0 +1,61 @@
+name: Create-check
+description: "Creates check for PR"
+inputs:
+  PR_HEAD:
+    description: "Head of PR on which create check"
+    required: true
+  CHECK_NAME:
+    description: "Name of check"
+    required: true
+  STATUS:
+    description: "Status of check"
+    required: true
+  TITLE: 
+    description: "Title of check"
+    required: true
+
+outputs:
+  CHECK_ID:
+    description: "CHECK_ID"
+    value: ${{ steps.create-check.outputs.check_id }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get Pull Request head_sha
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        PR_HEAD: ${{ inputs.PR_HEAD }}
+      run: |
+        gh api \
+        -H "Accept: application/vnd.github+json" \
+        -H "X-GitHub-Api-Version: 2022-11-28" \
+        /repos/saleor/saleor-dashboard/pulls?head=saleor:${{env.PR_HEAD}} > data.json
+        echo "PULL_REQUEST_HEAD_SHA=$(jq '.[0] | .head.sha' data.json)" >> $GITHUB_ENV
+
+    - name: Create check
+      shell: bash
+      id: create-check
+      env:
+        GH_TOKEN: ${{ github.token }}
+        NAME: ${{ inputs.CHECK_NAME }}
+        STATUS: ${{ inputs.STATUS }}
+        TITLE: ${{ inputs.TITLE }}
+      run: |
+        check_id=$(curl -L \
+        -X POST \
+        -H "Accept: application/vnd.github+json" \
+        -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
+        -H "X-GitHub-Api-Version: 2022-11-28" \
+        https://api.github.com/repos/saleor/saleor-dashboard/check-runs \
+        -d '{
+          "name":${{env.NAME}},
+          "head_sha":${{ env.PULL_REQUEST_HEAD_SHA }},
+          "status":${{env.STATUS}},
+          "output":{
+            "title":${{env.TITLE}},
+            "summary":""
+            ,"text":""
+          }
+        }'  | jq -r '.id') ; echo "check_id=$check_id" >> $GITHUB_OUTPUT
