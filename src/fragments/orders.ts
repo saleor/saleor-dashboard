@@ -613,6 +613,7 @@ export const fragmentOrderGrantedRefunds = gql`
     id
     createdAt
     shippingCostsIncluded
+    status
     amount {
       currency
       amount
