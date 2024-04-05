@@ -232,6 +232,22 @@ export const orderRefundData = gql`
   }
 `;
 
+export const orderTransationsData = gql`
+  query OrderTransationsData($orderId: ID!) {
+    order(id: $orderId) {
+      id
+      transactions {
+        ...TransactionBaseItem
+      }
+      total {
+        gross {
+          ...Money
+        }
+      }
+    }
+  }
+`;
+
 export const channelUsabilityData = gql`
   query ChannelUsabilityData($channel: String!) {
     products(channel: $channel) {
