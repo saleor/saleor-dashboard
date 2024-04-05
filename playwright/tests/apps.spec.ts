@@ -45,6 +45,7 @@ test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async (
   const appPage = new AppPage(page);
 
   await appPage.goToExistingAppPage(APPS.appToBeDeleted.id);
+  await appPage.pageHeader.waitFor({state: "visible", timeout: 10000});
   await expect(appPage.pageHeader).toContainText("Adyen");
   await appPage.deleteButton.click();
   await appPage.deleteAppDialog.clickDeleteButton();

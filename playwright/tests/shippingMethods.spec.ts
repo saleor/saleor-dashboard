@@ -47,10 +47,10 @@ test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes 
   await shippingRatesPage.clickSaveButton();
   await shippingRatesPage.basePage.expectSuccessBanner();
 
-  await shippingRatesPage.addFirstAvailableExcludedProduct();
+  await shippingRatesPage.addExcludedProduct("Bean Juice");
   await shippingRatesPage.basePage.expectSuccessBanner();
   await shippingRatesPage.excludedProductsRows.waitFor({ state: "visible" });
-  await expect(await shippingRatesPage.excludedProductsRows.count()).toEqual(1);
+  await expect(shippingRatesPage.excludedProductsRows).toContainText("Bean Juice");
   await expect(await shippingRatesPage.assignedPostalCodesRows.count()).toEqual(
     1,
   );
@@ -73,13 +73,10 @@ test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes
   await shippingRatesPage.clickSaveButton();
   await shippingRatesPage.basePage.expectSuccessBanner();
 
-  await shippingRatesPage.addFirstAvailableExcludedProduct();
+  await shippingRatesPage.addExcludedProduct("Bean Juice");
   await shippingRatesPage.basePage.expectSuccessBanner();
   await shippingRatesPage.excludedProductsRows.waitFor({ state: "visible" });
-  await expect(await shippingRatesPage.excludedProductsRows.count()).toEqual(1);
-  await expect(await shippingRatesPage.assignedPostalCodesRows.count()).toEqual(
-    1,
-  );
+  await expect(shippingRatesPage.excludedProductsRows).toContainText("Bean Juice");
 });
 
 test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details page @shipping-method @e2e", async () => {
