@@ -1,5 +1,6 @@
 const { Command } = require("commander");
 const program = new Command();
+const core = require("@actions/core");
 const { Octokit } = require("@octokit/core");
 
 program
@@ -28,6 +29,10 @@ program
       options.environment,
       options.ref_name,
     );
+
+    core.setOutput("status", testsStatus.status);
+    core.setOutput("message", testsStatus.message);
+    core.setOutput("linkToResults", testsStatus.linkToResults);
 
     await sendMessageOnSlack(
       testsStatus,

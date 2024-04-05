@@ -6,7 +6,17 @@ jobs:
   add-check-and-prepare-instance:
     runs-on: ubuntu-latest
     env:
-      VERSION: "3.15"
+      VERSION: "3.18"
+      CUSTOM_VERSION: "3.18.4-5a41d18"
+    outputs:
+      TESTMO_RUN_ID: ${{ steps.init-testmo.outputs.testmo-run-id }}
+      POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
+      POOL_INSTANCE: ${{ steps.pool_variables.outputs.POOL_INSTANCE }}
+      BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+      API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+      BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+      BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
+      BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
     steps:
       - uses: actions/checkout@v4
 
@@ -38,6 +48,80 @@ jobs:
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
+      - uses: ./.github/actions/testmo/testmo-init
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunName: "Playwright run ${{ env.CUSTOM_VERSION }}"
+        id: init-testmo
+
+  run-tests:
+    runs-on: ubuntu-22.04
+    needs: "add-check-and-prepare-instance"
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1/2, 2/2]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run playwright tests
+        uses: ./.github/actions/run-pw-tests
+        with:
+          SHARD: ${{ matrix.shard }}
+          BASE_URL: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
+          API_URL: ${{ needs.add-check-and-prepare-instance.outputs.API_URL }}
+          E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
+          URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: submit-results-to-testmo
+        if: always()
+        uses: ./.github/actions/testmo/testmo-threads-submit-playwright
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
+
+  tests-complete:
+    if: '!cancelled()'
+    needs: ["add-check-and-prepare-instance", "run-tests"]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Merge playwright reports
+        uses: ./.github/actions/merge-pw-reports
+
+      - name: complete testmo report
+        uses: ./.github/actions/testmo/testmo-finish
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
+
+      - name: send message on slack
+        working-directory: ".github"
+        id: send-slack-message
+        env:
+          run_id: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
+          url_to_action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          testmo_token: ${{ secrets.TESTMO_TOKEN }}
+          environment: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+          slack_webhook_url: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
+          ref_name: ${{github.ref_name}}
+
+        run: |
+          node workflows/postTestsResults.js \
+          --run_id "$run_id" \
+          --testmo_token "$testmo_token" \
+          --slack_webhook_url "$slack_webhook_url" \
+          --environment "$environment" \
+          --url_to_action "$url_to_action" \
+          --ref_name "$ref_name" 
+
       - id: update-check
         if: always() && ${{ steps.create-check.outputs.CHECK_ID }}
         uses: ./.github/actions/checks/update-pull-request-check
@@ -45,7 +129,7 @@ jobs:
           CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
           CHECK_NAME: "Automation_tests_run"
           STATUS: "completed"
-          CONCLUSION: "success"
+          CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
           TITLE: "Automation tests run"
-          SUMMARY: "There are 0 failures, 2 warnings, and 1 notices."
-          DETAILS_URL: ""
+          SUMMARY: "${{ steps.send-slack-message.outputs.message }} ${{ steps.send-slack-message.outputs.linkToResults }}"
+          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
