@@ -50,7 +50,7 @@ export interface PageDetailsPageProps {
     SearchAttributeValuesQuery["attribute"]["choices"]
   >;
   onRemove: () => void;
-  onImageUpload: (file: File) => any;
+  onImageUpload?: (file: File) => any;
   onSubmit: (data: PageData) => SubmitPromise;
   fetchPageTypes?: (data: string) => void;
   fetchMorePageTypes?: FetchMoreProps;
