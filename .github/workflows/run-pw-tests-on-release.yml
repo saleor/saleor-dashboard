@@ -6,7 +6,7 @@ jobs:
   add-check-and-prepare-instance:
     runs-on: ubuntu-latest
     env:
-      VERSION: "3.18"
+      VERSION: "3.15"
     steps:
       - uses: actions/checkout@v4
 
@@ -39,7 +39,7 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
       - id: update-check
-        if: ${{ steps.create-check.outputs.CHECK_ID }}
+        if: always() && ${{ steps.create-check.outputs.CHECK_ID }}
         uses: ./.github/actions/checks/update-pull-request-check
         with:
           CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
