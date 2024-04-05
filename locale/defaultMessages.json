@@ -1107,9 +1107,6 @@
     "context": "vat not included in order price",
     "string": "does not apply"
   },
-  "5Kq4j7": {
-    "string": "There are not transactions to refund"
-  },
   "5O8EIz": {
     "context": "Authorize transactions instead of charging",
     "string": "Authorize transactions instead of charging"
