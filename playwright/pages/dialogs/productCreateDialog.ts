@@ -19,8 +19,7 @@ export class ProductCreateDialog {
   async selectProductTypeWithVariants(productType: string = "Beer") {
     await this.dialogProductTypeInput.fill(productType);
     await this.promptedOptions.filter({ hasText: productType }).first().click();
-    await this.promptedOptions.waitFor({ state: "hidden", timeout: 30000});
-    await this.confirmButton.waitFor({ state: "visible", timeout: 30000});
+    await this.confirmButton.waitFor({ state: "visible", timeout: 30000 });
   }
   async clickConfirmButton() {
     await this.confirmButton.click();
