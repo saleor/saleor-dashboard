@@ -51,9 +51,23 @@ jobs:
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
-  run-tests:
+  create-run-on-testmo:
     runs-on: ubuntu-22.04
     needs: initialize-cloud
+    outputs:
+      testmo-run-id: ${{ steps.init-testmo.outputs.testmo-run-id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/testmo/testmo-init
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunName: "Playwright run ${{github.ref_name}}"
+        id: init-testmo
+    
+  run-tests:
+    runs-on: ubuntu-22.04
+    needs: ["initialize-cloud", "create-run-on-testmo"]
     strategy:
       fail-fast: false
       matrix:
@@ -71,13 +85,48 @@ jobs:
           E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
+          URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-  merge-reports:
+      - name: submit-results-to-testmo
+        if: always()
+        uses: ./.github/actions/testmo/testmo-threads-submit-playwright
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.create-run-on-testmo.outputs.testmo-run-id }}
+
+  tests-complete:
     if: '!cancelled()'
-    needs: run-tests
+    needs: ["initialize-cloud", "run-tests", "create-run-on-testmo"]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
+
+      - name: complete testmo report
+        uses: ./.github/actions/testmo/testmo-finish
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.create-run-on-testmo.outputs.testmo-run-id }}
+
+      - name: send message on slack
+        working-directory: ".github"
+        env:
+          run_id: ${{ needs.create-run-on-testmo.outputs.testmo-run-id }}
+          url_to_action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          testmo_token: ${{ secrets.TESTMO_TOKEN }}
+          environment: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+          slack_webhook_url: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
+          ref_name: ${{github.ref_name}}
+
+        run: |
+          node workflows/postTestsResults.js \
+          --run_id "$run_id" \
+          --testmo_token "$testmo_token" \
+          --slack_webhook_url "$slack_webhook_url" \
+          --environment "$environment" \
+          --url_to_action "$url_to_action" \
+          --ref_name "$ref_name" 
