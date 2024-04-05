@@ -24,7 +24,8 @@ inputs:
     required: true
   URL_TO_RUN:
     description: "Url which will be passed to testmo where can be found artifacts of the run"
-    required: false  PW_WORKERS:
+    required: false
+  PW_WORKERS:
     description: "Playwright workers"
     required: true
   PW_RETRIES:
@@ -59,7 +60,7 @@ runs:
         URL_TO_RUN: ${{ inputs.URL_TO_RUN }}
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
-      run: npm run qa:pw-e2e -- --shard "$SHARD_NUMBER"  --randomize-suites
+      run: npm run qa:pw-e2e -- --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v3
