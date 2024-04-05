@@ -120,7 +120,6 @@ jobs:
           testmo_token: ${{ secrets.TESTMO_TOKEN }}
           environment: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           slack_webhook_url: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ref_name: ${{github.ref_name}}
 
         run: |
