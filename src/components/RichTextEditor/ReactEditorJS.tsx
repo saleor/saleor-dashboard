@@ -14,57 +14,66 @@ import {
   ReactEditorJS as BaseReactEditorJS,
 } from "@react-editor-js/core";
 import React from "react";
+import { Merge } from "react-hook-form";
 
 // Source of @react-editor-js
 class ClientEditorCore implements EditorCore {
   private readonly _editorJS: EditorJS;
 
-  constructor({ tools, ...config }: EditorConfig, upload) {
-    const handleImageUpload = createFileUploadHandler(upload, {});
-
-    const extendTools = {
+  constructor(
+    { tools, ...config }: EditorConfig,
+    upload?: (file: File) => Promise<unknown>,
+  ) {
+    let extendTools = {
       // default tools
-      image: {
-        class: ImageTool,
-        config: {
-          uploader: {
-            uploadByFile(file: File) {
-              return handleImageUpload(file)
-                .then(resp => {
-                  return resp.data.pageMediaCreate.page.id;
-                })
-                .then((id: string) => {
-                  return apolloClient.query({
-                    fetchPolicy: "network-only",
-                    query: pageMediaUrlQuery,
-                    variables: {
-                      id,
-                      size: 0,
-                    },
-                  });
-                })
-                .then(query => {
-                  return {
-                    success: 1,
-                    file: {
-                      url: query.data.page.media.slice(-1)[0].url,
-                    },
-                  };
-                })
-                .catch(() => {
-                  return { success: 0, file: { url: null } };
-                });
-            },
-          },
-        },
-        inlineToolbar: true,
-      },
       paragraph: {
         class: Paragraph,
         inlineToolbar: true,
       } as unknown as ToolConstructable,
       ...tools,
     };
+
+    if (upload) {
+      const handleImageUpload = createFileUploadHandler(upload, {});
+      const imageTool = {
+        image: {
+          class: ImageTool,
+          config: {
+            uploader: {
+              uploadByFile(file: File) {
+                return handleImageUpload(file)
+                  .then(resp => {
+                    return resp.data.pageMediaCreate.page.id;
+                  })
+                  .then((id: string) => {
+                    return apolloClient.query({
+                      fetchPolicy: "network-only",
+                      query: pageMediaUrlQuery,
+                      variables: {
+                        id,
+                        size: 0,
+                      },
+                    });
+                  })
+                  .then(query => {
+                    return {
+                      success: 1,
+                      file: {
+                        url: query.data.page.media.slice(-1)[0].url,
+                      },
+                    };
+                  })
+                  .catch(() => {
+                    return { success: 0, file: { url: null } };
+                  });
+              },
+            },
+          },
+          inlineToolbar: true,
+        } as unknown as ToolConstructable,
+      };
+      extendTools = { ...extendTools, ...imageTool };
+    }
 
     this._editorJS = new EditorJS({
       tools: extendTools,
@@ -97,7 +106,10 @@ class ClientEditorCore implements EditorCore {
   }
 }
 
-export type Props = Omit<ReactEditorJSProps, "factory">;
+export type Props = Merge<
+  Omit<ReactEditorJSProps, "factory">,
+  { onImageUpload: (file: File) => Promise<unknown> }
+>;
 
 function ReactEditorJSClient(props: Props) {
   const { onImageUpload } = props;
