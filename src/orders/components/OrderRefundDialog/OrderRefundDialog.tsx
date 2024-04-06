@@ -10,15 +10,17 @@ import { orderRefundDialogMesages } from "./messages";
 interface OrderRefundDialogProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onStandardRefund: () => void;
+  onManualRefund: () => void;
 }
 
-type RefundType = "standard" | "misc";
+type RefundType = "standard" | "manual";
 
 export const OrderRefundDialog = ({
   open,
   onClose,
-  onConfirm,
+  onStandardRefund,
+  onManualRefund,
 }: OrderRefundDialogProps) => {
   const [selected, setSelected] = React.useState<RefundType>("standard");
   const intl = useIntl();
@@ -50,6 +52,7 @@ export const OrderRefundDialog = ({
           >
             <RadioTiles.RadioTile
               value={"standard"}
+              data-test-id="standard-refund"
               checked={selected === "standard"}
               title={intl.formatMessage(
                 orderRefundDialogMesages.standardRefundTitle,
@@ -59,13 +62,14 @@ export const OrderRefundDialog = ({
               )}
             />
             <RadioTiles.RadioTile
-              value={"misc"}
-              checked={selected === "misc"}
+              value={"manual"}
+              data-test-id="manual-refund"
+              checked={selected === "manual"}
               title={intl.formatMessage(
-                orderRefundDialogMesages.miscRefundTitle,
+                orderRefundDialogMesages.manualRefundTitle,
               )}
               description={intl.formatMessage(
-                orderRefundDialogMesages.miscRefundSubtitle,
+                orderRefundDialogMesages.manualRefundSubtitle,
               )}
             />
           </Box>
@@ -76,7 +80,11 @@ export const OrderRefundDialog = ({
               {intl.formatMessage(buttonMessages.cancel)}
             </Text>
           </Button>
-          <Button onClick={onConfirm}>
+          <Button
+            onClick={
+              selected === "standard" ? onStandardRefund : onManualRefund
+            }
+          >
             <Text fontWeight="medium" color="buttonDefaultPrimary">
               {intl.formatMessage(buttonMessages.confirm)}
             </Text>

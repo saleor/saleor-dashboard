@@ -16,7 +16,8 @@ describe("OrderRefundDialog", () => {
     const props = {
       open: true,
       onClose: jest.fn(),
-      onConfirm: jest.fn(),
+      onStandardRefund: jest.fn(),
+      onManualRefund: jest.fn(),
     };
 
     // Act
@@ -32,7 +33,8 @@ describe("OrderRefundDialog", () => {
     const props = {
       open: false,
       onClose: jest.fn(),
-      onConfirm: jest.fn(),
+      onStandardRefund: jest.fn(),
+      onManualRefund: jest.fn(),
     };
 
     // Act
@@ -48,7 +50,8 @@ describe("OrderRefundDialog", () => {
     const props = {
       open: true,
       onClose: jest.fn(),
-      onConfirm: jest.fn(),
+      onStandardRefund: jest.fn(),
+      onManualRefund: jest.fn(),
     };
 
     // Act
@@ -60,12 +63,13 @@ describe("OrderRefundDialog", () => {
     expect(props.onClose).toHaveBeenCalled();
   });
 
-  it("calls onConfirm when the confirm button is clicked", () => {
+  it("calls onStandardRefund when the confirm button is clicked", () => {
     // Arrange
     const props = {
       open: true,
       onClose: jest.fn(),
-      onConfirm: jest.fn(),
+      onStandardRefund: jest.fn(),
+      onManualRefund: jest.fn(),
     };
 
     // Act
@@ -74,6 +78,25 @@ describe("OrderRefundDialog", () => {
     fireEvent.click(confirmButton);
 
     // Assert
-    expect(props.onConfirm).toHaveBeenCalled();
+    expect(props.onStandardRefund).toHaveBeenCalled();
+  });
+  it("calls onManualRefund when the confirm button is clicked", async () => {
+    // Arrange
+    const props = {
+      open: true,
+      onClose: jest.fn(),
+      onStandardRefund: jest.fn(),
+      onManualRefund: jest.fn(),
+    };
+
+    // Act
+    render(<OrderRefundDialog {...props} />);
+    const confirmButton = screen.getByRole("button", { name: /confirm/i });
+    const manualRefundRadio = screen.getByTestId("manual-refund");
+    await fireEvent.click(manualRefundRadio);
+    await fireEvent.click(confirmButton);
+
+    // Assert
+    expect(props.onManualRefund).toHaveBeenCalled();
   });
 });

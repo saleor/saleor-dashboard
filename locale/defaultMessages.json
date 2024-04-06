@@ -1087,6 +1087,10 @@
   "5BajZK": {
     "string": "View and update your site settings"
   },
+  "5D30zr": {
+    "context": "transaction refund datagrid unit price column",
+    "string": "Unit price"
+  },
   "5HwLx9": {
     "context": "alert",
     "string": "Warehouse limit reached"
@@ -1530,6 +1534,10 @@
   "8RnPGF": {
     "context": "order history message",
     "string": "Payment was voided"
+  },
+  "8VPMar": {
+    "context": "transaction refund datagrid helper button",
+    "string": "Select max quantities"
   },
   "8aV98y": {
     "context": "new version notification content",
@@ -4251,6 +4259,10 @@
     "context": "active",
     "string": "Active"
   },
+  "QiSJFa": {
+    "context": "transaction refund datagrid qty. ordered column",
+    "string": "Qty. ordered"
+  },
   "QirE3M": {
     "string": "Start Date"
   },
@@ -4877,6 +4889,10 @@
   "UymotP": {
     "context": "channel name",
     "string": "Channel name"
+  },
+  "V+ONPA": {
+    "context": "transaction refund datagrid qty. to refund column",
+    "string": "Qty. to refund"
   },
   "V+fkAO": {
     "context": "number of products in category",
@@ -6081,6 +6097,10 @@
   },
   "ccXLVi": {
     "string": "Category"
+  },
+  "ccuz+A": {
+    "context": "transaction refund datagrid product column",
+    "string": "Product"
   },
   "cd13nN": {
     "context": "product attribute error",
@@ -8327,6 +8347,10 @@
   "szXISP": {
     "context": "permission group name",
     "string": "Permission Group Name"
+  },
+  "t/An8o": {
+    "context": "transaction refund datagrid helper button",
+    "string": "All"
   },
   "t/R8nK": {
     "context": "ShippingZoneSettingsCard title",
