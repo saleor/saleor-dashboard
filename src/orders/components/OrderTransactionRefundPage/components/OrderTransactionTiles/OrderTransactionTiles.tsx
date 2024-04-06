@@ -11,17 +11,12 @@ import {
 } from "@dashboard/orders/components/OrderTransaction/components/TransactionEvents/components";
 import { EventType } from "@dashboard/orders/components/OrderTransaction/components/TransactionEvents/components/EventType";
 import { mapTransactionEvent } from "@dashboard/orders/components/OrderTransaction/utils";
-import {
-  Box,
-  RadioGroup,
-  Skeleton,
-  Text,
-  Tooltip,
-} from "@saleor/macaw-ui-next";
+import { Box, RadioGroup, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, useController } from "react-hook-form";
 
 import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
+import { TileHeader } from "./TileHeader";
 
 interface OrderTransactionTilesProps {
   transactions: OrderDetailsGrantRefundFragment["transactions"] | undefined;
@@ -58,48 +53,17 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
                 {isDisabled ? (
                   <Tooltip>
                     <Tooltip.Trigger>
-                      <RadioGroup.Item
-                        id={transaction.id}
-                        value={transaction.id}
-                        padding={4}
-                        disabled={isDisabled}
-                      >
-                        <Text
-                          size={5}
-                          fontWeight="medium"
-                          padding={4}
-                          color={isDisabled ? "defaultDisabled" : "default1"}
-                        >
-                          {transaction.name === ""
-                            ? "Transaction"
-                            : transaction.name}
-                        </Text>
-                      </RadioGroup.Item>
+                      <Box>
+                        <TileHeader transaction={transaction} isDisabled />
+                      </Box>
                     </Tooltip.Trigger>
                     <Tooltip.Content side="left">
                       This transaction is non-refundable.
                     </Tooltip.Content>
                   </Tooltip>
                 ) : (
-                  <RadioGroup.Item
-                    id={transaction.id}
-                    value={transaction.id}
-                    padding={4}
-                    disabled={isDisabled}
-                  >
-                    <Text
-                      size={5}
-                      fontWeight="medium"
-                      padding={4}
-                      color={isDisabled ? "defaultDisabled" : "default1"}
-                    >
-                      {transaction.name === ""
-                        ? "Transaction"
-                        : transaction.name}
-                    </Text>
-                  </RadioGroup.Item>
+                  <TileHeader transaction={transaction} />
                 )}
-
                 <Box>
                   {transaction.events.map((event, eventIndex) => {
                     const { type, status } = mapTransactionEvent(event);

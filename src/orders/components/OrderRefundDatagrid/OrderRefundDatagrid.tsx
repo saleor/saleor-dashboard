@@ -4,7 +4,7 @@ import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColum
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
+import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { ListViews } from "@dashboard/types";
 import { Box, Button, EditIcon, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -59,7 +59,10 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
         label: "",
         Icon: (
           <Link
-            to={orderGrantRefundEditUrl(orderId, grantedRefunds[index]?.id)}
+            to={orderTransactionRefundEditUrl(
+              orderId,
+              grantedRefunds[index]?.id,
+            )}
           >
             <EditIcon />
           </Link>

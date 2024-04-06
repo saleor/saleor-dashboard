@@ -210,7 +210,7 @@ export const orderTransactionRefundEditUrl = (
   orderId: string,
   refundId: string,
 ) =>
-  orderGrantRefundEditPath(
+  orderTransactionRefundEditPath(
     encodeURIComponent(orderId),
     encodeURIComponent(refundId),
   );

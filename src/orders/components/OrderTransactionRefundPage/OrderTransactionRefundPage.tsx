@@ -1,15 +1,19 @@
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
+import Savebar from "@dashboard/components/Savebar";
 import {
   OrderDetailsGrantRefundFragment,
-  TransactionActionEnum,
+  PermissionEnum,
 } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
-import * as Portal from "@radix-ui/react-portal";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -17,10 +21,27 @@ import { OrderTransactionReason } from "./components/OrderTransactionReason/Orde
 import { OrderTransactionRefundDatagrid } from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
-
+import {
+  canRefundShipping,
+  createSetMaxQty,
+  getRefundFormDefaultValues,
+  getRefundViewTitle,
+  getSavebarLabels,
+  getSavebarState,
+  getSelectedProductsValue,
+  handleQtyToRefundChange,
+  useRecalculateTotalAmount,
+} from "./utils";
 export interface OrderTransactionRefundPageProps {
   order: OrderDetailsGrantRefundFragment | null | undefined;
-  loading: boolean;
+  draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
+  disabled: boolean;
+  onSaveDraft: (
+    submitData: OrderTransactionRefundPageFormData,
+  ) => SubmitPromise;
+  onTransferFunds?: () => void;
+  onSaveDraftState: ConfirmButtonTransitionState;
+  onTransferFundsState?: ConfirmButtonTransitionState;
 }
 
 export interface QuantityToRefund {
@@ -38,119 +59,97 @@ export interface OrderTransactionRefundPageFormData {
 
 const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   order,
-  // loading,
-  // submitState,
+  draftRefund,
+  disabled,
+  onSaveDraft,
+  onTransferFunds,
+  onSaveDraftState,
+  onTransferFundsState,
 }) => {
-  const getDefaultTransaction = (
-    transactions: OrderDetailsGrantRefundFragment["transactions"] | undefined,
-  ) =>
-    transactions?.find(transaction =>
-      transaction.actions.includes(TransactionActionEnum.REFUND),
-    )?.id;
-
-  const defaultValues: OrderTransactionRefundPageFormData = {
-    qtyToRefund: [],
-    transactionId: getDefaultTransaction(order?.transactions),
-    includeShipping: false,
-    amount: 0,
-    reason: "",
-  };
-
-  // const intl = useIntl();
-  // const { locale } = useLocale();
   const navigate = useNavigator();
 
-  const canRefundShipping = () => {
-    // TODO: add case when editing refund
-    return !order?.grantedRefunds?.some(refund => refund.shippingCostsIncluded);
-  };
+  // const intl = useIntl();
 
-  const { control, setValue, handleSubmit, watch, getValues, reset } =
-    useForm<OrderTransactionRefundPageFormData>({
-      defaultValues,
-    });
+  const {
+    control,
+    setValue,
+    handleSubmit,
+    watch,
+    getValues,
+    reset,
+    formState: { isDirty },
+  } = useForm<OrderTransactionRefundPageFormData>({
+    defaultValues: getRefundFormDefaultValues({ order, draftRefund }),
+  });
 
   React.useEffect(() => {
-    reset(defaultValues);
+    reset(getRefundFormDefaultValues({ order, draftRefund }));
   }, [order]);
 
-  const handleQtyToRefundChange = (data: DatagridChangeOpts) => {
-    const unchangedQuantites = qtyToRefund.filter(
-      qty => qty.row !== data.currentUpdate?.row,
-    );
-    const validateQty = (update: DatagridChangeOpts["currentUpdate"]) => {
-      if (!update?.data.value || !order) {
-        return 0;
-      }
-      const value = parseInt(update.data.value);
-      if (isNaN(value)) {
-        return 0;
-      }
-      if (value < 0) {
-        return 0;
-      }
-      if (value > order.lines[update.row].quantity) {
-        return order.lines[update.row].quantity;
-      }
-      return value;
-    };
-    if (data.currentUpdate) {
-      setValue("qtyToRefund", [
-        ...unchangedQuantites,
-        {
-          row: data.currentUpdate.row,
-          value: validateQty(data.currentUpdate),
-        },
-      ]);
-    }
-  };
+  const permissions = useUserPermissions();
+  const canHandlePayments = hasPermissions(permissions ?? [], [
+    PermissionEnum.HANDLE_PAYMENTS,
+  ]);
 
-  const handleSetMaximumQty = (rows: number[]) => {
-    if (!order) {
+  const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = data => {
+    if (!canHandlePayments) {
+      onSaveDraft(data);
       return;
     }
-    const unchangedQuantites = qtyToRefund.filter(
-      qty => !rows.includes(qty.row),
-    );
-    const newQtyToRefund = rows.map(row => ({
-      row,
-      value: order.lines[row].quantity,
-    }));
-    setValue("qtyToRefund", [...unchangedQuantites, ...newQtyToRefund]);
+    if (!draftRefund) {
+      onSaveDraft(data);
+      return;
+    }
+    if (isDirty) {
+      onSaveDraft(data);
+      return;
+    }
+    if (onTransferFunds) {
+      onTransferFunds();
+    }
   };
-
-  const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = () =>
-    null;
 
   const qtyToRefund = watch("qtyToRefund");
   const includeShipping = watch("includeShipping");
 
-  const selectedProductsValue = qtyToRefund?.reduce((acc, curr) => {
-    const unitPrice = order?.lines[curr.row].unitPrice.gross.amount;
-    const totalPrice = unitPrice ?? 0 * curr.value;
-    return acc + totalPrice;
-  }, 0);
+  const selectedProductsValue = getSelectedProductsValue({
+    qtyToRefund,
+    order,
+  });
 
-  React.useEffect(() => {
-    const customAmount = getValues("amount");
-    if (includeShipping) {
-      const shippingPrice = order?.shippingPrice.gross.amount;
-      const totalAmount = selectedProductsValue + (shippingPrice ?? 0);
-      if (totalAmount !== customAmount) {
-        setValue("amount", totalAmount);
-      }
-      return;
-    }
+  useRecalculateTotalAmount({
+    getValues,
+    includeShipping,
+    order,
+    qtyToRefund,
+    setValue,
+    selectedProductsValue,
+  });
 
-    if (selectedProductsValue !== customAmount) {
-      setValue("amount", selectedProductsValue);
-    }
-  }, [qtyToRefund, includeShipping]);
+  const onSetMaximumQty = createSetMaxQty({
+    order,
+    qtyToRefund,
+    setValue,
+  });
+
+  const onQtyToRefundChange = (data: DatagridChangeOpts) => {
+    handleQtyToRefundChange({
+      data,
+      qtyToRefund,
+      setValue,
+      order,
+    });
+  };
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
       <Box as="form" display="contents" onSubmit={handleSubmit(onSubmit)}>
-        <TopNav href={orderUrl(order?.id ?? "")} title={"Edit refund"}></TopNav>
+        <TopNav
+          href={orderUrl(order?.id ?? "")}
+          title={getRefundViewTitle(draftRefund)}
+        >
+          TODO: Add status
+        </TopNav>
         <DetailPageLayout.Content>
           <DashboardCard>
             <DashboardCard.Content marginBottom={5}>
@@ -162,8 +161,8 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           <OrderTransactionRefundDatagrid
             order={order}
             control={control}
-            onChange={handleQtyToRefundChange}
-            onMaxQtySet={handleSetMaximumQty}
+            onChange={onQtyToRefundChange}
+            onMaxQtySet={onSetMaximumQty}
             qtyToRefund={qtyToRefund}
           />
           <DashboardCard marginBottom={5}>
@@ -189,35 +188,30 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             <OrderTransactionSummary
               control={control}
               selectedProductsValue={selectedProductsValue}
-              canRefundShipping={canRefundShipping()}
+              canRefundShipping={canRefundShipping(order)}
               shippingCost={order?.shippingPrice.gross}
               currency={order?.total.gross.currency}
             />
             <OrderTransactionReason control={control} />
           </Box>
         </DetailPageLayout.RightSidebar>
-        {/* TODO: need custom savebar because of three buttons - do we migrate all savebars? */}
-        <Portal.Root>
-          <Box
-            display="flex"
-            position="absolute"
-            gap={2}
-            bottom={0}
-            right={0}
-            padding={4}
-          >
-            <Button
-              variant="secondary"
-              onClick={() => navigate(orderUrl(order?.id ?? ""))}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" onClick={handleSubmit(onSubmit)}>
-              Save draft
-            </Button>
-            <Button>Transfer funds</Button>
-          </Box>
-        </Portal.Root>
+        <Savebar
+          onSubmit={handleSubmit(onSubmit)}
+          onCancel={() => navigate(orderUrl(order?.id ?? ""))}
+          disabled={disabled}
+          state={getSavebarState({
+            isEdit: !!draftRefund,
+            isDirty,
+            canHandlePayments,
+            onSaveDraftState,
+            onTransferFundsState,
+          })}
+          labels={getSavebarLabels({
+            isDirty,
+            isEdit: !!draftRefund,
+            canHandlePayments,
+          })}
+        />
       </Box>
     </DetailPageLayout>
   );

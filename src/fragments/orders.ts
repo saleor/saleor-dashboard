@@ -639,6 +639,9 @@ export const orderDetailsGrantedRefund = gql`
       ...Money
     }
     shippingCostsIncluded
+    transaction {
+      id
+    }
     lines {
       id
       quantity
