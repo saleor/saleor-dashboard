@@ -465,6 +465,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onClose={closeModal}
         // TODO: Add redirect to manual refund view
         onConfirm={() => navigate(orderTransactionRefundUrl(id))}
+        // onConfirm={() => navigate(orderManualTransationRefundUrl(id))}
       />
 
       <OrderAddressFields

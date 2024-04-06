@@ -11,15 +11,7 @@ interface AppListCardDescriptionProps {
 const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
   app,
 }) => (
-  <Box
-    borderStyle="solid"
-    borderWidth={1}
-    borderTopLeftRadius={3}
-    borderTopRightRadius={3}
-    borderColor="default1"
-    borderBottomStyle="none"
-    padding={5}
-  >
+  <Box>
     <Box
       display="flex"
       flexDirection="row"

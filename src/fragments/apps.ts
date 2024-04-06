@@ -44,20 +44,20 @@ export const appFragment = gql`
         default(format: WEBP, size: 64)
       }
     }
-    privateMetadata {
+    privateMetadata @include(if: $hasManagedAppsPermission) {
       key
       value
     }
-    metadata {
+    metadata @include(if: $hasManagedAppsPermission) {
       key
       value
     }
-    tokens {
+    tokens @include(if: $hasManagedAppsPermission) {
       authToken
       id
       name
     }
-    webhooks {
+    webhooks @include(if: $hasManagedAppsPermission) {
       ...Webhook
     }
   }

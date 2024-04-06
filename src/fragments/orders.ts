@@ -476,16 +476,23 @@ export const fragmentOrderLineStockData = gql`
   }
 `;
 
-export const transactionEvent = gql`
-  fragment TransactionEvent on TransactionEvent {
+export const transactionBaseEvent = gql`
+  fragment TransactionBaseEvent on TransactionEvent {
     id
     pspReference
     amount {
       ...Money
     }
+    externalUrl
     type
     message
     createdAt
+  }
+`;
+
+export const transactionEvent = gql`
+  fragment TransactionEvent on TransactionEvent {
+    ...TransactionBaseEvent
     createdBy {
       ... on User {
         ...StaffMemberAvatar
@@ -498,12 +505,21 @@ export const transactionEvent = gql`
   }
 `;
 
+export const transactionBaseItemFragment = gql`
+  fragment TransactionBaseItem on TransactionItem {
+    id
+    name
+    actions
+    events {
+      ...TransactionBaseEvent
+    }
+  }
+`;
+
 export const transactionItemFragment = gql`
   fragment TransactionItem on TransactionItem {
-    id
+    ...TransactionBaseItem
     pspReference
-    actions
-    name
     externalUrl
     events {
       ...TransactionEvent

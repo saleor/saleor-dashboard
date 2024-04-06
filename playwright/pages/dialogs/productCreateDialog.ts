@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 export class ProductCreateDialog {
   readonly page: Page;
@@ -15,9 +16,10 @@ export class ProductCreateDialog {
   ) {
     this.page = page;
   }
-  async selectProductTypeWithVariants() {
-    await this.dialogProductTypeInput.fill("beer");
-    await this.promptedOptions.filter({ hasText: "Beer" }).click();
+  async selectProductTypeWithVariants(productType: string = "Beer") {
+    await this.dialogProductTypeInput.fill(productType);
+    await this.promptedOptions.filter({ hasText: productType }).first().click();
+    await this.confirmButton.waitFor({ state: "visible", timeout: 30000 });
   }
   async clickConfirmButton() {
     await this.confirmButton.click();

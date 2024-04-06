@@ -498,8 +498,13 @@ export const orderTransactionRequestActionMutation = gql`
   mutation OrderTransactionRequestAction(
     $action: TransactionActionEnum!
     $transactionId: ID!
+    $amount: PositiveDecimal
   ) {
-    transactionRequestAction(actionType: $action, id: $transactionId) {
+    transactionRequestAction(
+      actionType: $action
+      id: $transactionId
+      amount: $amount
+    ) {
       errors {
         ...TransactionRequestActionError
       }

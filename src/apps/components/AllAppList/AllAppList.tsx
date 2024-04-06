@@ -1,8 +1,7 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Skeleton } from "@material-ui/lab";
-import { Box } from "@saleor/macaw-ui-next";
-import chunk from "lodash/chunk";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import AppListRow from "../AppListRow";
@@ -20,18 +19,25 @@ const AllAppList: React.FC<AllAppListProps> = ({
   navigateToAppInstallPage,
   navigateToGithubForkPage,
 }) => {
-  const appsPairs = React.useMemo(() => chunk(appList, 2), [appList]);
+  const { themeValues } = useTheme();
 
   if (!appList) {
     return <Skeleton />;
   }
 
   return (
-    <Box display="flex" flexDirection="column" gap={5} marginTop={5}>
-      {appsPairs.map(appPair => (
+    <Box
+      data-test-id="all-app-list"
+      display="grid"
+      __gridTemplateColumns="repeat(2, 1fr)"
+      __gap={`${themeValues.spacing[8]} ${themeValues.spacing[5]}`}
+      padding={5}
+      marginTop={5}
+    >
+      {appList.map(app => (
         <AppListRow
-          key={appPair[0].name.en}
-          appPair={appPair}
+          key={app.name.en}
+          app={app}
           appInstallationList={appInstallationList}
           navigateToAppInstallPage={navigateToAppInstallPage}
           navigateToGithubForkPage={navigateToGithubForkPage}

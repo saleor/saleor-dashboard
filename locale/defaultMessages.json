@@ -295,6 +295,9 @@
     "context": "input label",
     "string": "Global threshold"
   },
+  "/jJLYy": {
+    "string": "Transactions"
+  },
   "/kWzY1": {
     "string": "Are you sure you want to delete this address from users address book?"
   },
@@ -1103,6 +1106,9 @@
   "5Jo3C5": {
     "context": "vat not included in order price",
     "string": "does not apply"
+  },
+  "5Kq4j7": {
+    "string": "There are not transactions to refund"
   },
   "5O8EIz": {
     "context": "Authorize transactions instead of charging",
@@ -1995,6 +2001,9 @@
     "context": "no webhooks message",
     "string": "No webhooks found"
   },
+  "Bl6896": {
+    "string": "Refund amount"
+  },
   "BooQvo": {
     "context": "navigator placeholder",
     "string": "Type {key} to see available actions"
@@ -2095,6 +2104,9 @@
   "CLeDae": {
     "context": "section header",
     "string": "Preferences"
+  },
+  "CNblvR": {
+    "string": "Refund fullfilling"
   },
   "CRAfpd": {
     "context": "gift card export dialog confirm button label",
@@ -2466,6 +2478,9 @@
   "F2cR19": {
     "context": "error message",
     "string": "Error details: {message}"
+  },
+  "F2kF9e": {
+    "string": "You must select transaction that you want to refund"
   },
   "F3Upht": {
     "string": "Product type deleted"
@@ -3891,6 +3906,9 @@
     "context": "header",
     "string": "{webhookName} Details"
   },
+  "ORQvOg": {
+    "string": "You don't have permission to perform this action"
+  },
   "OTDo9I": {
     "context": "tab name",
     "string": "All staff members"
@@ -4440,6 +4458,10 @@
   "S8kqP9": {
     "string": "Conditions"
   },
+  "S90DJO": {
+    "context": "Button with  app settings label",
+    "string": "App settings"
+  },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
     "string": "Select warehouse..."
@@ -4529,6 +4551,9 @@
   "SqhC7g": {
     "context": "checkbox label, fulfillment approval",
     "string": "Send shipment details to customer"
+  },
+  "SuqHws": {
+    "string": "You are now selecting which granted refund you want to fullfill and send to a customer."
   },
   "Sxzua5": {
     "context": "order payment",
@@ -6156,6 +6181,9 @@
   },
   "dM86a2": {
     "string": "No categories found"
+  },
+  "dO05fh": {
+    "string": "Select a refund you want to fullfill"
   },
   "dOQB9o": {
     "context": "payment status",
@@ -9191,6 +9219,9 @@
   "z3GGbZ": {
     "context": "deleted multiple attributes",
     "string": "Attributes successfully deleted"
+  },
+  "z3w/oL": {
+    "string": "You must provide amount value"
   },
   "z8jo8h": {
     "context": "button",

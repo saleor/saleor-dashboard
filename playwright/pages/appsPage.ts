@@ -11,14 +11,19 @@ export class AppsPage extends BasePage {
     readonly installExternalAppButton = page.getByTestId(
       "add-app-from-manifest",
     ),
-    readonly appsLogosList = page.getByTestId("app-logo"),
-    readonly appManifestUrlInput = page
+    readonly appLogo = page.getByTestId("app-logo"),
+    readonly installedAppsList = page.getByTestId("apps-installed"),
+    readonly availableAppsList = page.getByTestId("apps-available"),
+    readonly upcomingAppsList = page.getByTestId("apps-upcoming"),
+
+   readonly appManifestUrlInput = page
       .getByTestId("manifest-url-input")
       .locator("input"),
     readonly installAppFromManifestButton = page.getByTestId("install-app-from-manifest"),
     readonly installedAppRow = page.getByTestId("apps:installed-app-row"),
     readonly appKlaviyo = page.getByTestId("app-klaviyo"),
     readonly appAdyen = page.getByTestId("app-adyen"),
+    readonly installationPendingLabel = page.getByTestId("app-pending-label").first(),
   ) {
     super(page);
     this.page = page;
@@ -32,5 +37,4 @@ export class AppsPage extends BasePage {
   async typeManifestUrl(manifestUrl: string) {
     await this.appManifestUrlInput.fill(manifestUrl);
   }
-
 }

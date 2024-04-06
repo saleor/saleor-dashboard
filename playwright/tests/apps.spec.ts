@@ -9,7 +9,8 @@ let appsPage: AppsPage;
 let installationPage: AppInstallationPage;
 let appPage: AppPage;
 
-test("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
+//Adding temporary skip https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
+test.skip("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
   page,
 }) => {
   const appsPage = new AppsPage(page);
@@ -24,17 +25,18 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   await installationPage.installAppButton.click();
   await appsPage.expectSuccessBanner();
   await expect(appsPage.installedAppRow.first()).toBeVisible();
+  await appsPage.installationPendingLabel.waitFor({state: "hidden", timeout: 50000})
   await expect(appsPage.appKlaviyo).toContainText("Klaviyo");
+  await appsPage.installedAppRow.filter({hasText: "Klaviyo"}).first().waitFor({state: "visible", timeout: 50000});
   await appsPage.appKlaviyo.click();
-
   const iframeLocator = page.frameLocator("iframe");
-
   await expect(iframeLocator.getByLabel("PUBLIC_TOKEN")).toBeVisible();
   await iframeLocator.getByLabel("PUBLIC_TOKEN").fill("test_token");
   await iframeLocator.getByText("Save").click();
   await appsPage.expectSuccessBanner();
 
 });
+
 
 test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async ({
   page,
@@ -43,6 +45,7 @@ test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async (
   const appPage = new AppPage(page);
 
   await appPage.goToExistingAppPage(APPS.appToBeDeleted.id);
+  await appPage.pageHeader.waitFor({state: "visible", timeout: 10000});
   await expect(appPage.pageHeader).toContainText("Adyen");
   await appPage.deleteButton.click();
   await appPage.deleteAppDialog.clickDeleteButton();

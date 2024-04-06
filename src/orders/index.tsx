@@ -17,6 +17,7 @@ import {
   orderListPath,
   OrderListUrlQueryParams,
   OrderListUrlSortField,
+  orderManualTransationRefundPath,
   orderPath,
   orderPaymentRefundPath,
   orderReturnPath,
@@ -32,6 +33,7 @@ import OrderGrantRefundEditComponent from "./views/OrderEditGrantRefund";
 import OrderFulfillComponent from "./views/OrderFulfill";
 import OrderGrantRefundComponent from "./views/OrderGrantRefund";
 import OrderListComponent from "./views/OrderList";
+import OrderManualTransationRefundComponent from "./views/OrderManualTransationRefund";
 import OrderRefundComponent from "./views/OrderRefund";
 import OrderReturnComponent from "./views/OrderReturn";
 import OrderSendRefundComponent from "./views/OrderSendRefund";
@@ -141,6 +143,16 @@ const OrderTransactionRefundEdit: React.FC<RouteComponentProps<any>> = ({
     refundId={decodeURIComponent(match.params.refundId)}
   />
 );
+const OrderManualTransationRefund: React.FC<
+  RouteComponentProps<MatchParams>
+> = ({ match }) => {
+  return (
+    <OrderManualTransationRefundComponent
+      orderId={decodeURIComponent(match.params.id ?? "")}
+    />
+  );
+};
+
 const Component = () => {
   const intl = useIntl();
 
@@ -173,6 +185,10 @@ const Component = () => {
         <Route
           path={orderTransactionRefundPath(":id")}
           component={OrderTransactionRefund}
+        />
+        <Route
+          path={orderManualTransationRefundPath(":id")}
+          component={OrderManualTransationRefund}
         />
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>
