@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { Pill } from "@dashboard/components/Pill";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import Savebar from "@dashboard/components/Savebar";
 import {
@@ -25,6 +26,8 @@ import {
   canRefundShipping,
   createSetMaxQty,
   getRefundFormDefaultValues,
+  getRefundStatusColor,
+  getRefundStatusLabel,
   getRefundViewTitle,
   getSavebarLabels,
   getSavebarState,
@@ -148,7 +151,14 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           href={orderUrl(order?.id ?? "")}
           title={getRefundViewTitle(draftRefund)}
         >
-          TODO: Add status
+          {draftRefund && (
+            <Pill
+              color={getRefundStatusColor(draftRefund.status)}
+              label={getRefundStatusLabel(
+                draftRefund.status,
+              ).toLocaleUpperCase()}
+            />
+          )}
         </TopNav>
         <DetailPageLayout.Content>
           <DashboardCard>
@@ -188,7 +198,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             <OrderTransactionSummary
               control={control}
               selectedProductsValue={selectedProductsValue}
-              canRefundShipping={canRefundShipping(order)}
+              canRefundShipping={canRefundShipping(order, draftRefund)}
               shippingCost={order?.shippingPrice.gross}
               currency={order?.total.gross.currency}
             />

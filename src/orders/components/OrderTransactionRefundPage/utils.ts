@@ -1,6 +1,7 @@
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   OrderDetailsGrantRefundFragment,
+  OrderGrantedRefundStatusEnum,
   TransactionActionEnum,
 } from "@dashboard/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -79,9 +80,18 @@ export const getRefundCreateDefaultValues = (
 
 export const canRefundShipping = (
   order: OrderDetailsGrantRefundFragment | undefined | null,
+  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined,
 ) => {
-  // TODO: add case when editing refund
-  return !order?.grantedRefunds?.some(refund => refund.shippingCostsIncluded);
+  const refundWithShipping = order?.grantedRefunds.find(
+    refund => refund.shippingCostsIncluded,
+  );
+  if (!refundWithShipping) {
+    return true;
+  }
+  if (refundWithShipping.id === draftRefund?.id) {
+    return true;
+  }
+  return false;
 };
 
 const validateQty = ({
@@ -261,4 +271,30 @@ export const getSavebarState = ({
     return isDirty ? onSaveDraftState : onTransferFundsState;
   }
   return onSaveDraftState;
+};
+
+export const getRefundStatusColor = (status: OrderGrantedRefundStatusEnum) => {
+  switch (status) {
+    case OrderGrantedRefundStatusEnum.SUCCESS:
+      return "success";
+    case OrderGrantedRefundStatusEnum.FAILURE:
+      return "error";
+    case OrderGrantedRefundStatusEnum.PENDING:
+      return "warning";
+    default:
+      return "generic";
+  }
+};
+
+export const getRefundStatusLabel = (status: OrderGrantedRefundStatusEnum) => {
+  switch (status) {
+    case OrderGrantedRefundStatusEnum.SUCCESS:
+      return "Success";
+    case OrderGrantedRefundStatusEnum.FAILURE:
+      return "Failure";
+    case OrderGrantedRefundStatusEnum.PENDING:
+      return "Pending";
+    default:
+      return "Draft";
+  }
 };

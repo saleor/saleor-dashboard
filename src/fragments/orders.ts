@@ -658,6 +658,7 @@ export const orderDetailsGrantedRefund = gql`
     transaction {
       id
     }
+    status
     lines {
       id
       quantity

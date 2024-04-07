@@ -464,7 +464,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       <OrderRefundDialog
         open={params.action === "add-refund"}
         onClose={closeModal}
-        // TODO: Add redirect to manual refund view
         onStandardRefund={() => navigate(orderTransactionRefundUrl(id))}
         onManualRefund={() => navigate(orderManualTransationRefundUrl(id))}
       />
