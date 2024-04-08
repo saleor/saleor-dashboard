@@ -41,6 +41,10 @@ export const refundGridMessages = defineMessages({
     id: "ZU1Kz8",
     description: "empty state message",
   },
+  notEditable: {
+    id: "GnEY9V",
+    defaultMessage: "This grantend refund is not editable",
+  },
 });
 
 export const refundStatuses = defineMessages({

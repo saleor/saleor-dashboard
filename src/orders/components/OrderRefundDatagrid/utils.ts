@@ -1,4 +1,7 @@
-import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
+import {
+  OrderDetailsFragment,
+  OrderGrantedRefundStatusEnum,
+} from "@dashboard/graphql";
 import { PillStatusType } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
 
@@ -41,4 +44,17 @@ export const getGrantedRefundStatusMessage = (
       const _exhaustiveCheck: never = status;
       return _exhaustiveCheck;
   }
+};
+
+export const isRefundEditable = (
+  refund?: OrderDetailsFragment["grantedRefunds"][number],
+) => {
+  if (!refund) {
+    return false;
+  }
+
+  return [
+    OrderGrantedRefundStatusEnum.FAILURE,
+    OrderGrantedRefundStatusEnum.NONE,
+  ].includes(refund.status);
 };
