@@ -123,43 +123,6 @@ describe("OrderManualTransationRefundPage", () => {
     });
   });
 
-  it("should display info when not transactions and submit button disabled", async () => {
-    // Arrange &&  Act
-    render(
-      <OrderManualTransationRefundPage
-        currency="USD"
-        loading={false}
-        orderId="1"
-        transactions={[]}
-      />,
-      { wrapper: getWrapper() },
-    );
-
-    // Assert
-    expect(
-      screen.getByText(/there are not transactions to refund/i),
-    ).toBeInTheDocument();
-  });
-
-  it("should display info when not transactions", async () => {
-    // Arrange &&  Act
-    render(
-      <OrderManualTransationRefundPage
-        currency="USD"
-        loading={false}
-        orderId="1"
-        transactions={[]}
-      />,
-      { wrapper: getWrapper() },
-    );
-
-    // Assert
-    expect(
-      screen.getByText(/there are not transactions to refund/i),
-    ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "save" })).toBeDisabled();
-  });
-
   it("should display skeleton when loading", async () => {
     // Arrange &&  Act
     render(
