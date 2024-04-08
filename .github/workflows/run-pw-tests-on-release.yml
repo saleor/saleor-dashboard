@@ -157,7 +157,7 @@ jobs:
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
       - name: Change job status if previous job failed or skipped
-        if: needs.tests-complete !== 'success' && !cancelled()
+        if: needs.tests-complete != 'success' && !cancelled()
         uses: ./.github/actions/checks/update-pull-request-check
         with:
           CHECK_ID: ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
