@@ -22,9 +22,9 @@ export const messages = defineMessages({
     defaultMessage:
       " You are now selecting which granted refund you want to fullfill and send to a customer.",
   },
-  noTransactions: {
-    id: "5Kq4j7",
-    defaultMessage: "There are not transactions to refund",
+  notRefundable: {
+    id: "HW6Vef",
+    defaultMessage: "This transaction is non-refundable",
   },
 });
 
