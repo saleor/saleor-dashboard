@@ -95,15 +95,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   ]);
 
   const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = data => {
-    if (!canHandlePayments) {
-      onSaveDraft(data);
-      return;
-    }
-    if (!draftRefund) {
-      onSaveDraft(data);
-      return;
-    }
-    if (isDirty) {
+    if (!canHandlePayments || isDirty || !draftRefund) {
       onSaveDraft(data);
       return;
     }

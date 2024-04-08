@@ -36,12 +36,12 @@ export const useOrderTransactionRefundStaticColumns = () => {
     {
       id: "qtyOrdered",
       title: intl.formatMessage(transactionRefundGridMessages.qtyOrderedCell),
-      width: 300,
+      width: 150,
     },
     {
       id: "qtyToRefund",
       title: intl.formatMessage(transactionRefundGridMessages.qtyToRefundCell),
-      width: 300,
+      width: 150,
     },
     // TODO: reason per line - now or later?
   ];
@@ -88,7 +88,7 @@ export const createGetCellContent =
         return readonlyTextCell(rowData.quantity.toString(), false);
       case "qtyToRefund": {
         const qty = qtyToRefund?.find(q => q.row === row);
-        return numberCell(qty?.value ?? 0);
+        return numberCell(qty?.value ?? 0, { cursor: "pointer" });
       }
       default:
         return readonlyTextCell("", false);

@@ -47,7 +47,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
   const handleUpdateRefund = async (
     submitData: OrderTransactionRefundPageFormData,
   ) => {
-    if (!data?.order) {
+    if (!data?.order || !draftRefund) {
       return;
     }
     const { amount, reason, qtyToRefund, includeShipping, transactionId } =
@@ -63,6 +63,13 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
             quantity: qty.value,
             id: data.order!.lines[qty.row].id,
           })),
+          removeLines: qtyToRefund.map(qty => {
+            const line = data.order!.lines[qty.row];
+            const refundLine = draftRefund.lines.find(
+              refundLine => refundLine.orderLine.id === line.id,
+            );
+            return refundLine.id;
+          }),
           grantRefundForShipping: includeShipping,
           transactionId,
         },

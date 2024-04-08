@@ -264,13 +264,10 @@ export const getSavebarState = ({
   onSaveDraftState: ConfirmButtonTransitionState;
   onTransferFundsState: ConfirmButtonTransitionState | undefined;
 }) => {
-  if (!canHandlePayments || isEdit) {
+  if (!canHandlePayments || isDirty || !isEdit || !onTransferFundsState) {
     return onSaveDraftState;
   }
-  if (onTransferFundsState) {
-    return isDirty ? onSaveDraftState : onTransferFundsState;
-  }
-  return onSaveDraftState;
+  return onTransferFundsState;
 };
 
 export const getRefundStatusColor = (status: OrderGrantedRefundStatusEnum) => {
