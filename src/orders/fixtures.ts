@@ -15,6 +15,7 @@ import {
   OrderEventsEnum,
   OrderFulfillLineFragment,
   OrderGrantedRefundFragment,
+  OrderGrantedRefundStatusEnum,
   OrderListQuery,
   OrderPaymentFragment,
   OrderSettingsFragment,
@@ -3354,6 +3355,7 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     user: null,
     createdAt: "2022-08-22T10:40:22.226875+00:00",
     __typename: "OrderGrantedRefund",
+    status: OrderGrantedRefundStatusEnum.SUCCESS,
   },
   {
     id: "12344",
@@ -3371,5 +3373,6 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     },
     createdAt: "2022-08-22T10:40:22.226875+00:00",
     __typename: "OrderGrantedRefund",
+    status: OrderGrantedRefundStatusEnum.SUCCESS,
   },
 ];

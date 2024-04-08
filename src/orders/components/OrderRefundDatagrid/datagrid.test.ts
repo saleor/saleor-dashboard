@@ -1,5 +1,6 @@
 import { grantedRefunds } from "@dashboard/orders/fixtures";
 import { GridCellKind } from "@glideapps/glide-data-grid";
+import { intlMock } from "@test/intl";
 
 import { createGetCellContent, useOrderRefundStaticColumns } from "./datagrid";
 
@@ -32,6 +33,7 @@ describe("Order refund datagrid", () => {
       refunds,
       columns,
       currentTheme,
+      intl: intlMock,
     });
 
     // Assert
@@ -39,10 +41,12 @@ describe("Order refund datagrid", () => {
     // Status column
     expect(getCellContent([1, 1])).toEqual(
       expect.objectContaining({
+        allowOverlay: true,
+        copyData: "Success",
         data: {
           kind: "tags-cell",
-          possibleTags: [{ tag: "DRAFT", color: "#ffe6c8" }],
-          tags: ["DRAFT"],
+          possibleTags: [{ tag: "Success", color: "#d7f5d7" }],
+          tags: ["Success"],
         },
       }),
     );
@@ -94,6 +98,7 @@ describe("Order refund datagrid", () => {
       refunds,
       columns,
       currentTheme,
+      intl: intlMock,
     });
 
     // Assert
@@ -101,10 +106,12 @@ describe("Order refund datagrid", () => {
     // Status column
     expect(getCellContent([1, 0])).toEqual(
       expect.objectContaining({
+        allowOverlay: true,
+        copyData: "Success",
         data: {
           kind: "tags-cell",
-          possibleTags: [{ tag: "DRAFT", color: "#ffe6c8" }],
-          tags: ["DRAFT"],
+          possibleTags: [{ tag: "Success", color: "#d7f5d7" }],
+          tags: ["Success"],
         },
       }),
     );
