@@ -1,11 +1,12 @@
 import { TransactionBaseItemFragment } from "@dashboard/graphql";
 import { OrderTransactionTile } from "@dashboard/orders/components/OrderTransactionTile";
-import { RadioGroup, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { RadioGroup, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../messages";
+import { isTransactionRefundable } from "../../utils";
 import { ManualRefundForm } from "../OrderManualTransationRefundForm/manualRefundValidationSchema";
 
 interface OrderManualTransationRefundTilesProps {
@@ -22,14 +23,6 @@ export const OrderManualTransationRefundTiles = ({
 
   if (loading) {
     return <Skeleton marginTop={5} data-test-id="loading-skeleton" />;
-  }
-
-  if (!transactions.length) {
-    return (
-      <Text color="default2">
-        <FormattedMessage {...messages.noTransactions} />
-      </Text>
-    );
   }
 
   return (
@@ -52,28 +45,55 @@ export const OrderManualTransationRefundTiles = ({
             display="grid"
             gap={3}
           >
-            {transactions.map(transaction => (
-              <OrderTransactionTile error={!!error} key={transaction.id}>
-                <OrderTransactionTile.Header>
-                  <RadioGroup.Item
-                    {...field}
-                    id={transaction.id}
-                    value={transaction.id}
-                    error={!!error}
-                    padding={4}
-                  >
-                    <Text size={5} fontWeight="medium" padding={4}>
-                      {transaction?.name || "Transaction"}
-                    </Text>
-                  </RadioGroup.Item>
-                </OrderTransactionTile.Header>
-                <OrderTransactionTile.Events>
-                  {transaction.events.map(event => (
-                    <OrderTransactionTile.Event event={event} key={event.id} />
-                  ))}
-                </OrderTransactionTile.Events>
-              </OrderTransactionTile>
-            ))}
+            {transactions.map(transaction => {
+              const isRefundable = isTransactionRefundable(transaction);
+
+              return (
+                <OrderTransactionTile error={!!error} key={transaction.id}>
+                  <OrderTransactionTile.Header>
+                    <Tooltip>
+                      <Tooltip.Trigger>
+                        <RadioGroup.Item
+                          {...field}
+                          id={transaction.id}
+                          value={transaction.id}
+                          disabled={!isRefundable}
+                          error={!!error}
+                          padding={4}
+                        >
+                          <Text
+                            size={5}
+                            fontWeight="medium"
+                            padding={4}
+                            color={
+                              isRefundable ? "default1" : "defaultDisabled"
+                            }
+                          >
+                            {transaction?.name || "Transaction"}
+                          </Text>
+                        </RadioGroup.Item>
+                      </Tooltip.Trigger>
+                      <Tooltip.Content side="left">
+                        {!isRefundable && (
+                          <>
+                            <Tooltip.Arrow />
+                            <FormattedMessage {...messages.notRefundable} />
+                          </>
+                        )}
+                      </Tooltip.Content>
+                    </Tooltip>
+                  </OrderTransactionTile.Header>
+                  <OrderTransactionTile.Events>
+                    {transaction.events.map(event => (
+                      <OrderTransactionTile.Event
+                        event={event}
+                        key={event.id}
+                      />
+                    ))}
+                  </OrderTransactionTile.Events>
+                </OrderTransactionTile>
+              );
+            })}
           </RadioGroup>
         )}
       />
