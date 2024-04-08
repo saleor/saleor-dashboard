@@ -63,13 +63,15 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
             quantity: qty.value,
             id: data.order!.lines[qty.row].id,
           })),
-          removeLines: qtyToRefund.map(qty => {
-            const line = data.order!.lines[qty.row];
-            const refundLine = draftRefund.lines.find(
-              refundLine => refundLine.orderLine.id === line.id,
-            );
-            return refundLine.id;
-          }),
+          removeLines: qtyToRefund
+            .map(qty => {
+              const line = data.order!.lines[qty.row];
+              const refundLine = draftRefund.lines?.find(
+                refundLine => refundLine.orderLine.id === line.id,
+              );
+              return refundLine?.id;
+            })
+            .filter(Boolean) as string[],
           grantRefundForShipping: includeShipping,
           transactionId,
         },

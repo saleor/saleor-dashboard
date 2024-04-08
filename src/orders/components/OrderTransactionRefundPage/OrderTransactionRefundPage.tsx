@@ -55,7 +55,7 @@ export interface QuantityToRefund {
 export interface OrderTransactionRefundPageFormData {
   qtyToRefund: QuantityToRefund[];
   transactionId: string | undefined;
-  amount: number;
+  amount: number | undefined;
   includeShipping: boolean;
   reason: string;
 }
