@@ -157,6 +157,7 @@ export const useRecalculateTotalAmount = ({
   order,
   selectedProductsValue,
   qtyToRefund,
+  isFormDirty,
 }: {
   getValues: UseFormGetValues<OrderTransactionRefundPageFormData>;
   setValue: UseFormSetValue<OrderTransactionRefundPageFormData>;
@@ -164,20 +165,23 @@ export const useRecalculateTotalAmount = ({
   order: OrderDetailsGrantRefundFragment | undefined | null;
   selectedProductsValue: number;
   qtyToRefund: QuantityToRefund[];
+  isFormDirty: boolean;
 }) => {
   React.useEffect(() => {
-    const customAmount = getValues("amount");
-    if (includeShipping) {
-      const shippingPrice = order?.shippingPrice.gross.amount;
-      const totalAmount = selectedProductsValue + (shippingPrice ?? 0);
-      if (totalAmount !== customAmount) {
-        setValue("amount", totalAmount);
+    if (isFormDirty) {
+      const customAmount = getValues("amount");
+      if (includeShipping) {
+        const shippingPrice = order?.shippingPrice.gross.amount;
+        const totalAmount = selectedProductsValue + (shippingPrice ?? 0);
+        if (totalAmount !== customAmount) {
+          setValue("amount", totalAmount);
+        }
+        return;
       }
-      return;
-    }
 
-    if (selectedProductsValue !== customAmount) {
-      setValue("amount", selectedProductsValue);
+      if (selectedProductsValue !== customAmount) {
+        setValue("amount", selectedProductsValue);
+      }
     }
   }, [qtyToRefund, includeShipping]);
 };

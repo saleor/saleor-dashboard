@@ -80,6 +80,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     watch,
     getValues,
     reset,
+    getFieldState,
     formState: { isDirty },
   } = useForm<OrderTransactionRefundPageFormData>({
     defaultValues: getRefundFormDefaultValues({ order, draftRefund }),
@@ -96,7 +97,10 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
 
   const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = data => {
     if (!canHandlePayments || isDirty || !draftRefund) {
-      onSaveDraft(data);
+      onSaveDraft({
+        ...data,
+        amount: getFieldState("amount").isDirty ? data.amount : undefined,
+      });
       return;
     }
     if (onTransferFunds) {
@@ -119,6 +123,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     qtyToRefund,
     setValue,
     selectedProductsValue,
+    isFormDirty: isDirty,
   });
 
   const onSetMaximumQty = createSetMaxQty({
