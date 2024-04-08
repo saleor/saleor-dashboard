@@ -31,6 +31,7 @@ export class BasePage {
     ),
     readonly searchInputListView = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
+    readonly dialog = page.getByRole("dialog"),
   ) {
     this.page = page;
   }
@@ -248,7 +249,6 @@ export class BasePage {
       expect(locator).toContainText(objectProperty);
     }
   }
-
   async getNumberOfGridRowsWithText(expectedText: string) {
     await this.gridCanvas
       .locator("tr")
@@ -265,5 +265,8 @@ export class BasePage {
     await this.gridCanvas.locator("tr").first().waitFor({ state: "attached" });
     const gridRowsWithText = await this.gridCanvas.locator("tr").count();
     return gridRowsWithText;
+  }
+  async waitForDOMToFullyLoad() {
+    await this.page.waitForLoadState('domcontentloaded', { timeout: 70000 });
   }
 }

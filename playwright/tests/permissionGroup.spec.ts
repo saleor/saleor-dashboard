@@ -47,7 +47,6 @@ test("TC: SALEOR_133 Should be able to create new permission group @permissions 
     await permissionDetails.selectPermissionGroup(permission);
   }
   await permissionDetails.clickChannelPermissionsCheckbox();
-
   await permissionDetails.clickSaveButton();
   await permissions.successBanner.waitFor({
     state: "visible",
@@ -55,13 +54,11 @@ test("TC: SALEOR_133 Should be able to create new permission group @permissions 
   });
   await permissionDetails.clickAssignMembersButton();
   const members = PERMISSION_GROUPS.permissionGroupMembers;
-
   await assignmentDialog.searchForMembers("e2e_permission_group_member");
   for (const member of members) {
     await assignmentDialog.selectMember(member.name);
   }
   await assignmentDialog.clickAssignButton();
-
   await expect(permissionDetails.permissionGroupNameInput).toHaveValue(name);
   await expect(permissionDetails.channelPermissionsCheckbox).not.toBeChecked();
   for (const member of members) {
@@ -118,9 +115,11 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
   ).not.toBeChecked();
   await permissionDetails.selectPermissionGroup("HANDLE_CHECKOUTS");
   await expect(
-    permissionDetails.permissionGroupListItem.filter({
-      hasText: "HANDLE_CHECKOUTS",
-    }).locator(permissionDetails.permissionGroupCheckbox),
+    permissionDetails.permissionGroupListItem
+      .filter({
+        hasText: "HANDLE_CHECKOUTS",
+      })
+      .locator(permissionDetails.permissionGroupCheckbox),
   ).toBeChecked();
   const assignedMembers =
     PERMISSION_GROUPS.permissionGroupToBeEdited.assignedMembers;
@@ -130,13 +129,14 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
     timeout: 50000,
   });
   await unassignDialog.clickConfirmUnassignButton();
-  for (const name of await permissionDetails.assignedMemberName.all()){
-  await expect(name).not.toContainText(assignedMembers.names[0])};
+  for (const name of await permissionDetails.assignedMemberName.all()) {
+    await expect(name).not.toContainText(assignedMembers.names[0]);
+  }
   await expect(permissionDetails.assignedMemberName.first()).toContainText(
-    assignedMembers.names[1]
+    assignedMembers.names[1],
   );
   await expect(permissionDetails.assignedMemberName.last()).toContainText(
-    assignedMembers.names[2]
+    assignedMembers.names[2],
   );
   await permissionDetails.selectAllMembers();
   await permissionDetails.clickUnassignMembersButton();
@@ -145,7 +145,7 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
     timeout: 30000,
   });
   await unassignDialog.clickConfirmUnassignButton();
-  await expect(permissionDetails.assignedMembersTable).not.toBeAttached()
+  await expect(permissionDetails.assignedMembersTable).not.toBeAttached();
   await permissionDetails.clickSaveButton();
   await permissions.successBanner.waitFor({
     state: "visible",
@@ -161,7 +161,6 @@ test("TC: SALEOR_135 Should be able to delete single permission group @permissio
     state: "visible",
     timeout: 30000,
   });
-
   await expect(permissionDetails.permissionGroupNameInput).toHaveValue(
     permission.name,
   );

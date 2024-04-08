@@ -7,12 +7,14 @@ import { PageTypesPage } from "@pages/pageTypesPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/page.json" });
+
 let basePage: BasePage;
 let mainMenuPage: MainMenuPage;
 let configurationPage: ConfigurationPage;
 let home: HomePage;
 let contentPage: ContentPage;
 let pageTypesPage: PageTypesPage;
+
 test.beforeEach(async ({ page }) => {
   mainMenuPage = new MainMenuPage(page);
   configurationPage = new ConfigurationPage(page);
@@ -22,22 +24,29 @@ test.beforeEach(async ({ page }) => {
   pageTypesPage = new PageTypesPage(page);
 });
 
-test("TC: SALEOR_14 User should be able to navigate to content list as a staff member using CONTENT aka PAGE permission @e2e", async () => {
+test.beforeEach(async ({ page }) => {
+  mainMenuPage = new MainMenuPage(page);
+  configurationPage = new ConfigurationPage(page);
+  home = new HomePage(page);
+  contentPage = new ContentPage(page);
+  basePage = new BasePage(page);
+  pageTypesPage = new PageTypesPage(page);
   await home.goto();
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
+});
+
+test("TC: SALEOR_14 User should be able to navigate to content list as a staff member using CONTENT aka PAGE permission @e2e", async () => {
   await mainMenuPage.openContent();
   await expect(contentPage.createContentButton).toBeVisible();
   await mainMenuPage.expectMenuItemsCount(4);
   await basePage.expectGridToBeAttached();
 });
+
 test("TC: SALEOR_15 User should be able to navigate to page types list as a staff member using CONTENT aka PAGE permission @e2e", async () => {
-  await home.goto();
-  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
-  await configurationPage.goToConfirgurationView()
+  await configurationPage.goToConfirgurationView();
   await expect(configurationPage.taxesButton).toBeVisible();
   await expect(configurationPage.pageTypesButton).toBeVisible();
   await expect(configurationPage.webhooksAndEventsButton).toBeVisible();
-
   await configurationPage.openPageTypes();
   await expect(pageTypesPage.createPageTypeButton).toBeVisible();
   await mainMenuPage.expectMenuItemsCount(4);
