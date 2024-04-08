@@ -1055,6 +1055,10 @@
     "context": "content",
     "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
   },
+  "4z1O0N": {
+    "context": "Refund status success",
+    "string": "Success"
+  },
   "54KYgS": {
     "context": "months after label",
     "string": "months after issue"
@@ -3902,6 +3906,10 @@
     "context": "order history message",
     "string": "Order was created from draft"
   },
+  "OPN1kX": {
+    "context": "Refund status error",
+    "string": "Error"
+  },
   "OPtrMg": {
     "context": "header",
     "string": "{webhookName} Details"
@@ -4465,6 +4473,10 @@
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
     "string": "Select warehouse..."
+  },
+  "SBlTvZ": {
+    "context": "Refund status pending",
+    "string": "Pending"
   },
   "SC/eNC": {
     "context": "Payment card title",
@@ -7416,6 +7428,10 @@
   "mGiA6q": {
     "context": "modal button upload",
     "string": "Upload"
+  },
+  "mH74w7": {
+    "context": "Refund status none",
+    "string": "Not processed"
   },
   "mIRBuW": {
     "string": "Is published"
