@@ -3,5 +3,6 @@ import {
   TransactionBaseItemFragment,
 } from "@dashboard/graphql";
 
-export const isRefundable = (transaction: TransactionBaseItemFragment) =>
-  transaction.actions.includes(TransactionActionEnum.REFUND);
+export const isTransactionRefundable = (
+  transaction: TransactionBaseItemFragment,
+) => transaction.actions.includes(TransactionActionEnum.REFUND);

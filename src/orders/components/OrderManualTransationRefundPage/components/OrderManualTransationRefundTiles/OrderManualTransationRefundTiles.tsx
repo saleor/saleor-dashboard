@@ -6,7 +6,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../messages";
-import { isRefundable } from "../../utils";
+import { isTransactionRefundable } from "../../utils";
 import { ManualRefundForm } from "../OrderManualTransationRefundForm/manualRefundValidationSchema";
 
 interface OrderManualTransationRefundTilesProps {
@@ -45,29 +45,19 @@ export const OrderManualTransationRefundTiles = ({
             display="grid"
             gap={3}
           >
-            {transactions.map(transaction => (
-              <OrderTransactionTile error={!!error} key={transaction.id}>
-                <OrderTransactionTile.Header>
-                  {isRefundable(transaction) ? (
-                    <RadioGroup.Item
-                      {...field}
-                      id={transaction.id}
-                      value={transaction.id}
-                      error={!!error}
-                      padding={4}
-                    >
-                      <Text size={5} fontWeight="medium" padding={4}>
-                        {transaction?.name || "Transaction"}
-                      </Text>
-                    </RadioGroup.Item>
-                  ) : (
+            {transactions.map(transaction => {
+              const isRefundable = isTransactionRefundable(transaction);
+
+              return (
+                <OrderTransactionTile error={!!error} key={transaction.id}>
+                  <OrderTransactionTile.Header>
                     <Tooltip>
                       <Tooltip.Trigger>
                         <RadioGroup.Item
                           {...field}
                           id={transaction.id}
                           value={transaction.id}
-                          disabled
+                          disabled={!isRefundable}
                           error={!!error}
                           padding={4}
                         >
@@ -75,26 +65,35 @@ export const OrderManualTransationRefundTiles = ({
                             size={5}
                             fontWeight="medium"
                             padding={4}
-                            color="defaultDisabled"
+                            color={
+                              isRefundable ? "default1" : "defaultDisabled"
+                            }
                           >
                             {transaction?.name || "Transaction"}
                           </Text>
                         </RadioGroup.Item>
                       </Tooltip.Trigger>
                       <Tooltip.Content side="left">
-                        <Tooltip.Arrow />
-                        <FormattedMessage {...messages.notRefundable} />
+                        {!isRefundable && (
+                          <>
+                            <Tooltip.Arrow />
+                            <FormattedMessage {...messages.notRefundable} />
+                          </>
+                        )}
                       </Tooltip.Content>
                     </Tooltip>
-                  )}
-                </OrderTransactionTile.Header>
-                <OrderTransactionTile.Events>
-                  {transaction.events.map(event => (
-                    <OrderTransactionTile.Event event={event} key={event.id} />
-                  ))}
-                </OrderTransactionTile.Events>
-              </OrderTransactionTile>
-            ))}
+                  </OrderTransactionTile.Header>
+                  <OrderTransactionTile.Events>
+                    {transaction.events.map(event => (
+                      <OrderTransactionTile.Event
+                        event={event}
+                        key={event.id}
+                      />
+                    ))}
+                  </OrderTransactionTile.Events>
+                </OrderTransactionTile>
+              );
+            })}
           </RadioGroup>
         )}
       />
