@@ -17,6 +17,7 @@ jobs:
       BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
+      CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +28,7 @@ jobs:
           CHECK_NAME: "Automation_tests_run"
           STATUS: "in_progress"
           TITLE: "Automation tests run"
+          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
       - name: Generate variables
         id: cloud_variables
@@ -64,6 +66,8 @@ jobs:
         shard: [1/2, 2/2]
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
@@ -123,13 +127,24 @@ jobs:
           --ref_name "$ref_name" 
 
       - id: update-check
-        if: always() && ${{ steps.create-check.outputs.CHECK_ID }}
+        if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
         uses: ./.github/actions/checks/update-pull-request-check
         with:
-          CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
+          CHECK_ID: ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
           CHECK_NAME: "Automation_tests_run"
           STATUS: "completed"
           CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
           TITLE: "Automation tests run"
           SUMMARY: "${{ steps.send-slack-message.outputs.message }} ${{ steps.send-slack-message.outputs.linkToResults }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  update-check-status-if-previous-job-fails:
+    runs-on: ubuntu-latest
+    needs: [tests-complete]
+    if: |
+      always() &&
+      needs.tests-complete !== 'success' 
+      &&
+
+      (needs.deploy-api.result == 'success' || needs.deploy-api.result == 'skipped') &&
+      (needs.deploy-sync.result == 'success' || needs.deploy-sync.result == 'skipped')

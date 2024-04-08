@@ -13,6 +13,9 @@ inputs:
   TITLE: 
     description: "Title of check"
     required: true
+  DETAILS_URL: 
+    description: "Details url"
+    required: true
 
 outputs:
   CHECK_ID:
@@ -57,6 +60,7 @@ runs:
           "output":{
             "title":"${{env.TITLE}}",
             "summary":""
-            ,"text":""
+            ,"text":"",
+            "details_url":"${{ env.DETAILS_URL }}"
           }
         }'  | jq -r '.id') ; echo "check_id=$check_id" >> $GITHUB_OUTPUT
