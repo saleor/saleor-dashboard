@@ -51,6 +51,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
     columns: visibleColumns,
     refunds: grantedRefunds,
     currentTheme,
+    intl,
   });
 
   const getMenuItems = React.useCallback(
