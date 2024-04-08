@@ -59,6 +59,7 @@ export const OrderTransactionSummary: React.FC<
           <Box
             display="flex"
             justifyContent="space-between"
+            alignItems="center"
             borderBottomStyle="solid"
             borderBottomWidth={1}
             borderColor="default1"
@@ -68,12 +69,15 @@ export const OrderTransactionSummary: React.FC<
             {currency ? (
               <Money money={{ currency, amount: selectedProductsValue }} />
             ) : (
-              <Skeleton />
+              <Box display="flex" width={20}>
+                <Skeleton />
+              </Box>
             )}
           </Box>
           <Box
             display="flex"
             justifyContent="space-between"
+            alignItems="center"
             borderBottomStyle="solid"
             borderBottomWidth={1}
             borderColor="default1"
@@ -104,7 +108,13 @@ export const OrderTransactionSummary: React.FC<
                 </Tooltip.Content>
               </Tooltip>
             )}
-            {shippingCost ? <Money money={shippingCost} /> : <Skeleton />}
+            {shippingCost ? (
+              <Money money={shippingCost} />
+            ) : (
+              <Box display="flex" width={20}>
+                <Skeleton />
+              </Box>
+            )}
           </Box>
           <Box display="flex" justifyContent="space-between" paddingY={4}>
             <Text size={5} display="flex" alignItems="center">

@@ -29,7 +29,11 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
 }: OrderTransactionTilesProps) => {
   const { field } = useController({ name: "transactionId", control });
   if (!transactions) {
-    return <Skeleton marginTop={5} />;
+    return (
+      <Box display="flex">
+        <Skeleton marginX={6} />
+      </Box>
+    );
   }
   return (
     <DashboardCard>
