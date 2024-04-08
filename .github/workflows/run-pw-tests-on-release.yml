@@ -9,6 +9,7 @@ jobs:
       VERSION: "3.18"
       CUSTOM_VERSION: "3.18.4-5a41d18"
     outputs:
+      VERSION: ${{ env.VERSION }}
       TESTMO_RUN_ID: ${{ steps.init-testmo.outputs.testmo-run-id }}
       POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.pool_variables.outputs.POOL_INSTANCE }}
