@@ -2799,6 +2799,9 @@
     "context": "button",
     "string": "Unassign"
   },
+  "GnEY9V": {
+    "string": "This grantend refund is not editable"
+  },
   "GpqEl5": {
     "context": "shipping method description",
     "string": "Description"
