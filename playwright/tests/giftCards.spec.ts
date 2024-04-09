@@ -37,7 +37,7 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
     state: "hidden",
     timeout: 30000,
   });
-  await giftCardsPage.gotoGiftCardsListView();
+  await giftCardsPage.waitForNetworkIdle(() =>  giftCardsPage.gotoGiftCardsListView());
   await giftCardsPage.waitForDOMToFullyLoad();
   const actualNumberOfRows = await giftCardsPage.getNumberOfGridRowsWithText(
     "Code",
@@ -65,10 +65,7 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
     state: "hidden",
     timeout: 30000,
   });
-
-  await giftCardsPage.waitForGrid();
-
-  await giftCardsPage.gotoGiftCardsListView();
+  await giftCardsPage.waitForNetworkIdle(() =>  giftCardsPage.gotoGiftCardsListView());
   await giftCardsPage.waitForDOMToFullyLoad();
   const actualNumberOfRows = await giftCardsPage.getNumberOfGridRowsWithText(
     "Code",
@@ -129,7 +126,7 @@ test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
   await giftCardsPage.deleteDialog.clickConfirmDeletionCheckbox();
   await giftCardsPage.deleteDialog.clickDeleteButton();
   await giftCardsPage.dialog.waitFor({ state: "hidden" });
-  await giftCardsPage.gotoGiftCardsListView();
+  await giftCardsPage.waitForNetworkIdle(() =>  giftCardsPage.gotoGiftCardsListView());
   await giftCardsPage.waitForDOMToFullyLoad();
   const actualNumberOfRows = await giftCardsPage.getNumberOfGridRowsWithText(
     "Code",
