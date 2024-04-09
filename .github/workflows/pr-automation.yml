@@ -119,13 +119,14 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
+
   run-tests:
     runs-on: ubuntu-22.04
     needs: [initialize-cloud, deploy-dashboard]
     strategy:
       fail-fast: false
       matrix:
-        shard: [1/2, 2/2]
+        shard: [1/4, 2/4, 3/4, 4/4]
     steps:
       - uses: actions/checkout@v4
 
@@ -135,10 +136,12 @@ jobs:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
+          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          MAILPITURL: ${{ secrets.MAILPITURL }}
+          PW_WORKERS: ${{ vars.PW_WORKERS }}
+          PW_RETRIES: ${{ vars.PW_RETRIES }}
 
   merge-reports:
     if: "!cancelled()"

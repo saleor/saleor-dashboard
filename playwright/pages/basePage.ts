@@ -141,6 +141,11 @@ export class BasePage {
   async clickOnSpecificPositionOnPage(x: number, y: number) {
     await this.page.mouse.click(x, y);
   }
+  async waitForNetworkIdle(action: () => Promise<void>) {
+    const responsePromise = this.page.waitForResponse('**/graphql/');
+    await action();
+    await responsePromise;
+  }
   async resizeWindow(w: number, h: number) {
     await this.page.setViewportSize({width: w, height: h,});
   }
@@ -303,7 +308,7 @@ export class BasePage {
       .locator("tr")
       .filter({ hasText: expectedText })
       .first()
-      .waitFor({ state: "attached" });
+      .waitFor({ state: "attached", timeout: 10000 });
     const gridRowsWithText = await this.gridCanvas
       .locator("tr")
       .filter({ hasText: expectedText })
