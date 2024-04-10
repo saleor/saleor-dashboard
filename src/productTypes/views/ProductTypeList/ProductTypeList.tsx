@@ -189,6 +189,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
           <IconButton
             variant="secondary"
             color="primary"
+            data-test-id="bulk-delete-product-types"
             onClick={() =>
               openModal("remove", {
                 ids: selectedProductTypes,
