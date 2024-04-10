@@ -128,6 +128,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
 
   const onSetMaximumQty = createSetMaxQty({
     order,
+    draftRefund,
     qtyToRefund,
     setValue,
   });
@@ -138,6 +139,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
       qtyToRefund,
       setValue,
       order,
+      draftRefund,
     });
   };
 
@@ -167,6 +169,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           </DashboardCard>
           <OrderTransactionRefundDatagrid
             order={order}
+            draftRefund={draftRefund}
             control={control}
             onChange={onQtyToRefundChange}
             onMaxQtySet={onSetMaximumQty}

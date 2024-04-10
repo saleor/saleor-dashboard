@@ -21,10 +21,10 @@ export const transactionRefundGridMessages = defineMessages({
     id: "V+ONPA",
     description: "transaction refund datagrid qty. to refund column",
   },
-  all: {
-    defaultMessage: "All",
-    id: "t/An8o",
-    description: "transaction refund datagrid helper button",
+  maxQtyCell: {
+    defaultMessage: "Max qty. to refund",
+    id: "HqT1bA",
+    description: "transaction refund datagrid max qty column",
   },
   selectAll: {
     defaultMessage: "Select max quantities",

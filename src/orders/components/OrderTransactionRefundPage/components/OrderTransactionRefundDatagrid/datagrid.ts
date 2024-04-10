@@ -18,6 +18,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { QuantityToRefund } from "../../OrderTransactionRefundPage";
+import { getMaxQtyToRefund } from "../../utils";
 import { transactionRefundGridMessages } from "./messages";
 
 export const useOrderTransactionRefundStaticColumns = () => {
@@ -36,6 +37,11 @@ export const useOrderTransactionRefundStaticColumns = () => {
     {
       id: "qtyOrdered",
       title: intl.formatMessage(transactionRefundGridMessages.qtyOrderedCell),
+      width: 150,
+    },
+    {
+      id: "maxQty",
+      title: intl.formatMessage(transactionRefundGridMessages.maxQtyCell),
       width: 150,
     },
     {
@@ -58,10 +64,16 @@ export const createGetCellContent =
     lines,
     columns,
     qtyToRefund,
+    order,
+    draftRefund,
   }: {
     lines: OrderDetailsGrantRefundFragment["lines"] | undefined;
     columns: AvailableColumn[];
     qtyToRefund: QuantityToRefund[];
+    order: OrderDetailsGrantRefundFragment | null | undefined;
+    draftRefund:
+      | OrderDetailsGrantRefundFragment["grantedRefunds"][0]
+      | undefined;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = lines?.[row];
@@ -86,6 +98,11 @@ export const createGetCellContent =
         );
       case "qtyOrdered":
         return readonlyTextCell(rowData.quantity.toString(), false);
+      case "maxQty":
+        return readonlyTextCell(
+          getMaxQtyToRefund({ rowData, order, draftRefund }).toString(),
+          false,
+        );
       case "qtyToRefund": {
         const qty = qtyToRefund?.find(q => q.row === row);
         return numberCell(qty?.value ?? 0, { cursor: "pointer" });

@@ -97,9 +97,11 @@ export const canRefundShipping = (
 const validateQty = ({
   update,
   order,
+  draftRefund,
 }: {
   update: DatagridChangeOpts["currentUpdate"];
   order: OrderDetailsGrantRefundFragment | undefined | null;
+  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
 }) => {
   if (!update?.data.value || !order) {
     return 0;
@@ -111,8 +113,13 @@ const validateQty = ({
   if (value < 0) {
     return 0;
   }
-  if (value > order.lines[update.row].quantity) {
-    return order.lines[update.row].quantity;
+  const maxQtyToRefund = getMaxQtyToRefund({
+    rowData: order.lines[update.row],
+    order,
+    draftRefund,
+  });
+  if (value > maxQtyToRefund) {
+    return maxQtyToRefund;
   }
   return value;
 };
@@ -121,11 +128,13 @@ export const handleQtyToRefundChange = ({
   data,
   qtyToRefund,
   order,
+  draftRefund,
   setValue,
 }: {
   data: DatagridChangeOpts;
   qtyToRefund: QuantityToRefund[];
   order: OrderDetailsGrantRefundFragment | undefined | null;
+  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
   setValue: UseFormSetValue<OrderTransactionRefundPageFormData>;
 }) => {
   const unchangedQuantites = qtyToRefund.filter(
@@ -142,6 +151,7 @@ export const handleQtyToRefundChange = ({
           value: validateQty({
             update: data.currentUpdate,
             order,
+            draftRefund,
           }),
         },
       ],
@@ -203,10 +213,12 @@ export const getSelectedProductsValue = ({
 
 export const createSetMaxQty = ({
   order,
+  draftRefund,
   qtyToRefund,
   setValue,
 }: {
   order: OrderDetailsGrantRefundFragment | undefined | null;
+  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
   qtyToRefund: QuantityToRefund[];
   setValue: UseFormSetValue<OrderTransactionRefundPageFormData>;
 }) => {
@@ -219,7 +231,11 @@ export const createSetMaxQty = ({
     );
     const newQtyToRefund = rows.map(row => ({
       row,
-      value: order.lines[row].quantity,
+      value: getMaxQtyToRefund({
+        rowData: order.lines[row],
+        order,
+        draftRefund,
+      }),
     }));
     setValue("qtyToRefund", [...unchangedQuantites, ...newQtyToRefund], {
       shouldDirty: true,
@@ -298,4 +314,34 @@ export const getRefundStatusLabel = (status: OrderGrantedRefundStatusEnum) => {
     default:
       return "Draft";
   }
+};
+
+export const getMaxQtyToRefund = ({
+  rowData,
+  order,
+  draftRefund,
+}: {
+  rowData: {
+    id: string;
+    quantity: number;
+  };
+  order: OrderDetailsGrantRefundFragment | undefined | null;
+  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
+}) => {
+  if (!rowData || !order) {
+    return 0;
+  }
+  const otherGrantedRefunds = draftRefund
+    ? order.grantedRefunds.filter(refund => refund.id !== draftRefund?.id)
+    : order.grantedRefunds;
+
+  const otherRefundedQty = otherGrantedRefunds.reduce((acc, refund) => {
+    return (
+      acc +
+      (refund.lines?.find(line => line.orderLine.id === rowData.id)?.quantity ??
+        0)
+    );
+  }, 0);
+
+  return rowData.quantity - otherRefundedQty;
 };

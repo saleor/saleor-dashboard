@@ -25,6 +25,7 @@ import {
 
 interface OrderTransactionRefundDatagridProps {
   order: OrderDetailsGrantRefundFragment | undefined | null;
+  draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   control: Control<OrderTransactionRefundPageFormData, any>;
   onChange: (data: DatagridChangeOpts) => void;
   onMaxQtySet: (rows: number[]) => void;
@@ -33,7 +34,7 @@ interface OrderTransactionRefundDatagridProps {
 
 export const OrderTransactionRefundDatagrid: React.FC<
   OrderTransactionRefundDatagridProps
-> = ({ order, control, onChange, qtyToRefund, onMaxQtySet }) => {
+> = ({ order, draftRefund, control, onChange, qtyToRefund, onMaxQtySet }) => {
   // const intl = useIntl();
   const { datagrid, settings, handleColumnChange } = useDatagridOpts(
     ListViews.ORDER_TRANSACTION_REFUNDS,
@@ -58,6 +59,8 @@ export const OrderTransactionRefundDatagrid: React.FC<
     columns: visibleColumns,
     lines: order?.lines,
     qtyToRefund,
+    order,
+    draftRefund,
   });
 
   //   const getMenuItems = React.useCallback(

@@ -204,7 +204,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.ORDER_TRANSACTION_REFUNDS]: {
     rowNumber: PAGINATE_BY,
-    columns: ["product", "unitPrice", "qtyOrdered", "qtyToRefund"],
+    columns: ["product", "unitPrice", "qtyOrdered", "maxQty", "qtyToRefund"],
   },
 };
 
