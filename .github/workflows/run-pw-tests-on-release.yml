@@ -116,7 +116,7 @@ jobs:
           run_id: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
           url_to_action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           testmo_token: ${{ secrets.TESTMO_TOKEN }}
-          environment: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+          environment: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
           slack_webhook_url: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
           ref_name: ${{github.ref_name}}
 

@@ -33,11 +33,23 @@ runs:
         CHECK_ID: ${{ inputs.CHECK_ID }}
         NAME: ${{ inputs.CHECK_NAME }}
         STATUS: ${{ inputs.STATUS }}
-        CONCLUSION: '"conclusion":"${{inputs.CONCLUSION}}",'
+        CONCLUSION: ${{inputs.CONCLUSION}}
         TITLE: ${{ inputs.TITLE }}
         SUMMARY: ${{ inputs.SUMMARY }}
         DETAILS_URL: ${{ inputs.DETAILS_URL }}
       run: |
+        echo '{
+          "name":"${{env.NAME}}",
+          "status":"${{env.STATUS}}",
+          "conclusion":"${{ env.CONCLUSION }}",
+          "output":{
+            "title":"${{ env.TITLE }}",
+            "summary":"${{ env.SUMMARY }}",
+            "text":"",
+            "details_url":"${{ env.DETAILS_URL }}"
+          }
+        }'
+
         curl -L \
         -X PATCH \
         -H "Accept: application/vnd.github+json" \
@@ -47,7 +59,7 @@ runs:
         -d '{
           "name":"${{env.NAME}}",
           "status":"${{env.STATUS}}",
-          ${{ env.CONCLUSION }}
+          "conclusion":"${{ env.CONCLUSION }}",
           "output":{
             "title":"${{ env.TITLE }}",
             "summary":"${{ env.SUMMARY }}",
