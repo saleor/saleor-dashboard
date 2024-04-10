@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.19.5
+
+### Patch Changes
+
+- f1c0241df: Add results to testmo, add notification on slack after tests run
+- 3b8ac6c59: Allow users to copy voucher codes from cell in datagrid by double click cell and selecting code
+- db76d41ee: Remove not used babel config nad npm package that haven't been removed after migration to vite
+- f94eb20e3: Allow all user to access to APPS tab without checking any permissions. User will be able to see installed app list and enter to each apps.
+  Each app will be responsible for checking user permissions.
+- 553156eeb: Removed messages about plugins that have app replacements for Stripe and Emails. These apps are currently not available in App Store.
+
 ## 3.19.4
 
 ### Patch Changes
