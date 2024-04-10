@@ -60,15 +60,16 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
       }))
       .filter(line => line.quantity > 0);
 
-    const toRemove = draftRefund.lines.reduce((acc, line) => {
-      qtyToRefund.forEach(qty => {
-        const orderLine = data.order!.lines[qty.row];
-        if (line.orderLine.id === orderLine.id && !acc.includes(line.id)) {
-          acc.push(line.id);
-        }
-      });
-      return acc;
-    }, []);
+    const toRemove =
+      draftRefund.lines?.reduce<string[]>((acc, line) => {
+        qtyToRefund.forEach(qty => {
+          const orderLine = data.order!.lines[qty.row];
+          if (line.orderLine.id === orderLine.id && !acc.includes(line.id)) {
+            acc.push(line.id);
+          }
+        });
+        return acc;
+      }, []) ?? [];
 
     extractMutationErrors(
       updateRefund({
