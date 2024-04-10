@@ -6,8 +6,8 @@ jobs:
   add-check-and-prepare-instance:
     runs-on: ubuntu-latest
     env:
-      VERSION: "3.18"
-      CUSTOM_VERSION: "3.18.4-5a41d18"
+      VERSION: "3.19"
+      CUSTOM_VERSION: "3.19.4-5a41d18"
     outputs:
       VERSION: ${{ env.VERSION }}
       TESTMO_RUN_ID: ${{ steps.init-testmo.outputs.testmo-run-id }}
