@@ -149,6 +149,8 @@ jobs:
       (needs.tests-complete != 'success' && cancelled())
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Change job status if cancelled
         if: cancelled()
         uses: ./.github/actions/checks/update-pull-request-check
