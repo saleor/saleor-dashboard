@@ -512,8 +512,8 @@ export const USERS = {
 
 export const APPS = {
   appToBeDeleted: {
-    id: "QXBwOjY2",
-    name: "Adyen",
+    id: "QXBwOjcw",
+    name: "Saleor QA App",
     info: "App used in delete app test",
   }
 }

@@ -16,13 +16,14 @@ export class AppsPage extends BasePage {
     readonly availableAppsList = page.getByTestId("apps-available"),
     readonly upcomingAppsList = page.getByTestId("apps-upcoming"),
 
-   readonly appManifestUrlInput = page
+    readonly appManifestUrlInput = page
       .getByTestId("manifest-url-input")
       .locator("input"),
     readonly installAppFromManifestButton = page.getByTestId("install-app-from-manifest"),
     readonly installedAppRow = page.getByTestId("apps:installed-app-row"),
     readonly appKlaviyo = page.getByTestId("app-klaviyo"),
     readonly appAdyen = page.getByTestId("app-adyen"),
+    readonly appQA = page.getByTestId("app-saleorqa app"),
     readonly installationPendingLabel = page.getByTestId("app-pending-label").first(),
   ) {
     super(page);
