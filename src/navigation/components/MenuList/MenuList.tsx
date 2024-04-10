@@ -120,7 +120,7 @@ const MenuList: React.FC<MenuListProps> = props => {
             />
           </TableRowLink>
         </TableFooter>
-        <TableBody>
+        <TableBody data-test-id="navigation-menu-list">
           {renderCollection(
             menus,
             menu => {
@@ -128,6 +128,7 @@ const MenuList: React.FC<MenuListProps> = props => {
 
               return (
                 <TableRowLink
+                  data-test-id="navigation-menu"
                   hover={!!menu}
                   key={menu ? menu.id : "skeleton"}
                   href={menu && menuUrl(menu.id)}
@@ -142,7 +143,10 @@ const MenuList: React.FC<MenuListProps> = props => {
                       onChange={() => toggle(menu.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colTitle}>
+                  <TableCell
+                    className={classes.colTitle}
+                    data-test-id="menu-name"
+                  >
                     {maybe<React.ReactNode>(() => menu.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colItems}>

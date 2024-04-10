@@ -84,7 +84,12 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
+    <Form
+      data-test-id="navigation-menu-details-page"
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+    >
       {({ change, data, submit }) => (
         <DetailPageLayout gridTemplateColumns={1}>
           <DetailPageLayout.Content>
