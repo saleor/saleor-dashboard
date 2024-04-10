@@ -1033,6 +1033,7 @@ export const order = (
         firstName: "John",
         id: "QWRkcmVzczoxNQ==",
         lastName: "Doe",
+        avatar: null,
       },
     },
     {
@@ -1088,6 +1089,7 @@ export const order = (
         firstName: "Jane",
         id: "QWRkcmVzczoxNQ==",
         lastName: "Doe",
+        avatar: null,
       },
     },
     {

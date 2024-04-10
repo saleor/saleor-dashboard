@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
-import { getUserInitials } from "@dashboard/misc";
+import { OrderEventFragment } from "@dashboard/graphql";
+import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
@@ -49,11 +49,7 @@ const useStyles = makeStyles(
 interface TimelineNoteProps {
   date: string;
   message: string | null;
-  user: {
-    email: string;
-    firstName?: string;
-    lastName?: string;
-  };
+  user: OrderEventFragment["user"];
   hasPlainDate?: boolean;
 }
 
@@ -75,29 +71,22 @@ const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
 
 export const TimelineNote: React.FC<TimelineNoteProps> = props => {
   const { date, user, message, hasPlainDate } = props;
-  const { user: currentUser } = useUser();
 
   const classes = useStyles(props);
 
-  const getUserTitleOrEmail = () => {
-    if (user?.firstName && user?.lastName) {
-      return `${user.firstName} ${user.lastName}`;
-    }
-
-    return user?.email;
-  };
+  const userDisplayName = getUserName(user, true);
 
   return (
     <div className={classes.root}>
       {user && (
         <UserAvatar
-          initials={getUserInitials(currentUser)}
-          url={currentUser?.avatar?.url}
+          initials={getUserInitials(user)}
+          url={user?.avatar?.url}
           className={classes.avatar}
         />
       )}
       <div className={classes.title}>
-        <Typography>{getUserTitleOrEmail()}</Typography>
+        <Typography>{userDisplayName}</Typography>
         <Typography>
           <DateTime date={date} plain={hasPlainDate} />
         </Typography>

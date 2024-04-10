@@ -37,6 +37,9 @@ export const fragmentOrderEvent = gql`
       email
       firstName
       lastName
+      avatar(size: 128) {
+        url
+      }
     }
     app {
       id

@@ -20,6 +20,9 @@ export const giftCardEventsFragment = gql`
     user {
       ...UserBase
       email
+      avatar(size: 128) {
+        url
+      }
     }
     app {
       id
