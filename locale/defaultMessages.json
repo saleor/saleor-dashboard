@@ -2972,6 +2972,10 @@
   "HqRNN8": {
     "string": "Support"
   },
+  "HqT1bA": {
+    "context": "transaction refund datagrid max qty column",
+    "string": "Max qty. to refund"
+  },
   "HqeqEV": {
     "context": "create gift card product alert message",
     "string": "Create a gift card product"
@@ -8347,10 +8351,6 @@
   "szXISP": {
     "context": "permission group name",
     "string": "Permission Group Name"
-  },
-  "t/An8o": {
-    "context": "transaction refund datagrid helper button",
-    "string": "All"
   },
   "t/R8nK": {
     "context": "ShippingZoneSettingsCard title",
