@@ -1111,9 +1111,6 @@
     "context": "vat not included in order price",
     "string": "does not apply"
   },
-  "5Kq4j7": {
-    "string": "There are not transactions to refund"
-  },
   "5O8EIz": {
     "context": "Authorize transactions instead of charging",
     "string": "Authorize transactions instead of charging"
@@ -2908,6 +2905,9 @@
   "HVlMK2": {
     "context": "number of variants",
     "string": "Variants ({quantity})"
+  },
+  "HW6Vef": {
+    "string": "This transaction is non-refundable"
   },
   "HYC6cH": {
     "context": "input description",

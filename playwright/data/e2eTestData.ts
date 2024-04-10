@@ -544,26 +544,26 @@ export const PERMISSION_GROUPS = {
     assignedMembers: {
       names: ["e2e_permission_group_member_1 test", "e2e_permission_group_member_2 test", "e2e_permission_group_member_3 test"]
     },
-    assignedPermissions: { names:["MANAGE_PRODUCTS", "MANAGE_PLUGINS", "MANAGE_STAFF"]},
+    assignedPermissions: { names: ["MANAGE_PRODUCTS", "MANAGE_PLUGINS", "MANAGE_STAFF"] },
   },
   permissionGroupToBeDeleted: {
     id: "R3JvdXA6MTEw",
-    name:"e2e_permission_group_to_be_deleted"
-},
-  permissionGroupMembers:[
-  {
-    name: "e2e_permission_group_member_1 test",
-    email: "e2e_permission_group_member_1@grr.la"
+    name: "e2e_permission_group_to_be_deleted"
   },
-  {
-    name: "e2e_permission_group_member_2 test",
-    email: "e2e_permission_group_member_2@grr.la"
-  },
+  permissionGroupMembers: [
     {
-    name: "e2e_permission_group_member_3 test",
-    email: "e2e_permission_group_member_3@grr.la"
-  }
-]
+      name: "e2e_permission_group_member_1 test",
+      email: "e2e_permission_group_member_1@grr.la"
+    },
+    {
+      name: "e2e_permission_group_member_2 test",
+      email: "e2e_permission_group_member_2@grr.la"
+    },
+    {
+      name: "e2e_permission_group_member_3 test",
+      email: "e2e_permission_group_member_3@grr.la"
+    }
+  ]
 }
 
 export const PAGE_TYPES = {
@@ -583,5 +583,24 @@ export const PAGE_TYPES = {
       "a page type to be bulk deleted 2/2",
     ],
     ids: ["UGFnZVR5cGU6MzY=", "UGFnZVR5cGU6Mzc="]
+  },
+}
+export const PRODUCT_TYPES = {
+  productTypeToBeEdited: {
+    id: "UHJvZHVjdFR5cGU6Njk4",
+    name: "A product type to be edited",
+    info: "Product type used in edit product type test",
+  },
+  productTypeToBeRemoved: {
+    id: "UHJvZHVjdFR5cGU6Njk5",
+    name: "A product type to be removed",
+    info: "Product type used in delete product type test",
+  },
+  productTypesToBeBulkDeleted: {
+    names: [
+      "a product type to be bulk deleted 1/2",
+      "a product type to be bulk deleted 2/2",
+    ],
+    ids: ["UHJvZHVjdFR5cGU6NzAw", "UHJvZHVjdFR5cGU6NzAx"]
   },
 }
