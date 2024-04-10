@@ -84,8 +84,6 @@ jobs:
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
 
-      - uses: actions/checkout@v4
-
       - name: submit-results-to-testmo
         if: always()
         uses: ./.github/actions/testmo/testmo-threads-submit-playwright
