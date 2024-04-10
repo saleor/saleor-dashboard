@@ -53,25 +53,31 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
     const { amount, reason, qtyToRefund, includeShipping, transactionId } =
       submitData;
 
+    const toAdd = qtyToRefund
+      .map(qty => ({
+        quantity: qty.value,
+        id: data.order!.lines[qty.row].id,
+      }))
+      .filter(line => line.quantity > 0);
+
+    const toRemove = draftRefund.lines.reduce((acc, line) => {
+      qtyToRefund.forEach(qty => {
+        const orderLine = data.order!.lines[qty.row];
+        if (line.orderLine.id === orderLine.id && !acc.includes(line.id)) {
+          acc.push(line.id);
+        }
+      });
+      return acc;
+    }, []);
+
     extractMutationErrors(
       updateRefund({
         variables: {
           refundId,
           amount,
           reason,
-          addLines: qtyToRefund.map(qty => ({
-            quantity: qty.value,
-            id: data.order!.lines[qty.row].id,
-          })),
-          removeLines: qtyToRefund
-            .map(qty => {
-              const line = data.order!.lines[qty.row];
-              const refundLine = draftRefund.lines?.find(
-                refundLine => refundLine.orderLine.id === line.id,
-              );
-              return refundLine?.id;
-            })
-            .filter(Boolean) as string[],
+          addLines: toAdd,
+          removeLines: toRemove,
           grantRefundForShipping: includeShipping,
           transactionId,
         },
