@@ -41,6 +41,7 @@ node_modules/
 cypress/screenshots
 cypress/videos
 /results/
+/testmo/
 /saleor/static/assets/
 webpack-bundle.json
 /templates/templated_email/compiled/*
