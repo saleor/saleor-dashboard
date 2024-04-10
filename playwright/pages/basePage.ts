@@ -25,11 +25,13 @@ export class BasePage {
       "button-pagination-back",
     ),
     readonly rowNumberButton = page.getByTestId("PaginationRowNumberSelect"),
+    readonly rowNumberOption = page.getByTestId("rowNumberOption"),
     readonly nextPagePaginationButton = page.getByTestId(
       "button-pagination-next",
     ),
     readonly searchInputListView = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
+    readonly dialog = page.getByRole("dialog"),
   ) {
     this.page = page;
   }
@@ -43,6 +45,10 @@ export class BasePage {
       .innerText();
 
     return cellText;
+  }
+
+  async clickPaginationRowNumberOption(value: string) {
+    await this.rowNumberOption.filter({hasText: value}).click();
   }
 
   async clickFilterButton() {
@@ -107,6 +113,11 @@ export class BasePage {
       this.errorBanner,
       "No error banner should be visible",
     ).not.toBeVisible();
+  }
+  async waitForNetworkIdle(action: () => Promise<void>) {
+    const responsePromise = this.page.waitForResponse('**/graphql/');
+    await action();
+    await responsePromise;
   }
   async resizeWindow(w: number, h: number) {
     await this.page.setViewportSize({width: w, height: h,});
@@ -243,13 +254,12 @@ export class BasePage {
       expect(locator).toContainText(objectProperty);
     }
   }
-
   async getNumberOfGridRowsWithText(expectedText: string) {
     await this.gridCanvas
       .locator("tr")
       .filter({ hasText: expectedText })
       .first()
-      .waitFor({ state: "attached" });
+      .waitFor({ state: "attached", timeout: 10000 });
     const gridRowsWithText = await this.gridCanvas
       .locator("tr")
       .filter({ hasText: expectedText })
@@ -260,5 +270,8 @@ export class BasePage {
     await this.gridCanvas.locator("tr").first().waitFor({ state: "attached" });
     const gridRowsWithText = await this.gridCanvas.locator("tr").count();
     return gridRowsWithText;
+  }
+  async waitForDOMToFullyLoad() {
+    await this.page.waitForLoadState('domcontentloaded', { timeout: 70000 });
   }
 }

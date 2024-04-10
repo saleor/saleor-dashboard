@@ -91,6 +91,7 @@ jobs:
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunName: "Cypress run ${{github.ref_name}}"
         id: init-testmo
 
   run-tests-in-parallel:
@@ -209,7 +210,7 @@ jobs:
           browser: firefox
       - name: Testmo threads submit
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["electron", "all"]'), steps.get-browsers.outputs.result) && ! cancelled() }}
-        uses: ./.github/actions/testmo/testmo-threads-submit
+        uses: ./.github/actions/testmo/testmo-threads-submit-cypress
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}

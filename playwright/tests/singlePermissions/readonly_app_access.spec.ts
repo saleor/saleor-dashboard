@@ -6,14 +6,15 @@ import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect, test } from "@playwright/test";
 import { permissions } from "@data/userPermissions";
 
-
 let permissionToExclude = "app";
 const permissionList = permissions.filter(item => item !== permissionToExclude);
 
 for (const permission of permissionList) {
-    test.use({ storageState: `playwright/.auth/${permission}.json` });
+  test.use({ storageState: `playwright/.auth/${permission}.json` });
 
-test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps @e2e`, async ({ page }) => {
+  test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps @e2e`, async ({
+    page,
+  }) => {
     const mainMenuPage = new MainMenuPage(page);
     const appsPage = new AppsPage(page);
     const appPage = new AppPage(page);
@@ -23,9 +24,13 @@ test(`TC: SALEOR_131 User with ${permission} permissions should have readonly ac
     await mainMenuPage.openApps();
     await expect(appsPage.installExternalAppButton).not.toBeVisible();
 
-    const appLists = [appsPage.installedAppsList, appsPage.availableAppsList, appsPage.upcomingAppsList];
+    const appLists = [
+      appsPage.installedAppsList,
+      appsPage.availableAppsList,
+      appsPage.upcomingAppsList,
+    ];
     for (const appList of appLists) {
-        await expect(appList).toBeVisible();
+      await expect(appList).toBeVisible();
     }
 
     await appsPage.installedAppRow.first().click();
@@ -33,9 +38,17 @@ test(`TC: SALEOR_131 User with ${permission} permissions should have readonly ac
     await appPage.appSettingsButton.click();
     await expect(appDetailsPage.appDetailsSection).toBeVisible();
 
-    const buttons = [appDetailsPage.appDeleteButton, appDetailsPage.appActivateButton, appDetailsPage.appEditPermissionsButton];
+    const buttons = [
+      appDetailsPage.appDeleteButton,
+      appDetailsPage.appActivateButton,
+      appDetailsPage.appEditPermissionsButton,
+    ];
     for (const button of buttons) {
-        await expect(button).toBeDisabled();
+      await button.waitFor({
+        state: "visible",
+        timeout: 10000,
+      });
+      await expect(button).toBeDisabled();
     }
-});
+  });
 }

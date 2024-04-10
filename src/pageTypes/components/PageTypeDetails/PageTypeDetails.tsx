@@ -39,6 +39,7 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
             defaultMessage: "Content Type Name",
           })}
           name="name"
+          data-test-id="page-type-name"
           onChange={onChange}
           value={data.name}
         />

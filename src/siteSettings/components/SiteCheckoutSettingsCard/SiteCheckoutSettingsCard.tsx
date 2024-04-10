@@ -42,6 +42,7 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
         </Typography>
         <FormSpacer />
         <TextField
+          data-test-id="reserve-stock-duration-for-auth-user-input"
           disabled={disabled}
           error={!!formErrors.reserveStockDurationAuthenticatedUser}
           type="number"
@@ -65,6 +66,7 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
         />
         <FormSpacer />
         <TextField
+          data-test-id="reserve-stock-duration-for-anon-user-input"
           disabled={disabled}
           error={!!formErrors.reserveStockDurationAnonymousUser}
           type="number"
@@ -88,6 +90,7 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
       <CardTitle title={intl.formatMessage(messages.checkoutLimits)} />
       <CardContent>
         <TextField
+          data-test-id="checkout-limits-input"
           disabled={disabled}
           error={!!formErrors.reserveStockDurationAuthenticatedUser}
           type="number"
