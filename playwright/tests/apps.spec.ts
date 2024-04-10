@@ -57,5 +57,5 @@ test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async (
   await appsPage.expectSuccessBanner();
   await appsPage.waitForDOMToFullyLoad();
   await expect(appsPage.installedAppRow.first()).toBeVisible();
-  await expect(appsPage.appAdyen).not.toBeVisible();
+  await expect(appsPage.appQA).not.toBeVisible();
 });
