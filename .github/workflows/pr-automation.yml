@@ -335,3 +335,5 @@ jobs:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
           retention-days: 14
+      - name: Merge playwright reports
+        uses: ./.github/actions/merge-pw-reports
