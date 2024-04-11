@@ -31,7 +31,7 @@ program
     );
 
     core.setOutput("status", testsStatus.status);
-    core.setOutput("message", testsStatus.message);
+    core.setOutput("message", testsStatus.message.replaceAll(/\n/g, ""));
     core.setOutput("linkToResults", testsStatus.linkToResults);
 
     await sendMessageOnSlack(

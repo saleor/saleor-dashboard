@@ -35,7 +35,7 @@ runs:
         STATUS: ${{ inputs.STATUS }}
         CONCLUSION: ${{inputs.CONCLUSION}}
         TITLE: ${{ inputs.TITLE }}
-        SUMMARY: "${{ inputs.SUMMARY }}"
+        SUMMARY: ${{ inputs.SUMMARY }}
         DETAILS_URL: ${{ inputs.DETAILS_URL }}
       run: |
         echo '{
@@ -44,7 +44,7 @@ runs:
           "conclusion":"${{ env.CONCLUSION }}",
           "output":{
             "title":"${{ env.TITLE }}",
-            "summary":${{ env.SUMMARY }},
+            "summary":"${{ env.SUMMARY }}",
             "text":"",
             "details_url":"${{ env.DETAILS_URL }}"
           }
@@ -62,7 +62,7 @@ runs:
           "conclusion":"${{ env.CONCLUSION }}",
           "output":{
             "title":"${{ env.TITLE }}",
-            "summary":${{ env.SUMMARY }},
+            "summary":"${{ env.SUMMARY }}",
             "text":"",
             "details_url":"${{ env.DETAILS_URL }}"
           }
