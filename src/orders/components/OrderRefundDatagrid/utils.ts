@@ -29,7 +29,7 @@ export const getGrantedRefundStatusMessage = (
 ): string => {
   switch (status) {
     case OrderGrantedRefundStatusEnum.FAILURE:
-      return intl.formatMessage(refundStatuses.error);
+      return intl.formatMessage(refundStatuses.failure);
     case OrderGrantedRefundStatusEnum.SUCCESS:
       return intl.formatMessage(refundStatuses.success);
     case OrderGrantedRefundStatusEnum.PENDING:

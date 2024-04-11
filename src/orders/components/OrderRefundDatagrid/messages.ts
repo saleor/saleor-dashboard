@@ -44,10 +44,10 @@ export const refundGridMessages = defineMessages({
 });
 
 export const refundStatuses = defineMessages({
-  error: {
-    id: "OPN1kX",
-    defaultMessage: "Error",
-    description: "Refund status error",
+  failure: {
+    id: "DOHARW",
+    defaultMessage: "Failure",
+    description: "Refund status failure",
   },
   success: {
     id: "4z1O0N",
