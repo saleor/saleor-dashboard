@@ -32,13 +32,13 @@ export const getGrantedRefundStatusMessage = (
 ): string => {
   switch (status) {
     case OrderGrantedRefundStatusEnum.FAILURE:
-      return intl.formatMessage(refundStatuses.error);
+      return intl.formatMessage(refundStatuses.failure);
     case OrderGrantedRefundStatusEnum.SUCCESS:
       return intl.formatMessage(refundStatuses.success);
     case OrderGrantedRefundStatusEnum.PENDING:
       return intl.formatMessage(refundStatuses.pending);
     case OrderGrantedRefundStatusEnum.NONE:
-      return intl.formatMessage(refundStatuses.none);
+      return intl.formatMessage(refundStatuses.draft);
     default:
       // eslint-disable-next-line no-case-declarations
       const _exhaustiveCheck: never = status;

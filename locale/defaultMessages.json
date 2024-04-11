@@ -2275,6 +2275,10 @@
   "DO8+uV": {
     "string": "Product created"
   },
+  "DOHARW": {
+    "context": "Refund status failure",
+    "string": "Failure"
+  },
   "DOVEZF": {
     "context": "button",
     "string": "Create content"
@@ -3908,10 +3912,6 @@
   "OKGd/k": {
     "context": "order history message",
     "string": "Order was created from draft"
-  },
-  "OPN1kX": {
-    "context": "Refund status error",
-    "string": "Error"
   },
   "OPtrMg": {
     "context": "header",
@@ -7432,10 +7432,6 @@
     "context": "modal button upload",
     "string": "Upload"
   },
-  "mH74w7": {
-    "context": "Refund status none",
-    "string": "Not processed"
-  },
   "mIRBuW": {
     "string": "Is published"
   },
@@ -7571,6 +7567,10 @@
   "nIrjSR": {
     "context": "section header",
     "string": "Ongoing Installations"
+  },
+  "nIuKz3": {
+    "context": "Refund status none",
+    "string": "Draft"
   },
   "nJ0tek": {
     "context": "tab name",
