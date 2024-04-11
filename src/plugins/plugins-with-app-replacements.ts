@@ -12,9 +12,5 @@ export const getPluginsWithAppReplacementsIds = () => {
     "mirumee.payments.adyen",
     "mirumee.taxes.avalara",
     "mirumee.invoicing",
-    "mirumee.notifications.sendgrid_email",
-    "saleor.payments.stripe",
-    "mirumee.payments.stripe",
-    "mirumee.notifications.user_email",
   ];
 };
