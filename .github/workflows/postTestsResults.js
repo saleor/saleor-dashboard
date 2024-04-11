@@ -30,7 +30,7 @@ program
       options.ref_name,
     );
 
-    core.setOutput("status", testsStatus.status);
+    core.setOutput("status", testsStatus.status.toLowerCase());
     core.setOutput("message", testsStatus.message.replaceAll(/\n/g, ""));
     core.setOutput("linkToResults", testsStatus.linkToResults);
 
