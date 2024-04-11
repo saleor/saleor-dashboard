@@ -24,7 +24,7 @@ import {
   useOrderRefundStaticColumns,
 } from "./datagrid";
 import { refundGridMessages } from "./messages";
-import { isRefundEditable } from "./utils";
+import { getNotEditabledRefundMessage, isRefundEditable } from "./utils";
 
 interface OrderRefundDatagridProps {
   grantedRefunds: OrderDetailsFragment["grantedRefunds"];
@@ -80,7 +80,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
             </Tooltip.Trigger>
             <Tooltip.Content>
               <Tooltip.Arrow />
-              <FormattedMessage {...refundGridMessages.notEditable} />
+              <FormattedMessage {...getNotEditabledRefundMessage(refund)} />
             </Tooltip.Content>
           </Tooltip>
         ),

@@ -41,9 +41,15 @@ export const refundGridMessages = defineMessages({
     id: "ZU1Kz8",
     description: "empty state message",
   },
-  notEditable: {
-    id: "GnEY9V",
-    defaultMessage: "This grantend refund is not editable",
+  notEditableSuccessfully: {
+    id: "4i7ED7",
+    defaultMessage:
+      "This refund has been successfully processed and cannot be edited",
+  },
+  notEditablePending: {
+    id: "x0n6YG",
+    defaultMessage:
+      "This refund is currently being processed and cannot be edited",
   },
 });
 
