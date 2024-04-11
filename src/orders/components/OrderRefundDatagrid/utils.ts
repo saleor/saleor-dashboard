@@ -35,7 +35,7 @@ export const getGrantedRefundStatusMessage = (
     case OrderGrantedRefundStatusEnum.PENDING:
       return intl.formatMessage(refundStatuses.pending);
     case OrderGrantedRefundStatusEnum.NONE:
-      return intl.formatMessage(refundStatuses.none);
+      return intl.formatMessage(refundStatuses.draft);
     default:
       // eslint-disable-next-line no-case-declarations
       const _exhaustiveCheck: never = status;

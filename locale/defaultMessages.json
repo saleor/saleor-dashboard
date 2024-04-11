@@ -7429,10 +7429,6 @@
     "context": "modal button upload",
     "string": "Upload"
   },
-  "mH74w7": {
-    "context": "Refund status none",
-    "string": "Not processed"
-  },
   "mIRBuW": {
     "string": "Is published"
   },
@@ -7568,6 +7564,10 @@
   "nIrjSR": {
     "context": "section header",
     "string": "Ongoing Installations"
+  },
+  "nIuKz3": {
+    "context": "Refund status none",
+    "string": "Draft"
   },
   "nJ0tek": {
     "context": "tab name",

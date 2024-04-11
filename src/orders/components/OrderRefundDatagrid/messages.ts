@@ -59,9 +59,9 @@ export const refundStatuses = defineMessages({
     defaultMessage: "Pending",
     description: "Refund status pending",
   },
-  none: {
-    id: "mH74w7",
-    defaultMessage: "Not processed",
+  draft: {
+    id: "nIuKz3",
+    defaultMessage: "Draft",
     description: "Refund status none",
   },
 });
