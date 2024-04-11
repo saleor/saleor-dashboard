@@ -286,6 +286,7 @@ export const GIFT_CARDS = {
   },
   giftCardsToBeDeleted: {
     names: ["to be deleted 1/2", "to be deleted 2/2"],
+    last4: ["5EE6", "9E39"]
   },
   giftCardToBeActivated: {
     id: "R2lmdENhcmQ6NTQ%3D",
@@ -512,8 +513,8 @@ export const USERS = {
 
 export const APPS = {
   appToBeDeleted: {
-    id: "QXBwOjY2",
-    name: "Adyen",
+    id: "QXBwOjcw",
+    name: "Saleor QA App",
     info: "App used in delete app test",
   }
 }
