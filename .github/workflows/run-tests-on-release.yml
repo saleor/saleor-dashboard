@@ -52,14 +52,16 @@ jobs:
 
       - id: check-framework
         name: check if run playwright or cypress
+        shell: bash
         env: 
           VERSION: ${{inputs.VERSION}}
         run: |
-          if (( ${VERSION//./} >= 319 )); then
+          echo ${VERSION//./}
+          if [[ ${VERSION//./} -ge 319 ]]; then
             echo "TEST_FRAMEWORK=playwright" >> $GITHUB_OUTPUT
             exit 0
           fi
-          if (( ${VERSION//./} < 319 )); then
+          if [[ ${VERSION//./} -lt 319 ]]; then
             echo "TEST_FRAMEWORK=cypress" >> $GITHUB_OUTPUT
             exit 0
           fi
@@ -72,7 +74,7 @@ jobs:
         run: echo ${TEST_FRAMEWORK}
 
       - name: Create check if release PR exists
-        if: ${{ steps.check-framework.TEST_FRAMEWORK }} == 'playwright'
+        if: ${{ steps.check-framework.TEST_FRAMEWORK == 'playwright' }} 
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
