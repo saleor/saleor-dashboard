@@ -118,7 +118,7 @@ jobs:
       - name: Print framework
         env:
           TEST_FRAMEWORK: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK }}
-          IS_CYPRESS: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK == "cypress" }}
+          IS_CYPRESS: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"' }}
         run: |
           echo ${TEST_FRAMEWORK}
           echo ${IS_CYPRESS}
