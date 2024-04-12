@@ -208,9 +208,13 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         );
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
         const handleMarkAsPaidStrategyChange = () => {
+          if (!data.markAsPaidStrategy) {
+            set({ markAsPaidStrategy: MarkAsPaidStrategyEnum.PAYMENT_FLOW });
+            return;
+          }
+
           set({
             markAsPaidStrategy:
-              // Swap enum values
               data.markAsPaidStrategy === MarkAsPaidStrategyEnum.PAYMENT_FLOW
                 ? MarkAsPaidStrategyEnum.TRANSACTION_FLOW
                 : MarkAsPaidStrategyEnum.PAYMENT_FLOW,
@@ -218,6 +222,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         };
 
         const handleTransactionFlowStrategyChange = () => {
+          if (!data.defaultTransactionFlowStrategy) {
+            set({
+              defaultTransactionFlowStrategy:
+                TransactionFlowStrategyEnum.AUTHORIZATION,
+            });
+            return;
+          }
+
           set({
             defaultTransactionFlowStrategy:
               data.defaultTransactionFlowStrategy ===
