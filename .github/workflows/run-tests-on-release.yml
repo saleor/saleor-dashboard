@@ -113,7 +113,7 @@ jobs:
   run-cy-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == 'cypress'
+    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'cypress'
     steps:
       - name: Trigger dashboard cypress automation tests
         run: |
@@ -134,7 +134,7 @@ jobs:
   run-pw-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == 'playwright'
+    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'playwright'
     strategy:
       fail-fast: false
       matrix:
@@ -169,7 +169,7 @@ jobs:
   tests-complete-pw:
     if: |
       !cancelled() && 
-      needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == 'playwright'
+      needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'playwright'
     needs: ["add-check-and-prepare-instance", "run-pw-tests"]
     runs-on: ubuntu-22.04
     steps:
@@ -223,7 +223,7 @@ jobs:
     if: |
       always() &&
       (needs.tests-complete-pw != 'success' && cancelled()) &&
-      needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK   == 'playwright'
+      needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == 'playwright'
 
     steps:
       - uses: actions/checkout@v4
