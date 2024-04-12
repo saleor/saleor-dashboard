@@ -36,6 +36,78 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  wait-for-deployment:
+    name: Wait for deployment to finish and create checks in release prepare release PR
+    needs: prepare
+    if: needs.prepare.outputs.hasChangesets == 'true'
+    runs-on: ubuntu-22.04
+    outputs:
+      MINOR_VERSION: ${{ env.MINOR_VERSION }}
+      CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.VERSION }}
+      DEPLOY_STATUS: ${{ steps.wait-for-deploy.outputs.checkStatus }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Get version and current version
+        id: get-versions
+        env:
+          VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
+        run: |
+          set -x
+          minor_version=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#\1.\2#p')
+          echo "MINOR_VERSION=${minor_version}" >> $GITHUB_ENV
+
+          set -x
+          HASH=$(git rev-parse --short HEAD)
+          CURRENT_VERSION=$(jq -r .version package.json)
+          RELEASE="${CURRENT_VERSION}-${HASH}"
+          echo "CUSTOM_VERSION=${RELEASE}" >> $GITHUB_ENV
+      
+      - name: Create check in prepare release PR
+        if: ${{ steps.check-framework.TEST_FRAMEWORK }} == playwright
+        id: create-check
+        uses: ./.github/actions/checks/create-pull-request-check
+        with:
+          PR_HEAD: "changeset-release/${{env.MINOR_VERSION}}"
+          CHECK_NAME: "Deploy_staging"
+          STATUS: "in_progress"
+          TITLE: "Deploy staging"
+          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: Wait for deployment
+        id: wait-for-deploy
+        continue-on-error: true
+        env:
+          HEAD_SHA: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
+        run: 
+          node .github/workflows/checkIfDeploymentFinished.js \
+            --head_sha $HEAD_SHA \
+            --github_token $GH_TOKEN 
+
+      - name: Update check
+        if: always() && ${{ steps.create-check.outputs.CHECK_ID }}
+        uses: ./.github/actions/checks/update-pull-request-check
+        with:
+          CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
+          CHECK_NAME: "Deploy_staging"
+          STATUS: "${{ steps.wait-for-deploy.outputs.checkStatus }}"
+          CONCLUSION: "${{ steps.wait-for-deploy.outputs.checkConclusion }}"
+          TITLE: "Deploy staging"
+          SUMMARY: "${{ steps.wait-for-deploy.outputs.checkMessage }}"
+          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+
+  run-tests-on-release:
+    needs: [wait-for-deployment, prepare]
+    if: needs.prepare.outputs.hasChangesets == 'true' && needs.wait-for-deployment.DEPLOY_STATUS == 'success'
+    uses: ./.github/workflows/run-pw-tests-on-release.yml
+    with:
+      VERSION: ${{ needs.wait-for-deployment.MINOR_VERSION }} # eg. "3.19"
+      CUSTOM_VERSION: ${{ needs.wait-for-deployment.CUSTOM_VERSION }} # eg. "3.19.4-5a41d18"
+    secrets: inherit
+      
   release:
     name: Deploy and release to sandbox
     needs: prepare
