@@ -46,35 +46,32 @@ jobs:
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
-      FRAMEWORK: ${{ steps.check-framework.TEST_FRAMEWORK }}
+      FRAMEWORK: ${{ steps.check-framework..outputs.result }}
     steps:
       - uses: actions/checkout@v4
 
       - id: check-framework
-        name: check if run playwright or cypress
-        shell: bash
-        env: 
+        uses: actions/github-script@v7
+        env:
           VERSION: ${{inputs.VERSION}}
-        run: |
-          echo ${VERSION//./}
-          if [[ ${VERSION//./} -ge 319 ]]; then
-            echo "TEST_FRAMEWORK=playwright" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          if [[ ${VERSION//./} -lt 319 ]]; then
-            echo "TEST_FRAMEWORK=cypress" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          echo "Could not determinate if run cypress or playwright" >&2
-          exit 1
+        with:
+          script: |
+            const { VERSION } = process.env
+            const versionWithoutDot = VERSION.replaceAll(/\./g, "")
+            if(versionWithoutDot >== 319){
+              return "playwright"
+            }else{
+              return "cypress"
+            }
+
 
       - name: echo framework
         env: 
-          TEST_FRAMEWORK: ${{ steps.check-framework.TEST_FRAMEWORK }}
+          TEST_FRAMEWORK: ${{ steps.check-framework.outputs.result}}
         run: echo ${TEST_FRAMEWORK}
 
       - name: Create check if release PR exists
-        if: ${{ steps.check-framework.TEST_FRAMEWORK == 'playwright' }} 
+        if: ${{ steps.check-framework.outputs.result == 'playwright' }} 
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
@@ -105,7 +102,7 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
       - uses: ./.github/actions/testmo/testmo-init
-        if: ${{ steps.check-framework.TEST_FRAMEWORK }} == 'playwright'
+        if: ${{ steps.check-framework.outputs.result == 'playwright' }} 
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
@@ -115,7 +112,7 @@ jobs:
   run-cy-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK }} == 'cypress'
+    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == 'cypress'}} 
     steps:
       - name: Trigger dashboard cypress automation tests
         run: |
@@ -136,7 +133,7 @@ jobs:
   run-pw-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK }} == playwright
+    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == playwright}} 
     strategy:
       fail-fast: false
       matrix:
@@ -223,7 +220,7 @@ jobs:
     if: |
       always() &&
       (needs.tests-complete-pw != 'success' && cancelled()) &&
-      ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK  }} == playwright
+      ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK  == playwright}} 
 
     steps:
       - uses: actions/checkout@v4
