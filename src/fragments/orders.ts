@@ -45,6 +45,11 @@ export const fragmentOrderEvent = gql`
       id
       name
       appUrl
+      brand {
+        logo {
+          default(size: 128)
+        }
+      }
     }
     lines {
       quantity

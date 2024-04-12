@@ -127,7 +127,7 @@ const GiftCardTimelineEvent: React.FC<GiftCardTimelineEventProps> = ({
     <TimelineEvent
       date={date}
       title={getEventMessage(event, intl)}
-      hasPlainDate
+      hasPlainDate={false}
     />
   );
 };

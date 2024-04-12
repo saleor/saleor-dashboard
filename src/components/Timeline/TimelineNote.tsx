@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { OrderEventFragment } from "@dashboard/graphql";
+import { GiftCardEventFragment, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -50,6 +50,7 @@ interface TimelineNoteProps {
   date: string;
   message: string | null;
   user: OrderEventFragment["user"];
+  app: OrderEventFragment["app"] | GiftCardEventFragment["app"];
   hasPlainDate?: boolean;
 }
 
@@ -69,22 +70,48 @@ const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
   </>
 );
 
+const TimelineAvatar = ({
+  user,
+  app,
+  classes,
+}: {
+  user: OrderEventFragment["user"];
+  app: OrderEventFragment["app"] | GiftCardEventFragment["app"];
+  classes: string;
+}) => {
+  if (user) {
+    return (
+      <UserAvatar
+        initials={getUserInitials(user)}
+        url={user?.avatar?.url}
+        className={classes}
+      />
+    );
+  }
+
+  if (app) {
+    return (
+      <UserAvatar
+        initials={app.name.slice(0, 2)}
+        url={app?.brand?.logo?.default}
+        className={classes}
+      />
+    );
+  }
+
+  return null;
+};
+
 export const TimelineNote: React.FC<TimelineNoteProps> = props => {
-  const { date, user, message, hasPlainDate } = props;
+  const { date, user, message, hasPlainDate, app } = props;
 
   const classes = useStyles(props);
 
-  const userDisplayName = getUserName(user, true);
+  const userDisplayName = getUserName(user, true) ?? app.name;
 
   return (
     <div className={classes.root}>
-      {user && (
-        <UserAvatar
-          initials={getUserInitials(user)}
-          url={user?.avatar?.url}
-          className={classes.avatar}
-        />
-      )}
+      <TimelineAvatar user={user} app={app} classes={classes.avatar} />
       <div className={classes.title}>
         <Typography>{userDisplayName}</Typography>
         <Typography>

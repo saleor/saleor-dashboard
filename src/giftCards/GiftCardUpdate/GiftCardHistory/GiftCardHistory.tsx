@@ -79,7 +79,7 @@ const GiftCardHistory: React.FC = () => {
               .slice()
               .reverse()
               .map(event => {
-                const { id, message, type, date, user } = event;
+                const { id, message, type, date, user, app } = event;
 
                 if (type === GiftCardEventsEnum.NOTE_ADDED) {
                   return (
@@ -88,7 +88,8 @@ const GiftCardHistory: React.FC = () => {
                       user={user}
                       message={message}
                       key={id}
-                      hasPlainDate
+                      app={app}
+                      hasPlainDate={false}
                     />
                   );
                 }

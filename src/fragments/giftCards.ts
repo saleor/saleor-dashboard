@@ -27,6 +27,11 @@ export const giftCardEventsFragment = gql`
     app {
       id
       name
+      brand {
+        logo {
+          default(size: 128)
+        }
+      }
     }
     message
     email
