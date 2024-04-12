@@ -220,7 +220,7 @@ jobs:
     if: |
       always() &&
       (needs.tests-complete-pw != 'success' && cancelled()) &&
-      ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK  == playwright}} 
+      ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK  == 'playwright'}} 
 
     steps:
       - uses: actions/checkout@v4
