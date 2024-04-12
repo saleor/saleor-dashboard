@@ -71,7 +71,7 @@ jobs:
         run: echo ${TEST_FRAMEWORK}
 
       - name: Create check if release PR exists
-        if: ${{ steps.check-framework.outputs.result == 'playwright' }} 
+        if: ${{ steps.check-framework.outputs.result  }} == 'playwright'
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
@@ -102,7 +102,7 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
       - uses: ./.github/actions/testmo/testmo-init
-        if: ${{ steps.check-framework.outputs.result == 'playwright' }} 
+        if: ${{ steps.check-framework.outputs.result}}  == 'playwright' 
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
@@ -112,7 +112,7 @@ jobs:
   run-cy-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == 'cypress'}} 
+    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK }} == 'cypress'
     steps:
       - name: Trigger dashboard cypress automation tests
         run: |
@@ -133,7 +133,7 @@ jobs:
   run-pw-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == 'playwright'}} 
+    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK }} == 'playwright'
     strategy:
       fail-fast: false
       matrix:
@@ -166,7 +166,7 @@ jobs:
           testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
 
   tests-complete-pw:
-    if: ${{ !cancelled() && needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK  == 'playwright' }}
+    if: ${{ !cancelled() && needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK }} == 'playwright' 
     needs: ["add-check-and-prepare-instance", "run-pw-tests"]
     runs-on: ubuntu-22.04
     steps:
@@ -220,7 +220,7 @@ jobs:
     if: |
       always() &&
       (needs.tests-complete-pw != 'success' && cancelled()) &&
-      ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK  == 'playwright'}} 
+      ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK }}  == 'playwright'
 
     steps:
       - uses: actions/checkout@v4
