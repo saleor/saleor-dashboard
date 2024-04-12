@@ -98,7 +98,7 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
       - uses: ./.github/actions/testmo/testmo-init
-        if: ${{ steps.check-framework.TEST_FRAMEWORK }} == playwright
+        if: ${{ steps.check-framework.TEST_FRAMEWORK }} == 'playwright'
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
@@ -108,7 +108,7 @@ jobs:
   run-cy-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK }} == cypress
+    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK }} == 'cypress'
     steps:
       - name: Trigger dashboard cypress automation tests
         run: |
