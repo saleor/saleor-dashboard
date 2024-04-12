@@ -162,7 +162,7 @@ jobs:
           testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
 
   tests-complete-pw:
-    if: ${{ !cancelled() && needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK  == playwright }}
+    if: ${{ !cancelled() && needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK  == 'playwright' }}
     needs: ["add-check-and-prepare-instance", "run-pw-tests"]
     runs-on: ubuntu-22.04
     steps:
