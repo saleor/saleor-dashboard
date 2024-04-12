@@ -90,6 +90,7 @@ jobs:
           VERSION: ${{ env.VERSION }}
 
       - name: Prepare instances
+        if: steps.check-framework.outputs.result == 'playwright' 
         id: pool_variables
         uses: ./.github/actions/prepare-instance
         with:
