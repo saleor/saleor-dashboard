@@ -102,7 +102,7 @@ jobs:
   run-tests-on-release:
     needs: [wait-for-deployment, prepare]
     if: needs.prepare.outputs.hasChangesets == 'true' && needs.wait-for-deployment.DEPLOY_STATUS == 'success'
-    uses: ./.github/workflows/test-release-workflow.yml
+    uses: ./.github/workflows/run-tests-on-release.yml
     with:
       VERSION: ${{ needs.wait-for-deployment.MINOR_VERSION }} # eg. "3.19"
       CUSTOM_VERSION: ${{ needs.wait-for-deployment.CUSTOM_VERSION }} # eg. "3.19.4-5a41d18"
