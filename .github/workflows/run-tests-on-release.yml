@@ -113,9 +113,18 @@ jobs:
   run-cy-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'cypress' }}
+    # if: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'cypress' }}
     steps:
+      - name: Print framework
+        env:
+          TEST_FRAMEWORK: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK }}
+          IS_CYPRESS: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'cypress' }}
+        run: |
+          echo ${TEST_FRAMEWORK}
+          echo ${IS_CYPRESS}
+          
       - name: Trigger dashboard cypress automation tests
+        if: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'cypress' }}
         run: |
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
