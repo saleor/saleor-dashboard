@@ -207,7 +207,7 @@ jobs:
           STATUS: "completed"
           CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
           TITLE: "Automation tests run"
-          SUMMARY: "${{ steps.send-slack-message.outputs.message }}. Details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          SUMMARY: "${{ steps.send-slack-message.outputs.message }}. Run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
   update-check-status-if-previous-job-fails:
