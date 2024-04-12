@@ -66,8 +66,13 @@ jobs:
           echo "Could not determinate if run cypress or playwright" >&2
           exit 1
 
+      - name: echo framework
+        env: 
+          TEST_FRAMEWORK: ${{ steps.check-framework.TEST_FRAMEWORK }}
+        run: echo ${TEST_FRAMEWORK}
+
       - name: Create check if release PR exists
-        if: ${{ steps.check-framework.TEST_FRAMEWORK }} == playwright
+        if: ${{ steps.check-framework.TEST_FRAMEWORK }} == 'playwright'
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
@@ -122,7 +127,7 @@ jobs:
               "client_payload": {
                 "project": "DASHBOARD",
                 "environment": "SANDBOX",
-                "version": "${{ needs.add-check-and-prepare-instance.outputs.VERSION }}",
+                "version": "${{ needs.add-check-and-prepare-instance.outputs.VERSION }}"
               }
             }'
 
