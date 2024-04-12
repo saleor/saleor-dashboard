@@ -6,6 +6,6 @@ jobs:
   run-tests-on-release:
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
-      VERSION: "3.19"
-      CUSTOM_VERSION: "3.19.4-5a41d18"
+      VERSION: "3.14"
+      CUSTOM_VERSION: "3.14.4-5a41d18"
     secrets: inherit
