@@ -53,12 +53,12 @@ jobs:
       - id: check-framework
         uses: actions/github-script@v7
         env:
-          VERSION: ${{inputs.VERSION}}
+          VERSION: "${{inputs.VERSION}}"
         with:
           script: |
             const { VERSION } = process.env
             const versionWithoutDot = VERSION.replaceAll(/\./g, "")
-            if(versionWithoutDot >== 319){
+            if(versionWithoutDot >= 319){
               return "playwright"
             }else{
               return "cypress"
@@ -126,7 +126,7 @@ jobs:
               "client_payload": {
                 "project": "DASHBOARD",
                 "environment": "SANDBOX",
-                "version": "${{ needs.add-check-and-prepare-instance.outputs.VERSION }}"
+                "version": "${{ needs.add-check-and-prepare-instance.outputs.CUSTOM_VERSION }}"
               }
             }'
 
