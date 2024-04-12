@@ -133,7 +133,7 @@ jobs:
   run-pw-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == playwright}} 
+    if: ${{ needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == 'playwright'}} 
     strategy:
       fail-fast: false
       matrix:
