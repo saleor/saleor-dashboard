@@ -112,7 +112,7 @@ jobs:
   run-cy-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == "cypress"
+    if: needs.add-check-and-prepare-instance.outputs.TEST_FRAMEWORK == 'cypress'
     steps:
       - name: Trigger dashboard cypress automation tests
         run: |
@@ -126,7 +126,7 @@ jobs:
               "client_payload": {
                 "project": "DASHBOARD",
                 "environment": "SANDBOX",
-                "version": "${{ needs.add-check-and-prepare-instance.outputs.CUSTOM_VERSION }}"
+                "version": "${{inputs.CUSTOM_VERSION}}"
               }
             }'
 
