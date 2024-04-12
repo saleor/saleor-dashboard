@@ -1,13 +1,40 @@
 name: Run automation tests on release
 on:
-  push:
+  workflow_call:
+    inputs:
+      VERSION:
+        type: string
+        required: true
+        description: Version of run eg. "3.19"
+      CUSTOM_VERSION:
+        type: string
+        required: true
+        description: Version of run eg. "3.19.4-5a41d18"
+
+    secrets:
+      STAGING_TOKEN:
+        required: true
+      TESTMO_URL:
+        required: true
+      TESTMO_TOKEN:
+        required: true
+      E2E_USER_NAME:
+        required: true
+      E2E_USER_PASSWORD:
+        required: true
+      E2E_PERMISSIONS_USERS_PASSWORD:
+        required: true
+      MAILPITURL:
+        required: true
+      SLACK_QA_STATUSES_WEBHOOK_URL:
+        required: true
 
 jobs:
   add-check-and-prepare-instance:
     runs-on: ubuntu-latest
     env:
-      VERSION: "3.19"
-      CUSTOM_VERSION: "3.19.4-5a41d18"
+      VERSION: ${{inputs.VERSION}}
+      CUSTOM_VERSION: ${{inputs.CUSTOM_VERSION}}
     outputs:
       VERSION: ${{ env.VERSION }}
       TESTMO_RUN_ID: ${{ steps.init-testmo.outputs.testmo-run-id }}
@@ -22,7 +49,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: create-check
+      - name: Create check if release PR exists
+        id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
           PR_HEAD: "Test-add-tests-check-to-release-PR"
@@ -138,7 +166,7 @@ jobs:
           STATUS: "completed"
           CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
           TITLE: "Automation tests run"
-          SUMMARY: "${{ steps.send-slack-message.outputs.message }} ${{ steps.send-slack-message.outputs.linkToResults }}"
+          SUMMARY: "${{ steps.send-slack-message.outputs.message }}. Details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
   update-check-status-if-previous-job-fails:
