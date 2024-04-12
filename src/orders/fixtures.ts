@@ -1026,6 +1026,7 @@ export const order = (
         __typename: "App",
         name: "Testapp",
         appUrl: "https://www.google.com/",
+        brand: null,
       },
       user: {
         __typename: "User",
@@ -1082,6 +1083,7 @@ export const order = (
         __typename: "App",
         name: "Testapp",
         appUrl: "https://www.google.com/",
+        brand: null,
       },
       user: {
         __typename: "User",
