@@ -46,7 +46,7 @@ jobs:
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
-      FRAMEWORK: ${{ steps.check-framework..outputs.result }}
+      FRAMEWORK: ${{ steps.check-framework.outputs.result }}
     steps:
       - uses: actions/checkout@v4
 
