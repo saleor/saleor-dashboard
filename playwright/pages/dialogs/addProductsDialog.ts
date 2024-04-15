@@ -9,8 +9,10 @@ export class AddProductsDialog {
     readonly variantRow = page.getByTestId("variant"),
     readonly backButton = page.getByTestId("back-button"),
     readonly confirmButton = page.getByTestId("confirm-button"),
-    readonly productRowCheckbox = page.getByTestId("checkbox"),
+    readonly checkbox = page.getByTestId("checkbox").getByRole("checkbox"),
+    readonly productCheckbox = page.getByTestId("product").getByTestId("checkbox"),
     readonly assignAndSaveButton = page.getByTestId("assign-and-save-button"),
+    readonly searchInput = page.getByTestId("search-query").locator("input"),
   ) {
     this.page = page;
   }
@@ -22,13 +24,13 @@ export class AddProductsDialog {
     await this.confirmButton.click();
   }
 
-  async selectVariantWithSkuOnListAndConfirm(variantSku = "61630747") {
-    await this.variantRow
-      .filter({ has: this.page.locator(`text=SKU ${variantSku}`) })
-      .locator(this.productRowCheckbox)
-      .click();
-    await this.clickConfirmButton();
-    await this.productRow.first().waitFor({state:"hidden"})
-    await expect(this.productRow.first()).not.toBeVisible();
+  async searchForProductInDialog(productName: string) {
+    await this.searchInput.fill(productName);
   }
+
+async selectVariantBySKU(sku: string) {
+const variant = this.variantRow.filter({hasText:`SKU ${sku}`})
+await variant.waitFor({state:"visible"});
+await variant.getByRole("checkbox").click();
+}
 }

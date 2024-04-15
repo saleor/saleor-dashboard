@@ -1433,6 +1433,29 @@ export const RefundOrderLineFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
+export const TransactionBaseEventFragmentDoc = gql`
+    fragment TransactionBaseEvent on TransactionEvent {
+  id
+  pspReference
+  amount {
+    ...Money
+  }
+  externalUrl
+  type
+  message
+  createdAt
+}
+    ${MoneyFragmentDoc}`;
+export const TransactionBaseItemFragmentDoc = gql`
+    fragment TransactionBaseItem on TransactionItem {
+  id
+  name
+  actions
+  events {
+    ...TransactionBaseEvent
+  }
+}
+    ${TransactionBaseEventFragmentDoc}`;
 export const StaffMemberFragmentDoc = gql`
     fragment StaffMember on User {
   id
@@ -1458,14 +1481,7 @@ export const AppAvatarFragmentDoc = gql`
     `;
 export const TransactionEventFragmentDoc = gql`
     fragment TransactionEvent on TransactionEvent {
-  id
-  pspReference
-  amount {
-    ...Money
-  }
-  type
-  message
-  createdAt
+  ...TransactionBaseEvent
   createdBy {
     ... on User {
       ...StaffMemberAvatar
@@ -1476,15 +1492,13 @@ export const TransactionEventFragmentDoc = gql`
   }
   externalUrl
 }
-    ${MoneyFragmentDoc}
+    ${TransactionBaseEventFragmentDoc}
 ${StaffMemberAvatarFragmentDoc}
 ${AppAvatarFragmentDoc}`;
 export const TransactionItemFragmentDoc = gql`
     fragment TransactionItem on TransactionItem {
-  id
+  ...TransactionBaseItem
   pspReference
-  actions
-  name
   externalUrl
   events {
     ...TransactionEvent
@@ -1514,7 +1528,8 @@ export const TransactionItemFragmentDoc = gql`
     ...Money
   }
 }
-    ${TransactionEventFragmentDoc}
+    ${TransactionBaseItemFragmentDoc}
+${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
 export const OrderPaymentFragmentDoc = gql`
     fragment OrderPayment on Payment {
@@ -11284,8 +11299,12 @@ export type OrderSettingsUpdateMutationHookResult = ReturnType<typeof useOrderSe
 export type OrderSettingsUpdateMutationResult = Apollo.MutationResult<Types.OrderSettingsUpdateMutation>;
 export type OrderSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderSettingsUpdateMutation, Types.OrderSettingsUpdateMutationVariables>;
 export const OrderTransactionRequestActionDocument = gql`
-    mutation OrderTransactionRequestAction($action: TransactionActionEnum!, $transactionId: ID!) {
-  transactionRequestAction(actionType: $action, id: $transactionId) {
+    mutation OrderTransactionRequestAction($action: TransactionActionEnum!, $transactionId: ID!, $amount: PositiveDecimal) {
+  transactionRequestAction(
+    actionType: $action
+    id: $transactionId
+    amount: $amount
+  ) {
     errors {
       ...TransactionRequestActionError
     }
@@ -11309,6 +11328,7 @@ export type OrderTransactionRequestActionMutationFn = Apollo.MutationFunction<Ty
  *   variables: {
  *      action: // value for 'action'
  *      transactionId: // value for 'transactionId'
+ *      amount: // value for 'amount'
  *   },
  * });
  */
@@ -12140,6 +12160,50 @@ export function useOrderRefundDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type OrderRefundDataQueryHookResult = ReturnType<typeof useOrderRefundDataQuery>;
 export type OrderRefundDataLazyQueryHookResult = ReturnType<typeof useOrderRefundDataLazyQuery>;
 export type OrderRefundDataQueryResult = Apollo.QueryResult<Types.OrderRefundDataQuery, Types.OrderRefundDataQueryVariables>;
+export const OrderTransationsDataDocument = gql`
+    query OrderTransationsData($orderId: ID!) {
+  order(id: $orderId) {
+    id
+    transactions {
+      ...TransactionBaseItem
+    }
+    total {
+      gross {
+        ...Money
+      }
+    }
+  }
+}
+    ${TransactionBaseItemFragmentDoc}
+${MoneyFragmentDoc}`;
+
+/**
+ * __useOrderTransationsDataQuery__
+ *
+ * To run a query within a React component, call `useOrderTransationsDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderTransationsDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderTransationsDataQuery({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *   },
+ * });
+ */
+export function useOrderTransationsDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>(OrderTransationsDataDocument, options);
+      }
+export function useOrderTransationsDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>(OrderTransationsDataDocument, options);
+        }
+export type OrderTransationsDataQueryHookResult = ReturnType<typeof useOrderTransationsDataQuery>;
+export type OrderTransationsDataLazyQueryHookResult = ReturnType<typeof useOrderTransationsDataLazyQuery>;
+export type OrderTransationsDataQueryResult = Apollo.QueryResult<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>;
 export const ChannelUsabilityDataDocument = gql`
     query ChannelUsabilityData($channel: String!) {
   products(channel: $channel) {
