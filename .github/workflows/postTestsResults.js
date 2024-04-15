@@ -57,6 +57,7 @@ async function getTestsStatus(runId, testmoToken) {
 function convertResults(results, environment, refName) {
   let status = results?.result?.status === 2 ? "SUCCESS" : "FAILURE";
   let message = `Tests run on environment: \n${environment} \n`;
+
   const linkToResults = `https:\/\/saleor.testmo.net\/automation\/runs\/view\/${results.result.id}`;
   const threads = results.result.threads;
 
