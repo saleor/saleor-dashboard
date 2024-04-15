@@ -21,3 +21,4 @@ declare interface Window {
 }
 
 declare module "@editorjs/paragraph" {}
+declare module "@editorjs/image" {}

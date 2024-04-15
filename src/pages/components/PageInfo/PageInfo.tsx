@@ -3,7 +3,7 @@ import CardTitle from "@dashboard/components/CardTitle";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
-import { PageErrorFragment } from "@dashboard/graphql";
+import { PageErrorFragment, usePageMediaUrlQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
@@ -40,7 +40,20 @@ const PageInfo: React.FC<PageInfoProps> = props => {
 
   const { defaultValue, editorRef, isReadyForMount, handleChange } =
     useRichTextContext();
+  const { data: result } = usePageMediaUrlQuery({
+    variables: { id: data?.id, size: 0 },
+  });
   const formErrors = getFormErrors(["title", "content"], errors);
+
+  defaultValue.blocks.forEach(block => {
+    if (block.type === "image") {
+      const imageName = block.data.file.url.split("/").pop();
+      const pageMedia = result.page.media.find(
+        media => media.url.split("/").pop() === imageName,
+      );
+      block.data.file.url = pageMedia.url;
+    }
+  });
 
   return (
     <Card className={classes.root}>
