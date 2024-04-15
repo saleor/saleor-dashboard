@@ -1,8 +1,11 @@
-import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
+import {
+  OrderDetailsFragment,
+  OrderGrantedRefundStatusEnum,
+} from "@dashboard/graphql";
 import { PillStatusType } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
 
-import { refundStatuses } from "./messages";
+import { refundGridMessages, refundStatuses } from "./messages";
 
 export const getGrantedRefundStatus = (
   status: OrderGrantedRefundStatusEnum,
@@ -41,4 +44,44 @@ export const getGrantedRefundStatusMessage = (
       const _exhaustiveCheck: never = status;
       return _exhaustiveCheck;
   }
+};
+
+const isRefundSuccessful = (
+  refund?: OrderDetailsFragment["grantedRefunds"][number],
+) => {
+  if (!refund) {
+    return false;
+  }
+
+  return refund.status === OrderGrantedRefundStatusEnum.SUCCESS;
+};
+
+const isRefundPending = (
+  refund?: OrderDetailsFragment["grantedRefunds"][number],
+) => {
+  if (!refund) {
+    return false;
+  }
+
+  return refund.status === OrderGrantedRefundStatusEnum.PENDING;
+};
+
+export const isRefundEditable = (
+  refund?: OrderDetailsFragment["grantedRefunds"][number],
+) => {
+  if (!refund) {
+    return false;
+  }
+
+  return !(isRefundSuccessful(refund) || isRefundPending(refund));
+};
+
+export const getNotEditabledRefundMessage = (
+  refund?: OrderDetailsFragment["grantedRefunds"][number],
+) => {
+  if (isRefundSuccessful(refund)) {
+    return refundGridMessages.notEditableSuccessfully;
+  }
+
+  return refundGridMessages.notEditablePending;
 };

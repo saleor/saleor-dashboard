@@ -1032,6 +1032,9 @@
     "context": "variant price in channel",
     "string": "Price"
   },
+  "4i7ED7": {
+    "string": "This refund has been successfully processed and cannot be edited"
+  },
   "4k9rMQ": {
     "context": "variant attribute checkbox",
     "string": "Variant Selection"
@@ -8957,6 +8960,9 @@
   "x/pIZ9": {
     "context": "button",
     "string": "Add product"
+  },
+  "x0n6YG": {
+    "string": "This refund is currently being processed and cannot be edited"
   },
   "x2mg39": {
     "context": "Transaction event description",

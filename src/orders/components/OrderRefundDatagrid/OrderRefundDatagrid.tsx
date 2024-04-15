@@ -6,7 +6,14 @@ import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/hooks
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
 import { ListViews } from "@dashboard/types";
-import { Box, Button, EditIcon, PlusIcon, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  Button,
+  EditIcon,
+  PlusIcon,
+  Text,
+  Tooltip,
+} from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -17,6 +24,7 @@ import {
   useOrderRefundStaticColumns,
 } from "./datagrid";
 import { refundGridMessages } from "./messages";
+import { getNotEditabledRefundMessage, isRefundEditable } from "./utils";
 
 interface OrderRefundDatagridProps {
   grantedRefunds: OrderDetailsFragment["grantedRefunds"];
@@ -54,22 +62,32 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
     intl,
   });
 
-  const getMenuItems = React.useCallback(
-    index => [
+  const getMenuItems = React.useCallback(index => {
+    const refund = grantedRefunds[index];
+    const isEditable = isRefundEditable(refund);
+
+    return [
       {
         label: "",
-        Icon: (
-          <Link
-            to={orderGrantRefundEditUrl(orderId, grantedRefunds[index]?.id)}
-          >
+        Icon: isEditable ? (
+          <Link to={orderGrantRefundEditUrl(orderId, refund?.id)}>
             <EditIcon />
           </Link>
+        ) : (
+          <Tooltip>
+            <Tooltip.Trigger>
+              <EditIcon color="defaultDisabled" />
+            </Tooltip.Trigger>
+            <Tooltip.Content>
+              <Tooltip.Arrow />
+              <FormattedMessage {...getNotEditabledRefundMessage(refund)} />
+            </Tooltip.Content>
+          </Tooltip>
         ),
         onSelect: () => false,
       },
-    ],
-    [],
-  );
+    ];
+  }, []);
 
   return (
     <DashboardCard>
