@@ -2145,6 +2145,7 @@ export const OrderDetailsGrantedRefundFragmentDoc = gql`
   lines {
     id
     quantity
+    reason
     orderLine {
       ...OrderLine
     }
