@@ -21,6 +21,11 @@ export const transactionRefundGridMessages = defineMessages({
     id: "V+ONPA",
     description: "transaction refund datagrid qty. to refund column",
   },
+  reasonToRefundCell: {
+    id: "DEavHl",
+    defaultMessage: "Reason",
+    description: "transaction refund datagrid reason. to refund column",
+  },
   maxQtyCell: {
     defaultMessage: "Max qty. to refund",
     id: "HqT1bA",
