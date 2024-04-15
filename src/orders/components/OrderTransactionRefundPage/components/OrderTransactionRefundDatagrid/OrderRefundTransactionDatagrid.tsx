@@ -11,17 +11,18 @@ import { ListViews } from "@dashboard/types";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, Controller } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
 import {
   OrderTransactionRefundPageFormData,
   QuantityToRefund,
 } from "../../OrderTransactionRefundPage";
-// import { useIntl } from "react-intl";
 import {
   createGetCellContent,
   useDatagridOpts,
   useOrderTransactionRefundStaticColumns,
 } from "./datagrid";
+import { transactionRefundGridMessages } from "./messages";
 
 interface OrderTransactionRefundDatagridProps {
   order: OrderDetailsGrantRefundFragment | undefined | null;
@@ -35,7 +36,6 @@ interface OrderTransactionRefundDatagridProps {
 export const OrderTransactionRefundDatagrid: React.FC<
   OrderTransactionRefundDatagridProps
 > = ({ order, draftRefund, control, onChange, qtyToRefund, onMaxQtySet }) => {
-  // const intl = useIntl();
   const { datagrid, settings, handleColumnChange } = useDatagridOpts(
     ListViews.ORDER_TRANSACTION_REFUNDS,
   );
@@ -63,17 +63,6 @@ export const OrderTransactionRefundDatagrid: React.FC<
     draftRefund,
   });
 
-  //   const getMenuItems = React.useCallback(
-  //     () => [
-  //       {
-  //         label: "",
-  //         Icon: <Text>All</Text>,
-  //         onSelect: () => false,
-  //       },
-  //     ],
-  //     [],
-  //   );
-
   return (
     <DashboardCard>
       {order ? (
@@ -96,13 +85,14 @@ export const OrderTransactionRefundDatagrid: React.FC<
                 getCellError={() => false}
                 rows={order?.lines.length ?? 0}
                 selectionActions={values => (
-                  // I think this is better to put above datagrid
                   <>
                     <Button
                       variant="secondary"
                       onClick={() => onMaxQtySet(values)}
                     >
-                      Set maximum qty
+                      <FormattedMessage
+                        {...transactionRefundGridMessages.selectAll}
+                      />
                     </Button>
                   </>
                 )}

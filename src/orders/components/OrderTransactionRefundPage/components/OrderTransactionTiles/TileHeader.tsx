@@ -1,6 +1,9 @@
 import { TransactionItemFragment } from "@dashboard/graphql";
 import { Box, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { FormattedMessage } from "react-intl";
+
+import { transactionRefundTilesMessages } from "./messages";
 
 interface TileHeaderProps {
   transaction: TransactionItemFragment;
@@ -25,7 +28,13 @@ export const TileHeader: React.FC<TileHeaderProps> = ({
         padding={4}
         color={isDisabled ? "defaultDisabled" : "default1"}
       >
-        {transaction.name === "" ? "Transaction" : transaction.name}
+        {transaction.name === "" ? (
+          <FormattedMessage
+            {...transactionRefundTilesMessages.defaultTransactionName}
+          />
+        ) : (
+          transaction.name
+        )}
       </Text>
       {/* TODO: Need to use radix to make whole row clickable */}
     </Box>

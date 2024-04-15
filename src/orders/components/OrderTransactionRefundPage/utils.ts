@@ -7,7 +7,13 @@ import {
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { IntlShape } from "react-intl";
 
+import {
+  orderTransactionRefundMessages,
+  refundSavebarMessages,
+  refundStatusMessages,
+} from "./messages";
 import {
   OrderTransactionRefundPageFormData,
   QuantityToRefund,
@@ -247,28 +253,35 @@ export const getSavebarLabels = ({
   isDirty,
   isEdit,
   canHandlePayments,
+  intl,
 }: {
   isDirty: boolean;
   isEdit: boolean;
   canHandlePayments: boolean;
+  intl: IntlShape;
 }) => {
   if (!canHandlePayments || isDirty || !isEdit) {
     return {
-      confirm: "Save draft",
-      cancel: "Cancel",
+      confirm: intl.formatMessage(refundSavebarMessages.saveDraft),
+      cancel: intl.formatMessage(refundSavebarMessages.cancel),
     };
   }
 
   return {
-    confirm: "Transfer funds",
-    cancel: "Cancel",
+    confirm: intl.formatMessage(refundSavebarMessages.transferFunds),
+    cancel: intl.formatMessage(refundSavebarMessages.cancel),
   };
 };
 
 export const getRefundViewTitle = (
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined,
+  intl: IntlShape,
 ) => {
-  return draftRefund ? "Edit refund" : "Create refund";
+  return intl.formatMessage(
+    draftRefund
+      ? orderTransactionRefundMessages.editRefundTitle
+      : orderTransactionRefundMessages.createRefundTitle,
+  );
 };
 
 export const getSavebarState = ({
@@ -303,16 +316,19 @@ export const getRefundStatusColor = (status: OrderGrantedRefundStatusEnum) => {
   }
 };
 
-export const getRefundStatusLabel = (status: OrderGrantedRefundStatusEnum) => {
+export const getRefundStatusLabel = (
+  status: OrderGrantedRefundStatusEnum,
+  intl: IntlShape,
+) => {
   switch (status) {
     case OrderGrantedRefundStatusEnum.SUCCESS:
-      return "Success";
+      return intl.formatMessage(refundStatusMessages.success);
     case OrderGrantedRefundStatusEnum.FAILURE:
-      return "Failure";
+      return intl.formatMessage(refundStatusMessages.failure);
     case OrderGrantedRefundStatusEnum.PENDING:
-      return "Pending";
+      return intl.formatMessage(refundStatusMessages.pending);
     default:
-      return "Draft";
+      return intl.formatMessage(refundStatusMessages.draft);
   }
 };
 
