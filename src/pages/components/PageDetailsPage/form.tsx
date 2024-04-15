@@ -63,6 +63,7 @@ export interface PageFormData extends MetadataFormData {
   slug: string;
   title: string;
   pageType: PageDetailsFragment["pageType"];
+  id: string;
 }
 export interface PageData extends PageFormData {
   attributes: AttributeInput[];
@@ -135,6 +136,7 @@ const getInitialFormData = (
   seoTitle: page?.seoTitle || "",
   slug: page?.slug || "",
   title: page?.title || "",
+  id: page?.id,
 });
 
 function usePageForm(
