@@ -73,18 +73,18 @@ const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
 const TimelineAvatar = ({
   user,
   app,
-  classes,
+  className,
 }: {
   user: OrderEventFragment["user"];
   app: OrderEventFragment["app"] | GiftCardEventFragment["app"];
-  classes: string;
+  className: string;
 }) => {
   if (user) {
     return (
       <UserAvatar
         initials={getUserInitials(user)}
         url={user?.avatar?.url}
-        className={classes}
+        className={className}
       />
     );
   }
@@ -94,7 +94,7 @@ const TimelineAvatar = ({
       <UserAvatar
         initials={app.name.slice(0, 2)}
         url={app?.brand?.logo?.default}
-        className={classes}
+        className={className}
       />
     );
   }
@@ -102,16 +102,20 @@ const TimelineAvatar = ({
   return null;
 };
 
-export const TimelineNote: React.FC<TimelineNoteProps> = props => {
-  const { date, user, message, hasPlainDate, app } = props;
-
-  const classes = useStyles(props);
+export const TimelineNote: React.FC<TimelineNoteProps> = ({
+  date,
+  user,
+  message,
+  hasPlainDate,
+  app,
+}) => {
+  const classes = useStyles();
 
   const userDisplayName = getUserName(user, true) ?? app.name;
 
   return (
     <div className={classes.root}>
-      <TimelineAvatar user={user} app={app} classes={classes.avatar} />
+      <TimelineAvatar user={user} app={app} className={classes.avatar} />
       <div className={classes.title}>
         <Typography>{userDisplayName}</Typography>
         <Typography>
