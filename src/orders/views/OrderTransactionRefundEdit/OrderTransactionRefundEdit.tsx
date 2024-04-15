@@ -50,19 +50,20 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
     if (!data?.order || !draftRefund) {
       return;
     }
-    const { amount, reason, qtyToRefund, includeShipping, transactionId } =
+    const { amount, reason, linesToRefund, includeShipping, transactionId } =
       submitData;
 
-    const toAdd = qtyToRefund
-      .map(qty => ({
-        quantity: qty.value,
-        id: data.order!.lines[qty.row].id,
+    const toAdd = linesToRefund
+      .map(line => ({
+        quantity: line.quantity,
+        reason: line.reason,
+        id: data.order!.lines[line.row].id,
       }))
       .filter(line => line.quantity > 0);
 
     const toRemove =
       draftRefund.lines?.reduce<string[]>((acc, line) => {
-        qtyToRefund.forEach(qty => {
+        linesToRefund.forEach(qty => {
           const orderLine = data.order!.lines[qty.row];
           if (line.orderLine.id === orderLine.id && !acc.includes(line.id)) {
             acc.push(line.id);

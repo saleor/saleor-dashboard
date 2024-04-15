@@ -13,8 +13,8 @@ import React from "react";
 import { Control, Controller } from "react-hook-form";
 
 import {
+  LineToRefund,
   OrderTransactionRefundPageFormData,
-  QuantityToRefund,
 } from "../../OrderTransactionRefundPage";
 // import { useIntl } from "react-intl";
 import {
@@ -29,12 +29,12 @@ interface OrderTransactionRefundDatagridProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
   onChange: (data: DatagridChangeOpts) => void;
   onMaxQtySet: (rows: number[]) => void;
-  qtyToRefund: QuantityToRefund[];
+  linesToRefund: LineToRefund[];
 }
 
 export const OrderTransactionRefundDatagrid: React.FC<
   OrderTransactionRefundDatagridProps
-> = ({ order, draftRefund, control, onChange, qtyToRefund, onMaxQtySet }) => {
+> = ({ order, draftRefund, control, onChange, linesToRefund, onMaxQtySet }) => {
   // const intl = useIntl();
   const { datagrid, settings, handleColumnChange } = useDatagridOpts(
     ListViews.ORDER_TRANSACTION_REFUNDS,
@@ -58,7 +58,7 @@ export const OrderTransactionRefundDatagrid: React.FC<
   const getCellContent = createGetCellContent({
     columns: visibleColumns,
     lines: order?.lines,
-    qtyToRefund,
+    linesToRefund,
     order,
     draftRefund,
   });
@@ -79,7 +79,7 @@ export const OrderTransactionRefundDatagrid: React.FC<
       {order ? (
         <DatagridChangeStateContext.Provider value={datagrid}>
           <Controller
-            name="qtyToRefund"
+            name="linesToRefund"
             control={control}
             render={({ field }) => (
               <Datagrid

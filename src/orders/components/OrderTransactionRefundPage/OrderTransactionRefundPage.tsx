@@ -47,13 +47,14 @@ export interface OrderTransactionRefundPageProps {
   onTransferFundsState?: ConfirmButtonTransitionState;
 }
 
-export interface QuantityToRefund {
+export interface LineToRefund {
   row: number;
-  value: number;
+  quantity: number;
+  reason: string;
 }
 
 export interface OrderTransactionRefundPageFormData {
-  qtyToRefund: QuantityToRefund[];
+  linesToRefund: LineToRefund[];
   transactionId: string | undefined;
   amount: number | undefined;
   includeShipping: boolean;
@@ -108,11 +109,11 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     }
   };
 
-  const qtyToRefund = watch("qtyToRefund");
+  const linesToRefund = watch("linesToRefund");
   const includeShipping = watch("includeShipping");
 
   const selectedProductsValue = getSelectedProductsValue({
-    qtyToRefund,
+    linesToRefund,
     order,
   });
 
@@ -120,7 +121,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     getValues,
     includeShipping,
     order,
-    qtyToRefund,
+    linesToRefund,
     setValue,
     selectedProductsValue,
     isFormDirty: isDirty,
@@ -129,14 +130,14 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const onSetMaximumQty = createSetMaxQty({
     order,
     draftRefund,
-    qtyToRefund,
+    linesToRefund,
     setValue,
   });
 
   const onQtyToRefundChange = (data: DatagridChangeOpts) => {
     handleQtyToRefundChange({
       data,
-      qtyToRefund,
+      linesToRefund,
       setValue,
       order,
       draftRefund,
@@ -173,7 +174,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             control={control}
             onChange={onQtyToRefundChange}
             onMaxQtySet={onSetMaximumQty}
-            qtyToRefund={qtyToRefund}
+            linesToRefund={linesToRefund}
           />
           <DashboardCard marginBottom={5}>
             <DashboardCard.Content>

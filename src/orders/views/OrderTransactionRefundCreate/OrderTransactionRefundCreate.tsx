@@ -52,7 +52,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
     if (!data?.order) {
       return;
     }
-    const { amount, reason, qtyToRefund, includeShipping, transactionId } =
+    const { amount, reason, linesToRefund, includeShipping, transactionId } =
       submitData;
 
     extractMutationErrors(
@@ -61,9 +61,10 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
           orderId,
           amount,
           reason,
-          lines: qtyToRefund.map(qty => ({
-            quantity: qty.value,
-            id: data.order!.lines[qty.row].id,
+          lines: linesToRefund.map(line => ({
+            quantity: line.quantity,
+            reason: line.reason,
+            id: data.order!.lines[line.row].id,
           })),
           grantRefundForShipping: includeShipping,
           transactionId,
