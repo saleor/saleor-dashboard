@@ -49,7 +49,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Get version and current version
+      - name: Get version and custom version
         id: get-versions
         env:
           VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}

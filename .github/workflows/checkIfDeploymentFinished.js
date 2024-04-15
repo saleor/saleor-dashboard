@@ -54,10 +54,9 @@ program
   .parse();
 
 async function getRun(githubToken, headSha) {
-  // const octokit = new Octokit({
-  //   auth: githubToken,
-  // });
-  const octokit = new Octokit();
+  const octokit = new Octokit({
+    auth: githubToken,
+  });
   let foundRuns = [];
   console.log("before while");
   while (foundRuns.length === 0) {
@@ -80,10 +79,9 @@ async function getRun(githubToken, headSha) {
 }
 
 async function waitForRunToComplete(githubToken, runId) {
-  // const octokit = new Octokit({
-  //   auth: githubToken,
-  // });
-  const octokit = new Octokit();
+  const octokit = new Octokit({
+    auth: githubToken,
+  });
 
   let status = "";
   let conclusion = "";

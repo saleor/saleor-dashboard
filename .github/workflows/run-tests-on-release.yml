@@ -75,7 +75,7 @@ jobs:
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
-          PR_HEAD: "Test-add-tests-check-to-release-PR" # TODO: change name before merging!!!
+          PR_HEAD: "changeset-release/${{env.MINOR_VERSION}}"
           CHECK_NAME: "Automation_tests_run"
           STATUS: "in_progress"
           TITLE: "Automation tests run"
