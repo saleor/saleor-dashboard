@@ -18,7 +18,6 @@ interface OrderTransactionRefundCreateProps {
 const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
   orderId,
 }) => {
-  //   const intl = useIntl();
   const notify = useNotifier();
   const navigate = useNavigator();
 
