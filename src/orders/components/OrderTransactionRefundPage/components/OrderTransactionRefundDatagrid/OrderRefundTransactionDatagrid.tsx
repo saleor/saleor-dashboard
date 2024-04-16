@@ -8,6 +8,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { ListViews } from "@dashboard/types";
+import { Item } from "@glideapps/glide-data-grid";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, Controller } from "react-hook-form";
@@ -25,6 +26,7 @@ import {
 import { transactionRefundGridMessages } from "./messages";
 
 interface OrderTransactionRefundDatagridProps {
+  errors?: LineToRefund[];
   order: OrderDetailsGrantRefundFragment | undefined | null;
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   control: Control<OrderTransactionRefundPageFormData, any>;
@@ -35,7 +37,15 @@ interface OrderTransactionRefundDatagridProps {
 
 export const OrderTransactionRefundDatagrid: React.FC<
   OrderTransactionRefundDatagridProps
-> = ({ order, draftRefund, control, onChange, linesToRefund, onMaxQtySet }) => {
+> = ({
+  order,
+  draftRefund,
+  control,
+  onChange,
+  linesToRefund,
+  onMaxQtySet,
+  errors,
+}) => {
   const { datagrid, settings, handleColumnChange } = useDatagridOpts(
     ListViews.ORDER_TRANSACTION_REFUNDS,
   );
@@ -63,6 +73,16 @@ export const OrderTransactionRefundDatagrid: React.FC<
     draftRefund,
   });
 
+  const getCellError = ([column, row]: Item) => {
+    const rowMatch = errors?.find(err => err.row === row);
+
+    if (rowMatch && staticColumns[column].id === "qtyToRefund") {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <DashboardCard>
       {order ? (
@@ -82,7 +102,7 @@ export const OrderTransactionRefundDatagrid: React.FC<
                 availableColumns={visibleColumns}
                 emptyText={""}
                 getCellContent={getCellContent}
-                getCellError={() => false}
+                getCellError={getCellError}
                 rows={order?.lines.length ?? 0}
                 selectionActions={values => (
                   <>

@@ -166,6 +166,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             </DashboardCard.Content>
           </DashboardCard>
           <OrderTransactionRefundDatagrid
+            errors={[]}
             order={order}
             draftRefund={draftRefund}
             control={control}

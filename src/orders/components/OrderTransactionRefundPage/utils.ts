@@ -132,6 +132,38 @@ const validateQty = ({
   return value;
 };
 
+const calucalteLineToRefundChangeValue = ({
+  data,
+  order,
+  linesToRefund,
+  draftRefund,
+}: {
+  data: DatagridChangeOpts;
+  linesToRefund: LineToRefund[];
+  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
+  order: OrderDetailsGrantRefundFragment | undefined | null;
+}): LineToRefund => {
+  const rowId = data.currentUpdate!.row;
+
+  if (data.currentUpdate!.column === "reason") {
+    return {
+      row: rowId,
+      reason: data.currentUpdate!.data,
+      quantity: linesToRefund[rowId]?.quantity ?? 0,
+    };
+  }
+
+  return {
+    row: rowId,
+    reason: linesToRefund[rowId]?.reason,
+    quantity: validateQty({
+      update: data.currentUpdate!,
+      order,
+      draftRefund,
+    }),
+  };
+};
+
 export const handleLinesToRefundChange = ({
   data,
   linesToRefund,
@@ -150,34 +182,16 @@ export const handleLinesToRefundChange = ({
   );
 
   if (data.currentUpdate) {
-    const rowId = data.currentUpdate.row;
-
-    if (data.currentUpdate.column === "reason") {
-      setValue("linesToRefund", [
-        ...unchangedLines,
-        {
-          row: rowId,
-          reason: data.currentUpdate.data,
-          quantity: linesToRefund[rowId]?.quantity,
-        },
-      ]);
-
-      return;
-    }
-
     setValue(
       "linesToRefund",
       [
         ...unchangedLines,
-        {
-          row: rowId,
-          reason: linesToRefund[rowId]?.reason,
-          quantity: validateQty({
-            update: data.currentUpdate,
-            order,
-            draftRefund,
-          }),
-        },
+        calucalteLineToRefundChangeValue({
+          data,
+          linesToRefund,
+          draftRefund,
+          order,
+        }),
       ],
       { shouldDirty: true },
     );
