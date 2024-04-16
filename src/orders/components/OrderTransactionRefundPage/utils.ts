@@ -126,7 +126,7 @@ const validateQty = ({
   return value;
 };
 
-export const handleQtyToRefundChange = ({
+export const handleLinesToRefundChange = ({
   data,
   linesToRefund,
   order,

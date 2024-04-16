@@ -17,11 +17,13 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
 import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
 import { OrderTransactionRefundDatagrid } from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
+import { refundMessages } from "./messages";
 import {
   canRefundShipping,
   createSetMaxQty,
@@ -32,7 +34,7 @@ import {
   getSavebarLabels,
   getSavebarState,
   getSelectedProductsValue,
-  handleQtyToRefundChange,
+  handleLinesToRefundChange,
   useRecalculateTotalAmount,
 } from "./utils";
 export interface OrderTransactionRefundPageProps {
@@ -72,24 +74,17 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
 }) => {
   const navigate = useNavigator();
 
-  // const intl = useIntl();
-
   const {
     control,
     setValue,
     handleSubmit,
     watch,
     getValues,
-    reset,
     getFieldState,
     formState: { isDirty },
   } = useForm<OrderTransactionRefundPageFormData>({
-    defaultValues: getRefundFormDefaultValues({ order, draftRefund }),
+    values: getRefundFormDefaultValues({ order, draftRefund }),
   });
-
-  React.useEffect(() => {
-    reset(getRefundFormDefaultValues({ order, draftRefund }));
-  }, [order]);
 
   const permissions = useUserPermissions();
   const canHandlePayments = hasPermissions(permissions ?? [], [
@@ -134,8 +129,8 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     setValue,
   });
 
-  const onQtyToRefundChange = (data: DatagridChangeOpts) => {
-    handleQtyToRefundChange({
+  const onLinesToRefundChange = (data: DatagridChangeOpts) => {
+    handleLinesToRefundChange({
       data,
       linesToRefund,
       setValue,
@@ -164,7 +159,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           <DashboardCard>
             <DashboardCard.Content marginBottom={5}>
               <Text fontWeight="medium" as="p" marginTop={5}>
-                Select quantities to refund
+                <FormattedMessage {...refundMessages.qtyTitle} />
               </Text>
             </DashboardCard.Content>
           </DashboardCard>
@@ -172,14 +167,14 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             order={order}
             draftRefund={draftRefund}
             control={control}
-            onChange={onQtyToRefundChange}
+            onChange={onLinesToRefundChange}
             onMaxQtySet={onSetMaximumQty}
             linesToRefund={linesToRefund}
           />
           <DashboardCard marginBottom={5}>
             <DashboardCard.Content>
               <Text fontWeight="medium" as="p" marginTop={5}>
-                Select transaction you want to refund
+                <FormattedMessage {...refundMessages.transactionTitle} />
               </Text>
             </DashboardCard.Content>
           </DashboardCard>
