@@ -53,9 +53,9 @@ const getRefundEditDefaultValues = (
   };
 };
 
-const getRefundEditOrderQty = (
+export const getRefundEditOrderQty = (
   order: OrderDetailsGrantRefundFragment | undefined | null,
-  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0],
+  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined,
 ) => {
   const lines = order?.lines.map((line, index) => ({
     id: line.id,
@@ -100,7 +100,12 @@ export const canRefundShipping = (
   return false;
 };
 
-const validateQty = ({
+export interface ValidateQtyParams {
+  update: DatagridChangeOpts["currentUpdate"];
+  order: OrderDetailsGrantRefundFragment | undefined | null;
+  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
+}
+export const validateQty = ({
   update,
   order,
   draftRefund,
@@ -209,10 +214,10 @@ export const getSelectedProductsValue = ({
   qtyToRefund: QuantityToRefund[];
   order: OrderDetailsGrantRefundFragment | undefined | null;
 }) => {
-  return qtyToRefund?.reduce((acc, curr) => {
+  return qtyToRefund.reduce((acc, curr) => {
     const unitPrice: number =
       order?.lines[curr.row].unitPrice.gross.amount ?? 0;
-    const totalPrice = unitPrice ?? 0 * curr.value;
+    const totalPrice = unitPrice * curr.value;
     return acc + totalPrice;
   }, 0);
 };
@@ -337,10 +342,12 @@ export const getMaxQtyToRefund = ({
   order,
   draftRefund,
 }: {
-  rowData: {
-    id: string;
-    quantity: number;
-  };
+  rowData:
+    | {
+        id: string;
+        quantity: number;
+      }
+    | undefined;
   order: OrderDetailsGrantRefundFragment | undefined | null;
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
 }) => {
