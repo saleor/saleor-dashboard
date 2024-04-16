@@ -28,11 +28,10 @@ import {
   canRefundShipping,
   createSetMaxQty,
   getRefundFormDefaultValues,
+  getRefundFormSubmitBehavior,
   getRefundStatusColor,
   getRefundStatusLabel,
   getRefundViewTitle,
-  getSavebarLabels,
-  getSavebarState,
   getSelectedProductsValue,
   handleQtyToRefundChange,
   useRecalculateTotalAmount,
@@ -96,17 +95,22 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     PermissionEnum.HANDLE_PAYMENTS,
   ]);
 
+  const submitBehavior = getRefundFormSubmitBehavior({
+    canHandlePayments,
+    isDirty,
+    isEdit: !!draftRefund,
+    onTransferFunds,
+    onSaveDraft,
+    onSaveDraftState,
+    onTransferFundsState,
+    intl,
+  });
+
   const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = data => {
-    if (!canHandlePayments || isDirty || !draftRefund) {
-      onSaveDraft({
-        ...data,
-        amount: getFieldState("amount").isDirty ? data.amount : undefined,
-      });
-      return;
-    }
-    if (onTransferFunds) {
-      onTransferFunds();
-    }
+    submitBehavior.onSubmit({
+      ...data,
+      amount: getFieldState("amount").isDirty ? data.amount : undefined,
+    });
   };
 
   const qtyToRefund = watch("qtyToRefund");
@@ -211,19 +215,8 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           onSubmit={handleSubmit(onSubmit)}
           onCancel={() => navigate(orderUrl(order?.id ?? ""))}
           disabled={disabled}
-          state={getSavebarState({
-            isEdit: !!draftRefund,
-            isDirty,
-            canHandlePayments,
-            onSaveDraftState,
-            onTransferFundsState,
-          })}
-          labels={getSavebarLabels({
-            isDirty,
-            isEdit: !!draftRefund,
-            canHandlePayments,
-            intl,
-          })}
+          state={submitBehavior.submitState}
+          labels={submitBehavior.submitLabels}
         />
       </Box>
     </DetailPageLayout>

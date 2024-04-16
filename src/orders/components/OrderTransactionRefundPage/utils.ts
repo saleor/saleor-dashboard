@@ -4,7 +4,7 @@ import {
   OrderGrantedRefundStatusEnum,
   TransactionActionEnum,
 } from "@dashboard/graphql";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, SavebarLabels } from "@saleor/macaw-ui";
 import React from "react";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { IntlShape } from "react-intl";
@@ -254,30 +254,6 @@ export const createSetMaxQty = ({
   };
 };
 
-export const getSavebarLabels = ({
-  isDirty,
-  isEdit,
-  canHandlePayments,
-  intl,
-}: {
-  isDirty: boolean;
-  isEdit: boolean;
-  canHandlePayments: boolean;
-  intl: IntlShape;
-}) => {
-  if (!canHandlePayments || isDirty || !isEdit) {
-    return {
-      confirm: intl.formatMessage(refundSavebarMessages.saveDraft),
-      cancel: intl.formatMessage(refundSavebarMessages.cancel),
-    };
-  }
-
-  return {
-    confirm: intl.formatMessage(refundSavebarMessages.transferFunds),
-    cancel: intl.formatMessage(refundSavebarMessages.cancel),
-  };
-};
-
 export const getRefundViewTitle = (
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined,
   intl: IntlShape,
@@ -287,25 +263,6 @@ export const getRefundViewTitle = (
       ? orderTransactionRefundMessages.editRefundTitle
       : orderTransactionRefundMessages.createRefundTitle,
   );
-};
-
-export const getSavebarState = ({
-  isEdit,
-  isDirty,
-  canHandlePayments,
-  onSaveDraftState,
-  onTransferFundsState,
-}: {
-  isEdit: boolean;
-  isDirty: boolean;
-  canHandlePayments: boolean;
-  onSaveDraftState: ConfirmButtonTransitionState;
-  onTransferFundsState: ConfirmButtonTransitionState | undefined;
-}) => {
-  if (!canHandlePayments || isDirty || !isEdit || !onTransferFundsState) {
-    return onSaveDraftState;
-  }
-  return onTransferFundsState;
 };
 
 export const getRefundStatusColor = (status: OrderGrantedRefundStatusEnum) => {
@@ -367,4 +324,55 @@ export const getMaxQtyToRefund = ({
   }, 0);
 
   return rowData.quantity - otherRefundedQty;
+};
+
+interface TransactionRefundFormSubmitBehavior {
+  onSubmit: (submitData: OrderTransactionRefundPageFormData) => void;
+  submitState: ConfirmButtonTransitionState;
+  submitLabels: Partial<SavebarLabels>;
+}
+export const getRefundFormSubmitBehavior = ({
+  canHandlePayments,
+  isDirty,
+  isEdit,
+  onTransferFundsState,
+  onSaveDraft,
+  onSaveDraftState,
+  onTransferFunds,
+  intl,
+}: {
+  canHandlePayments: boolean;
+  isDirty: boolean;
+  isEdit: boolean;
+  onTransferFundsState?: ConfirmButtonTransitionState;
+  onSaveDraft: (submitData: OrderTransactionRefundPageFormData) => void;
+  onSaveDraftState: ConfirmButtonTransitionState;
+  onTransferFunds?: () => void;
+  intl: IntlShape;
+}): TransactionRefundFormSubmitBehavior => {
+  if (
+    !canHandlePayments ||
+    isDirty ||
+    !isEdit ||
+    !onTransferFundsState ||
+    !onTransferFunds
+  ) {
+    return {
+      onSubmit: onSaveDraft,
+      submitState: onSaveDraftState,
+      submitLabels: {
+        confirm: intl.formatMessage(refundSavebarMessages.saveDraft),
+        cancel: intl.formatMessage(refundSavebarMessages.cancel),
+      },
+    };
+  }
+  return {
+    onSubmit: (_submitData: OrderTransactionRefundPageFormData) =>
+      onTransferFunds(),
+    submitState: onTransferFundsState,
+    submitLabels: {
+      confirm: intl.formatMessage(refundSavebarMessages.transferFunds),
+      cancel: intl.formatMessage(refundSavebarMessages.cancel),
+    },
+  };
 };
