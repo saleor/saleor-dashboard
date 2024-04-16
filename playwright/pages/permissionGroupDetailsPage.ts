@@ -57,9 +57,6 @@ async unassignSingleMember(member: string) {
   async clickDeleteButton(){
     await this.deleteButton.click();
   }
-  async selectAllMembers() {
-    await this.membersSection.getByTestId("checkbox").first().click();
-  }
   async clickUnassignMembersButton() {
     await this.unassignMembersButton.click();
   }

@@ -1,8 +1,8 @@
 import { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
+import { BasePage } from "../basePage";
 
-export class AddNavigationMenuItemDialog {
-  readonly page: Page;
+export class AddNavigationMenuItemDialog extends BasePage{
 
   constructor(
     page: Page,
@@ -16,19 +16,16 @@ export class AddNavigationMenuItemDialog {
     readonly saveButton = page.getByTestId("submit"),
     readonly menuLinkOptions = page.getByTestId("menu-link-options"),
   ) {
-    this.page = page;
+    super(page)
   }
   async selectLinkOption(option: string, optionName: string) {
     await this.linkSelect.click();
     await expect(this.menuLinkOptions).toBeEnabled();
     await expect(this.menuLinkOptions.getByTestId(option)).toBeEnabled({ timeout: 60000 });
     await this.menuLinkOptions.getByTestId(option).click({ force: true });
-    await expect(
-      this.menuLinkOptions.getByRole("option", { name: optionName }),
-    ).toBeEnabled({ timeout: 60000 });
     await this.menuLinkOptions
       .getByRole("option", { name: optionName })
-      .click();
+      .click({ force: true });
   }
   async typeMenuItemName(name: string) {
     await this.menuNameInput.fill(name);

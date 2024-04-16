@@ -49,7 +49,9 @@ test.skip("TC: SALEOR_119 User should be able to install and configure app from 
 });
 
 test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async () => {
-  await appPage.goToExistingAppPage(APPS.appToBeDeleted.id);
+  await appPage.waitForNetworkIdle(() =>
+        appPage.goToExistingAppPage(APPS.appToBeDeleted.id)
+      );
   await appPage.pageHeader.waitFor({ state: "visible", timeout: 10000 });
   await expect(appPage.pageHeader).toContainText("Saleor QA App");
   await appPage.deleteButton.click();

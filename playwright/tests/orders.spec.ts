@@ -238,14 +238,15 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
   await draftOrdersPage.clickCreateDraftOrderButton();
   await draftOrdersPage.draftOrderCreateDialog.completeDraftOrderCreateDialogWithFirstChannel();
   await draftOrdersPage.clickAddProductsButton();
-  await draftOrdersPage.addProductsDialog.searchForProductInDialog(
+    await draftOrdersPage.waitForNetworkIdle(() => draftOrdersPage.addProductsDialog.searchForProductInDialog(
     PRODUCTS.productAvailableWithTransactionFlow.name,
-  );
+  ))
   await draftOrdersPage.addProductsDialog.productRow
     .filter({ hasText: PRODUCTS.productAvailableWithTransactionFlow.name })
     .waitFor({ state: "visible", timeout: 30000 });
   await draftOrdersPage.addProductsDialog.selectVariantBySKU(variantSKU);
-  await draftOrdersPage.addProductsDialog.clickConfirmButton();
+  await draftOrdersPage.addProductsDialog.waitForDOMToFullyLoad();
+  await draftOrdersPage.waitForNetworkIdle(() => draftOrdersPage.addProductsDialog.clickConfirmButton());
   await draftOrdersPage.rightSideDetailsPage.clickEditCustomerButton();
   await draftOrdersPage.rightSideDetailsPage.clickSearchCustomerInput();
   await draftOrdersPage.rightSideDetailsPage.selectCustomer();

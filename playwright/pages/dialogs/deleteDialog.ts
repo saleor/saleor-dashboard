@@ -9,7 +9,7 @@ export class DeleteDialog extends BasePage {
     readonly confirmDeletionCheckbox = page.locator(
       "[name='delete-assigned-items-consent']",
     ),
-    readonly confirmDeleteButton = page.getByTestId("submit")
+    readonly confirmDeleteButton = page.getByTestId("confirm-delete")
   ) {
      super(page);
   }

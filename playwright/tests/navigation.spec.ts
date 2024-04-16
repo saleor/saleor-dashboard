@@ -119,7 +119,7 @@ test("TC: SALEOR_195 Should remove a single menu from the list @navigation @e2e"
 
 test("TC: SALEOR_196 Should bulk delete menus from the list @navigation @e2e", async () => {
   await navigation.goToNavigationView();
-  await navigation.selectAllNavigationMenus();
+  await navigation.selectAll();
   const menusToBeBulkDeleted =
     NAVIGATION_ITEMS.navigationMenusToBeBulkDeleted.names;
   const menus = await navigation.menuName.allInnerTexts();

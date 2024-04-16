@@ -29,9 +29,6 @@ export class NavigationPage extends BasePage {
     readonly bulkDeleteButton = page
       .getByTestId("bulk-delete-button"),
     readonly navigationMenu = page.getByTestId("navigation-menu"),
-    readonly selectAllCheckbox = page
-      .getByTestId("select-all-checkbox")
-      .locator("input"),
   ) {
     super(page);
     this.addNavigationMenuDialog = new AddNavigationMenuDialog(page);
@@ -58,8 +55,5 @@ export class NavigationPage extends BasePage {
   async selectNavigationMenu(name: string) {
     const item = await this.navigationMenu.filter({ hasText: name });
     await item.getByTestId("checkbox").click();
-  }
-  async selectAllNavigationMenus() {
-    await this.selectAllCheckbox.click();
   }
 }
