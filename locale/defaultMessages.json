@@ -3947,9 +3947,6 @@
     "context": "button",
     "string": "Create Channel"
   },
-  "OK/KE0": {
-    "string": "Select quantities to refund"
-  },
   "OK5+Fh": {
     "string": "Variant"
   },
@@ -7434,9 +7431,6 @@
   },
   "lZC/1a": {
     "string": "greater than {value}"
-  },
-  "laHYed": {
-    "string": "Select transaction you want to refund"
   },
   "laax5C": {
     "context": "order returned success message",
