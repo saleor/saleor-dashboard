@@ -105,18 +105,15 @@ export default defineConfig(({ command, mode }) => {
 
     plugins.push(
       VitePWA({
-        /*
-          We use 'register-service-worker' for registering sw.js.
-         */
-        injectRegister: null,
+        injectRegister: false,
         strategies: "injectManifest",
+        registerType: "autoUpdate",
 
-        /*
-          Since "src" is exposed as a root,
-          sw.js has to be moved above, to preventing loading in a dev mode.
-        */
         srcDir: path.resolve(__dirname),
         filename: "sw.js",
+        injectManifest: {
+          injectionPoint: undefined,
+        },
       }),
       sentryVitePlugin({
         authToken: SENTRY_AUTH_TOKEN,
