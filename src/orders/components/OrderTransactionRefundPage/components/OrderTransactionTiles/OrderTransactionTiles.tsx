@@ -14,8 +14,10 @@ import { mapTransactionEvent } from "@dashboard/orders/components/OrderTransacti
 import { Box, RadioGroup, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, useController } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
 import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
+import { transactionRefundTilesMessages } from "./messages";
 import { TileHeader } from "./TileHeader";
 
 interface OrderTransactionTilesProps {
@@ -62,7 +64,9 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
                       </Box>
                     </Tooltip.Trigger>
                     <Tooltip.Content side="left">
-                      This transaction is non-refundable.
+                      <FormattedMessage
+                        {...transactionRefundTilesMessages.disabledTransaction}
+                      />
                     </Tooltip.Content>
                   </Tooltip>
                 ) : (

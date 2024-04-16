@@ -11,8 +11,10 @@ import {
 } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, useController } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
 import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
+import { orderTransactionRefundSummaryMessages as messages } from "./messages";
 
 interface OrderTransactionSummaryProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
@@ -43,11 +45,10 @@ export const OrderTransactionSummary: React.FC<
     <DashboardCard>
       <DashboardCard.Content display="flex" flexDirection="column" gap={5}>
         <Text fontWeight="medium" marginTop={6}>
-          Amount
+          <FormattedMessage {...messages.amount} />
         </Text>
         <Text as="p">
-          Amount is calculated automatically based on the items selected, but
-          you can modify it manually.
+          <FormattedMessage {...messages.amountDescription} />
         </Text>
         <Box
           display="flex"
@@ -65,7 +66,9 @@ export const OrderTransactionSummary: React.FC<
             borderColor="default1"
             paddingY={4}
           >
-            <Text size={3}>Selected products</Text>
+            <Text size={3}>
+              <FormattedMessage {...messages.selectedProducts} />
+            </Text>
             {currency ? (
               <Money money={{ currency, amount: selectedProductsValue }} />
             ) : (
@@ -88,7 +91,9 @@ export const OrderTransactionSummary: React.FC<
                 checked={shippingField.value}
                 onCheckedChange={shippingField.onChange}
               >
-                <Text size={3}>Shipping</Text>
+                <Text size={3}>
+                  <FormattedMessage {...messages.shipping} />
+                </Text>
               </Checkbox>
             ) : (
               <Tooltip>
@@ -99,12 +104,14 @@ export const OrderTransactionSummary: React.FC<
                     onCheckedChange={shippingField.onChange}
                   >
                     <Text size={3} color="defaultDisabled">
-                      Shipping
+                      <FormattedMessage {...messages.shipping} />
                     </Text>
                   </Checkbox>
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  <Text size={2}>Shipping has already been refunded.</Text>
+                  <Text size={2}>
+                    <FormattedMessage {...messages.cannotRefundShipping} />
+                  </Text>
                 </Tooltip.Content>
               </Tooltip>
             )}
@@ -118,7 +125,7 @@ export const OrderTransactionSummary: React.FC<
           </Box>
           <Box display="flex" justifyContent="space-between" paddingY={4}>
             <Text size={5} display="flex" alignItems="center">
-              Total amount:
+              <FormattedMessage {...messages.totalAmount} />
             </Text>
             <Input
               type="number"

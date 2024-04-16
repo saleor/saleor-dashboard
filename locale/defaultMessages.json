@@ -228,6 +228,10 @@
   "/Fa+RP": {
     "string": "Couldn't load top products"
   },
+  "/Gu3A7": {
+    "context": "transaction refund datagrid helper button",
+    "string": "Set maximum qty"
+  },
   "/ILyIf": {
     "context": "tax classes menu header",
     "string": "Tax class label"
@@ -1285,6 +1289,10 @@
   "6SL46U": {
     "string": "by {author}"
   },
+  "6ScZk5": {
+    "context": "order transaction refund summary disabled shipping tooltip content",
+    "string": "Shipping has already been refunded."
+  },
   "6Tps09": {
     "string": "Inactive"
   },
@@ -1532,10 +1540,6 @@
     "context": "order history message",
     "string": "Payment was voided"
   },
-  "8VPMar": {
-    "context": "transaction refund datagrid helper button",
-    "string": "Select max quantities"
-  },
   "8aV98y": {
     "context": "new version notification content",
     "string": "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below."
@@ -1601,6 +1605,10 @@
   "98WMlR": {
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
+  },
+  "991li9": {
+    "context": "input label",
+    "string": "Reason for refund"
   },
   "9B2mOB": {
     "context": "tile view pagination label",
@@ -2391,6 +2399,10 @@
   "EM730i": {
     "string": "Manage Channel Availability"
   },
+  "EOPuT6": {
+    "context": "datagrid title label",
+    "string": "Select transaction you want to refund"
+  },
   "EP+jcU": {
     "context": "checkbox",
     "string": "Refund shipment costs"
@@ -2512,6 +2524,10 @@
   },
   "F7DxHw": {
     "string": "Subcategories"
+  },
+  "F8pCg4": {
+    "context": "input placeholder",
+    "string": "Optional"
   },
   "FA+MRz": {
     "string": "Set plugin as active"
@@ -2699,6 +2715,10 @@
     "context": "label",
     "string": "Min Delivery Time"
   },
+  "GFIwLo": {
+    "context": "create refund title",
+    "string": "Create refund"
+  },
   "GFJabu": {
     "context": "dialog header",
     "string": "Delete Variant"
@@ -2813,6 +2833,10 @@
   },
   "GsBRWL": {
     "string": "Languages"
+  },
+  "GuihaP": {
+    "context": "order transaction refund summary label",
+    "string": "Shipping"
   },
   "Gxm7Qx": {
     "context": "navigator notification title",
@@ -3397,6 +3421,10 @@
   "KeO51o": {
     "string": "Channel"
   },
+  "Kfuqfq": {
+    "context": "transfer funds button",
+    "string": "Transfer funds"
+  },
   "Kg0Fiu": {
     "context": "quantity of fulfilled products",
     "string": "Quantity to fulfill"
@@ -3560,6 +3588,10 @@
     "context": "button",
     "string": "Create order"
   },
+  "LwU0Vy": {
+    "context": "datagrid title label",
+    "string": "Select quantities to refund"
+  },
   "LwX0Ug": {
     "context": "Button with Manage app label",
     "string": "Manage app"
@@ -3695,6 +3727,10 @@
   "Myx1Qp": {
     "context": "add discount button",
     "string": "Add Discount"
+  },
+  "MzXBdd": {
+    "context": "Refund failure status",
+    "string": "Failure"
   },
   "N2SbNc": {
     "string": "{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
@@ -3962,6 +3998,10 @@
     "context": "amount of refunded money",
     "string": "Amount"
   },
+  "OoMaRq": {
+    "context": "order transaction refund summary title",
+    "string": "Amount"
+  },
   "OrMr/k": {
     "context": "window title",
     "string": "Create Channel"
@@ -4124,6 +4164,10 @@
   },
   "PuQb0P": {
     "string": "Reward"
+  },
+  "PvrceS": {
+    "context": "Refund draft status",
+    "string": "Draft"
   },
   "Pyjarj": {
     "string": "This shipping rate has no postal codes assigned"
@@ -5276,6 +5320,10 @@
     "context": "discount type",
     "string": "Fixed amount"
   },
+  "XFErUZ": {
+    "context": "Refund pending status",
+    "string": "Pending"
+  },
   "XFKV5Z": {
     "string": "Created at: {date}"
   },
@@ -5703,6 +5751,10 @@
     "context": "section header",
     "string": "Data privacy"
   },
+  "a5D12C": {
+    "context": "order transaction refund summary description",
+    "string": "Amount is calculated automatically based on the items selected, but you can modify it manually."
+  },
   "a5msuh": {
     "string": "Yes"
   },
@@ -6095,6 +6147,10 @@
   "cY42ht": {
     "string": "Password cannot be entirely numeric"
   },
+  "cYkerh": {
+    "context": "order transaction refund summary label",
+    "string": "Total amount:"
+  },
   "cZN5Jd": {
     "context": "Webhook details events",
     "string": "Events"
@@ -6139,6 +6195,10 @@
   "cnvyqW": {
     "context": "ChannelsSection select field placeholder",
     "string": "Add Channel"
+  },
+  "cohh4s": {
+    "context": "Refund success status",
+    "string": "Success"
   },
   "cpZLRH": {
     "context": "dialog header",
@@ -6400,6 +6460,10 @@
   "f91E8b": {
     "context": "app repository",
     "string": "Repository"
+  },
+  "fDc5ys": {
+    "context": "order transaction refund summary label",
+    "string": "Selected products"
   },
   "fEfCtO": {
     "context": "voucher discount type",
@@ -7629,6 +7693,10 @@
     "context": "number of order",
     "string": "No. of Order"
   },
+  "nW5Cca": {
+    "context": "edit refund title",
+    "string": "Edit refund"
+  },
   "nX2pCU": {
     "context": "window title",
     "string": "Create customer"
@@ -7811,6 +7879,10 @@
     "context": "unassign products from shipping rate and save, button",
     "string": "Unassign and save"
   },
+  "p12BmC": {
+    "context": "transaction refund tiles disabled transaction",
+    "string": "This transaction is non-refundable."
+  },
   "p1D4Ok": {
     "context": "order send refund, manual transaction refund was created",
     "string": "Manual refund was created successfully"
@@ -7968,6 +8040,10 @@
   "q5Lfp4": {
     "context": "tooltip",
     "string": "Order contains products that have \"Track inventory\" enabled."
+  },
+  "q7v0W7": {
+    "context": "save draft button",
+    "string": "Save draft"
   },
   "q8ep2I": {
     "context": "dialog header",
@@ -8283,6 +8359,10 @@
     "context": "dialog content",
     "string": "Are you sure you want to delete {name}?"
   },
+  "sR5mWJ": {
+    "context": "cancel button",
+    "string": "Cancel"
+  },
   "sS5aVm": {
     "context": "voucher discount type",
     "string": "Free Shipping"
@@ -8309,6 +8389,10 @@
   "sdA14A": {
     "context": "Status label when object is published in a channel",
     "string": "Published"
+  },
+  "se5+j/": {
+    "context": "transaction refund tiles transaction name",
+    "string": "Transaction"
   },
   "sedoZ3": {
     "context": "VariantDetailsChannelsAvailabilityCard title",

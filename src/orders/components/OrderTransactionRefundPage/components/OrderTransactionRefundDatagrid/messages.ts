@@ -32,8 +32,8 @@ export const transactionRefundGridMessages = defineMessages({
     description: "transaction refund datagrid max qty column",
   },
   selectAll: {
-    defaultMessage: "Select max quantities",
-    id: "8VPMar",
+    defaultMessage: "Set maximum qty",
+    id: "/Gu3A7",
     description: "transaction refund datagrid helper button",
   },
 });

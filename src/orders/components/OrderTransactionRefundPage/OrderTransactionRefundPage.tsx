@@ -17,13 +17,13 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
 import { OrderTransactionRefundDatagrid } from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
-import { refundMessages } from "./messages";
+import { orderTransactionRefundMessages as messages } from "./messages";
 import {
   canRefundShipping,
   createSetMaxQty,
@@ -73,6 +73,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   onTransferFundsState,
 }) => {
   const navigate = useNavigator();
+  const intl = useIntl();
 
   const {
     control,
@@ -144,13 +145,14 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
       <Box as="form" display="contents" onSubmit={handleSubmit(onSubmit)}>
         <TopNav
           href={orderUrl(order?.id ?? "")}
-          title={getRefundViewTitle(draftRefund)}
+          title={getRefundViewTitle(draftRefund, intl)}
         >
           {draftRefund && (
             <Pill
               color={getRefundStatusColor(draftRefund.status)}
               label={getRefundStatusLabel(
                 draftRefund.status,
+                intl,
               ).toLocaleUpperCase()}
             />
           )}
@@ -159,7 +161,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           <DashboardCard>
             <DashboardCard.Content marginBottom={5}>
               <Text fontWeight="medium" as="p" marginTop={5}>
-                <FormattedMessage {...refundMessages.qtyTitle} />
+                <FormattedMessage {...messages.selectQuantitiesToRefund} />
               </Text>
             </DashboardCard.Content>
           </DashboardCard>
@@ -174,7 +176,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           <DashboardCard marginBottom={5}>
             <DashboardCard.Content>
               <Text fontWeight="medium" as="p" marginTop={5}>
-                <FormattedMessage {...refundMessages.transactionTitle} />
+                <FormattedMessage {...messages.selectTransactionToRefund} />
               </Text>
             </DashboardCard.Content>
           </DashboardCard>
@@ -216,6 +218,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             isDirty,
             isEdit: !!draftRefund,
             canHandlePayments,
+            intl,
           })}
         />
       </Box>
