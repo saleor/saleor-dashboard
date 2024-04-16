@@ -9,6 +9,8 @@ import { StaleWhileRevalidate } from "workbox-strategies/StaleWhileRevalidate";
 
 precacheAndRoute(self.__WB_MANIFEST);
 
+console.log("Service worker is active.");
+
 registerRoute(
   /\.(?:png|gif|jpg|jpeg|webp|svg)$/,
   new CacheFirst({
