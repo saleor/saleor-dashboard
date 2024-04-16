@@ -53,6 +53,7 @@ export interface LineToRefund {
   row: number;
   quantity: number;
   reason: string;
+  isDirty?: boolean;
 }
 
 export interface OrderTransactionRefundPageFormData {

@@ -144,23 +144,26 @@ const calucalteLineToRefundChangeValue = ({
   order: OrderDetailsGrantRefundFragment | undefined | null;
 }): LineToRefund => {
   const rowId = data.currentUpdate!.row;
+  const lineToRefund = linesToRefund.find(line => line.row === rowId);
 
   if (data.currentUpdate!.column === "reason") {
     return {
       row: rowId,
       reason: data.currentUpdate!.data,
-      quantity: linesToRefund[rowId]?.quantity ?? 0,
+      quantity: lineToRefund?.quantity ?? 0,
+      isDirty: true,
     };
   }
 
   return {
     row: rowId,
-    reason: linesToRefund[rowId]?.reason,
+    reason: lineToRefund?.reason ?? "",
     quantity: validateQty({
       update: data.currentUpdate!,
       order,
       draftRefund,
     }),
+    isDirty: true,
   };
 };
 
@@ -244,7 +247,7 @@ export const getSelectedProductsValue = ({
   return linesToRefund?.reduce((acc, curr) => {
     const unitPrice: number =
       order?.lines[curr.row].unitPrice.gross.amount ?? 0;
-    const totalPrice = unitPrice ?? 0 * curr.quantity;
+    const totalPrice = (unitPrice ?? 0) * curr.quantity;
     return acc + totalPrice;
   }, 0);
 };

@@ -1,4 +1,6 @@
 import {
+  OrderDetailsDocument,
+  OrderDetailsFragment,
   OrderDetailsGrantRefundFragment,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundEditMutation,
@@ -42,6 +44,29 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
         });
       }
     },
+    update(cache, { data }) {
+      if (data?.orderGrantRefundUpdate?.errors?.length === 0) {
+        const cachedPromotion = cache.readQuery<{
+          order: OrderDetailsFragment;
+        }>({
+          query: OrderDetailsDocument,
+          variables: {
+            id: orderId,
+          },
+        });
+
+        if (!cachedPromotion?.order) {
+          return;
+        }
+
+        cache.writeQuery({
+          query: OrderDetailsDocument,
+          data: {
+            order: data.orderGrantRefundUpdate?.order,
+          },
+        });
+      }
+    },
   });
 
   const handleUpdateRefund = async (
@@ -53,17 +78,17 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
     const { amount, reason, linesToRefund, includeShipping, transactionId } =
       submitData;
 
-    const toAdd = linesToRefund
-      .map(line => ({
-        quantity: line.quantity,
-        reason: line.reason,
-        id: data.order!.lines[line.row].id,
-      }))
-      .filter(line => line.quantity > 0);
+    const dirtyLinesToRefund = linesToRefund.filter(item => item.isDirty);
+
+    const toAdd = dirtyLinesToRefund.map(line => ({
+      quantity: line.quantity,
+      reason: line.reason,
+      id: data.order!.lines[line.row].id,
+    }));
 
     const toRemove =
       draftRefund.lines?.reduce<string[]>((acc, line) => {
-        linesToRefund.forEach(qty => {
+        dirtyLinesToRefund.forEach(qty => {
           const orderLine = data.order!.lines[qty.row];
           if (line.orderLine.id === orderLine.id && !acc.includes(line.id)) {
             acc.push(line.id);
