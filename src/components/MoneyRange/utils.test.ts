@@ -40,8 +40,7 @@ describe("getMoneyRange", () => {
     expect(getMoneyRange(Locale.EN, intl, fromMoney, toMoney)).toBe("€10.00");
   });
 
-  // TODO: disabled bacause of locale dash mismatch - to investigate
-  xit("should return formated money range when from and to have different amount", () => {
+  it("should return formated money range when from and to have different amount", () => {
     // Arrange
     const fromMoney: IMoney = {
       amount: 10,
