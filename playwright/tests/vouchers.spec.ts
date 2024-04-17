@@ -52,7 +52,7 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
   await vouchersPage.clickAddCodeButton();
   await vouchersPage.clickManualGeneratedCodesItem();
   await vouchersPage.addVoucherCodeDialog.typeCode(code);
-  await vouchersPage.waitForNetworkIdle(() =>vouchersPage.addVoucherCodeDialog.clickConfirmButton());
+  await vouchersPage.addVoucherCodeDialog.clickConfirmButton();
   await vouchersPage.waitForGrid();
   const manualCodesRows = await vouchersPage.getNumberOfGridRowsWithText(code);
   await expect(
