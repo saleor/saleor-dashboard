@@ -45,7 +45,7 @@ describe("OrderRefundDialog", () => {
     expect(dialog).not.toBeInTheDocument();
   });
 
-  it("calls onClose when the cancel button is clicked", () => {
+  it("closes the modal when user clicks on cancel", () => {
     // Arrange
     const props = {
       open: true,
@@ -63,7 +63,7 @@ describe("OrderRefundDialog", () => {
     expect(props.onClose).toHaveBeenCalled();
   });
 
-  it("calls onStandardRefund when the confirm button is clicked", () => {
+  it("makes a standard refund (with order lines) when user confirms it", () => {
     // Arrange
     const props = {
       open: true,
@@ -80,7 +80,7 @@ describe("OrderRefundDialog", () => {
     // Assert
     expect(props.onStandardRefund).toHaveBeenCalled();
   });
-  it("calls onManualRefund when the confirm button is clicked", async () => {
+  it("makes a manual refund when user confirms it", async () => {
     // Arrange
     const props = {
       open: true,
