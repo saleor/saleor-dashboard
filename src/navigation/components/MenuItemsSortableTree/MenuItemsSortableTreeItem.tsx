@@ -53,6 +53,7 @@ export const MenuItemsSortableTreeItem = ({
       pointerEvents={disableInteraction ? "none" : undefined}
     >
       <Box
+        data-test-id="menu-item"
         position="relative"
         borderColor="default1"
         borderStyle="solid"
@@ -80,10 +81,18 @@ export const MenuItemsSortableTreeItem = ({
           >
             <FormattedMessage {...buttonMessages.show} />
           </Button>
-          <Button variant="secondary" onClick={() => onEdit(id)}>
+          <Button
+            data-test-id="edit-menu-item-button"
+            variant="secondary"
+            onClick={() => onEdit(id)}
+          >
             <EditIcon />
           </Button>
-          <Button variant="secondary" onClick={() => onRemove(id)}>
+          <Button
+            data-test-id="remove-menu-item-button"
+            variant="secondary"
+            onClick={() => onRemove(id)}
+          >
             <TrashBinIcon />
           </Button>
         </Box>

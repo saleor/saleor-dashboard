@@ -231,7 +231,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
         style: { overflowY: "visible" },
       }}
     >
-      <DialogTitle disableTypography>
+      <DialogTitle disableTypography data-test-id="add-menu-item-dialog-title">
         {!!initial
           ? intl.formatMessage({
               id: "KKQUMK",
@@ -246,6 +246,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
       </DialogTitle>
       <DialogContent style={{ overflow: "visible" }}>
         <TextField
+          data-test-id="menu-item-name-input"
           disabled={disabled}
           label={intl.formatMessage({
             id: "0Vyr8h",
