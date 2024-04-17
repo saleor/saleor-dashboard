@@ -64,12 +64,6 @@ jobs:
               return "cypress"
             }
 
-
-      - name: echo framework
-        env: 
-          TEST_FRAMEWORK: ${{ steps.check-framework.outputs.result}}
-        run: echo ${TEST_FRAMEWORK}
-
       - name: Create check if release PR exists
         if: steps.check-framework.outputs.result == '"playwright"'
         id: create-check
@@ -116,20 +110,28 @@ jobs:
     if: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"' }}
     steps:
       - name: Trigger dashboard cypress automation tests
+        env: 
+          VERSION: ${{inputs.CUSTOM_VERSION}}
         run: |
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
 
+          payload=$(\
+          jq --null-input \
+          --arg version "$VERSION" \
+          '{
+            "event_type":"automation-tests-event", 
+            "client_payload": {
+              "project": "DASHBOARD",
+              "environment": "SANDBOX",
+              "version": $version
+            }
+          }'
+          )
+
           gh api /repos/saleor/saleor-dashboard/dispatches \
-            --input - <<< '{
-              "event_type": "automation-tests-event",
-              "client_payload": {
-                "project": "DASHBOARD",
-                "environment": "SANDBOX",
-                "version": "${{inputs.CUSTOM_VERSION}}"
-              }
-            }'
+            --input - <<< "$payload""
 
   run-pw-tests:
     runs-on: ubuntu-22.04

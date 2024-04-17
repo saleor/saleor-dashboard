@@ -54,11 +54,8 @@ jobs:
         env:
           VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
         run: |
-          set -x
           minor_version=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#\1.\2#p')
           echo "MINOR_VERSION=${minor_version}" >> $GITHUB_ENV
-
-          set -x
           HASH=$(git rev-parse --short HEAD)
           CURRENT_VERSION=$(jq -r .version package.json)
           RELEASE="${CURRENT_VERSION}-${HASH}"

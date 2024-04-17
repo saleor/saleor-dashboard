@@ -38,17 +38,27 @@ runs:
         SUMMARY: ${{ inputs.SUMMARY }}
         DETAILS_URL: ${{ inputs.DETAILS_URL }}
       run: |
-        echo '{
-          "name":"${{env.NAME}}",
-          "status":"${{env.STATUS}}",
-          "conclusion":"${{ env.CONCLUSION }}",
-          "output":{
-            "title":"${{ env.TITLE }}",
-            "summary":"${{ env.SUMMARY }}",
-            "text":"",
-            "details_url":"${{ env.DETAILS_URL }}"
-          }
+      
+        payload=$(\
+        jq --null-input \
+        --arg name "$NAME" \
+        --arg status "$STATUS" \
+        --arg conclusion "$CONCLUSION" \
+        --arg title "$TITLE" \
+        --arg summary "$SUMMARY" \
+        --arg details_url "$DETAILS_URL" \
+        '{
+          "name": $name, 
+          "status": $status, 
+          "conclusion": $conclusion,
+          "output": {
+            "title": $title,
+            "summary": $summary,
+            "text": "",
+            "details_url": $details_url
+         }
         }'
+        )
 
         curl -L \
         -X PATCH \
@@ -56,14 +66,4 @@ runs:
         -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
         -H "X-GitHub-Api-Version: 2022-11-28" \
         https://api.github.com/repos/saleor/saleor-dashboard/check-runs/${{env.CHECK_ID}} \
-        -d '{
-          "name":"${{env.NAME}}",
-          "status":"${{env.STATUS}}",
-          "conclusion":"${{ env.CONCLUSION }}",
-          "output":{
-            "title":"${{ env.TITLE }}",
-            "summary":"${{ env.SUMMARY }}",
-            "text":"",
-            "details_url":"${{ env.DETAILS_URL }}"
-          }
-        }'
+        -d "$payload"
