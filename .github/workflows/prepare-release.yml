@@ -83,8 +83,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: 
           node .github/workflows/checkIfDeploymentFinished.js \
-            --head_sha $HEAD_SHA \
-            --github_token $GH_TOKEN 
+            --head_sha "$HEAD_SHA" \
+            --github_token "$GH_TOKEN"
 
       - name: Update check
         if: always() && ${{ steps.create-check.outputs.CHECK_ID }}
