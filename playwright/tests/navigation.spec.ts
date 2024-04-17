@@ -44,6 +44,7 @@ test("TC: SALEOR_194 Should create a new menu navigation with menu item @navigat
   await expect(navigationDetailsPage.menuNameInput).toHaveValue(menuName);
   await expect(navigationDetailsPage.menuItemList).toContainText(menuItemName);
 });
+
 //TODO: To be updated after https://linear.app/saleor/issue/MERX-307 is fixed
 test("TC: SALEOR_198 Should update existing menu @navigation @e2e", async () => {
   await navigationDetailsPage.goToExistingMenuView(

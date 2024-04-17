@@ -23,7 +23,7 @@ test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount di
     codesQuantity.toString(),
   );
   await vouchersPage.addVoucherCodeDialog.typeCodesPrefix(codesPrefix);
-  await vouchersPage.waitForNetworkIdle(() =>vouchersPage.addVoucherCodeDialog.clickConfirmButton());
+  await vouchersPage.addVoucherCodeDialog.clickConfirmButton();
   await vouchersPage.waitForGrid();
   const generatedCodesRows = await vouchersPage.getNumberOfGridRowsWithText(
     codesPrefix,
@@ -50,7 +50,7 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
   await vouchersPage.gotoVoucherAddPage();
   await vouchersPage.typeVoucherName();
   await vouchersPage.clickAddCodeButton();
-  await vouchersPage.waitForNetworkIdle(() => vouchersPage.clickManualGeneratedCodesItem());
+  await vouchersPage.clickManualGeneratedCodesItem();
   await vouchersPage.addVoucherCodeDialog.typeCode(code);
   await vouchersPage.waitForNetworkIdle(() =>vouchersPage.addVoucherCodeDialog.clickConfirmButton());
   await vouchersPage.waitForGrid();
