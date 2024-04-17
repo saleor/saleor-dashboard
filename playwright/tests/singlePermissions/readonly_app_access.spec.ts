@@ -22,6 +22,7 @@ for (const permission of permissionList) {
 
     await page.goto(URL_LIST.homePage);
     await mainMenuPage.waitForNetworkIdle(() =>mainMenuPage.openApps()),
+    await mainMenuPage.waitForDOMToFullyLoad();
     await expect(appsPage.installExternalAppButton).not.toBeVisible();
 
     const appLists = [

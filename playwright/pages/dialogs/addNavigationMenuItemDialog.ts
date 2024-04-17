@@ -19,13 +19,13 @@ export class AddNavigationMenuItemDialog extends BasePage{
     super(page)
   }
   async selectLinkOption(option: string, optionName: string) {
-    await this.linkSelect.click();
+    await this.waitForNetworkIdle(() => this.linkSelect.click());
     await expect(this.menuLinkOptions).toBeEnabled();
     await expect(this.menuLinkOptions.getByTestId(option)).toBeEnabled({ timeout: 60000 });
-    await this.menuLinkOptions.getByTestId(option).click({ force: true });
-    await this.menuLinkOptions
+    await this.waitForNetworkIdle(() =>  this.menuLinkOptions.getByTestId(option).click({ force: true }));
+    await this.waitForNetworkIdle(() => this.menuLinkOptions
       .getByRole("option", { name: optionName })
-      .click({ force: true });
+      .click({ force: true }));
   }
   async typeMenuItemName(name: string) {
     await this.menuNameInput.fill(name);

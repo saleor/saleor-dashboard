@@ -95,7 +95,7 @@ test("TC: SALEOR_197 Should remove existing menu from it's details page @navigat
     NAVIGATION_ITEMS.navigationMenuToBeDeletedFromDetailsView.id,
   );
   await navigationDetailsPage.clickDeleteButton();
-  await navigationDetailsPage.deleteDialog.clickConfirmDeleteButton();
+  await navigationDetailsPage.deleteDialog.clickDeleteButton();
   await navigationDetailsPage.expectSuccessBanner();
   await expect(navigation.navigationList).not.toHaveText(
     NAVIGATION_ITEMS.navigationMenuToBeDeletedFromDetailsView.name,
@@ -110,7 +110,7 @@ test("TC: SALEOR_195 Should remove a single menu from the list @navigation @e2e"
   await navigation.deleteSingleMenu(
     NAVIGATION_ITEMS.navigationMenuToBeDeletedFromList.name,
   );
-  await navigation.deleteDialog.clickConfirmDeleteButton();
+  await navigation.deleteDialog.clickDeleteButton();
   await navigation.expectSuccessBanner();
   await expect(navigation.navigationList).not.toHaveText(
     NAVIGATION_ITEMS.navigationMenuToBeDeletedFromList.name,
@@ -138,7 +138,7 @@ test("TC: SALEOR_196 Should bulk delete menus from the list @navigation @e2e", a
     }
   }
   await navigation.clickBulkDeleteButton();
-  await navigation.deleteDialog.clickConfirmDeleteButton();
+  await navigation.deleteDialog.clickDeleteButton();
   await navigation.successBanner.waitFor({ state: "hidden" });
   await expect(navigation.navigationList).not.toHaveText(
     menusToBeBulkDeleted[0],

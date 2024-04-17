@@ -137,10 +137,8 @@ const attributesWithValuesToBeUpdated = [
 ];
 for (const attribute of attributesWithValuesToBeUpdated) {
   test(`TC: SALEOR_127 User should be able to update attribute values in existing ${attribute.name} attribute @e2e @attributes`, async () => {
-    await attributesPage.gotoExistingAttributePage(
-      attribute.id,
-      attribute.name,
-    );
+    await attributesPage.waitForNetworkIdle(() =>  attributesPage.gotoExistingAttributePage(attribute.id, attribute.name));
+
     await attributesPage.clickDeleteAttrValueButton(attribute.valueToBeDeleted);
     await expect(attributesPage.dialog).toBeVisible();
     await attributesPage.deleteAttributeValueDialog.deleteAttributeValue();
@@ -172,7 +170,7 @@ for (const attribute of attributesWithValuesToBeUpdated) {
 
 for (const attr of ATTRIBUTES.attributesToBeUpdated) {
   test(`TC: SALEOR_128 User should be able to edit existing ${attr.name} attribute @e2e @attributes`, async () => {
-    await attributesPage.gotoExistingAttributePage(attr.id, attr.name);
+    await attributesPage.waitForNetworkIdle(() =>  attributesPage.gotoExistingAttributePage(attr.id, attr.name));
     await attributesPage.attributeDefaultLabelInput.clear();
     await attributesPage.typeAttributeDefaultLabel(`updated ${attr.name}`);
     await attributesPage.expandMetadataSection();
@@ -221,13 +219,11 @@ for (const attribute of attributesToBeDeleted) {
 }
 
 test("TC: SALEOR_130 Bulk delete attributes @e2e @attributes", async () => {
-  await attributesPage.gotoListView();
+  await attributesPage.waitForNetworkIdle(() =>  attributesPage.gotoListView());
   await attributesPage.resizeWindow(800, 600);
-  await attributesPage.typeInSearchOnListView(
+  await attributesPage.waitForNetworkIdle(() => attributesPage.typeInSearchOnListView(
     "e2e attribute to be bulk deleted",
-  );
-  await attributesPage.loader.waitFor({ state: "visible", timeout: 30000 });
-  await attributesPage.loader.waitFor({ state: "hidden", timeout: 30000 });
+  ));
   await attributesPage.clickOnSpecificPositionOnPage(60, 136);
   await attributesPage.clickBulkDeleteGridRowsButton();
   await attributesPage.waitForNetworkIdle(() =>

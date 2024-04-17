@@ -254,9 +254,9 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
     state: "visible",
     timeout: 10000,
   });
-  await draftOrdersPage.addressDialog.clickConfirmButton();
+  await draftOrdersPage.waitForNetworkIdle(() => draftOrdersPage.addressDialog.clickConfirmButton());
   await draftOrdersPage.clickAddShippingCarrierButton();
-  await draftOrdersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
+  await draftOrdersPage.waitForNetworkIdle(() => draftOrdersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod());
   await draftOrdersPage.clickFinalizeButton();
   await draftOrdersPage.successBanner
     .filter({ hasText: "finalized" })
