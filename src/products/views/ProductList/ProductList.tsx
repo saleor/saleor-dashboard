@@ -69,7 +69,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
-import { ExportProductsInput } from "./export";
+import { ProductsExportParameters } from "./export";
 import {
   getFilterOpts,
   getFilterQueryParam,
@@ -508,7 +508,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         channels={availableChannels}
         onClose={closeModal}
         onSubmit={data => {
-          const exportProductsInput = new ExportProductsInput({
+          const productsExportParams = new ProductsExportParameters({
             ...data,
             ...filterVariables,
             ids: selectedRowIds,
@@ -516,7 +516,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
           exportProducts({
             variables: {
-              input: exportProductsInput.getExportProductsInput(),
+              input: productsExportParams.asExportProductsInput(),
             },
           });
         }}

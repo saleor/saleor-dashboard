@@ -8,7 +8,7 @@ import {
   Scalars,
 } from "@dashboard/graphql";
 
-export class ExportProductsInput {
+export class ProductsExportParameters {
   private readonly exportInfo?: InputMaybe<ExportInfoInput>;
   private readonly fileType: FileTypesEnum;
   private readonly filter?: InputMaybe<ProductFilterInput>;
@@ -29,7 +29,7 @@ export class ExportProductsInput {
     this.scope = scope;
   }
 
-  getExportProductsInput() {
+  asExportProductsInput() {
     return {
       exportInfo: this.exportInfo,
       fileType: this.fileType,
