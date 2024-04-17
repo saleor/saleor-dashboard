@@ -11,9 +11,9 @@ describe("TimelineNote", () => {
     render(
       <Wrapper>
         <TimelineNote
-          app={undefined}
+          app={null}
           user={{
-            avatar: undefined,
+            avatar: null,
             id: "1",
             email: "test@test.com",
             firstName: "Test",
@@ -37,7 +37,7 @@ describe("TimelineNote", () => {
     const { container } = render(
       <Wrapper>
         <TimelineNote
-          app={undefined}
+          app={null}
           user={{
             avatar: {
               __typename: "Image",
@@ -75,9 +75,9 @@ describe("TimelineNote", () => {
             id: "1",
             name: "Test App",
             appUrl: "http://example.com",
-            brand: undefined,
+            brand: null,
           }}
-          user={undefined}
+          user={null}
           date={wrapperFriendlyDate}
           message="Note"
           hasPlainDate={false}
@@ -108,7 +108,7 @@ describe("TimelineNote", () => {
               },
             },
           }}
-          user={undefined}
+          user={null}
           date={wrapperFriendlyDate}
           message="Note"
           hasPlainDate={false}
