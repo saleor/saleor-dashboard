@@ -725,6 +725,9 @@
   "2dgbGR": {
     "string": "Those codes already exist"
   },
+  "2eHzVW": {
+    "string": "Manual refunds cannot be edited"
+  },
   "2fgaAQ": {
     "context": "search input placeholder",
     "string": "Search shipping zones..."
@@ -2600,6 +2603,9 @@
   "FYfoiF": {
     "context": "section name",
     "string": "Allocation strategy"
+  },
+  "FZTrzW": {
+    "string": "Manual refund"
   },
   "Fbr4Vp": {
     "context": "dialog header",
