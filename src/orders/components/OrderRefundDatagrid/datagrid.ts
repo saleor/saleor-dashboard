@@ -11,7 +11,6 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { OrderDetailsFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { getStatusColor } from "@dashboard/misc";
 import { ListSettings, ListViews } from "@dashboard/types";
@@ -21,7 +20,11 @@ import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { refundGridMessages } from "./messages";
-import { getGrantedRefundStatus, getGrantedRefundStatusMessage } from "./utils";
+import {
+  DatagridRefund,
+  getGrantedRefundStatus,
+  getGrantedRefundStatusMessage,
+} from "./utils";
 
 const useOrderRefundConstantColumns = () => {
   const intl = useIntl();
@@ -67,7 +70,7 @@ export const createGetCellContent =
     currentTheme,
     intl,
   }: {
-    refunds: OrderDetailsFragment["grantedRefunds"] | undefined;
+    refunds: DatagridRefund[] | undefined;
     columns: AvailableColumn[];
     currentTheme: DefaultTheme;
     intl: IntlShape;

@@ -3,6 +3,7 @@ import { GridCellKind } from "@glideapps/glide-data-grid";
 import { intlMock } from "@test/intl";
 
 import { createGetCellContent, useOrderRefundStaticColumns } from "./datagrid";
+import { DatagridRefund } from "./utils";
 
 const currentTheme = "defaultLight";
 
@@ -22,10 +23,15 @@ jest.mock("@dashboard/components/Datagrid/hooks/useEmptyColumn", () => ({
   }),
 }));
 
+const mockedRefunds: DatagridRefund[] = grantedRefunds.map(refund => ({
+  ...refund,
+  type: "manual",
+}));
+
 describe("Order refund datagrid", () => {
   it("presents grant refund with status draft created by user", () => {
     // Arrange
-    const refunds = grantedRefunds;
+    const refunds = mockedRefunds;
     const columns = useOrderRefundStaticColumns();
 
     // Act
@@ -90,7 +96,7 @@ describe("Order refund datagrid", () => {
   });
   it("presents grant refund with status draft created by app", () => {
     // Arrange
-    const refunds = grantedRefunds;
+    const refunds = mockedRefunds;
     const columns = useOrderRefundStaticColumns();
 
     // Act
