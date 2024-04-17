@@ -1603,6 +1603,7 @@ export const OrderGrantedRefundFragmentDoc = gql`
   id
   createdAt
   shippingCostsIncluded
+  status
   amount {
     currency
     amount

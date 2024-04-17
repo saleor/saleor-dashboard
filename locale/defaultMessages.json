@@ -1036,6 +1036,9 @@
     "context": "variant price in channel",
     "string": "Price"
   },
+  "4i7ED7": {
+    "string": "This refund has been successfully processed and cannot be edited"
+  },
   "4k9rMQ": {
     "context": "variant attribute checkbox",
     "string": "Variant Selection"
@@ -1058,6 +1061,10 @@
   "4yRwN+": {
     "context": "content",
     "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
+  },
+  "4z1O0N": {
+    "context": "Refund status success",
+    "string": "Success"
   },
   "54KYgS": {
     "context": "months after label",
@@ -2287,6 +2294,10 @@
   },
   "DO8+uV": {
     "string": "Product created"
+  },
+  "DOHARW": {
+    "context": "Refund status failure",
+    "string": "Failure"
   },
   "DOVEZF": {
     "context": "button",
@@ -4529,6 +4540,10 @@
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
     "string": "Select warehouse..."
+  },
+  "SBlTvZ": {
+    "context": "Refund status pending",
+    "string": "Pending"
   },
   "SC/eNC": {
     "context": "Payment card title",
@@ -7645,6 +7660,10 @@
     "context": "section header",
     "string": "Ongoing Installations"
   },
+  "nIuKz3": {
+    "context": "Refund status none",
+    "string": "Draft"
+  },
   "nJ0tek": {
     "context": "tab name",
     "string": "All draft orders"
@@ -9053,6 +9072,9 @@
   "x/pIZ9": {
     "context": "button",
     "string": "Add product"
+  },
+  "x0n6YG": {
+    "string": "This refund is currently being processed and cannot be edited"
   },
   "x2mg39": {
     "context": "Transaction event description",

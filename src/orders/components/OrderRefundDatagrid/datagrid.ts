@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   dateCell,
   moneyCell,
@@ -17,9 +18,10 @@ import { ListSettings, ListViews } from "@dashboard/types";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 import { refundGridMessages } from "./messages";
+import { getGrantedRefundStatus, getGrantedRefundStatusMessage } from "./utils";
 
 const useOrderRefundConstantColumns = () => {
   const intl = useIntl();
@@ -63,10 +65,12 @@ export const createGetCellContent =
     refunds,
     columns,
     currentTheme,
+    intl,
   }: {
     refunds: OrderDetailsFragment["grantedRefunds"] | undefined;
     columns: AvailableColumn[];
     currentTheme: DefaultTheme;
+    intl: IntlShape;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = refunds?.[row];
@@ -76,22 +80,26 @@ export const createGetCellContent =
       return readonlyTextCell("");
     }
 
-    // TODO: replace with actual status when API available
-    const color = getStatusColor({
-      status: "generic",
-      currentTheme,
-    });
-
     switch (columnId) {
       case "status":
+        const color = getStatusColor({
+          status: getGrantedRefundStatus(rowData.status),
+          currentTheme,
+        });
+
+        const statusMessage = getGrantedRefundStatusMessage(
+          rowData.status,
+          intl,
+        );
+
         return tagsCell(
           [
             {
-              tag: "DRAFT",
+              tag: statusMessage,
               color: color.base,
             },
           ],
-          ["DRAFT"],
+          [statusMessage],
         );
       case "amount":
         return moneyCell(rowData.amount.amount, rowData.amount.currency ?? "", {
