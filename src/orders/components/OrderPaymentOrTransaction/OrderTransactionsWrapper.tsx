@@ -54,29 +54,28 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
 
   return (
     <>
-      <div className={classes.cardGrid}>
-        <OrderSummaryCard order={order} />
-        <OrderPaymentSummaryCard order={order} onMarkAsPaid={onMarkAsPaid} />
-      </div>
+      {enabled ? (
+        <OrderRefundDatagrid
+          orderId={order?.id}
+          grantedRefunds={order?.grantedRefunds}
+          onRefundAdd={onRefundAdd}
+        />
+      ) : (
+        <div className={classes.cardGrid}>
+          <OrderSummaryCard order={order} />
+          <OrderPaymentSummaryCard order={order} onMarkAsPaid={onMarkAsPaid} />
+        </div>
+      )}
+
       <CardSpacer />
-      <>
-        {enabled && (
-          <>
-            <OrderRefundDatagrid
-              orderId={order?.id}
-              grantedRefunds={order?.grantedRefunds}
-              onRefundAdd={onRefundAdd}
-            />
-            <CardSpacer />
-          </>
-        )}
-        {order?.grantedRefunds?.length !== 0 && !enabled && (
-          <>
-            <OrderGrantedRefunds order={order} />
-            <CardSpacer />
-          </>
-        )}
-      </>
+
+      {order?.grantedRefunds?.length !== 0 && !enabled && (
+        <>
+          <OrderGrantedRefunds order={order} />
+          <CardSpacer />
+        </>
+      )}
+
       <div>
         {order?.transactions?.map(transaction => (
           <OrderTransaction
