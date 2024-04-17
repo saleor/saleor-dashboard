@@ -95,6 +95,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
             })}
           >
             <Checkbox
+              data-test-id="select-all-checkbox"
               indeterminate={items && items.length > selected && selected > 0}
               checked={selected !== 0}
               disabled={disabled}
@@ -121,7 +122,14 @@ const TableHead: React.FC<TableHeadProps> = props => {
                   </Typography>
                 )}
                 <div className={classes.spacer} />
-                {toolbar && <div className={classes.toolbar}>{toolbar}</div>}
+                {toolbar && (
+                  <div
+                    data-test-id="bulk-delete-button"
+                    className={classes.toolbar}
+                  >
+                    {toolbar}
+                  </div>
+                )}
               </div>
             </TableCell>
           </>
