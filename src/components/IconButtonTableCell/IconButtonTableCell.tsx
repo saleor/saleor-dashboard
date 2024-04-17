@@ -32,6 +32,7 @@ const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
   return (
     <TableCell className={clsx(classes.root, className)}>
       <IconButton
+        data-test-id="delete-button"
         variant="secondary"
         color="primary"
         disabled={disabled}

@@ -44,13 +44,21 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
             defaultMessage: "Menu Items",
             description: "header",
           })}
-          <Button disabled={!canUndo} onClick={onUndo}>
+          <Button
+            disabled={!canUndo}
+            onClick={onUndo}
+            data-test-id="undo-button"
+          >
             <FormattedMessage {...buttonMessages.undo} />
           </Button>
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <Box backgroundColor="default1" marginBottom={4}>
+        <Box
+          data-test-id="menu-items-list"
+          backgroundColor="default1"
+          marginBottom={4}
+        >
           {items === undefined ? (
             <Skeleton />
           ) : (
