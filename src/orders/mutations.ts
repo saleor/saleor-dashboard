@@ -596,7 +596,7 @@ export const orderGrantRefundEditMutation = gql`
         ...OrderGrantRefundUpdateError
       }
       order {
-        ...OrderDetails
+        ...OrderDetailsGrantRefund
       }
     }
   }

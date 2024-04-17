@@ -11439,12 +11439,12 @@ export const OrderGrantRefundEditDocument = gql`
       ...OrderGrantRefundUpdateError
     }
     order {
-      ...OrderDetails
+      ...OrderDetailsGrantRefund
     }
   }
 }
     ${OrderGrantRefundUpdateErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+${OrderDetailsGrantRefundFragmentDoc}`;
 export type OrderGrantRefundEditMutationFn = Apollo.MutationFunction<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>;
 
 /**

@@ -1,6 +1,5 @@
 import {
-  OrderDetailsDocument,
-  OrderDetailsFragment,
+  OrderDetailsGrantRefundDocument,
   OrderDetailsGrantRefundFragment,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundEditMutation,
@@ -46,23 +45,10 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
     },
     update(cache, { data }) {
       if (data?.orderGrantRefundUpdate?.errors?.length === 0) {
-        const cachedPromotion = cache.readQuery<{
-          order: OrderDetailsFragment;
-        }>({
-          query: OrderDetailsDocument,
-          variables: {
-            id: orderId,
-          },
-        });
-
-        if (!cachedPromotion?.order) {
-          return;
-        }
-
         cache.writeQuery({
-          query: OrderDetailsDocument,
+          query: OrderDetailsGrantRefundDocument,
           data: {
-            order: data.orderGrantRefundUpdate?.order,
+            order: data.orderGrantRefundUpdate.order,
           },
         });
       }
