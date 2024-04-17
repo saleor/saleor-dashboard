@@ -2,6 +2,7 @@ import {
   moneyCell,
   numberCell,
   readonlyTextCell,
+  textCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import {
@@ -17,7 +18,7 @@ import { DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { QuantityToRefund } from "../../OrderTransactionRefundPage";
+import { LineToRefund } from "../../OrderTransactionRefundPage";
 import { getMaxQtyToRefund } from "../../utils";
 import { transactionRefundGridMessages } from "./messages";
 
@@ -49,7 +50,13 @@ export const useOrderTransactionRefundStaticColumns = () => {
       title: intl.formatMessage(transactionRefundGridMessages.qtyToRefundCell),
       width: 150,
     },
-    // TODO: reason per line - now or later?
+    {
+      id: "reason",
+      title: intl.formatMessage(
+        transactionRefundGridMessages.reasonToRefundCell,
+      ),
+      width: 250,
+    },
   ];
 };
 
@@ -63,13 +70,13 @@ export const createGetCellContent =
   ({
     lines,
     columns,
-    qtyToRefund,
+    linesToRefund,
     order,
     draftRefund,
   }: {
     lines: OrderDetailsGrantRefundFragment["lines"] | undefined;
     columns: AvailableColumn[];
-    qtyToRefund: QuantityToRefund[];
+    linesToRefund: LineToRefund[];
     order: OrderDetailsGrantRefundFragment | null | undefined;
     draftRefund:
       | OrderDetailsGrantRefundFragment["grantedRefunds"][0]
@@ -104,8 +111,12 @@ export const createGetCellContent =
           false,
         );
       case "qtyToRefund": {
-        const qty = qtyToRefund?.find(q => q.row === row);
-        return numberCell(qty?.value ?? 0, { cursor: "pointer" });
+        const line = linesToRefund?.find(q => q.row === row);
+        return numberCell(line?.quantity ?? 0, { cursor: "pointer" });
+      }
+      case "reason": {
+        const line = linesToRefund?.find(q => q.row === row);
+        return textCell(line?.reason ?? "");
       }
       default:
         return readonlyTextCell("", false);

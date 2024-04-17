@@ -1,4 +1,5 @@
 import {
+  OrderDetailsGrantRefundDocument,
   OrderDetailsGrantRefundFragment,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundEditMutation,
@@ -8,10 +9,11 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import OrderTransactionRefundPage, {
+  OrderTransactionRefundError,
   OrderTransactionRefundPageFormData,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
+import React, { useState } from "react";
 
 interface OrderTransactionRefundProps {
   orderId: string;
@@ -22,9 +24,12 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
   orderId,
   refundId,
 }) => {
-  //   const intl = useIntl();
   const notify = useNotifier();
   const navigate = useNavigator();
+
+  const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>(
+    [],
+  );
 
   const { data, loading } = useOrderDetailsGrantRefundQuery({
     displayLoader: true,
@@ -42,6 +47,16 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
         });
       }
     },
+    update(cache, { data }) {
+      if (data?.orderGrantRefundUpdate?.errors?.length === 0) {
+        cache.writeQuery({
+          query: OrderDetailsGrantRefundDocument,
+          data: {
+            order: data.orderGrantRefundUpdate.order,
+          },
+        });
+      }
+    },
   });
 
   const handleUpdateRefund = async (
@@ -50,19 +65,20 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
     if (!data?.order || !draftRefund) {
       return;
     }
-    const { amount, reason, qtyToRefund, includeShipping, transactionId } =
+    const { amount, reason, linesToRefund, includeShipping, transactionId } =
       submitData;
 
-    const toAdd = qtyToRefund
-      .map(qty => ({
-        quantity: qty.value,
-        id: data.order!.lines[qty.row].id,
-      }))
-      .filter(line => line.quantity > 0);
+    const dirtyLinesToRefund = linesToRefund.filter(item => item.isDirty);
+
+    const toAdd = dirtyLinesToRefund.map(line => ({
+      quantity: line.quantity,
+      reason: line.reason,
+      id: data.order!.lines[line.row].id,
+    }));
 
     const toRemove =
       draftRefund.lines?.reduce<string[]>((acc, line) => {
-        qtyToRefund.forEach(qty => {
+        dirtyLinesToRefund.forEach(qty => {
           const orderLine = data.order!.lines[qty.row];
           if (line.orderLine.id === orderLine.id && !acc.includes(line.id)) {
             acc.push(line.id);
@@ -71,19 +87,30 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
         return acc;
       }, []) ?? [];
 
-    extractMutationErrors(
-      updateRefund({
-        variables: {
-          refundId,
-          amount,
-          reason,
-          addLines: toAdd,
-          removeLines: toRemove,
-          grantRefundForShipping: includeShipping,
-          transactionId,
-        },
-      }),
-    );
+    const result = await updateRefund({
+      variables: {
+        refundId,
+        amount,
+        reason,
+        addLines: toAdd,
+        removeLines: toRemove,
+        grantRefundForShipping: includeShipping,
+        transactionId,
+      },
+    });
+
+    const errors = result.data?.orderGrantRefundUpdate?.errors;
+
+    if (errors?.length) {
+      setLinesErrors(
+        errors.map(err => ({
+          code: err.code,
+          field: err.field,
+          message: err.message,
+          lines: err.addLines,
+        })) as OrderTransactionRefundError[],
+      );
+    }
   };
 
   const draftRefund:
@@ -124,6 +151,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
 
   return (
     <OrderTransactionRefundPage
+      errors={linesErrors}
       disabled={loading}
       order={data?.order}
       draftRefund={draftRefund}

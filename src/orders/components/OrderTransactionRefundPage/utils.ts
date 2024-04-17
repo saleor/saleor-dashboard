@@ -15,8 +15,8 @@ import {
   refundStatusMessages,
 } from "./messages";
 import {
+  LineToRefund,
   OrderTransactionRefundPageFormData,
-  QuantityToRefund,
 } from "./OrderTransactionRefundPage";
 
 export const getDefaultTransaction = (
@@ -44,7 +44,7 @@ const getRefundEditDefaultValues = (
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0],
 ): OrderTransactionRefundPageFormData => {
   return {
-    qtyToRefund: getRefundEditOrderQty(order, draftRefund) ?? [],
+    linesToRefund: getRefundEditOrderLinesToRefund(order, draftRefund) ?? [],
     transactionId:
       draftRefund.transaction?.id ?? getDefaultTransaction(order?.transactions),
     includeShipping: draftRefund.shippingCostsIncluded,
@@ -53,7 +53,7 @@ const getRefundEditDefaultValues = (
   };
 };
 
-export const getRefundEditOrderQty = (
+export const getRefundEditOrderLinesToRefund = (
   order: OrderDetailsGrantRefundFragment | undefined | null,
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined,
 ) => {
@@ -64,12 +64,14 @@ export const getRefundEditOrderQty = (
   const refundLines = draftRefund?.lines?.map(line => ({
     id: line.orderLine.id,
     quantity: line.quantity,
+    reason: line.reason,
   }));
   return refundLines?.map(refundLine => {
     const line = lines?.find(line => line.id === refundLine.id);
     return {
       row: line?.index ?? 0,
-      value: refundLine.quantity,
+      reason: refundLine?.reason ?? "",
+      quantity: refundLine.quantity,
     };
   });
 };
@@ -77,7 +79,7 @@ export const getRefundEditOrderQty = (
 export const getRefundCreateDefaultValues = (
   order: OrderDetailsGrantRefundFragment | undefined | null,
 ): OrderTransactionRefundPageFormData => ({
-  qtyToRefund: [],
+  linesToRefund: [],
   transactionId: getDefaultTransaction(order?.transactions),
   includeShipping: false,
   amount: 0,
@@ -135,36 +137,69 @@ export const validateQty = ({
   return value;
 };
 
-export const handleQtyToRefundChange = ({
+const calucalteLineToRefundChangeValue = ({
   data,
-  qtyToRefund,
+  order,
+  linesToRefund,
+  draftRefund,
+}: {
+  data: DatagridChangeOpts;
+  linesToRefund: LineToRefund[];
+  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
+  order: OrderDetailsGrantRefundFragment | undefined | null;
+}): LineToRefund => {
+  const rowId = data.currentUpdate!.row;
+  const lineToRefund = linesToRefund.find(line => line.row === rowId);
+
+  if (data.currentUpdate!.column === "reason") {
+    return {
+      row: rowId,
+      reason: data.currentUpdate!.data,
+      quantity: lineToRefund?.quantity ?? 0,
+      isDirty: true,
+    };
+  }
+
+  return {
+    row: rowId,
+    reason: lineToRefund?.reason ?? "",
+    quantity: validateQty({
+      update: data.currentUpdate!,
+      order,
+      draftRefund,
+    }),
+    isDirty: true,
+  };
+};
+
+export const handleLinesToRefundChange = ({
+  data,
+  linesToRefund,
   order,
   draftRefund,
   setValue,
 }: {
   data: DatagridChangeOpts;
-  qtyToRefund: QuantityToRefund[];
+  linesToRefund: LineToRefund[];
   order: OrderDetailsGrantRefundFragment | undefined | null;
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
   setValue: UseFormSetValue<OrderTransactionRefundPageFormData>;
 }) => {
-  const unchangedQuantites = qtyToRefund.filter(
+  const unchangedLines = linesToRefund.filter(
     qty => qty.row !== data.currentUpdate?.row,
   );
 
   if (data.currentUpdate) {
     setValue(
-      "qtyToRefund",
+      "linesToRefund",
       [
-        ...unchangedQuantites,
-        {
-          row: data.currentUpdate.row,
-          value: validateQty({
-            update: data.currentUpdate,
-            order,
-            draftRefund,
-          }),
-        },
+        ...unchangedLines,
+        calucalteLineToRefundChangeValue({
+          data,
+          linesToRefund,
+          draftRefund,
+          order,
+        }),
       ],
       { shouldDirty: true },
     );
@@ -177,7 +212,7 @@ export const useRecalculateTotalAmount = ({
   includeShipping,
   order,
   selectedProductsValue,
-  qtyToRefund,
+  linesToRefund,
   isFormDirty,
 }: {
   getValues: UseFormGetValues<OrderTransactionRefundPageFormData>;
@@ -185,7 +220,7 @@ export const useRecalculateTotalAmount = ({
   includeShipping: boolean;
   order: OrderDetailsGrantRefundFragment | undefined | null;
   selectedProductsValue: number;
-  qtyToRefund: QuantityToRefund[];
+  linesToRefund: LineToRefund[];
   isFormDirty: boolean;
 }) => {
   React.useEffect(() => {
@@ -204,20 +239,20 @@ export const useRecalculateTotalAmount = ({
         setValue("amount", selectedProductsValue);
       }
     }
-  }, [qtyToRefund, includeShipping]);
+  }, [linesToRefund, includeShipping]);
 };
 
 export const getSelectedProductsValue = ({
-  qtyToRefund,
+  linesToRefund,
   order,
 }: {
-  qtyToRefund: QuantityToRefund[];
+  linesToRefund: LineToRefund[];
   order: OrderDetailsGrantRefundFragment | undefined | null;
 }) => {
-  return qtyToRefund.reduce((acc, curr) => {
+  return linesToRefund?.reduce((acc, curr) => {
     const unitPrice: number =
       order?.lines[curr.row].unitPrice.gross.amount ?? 0;
-    const totalPrice = unitPrice * curr.value;
+    const totalPrice = (unitPrice ?? 0) * curr.quantity;
     return acc + totalPrice;
   }, 0);
 };
@@ -225,30 +260,31 @@ export const getSelectedProductsValue = ({
 export const createSetMaxQty = ({
   order,
   draftRefund,
-  qtyToRefund,
+  linesToRefund,
   setValue,
 }: {
   order: OrderDetailsGrantRefundFragment | undefined | null;
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
-  qtyToRefund: QuantityToRefund[];
+  linesToRefund: LineToRefund[];
   setValue: UseFormSetValue<OrderTransactionRefundPageFormData>;
 }) => {
   return (rows: number[]) => {
     if (!order) {
       return;
     }
-    const unchangedQuantites = qtyToRefund.filter(
+    const unchangedQuantites = linesToRefund.filter(
       qty => !rows.includes(qty.row),
     );
     const newQtyToRefund = rows.map(row => ({
       row,
-      value: getMaxQtyToRefund({
+      reason: linesToRefund[row]?.reason ?? "",
+      quantity: getMaxQtyToRefund({
         rowData: order.lines[row],
         order,
         draftRefund,
       }),
     }));
-    setValue("qtyToRefund", [...unchangedQuantites, ...newQtyToRefund], {
+    setValue("linesToRefund", [...unchangedQuantites, ...newQtyToRefund], {
       shouldDirty: true,
     });
   };

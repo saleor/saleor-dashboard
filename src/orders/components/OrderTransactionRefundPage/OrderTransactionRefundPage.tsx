@@ -20,7 +20,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
-import { OrderTransactionRefundDatagrid } from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
+import {
+  OrderRefundTransactionDatagridError,
+  OrderTransactionRefundDatagrid,
+} from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
 import { orderTransactionRefundMessages as messages } from "./messages";
@@ -33,10 +36,23 @@ import {
   getRefundStatusLabel,
   getRefundViewTitle,
   getSelectedProductsValue,
-  handleQtyToRefundChange,
+  handleLinesToRefundChange,
   useRecalculateTotalAmount,
 } from "./utils";
+
+export interface OrderTransactionRefundError {
+  field: string;
+  message: string;
+  code: string;
+  lines: Array<{
+    field: string;
+    message: string;
+    code: string;
+    lineId: string;
+  }>;
+}
 export interface OrderTransactionRefundPageProps {
+  errors: OrderTransactionRefundError[];
   order: OrderDetailsGrantRefundFragment | null | undefined;
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   disabled: boolean;
@@ -48,13 +64,15 @@ export interface OrderTransactionRefundPageProps {
   onTransferFundsState?: ConfirmButtonTransitionState;
 }
 
-export interface QuantityToRefund {
+export interface LineToRefund {
   row: number;
-  value: number;
+  quantity: number;
+  reason: string;
+  isDirty?: boolean;
 }
 
 export interface OrderTransactionRefundPageFormData {
-  qtyToRefund: QuantityToRefund[];
+  linesToRefund: LineToRefund[];
   transactionId: string | undefined;
   amount: number | undefined;
   includeShipping: boolean;
@@ -62,6 +80,7 @@ export interface OrderTransactionRefundPageFormData {
 }
 
 const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
+  errors,
   order,
   draftRefund,
   disabled,
@@ -73,22 +92,24 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const navigate = useNavigator();
   const intl = useIntl();
 
+  const datagridErrors: OrderRefundTransactionDatagridError[] = errors
+    .filter(err => err.field === "lines" || err.field === "addLines")
+    .flatMap(error => error?.lines)
+    .filter(Boolean);
+
+  const amountError = errors.find(error => error.field === "amount");
+
   const {
     control,
     setValue,
     handleSubmit,
     watch,
     getValues,
-    reset,
     getFieldState,
     formState: { isDirty },
   } = useForm<OrderTransactionRefundPageFormData>({
-    defaultValues: getRefundFormDefaultValues({ order, draftRefund }),
+    values: getRefundFormDefaultValues({ order, draftRefund }),
   });
-
-  React.useEffect(() => {
-    reset(getRefundFormDefaultValues({ order, draftRefund }));
-  }, [order]);
 
   const permissions = useUserPermissions();
   const canHandlePayments = hasPermissions(permissions ?? [], [
@@ -113,11 +134,11 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     });
   };
 
-  const qtyToRefund = watch("qtyToRefund");
+  const linesToRefund = watch("linesToRefund");
   const includeShipping = watch("includeShipping");
 
   const selectedProductsValue = getSelectedProductsValue({
-    qtyToRefund,
+    linesToRefund,
     order,
   });
 
@@ -125,7 +146,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     getValues,
     includeShipping,
     order,
-    qtyToRefund,
+    linesToRefund,
     setValue,
     selectedProductsValue,
     isFormDirty: isDirty,
@@ -134,14 +155,14 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const onSetMaximumQty = createSetMaxQty({
     order,
     draftRefund,
-    qtyToRefund,
+    linesToRefund,
     setValue,
   });
 
-  const onQtyToRefundChange = (data: DatagridChangeOpts) => {
-    handleQtyToRefundChange({
+  const onLinesToRefundChange = (data: DatagridChangeOpts) => {
+    handleLinesToRefundChange({
       data,
-      qtyToRefund,
+      linesToRefund,
       setValue,
       order,
       draftRefund,
@@ -174,12 +195,13 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             </DashboardCard.Content>
           </DashboardCard>
           <OrderTransactionRefundDatagrid
+            errors={datagridErrors}
             order={order}
             draftRefund={draftRefund}
             control={control}
-            onChange={onQtyToRefundChange}
+            onChange={onLinesToRefundChange}
             onMaxQtySet={onSetMaximumQty}
-            qtyToRefund={qtyToRefund}
+            linesToRefund={linesToRefund}
           />
           <DashboardCard marginBottom={5}>
             <DashboardCard.Content>
@@ -202,6 +224,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             justifyContent="space-between"
           >
             <OrderTransactionSummary
+              error={!!amountError}
               control={control}
               selectedProductsValue={selectedProductsValue}
               canRefundShipping={canRefundShipping(order, draftRefund)}

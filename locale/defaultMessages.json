@@ -2253,6 +2253,10 @@
     "context": "button",
     "string": "Save Search"
   },
+  "DEavHl": {
+    "context": "transaction refund datagrid reason. to refund column",
+    "string": "Reason"
+  },
   "DGCzal": {
     "string": "This token gives you access to your shop's API, which you'll find here: {url}"
   },

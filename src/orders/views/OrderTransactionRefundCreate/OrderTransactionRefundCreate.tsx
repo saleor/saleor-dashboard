@@ -4,12 +4,12 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { extractMutationErrors } from "@dashboard/misc";
 import OrderTransactionRefundPage, {
+  OrderTransactionRefundError,
   OrderTransactionRefundPageFormData,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
-import React from "react";
+import React, { useState } from "react";
 
 interface OrderTransactionRefundCreateProps {
   orderId: string;
@@ -20,6 +20,10 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
 }) => {
   const notify = useNotifier();
   const navigate = useNavigator();
+
+  const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>(
+    [],
+  );
 
   const { data, loading } = useOrderDetailsGrantRefundQuery({
     displayLoader: true,
@@ -51,29 +55,42 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
     if (!data?.order) {
       return;
     }
-    const { amount, reason, qtyToRefund, includeShipping, transactionId } =
+    const { amount, reason, linesToRefund, includeShipping, transactionId } =
       submitData;
 
-    extractMutationErrors(
-      createRefund({
-        variables: {
-          orderId,
-          amount,
-          reason,
-          lines: qtyToRefund.map(qty => ({
-            quantity: qty.value,
-            id: data.order!.lines[qty.row].id,
-          })),
-          grantRefundForShipping: includeShipping,
-          transactionId,
-        },
-      }),
-    );
+    const result = await createRefund({
+      variables: {
+        orderId,
+        amount,
+        reason,
+        lines: linesToRefund.map(line => ({
+          quantity: line.quantity,
+          reason: line.reason,
+          id: data.order!.lines[line.row].id,
+        })),
+        grantRefundForShipping: includeShipping,
+        transactionId,
+      },
+    });
+
+    const errors = result.data?.orderGrantRefundCreate?.errors;
+
+    if (errors?.length) {
+      setLinesErrors(
+        errors.map(err => ({
+          code: err.code,
+          field: err.field,
+          lines: err.lines,
+          message: err.message,
+        })) as OrderTransactionRefundError[],
+      );
+    }
   };
 
   return (
     <OrderTransactionRefundPage
       disabled={loading}
+      errors={linesErrors}
       order={data?.order}
       onSaveDraft={handleCreateRefund}
       onSaveDraftState={createRefundOpts.status}

@@ -662,6 +662,7 @@ export const orderDetailsGrantedRefund = gql`
     lines {
       id
       quantity
+      reason
       orderLine {
         ...OrderLine
       }
