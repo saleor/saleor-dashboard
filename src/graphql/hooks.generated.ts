@@ -2139,9 +2139,14 @@ export const OrderDetailsGrantedRefundFragmentDoc = gql`
     ...Money
   }
   shippingCostsIncluded
+  transaction {
+    id
+  }
+  status
   lines {
     id
     quantity
+    reason
     orderLine {
       ...OrderLine
     }
@@ -2172,11 +2177,15 @@ export const OrderDetailsGrantRefundFragmentDoc = gql`
   grantedRefunds {
     ...OrderDetailsGrantedRefund
   }
+  transactions {
+    ...TransactionItem
+  }
 }
     ${OrderLineGrantRefundFragmentDoc}
 ${OrderFulfillmentGrantRefundFragmentDoc}
 ${MoneyFragmentDoc}
-${OrderDetailsGrantedRefundFragmentDoc}`;
+${OrderDetailsGrantedRefundFragmentDoc}
+${TransactionItemFragmentDoc}`;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -11327,10 +11336,10 @@ export type OrderTransactionRequestActionMutationHookResult = ReturnType<typeof 
 export type OrderTransactionRequestActionMutationResult = Apollo.MutationResult<Types.OrderTransactionRequestActionMutation>;
 export type OrderTransactionRequestActionMutationOptions = Apollo.BaseMutationOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>;
 export const OrderGrantRefundAddDocument = gql`
-    mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal, $reason: String, $lines: [OrderGrantRefundCreateLineInput!], $grantRefundForShipping: Boolean) {
+    mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal, $reason: String, $lines: [OrderGrantRefundCreateLineInput!], $grantRefundForShipping: Boolean, $transactionId: ID) {
   orderGrantRefundCreate(
     id: $orderId
-    input: {amount: $amount, reason: $reason, lines: $lines, grantRefundForShipping: $grantRefundForShipping}
+    input: {amount: $amount, reason: $reason, lines: $lines, grantRefundForShipping: $grantRefundForShipping, transactionId: $transactionId}
   ) {
     errors {
       ...OrderGrantRefundCreateError
@@ -11361,6 +11370,7 @@ export type OrderGrantRefundAddMutationFn = Apollo.MutationFunction<Types.OrderG
  *      reason: // value for 'reason'
  *      lines: // value for 'lines'
  *      grantRefundForShipping: // value for 'grantRefundForShipping'
+ *      transactionId: // value for 'transactionId'
  *   },
  * });
  */
@@ -11421,17 +11431,21 @@ export type OrderGrantRefundAddWithOrderMutationHookResult = ReturnType<typeof u
 export type OrderGrantRefundAddWithOrderMutationResult = Apollo.MutationResult<Types.OrderGrantRefundAddWithOrderMutation>;
 export type OrderGrantRefundAddWithOrderMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundAddWithOrderMutation, Types.OrderGrantRefundAddWithOrderMutationVariables>;
 export const OrderGrantRefundEditDocument = gql`
-    mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal, $reason: String, $addLines: [OrderGrantRefundUpdateLineAddInput!], $removeLines: [ID!], $grantRefundForShipping: Boolean) {
+    mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal, $reason: String, $addLines: [OrderGrantRefundUpdateLineAddInput!], $removeLines: [ID!], $grantRefundForShipping: Boolean, $transactionId: ID) {
   orderGrantRefundUpdate(
     id: $refundId
-    input: {amount: $amount, reason: $reason, addLines: $addLines, removeLines: $removeLines, grantRefundForShipping: $grantRefundForShipping}
+    input: {amount: $amount, reason: $reason, addLines: $addLines, removeLines: $removeLines, grantRefundForShipping: $grantRefundForShipping, transactionId: $transactionId}
   ) {
     errors {
       ...OrderGrantRefundUpdateError
     }
+    order {
+      ...OrderDetailsGrantRefund
+    }
   }
 }
-    ${OrderGrantRefundUpdateErrorFragmentDoc}`;
+    ${OrderGrantRefundUpdateErrorFragmentDoc}
+${OrderDetailsGrantRefundFragmentDoc}`;
 export type OrderGrantRefundEditMutationFn = Apollo.MutationFunction<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>;
 
 /**
@@ -11453,6 +11467,7 @@ export type OrderGrantRefundEditMutationFn = Apollo.MutationFunction<Types.Order
  *      addLines: // value for 'addLines'
  *      removeLines: // value for 'removeLines'
  *      grantRefundForShipping: // value for 'grantRefundForShipping'
+ *      transactionId: // value for 'transactionId'
  *   },
  * });
  */
