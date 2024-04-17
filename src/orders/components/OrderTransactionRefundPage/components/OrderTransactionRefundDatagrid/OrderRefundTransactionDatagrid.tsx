@@ -25,8 +25,13 @@ import {
 } from "./datagrid";
 import { transactionRefundGridMessages } from "./messages";
 
+export interface OrderRefundTransactionDatagridError {
+  field: string;
+  lineId: string;
+}
+
 interface OrderTransactionRefundDatagridProps {
-  errors?: LineToRefund[];
+  errors?: OrderRefundTransactionDatagridError[];
   order: OrderDetailsGrantRefundFragment | undefined | null;
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   control: Control<OrderTransactionRefundPageFormData, any>;
@@ -74,9 +79,15 @@ export const OrderTransactionRefundDatagrid: React.FC<
   });
 
   const getCellError = ([column, row]: Item) => {
-    const rowMatch = errors?.find(err => err.row === row);
+    const line = order!.lines[row];
+    const columnId = staticColumns[column].id;
+    const error = errors?.find(err => err.lineId === line.id);
 
-    if (rowMatch && staticColumns[column].id === "qtyToRefund") {
+    if (error?.field === "quantity" && columnId === "qtyToRefund") {
+      return true;
+    }
+
+    if (error?.field === "reason" && columnId === "reason") {
       return true;
     }
 

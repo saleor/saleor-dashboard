@@ -20,7 +20,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
-import { OrderTransactionRefundDatagrid } from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
+import {
+  OrderRefundTransactionDatagridError,
+  OrderTransactionRefundDatagrid,
+} from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
 import { orderTransactionRefundMessages as messages } from "./messages";
@@ -36,7 +39,17 @@ import {
   handleLinesToRefundChange,
   useRecalculateTotalAmount,
 } from "./utils";
+
+interface OrderTransactionRefundError {
+  field: string;
+  message: string;
+  lines: Array<{
+    field: string;
+    lineId: string;
+  }>;
+}
 export interface OrderTransactionRefundPageProps {
+  errors: OrderTransactionRefundError[];
   order: OrderDetailsGrantRefundFragment | null | undefined;
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   disabled: boolean;
@@ -64,6 +77,7 @@ export interface OrderTransactionRefundPageFormData {
 }
 
 const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
+  errors,
   order,
   draftRefund,
   disabled,
@@ -74,6 +88,13 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
 }) => {
   const navigate = useNavigator();
   const intl = useIntl();
+
+  const datagridErrors: OrderRefundTransactionDatagridError[] = errors
+    .filter(err => err.field === "lines")
+    .flatMap(error => error.lines)
+    .filter(Boolean);
+
+  const amountError = errors.find(error => error.field === "amount");
 
   const {
     control,
@@ -171,7 +192,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             </DashboardCard.Content>
           </DashboardCard>
           <OrderTransactionRefundDatagrid
-            errors={[]}
+            errors={datagridErrors}
             order={order}
             draftRefund={draftRefund}
             control={control}
@@ -200,6 +221,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             justifyContent="space-between"
           >
             <OrderTransactionSummary
+              error={!!amountError}
               control={control}
               selectedProductsValue={selectedProductsValue}
               canRefundShipping={canRefundShipping(order, draftRefund)}

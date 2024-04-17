@@ -17,6 +17,7 @@ import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefund
 import { orderTransactionRefundSummaryMessages as messages } from "./messages";
 
 interface OrderTransactionSummaryProps {
+  error?: boolean;
   control: Control<OrderTransactionRefundPageFormData, any>;
   selectedProductsValue: number;
   canRefundShipping: boolean;
@@ -27,6 +28,7 @@ interface OrderTransactionSummaryProps {
 export const OrderTransactionSummary: React.FC<
   OrderTransactionSummaryProps
 > = ({
+  error,
   control,
   selectedProductsValue,
   canRefundShipping,
@@ -131,6 +133,7 @@ export const OrderTransactionSummary: React.FC<
               type="number"
               value={amountField.value}
               onChange={amountField.onChange}
+              error={error}
               __width="100px"
               endAdornment={currency}
             />
