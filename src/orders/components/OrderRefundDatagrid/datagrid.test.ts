@@ -1,3 +1,4 @@
+import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import { grantedRefunds } from "@dashboard/orders/fixtures";
 import { GridCellKind } from "@glideapps/glide-data-grid";
 import { intlMock } from "@test/intl";
@@ -27,6 +28,19 @@ const mockedRefunds: DatagridRefund[] = grantedRefunds.map(refund => ({
   ...refund,
   type: "manual",
 }));
+
+const mockedManualRefund: DatagridRefund = {
+  id: "5",
+  type: "manual",
+  status: OrderGrantedRefundStatusEnum.SUCCESS,
+  amount: {
+    amount: 234.93,
+    currency: "USD",
+  },
+  reason: "Manual refund",
+  createdAt: "2022-08-22T10:40:22.226875+00:00",
+  user: null,
+};
 
 describe("Order refund datagrid", () => {
   it("presents grant refund with status draft created by user", () => {
@@ -137,6 +151,71 @@ describe("Order refund datagrid", () => {
     expect(getCellContent([3, 0])).toEqual(
       expect.objectContaining({
         data: "Products returned",
+        kind: GridCellKind.Text,
+      }),
+    );
+
+    // Date column
+    expect(getCellContent([4, 0])).toEqual(
+      expect.objectContaining({
+        data: {
+          kind: "date-cell",
+          value: "2022-08-22T10:40:22.226875+00:00",
+        },
+      }),
+    );
+
+    // Account column
+    expect(getCellContent([5, 0])).toEqual(
+      expect.objectContaining({
+        data: "",
+        kind: GridCellKind.Text,
+      }),
+    );
+  });
+  it("presents successful manual refund", () => {
+    // Arrange
+    const refunds = [mockedManualRefund];
+    const columns = useOrderRefundStaticColumns();
+
+    // Act
+    const getCellContent = createGetCellContent({
+      refunds,
+      columns,
+      currentTheme,
+      intl: intlMock,
+    });
+
+    // Assert
+
+    // Status column
+    expect(getCellContent([1, 0])).toEqual(
+      expect.objectContaining({
+        allowOverlay: true,
+        copyData: "Success",
+        data: {
+          kind: "tags-cell",
+          possibleTags: [{ tag: "Success", color: "#d7f5d7" }],
+          tags: ["Success"],
+        },
+      }),
+    );
+
+    // Amount column
+    expect(getCellContent([2, 0])).toEqual(
+      expect.objectContaining({
+        data: {
+          kind: "money-cell",
+          value: 234.93,
+          currency: "USD",
+        },
+      }),
+    );
+
+    // Reason column
+    expect(getCellContent([3, 0])).toEqual(
+      expect.objectContaining({
+        data: "Manual refund",
         kind: GridCellKind.Text,
       }),
     );
