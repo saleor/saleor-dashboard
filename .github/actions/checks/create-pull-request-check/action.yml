@@ -67,6 +67,8 @@ runs:
         }'
         )
 
+        echo $payload
+
         check_id=$(curl -L \
         -X POST \
         -H "Accept: application/vnd.github+json" \
