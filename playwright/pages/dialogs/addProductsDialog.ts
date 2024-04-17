@@ -1,8 +1,7 @@
-import { expect, Page } from "@playwright/test";
+import { BasePage } from "@pages/basePage";
+import { Page } from "@playwright/test";
 
-export class AddProductsDialog {
-  readonly page: Page;
-
+export class AddProductsDialog extends BasePage {
   constructor(
     page: Page,
     readonly productRow = page.getByTestId("product"),
@@ -14,7 +13,7 @@ export class AddProductsDialog {
     readonly assignAndSaveButton = page.getByTestId("assign-and-save-button"),
     readonly searchInput = page.getByTestId("search-query").locator("input"),
   ) {
-    this.page = page;
+    super(page)
   }
 
   async clickConfirmButton() {

@@ -138,7 +138,8 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
   await expect(permissionDetails.assignedMemberName.last()).toContainText(
     assignedMembers.names[2],
   );
-  await permissionDetails.selectAllMembers();
+  await permissionDetails.membersSection.getByTestId("select-all-checkbox")
+      .locator("input").click();;
   await permissionDetails.clickUnassignMembersButton();
   await permissionDetails.unassignMembersDialog.waitFor({
     state: "visible",

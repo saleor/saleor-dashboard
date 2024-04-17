@@ -26,31 +26,37 @@ export const ATTRIBUTES = {
       "e2e attribute to be bulk deleted 3/3",
     ],
   },
-  attributesToBeUpdated:
-    [{
-      name:
-        "e2e product attribute to be updated 1",
-      id: "QXR0cmlidXRlOjc0MA=="
+  attributesToBeUpdated: [
+    {
+      name: "e2e product attribute to be updated 1",
+      id: "QXR0cmlidXRlOjc0MA==",
     },
-    { name: "e2e content attribute to be updated 2", id: "QXR0cmlidXRlOjczOQ==" }
-    ],
+    {
+      name: "e2e content attribute to be updated 2",
+      id: "QXR0cmlidXRlOjczOQ==",
+    },
+  ],
   attributeTypesWithAbilityToAddValues: {
-    names:
-      ["DROPDOWN", "MULTISELECT", "SWATCH",]
+    names: ["DROPDOWN", "MULTISELECT", "SWATCH"],
   },
   attributeTypesWithoutAbilityToAddValues: {
-    names:
-      ["FILE",
-        "NUMERIC",
-        "RICH_TEXT",
-        "PLAIN_TEXT",
-        "BOOLEAN",
-        "DATE",
-        "DATE_TIME",]
+    names: [
+      "FILE",
+      "NUMERIC",
+      "RICH_TEXT",
+      "PLAIN_TEXT",
+      "BOOLEAN",
+      "DATE",
+      "DATE_TIME",
+    ],
   },
-  attributeReferencesEntities: { names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"] },
-  attributeToBeAssignedToPageType: { name: "Attribute to be assigned to page type" },
-}
+  attributeReferencesEntities: {
+    names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"],
+  },
+  attributeToBeAssignedToPageType: {
+    name: "Attribute to be assigned to page type",
+  },
+};
 export const VOUCHERS = {
   vouchers: {
     voucherToBeEditedWithFreeShipping: {
@@ -79,7 +85,7 @@ export const DISCOUNTS = {
   promotionToBeEdited: {
     name: "e2e promotion to be edited",
     type: "Catalog",
-    id: "UHJvbW90aW9uOjI0MGVkZGVkLWYzMTAtNGUzZi1iNTlmLTFlMGFkYWE2ZWFkYg=="
+    id: "UHJvbW90aW9uOjI0MGVkZGVkLWYzMTAtNGUzZi1iNTlmLTFlMGFkYWE2ZWFkYg==",
   },
   promotionWithoutRulesToBeDeleted: {
     id: "UHJvbW90aW9uOjRmNTQwMDc1LTZlZGMtNDI1NC1hY2U2LTQ2MzdlMGYxZWJhOA==",
@@ -93,19 +99,18 @@ export const DISCOUNTS = {
     rules: [
       {
         id: "UHJvbW90aW9uUnVsZTo3NDk4MGVhNS0zNDA2LTQxZGYtOTc3Mi1jMzg3MjNhMWEwOWM=",
-        name: "rule 1"
+        name: "rule 1",
       },
 
       {
         id: "UHJvbW90aW9uUnVsZTozMTEyMTE0Yy1hYjFkLTQ3OTktODY0My1jZDhlODMwYzllZmE=",
-        name: "rule 2"
+        name: "rule 2",
       },
 
       {
         id: "UHJvbW90aW9uUnVsZTozOWE3Zjc1Zi1jYTdmLTQ4ODgtOGE4NC02NzdjMTVhOGQ4Yjc=",
-        name: "rule 3"
-      }
-
+        name: "rule 3",
+      },
     ],
   },
   orderPromotionWithRulesToBeDeleted: {
@@ -115,19 +120,18 @@ export const DISCOUNTS = {
     rules: [
       {
         id: "UHJvbW90aW9uUnVsZTo2ZTdlODNkOS1kNjJlLTQ2YmQtOGE2ZS03OTdlYTZiODk2NmQ=",
-        name: "rule #1"
+        name: "rule #1",
       },
 
       {
         id: "UHJvbW90aW9uUnVsZTo1MzQwNjEyYy0wOWJhLTQxYzUtYmY2Yy1lYmUzZTQ3MjY0MjY=",
-        name: "rule #2"
+        name: "rule #2",
       },
 
       {
         id: "UHJvbW90aW9uUnVsZTpjMzk5ZTM1Ni04OWFhLTQ0MTUtYWE0Zi01NThlZDQ2M2IwNTM=",
-        name: "rule #3"
-      }
-
+        name: "rule #3",
+      },
     ],
   },
   orderPromotionWithRulesToBeUpdated: {
@@ -147,7 +151,7 @@ export const DISCOUNTS = {
         name: "rule 2",
         channel: "Channel-PLN",
         channelCurrency: "PLN",
-        giftRewardToBeDeleted: "UHJvZHVjdFZhcmlhbnQ6MjE0"
+        giftRewardToBeDeleted: "UHJvZHVjdFZhcmlhbnQ6MjE0",
       },
     ],
   },
@@ -183,7 +187,7 @@ export const DISCOUNTS = {
     name: "e2e Order promotion for adding rules",
     id: "UHJvbW90aW9uOjJlM2VhNDkyLTRhMTAtNDYzOS05MWVmLTc1YzQ1OTUxNGQyMQ==",
   },
-}
+};
 
 export const CUSTOMER_ADDRESS = {
   changeBillingAddress: {
@@ -222,8 +226,8 @@ export const CATEGORIES = {
   },
   e2eCategory: {
     id: "Q2F0ZWdvcnk6NTEx",
-    name: "e2e category"
-  }
+    name: "e2e category",
+  },
 };
 export const COLLECTIONS = {
   collectionToBeUpdated: {
@@ -235,8 +239,8 @@ export const COLLECTIONS = {
   },
   e2eCollection: {
     id: "Q29sbGVjdGlvbjoxNjc=",
-    name: "e2e collection"
-  }
+    name: "e2e collection",
+  },
 };
 export const COUNTRIES = {
   afghanistan: {
@@ -286,7 +290,7 @@ export const GIFT_CARDS = {
   },
   giftCardsToBeDeleted: {
     names: ["to be deleted 1/2", "to be deleted 2/2"],
-    last4: ["5EE6", "9E39"]
+    last4: ["5EE6", "9E39"],
   },
   giftCardToBeActivated: {
     id: "R2lmdENhcmQ6NTQ%3D",
@@ -338,11 +342,11 @@ export const PRODUCTS = {
   },
   e2eProduct1: {
     id: "UHJvZHVjdDo3OQ==",
-    name: "Bean Juice"
+    name: "Bean Juice",
   },
   e2eProduct2: {
     id: "UHJvZHVjdDoxMTU=",
-    name: "Black Hoodie"
+    name: "Black Hoodie",
   },
   productAvailableOnlyInPlnChannel: {
     id: "UHJvZHVjdDo3NjM%3D",
@@ -508,8 +512,8 @@ export const APPS = {
     id: "QXBwOjcw",
     name: "Saleor QA App",
     info: "App used in delete app test",
-  }
-}
+  },
+};
 
 export const TRANSLATIONS = {
   translationsToBeAdded: {
@@ -526,38 +530,68 @@ export const TRANSLATIONS = {
     id: "Q29sbGVjdGlvbjox",
     name: "Summer collection",
     info: "Translation used in clear translation test",
-  }
-}
+  },
+};
 
+export const NAVIGATION_ITEMS = {
+  navigationMenuToBeUpdated: {
+    name: "e2e-menu-to-be-updated",
+    id: "TWVudTozNQ==",
+    menuItems: [
+      { name: "e2e-menu-item-to-be-updated", link: "Groceries" },
+      { name: "e2e-menu-item-to-be-deleted", link: "Accessories" },
+    ],
+  },
+  navigationMenuToBeDeletedFromList: {
+    id: "TWVudTozOQ==",
+    name: "e2e-menu-to-be-deleted-from-list",
+  },
+  navigationMenuToBeDeletedFromDetailsView: {
+    id: "TWVudTo0MA==",
+    name: "e2e-menu-to-be-deleted-from-details-view",
+  },
+  navigationMenusToBeBulkDeleted: {
+    names: [
+      "e2e-menu-to-be-bulk-deleted 1/2",
+      "e2e-menu-to-be-bulk-deleted 2/2",
+    ],
+  },
+};
 
 export const PERMISSION_GROUPS = {
   permissionGroupToBeEdited: {
     id: "R3JvdXA6MTEx",
     name: "e2e_permission_group_to_be_updated",
     assignedMembers: {
-      names: ["e2e_permission_group_member_1 test", "e2e_permission_group_member_2 test", "e2e_permission_group_member_3 test"]
+      names: [
+        "e2e_permission_group_member_1 test",
+        "e2e_permission_group_member_2 test",
+        "e2e_permission_group_member_3 test",
+      ],
     },
-    assignedPermissions: { names: ["MANAGE_PRODUCTS", "MANAGE_PLUGINS", "MANAGE_STAFF"] },
+    assignedPermissions: {
+      names: ["MANAGE_PRODUCTS", "MANAGE_PLUGINS", "MANAGE_STAFF"],
+    },
   },
   permissionGroupToBeDeleted: {
     id: "R3JvdXA6MTEw",
-    name: "e2e_permission_group_to_be_deleted"
+    name: "e2e_permission_group_to_be_deleted",
   },
   permissionGroupMembers: [
     {
       name: "e2e_permission_group_member_1 test",
-      email: "e2e_permission_group_member_1@grr.la"
+      email: "e2e_permission_group_member_1@grr.la",
     },
     {
       name: "e2e_permission_group_member_2 test",
-      email: "e2e_permission_group_member_2@grr.la"
+      email: "e2e_permission_group_member_2@grr.la",
     },
     {
       name: "e2e_permission_group_member_3 test",
-      email: "e2e_permission_group_member_3@grr.la"
-    }
-  ]
-}
+      email: "e2e_permission_group_member_3@grr.la",
+    },
+  ],
+};
 
 export const PAGE_TYPES = {
   pageTypeToBeEdited: {
@@ -575,9 +609,9 @@ export const PAGE_TYPES = {
       "a page type to be bulk deleted 1/2",
       "a page type to be bulk deleted 2/2",
     ],
-    ids: ["UGFnZVR5cGU6MzY=", "UGFnZVR5cGU6Mzc="]
+    ids: ["UGFnZVR5cGU6MzY=", "UGFnZVR5cGU6Mzc="],
   },
-}
+};
 export const PRODUCT_TYPES = {
   productTypeToBeEdited: {
     id: "UHJvZHVjdFR5cGU6Njk4",
@@ -594,6 +628,6 @@ export const PRODUCT_TYPES = {
       "a product type to be bulk deleted 1/2",
       "a product type to be bulk deleted 2/2",
     ],
-    ids: ["UHJvZHVjdFR5cGU6NzAw", "UHJvZHVjdFR5cGU6NzAx"]
+    ids: ["UHJvZHVjdFR5cGU6NzAw", "UHJvZHVjdFR5cGU6NzAx"],
   },
-}
+};

@@ -5,7 +5,6 @@ import { DeleteAttributeDialog } from "@pages/dialogs/deleteAttributeDialog";
 import { DeleteAttributeValueDialog } from "@pages/dialogs/deleteAttributeValueDialog";
 import { EditAttributeValueDialog } from "@pages/dialogs/editAttributeValueDialog";
 
-
 import type { Page } from "@playwright/test";
 import { URL_LIST } from "@data/url";
 
@@ -34,29 +33,48 @@ export class AttributesPage extends BasePage {
     readonly attributeCodeInput = page
       .getByTestId("attribute-code-input")
       .locator("input"),
-    readonly bulkDeleteAttributesDialog = page.getByTestId("attribute-bulk-delete-dialog"),
-    readonly deleteSingleAttributeDialog = page.getByTestId("delete-single-attr-dialog"),
+    readonly bulkDeleteAttributesDialog = page.getByTestId(
+      "attribute-bulk-delete-dialog",
+    ),
+    readonly deleteSingleAttributeDialog = page.getByTestId(
+      "delete-single-attr-dialog",
+    ),
     readonly dialog = page.getByRole("dialog"),
-    readonly deleteAttributeValueButton = page.getByTestId("delete-attribute-value-button"),
+    readonly deleteAttributeValueButton = page.getByTestId(
+      "delete-attribute-value-button",
+    ),
     readonly attributeValueRows = page.getByTestId("attributes-rows"),
     readonly attributeValueName = page.getByTestId("attribute-value-name"),
-    readonly deleteAttrValueDialog = page.getByTestId("delete-attribute-value-dialog"),
-    readonly editAttrValueDialog = page.getByTestId("edit-attribute-value-dialog"),
+    readonly deleteAttrValueDialog = page.getByTestId(
+      "delete-attribute-value-dialog",
+    ),
+    readonly editAttrValueDialog = page.getByTestId(
+      "edit-attribute-value-dialog",
+    ),
     readonly attrValuesSection = page.getByTestId("attribute-values-section"),
-    readonly attrEntityTypeSelect = page.locator(`[id="mui-component-select-entityType"]`),
-    readonly attrVisibleInStorefrontSwitch = page.locator(`[name = "visibleInStorefront"]`),
-    readonly metadataSectionAccordionButton = page.getByTestId("metadata-item").getByTestId("expand"),
-    readonly metadataAddFieldButton = page.getByTestId("metadata-item").getByTestId("add-field"),
+    readonly attrEntityTypeSelect = page.locator(
+      `[id="mui-component-select-entityType"]`,
+    ),
+    readonly attrVisibleInStorefrontSwitch = page.locator(
+      `[name = "visibleInStorefront"]`,
+    ),
+    readonly metadataSectionAccordionButton = page
+      .getByTestId("metadata-item")
+      .getByTestId("expand"),
+    readonly metadataAddFieldButton = page
+      .getByTestId("metadata-item")
+      .getByTestId("add-field"),
     readonly metadataKeyInput = page.getByTestId("metadata-key-input").first(),
-    readonly metadataValueInput = page.getByTestId("metadata-value-input").first(),
+    readonly metadataValueInput = page
+      .getByTestId("metadata-value-input")
+      .first(),
   ) {
-    super(page)
+    super(page);
     this.addValueDialog = new AddValueDialog(page);
     this.deleteAttributesInBulkDialog = new DeleteAttributesInBulkDialog(page);
     this.deleteAttributeDialog = new DeleteAttributeDialog(page);
     this.deleteAttributeValueDialog = new DeleteAttributeValueDialog(page);
     this.editAttributeValueDialog = new EditAttributeValueDialog(page);
-
   }
 
   async gotoListView() {
@@ -70,39 +88,34 @@ export class AttributesPage extends BasePage {
       timeout: 10000,
     });
   }
-async assertSearchResultsVisibility(searchText:string) {
-    // Wait for all elements containing searchText to appear
-    const elements = await this.page.$$('text=' + searchText);
-
-    // Wait for all elements not containing searchText to disappear
-    const otherElements = await this.page.$$('text!=' + searchText);
-
-    // Assert that all elements containing searchText are visible
+  async assertSearchResultsVisibility(searchText: string) {
+    const elements = await this.page.$$("text=" + searchText);
+    const otherElements = await this.page.$$("text!=" + searchText);
     for (const element of elements) {
-        await element.waitForElementState('visible');
+      await element.waitForElementState("visible");
     }
-
-    // Assert that all elements not containing searchText are not visible
     for (const element of otherElements) {
-        await element.waitForElementState('hidden');
+      await element.waitForElementState("hidden");
     }
-}
+  }
   async searchForAttribute(attributeName: string) {
     await this.searchInputListView.click();
-
   }
   async gotoExistingAttributePage(attributeId: string, attributeName: string) {
     const existingAttributeUrl = `${URL_LIST.attributes}${attributeId}`;
-      await console.log(
-        `Navigates to existing attribute page: ${existingAttributeUrl}`,
-      );
+    await console.log(
+      `Navigates to existing attribute page: ${existingAttributeUrl}`,
+    );
     await this.page.goto(existingAttributeUrl);
 
     await this.pageHeader.getByText(attributeName).waitFor({
       state: "visible",
       timeout: 30000,
     });
-    }
+  }
+  async clickFirstCheckbox(){
+    this.page.getByRole("checkbox").first().click();
+  }
   async clickCreateAttributeButton() {
     await this.createAttributeButton.click();
   }
@@ -126,7 +139,10 @@ async assertSearchResultsVisibility(searchText:string) {
     await this.assignAttributeValueButton.click();
   }
   async clickDeleteAttrValueButton(attrName: string) {
-    await this.attributeValueRows.filter({ hasText: attrName }).locator(this.deleteAttributeValueButton).click();
+    await this.attributeValueRows
+      .filter({ hasText: attrName })
+      .locator(this.deleteAttributeValueButton)
+      .click();
   }
   async clickOnExistingAttrValue(attrName: string) {
     await this.attributeValueRows.filter({ hasText: attrName }).click();
