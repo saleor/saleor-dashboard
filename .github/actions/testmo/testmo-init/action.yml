@@ -7,6 +7,9 @@ inputs:
   testmoToken:
     description: "Testmo token"
     required: true
+  testmoRunName:
+    description: "Displayed name in testmo"
+    required: true
 outputs:
   testmo-run-id:
     description: "Testmo run id"
@@ -29,10 +32,11 @@ runs:
         ID=$(npx testmo automation:run:create \
           --instance "$TESTMO_URL" \
           --project-id 1 \
-          --name "Deployment tests" \
+          --name "$RUN_NAME" \
           --source frontend-e2e-tests)
         echo "TESTMO_RUN_ID=$ID" >> $GITHUB_OUTPUT
       env:
         TESTMO_URL: ${{ inputs.testmoUrl }}
         TESTMO_TOKEN: ${{ inputs.testmoToken }}
+        RUN_NAME: ${{inputs.testmoRunName}}
       id: run-tests

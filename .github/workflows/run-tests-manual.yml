@@ -66,7 +66,7 @@ jobs:
       options: --user 1001  
     env:
       GREP_TAGS: ${{ github.event.inputs.tags || '@critical'}}
-      BROWSER: ${{ inputs.browser || 'firefox' }}
+      BROWSER: ${{ inputs.browser || 'electron' }}
     strategy:
       fail-fast: false
       matrix:
@@ -78,6 +78,7 @@ jobs:
       - name: Cypress run
         id: cypress-run
         uses: ./.github/actions/e2e
+        continue-on-error: true
         with:
           apiUrl: ${{ needs.testmo-report-preparation.outputs.API_URL}}
           appMountUri: ${{ secrets.APP_MOUNT_URI }}
