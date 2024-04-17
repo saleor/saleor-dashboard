@@ -33,6 +33,7 @@ const MenuProperties: React.FC<MenuPropertiesProps> = ({
       />
       <CardContent>
         <TextField
+          data-test-id="menu-name"
           disabled={disabled}
           error={!!formErrors.name}
           name={"name" as keyof MenuDetailsFormData}

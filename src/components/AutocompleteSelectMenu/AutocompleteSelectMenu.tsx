@@ -149,7 +149,11 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                 value={inputValue}
               />
               {isOpen && (
-                <Paper className={classes.paper} square>
+                <Paper
+                  data-test-id="menu-link-options"
+                  className={classes.paper}
+                  square
+                >
                   {options.length ? (
                     <>
                       {menuPath.length > 0 && (

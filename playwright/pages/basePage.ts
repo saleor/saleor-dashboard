@@ -32,6 +32,9 @@ export class BasePage {
     readonly searchInputListView = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
     readonly dialog = page.getByRole("dialog"),
+    readonly selectAllCheckbox = page
+      .getByTestId("select-all-checkbox")
+      .locator("input"),
   ) {
     this.page = page;
   }
@@ -46,9 +49,11 @@ export class BasePage {
 
     return cellText;
   }
-
+  async selectAll() {
+    await this.selectAllCheckbox.click();
+  }
   async clickPaginationRowNumberOption(value: string) {
-    await this.rowNumberOption.filter({hasText: value}).click();
+    await this.rowNumberOption.filter({ hasText: value }).click();
   }
 
   async clickFilterButton() {
@@ -141,17 +146,17 @@ export class BasePage {
   async clickOnSpecificPositionOnPage(x: number, y: number) {
     await this.page.mouse.click(x, y);
   }
-  async waitForNetworkIdle(action: () => Promise<void>) {
-    const responsePromise = this.page.waitForResponse('**/graphql/');
+  async waitForNetworkIdle(action: () => Promise<void>,timeoutMs: number = 50000) {
+    const responsePromise = this.page.waitForResponse("**/graphql/",{ timeout: timeoutMs });
     await action();
     await responsePromise;
   }
   async resizeWindow(w: number, h: number) {
-    await this.page.setViewportSize({width: w, height: h,});
+    await this.page.setViewportSize({ width: w, height: h });
   }
-  async clickOnSpecificPositionOnPage(x:number, y: number){
-    await this.page.mouse.click(x,y)
-}
+  async clickOnSpecificPositionOnPage(x: number, y: number) {
+    await this.page.mouse.click(x, y);
+  }
 
   async getRandomInt(max: number) {
     return Math.floor(Math.random() * (max + 1));
@@ -321,6 +326,6 @@ export class BasePage {
     return gridRowsWithText;
   }
   async waitForDOMToFullyLoad() {
-    await this.page.waitForLoadState('domcontentloaded', { timeout: 70000 });
+    await this.page.waitForLoadState("domcontentloaded", { timeout: 70000 });
   }
 }

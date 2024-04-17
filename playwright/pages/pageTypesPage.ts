@@ -20,6 +20,7 @@ export class PageTypesPage extends BasePage {
     readonly rowCheckbox = page.getByTestId("checkbox"),
     readonly assignAttributesButton = page.getByTestId("assign-attributes"),
     readonly pageAttributes = page.getByTestId("page-attributes"),
+    readonly confirmRemovalButton = page.getByTestId("confirm-delete"),
   ) {
     super(page);
     this.page = page;
@@ -35,7 +36,9 @@ export class PageTypesPage extends BasePage {
   async gotoPageTypeListPage() {
     await this.page.goto(URL_LIST.pageTypes);
   }
-
+async clickConfirmRemovalButton() {
+  await this.confirmRemovalButton.click();
+}
   async clickCreatePageTypeButton() {
     await this.createPageTypeButton.click();
   }
