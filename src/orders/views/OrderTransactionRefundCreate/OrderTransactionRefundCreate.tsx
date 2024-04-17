@@ -1,11 +1,11 @@
 import {
-  OrderGrantRefundCreateErrorFragment,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundAddMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import OrderTransactionRefundPage, {
+  OrderTransactionRefundError,
   OrderTransactionRefundPageFormData,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
@@ -21,9 +21,9 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
   const notify = useNotifier();
   const navigate = useNavigator();
 
-  const [linesErrors, setLinesErrors] = useState<
-    OrderGrantRefundCreateErrorFragment[]
-  >([]);
+  const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>(
+    [],
+  );
 
   const { data, loading } = useOrderDetailsGrantRefundQuery({
     displayLoader: true,
@@ -75,8 +75,15 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
 
     const errors = result.data?.orderGrantRefundCreate?.errors;
 
-    if (errors.length) {
-      setLinesErrors(errors);
+    if (errors?.length) {
+      setLinesErrors(
+        errors.map(err => ({
+          code: err.code,
+          field: err.field,
+          lines: err.lines,
+          message: err.message,
+        })) as OrderTransactionRefundError[],
+      );
     }
   };
 

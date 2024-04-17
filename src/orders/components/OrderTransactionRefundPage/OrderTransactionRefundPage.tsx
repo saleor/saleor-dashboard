@@ -40,11 +40,14 @@ import {
   useRecalculateTotalAmount,
 } from "./utils";
 
-interface OrderTransactionRefundError {
+export interface OrderTransactionRefundError {
   field: string;
   message: string;
+  code: string;
   lines: Array<{
     field: string;
+    message: string;
+    code: string;
     lineId: string;
   }>;
 }
@@ -90,8 +93,8 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const intl = useIntl();
 
   const datagridErrors: OrderRefundTransactionDatagridError[] = errors
-    .filter(err => err.field === "lines")
-    .flatMap(error => error.lines)
+    .filter(err => err.field === "lines" || err.field === "addLines")
+    .flatMap(error => error?.lines)
     .filter(Boolean);
 
   const amountError = errors.find(error => error.field === "amount");

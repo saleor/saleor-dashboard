@@ -53,7 +53,7 @@ const getRefundEditDefaultValues = (
   };
 };
 
-const getRefundEditOrderLinesToRefund = (
+export const getRefundEditOrderLinesToRefund = (
   order: OrderDetailsGrantRefundFragment | undefined | null,
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined,
 ) => {

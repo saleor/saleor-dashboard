@@ -4,16 +4,16 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useForm } from "react-hook-form";
 
 import {
+  LineToRefund,
   OrderTransactionRefundPageFormData,
-  QuantityToRefund,
 } from "./OrderTransactionRefundPage";
 import {
   canRefundShipping,
   createSetMaxQty,
   getMaxQtyToRefund,
-  getRefundEditOrderQty,
+  getRefundEditOrderLinesToRefund,
   getSelectedProductsValue,
-  handleQtyToRefundChange,
+  handleLinesToRefundChange,
   useRecalculateTotalAmount,
   validateQty,
   ValidateQtyParams,
@@ -101,7 +101,7 @@ describe("createSetMaxQty", () => {
     const params = {
       order: null,
       draftRefund: undefined,
-      qtyToRefund: [],
+      linesToRefund: [],
       setValue,
     };
 
@@ -128,7 +128,7 @@ describe("createSetMaxQty", () => {
         grantedRefunds: [],
       } as unknown as OrderDetailsGrantRefundFragment,
       draftRefund: undefined,
-      qtyToRefund: [],
+      linesToRefund: [],
       setValue,
     };
     const setMaxQty = createSetMaxQty(params);
@@ -154,7 +154,7 @@ describe("getSelectedProductsValue", () => {
   it("returns 0 when qtyToRefund or order is not provided", () => {
     // Arrange
     const params = {
-      qtyToRefund: [],
+      linesToRefund: [],
       order: null,
     };
 
@@ -167,16 +167,19 @@ describe("getSelectedProductsValue", () => {
 
   it("returns the total value of selected products", () => {
     // Arrange
-    const qtyToRefund = [
+    const linesToRefund = [
       {
         row: 0,
-        value: 2,
+        quantity: 2,
+        reason: "",
       },
       {
         row: 1,
-        value: 3,
+        quantity: 3,
+        reason: "",
       },
-    ] as QuantityToRefund[];
+    ] as LineToRefund[];
+
     const order = {
       lines: [
         {
@@ -198,7 +201,7 @@ describe("getSelectedProductsValue", () => {
 
     // Act
     const result = getSelectedProductsValue({
-      qtyToRefund,
+      linesToRefund,
       order,
     });
 
@@ -213,7 +216,7 @@ describe("useRecalculateTotalAmount", () => {
     const { result } = renderHook(() =>
       useForm({
         defaultValues: {
-          qtyToRefund: [] as QuantityToRefund[],
+          linesToRefund: [] as LineToRefund[],
           amount: 5,
           transactionId: "",
           includeShipping: true,
@@ -234,10 +237,11 @@ describe("useRecalculateTotalAmount", () => {
         },
       } as unknown as OrderDetailsGrantRefundFragment,
       selectedProductsValue: 20,
-      qtyToRefund: [
+      linesToRefund: [
         {
           row: 0,
-          value: 2,
+          quantity: 2,
+          reason: "",
         },
       ],
       isFormDirty: true,
@@ -255,7 +259,7 @@ describe("useRecalculateTotalAmount", () => {
     const { result } = renderHook(() =>
       useForm({
         defaultValues: {
-          qtyToRefund: [] as QuantityToRefund[],
+          linesToRefund: [] as LineToRefund[],
           amount: 5,
           transactionId: "",
           includeShipping: true,
@@ -270,10 +274,11 @@ describe("useRecalculateTotalAmount", () => {
       includeShipping: false,
       order: null,
       selectedProductsValue: 20,
-      qtyToRefund: [
+      linesToRefund: [
         {
           row: 0,
-          value: 2,
+          quantity: 2,
+          reason: "",
         },
       ],
       isFormDirty: true,
@@ -339,20 +344,20 @@ describe("validateQty", () => {
   });
 });
 
-describe("handleQtyToRefundChange", () => {
+describe("handleLinesToRefundChange", () => {
   it("does nothing when currentUpdate is not provided", () => {
     // Arrange
     const setValue = jest.fn();
     const params = {
       data: { currentUpdate: null } as unknown as DatagridChangeOpts,
-      qtyToRefund: [],
+      linesToRefund: [],
       order: null,
       draftRefund: undefined,
       setValue,
     };
 
     // Act
-    handleQtyToRefundChange(params);
+    handleLinesToRefundChange(params);
 
     // Assert
     expect(setValue).not.toHaveBeenCalled();
@@ -365,14 +370,16 @@ describe("handleQtyToRefundChange", () => {
       data: {
         currentUpdate: { row: 0, data: { value: "5" } },
       } as DatagridChangeOpts,
-      qtyToRefund: [
+      linesToRefund: [
         {
           row: 0,
-          value: 2,
+          quantity: 2,
+          reason: "",
         },
         {
           row: 1,
-          value: 3,
+          quantity: 3,
+          reason: "",
         },
       ],
       order: {
@@ -389,7 +396,7 @@ describe("handleQtyToRefundChange", () => {
     };
 
     // Act
-    handleQtyToRefundChange(params);
+    handleLinesToRefundChange(params);
 
     // Assert
     expect(setValue).toHaveBeenCalledWith(
@@ -483,14 +490,14 @@ describe("canRefundShipping", () => {
   });
 });
 
-describe("getRefundEditOrderQty", () => {
+describe("getRefundEditOrderLinesToRefund", () => {
   it("returns undefined when order is not provided", () => {
     // Arrange
     const order = null;
     const draftRefund = undefined;
 
     // Act
-    const result = getRefundEditOrderQty(order, draftRefund);
+    const result = getRefundEditOrderLinesToRefund(order, draftRefund);
 
     // Assert
     expect(result).toBeUndefined();
@@ -526,7 +533,7 @@ describe("getRefundEditOrderQty", () => {
     } as unknown as OrderDetailsGrantRefundFragment["grantedRefunds"][0];
 
     // Act
-    const result = getRefundEditOrderQty(order, draftRefund);
+    const result = getRefundEditOrderLinesToRefund(order, draftRefund);
 
     // Assert
     expect(result).toEqual([

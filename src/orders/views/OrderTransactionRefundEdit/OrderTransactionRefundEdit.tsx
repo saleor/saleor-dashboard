@@ -9,10 +9,11 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import OrderTransactionRefundPage, {
+  OrderTransactionRefundError,
   OrderTransactionRefundPageFormData,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
+import React, { useState } from "react";
 
 interface OrderTransactionRefundProps {
   orderId: string;
@@ -23,9 +24,12 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
   orderId,
   refundId,
 }) => {
-  //   const intl = useIntl();
   const notify = useNotifier();
   const navigate = useNavigator();
+
+  const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>(
+    [],
+  );
 
   const { data, loading } = useOrderDetailsGrantRefundQuery({
     displayLoader: true,
@@ -83,19 +87,30 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
         return acc;
       }, []) ?? [];
 
-    extractMutationErrors(
-      updateRefund({
-        variables: {
-          refundId,
-          amount,
-          reason,
-          addLines: toAdd,
-          removeLines: toRemove,
-          grantRefundForShipping: includeShipping,
-          transactionId,
-        },
-      }),
-    );
+    const result = await updateRefund({
+      variables: {
+        refundId,
+        amount,
+        reason,
+        addLines: toAdd,
+        removeLines: toRemove,
+        grantRefundForShipping: includeShipping,
+        transactionId,
+      },
+    });
+
+    const errors = result.data?.orderGrantRefundUpdate?.errors;
+
+    if (errors?.length) {
+      setLinesErrors(
+        errors.map(err => ({
+          code: err.code,
+          field: err.field,
+          message: err.message,
+          lines: err.addLines,
+        })) as OrderTransactionRefundError[],
+      );
+    }
   };
 
   const draftRefund:
@@ -136,6 +151,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
 
   return (
     <OrderTransactionRefundPage
+      errors={linesErrors}
       disabled={loading}
       order={data?.order}
       draftRefund={draftRefund}
