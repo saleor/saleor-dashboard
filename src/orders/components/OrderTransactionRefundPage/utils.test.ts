@@ -114,7 +114,7 @@ describe("createSetMaxQty", () => {
     expect(setValue).not.toHaveBeenCalled();
   });
 
-  it("updates the qtyToRefund form value", () => {
+  it("updates the linesToRefund form value", () => {
     // Arrange
     const setValue = jest.fn();
     const params = {
@@ -138,11 +138,12 @@ describe("createSetMaxQty", () => {
 
     // Assert
     expect(setValue).toHaveBeenCalledWith(
-      "qtyToRefund",
+      "linesToRefund",
       [
         {
           row: 0,
-          value: 10, // max quantity to refund for row 0
+          quantity: 10, // max quantity to refund for row 0
+          reason: "",
         },
       ],
       { shouldDirty: true },
@@ -151,7 +152,7 @@ describe("createSetMaxQty", () => {
 });
 
 describe("getSelectedProductsValue", () => {
-  it("returns 0 when qtyToRefund or order is not provided", () => {
+  it("returns 0 when linesToRefund or order is not provided", () => {
     // Arrange
     const params = {
       linesToRefund: [],
@@ -363,7 +364,7 @@ describe("handleLinesToRefundChange", () => {
     expect(setValue).not.toHaveBeenCalled();
   });
 
-  it("updates the qtyToRefund form value", () => {
+  it("updates the linesToRefund form value", () => {
     // Arrange
     const setValue = jest.fn();
     const params = {
@@ -400,15 +401,18 @@ describe("handleLinesToRefundChange", () => {
 
     // Assert
     expect(setValue).toHaveBeenCalledWith(
-      "qtyToRefund",
+      "linesToRefund",
       [
         {
           row: 1,
-          value: 3,
+          quantity: 3,
+          reason: "",
         },
         {
           row: 0,
-          value: 5, // updated value
+          quantity: 5, // updated value
+          reason: "",
+          isDirty: true,
         },
       ],
       { shouldDirty: true },
@@ -539,11 +543,13 @@ describe("getRefundEditOrderLinesToRefund", () => {
     expect(result).toEqual([
       {
         row: 0,
-        value: 2,
+        quantity: 2,
+        reason: "",
       },
       {
         row: 1,
-        value: 3,
+        quantity: 3,
+        reason: "",
       },
     ]);
   });
