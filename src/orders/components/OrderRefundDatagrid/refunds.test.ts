@@ -12,7 +12,7 @@ describe("manualRefundsExtractor", () => {
 
   it("returns undefined when order is not provided", () => {
     // Arrange
-    const order: OrderDetailsFragment = undefined;
+    const order = undefined;
 
     // Act
     const result = manualRefundsExtractor(order, intl);
