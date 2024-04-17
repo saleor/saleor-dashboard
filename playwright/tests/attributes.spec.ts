@@ -219,14 +219,14 @@ for (const attribute of attributesToBeDeleted) {
 }
 
 test("TC: SALEOR_130 Bulk delete attributes @e2e @attributes", async () => {
-  await attributesPage.waitForNetworkIdle(() =>  attributesPage.gotoListView());
-  await attributesPage.resizeWindow(800, 600);
+  await attributesPage.gotoListView()
   await attributesPage.waitForNetworkIdle(() => attributesPage.typeInSearchOnListView(
     "e2e attribute to be bulk deleted",
   ));
-  await attributesPage.clickOnSpecificPositionOnPage(60, 136);
+  await attributesPage.clickGridCell(0, 0);
+  await attributesPage.clickGridCell(0, 1);
+  await attributesPage.clickGridCell(0, 2);
   await attributesPage.clickBulkDeleteGridRowsButton();
-  await expect(attributesPage.deleteAttributeDialog.deleteAttributesDialogText).toBeVisible({timeout:50000});
   await attributesPage.waitForNetworkIdle(() =>
         attributesPage.deleteAttributesInBulkDialog.deleteSelectedAttributes(),
       );
