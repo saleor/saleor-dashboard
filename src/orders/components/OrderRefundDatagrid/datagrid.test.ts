@@ -3,7 +3,7 @@ import { GridCellKind } from "@glideapps/glide-data-grid";
 import { intlMock } from "@test/intl";
 
 import { createGetCellContent, useOrderRefundStaticColumns } from "./datagrid";
-import { DatagridRefund } from "./utils";
+import { DatagridRefund } from "./refunds";
 
 const currentTheme = "defaultLight";
 

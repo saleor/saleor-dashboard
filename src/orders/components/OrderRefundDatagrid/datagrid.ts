@@ -20,11 +20,8 @@ import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { refundGridMessages } from "./messages";
-import {
-  DatagridRefund,
-  getGrantedRefundStatus,
-  getGrantedRefundStatusMessage,
-} from "./utils";
+import { DatagridRefund } from "./refunds";
+import { getGrantedRefundStatus, getGrantedRefundStatusMessage } from "./utils";
 
 const useOrderRefundConstantColumns = () => {
   const intl = useIntl();

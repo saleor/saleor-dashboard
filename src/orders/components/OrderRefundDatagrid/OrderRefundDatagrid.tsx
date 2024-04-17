@@ -24,12 +24,8 @@ import {
   useOrderRefundStaticColumns,
 } from "./datagrid";
 import { refundGridMessages } from "./messages";
-import {
-  getNotEditabledRefundMessage,
-  isRefundEditable,
-  manualRefundsExtractor,
-  mergeRefunds,
-} from "./utils";
+import { manualRefundsExtractor, mergeRefunds } from "./refunds";
+import { getNotEditabledRefundMessage, isRefundEditable } from "./utils";
 
 interface OrderRefundDatagridProps {
   orderId: string;
