@@ -226,6 +226,7 @@ test("TC: SALEOR_130 Bulk delete attributes @e2e @attributes", async () => {
   ));
   await attributesPage.clickOnSpecificPositionOnPage(60, 136);
   await attributesPage.clickBulkDeleteGridRowsButton();
+  await expect(attributesPage.deleteAttributeDialog.deleteAttributesDialogText).toBeVisible({timeout:50000});
   await attributesPage.waitForNetworkIdle(() =>
         attributesPage.deleteAttributesInBulkDialog.deleteSelectedAttributes(),
       );
