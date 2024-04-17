@@ -88,7 +88,7 @@ jobs:
           split: ${{ strategy.job-total }}
           splitIndex: ${{ strategy.job-index }}
           commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
-          install: false
+          install: true
           browser: ${{ env.BROWSER }}
 
       - name: Testmo threads submit
