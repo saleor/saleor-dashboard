@@ -188,7 +188,6 @@
     "mochawesome-report-generator": "^6.2.0",
     "playwright-testmo-reporter": "^1.8.4",
     "regenerator-runtime": "^0.11.1",
-    "register-service-worker": "^1.7.2",
     "require-context.macro": "^1.1.1",
     "rimraf": "^3.0.0",
     "rollup-plugin-polyfill-node": "^0.11.0",
