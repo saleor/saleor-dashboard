@@ -4,6 +4,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { transactionRefundTilesMessages } from "./messages";
+import { TileHeaderMoney } from "./TileHeaderMoney";
 
 interface TileHeaderProps {
   transaction: TransactionItemFragment;
@@ -25,7 +26,7 @@ export const TileHeader: React.FC<TileHeaderProps> = ({
       display="grid"
       __gridTemplateColumns="max-content 1fr"
     >
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
         <Text
           size={5}
           fontWeight="medium"
@@ -40,7 +41,8 @@ export const TileHeader: React.FC<TileHeaderProps> = ({
             transaction.name
           )}
         </Text>
-        {/* TODO: Need to use radix to make whole row clickable */}
+
+        <TileHeaderMoney transaction={transaction} />
       </Box>
     </RadioGroup.Item>
   );
