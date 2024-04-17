@@ -1,0 +1,147 @@
+name: Run test manually
+run-name: Run cypress tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        required: true
+        description: "Select tests to run"
+        default: "@allEnv"
+        type: choice
+        options:
+          - "@allEnv"
+          - "@critical"
+          - "@stable"
+          - "@oldRelease"
+      browser:
+        required: true
+        description: "Browser"
+        default: "electron"
+        type: choice
+        options:
+          - electron
+          - firefox
+          - all
+
+  push:
+
+jobs:
+
+  testmo-report-preparation:
+    runs-on: ubuntu-22.04
+    outputs:
+      TESTMO_RUN_ID: ${{ steps.init-testmo.outputs.testmo-run-id }}
+      BASE_URL: ${{ steps.set_variables.outputs.BASE_URL }}
+      API_URL: ${{ steps.set_variables.outputs.API_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set variables
+        id: set_variables
+        run: |
+          CURRENT_BRANCH=$(echo "${GITHUB_REF}" | sed "s/refs\/heads\///")
+          VERSION_SLUG=$(echo "${CURRENT_BRANCH}" | sed "s/\.//")
+
+          echo "BASE_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
+          echo "API_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
+
+      - uses: ./.github/actions/testmo/testmo-init
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunName: "Cypress run ${{ github.ref_name }}"
+        id: init-testmo
+
+  run-tests-in-parallel:
+    needs: testmo-report-preparation
+    runs-on: ubuntu-22.04
+    container: 
+      image: cypress/browsers:node18.12.0-chrome106-ff106
+      options: --user 1001  
+    env:
+      GREP_TAGS: ${{ github.event.inputs.tags || '@critical'}}
+      BROWSER: ${{ inputs.browser || 'firefox' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4, 5, 6]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cypress run
+        id: cypress-run
+        uses: ./.github/actions/e2e
+        with:
+          apiUrl: ${{ needs.testmo-report-preparation.outputs.API_URL}}
+          appMountUri: ${{ secrets.APP_MOUNT_URI }}
+          baseUrl: ${{ needs.testmo-report-preparation.outputs.BASE_URL}}
+          userName: ${{ secrets.CYPRESS_USER_NAME }}
+          secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          permissionsUserPassword: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          mailpitUrl: ${{ secrets.CYPRESS_MAILPITURL }}
+          stripeSecretKey: ${{ secrets.STRIPE_SECRET_KEY }}
+          stripePublicKey: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          cypressGrepTags: ${{ env.GREP_TAGS }}
+          split: ${{ strategy.job-total }}
+          splitIndex: ${{ strategy.job-index }}
+          commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
+          install: false
+          browser: ${{ env.BROWSER }}
+
+      - name: Testmo threads submit
+        uses: ./.github/actions/testmo/testmo-threads-submit
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.testmo-report-preparation.outputs.TESTMO_RUN_ID }}
+      
+
+  post-tests-results:
+    defaults:
+      run:
+        shell: bash
+        working-directory: .github/workflows
+    runs-on: ubuntu-22.04
+    needs: [run-tests-in-parallel, testmo-report-preparation]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - uses: ./.github/actions/combineReportsFromE2E
+
+      - name: complete testmo report
+        uses: ./.github/actions/testmo/testmo-finish
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.testmo-report-preparation.outputs.TESTMO_RUN_ID }}
+
+      - name: send message on slack
+        working-directory: ".github"
+        env:
+          run_id: ${{ needs.testmo-report-preparation.outputs.TESTMO_RUN_ID }}
+          url_to_action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          testmo_token: ${{ secrets.TESTMO_TOKEN }}
+          environment: ${{ needs.testmo-report-preparation.outputs.BASE_URL }}
+          slack_webhook_url: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
+          ref_name: ${{github.ref_name}}
+
+        run: |
+          node workflows/postTestsResults.js \
+          --run_id "$run_id" \
+          --testmo_token "$testmo_token" \
+          --slack_webhook_url "$slack_webhook_url" \
+          --environment "$environment" \
+          --url_to_action "$url_to_action" \
+          --ref_name "$ref_name"
