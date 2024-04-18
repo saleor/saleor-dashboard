@@ -861,9 +861,6 @@
     "context": "order history message",
     "string": "Payment was refunded"
   },
-  "3gFJH+": {
-    "string": "Amount must be higher that 0 when you transfer funds"
-  },
   "3kwdxJ": {
     "context": "gift card export type label",
     "string": "gift cards"
@@ -8839,6 +8836,9 @@
   "vTgRTZ": {
     "context": "limit voucher",
     "string": "Limit to one use per customer"
+  },
+  "vUY6ir": {
+    "string": "Amount must be higher than 0 when you transfer funds"
   },
   "vVviA2": {
     "string": "Those permissions are out of your scope"
