@@ -1,5 +1,5 @@
 import { SiteSettingsPage } from "@pages/siteSettingsPage";
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import faker from "faker";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });

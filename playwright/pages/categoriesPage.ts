@@ -34,6 +34,7 @@ export class CategoriesPage extends BasePage {
   async gotoCategoryListView() {
     await this.page.goto(URL_LIST.categories);
   }
+
   async gotoExistingCategoriesPage(categoryId: string) {
     const categoryUrl = URL_LIST.categories + categoryId;
     await console.log("Navigating to category details: " + categoryUrl);
@@ -43,6 +44,7 @@ export class CategoriesPage extends BasePage {
   async clickCreateNewCategoryButton() {
     await this.createCategoryButton.click();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
@@ -50,6 +52,7 @@ export class CategoriesPage extends BasePage {
   async typeCategoryName(categoryName: string) {
     await this.categoryNameInput.fill(categoryName);
   }
+
   async typeCategoryDescription(categoryDescription: string) {
     await this.categoryDescriptionLoader.waitFor({ state: "hidden" });
     await this.categoryDescriptionEditor
@@ -60,6 +63,7 @@ export class CategoriesPage extends BasePage {
   async clickBulkDeleteButton() {
     await this.bulkDeleteButton.click();
   }
+
   async clickProductsTabButton() {
     await this.productsTabButton.click();
   }

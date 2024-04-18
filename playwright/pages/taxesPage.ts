@@ -78,6 +78,7 @@ export class TaxesPage extends BasePage {
   async clickSelectMethodField() {
     await this.appOrFlatRateSelect.click();
   }
+
   async typeAllTaxRatesForCountry(
     defaultRate: string,
     noTaxRate: string,
@@ -93,26 +94,33 @@ export class TaxesPage extends BasePage {
     await this.standardRateInput.fill(standardRate);
     await this.temporaryUnmappedRateInput.fill(temporaryRate);
   }
+
   async clickCountriesTab() {
     await this.countriesTab.click();
     await this.countriesListRow.first().waitFor({ state: "visible" });
   }
+
   async clickTaxClassTab() {
     await this.taxClassTab.click();
     await this.classListRow.first().waitFor({ state: "visible" });
   }
+
   async clickCountryFromList(countryCode: string) {
     await this.countriesListRow.filter({ hasText: countryCode }).click();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async typeTaxClassName(taxClassName: string) {
     await this.taxClassNameInput.fill(taxClassName);
   }
+
   async typeSearchedTaxCountryName(taxCountryName: string) {
     await this.searchTaxCountryInput.fill(taxCountryName);
   }
+
   async typeTaxRateInSearchedCountryRow(
     taxCountryName: string,
     taxRateValue: string,
@@ -122,9 +130,11 @@ export class TaxesPage extends BasePage {
       .locator("input")
       .fill(taxRateValue);
   }
+
   async clickCreateClassButton() {
     await this.createClassButton.click();
   }
+
   async selectTaxCalculationMethod(method: "FLAT_RATES" | "saleor.app.avatax") {
     await this.clickSelectMethodField();
     await this.page.getByTestId(`select-field-option-${method}`).click();
@@ -135,11 +145,13 @@ export class TaxesPage extends BasePage {
       .locator(this.pricesEnteredWithoutTaxButton)
       .click();
   }
+
   async selectPricesWithTaxes() {
     await this.enteredRenderedSection
       .locator(this.pricesEnteredWithTaxButton)
       .click();
   }
+
   async clickShowGrossPricesInStorefront() {
     await this.enteredRenderedSection
       .locator(this.displayGrossPricesCheckbox)
@@ -149,6 +161,7 @@ export class TaxesPage extends BasePage {
   async clickAddCountryButton() {
     await this.addCountryButton.click();
   }
+
   async selectChannel(channelName: string) {
     await this.chanelListRow.filter({ hasText: channelName }).click();
   }

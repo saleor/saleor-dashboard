@@ -23,6 +23,7 @@ export class ChangePasswordDialog {
   async typeNewPassword(newPassword: string) {
     await this.newPasswordInput.fill(newPassword);
   }
+
   async typeOldPassword(oldPassword: string) {
     await this.oldPasswordInput.fill(oldPassword);
   }

@@ -1,7 +1,6 @@
 import { BasePage } from "@pages/basePage";
 import { AddPostalCodeDialog } from "@pages/dialogs/addPostalCodeDialog";
 import { AssignProductsDialog } from "@pages/dialogs/assignProductsDialog";
-
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import type { Page } from "@playwright/test";
 
@@ -31,7 +30,9 @@ export class ShippingRatesPage {
     ),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly assignProductButton = page.getByTestId("assign-product-button"),
-    readonly assignExcludedProductsDialog = page.getByTestId("assign-products-dialog-content"),
+    readonly assignExcludedProductsDialog = page.getByTestId(
+      "assign-products-dialog-content",
+    ),
     readonly priceInput = page.getByTestId("price-input"),
     readonly minValueInput = page.getByTestId("min-value-price-input"),
     readonly minWeightInput = page
@@ -54,11 +55,11 @@ export class ShippingRatesPage {
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
   }
 
-  async addExcludedProduct(name:string) {
+  async addExcludedProduct(name: string) {
     await this.assignProductButton.click();
     await this.assignProductsDialog.searchForProductInDialog(name);
     await this.assignProductsDialog.selectProduct(name);
-       await this.assignProductsDialog.assignAndSaveButton.click();
+    await this.assignProductsDialog.assignAndSaveButton.click();
     await this.assignProductsDialog.assignAndSaveButton.waitFor({
       state: "hidden",
       timeout: 5000,
@@ -73,6 +74,7 @@ export class ShippingRatesPage {
     await this.minValueInput.fill(minValue);
     await this.maxValueInput.fill(maxValue);
   }
+
   async typeMaxAndMinWeights(minWeight = "20", maxWeight = "37800") {
     await this.minWeightInput.fill(minWeight);
     await this.maxWeightInput.fill(maxWeight);
@@ -81,6 +83,7 @@ export class ShippingRatesPage {
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async addPostalCodeRange() {
     await this.addPostalCodeRangeButton.click();
     await this.addPostalCodeDialog.addStartAndEndZipCodesRange();
@@ -89,15 +92,19 @@ export class ShippingRatesPage {
   async typeRateName(rateName = "e2e rate name") {
     await this.shippingRateNameInput.fill(rateName);
   }
+
   async typePrice(price = "329") {
     await this.priceInput.fill(price);
   }
+
   async typeRateMinDeliveryTime(minDeliveryTime = "2") {
     await this.minDeliveryTimeInput.fill(minDeliveryTime);
   }
+
   async typeRateMaxDeliveryTime(maxDeliveryTime = "9") {
     await this.maxDeliveryTimeInput.fill(maxDeliveryTime);
   }
+
   async typeRateDescription(rateDescription = "e2e description") {
     await this.shippingRateDescriptionField.fill(rateDescription);
   }

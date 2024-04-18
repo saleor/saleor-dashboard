@@ -1,16 +1,16 @@
+// import { MailpitService } from "@api/mailpit";
 import { GIFT_CARDS } from "@data/e2eTestData";
 import { GiftCardsPage } from "@pages/giftCardsPage";
 import { expect, test } from "@playwright/test";
-import { MailpitService } from "@api/mailpit";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
 
 let giftCardsPage: GiftCardsPage;
-let mailpitService: MailpitService;
+// let mailpitService: MailpitService;
 
 test.beforeEach(async ({ page, request }) => {
   giftCardsPage = new GiftCardsPage(page);
-  mailpitService = new MailpitService(request);
+  // mailpitService = new MailpitService(request);
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForDOMToFullyLoad();
 });
@@ -22,9 +22,13 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
     "super ultra automation discount",
   );
   await giftCardsPage.issueGiftCardDialog.clickRequiresActivationCheckbox();
-  await giftCardsPage.waitForNetworkIdle(() => giftCardsPage.issueGiftCardDialog.clickIssueButton());
+  await giftCardsPage.waitForNetworkIdle(() =>
+    giftCardsPage.issueGiftCardDialog.clickIssueButton(),
+  );
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
-  const code = (await giftCardsPage.issueGiftCardDialog.cardCode.innerText()).slice(-4);
+  const code = (
+    await giftCardsPage.issueGiftCardDialog.cardCode.innerText()
+  ).slice(-4);
   await giftCardsPage.issueGiftCardDialog.clickCopyCodeButton();
   await giftCardsPage.expectSuccessBanner();
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
@@ -36,9 +40,13 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
     state: "hidden",
     timeout: 30000,
   });
-  await giftCardsPage.waitForNetworkIdle(() =>  giftCardsPage.gotoGiftCardsListView());
+  await giftCardsPage.waitForNetworkIdle(() =>
+    giftCardsPage.gotoGiftCardsListView(),
+  );
   await giftCardsPage.waitForDOMToFullyLoad();
-  await giftCardsPage.gridCanvas.getByText(`Code ending with ${code}`).waitFor({ state: "attached", timeout: 30000});
+  await giftCardsPage.gridCanvas
+    .getByText(`Code ending with ${code}`)
+    .waitFor({ state: "attached", timeout: 30000 });
 });
 
 test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
@@ -47,9 +55,13 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
   await giftCardsPage.issueGiftCardDialog.typeCustomer("Allison Freeman");
   await giftCardsPage.issueGiftCardDialog.clickSendExpireDateCheckbox();
   await giftCardsPage.issueGiftCardDialog.typeExpiryPeriodAmount("2");
-  await giftCardsPage.waitForNetworkIdle(() => giftCardsPage.issueGiftCardDialog.clickIssueButton());
+  await giftCardsPage.waitForNetworkIdle(() =>
+    giftCardsPage.issueGiftCardDialog.clickIssueButton(),
+  );
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
-  const code = (await giftCardsPage.issueGiftCardDialog.cardCode.innerText()).slice(-4);
+  const code = (
+    await giftCardsPage.issueGiftCardDialog.cardCode.innerText()
+  ).slice(-4);
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });
   await giftCardsPage.expectSuccessBannerMessage(
@@ -59,10 +71,13 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
     state: "hidden",
     timeout: 30000,
   });
-  await giftCardsPage.waitForNetworkIdle(() =>  giftCardsPage.gotoGiftCardsListView());
+  await giftCardsPage.waitForNetworkIdle(() =>
+    giftCardsPage.gotoGiftCardsListView(),
+  );
   await giftCardsPage.waitForDOMToFullyLoad();
-  await giftCardsPage.gridCanvas.getByText(`Code ending with ${code}`).waitFor({ state: "attached", timeout: 30000});
-
+  await giftCardsPage.gridCanvas
+    .getByText(`Code ending with ${code}`)
+    .waitFor({ state: "attached", timeout: 30000 });
 });
 
 test("TC: SALEOR_107 Resend code @e2e @gift", async () => {
@@ -105,7 +120,6 @@ test("TC: SALEOR_110 Edit gift card @e2e @gift", async () => {
   await giftCardsPage.expectSuccessBanner();
 });
 
-
 test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
   await giftCardsPage.checkListRowsBasedOnContainingText(
     GIFT_CARDS.giftCardsToBeDeleted.names,
@@ -114,10 +128,14 @@ test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
   await giftCardsPage.deleteDialog.clickConfirmDeletionCheckbox();
   await giftCardsPage.deleteDialog.clickDeleteButton();
   await giftCardsPage.dialog.waitFor({ state: "hidden" });
-  await giftCardsPage.waitForNetworkIdle(() =>  giftCardsPage.gotoGiftCardsListView());
+  await giftCardsPage.waitForNetworkIdle(() =>
+    giftCardsPage.gotoGiftCardsListView(),
+  );
   await giftCardsPage.waitForDOMToFullyLoad();
   for (const last4Code of GIFT_CARDS.giftCardsToBeDeleted.last4) {
-    await expect(giftCardsPage.gridCanvas).not.toContainText(`Code ending with ${last4Code}`)
+    await expect(giftCardsPage.gridCanvas).not.toContainText(
+      `Code ending with ${last4Code}`,
+    );
   }
 });
 
@@ -139,7 +157,7 @@ test("TC: SALEOR_182 Export gift card codes in XLSX file @e2e @gift", async () =
     state: "hidden",
     timeout: 30000,
   });
-  //To be uncommented https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
+  // To be uncommented https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
   // await mailpitService.checkDoesUserReceivedExportedData(
   //   process.env.E2E_USER_NAME!,
   //   "Your exported gift cards data is ready",
@@ -154,7 +172,7 @@ test("TC: SALEOR_183 Export gift card codes in CSV file @e2e @gift", async () =>
     state: "hidden",
     timeout: 30000,
   });
-  //To be uncommented https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
+  // To be uncommented https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
   // await mailpitService.checkDoesUserReceivedExportedData(
   //   process.env.E2E_USER_NAME!,
   //   "Your exported gift cards data is ready",

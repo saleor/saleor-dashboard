@@ -151,7 +151,7 @@ for (const { promotionRule, predicateValue } of predicateValues) {
         .filter({ hasText: `Catalog rule: ${name}` })
         .first(),
     ).toContainText(
-      `Catalog rule: ${name}Discount of ${rewardValue}% on the purchase of ${promotionRule}: ${predicateValue} through the ${channelName}`,
+      `Catalog rule: ${name}Discount of ${rewardValue}% on the purchase of ${promotionRule}: ${predicateValue} through the ${channelName}`,
     );
   });
 }
@@ -204,7 +204,7 @@ for (const { conditionType, value, conditionDesc } of notEqConditions) {
     await expect(
       discounts.existingRule.filter({ hasText: `Order rule: ${name}` }).first(),
     ).toContainText(
-      `Order rule: ${name}Discount of ${currency} ${rewardValueFixed} on the purchase of Subtotal price: ${currency} 100.00Total price: ${conditionDesc} ${currency} ${value} through the ${channelName}`,
+      `Order rule: ${name}Discount of ${currency} ${rewardValueFixed} on the purchase of Subtotal price: ${currency} 100.00Total price: ${conditionDesc} ${currency} ${value} through the ${channelName}`,
     );
   });
 }
@@ -285,7 +285,7 @@ for (const rule of orderRules) {
           .filter({ hasText: `Order rule: ${orderRules[0].name}` })
           .first(),
       ).toContainText(
-        `Order rule: ${orderRules[0].name}Discount of ${orderRules[0].channelCurrency} 1.00 on the purchase of Subtotal price: ${orderRules[0].channelCurrency} 25.00Total price: ${orderRules[0].channelCurrency} 13.33 through the ${orderRules[0].channel}`,
+        `Order rule: ${orderRules[0].name}Discount of ${orderRules[0].channelCurrency} 1.00 on the purchase of Subtotal price: ${orderRules[0].channelCurrency} 25.00Total price: ${orderRules[0].channelCurrency} 13.33 through the ${orderRules[0].channel}`,
       );
     } else {
       const giftRewardToBeDeleted = orderRules[1].giftRewardToBeDeleted ?? "";
@@ -308,7 +308,7 @@ for (const rule of orderRules) {
           .filter({ hasText: `Order rule: ${orderRules[1].name}` })
           .first(),
       ).toContainText(
-        `Order rule: ${orderRules[1].name}Discount of Gift on the purchase of Subtotal price: ${orderRules[1].channelCurrency} 100.00 through the ${orderRules[1].channel}`,
+        `Order rule: ${orderRules[1].name}Discount of Gift on the purchase of Subtotal price: ${orderRules[1].channelCurrency} 100.00 through the ${orderRules[1].channel}`,
       );
     }
   });

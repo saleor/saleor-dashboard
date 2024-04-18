@@ -14,18 +14,23 @@ export class ExportProductsDialog {
   ) {
     this.page = page;
   }
+
   async clickChannelsAccordion() {
     await this.channelsAccordion.click();
   }
+
   async clickNextButton() {
     await this.nextButton.click();
   }
+
   async clickSubmitButton() {
     await this.submitButton.click();
   }
+
   async clickExportSearchedProductsRadioButton() {
     await this.exportSearchedProductsRadioButton.click();
   }
+
   async checkChannelCheckbox(channel = "PLN") {
     await this.page.locator(`[name="Channel-${channel}"]`).click();
   }

@@ -38,6 +38,7 @@ export class StaffMembersPage extends BasePage {
   async clickIsActiveCheckbox() {
     await this.isActiveCheckbox.click();
   }
+
   async clickPermissionsGroupSelectButton() {
     await this.permissionsGroupSelectButton.click();
   }
@@ -51,9 +52,11 @@ export class StaffMembersPage extends BasePage {
   async clickInviteStaffMemberButton() {
     await this.inviteStaffMembersButton.click();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async gotToExistingStaffMemberPage(staffMemberId: string) {
     const staffMemberUrl = `${URL_LIST.staffMembers}${staffMemberId}`;
     await this.page.goto(staffMemberUrl);

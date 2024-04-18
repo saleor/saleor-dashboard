@@ -30,8 +30,8 @@ export class MailpitService {
     return latestEmailsJson;
   }
 
-  async getEmailsFromTime(fromTime = 10000){
-    const latestEmails = await this.getLastEmails()
+  async getEmailsFromTime(fromTime = 10000) {
+    const latestEmails = await this.getLastEmails();
 
     latestEmails.messages = latestEmails.messages.filter(
       (message: { Created: string }) => {
@@ -84,7 +84,7 @@ export class MailpitService {
     await expect
       .poll(
         async () => {
-          let userEmails: any[] = await this.getEmailsForUser(userEmail);
+          const userEmails: any[] = await this.getEmailsForUser(userEmail);
           for (const email of userEmails) {
             if (email.Subject === mailSubject) {
               confirmationMessageReceived = true;

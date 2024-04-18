@@ -49,37 +49,47 @@ export class ChannelPage extends BasePage {
   async clickAuthorizeInsteadOfChargingCheckbox() {
     await this.authorizeInsteadOfChargingCheckbox.click();
   }
+
   async clickDeleteButtonOnRowContainingChannelName(channelName: string) {
     await this.channelRow
       .filter({ hasText: channelName })
       .locator(this.deleteChannelButton)
       .click();
   }
+
   async clickAllowUnpaidOrdersCheckbox() {
     await this.allowUnpaidOrdersCheckbox.click();
   }
+
   async clickTransactionFlowCheckbox() {
     await this.transactionFlowCheckbox.click();
   }
+
   async clickCreateChannelButton() {
     await this.createChannelButton.click();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async typeChannelName(channelName = "z - automation") {
     await this.channelNameInput.fill(channelName);
   }
+
   async typeSlugName(slugName: string) {
     await this.slugNameInput.fill(slugName);
   }
+
   async typeOrderExpiration(expirationDays = "120") {
     await this.orderExpirationInput.fill(expirationDays);
   }
+
   async selectCurrency(currencyName: string) {
     await this.channelCurrencySelect.click();
     await this.page.getByRole("option", { name: currencyName }).click();
   }
+
   async selectCountry(countryName: string) {
     await this.countrySelect.click();
     await this.page.getByRole("option", { name: countryName }).click();
@@ -90,6 +100,7 @@ export class ChannelPage extends BasePage {
     await console.log("Navigating to channel details: " + channelDetailsUrl);
     await this.page.goto(channelDetailsUrl);
   }
+
   async gotoChannelList() {
     await this.page.goto(URL_LIST.channels);
   }

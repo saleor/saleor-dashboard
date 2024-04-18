@@ -30,6 +30,20 @@
   ],
   "overrides": [
     {
+        "plugins": [
+          "prettier"
+        ],
+        "extends": ["prettier"],
+        "files": ["playwright/**/*.ts"],
+        "parserOptions": {
+            "project": "./playwright/tsconfig.json"
+        },
+        "rules": {
+           "no-console": "off",
+           "prettier/prettier": "error"
+        }
+    },
+    {
       "files": ["src/**/*.test.*", "src/**/*.stories.*"],
       "rules": {
         "react-refresh/only-export-components": "off"

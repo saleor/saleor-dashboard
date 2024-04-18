@@ -20,6 +20,7 @@ export class InviteStaffMembersDialog {
   async clickSendInviteButton() {
     await this.sendInviteButton.click();
   }
+
   async typeNameLastNameAndEmail(
     name: string,
     lastName: string,

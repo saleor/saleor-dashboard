@@ -44,22 +44,27 @@ export class ProductTypePage extends BasePage {
     await this.nameInput.clear();
     await this.nameInput.fill(name);
   }
+
   async makeProductShippableWithWeight(weight: string = "10") {
     await this.isShippingRequired.click();
     await this.shippingWeightInput.fill(weight);
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async selectGiftCardButton() {
     await this.giftCardKindCheckbox.click();
   }
+
   async gotoAddProductTypePage() {
     console.log(
       `Navigating to add product type page: ${URL_LIST.productTypesAdd}`,
     );
     await this.page.goto(URL_LIST.productTypesAdd);
   }
+
   async expectSuccessBanner() {
     await this.basePage.expectSuccessBanner();
   }
@@ -79,6 +84,7 @@ export class ProductTypePage extends BasePage {
     );
     await this.page.goto(existingProductTypeUrl);
   }
+
   async clickBulkDeleteButton() {
     await this.bulkDeleteButton.click();
   }

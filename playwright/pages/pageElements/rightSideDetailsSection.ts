@@ -87,20 +87,25 @@ export class RightSideDetailsPage {
   async clickEditBillingAddressButton() {
     await this.editBillingAddressButton.click();
   }
+
   async clickAllocationHighStockButton() {
     await this.allocationHighStockButton.click();
   }
+
   async clickEditShippingAddressButton() {
     await this.editShippingAddressButton.click();
   }
+
   async clickWarehouseSelectShippingPage() {
     await this.selectWarehouseShippingMethodButton.click();
   }
+
   async expectOptionsSelected(section: Locator, names: string[]) {
     for (const name of names) {
-      await expect(section.getByText(name)).toBeVisible({timeout: 30000});
+      await expect(section.getByText(name)).toBeVisible({ timeout: 30000 });
     }
   }
+
   async typeAndSelectSingleWarehouseShippingPage(warehouse = "Europe") {
     await this.selectWarehouseShippingMethodButton
       .locator("input")
@@ -110,6 +115,7 @@ export class RightSideDetailsPage {
     // below click hides prompted options
     this.clickWarehouseSelectShippingPage();
   }
+
   async typeAndSelectMultipleWarehousesShippingPage(warehouses: string[]) {
     for (const warehouse of warehouses) {
       await this.selectWarehouseShippingMethodButton
@@ -120,81 +126,103 @@ export class RightSideDetailsPage {
     }
     this.clickWarehouseSelectShippingPage();
   }
+
   async clickChannelsSelectShippingPage() {
     await this.selectChannelShippingPageButton.click();
   }
+
   async selectSingleChannelShippingPage(channel = "PLN") {
     await this.selectOption.filter({ hasText: `Channel-${channel}` }).click();
     // below click hides prompted options
     this.clickChannelsSelectShippingPage();
   }
+
   async openChannelsDialog() {
     await this.manageChannelsButton.click();
   }
+
   async selectFirstCategory() {
     await this.categoryInput.click();
     await this.categorySelectOption.first().click();
   }
+
   async selectFirstTax() {
     await expect(this.taxInput.locator("input")).not.toBeDisabled();
     await this.taxInput.click();
     await this.taxSelectOption.first().click();
   }
+
   async selectTaxIndex(taxIndexOnList: number) {
     await this.taxInput.click();
     await this.taxSelectOption.nth(taxIndexOnList).click();
   }
+
   async selectFirstCollection() {
     await this.collectionInput.click();
     await this.selectOption.first().click();
   }
+
   async clickEditCustomerButton() {
     await this.editCustomerButton.click();
   }
+
   async expandShippingZonesSection() {
     await this.shippingZoneSection.locator(this.expandButton).click();
   }
+
   async expandWarehousesSection() {
     await this.warehousesSection.locator(this.expandButton).click();
   }
+
   async clickSearchCustomerInput() {
     await this.searchCustomerInput.click();
   }
+
   async clickAddShippingZonesButton() {
     await this.addShippingZonesButton.click();
   }
+
   async clickAddWarehousesButton() {
     await this.addWarehousesButton.click();
   }
+
   async clickPublicStockButton() {
     await this.stockSettingsSection.getByText("Public").click();
   }
+
   async clickPickupDisabledButton() {
     await this.pickupDisabledButton.click();
   }
+
   async clickPickupAllWarehousesButton() {
     await this.pickupAllWarehousesButton.click();
   }
+
   async clickPrivateStockButton() {
     await this.stockSettingsSection.getByText("Private").click();
   }
+
   async selectShippingZone(zoneName = "Asia") {
     await this.shippingZonesSelect.click();
     await this.page.getByRole("option", { name: zoneName });
   }
+
   async selectWarehouse(warehouseName = "Asia") {
     await this.warehouseSelect.click();
     await this.page.getByRole("option", { name: warehouseName });
   }
+
   async selectCustomer(customer = "allison.freeman@example.com") {
     await this.selectCustomerOption.locator(`text=${customer}`).click();
   }
+
   async selectOneChannelAsAvailableWhenMoreSelected(channel: string) {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.clickAllChannelsCheckbox();
     await this.channelSelectDialog.selectChannel(channel);
     await this.channelSelectDialog.clickConfirmButton();
   }
+
   async selectOneChannelAsAvailableWhenNoneSelected(channel: string) {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.selectChannel(channel);

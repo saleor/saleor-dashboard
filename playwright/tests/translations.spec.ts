@@ -1,6 +1,6 @@
 import { TRANSLATIONS } from "@data/e2eTestData";
-import { expect, test } from "@playwright/test";
 import { TranslationsPage } from "@pages/translationsPage";
+import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 

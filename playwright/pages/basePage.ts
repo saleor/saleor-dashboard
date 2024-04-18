@@ -49,9 +49,11 @@ export class BasePage {
 
     return cellText;
   }
+
   async selectAll() {
     await this.selectAllCheckbox.click();
   }
+
   async clickPaginationRowNumberOption(value: string) {
     await this.rowNumberOption.filter({ hasText: value }).click();
   }
@@ -63,12 +65,15 @@ export class BasePage {
   async clickBulkDeleteGridRowsButton() {
     await this.bulkDeleteGridRowsButton.click();
   }
+
   async clickDeleteButton() {
     await this.deleteButton.click();
   }
+
   async typeInSearchOnListView(searchItem: string) {
     await this.searchInputListView.fill(searchItem);
   }
+
   async clickNextPageButton() {
     await this.nextPagePaginationButton.click();
     await expect(
@@ -76,6 +81,7 @@ export class BasePage {
       "No error banner should be visible",
     ).not.toBeVisible();
   }
+
   async clickPreviousPageButton() {
     await this.previousPagePaginationButton.click();
     await expect(
@@ -83,17 +89,21 @@ export class BasePage {
       "No error banner should be visible",
     ).not.toBeVisible();
   }
+
   async clickNumbersOfRowsButton() {
     await this.rowNumberButton.click();
   }
+
   async expectGridToBeAttached() {
     await expect(this.gridCanvas).toBeAttached({
       timeout: 10000,
     });
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async expectSuccessBannerMessage(msg: string) {
     await this.successBanner
       .locator(`text=${msg}`)
@@ -103,6 +113,7 @@ export class BasePage {
       "No error banner should be visible",
     ).not.toBeVisible();
   }
+
   async expectSuccessBanner() {
     await this.successBanner
       .first()
@@ -112,6 +123,7 @@ export class BasePage {
       "No error banner should be visible",
     ).not.toBeVisible();
   }
+
   async expectInfoBanner() {
     await this.infoBanner.first().waitFor({ state: "visible", timeout: 15000 });
     await expect(
@@ -119,14 +131,22 @@ export class BasePage {
       "No error banner should be visible",
     ).not.toBeVisible();
   }
-  async waitForNetworkIdle(action: () => Promise<void>,timeoutMs: number = 50000) {
-    const responsePromise = this.page.waitForResponse("**/graphql/",{ timeout: timeoutMs });
+
+  async waitForNetworkIdle(
+    action: () => Promise<void>,
+    timeoutMs: number = 50000,
+  ) {
+    const responsePromise = this.page.waitForResponse("**/graphql/", {
+      timeout: timeoutMs,
+    });
     await action();
     await responsePromise;
   }
+
   async resizeWindow(w: number, h: number) {
     await this.page.setViewportSize({ width: w, height: h });
   }
+
   async clickOnSpecificPositionOnPage(x: number, y: number) {
     await this.page.mouse.click(x, y);
   }
@@ -202,6 +222,7 @@ export class BasePage {
     await this.gridInput.waitFor({ state: "attached" });
     await this.gridInput.fill(content);
   }
+
   async clickGridCell(col: number, row: number) {
     const bounds = await this.findGridCellBounds(col, row);
 
@@ -216,7 +237,7 @@ export class BasePage {
       .locator("table tr")
       .first()
       .waitFor({ state: "attached" });
-    let rowIndexes: number[] = [];
+    const rowIndexes: number[] = [];
 
     const rows = await this.page.$$eval("table tr", rows =>
       rows.map(row => row.textContent),
@@ -245,6 +266,7 @@ export class BasePage {
     // make sure all searched texts were found and checked
     await expect(searchText.length).toEqual(rowIndexes.length);
   }
+
   async clickListRowBasedOnContainingText(searchText: string) {
     const rowIndex = await this.findRowIndexBasedOnText([searchText]);
     await this.clickGridCell(1, rowIndex[0]);
@@ -259,6 +281,7 @@ export class BasePage {
       expect(locator).toContainText(objectProperty);
     }
   }
+
   async getNumberOfGridRowsWithText(expectedText: string) {
     await this.gridCanvas
       .locator("tr")
@@ -271,11 +294,13 @@ export class BasePage {
       .count();
     return gridRowsWithText;
   }
+
   async getNumberOfGridRows() {
     await this.gridCanvas.locator("tr").first().waitFor({ state: "attached" });
     const gridRowsWithText = await this.gridCanvas.locator("tr").count();
     return gridRowsWithText;
   }
+
   async waitForDOMToFullyLoad() {
     await this.page.waitForLoadState("domcontentloaded", { timeout: 70000 });
   }

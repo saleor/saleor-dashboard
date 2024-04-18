@@ -55,6 +55,7 @@ export class WarehousePage extends BasePage {
   async clickCreateNewWarehouseButton() {
     await this.createNewWarehouseButton.click();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
@@ -86,27 +87,34 @@ export class WarehousePage extends BasePage {
   async typeWarehouseName(warehouseName: string) {
     await this.warehouseNameInput.fill(warehouseName);
   }
+
   async typeAddressLine1(lineAddress1: string) {
     await this.companyAddressLine1Input.fill(lineAddress1);
   }
+
   async typeAddressLine2(lineAddress2: string) {
     await this.companyAddressLine2Input.fill(lineAddress2);
   }
+
   async typeCompanyName(warehouseName: string) {
     await this.companyNameInput.fill(warehouseName);
   }
+
   async typePhone(phone: string) {
     await this.companyPhoneInput.fill(phone);
   }
+
   async gotoWarehouseListView() {
     await this.page.goto(URL_LIST.warehouses);
   }
+
   async clickDeleteWarehouseButton(warehouseName: string) {
     await this.page
       .getByTestId(`warehouse-entry-${warehouseName}`)
       .locator(this.deleteWarehouseButton)
       .click();
   }
+
   async gotoExistingWarehousePage(warehouseId: string) {
     const existingWarehouseUrl = URL_LIST.warehouses + warehouseId;
     await console.log(

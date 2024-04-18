@@ -17,6 +17,7 @@ export class AddNavigationMenuDialog {
   async typeNewMenuName(name: string) {
     await this.menuNameInput.fill(name);
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }

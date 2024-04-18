@@ -1,7 +1,7 @@
 import { BasePage } from "@pages/basePage";
-import { HomePage } from "@pages/homePage";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { ContentPage } from "@pages/contentPage";
+import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { PageTypesPage } from "@pages/pageTypesPage";
 import { expect, test } from "@playwright/test";

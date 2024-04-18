@@ -1,6 +1,6 @@
-import { HomePage } from "@pages/homePage";
 import { CategoriesPage } from "@pages/categoriesPage";
 import { CollectionsPage } from "@pages/collectionsPage";
+import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { ProductPage } from "@pages/productPage";
 import { expect, test } from "@playwright/test";

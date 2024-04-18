@@ -1,6 +1,6 @@
-import type { Page } from "@playwright/test";
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
+import type { Page } from "@playwright/test";
 
 export class AppsPage extends BasePage {
   readonly page: Page;
@@ -19,12 +19,16 @@ export class AppsPage extends BasePage {
     readonly appManifestUrlInput = page
       .getByTestId("manifest-url-input")
       .locator("input"),
-    readonly installAppFromManifestButton = page.getByTestId("install-app-from-manifest"),
+    readonly installAppFromManifestButton = page.getByTestId(
+      "install-app-from-manifest",
+    ),
     readonly installedAppRow = page.getByTestId("apps:installed-app-row"),
     readonly appKlaviyo = page.getByTestId("app-klaviyo"),
     readonly appAdyen = page.getByTestId("app-adyen"),
     readonly appQA = page.getByTestId("app-saleorqa app"),
-    readonly installationPendingLabel = page.getByTestId("app-pending-label").first(),
+    readonly installationPendingLabel = page
+      .getByTestId("app-pending-label")
+      .first(),
   ) {
     super(page);
     this.page = page;

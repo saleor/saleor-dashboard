@@ -30,6 +30,7 @@ export class AccountSettingsPage {
   async clickSaveChangedPasswordButton() {
     await this.changePasswordDialog.clickSaveButton();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }

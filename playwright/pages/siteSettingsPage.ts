@@ -1,6 +1,6 @@
-import type { Page } from "@playwright/test";
-import { BasePage } from "@pages/basePage";
 import { URL_LIST } from "@data/url";
+import { BasePage } from "@pages/basePage";
+import type { Page } from "@playwright/test";
 
 export class SiteSettingsPage extends BasePage {
   constructor(
@@ -46,15 +46,19 @@ export class SiteSettingsPage extends BasePage {
   async gotoSiteSettings() {
     await this.page.goto(URL_LIST.siteSettings);
   }
+
   async fillStockReservationForAuthUser(value: string) {
     await this.stockReservationForAuthUserInput.fill(value);
   }
+
   async fillStockReservationForAnonUser(value: string) {
     await this.stockReservationForAnonUserInput.fill(value);
   }
+
   async fillCheckoutLineLimitInput(value: string) {
     await this.checkoutLineLimitInput.fill(value);
   }
+
   async completeAddressForm(
     companyName: string,
     addressLine1: string,

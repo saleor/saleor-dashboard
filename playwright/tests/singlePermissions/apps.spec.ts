@@ -1,6 +1,6 @@
 import { AppsPage } from "@pages/appsPage";
-import { MainMenuPage } from "@pages/mainMenuPage";
 import { HomePage } from "@pages/homePage";
+import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/app.json" });

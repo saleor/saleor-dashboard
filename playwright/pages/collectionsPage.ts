@@ -1,11 +1,10 @@
-import path from "path";
-
 import { URL_LIST } from "@data/url";
 import { AssignSpecificProductsDialog } from "@dialogs/assignSpecificProductsDialog";
 import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { RightSideDetailsPage } from "@pageElements/rightSideDetailsSection";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
+import path from "path";
 
 import { DeleteDialog } from "./dialogs/deleteDialog";
 
@@ -46,15 +45,19 @@ export class CollectionsPage extends BasePage {
   async clickCreateCollectionButton() {
     await this.createCollectionButton.click();
   }
+
   async clickBulkDeleteButton() {
     await this.bulkDeleteButton.click();
   }
+
   async clickAssignProductButton() {
     await this.assignProductButton.click();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async clickUploadImageButton() {
     await this.uploadImageButton.click();
   }
@@ -62,6 +65,7 @@ export class CollectionsPage extends BasePage {
   async gotoCollectionsListView() {
     await this.page.goto(URL_LIST.collections);
   }
+
   async gotoExistingCollectionView(collectionId: string) {
     const collectionUrl = URL_LIST.collections + collectionId;
     await console.log(
@@ -69,9 +73,11 @@ export class CollectionsPage extends BasePage {
     );
     await this.page.goto(collectionUrl);
   }
+
   async typeCollectionName(collectionName: string) {
     await this.collectionNameInput.fill(collectionName);
   }
+
   async typeCollectionDescription(collectionDescription: string) {
     await this.descriptionLoader.waitFor({ state: "hidden" });
     await this.collectionDescriptionEditor

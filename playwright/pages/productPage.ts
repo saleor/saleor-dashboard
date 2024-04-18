@@ -1,6 +1,3 @@
-import * as faker from "faker";
-import path from "path";
-
 import { URL_LIST } from "@data/url";
 import { DeleteDialog } from "@dialogs/deleteDialog";
 import { FiltersPage } from "@pageElements/filtersPage";
@@ -9,7 +6,9 @@ import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
 import { ExportProductsDialog } from "@pages/dialogs/exportProductsDialog";
 import { MetadataSeoPage } from "@pages/pageElements/metadataSeoPage";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
-import { expect, Page } from "@playwright/test";
+import { Page } from "@playwright/test";
+import * as faker from "faker";
+import path from "path";
 
 const productName = `e2e-productName-${faker.datatype.number()}`;
 const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
@@ -93,10 +92,12 @@ export class ProductPage extends BasePage {
     await this.page.goto(createProductUrl);
     await this.pageHeader.waitFor({ state: "visible", timeout: 50000 });
   }
+
   async searchforProduct(productName: string) {
     await this.searchInput.fill(productName);
     await this.waitForGrid();
   }
+
   async gotoExistingProductPage(productId: string) {
     const existingProductUrl = `${URL_LIST.products}${productId}`;
     console.log(`Navigating to existing product: ${existingProductUrl}`);
@@ -107,21 +108,27 @@ export class ProductPage extends BasePage {
   async clickDeleteProductButton() {
     await this.deleteProductButton.click();
   }
+
   async clickExportButton() {
     await this.exportButton.click();
   }
+
   async clickCogShowMoreButtonButton() {
     await this.cogShowMoreButtonButton.click();
   }
+
   async clickUploadImagesButton() {
     await this.uploadSavedImagesButton.click();
   }
+
   async clickUploadMediaButton() {
     await this.uploadProductImageButton.click();
   }
+
   async clickChooseMediaVariantButton() {
     await this.chooseMediaVariantButton.click();
   }
+
   async clickBulkDeleteButton() {
     await this.bulkDeleteButton.click();
   }
@@ -129,12 +136,15 @@ export class ProductPage extends BasePage {
   async addSeo() {
     await this.metadataSeoPage.fillSeoSection();
   }
+
   async selectFirstCategory() {
     await this.rightSideDetailsPage.selectFirstCategory();
   }
+
   async selectFirstTaxOption() {
     await this.rightSideDetailsPage.selectFirstTax();
   }
+
   async addAllMetaData() {
     await this.metadataSeoPage.expandAndAddAllMetadata();
   }
@@ -148,12 +158,15 @@ export class ProductPage extends BasePage {
   async typeProductName(name = productName) {
     await this.productNameInput.fill(name);
   }
+
   async typeProductDescription(description = productDescription) {
     await this.descriptionInput.type(description);
   }
+
   async typeProductRating(rating = "9") {
     await this.ratingInput.fill(rating);
   }
+
   async typeSellingPriceForChannel(
     channelName: string,
     sellingPriceValue = "50",
@@ -174,6 +187,7 @@ export class ProductPage extends BasePage {
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async expectSuccessBanner() {
     await this.basePage.expectSuccessBanner();
   }
@@ -181,9 +195,11 @@ export class ProductPage extends BasePage {
   async clickCreateProductButton() {
     await this.createProductButton.click();
   }
+
   async clickFirstEditVariantButton() {
     await this.editVariantButton.first().click();
   }
+
   async clickAddVariantButton() {
     await this.addVariantButton.click();
   }

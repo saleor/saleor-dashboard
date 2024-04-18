@@ -17,6 +17,7 @@ export class OrderCreateDialog {
   async expandChannelsSearchList() {
     await this.channelNameInput.click();
   }
+
   async clickConfirmButton() {
     await this.confirmButton.click();
   }
@@ -26,6 +27,7 @@ export class OrderCreateDialog {
     await this.channelOption.first().click();
     await this.clickConfirmButton();
   }
+
   async completeOrderCreateDialogWithTransactionChannel() {
     await this.expandChannelsSearchList();
     await this.channelOption

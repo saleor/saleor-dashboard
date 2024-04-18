@@ -1,12 +1,11 @@
+import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import { AddValueDialog } from "@pages/dialogs/addValueDialog";
-import { DeleteAttributesInBulkDialog } from "@pages/dialogs/deleteAttributesInBulkDialog";
 import { DeleteAttributeDialog } from "@pages/dialogs/deleteAttributeDialog";
+import { DeleteAttributesInBulkDialog } from "@pages/dialogs/deleteAttributesInBulkDialog";
 import { DeleteAttributeValueDialog } from "@pages/dialogs/deleteAttributeValueDialog";
 import { EditAttributeValueDialog } from "@pages/dialogs/editAttributeValueDialog";
-
 import type { Page } from "@playwright/test";
-import { URL_LIST } from "@data/url";
 
 export class AttributesPage extends BasePage {
   readonly addValueDialog: AddValueDialog;
@@ -88,6 +87,7 @@ export class AttributesPage extends BasePage {
       timeout: 10000,
     });
   }
+
   async assertSearchResultsVisibility(searchText: string) {
     const elements = await this.page.$$("text=" + searchText);
     const otherElements = await this.page.$$("text!=" + searchText);
@@ -98,9 +98,11 @@ export class AttributesPage extends BasePage {
       await element.waitForElementState("hidden");
     }
   }
+
   async searchForAttribute(attributeName: string) {
     await this.searchInputListView.click();
   }
+
   async gotoExistingAttributePage(attributeId: string, attributeName: string) {
     const existingAttributeUrl = `${URL_LIST.attributes}${attributeId}`;
     await console.log(
@@ -113,37 +115,47 @@ export class AttributesPage extends BasePage {
       timeout: 30000,
     });
   }
-  async clickFirstCheckbox(){
+
+  async clickFirstCheckbox() {
     this.page.getByRole("checkbox").first().click();
   }
+
   async clickCreateAttributeButton() {
     await this.createAttributeButton.click();
   }
+
   async fillAttributeSlug(attributeSlug: string) {
     await this.attributeCodeInput.fill(attributeSlug);
   }
+
   async clickValueRequiredCheckbox() {
     await this.valueRequiredCheckbox.click();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async selectAttributeType(attributeType: string) {
     await this.page.getByTestId(attributeType).click();
   }
+
   async selectAttributeInputType(attributeType: string) {
     await this.attributeSelect.click();
     await this.page.getByTestId(`select-field-option-${attributeType}`).click();
   }
+
   async clickAssignAttributeValueButton() {
     await this.assignAttributeValueButton.click();
   }
+
   async clickDeleteAttrValueButton(attrName: string) {
     await this.attributeValueRows
       .filter({ hasText: attrName })
       .locator(this.deleteAttributeValueButton)
       .click();
   }
+
   async clickOnExistingAttrValue(attrName: string) {
     await this.attributeValueRows.filter({ hasText: attrName }).click();
     await this.editAttrValueDialog.waitFor({
@@ -151,22 +163,28 @@ export class AttributesPage extends BasePage {
       timeout: 30000,
     });
   }
+
   async typeAttributeDefaultLabel(attributeDefaultLabel: string) {
     await this.attributeDefaultLabelInput.fill(attributeDefaultLabel);
   }
+
   async selectAttributeEntityType(entityType: string) {
     await this.attrEntityTypeSelect.click();
     await this.page.getByTestId(`select-field-option-${entityType}`).click();
   }
+
   async changeAttributeVisibility() {
     await this.attrVisibleInStorefrontSwitch.click();
   }
+
   async expandMetadataSection() {
     await this.metadataSectionAccordionButton.first().click();
   }
+
   async addMetadataField() {
     await this.metadataAddFieldButton.click();
   }
+
   async fillMetadataFields(key: string, value: string) {
     await this.metadataKeyInput.fill(key);
     await this.metadataValueInput.fill(value);

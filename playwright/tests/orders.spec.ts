@@ -75,9 +75,8 @@ test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow acti
   await ordersPage.clickMarkAsPaidButton();
   await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
   await ordersPage.expectSuccessBannerMessage("paid");
-  const transactionsMadeRows = await ordersPage.orderTransactionsList.locator(
-    "tr",
-  );
+  const transactionsMadeRows =
+    await ordersPage.orderTransactionsList.locator("tr");
   expect(await transactionsMadeRows.count()).toEqual(1);
   await expect(transactionsMadeRows).toContainText("Success");
   await ordersPage.clickFulfillButton();
@@ -155,9 +154,6 @@ test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow @e2e @or
   await ordersPage.clickMarkAsPaidButton();
   await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
   await ordersPage.expectSuccessBannerMessage("paid");
-  const transactionsMadeRows = await ordersPage.orderTransactionsList.locator(
-    "tr",
-  );
   await expect(ordersPage.balanceStatusInfo).toHaveText("Settled");
   expect(
     await ordersPage.paymentStatusInfo,
@@ -238,15 +234,19 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
   await draftOrdersPage.clickCreateDraftOrderButton();
   await draftOrdersPage.draftOrderCreateDialog.completeDraftOrderCreateDialogWithFirstChannel();
   await draftOrdersPage.clickAddProductsButton();
-    await draftOrdersPage.waitForNetworkIdle(() => draftOrdersPage.addProductsDialog.searchForProductInDialog(
-    PRODUCTS.productAvailableWithTransactionFlow.name,
-  ))
+  await draftOrdersPage.waitForNetworkIdle(() =>
+    draftOrdersPage.addProductsDialog.searchForProductInDialog(
+      PRODUCTS.productAvailableWithTransactionFlow.name,
+    ),
+  );
   await draftOrdersPage.addProductsDialog.productRow
     .filter({ hasText: PRODUCTS.productAvailableWithTransactionFlow.name })
     .waitFor({ state: "visible", timeout: 30000 });
   await draftOrdersPage.addProductsDialog.selectVariantBySKU(variantSKU);
   await draftOrdersPage.addProductsDialog.waitForDOMToFullyLoad();
-  await draftOrdersPage.waitForNetworkIdle(() => draftOrdersPage.addProductsDialog.clickConfirmButton());
+  await draftOrdersPage.waitForNetworkIdle(() =>
+    draftOrdersPage.addProductsDialog.clickConfirmButton(),
+  );
   await draftOrdersPage.rightSideDetailsPage.clickEditCustomerButton();
   await draftOrdersPage.rightSideDetailsPage.clickSearchCustomerInput();
   await draftOrdersPage.rightSideDetailsPage.selectCustomer();
@@ -254,9 +254,13 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
     state: "visible",
     timeout: 10000,
   });
-  await draftOrdersPage.waitForNetworkIdle(() => draftOrdersPage.addressDialog.clickConfirmButton());
+  await draftOrdersPage.waitForNetworkIdle(() =>
+    draftOrdersPage.addressDialog.clickConfirmButton(),
+  );
   await draftOrdersPage.clickAddShippingCarrierButton();
-  await draftOrdersPage.waitForNetworkIdle(() => draftOrdersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod());
+  await draftOrdersPage.waitForNetworkIdle(() =>
+    draftOrdersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod(),
+  );
   await draftOrdersPage.clickFinalizeButton();
   await draftOrdersPage.successBanner
     .filter({ hasText: "finalized" })

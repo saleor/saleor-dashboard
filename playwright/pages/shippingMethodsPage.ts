@@ -10,7 +10,6 @@ export class ShippingMethodsPage extends BasePage {
   assignCountriesDialog: AssignCountriesDialog;
   deleteShippingMethodDialog: DeleteShippingMethodDialog;
 
-
   constructor(
     page: Page,
     readonly assignCountryButton = page.getByTestId("assign-country"),
@@ -24,8 +23,13 @@ export class ShippingMethodsPage extends BasePage {
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly shippingZoneName = page.getByTestId("page-header"),
     readonly deleteShippingRateButton = page.getByTestId("button-bar-delete"),
-    readonly shippingRateNameInput = page.getByTestId("shipping-rate-name-input"),
-    readonly deleteShippingRateButtonOnList = page.getByTestId("shipping-method-row").getByRole("button").getByTestId("delete-button"),
+    readonly shippingRateNameInput = page.getByTestId(
+      "shipping-rate-name-input",
+    ),
+    readonly deleteShippingRateButtonOnList = page
+      .getByTestId("shipping-method-row")
+      .getByRole("button")
+      .getByTestId("delete-button"),
     readonly priceBasedRatesSection = page.getByTestId("price-based-rates"),
     readonly weightBasedRatesSection = page.getByTestId("weight-based-rates"),
   ) {
@@ -85,7 +89,10 @@ export class ShippingMethodsPage extends BasePage {
       });
   }
 
-  async gotoExistingShippingRate(shippingMethodId: string, shippingRateId: string) {
+  async gotoExistingShippingRate(
+    shippingMethodId: string,
+    shippingRateId: string,
+  ) {
     const existingShippingRateUrl = `${URL_LIST.shippingMethods}${shippingMethodId}/${shippingRateId}`;
 
     await console.log(
@@ -100,20 +107,17 @@ export class ShippingMethodsPage extends BasePage {
     });
   }
 
-
   async clickCreateShippingZoneButton() {
     await this.createShippingZoneButton.click();
   }
 
   async clickDeletePriceBasedShippingMethod() {
-    await this.priceBasedRatesSection.locator(this.deleteShippingRateButtonOnList).click();
-
+    await this.priceBasedRatesSection
+      .locator(this.deleteShippingRateButtonOnList)
+      .click();
   }
 
   async clickDeleteShippingRateButton() {
     await this.deleteShippingRateButton.click();
   }
-
-
 }
-

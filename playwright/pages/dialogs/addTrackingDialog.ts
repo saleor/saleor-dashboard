@@ -14,6 +14,7 @@ export class AddTrackingDialog {
   async typeTrackingNumber(trackingNumber = "123456789") {
     await this.trackingNumberInput.fill(trackingNumber);
   }
+
   async typeTrackingNumberAndSave(trackingNumber: string) {
     await this.typeTrackingNumber(trackingNumber);
     await this.confirmTrackingNumberButton.click();

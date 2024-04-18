@@ -17,6 +17,7 @@ export class AssignProductsDialog {
   async clickAssignButton() {
     await this.assignButton.click();
   }
+
   async clickBackButton() {
     await this.backButton.click();
   }
@@ -24,9 +25,10 @@ export class AssignProductsDialog {
   async searchForProductInDialog(productName: string) {
     await this.searchInput.fill(productName);
   }
-async selectProduct(name: string) {
-const product = this.productRow.filter({hasText:name})
-await product.waitFor({state:"visible"});
-await product.getByRole("checkbox").click();
-}
+
+  async selectProduct(name: string) {
+    const product = this.productRow.filter({ hasText: name });
+    await product.waitFor({ state: "visible" });
+    await product.getByRole("checkbox").click();
+  }
 }

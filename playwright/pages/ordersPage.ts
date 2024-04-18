@@ -61,29 +61,36 @@ export class OrdersPage extends BasePage {
   async clickCreateOrderButton() {
     await this.createOrderButton.click();
   }
+
   async clickAddTrackingButton() {
     await this.addTrackingButton.click();
   }
+
   async clickManualTransactionButton() {
     await this.manualTransactionButton.click();
   }
+
   async clickMarkAsPaidButton() {
     await this.markAsPaidButton.waitFor({ state: "visible", timeout: 60000 });
     await this.markAsPaidButton.click();
   }
+
   async clickFulfillButton() {
     await this.fulfillButton.click();
   }
+
   async clickAddShippingCarrierButton() {
     await this.addShippingCarrierLink.click();
   }
+
   async clickAddProductsButton() {
     await this.addProducts.click();
   }
 
   async clickFinalizeButton() {
-    await this.finalizeButton.click({timeout: 90000});
+    await this.finalizeButton.click({ timeout: 90000 });
   }
+
   async expectSuccessBanner() {
     await this.basePage.expectSuccessBanner();
   }
@@ -91,6 +98,7 @@ export class OrdersPage extends BasePage {
   async goToOrdersListView() {
     await this.page.goto(URL_LIST.orders);
   }
+
   async goToExistingOrderPage(orderId: string) {
     const orderLink = URL_LIST.orders + orderId;
     await console.log("Navigating to order details view: " + orderLink);

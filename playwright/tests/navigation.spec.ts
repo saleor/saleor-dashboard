@@ -1,10 +1,10 @@
+import { NAVIGATION_ITEMS } from "@data/e2eTestData";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { AddNavigationMenuItemDialog } from "@pages/dialogs/addNavigationMenuItemDialog";
 import { NavigationDetailsPage } from "@pages/navigationDetailsPage";
 import { NavigationPage } from "@pages/navigationPage";
 import { expect, test } from "@playwright/test";
 import faker from "faker";
-import { NAVIGATION_ITEMS } from "@data/e2eTestData";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
@@ -45,7 +45,7 @@ test("TC: SALEOR_194 Should create a new menu navigation with menu item @navigat
   await expect(navigationDetailsPage.menuItemList).toContainText(menuItemName);
 });
 
-//TODO: To be updated after https://linear.app/saleor/issue/MERX-307 is fixed
+// TODO: To be updated after https://linear.app/saleor/issue/MERX-307 is fixed
 test("TC: SALEOR_198 Should update existing menu @navigation @e2e", async () => {
   await navigationDetailsPage.goToExistingMenuView(
     NAVIGATION_ITEMS.navigationMenuToBeUpdated.id,

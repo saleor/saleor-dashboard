@@ -6,18 +6,19 @@ import { WebhooksEventsPage } from "@pages/webhooksEventsPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/channel.json" });
-let channelPage: ChannelPage
-let mainMenuPage: MainMenuPage
-let configurationPage: ConfigurationPage
-let home:HomePage
-let webhooksEventsPage: WebhooksEventsPage
+let channelPage: ChannelPage;
+let mainMenuPage: MainMenuPage;
+let configurationPage: ConfigurationPage;
+let home: HomePage;
+let webhooksEventsPage: WebhooksEventsPage;
 
 test.beforeEach(async ({ page }) => {
   channelPage = new ChannelPage(page);
   mainMenuPage = new MainMenuPage(page);
   configurationPage = new ConfigurationPage(page);
-home = new HomePage(page)
-webhooksEventsPage = new WebhooksEventsPage(page)})
+  home = new HomePage(page);
+  webhooksEventsPage = new WebhooksEventsPage(page);
+});
 
 test.beforeEach(async ({ page }) => {
   channelPage = new ChannelPage(page);

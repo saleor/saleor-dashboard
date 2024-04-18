@@ -25,9 +25,8 @@ test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount di
   await vouchersPage.addVoucherCodeDialog.typeCodesPrefix(codesPrefix);
   await vouchersPage.addVoucherCodeDialog.clickConfirmButton();
   await vouchersPage.waitForGrid();
-  const generatedCodesRows = await vouchersPage.getNumberOfGridRowsWithText(
-    codesPrefix,
-  );
+  const generatedCodesRows =
+    await vouchersPage.getNumberOfGridRowsWithText(codesPrefix);
   await expect(
     generatedCodesRows,
     `Auto-generated number of codes: ${codesQuantity} should be visible on grid`,
@@ -36,9 +35,8 @@ test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount di
   await vouchersPage.waitForNetworkIdle(() => vouchersPage.clickSaveButton());
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.waitForGrid();
-  const activeCodesRows = await vouchersPage.getNumberOfGridRowsWithText(
-    "Active",
-  );
+  const activeCodesRows =
+    await vouchersPage.getNumberOfGridRowsWithText("Active");
   await expect(
     activeCodesRows,
     `Given codes quantity: ${codesQuantity} should have status Active displayed on grid`,
@@ -67,9 +65,8 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
   await vouchersPage.waitForNetworkIdle(() => vouchersPage.clickSaveButton());
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.waitForGrid();
-  const manualActiveCodesRows = await vouchersPage.getNumberOfGridRowsWithText(
-    "Active",
-  );
+  const manualActiveCodesRows =
+    await vouchersPage.getNumberOfGridRowsWithText("Active");
   await expect(
     manualActiveCodesRows,
     `Given codes: ${code} should have status Active displayed on grid`,
@@ -140,9 +137,8 @@ test("TC: SALEOR_89 Create voucher with minimum value of order @vouchers @e2e", 
   await vouchersPage.waitForNetworkIdle(() => vouchersPage.clickSaveButton());
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.waitForGrid();
-  const manualActiveCodesRows = await vouchersPage.getNumberOfGridRowsWithText(
-    "Active",
-  );
+  const manualActiveCodesRows =
+    await vouchersPage.getNumberOfGridRowsWithText("Active");
   await expect(
     manualActiveCodesRows,
     `Given codes: ${code} should have status Active displayed on grid`,
@@ -165,7 +161,9 @@ test("TC: SALEOR_92 Delete voucher @vouchers @e2e", async () => {
     VOUCHERS.vouchers.voucherToBeDeleted.id,
   );
   await vouchersPage.clickDeleteSingleVoucherButton();
-  await vouchersPage.waitForNetworkIdle(() => vouchersPage.deleteVoucherDialog.clickDeleteButton());
+  await vouchersPage.waitForNetworkIdle(() =>
+    vouchersPage.deleteVoucherDialog.clickDeleteButton(),
+  );
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.createVoucherButton.waitFor({ state: "visible" });
   await vouchersPage.waitForGrid();
@@ -183,7 +181,9 @@ test("TC: SALEOR_93 Bulk delete voucher @vouchers @e2e", async () => {
     VOUCHERS.vouchers.voucherToBeBulkDeleted.names,
   );
   await vouchersPage.clickBulkDeleteButton();
-  await vouchersPage.waitForNetworkIdle(() => vouchersPage.deleteVoucherDialog.clickDeleteButton());
+  await vouchersPage.waitForNetworkIdle(() =>
+    vouchersPage.deleteVoucherDialog.clickDeleteButton(),
+  );
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.waitForGrid();
   await expect(
@@ -203,9 +203,11 @@ test.skip("TC: SALEOR_94 Edit voucher - assign voucher to specific category @vou
   );
   await vouchersPage.clickSpecificProductsButton();
   await vouchersPage.clickAssignCategoryButton();
-    await vouchersPage.waitForNetworkIdle(() => vouchersPage.assignSpecificProductsDialog.assignSpecificProductsByNameAndSave(
-    categoryToBeAssigned,
-  ));
+  await vouchersPage.waitForNetworkIdle(() =>
+    vouchersPage.assignSpecificProductsDialog.assignSpecificProductsByNameAndSave(
+      categoryToBeAssigned,
+    ),
+  );
   await vouchersPage.expectSuccessBanner();
   await expect(
     vouchersPage.assignedSpecificProductRow,
@@ -225,9 +227,11 @@ test("TC:SALEOR_95  Edit voucher - assign voucher to specific collection @vouche
   await vouchersPage.clickSpecificProductsButton();
   await vouchersPage.clickCollectionsTab();
   await vouchersPage.clickAssignCollectionButton();
-  await vouchersPage.waitForNetworkIdle(() => vouchersPage.assignSpecificProductsDialog.assignSpecificProductsByNameAndSave(
-    collectionToBeAssigned,
-  ));
+  await vouchersPage.waitForNetworkIdle(() =>
+    vouchersPage.assignSpecificProductsDialog.assignSpecificProductsByNameAndSave(
+      collectionToBeAssigned,
+    ),
+  );
   await vouchersPage.expectSuccessBanner();
   await expect(
     vouchersPage.assignedSpecificProductRow,
@@ -247,9 +251,11 @@ test("TC: SALEOR_96 Edit voucher - assign voucher to specific product @vouchers 
   await vouchersPage.clickSpecificProductsButton();
   await vouchersPage.clickProductsTab();
   await vouchersPage.clickAssignProductButton();
-  await vouchersPage.waitForNetworkIdle(() => vouchersPage.assignSpecificProductsDialog.assignSpecificProductsByNameAndSave(
-    productToBeAssigned,
-));
+  await vouchersPage.waitForNetworkIdle(() =>
+    vouchersPage.assignSpecificProductsDialog.assignSpecificProductsByNameAndSave(
+      productToBeAssigned,
+    ),
+  );
   await vouchersPage.expectSuccessBanner();
   await expect(
     vouchersPage.assignedSpecificProductRow,

@@ -1,6 +1,5 @@
-import * as faker from "faker";
-
 import type { Page } from "@playwright/test";
+import * as faker from "faker";
 
 const metaDataName = `e2e-metaDataName-${faker.datatype.number()}`;
 const metaDataValue = `e2e-metaDataValue-${faker.datatype.number()}`;
@@ -82,9 +81,11 @@ export class MetadataSeoPage {
   async clickSeoSectionEditButton() {
     await this.editSeoSettings.click();
   }
+
   async clickMetadataSectionExpandButton() {
     await this.expandMetadataButton.first().click();
   }
+
   async clickPrivateMetadataSectionExpandButton() {
     await this.expandMetadataButton.last().click();
   }

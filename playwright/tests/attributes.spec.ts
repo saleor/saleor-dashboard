@@ -1,5 +1,5 @@
-import { AttributesPage } from "@pages/attributesPage";
 import { ATTRIBUTES } from "@data/e2eTestData";
+import { AttributesPage } from "@pages/attributesPage";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { expect, test } from "@playwright/test";
 import faker from "faker";
@@ -19,8 +19,12 @@ const attributeClasses = ["PRODUCT_TYPE", "PAGE_TYPE"];
 for (const attr of attributeClasses) {
   for (const type of ATTRIBUTES.attributeTypesWithAbilityToAddValues.names) {
     const uniqueSlug = `${attr}-${type}-${SALEOR_124_uuid}`;
-    test(`TC: SALEOR_124 User should be able to create ${attr} ${type} attribute with ability to add values, required, public @e2e @attributes`, async ({page}) => {
-      await page.context().storageState({ path: "./playwright/.auth/admin.json" });
+    test(`TC: SALEOR_124 User should be able to create ${attr} ${type} attribute with ability to add values, required, public @e2e @attributes`, async ({
+      page,
+    }) => {
+      await page
+        .context()
+        .storageState({ path: "./playwright/.auth/admin.json" });
       await configurationPage.gotoConfigurationView();
       await configurationPage.openAttributes();
       await attributesPage.clickCreateAttributeButton();
@@ -51,8 +55,12 @@ const SALEOR_125_uuid = faker.datatype.uuid();
 for (const attr of attributeClasses) {
   for (const type of ATTRIBUTES.attributeTypesWithoutAbilityToAddValues.names) {
     const uniqueSlug = `${attr}-${type}-${SALEOR_125_uuid}`;
-    test(`TC: SALEOR_125 User should be able to create ${attr} ${type} attribute without ability to add values, NOT required, private @e2e @attributes`, async ({page}) => {
-      await page.context().storageState({ path: "./playwright/.auth/admin.json" });
+    test(`TC: SALEOR_125 User should be able to create ${attr} ${type} attribute without ability to add values, NOT required, private @e2e @attributes`, async ({
+      page,
+    }) => {
+      await page
+        .context()
+        .storageState({ path: "./playwright/.auth/admin.json" });
       await configurationPage.gotoConfigurationView();
       await configurationPage.openAttributes();
       await attributesPage.waitForDOMToFullyLoad();
@@ -86,8 +94,12 @@ const SALEOR_126_uuid = faker.datatype.uuid();
 for (const attr of attributeClasses) {
   for (const entity of ATTRIBUTES.attributeReferencesEntities.names) {
     const uniqueSlug = `${attr}-${entity}-${SALEOR_126_uuid}`;
-    test(`TC: SALEOR_126 User should be able to create ${attr} References attribute for ${entity}, NOT required, public @e2e @attributes`, async ({page}) => {
-      await page.context().storageState({ path: "./playwright/.auth/admin.json" });
+    test(`TC: SALEOR_126 User should be able to create ${attr} References attribute for ${entity}, NOT required, public @e2e @attributes`, async ({
+      page,
+    }) => {
+      await page
+        .context()
+        .storageState({ path: "./playwright/.auth/admin.json" });
       await configurationPage.gotoConfigurationView();
       await configurationPage.openAttributes();
       await attributesPage.waitForDOMToFullyLoad();
@@ -137,7 +149,9 @@ const attributesWithValuesToBeUpdated = [
 ];
 for (const attribute of attributesWithValuesToBeUpdated) {
   test(`TC: SALEOR_127 User should be able to update attribute values in existing ${attribute.name} attribute @e2e @attributes`, async () => {
-    await attributesPage.waitForNetworkIdle(() =>  attributesPage.gotoExistingAttributePage(attribute.id, attribute.name));
+    await attributesPage.waitForNetworkIdle(() =>
+      attributesPage.gotoExistingAttributePage(attribute.id, attribute.name),
+    );
 
     await attributesPage.clickDeleteAttrValueButton(attribute.valueToBeDeleted);
     await expect(attributesPage.dialog).toBeVisible();
@@ -154,8 +168,9 @@ for (const attribute of attributesWithValuesToBeUpdated) {
     );
     await attributesPage.expectSuccessBanner();
     await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.clickSaveButton(),
-      );    await attributesPage.expectSuccessBanner();
+      attributesPage.clickSaveButton(),
+    );
+    await attributesPage.expectSuccessBanner();
     await expect(attributesPage.attrValuesSection).not.toContainText(
       attribute.valueToBeDeleted,
     );
@@ -170,15 +185,18 @@ for (const attribute of attributesWithValuesToBeUpdated) {
 
 for (const attr of ATTRIBUTES.attributesToBeUpdated) {
   test(`TC: SALEOR_128 User should be able to edit existing ${attr.name} attribute @e2e @attributes`, async () => {
-    await attributesPage.waitForNetworkIdle(() =>  attributesPage.gotoExistingAttributePage(attr.id, attr.name));
+    await attributesPage.waitForNetworkIdle(() =>
+      attributesPage.gotoExistingAttributePage(attr.id, attr.name),
+    );
     await attributesPage.attributeDefaultLabelInput.clear();
     await attributesPage.typeAttributeDefaultLabel(`updated ${attr.name}`);
     await attributesPage.expandMetadataSection();
     await attributesPage.metadataAddFieldButton.click();
     await attributesPage.fillMetadataFields("new key", "new value");
     await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.clickSaveButton(),
-      );    await attributesPage.expectSuccessBanner();
+      attributesPage.clickSaveButton(),
+    );
+    await attributesPage.expectSuccessBanner();
     await expect(
       attributesPage.attributeSelect.getByRole("button"),
     ).toHaveAttribute("aria-disabled", "true");
@@ -211,25 +229,25 @@ for (const attribute of attributesToBeDeleted) {
       timeout: 10000,
     });
     await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.deleteAttributeDialog.deleteAttribute(),
-      );
+      attributesPage.deleteAttributeDialog.deleteAttribute(),
+    );
     await attributesPage.waitForGrid();
     await expect(attributesPage.gridCanvas).not.toContainText(attribute.name);
   });
 }
 
 test("TC: SALEOR_130 Bulk delete attributes @e2e @attributes", async () => {
-  await attributesPage.gotoListView()
-  await attributesPage.waitForNetworkIdle(() => attributesPage.typeInSearchOnListView(
-    "e2e attribute to be bulk deleted",
-  ));
+  await attributesPage.gotoListView();
+  await attributesPage.waitForNetworkIdle(() =>
+    attributesPage.typeInSearchOnListView("e2e attribute to be bulk deleted"),
+  );
   await attributesPage.clickGridCell(0, 0);
   await attributesPage.clickGridCell(0, 1);
   await attributesPage.clickGridCell(0, 2);
   await attributesPage.clickBulkDeleteGridRowsButton();
   await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.deleteAttributesInBulkDialog.deleteSelectedAttributes(),
-      );
+    attributesPage.deleteAttributesInBulkDialog.deleteSelectedAttributes(),
+  );
   await attributesPage.expectSuccessBanner();
   await expect(attributesPage.emptyDataGridListView).toBeVisible();
 });

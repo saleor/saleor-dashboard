@@ -39,6 +39,7 @@ export class DraftOrdersPage extends BasePage {
   async clickCreateDraftOrderButton() {
     await this.createDraftOrderButton.click();
   }
+
   async goToDraftOrdersListView() {
     await this.page.goto(URL_LIST.draftOrders);
   }

@@ -17,12 +17,15 @@ export class FiltersPage {
   async clickAddFilterButton() {
     await this.addFilterButton.click();
   }
+
   async clickLeftInput() {
     await this.leftInput.click();
   }
+
   async clickRightInput() {
     await this.rightInput.click();
   }
+
   async clickSaveFiltersButton() {
     await this.saveFiltersButton.click();
   }

@@ -1,11 +1,11 @@
-import { ConfigurationPage } from "@pages/configurationPage";
-import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
-import { PermissionGroupDetailsPage } from "@pages/permissionGroupDetailsPage";
-import { AssignPermissionGroupMembersDialog } from "@pages/dialogs/assignPermissionGroupMembersDialog";
 import { PERMISSION_GROUPS } from "@data/e2eTestData";
+import { ConfigurationPage } from "@pages/configurationPage";
+import { AssignPermissionGroupMembersDialog } from "@pages/dialogs/assignPermissionGroupMembersDialog";
+import { UnassignPermissionGroupMembersDialog } from "@pages/dialogs/unassignPermissionGroupMembersDialog";
+import { PermissionGroupDetailsPage } from "@pages/permissionGroupDetailsPage";
+import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { expect, test } from "@playwright/test";
 import faker from "faker";
-import { UnassignPermissionGroupMembersDialog } from "@pages/dialogs/unassignPermissionGroupMembersDialog";
 
 test.use({ storageState: "playwright/.auth/admin.json" });
 
@@ -138,8 +138,10 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
   await expect(permissionDetails.assignedMemberName.last()).toContainText(
     assignedMembers.names[2],
   );
-  await permissionDetails.membersSection.getByTestId("select-all-checkbox")
-      .locator("input").click();;
+  await permissionDetails.membersSection
+    .getByTestId("select-all-checkbox")
+    .locator("input")
+    .click();
   await permissionDetails.clickUnassignMembersButton();
   await permissionDetails.unassignMembersDialog.waitFor({
     state: "visible",

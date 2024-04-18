@@ -1,25 +1,25 @@
 import { BasePage } from "@pages/basePage";
-import { HomePage } from "@pages/homePage";
 import { DiscountsPage } from "@pages/discountsPage";
+import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { VouchersPage } from "@pages/vouchersPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/discount.json" });
 
-let mainMenuPage: MainMenuPage
-let home:HomePage
-let basePage: BasePage
-let discountsPage: DiscountsPage
-let vouchersPage: VouchersPage
+let mainMenuPage: MainMenuPage;
+let home: HomePage;
+let basePage: BasePage;
+let discountsPage: DiscountsPage;
+let vouchersPage: VouchersPage;
 
 test.beforeEach(async ({ page }) => {
-mainMenuPage = new MainMenuPage(page);
-home = new HomePage(page)
-basePage = new BasePage(page);
-discountsPage = new DiscountsPage(page);
-vouchersPage = new VouchersPage(page);
-})
+  mainMenuPage = new MainMenuPage(page);
+  home = new HomePage(page);
+  basePage = new BasePage(page);
+  discountsPage = new DiscountsPage(page);
+  vouchersPage = new VouchersPage(page);
+});
 
 test.beforeEach(async ({ page }) => {
   mainMenuPage = new MainMenuPage(page);

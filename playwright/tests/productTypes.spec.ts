@@ -1,7 +1,7 @@
-import * as faker from "faker";
 import { PRODUCT_TYPES } from "@data/e2eTestData";
 import { ProductTypePage } from "@pages/productTypePage";
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import * as faker from "faker";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
 const productTypeName = `e2e-product-type-${faker.datatype.number()}`;
@@ -40,7 +40,9 @@ test("TC: SALEOR_184 As a admin I can edit product type @e2e @product-type", asy
 
   const updatedProductTypeName = `updated-e2e-product-type-${faker.datatype.number()}`;
 
-  await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeEdited.id);
+  await productTypePage.gotoExistingProductTypePage(
+    PRODUCT_TYPES.productTypeToBeEdited.id,
+  );
   await productTypePage.updateProductTypeName(updatedProductTypeName);
   await productTypePage.makeProductShippableWithWeight();
   await productTypePage.clickSaveButton();
@@ -57,13 +59,20 @@ test("TC: SALEOR_185 As a admin user I can delete product type with assigned pro
 
   const productTypeName = PRODUCT_TYPES.productTypeToBeRemoved.name;
 
-  await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeRemoved.id);
+  await productTypePage.gotoExistingProductTypePage(
+    PRODUCT_TYPES.productTypeToBeRemoved.id,
+  );
   await productTypePage.clickDeleteButton();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeletionCheckbox();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
   await productTypePage.expectSuccessBanner();
-  await productTypePage.productTypeList.waitFor({ state: "visible", timeout: 50000 });
-  await expect(productTypePage.productTypeList).not.toContainText(productTypeName);
+  await productTypePage.productTypeList.waitFor({
+    state: "visible",
+    timeout: 50000,
+  });
+  await expect(productTypePage.productTypeList).not.toContainText(
+    productTypeName,
+  );
 });
 
 test("TC: SALEOR_186 As a admin user I can delete several product types @e2e @product-type", async ({
@@ -80,7 +89,14 @@ test("TC: SALEOR_186 As a admin user I can delete several product types @e2e @pr
   await productTypePage.clickBulkDeleteButton();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
   await productTypePage.expectSuccessBanner();
-  await productTypePage.productTypeList.waitFor({ state: "visible", timeout: 50000 });
-  await expect(productTypePage.productTypeList).not.toContainText(productTypeNames[0]);
-  await expect(productTypePage.productTypeList).not.toContainText(productTypeNames[1]);
+  await productTypePage.productTypeList.waitFor({
+    state: "visible",
+    timeout: 50000,
+  });
+  await expect(productTypePage.productTypeList).not.toContainText(
+    productTypeNames[0],
+  );
+  await expect(productTypePage.productTypeList).not.toContainText(
+    productTypeNames[1],
+  );
 });

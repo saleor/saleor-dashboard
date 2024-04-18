@@ -1,7 +1,7 @@
-import * as faker from "faker";
-import { PAGE_TYPES, ATTRIBUTES } from "@data/e2eTestData";
+import { ATTRIBUTES, PAGE_TYPES } from "@data/e2eTestData";
 import { PageTypesPage } from "@pages/pageTypesPage";
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import * as faker from "faker";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
 const pageTypeName = `e2e-page-type-${faker.datatype.number()}`;
@@ -74,7 +74,7 @@ test("TC: SALEOR_190 As an admin user I can delete several page types@e2e @page-
   const rowsToBeDeleted = PAGE_TYPES.pageTypesToBeBulkDeleted.ids;
   const pageTypeNames = PAGE_TYPES.pageTypesToBeBulkDeleted.names;
 
-await pageTypePage.waitForNetworkIdle(() =>
+  await pageTypePage.waitForNetworkIdle(() =>
     pageTypePage.gotoPageTypeListPage(),
   );
   await expect(pageTypePage.pageTypeList).toBeVisible();

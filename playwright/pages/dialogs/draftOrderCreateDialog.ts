@@ -17,6 +17,7 @@ export class DraftOrderCreateDialog {
   async expandChannelsSearchList() {
     await this.channelNameInput.click();
   }
+
   async clickConfirmButton() {
     await this.confirmButton.click();
   }

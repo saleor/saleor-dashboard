@@ -1,10 +1,10 @@
+import {
+  permissions,
+  USER_PERMISSION,
+  UserPermissionType,
+} from "@data/userPermissions";
 import { LoginPage } from "@pages/loginPage";
 import { test } from "@playwright/test";
-import {
-  UserPermissionType,
-  USER_PERMISSION,
-  permissions,
-} from "@data/userPermissions";
 
 let login: LoginPage;
 

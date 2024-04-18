@@ -39,24 +39,31 @@ export class IssueGiftCardDialog {
   async clickIssueButton() {
     await this.issueButton.click();
   }
+
   async clickOkButton() {
     await this.okButton.click();
   }
+
   async clickCopyCodeButton() {
     await this.copyCodeButton.click();
   }
+
   async typeAmount(amount: string) {
     await this.enterAmountInput.fill(amount);
   }
+
   async typeCustomer(customer: string) {
     await this.customerInput.fill(customer);
   }
+
   async typeExpiryPeriodAmount(expiryPeriodAmount: string) {
     await this.expiryPeriodAmountInput.fill(expiryPeriodAmount);
   }
+
   async typeTag(tag: string) {
     await this.tagsInput.fill(tag);
   }
+
   async typeNote(tag: string) {
     await this.noteTextArea.fill(tag);
   }
@@ -64,9 +71,11 @@ export class IssueGiftCardDialog {
   async clickSendToCustomerCheckbox() {
     await this.sendToCustomerCheckbox.click();
   }
+
   async clickSendExpireDateCheckbox() {
     await this.sendExpireDateCheckbox.click();
   }
+
   async clickRequiresActivationCheckbox() {
     await this.requiresActivationCheckbox.click();
   }
