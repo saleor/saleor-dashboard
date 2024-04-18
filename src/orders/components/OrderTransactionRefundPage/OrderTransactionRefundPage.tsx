@@ -123,10 +123,10 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
         type: "custom",
         message: intl.formatMessage(messages.amountError),
       });
-      // return;
+      return;
     }
 
-    // onTransferFunds();
+    onTransferFunds?.();
   };
 
   const submitBehavior = getRefundFormSubmitBehavior({

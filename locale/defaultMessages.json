@@ -861,6 +861,9 @@
     "context": "order history message",
     "string": "Payment was refunded"
   },
+  "3gFJH+": {
+    "string": "Amount must be higher that 0 when you transfer funds"
+  },
   "3kwdxJ": {
     "context": "gift card export type label",
     "string": "gift cards"
@@ -1777,9 +1780,6 @@
   },
   "A7W4KO": {
     "string": "Catalog rule"
-  },
-  "A7Zr+z": {
-    "string": "Amount must be higher that 0"
   },
   "A9QSur": {
     "context": "area units type",

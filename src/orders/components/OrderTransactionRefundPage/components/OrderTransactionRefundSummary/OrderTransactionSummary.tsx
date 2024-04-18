@@ -129,7 +129,12 @@ export const OrderTransactionSummary: React.FC<
               </Box>
             )}
           </Box>
-          <Box display="flex" justifyContent="space-between" paddingY={4}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            paddingTop={4}
+            paddingBottom={!!amountError ? 2 : 4}
+          >
             <Text size={5} display="flex" alignItems="center">
               <FormattedMessage {...messages.totalAmount} />
             </Text>
@@ -138,11 +143,17 @@ export const OrderTransactionSummary: React.FC<
               value={amountField.value}
               onChange={amountField.onChange}
               error={!!amountError}
-              helperText={amountError?.message}
-              __width="100px"
+              __width={100}
               endAdornment={currency}
             />
           </Box>
+          {!!amountError && (
+            <Box textAlign="right" paddingBottom={4}>
+              <Text color="critical1" size={1}>
+                {amountError.message}
+              </Text>
+            </Box>
+          )}
         </Box>
       </DashboardCard.Content>
     </DashboardCard>
