@@ -3,6 +3,7 @@ import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
+import { useFlag } from "@dashboard/featureFlags";
 import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { transformPaymentStatus } from "@dashboard/misc";
 import {
@@ -35,6 +36,8 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
 }) => {
   const classes = useStyles();
   const intl = useIntl();
+
+  const { enabled } = useFlag("improved_refunds");
 
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
@@ -101,7 +104,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
           </CardContent>
         )}
       <PaymentsSummary order={order} />
-      {canAnyRefund && (
+      {canAnyRefund && !enabled && (
         <>
           <Divider />
           <CardTitle
