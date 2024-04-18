@@ -1778,6 +1778,9 @@
   "A7W4KO": {
     "string": "Catalog rule"
   },
+  "A7Zr+z": {
+    "string": "Amount must be higher that 0"
+  },
   "A9QSur": {
     "context": "area units type",
     "string": "Area"
