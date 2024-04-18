@@ -26,34 +26,26 @@ export interface TranslationsSalesProps {
   params: TranslationsSalesQueryParams;
 }
 
-const TranslationsSales: React.FC<TranslationsSalesProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsSales: React.FC<TranslationsSalesProps> = ({ id, languageCode, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
-
   const saleTranslations = useSaleTranslationDetailsQuery({
     variables: { id, language: languageCode },
   });
-
-  const [updateTranslations, updateTranslationsOpts] =
-    useUpdateSaleTranslationsMutation({
-      onCompleted: data => {
-        if (data.saleTranslate.errors.length === 0) {
-          saleTranslations.refetch();
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          navigate("?", { replace: true });
-        }
-      },
-    });
-
+  const [updateTranslations, updateTranslationsOpts] = useUpdateSaleTranslationsMutation({
+    onCompleted: data => {
+      if (data.saleTranslate.errors.length === 0) {
+        saleTranslations.refetch();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        navigate("?", { replace: true });
+      }
+    },
+  });
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -62,11 +54,9 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
         }),
       { replace: true },
     );
-
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
-
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
     data: string,
@@ -83,7 +73,6 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
         },
       }),
     );
-
   const translation = saleTranslations?.data?.translation;
 
   return (
@@ -97,11 +86,7 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={
-        translation?.__typename === "SaleTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === "SaleTranslatableContent" ? translation : null}
     />
   );
 };

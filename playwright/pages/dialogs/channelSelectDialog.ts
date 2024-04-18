@@ -25,10 +25,7 @@ export class ChannelSelectDialog {
   }
 
   async selectLastChannel() {
-    await this.displayedChannels
-      .last()
-      .locator(this.displayedChannelsCheckboxes)
-      .click();
+    await this.displayedChannels.last().locator(this.displayedChannelsCheckboxes).click();
   }
 
   async clickConfirmButton() {

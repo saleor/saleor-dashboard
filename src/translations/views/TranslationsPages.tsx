@@ -17,10 +17,7 @@ import { useIntl } from "react-intl";
 
 import TranslationsPagesPage from "../components/TranslationsPagesPage";
 import { PageTranslationInputFieldName, TranslationField } from "../types";
-import {
-  getAttributeValueTranslationsInputData,
-  getParsedTranslationInputData,
-} from "../utils";
+import { getAttributeValueTranslationsInputData, getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsPagesQueryParams {
   activeField: string;
@@ -34,20 +31,14 @@ export interface TranslationsPagesProps {
 type HandleSubmitData = string | any;
 type HandleSubmitAttributeValue = OutputData | string;
 
-const TranslationsPages: React.FC<TranslationsPagesProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsPages: React.FC<TranslationsPagesProps> = ({ id, languageCode, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
-
   const pageTranslations = usePageTranslationDetailsQuery({
     variables: { id, language: languageCode },
   });
-
   const onUpdate = (errors: unknown[]) => {
     if (errors.length === 0) {
       pageTranslations.refetch();
@@ -58,17 +49,12 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
       navigate("?", { replace: true });
     }
   };
-
-  const [updateTranslations, updateTranslationsOpts] =
-    useUpdatePageTranslationsMutation({
-      onCompleted: data => onUpdate(data.pageTranslate.errors),
-    });
-
-  const [updateAttributeValueTranslations] =
-    useUpdateAttributeValueTranslationsMutation({
-      onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
-    });
-
+  const [updateTranslations, updateTranslationsOpts] = useUpdatePageTranslationsMutation({
+    onCompleted: data => onUpdate(data.pageTranslate.errors),
+  });
+  const [updateAttributeValueTranslations] = useUpdateAttributeValueTranslationsMutation({
+    onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
+  });
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -77,11 +63,9 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
         }),
       { replace: true },
     );
-
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
-
   const handleSubmit = (
     { name: fieldName }: TranslationField<PageTranslationInputFieldName>,
     data: HandleSubmitData,
@@ -98,7 +82,6 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
         },
       }),
     );
-
   const handleAttributeValueSubmit = (
     { id, type }: TranslationField<PageTranslationInputFieldName>,
     data: HandleSubmitAttributeValue,
@@ -112,7 +95,6 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
         },
       }),
     );
-
   const translation = pageTranslations?.data?.translation;
 
   return (
@@ -127,11 +109,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
       onAttributeValueSubmit={handleAttributeValueSubmit}
-      data={
-        translation?.__typename === "PageTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === "PageTranslatableContent" ? translation : null}
     />
   );
 };

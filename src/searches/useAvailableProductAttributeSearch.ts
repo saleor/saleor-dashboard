@@ -8,19 +8,10 @@ import {
 import makeSearch from "@dashboard/hooks/makeSearch";
 
 export const searchProductAttributes = gql`
-  query SearchAvailableProductAttributes(
-    $id: ID!
-    $after: String
-    $first: Int!
-    $query: String!
-  ) {
+  query SearchAvailableProductAttributes($id: ID!, $after: String, $first: Int!, $query: String!) {
     productType(id: $id) {
       id
-      availableAttributes(
-        after: $after
-        first: $first
-        filter: { search: $query }
-      ) {
+      availableAttributes(after: $after, first: $first, filter: { search: $query }) {
         edges {
           node {
             ...AvailableAttribute

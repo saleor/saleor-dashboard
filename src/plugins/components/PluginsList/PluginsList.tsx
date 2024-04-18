@@ -8,12 +8,7 @@ import { renderCollection } from "@dashboard/misc";
 import { getPluginsWithAppReplacementsIds } from "@dashboard/plugins/plugins-with-app-replacements";
 import { PluginListUrlSortField, pluginUrl } from "@dashboard/plugins/urls";
 import { ListProps, SortPage } from "@dashboard/types";
-import {
-  TableBody,
-  TableCell,
-  TableFooter,
-  Typography,
-} from "@material-ui/core";
+import { TableBody, TableCell, TableFooter, Typography } from "@material-ui/core";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -33,20 +28,15 @@ export const useStyles = makeStyles(
 );
 
 const pluginsWithAppReplacements = getPluginsWithAppReplacementsIds();
-const hasAppReplacement = (pluginId: string) =>
-  pluginsWithAppReplacements.includes(pluginId);
+const hasAppReplacement = (pluginId: string) => pluginsWithAppReplacements.includes(pluginId);
 
-export interface PluginListProps
-  extends ListProps,
-    SortPage<PluginListUrlSortField> {
+export interface PluginListProps extends ListProps, SortPage<PluginListUrlSortField> {
   plugins: PluginBaseFragment[];
 }
 
 const totalColSpan = 10;
-
 const PluginList: React.FC<PluginListProps> = props => {
-  const { settings, plugins, disabled, sort, onSort, onUpdateListSettings } =
-    props;
+  const { settings, plugins, disabled, sort, onSort, onUpdateListSettings } = props;
   const classes = useStyles(props);
   const navigate = useNavigator();
   const intl = useIntl();
@@ -69,12 +59,12 @@ const PluginList: React.FC<PluginListProps> = props => {
           plugins,
           plugin => {
             const hasReplacement = plugin && hasAppReplacement(plugin.id);
-            const activeChannelConfigurations =
-              plugin?.channelConfigurations?.filter(c => c.active);
+            const activeChannelConfigurations = plugin?.channelConfigurations?.filter(
+              c => c.active,
+            );
             const isActive =
               plugin?.globalConfiguration?.active ||
-              (activeChannelConfigurations &&
-                activeChannelConfigurations.length > 0);
+              (activeChannelConfigurations && activeChannelConfigurations.length > 0);
 
             return plugin ? (
               <TableRowLink
@@ -90,9 +80,7 @@ const PluginList: React.FC<PluginListProps> = props => {
                   <Typography>{plugin.name}</Typography>
                   {hasReplacement && isActive && (
                     <Typography variant="caption" color="error">
-                      {intl.formatMessage(
-                        pluginsMiscMessages.appReplacementMessage,
-                      )}
+                      {intl.formatMessage(pluginsMiscMessages.appReplacementMessage)}
                     </Typography>
                   )}
                 </TableCell>

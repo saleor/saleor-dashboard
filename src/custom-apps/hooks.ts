@@ -6,7 +6,6 @@ export const useAvailableEvents = () => {
   const { data: introspectionData } = useQuery(IntrospectionQuery, {
     fetchPolicy: "network-only",
   });
-
   const elements = introspectionData?.__schema?.types || [];
   const availableEvents = buildEventsMap(elements);
 

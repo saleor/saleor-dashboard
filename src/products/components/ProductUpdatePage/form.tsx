@@ -62,28 +62,18 @@ export function useProductUpdateForm(
     () => getProductUpdatePageFormData(product, product?.variants),
     [product],
   );
-
   const form = useForm(initial, undefined, {
     confirmLeave: true,
     formId: PRODUCT_UPDATE_FORM_ID,
   });
-
-  const {
-    handleChange,
-    triggerChange,
-    toggleValues,
-    data: formData,
-    setIsSubmitDisabled,
-  } = form;
+  const { handleChange, triggerChange, toggleValues, data: formData, setIsSubmitDisabled } = form;
   const { locale } = useLocale();
-
   const datagrid = useDatagridChangeState();
   const variants = useRef<DatagridChangeOpts>({
     added: [],
     removed: [],
     updates: [],
   });
-
   const handleVariantChange = React.useCallback(
     (data: DatagridChangeOpts) => {
       variants.current = prepareVariantChangeData(data, locale, product);
@@ -91,39 +81,32 @@ export function useProductUpdateForm(
     },
     [locale, product, triggerChange],
   );
-
   const attributes = useFormset(getAttributeInputFromProduct(product));
-  const {
-    getters: attributeRichTextGetters,
-    getValues: getAttributeRichTextValues,
-  } = useMultipleRichText({
-    initial: getRichTextDataFromAttributes(attributes.data),
-    triggerChange,
-  });
+  const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
+    useMultipleRichText({
+      initial: getRichTextDataFromAttributes(attributes.data),
+      triggerChange,
+    });
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const richText = useRichText({
     initial: product?.description,
     loading: !product,
     triggerChange,
   });
-
   const { setExitDialogSubmitRef } = useExitFormDialog({
     formId: PRODUCT_UPDATE_FORM_ID,
   });
-
   const {
     isMetadataModified,
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
-
   const {
     channels,
     handleChannelChange,
     handleChannelListUpdate,
     touched: touchedChannels,
   } = useProductChannelListingsForm(product, triggerChange);
-
   const handleCollectionSelect = createMultiselectChangeHandler(
     toggleValues,
     opts.setSelectedCollections,
@@ -133,10 +116,7 @@ export function useProductUpdateForm(
     opts.setSelectedCategory,
     opts.categories,
   );
-  const handleAttributeChange = createAttributeChangeHandler(
-    attributes.change,
-    triggerChange,
-  );
+  const handleAttributeChange = createAttributeChangeHandler(attributes.change, triggerChange);
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
@@ -180,7 +160,6 @@ export function useProductUpdateForm(
     opts.taxClasses,
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-
   const data: ProductUpdateData = {
     ...formData,
     attributes: getAttributesDisplayData(
@@ -192,16 +171,12 @@ export function useProductUpdateForm(
     channels,
     description: null,
   };
-
   const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
     ...data,
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
     attributes: mergeAttributes(
       attributes.data,
-      getRichTextAttributesFromMap(
-        attributes.data,
-        await getAttributeRichTextValues(),
-      ),
+      getRichTextAttributesFromMap(attributes.data, await getAttributeRichTextValues()),
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     channels: {
@@ -213,7 +188,6 @@ export function useProductUpdateForm(
     description: await richText.getValue(),
     variants: variants.current,
   });
-
   const handleSubmit = async (data: ProductUpdateSubmitData) => {
     const errors = await onSubmit(data);
 
@@ -223,16 +197,13 @@ export function useProductUpdateForm(
 
     return errors;
   };
-
   const handleFormSubmit = useHandleFormSubmit({
     formId: form.formId,
     onSubmit: handleSubmit,
   });
-
   const submit = useCallback(async () => {
     const result = await handleFormSubmit(await getSubmitData());
     await refetch();
-
     datagrid.setAdded(prevAdded =>
       prevAdded.filter((_, index) =>
         result.some(
@@ -275,17 +246,12 @@ export function useProductUpdateForm(
       return false;
     }
 
-    if (
-      data.isPreorder &&
-      data.hasPreorderEndDate &&
-      !!form.errors.preorderEndDateTime
-    ) {
+    if (data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime) {
       return false;
     }
 
     return true;
   };
-
   const isSaveDisabled = disabled;
   const isSubmitDisabled = isSaveDisabled || !isValid();
 
@@ -341,9 +307,7 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   return (
     <form onSubmit={props.submit} data-test-id="product-update-form">
       <DatagridChangeStateContext.Provider value={datagrid}>
-        <RichTextContext.Provider value={richText}>
-          {children(props)}
-        </RichTextContext.Provider>
+        <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
       </DatagridChangeStateContext.Provider>
     </form>
   );

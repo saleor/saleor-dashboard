@@ -1,18 +1,12 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  OrderErrorFragment,
-  SearchOrderVariantQuery,
-} from "@dashboard/graphql";
+import { OrderErrorFragment, SearchOrderVariantQuery } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
@@ -40,12 +34,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
-import {
-  hasAllVariantsSelected,
-  isVariantSelected,
-  onProductAdd,
-  onVariantAdd,
-} from "./utils";
+import { hasAllVariantsSelected, isVariantSelected, onProductAdd, onVariantAdd } from "./utils";
 
 export interface OrderProductAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -54,14 +43,11 @@ export interface OrderProductAddDialogProps extends FetchMoreProps {
   products: RelayToFlat<SearchOrderVariantQuery["search"]>;
   onClose: () => void;
   onFetch: (query: string) => void;
-  onSubmit: (
-    data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-  ) => void;
+  onSubmit: (data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]) => void;
   channelName?: string;
 }
 
 const scrollableTargetId = "orderProductAddScrollableDialog";
-
 const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   const {
     confirmButtonState,
@@ -76,7 +62,6 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     onSubmit,
     channelName,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
@@ -91,36 +76,25 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
 
   const isValidVariant = ({
     pricing,
-  }: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]) =>
-    !!pricing;
-
+  }: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]) => !!pricing;
   const getValidProductVariants = ({
     variants,
-  }: SearchOrderVariantQuery["search"]["edges"][0]["node"]) =>
-    variants.filter(isValidVariant);
-
+  }: SearchOrderVariantQuery["search"]["edges"][0]["node"]) => variants.filter(isValidVariant);
   const productChoices =
-    products?.filter(product => getValidProductVariants(product).length > 0) ||
-    [];
-
+    products?.filter(product => getValidProductVariants(product).length > 0) || [];
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
-        getValidProductVariants(product).map(variant =>
-          isVariantSelected(variant, variants),
-        ),
+        getValidProductVariants(product).map(variant => isVariantSelected(variant, variants)),
       )
     : [];
-
   const productsWithAllVariantsSelected = productChoices
     ? productChoices.map(product =>
         hasAllVariantsSelected(getValidProductVariants(product), variants),
       )
     : [];
-
   const handleSubmit = () => onSubmit(variants);
-
-  const productChoicesWithValidVariants = productChoices.filter(
-    ({ variants }) => variants.some(isValidVariant),
+  const productChoicesWithValidVariants = productChoices.filter(({ variants }) =>
+    variants.some(isValidVariant),
   );
 
   return (
@@ -178,14 +152,9 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                 (product, productIndex) => (
                   <React.Fragment key={product ? product.id : "skeleton"}>
                     <TableRowLink data-test-id="product">
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.productCheckboxCell}
-                      >
+                      <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                         <Checkbox
-                          checked={
-                            productsWithAllVariantsSelected[productIndex]
-                          }
+                          checked={productsWithAllVariantsSelected[productIndex]}
                           disabled={loading}
                           onChange={() =>
                             onProductAdd(
@@ -218,11 +187,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                           <TableCell className={classes.colVariantCheckbox}>
                             <Checkbox
                               className={classes.variantCheckbox}
-                              checked={
-                                selectedVariantsToProductsMap[productIndex][
-                                  variantIndex
-                                ]
-                              }
+                              checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
                               disabled={loading}
                               onChange={() =>
                                 onVariantAdd(
@@ -249,10 +214,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                               </div>
                             )}
                           </TableCell>
-                          <TableCell
-                            className={classes.textRight}
-                            data-test-id="variant-price"
-                          >
+                          <TableCell className={classes.textRight} data-test-id="variant-price">
                             <OrderPriceLabel pricing={variant.pricing} />
                           </TableCell>
                         </TableRowLink>

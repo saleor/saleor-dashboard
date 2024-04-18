@@ -24,12 +24,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
   const { warehouse, trackingNumber, status } = fulfillment;
 
   return (
-    <Box
-      paddingY={4}
-      borderColor="default1"
-      borderBottomStyle={"solid"}
-      borderBottomWidth={1}
-    >
+    <Box paddingY={4} borderColor="default1" borderBottomStyle={"solid"} borderBottomWidth={1}>
       <Typography color="textSecondary" variant="body2">
         {warehouse && (
           <>

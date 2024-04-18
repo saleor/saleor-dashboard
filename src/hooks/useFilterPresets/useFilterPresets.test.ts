@@ -17,7 +17,6 @@ describe("useFilterPresets", () => {
       value: new URL(window.location.href),
     });
   });
-
   afterEach(() => {
     Object.defineProperty(window, "location", {
       configurable: true,
@@ -28,14 +27,12 @@ describe("useFilterPresets", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-
   it("should return saved filter presets from storage", () => {
     // Arrange && Act
     const presets = [
       { name: "preset1", data: "data1" },
       { name: "preset2", data: "data2" },
     ];
-
     const { result } = renderHook(() =>
       useFilterPresets({
         getUrl: jest.fn(),
@@ -53,7 +50,6 @@ describe("useFilterPresets", () => {
     // Assert
     expect(result.current.presets).toEqual(presets);
   });
-
   it("should return selected preset index when activeTab param", () => {
     // Arrange & Act
     const { result } = renderHook(() =>
@@ -75,7 +71,6 @@ describe("useFilterPresets", () => {
     // Assert
     expect(result.current.selectedPreset).toEqual(1);
   });
-
   it("should handle active filter preset change", () => {
     // Arrange
     const savedPreset = { name: "preset1", data: "query=John" };
@@ -97,18 +92,13 @@ describe("useFilterPresets", () => {
     act(() => {
       result.current.onPresetChange(1);
     });
-
     // Assert
-    expect(mockNavigate).toHaveBeenCalledWith(
-      `${baseUrl}?${savedPreset.data}&activeTab=1`,
-    );
+    expect(mockNavigate).toHaveBeenCalledWith(`${baseUrl}?${savedPreset.data}&activeTab=1`);
   });
-
   it("should handle preset delete and navigate to base url when active preset is equal deleting preset", () => {
     // Arrange
     const mockDeleteStorage = jest.fn();
     const mockReset = jest.fn();
-
     const { result } = renderHook(() =>
       useFilterPresets({
         getUrl: jest.fn(() => baseUrl),
@@ -133,18 +123,15 @@ describe("useFilterPresets", () => {
     act(() => {
       result.current.onPresetDelete();
     });
-
     // Assert
     expect(mockDeleteStorage).toHaveBeenCalledWith(1);
     expect(mockReset).toHaveBeenCalled();
     expect(mockNavigate).toHaveBeenCalledWith(baseUrl);
   });
-
   it("should handle preset delete and navigate to active preset when preset to delete is different that preset to delete", () => {
     // Arrange
     const mockDeleteStorage = jest.fn();
     const mockReset = jest.fn();
-
     const { result } = renderHook(() =>
       useFilterPresets({
         getUrl: jest.fn(() => baseUrl),
@@ -169,13 +156,11 @@ describe("useFilterPresets", () => {
     act(() => {
       result.current.onPresetDelete();
     });
-
     // Assert
     expect(mockDeleteStorage).toHaveBeenCalledWith(1);
     expect(mockReset).toHaveBeenCalled();
     expect(mockNavigate).toHaveBeenCalledWith(baseUrl + "?activeTab=1");
   });
-
   it("should handle save new filter preset", () => {
     // Arrange
     const mockSaveStorage = jest.fn();
@@ -199,12 +184,10 @@ describe("useFilterPresets", () => {
     act(() => {
       result.current.onPresetSave({ name: "new-preset" });
     });
-
     // Assert
     expect(mockSaveStorage).toHaveBeenCalledWith("new-preset", "query=John");
     expect(mockNavigate).toHaveBeenCalledWith(`${baseUrl}?activeTab=1`);
   });
-
   it("should handle update existing filter preset", () => {
     // Arrange
     const mockUpdateStorage = jest.fn();
@@ -233,24 +216,16 @@ describe("useFilterPresets", () => {
     act(() => {
       result.current.onPresetUpdate("current-preset");
     });
-
     // Assert
-    expect(mockUpdateStorage).toHaveBeenCalledWith(
-      "current-preset",
-      "query=JoeDoe",
-    );
-    expect(mockNavigate).toHaveBeenCalledWith(
-      `${baseUrl}?query=John&activeTab=1`,
-    );
+    expect(mockUpdateStorage).toHaveBeenCalledWith("current-preset", "query=JoeDoe");
+    expect(mockNavigate).toHaveBeenCalledWith(`${baseUrl}?query=John&activeTab=1`);
   });
-
   it("should return preset name to delete when presetIdToDelete has been specific", () => {
     // Arrange
     const presets = [
       { name: "preset1", data: "data1" },
       { name: "preset2", data: "data2" },
     ];
-
     const { result } = renderHook(() =>
       useFilterPresets({
         getUrl: jest.fn(),
@@ -271,18 +246,15 @@ describe("useFilterPresets", () => {
     act(() => {
       result.current.setPresetIdToDelete(1);
     });
-
     // Assert
     expect(result.current.getPresetNameToDelete()).toEqual("preset1");
   });
-
   it("should return '...'  when presetIdToDelete has not been specific", () => {
     // Arrange
     const presets = [
       { name: "preset1", data: "data1" },
       { name: "preset2", data: "data2" },
     ];
-
     const { result } = renderHook(() =>
       useFilterPresets({
         getUrl: jest.fn(),

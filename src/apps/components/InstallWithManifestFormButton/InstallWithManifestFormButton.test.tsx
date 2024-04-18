@@ -34,7 +34,6 @@ describe("Apps InstallWithManifestFormButton", () => {
     expect(submitHandler).toBeCalledTimes(1);
     expect(submitHandler).toBeCalledWith("https://example.com/manifest.json");
   });
-
   it("return error when invalid manifest url value passed", async () => {
     // Arrange
     const submitHandler = jest.fn();

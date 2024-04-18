@@ -1,9 +1,6 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { useAppListContext } from "@dashboard/apps/context";
-import {
-  getAppDetails,
-  resolveInstallationOfAppstoreApp,
-} from "@dashboard/apps/utils";
+import { getAppDetails, resolveInstallationOfAppstoreApp } from "@dashboard/apps/utils";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -29,16 +26,12 @@ const AppListRow: React.FC<AppListRowProps> = ({
 }) => {
   const intl = useIntl();
   const { retryAppInstallation, removeAppInstallation } = useAppListContext();
-
   const appDetails = React.useCallback(
     (app: AppstoreApi.SaleorApp) =>
       getAppDetails({
         intl,
         app,
-        appInstallation: resolveInstallationOfAppstoreApp(
-          app,
-          appInstallationList,
-        ),
+        appInstallation: resolveInstallationOfAppstoreApp(app, appInstallationList),
         navigateToAppInstallPage,
         navigateToGithubForkPage,
         retryAppInstallation,
@@ -53,7 +46,6 @@ const AppListRow: React.FC<AppListRowProps> = ({
       retryAppInstallation,
     ],
   );
-
   const {
     releaseDate,
     installationPending,
@@ -77,15 +69,9 @@ const AppListRow: React.FC<AppListRowProps> = ({
     >
       <AppListCardDescription key={app.name.en + "description"} app={app} />
 
-      <AppListCardLinks
-        key={app.name.en + "links"}
-        links={appDetails(app).links}
-      />
+      <AppListCardLinks key={app.name.en + "links"} links={appDetails(app).links} />
 
-      <AppListCardIntegrations
-        key={app.name.en + "integrations"}
-        integrations={app.integrations}
-      />
+      <AppListCardIntegrations key={app.name.en + "integrations"} integrations={app.integrations} />
 
       <AppListCardActions
         key={app.name.en + "actions"}

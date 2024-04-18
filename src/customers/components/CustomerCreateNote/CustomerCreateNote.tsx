@@ -24,7 +24,6 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
-
   const formErrors = getFormErrors(["note"], errors);
 
   return (

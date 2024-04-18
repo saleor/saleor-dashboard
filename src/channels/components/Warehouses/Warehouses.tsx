@@ -34,7 +34,6 @@ const Warehouses: React.FC<WarehousesProps> = props => {
     warehouses,
     warehousesChoices,
   } = props;
-
   const intl = useIntl();
 
   return (

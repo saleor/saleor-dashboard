@@ -6,10 +6,7 @@ import { numeric } from "./numeric";
 
 describe("ConditionalFilter / validation / numeric", () => {
   it.each([
-    [
-      "12345678901234567890123456",
-      { rightText: "The value is too long.", row: 0 },
-    ],
+    ["12345678901234567890123456", { rightText: "The value is too long.", row: 0 }],
     ["123", false],
     [["123", "321"], false],
     [["100", "1"], { rightText: "The value must be higher", row: 0 }],

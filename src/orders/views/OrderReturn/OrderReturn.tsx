@@ -25,40 +25,28 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const [replacedOrder, setReplacedOrder] = React.useState<string | null>(null);
-
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId,
     },
   });
-
-  const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation(
-    {
-      onCompleted: data => {
-        if (!data.orderFulfillmentReturnProducts?.errors.length) {
-          const replaceOrder =
-            data.orderFulfillmentReturnProducts?.replaceOrder;
-          if (replaceOrder?.id) {
-            setReplacedOrder(replaceOrder?.id);
-          }
+  const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation({
+    onCompleted: data => {
+      if (!data.orderFulfillmentReturnProducts?.errors.length) {
+        const replaceOrder = data.orderFulfillmentReturnProducts?.replaceOrder;
+        if (replaceOrder?.id) {
+          setReplacedOrder(replaceOrder?.id);
         }
-      },
+      }
     },
-  );
-
-  const {
-    sendMutations,
-    grantRefundErrors,
-    sendRefundErrors,
-    grantRefundResponseOrderData,
-  } = useRefundWithinReturn({
-    orderId,
-    transactionId: data?.order?.transactions[0]?.id,
   });
-
+  const { sendMutations, grantRefundErrors, sendRefundErrors, grantRefundResponseOrderData } =
+    useRefundWithinReturn({
+      orderId,
+      transactionId: data?.order?.transactions[0]?.id,
+    });
   const handleSubmit = async (formData: OrderReturnFormData) => {
     if (!data?.order) {
       return;
@@ -81,10 +69,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       return;
     }
 
-    const { grantRefundErrors, sendRefundErrors } = await sendMutations(
-      formData,
-    );
-
+    const { grantRefundErrors, sendRefundErrors } = await sendMutations(formData);
     const errors = [...returnErrors, ...grantRefundErrors, ...sendRefundErrors];
 
     if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
@@ -105,21 +90,14 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       navigate(orderUrl(replacedOrder ?? orderId));
     }
   };
-
   const returnCreateResponseOrderData =
     returnCreateOpts.data?.orderFulfillmentReturnProducts?.order;
-
   // order data from mutations responses if available
-  const orderData =
-    grantRefundResponseOrderData ??
-    returnCreateResponseOrderData ??
-    data?.order;
+  const orderData = grantRefundResponseOrderData ?? returnCreateResponseOrderData ?? data?.order;
 
   return (
     <OrderReturnPage
-      returnErrors={
-        returnCreateOpts.data?.orderFulfillmentReturnProducts?.errors
-      }
+      returnErrors={returnCreateOpts.data?.orderFulfillmentReturnProducts?.errors}
       grantRefundErrors={grantRefundErrors}
       sendRefundErrors={sendRefundErrors}
       order={orderData}

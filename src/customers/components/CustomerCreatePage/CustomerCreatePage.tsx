@@ -7,11 +7,7 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { customerListUrl } from "@dashboard/customers/urls";
-import {
-  AccountErrorFragment,
-  AddressInput,
-  CustomerCreateDataQuery,
-} from "@dashboard/graphql";
+import { AccountErrorFragment, AddressInput, CustomerCreateDataQuery } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -32,8 +28,7 @@ export interface CustomerCreatePageFormData {
   email: string;
   note: string;
 }
-export interface CustomerCreatePageSubmitData
-  extends CustomerCreatePageFormData {
+export interface CustomerCreatePageSubmitData extends CustomerCreatePageFormData {
   address: AddressInput;
 }
 
@@ -72,37 +67,34 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
 }: CustomerCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const [countryDisplayName, setCountryDisplayName] = React.useState("");
   const countryChoices = mapCountriesToChoices(countries);
-  const { errors: validationErrors, submit: handleSubmitWithAddress } =
-    useAddressValidation<CustomerCreatePageFormData, void>(formData =>
-      onSubmit({
-        address: {
-          city: formData.city,
-          cityArea: formData.cityArea,
-          companyName: formData.companyName,
-          country: formData.country,
-          countryArea: formData.countryArea,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          phone: formData.phone,
-          postalCode: formData.postalCode,
-          streetAddress1: formData.streetAddress1,
-          streetAddress2: formData.streetAddress2,
-        },
-        customerFirstName: formData.customerFirstName,
-        customerLastName: formData.customerLastName,
-        email: formData.email,
-        note: formData.note,
-      }),
-    );
-
+  const { errors: validationErrors, submit: handleSubmitWithAddress } = useAddressValidation<
+    CustomerCreatePageFormData,
+    void
+  >(formData =>
+    onSubmit({
+      address: {
+        city: formData.city,
+        cityArea: formData.cityArea,
+        companyName: formData.companyName,
+        country: formData.country,
+        countryArea: formData.countryArea,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phone,
+        postalCode: formData.postalCode,
+        streetAddress1: formData.streetAddress1,
+        streetAddress2: formData.streetAddress2,
+      },
+      customerFirstName: formData.customerFirstName,
+      customerLastName: formData.customerLastName,
+      email: formData.email,
+      note: formData.note,
+    }),
+  );
   const errors = [...apiErrors, ...validationErrors];
-
-  const handleSubmit = (
-    formData: CustomerCreatePageFormData & AddressTypeInput,
-  ) => {
+  const handleSubmit = (formData: CustomerCreatePageFormData & AddressTypeInput) => {
     const areAddressInputFieldsModified = (
       [
         "city",
@@ -136,19 +128,13 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={handleSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
       {({ change, set, data, isSaveDisabled, submit }) => {
         const countrySelect = createSingleAutocompleteSelectHandler(
           change,
           setCountryDisplayName,
           countryChoices,
         );
-
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (

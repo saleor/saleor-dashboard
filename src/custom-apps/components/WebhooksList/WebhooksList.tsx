@@ -9,19 +9,9 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { isUnnamed } from "@dashboard/custom-apps/utils";
 import { WebhookFragment } from "@dashboard/graphql";
-import {
-  commonMessages,
-  commonStatusMessages,
-  sectionNames,
-} from "@dashboard/intl";
+import { commonMessages, commonStatusMessages, sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  TableHead,
-} from "@material-ui/core";
+import { Card, CardContent, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -36,11 +26,7 @@ export interface WebhooksListProps {
   createHref?: string;
 }
 
-const WebhooksList: React.FC<WebhooksListProps> = ({
-  webhooks,
-  createHref,
-  onRemove,
-}) => {
+const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRemove }) => {
   const intl = useIntl();
   const classes = useStyles();
   const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
@@ -52,11 +38,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
         className={classes.cardTitle}
         toolbar={
           !!createHref && (
-            <Button
-              variant="secondary"
-              href={createHref}
-              data-test-id="create-webhook"
-            >
+            <Button variant="secondary" href={createHref} data-test-id="create-webhook">
               <FormattedMessage {...messages.createWebhook} />
             </Button>
           )
@@ -66,12 +48,8 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
         <ResponsiveTable className={classes.table}>
           <TableHead>
             <TableRowLink>
-              <TableCellHeader>
-                {intl.formatMessage(commonMessages.name)}
-              </TableCellHeader>
-              <TableCellHeader>
-                {intl.formatMessage(commonMessages.status)}
-              </TableCellHeader>
+              <TableCellHeader>{intl.formatMessage(commonMessages.name)}</TableCellHeader>
+              <TableCellHeader>{intl.formatMessage(commonMessages.status)}</TableCellHeader>
               <TableCell className={clsx(classes.colAction, classes.colRight)}>
                 <FormattedMessage {...messages.action} />
               </TableCell>
@@ -84,10 +62,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                 <TableRowLink
                   hover={!!webhook}
                   className={!!webhook ? classes.tableRow : undefined}
-                  href={
-                    webhook &&
-                    CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)
-                  }
+                  href={webhook && CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)}
                   key={webhook ? webhook.id : "skeleton"}
                 >
                   <TableCell
@@ -115,18 +90,12 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell
-                    className={clsx(classes.colAction, classes.colRight)}
-                  >
+                  <TableCell className={clsx(classes.colAction, classes.colRight)}>
                     <TableButtonWrapper>
                       <IconButton
                         variant="secondary"
                         color="primary"
-                        onClick={
-                          webhook
-                            ? stopPropagation(() => onRemove(webhook.id))
-                            : undefined
-                        }
+                        onClick={webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined}
                       >
                         <DeleteIcon />
                       </IconButton>

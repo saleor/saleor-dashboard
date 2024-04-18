@@ -26,28 +26,20 @@ import {
   taxTabPath,
 } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
-import {
-  excludeExistingCountries,
-  mapUndefinedTaxRatesToCountries,
-} from "../utils/utils";
+import { excludeExistingCountries, mapUndefinedTaxRatesToCountries } from "../utils/utils";
 
 interface TaxCountriesListProps {
   id: string | undefined;
   params: TaxesUrlQueryParams | undefined;
 }
 
-export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({
-  id,
-  params,
-}) => {
+export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const handleTabChange = (tab: TaxTab) => {
     navigate(taxTabPath(tab));
   };
-
   const [
     taxCountryConfigurationUpdateMutation,
     { status: mutationStatus, loading: mutationInProgress },
@@ -62,56 +54,40 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({
       }
     },
   });
-  const [taxCountryConfigurationDeleteMutation] =
-    useTaxCountryConfigurationDeleteMutation({
-      onCompleted: data => {
-        const errors = data?.taxCountryConfigurationDelete?.errors;
-        if (errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
-
+  const [taxCountryConfigurationDeleteMutation] = useTaxCountryConfigurationDeleteMutation({
+    onCompleted: data => {
+      const errors = data?.taxCountryConfigurationDelete?.errors;
+      if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
   const shop = useShop();
-
-  const [openDialog, closeDialog] = createDialogActionHandlers<
-    TaxesUrlDialog,
-    TaxesUrlQueryParams
-  >(navigate, params => taxCountriesListUrl(id, params), params);
-
-  const [newCountry, setNewCountry] =
-    React.useState<TaxCountryConfigurationFragment>();
-
-  const {
-    data,
-    refetch,
-    loading: queryInProgress,
-  } = useTaxCountriesListQuery();
+  const [openDialog, closeDialog] = createDialogActionHandlers<TaxesUrlDialog, TaxesUrlQueryParams>(
+    navigate,
+    params => taxCountriesListUrl(id, params),
+    params,
+  );
+  const [newCountry, setNewCountry] = React.useState<TaxCountryConfigurationFragment>();
+  const { data, refetch, loading: queryInProgress } = useTaxCountriesListQuery();
   const { data: taxClassesData } = useTaxClassesListQuery({
     variables: { first: 100 },
   });
-
   const taxCountryConfigurations = data?.taxCountryConfigurations;
   const taxClasses = mapEdgesToItems(taxClassesData?.taxClasses);
-
-  const allCountryTaxes: TaxCountryConfigurationFragment[] =
-    React.useMemo(() => {
-      if (taxClasses && taxCountryConfigurations) {
-        return [
-          ...(newCountry ? [newCountry] : []),
-          ...mapUndefinedTaxRatesToCountries(
-            taxCountryConfigurations ?? [],
-            taxClasses ?? [],
-          ),
-        ];
-      } else {
-        return undefined;
-      }
-    }, [taxCountryConfigurations, newCountry, taxClasses]);
-
+  const allCountryTaxes: TaxCountryConfigurationFragment[] = React.useMemo(() => {
+    if (taxClasses && taxCountryConfigurations) {
+      return [
+        ...(newCountry ? [newCountry] : []),
+        ...mapUndefinedTaxRatesToCountries(taxCountryConfigurations ?? [], taxClasses ?? []),
+      ];
+    } else {
+      return undefined;
+    }
+  }, [taxCountryConfigurations, newCountry, taxClasses]);
   const handleDeleteConfiguration = async (countryCode: CountryCode) => {
     if (newCountry?.country.code === countryCode) {
       setNewCountry(undefined);

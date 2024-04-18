@@ -7,10 +7,7 @@ import {
 import { findValueInEnum } from "@dashboard/misc";
 import { ActiveTab } from "@dashboard/types";
 
-function createFilterUtils<
-  TQueryParams extends {},
-  TFilters extends {},
->(filters: {}) {
+function createFilterUtils<TQueryParams extends {}, TFilters extends {}>(filters: {}) {
   function getActiveFilters(params: TQueryParams): TFilters {
     return Object.keys(params)
       .filter(key => Object.values(filters).includes(key))
@@ -21,9 +18,7 @@ function createFilterUtils<
   }
 
   function areFiltersApplied(params: TQueryParams): boolean {
-    return Object.keys(getActiveFilters(params)).some(
-      key => !!params[key as keyof typeof params],
-    );
+    return Object.keys(getActiveFilters(params)).some(key => !!params[key as keyof typeof params]);
   }
 
   function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(
@@ -52,14 +47,11 @@ export function dedupeFilter<T>(array: T[]): T[] {
   return Array.from(new Set(array));
 }
 
-export type GetFilterQueryParam<
-  TFilterKeys extends string,
-  TFilters extends {},
-> = (filter: FilterElement<TFilterKeys>, params?: {}) => TFilters;
-export function getFilterQueryParams<
-  TFilterKeys extends string,
-  TUrlFilters extends {},
->(
+export type GetFilterQueryParam<TFilterKeys extends string, TFilters extends {}> = (
+  filter: FilterElement<TFilterKeys>,
+  params?: {},
+) => TFilters;
+export function getFilterQueryParams<TFilterKeys extends string, TUrlFilters extends {}>(
   filters: IFilter<TFilterKeys>,
   getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TUrlFilters>,
 ): TUrlFilters {
@@ -76,11 +68,7 @@ export type GteLte<T> = Partial<Record<"gte" | "lte", T>>;
 export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
   if (
     !![variables.gte, variables.lte].some(
-      v =>
-        v !== undefined &&
-        v !== null &&
-        v !== "" &&
-        !(typeof v === "number" && isNaN(v)),
+      v => v !== undefined && v !== null && v !== "" && !(typeof v === "number" && isNaN(v)),
     )
   ) {
     return variables;
@@ -89,10 +77,10 @@ export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
   return null;
 }
 
-export function getSingleValueQueryParam<
-  TKey extends string,
-  TUrlKey extends string,
->(param: FilterElement<TKey>, key: TUrlKey) {
+export function getSingleValueQueryParam<TKey extends string, TUrlKey extends string>(
+  param: FilterElement<TKey>,
+  key: TUrlKey,
+) {
   const { active, value } = param;
 
   if (!active || !value) {
@@ -142,10 +130,10 @@ export function getMultipleEnumValueQueryParam<
   };
 }
 
-export function getMultipleValueQueryParam<
-  TKey extends string,
-  TUrlKey extends string,
->(param: FilterElement<TKey>, key: TUrlKey) {
+export function getMultipleValueQueryParam<TKey extends string, TUrlKey extends string>(
+  param: FilterElement<TKey>,
+  key: TUrlKey,
+) {
   const { active, value } = param;
 
   if (!active) {
@@ -159,10 +147,11 @@ export function getMultipleValueQueryParam<
   };
 }
 
-export function getMinMaxQueryParam<
-  TKey extends string,
-  TUrlKey extends string,
->(param: FilterElement<TKey>, keyFrom: TUrlKey, keyTo: TUrlKey) {
+export function getMinMaxQueryParam<TKey extends string, TUrlKey extends string>(
+  param: FilterElement<TKey>,
+  keyFrom: TUrlKey,
+  keyTo: TUrlKey,
+) {
   const { active, multiple, value } = param;
 
   if (!active || !value) {
@@ -185,10 +174,10 @@ export function getMinMaxQueryParam<
   };
 }
 
-export function getKeyValueQueryParam<
-  TKey extends string,
-  TUrlKey extends string,
->(param: FilterElementKeyValue<TKey>, key: TUrlKey) {
+export function getKeyValueQueryParam<TKey extends string, TUrlKey extends string>(
+  param: FilterElementKeyValue<TKey>,
+  key: TUrlKey,
+) {
   const { active, value } = param;
 
   if (!active) {

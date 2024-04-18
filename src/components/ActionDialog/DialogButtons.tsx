@@ -33,15 +33,12 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
     showBackButton = true,
     backButtonText,
   } = props;
-
   const intl = useIntl();
 
   return (
     <DialogActions>
       {children}
-      {showBackButton && (
-        <BackButton onClick={onClose}>{backButtonText}</BackButton>
-      )}
+      {showBackButton && <BackButton onClick={onClose}>{backButtonText}</BackButton>}
       {variant !== "info" && (
         <ConfirmButton
           disabled={disabled}

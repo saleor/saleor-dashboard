@@ -45,17 +45,9 @@ import {
   VariableEditor,
   WriteableEditorProps,
 } from "@graphiql/react";
-import React, {
-  ComponentType,
-  PropsWithChildren,
-  ReactNode,
-  useState,
-} from "react";
+import React, { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
 
-import {
-  useDashboardTheme,
-  useGraphiQLThemeSwitcher,
-} from "../GraphiQL/styles";
+import { useDashboardTheme, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";
 
 export interface GraphiQLToolbarConfig {
   /**
@@ -71,8 +63,7 @@ export interface GraphiQLToolbarConfig {
  *
  * https://graphiql-test.netlify.app/typedoc/modules/graphiql.html#graphiqlprops
  */
-export type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> &
-  GraphiQLInterfaceProps;
+export type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLInterfaceProps;
 
 /**
  * The top-level React component for GraphiQL, intended to encompass the entire
@@ -148,10 +139,7 @@ export function GraphiQL({
       validationRules={validationRules}
       variables={variables}
     >
-      <GraphiQLInterface
-        showPersistHeadersSettings={shouldPersistHeaders}
-        {...props}
-      />
+      <GraphiQLInterface showPersistHeadersSettings={shouldPersistHeaders} {...props} />
     </GraphiQLProvider>
   );
 }
@@ -198,13 +186,11 @@ export type GraphiQLInterfaceProps = WriteableEditorProps &
 
 export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   const isHeadersEditorEnabled = props.isHeadersEditorEnabled ?? true;
-
   const editorContext = useEditorContext({ nonNull: true });
   const executionContext = useExecutionContext({ nonNull: true });
   const schemaContext = useSchemaContext({ nonNull: true });
   const storageContext = useStorageContext();
   const pluginContext = usePluginContext();
-
   const copy = useCopyQuery({ onCopyQuery: props.onCopyQuery });
   const merge = useMergeQuery();
   const prettify = usePrettifyEditors();
@@ -213,9 +199,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   useGraphiQLThemeSwitcher();
 
   const { theme, setTheme } = useTheme();
-
   const PluginContent = pluginContext?.visiblePlugin?.content;
-
   const pluginResize = useDragResize({
     defaultSizeRelation: 1 / 3,
     direction: "horizontal",
@@ -233,45 +217,30 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     sizeThresholdSecond: 60,
     storageKey: "secondaryEditorFlex",
   });
-
-  const [activeSecondaryEditor, setActiveSecondaryEditor] = useState<
-    "variables" | "headers"
-  >(() => {
-    if (
-      props.defaultEditorToolsVisibility === "variables" ||
-      props.defaultEditorToolsVisibility === "headers"
-    ) {
-      return props.defaultEditorToolsVisibility;
-    }
-    return !editorContext.initialVariables &&
-      editorContext.initialHeaders &&
-      isHeadersEditorEnabled
-      ? "headers"
-      : "variables";
-  });
-  const [showDialog, setShowDialog] = useState<
-    "settings" | "short-keys" | null
-  >(null);
-  const [clearStorageStatus, setClearStorageStatus] = useState<
-    "success" | "error" | null
-  >(null);
-
+  const [activeSecondaryEditor, setActiveSecondaryEditor] = useState<"variables" | "headers">(
+    () => {
+      if (
+        props.defaultEditorToolsVisibility === "variables" ||
+        props.defaultEditorToolsVisibility === "headers"
+      ) {
+        return props.defaultEditorToolsVisibility;
+      }
+      return !editorContext.initialVariables &&
+        editorContext.initialHeaders &&
+        isHeadersEditorEnabled
+        ? "headers"
+        : "variables";
+    },
+  );
+  const [showDialog, setShowDialog] = useState<"settings" | "short-keys" | null>(null);
+  const [clearStorageStatus, setClearStorageStatus] = useState<"success" | "error" | null>(null);
   const children = React.Children.toArray(props.children);
-
-  const toolbar = children.find(child =>
-    isChildComponentType(child, GraphiQL.Toolbar),
-  ) || (
+  const toolbar = children.find(child => isChildComponentType(child, GraphiQL.Toolbar)) || (
     <>
-      <ToolbarButton
-        onClick={() => prettify()}
-        label="Prettify query (Shift-Ctrl-P)"
-      >
+      <ToolbarButton onClick={() => prettify()} label="Prettify query (Shift-Ctrl-P)">
         <PrettifyIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
-      <ToolbarButton
-        onClick={() => merge()}
-        label="Merge fragments into query (Shift-Ctrl-M)"
-      >
+      <ToolbarButton onClick={() => merge()} label="Merge fragments into query (Shift-Ctrl-M)">
         <MergeIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
       <ToolbarButton onClick={() => copy()} label="Copy query (Shift-Ctrl-C)">
@@ -280,17 +249,12 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       {props.toolbar?.additionalContent || null}
     </>
   );
-
-  const footer = children.find(child =>
-    isChildComponentType(child, GraphiQL.Footer),
-  );
-
+  const footer = children.find(child => isChildComponentType(child, GraphiQL.Footer));
   const onClickReference = () => {
     if (pluginResize.hiddenElement === "first") {
       pluginResize.setHiddenElement(null);
     }
   };
-
   const modifier =
     window.navigator.platform.toLowerCase().indexOf("mac") === 0 ? (
       <code className="graphiql-key">Cmd</code>
@@ -299,11 +263,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     );
 
   return (
-    <div
-      data-testid="graphiql-container"
-      className="graphiql-container"
-      style={{ ...rootStyle }}
-    >
+    <div data-testid="graphiql-container" className="graphiql-container" style={{ ...rootStyle }}>
       <div className="graphiql-sidebar">
         <div className="graphiql-sidebar-section">
           {pluginContext?.plugins.map(plugin => {
@@ -357,14 +317,10 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
             minWidth: "200px",
           }}
         >
-          <div className="graphiql-plugin">
-            {PluginContent ? <PluginContent /> : null}
-          </div>
+          <div className="graphiql-plugin">{PluginContent ? <PluginContent /> : null}</div>
         </div>
         <div ref={pluginResize.dragBarRef}>
-          {pluginContext?.visiblePlugin ? (
-            <div className="graphiql-horizontal-drag-bar" />
-          ) : null}
+          {pluginContext?.visiblePlugin ? <div className="graphiql-horizontal-drag-bar" /> : null}
         </div>
         <div ref={pluginResize.secondRef} style={{ minWidth: 0 }}>
           <div className="graphiql-sessions">
@@ -373,10 +329,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                 {editorContext.tabs.length > 1 ? (
                   <>
                     {editorContext.tabs.map((tab, index) => (
-                      <Tab
-                        key={tab.id}
-                        isActive={index === editorContext.activeTabIndex}
-                      >
+                      <Tab key={tab.id} isActive={index === editorContext.activeTabIndex}>
                         <Tab.Button
                           aria-controls="graphiql-session"
                           id={`graphiql-session-tab-${index}`}
@@ -442,10 +395,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                   }`}
                 >
                   <div ref={editorToolsResize.firstRef}>
-                    <section
-                      className="graphiql-query-editor"
-                      aria-label="Query Editor"
-                    >
+                    <section className="graphiql-query-editor" aria-label="Query Editor">
                       <div className="graphiql-query-editor-wrapper">
                         <QueryEditor
                           editorTheme={props.editorTheme}
@@ -456,11 +406,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                           readOnly={props.readOnly}
                         />
                       </div>
-                      <div
-                        className="graphiql-toolbar"
-                        role="toolbar"
-                        aria-label="Editor Commands"
-                      >
+                      <div className="graphiql-toolbar" role="toolbar" aria-label="Editor Commands">
                         <ExecuteButton />
                         {toolbar}
                       </div>
@@ -496,9 +442,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                                 : ""
                             }
                             onClick={() => {
-                              if (
-                                editorToolsResize.hiddenElement === "second"
-                              ) {
+                              if (editorToolsResize.hiddenElement === "second") {
                                 editorToolsResize.setHiddenElement(null);
                               }
                               setActiveSecondaryEditor("headers");
@@ -519,9 +463,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                           type="button"
                           onClick={() => {
                             editorToolsResize.setHiddenElement(
-                              editorToolsResize.hiddenElement === "second"
-                                ? null
-                                : "second",
+                              editorToolsResize.hiddenElement === "second" ? null : "second",
                             );
                           }}
                           aria-label={
@@ -531,15 +473,9 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                           }
                         >
                           {editorToolsResize.hiddenElement === "second" ? (
-                            <ChevronUpIcon
-                              className="graphiql-chevron-icon"
-                              aria-hidden="true"
-                            />
+                            <ChevronUpIcon className="graphiql-chevron-icon" aria-hidden="true" />
                           ) : (
-                            <ChevronDownIcon
-                              className="graphiql-chevron-icon"
-                              aria-hidden="true"
-                            />
+                            <ChevronDownIcon className="graphiql-chevron-icon" aria-hidden="true" />
                           )}
                         </UnStyledButton>
                       </Tooltip>
@@ -548,11 +484,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                   <div ref={editorToolsResize.secondRef}>
                     <section
                       className="graphiql-editor-tool"
-                      aria-label={
-                        activeSecondaryEditor === "variables"
-                          ? "Variables"
-                          : "Headers"
-                      }
+                      aria-label={activeSecondaryEditor === "variables" ? "Variables" : "Headers"}
                     >
                       <VariableEditor
                         editorTheme={props.editorTheme}
@@ -593,10 +525,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           </div>
         </div>
       </div>
-      <Dialog
-        isOpen={showDialog === "short-keys"}
-        onDismiss={() => setShowDialog(null)}
-      >
+      <Dialog isOpen={showDialog === "short-keys"} onDismiss={() => setShowDialog(null)}>
         <div className="graphiql-dialog-header">
           <div className="graphiql-dialog-title">Short Keys</div>
           <Dialog.Close onClick={() => setShowDialog(null)} />
@@ -765,8 +694,8 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                 {clearStorageStatus === "success"
                   ? "Cleared data"
                   : clearStorageStatus === "error"
-                  ? "Failed"
-                  : "Clear data"}
+                    ? "Failed"
+                    : "Clear data"}
               </Button>
             </div>
           </div>
@@ -791,14 +720,8 @@ function GraphiQLFooter<TProps>(props: PropsWithChildren<TProps>) {
 GraphiQLFooter.displayName = "GraphiQLFooter";
 
 // Determines if the React child is of the same type of the provided React component
-function isChildComponentType<T extends ComponentType>(
-  child: any,
-  component: T,
-): child is T {
-  if (
-    child?.type?.displayName &&
-    child.type.displayName === component.displayName
-  ) {
+function isChildComponentType<T extends ComponentType>(child: any, component: T): child is T {
+  if (child?.type?.displayName && child.type.displayName === component.displayName) {
     return true;
   }
 

@@ -1,8 +1,5 @@
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { InvoiceErrorFragment, InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -25,9 +22,14 @@ export interface OrderInvoiceEmailSendDialogProps extends DialogProps {
   onSend: () => void;
 }
 
-const OrderInvoiceEmailSendDialog: React.FC<
-  OrderInvoiceEmailSendDialogProps
-> = ({ confirmButtonState, errors, open, invoice, onClose, onSend }) => {
+const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = ({
+  confirmButtonState,
+  errors,
+  open,
+  invoice,
+  onClose,
+  onSend,
+}) => {
   const intl = useIntl();
 
   return (

@@ -64,9 +64,7 @@ export const createAPIWhereInput = (condition: Condition) => {
   return { eq: value };
 };
 
-export function getConditionType(
-  conditionValue: DecimalFilterInput,
-): ConditionType {
+export function getConditionType(conditionValue: DecimalFilterInput): ConditionType {
   if (conditionValue.eq) {
     return "is";
   }
@@ -124,14 +122,8 @@ export function hasPredicateNestedConditions(
     return true;
   }
 
-  if (
-    keys.length === 1 &&
-    keys[0] !== "OR" &&
-    keys[0] !== "discountedObjectPredicate"
-  ) {
-    const innerKeys = Object.keys(
-      predicate[keys[0] as keyof typeof predicate] ?? {},
-    );
+  if (keys.length === 1 && keys[0] !== "OR" && keys[0] !== "discountedObjectPredicate") {
+    const innerKeys = Object.keys(predicate[keys[0] as keyof typeof predicate] ?? {});
     return innerKeys.every(key => !ALLOW_KEYS.includes(key));
   }
 
@@ -170,9 +162,7 @@ function checkDeeplyNestedPredicate(
 
     if (typeof nestedPredicate[key as keyType] === "object") {
       return checkDeeplyNestedPredicate(
-        nestedPredicate[key as keyType] as
-          | OrderPredicateAPI
-          | CataloguePredicateAPI,
+        nestedPredicate[key as keyType] as OrderPredicateAPI | CataloguePredicateAPI,
       );
     }
   }

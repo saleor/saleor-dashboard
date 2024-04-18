@@ -15,8 +15,7 @@ export const pluginsFilterErrorMessages = defineMessages({
 
 export const pluginsListPageMessages = defineMessages({
   appStoreWarning: {
-    defaultMessage:
-      "We are working on replacing plugins with apps. Read more about",
+    defaultMessage: "We are working on replacing plugins with apps. Read more about",
     id: "yfhLcv",
   },
   warningHeadline: {

@@ -7,9 +7,7 @@ export class DeleteAttributeDialog {
     page: Page,
     readonly deleteButton = page.getByTestId("submit"),
     readonly cancelButton = page.getByTestId("back"),
-    readonly deleteAttributesDialogText = page.getByTestId(
-      "delete-single-attr-dialog-text",
-    ),
+    readonly deleteAttributesDialogText = page.getByTestId("delete-single-attr-dialog-text"),
   ) {
     this.page = page;
   }

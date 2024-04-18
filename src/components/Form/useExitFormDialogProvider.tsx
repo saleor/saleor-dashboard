@@ -19,26 +19,21 @@ const defaultValues = {
 export function useExitFormDialogProvider() {
   const history = useHistory();
   const { history: routerHistory } = useRouter();
-
   const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
   const isSubmitDisabled = useRef(false);
-
   const setIsSubmitDisabled = (status: boolean) => {
     isSubmitDisabled.current = status;
   };
-
   const isSubmitting = useRef(defaultValues.isSubmitting);
   const formsData = useRef<FormsData>({});
   const blockNav = useRef(defaultValues.blockNav);
   const navAction = useRef<typeof history.location>(defaultValues.navAction);
   const enableExitDialog = useRef(defaultValues.enableExitDialog);
   const currentLocation = useRef(history.location);
-
   const setIsSubmitting = (value: boolean) => {
     setEnableExitDialog(!value);
     isSubmitting.current = value;
   };
-
   const setEnableExitDialog = (value: boolean) => {
     // dialog should never be toggled to enabled during form submission
     if (isSubmitting.current) {
@@ -47,15 +42,12 @@ export function useExitFormDialogProvider() {
 
     enableExitDialog.current = value;
   };
-
   const setDefaultFormsData = () => {
     formsData.current = defaultValues.formsData;
   };
-
   const setCurrentLocation = (newLocation: typeof history.location) => {
     currentLocation.current = newLocation;
   };
-
   const setFormData = (id: symbol, newData: Partial<FormData>) => {
     const updatedFormData = { ...formsData.current[id], ...newData };
 
@@ -64,16 +56,11 @@ export function useExitFormDialogProvider() {
       [id]: updatedFormData,
     };
   };
-
   // Set either on generic form load or on every custom form data change
   // but doesn't cause re-renders
-  const setSubmitRef = <T extends () => SubmitPromise<any[]>>(
-    id: symbol,
-    submitFn: T,
-  ) => {
+  const setSubmitRef = <T extends () => SubmitPromise<any[]>>(id: symbol, submitFn: T) => {
     setFormData(id, { submitFn });
   };
-
   const setIsDirty = (id: symbol, value: boolean) => {
     // in case of race conitions between forms and transitions
     if (!formsData.current[id]) {
@@ -86,12 +73,8 @@ export function useExitFormDialogProvider() {
       setEnableExitDialog(true);
     }
   };
-
   const setBlockNav = (value: boolean) => (blockNav.current = value);
-
-  const setDefaultNavAction = () =>
-    (navAction.current = defaultValues.navAction);
-
+  const setDefaultNavAction = () => (navAction.current = defaultValues.navAction);
   const setStateDefaultValues = () => {
     setIsSubmitting(defaultValues.isSubmitting);
     setDefaultFormsData();
@@ -100,15 +83,9 @@ export function useExitFormDialogProvider() {
     setEnableExitDialog(defaultValues.enableExitDialog);
     setDefaultNavAction();
   };
-
   const getFormsDataValuesArray = () =>
-    Object.getOwnPropertySymbols(formsData.current).map(
-      key => formsData.current[key],
-    );
-
-  const hasAnyFormsDirty = () =>
-    getFormsDataValuesArray().some(({ isDirty }) => isDirty);
-
+    Object.getOwnPropertySymbols(formsData.current).map(key => formsData.current[key]);
+  const hasAnyFormsDirty = () => getFormsDataValuesArray().some(({ isDirty }) => isDirty);
   const shouldBlockNav = () => {
     if (!enableExitDialog.current || !hasAnyFormsDirty()) {
       return false;
@@ -116,12 +93,10 @@ export function useExitFormDialogProvider() {
 
     return blockNav.current;
   };
-
   const isOnlyQuerying = (transition: typeof history.location) =>
     // We need to compare to current path and not window location
     // so it works with browser back button as well
     transition.pathname === currentLocation.current.pathname;
-
   const handleNavigationBlock = () => {
     // This callback blocks only navigation between internal dashboard pages
     // https://github.com/remix-run/history/blob/main/docs/blocking-transitions.md#caveats
@@ -153,7 +128,6 @@ export function useExitFormDialogProvider() {
   const continueNavigation = () => {
     setBlockNav(false);
     setDefaultFormsData();
-
     setCurrentLocation(navAction.current);
     // because our useNavigator navigate action may be blocked
     // by exit dialog we want to avoid using it doing this transition
@@ -162,20 +136,16 @@ export function useExitFormDialogProvider() {
     }
     setStateDefaultValues();
   };
-
   const handleLeave = () => {
     continueNavigation();
   };
-
   const handleClose = () => {
     setDefaultNavAction();
     setShowDialog(false);
   };
-
   // Used to prevent race conditions from places such as
   // create pages with navigation on mutation completed
   const shouldBlockNavigation = () => !!navAction.current;
-
   const providerData: ExitFormDialogData = {
     setIsDirty,
     shouldBlockNavigation,

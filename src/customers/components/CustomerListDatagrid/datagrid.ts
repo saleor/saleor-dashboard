@@ -41,13 +41,7 @@ export const customerListStaticColumnsAdapter = (
   }));
 
 export const createGetCellContent =
-  ({
-    customers,
-    columns,
-  }: {
-    customers: Customers | undefined;
-    columns: AvailableColumn[];
-  }) =>
+  ({ customers, columns }: { customers: Customers | undefined; columns: AvailableColumn[] }) =>
   ([column, row]: Item): GridCell => {
     const rowData = customers?.[row];
     const columnId = columns[column]?.id;

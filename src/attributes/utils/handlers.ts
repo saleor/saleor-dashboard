@@ -1,8 +1,5 @@
 import { FetchResult } from "@apollo/client";
-import {
-  AttributeInput,
-  AttributeInputData,
-} from "@dashboard/components/Attributes";
+import { AttributeInput, AttributeInputData } from "@dashboard/components/Attributes";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -45,9 +42,7 @@ export function createAttributeMultiChangeHandler(
   triggerChange: () => void,
 ): FormsetChange<string> {
   return (attributeId: string, value: string | string[]) => {
-    const attribute = attributes.find(
-      attribute => attribute.id === attributeId,
-    );
+    const attribute = attributes.find(attribute => attribute.id === attributeId);
 
     if (Array.isArray(value)) {
       triggerChange();
@@ -55,11 +50,7 @@ export function createAttributeMultiChangeHandler(
       return;
     }
 
-    const newAttributeValues = toggle(
-      value,
-      attribute?.value ?? [],
-      (a, b) => a === b,
-    );
+    const newAttributeValues = toggle(value, attribute?.value ?? [], (a, b) => a === b);
 
     triggerChange();
     changeAttributeData(attributeId, newAttributeValues);
@@ -98,25 +89,19 @@ export function createFetchReferencesHandler(
   fetchReferenceProducts?: (data: string) => void,
 ) {
   return (value: string) => {
-    const attribute = attributes?.find(
-      attribute => attribute.id === assignReferencesAttributeId,
-    );
+    const attribute = attributes?.find(attribute => attribute.id === assignReferencesAttributeId);
 
     if (!attribute) {
       return;
     }
 
-    if (
-      attribute.data.entityType === AttributeEntityTypeEnum.PAGE &&
-      fetchReferencePages
-    ) {
+    if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE && fetchReferencePages) {
       fetchReferencePages(value);
     } else if (
       attribute.data?.entityType &&
-      [
-        AttributeEntityTypeEnum.PRODUCT,
-        AttributeEntityTypeEnum.PRODUCT_VARIANT,
-      ].includes(attribute.data.entityType) &&
+      [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
+        attribute.data.entityType,
+      ) &&
       fetchReferenceProducts
     ) {
       fetchReferenceProducts(value);
@@ -130,9 +115,7 @@ export function createFetchMoreReferencesHandler(
   fetchMoreReferencePages?: FetchMoreProps,
   fetchMoreReferenceProducts?: FetchMoreProps,
 ) {
-  const attribute = attributes?.find(
-    attribute => attribute.id === assignReferencesAttributeId,
-  );
+  const attribute = attributes?.find(attribute => attribute.id === assignReferencesAttributeId);
 
   if (!attribute) {
     return;
@@ -142,10 +125,9 @@ export function createFetchMoreReferencesHandler(
     return fetchMoreReferencePages;
   } else if (
     attribute.data?.entityType &&
-    [
-      AttributeEntityTypeEnum.PRODUCT,
-      AttributeEntityTypeEnum.PRODUCT_VARIANT,
-    ].includes(attribute.data.entityType)
+    [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
+      attribute.data.entityType,
+    )
   ) {
     return fetchMoreReferenceProducts;
   }
@@ -188,10 +170,7 @@ export function createAttributeValueReorderHandler(
   return (attributeId: string, reorder: ReorderEvent) => {
     triggerChange();
 
-    const attribute = attributes.find(
-      attribute => attribute.id === attributeId,
-    );
-
+    const attribute = attributes.find(attribute => attribute.id === attributeId);
     const reorderedValues = move(
       attribute?.value?.[reorder.oldIndex] ?? "",
       attribute?.value ?? [],
@@ -203,10 +182,7 @@ export function createAttributeValueReorderHandler(
   };
 }
 
-function getFileInput(
-  attribute: AttributeInput,
-  updatedFileAttributes: AttributeValueInput[],
-) {
+function getFileInput(attribute: AttributeInput, updatedFileAttributes: AttributeValueInput[]) {
   const updatedFileAttribute = updatedFileAttributes.find(
     attributeWithNewFile => attribute.id === attributeWithNewFile.id,
   );
@@ -234,9 +210,7 @@ function getBooleanInput(attribute: AttributeInput) {
 
 function getAttributesMap(attributes: AttributeInput[] | null) {
   if (attributes && attributes?.length !== 0) {
-    return new Map(
-      attributes.map(attribute => [attribute.id, attribute.value]),
-    );
+    return new Map(attributes.map(attribute => [attribute.id, attribute.value]));
   }
   return new Map();
 }
@@ -335,16 +309,13 @@ export const prepareAttributesInput = ({
 
 export const handleUploadMultipleFiles = async (
   attributesWithNewFileValue: FormsetData<null, File>,
-  uploadFile: (
-    variables: FileUploadMutationVariables,
-  ) => Promise<FetchResult<FileUploadMutation>>,
+  uploadFile: (variables: FileUploadMutationVariables) => Promise<FetchResult<FileUploadMutation>>,
 ) =>
   Promise.all(
-    getFileValuesToUploadFromAttributes(attributesWithNewFileValue).map(
-      fileAttribute =>
-        uploadFile({
-          file: fileAttribute.value,
-        }),
+    getFileValuesToUploadFromAttributes(attributesWithNewFileValue).map(fileAttribute =>
+      uploadFile({
+        file: fileAttribute.value,
+      }),
     ),
   );
 
@@ -353,9 +324,7 @@ export const handleDeleteMultipleAttributeValues = async (
   attributes: Array<
     | PageSelectedAttributeFragment
     | ProductFragment["attributes"][0]
-    | NonNullable<
-        ProductVariantDetailsQuery["productVariant"]
-      >["nonSelectionAttributes"][0]
+    | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
   >,
   deleteAttributeValue: (
     variables: AttributeValueDeleteMutationVariables,
@@ -363,10 +332,7 @@ export const handleDeleteMultipleAttributeValues = async (
 ) =>
   Promise.all(
     attributes.map(existingAttribute => {
-      const fileValueUnused = isFileValueUnused(
-        attributesWithNewFileValue,
-        existingAttribute,
-      );
+      const fileValueUnused = isFileValueUnused(attributesWithNewFileValue, existingAttribute);
 
       if (fileValueUnused) {
         return deleteAttributeValue({

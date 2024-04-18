@@ -14,17 +14,11 @@ export class ProductTypePage extends BasePage {
     readonly notificationSuccess = page.getByTestId("notification-message"),
     readonly nameInput = page.locator("[name='name']"),
     readonly isShippingRequired = page.locator("[name='isShippingRequired']"),
-    readonly assignProductAttributeButton = page.getByTestId(
-      "assign-products-attributes",
-    ),
+    readonly assignProductAttributeButton = page.getByTestId("assign-products-attributes"),
     readonly hasVariantsButton = page.locator("[name='hasVariants']"),
     readonly shippingWeightInput = page.locator("[name='weight']"),
-    readonly giftCardKindCheckbox = page.getByTestId(
-      "product-type-kind-option-GIFT_CARD",
-    ),
-    readonly variantSelectionCheckbox = page.getByTestId(
-      "variant-selection-checkbox",
-    ),
+    readonly giftCardKindCheckbox = page.getByTestId("product-type-kind-option-GIFT_CARD"),
+    readonly variantSelectionCheckbox = page.getByTestId("variant-selection-checkbox"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-product-types"),
     readonly productTypeList = page.getByTestId("product-types-list"),
@@ -59,9 +53,7 @@ export class ProductTypePage extends BasePage {
   }
 
   async gotoAddProductTypePage() {
-    console.log(
-      `Navigating to add product type page: ${URL_LIST.productTypesAdd}`,
-    );
+    console.log(`Navigating to add product type page: ${URL_LIST.productTypesAdd}`);
     await this.page.goto(URL_LIST.productTypesAdd);
   }
 
@@ -79,9 +71,7 @@ export class ProductTypePage extends BasePage {
 
   async gotoExistingProductTypePage(productTypeId: string) {
     const existingProductTypeUrl = URL_LIST.productTypes + productTypeId;
-    await console.log(
-      "Navigating to product type details: " + existingProductTypeUrl,
-    );
+    await console.log("Navigating to product type details: " + existingProductTypeUrl);
     await this.page.goto(existingProductTypeUrl);
   }
 

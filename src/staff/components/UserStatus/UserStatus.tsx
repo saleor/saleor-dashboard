@@ -15,12 +15,7 @@ interface AppStatusProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const AppStatus: React.FC<AppStatusProps> = ({
-  data,
-  disabled,
-  label,
-  onChange,
-}) => {
+const AppStatus: React.FC<AppStatusProps> = ({ data, disabled, label, onChange }) => {
   const intl = useIntl();
 
   return (

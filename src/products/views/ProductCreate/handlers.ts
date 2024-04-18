@@ -41,11 +41,7 @@ const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
     },
   },
 });
-
-const getSimpleProductVariables = (
-  formData: ProductCreateData,
-  productId: string,
-) => ({
+const getSimpleProductVariables = (formData: ProductCreateData, productId: string) => ({
   input: {
     attributes: [],
     product: productId,
@@ -56,9 +52,7 @@ const getSimpleProductVariables = (
     })),
     preorder: formData.isPreorder
       ? {
-          globalThreshold: formData.globalThreshold
-            ? parseInt(formData.globalThreshold, 10)
-            : null,
+          globalThreshold: formData.globalThreshold ? parseInt(formData.globalThreshold, 10) : null,
           endDate: formData.preorderEndDateTime || null,
         }
       : null,
@@ -68,9 +62,7 @@ const getSimpleProductVariables = (
 
 export function createHandler(
   productType: ProductTypeQuery["productType"],
-  uploadFile: (
-    variables: FileUploadMutationVariables,
-  ) => Promise<FetchResult<FileUploadMutation>>,
+  uploadFile: (variables: FileUploadMutationVariables) => Promise<FetchResult<FileUploadMutation>>,
   productCreate: (
     variables: ProductCreateMutationVariables,
   ) => Promise<FetchResult<ProductCreateMutation>>,
@@ -105,7 +97,6 @@ export function createHandler(
       formData.attributesWithNewFileValue,
       uploadFilesResult,
     );
-
     const productVariables: ProductCreateMutationVariables = {
       input: {
         attributes: prepareAttributesInput({
@@ -128,7 +119,6 @@ export function createHandler(
         weight: weight(formData.weight),
       },
     };
-
     const result = await productCreate(productVariables);
     const productErrors = result?.data?.productCreate?.errors ?? [];
 
@@ -143,13 +133,10 @@ export function createHandler(
 
     if (!hasVariants) {
       const result = await Promise.all([
-        updateChannels(
-          getChannelsVariables(productId, formData.channelListings),
-        ),
+        updateChannels(getChannelsVariables(productId, formData.channelListings)),
         productVariantCreate(getSimpleProductVariables(formData, productId)),
       ]);
-      const channelErrors =
-        result[0].data?.productChannelListingUpdate?.errors || [];
+      const channelErrors = result[0].data?.productChannelListingUpdate?.errors || [];
       const variantErrors = result[1].data?.productVariantCreate?.errors || [];
       errors = [...errors, ...channelErrors, ...variantErrors];
 
@@ -170,8 +157,7 @@ export function createHandler(
       const result = await updateChannels(
         getChannelsVariables(productId, formData.channelListings),
       );
-      const channelErrors =
-        result.data?.productChannelListingUpdate?.errors || [];
+      const channelErrors = result.data?.productChannelListingUpdate?.errors || [];
 
       errors = [...errors, ...channelErrors];
     }

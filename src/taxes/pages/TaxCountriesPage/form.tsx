@@ -41,25 +41,19 @@ function useTaxCountriesForm(
   const intl = useIntl();
   const initialFormsetData = country?.taxClassCountryRates.map(item => ({
     id: item.taxClass?.id ?? null,
-    label:
-      item.taxClass?.name ??
-      intl.formatMessage(taxesMessages.countryDefaultRate),
+    label: item.taxClass?.name ?? intl.formatMessage(taxesMessages.countryDefaultRate),
     value: item.rate?.toString() ?? "",
     data: null,
   }));
-
   const { formId, triggerChange } = useForm({}, undefined, {
     confirmLeave: true,
   });
-
   const formset = useFormset(initialFormsetData);
-
   // Handlers
   const handleRateChange = (id: string, value: string) => {
     triggerChange();
     formset.change(id, value);
   };
-
   // Submit
   const submitData = formset.data.map(item => {
     const { id, value } = item;
@@ -69,18 +63,15 @@ function useTaxCountriesForm(
       taxClassId: id,
     };
   });
-
   const handleSubmit = async (data: TaxClassRateInput[]) => {
     const errors = await onSubmit(data);
 
     return errors;
   };
-
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit: handleSubmit,
   });
-
   const submit = () => handleFormSubmit(submitData);
 
   // Exit form util
@@ -89,10 +80,7 @@ function useTaxCountriesForm(
     formId,
   });
 
-  React.useEffect(
-    () => setExitDialogSubmitRef(submit),
-    [setExitDialogSubmitRef, submit],
-  );
+  React.useEffect(() => setExitDialogSubmitRef(submit), [setExitDialogSubmitRef, submit]);
   setIsSubmitDisabled(disabled);
 
   return { data: formset.data, handlers: { handleRateChange }, submit };

@@ -71,7 +71,6 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
     hideUploadIcon,
     onImageUpload,
   } = props;
-
   const classes = useStyles(props);
 
   return (
@@ -91,11 +90,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
                   [iconContainerActiveClassName]: isDragActive,
                 })}
               >
-                <input
-                  {...getInputProps()}
-                  className={classes.fileField}
-                  accept="image/*"
-                />
+                <input {...getInputProps()} className={classes.fileField} accept="image/*" />
                 <ImageIcon className={classes.photosIcon} />
                 <Typography className={classes.uploadText}>
                   <FormattedMessage

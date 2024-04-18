@@ -7,12 +7,10 @@ const currentTheme = "defaultLight";
 
 jest.mock("react-intl", () => ({
   useIntl: () => ({
-    formatMessage: ({ defaultMessage }: { defaultMessage: string }) =>
-      defaultMessage,
+    formatMessage: ({ defaultMessage }: { defaultMessage: string }) => defaultMessage,
   }),
   defineMessages: jest.fn(x => x),
 }));
-
 jest.mock("@dashboard/components/Datagrid/hooks/useEmptyColumn", () => ({
   useEmptyColumn: () => ({
     id: "empty",
@@ -20,13 +18,11 @@ jest.mock("@dashboard/components/Datagrid/hooks/useEmptyColumn", () => ({
     width: 20,
   }),
 }));
-
 describe("Order refund datagrid", () => {
   it("presents grant refund with status draft created by user", () => {
     // Arrange
     const refunds = grantedRefunds;
     const columns = useOrderRefundStaticColumns();
-
     // Act
     const getCellContent = createGetCellContent({
       refunds,
@@ -46,7 +42,6 @@ describe("Order refund datagrid", () => {
         },
       }),
     );
-
     // Amount column
     expect(getCellContent([2, 1])).toEqual(
       expect.objectContaining({
@@ -57,7 +52,6 @@ describe("Order refund datagrid", () => {
         },
       }),
     );
-
     // Reason column
     expect(getCellContent([3, 1])).toEqual(
       expect.objectContaining({
@@ -65,7 +59,6 @@ describe("Order refund datagrid", () => {
         kind: GridCellKind.Text,
       }),
     );
-
     // Date column
     expect(getCellContent([4, 1])).toEqual(
       expect.objectContaining({
@@ -75,7 +68,6 @@ describe("Order refund datagrid", () => {
         },
       }),
     );
-
     // Account column
     expect(getCellContent([5, 1])).toEqual(
       expect.objectContaining({
@@ -88,7 +80,6 @@ describe("Order refund datagrid", () => {
     // Arrange
     const refunds = grantedRefunds;
     const columns = useOrderRefundStaticColumns();
-
     // Act
     const getCellContent = createGetCellContent({
       refunds,
@@ -108,7 +99,6 @@ describe("Order refund datagrid", () => {
         },
       }),
     );
-
     // Amount column
     expect(getCellContent([2, 0])).toEqual(
       expect.objectContaining({
@@ -119,7 +109,6 @@ describe("Order refund datagrid", () => {
         },
       }),
     );
-
     // Reason column
     expect(getCellContent([3, 0])).toEqual(
       expect.objectContaining({
@@ -127,7 +116,6 @@ describe("Order refund datagrid", () => {
         kind: GridCellKind.Text,
       }),
     );
-
     // Date column
     expect(getCellContent([4, 0])).toEqual(
       expect.objectContaining({
@@ -137,7 +125,6 @@ describe("Order refund datagrid", () => {
         },
       }),
     );
-
     // Account column
     expect(getCellContent([5, 0])).toEqual(
       expect.objectContaining({

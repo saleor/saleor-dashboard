@@ -5,12 +5,8 @@ import { BasePage } from "../basePage";
 export class AddNavigationMenuItemDialog extends BasePage {
   constructor(
     page: Page,
-    readonly menuNameInput = page
-      .getByTestId("menu-item-name-input")
-      .locator("input"),
-    readonly linkSelect = page
-      .getByTestId("container-autocomplete-select")
-      .locator("input"),
+    readonly menuNameInput = page.getByTestId("menu-item-name-input").locator("input"),
+    readonly linkSelect = page.getByTestId("container-autocomplete-select").locator("input"),
     readonly backButton = page.getByTestId("back"),
     readonly saveButton = page.getByTestId("submit"),
     readonly menuLinkOptions = page.getByTestId("menu-link-options"),

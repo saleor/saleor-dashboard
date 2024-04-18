@@ -7,14 +7,12 @@ describe("ConditionalFilter / FilterElement / Constraint", () => {
     // Assert
     expect(dependency).toBe("channel");
   });
-
   it("should return null for an invalid slug", () => {
     // Arrange & Act
     const dependency = Constraint.getDependency("invalidSlug");
     // Assert
     expect(dependency).toBeNull();
   });
-
   it("should create an instance from a valid slug", () => {
     // Arrange & Act
     const constraint = Constraint.fromSlug("channel");
@@ -25,7 +23,6 @@ describe("ConditionalFilter / FilterElement / Constraint", () => {
       removable: false,
     });
   });
-
   it("should return null for an invalid slug", () => {
     // Arrange & Act
     const constraint = Constraint.fromSlug("invalidSlug");

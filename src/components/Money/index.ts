@@ -44,11 +44,7 @@ export const formatMoney = (money: IMoney, locale: string) => {
   }
 };
 
-export const formatMoneyRange = (
-  moneyFrom: IMoney,
-  moneyTo: IMoney,
-  locale: string,
-) => {
+export const formatMoneyRange = (moneyFrom: IMoney, moneyTo: IMoney, locale: string) => {
   try {
     const formattedMoneyRange = Intl.NumberFormat(locale, {
       style: "currency",

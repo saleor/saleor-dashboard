@@ -6,11 +6,7 @@ type ContentProps = PropsWithBox<{
   disableAutofocus?: boolean;
 }>;
 
-export const Content = ({
-  children,
-  disableAutofocus,
-  ...rest
-}: ContentProps) => {
+export const Content = ({ children, disableAutofocus, ...rest }: ContentProps) => {
   return (
     <Modal.Content disableAutofocus={disableAutofocus}>
       <Box

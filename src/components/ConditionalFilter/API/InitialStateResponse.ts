@@ -55,18 +55,13 @@ export class InitialStateResponse implements InitialState {
 
   public filterByUrlToken(token: UrlToken) {
     if (token.isAttribute() && token.hasDynamicValues()) {
-      return this.attribute[token.name].choices.filter(({ value }) =>
-        token.value.includes(value),
-      );
+      return this.attribute[token.name].choices.filter(({ value }) => token.value.includes(value));
     }
 
     if (token.isAttribute()) {
       const attr = this.attribute[token.name];
       return attr.inputType === "BOOLEAN"
-        ? createBooleanOption(
-            token.value === "true",
-            AttributeInputTypeEnum.BOOLEAN,
-          )
+        ? createBooleanOption(token.value === "true", AttributeInputTypeEnum.BOOLEAN)
         : token.value;
     }
 
@@ -74,9 +69,7 @@ export class InitialStateResponse implements InitialState {
       return [token.value] as string[];
     }
 
-    return this.getEntryByName(token.name).filter(
-      ({ slug }) => slug && token.value.includes(slug),
-    );
+    return this.getEntryByName(token.name).filter(({ slug }) => slug && token.value.includes(slug));
   }
 
   private getEntryByName(name: string) {

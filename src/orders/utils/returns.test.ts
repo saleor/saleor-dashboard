@@ -26,8 +26,7 @@ const mockedItemQuantities: FormsetData<LineItemData, number> = [
     data: {
       isFulfillment: true,
       isRefunded: false,
-      orderLineId:
-        "T3JkZXJMaW5lOmZjNzRlNDliLWQyNTItNDVhYS1hMWU0LWQ2MGU5MzFiNjNlOA==",
+      orderLineId: "T3JkZXJMaW5lOmZjNzRlNDliLWQyNTItNDVhYS1hMWU0LWQ2MGU5MzFiNjNlOA==",
     },
     id: "RnVsZmlsbG1lbnRMaW5lOjU1Ng==",
     label: "",
@@ -37,8 +36,7 @@ const mockedItemQuantities: FormsetData<LineItemData, number> = [
     data: {
       isFulfillment: true,
       isRefunded: false,
-      orderLineId:
-        "T3JkZXJMaW5lOmZjNzRlNDliLWQyNTItNDVhYS1hMWU0LWQ2MGU5MzFiNjNlOA==",
+      orderLineId: "T3JkZXJMaW5lOmZjNzRlNDliLWQyNTItNDVhYS1hMWU0LWQ2MGU5MzFiNjNlOA==",
     },
     id: "RnVsZmlsbG1lbnRMaW5lOjU1Nw==",
     label: "",

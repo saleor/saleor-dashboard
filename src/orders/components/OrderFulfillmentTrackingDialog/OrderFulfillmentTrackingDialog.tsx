@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { OrderErrorFragment } from "@dashboard/graphql";
@@ -35,9 +32,7 @@ export interface OrderFulfillmentTrackingDialogProps {
   onConfirm: (data: FormData) => any;
 }
 
-const OrderFulfillmentTrackingDialog: React.FC<
-  OrderFulfillmentTrackingDialogProps
-> = ({
+const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogProps> = ({
   confirmButtonState,
   errors: apiErrors,
   open,
@@ -47,10 +42,8 @@ const OrderFulfillmentTrackingDialog: React.FC<
 }) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
-
   const formFields = ["trackingNumber"];
   const formErrors = getFormErrors(formFields, errors);
-
   const initialData: FormData = {
     trackingNumber: trackingNumber || "",
   };
@@ -70,10 +63,7 @@ const OrderFulfillmentTrackingDialog: React.FC<
             <DialogContent>
               <TextField
                 error={!!formErrors.trackingNumber}
-                helperText={getOrderErrorMessage(
-                  formErrors.trackingNumber,
-                  intl,
-                )}
+                helperText={getOrderErrorMessage(formErrors.trackingNumber, intl)}
                 label={intl.formatMessage({
                   id: "yT/GAp",
                   defaultMessage: "Tracking number",

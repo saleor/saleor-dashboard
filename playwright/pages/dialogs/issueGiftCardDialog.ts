@@ -6,26 +6,14 @@ export class IssueGiftCardDialog {
   constructor(
     page: Page,
     readonly enterAmountInput = page.locator('[name="balanceAmount"]'),
-    readonly expiryPeriodAmountInput = page.locator(
-      '[name="expiryPeriodAmount"]',
-    ),
-    readonly tagsInput = page
-      .getByTestId("gift-card-tag-select-field")
-      .locator("input"),
+    readonly expiryPeriodAmountInput = page.locator('[name="expiryPeriodAmount"]'),
+    readonly tagsInput = page.getByTestId("gift-card-tag-select-field").locator("input"),
     readonly cardCode = page.getByTestId("cardCode"),
 
-    readonly sendToCustomerCheckbox = page
-      .getByTestId("send-to-customer-section")
-      .locator("input"),
-    readonly sendExpireDateCheckbox = page
-      .getByTestId("expiry-section")
-      .locator("input"),
-    readonly customerInput = page
-      .getByTestId("customer-field")
-      .locator("input"),
-    readonly noteTextArea = page
-      .getByTestId("note-field")
-      .locator('[name="note"]'),
+    readonly sendToCustomerCheckbox = page.getByTestId("send-to-customer-section").locator("input"),
+    readonly sendExpireDateCheckbox = page.getByTestId("expiry-section").locator("input"),
+    readonly customerInput = page.getByTestId("customer-field").locator("input"),
+    readonly noteTextArea = page.getByTestId("note-field").locator('[name="note"]'),
     readonly requiresActivationCheckbox = page
       .getByTestId("requires-activation-section")
       .locator("input"),

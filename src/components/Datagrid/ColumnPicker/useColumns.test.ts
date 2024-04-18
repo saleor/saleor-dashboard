@@ -17,14 +17,8 @@ const mockedColumns: AvailableColumn[] = [
     icon: "arrowUp",
   },
 ];
-
 // dynamic - color and ABV
-const mockedSelectedColumns = [
-  "name",
-  "attribute:QXR0cmlidXRlOjE0",
-  "attribute:QXR0cmlidXRlOjIx",
-];
-
+const mockedSelectedColumns = ["name", "attribute:QXR0cmlidXRlOjE0", "attribute:QXR0cmlidXRlOjIx"];
 const mockedCategories: ColumnCategory[] = [
   {
     name: "Attributes",
@@ -82,7 +76,6 @@ const mockedCategories: ColumnCategory[] = [
     onSearch: () => undefined,
   },
 ];
-
 const expectedVisibleColumns = [
   {
     id: "name",
@@ -103,7 +96,6 @@ const expectedVisibleColumns = [
     width: 200,
   },
 ];
-
 const expectedDynamicColumns = [
   {
     id: "attribute:QXR0cmlidXRlOjE0",
@@ -118,7 +110,6 @@ const expectedDynamicColumns = [
     width: 200,
   },
 ];
-
 const onSave = jest.fn();
 
 describe("useColumns", () => {
@@ -154,10 +145,7 @@ describe("useColumns", () => {
     );
 
     // Act
-    act(() =>
-      result.current.handlers.onResize({ id: "name", title: "Name" }, 150),
-    );
-
+    act(() => result.current.handlers.onResize({ id: "name", title: "Name" }, 150));
     // Assert
     expect(result.current.visibleColumns[0].width).toEqual(150);
   });
@@ -174,7 +162,6 @@ describe("useColumns", () => {
 
     // Act
     act(() => result.current.handlers.onMove(1, 0));
-
     // Assert
     expect(result.current.visibleColumns).toEqual([
       {
@@ -210,7 +197,6 @@ describe("useColumns", () => {
 
     // Act
     act(() => result.current.handlers.onToggle("name"));
-
     // Assert
     expect(onSave).toHaveBeenCalledTimes(1);
   });
@@ -227,11 +213,8 @@ describe("useColumns", () => {
 
     // Act
     act(() => result.current.handlers.onToggle("attribute:QXR0cmlidXRlOjI3"));
-
     // Assert
-    expect(result.current.recentlyAddedColumn).toEqual(
-      "attribute:QXR0cmlidXRlOjI3",
-    );
+    expect(result.current.recentlyAddedColumn).toEqual("attribute:QXR0cmlidXRlOjI3");
   });
   it("should update dynamic columns when new column is picked", () => {
     // Arrange
@@ -246,7 +229,6 @@ describe("useColumns", () => {
 
     // Act
     act(() => result.current.handlers.onToggle("attribute:QXR0cmlidXRlOjI3"));
-
     // Assert
     expect(onSave).toHaveBeenCalledTimes(1);
     expect(result.current.dynamicColumns).toEqual([
@@ -277,7 +259,6 @@ describe("useColumns", () => {
         "attribute:QXR0cmlidXRlOjIx",
       ),
     );
-
     // Assert
     expect(onSave).toHaveBeenCalledTimes(1);
     expect(result.current.dynamicColumns).toEqual([

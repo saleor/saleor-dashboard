@@ -13,24 +13,20 @@ export const useComboboxHandlers = ({
   alwaysFetchOnFocus?: boolean;
 }) => {
   const mounted = useRef(false);
-
   const debouncedFetchOptions = useCallback(
     useDebounce(async (value: string) => {
       fetchOptions(value);
     }, 500),
     [fetchOptions],
   );
-
   const handleFetchMore = () => {
     if (fetchMore?.hasMore) {
       fetchMore?.onFetchMore();
     }
   };
-
   const handleInputChange = (value: string) => {
     debouncedFetchOptions(value);
   };
-
   const handleFocus = () => {
     if (alwaysFetchOnFocus || !mounted.current) {
       mounted.current = true;

@@ -24,23 +24,15 @@ export class VouchersPage extends BasePage {
     readonly deleteButton = page.getByTestId("button-bar-delete"),
     readonly addCodeButton = page.getByTestId("add-code-button"),
     readonly usageLimitCheckbox = page.getByTestId("has-usage-limit"),
-    readonly oncePerCustomerLimitCheckbox = page.getByTestId(
-      "apply-once-per-customer",
-    ),
+    readonly oncePerCustomerLimitCheckbox = page.getByTestId("apply-once-per-customer"),
     readonly onlyForStaffLimitCheckbox = page.getByTestId("only-for-staff"),
     readonly singleUseLimitCheckbox = page.getByTestId("single-use"),
     readonly usageLimitSection = page.getByTestId("usage-limit-section"),
     readonly valueSection = page.getByTestId("value-section"),
-    readonly minimumRequirementsSection = page.getByTestId(
-      "minimum-requirements-section",
-    ),
+    readonly minimumRequirementsSection = page.getByTestId("minimum-requirements-section"),
     readonly usageLimitInput = page.getByTestId("usage-limit").locator("input"),
-    readonly assignedSpecificProductsTable = page.getByTestId(
-      "assigned-specific-products-table",
-    ),
-    readonly assignedSpecificProductRow = page.getByTestId(
-      "assigned-specific-product",
-    ),
+    readonly assignedSpecificProductsTable = page.getByTestId("assigned-specific-products-table"),
+    readonly assignedSpecificProductRow = page.getByTestId("assigned-specific-product"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly voucherNameInput = page.getByTestId("voucher-name-input"),
     readonly discountValueInput = page.getByTestId("discount-value-input"),
@@ -60,17 +52,11 @@ export class VouchersPage extends BasePage {
     readonly minimalOrderValueButton = page.getByTestId("ORDER"),
     readonly minimumQuantityOfItemsButton = page.getByTestId("ITEM"),
     readonly specificProductsButton = page.getByTestId("SPECIFIC_PRODUCT"),
-    readonly assignCollectionButton = page.getByTestId(
-      "assign-collection-button",
-    ),
+    readonly assignCollectionButton = page.getByTestId("assign-collection-button"),
     readonly assignCategoryButton = page.getByTestId("assign-category-button"),
     readonly assignProductButton = page.getByTestId("assign-products"),
-    readonly assignCollectionSection = page.getByTestId(
-      "assign-collection-section",
-    ),
-    readonly assignCategoriesSection = page.getByTestId(
-      "assign-category-section",
-    ),
+    readonly assignCollectionSection = page.getByTestId("assign-collection-section"),
+    readonly assignCategoriesSection = page.getByTestId("assign-category-section"),
     readonly assignProductSection = page.getByTestId("assign-product-section"),
   ) {
     super(page);
@@ -196,10 +182,7 @@ export class VouchersPage extends BasePage {
     await this.page.goto(URL_LIST.vouchersAddPage);
   }
 
-  async typeDiscountValueInChannel(
-    channel = "Channel-PLN",
-    discountValue = "10",
-  ) {
+  async typeDiscountValueInChannel(channel = "Channel-PLN", discountValue = "10") {
     const valueInput = await this.valueSection
       .getByTestId(channel)
       .locator(this.discountValueInput);
@@ -207,10 +190,7 @@ export class VouchersPage extends BasePage {
     await valueInput.fill(discountValue);
   }
 
-  async typeMinimumOrderValue(
-    channel = "Channel-PLN",
-    minimumOrderValue = "10",
-  ) {
+  async typeMinimumOrderValue(channel = "Channel-PLN", minimumOrderValue = "10") {
     await this.minimumRequirementsSection
       .getByTestId(channel)
       .locator(this.minRequirementsValueInput)

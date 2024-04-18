@@ -6,7 +6,6 @@ const FIRST_PAGINATED_PAGE = 1;
 export const useClientPagination = () => {
   const [rowNumber, setRowNumber] = useState(DEFAULT_ROWS_COUNT);
   const [currentPage, setCurrentPage] = useState(FIRST_PAGINATED_PAGE);
-
   const indexOfLastElement = currentPage * rowNumber;
   const indexOfFirstElement = indexOfLastElement - rowNumber;
 
@@ -18,15 +17,12 @@ export const useClientPagination = () => {
     setCurrentPage(FIRST_PAGINATED_PAGE);
     setRowNumber(DEFAULT_ROWS_COUNT);
   }, []);
-
   const changeRowNumber = useCallback((rowNumber: number) => {
     setRowNumber(rowNumber);
   }, []);
-
   const changeCurrentPage = useCallback((page: number) => {
     setCurrentPage(page);
   }, []);
-
   const paginate = useCallback(
     <T>(data: T[]) => ({
       data: data.slice(indexOfFirstElement, indexOfLastElement),

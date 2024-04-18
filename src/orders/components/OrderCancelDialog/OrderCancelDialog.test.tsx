@@ -29,7 +29,6 @@ describe("OrderCancelDialog", () => {
 
     // Act
     render(<OrderCancelDialog {...defaultProps} number={orderNumber} />);
-
     // Assert
     expect(FormattedMessage).toHaveBeenCalledWith(
       {
@@ -41,7 +40,6 @@ describe("OrderCancelDialog", () => {
       {},
     );
   });
-
   it("displays error messages when provided", () => {
     // Arrange
     const errors = [
@@ -56,7 +54,6 @@ describe("OrderCancelDialog", () => {
     const errorMessages = screen.getAllByTestId("dialog-error");
     expect(errorMessages).toHaveLength(errors.length);
   });
-
   it("does not display error messages when none are provided", () => {
     // Act
     render(<OrderCancelDialog {...defaultProps} errors={[]} />);

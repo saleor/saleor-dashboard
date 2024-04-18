@@ -10,11 +10,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export const searchProductTypes = gql`
   query SearchProductTypes($after: String, $first: Int!, $query: String!) {
-    search: productTypes(
-      after: $after
-      first: $first
-      filter: { search: $query }
-    ) {
+    search: productTypes(after: $after, first: $first, filter: { search: $query }) {
       edges {
         node {
           id
@@ -48,7 +44,6 @@ export function useSearchProductTypes() {
       );
 }
 
-export default makeTopLevelSearch<
-  SearchProductTypesQuery,
-  SearchProductTypesQueryVariables
->(SearchProductTypesDocument);
+export default makeTopLevelSearch<SearchProductTypesQuery, SearchProductTypesQueryVariables>(
+  SearchProductTypesDocument,
+);

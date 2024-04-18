@@ -6,20 +6,11 @@ import {
   OrderDiscountCommonInput,
 } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import {
-  CustomCell,
-  CustomRenderer,
-  GridCellKind,
-} from "@glideapps/glide-data-grid";
+import { CustomCell, CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
 import React, { useCallback } from "react";
 
 import { cellHeight } from "../../styles";
-import {
-  drawCurrency,
-  drawLineCrossedPrice,
-  drawPrice,
-  getFormattedMoney,
-} from "./utils";
+import { drawCurrency, drawLineCrossedPrice, drawPrice, getFormattedMoney } from "./utils";
 
 interface MoneyDiscountedCellProps {
   readonly kind: "money-discounted-cell";
@@ -38,10 +29,7 @@ export type MoneyDiscuntedCell = CustomCell<MoneyDiscountedCellProps>;
 const MoneyDiscountedCellEditor = ({ onFinishedEditing, value }) => {
   const getDiscountProviderValues = useOrderLineDiscountContext();
   const editedLineId = value.data.lineItemId;
-  const discountProviderValues = editedLineId
-    ? getDiscountProviderValues(editedLineId)
-    : null;
-
+  const discountProviderValues = editedLineId ? getDiscountProviderValues(editedLineId) : null;
   const handleDiscountConfirm = useCallback(
     async (discount: OrderDiscountCommonInput) => {
       await discountProviderValues.addOrderLineDiscount(discount);
@@ -69,48 +57,38 @@ const MoneyDiscountedCellEditor = ({ onFinishedEditing, value }) => {
 };
 
 // TODO: add new design
-export const moneyDiscountedCellRenderer =
-  (): CustomRenderer<MoneyDiscuntedCell> => ({
-    kind: GridCellKind.Custom,
-    isMatch: (c): c is MoneyDiscuntedCell =>
-      (c.data as any).kind === "money-discounted-cell",
-    draw: (args, cell) => {
-      const { ctx, theme, rect } = args;
-      const { currency, value, undiscounted, locale } = cell.data;
-      const hasValue = value === 0 ? true : !!value;
-      const formattedValue = getFormattedMoney(value, currency, locale, "-");
-      const formattedUndiscounted = getFormattedMoney(
-        undiscounted !== value ? undiscounted : "",
-        currency,
-        locale,
-      );
-      const formattedWithDiscount =
-        formattedUndiscounted + " " + formattedValue;
+export const moneyDiscountedCellRenderer = (): CustomRenderer<MoneyDiscuntedCell> => ({
+  kind: GridCellKind.Custom,
+  isMatch: (c): c is MoneyDiscuntedCell => (c.data as any).kind === "money-discounted-cell",
+  draw: (args, cell) => {
+    const { ctx, theme, rect } = args;
+    const { currency, value, undiscounted, locale } = cell.data;
+    const hasValue = value === 0 ? true : !!value;
+    const formattedValue = getFormattedMoney(value, currency, locale, "-");
+    const formattedUndiscounted = getFormattedMoney(
+      undiscounted !== value ? undiscounted : "",
+      currency,
+      locale,
+    );
+    const formattedWithDiscount = formattedUndiscounted + " " + formattedValue;
 
-      drawPrice(ctx, theme, rect, formattedWithDiscount);
+    drawPrice(ctx, theme, rect, formattedWithDiscount);
 
-      // Draw crossed line above price without discount
-      if (undiscounted !== undefined && undiscounted !== value) {
-        drawLineCrossedPrice(
-          ctx,
-          rect,
-          formattedWithDiscount,
-          formattedUndiscounted,
-        );
-      }
+    // Draw crossed line above price without discount
+    if (undiscounted !== undefined && undiscounted !== value) {
+      drawLineCrossedPrice(ctx, rect, formattedWithDiscount, formattedUndiscounted);
+    }
 
-      ctx.save();
-
-      drawCurrency(ctx, theme, rect, hasValue ? currency : "-");
-
-      ctx.restore();
-      return true;
+    ctx.save();
+    drawCurrency(ctx, theme, rect, hasValue ? currency : "-");
+    ctx.restore();
+    return true;
+  },
+  provideEditor: () => ({
+    editor: MoneyDiscountedCellEditor,
+    styleOverride: {
+      padding: `${ROW_HEIGHT}px 0 0 0`,
     },
-    provideEditor: () => ({
-      editor: MoneyDiscountedCellEditor,
-      styleOverride: {
-        padding: `${ROW_HEIGHT}px 0 0 0`,
-      },
-      disableStyling: true,
-    }),
-  });
+    disableStyling: true,
+  }),
+});

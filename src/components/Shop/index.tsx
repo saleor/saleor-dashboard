@@ -26,9 +26,7 @@ export const ShopProvider: React.FC = ({ children }) => {
         <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
         <link rel="mask-icon" href={safariPinnedTab} />
       </Helmet>
-      <ShopContext.Provider value={data ? data.shop : undefined}>
-        {children}
-      </ShopContext.Provider>
+      <ShopContext.Provider value={data ? data.shop : undefined}>{children}</ShopContext.Provider>
     </>
   );
 };

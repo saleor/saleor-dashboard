@@ -43,7 +43,6 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   onShowMetadata,
 }) => {
   const intl = useIntl();
-
   const isChannelActive = order?.channel.isActive;
   const areProductsInChannel = !!channelUsabilityData?.products.totalCount;
 
@@ -58,16 +57,8 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         toolbar={
           isChannelActive &&
           areProductsInChannel && (
-            <Button
-              variant="tertiary"
-              onClick={onOrderLineAdd}
-              data-test-id="add-products-button"
-            >
-              <FormattedMessage
-                id="C50ahv"
-                defaultMessage="Add products"
-                description="button"
-              />
+            <Button variant="tertiary" onClick={onOrderLineAdd} data-test-id="add-products-button">
+              <FormattedMessage id="C50ahv" defaultMessage="Add products" description="button" />
             </Button>
           )
         }

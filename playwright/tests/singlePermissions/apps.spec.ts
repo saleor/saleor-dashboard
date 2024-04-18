@@ -14,7 +14,6 @@ test.beforeEach(async ({ page }) => {
   appsPage = new AppsPage(page);
   home = new HomePage(page);
 });
-
 test("TC: SALEOR_10 User should be able to navigate to apps list as a staff member using APP permission @e2e", async () => {
   await home.goto();
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });

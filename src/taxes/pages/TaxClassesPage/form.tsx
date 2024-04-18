@@ -27,42 +27,26 @@ export interface UseTaxClassesFormResult {
 interface TaxClassesFormProps {
   children: (props: UseTaxClassesFormResult) => React.ReactNode;
   taxClass: TaxClassFragment | undefined;
-  onTaxClassCreate: (
-    data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassError[]>;
-  onTaxClassUpdate: (
-    data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassError[]>;
+  onTaxClassCreate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>;
+  onTaxClassUpdate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>;
   disabled: boolean;
 }
 
 function useTaxClassesForm(
   taxClass: TaxClassFragment,
-  onTaxClassCreate: (
-    data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassError[]>,
-  onTaxClassUpdate: (
-    data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassError[]>,
+  onTaxClassCreate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>,
+  onTaxClassUpdate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>,
   disabled: boolean,
 ): UseTaxClassesFormResult {
   // Initial
 
   const isNewTaxClass = taxClass?.id === "new";
-
   const initialFormData = getTaxClassInitialFormData(taxClass);
   const initialFormsetData = initialFormData.updateTaxClassRates;
-
   const formset = useFormset(initialFormsetData);
-
-  const { formId, triggerChange, data, handleChange } = useForm(
-    initialFormData,
-    undefined,
-    {
-      confirmLeave: true,
-    },
-  );
-
+  const { formId, triggerChange, data, handleChange } = useForm(initialFormData, undefined, {
+    confirmLeave: true,
+  });
   const [validationErrors, setValidationErrors] = useState<TaxClassError[]>([]);
 
   if (isNewTaxClass) {
@@ -75,10 +59,7 @@ function useTaxClassesForm(
     triggerChange();
     formset.change(id, value);
   };
-
-  const { makeChangeHandler: makeMetadataChangeHandler } =
-    useMetadataChangeTrigger();
-
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
   // Submit
@@ -98,12 +79,10 @@ function useTaxClassesForm(
 
     return onTaxClassUpdate(data);
   };
-
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit: handleSubmit,
   });
-
   const submit = () =>
     handleFormSubmit({
       ...data,
@@ -116,10 +95,7 @@ function useTaxClassesForm(
     formId,
   });
 
-  React.useEffect(
-    () => setExitDialogSubmitRef(submit),
-    [setExitDialogSubmitRef, submit],
-  );
+  React.useEffect(() => setExitDialogSubmitRef(submit), [setExitDialogSubmitRef, submit]);
   setIsSubmitDisabled(disabled);
 
   return {
@@ -138,12 +114,7 @@ const TaxClassesForm: React.FC<TaxClassesFormProps> = ({
   onTaxClassUpdate,
   disabled,
 }) => {
-  const props = useTaxClassesForm(
-    taxClass,
-    onTaxClassCreate,
-    onTaxClassUpdate,
-    disabled,
-  );
+  const props = useTaxClassesForm(taxClass, onTaxClassCreate, onTaxClassUpdate, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

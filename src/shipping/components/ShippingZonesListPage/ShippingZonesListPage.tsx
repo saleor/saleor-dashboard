@@ -3,19 +3,11 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { configurationMenuUrl } from "@dashboard/configuration";
-import {
-  PermissionEnum,
-  ShippingZoneFragment,
-  WeightUnitsEnum,
-} from "@dashboard/graphql";
+import { PermissionEnum, ShippingZoneFragment, WeightUnitsEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { shippingZoneAddUrl } from "@dashboard/shipping/urls";
-import {
-  PageListProps,
-  SearchPageProps,
-  UserPermissionProps,
-} from "@dashboard/types";
+import { PageListProps, SearchPageProps, UserPermissionProps } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -58,9 +50,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
         withoutBorder
       >
         <Box display="flex" alignItems="end" gap={2}>
-          <RequirePermissions
-            requiredPermissions={[PermissionEnum.MANAGE_SETTINGS]}
-          >
+          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_SETTINGS]}>
             <TopNav.Menu
               dataTestId="shipping-zones-menu"
               items={[
@@ -72,10 +62,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
               ]}
             />
           </RequirePermissions>
-          <Button
-            data-test-id="add-shipping-zone"
-            onClick={() => navigate(shippingZoneAddUrl)}
-          >
+          <Button data-test-id="add-shipping-zone" onClick={() => navigate(shippingZoneAddUrl)}>
             <FormattedMessage {...messages.createShippingZone} />
           </Button>
         </Box>

@@ -11,13 +11,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { ShippingZoneQuery } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { ListActions, ListProps, RelayToFlat } from "@dashboard/types";
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableFooter,
-  Typography,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableFooter, Typography } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -55,7 +49,6 @@ export interface ShippingMethodProductsProps
 }
 
 const numberOfColumns = 3;
-
 const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
   const {
     disabled,
@@ -68,7 +61,6 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
     toggleAll,
     toolbar,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
 
@@ -81,16 +73,8 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
           description: "section header",
         })}
         toolbar={
-          <Button
-            data-test-id="assign-product-button"
-            variant="tertiary"
-            onClick={onProductAssign}
-          >
-            <FormattedMessage
-              id="U8eeLW"
-              defaultMessage="Assign products"
-              description="button"
-            />
+          <Button data-test-id="assign-product-button" variant="tertiary" onClick={onProductAssign}>
+            <FormattedMessage id="U8eeLW" defaultMessage="Assign products" description="button" />
           </Button>
         }
       />
@@ -114,10 +98,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
             </TableHead>
             <TableFooter>
               <TableRowLink>
-                <TablePaginationWithContext
-                  colSpan={numberOfColumns}
-                  disabled={disabled}
-                />
+                <TablePaginationWithContext colSpan={numberOfColumns} disabled={disabled} />
               </TableRowLink>
             </TableFooter>
           </>
@@ -145,10 +126,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
                       onChange={() => toggle(product.id)}
                     />
                   </TableCell>
-                  <TableCellAvatar
-                    className={classes.colName}
-                    thumbnail={product?.thumbnail?.url}
-                  >
+                  <TableCellAvatar className={classes.colName} thumbnail={product?.thumbnail?.url}>
                     {product?.name ? (
                       <Typography variant="body2">{product.name}</Typography>
                     ) : (
@@ -156,10 +134,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
                     )}
                   </TableCellAvatar>
                   <TableCell className={classes.colAction}>
-                    <IconButton
-                      variant="secondary"
-                      onClick={() => onProductUnassign([product.id])}
-                    >
+                    <IconButton variant="secondary" onClick={() => onProductUnassign([product.id])}>
                       <DeleteIcon color="primary" />
                     </IconButton>
                   </TableCell>

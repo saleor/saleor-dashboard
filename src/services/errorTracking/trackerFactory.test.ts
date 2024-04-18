@@ -5,16 +5,12 @@ const testErrorId = "testId";
 const initMockFn = jest.fn();
 const captureExceptionMockFn = jest.fn(_ => testErrorId);
 const setUserDataMockFn = jest.fn();
-
 const TestAdapter = (): TrackerMethods => {
   const init: TrackerMethods["init"] = () => {
     initMockFn();
     return true;
   };
-
-  const setUserData: TrackerMethods["setUserData"] = userData =>
-    setUserDataMockFn(userData);
-
+  const setUserData: TrackerMethods["setUserData"] = userData => setUserDataMockFn(userData);
   const captureException: TrackerMethods["captureException"] = (e: Error) =>
     captureExceptionMockFn(e);
 
@@ -33,7 +29,6 @@ describe("Error Tracking", () => {
     expect(enabled).toBe(true);
     expect(initMockFn).toHaveBeenCalled();
   });
-
   it("Does not fire events when is not initiated", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter());
     const sampleError = new Error("test");
@@ -42,7 +37,6 @@ describe("Error Tracking", () => {
     expect(id).toBe(undefined);
     expect(captureExceptionMockFn).toHaveBeenCalledTimes(0);
   });
-
   it("Sends a captured exception", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter());
     errorTracking.init();
@@ -52,7 +46,6 @@ describe("Error Tracking", () => {
     expect(id).toBe(testErrorId);
     expect(captureExceptionMockFn).toHaveBeenCalledWith(sampleError);
   });
-
   it("Does not save user data without permission", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter());
     errorTracking.init();
@@ -62,14 +55,10 @@ describe("Error Tracking", () => {
       username: "John Doe",
     };
     errorTracking.setUserData(userData);
-
     expect(setUserDataMockFn).toHaveBeenCalledTimes(0);
   });
-
   it("Does save user data with proper permission", () => {
-    const errorTracking = ErrorTrackerFactory(TestAdapter(), [
-      TrackerPermission.USER_DATA,
-    ]);
+    const errorTracking = ErrorTrackerFactory(TestAdapter(), [TrackerPermission.USER_DATA]);
     errorTracking.init();
     const userData = {
       email: "john@example.com",
@@ -77,7 +66,6 @@ describe("Error Tracking", () => {
       username: "John Doe",
     };
     errorTracking.setUserData(userData);
-
     expect(setUserDataMockFn).toHaveBeenCalledWith(userData);
   });
 });

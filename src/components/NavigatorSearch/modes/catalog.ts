@@ -20,9 +20,7 @@ export function searchInCatalog(
   navigate: UseNavigatorResult,
   catalog: SearchCatalogQuery,
 ): QuickSearchAction[] {
-  const categories: QuickSearchActionInput[] = (
-    mapEdgesToItems(catalog?.categories) || []
-  )
+  const categories: QuickSearchActionInput[] = (mapEdgesToItems(catalog?.categories) || [])
     .map<QuickSearchActionInput>(category => ({
       caption: intl.formatMessage(messages.category),
       label: category.name,
@@ -35,10 +33,7 @@ export function searchInCatalog(
       type: "catalog",
     }))
     .sort(sortScores);
-
-  const collections: QuickSearchActionInput[] = (
-    mapEdgesToItems(catalog?.collections) || []
-  )
+  const collections: QuickSearchActionInput[] = (mapEdgesToItems(catalog?.collections) || [])
     .map<QuickSearchActionInput>(collection => ({
       caption: intl.formatMessage(messages.collection),
       label: collection.name,
@@ -51,10 +46,7 @@ export function searchInCatalog(
       type: "catalog",
     }))
     .sort(sortScores);
-
-  const products: QuickSearchActionInput[] = (
-    mapEdgesToItems(catalog?.products) || []
-  )
+  const products: QuickSearchActionInput[] = (mapEdgesToItems(catalog?.products) || [])
     .map<QuickSearchActionInput>(product => ({
       caption: intl.formatMessage(messages.product),
       extraInfo: product.category.name,
@@ -68,7 +60,6 @@ export function searchInCatalog(
       type: "catalog",
     }))
     .sort(sortScores);
-
   const baseActions = [
     ...categories.slice(0, 1),
     ...collections.slice(0, 1),

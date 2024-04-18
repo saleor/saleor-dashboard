@@ -21,13 +21,11 @@ jest.mock("@dashboard/apps/context", () => ({
     retryAppInstallation: jest.fn(),
   })),
 }));
-
 jest.mock("@dashboard/hooks/useHasManagedAppsPermission", () => ({
   useHasManagedAppsPermission: jest.fn(() => ({
     hasManagedAppsPermission: true,
   })),
 }));
-
 jest.mock("@dashboard/config", () => {
   const original = jest.requireActual("@dashboard/config");
 
@@ -37,7 +35,6 @@ jest.mock("@dashboard/config", () => {
     IS_CLOUD_INSTANCE: true,
   };
 });
-
 describe("Apps AppListRow", () => {
   it("displays released app details when released app data passed", () => {
     // Arrange
@@ -58,19 +55,14 @@ describe("Apps AppListRow", () => {
     expect(name[0]).toBeTruthy();
     expect(description[0]).toBeTruthy();
     const expectedImages = [releasedApp.logo.source, ...integrationImages];
-    images.forEach(image =>
-      expect(expectedImages).toContain(image.getAttribute("src")),
-    );
+    images.forEach(image => expect(expectedImages).toContain(image.getAttribute("src")));
     const expectedLinks = [
       releasedApp.privacyUrl,
       releasedApp.repositoryUrl,
       releasedApp.supportUrl,
     ];
-    links.forEach(link =>
-      expect(expectedLinks).toContain(link.getAttribute("href")),
-    );
+    links.forEach(link => expect(expectedLinks).toContain(link.getAttribute("href")));
   });
-
   it("calls handlers when released app data passed and buttons clicked", async () => {
     // Arrange
     const navigateToAppInstallPage = jest.fn();
@@ -86,19 +78,15 @@ describe("Apps AppListRow", () => {
     );
     const user = userEvent.setup();
     const installButton = screen.getAllByTestId("app-install-button");
-    const deployToVercelButton = screen.getAllByTestId(
-      "app-fork-on-github-button",
-    );
+    const deployToVercelButton = screen.getAllByTestId("app-fork-on-github-button");
 
     // Act
     await user.click(installButton[0]);
     await user.click(deployToVercelButton[0]);
-
     // Assert
     expect(navigateToAppInstallPage).toBeCalledTimes(1);
     expect(navigateToVercelDeploymentPage).toBeCalledTimes(1);
   });
-
   it("displays coming soon app details when coming soon app data passed", () => {
     // Arrange
     const integrationImages = comingSoonApp.integrations.map(
@@ -121,13 +109,10 @@ describe("Apps AppListRow", () => {
     expect(name[0]).toBeTruthy();
     expect(description[0]).toBeTruthy();
     const expectedImages = [comingSoonApp.logo.source, ...integrationImages];
-    images.forEach(image =>
-      expect(expectedImages).toContain(image.getAttribute("src")),
-    );
+    images.forEach(image => expect(expectedImages).toContain(image.getAttribute("src")));
     expect(links).toHaveLength(0);
     expect(releaseDate[0]).toBeTruthy();
   });
-
   it("displays placeholder initial when no released app logo passed", () => {
     // Arrange
     const app: AppstoreApi.ReleasedSaleorApp = {
@@ -143,9 +128,7 @@ describe("Apps AppListRow", () => {
       </Wrapper>,
     );
     const logo = screen.getAllByTestId("app-logo");
-    const logoPlaceholder = within(logo[0]).queryByTestId(
-      "app-logo-placeholder",
-    );
+    const logoPlaceholder = within(logo[0]).queryByTestId("app-logo-placeholder");
     const logoImage = within(logo[0]).queryByRole("img");
 
     // Assert
@@ -153,7 +136,6 @@ describe("Apps AppListRow", () => {
     expect(logoPlaceholder?.textContent).toBe(app.name.en[0]);
     expect(logoImage).toBeFalsy();
   });
-
   it("displays placeholder initial when no coming soon app logo passed", () => {
     // Arrange
     const app: AppstoreApi.ComingSoonSaleorApp = {
@@ -169,9 +151,7 @@ describe("Apps AppListRow", () => {
       </Wrapper>,
     );
     const logo = screen.getAllByTestId("app-logo");
-    const logoPlaceholder = within(logo[0]).queryByTestId(
-      "app-logo-placeholder",
-    );
+    const logoPlaceholder = within(logo[0]).queryByTestId("app-logo-placeholder");
     const logoImage = within(logo[0]).queryByRole("img");
 
     // Assert
@@ -179,15 +159,11 @@ describe("Apps AppListRow", () => {
     expect(logoPlaceholder?.textContent).toBe(app.name.en[0]);
     expect(logoImage).toBeFalsy();
   });
-
   it("displays app installation details when failed installation data passed", () => {
     // Arrange
     render(
       <Wrapper>
-        <AppListRow
-          app={releasedApp}
-          appInstallationList={[failedAppInProgress]}
-        />
+        <AppListRow app={releasedApp} appInstallationList={[failedAppInProgress]} />
       </Wrapper>,
     );
     const status = screen.getAllByTestId("app-installation-failed");
@@ -198,15 +174,11 @@ describe("Apps AppListRow", () => {
     // Assert
     expect(statusDetails).toBeTruthy();
   });
-
   it("displays app installation details when pending installation data passed", () => {
     // Arrange
     render(
       <Wrapper>
-        <AppListRow
-          app={releasedApp}
-          appInstallationList={[pendingAppInProgress]}
-        />
+        <AppListRow app={releasedApp} appInstallationList={[pendingAppInProgress]} />
       </Wrapper>,
     );
     const status = screen.getAllByTestId("app-installation-pending");
@@ -217,7 +189,6 @@ describe("Apps AppListRow", () => {
     // Assert
     expect(statusText).toBeTruthy();
   });
-
   it("calls handlers when failed installation data passed and buttons clicked", async () => {
     // Arrange
     const openAppSettings = jest.fn();
@@ -230,10 +201,7 @@ describe("Apps AppListRow", () => {
     }));
     render(
       <Wrapper>
-        <AppListRow
-          app={releasedApp}
-          appInstallationList={[failedAppInProgress]}
-        />
+        <AppListRow app={releasedApp} appInstallationList={[failedAppInProgress]} />
       </Wrapper>,
     );
     const user = userEvent.setup();
@@ -243,7 +211,6 @@ describe("Apps AppListRow", () => {
     // Act
     await user.click(retryButton[0]);
     await user.click(removeButton[0]);
-
     // Assert
     expect(retryAppInstallation).toHaveBeenCalledWith(failedAppInProgress.id);
     expect(retryAppInstallation).toHaveBeenCalledTimes(1);

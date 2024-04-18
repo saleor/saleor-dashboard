@@ -41,10 +41,7 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
   );
 };
 
-function RuleRewardWrapper({
-  children,
-  ...props
-}: { children: React.ReactNode } & BoxProps) {
+function RuleRewardWrapper({ children, ...props }: { children: React.ReactNode } & BoxProps) {
   const intl = useIntl();
 
   return (

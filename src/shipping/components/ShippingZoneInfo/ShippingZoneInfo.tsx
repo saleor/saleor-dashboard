@@ -48,9 +48,7 @@ const useStyles = makeStyles(
   },
   { name: "ShippingZoneCreatePage" },
 );
-
 const MAX_DESCRIPTION_LENGTH = 300;
-
 const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
   data,
   disabled,
@@ -59,14 +57,11 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
-
   const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
           disabled={disabled}

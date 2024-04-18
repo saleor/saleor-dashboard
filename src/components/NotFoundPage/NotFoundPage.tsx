@@ -61,7 +61,6 @@ type NotFoundPageProps =
 
 const NotFoundPage: React.FC<NotFoundPageProps> = props => {
   const { onBack, backHref } = props;
-
   const classes = useStyles(props);
 
   return (
@@ -73,25 +72,14 @@ const NotFoundPage: React.FC<NotFoundPageProps> = props => {
               <FormattedMessage id="yH56V+" defaultMessage="Ooops!..." />
             </Typography>
             <Typography className={classes.header} variant="h4">
-              <FormattedMessage
-                id="bj6pTd"
-                defaultMessage="Something's missing"
-              />
+              <FormattedMessage id="bj6pTd" defaultMessage="Something's missing" />
             </Typography>
             <Typography>
-              <FormattedMessage
-                id="nRiOg+"
-                defaultMessage="Sorry, the page was not found"
-              />
+              <FormattedMessage id="nRiOg+" defaultMessage="Sorry, the page was not found" />
             </Typography>
           </div>
           <div>
-            <Button
-              className={classes.button}
-              variant="primary"
-              onClick={onBack}
-              href={backHref}
-            >
+            <Button className={classes.button} variant="primary" onClick={onBack} href={backHref}>
               <FormattedMessage
                 id="95oJ5d"
                 defaultMessage="Go back to dashboard"

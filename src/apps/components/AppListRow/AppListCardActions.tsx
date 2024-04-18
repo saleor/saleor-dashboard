@@ -50,9 +50,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
         </Button>
       )}
 
-      {installHandler && (
-        <AppListCardInstallButton installHandler={installHandler} />
-      )}
+      {installHandler && <AppListCardInstallButton installHandler={installHandler} />}
 
       {installationPending && (
         <Text color="default2" size={3} data-test-id="app-installation-pending">

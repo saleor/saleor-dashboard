@@ -12,28 +12,16 @@ import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { Customers } from "@dashboard/customers/types";
-import {
-  customerAddUrl,
-  CustomerListUrlSortField,
-  customerUrl,
-} from "@dashboard/customers/urls";
+import { customerAddUrl, CustomerListUrlSortField, customerUrl } from "@dashboard/customers/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import {
-  FilterPagePropsWithPresets,
-  PageListProps,
-  SortPage,
-} from "@dashboard/types";
+import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CustomerListDatagrid } from "../CustomerListDatagrid/CustomerListDatagrid";
-import {
-  createFilterStructure,
-  CustomerFilterKeys,
-  CustomerListFilterOpts,
-} from "./filters";
+import { createFilterStructure, CustomerFilterKeys, CustomerListFilterOpts } from "./filters";
 
 export interface CustomerListPageProps
   extends PageListProps,
@@ -65,13 +53,12 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const userPermissions = useUserPermissions();
   const structure = createFilterStructure(intl, filterOpts, userPermissions);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-
-  const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } =
-    useExtensions(extensionMountPoints.CUSTOMER_LIST);
+  const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.CUSTOMER_LIST,
+  );
   const extensionMenuItems = mapToMenuItemsForCustomerOverviewActions(
     CUSTOMER_OVERVIEW_MORE_ACTIONS,
     selectedCustomerIds,
@@ -85,12 +72,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
         withoutBorder
         isAlignToRight={false}
       >
-        <Box
-          __flex={1}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={5} display="flex" alignItems="center">
               <ChevronRightIcon />
@@ -114,9 +96,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
             />
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
-            {extensionMenuItems.length > 0 && (
-              <TopNav.Menu items={extensionMenuItems} />
-            )}
+            {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
             {extensionCreateButtonItems.length > 0 ? (
               <ButtonWithDropdown
                 options={extensionCreateButtonItems}
@@ -130,10 +110,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
                 />
               </ButtonWithDropdown>
             ) : (
-              <Button
-                data-test-id="create-customer"
-                onClick={() => navigate(customerAddUrl)}
-              >
+              <Button data-test-id="create-customer" onClick={() => navigate(customerAddUrl)}>
                 <FormattedMessage
                   id="QLVddq"
                   defaultMessage="Create customer"
@@ -158,10 +135,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
             <Box display="flex" gap={4}>
               {selectedCustomerIds.length > 0 && (
                 <BulkDeleteButton onClick={onCustomersDelete}>
-                  <FormattedMessage
-                    defaultMessage="Delete customers"
-                    id="kFsTMN"
-                  />
+                  <FormattedMessage defaultMessage="Delete customers" id="kFsTMN" />
                 </BulkDeleteButton>
               )}
             </Box>

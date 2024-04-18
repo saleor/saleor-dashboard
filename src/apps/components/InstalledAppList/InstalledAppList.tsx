@@ -16,27 +16,18 @@ interface InstalledAppListProps extends ListProps {
   appInstallationList?: AppInstallation[];
 }
 
-const InstalledAppList: React.FC<InstalledAppListProps> = ({
-  appList,
-  appInstallationList,
-}) => {
+const InstalledAppList: React.FC<InstalledAppListProps> = ({ appList, appInstallationList }) => {
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
-  if (
-    appsAreLoading({ appList, appInstallationList, hasManagedAppsPermission })
-  ) {
+  if (appsAreLoading({ appList, appInstallationList, hasManagedAppsPermission })) {
     return <Skeleton />;
   }
 
-  if (
-    hasEmptyAppList({ appList, appInstallationList, hasManagedAppsPermission })
-  ) {
+  if (hasEmptyAppList({ appList, appInstallationList, hasManagedAppsPermission })) {
     return (
       <Box marginTop={3}>
-        <Text size={2}>
-          {intl.formatMessage(messages.nothingInstalledPlaceholder)}
-        </Text>
+        <Text size={2}>{intl.formatMessage(messages.nothingInstalledPlaceholder)}</Text>
       </Box>
     );
   }
@@ -60,9 +51,7 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
           key={app.id}
           app={app}
           isExternal={isExternal}
-          logo={
-            app.brand?.logo.default ? { source: app.brand?.logo.default } : logo
-          }
+          logo={app.brand?.logo.default ? { source: app.brand?.logo.default } : logo}
         />
       ))}
     </List>

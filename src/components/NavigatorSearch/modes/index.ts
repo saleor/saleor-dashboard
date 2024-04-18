@@ -27,13 +27,7 @@ function getModeActions(
     case "catalog":
       return getCatalogModeActions(query, intl, cbs.navigate, queries.catalog);
     case "commands":
-      return getCommandModeActions(
-        query,
-        intl,
-        cbs.navigate,
-        cbs.createOrder,
-        cbs.setMode,
-      );
+      return getCommandModeActions(query, intl, cbs.navigate, cbs.createOrder, cbs.setMode);
     case "customers":
       return getCustomersModeActions(intl, cbs.navigate, queries.customers);
     case "help":
@@ -41,13 +35,7 @@ function getModeActions(
     case "orders":
       return getOrdersModeActions(query, intl, cbs.navigate, queries.order);
     default:
-      return getDefaultModeActions(
-        query,
-        intl,
-        cbs.navigate,
-        cbs.createOrder,
-        cbs.setMode,
-      );
+      return getDefaultModeActions(query, intl, cbs.navigate, cbs.createOrder, cbs.setMode);
   }
 }
 

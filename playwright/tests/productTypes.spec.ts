@@ -6,9 +6,7 @@ import * as faker from "faker";
 test.use({ storageState: "./playwright/.auth/admin.json" });
 const productTypeName = `e2e-product-type-${faker.datatype.number()}`;
 
-test("TC: SALEOR_1 Create basic product type @e2e @product-type", async ({
-  page,
-}) => {
+test("TC: SALEOR_1 Create basic product type @e2e @product-type", async ({ page }) => {
   const productTypePage = new ProductTypePage(page);
 
   await productTypePage.gotoProductTypeListPage();
@@ -19,10 +17,7 @@ test("TC: SALEOR_1 Create basic product type @e2e @product-type", async ({
   await productTypePage.expectSuccessBanner();
   await expect(productTypePage.nameInput).toHaveValue(productTypeName);
 });
-
-test("TC: SALEOR_2 Create gift card product type @e2e @product-type", async ({
-  page,
-}) => {
+test("TC: SALEOR_2 Create gift card product type @e2e @product-type", async ({ page }) => {
   const productTypePage = new ProductTypePage(page);
 
   await productTypePage.gotoAddProductTypePage();
@@ -32,17 +27,11 @@ test("TC: SALEOR_2 Create gift card product type @e2e @product-type", async ({
   await productTypePage.expectSuccessBanner();
   await expect(productTypePage.nameInput).toHaveValue(productTypeName);
 });
-
-test("TC: SALEOR_184 As a admin I can edit product type @e2e @product-type", async ({
-  page,
-}) => {
+test("TC: SALEOR_184 As a admin I can edit product type @e2e @product-type", async ({ page }) => {
   const productTypePage = new ProductTypePage(page);
-
   const updatedProductTypeName = `updated-e2e-product-type-${faker.datatype.number()}`;
 
-  await productTypePage.gotoExistingProductTypePage(
-    PRODUCT_TYPES.productTypeToBeEdited.id,
-  );
+  await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeEdited.id);
   await productTypePage.updateProductTypeName(updatedProductTypeName);
   await productTypePage.makeProductShippableWithWeight();
   await productTypePage.clickSaveButton();
@@ -51,17 +40,13 @@ test("TC: SALEOR_184 As a admin I can edit product type @e2e @product-type", asy
   await expect(productTypePage.shippingWeightInput).toHaveValue("10");
   await expect(productTypePage.nameInput).toHaveValue(updatedProductTypeName);
 });
-
 test("TC: SALEOR_185 As a admin user I can delete product type with assigned products @e2e @product-type", async ({
   page,
 }) => {
   const productTypePage = new ProductTypePage(page);
-
   const productTypeName = PRODUCT_TYPES.productTypeToBeRemoved.name;
 
-  await productTypePage.gotoExistingProductTypePage(
-    PRODUCT_TYPES.productTypeToBeRemoved.id,
-  );
+  await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeRemoved.id);
   await productTypePage.clickDeleteButton();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeletionCheckbox();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
@@ -70,16 +55,12 @@ test("TC: SALEOR_185 As a admin user I can delete product type with assigned pro
     state: "visible",
     timeout: 50000,
   });
-  await expect(productTypePage.productTypeList).not.toContainText(
-    productTypeName,
-  );
+  await expect(productTypePage.productTypeList).not.toContainText(productTypeName);
 });
-
 test("TC: SALEOR_186 As a admin user I can delete several product types @e2e @product-type", async ({
   page,
 }) => {
   const productTypePage = new ProductTypePage(page);
-
   const rowsToBeDeleted = PRODUCT_TYPES.productTypesToBeBulkDeleted.ids;
   const productTypeNames = PRODUCT_TYPES.productTypesToBeBulkDeleted.names;
 
@@ -93,10 +74,6 @@ test("TC: SALEOR_186 As a admin user I can delete several product types @e2e @pr
     state: "visible",
     timeout: 50000,
   });
-  await expect(productTypePage.productTypeList).not.toContainText(
-    productTypeNames[0],
-  );
-  await expect(productTypePage.productTypeList).not.toContainText(
-    productTypeNames[1],
-  );
+  await expect(productTypePage.productTypeList).not.toContainText(productTypeNames[0]);
+  await expect(productTypePage.productTypeList).not.toContainText(productTypeNames[1]);
 });

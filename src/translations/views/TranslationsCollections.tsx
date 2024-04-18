@@ -35,25 +35,21 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
-
   const collectionTranslations = useCollectionTranslationDetailsQuery({
     variables: { id, language: languageCode },
   });
-
-  const [updateTranslations, updateTranslationsOpts] =
-    useUpdateCollectionTranslationsMutation({
-      onCompleted: data => {
-        if (data.collectionTranslate.errors.length === 0) {
-          collectionTranslations.refetch();
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          navigate("?", { replace: true });
-        }
-      },
-    });
-
+  const [updateTranslations, updateTranslationsOpts] = useUpdateCollectionTranslationsMutation({
+    onCompleted: data => {
+      if (data.collectionTranslate.errors.length === 0) {
+        collectionTranslations.refetch();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        navigate("?", { replace: true });
+      }
+    },
+  });
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -62,12 +58,10 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
         }),
       { replace: true },
     );
-
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
   const translation = collectionTranslations?.data?.translation;
-
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
     data: string,
@@ -89,20 +83,14 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
     <TranslationsCollectionsPage
       translationId={id}
       activeField={params.activeField}
-      disabled={
-        collectionTranslations.loading || updateTranslationsOpts.loading
-      }
+      disabled={collectionTranslations.loading || updateTranslationsOpts.loading}
       languageCode={languageCode}
       languages={maybe(() => shop.languages, [])}
       saveButtonState={updateTranslationsOpts.status}
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={
-        translation?.__typename === "CollectionTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === "CollectionTranslatableContent" ? translation : null}
     />
   );
 };

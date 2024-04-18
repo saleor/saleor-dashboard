@@ -1,9 +1,4 @@
-import {
-  act,
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from "@testing-library/react";
+import { act, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
@@ -15,11 +10,8 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => (
-    <>{defaultMessage}</>
-  ),
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
-
 describe("ChannelPermission", () => {
   it("should render by default header and checkbox", () => {
     // Arrange & Act
@@ -34,16 +26,12 @@ describe("ChannelPermission", () => {
         hasAllChannels={true}
       />,
     );
-
     // Assert
     expect(screen.getByText(/channels permissions/i)).toBeInTheDocument();
     expect(screen.getByRole("checkbox")).toBeInTheDocument();
     expect(screen.getByRole("checkbox")).toBeChecked();
-    expect(
-      screen.getByText(/allow access to orders of all channels/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/allow access to orders of all channels/i)).toBeInTheDocument();
   });
-
   it("should render channels select when access to all channels checkbox unchecked", () => {
     // Arrange & Act
     render(
@@ -57,12 +45,10 @@ describe("ChannelPermission", () => {
         hasAllChannels={false}
       />,
     );
-
     // Assert
     expect(screen.getByRole("checkbox")).not.toBeChecked();
     expect(screen.getByRole("listbox")).toBeInTheDocument();
   });
-
   it("should render restricted checkbox disabled", () => {
     // Arrange & Act
     const mockonHasAllChannelsChange = jest.fn();
@@ -78,15 +64,12 @@ describe("ChannelPermission", () => {
         hasAllChannels={true}
       />,
     );
-
     // Act
     userEvent.click(screen.getByRole("checkbox"));
-
     // Assert
     expect(mockonHasAllChannelsChange).not.toHaveBeenCalled();
     expect(screen.getByRole("checkbox")).toBeDisabled();
   });
-
   it("should render selected channels when has restricted channels selected", () => {
     // Arrange & Act
     const selectedChannels = [allChannels[1]];
@@ -101,11 +84,9 @@ describe("ChannelPermission", () => {
         hasAllChannels={false}
       />,
     );
-
     // Assert
     expect(screen.getByText(selectedChannels[0].name)).toBeInTheDocument();
   });
-
   it("should allow to remove selected channels", async () => {
     // Arrange & Act
     const selectedChannels = [allChannels[1]];
@@ -120,15 +101,12 @@ describe("ChannelPermission", () => {
         hasAllChannels={false}
       />,
     );
-
     // Assert
     expect(screen.getByText(selectedChannels[0].name)).toBeInTheDocument();
-
     // Act
     act(() => {
       userEvent.click(screen.getByText(/✕/i));
     });
-
     // Assert
     waitForElementToBeRemoved(screen.getByText(selectedChannels[0].name));
   });

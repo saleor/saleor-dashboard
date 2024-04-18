@@ -16,8 +16,7 @@ import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsSalesPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsSalesPageProps extends TranslationsEntitiesPageProps {
   data: SaleTranslationFragment;
 }
 

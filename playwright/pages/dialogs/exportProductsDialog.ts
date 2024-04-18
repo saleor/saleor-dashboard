@@ -8,9 +8,7 @@ export class ExportProductsDialog {
     readonly channelsAccordion = page.getByTestId("channel-expand-button"),
     readonly nextButton = page.getByTestId("next"),
     readonly submitButton = page.getByTestId("submit"),
-    readonly exportSearchedProductsRadioButton = page.locator(
-      "input[value='FILTER']",
-    ),
+    readonly exportSearchedProductsRadioButton = page.locator("input[value='FILTER']"),
   ) {
     this.page = page;
   }

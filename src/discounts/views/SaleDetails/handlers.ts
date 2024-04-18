@@ -23,9 +23,7 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 export function createUpdateHandler(
   sale: SaleDetailsFragment,
   saleChannelsChoices: ChannelSaleFormData[],
-  updateSale: (
-    variables: SaleUpdateMutationVariables,
-  ) => Promise<FetchResult<SaleUpdateMutation>>,
+  updateSale: (variables: SaleUpdateMutationVariables) => Promise<FetchResult<SaleUpdateMutation>>,
 ) {
   return async (formData: SaleDetailsPageFormData) => {
     const { id } = sale;
@@ -33,9 +31,7 @@ export function createUpdateHandler(
       updateSale({
         id,
         input: {
-          endDate: formData.hasEndDate
-            ? joinDateTime(formData.endDate, formData.endTime)
-            : null,
+          endDate: formData.hasEndDate ? joinDateTime(formData.endDate, formData.endTime) : null,
           name: formData.name,
           startDate: joinDateTime(formData.startDate, formData.startTime),
           type: discountValueTypeEnum(formData.type),

@@ -17,7 +17,6 @@ describe("useEnvLink", () => {
     // Assert
     expect(result.current).toBe(cloudHref);
   });
-
   it("should return link to the cloud environment on staging", () => {
     // Arrange
     const stagingHref =

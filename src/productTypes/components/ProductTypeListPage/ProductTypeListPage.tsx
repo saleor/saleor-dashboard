@@ -6,10 +6,7 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { ProductTypeFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
-import {
-  productTypeAddUrl,
-  ProductTypeListUrlSortField,
-} from "@dashboard/productTypes/urls";
+import { productTypeAddUrl, ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
 import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -21,11 +18,7 @@ import {
   SortPage,
   TabPageProps,
 } from "../../../types";
-import {
-  createFilterStructure,
-  ProductTypeFilterKeys,
-  ProductTypeListFilterOpts,
-} from "./filters";
+import { createFilterStructure, ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
 
 export interface ProductTypeListPageProps
   extends PageListProps,
@@ -50,25 +43,13 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
-
   const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <>
-      <TopNav
-        href={configurationMenuUrl}
-        title={intl.formatMessage(sectionNames.productTypes)}
-      >
-        <Button
-          variant="primary"
-          href={productTypeAddUrl()}
-          data-test-id="add-product-type"
-        >
-          <FormattedMessage
-            id="gksZwp"
-            defaultMessage="Create product type"
-            description="button"
-          />
+      <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.productTypes)}>
+        <Button variant="primary" href={productTypeAddUrl()} data-test-id="add-product-type">
+          <FormattedMessage id="gksZwp" defaultMessage="Create product type" description="button" />
         </Button>
       </TopNav>
       <Card>

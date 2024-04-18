@@ -7,10 +7,7 @@ import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { PageTypeFragment } from "@dashboard/graphql";
-import {
-  PageTypeListUrlSortField,
-  pageTypeUrl,
-} from "@dashboard/pageTypes/urls";
+import { PageTypeListUrlSortField, pageTypeUrl } from "@dashboard/pageTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -32,25 +29,13 @@ const useStyles = makeStyles(
   { name: "PageTypeList" },
 );
 
-interface PageTypeListProps
-  extends ListProps,
-    ListActions,
-    SortPage<PageTypeListUrlSortField> {
+interface PageTypeListProps extends ListProps, ListActions, SortPage<PageTypeListUrlSortField> {
   pageTypes: PageTypeFragment[];
 }
 
 const PageTypeList: React.FC<PageTypeListProps> = props => {
-  const {
-    disabled,
-    pageTypes,
-    onSort,
-    isChecked,
-    selected,
-    sort,
-    toggle,
-    toggleAll,
-    toolbar,
-  } = props;
+  const { disabled, pageTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
+    props;
   const classes = useStyles(props);
   const numberOfColumns = pageTypes?.length === 0 ? 1 : 2;
 
@@ -66,9 +51,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
       >
         <TableCellHeader
           direction={
-            sort.sort === PageTypeListUrlSortField.name
-              ? getArrowDirection(sort.asc)
-              : undefined
+            sort.sort === PageTypeListUrlSortField.name ? getArrowDirection(sort.asc) : undefined
           }
           arrowPosition="right"
           onClick={() => onSort(PageTypeListUrlSortField.name)}
@@ -83,10 +66,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRowLink>
-          <TablePaginationWithContext
-            colSpan={numberOfColumns}
-            disabled={disabled}
-          />
+          <TablePaginationWithContext colSpan={numberOfColumns} disabled={disabled} />
         </TableRowLink>
       </TableFooter>
       <TableBody data-test-id="page-types-list">
@@ -112,11 +92,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                   />
                 </TableCell>
                 <TableCell className={classes.colName}>
-                  {pageType ? (
-                    <span data-test-id="name">{pageType.name}</span>
-                  ) : (
-                    <Skeleton />
-                  )}
+                  {pageType ? <span data-test-id="name">{pageType.name}</span> : <Skeleton />}
                 </TableCell>
               </TableRowLink>
             );
@@ -124,10 +100,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
           () => (
             <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage
-                  id="6fORLY"
-                  defaultMessage="No page types found"
-                />
+                <FormattedMessage id="6fORLY" defaultMessage="No page types found" />
               </TableCell>
             </TableRowLink>
           ),

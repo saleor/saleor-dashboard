@@ -26,7 +26,6 @@ describe("Filtering query params", () => {
 
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
-
   it("should not be empty object if params given", () => {
     const params: ProductListUrlFilters = {
       priceFrom: "10",
@@ -39,11 +38,8 @@ describe("Filtering query params", () => {
     expect(getExistingKeys(filterVariables)).toHaveLength(2);
   });
 });
-
 describe("Get attribute values from URL params", () => {
-  type GetAttributeValuesFromParams = Parameters<
-    typeof getAttributeValuesFromParams
-  >;
+  type GetAttributeValuesFromParams = Parameters<typeof getAttributeValuesFromParams>;
 
   it("should return empty array when attribute doesn't exist in params", () => {
     // Arrange
@@ -52,14 +48,12 @@ describe("Get attribute values from URL params", () => {
       slug: "test",
       inputType: AttributeInputTypeEnum.DROPDOWN,
     };
-
     // Act
     const attributeValues = getAttributeValuesFromParams(params, attribute);
 
     // Assert
     expect(attributeValues).toHaveLength(0);
   });
-
   it("should return attribute values when attribute exists in params", () => {
     // Arrange
     const params: GetAttributeValuesFromParams[0] = {
@@ -71,7 +65,6 @@ describe("Get attribute values from URL params", () => {
       slug: "test",
       inputType: AttributeInputTypeEnum.DROPDOWN,
     };
-
     // Act
     const attributeValues = getAttributeValuesFromParams(params, attribute);
 
@@ -79,14 +72,9 @@ describe("Get attribute values from URL params", () => {
     expect(attributeValues).toEqual(["value-1", "value-2"]);
   });
 });
-
 describe("Map attribute params to filter opts", () => {
-  type MapAttributeParamsToFilterOpts = Parameters<
-    typeof mapAttributeParamsToFilterOpts
-  >;
-  type MapAttributeParamsToFilterOptsReturn = ReturnType<
-    typeof mapAttributeParamsToFilterOpts
-  >;
+  type MapAttributeParamsToFilterOpts = Parameters<typeof mapAttributeParamsToFilterOpts>;
+  type MapAttributeParamsToFilterOptsReturn = ReturnType<typeof mapAttributeParamsToFilterOpts>;
 
   it("should return empty array when no params given", () => {
     // Arrange
@@ -100,10 +88,8 @@ describe("Map attribute params to filter opts", () => {
       },
     ];
     const params: MapAttributeParamsToFilterOpts[1] = {};
-
     // Act
     const filterOpts = mapAttributeParamsToFilterOpts(attributes, params);
-
     // Assert
     const expectedFilterOpts: MapAttributeParamsToFilterOptsReturn = [
       {
@@ -117,7 +103,6 @@ describe("Map attribute params to filter opts", () => {
     ];
     expect(filterOpts).toEqual(expectedFilterOpts);
   });
-
   it("should return filter opts with proper values selected according to passed values selection in params", () => {
     // Arrange
     const attributes: MapAttributeParamsToFilterOpts[0] = [
@@ -149,10 +134,8 @@ describe("Map attribute params to filter opts", () => {
         "test-2": ["value-3"],
       },
     };
-
     // Act
     const filterOpts = mapAttributeParamsToFilterOpts(attributes, params);
-
     // Assert
     const expectedFilterOpts: MapAttributeParamsToFilterOptsReturn = [
       {
@@ -183,21 +166,15 @@ describe("Map attribute params to filter opts", () => {
     expect(filterOpts).toEqual(expectedFilterOpts);
   });
 });
-
 describe("Filtering URL params", () => {
   const intl = createIntl(config);
-
   const filters = createFilterStructure(intl, productListFilterOpts);
 
   it("should be empty if no active filters", () => {
-    const filterQueryParams = getFilterQueryParams(
-      filters,
-      getFilterQueryParam,
-    );
+    const filterQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
   });
-
   it("should not be empty if active filters are present", () => {
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
@@ -208,7 +185,6 @@ describe("Filtering URL params", () => {
     expect(stringifyQs(filterQueryParams)).toMatchSnapshot();
   });
 });
-
 describe("Parsing filter value", () => {
   it("should return boolean values when boolean attributes values passed", () => {
     // Arrange
@@ -218,13 +194,10 @@ describe("Parsing filter value", () => {
         "test-2": ["false"],
       },
     };
-    const type =
-      ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes;
-
+    const type = ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes;
     // Act
     const parsedValue1 = parseFilterValue(params, "test-1", type);
     const parsedValue2 = parseFilterValue(params, "test-2", type);
-
     // Assert
     const expectedValue1: FilterParam = {
       slug: "test-1",
@@ -237,7 +210,6 @@ describe("Parsing filter value", () => {
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
   });
-
   it("should return numeric values when numeric attributes values passed", () => {
     // Arrange
     const params: ProductListUrlFilters = {
@@ -246,13 +218,10 @@ describe("Parsing filter value", () => {
         "test-2": ["1", "2"],
       },
     };
-    const type =
-      ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes;
-
+    const type = ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes;
     // Act
     const parsedValue1 = parseFilterValue(params, "test-1", type);
     const parsedValue2 = parseFilterValue(params, "test-2", type);
-
     // Assert
     const expectedValue1: FilterParam = {
       slug: "test-1",
@@ -271,7 +240,6 @@ describe("Parsing filter value", () => {
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
   });
-
   it("should return string values when string attributes values passed", () => {
     // Arrange
     const params: ProductListUrlFilters = {
@@ -281,11 +249,9 @@ describe("Parsing filter value", () => {
       },
     };
     const type = ProductListUrlFiltersAsDictWithMultipleValues.stringAttributes;
-
     // Act
     const parsedValue1 = parseFilterValue(params, "test-1", type);
     const parsedValue2 = parseFilterValue(params, "test-2", type);
-
     // Assert
     const expectedValue1: FilterParam = {
       slug: "test-1",
@@ -298,7 +264,6 @@ describe("Parsing filter value", () => {
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
   });
-
   it("should return date values when date attributes values passed", () => {
     // Arrange
     const params: ProductListUrlFilters = {
@@ -308,11 +273,9 @@ describe("Parsing filter value", () => {
       },
     };
     const type = ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes;
-
     // Act
     const parsedValue1 = parseFilterValue(params, "test-1", type);
     const parsedValue2 = parseFilterValue(params, "test-2", type);
-
     // Assert
     const expectedValue1: FilterParam = {
       slug: "test-1",
@@ -331,7 +294,6 @@ describe("Parsing filter value", () => {
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
   });
-
   it("should return datetime values when datetime attributes values passed", () => {
     // Arrange
     const params: ProductListUrlFilters = {
@@ -340,13 +302,10 @@ describe("Parsing filter value", () => {
         "test-2": ["2020-01-01T00:00:00", "2020-02-02T00:00:00"],
       },
     };
-    const type =
-      ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes;
-
+    const type = ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes;
     // Act
     const parsedValue1 = parseFilterValue(params, "test-1", type);
     const parsedValue2 = parseFilterValue(params, "test-2", type);
-
     // Assert
     const expectedValue1: FilterParam = {
       slug: "test-1",

@@ -10,10 +10,7 @@ import {
 import { FormChange } from "@dashboard/hooks/useForm";
 import { flatten, getById } from "@dashboard/misc";
 
-import {
-  OrderCustomerAddressesEditData,
-  OrderCustomerAddressesEditHandlers,
-} from "./form";
+import { OrderCustomerAddressesEditData, OrderCustomerAddressesEditHandlers } from "./form";
 import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
 import { OrderCustomerSearchAddressState } from "./types";
 
@@ -30,8 +27,7 @@ export const stringifyAddress = (address: Partial<AddressFragment>): string => {
   return Object.values(flatten(addressWithoutId)).join(" ");
 };
 
-export const parseQuery = (query: string) =>
-  query.replace(/([.?*+\-=:^$\\[\]<>(){}|])/g, "\\$&");
+export const parseQuery = (query: string) => query.replace(/([.?*+\-=:^$\\[\]<>(){}|])/g, "\\$&");
 
 export function validateDefaultAddress<T extends AddressFragment>(
   defaultAddress: Node,
@@ -70,9 +66,7 @@ export const getAddressEditProps = (
   handlers: OrderCustomerAddressesEditHandlers,
   change: FormChange,
   dialogErrors: Array<OrderErrorFragment | AccountErrorFragment>,
-  setAddressSearchState: React.Dispatch<
-    React.SetStateAction<OrderCustomerSearchAddressState>
-  >,
+  setAddressSearchState: React.Dispatch<React.SetStateAction<OrderCustomerSearchAddressState>>,
   addressEditCommonProps: AddressEditCommonProps,
 ): OrderCustomerAddressEditProps => {
   if (variant === "shipping") {
@@ -90,8 +84,7 @@ export const getAddressEditProps = (
       selectedCustomerAddressId: data.customerShippingAddress?.id,
       formAddress: data.shippingAddress,
       formAddressCountryDisplayName: data.shippingCountryDisplayName,
-      onChangeFormAddress: event =>
-        handlers.changeFormAddress(event, "shippingAddress"),
+      onChangeFormAddress: event => handlers.changeFormAddress(event, "shippingAddress"),
       onChangeFormAddressCountry: handlers.selectShippingCountry,
     };
   }
@@ -109,8 +102,7 @@ export const getAddressEditProps = (
     selectedCustomerAddressId: data.customerBillingAddress?.id,
     formAddress: data.billingAddress,
     formAddressCountryDisplayName: data.billingCountryDisplayName,
-    onChangeFormAddress: event =>
-      handlers.changeFormAddress(event, "billingAddress"),
+    onChangeFormAddress: event => handlers.changeFormAddress(event, "billingAddress"),
     onChangeFormAddressCountry: handlers.selectBillingCountry,
   };
 };

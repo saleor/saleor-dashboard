@@ -35,10 +35,7 @@ export const categoryListUrl = (params?: CategoryListUrlQueryParams) =>
   categorySectionUrl + "?" + stringifyQs(params);
 
 export const categoryPath = (id: string) => urlJoin(categorySectionUrl, id);
-export type CategoryUrlDialog =
-  | "delete"
-  | "delete-categories"
-  | "delete-products";
+export type CategoryUrlDialog = "delete" | "delete-categories" | "delete-products";
 export type CategoryUrlQueryParams = BulkAction & Dialog<CategoryUrlDialog>;
 export const categoryUrl = (id: string, params?: CategoryUrlQueryParams) =>
   categoryPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

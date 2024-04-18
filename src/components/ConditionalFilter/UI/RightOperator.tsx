@@ -118,9 +118,7 @@ export const RightOperator = ({
           if (!value) return;
           emitter.changeRightOperator(index, value);
         }}
-        onInputValueChange={value =>
-          emitter.inputChangeRightOperator(index, value)
-        }
+        onInputValueChange={value => emitter.inputChangeRightOperator(index, value)}
         onFocus={() => {
           emitter.focusRightOperator(index);
         }}
@@ -243,7 +241,5 @@ export const RightOperator = ({
     );
   }
 
-  return (
-    <Input disabled value={selected.value} data-test-id={`right-${index}`} />
-  );
+  return <Input disabled value={selected.value} data-test-id={`right-${index}`} />;
 };

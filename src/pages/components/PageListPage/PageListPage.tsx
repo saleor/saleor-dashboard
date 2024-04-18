@@ -12,11 +12,7 @@ import {
   PageListUrlSortField,
   pageUrl,
 } from "@dashboard/pages/urls";
-import {
-  FilterPagePropsWithPresets,
-  PageListProps,
-  SortPage,
-} from "@dashboard/types";
+import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
 import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -70,23 +66,13 @@ const PageListPage: React.FC<PageListPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = React.useState(false);
 
   return (
     <ListPageLayout>
-      <TopNav
-        title={intl.formatMessage(sectionNames.content)}
-        isAlignToRight={false}
-        withoutBorder
-      >
-        <Box
-          __flex={1}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+      <TopNav title={intl.formatMessage(sectionNames.content)} isAlignToRight={false} withoutBorder>
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={5} display="flex" alignItems="center">
               <ChevronRightIcon />
@@ -110,16 +96,8 @@ const PageListPage: React.FC<PageListPageProps> = ({
             />
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
-            <Button
-              onClick={onPageCreate}
-              variant="primary"
-              data-test-id="create-page"
-            >
-              <FormattedMessage
-                id="DOVEZF"
-                defaultMessage="Create content"
-                description="button"
-              />
+            <Button onClick={onPageCreate} variant="primary" data-test-id="create-page">
+              <FormattedMessage id="DOVEZF" defaultMessage="Create content" description="button" />
             </Button>
           </Box>
         </Box>

@@ -23,7 +23,6 @@ export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
-
   const getItemSubtitle = () => {
     if (!isPublished) {
       return intl.formatMessage(messages.itemSubtitleHidden);
@@ -46,10 +45,7 @@ export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({
         >
           {name}
         </Text>
-        <Text
-          size={3}
-          data-test-id={`channels-variant-availability-item-subtitle-${id}`}
-        >
+        <Text size={3} data-test-id={`channels-variant-availability-item-subtitle-${id}`}>
           {getItemSubtitle()}
         </Text>
       </DashboardCard.Content>

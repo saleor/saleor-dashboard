@@ -12,16 +12,9 @@ interface ManualRefundHookProps {
 
 export type ManualRefundData = ReturnType<typeof useManualRefund>;
 
-export const useManualRefund = ({
-  submitState,
-  initialData,
-}: ManualRefundHookProps) => {
-  const [amount, setAmount] = React.useState<number | undefined>(
-    initialData?.amount,
-  );
-  const [description, setDescription] = React.useState(
-    initialData?.description ?? "",
-  );
+export const useManualRefund = ({ submitState, initialData }: ManualRefundHookProps) => {
+  const [amount, setAmount] = React.useState<number | undefined>(initialData?.amount);
+  const [description, setDescription] = React.useState(initialData?.description ?? "");
   const [pspReference, setPspReference] = React.useState<string | undefined>(
     initialData?.pspReference,
   );
@@ -35,12 +28,9 @@ export const useManualRefund = ({
     }
   }, [submitState]);
 
-  const handleChangeDescription: React.ChangeEventHandler<
-    HTMLInputElement
-  > = e => {
+  const handleChangeDescription: React.ChangeEventHandler<HTMLInputElement> = e => {
     setDescription(e.target.value);
   };
-
   const handleChangeAmount: React.ChangeEventHandler<HTMLInputElement> = e => {
     const value = parseFloat(e.target.value);
     if (!Number.isNaN(value)) {
@@ -49,10 +39,7 @@ export const useManualRefund = ({
       setAmount(undefined);
     }
   };
-
-  const handleChangePspReference: React.ChangeEventHandler<
-    HTMLInputElement
-  > = e => {
+  const handleChangePspReference: React.ChangeEventHandler<HTMLInputElement> = e => {
     setPspReference(e.target.value);
   };
 

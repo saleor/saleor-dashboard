@@ -29,18 +29,15 @@ const Component = () => {
     </Wrapper>
   );
 };
-
 const getExpandIcon = () => screen.getByTestId("expand");
 
 describe("WebhookHeaders", () => {
   it("is available on the webhook page", async () => {
     // Arrange
     render(<Component />);
-
     // Assert
     expect(screen.queryByTestId("webhook-headers-editor")).toBeInTheDocument();
   });
-
   it("can expand field", async () => {
     // Arrange
     render(<Component />);
@@ -53,7 +50,6 @@ describe("WebhookHeaders", () => {
     await act(async () => {
       await user.click(getExpandIcon());
     });
-
     // Assert
     expect(editor).toHaveAttribute(isExpandedAttribute, "false");
   });

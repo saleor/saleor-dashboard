@@ -30,15 +30,9 @@ export class VariantsPage {
     readonly shippingWeightInput = page.locator("[name='weight']"),
     readonly priceFieldInput = page.getByTestId("price-field"),
     readonly checkoutLimitInput = page.getByTestId("checkout-limit-input"),
-    readonly assignWarehouseButton = page.getByTestId(
-      "assign-warehouse-button",
-    ),
-    readonly booleanAttributeCheckbox = page.locator(
-      "[name*='attribute'][type='checkbox']",
-    ),
-    readonly selectOption = page.getByTestId(
-      "multi-autocomplete-select-option",
-    ),
+    readonly assignWarehouseButton = page.getByTestId("assign-warehouse-button"),
+    readonly booleanAttributeCheckbox = page.locator("[name*='attribute'][type='checkbox']"),
+    readonly selectOption = page.getByTestId("multi-autocomplete-select-option"),
     readonly manageChannels = page.getByTestId("manage-channels-button"),
     readonly allChannels = page.locator("[name='allChannels']"),
   ) {
@@ -64,10 +58,7 @@ export class VariantsPage {
     await this.checkoutLimitInput.fill(checkoutLimit);
   }
 
-  async typeSellingPriceInChannel(
-    channelName: string,
-    sellingPriceValue = "99",
-  ) {
+  async typeSellingPriceInChannel(channelName: string, sellingPriceValue = "99") {
     const sellingPriceInput = await this.page
       .locator(`[data-test-id="Channel-${channelName}"]`)
       .locator(this.priceFieldInput)
@@ -136,9 +127,7 @@ export class VariantsPage {
   }
 
   async typeQuantityInStock(warehouse = "Oceania", quantity = "10") {
-    const quantityInput = await this.page
-      .getByTestId(warehouse)
-      .locator(this.stockInput);
+    const quantityInput = await this.page.getByTestId(warehouse).locator(this.stockInput);
     await quantityInput.clear();
     await quantityInput.fill(quantity);
   }

@@ -6,9 +6,7 @@ import {
   useUpdateAttributeValueTranslationsMutation,
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
-import useLocalPaginator, {
-  useLocalPaginationState,
-} from "@dashboard/hooks/useLocalPaginator";
+import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
@@ -21,9 +19,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getMutationState, maybe } from "../../misc";
-import TranslationsAttributesPage, {
-  fieldNames,
-} from "../components/TranslationsAttributesPage";
+import TranslationsAttributesPage, { fieldNames } from "../components/TranslationsAttributesPage";
 import { TranslationField } from "../types";
 
 type HandleSubmitData = string | OutputData;
@@ -46,13 +42,12 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
-
   const { updateListSettings, settings } = useListSettings(
     ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST,
   );
-  const [valuesPaginationState, setValuesPaginationState] =
-    useLocalPaginationState(settings?.rowNumber);
-
+  const [valuesPaginationState, setValuesPaginationState] = useLocalPaginationState(
+    settings?.rowNumber,
+  );
   const attributeTranslations = useAttributeTranslationDetailsQuery({
     variables: {
       id,
@@ -65,16 +60,12 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
   });
   const translationData = attributeTranslations?.data?.translation;
   const translation =
-    translationData?.__typename === "AttributeTranslatableContent"
-      ? translationData
-      : null;
-
+    translationData?.__typename === "AttributeTranslatableContent" ? translationData : null;
   const paginate = useLocalPaginator(setValuesPaginationState);
   const { pageInfo, ...paginationValues } = paginate(
     translation?.attribute?.choices?.pageInfo,
     valuesPaginationState,
   );
-
   const [updateAttributeTranslations, updateAttributeTranslationsOpts] =
     useUpdateAttributeTranslationsMutation({
       onCompleted: data => {
@@ -88,23 +79,19 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
         }
       },
     });
-
-  const [
-    updateAttributeValueTranslations,
-    updateAttributeValueTranslationsOpts,
-  ] = useUpdateAttributeValueTranslationsMutation({
-    onCompleted: data => {
-      if (data.attributeValueTranslate.errors.length === 0) {
-        attributeTranslations.refetch();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate("?", { replace: true });
-      }
-    },
-  });
-
+  const [updateAttributeValueTranslations, updateAttributeValueTranslationsOpts] =
+    useUpdateAttributeValueTranslationsMutation({
+      onCompleted: data => {
+        if (data.attributeValueTranslate.errors.length === 0) {
+          attributeTranslations.refetch();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          navigate("?", { replace: true });
+        }
+      },
+    });
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -113,11 +100,9 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
         }),
       { replace: true },
     );
-
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
-
   const handleSubmit = ({ name }: TranslationField, data: HandleSubmitData) => {
     const [fieldName, fieldId] = name.split(":");
 
@@ -129,40 +114,25 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
           language: languageCode,
         },
       });
-    } else if (
-      [fieldNames.value, fieldNames.richTextValue].includes(fieldName)
-    ) {
+    } else if ([fieldNames.value, fieldNames.richTextValue].includes(fieldName)) {
       const isRichText = fieldName === fieldNames.richTextValue;
 
       return extractMutationErrors(
         updateAttributeValueTranslations({
           variables: {
             id: fieldId,
-            input: isRichText
-              ? { richText: JSON.stringify(data) }
-              : { name: data as string },
+            input: isRichText ? { richText: JSON.stringify(data) } : { name: data as string },
             language: languageCode,
           },
         }),
       );
     }
   };
-
   const saveButtonState = getMutationState(
-    updateAttributeTranslationsOpts.called ||
-      updateAttributeValueTranslationsOpts.called,
-    updateAttributeTranslationsOpts.loading ||
-      updateAttributeValueTranslationsOpts.loading,
-    maybe(
-      () => updateAttributeTranslationsOpts.data.attributeTranslate.errors,
-      [],
-    ),
-    maybe(
-      () =>
-        updateAttributeValueTranslationsOpts.data.attributeValueTranslate
-          .errors,
-      [],
-    ),
+    updateAttributeTranslationsOpts.called || updateAttributeValueTranslationsOpts.called,
+    updateAttributeTranslationsOpts.loading || updateAttributeValueTranslationsOpts.loading,
+    maybe(() => updateAttributeTranslationsOpts.data.attributeTranslate.errors, []),
+    maybe(() => updateAttributeValueTranslationsOpts.data.attributeValueTranslate.errors, []),
   );
 
   return (

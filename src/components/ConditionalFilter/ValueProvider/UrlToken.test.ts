@@ -8,21 +8,18 @@ describe("UrlEntry", () => {
     // Assert
     expect(entry).toEqual({ key: "value" });
   });
-
   it("should create an instance with an array value", () => {
     // Arrange & Act
     const entry = new UrlEntry("key", ["value1", "value2"]);
     // Assert
     expect(entry).toEqual({ key: ["value1", "value2"] });
   });
-
   it("should create an instance from a ParsedQs object", () => {
     // Arrange & Act
     const entry = UrlEntry.fromQs({ key: "value" });
     // Assert
     expect(entry).toEqual({ key: "value" });
   });
-
   it("should create an instance for an attribute condition", () => {
     // Arrange
     const condition = new ConditionSelected(
@@ -45,7 +42,6 @@ describe("UrlEntry", () => {
     // Assert
     expect(entry).toEqual({ "s-1.bottle-size": "value-id" });
   });
-
   it.skip("should create an instance for a static condition", () => {
     // Arrange
     const condition = new ConditionSelected(
@@ -63,7 +59,6 @@ describe("UrlEntry", () => {
     // Assert
     expect(entry).toEqual({ static: "value" });
   });
-
   it("should return the correct info", () => {
     // Arrange
     const entry = new UrlEntry("s0.price", "value");

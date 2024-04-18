@@ -4,14 +4,12 @@ import { prepareOrderPredicate } from "./preparePredicate";
 describe("prepareOrderPredicate", () => {
   it("should return empty object when conditions are empty", () => {
     const conditions: Condition[] = [];
-
     const result = prepareOrderPredicate(conditions);
 
     expect(result).toEqual({
       discountedObjectPredicate: {},
     });
   });
-
   it("should return object with filtered conditions", () => {
     const conditions = [
       {
@@ -38,7 +36,6 @@ describe("prepareOrderPredicate", () => {
         },
       },
     ] as Condition[];
-
     const result = prepareOrderPredicate(conditions);
 
     expect(result).toEqual({

@@ -15,7 +15,6 @@ describe("InstalledAppList utils", () => {
           },
         ] as InstalledApp[];
         const appInstallationList = undefined;
-
         // Act
         const isLoading = appsAreLoading({
           appList,
@@ -26,7 +25,6 @@ describe("InstalledAppList utils", () => {
         // Assert
         expect(isLoading).toBe(true);
       });
-
       it("should return true when has apps installations and no app installed", () => {
         // Arrange
         const appList = undefined;
@@ -35,7 +33,6 @@ describe("InstalledAppList utils", () => {
             isExternal: false,
           },
         ] as AppInstallation[];
-
         // Act
         const isLoading = appsAreLoading({
           appList,
@@ -46,12 +43,10 @@ describe("InstalledAppList utils", () => {
         // Assert
         expect(isLoading).toBe(true);
       });
-
       it("should return true when has no apps installed and no app installations", () => {
         // Arrange
         const appList = undefined;
         const appInstallationList = undefined;
-
         // Act
         const isLoading = appsAreLoading({
           appList,
@@ -62,12 +57,10 @@ describe("InstalledAppList utils", () => {
         // Assert
         expect(isLoading).toBe(true);
       });
-
       it("should return false when has apps installations and app installed", () => {
         // Arrange
         const appList: InstalledApp[] = [];
         const appInstallationList: AppInstallation[] = [];
-
         // Act
         const isLoading = appsAreLoading({
           appList,
@@ -79,7 +72,6 @@ describe("InstalledAppList utils", () => {
         expect(isLoading).toBe(false);
       });
     });
-
     describe("has no MANAGE_APPS permission", () => {
       const hasManagedAppsPermission = false;
 
@@ -87,7 +79,6 @@ describe("InstalledAppList utils", () => {
         // Arrange
         const appList = undefined;
         const appInstallationList: AppInstallation[] = [];
-
         // Act
         const isLoading = appsAreLoading({
           appList,
@@ -98,12 +89,10 @@ describe("InstalledAppList utils", () => {
         // Assert
         expect(isLoading).toBe(true);
       });
-
       it("should return false when has apps installed and ignore app installtion", () => {
         // Arrange
         const appList: InstalledApp[] = [];
         const appInstallationList = undefined;
-
         // Act
         const isLoading = appsAreLoading({
           appList,
@@ -116,7 +105,6 @@ describe("InstalledAppList utils", () => {
       });
     });
   });
-
   describe("appNotInstalled", () => {
     describe("has MANAGE_APPS permission", () => {
       const hasManagedAppsPermission = true;
@@ -124,7 +112,6 @@ describe("InstalledAppList utils", () => {
         // Arrange
         const appList: InstalledApp[] = [];
         const appInstallationList: AppInstallation[] = [];
-
         // Act
         const showInstalledApps = hasEmptyAppList({
           appInstallationList,
@@ -135,12 +122,10 @@ describe("InstalledAppList utils", () => {
         // Assert
         expect(showInstalledApps).toBe(true);
       });
-
       it("should return false when has no apps installed and no app installations", () => {
         // Arrange
         const appList = undefined;
         const appInstallationList = undefined;
-
         // Act
         const showInstalledApps = hasEmptyAppList({
           appInstallationList,
@@ -151,7 +136,6 @@ describe("InstalledAppList utils", () => {
         // Assert
         expect(showInstalledApps).toBe(false);
       });
-
       it("should return false when has apps installations and no app installed", () => {
         // Arrange
         const appList: InstalledApp[] = [];
@@ -160,7 +144,6 @@ describe("InstalledAppList utils", () => {
             isExternal: false,
           },
         ] as AppInstallation[];
-
         // Act
         const showInstalledApps = hasEmptyAppList({
           appInstallationList,
@@ -171,7 +154,6 @@ describe("InstalledAppList utils", () => {
         // Assert
         expect(showInstalledApps).toBe(false);
       });
-
       it("should return false when has apps installed and no app installations", () => {
         // Arrange
         const appList = [
@@ -180,7 +162,6 @@ describe("InstalledAppList utils", () => {
           },
         ] as InstalledApp[];
         const appInstallationList: AppInstallation[] = [];
-
         // Act
         const showInstalledApps = hasEmptyAppList({
           appInstallationList,
@@ -192,7 +173,6 @@ describe("InstalledAppList utils", () => {
         expect(showInstalledApps).toBe(false);
       });
     });
-
     describe("has no MANAGE_APPS permission", () => {
       const hasManagedAppsPermission = false;
 
@@ -200,7 +180,6 @@ describe("InstalledAppList utils", () => {
         // Arrange
         const appList: InstalledApp[] = [];
         const appInstallationList = undefined;
-
         // Act
         const showInstalledApps = hasEmptyAppList({
           appInstallationList,
@@ -211,12 +190,10 @@ describe("InstalledAppList utils", () => {
         // Assert
         expect(showInstalledApps).toBe(true);
       });
-
       it("should return false when has no apps installed and no app installations", () => {
         // Arrange
         const appList = undefined;
         const appInstallationList = undefined;
-
         // Act
         const showInstalledApps = hasEmptyAppList({
           appInstallationList,
@@ -227,7 +204,6 @@ describe("InstalledAppList utils", () => {
         // Assert
         expect(showInstalledApps).toBe(false);
       });
-
       it("should return false when has apps installed and no app installations", () => {
         // Arrange
         const appList = [
@@ -236,7 +212,6 @@ describe("InstalledAppList utils", () => {
           },
         ] as InstalledApp[];
         const appInstallationList: AppInstallation[] = [];
-
         // Act
         const showInstalledApps = hasEmptyAppList({
           appInstallationList,

@@ -9,9 +9,7 @@ export class AddProductsDialog extends BasePage {
     readonly backButton = page.getByTestId("back-button"),
     readonly confirmButton = page.getByTestId("confirm-button"),
     readonly checkbox = page.getByTestId("checkbox").getByRole("checkbox"),
-    readonly productCheckbox = page
-      .getByTestId("product")
-      .getByTestId("checkbox"),
+    readonly productCheckbox = page.getByTestId("product").getByTestId("checkbox"),
     readonly assignAndSaveButton = page.getByTestId("assign-and-save-button"),
     readonly searchInput = page.getByTestId("search-query").locator("input"),
   ) {

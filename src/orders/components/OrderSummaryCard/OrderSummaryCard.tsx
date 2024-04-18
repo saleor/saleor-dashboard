@@ -13,11 +13,7 @@ import { obtainUsedGifrcard } from "../OrderPayment/utils";
 import { orderSummaryMessages } from "./messages";
 import SummaryLine from "./SummaryLine";
 import { SummaryList } from "./SummaryList";
-import {
-  extractOrderGiftCardUsedAmount,
-  getDeliveryMethodName,
-  getTaxTypeText,
-} from "./utils";
+import { extractOrderGiftCardUsedAmount, getDeliveryMethodName, getTaxTypeText } from "./utils";
 
 interface OrderPaymentProps {
   order: OrderDetailsFragment;
@@ -38,20 +34,15 @@ const useStyles = makeStyles(
   }),
   { name: "OrderSummaryCard" },
 );
-
 const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
   const classes = useStyles();
-
   const intl = useIntl();
-
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
   const usedGiftcard = obtainUsedGifrcard(order);
 
   return (
     <Card data-test-id="OrderSummaryCard">
-      <CardTitle
-        title={<FormattedMessage {...orderSummaryMessages.orderSummary} />}
-      />
+      <CardTitle title={<FormattedMessage {...orderSummaryMessages.orderSummary} />} />
       <CardContent>
         <SummaryList className={classes.list}>
           <SummaryLine

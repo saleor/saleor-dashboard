@@ -16,8 +16,7 @@ const messages = defineMessages({
   },
   attributeAlreadyAssigned: {
     id: "aggaJg",
-    defaultMessage:
-      "This attribute has already been assigned to this product type",
+    defaultMessage: "This attribute has already been assigned to this product type",
   },
   attributeCannotBeAssigned: {
     id: "u24Ppd",
@@ -76,9 +75,7 @@ const messages = defineMessages({
 function getProductErrorMessage(
   err:
     | Omit<
-        | ProductErrorFragment
-        | CollectionErrorFragment
-        | ProductChannelListingErrorFragment,
+        ProductErrorFragment | CollectionErrorFragment | ProductChannelListingErrorFragment,
         "__typename"
       >
     | undefined,

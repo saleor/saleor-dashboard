@@ -2,10 +2,7 @@ import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
-import {
-  SortableTableBody,
-  SortableTableRow,
-} from "@dashboard/components/SortableTable";
+import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import TablePagination from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
@@ -14,12 +11,7 @@ import {
   AttributeValueListFragment,
 } from "@dashboard/graphql";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
-import {
-  ListProps,
-  PaginateListProps,
-  RelayToFlat,
-  ReorderAction,
-} from "@dashboard/types";
+import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { Card, TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -70,7 +62,6 @@ const useStyles = makeStyles(
   }),
   { name: "AttributeValues" },
 );
-
 const getSwatchCellStyle = (value?: AttributeValueFragment | undefined) => {
   if (!value) {
     return;
@@ -79,7 +70,6 @@ const getSwatchCellStyle = (value?: AttributeValueFragment | undefined) => {
     ? { backgroundImage: `url(${value.file.url})` }
     : { backgroundColor: value.value ?? undefined };
 };
-
 const AttributeValues: React.FC<AttributeValuesProps> = ({
   disabled,
   onValueAdd,
@@ -96,7 +86,6 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
   const numberOfColumns = isSwatch ? 5 : 4;
 
@@ -159,9 +148,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
               colSpan={numberOfColumns}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
+              hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
               onPreviousPage={onPreviousPage}
               settings={settings}
               onUpdateListSettings={onUpdateListSettings}
@@ -189,23 +176,16 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                     />
                   </TableCell>
                 )}
-                <TableCell
-                  className={classes.columnAdmin}
-                  data-test-id="attribute-value-name"
-                >
+                <TableCell className={classes.columnAdmin} data-test-id="attribute-value-name">
                   {value?.slug ?? <Skeleton />}
                 </TableCell>
-                <TableCell className={classes.columnStore}>
-                  {value?.name ?? <Skeleton />}
-                </TableCell>
+                <TableCell className={classes.columnStore}>{value?.name ?? <Skeleton />}</TableCell>
                 <TableCell className={classes.iconCell}>
                   <IconButton
                     data-test-id="delete-attribute-value-button"
                     variant="secondary"
                     disabled={disabled}
-                    onClick={stopPropagation(() =>
-                      onValueDelete(value?.id ?? ""),
-                    )}
+                    onClick={stopPropagation(() => onValueDelete(value?.id ?? ""))}
                   >
                     <DeleteIcon />
                   </IconButton>

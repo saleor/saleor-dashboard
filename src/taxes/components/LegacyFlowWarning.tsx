@@ -25,8 +25,7 @@ export const LegacyFlowWarning: React.FC<{
       <WarningIcon size="small" color="warning1" />
       <Text size={2}>
         {intl.formatMessage({
-          defaultMessage:
-            "Legacy flow detected -  select tax strategy from dropdown",
+          defaultMessage: "Legacy flow detected -  select tax strategy from dropdown",
           id: "k20lqw",
         })}
       </Text>

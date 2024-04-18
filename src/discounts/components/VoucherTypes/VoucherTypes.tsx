@@ -18,16 +18,9 @@ interface VoucherTypesProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const VoucherTypes = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}: VoucherTypesProps) => {
+const VoucherTypes = ({ data, disabled, errors, onChange }: VoucherTypesProps) => {
   const intl = useIntl();
-
   const formErrors = getFormErrors(["discountType"], errors);
-
   const voucherTypeChoices = [
     {
       label: intl.formatMessage({

@@ -734,11 +734,7 @@ export const orderDiscount: PromotionDetailsFragment = {
       rewardValue: "33",
       rewardValueType: RewardValueTypeEnum.FIXED,
       rewardType: RewardTypeEnum.GIFT,
-      giftIds: [
-        "UHJvZHVjdFZhcmlhbnQ6MTkz",
-        "UHJvZHVjdFZhcmlhbnQ6Mjk5",
-        "UHJvZHVjdFZhcmlhbnQ6MjA2",
-      ],
+      giftIds: ["UHJvZHVjdFZhcmlhbnQ6MTkz", "UHJvZHVjdFZhcmlhbnQ6Mjk5", "UHJvZHVjdFZhcmlhbnQ6MjA2"],
       orderPredicate: {
         discountedObjectPredicate: {
           baseSubtotalPrice: {

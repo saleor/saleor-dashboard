@@ -16,14 +16,8 @@ interface VoucherInfoProps {
   onChange: (event: any) => void;
 }
 
-const VoucherInfo = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}: VoucherInfoProps) => {
+const VoucherInfo = ({ data, disabled, errors, onChange }: VoucherInfoProps) => {
   const intl = useIntl();
-
   const formErrors = getFormErrors(["name"], errors);
 
   return (

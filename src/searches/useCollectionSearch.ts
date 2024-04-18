@@ -8,12 +8,7 @@ import {
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchCollections = gql`
-  query SearchCollections(
-    $after: String
-    $first: Int!
-    $query: String!
-    $channel: String
-  ) {
+  query SearchCollections($after: String, $first: Int!, $query: String!, $channel: String) {
     search: collections(
       after: $after
       first: $first
@@ -33,7 +28,6 @@ export const searchCollections = gql`
   }
 `;
 
-export default makeTopLevelSearch<
-  SearchCollectionsQuery,
-  SearchCollectionsQueryVariables
->(SearchCollectionsDocument);
+export default makeTopLevelSearch<SearchCollectionsQuery, SearchCollectionsQueryVariables>(
+  SearchCollectionsDocument,
+);

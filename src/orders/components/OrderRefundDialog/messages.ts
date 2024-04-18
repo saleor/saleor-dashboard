@@ -18,8 +18,7 @@ export const orderRefundDialogMesages = defineMessages({
   },
   standardRefundSubtitle: {
     id: "+6liDh",
-    defaultMessage:
-      "The purchased product list will be sent and used to suggest amount to refund.",
+    defaultMessage: "The purchased product list will be sent and used to suggest amount to refund.",
     description: "radio button label",
   },
   miscRefundTitle: {

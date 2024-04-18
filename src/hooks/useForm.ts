@@ -21,10 +21,7 @@ export interface ChangeEvent<TData = any> {
 }
 export type SubmitPromise<TData = any> = Promise<TData>;
 
-export type FormChange<T = any> = (
-  event: ChangeEvent<T>,
-  cb?: () => void,
-) => void;
+export type FormChange<T = any> = (event: ChangeEvent<T>, cb?: () => void) => void;
 
 export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;
@@ -96,7 +93,6 @@ function useForm<T extends FormData, TErrors>(
   const [data, setData] = useStateFromProps(initialData, {
     mergeFunc: mergeData ? merge : undefined,
   });
-
   const isSaveDisabled = () => {
     if (checkIfSaveIsDisabled) {
       return checkIfSaveIsDisabled(data);
@@ -104,7 +100,6 @@ function useForm<T extends FormData, TErrors>(
 
     return !!disabled;
   };
-
   const {
     setIsDirty: setIsFormDirtyInExitDialog,
     setExitDialogSubmitRef,
@@ -115,18 +110,15 @@ function useForm<T extends FormData, TErrors>(
     formId: propsFormId,
     isDisabled: isSaveDisabled(),
   });
-
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit,
   });
-
   const handleSetChanged = (value: boolean = true) => {
     if (confirmLeave) {
       setIsFormDirtyInExitDialog(value);
     }
   };
-
   const setExitDialogData = () => {
     setEnableExitDialog(true);
 
@@ -145,7 +137,6 @@ function useForm<T extends FormData, TErrors>(
 
     if (Array.isArray(field)) {
       handleSetChanged(true);
-
       setData({
         ...data,
         [name]: toggle(value, field, isEqual),
@@ -163,7 +154,6 @@ function useForm<T extends FormData, TErrors>(
 
     if (Array.isArray(field)) {
       handleSetChanged(true);
-
       setData({
         ...data,
         [name]: value,
@@ -217,14 +207,11 @@ function useForm<T extends FormData, TErrors>(
 
   const setError = (field: keyof T, error: string | React.ReactNode) =>
     setErrors(e => ({ ...e, [field]: error }));
-
   const clearErrors = (field?: keyof T | Array<keyof T>) => {
     if (!field) {
       setErrors({});
     } else {
-      setErrors(errors =>
-        omit<FormErrors<T>>(errors, Array.isArray(field) ? field : [field]),
-      );
+      setErrors(errors => omit<FormErrors<T>>(errors, Array.isArray(field) ? field : [field]));
     }
   };
 

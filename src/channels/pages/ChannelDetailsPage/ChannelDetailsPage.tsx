@@ -49,9 +49,7 @@ import {
 } from "./handlers";
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
-export interface ChannelDetailsPageProps<
-  TErrors extends ChannelErrorFragment[],
-> {
+export interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
   currencyCodes?: SingleAutocompleteChoiceType[];
   disabled: boolean;
@@ -98,24 +96,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
   const intl = useIntl();
-
-  const [validationErrors, setValidationErrors] = useState<
-    ChannelErrorFragment[]
-  >([]);
-
+  const [validationErrors, setValidationErrors] = useState<ChannelErrorFragment[]>([]);
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
-  const [selectedCountryDisplayName, setSelectedCountryDisplayName] =
-    useStateFromProps(channel?.defaultCountry.country || "");
-
+  const [selectedCountryDisplayName, setSelectedCountryDisplayName] = useStateFromProps(
+    channel?.defaultCountry.country || "",
+  );
   const countryChoices = mapCountriesToChoices(countries || []);
-
-  const {
-    defaultCountry,
-    stockSettings,
-    orderSettings,
-    paymentSettings,
-    ...formData
-  } = channel || ({} as ChannelDetailsFragment);
+  const { defaultCountry, stockSettings, orderSettings, paymentSettings, ...formData } =
+    channel || ({} as ChannelDetailsFragment);
   const initialStockSettings: StockSettingsInput = {
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
@@ -136,18 +124,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     markAsPaidStrategy: orderSettings?.markAsPaidStrategy,
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
-    defaultTransactionFlowStrategy:
-      paymentSettings?.defaultTransactionFlowStrategy,
+    defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
   };
-
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
   ): RelayToFlat<SearchShippingZonesQuery["search"]> =>
     getParsedSearchData({ data: searchShippingZonesData }).filter(
-      ({ id: searchedZoneId }) =>
-        !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId),
+      ({ id: searchedZoneId }) => !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId),
     );
-
   const getFilteredWarehousesChoices = (
     warehousesToDisplay: ChannelWarehouses,
   ): RelayToFlat<SearchWarehousesQuery["search"]> =>
@@ -155,7 +139,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
       ({ id: searchedWarehouseId }) =>
         !warehousesToDisplay.some(({ id }) => id === searchedWarehouseId),
     );
-
   const handleSubmit = async (data: FormData) => {
     const errors = validateChannelFormData(data);
 
@@ -176,36 +159,25 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           setSelectedCurrencyCode,
           currencyCodes,
         );
-        const handleDefaultCountrySelect =
-          createSingleAutocompleteSelectHandler(
-            change,
-            setSelectedCountryDisplayName,
-            countryChoices,
-          );
-
+        const handleDefaultCountrySelect = createSingleAutocompleteSelectHandler(
+          change,
+          setSelectedCountryDisplayName,
+          countryChoices,
+        );
         const addShippingZone = createShippingZoneAddHandler(
           data,
           searchShippingZonesData,
           set,
           triggerChange,
         );
-        const removeShippingZone = createShippingZoneRemoveHandler(
-          data,
-          set,
-          triggerChange,
-        );
-
+        const removeShippingZone = createShippingZoneRemoveHandler(data, set, triggerChange);
         const addWarehouse = createWarehouseAddHandler(
           data,
           searchWarehousesData,
           set,
           triggerChange,
         );
-        const removeWarehouse = createWarehouseRemoveHandler(
-          data,
-          set,
-          triggerChange,
-        );
+        const removeWarehouse = createWarehouseRemoveHandler(data, set, triggerChange);
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
         const handleMarkAsPaidStrategyChange = () => {
           set({
@@ -216,17 +188,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 : MarkAsPaidStrategyEnum.PAYMENT_FLOW,
           });
         };
-
         const handleTransactionFlowStrategyChange = () => {
           set({
             defaultTransactionFlowStrategy:
-              data.defaultTransactionFlowStrategy ===
-              TransactionFlowStrategyEnum.CHARGE
+              data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.CHARGE
                 ? TransactionFlowStrategyEnum.AUTHORIZATION
                 : TransactionFlowStrategyEnum.CHARGE,
           });
         };
-
         const allErrors = [...errors, ...validationErrors];
 
         return (
@@ -254,9 +223,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 onCurrencyCodeChange={handleCurrencyCodeSelect}
                 onDefaultCountryChange={handleDefaultCountrySelect}
                 onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
-                onTransactionFlowStrategyChange={
-                  handleTransactionFlowStrategyChange
-                }
+                onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
                 errors={allErrors}
               />
             </DetailPageLayout.Content>
@@ -271,9 +238,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                   <CardSpacer />
                 </>
               )}
-              <RequirePermissions
-                requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}
-              >
+              <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}>
                 <ShippingZones
                   shippingZonesChoices={getFilteredShippingZonesChoices(
                     data.shippingZonesToDisplay,
@@ -296,9 +261,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 ]}
               >
                 <Warehouses
-                  warehousesChoices={getFilteredWarehousesChoices(
-                    data.warehousesToDisplay,
-                  )}
+                  warehousesChoices={getFilteredWarehousesChoices(data.warehousesToDisplay)}
                   warehouses={data.warehousesToDisplay}
                   addWarehouse={addWarehouse}
                   removeWarehouse={removeWarehouse}
@@ -310,11 +273,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 />
                 <CardSpacer />
               </RequirePermissions>
-              <ChannelAllocationStrategy
-                data={data}
-                disabled={disabled}
-                onChange={change}
-              />
+              <ChannelAllocationStrategy data={data} disabled={disabled} onChange={change} />
             </DetailPageLayout.RightSidebar>
             <Savebar
               onCancel={() => navigate(channelsListUrl())}

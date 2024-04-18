@@ -11,9 +11,7 @@ import {
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
-import useLocalPaginator, {
-  useLocalPaginationState,
-} from "@dashboard/hooks/useLocalPaginator";
+import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
@@ -28,9 +26,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
-import AttributePage, {
-  AttributePageFormData,
-} from "../../components/AttributePage";
+import AttributePage, { AttributePageFormData } from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
 import {
@@ -51,19 +47,14 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const intl = useIntl();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeUrlDialog,
     AttributeUrlQueryParams
   >(navigate, params => attributeUrl(id, params), params);
-
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.ATTRIBUTE_VALUE_LIST,
+  const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_VALUE_LIST);
+  const [valuesPaginationState, setValuesPaginationState] = useLocalPaginationState(
+    settings?.rowNumber,
   );
-
-  const [valuesPaginationState, setValuesPaginationState] =
-    useLocalPaginationState(settings?.rowNumber);
-
   const { data, loading } = useAttributeDetailsQuery({
     variables: {
       id,
@@ -74,19 +65,16 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     },
     skip: !settings,
   });
-
   const paginateValues = useLocalPaginator(setValuesPaginationState);
   const { loadNextPage, loadPreviousPage, pageInfo } = paginateValues(
     data?.attribute?.choices?.pageInfo,
     valuesPaginationState,
   );
-
   const notifySaved = () =>
     notify({
       status: "success",
       text: intl.formatMessage(commonMessages.savedChanges),
     });
-
   const [attributeDelete, attributeDeleteOpts] = useAttributeDeleteMutation({
     onCompleted: data => {
       if (data?.attributeDelete?.errors.length === 0) {
@@ -101,34 +89,29 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       }
     },
   });
-
-  const [attributeValueDelete, attributeValueDeleteOpts] =
-    useAttributeValueDeleteMutation({
-      onCompleted: data => {
-        if (data?.attributeValueDelete?.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage({
-              id: "7H2D5m",
-              defaultMessage: "Value deleted",
-              description: "attribute value deleted",
-            }),
-          });
-          closeModal();
-        }
-      },
-    });
-
-  const [attributeValueUpdate, attributeValueUpdateOpts] =
-    useAttributeValueUpdateMutation({
-      onCompleted: data => {
-        if (data?.attributeValueUpdate?.errors.length === 0) {
-          notifySaved();
-          closeModal();
-        }
-      },
-    });
-
+  const [attributeValueDelete, attributeValueDeleteOpts] = useAttributeValueDeleteMutation({
+    onCompleted: data => {
+      if (data?.attributeValueDelete?.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            id: "7H2D5m",
+            defaultMessage: "Value deleted",
+            description: "attribute value deleted",
+          }),
+        });
+        closeModal();
+      }
+    },
+  });
+  const [attributeValueUpdate, attributeValueUpdateOpts] = useAttributeValueUpdateMutation({
+    onCompleted: data => {
+      if (data?.attributeValueUpdate?.errors.length === 0) {
+        notifySaved();
+        closeModal();
+      }
+    },
+  });
   const [attributeUpdate, attributeUpdateOpts] = useAttributeUpdateMutation({
     onCompleted: data => {
       if (data?.attributeUpdate?.errors.length === 0) {
@@ -136,40 +119,33 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       }
     },
   });
-
-  const [attributeValueCreate, attributeValueCreateOpts] =
-    useAttributeValueCreateMutation({
-      onCompleted: data => {
-        if (data?.attributeValueCreate?.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage({
-              id: "xVn5B0",
-              defaultMessage: "Added new value",
-              description: "added new attribute value",
-            }),
-          });
-          closeModal();
-        }
-      },
-    });
-
+  const [attributeValueCreate, attributeValueCreateOpts] = useAttributeValueCreateMutation({
+    onCompleted: data => {
+      if (data?.attributeValueCreate?.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            id: "xVn5B0",
+            defaultMessage: "Added new value",
+            description: "added new attribute value",
+          }),
+        });
+        closeModal();
+      }
+    },
+  });
   const [attributeValueReorder] = useAttributeValueReorderMutation({
     onCompleted: data => {
       if (data?.attributeReorderValues?.errors.length !== 0) {
         notify({
           status: "error",
-          text: getAttributeErrorMessage(
-            data?.attributeReorderValues?.errors[0],
-            intl,
-          ),
+          text: getAttributeErrorMessage(data?.attributeReorderValues?.errors[0], intl),
         });
       } else {
         notifySaved();
       }
     },
   });
-
   const handleValueReorder = ({ newIndex, oldIndex }: ReorderEvent) =>
     attributeValueReorder({
       optimisticResponse: {
@@ -206,28 +182,18 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         beforeValues: valuesPaginationState.before,
       },
     });
-
   const handleUpdate = async (data: AttributePageFormData) =>
     extractMutationErrors(
       attributeUpdate({
         variables: {
           id,
           input: {
-            ...omit(data, [
-              "entityType",
-              "inputType",
-              "metadata",
-              "privateMetadata",
-            ]),
-            storefrontSearchPosition: parseInt(
-              data.storefrontSearchPosition,
-              10,
-            ),
+            ...omit(data, ["entityType", "inputType", "metadata", "privateMetadata"]),
+            storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
           },
         },
       }),
     );
-
   const handleSubmit = createMetadataUpdateHandler(
     data?.attribute!,
     handleUpdate,
@@ -281,9 +247,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             attributeName={data?.attribute?.name ?? "..."}
             open={params.action === "remove-value"}
             name={getStringOrPlaceholder(
-              data?.attribute?.choices?.edges?.find(
-                value => params.id === value.node.id,
-              )?.node?.name ?? "",
+              data?.attribute?.choices?.edges?.find(value => params.id === value.node.id)?.node
+                ?.name ?? "",
             )}
             useName={true}
             confirmButtonState={attributeValueDeleteOpts.status}
@@ -305,9 +270,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             attributeValue={null}
             confirmButtonState={attributeValueCreateOpts.status}
             disabled={loading}
-            errors={
-              attributeValueCreateOpts.data?.attributeValueCreate?.errors || []
-            }
+            errors={attributeValueCreateOpts.data?.attributeValueCreate?.errors || []}
             open={params.action === "add-value"}
             onClose={closeModal}
             onSubmit={input =>
@@ -326,24 +289,20 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
           <AttributeValueEditDialog
             inputType={attributeFormData.inputType}
             attributeValue={attributeValueFragmentToFormData(
-              data?.attribute?.choices?.edges?.find(
-                value => params.id === value.node.id,
-              )?.node ?? null,
+              data?.attribute?.choices?.edges?.find(value => params.id === value.node.id)?.node ??
+                null,
             )}
             confirmButtonState={attributeValueUpdateOpts.status}
             disabled={loading}
-            errors={
-              attributeValueUpdateOpts.data?.attributeValueUpdate?.errors || []
-            }
+            errors={attributeValueUpdateOpts.data?.attributeValueUpdate?.errors || []}
             open={params.action === "edit-value"}
             onClose={closeModal}
             onSubmit={input =>
               attributeValueUpdate({
                 variables: {
                   id:
-                    data?.attribute?.choices?.edges?.find(
-                      value => params.id === value.node.id,
-                    )?.node?.id || "",
+                    data?.attribute?.choices?.edges?.find(value => params.id === value.node.id)
+                      ?.node?.id || "",
                   input,
                   firstValues: valuesPaginationState.first,
                   lastValues: valuesPaginationState.last,

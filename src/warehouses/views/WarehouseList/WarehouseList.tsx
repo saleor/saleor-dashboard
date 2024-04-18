@@ -4,10 +4,7 @@ import SaveFilterTabDialog, {
 } from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  useWarehouseDeleteMutation,
-  useWarehouseListQuery,
-} from "@dashboard/graphql";
+import { useWarehouseDeleteMutation, useWarehouseListQuery } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -51,9 +48,7 @@ export interface WarehouseListProps {
 const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.SALES_LIST,
-  );
+  const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);
   const intl = useIntl();
 
   usePaginationReset(warehouseListUrl, params, settings.rowNumber);
@@ -89,23 +84,18 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
       }
     },
   });
-
   const tabs = getFilterTabs();
-
   const currentTab = getFiltersCurrentTab(params, tabs);
-
   const [, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: warehouseListUrl,
     getFilterQueryParam: async () => undefined,
     navigate,
     params,
   });
-
   const [openModal, closeModal] = createDialogActionHandlers<
     WarehouseListUrlDialog,
     WarehouseListUrlQueryParams
   >(navigate, warehouseListUrl, params);
-
   const handleTabChange = (tab: number) =>
     navigate(
       warehouseListUrl({
@@ -113,25 +103,20 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         ...getFilterTabs()[tab - 1].data,
       }),
     );
-
   const handleTabDelete = () => {
     deleteFilterTab(currentTab);
     navigate(warehouseListUrl());
   };
-
   const handleTabSave = (data: SaveFilterTabDialogFormData) => {
     saveFilterTab(data.name, getActiveFilters(params));
     handleTabChange(tabs.length + 1);
   };
-
   const paginationValues = usePaginator({
     pageInfo: data?.warehouses?.pageInfo,
     paginationState,
     queryString: params,
   });
-
   const handleSort = createSortHandler(navigate, warehouseListUrl, params);
-
   const deleteTransitionState = getMutationStatus(deleteWarehouseOpts);
 
   return (
@@ -158,10 +143,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
       {!!params.id && (
         <WarehouseDeleteDialog
           confirmButtonState={deleteTransitionState}
-          name={
-            mapEdgesToItems(data?.warehouses)?.find(getById(params.id))?.name ??
-            ""
-          }
+          name={mapEdgesToItems(data?.warehouses)?.find(getById(params.id))?.name ?? ""}
           open={params.action === "delete"}
           onClose={closeModal}
           onConfirm={() =>

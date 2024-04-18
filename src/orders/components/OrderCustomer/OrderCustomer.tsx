@@ -69,21 +69,14 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
     onShippingAddressEdit,
   } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
-
   const user = maybe(() => order.user);
   const userEmail = maybe(() => order.userEmail);
-
-  const [userDisplayName, setUserDisplayName] = useStateFromProps(
-    maybe(() => user.email, ""),
-  );
+  const [userDisplayName, setUserDisplayName] = useStateFromProps(maybe(() => user.email, ""));
   const [isInEditMode, setEditModeStatus] = React.useState(false);
   const toggleEditMode = () => setEditModeStatus(!isInEditMode);
-
   const billingAddress = maybe(() => order.billingAddress);
   const shippingAddress = maybe(() => order.shippingAddress);
-
   const noBillingAddressError = errors.find(
     error => error.code === OrderErrorCode.BILLING_ADDRESS_NOT_SET,
   );
@@ -101,9 +94,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         })}
         toolbar={
           !!canEditCustomer && (
-            <RequirePermissions
-              requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-            >
+            <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
               <Button
                 data-test-id="edit-customer"
                 variant="tertiary"
@@ -122,9 +113,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         ) : isInEditMode && canEditCustomer ? (
           <Form confirmLeave initial={{ query: "" }}>
             {({ change, data }) => {
-              const handleChange = (
-                event: React.ChangeEvent<HTMLInputElement>,
-              ) => {
+              const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                 change(event);
                 const value = event.target.value;
 
@@ -180,37 +169,20 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                     customer: userEmail,
                   })}
                 >
-                  <FormattedMessage
-                    id="J4NBVR"
-                    defaultMessage="View Orders"
-                    description="link"
-                  />
+                  <FormattedMessage id="J4NBVR" defaultMessage="View Orders" description="link" />
                 </Link>
               </div>
             </>
           )
         ) : (
           <>
-            <Typography
-              className={classes.userEmail}
-              data-test-id="customer-email"
-            >
+            <Typography className={classes.userEmail} data-test-id="customer-email">
               {user.email}
             </Typography>
-            <RequirePermissions
-              requiredPermissions={[PermissionEnum.MANAGE_USERS]}
-            >
+            <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_USERS]}>
               <div>
-                <Link
-                  underline={false}
-                  href={customerUrl(user.id)}
-                  onClick={onProfileView}
-                >
-                  <FormattedMessage
-                    id="VCzrEZ"
-                    defaultMessage="View Profile"
-                    description="link"
-                  />
+                <Link underline={false} href={customerUrl(user.id)} onClick={onProfileView}>
+                  <FormattedMessage id="VCzrEZ" defaultMessage="View Profile" description="link" />
                 </Link>
               </div>
             </RequirePermissions>
@@ -285,9 +257,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           <Skeleton />
         ) : (
           <>
-            {noShippingAddressError && (
-              <AddressTextError orderError={noShippingAddressError} />
-            )}
+            {noShippingAddressError && <AddressTextError orderError={noShippingAddressError} />}
             {shippingAddress === null ? (
               <Typography>
                 <FormattedMessage
@@ -328,9 +298,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           <Skeleton />
         ) : (
           <>
-            {noBillingAddressError && (
-              <AddressTextError orderError={noBillingAddressError} />
-            )}
+            {noBillingAddressError && <AddressTextError orderError={noBillingAddressError} />}
             {billingAddress === null ? (
               <Typography>
                 <FormattedMessage

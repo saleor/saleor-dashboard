@@ -23,7 +23,6 @@ export type NumberCell = CustomCell<NumberCellProps>;
 
 const onlyDigitsRegExp = /^\d+$/;
 const flaotingPointDigits = /^[0-9]+[.,]?[0-9]+$/;
-
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
   onChange,
@@ -35,9 +34,7 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
         ...cell,
         data: {
           ...cell.data,
-          value: event.target.value
-            ? parseFloat(event.target.value)
-            : numberCellEmptyValue,
+          value: event.target.value ? parseFloat(event.target.value) : numberCellEmptyValue,
         },
       })
     }
@@ -46,16 +43,13 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   />
 );
 
-export const numberCellRenderer = (
-  locale: Locale,
-): CustomRenderer<NumberCell> => ({
+export const numberCellRenderer = (locale: Locale): CustomRenderer<NumberCell> => ({
   kind: GridCellKind.Custom,
   isMatch: (c): c is NumberCell => (c.data as any).kind === "number-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
     const { value, options } = cell.data;
-    let formatted =
-      value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
+    let formatted = value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
     if (options?.format === "percent") {
       formatted += "%";
     }
@@ -82,9 +76,7 @@ export const numberCellRenderer = (
     }),
   }),
   onPaste: (value, data) => {
-    const testRegExp = data.options?.hasFloatingPoint
-      ? flaotingPointDigits
-      : onlyDigitsRegExp;
+    const testRegExp = data.options?.hasFloatingPoint ? flaotingPointDigits : onlyDigitsRegExp;
     if (!testRegExp.test(value)) {
       return undefined;
     }

@@ -26,10 +26,7 @@ export const messages = defineMessages({
   },
 });
 
-export const getHeaderTitle = (
-  intl: IntlShape,
-  webhook?: WebhookDetailsQuery["webhook"],
-) => {
+export const getHeaderTitle = (intl: IntlShape, webhook?: WebhookDetailsQuery["webhook"]) => {
   if (!webhook) {
     return intl.formatMessage(messages.headerCreate);
   }

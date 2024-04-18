@@ -15,18 +15,10 @@ export class StaffMembersPage extends BasePage {
     request: APIRequestContext,
     readonly inviteStaffMembersButton = page.getByTestId("invite-staff-member"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
-    readonly permissionsGroupSelectButton = page.getByTestId(
-      "permission-groups",
-    ),
-    readonly permissionGroupOptions = page.getByTestId(
-      "multi-autocomplete-select-option",
-    ),
-    readonly assignedPermissionGroups = page.getByTestId(
-      "assigned-permission-group",
-    ),
-    readonly isActiveCheckbox = page
-      .getByTestId("is-active-checkbox")
-      .locator("input"),
+    readonly permissionsGroupSelectButton = page.getByTestId("permission-groups"),
+    readonly permissionGroupOptions = page.getByTestId("multi-autocomplete-select-option"),
+    readonly assignedPermissionGroups = page.getByTestId("assigned-permission-group"),
+    readonly isActiveCheckbox = page.getByTestId("is-active-checkbox").locator("input"),
   ) {
     super(page);
     this.request = request;
@@ -44,9 +36,7 @@ export class StaffMembersPage extends BasePage {
   }
 
   async assignUserToPermissionGroup(permissionGroupName: string) {
-    await this.permissionGroupOptions
-      .filter({ hasText: permissionGroupName })
-      .click();
+    await this.permissionGroupOptions.filter({ hasText: permissionGroupName }).click();
   }
 
   async clickInviteStaffMemberButton() {

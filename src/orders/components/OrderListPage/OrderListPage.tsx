@@ -16,18 +16,9 @@ import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";
 import { DevModeQuery } from "@dashboard/orders/queries";
-import {
-  OrderListUrlQueryParams,
-  OrderListUrlSortField,
-  orderUrl,
-} from "@dashboard/orders/urls";
+import { OrderListUrlQueryParams, OrderListUrlSortField, orderUrl } from "@dashboard/orders/urls";
 import { getFilterVariables } from "@dashboard/orders/views/OrderList/filters";
-import {
-  FilterPageProps,
-  PageListProps,
-  RelayToFlat,
-  SortPage,
-} from "@dashboard/types";
+import { FilterPageProps, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui-next";
@@ -36,11 +27,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderLimitReached from "../OrderLimitReached";
 import { OrderListDatagrid } from "../OrderListDatagrid";
-import {
-  createFilterStructure,
-  OrderFilterKeys,
-  OrderListFilterOpts,
-} from "./filters";
+import { createFilterStructure, OrderFilterKeys, OrderListFilterOpts } from "./filters";
 
 export interface OrderListPageProps
   extends PageListProps,
@@ -81,19 +68,12 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-
   const { ORDER_OVERVIEW_CREATE, ORDER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.ORDER_LIST,
   );
-  const extensionMenuItems = mapToMenuItemsForOrderListActions(
-    ORDER_OVERVIEW_MORE_ACTIONS,
-  );
-  const extensionCreateButtonItems = mapToMenuItemsForOrderListActions(
-    ORDER_OVERVIEW_CREATE,
-  );
-
+  const extensionMenuItems = mapToMenuItemsForOrderListActions(ORDER_OVERVIEW_MORE_ACTIONS);
+  const extensionCreateButtonItems = mapToMenuItemsForOrderListActions(ORDER_OVERVIEW_CREATE);
   const context = useDevModeContext();
-
   const openPlaygroundURL = () => {
     context.setDevModeContent(DevModeQuery);
     const variables = JSON.stringify(
@@ -112,17 +92,8 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
   return (
     <ListPageLayout>
-      <TopNav
-        title={intl.formatMessage(sectionNames.orders)}
-        withoutBorder
-        isAlignToRight={false}
-      >
-        <Box
-          __flex={1}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+      <TopNav title={intl.formatMessage(sectionNames.orders)} withoutBorder isAlignToRight={false}>
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
               <ChevronRightIcon />
@@ -139,9 +110,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
               onSave={onTabSave}
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
-              selectAllLabel={intl.formatMessage(
-                orderMessages.filterPresetsAll,
-              )}
+              selectAllLabel={intl.formatMessage(orderMessages.filterPresetsAll)}
             />
           </Box>
 
@@ -239,11 +208,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             defaultMessage: "Search Orders...",
           })}
         />
-        <OrderListDatagrid
-          {...listProps}
-          hasRowHover={!isFilterPresetOpen}
-          rowAnchor={orderUrl}
-        />
+        <OrderListDatagrid {...listProps} hasRowHover={!isFilterPresetOpen} rowAnchor={orderUrl} />
       </Card>
     </ListPageLayout>
   );

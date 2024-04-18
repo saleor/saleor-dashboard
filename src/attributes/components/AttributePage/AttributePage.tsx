@@ -37,9 +37,7 @@ export interface AttributePageProps {
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  values?:
-    | NonNullable<AttributeDetailsQuery["attribute"]>["choices"]
-    | undefined;
+  values?: NonNullable<AttributeDetailsQuery["attribute"]>["choices"] | undefined;
   onDelete: () => void;
   onSubmit: (data: AttributePageFormData) => SubmitPromise;
   onValueAdd: () => void;
@@ -93,10 +91,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
-  const { makeChangeHandler: makeMetadataChangeHandler } =
-    useMetadataChangeTrigger();
-
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const initialForm: AttributePageFormData = !attribute
     ? {
         availableInGrid: true,
@@ -130,7 +125,6 @@ const AttributePage: React.FC<AttributePageProps> = ({
         visibleInStorefront: attribute.visibleInStorefront,
         unit: attribute?.unit ?? null,
       };
-
   const handleSubmit = (data: AttributePageFormData) => {
     const type = attribute === null ? data.type : undefined;
 
@@ -142,22 +136,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={handleSubmit}
-      disabled={disabled}
-    >
-      {({
-        change,
-        set,
-        data,
-        isSaveDisabled,
-        submit,
-        errors,
-        setError,
-        clearErrors,
-      }) => {
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
+      {({ change, set, data, isSaveDisabled, submit, errors, setError, clearErrors }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -187,9 +167,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   setError={setError}
                   clearErrors={clearErrors}
                 />
-                {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
-                  data.inputType,
-                ) && (
+                {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
                   <>
                     <CardSpacer />
                     <AttributeValues
@@ -209,11 +187,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   </>
                 )}
                 <CardSpacer />
-                <Metadata
-                  data={data}
-                  isLoading={disabled}
-                  onChange={changeMetadata}
-                />
+                <Metadata data={data} isLoading={disabled} onChange={changeMetadata} />
               </DetailPageLayout.Content>
               <DetailPageLayout.RightSidebar>
                 <AttributeOrganization

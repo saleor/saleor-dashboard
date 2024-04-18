@@ -31,9 +31,7 @@ type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
 export interface Container extends Node {
   name: string;
 }
-export interface AssignContainerDialogProps
-  extends FetchMoreProps,
-    DialogProps {
+export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   containers: Container[];
   loading: boolean;
@@ -50,9 +48,7 @@ function handleContainerAssign(
 ) {
   if (isSelected) {
     setSelectedContainers(
-      selectedContainers.filter(
-        selectedContainer => selectedContainer.id !== container.id,
-      ),
+      selectedContainers.filter(selectedContainer => selectedContainer.id !== container.id),
     );
   } else {
     setSelectedContainers([...selectedContainers, container]);
@@ -60,7 +56,6 @@ function handleContainerAssign(
 }
 
 const scrollableTargetId = "assignContainerScrollableDialog";
-
 const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
   const {
     confirmButtonState,
@@ -76,14 +71,9 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
   } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
-
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedContainers, setSelectedContainers] = React.useState<
-    Container[]
-  >([]);
-
+  const [selectedContainers, setSelectedContainers] = React.useState<Container[]>([]);
   const handleSubmit = () => onSubmit(selectedContainers);
-
   const handleClose = () => {
     queryReset();
     onClose();
@@ -112,10 +102,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
           }}
         />
       </DialogContent>
-      <DialogContent
-        className={scrollableDialogClasses.scrollArea}
-        id={scrollableTargetId}
-      >
+      <DialogContent className={scrollableDialogClasses.scrollArea} id={scrollableTargetId}>
         <InfiniteScroll
           dataLength={containers?.length}
           next={onFetchMore}
@@ -137,10 +124,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
 
                 return (
                   <TableRowLink key={container.id} data-test-id="dialog-row">
-                    <TableCell
-                      padding="checkbox"
-                      className={classes.checkboxCell}
-                    >
+                    <TableCell padding="checkbox" className={classes.checkboxCell}>
                       <Checkbox
                         checked={isSelected}
                         onChange={() =>
@@ -153,10 +137,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
                         }
                       />
                     </TableCell>
-                    <TableCell
-                      className={classes.wideCell}
-                      data-test-id={container.name}
-                    >
+                    <TableCell className={classes.wideCell} data-test-id={container.name}>
                       {container.name}
                     </TableCell>
                   </TableRowLink>

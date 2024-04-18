@@ -54,7 +54,6 @@ export default function useLocalStorage<T>(
 
     return getValue(result, initialValue);
   });
-
   const setValue = (value: SetStateAction<T>) => {
     const valueToStore = value instanceof Function ? value(storedValue) : value;
     setStoredValue(valueToStore);

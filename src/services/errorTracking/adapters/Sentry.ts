@@ -26,10 +26,7 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
     }
     return false;
   };
-
-  const setUserData: TrackerMethods["setUserData"] = userData =>
-    Sentry.setUser(userData);
-
+  const setUserData: TrackerMethods["setUserData"] = userData => Sentry.setUser(userData);
   const captureException: TrackerMethods["captureException"] = (e: Error) =>
     Sentry.captureException(e);
 

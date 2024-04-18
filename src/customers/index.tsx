@@ -23,10 +23,7 @@ import CustomerListViewComponent from "./views/CustomerList";
 
 const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
-  const params: CustomerListUrlQueryParams = asSortParams(
-    qs,
-    CustomerListUrlSortField,
-  );
+  const params: CustomerListUrlQueryParams = asSortParams(qs, CustomerListUrlSortField);
 
   return <CustomerListViewComponent params={params} />;
 };
@@ -34,34 +31,27 @@ const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface CustomerDetailsRouteParams {
   id: string;
 }
-const CustomerDetailsView: React.FC<
-  RouteComponentProps<CustomerDetailsRouteParams>
-> = ({ location, match }) => {
+const CustomerDetailsView: React.FC<RouteComponentProps<CustomerDetailsRouteParams>> = ({
+  location,
+  match,
+}) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomerUrlQueryParams = qs;
 
-  return (
-    <CustomerDetailsViewComponent
-      id={decodeURIComponent(match.params.id)}
-      params={params}
-    />
-  );
+  return <CustomerDetailsViewComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
 interface CustomerAddressesRouteParams {
   id: string;
 }
-const CustomerAddressesView: React.FC<
-  RouteComponentProps<CustomerAddressesRouteParams>
-> = ({ match }) => {
+const CustomerAddressesView: React.FC<RouteComponentProps<CustomerAddressesRouteParams>> = ({
+  match,
+}) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomerAddressesUrlQueryParams = qs;
 
   return (
-    <CustomerAddressesViewComponent
-      id={decodeURIComponent(match.params.id)}
-      params={params}
-    />
+    <CustomerAddressesViewComponent id={decodeURIComponent(match.params.id)} params={params} />
   );
 };
 
@@ -74,10 +64,7 @@ export const CustomerSection: React.FC<{}> = () => {
       <Switch>
         <Route exact path={customerListPath} component={CustomerListView} />
         <Route exact path={customerAddPath} component={CustomerCreateView} />
-        <Route
-          path={customerAddressesPath(":id")}
-          component={CustomerAddressesView}
-        />
+        <Route path={customerAddressesPath(":id")} component={CustomerAddressesView} />
         <Route path={customerPath(":id")} component={CustomerDetailsView} />
       </Switch>
     </>

@@ -6,10 +6,7 @@ interface OrderTransactionTileRootProps {
   children: ReactNode;
 }
 
-export const OrderTransactionTileRoot = ({
-  error,
-  children,
-}: OrderTransactionTileRootProps) => {
+export const OrderTransactionTileRoot = ({ error, children }: OrderTransactionTileRootProps) => {
   return (
     <Box
       borderStyle="solid"

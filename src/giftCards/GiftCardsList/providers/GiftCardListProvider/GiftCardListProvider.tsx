@@ -8,43 +8,21 @@ import {
   GiftCardListQueryVariables,
   useGiftCardListQuery,
 } from "@dashboard/graphql";
-import {
-  UseFilterPresets,
-  useFilterPresets,
-} from "@dashboard/hooks/useFilterPresets";
-import useListSettings, {
-  UseListSettings,
-} from "@dashboard/hooks/useListSettings";
+import { UseFilterPresets, useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import useListSettings, { UseListSettings } from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
-import {
-  createPaginationState,
-  PageInfo,
-  PaginationState,
-} from "@dashboard/hooks/usePaginator";
-import {
-  UseRowSelection,
-  useRowSelection,
-} from "@dashboard/hooks/useRowSelection";
+import { createPaginationState, PageInfo, PaginationState } from "@dashboard/hooks/usePaginator";
+import { UseRowSelection, useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { ListViews, SortPage } from "@dashboard/types";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from "react";
+import React, { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 
-import {
-  getFilterQueryParam,
-  getFilterVariables,
-  storageUtils,
-} from "../../filters";
+import { getFilterQueryParam, getFilterVariables, storageUtils } from "../../filters";
 import {
   GiftCardListColummns,
   GiftCardListUrlQueryParams,
@@ -65,9 +43,7 @@ export interface GiftCardsListConsumerProps
     UseListSettings<GiftCardListColummns>,
     SortPage<GiftCardUrlSortField> {
   giftCards: Array<
-    ExtendedGiftCard<
-      NonNullable<GiftCardListQuery["giftCards"]>["edges"][0]["node"]
-    >
+    ExtendedGiftCard<NonNullable<GiftCardListQuery["giftCards"]>["edges"][0]["node"]>
   >;
   pageInfo?: PageInfo;
   loading: boolean;
@@ -82,16 +58,13 @@ export interface GiftCardsListConsumerProps
   setFilterPresetOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const GiftCardsListContext =
-  createContext<GiftCardsListConsumerProps | null>(null);
+export const GiftCardsListContext = createContext<GiftCardsListConsumerProps | null>(null);
 
 export const useGiftCardList = () => {
   const context = useContext(GiftCardsListContext);
 
   if (!context) {
-    throw new Error(
-      "You are trying to use GiftCardsListContext outside of its provider",
-    );
+    throw new Error("You are trying to use GiftCardsListContext outside of its provider");
   }
 
   return context;
@@ -103,36 +76,30 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { clearRowSelection, ...rowSelectionUtils } = useRowSelection(params);
-
   const filterUtils = useFilterPresets({
     reset: clearRowSelection,
     params,
     getUrl: giftCardListUrl,
     storageUtils,
   });
-
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      createUrl: giftCardListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-      cleanupFn: clearRowSelection,
-      keepActiveTab: true,
-    });
-
-  const { updateListSettings, settings } =
-    useListSettings<GiftCardListColummns>(ListViews.GIFT_CARD_LIST);
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+    createUrl: giftCardListUrl,
+    getFilterQueryParam,
+    navigate,
+    params,
+    cleanupFn: clearRowSelection,
+    keepActiveTab: true,
+  });
+  const { updateListSettings, settings } = useListSettings<GiftCardListColummns>(
+    ListViews.GIFT_CARD_LIST,
+  );
 
   usePaginationReset(giftCardListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-
   const handleSort = createSortHandler(navigate, giftCardListUrl, params);
-
   const queryVariables = React.useMemo<GiftCardListQueryVariables>(
     () => ({
       ...paginationState,
@@ -141,7 +108,6 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     }),
     [params, paginationState],
   );
-
   const handleGiftCardListError = (error: ApolloError) => {
     const { message } = error?.graphQLErrors[0];
 
@@ -152,16 +118,12 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
       });
     }
   };
-
   const { data, loading } = useGiftCardListQuery({
     displayLoader: true,
     variables: queryVariables,
     handleError: handleGiftCardListError,
   });
-
-  const giftCards =
-    mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) ?? [];
-
+  const giftCards = mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) ?? [];
   const providerValues: GiftCardsListConsumerProps = {
     onSort: handleSort,
     sort: getSortParams(params),
@@ -185,8 +147,6 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   };
 
   return (
-    <GiftCardsListContext.Provider value={providerValues}>
-      {children}
-    </GiftCardsListContext.Provider>
+    <GiftCardsListContext.Provider value={providerValues}>{children}</GiftCardsListContext.Provider>
   );
 };

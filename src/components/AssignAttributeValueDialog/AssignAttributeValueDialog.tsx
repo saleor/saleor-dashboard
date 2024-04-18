@@ -4,15 +4,10 @@ import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import AssignContainerDialog from "../AssignContainerDialog";
-import AssignProductDialog, {
-  AssignProductDialogProps,
-} from "../AssignProductDialog";
+import AssignProductDialog, { AssignProductDialogProps } from "../AssignProductDialog";
 import AssignVariantDialog from "../AssignVariantDialog";
 import { AttributeInput } from "../Attributes";
-import {
-  filterPagesByAttributeValues,
-  filterProductsByAttributeValues,
-} from "./utils";
+import { filterPagesByAttributeValues, filterProductsByAttributeValues } from "./utils";
 
 const pagesMessages = defineMessages({
   confirmBtn: {
@@ -51,7 +46,6 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
   ...rest
 }) => {
   const intl = useIntl();
-
   const filteredProducts = filterProductsByAttributeValues(products, attribute);
   const filteredPages = filterPagesByAttributeValues(pages, attribute);
 

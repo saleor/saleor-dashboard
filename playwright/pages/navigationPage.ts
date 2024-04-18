@@ -14,18 +14,14 @@ export class NavigationPage extends BasePage {
     readonly navigationButton = page.getByTestId(
       "configuration-menu-navigation-settings-subsection-navigation",
     ),
-    readonly navigationHeader = page
-      .getByTestId("page-header")
-      .getByText("Navigation"),
+    readonly navigationHeader = page.getByTestId("page-header").getByText("Navigation"),
     readonly navigationList = page.getByTestId("navigation-menu-list"),
     readonly checkedRows = page
       .getByTestId("navigation-menu-list")
       .locator('input[type="checkbox"]:checked'),
     readonly createMenuButton = page.getByTestId("add-menu"),
     readonly menuName = page.getByTestId("menu-name"),
-    readonly createMenuDialogTitle = page.getByTestId(
-      "create-menu-dialog-title",
-    ),
+    readonly createMenuDialogTitle = page.getByTestId("create-menu-dialog-title"),
     readonly deleteButton = page.getByTestId("delete-button"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly navigationMenu = page.getByTestId("navigation-menu"),
@@ -45,10 +41,7 @@ export class NavigationPage extends BasePage {
   }
 
   async deleteSingleMenu(name: string) {
-    await this.page
-      .getByRole("link", { name })
-      .getByTestId("delete-button")
-      .click();
+    await this.page.getByRole("link", { name }).getByTestId("delete-button").click();
   }
 
   async clickBulkDeleteButton() {

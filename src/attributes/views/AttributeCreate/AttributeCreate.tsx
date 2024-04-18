@@ -7,29 +7,19 @@ import {
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
-import useLocalPageInfo, {
-  getMaxPage,
-} from "@dashboard/hooks/useLocalPageInfo";
+import useLocalPageInfo, { getMaxPage } from "@dashboard/hooks/useLocalPageInfo";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { getMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews, ReorderEvent } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import {
-  add,
-  isSelected,
-  move,
-  remove,
-  updateAtIndex,
-} from "@dashboard/utils/lists";
+import { add, isSelected, move, remove, updateAtIndex } from "@dashboard/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
-import AttributePage, {
-  AttributePageFormData,
-} from "../../components/AttributePage";
+import AttributePage, { AttributePageFormData } from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
 import {
@@ -38,10 +28,7 @@ import {
   AttributeAddUrlQueryParams,
   attributeUrl,
 } from "../../urls";
-import {
-  AttributeValueEditDialogFormData,
-  getAttributeData,
-} from "../../utils/data";
+import { AttributeValueEditDialogFormData, getAttributeData } from "../../utils/data";
 
 type ParamId = number | undefined;
 
@@ -56,10 +43,7 @@ const attributeValueAlreadyExistsError: AttributeErrorFragment = {
   message: "",
 };
 
-function areValuesEqual(
-  a: AttributeValueEditDialogFormData,
-  b: AttributeValueEditDialogFormData,
-) {
+function areValuesEqual(a: AttributeValueEditDialogFormData, b: AttributeValueEditDialogFormData) {
   return a.name === b.name;
 }
 
@@ -67,21 +51,13 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
-  const [values, setValues] = React.useState<
-    AttributeValueEditDialogFormData[]
-  >([]);
-  const [valueErrors, setValueErrors] = React.useState<
-    AttributeErrorFragment[]
-  >([]);
-
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.ATTRIBUTE_VALUE_LIST,
+  const [values, setValues] = React.useState<AttributeValueEditDialogFormData[]>([]);
+  const [valueErrors, setValueErrors] = React.useState<AttributeErrorFragment[]>([]);
+  const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_VALUE_LIST);
+  const { pageInfo, pageValues, loadNextPage, loadPreviousPage, loadPage } = useLocalPageInfo(
+    values,
+    settings?.rowNumber,
   );
-
-  const { pageInfo, pageValues, loadNextPage, loadPreviousPage, loadPage } =
-    useLocalPageInfo(values, settings?.rowNumber);
-
   const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation({
     onCompleted: data => {
       if (data?.attributeCreate?.errors.length === 0) {
@@ -98,11 +74,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   });
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
-  const id: ParamId = params.id
-    ? parseInt(params.id, 10) + pageInfo.startCursor
-    : undefined;
-
+  const id: ParamId = params.id ? parseInt(params.id, 10) + pageInfo.startCursor : undefined;
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeAddUrlDialog,
     AttributeAddUrlQueryParams
@@ -117,7 +89,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     }
     closeModal();
   };
-
   const handleValueUpdate = (input: AttributeValueEditDialogFormData) => {
     if (isSelected(input, values, areValuesEqual)) {
       setValueErrors([attributeValueAlreadyExistsError]);
@@ -128,7 +99,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       closeModal();
     }
   };
-
   const handleValueCreate = (input: AttributeValueEditDialogFormData) => {
     if (isSelected(input, values, areValuesEqual)) {
       setValueErrors([attributeValueAlreadyExistsError]);
@@ -147,7 +117,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       closeModal();
     }
   };
-
   const handleValueReorder = ({ newIndex, oldIndex }: ReorderEvent) =>
     setValues(
       move(
@@ -157,7 +126,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
         pageInfo.startCursor + newIndex,
       ),
     );
-
   const handleCreate = async (data: AttributePageFormData) => {
     const result = await attributeCreate({
       variables: {
@@ -170,7 +138,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       errors: getMutationErrors(result),
     };
   };
-
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,
@@ -198,8 +165,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       }
       saveButtonBarState={attributeCreateOpts.status}
       values={{
-        __typename:
-          "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           __typename: "PageInfo" as "PageInfo",
           endCursor: "",
@@ -208,8 +174,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           startCursor: "",
         },
         edges: pageValues.map((value, valueIndex) => ({
-          __typename:
-            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "1",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -257,9 +222,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
               <AttributeValueDeleteDialog
                 attributeName=""
                 open={params.action === "remove-value"}
-                name={getStringOrPlaceholder(
-                  id !== undefined ? values[id]?.name : "",
-                )}
+                name={getStringOrPlaceholder(id !== undefined ? values[id]?.name : "")}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onConfirm={handleValueDelete}

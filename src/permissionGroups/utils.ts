@@ -43,9 +43,7 @@ export const extractPermissionCodes = (
     return [];
   }
 
-  return permissionGroup?.permissions
-    ? permissionGroup.permissions.map(perm => perm.code)
-    : [];
+  return permissionGroup?.permissions ? permissionGroup.permissions.map(perm => perm.code) : [];
 };
 
 /**
@@ -110,12 +108,9 @@ export const channelsDiff = (
     };
   }
 
-  const newChannels = formData.hasAllChannels
-    ? allChannels.map(c => c.id)
-    : formData.channels;
+  const newChannels = formData.hasAllChannels ? allChannels.map(c => c.id) : formData.channels;
   const oldChannels = permissionGroup?.accessibleChannels?.map(c => c.id) ?? [];
-  const hasRestrictedChannels =
-    permissionGroup?.restrictedAccessToChannels ?? false;
+  const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels ?? false;
 
   if (!hasRestrictedChannels) {
     return {
@@ -159,7 +154,7 @@ export const mapAccessibleChannelsToChoice = (
         label: channel.name,
         value: channel.id,
         disabled: isUserAbleToEdit !== undefined ? !isUserAbleToEdit : false,
-      } as unknown as MultiAutocompleteChoiceType),
+      }) as unknown as MultiAutocompleteChoiceType,
   ) ?? [];
 
 export const checkIfUserBelongToPermissionGroup = (
@@ -194,9 +189,7 @@ export const getUserAccessibleChannelsOptions = (
 /**
  * Check if user has restricted access to channels.
  */
-export const checkIfUserHasRestictedAccessToChannels = (
-  user?: UserContext["user"],
-) => {
+export const checkIfUserHasRestictedAccessToChannels = (user?: UserContext["user"]) => {
   if (user) {
     return user.restrictedAccessToChannels;
   }

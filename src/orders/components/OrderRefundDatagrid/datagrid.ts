@@ -119,7 +119,6 @@ export const useDatagridOpts = (
   const datagrid = useDatagridChangeState();
   const { theme: currentTheme } = useTheme();
   const { updateListSettings, settings } = useListSettings(view);
-
   const handleColumnChange = React.useCallback(
     picked => {
       if (updateListSettings) {

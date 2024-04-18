@@ -28,21 +28,11 @@ export interface FileUploadFieldProps {
 }
 
 const FileUploadField: React.FC<FileUploadFieldProps> = props => {
-  const {
-    loading,
-    disabled,
-    file,
-    error,
-    helperText,
-    onFileUpload,
-    onFileDelete,
-    inputProps,
-  } = props;
+  const { loading, disabled, file, error, helperText, onFileUpload, onFileDelete, inputProps } =
+    props;
   const intl = useIntl();
-
   const fileInputAnchor = React.createRef<HTMLInputElement>();
   const clickFileInput = () => fileInputAnchor.current.click();
-
   const handleFileDelete = () => {
     fileInputAnchor.current.value = "";
     onFileDelete();

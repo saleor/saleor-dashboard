@@ -5,9 +5,7 @@ export class AssignPermissionGroupMembersDialog {
 
   constructor(
     page: Page,
-    readonly searchMembersInput = page
-      .getByTestId("search-members-input")
-      .locator("input"),
+    readonly searchMembersInput = page.getByTestId("search-members-input").locator("input"),
     readonly userRow = page.getByTestId("user-row"),
     readonly assignButton = page.getByTestId("submit"),
     readonly searchResults = page.getByTestId("search-results"),
@@ -25,10 +23,7 @@ export class AssignPermissionGroupMembersDialog {
     await this.userRow
       .getByText(memberName, { exact: true })
       .waitFor({ state: "visible", timeout: 30000 });
-    const memberInput = await this.userRow
-      .filter({ hasText: memberName })
-      .locator("input")
-      .first();
+    const memberInput = await this.userRow.filter({ hasText: memberName }).locator("input").first();
     await memberInput.click();
   }
 

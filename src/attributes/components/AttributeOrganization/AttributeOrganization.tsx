@@ -27,7 +27,6 @@ const messages = defineMessages({
     description: "attribute type",
   },
 });
-
 const useStyles = makeStyles(
   theme => ({
     card: {
@@ -43,10 +42,8 @@ const useStyles = makeStyles(
   }),
   { name: "AttributeOrganization" },
 );
-
 const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
   const { canChangeType, data, disabled, onChange } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
 
@@ -75,10 +72,7 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
             disabled={disabled}
             label={
               <>
-                <FormattedMessage
-                  id="v1pNHW"
-                  defaultMessage="Attribute Class"
-                />
+                <FormattedMessage id="v1pNHW" defaultMessage="Attribute Class" />
                 <Typography variant="caption">
                   <FormattedMessage
                     id="ErNH3D"

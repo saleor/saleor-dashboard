@@ -2,16 +2,9 @@
 import chevronDown from "@assets/images/ChevronDown.svg";
 import Checkbox from "@dashboard/components/Checkbox";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import useElementScroll, {
-  isScrolledToBottom,
-} from "@dashboard/hooks/useElementScroll";
+import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
 import { FetchMoreProps } from "@dashboard/types";
-import {
-  CircularProgress,
-  MenuItem,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { CircularProgress, MenuItem, Paper, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
@@ -36,8 +29,7 @@ export interface MultiAutocompleteChoiceType {
   disabled?: boolean;
   badge?: ReactNode;
 }
-export interface MultiAutocompleteSelectFieldContentProps
-  extends Partial<FetchMoreProps> {
+export interface MultiAutocompleteSelectFieldContentProps extends Partial<FetchMoreProps> {
   add?: MultiAutocompleteActionType;
   choices: MultiAutocompleteChoiceType[];
   displayCustomValue: boolean;
@@ -67,10 +59,7 @@ const useStyles = makeStyles(
     },
     arrowInnerContainer: {
       alignItems: "center",
-      background:
-        theme.palette.type === "light"
-          ? theme.palette.grey[50]
-          : theme.palette.grey[900],
+      background: theme.palette.type === "light" ? theme.palette.grey[50] : theme.palette.grey[900],
       bottom: 0,
       color: theme.palette.grey[500],
       display: "flex",
@@ -86,9 +75,7 @@ const useStyles = makeStyles(
       width: 20,
     },
     content: {
-      maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(
-        2,
-      )})`,
+      maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(2)})`,
       overflowY: "scroll",
       padding: 8,
     },
@@ -101,18 +88,12 @@ const useStyles = makeStyles(
     },
     menuItem: {
       "&:focus": {
-        backgroundColor: [
-          theme.palette.background.default,
-          "!important",
-        ] as any,
+        backgroundColor: [theme.palette.background.default, "!important"] as any,
         color: theme.palette.primary.main,
         fontWeight: 400,
       },
       "&:hover": {
-        backgroundColor: [
-          theme.palette.background.default,
-          "!important",
-        ] as any,
+        backgroundColor: [theme.palette.background.default, "!important"] as any,
         color: theme.palette.primary.main,
         fontWeight: 700,
       },
@@ -189,7 +170,6 @@ const MultiAutocompleteSelectFieldContent: React.FC<
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
   const [calledForMore, setCalledForMore] = React.useState(false);
-
   const scrolledToBottom = isScrolledToBottom(anchor, scrollPosition, offset);
 
   React.useEffect(() => {
@@ -198,15 +178,13 @@ const MultiAutocompleteSelectFieldContent: React.FC<
       setCalledForMore(true);
     }
   }, [scrolledToBottom]);
-
   React.useEffect(() => {
     if (calledForMore && !loading) {
       setCalledForMore(false);
     }
   }, [loading]);
 
-  const hasValuesToDisplay =
-    displayValues?.length > 0 || displayCustomValue || choices.length > 0;
+  const hasValuesToDisplay = displayValues?.length > 0 || displayCustomValue || choices.length > 0;
   return (
     <Paper className={classes.root} elevation={8}>
       {hasValuesToDisplay && (
@@ -251,8 +229,9 @@ const MultiAutocompleteSelectFieldContent: React.FC<
                 />
               </MenuItem>
             )}
-            {(choices.length > 0 || displayValues?.length > 0) &&
-              displayCustomValue && <Hr className={classes.hr} />}
+            {(choices.length > 0 || displayValues?.length > 0) && displayCustomValue && (
+              <Hr className={classes.hr} />
+            )}
             {displayValues?.map(value => (
               <MenuItem
                 className={classes.menuItem}
@@ -278,16 +257,9 @@ const MultiAutocompleteSelectFieldContent: React.FC<
                 </span>
               </MenuItem>
             ))}
-            {displayValues?.length > 0 && choices.length > 0 && (
-              <Hr className={classes.hr} />
-            )}
+            {displayValues?.length > 0 && choices.length > 0 && <Hr className={classes.hr} />}
             {choices.map((suggestion, index) => {
-              const choiceIndex = getChoiceIndex(
-                index,
-                displayValues,
-                displayCustomValue,
-                !!add,
-              );
+              const choiceIndex = getChoiceIndex(index, displayValues, displayCustomValue, !!add);
 
               return (
                 <MenuItem
@@ -354,6 +326,5 @@ const MultiAutocompleteSelectFieldContent: React.FC<
   );
 };
 
-MultiAutocompleteSelectFieldContent.displayName =
-  "MultiAutocompleteSelectFieldContent";
+MultiAutocompleteSelectFieldContent.displayName = "MultiAutocompleteSelectFieldContent";
 export default MultiAutocompleteSelectFieldContent;

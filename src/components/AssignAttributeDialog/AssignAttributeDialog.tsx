@@ -1,15 +1,10 @@
 // @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { AvailableAttributeFragment } from "@dashboard/graphql";
-import useElementScroll, {
-  isScrolledToBottom,
-} from "@dashboard/hooks/useElementScroll";
+import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
@@ -89,7 +84,6 @@ export interface AssignAttributeDialogProps extends FetchMoreProps {
 }
 
 const scrollableTargetId = "assignAttributeScrollableDialog";
-
 const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
   attributes,
   confirmButtonState,
@@ -145,11 +139,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           }}
         />
       </DialogContent>
-      <DialogContent
-        className={classes.scrollArea}
-        ref={anchor}
-        id={scrollableTargetId}
-      >
+      <DialogContent className={classes.scrollArea} ref={anchor} id={scrollableTargetId}>
         <InfiniteScroll
           dataLength={attributes?.length || 0}
           next={onFetchMore}
@@ -176,20 +166,12 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
 
                   return (
                     <TableRowLink key={maybe(() => attribute.id)}>
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.checkboxCell}
-                      >
-                        <Checkbox
-                          checked={isChecked}
-                          onChange={() => onToggle(attribute.id)}
-                        />
+                      <TableCell padding="checkbox" className={classes.checkboxCell}>
+                        <Checkbox checked={isChecked} onChange={() => onToggle(attribute.id)} />
                       </TableCell>
                       <TableCell className={classes.wideCell}>
                         {attribute.name}
-                        <Typography variant="caption">
-                          {attribute.slug}
-                        </Typography>
+                        <Typography variant="caption">{attribute.slug}</Typography>
                       </TableCell>
                     </TableRowLink>
                   );

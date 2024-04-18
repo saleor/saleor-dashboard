@@ -33,11 +33,7 @@ const ExitFormDialogProvider = ({ children }) => {
 
   return (
     <ExitFormDialogContext.Provider value={providerData}>
-      <ExitFormDialog
-        isOpen={showDialog}
-        onLeave={handleLeave}
-        onClose={handleClose}
-      />
+      <ExitFormDialog isOpen={showDialog} onLeave={handleLeave} onClose={handleClose} />
       {children}
     </ExitFormDialogContext.Provider>
   );

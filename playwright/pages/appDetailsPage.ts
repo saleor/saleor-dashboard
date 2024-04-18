@@ -13,9 +13,7 @@ export class AppDetailsPage extends BasePage {
     readonly appDetailsSection = page.getByTestId("app-details-section"),
     readonly appDeleteButton = page.getByTestId("app-delete-button"),
     readonly appActivateButton = page.getByTestId("app-activate-button"),
-    readonly appEditPermissionsButton = page.getByTestId(
-      "app-edit-permissions-button",
-    ),
+    readonly appEditPermissionsButton = page.getByTestId("app-edit-permissions-button"),
   ) {
     super(page);
     this.page = page;

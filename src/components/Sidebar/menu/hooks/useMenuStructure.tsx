@@ -1,7 +1,4 @@
-import {
-  extensionMountPoints,
-  useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
+import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
 import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
@@ -38,14 +35,12 @@ export function useMenuStructure() {
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
   const { user } = useUser();
-
   const appExtensionsHeaderItem: SidebarMenuItem = {
     id: "extensions",
     label: intl.formatMessage(sectionNames.appExtensions),
     type: "divider",
     paddingY: 1.5,
   };
-
   const getAppSection = (): SidebarMenuItem => ({
     icon: renderIcon(<MarketplaceIcon />),
     label: intl.formatMessage(sectionNames.apps),
@@ -54,7 +49,6 @@ export function useMenuStructure() {
     url: AppPaths.appListPath,
     type: "item",
   });
-
   const menuItems: SidebarMenuItem[] = [
     {
       icon: renderIcon(<HomeIcon />),
@@ -86,18 +80,12 @@ export function useMenuStructure() {
           permissions: [PermissionEnum.MANAGE_GIFT_CARD],
           type: "item",
         },
-        ...mapToExtensionsItems(
-          extensions.NAVIGATION_CATALOG,
-          appExtensionsHeaderItem,
-        ),
+        ...mapToExtensionsItems(extensions.NAVIGATION_CATALOG, appExtensionsHeaderItem),
       ],
       icon: renderIcon(<ProductsIcon />),
       url: productListUrl(),
       label: intl.formatMessage(commonMessages.products),
-      permissions: [
-        PermissionEnum.MANAGE_GIFT_CARD,
-        PermissionEnum.MANAGE_PRODUCTS,
-      ],
+      permissions: [PermissionEnum.MANAGE_GIFT_CARD, PermissionEnum.MANAGE_PRODUCTS],
       id: "products",
       type: "itemGroup",
     },
@@ -110,10 +98,7 @@ export function useMenuStructure() {
           url: orderDraftListUrl(),
           type: "item",
         },
-        ...mapToExtensionsItems(
-          extensions.NAVIGATION_ORDERS,
-          appExtensionsHeaderItem,
-        ),
+        ...mapToExtensionsItems(extensions.NAVIGATION_ORDERS, appExtensionsHeaderItem),
       ],
       icon: renderIcon(<OrdersIcon />),
       label: intl.formatMessage(sectionNames.orders),
@@ -132,10 +117,7 @@ export function useMenuStructure() {
               url: customerListUrl(),
               type: "item",
             },
-            ...mapToExtensionsItems(
-              extensions.NAVIGATION_CUSTOMERS,
-              appExtensionsHeaderItem,
-            ),
+            ...mapToExtensionsItems(extensions.NAVIGATION_CUSTOMERS, appExtensionsHeaderItem),
           ]
         : undefined,
       icon: renderIcon(<CustomersIcon />),
@@ -153,10 +135,7 @@ export function useMenuStructure() {
           url: voucherListUrl(),
           type: "item",
         },
-        ...mapToExtensionsItems(
-          extensions.NAVIGATION_DISCOUNTS,
-          appExtensionsHeaderItem,
-        ),
+        ...mapToExtensionsItems(extensions.NAVIGATION_DISCOUNTS, appExtensionsHeaderItem),
       ],
       icon: renderIcon(<DiscountsIcon />),
       label: intl.formatMessage(commonMessages.discounts),
@@ -167,12 +146,7 @@ export function useMenuStructure() {
     },
     {
       children: !isEmpty(extensions.NAVIGATION_PAGES)
-        ? [
-            ...mapToExtensionsItems(
-              extensions.NAVIGATION_PAGES,
-              appExtensionsHeaderItem,
-            ),
-          ]
+        ? [...mapToExtensionsItems(extensions.NAVIGATION_PAGES, appExtensionsHeaderItem)]
         : undefined,
       icon: renderIcon(<ContentsIcon />),
       label: intl.formatMessage(sectionNames.content),
@@ -183,12 +157,7 @@ export function useMenuStructure() {
     },
     {
       children: !isEmpty(extensions.NAVIGATION_TRANSLATIONS)
-        ? [
-            ...mapToExtensionsItems(
-              extensions.NAVIGATION_TRANSLATIONS,
-              appExtensionsHeaderItem,
-            ),
-          ]
+        ? [...mapToExtensionsItems(extensions.NAVIGATION_TRANSLATIONS, appExtensionsHeaderItem)]
         : undefined,
       icon: renderIcon(<TranslationsIcon />),
       label: intl.formatMessage(sectionNames.translations),
@@ -207,36 +176,25 @@ export function useMenuStructure() {
       type: "item",
     },
   ];
-
   const isMenuItemPermitted = (menuItem: SidebarMenuItem) => {
-    const userPermissions = (user?.userPermissions || []).map(
-      permission => permission.code,
-    );
+    const userPermissions = (user?.userPermissions || []).map(permission => permission.code);
     if (!menuItem?.permissions || menuItem?.permissions?.length < 1) {
       return true;
     }
-    return menuItem.permissions.some(permission =>
-      userPermissions.includes(permission),
-    );
+    return menuItem.permissions.some(permission => userPermissions.includes(permission));
   };
-
   const getFilteredMenuItems = (menuItems: SidebarMenuItem[]) =>
     menuItems.filter(isMenuItemPermitted);
 
-  return menuItems.reduce(
-    (resultItems: SidebarMenuItem[], menuItem: SidebarMenuItem) => {
-      if (!isMenuItemPermitted(menuItem)) {
-        return resultItems;
-      }
-      const { children } = menuItem;
-      const filteredChildren = children
-        ? getFilteredMenuItems(children)
-        : undefined;
+  return menuItems.reduce((resultItems: SidebarMenuItem[], menuItem: SidebarMenuItem) => {
+    if (!isMenuItemPermitted(menuItem)) {
+      return resultItems;
+    }
+    const { children } = menuItem;
+    const filteredChildren = children ? getFilteredMenuItems(children) : undefined;
 
-      return [...resultItems, { ...menuItem, children: filteredChildren }];
-    },
-    [],
-  );
+    return [...resultItems, { ...menuItem, children: filteredChildren }];
+  }, []);
 }
 
 function renderIcon(icon: React.ReactNode) {

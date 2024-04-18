@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Money from "@dashboard/components/Money";
@@ -70,9 +67,7 @@ export interface OrderShippingMethodEditDialogProps {
   onSubmit?: (data: FormData) => any;
 }
 
-const OrderShippingMethodEditDialog: React.FC<
-  OrderShippingMethodEditDialogProps
-> = props => {
+const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps> = props => {
   const {
     confirmButtonState,
     errors: apiErrors,
@@ -85,11 +80,9 @@ const OrderShippingMethodEditDialog: React.FC<
   const classes = useStyles(props);
   const errors = useModalDialogErrors(apiErrors, open);
   const intl = useIntl();
-
   const formFields = ["shippingMethod"];
   const formErrors = getFormErrors(formFields, errors);
   const nonFieldErrors = errors.filter(err => !formFields.includes(err.field));
-
   const choices = shippingMethods
     ? shippingMethods
         .map(s => ({

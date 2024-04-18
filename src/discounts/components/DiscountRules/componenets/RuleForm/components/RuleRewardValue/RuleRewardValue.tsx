@@ -14,19 +14,14 @@ interface RuleRewardPriceProps {
   error: string | undefined;
 }
 
-export const RuleRewardValue = ({
-  currencySymbol,
-  error,
-}: RuleRewardPriceProps) => {
+export const RuleRewardValue = ({ currencySymbol, error }: RuleRewardPriceProps) => {
   const intl = useIntl();
   const { disabled } = useDiscountRulesContext();
   const { watch, formState } = useFormContext<Rule>();
   const discountType = watch("rewardValueType");
-
   const { field: rewardTypeField } = useController<Rule, "rewardValueType">({
     name: "rewardValueType",
   });
-
   const { field: rewardValueType } = useController<Rule, "rewardValue">({
     name: "rewardValue",
   });

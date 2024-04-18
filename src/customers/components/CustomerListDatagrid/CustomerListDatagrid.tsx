@@ -16,22 +16,14 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  createGetCellContent,
-  customerListStaticColumnsAdapter,
-} from "./datagrid";
+import { createGetCellContent, customerListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 
-interface CustomerListDatagridProps
-  extends ListProps,
-    SortPage<CustomerListUrlSortField> {
+interface CustomerListDatagridProps extends ListProps, SortPage<CustomerListUrlSortField> {
   customers: Customers | undefined;
   loading: boolean;
   hasRowHover?: boolean;
-  onSelectCustomerIds: (
-    rowsIndex: number[],
-    clearSelection: () => void,
-  ) => void;
+  onSelectCustomerIds: (rowsIndex: number[], clearSelection: () => void) => void;
   onRowClick: (id: string) => void;
   rowAnchor?: (id: string) => string;
 }
@@ -51,18 +43,13 @@ export const CustomerListDatagrid = ({
 }: CustomerListDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
-
   const userPermissions = useUserPermissions();
   const hasManageOrdersPermission =
-    userPermissions?.some(perm => perm.code === PermissionEnum.MANAGE_ORDERS) ??
-    false;
-
+    userPermissions?.some(perm => perm.code === PermissionEnum.MANAGE_ORDERS) ?? false;
   const customerListStaticColumns = useMemo(
-    () =>
-      customerListStaticColumnsAdapter(intl, sort, hasManageOrdersPermission),
+    () => customerListStaticColumnsAdapter(intl, sort, hasManageOrdersPermission),
     [intl, sort, hasManageOrdersPermission],
   );
-
   const onColumnChange = useCallback(
     (picked: string[]) => {
       if (onUpdateListSettings) {
@@ -71,19 +58,12 @@ export const CustomerListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
-  const {
-    handlers,
-    visibleColumns,
-    staticColumns,
-    selectedColumns,
-    recentlyAddedColumn,
-  } = useColumns({
-    staticColumns: customerListStaticColumns,
-    selectedColumns: settings?.columns ?? [],
-    onSave: onColumnChange,
-  });
-
+  const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
+    useColumns({
+      staticColumns: customerListStaticColumns,
+      selectedColumns: settings?.columns ?? [],
+      onSave: onColumnChange,
+    });
   const getCellContent = useCallback(
     createGetCellContent({
       customers,
@@ -91,7 +71,6 @@ export const CustomerListDatagrid = ({
     }),
     [customers, visibleColumns],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       if (!onRowClick || !customers) {
@@ -102,7 +81,6 @@ export const CustomerListDatagrid = ({
     },
     [onRowClick, customers],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => {
       if (!rowAnchor || !customers) {
@@ -113,7 +91,6 @@ export const CustomerListDatagrid = ({
     },
     [rowAnchor, customers],
   );
-
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as CustomerListUrlSortField;

@@ -1,18 +1,12 @@
 // @ts-strict-ignore
 import { IFilter } from "@dashboard/components/Filter";
 import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
-import {
-  GetFilterQueryParam,
-  getFilterQueryParams,
-} from "@dashboard/utils/filters";
+import { GetFilterQueryParam, getFilterQueryParams } from "@dashboard/utils/filters";
 import { useEffect, useRef } from "react";
 
 import useNavigator from "./useNavigator";
 
-type RequiredParams = ActiveTab &
-  Search &
-  Sort<any> &
-  Pagination & { presestesChanged?: string };
+type RequiredParams = ActiveTab & Search & Sort<any> & Pagination & { presestesChanged?: string };
 type CreateUrl = (params: RequiredParams) => string;
 type CreateFilterHandlers<TFilterKeys extends string> = [
   (filter: IFilter<TFilterKeys>) => void,
@@ -42,7 +36,6 @@ export const useFilterHandlers = <
     defaultSortField,
     hasSortWithRank = false,
   } = opts;
-
   const navigate = useNavigator();
   const prevAsc = useRef<boolean | null>(null);
 
@@ -60,15 +53,11 @@ export const useFilterHandlers = <
 
     return params.activeTab;
   };
-
   const changeFilters = (filters: IFilter<TFilterKeys>) => {
     if (!!cleanupFn) {
       cleanupFn();
     }
-    const filtersQueryParams = getFilterQueryParams(
-      filters,
-      getFilterQueryParam,
-    );
+    const filtersQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
     navigate(
       createUrl({
         ...params,
@@ -79,7 +68,6 @@ export const useFilterHandlers = <
       }),
     );
   };
-
   const resetFilters = () => {
     if (!!cleanupFn) {
       cleanupFn();
@@ -92,17 +80,14 @@ export const useFilterHandlers = <
       }),
     );
   };
-
   const handleSearchChange = (query: string) => {
     if (!!cleanupFn) {
       cleanupFn();
     }
     const trimmedQuery = query?.trim() ?? "";
     const hasQuery = !!trimmedQuery;
-    const sortWithoutQuery =
-      params.sort === "rank" ? defaultSortField : params.sort;
+    const sortWithoutQuery = params.sort === "rank" ? defaultSortField : params.sort;
     const sortWithQuery = "rank" as SortField;
-
     const getAscParam = () => {
       if (hasQuery) {
         return false;

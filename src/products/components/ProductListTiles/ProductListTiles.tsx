@@ -26,7 +26,6 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
   onUpdateListSettings,
 }) => {
   const intl = useIntl();
-
   const renderContent = useCallback(() => {
     if (loading) {
       return (

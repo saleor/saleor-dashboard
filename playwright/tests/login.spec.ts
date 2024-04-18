@@ -1,8 +1,4 @@
-import {
-  permissions,
-  USER_PERMISSION,
-  UserPermissionType,
-} from "@data/userPermissions";
+import { permissions, USER_PERMISSION, UserPermissionType } from "@data/userPermissions";
 import { LoginPage } from "@pages/loginPage";
 import { test } from "@playwright/test";
 
@@ -11,12 +7,8 @@ let login: LoginPage;
 test.beforeEach(({ page }) => {
   login = new LoginPage(page);
 });
-
 test("TC: SALEOR_39 Login as admin", async () => {
-  await login.loginViaUI(
-    process.env.E2E_USER_NAME!,
-    process.env.E2E_USER_PASSWORD!,
-  );
+  await login.loginViaUI(process.env.E2E_USER_NAME!, process.env.E2E_USER_PASSWORD!);
 });
 
 const user: UserPermissionType = USER_PERMISSION;

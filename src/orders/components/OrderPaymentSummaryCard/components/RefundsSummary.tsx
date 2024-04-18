@@ -14,12 +14,10 @@ interface RefundsSummary {
 
 export const RefundsSummary: React.FC<RefundsSummary> = ({ order }) => {
   const classes = useStyles();
-
   const { totalRefunded, totalRefundPending, totalGrantedRefund } = order;
   const refundedAmount = totalRefunded?.amount ?? 0;
   const pendingAmount = totalRefundPending?.amount ?? 0;
   const grantedAmount = totalGrantedRefund?.amount ?? 0;
-
   const hasAnyRefund = refundedAmount || pendingAmount || grantedAmount;
 
   if (!hasAnyRefund) {

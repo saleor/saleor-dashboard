@@ -12,11 +12,7 @@ interface MarkAsPaidProps {
   onCheckedChange: () => void;
 }
 
-export const MarkAsPaid = ({
-  isDiabled,
-  isChecked,
-  onCheckedChange,
-}: MarkAsPaidProps) => (
+export const MarkAsPaid = ({ isDiabled, isChecked, onCheckedChange }: MarkAsPaidProps) => (
   <Box paddingX={6} marginTop={4}>
     <Checkbox
       data-test-id="order-settings-mark-as-paid"

@@ -15,10 +15,8 @@ const useStyles = makeStyles(
   }),
   { name: "TabContainer" },
 );
-
 const TabContainer: React.FC<TabContainerProps> = props => {
   const { children } = props;
-
   const classes = useStyles(props);
 
   return <div className={clsx(classes.root, props.className)}>{children}</div>;

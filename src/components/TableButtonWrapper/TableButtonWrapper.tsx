@@ -17,9 +17,7 @@ export interface TableButtonWrapper {
  * </TableButtonWrapper>
  * ```
  */
-export const TableButtonWrapper = <T extends HTMLElement>({
-  children,
-}: TableButtonWrapper) => {
+export const TableButtonWrapper = <T extends HTMLElement>({ children }: TableButtonWrapper) => {
   const onClick = (e: React.MouseEvent<T>) => {
     if (!children.props.href) {
       // <TableRowLink> is a <a> that wraps each <tr>

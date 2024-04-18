@@ -20,8 +20,7 @@ export function isScrolledToBottom(
   offset: number = 0,
 ) {
   return !!anchor.current && position
-    ? position.y + anchor.current.clientHeight + offset >=
-        anchor.current.scrollHeight
+    ? position.y + anchor.current.clientHeight + offset >= anchor.current.scrollHeight
     : undefined;
 }
 
@@ -32,10 +31,7 @@ function useElementScroll(anchor: MutableRefObject<HTMLElement>): Position {
     const anchorInstance = anchor.current;
 
     if (!!anchorInstance) {
-      const handleScroll = throttle(
-        () => setScroll(getPosition(anchorInstance)),
-        100,
-      );
+      const handleScroll = throttle(() => setScroll(getPosition(anchorInstance)), 100);
       anchorInstance.addEventListener("scroll", handleScroll);
 
       return () => {
@@ -45,7 +41,6 @@ function useElementScroll(anchor: MutableRefObject<HTMLElement>): Position {
       };
     }
   }, [anchor.current]);
-
   useEffect(() => {
     setTimeout(() => setScroll(getPosition(anchor.current)), 100);
   }, []);

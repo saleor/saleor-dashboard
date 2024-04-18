@@ -16,91 +16,76 @@ import { GIFT_CARD_LIST_QUERY } from "../queries";
 export const GiftCardListBulkActions: React.FC = () => {
   const intl = useIntl();
   const notify = useNotifier();
-
   const { selectedRowIds, clearRowSelection, giftCards } = useGiftCardList();
-
   const hasAnyEnabledCardsSelected = giftCards
     .filter(getByIds(selectedRowIds))
     .some(({ isActive }) => isActive);
-
   const areAllSelectedCardsActive = giftCards
     .filter(getByIds(selectedRowIds))
     .every(({ isActive }) => isActive);
-
   const hasAnyDisabledCardsSelected = giftCards
     .filter(getByIds(selectedRowIds))
     .some(({ isActive }) => !isActive);
-
   const areAllSelectedCardsDisabled = giftCards
     .filter(getByIds(selectedRowIds))
     .every(({ isActive }) => !isActive);
+  const [activateGiftCards, activateGiftCardsOpts] = useGiftCardBulkActivateMutation({
+    onCompleted: data => {
+      const notifierData: IMessage = !!data?.giftCardBulkActivate?.errors?.length
+        ? {
+            status: "error",
+            text: intl.formatMessage(messages.errorActivateAlertText, {
+              count: data?.giftCardBulkActivate?.count,
+            }),
+          }
+        : {
+            status: "success",
+            text: intl.formatMessage(messages.successActivateAlertText, {
+              count: data?.giftCardBulkActivate?.count,
+            }),
+          };
 
-  const [activateGiftCards, activateGiftCardsOpts] =
-    useGiftCardBulkActivateMutation({
-      onCompleted: data => {
-        const notifierData: IMessage = !!data?.giftCardBulkActivate?.errors
-          ?.length
-          ? {
-              status: "error",
-              text: intl.formatMessage(messages.errorActivateAlertText, {
-                count: data?.giftCardBulkActivate?.count,
-              }),
-            }
-          : {
-              status: "success",
-              text: intl.formatMessage(messages.successActivateAlertText, {
-                count: data?.giftCardBulkActivate?.count,
-              }),
-            };
+      notify(notifierData);
 
-        notify(notifierData);
+      if (!data?.giftCardBulkActivate?.errors?.length) {
+        clearRowSelection();
+      }
+    },
+    refetchQueries: [GIFT_CARD_LIST_QUERY],
+  });
+  const [deactivateGiftCards, deactivateGiftCardsOpts] = useGiftCardBulkDeactivateMutation({
+    onCompleted: data => {
+      const notifierData: IMessage = !!data?.giftCardBulkDeactivate?.errors?.length
+        ? {
+            status: "error",
+            text: intl.formatMessage(messages.errorDeactivateAlertText, {
+              count: data?.giftCardBulkDeactivate?.count,
+            }),
+          }
+        : {
+            status: "success",
+            text: intl.formatMessage(messages.successDeactivateAlertText, {
+              count: data?.giftCardBulkDeactivate?.count,
+            }),
+          };
 
-        if (!data?.giftCardBulkActivate?.errors?.length) {
-          clearRowSelection();
-        }
-      },
-      refetchQueries: [GIFT_CARD_LIST_QUERY],
-    });
+      notify(notifierData);
 
-  const [deactivateGiftCards, deactivateGiftCardsOpts] =
-    useGiftCardBulkDeactivateMutation({
-      onCompleted: data => {
-        const notifierData: IMessage = !!data?.giftCardBulkDeactivate?.errors
-          ?.length
-          ? {
-              status: "error",
-              text: intl.formatMessage(messages.errorDeactivateAlertText, {
-                count: data?.giftCardBulkDeactivate?.count,
-              }),
-            }
-          : {
-              status: "success",
-              text: intl.formatMessage(messages.successDeactivateAlertText, {
-                count: data?.giftCardBulkDeactivate?.count,
-              }),
-            };
-
-        notify(notifierData);
-
-        if (!data?.giftCardBulkDeactivate?.errors?.length) {
-          clearRowSelection();
-        }
-      },
-      refetchQueries: [GIFT_CARD_LIST_QUERY],
-    });
-
+      if (!data?.giftCardBulkDeactivate?.errors?.length) {
+        clearRowSelection();
+      }
+    },
+    refetchQueries: [GIFT_CARD_LIST_QUERY],
+  });
   const handleActivateGiftCards = async () => {
     await activateGiftCards({ variables: { ids: selectedRowIds } });
     clearRowSelection();
   };
-
   const handleDeactivateGiftCards = async () => {
     await deactivateGiftCards({ variables: { ids: selectedRowIds } });
     clearRowSelection();
   };
-
-  const isSelectionMixed =
-    hasAnyEnabledCardsSelected && hasAnyDisabledCardsSelected;
+  const isSelectionMixed = hasAnyEnabledCardsSelected && hasAnyDisabledCardsSelected;
 
   return (
     <>

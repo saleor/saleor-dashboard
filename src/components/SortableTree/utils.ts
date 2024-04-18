@@ -77,11 +77,7 @@ function getMaxDepth<T extends DataTypePlaceholder>({
   return 0;
 }
 
-function getMinDepth<T extends DataTypePlaceholder>({
-  nextItem,
-}: {
-  nextItem: FlattenedItem<T>;
-}) {
+function getMinDepth<T extends DataTypePlaceholder>({ nextItem }: { nextItem: FlattenedItem<T> }) {
   if (nextItem) {
     return nextItem.depth;
   }
@@ -103,9 +99,7 @@ function flatten<T extends DataTypePlaceholder>(
   }, []);
 }
 
-export function flattenTree<T extends DataTypePlaceholder>(
-  items: TreeItems<T>,
-): FlattenedItems<T> {
+export function flattenTree<T extends DataTypePlaceholder>(items: TreeItems<T>): FlattenedItems<T> {
   return flatten(items);
 }
 

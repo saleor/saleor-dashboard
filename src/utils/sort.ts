@@ -30,10 +30,9 @@ export function getArrowDirection(asc: boolean): TableCellHeaderArrowDirection {
 }
 
 // Extracts Sort object from the querystring
-export function getSortParams<
-  TParams extends Sort<TFields>,
-  TFields extends string,
->(params: TParams): Sort<TFields> {
+export function getSortParams<TParams extends Sort<TFields>, TFields extends string>(
+  params: TParams,
+): Sort<TFields> {
   return {
     asc: params.asc,
     sort: params.sort,
@@ -52,13 +51,8 @@ export function asSortParams<
 ): TParams & Sort {
   return {
     ...params,
-    asc: parseBoolean(
-      params.asc,
-      defaultOrder === undefined ? true : defaultOrder,
-    ),
-    sort: params.sort
-      ? findValueInEnum(params.sort, fields)
-      : defaultField?.toString() || "name",
+    asc: parseBoolean(params.asc, defaultOrder === undefined ? true : defaultOrder),
+    sort: params.sort ? findValueInEnum(params.sort, fields) : defaultField?.toString() || "name",
   };
 }
 
@@ -69,10 +63,9 @@ interface SortingInput<T extends string> {
 type GetSortQueryField<TUrlField extends string, TSortField extends string> = (
   sort: TUrlField,
 ) => TSortField | undefined;
-type GetSortQueryVariables<
-  TSortField extends string,
-  TParams extends Record<any, any>,
-> = (params: TParams) => SortingInput<TSortField> | undefined;
+type GetSortQueryVariables<TSortField extends string, TParams extends Record<any, any>> = (
+  params: TParams,
+) => SortingInput<TSortField> | undefined;
 export function createGetSortQueryVariables<
   TUrlField extends string,
   TSortField extends string,

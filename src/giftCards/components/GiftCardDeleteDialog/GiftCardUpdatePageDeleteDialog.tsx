@@ -11,11 +11,12 @@ type GiftCardUpdatePageDeleteDialogProps = DialogProps & {
   onDelete: () => void;
 };
 
-const GiftCardUpdatePageDeleteDialog: React.FC<
-  GiftCardUpdatePageDeleteDialogProps
-> = ({ onClose, open, onDelete }) => {
+const GiftCardUpdatePageDeleteDialog: React.FC<GiftCardUpdatePageDeleteDialogProps> = ({
+  onClose,
+  open,
+  onDelete,
+}) => {
   const { giftCard } = useGiftCardDetails();
-
   const { onDeleteGiftCard, deleteGiftCardOpts } = useGiftCardSingleDelete({
     id: giftCard?.id,
     onClose,

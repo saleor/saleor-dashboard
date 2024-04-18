@@ -10,11 +10,7 @@ export interface UseWizardOpts<T> {
   onTransition: (prevStep: T, nextStep: T) => void;
 }
 export type UseWizard<T> = [T, UseWizardActions<T>];
-function useWizard<T>(
-  initial: T,
-  steps: T[],
-  opts?: UseWizardOpts<T>,
-): UseWizard<T> {
+function useWizard<T>(initial: T, steps: T[], opts?: UseWizardOpts<T>): UseWizard<T> {
   const [stepIndex, setStepIndex] = useState(steps.indexOf(initial));
 
   function goToStep(nextStepIndex) {

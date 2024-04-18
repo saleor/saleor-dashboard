@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import CustomerAddressChoiceCard from "@dashboard/customers/components/CustomerAddressChoiceCard";
 import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
@@ -38,9 +35,7 @@ export interface OrderCustomerAddressesSearchProps {
   exitSearch: () => any;
 }
 
-const OrderCustomerAddressesSearch: React.FC<
-  OrderCustomerAddressesSearchProps
-> = props => {
+const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
   const {
     type,
     cloneAddress,
@@ -53,18 +48,11 @@ const OrderCustomerAddressesSearch: React.FC<
     onChangeCustomerBillingAddress,
     exitSearch,
   } = props;
-
   const intl = useIntl();
   const classes = useStyles(props);
-
-  const initialAddress = customerAddresses.find(
-    getById(selectedCustomerAddressId),
-  );
-
+  const initialAddress = customerAddresses.find(getById(selectedCustomerAddressId));
   const [query, setQuery] = React.useState("");
-  const [temporarySelectedAddress, setTemporarySelectedAddress] =
-    React.useState(initialAddress);
-
+  const [temporarySelectedAddress, setTemporarySelectedAddress] = React.useState(initialAddress);
   const handleSelect = () => {
     if (type === AddressTypeEnum.SHIPPING) {
       onChangeCustomerShippingAddress(temporarySelectedAddress);
@@ -75,11 +63,9 @@ const OrderCustomerAddressesSearch: React.FC<
       exitSearch();
     }
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
-
   const filteredCustomerAddresses = customerAddresses.filter(address => {
     const parsedAddress = stringifyAddress(address);
 

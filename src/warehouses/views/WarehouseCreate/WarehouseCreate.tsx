@@ -4,11 +4,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
-import {
-  extractMutationErrors,
-  findValueInEnum,
-  getMutationStatus,
-} from "@dashboard/misc";
+import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
 import WarehouseCreatePage, {
   WarehouseCreatePageFormData,
 } from "@dashboard/warehouses/components/WarehouseCreatePage";
@@ -36,7 +32,6 @@ const WarehouseCreate: React.FC = () => {
     },
   });
   const createWarehouseTransitionState = getMutationStatus(createWarehouseOpts);
-
   const handleSubmit = (data: WarehouseCreatePageFormData) =>
     extractMutationErrors(
       createWarehouse({

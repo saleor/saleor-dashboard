@@ -18,25 +18,15 @@ export class PermissionGroupDetailsPage extends BasePage {
     readonly permissionGroupNameInput = page
       .getByTestId("permission-group-name-input")
       .locator("input"),
-    readonly channelPermissionsCheckbox = page.getByTestId(
-      "all-channel-permissions-checkbox",
-    ),
-    readonly permissionGroupListItem = page.getByTestId(
-      "permission-group-list-item",
-    ),
+    readonly channelPermissionsCheckbox = page.getByTestId("all-channel-permissions-checkbox"),
+    readonly permissionGroupListItem = page.getByTestId("permission-group-list-item"),
     readonly assignMembersButton = page.getByTestId("assign-members"),
     readonly assignedMembersTable = page.getByTestId("assigned-members-table"),
     readonly assignedMemberRow = page.getByTestId("assigned-member-row"),
     readonly removeMemberButton = page.getByTestId("remove-user"),
-    readonly unassignMembersButton = page.getByTestId(
-      "unassign-members-button",
-    ),
-    readonly membersSection = page.getByTestId(
-      "permission-group-members-section",
-    ),
-    readonly unassignMembersDialog = page
-      .getByRole("dialog")
-      .filter({ hasText: "Unassign users" }),
+    readonly unassignMembersButton = page.getByTestId("unassign-members-button"),
+    readonly membersSection = page.getByTestId("permission-group-members-section"),
+    readonly unassignMembersDialog = page.getByRole("dialog").filter({ hasText: "Unassign users" }),
     readonly permissionGroupList = page.getByTestId("permission-group-list"),
     readonly assignedMemberName = page.getByTestId("member-name"),
     readonly permissionGroupCheckbox = page
@@ -44,10 +34,8 @@ export class PermissionGroupDetailsPage extends BasePage {
       .locator("input"),
   ) {
     super(page);
-    this.assignPermissionGroupMemberDialog =
-      new AssignPermissionGroupMembersDialog(page);
-    this.unassignPermissionGroupMemberDialog =
-      new UnassignPermissionGroupMembersDialog(page);
+    this.assignPermissionGroupMemberDialog = new AssignPermissionGroupMembersDialog(page);
+    this.unassignPermissionGroupMemberDialog = new UnassignPermissionGroupMembersDialog(page);
     this.deletePermissionGroupDialog = new DeletePermissionGroupDialog(page);
   }
 
@@ -60,10 +48,7 @@ export class PermissionGroupDetailsPage extends BasePage {
   }
 
   async selectPermissionGroup(permission: string) {
-    await this.permissionGroupListItem
-      .filter({ hasText: permission })
-      .first()
-      .click();
+    await this.permissionGroupListItem.filter({ hasText: permission }).first().click();
   }
 
   async clickAssignMembersButton() {
@@ -71,10 +56,7 @@ export class PermissionGroupDetailsPage extends BasePage {
   }
 
   async selectAssignedMember(member: string) {
-    await this.assignedMemberRow
-      .filter({ hasText: member })
-      .locator("input")
-      .click();
+    await this.assignedMemberRow.filter({ hasText: member }).locator("input").click();
   }
 
   async unassignSingleMember(member: string) {

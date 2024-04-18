@@ -17,33 +17,19 @@ export class WarehousePage extends BasePage {
     readonly deleteWarehouseButton = page.getByTestId("delete-button"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly warehousesList = page.getByTestId("warehouses-list"),
-    readonly warehouseNameInput = page
-      .getByTestId("warehouse-name-input")
-      .locator("input"),
-    readonly companyNameInput = page
-      .getByTestId("company-name-input")
-      .locator("input"),
+    readonly warehouseNameInput = page.getByTestId("warehouse-name-input").locator("input"),
+    readonly companyNameInput = page.getByTestId("company-name-input").locator("input"),
     readonly companyAddressLine1Input = page
       .getByTestId("company-address-line-1-input")
       .locator("input"),
     readonly companyAddressLine2Input = page
       .getByTestId("company-address-line-2-input")
       .locator("input"),
-    readonly companyCityInput = page
-      .getByTestId("company-city-input")
-      .locator("input"),
-    readonly companyZipInput = page
-      .getByTestId("company-zip-input")
-      .locator("input"),
-    readonly companyPhoneInput = page
-      .getByTestId("company-phone-input")
-      .locator("input"),
-    readonly companyCountrySelect = page.getByTestId(
-      "address-edit-country-select-field",
-    ),
-    readonly companyCountryOptions = page.getByTestId(
-      "single-autocomplete-select-option",
-    ),
+    readonly companyCityInput = page.getByTestId("company-city-input").locator("input"),
+    readonly companyZipInput = page.getByTestId("company-zip-input").locator("input"),
+    readonly companyPhoneInput = page.getByTestId("company-phone-input").locator("input"),
+    readonly companyCountrySelect = page.getByTestId("address-edit-country-select-field"),
+    readonly companyCountryOptions = page.getByTestId("single-autocomplete-select-option"),
   ) {
     super(page);
     this.page = page;
@@ -117,9 +103,7 @@ export class WarehousePage extends BasePage {
 
   async gotoExistingWarehousePage(warehouseId: string) {
     const existingWarehouseUrl = URL_LIST.warehouses + warehouseId;
-    await console.log(
-      "Navigating to warehouse details: " + existingWarehouseUrl,
-    );
+    await console.log("Navigating to warehouse details: " + existingWarehouseUrl);
     await this.page.goto(existingWarehouseUrl);
   }
 }

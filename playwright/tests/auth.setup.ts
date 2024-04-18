@@ -1,9 +1,5 @@
 import { BasicApiService } from "@api/basics";
-import {
-  permissions,
-  USER_PERMISSION,
-  UserPermissionType,
-} from "@data/userPermissions";
+import { permissions, USER_PERMISSION, UserPermissionType } from "@data/userPermissions";
 import { APIRequestContext, test as setup } from "@playwright/test";
 import fs from "fs";
 import path from "path";
@@ -30,7 +26,6 @@ const authenticateAndSaveState = async (
   });
   fs.writeFileSync(filePath, JSON.stringify(loginJsonInfo, null, 2));
 };
-
 const authSetup = async (
   request: APIRequestContext,
   email: string,

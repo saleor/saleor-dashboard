@@ -61,14 +61,10 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
                   <FormattedMessage {...messages.allocaationMayOccur} />
                   <ul>
                     <li>
-                      <FormattedMessage
-                        {...messages.allocaationMayOccurWithTrackInventory}
-                      />
+                      <FormattedMessage {...messages.allocaationMayOccurWithTrackInventory} />
                     </li>
                     <li>
-                      <FormattedMessage
-                        {...messages.allocaationMayOccurWithReservationTime}
-                      />
+                      <FormattedMessage {...messages.allocaationMayOccurWithReservationTime} />
                     </li>
                   </ul>
                 </Tooltip.Content>

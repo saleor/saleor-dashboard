@@ -20,18 +20,12 @@ export class CollectionsPage extends BasePage {
     readonly createCollectionButton = page.getByTestId("create-collection"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
-    readonly assignedSpecificProductRow = page.getByTestId(
-      "assign-product-table-row",
-    ),
+    readonly assignedSpecificProductRow = page.getByTestId("assign-product-table-row"),
     readonly assignProductButton = page.getByTestId("add-product"),
     readonly collectionImages = page.getByTestId("product-image"),
     readonly uploadImageButton = page.getByTestId("upload-image-button"),
-    readonly collectionNameInput = page
-      .getByTestId("collection-name-input")
-      .locator("input"),
-    readonly collectionDescriptionEditor = page.getByTestId(
-      "rich-text-editor-description",
-    ),
+    readonly collectionNameInput = page.getByTestId("collection-name-input").locator("input"),
+    readonly collectionDescriptionEditor = page.getByTestId("rich-text-editor-description"),
     readonly descriptionLoader = page.locator(".codex-editor__loader"),
   ) {
     super(page);
@@ -68,9 +62,7 @@ export class CollectionsPage extends BasePage {
 
   async gotoExistingCollectionView(collectionId: string) {
     const collectionUrl = URL_LIST.collections + collectionId;
-    await console.log(
-      "Navigating to existing collection url: " + collectionUrl,
-    );
+    await console.log("Navigating to existing collection url: " + collectionUrl);
     await this.page.goto(collectionUrl);
   }
 

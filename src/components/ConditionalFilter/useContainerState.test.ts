@@ -24,7 +24,6 @@ describe("ConditionalFilter / useContainerState", () => {
     // Assert
     expect(result.current.value).toEqual([]);
   });
-
   it("should create new empty row", () => {
     // Arrange
     const { result } = renderHook(() => useContainerState(valueProvider));
@@ -35,7 +34,6 @@ describe("ConditionalFilter / useContainerState", () => {
     // Assert
     expect(result.current.value).toEqual([FilterElement.createEmpty()]);
   });
-
   it("should add new row", () => {
     // Arrange
     const { result } = renderHook(() => useContainerState(valueProvider));
@@ -61,13 +59,8 @@ describe("ConditionalFilter / useContainerState", () => {
       result.current.create(staticPriceElement);
     });
     // Assert
-    expect(result.current.value).toEqual([
-      FilterElement.createEmpty(),
-      "AND",
-      staticPriceElement,
-    ]);
+    expect(result.current.value).toEqual([FilterElement.createEmpty(), "AND", staticPriceElement]);
   });
-
   it("should update row", () => {
     // Arrange
     const { result } = renderHook(() => useContainerState(valueProvider));
@@ -102,7 +95,6 @@ describe("ConditionalFilter / useContainerState", () => {
     // Assert
     expect(result.current.value).toEqual([staticPriceElement]);
   });
-
   it("should remove row", () => {
     // Arrange
     const { result } = renderHook(() => useContainerState(valueProvider));
@@ -133,7 +125,6 @@ describe("ConditionalFilter / useContainerState", () => {
     // Assert
     expect(result.current.value).toEqual([staticPriceElement]);
   });
-
   it("should clear not filled rows", () => {
     // Arrange
     const { result } = renderHook(() => useContainerState(valueProvider));

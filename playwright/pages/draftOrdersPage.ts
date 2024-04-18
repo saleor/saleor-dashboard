@@ -18,9 +18,7 @@ export class DraftOrdersPage extends BasePage {
   readonly shippingAddressDialog: ShippingAddressDialog;
   constructor(
     page: Page,
-    readonly createDraftOrderButton = page.getByTestId(
-      "create-draft-order-button",
-    ),
+    readonly createDraftOrderButton = page.getByTestId("create-draft-order-button"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly addProducts = page.getByTestId("add-products-button"),
     readonly finalizeButton = page.getByTestId("button-bar-confirm"),

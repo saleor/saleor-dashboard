@@ -17,7 +17,6 @@ const useStyles = makeStyles(
     name: "ErrorNoticeBar",
   },
 );
-
 const ErrorNoticeBar: React.FC<ErrorNoticeBarProps> = props => {
   const { className, message } = props;
   const classes = useStyles(props);

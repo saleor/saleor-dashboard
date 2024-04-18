@@ -16,57 +16,33 @@ export class AttributesPage extends BasePage {
 
   constructor(
     page: Page,
-    readonly createAttributeButton = page.getByTestId(
-      "create-attribute-button",
-    ),
+    readonly createAttributeButton = page.getByTestId("create-attribute-button"),
     readonly valueRequiredCheckbox = page.getByLabel("Value Required"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly attributesRows = page.getByTestId("attributes-rows"),
-    readonly assignAttributeValueButton = page.getByTestId(
-      "assign-value-button",
-    ),
+    readonly assignAttributeValueButton = page.getByTestId("assign-value-button"),
     readonly attributeSelect = page.getByTestId("attribute-type-select"),
     readonly attributeDefaultLabelInput = page
       .getByTestId("attribute-default-label-input")
       .locator("input"),
-    readonly attributeCodeInput = page
-      .getByTestId("attribute-code-input")
-      .locator("input"),
-    readonly bulkDeleteAttributesDialog = page.getByTestId(
-      "attribute-bulk-delete-dialog",
-    ),
-    readonly deleteSingleAttributeDialog = page.getByTestId(
-      "delete-single-attr-dialog",
-    ),
+    readonly attributeCodeInput = page.getByTestId("attribute-code-input").locator("input"),
+    readonly bulkDeleteAttributesDialog = page.getByTestId("attribute-bulk-delete-dialog"),
+    readonly deleteSingleAttributeDialog = page.getByTestId("delete-single-attr-dialog"),
     readonly dialog = page.getByRole("dialog"),
-    readonly deleteAttributeValueButton = page.getByTestId(
-      "delete-attribute-value-button",
-    ),
+    readonly deleteAttributeValueButton = page.getByTestId("delete-attribute-value-button"),
     readonly attributeValueRows = page.getByTestId("attributes-rows"),
     readonly attributeValueName = page.getByTestId("attribute-value-name"),
-    readonly deleteAttrValueDialog = page.getByTestId(
-      "delete-attribute-value-dialog",
-    ),
-    readonly editAttrValueDialog = page.getByTestId(
-      "edit-attribute-value-dialog",
-    ),
+    readonly deleteAttrValueDialog = page.getByTestId("delete-attribute-value-dialog"),
+    readonly editAttrValueDialog = page.getByTestId("edit-attribute-value-dialog"),
     readonly attrValuesSection = page.getByTestId("attribute-values-section"),
-    readonly attrEntityTypeSelect = page.locator(
-      `[id="mui-component-select-entityType"]`,
-    ),
-    readonly attrVisibleInStorefrontSwitch = page.locator(
-      `[name = "visibleInStorefront"]`,
-    ),
+    readonly attrEntityTypeSelect = page.locator(`[id="mui-component-select-entityType"]`),
+    readonly attrVisibleInStorefrontSwitch = page.locator(`[name = "visibleInStorefront"]`),
     readonly metadataSectionAccordionButton = page
       .getByTestId("metadata-item")
       .getByTestId("expand"),
-    readonly metadataAddFieldButton = page
-      .getByTestId("metadata-item")
-      .getByTestId("add-field"),
+    readonly metadataAddFieldButton = page.getByTestId("metadata-item").getByTestId("add-field"),
     readonly metadataKeyInput = page.getByTestId("metadata-key-input").first(),
-    readonly metadataValueInput = page
-      .getByTestId("metadata-value-input")
-      .first(),
+    readonly metadataValueInput = page.getByTestId("metadata-value-input").first(),
   ) {
     super(page);
     this.addValueDialog = new AddValueDialog(page);
@@ -105,11 +81,8 @@ export class AttributesPage extends BasePage {
 
   async gotoExistingAttributePage(attributeId: string, attributeName: string) {
     const existingAttributeUrl = `${URL_LIST.attributes}${attributeId}`;
-    await console.log(
-      `Navigates to existing attribute page: ${existingAttributeUrl}`,
-    );
+    await console.log(`Navigates to existing attribute page: ${existingAttributeUrl}`);
     await this.page.goto(existingAttributeUrl);
-
     await this.pageHeader.getByText(attributeName).waitFor({
       state: "visible",
       timeout: 30000,

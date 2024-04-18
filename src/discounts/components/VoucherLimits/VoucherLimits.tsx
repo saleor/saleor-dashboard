@@ -33,9 +33,7 @@ const VoucherLimits = ({
 }: VoucherLimitsProps) => {
   const intl = useIntl();
   const classes = useStyles();
-
   const formErrors = getFormErrors(["usageLimit"], errors);
-
   const usesLeft = data.usageLimit - data.used;
 
   return (
@@ -75,10 +73,7 @@ const VoucherLimits = ({
                 data-test-id="usage-limit"
                 disabled={disabled}
                 error={!!formErrors.usageLimit || data.usageLimit <= 0}
-                helperText={getDiscountErrorMessage(
-                  formErrors.usageLimit,
-                  intl,
-                )}
+                helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
                 label={intl.formatMessage(messages.usageLimit)}
                 name={"usageLimit" as keyof VoucherDetailsPageFormData}
                 value={data.usageLimit}

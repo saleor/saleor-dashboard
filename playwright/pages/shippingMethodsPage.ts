@@ -23,9 +23,7 @@ export class ShippingMethodsPage extends BasePage {
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly shippingZoneName = page.getByTestId("page-header"),
     readonly deleteShippingRateButton = page.getByTestId("button-bar-delete"),
-    readonly shippingRateNameInput = page.getByTestId(
-      "shipping-rate-name-input",
-    ),
+    readonly shippingRateNameInput = page.getByTestId("shipping-rate-name-input"),
     readonly deleteShippingRateButtonOnList = page
       .getByTestId("shipping-method-row")
       .getByRole("button")
@@ -52,14 +50,10 @@ export class ShippingMethodsPage extends BasePage {
   }
 
   async typeShippingZoneName(shippingZoneName = "e2e shipping zone") {
-    await this.shippingZoneNameInput.fill(
-      `${shippingZoneName} - ${new Date().toISOString()}`,
-    );
+    await this.shippingZoneNameInput.fill(`${shippingZoneName} - ${new Date().toISOString()}`);
   }
 
-  async typeShippingZoneDescription(
-    shippingDescription = "Biggest zone in e2e world",
-  ) {
+  async typeShippingZoneDescription(shippingDescription = "Biggest zone in e2e world") {
     await this.shippingZoneDescriptionField.fill(shippingDescription);
   }
 
@@ -77,9 +71,7 @@ export class ShippingMethodsPage extends BasePage {
 
   async gotoExistingShippingMethod(shippingMethodId: string) {
     const existingShippingMethodUrl = `${URL_LIST.shippingMethods}${shippingMethodId}`;
-    await console.log(
-      `Navigates to existing shipping method page: ${existingShippingMethodUrl}`,
-    );
+    await console.log(`Navigates to existing shipping method page: ${existingShippingMethodUrl}`);
     await this.page.goto(existingShippingMethodUrl);
     await this.rightSideDetailsPage.channelSection
       .locator(this.page.getByTestId("selected-options"))
@@ -89,18 +81,11 @@ export class ShippingMethodsPage extends BasePage {
       });
   }
 
-  async gotoExistingShippingRate(
-    shippingMethodId: string,
-    shippingRateId: string,
-  ) {
+  async gotoExistingShippingRate(shippingMethodId: string, shippingRateId: string) {
     const existingShippingRateUrl = `${URL_LIST.shippingMethods}${shippingMethodId}/${shippingRateId}`;
 
-    await console.log(
-      `Navigates to existing shipping rate page: ${existingShippingRateUrl}`,
-    );
-
+    await console.log(`Navigates to existing shipping rate page: ${existingShippingRateUrl}`);
     await this.page.goto(existingShippingRateUrl);
-
     await this.shippingRateNameInput.waitFor({
       state: "visible",
       timeout: 60000,
@@ -112,9 +97,7 @@ export class ShippingMethodsPage extends BasePage {
   }
 
   async clickDeletePriceBasedShippingMethod() {
-    await this.priceBasedRatesSection
-      .locator(this.deleteShippingRateButtonOnList)
-      .click();
+    await this.priceBasedRatesSection.locator(this.deleteShippingRateButtonOnList).click();
   }
 
   async clickDeleteShippingRateButton() {

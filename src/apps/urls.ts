@@ -11,10 +11,7 @@ export const MANIFEST_ATTR = "manifestUrl";
 export type AppListUrlDialog = "app-installation-remove";
 export type AppListUrlQueryParams = Dialog<AppListUrlDialog> & SingleAction;
 
-export type AppDetailsUrlDialog =
-  | "app-activate"
-  | "app-deactivate"
-  | "app-delete";
+export type AppDetailsUrlDialog = "app-activate" | "app-deactivate" | "app-delete";
 export interface AppDetailsUrlMountQueryParams {
   productId?: string;
   productIds?: string[];
@@ -57,19 +54,11 @@ export const AppUrls = {
   resolveAppUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
     AppPaths.resolveAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params),
   resolveAppDetailsUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
-    AppPaths.resolveAppDetailsPath(encodeURIComponent(id)) +
-    "?" +
-    stringifyQs(params),
+    AppPaths.resolveAppDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params),
   resolveAppInstallUrl: (manifestUrl: string) =>
     `${AppPaths.appInstallPath}?manifestUrl=${manifestUrl}`,
-  resolveAppDeepUrl: (
-    id: string,
-    subPath: string,
-    params?: AppDetailsUrlQueryParams,
-  ) =>
-    AppPaths.resolveAppDeepPath(encodeURIComponent(id), subPath) +
-    "?" +
-    stringifyQs(params),
+  resolveAppDeepUrl: (id: string, subPath: string, params?: AppDetailsUrlQueryParams) =>
+    AppPaths.resolveAppDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params),
   isAppDeepUrlChange: (appId: string, from: string, to: string) => {
     const appCompletePath = AppPaths.resolveAppPath(encodeURIComponent(appId));
 
@@ -106,10 +95,7 @@ export const AppUrls = {
       return appUrl;
     }
     const deepSubPath = appCompleteUrl.replace(appUrl, "");
-    const dashboardUrl = urlJoin(
-      AppPaths.resolveAppPath(encodeURIComponent(appId)),
-      deepSubPath,
-    );
+    const dashboardUrl = urlJoin(AppPaths.resolveAppPath(encodeURIComponent(appId)), deepSubPath);
     return dashboardUrl;
   },
   resolveAppIframeUrl: (
@@ -122,7 +108,6 @@ export const AppUrls = {
      * Use host to preserve port, in case of multiple Saleors running on localhost
      */
     const apiUrlHost = new URL(apiUrl).host;
-
     const iframeContextQueryString = `?${stringifyQs(
       {
         /**

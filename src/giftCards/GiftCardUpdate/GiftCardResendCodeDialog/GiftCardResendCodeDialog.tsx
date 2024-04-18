@@ -5,10 +5,7 @@ import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { IMessage } from "@dashboard/components/messages";
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
-import {
-  useChannelsQuery,
-  useGiftCardResendMutation,
-} from "@dashboard/graphql";
+import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { getBySlug } from "@dashboard/misc";
@@ -36,34 +33,22 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const notify = useNotifier();
   const classes = useStyles();
   const progressClasses = useProgressStyles();
-
   const {
     giftCard: { boughtInChannel: initialChannelSlug },
   } = useGiftCardDetails();
-
   const [consentSelected, setConsentSelected] = useState(false);
-
   const { data: channelsData, loading: loadingChannels } = useChannelsQuery({});
-
   const channels = channelsData?.channels;
-
   const activeChannels = channels?.filter(({ isActive }) => isActive);
-
   const { onQueryChange, filteredChannels } = useChannelsSearch(activeChannels);
-
   const initialFormData: GiftCardResendCodeFormData = {
     email: "",
     channelSlug: initialChannelSlug || "",
   };
-
   const {
     giftCard: { id },
   } = useGiftCardDetails();
-
-  const handleSubmit = async ({
-    email,
-    channelSlug,
-  }: GiftCardResendCodeFormData) => {
+  const handleSubmit = async ({ email, channelSlug }: GiftCardResendCodeFormData) => {
     const result = await resendGiftCardCode({
       variables: {
         input: {
@@ -76,38 +61,29 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
 
     return result?.data?.giftCardResend?.errors;
   };
+  const { data, change, submit, reset } = useForm(initialFormData, handleSubmit);
+  const [resendGiftCardCode, resendGiftCardCodeOpts] = useGiftCardResendMutation({
+    onCompleted: data => {
+      const errors = data?.giftCardResend?.errors;
+      const notifierData: IMessage = !!errors?.length
+        ? {
+            status: "error",
+            text: intl.formatMessage(commonErrorMessages.unknownError),
+          }
+        : {
+            status: "success",
+            text: intl.formatMessage(messages.successResendAlertText),
+          };
 
-  const { data, change, submit, reset } = useForm(
-    initialFormData,
-    handleSubmit,
-  );
+      notify(notifierData);
 
-  const [resendGiftCardCode, resendGiftCardCodeOpts] =
-    useGiftCardResendMutation({
-      onCompleted: data => {
-        const errors = data?.giftCardResend?.errors;
-
-        const notifierData: IMessage = !!errors?.length
-          ? {
-              status: "error",
-              text: intl.formatMessage(commonErrorMessages.unknownError),
-            }
-          : {
-              status: "success",
-              text: intl.formatMessage(messages.successResendAlertText),
-            };
-
-        notify(notifierData);
-
-        if (!errors.length) {
-          onClose();
-          reset();
-        }
-      },
-    });
-
+      if (!errors.length) {
+        onClose();
+        reset();
+      }
+    },
+  });
   const { loading, status, data: submitData } = resendGiftCardCodeOpts;
-
   const { formErrors } = useDialogFormReset({
     open,
     reset,

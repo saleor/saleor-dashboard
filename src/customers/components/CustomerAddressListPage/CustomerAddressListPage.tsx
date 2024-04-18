@@ -41,8 +41,7 @@ const messages = defineMessages({
   noNameToShow: {
     id: "CWqmRU",
     defaultMessage: "Address Book",
-    description:
-      "customer's address book when no customer name is available, header",
+    description: "customer's address book when no customer name is available, header",
   },
   fullNameDetail: {
     id: "MpR4zK",
@@ -54,7 +53,6 @@ const messages = defineMessages({
     defaultMessage: "There is no address to show for this customer",
   },
 });
-
 const useStyles = makeStyles(
   theme => ({
     addButton: {
@@ -82,15 +80,10 @@ const useStyles = makeStyles(
   }),
   { name: "CustomerAddressListPage" },
 );
-
-const CustomerAddressListPage: React.FC<
-  CustomerAddressListPageProps
-> = props => {
+const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props => {
   const { customer, disabled, onAdd, onEdit, onRemove, onSetAsDefault } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
-
   const isEmpty = customer?.addresses?.length === 0;
   const fullName = getStringOrPlaceholder(
     customer && [customer.firstName, customer.lastName].join(" "),
@@ -120,17 +113,11 @@ const CustomerAddressListPage: React.FC<
           padding={6}
           flexDirection="column"
         >
-          <Typography variant="h5">
-            {intl.formatMessage(messages.noAddressToShow)}
-          </Typography>
+          <Typography variant="h5">{intl.formatMessage(messages.noAddressToShow)}</Typography>
           <Typography className={classes.description}>
             {intl.formatMessage(messages.doesntHaveAddresses)}
           </Typography>
-          <Button
-            className={classes.addButton}
-            variant="primary"
-            onClick={onAdd}
-          >
+          <Button className={classes.addButton} variant="primary" onClick={onAdd}>
             {intl.formatMessage(messages.addAddress)}
           </Button>
         </Box>
@@ -141,12 +128,8 @@ const CustomerAddressListPage: React.FC<
               address={address}
               addressNumber={addressNumber + 1}
               disabled={disabled}
-              isDefaultBillingAddress={
-                customer?.defaultBillingAddress?.id === address?.id
-              }
-              isDefaultShippingAddress={
-                customer?.defaultShippingAddress?.id === address?.id
-              }
+              isDefaultBillingAddress={customer?.defaultBillingAddress?.id === address?.id}
+              isDefaultShippingAddress={customer?.defaultShippingAddress?.id === address?.id}
               onEdit={() => onEdit(address.id)}
               onRemove={() => onRemove(address.id)}
               onSetAsDefault={type => onSetAsDefault(address.id, type)}

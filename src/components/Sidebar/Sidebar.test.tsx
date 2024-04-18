@@ -14,25 +14,19 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => (
-    <>{defaultMessage}</>
-  ),
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
-
 jest.mock("./menu/hooks/useMenuStructure", () => ({
   useMenuStructure: jest.fn(() => []),
 }));
-
 jest.mock("@dashboard/featureFlags/useFlagsInfo", () => ({
   useFlagsInfo: jest.fn(() => []),
 }));
-
 jest.mock("@dashboard/auth/hooks/useCloud", () => ({
   useCloud: jest.fn(() => ({
     isAuthenticatedViaCloud: false,
   })),
 }));
-
 jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
   useDevModeContext: jest.fn(() => ({
     variables: "",
@@ -43,16 +37,12 @@ jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
     setDevModeContent: jest.fn(),
   })),
 }));
-
-jest.mock(
-  "@dashboard/components/NavigatorSearch/useNavigatorSearchContext",
-  () => ({
-    useNavigatorSearchContext: jest.fn(() => ({
-      isNavigatorVisible: false,
-      setNavigatorVisibility: jest.fn(),
-    })),
-  }),
-);
+jest.mock("@dashboard/components/NavigatorSearch/useNavigatorSearchContext", () => ({
+  useNavigatorSearchContext: jest.fn(() => ({
+    isNavigatorVisible: false,
+    setNavigatorVisibility: jest.fn(),
+  })),
+}));
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
@@ -68,36 +58,28 @@ describe("Sidebar", () => {
     (useCloud as jest.Mock).mockImplementation(() => ({
       isAuthenticatedViaCloud: true,
     }));
-
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
-
     // Assert
     expect(screen.getByText("Saleor Cloud")).toBeInTheDocument();
   });
-
   it('shouldd not render "Saleor Cloud" link when is not cloud instance', () => {
     // Arrange
     (useCloud as jest.Mock).mockImplementation(() => ({
       isAuthenticatedViaCloud: false,
     }));
-
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
-
     // Assert
     expect(screen.queryByText("Saleor Cloud")).not.toBeInTheDocument();
   });
-
   it("should render keyboard shortcuts", () => {
     // Arrange & Act
     render(<Sidebar />, { wrapper: Wrapper });
-
     // Assert
     expect(screen.getByText("Search")).toBeInTheDocument();
     expect(screen.getByText("Playground")).toBeInTheDocument();
   });
-
   it("should call callback when click on playground shortcut", async () => {
     // Arrange
     const actionCallback = jest.fn();
@@ -109,16 +91,12 @@ describe("Sidebar", () => {
       devModeContent: "",
       setDevModeContent: jest.fn(),
     }));
-
     render(<Sidebar />, { wrapper: Wrapper });
-
     // Act
     await userEvent.click(screen.getByText("Playground"));
-
     // Assert
     expect(actionCallback).toHaveBeenCalledWith(true);
   });
-
   it("should call callback when click on search shortcut", async () => {
     // Arrange
     const actionCallback = jest.fn();
@@ -126,12 +104,9 @@ describe("Sidebar", () => {
       isNavigatorVisible: false,
       setNavigatorVisibility: actionCallback,
     }));
-
     render(<Sidebar />, { wrapper: Wrapper });
-
     // Act
     await userEvent.click(screen.getByText("Search"));
-
     // Assert
     expect(actionCallback).toHaveBeenCalledWith(true);
   });

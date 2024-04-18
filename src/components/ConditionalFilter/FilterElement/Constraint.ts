@@ -25,8 +25,7 @@ export class Constraint {
     const constraintKey = Object.keys(CONSTRAINTS).find(key => key === slug);
 
     if (!constraintKey) return null;
-    const fieldConstraint =
-      CONSTRAINTS[constraintKey as keyof typeof CONSTRAINTS];
+    const fieldConstraint = CONSTRAINTS[constraintKey as keyof typeof CONSTRAINTS];
 
     return new Constraint(
       fieldConstraint.dependsOn,

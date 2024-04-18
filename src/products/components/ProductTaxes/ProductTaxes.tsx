@@ -19,21 +19,12 @@ interface ProductTaxesProps {
 }
 
 const ProductTaxes: React.FC<ProductTaxesProps> = props => {
-  const {
-    value,
-    disabled,
-    taxClasses,
-    taxClassDisplayName,
-    onChange,
-    onFetchMore,
-  } = props;
+  const { value, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const intl = useIntl();
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage(sectionNames.taxes)}
-      </DashboardCard.Title>
+      <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
       <DashboardCard.Content>
         <Box data-test-id="taxes">
           <Combobox

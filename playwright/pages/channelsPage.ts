@@ -17,9 +17,7 @@ export class ChannelPage extends BasePage {
     readonly createChannelButton = page.getByTestId("add-channel"),
     readonly channelsListTable = page.getByTestId("channel-list"),
     readonly channelNameInput = page.getByTestId("channel-name-input"),
-    readonly orderExpirationInput = page.getByTestId(
-      "delete-expired-order-input",
-    ),
+    readonly orderExpirationInput = page.getByTestId("delete-expired-order-input"),
     readonly transactionFlowCheckbox = page
       .getByTestId("order-settings-mark-as-paid")
       .locator("button")
@@ -36,9 +34,7 @@ export class ChannelPage extends BasePage {
     readonly channelCurrencySelect = page
       .getByTestId("channel-currency-select-input")
       .locator("input"),
-    readonly countrySelect = page
-      .getByTestId("country-select-input")
-      .locator("input"),
+    readonly countrySelect = page.getByTestId("country-select-input").locator("input"),
   ) {
     super(page);
     this.page = page;

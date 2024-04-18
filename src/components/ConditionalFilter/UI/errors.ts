@@ -40,10 +40,7 @@ export const createErrorLookup = (errors: Error[] | undefined): ErrorLookup => {
   return entries ? Object.fromEntries(entries) : {};
 };
 
-export const getErrorByRowIndex = (
-  errorLookup: ErrorLookup,
-  rowIndex: number,
-) => {
+export const getErrorByRowIndex = (errorLookup: ErrorLookup, rowIndex: number) => {
   const possibleError = errorLookup[rowIndex];
 
   return (

@@ -11,11 +11,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import {
-  createGetCellContent,
-  useDatagridOpts,
-  useOrderRefundStaticColumns,
-} from "./datagrid";
+import { createGetCellContent, useDatagridOpts, useOrderRefundStaticColumns } from "./datagrid";
 import { refundGridMessages } from "./messages";
 
 interface OrderRefundDatagridProps {
@@ -30,37 +26,27 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
   onRefundAdd,
 }) => {
   const intl = useIntl();
-  const { datagrid, currentTheme, settings, handleColumnChange } =
-    useDatagridOpts(ListViews.ORDER_REFUNDS);
-
+  const { datagrid, currentTheme, settings, handleColumnChange } = useDatagridOpts(
+    ListViews.ORDER_REFUNDS,
+  );
   const orderDraftDetailsStaticColumns = useOrderRefundStaticColumns();
-
-  const {
-    handlers,
-    visibleColumns,
-    staticColumns,
-    selectedColumns,
-    recentlyAddedColumn,
-  } = useColumns({
-    staticColumns: orderDraftDetailsStaticColumns,
-    selectedColumns: settings?.columns ?? [],
-    onSave: handleColumnChange,
-  });
-
+  const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
+    useColumns({
+      staticColumns: orderDraftDetailsStaticColumns,
+      selectedColumns: settings?.columns ?? [],
+      onSave: handleColumnChange,
+    });
   const getCellContent = createGetCellContent({
     columns: visibleColumns,
     refunds: grantedRefunds,
     currentTheme,
   });
-
   const getMenuItems = React.useCallback(
     index => [
       {
         label: "",
         Icon: (
-          <Link
-            to={orderGrantRefundEditUrl(orderId, grantedRefunds[index]?.id)}
-          >
+          <Link to={orderGrantRefundEditUrl(orderId, grantedRefunds[index]?.id)}>
             <EditIcon />
           </Link>
         ),
@@ -72,12 +58,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
 
   return (
     <DashboardCard>
-      <Box
-        paddingX={6}
-        paddingTop={6}
-        display="flex"
-        justifyContent="space-between"
-      >
+      <Box paddingX={6} paddingTop={6} display="flex" justifyContent="space-between">
         <Text size={5} fontWeight="bold">
           <FormattedMessage {...refundGridMessages.refundSection} />
         </Text>

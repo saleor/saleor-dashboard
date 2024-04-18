@@ -6,11 +6,7 @@ import {
   MutationResult,
   useMutation as useBaseMutation,
 } from "@apollo/client";
-import {
-  handleNestedMutationErrors,
-  showAllErrors,
-  useUser,
-} from "@dashboard/auth";
+import { handleNestedMutationErrors, showAllErrors, useUser } from "@dashboard/auth";
 import { isJwtError } from "@dashboard/auth/errors";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationStatus } from "@dashboard/misc";
@@ -21,8 +17,7 @@ import { useIntl } from "react-intl";
 
 import useNotifier from "./useNotifier";
 
-export type MutationResultWithOpts<TData> = MutationResult<TData> &
-  MutationResultAdditionalProps;
+export type MutationResultWithOpts<TData> = MutationResult<TData> & MutationResultAdditionalProps;
 
 export type UseMutation<TData, TVariables> = [
   MutationFunction<TData, TVariables>,
@@ -32,24 +27,17 @@ export type UseMutationHook<TData, TVariables> = (
   cbs: MutationHookOptions<TData, TVariables>,
 ) => UseMutation<TData, TVariables>;
 
-export type MutationHookOptions<TData, TVariables> = BaseMutationHookOptions<
-  TData,
-  TVariables
-> & { disableErrorHandling?: boolean };
+export type MutationHookOptions<TData, TVariables> = BaseMutationHookOptions<TData, TVariables> & {
+  disableErrorHandling?: boolean;
+};
 
 export function useMutation<TData, TVariables>(
   mutation: DocumentNode,
-  {
-    onCompleted,
-    onError,
-    disableErrorHandling,
-    ...opts
-  }: MutationHookOptions<TData, TVariables>,
+  { onCompleted, onError, disableErrorHandling, ...opts }: MutationHookOptions<TData, TVariables>,
 ): UseMutation<TData, TVariables> {
   const notify = useNotifier();
   const intl = useIntl();
   const user = useUser();
-
   const [mutateFn, result] = useBaseMutation(mutation, {
     ...opts,
     onCompleted: data => {

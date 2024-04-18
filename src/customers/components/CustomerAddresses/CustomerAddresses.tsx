@@ -31,7 +31,6 @@ export interface CustomerAddressesProps {
 const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
   const { customer, disabled, manageAddressHref } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
@@ -65,15 +64,10 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
                   description="subsection header"
                 />
               </Typography>
-              <AddressFormatter
-                address={maybe(() => customer.defaultBillingAddress)}
-              />
+              <AddressFormatter address={maybe(() => customer.defaultBillingAddress)} />
             </CardContent>
           )}
-          {maybe(
-            () =>
-              customer.defaultBillingAddress && customer.defaultShippingAddress,
-          ) && <Hr />}
+          {maybe(() => customer.defaultBillingAddress && customer.defaultShippingAddress) && <Hr />}
           {maybe(() => customer.defaultShippingAddress) && (
             <CardContent>
               <Typography className={classes.label}>
@@ -83,9 +77,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
                   description="subsection header"
                 />
               </Typography>
-              <AddressFormatter
-                address={maybe(() => customer.defaultShippingAddress)}
-              />
+              <AddressFormatter address={maybe(() => customer.defaultShippingAddress)} />
             </CardContent>
           )}
         </>
@@ -93,10 +85,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
         maybe(() => customer.defaultShippingAddress) === null ? (
         <CardContent>
           <Typography>
-            <FormattedMessage
-              id="3d1RXL"
-              defaultMessage="This customer has no addresses yet"
-            />
+            <FormattedMessage id="3d1RXL" defaultMessage="This customer has no addresses yet" />
           </Typography>
         </CardContent>
       ) : (
@@ -108,9 +97,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
               description="subsection header"
             />
           </Typography>
-          <AddressFormatter
-            address={maybe(() => customer.defaultBillingAddress)}
-          />
+          <AddressFormatter address={maybe(() => customer.defaultBillingAddress)} />
         </CardContent>
       )}
     </Card>

@@ -1,24 +1,12 @@
 import { getAttributeValueErrorMessage } from "@dashboard/attributes/errors";
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import {
-  AttributeErrorFragment,
-  AttributeInputTypeEnum,
-} from "@dashboard/graphql";
+import { AttributeErrorFragment, AttributeInputTypeEnum } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -48,13 +36,8 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
   inputType,
 }) => {
   const intl = useIntl();
-
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
-  const attributeValueFields = getAttributeValueFields(
-    attributeValue,
-    isSwatch,
-  );
-
+  const attributeValueFields = getAttributeValueFields(attributeValue, isSwatch);
   const initialForm: AttributeValueEditDialogFormData = {
     name: attributeValue?.name ?? "",
     ...attributeValueFields,
@@ -95,10 +78,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
                 disabled={disabled}
                 error={!!formErrors.name}
                 fullWidth
-                helperText={getAttributeValueErrorMessage(
-                  formErrors.name,
-                  intl,
-                )}
+                helperText={getAttributeValueErrorMessage(formErrors.name, intl)}
                 name={"name" as keyof AttributeValueEditDialogFormData}
                 label={intl.formatMessage({
                   id: "UhcALJ",

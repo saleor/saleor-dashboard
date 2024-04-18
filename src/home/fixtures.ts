@@ -302,9 +302,9 @@ export const activities: HomeActivitiesQuery["activities"] = {
   ],
 };
 
-export const topProducts: (
+export const topProducts: (placeholderImage: string) => HomeTopProductsQuery["productTopToday"] = (
   placeholderImage: string,
-) => HomeTopProductsQuery["productTopToday"] = (placeholderImage: string) => ({
+) => ({
   __typename: "ProductVariantCountableConnection",
   edges: [
     {

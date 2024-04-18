@@ -8,11 +8,7 @@ interface HomeAnalyticsCardProps {
   children?: React.ReactNode;
 }
 
-export const HomeAnalyticsCard = ({
-  children,
-  title,
-  testId,
-}: HomeAnalyticsCardProps) => (
+export const HomeAnalyticsCard = ({ children, title, testId }: HomeAnalyticsCardProps) => (
   <Box
     borderWidth={1}
     borderStyle="solid"

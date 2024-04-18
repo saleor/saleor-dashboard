@@ -12,11 +12,7 @@ interface OrderMetadataDialogProps {
   data?: OrderLineWithMetadataFragment;
 }
 
-export const OrderMetadataDialog = ({
-  onClose,
-  open,
-  data,
-}: OrderMetadataDialogProps) => {
+export const OrderMetadataDialog = ({ onClose, open, data }: OrderMetadataDialogProps) => {
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content
@@ -27,8 +23,7 @@ export const OrderMetadataDialog = ({
         paddingX={0}
       >
         <DashboardModal.Title paddingX={6}>
-          <FormattedMessage {...commonMessages.metadata} />:{" "}
-          {data?.productName ?? ""}
+          <FormattedMessage {...commonMessages.metadata} />: {data?.productName ?? ""}
         </DashboardModal.Title>
 
         <Metadata

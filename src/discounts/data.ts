@@ -7,9 +7,7 @@ import { RequirementsPicker } from "./types";
 const getChannelDiscountValue = (
   channel: ChannelVoucherData,
   formData: VoucherDetailsPageFormData,
-) =>
-  formData.discountType.toString() === "SHIPPING" ? 100 : channel.discountValue;
-
+) => (formData.discountType.toString() === "SHIPPING" ? 100 : channel.discountValue);
 const getChannelMinAmountSpent = (
   channel: ChannelVoucherData,
   formData: VoucherDetailsPageFormData,
@@ -22,21 +20,16 @@ const getChannelMinAmountSpent = (
   }
   return channel.minSpent;
 };
-
 const mapChannelToChannelInput =
   (formData: VoucherDetailsPageFormData) => (channel: ChannelVoucherData) => ({
     channelId: channel.id,
     discountValue: getChannelDiscountValue(channel, formData),
     minAmountSpent: getChannelMinAmountSpent(channel, formData),
   });
+const filterNotDiscountedChannel = (channelInput: VoucherChannelListingAddInput) =>
+  !!channelInput.discountValue;
 
-const filterNotDiscountedChannel = (
-  channelInput: VoucherChannelListingAddInput,
-) => !!channelInput.discountValue;
-
-export const getAddedChannelsInputFromFormData = (
-  formData: VoucherDetailsPageFormData,
-) =>
+export const getAddedChannelsInputFromFormData = (formData: VoucherDetailsPageFormData) =>
   formData.channelListings
     ?.map(mapChannelToChannelInput(formData))
     .filter(filterNotDiscountedChannel) || [];

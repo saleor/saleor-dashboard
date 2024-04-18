@@ -22,14 +22,12 @@ test.beforeEach(({ page }) => {
   assignmentDialog = new AssignPermissionGroupMembersDialog(page);
   unassignDialog = new UnassignPermissionGroupMembersDialog(page);
 });
-
 test("TC: SALEOR_139 Should be able to navigate to permission groups page @permissions @e2e", async () => {
   await config.gotoConfigurationView();
   await config.permissionGroupsButton.scrollIntoViewIfNeeded();
   await config.openPermissionGroups();
   await expect(permissions.permissionGroupsList).toBeVisible();
 });
-
 test("TC: SALEOR_133 Should be able to create new permission group @permissions @e2e", async () => {
   await permissions.gotoPermissionGroupsView();
   await permissions.clickCreatePermissionGroupButton();
@@ -74,7 +72,6 @@ test("TC: SALEOR_133 Should be able to create new permission group @permissions 
     ).toBeChecked();
   }
 });
-
 test("TC: SALEOR_134 Should be able to edit existing permission group @permissions @e2e", async () => {
   await permissions.gotoPermissionGroupsView();
   const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
@@ -89,12 +86,8 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
   const newName = faker.random.words(2);
   await permissionDetails.fillPermissionGroupNameInput(newName);
   await permissionDetails.clickChannelPermissionsCheckbox();
-  const assignedPermissions =
-    PERMISSION_GROUPS.permissionGroupToBeEdited.assignedPermissions;
-  const permissionsToBeUnchecked = [
-    assignedPermissions.names[0],
-    assignedPermissions.names[1],
-  ];
+  const assignedPermissions = PERMISSION_GROUPS.permissionGroupToBeEdited.assignedPermissions;
+  const permissionsToBeUnchecked = [assignedPermissions.names[0], assignedPermissions.names[1]];
   for (const permission of permissionsToBeUnchecked) {
     await permissionDetails.selectPermissionGroup(permission);
   }
@@ -121,8 +114,7 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
       })
       .locator(permissionDetails.permissionGroupCheckbox),
   ).toBeChecked();
-  const assignedMembers =
-    PERMISSION_GROUPS.permissionGroupToBeEdited.assignedMembers;
+  const assignedMembers = PERMISSION_GROUPS.permissionGroupToBeEdited.assignedMembers;
   await permissionDetails.unassignSingleMember(assignedMembers.names[0]);
   await permissionDetails.unassignMembersDialog.waitFor({
     state: "visible",
@@ -135,9 +127,7 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
   await expect(permissionDetails.assignedMemberName.first()).toContainText(
     assignedMembers.names[1],
   );
-  await expect(permissionDetails.assignedMemberName.last()).toContainText(
-    assignedMembers.names[2],
-  );
+  await expect(permissionDetails.assignedMemberName.last()).toContainText(assignedMembers.names[2]);
   await permissionDetails.membersSection
     .getByTestId("select-all-checkbox")
     .locator("input")
@@ -155,7 +145,6 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
     timeout: 50000,
   });
 });
-
 test("TC: SALEOR_135 Should be able to delete single permission group @permissions @e2e", async () => {
   await permissions.gotoPermissionGroupsView();
   const permission = PERMISSION_GROUPS.permissionGroupToBeDeleted;
@@ -164,9 +153,7 @@ test("TC: SALEOR_135 Should be able to delete single permission group @permissio
     state: "visible",
     timeout: 30000,
   });
-  await expect(permissionDetails.permissionGroupNameInput).toHaveValue(
-    permission.name,
-  );
+  await expect(permissionDetails.permissionGroupNameInput).toHaveValue(permission.name);
   await permissionDetails.clickDeleteButton();
   await permissionDetails.deletePermissionGroupDialog.deleteDialog.waitFor({
     state: "visible",
@@ -180,7 +167,5 @@ test("TC: SALEOR_135 Should be able to delete single permission group @permissio
   await permissions.waitForGrid();
   await permissions.clickNumbersOfRowsButton();
   await permissions.clickPaginationRowNumberOption("100");
-  await expect(permissions.permissionGroupsList).not.toHaveText(
-    permission.name,
-  );
+  await expect(permissions.permissionGroupsList).not.toHaveText(permission.name);
 });

@@ -36,12 +36,8 @@ const useStyles = makeStyles(
   },
   { name: "TranslationsLanguageList" },
 );
-
-const TranslationsLanguageList: React.FC<
-  TranslationsLanguageListProps
-> = props => {
+const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props => {
   const { languages } = props;
-
   const classes = useStyles(props);
 
   return (
@@ -66,20 +62,14 @@ const TranslationsLanguageList: React.FC<
                   href={language && languageEntitiesUrl(language.code, {})}
                 >
                   <TableCell className={classes.capitalize}>
-                    {maybe<React.ReactNode>(
-                      () => language.language,
-                      <Skeleton />,
-                    )}
+                    {maybe<React.ReactNode>(() => language.language, <Skeleton />)}
                   </TableCell>
                 </TableRowLink>
               ),
               () => (
                 <TableRowLink>
                   <TableCell colSpan={1}>
-                    <FormattedMessage
-                      id="ptPPVk"
-                      defaultMessage="No languages found"
-                    />
+                    <FormattedMessage id="ptPPVk" defaultMessage="No languages found" />
                   </TableCell>
                 </TableRowLink>
               ),

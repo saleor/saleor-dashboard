@@ -22,10 +22,7 @@ import { getFilteredPayments } from "./utils";
 interface OrderTransactionsWrapper {
   order: OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
-  onTransactionAction: (
-    transactionId: string,
-    actionType: TransactionActionEnum,
-  ) => any;
+  onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => any;
   onPaymentCapture: () => any;
   onMarkAsPaid: () => any;
   onPaymentVoid: () => any;
@@ -44,12 +41,7 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
   onRefundAdd,
 }) => {
   const classes = useStyles();
-
-  const filteredPayments = React.useMemo(
-    () => getFilteredPayments(order),
-    [order],
-  );
-
+  const filteredPayments = React.useMemo(() => getFilteredPayments(order), [order]);
   const { enabled } = useFlag("improved_refunds");
 
   return (
@@ -95,17 +87,10 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
           />
         ))}
         {order?.giftCards?.map(giftCard => (
-          <OrderTransactionGiftCard
-            key={giftCard.id}
-            order={order}
-            giftCard={giftCard}
-          />
+          <OrderTransactionGiftCard key={giftCard.id} order={order} giftCard={giftCard} />
         ))}
       </div>
-      <OrderAddTransaction
-        order={order}
-        onAddTransaction={onAddManualTransaction}
-      />
+      <OrderAddTransaction order={order} onAddTransaction={onAddManualTransaction} />
     </>
   );
 };

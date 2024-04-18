@@ -9,16 +9,13 @@ export interface SearchInputProps extends SearchPageProps {
 
 const SearchInput: React.FC<SearchInputProps> = props => {
   const { initialSearch, onSearchChange, placeholder } = props;
-
   const [search, setSearch] = React.useState(initialSearch);
   React.useEffect(() => setSearch(initialSearch), [initialSearch]);
 
   return (
     <Debounce debounceFn={onSearchChange} time={500}>
       {debounceSearchChange => {
-        const handleSearchChange = (
-          event: React.ChangeEvent<HTMLInputElement>,
-        ) => {
+        const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
           const value = event.target.value;
           setSearch(value);
           debounceSearchChange(value);

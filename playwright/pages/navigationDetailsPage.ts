@@ -10,9 +10,7 @@ export class NavigationDetailsPage extends BasePage {
   deleteDialog: DeleteDialog;
   constructor(
     page: Page,
-    readonly navigationDetails = page.getByTestId(
-      "navigation-menu-details-page",
-    ),
+    readonly navigationDetails = page.getByTestId("navigation-menu-details-page"),
     readonly menuNameInput = page.getByTestId("menu-name").locator("input"),
     readonly createMenuItemButton = page.getByTestId("create-new-menu-item"),
     readonly menuItem = page.getByTestId("menu-item"),

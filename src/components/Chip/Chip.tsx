@@ -34,16 +34,13 @@ const useStyles = makeStyles(
 );
 const Chip: React.FC<ChipProps> = props => {
   const { className, label, onClose } = props;
-
   const classes = useStyles(props);
 
   return (
     <div className={clsx(classes.root, className)}>
       <Typography className={classes.label} variant="caption">
         {label}
-        {onClose && (
-          <CloseIcon className={classes.closeIcon} onClick={onClose} />
-        )}
+        {onClose && <CloseIcon className={classes.closeIcon} onClick={onClose} />}
       </Typography>
     </div>
   );

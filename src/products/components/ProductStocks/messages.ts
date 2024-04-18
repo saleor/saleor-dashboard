@@ -27,8 +27,7 @@ export const messages = defineMessages({
   },
   trackInventoryDescription: {
     id: "Wyl25+",
-    defaultMessage:
-      "Active inventory tracking will automatically calculate changes of stock",
+    defaultMessage: "Active inventory tracking will automatically calculate changes of stock",
     description: "product inventory, checkbox description",
   },
   quantity: {

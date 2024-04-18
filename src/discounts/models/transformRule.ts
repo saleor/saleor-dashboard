@@ -43,9 +43,7 @@ export const mapAPIRuleToForm = (
     return {
       ...baseRuleData,
       conditions: catalogueConditions,
-      hasPredicateNestedConditions: hasPredicateNestedConditions(
-        rule.cataloguePredicate,
-      ),
+      hasPredicateNestedConditions: hasPredicateNestedConditions(rule.cataloguePredicate),
     };
   }
 
@@ -57,9 +55,7 @@ export const mapAPIRuleToForm = (
     return {
       ...baseRuleData,
       conditions: orderconditions,
-      hasPredicateNestedConditions: hasPredicateNestedConditions(
-        rule.orderPredicate,
-      ),
+      hasPredicateNestedConditions: hasPredicateNestedConditions(rule.orderPredicate),
     };
   }
 
@@ -80,14 +76,11 @@ export const toAPI =
     }
 
     const orderPredicate =
-      discountType === PromotionTypeEnum.ORDER &&
-      !rule.hasPredicateNestedConditions
+      discountType === PromotionTypeEnum.ORDER && !rule.hasPredicateNestedConditions
         ? prepareOrderPredicate(rule.conditions)
         : undefined;
-
     const cataloguePredicate =
-      discountType === PromotionTypeEnum.CATALOGUE &&
-      !rule.hasPredicateNestedConditions
+      discountType === PromotionTypeEnum.CATALOGUE && !rule.hasPredicateNestedConditions
         ? prepareCataloguePredicate(rule.conditions)
         : undefined;
 
@@ -99,10 +92,7 @@ export const toAPI =
     };
   };
 
-function getRewardProperties(
-  rule: Rule,
-  discountType: PromotionTypeEnum | null | undefined,
-) {
+function getRewardProperties(rule: Rule, discountType: PromotionTypeEnum | null | undefined) {
   const isOrderDiscount = discountType === PromotionTypeEnum.ORDER;
 
   if (isOrderDiscount) {

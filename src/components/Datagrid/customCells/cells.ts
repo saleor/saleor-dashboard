@@ -5,25 +5,11 @@ import {
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { Locale } from "@dashboard/components/Locale";
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
-import {
-  CustomCell,
-  GridCell,
-  GridCellKind,
-  TextCell,
-} from "@glideapps/glide-data-grid";
+import { CustomCell, GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
 
-import {
-  DropdownCell,
-  DropdownCellContentProps,
-  DropdownChoice,
-} from "./DropdownCell";
+import { DropdownCell, DropdownCellContentProps, DropdownChoice } from "./DropdownCell";
 import { MoneyCell, MoneyDiscuntedCell } from "./Money";
-import {
-  hueToPillColorLight,
-  PillCell,
-  PillColor,
-  stringToHue,
-} from "./PillCell";
+import { hueToPillColorLight, PillCell, PillColor, stringToHue } from "./PillCell";
 import { StatusCell } from "./StatusCell";
 import { ThumbnailCell } from "./ThumbnailCell";
 
@@ -42,10 +28,7 @@ export function textCell(value: string, opts?: Partial<TextCell>): GridCell {
   };
 }
 
-export function readonlyTextCell(
-  value: string,
-  hasCursorPointer: boolean = true,
-): TextCell {
+export function readonlyTextCell(value: string, hasCursorPointer: boolean = true): TextCell {
   return {
     cursor: hasCursorPointer ? "pointer" : "default",
     allowOverlay: false,
@@ -74,10 +57,7 @@ export function tagsCell(
   };
 }
 
-export function booleanCell(
-  value: boolean,
-  options: Partial<GridCell> = {},
-): GridCell {
+export function booleanCell(value: boolean, options: Partial<GridCell> = {}): GridCell {
   return {
     ...common,
     ...options,
@@ -160,13 +140,7 @@ interface MoneyDiscountedCellData {
 }
 
 export function moneyDiscountedCell(
-  {
-    value,
-    undiscounted,
-    currency,
-    locale,
-    lineItemId,
-  }: MoneyDiscountedCellData,
+  { value, undiscounted, currency, locale, lineItemId }: MoneyDiscountedCellData,
   opts?: Partial<GridCell>,
 ): MoneyDiscuntedCell {
   return {
@@ -188,10 +162,7 @@ export function moneyDiscountedCell(
 export function dropdownCell(
   value: DropdownChoice,
   dataOpts: DropdownCellContentProps &
-    (
-      | { choices: DropdownChoice[] }
-      | { update: (text: string) => Promise<DropdownChoice[]> }
-    ),
+    ({ choices: DropdownChoice[] } | { update: (text: string) => Promise<DropdownChoice[]> }),
   opts?: Partial<GridCell>,
 ): DropdownCell {
   return {
@@ -225,11 +196,7 @@ export function thumbnailCell(
   };
 }
 
-export function statusCell(
-  status: DotStatus,
-  value: string,
-  opts?: Partial<GridCell>,
-): StatusCell {
+export function statusCell(status: DotStatus, value: string, opts?: Partial<GridCell>): StatusCell {
   return {
     ...common,
     ...opts,

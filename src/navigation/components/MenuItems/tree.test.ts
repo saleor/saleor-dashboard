@@ -38,7 +38,6 @@ describe("MenuItems tree - getDiff", () => {
     const diff = getDiff(originalTree, []);
     expect(diff).toMatchSnapshot();
   });
-
   it("should return array with operations", () => {
     const diff = getDiff(originalTree, [
       {

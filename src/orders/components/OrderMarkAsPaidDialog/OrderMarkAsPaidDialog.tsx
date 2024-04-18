@@ -43,10 +43,7 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
       onConfirm={onConfirm}
     >
       <DialogContentText>
-        <FormattedMessage
-          id="sfEbeB"
-          defaultMessage="You're going to mark this order as paid."
-        />
+        <FormattedMessage id="sfEbeB" defaultMessage="You're going to mark this order as paid." />
         <br />
         <FormattedMessage
           id="rwOx2s"

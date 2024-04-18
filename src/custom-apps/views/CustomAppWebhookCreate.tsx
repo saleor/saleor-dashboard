@@ -11,9 +11,7 @@ import { extractMutationErrors } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import WebhookDetailsPage, {
-  WebhookFormData,
-} from "../components/WebhookDetailsPage";
+import WebhookDetailsPage, { WebhookFormData } from "../components/WebhookDetailsPage";
 import { useAvailableEvents } from "../hooks";
 import { CustomAppUrls } from "../urls";
 
@@ -21,19 +19,14 @@ export interface CustomAppWebhookCreateProps {
   appId: string;
 }
 
-export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
-  appId,
-}) => {
+export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({ appId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const { data } = useAppQuery({
     variables: { id: appId, hasManagedAppsPermission: true },
   });
-
   const availableEvents = useAvailableEvents();
-
   const [webhookCreate, webhookCreateOpts] = useWebhookCreateMutation({
     onCompleted: data => {
       const webhook = data.webhookCreate?.webhook;
@@ -46,7 +39,6 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
       }
     },
   });
-
   const handleSubmit = (data: WebhookFormData) =>
     extractMutationErrors(
       webhookCreate({
@@ -54,9 +46,7 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
           input: {
             app: appId,
             syncEvents: data.syncEvents,
-            asyncEvents: data.asyncEvents.includes(
-              WebhookEventTypeAsyncEnum.ANY_EVENTS,
-            )
+            asyncEvents: data.asyncEvents.includes(WebhookEventTypeAsyncEnum.ANY_EVENTS)
               ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
               : data.asyncEvents,
             isActive: data.isActive,

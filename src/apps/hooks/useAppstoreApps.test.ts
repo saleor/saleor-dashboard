@@ -22,46 +22,31 @@ global.fetch = jest.fn(url => {
   }
   return Promise.reject(new Error("API is down"));
 }) as Fetch;
-
 describe("apps hooks useAppstoreApps", () => {
   it("should return apps when request to proper appstore url returns apps", async () => {
     // Arrange
     const appstoreUrl = "https://apps.saleor.io/apps";
-
     // Act
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useAppstoreApps(appstoreUrl),
-    );
+    const { result, waitForNextUpdate } = renderHook(() => useAppstoreApps(appstoreUrl));
     await waitForNextUpdate();
-
     // Assert
     expect(result.current).toEqual({ data: mockApps });
   });
-
   it("should return error when request to proper appstore url returns error", async () => {
     // Arrange
     const appstoreUrl = "https://apps.saleor.io/failing-apps-endpoint";
-
     // Act
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useAppstoreApps(appstoreUrl),
-    );
+    const { result, waitForNextUpdate } = renderHook(() => useAppstoreApps(appstoreUrl));
     await waitForNextUpdate();
-
     // Assert
     expect(result.current).toEqual({ error: Error("API error") });
   });
-
   it("should return error when request to wrong appstore url fails", async () => {
     // Arrange
     const appstoreUrl = "https://wrong-appstore.com";
-
     // Act
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useAppstoreApps(appstoreUrl),
-    );
+    const { result, waitForNextUpdate } = renderHook(() => useAppstoreApps(appstoreUrl));
     await waitForNextUpdate();
-
     // Assert
     expect(result.current).toEqual({ error: Error("API is down") });
   });

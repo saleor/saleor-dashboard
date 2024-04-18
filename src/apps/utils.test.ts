@@ -28,7 +28,6 @@ describe("App utils app details", () => {
       repositoryUrl: "https://www.example.com/repository",
       githubForkUrl: "https://www.example.com/repository/fork",
     };
-
     // Act
     const details = getAppDetails({
       intl: intlMock,
@@ -39,7 +38,6 @@ describe("App utils app details", () => {
       removeAppInstallation: () => undefined,
       retryAppInstallation: () => undefined,
     });
-
     // Assert
     const expectedDetails: AppDetails = {
       releaseDate: undefined,
@@ -65,7 +63,6 @@ describe("App utils app details", () => {
     };
     expect(details).toEqual(expectedDetails);
   });
-
   it("should return app details when required coming soon app data passed", () => {
     // Arrange
     const app: AppstoreApi.ComingSoonSaleorApp = {
@@ -82,7 +79,6 @@ describe("App utils app details", () => {
       integrations: [],
       releaseDate: "2019-12-16",
     };
-
     // Act
     const details = getAppDetails({
       intl: intlMock,
@@ -93,7 +89,6 @@ describe("App utils app details", () => {
       removeAppInstallation: () => undefined,
       retryAppInstallation: () => undefined,
     });
-
     // Assert
     const expectedDetails: AppDetails = {
       releaseDate: "2019-12-16",
@@ -106,7 +101,6 @@ describe("App utils app details", () => {
     };
     expect(details).toEqual(expectedDetails);
   });
-
   it("should return app details when required app pending installation data passed", () => {
     // Arrange
     const app: AppstoreApi.ReleasedSaleorApp = {
@@ -136,7 +130,6 @@ describe("App utils app details", () => {
       manifestUrl: "https://www.example.com/manifest",
       brand: null,
     };
-
     // Act
     const details = getAppDetails({
       intl: intlMock,
@@ -147,7 +140,6 @@ describe("App utils app details", () => {
       removeAppInstallation: () => undefined,
       retryAppInstallation: () => undefined,
     });
-
     // Assert
     const expectedDetails: AppDetails = {
       releaseDate: undefined,
@@ -173,7 +165,6 @@ describe("App utils app details", () => {
     };
     expect(details).toEqual(expectedDetails);
   });
-
   it("should return app details when required app failed installation data passed", () => {
     // Arrange
     const app: AppstoreApi.ReleasedSaleorApp = {
@@ -203,7 +194,6 @@ describe("App utils app details", () => {
       manifestUrl: "https://www.example.com/manifest",
       brand: null,
     };
-
     // Act
     const details = getAppDetails({
       intl: intlMock,
@@ -214,7 +204,6 @@ describe("App utils app details", () => {
       removeAppInstallation: () => undefined,
       retryAppInstallation: () => undefined,
     });
-
     // Assert
     const expectedDetails: AppDetails = {
       releaseDate: undefined,
@@ -240,7 +229,6 @@ describe("App utils app details", () => {
     };
     expect(details).toEqual(expectedDetails);
   });
-
   describe("App utils resolve apps installations", () => {
     it("should return app installation that has manifest related to passed app details when app installation list and app details are passed", () => {
       // Arrange
@@ -257,12 +245,8 @@ describe("App utils app details", () => {
         releasedAppInstallation,
         ...appsInProgress,
       ];
-
       // Act
-      const installation = resolveInstallationOfAppstoreApp(
-        releasedApp,
-        appInstallationList,
-      );
+      const installation = resolveInstallationOfAppstoreApp(releasedApp, appInstallationList);
 
       // Assert
       expect(installation).toEqual(releasedAppInstallation);

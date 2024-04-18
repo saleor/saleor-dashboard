@@ -4,11 +4,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
-import {
-  OrderDetailsFragment,
-  OrderErrorFragment,
-  OrderRefundDataQuery,
-} from "@dashboard/graphql";
+import { OrderDetailsFragment, OrderErrorFragment, OrderRefundDataQuery } from "@dashboard/graphql";
 import {
   Card,
   CardContent,
@@ -27,10 +23,7 @@ import {
   OrderRefundType,
 } from "../../../OrderRefundPage/form";
 import { OrderReturnFormData } from "../../form";
-import {
-  PaymentSubmitCardValues,
-  PaymentSubmitCardValuesProps,
-} from "./PaymentSubmitCardValues";
+import { PaymentSubmitCardValues, PaymentSubmitCardValuesProps } from "./PaymentSubmitCardValues";
 import RefundAmountInput from "./RefundAmountInput";
 
 const useStyles = makeStyles(
@@ -64,7 +57,6 @@ const useStyles = makeStyles(
   }),
   { name: "PaymentSubmitCard" },
 );
-
 const messages = defineMessages({
   refundButton: {
     id: "QkFeOa",
@@ -116,11 +108,8 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-
   const { type = OrderRefundType.PRODUCTS } = data as OrderRefundFormData;
-
   const amountCurrency = order?.total?.gross?.currency;
-
   const {
     authorizedAmount,
     maxRefund,
@@ -131,22 +120,13 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
     shipmentCost,
     replacedProductsValue,
   } = amountData;
-
   const isRefundAutomatic =
     type === OrderRefundType.PRODUCTS &&
     data.amountCalculationMode === OrderRefundAmountCalculationMode.AUTOMATIC;
-
-  const selectedRefundAmount = isRefundAutomatic
-    ? refundTotalAmount?.amount
-    : Number(data.amount);
-
+  const selectedRefundAmount = isRefundAutomatic ? refundTotalAmount?.amount : Number(data.amount);
   const isAmountTooSmall = selectedRefundAmount && selectedRefundAmount <= 0;
   const isAmountTooBig = selectedRefundAmount > maxRefund?.amount;
-
-  const parsedRefundTotalAmount = isAmountTooBig
-    ? maxRefund
-    : refundTotalAmount;
-
+  const parsedRefundTotalAmount = isAmountTooBig ? maxRefund : refundTotalAmount;
   const shouldRefundButtonBeDisabled = () => {
     if (isAmountTooSmall) {
       return true;
@@ -166,7 +146,6 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
     }
     return !selectedRefundAmount;
   };
-
   const disableRefundButton = shouldRefundButtonBeDisabled();
 
   return (
@@ -207,8 +186,7 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
                 description: "label",
               })}
             />
-            {data.amountCalculationMode ===
-              OrderRefundAmountCalculationMode.NONE && (
+            {data.amountCalculationMode === OrderRefundAmountCalculationMode.NONE && (
               <>
                 <CardSpacer />
                 <PaymentSubmitCardValues
@@ -219,8 +197,7 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
                 />
               </>
             )}
-            {data.amountCalculationMode ===
-              OrderRefundAmountCalculationMode.AUTOMATIC && (
+            {data.amountCalculationMode === OrderRefundAmountCalculationMode.AUTOMATIC && (
               <>
                 <ControlledCheckbox
                   checked={data.refundShipmentCosts}
@@ -255,8 +232,7 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
                 description: "label",
               })}
             />
-            {data.amountCalculationMode ===
-              OrderRefundAmountCalculationMode.MANUAL && (
+            {data.amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL && (
               <>
                 <ControlledCheckbox
                   disabled={disabled}
@@ -332,20 +308,12 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
               }}
             />
           ) : (
-            intl.formatMessage(
-              isReturn ? messages.returnButton : messages.refundButton,
-            )
+            intl.formatMessage(isReturn ? messages.returnButton : messages.refundButton)
           )}
         </Button>
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          className={classes.refundCaution}
-        >
+        <Typography variant="caption" color="textSecondary" className={classes.refundCaution}>
           {intl.formatMessage(
-            isReturn
-              ? messages.returnCannotBeFulfilled
-              : messages.refundCannotBeFulfilled,
+            isReturn ? messages.returnCannotBeFulfilled : messages.refundCannotBeFulfilled,
           )}
         </Typography>
       </CardContent>

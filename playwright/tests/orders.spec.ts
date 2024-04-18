@@ -40,7 +40,6 @@ test("TC: SALEOR_28 Create basic order @e2e @order", async () => {
     .getByText("finalized")
     .waitFor({ state: "visible", timeout: 60000 });
 });
-
 test("TC: SALEOR_76 Create order with transaction flow activated @e2e @order", async () => {
   await ordersPage.goToOrdersListView();
   await ordersPage.clickCreateOrderButton();
@@ -51,22 +50,17 @@ test("TC: SALEOR_76 Create order with transaction flow activated @e2e @order", a
   await ordersPage.rightSideDetailsPage.clickEditCustomerButton();
   await ordersPage.rightSideDetailsPage.clickSearchCustomerInput();
   await ordersPage.rightSideDetailsPage.selectCustomer();
-  await expect(
-    ordersPage.addressDialog.existingAddressRadioButton,
-  ).toBeVisible();
+  await expect(ordersPage.addressDialog.existingAddressRadioButton).toBeVisible();
   await ordersPage.addressDialog.clickConfirmButton();
   await ordersPage.clickAddShippingCarrierButton();
   await ordersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
   await ordersPage.clickFinalizeButton();
-  await ordersPage.successBanner
-    .getByText("finalized")
-    .waitFor({ state: "visible" });
+  await ordersPage.successBanner.getByText("finalized").waitFor({ state: "visible" });
   await expect(ordersPage.markAsPaidButton).toBeVisible();
   await expect(ordersPage.paymentSummarySection).toBeVisible();
   await expect(ordersPage.orderSummarySection).toBeVisible();
   await expect(ordersPage.fulfillButton).toBeDisabled();
 });
-
 test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow activated @e2e @order", async () => {
   await ordersPage.goToExistingOrderPage(
     ORDERS.ordersWithinTransactionFlow.markAsPaidOrder.orderId,
@@ -75,8 +69,7 @@ test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow acti
   await ordersPage.clickMarkAsPaidButton();
   await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
   await ordersPage.expectSuccessBannerMessage("paid");
-  const transactionsMadeRows =
-    await ordersPage.orderTransactionsList.locator("tr");
+  const transactionsMadeRows = await ordersPage.orderTransactionsList.locator("tr");
   expect(await transactionsMadeRows.count()).toEqual(1);
   await expect(transactionsMadeRows).toContainText("Success");
   await ordersPage.clickFulfillButton();
@@ -84,7 +77,6 @@ test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow acti
   await ordersPage.expectSuccessBannerMessage("fulfilled");
   expect(await ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
 });
-
 test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill order with transaction flow activated @e2e @order", async () => {
   const firstManualTransactionAmount = "100";
   const secondManualTransactionAmount = "20";
@@ -99,22 +91,19 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
     "111111",
     firstManualTransactionAmount,
   );
-  const completedTransactionsRows =
-    await ordersPage.orderTransactionsList.locator("tr");
+  const completedTransactionsRows = await ordersPage.orderTransactionsList.locator("tr");
   await expect(
     completedTransactionsRows.filter({
       hasText: `EUR${firstManualTransactionAmount}`,
     }),
     "Row with first manual transaction details is visible with Success status",
   ).toContainText("Success");
-  expect(
-    await ordersPage.pageHeaderStatusInfo,
-    "Order should not be yet fulfilled",
-  ).toContainText("Unfulfilled");
-  expect(
-    await ordersPage.paymentStatusInfo,
-    "Order should be partially paid",
-  ).toContainText("Partially paid");
+  expect(await ordersPage.pageHeaderStatusInfo, "Order should not be yet fulfilled").toContainText(
+    "Unfulfilled",
+  );
+  expect(await ordersPage.paymentStatusInfo, "Order should be partially paid").toContainText(
+    "Partially paid",
+  );
   await ordersPage.clickManualTransactionButton();
   await ordersPage.manualTransactionDialog.completeManualTransactionDialogAndSave(
     "partial payment 2",
@@ -131,23 +120,19 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
     await completedTransactionsRows.filter({ hasText: "Success" }).count(),
     "Two rows are visible within Manual capture sections with Success status",
   ).toEqual(2);
-  expect(
-    await ordersPage.pageHeaderStatusInfo,
-    "Order should not be yet fulfilled",
-  ).toContainText("Unfulfilled");
-  expect(
-    await ordersPage.paymentStatusInfo,
-    "Order should be fully paid",
-  ).toContainText("Fully paid");
+  expect(await ordersPage.pageHeaderStatusInfo, "Order should not be yet fulfilled").toContainText(
+    "Unfulfilled",
+  );
+  expect(await ordersPage.paymentStatusInfo, "Order should be fully paid").toContainText(
+    "Fully paid",
+  );
   await ordersPage.clickFulfillButton();
   await fulfillmentPage.clickFulfillButton();
   await ordersPage.expectSuccessBannerMessage("fulfilled");
-  expect(
-    await ordersPage.pageHeaderStatusInfo,
-    "Order should be yet fulfilled",
-  ).toContainText("Fulfilled");
+  expect(await ordersPage.pageHeaderStatusInfo, "Order should be yet fulfilled").toContainText(
+    "Fulfilled",
+  );
 });
-
 test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow @e2e @order", async () => {
   await ordersPage.goToExistingOrderPage(ORDERS.orderToMarkAsPaidAndFulfill.id);
   await ordersPage.waitForGrid();
@@ -155,17 +140,14 @@ test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow @e2e @or
   await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
   await ordersPage.expectSuccessBannerMessage("paid");
   await expect(ordersPage.balanceStatusInfo).toHaveText("Settled");
-  expect(
-    await ordersPage.paymentStatusInfo,
-    "Order should be fully paid",
-  ).toContainText("Fully paid");
-
+  expect(await ordersPage.paymentStatusInfo, "Order should be fully paid").toContainText(
+    "Fully paid",
+  );
   await ordersPage.clickFulfillButton();
   await fulfillmentPage.clickFulfillButton();
   await ordersPage.expectSuccessBannerMessage("fulfilled");
   expect(await ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
 });
-
 test("TC: SALEOR_80 Add tracking to order @e2e @order", async () => {
   const trackingNumber = "123456789";
   await ordersPage.goToExistingOrderPage(ORDERS.orderToAddTrackingNumberTo.id);
@@ -175,11 +157,8 @@ test("TC: SALEOR_80 Add tracking to order @e2e @order", async () => {
   await ordersPage.expectSuccessBannerMessage("updated");
   await expect(ordersPage.setTrackingNumber).toContainText(trackingNumber);
 });
-
 test("TC: SALEOR_81 Change billing address in fulfilled order @e2e @order", async () => {
-  await ordersPage.goToExistingOrderPage(
-    ORDERS.orderFulfilledToChangeBillingAddress.id,
-  );
+  await ordersPage.goToExistingOrderPage(ORDERS.orderFulfilledToChangeBillingAddress.id);
   await ordersPage.waitForGrid();
   await ordersPage.rightSideDetailsPage.clickEditBillingAddressButton();
   await ordersPage.addressDialog.clickNewAddressRadioButton();
@@ -192,11 +171,8 @@ test("TC: SALEOR_81 Change billing address in fulfilled order @e2e @order", asyn
     CUSTOMER_ADDRESS.changeBillingAddress,
   );
 });
-
 test("TC: SALEOR_82 Change shipping address in not fulfilled order @e2e @order", async () => {
-  await ordersPage.goToExistingOrderPage(
-    ORDERS.orderNotFulfilledToChangeShippingAddress.id,
-  );
+  await ordersPage.goToExistingOrderPage(ORDERS.orderNotFulfilledToChangeShippingAddress.id);
   await ordersPage.waitForGrid();
   await ordersPage.rightSideDetailsPage.clickEditShippingAddressButton();
   await ordersPage.addressDialog.clickNewAddressRadioButton();
@@ -209,25 +185,19 @@ test("TC: SALEOR_82 Change shipping address in not fulfilled order @e2e @order",
     CUSTOMER_ADDRESS.changeShippingAddress,
   );
 });
-
 test("TC: SALEOR_83 Draft orders bulk delete @e2e @draft", async () => {
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.waitForGrid();
-  await draftOrdersPage.checkListRowsBasedOnContainingText(
-    ORDERS.draftOrdersToBeDeleted.ids,
-  );
+  await draftOrdersPage.checkListRowsBasedOnContainingText(ORDERS.draftOrdersToBeDeleted.ids);
   await draftOrdersPage.clickBulkDeleteButton();
   await draftOrdersPage.deleteDraftOrdersDialog.clickDeleteButton();
   await draftOrdersPage.expectSuccessBanner();
   await draftOrdersPage.waitForGrid();
   await expect(
-    await draftOrdersPage.findRowIndexBasedOnText(
-      PRODUCTS.productsToBeBulkDeleted.names,
-    ),
+    await draftOrdersPage.findRowIndexBasedOnText(PRODUCTS.productsToBeBulkDeleted.names),
     `Given draft orders: ${ORDERS.draftOrdersToBeDeleted.ids} should be deleted from the list`,
   ).toEqual([]);
 });
-
 test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.waitForGrid();

@@ -35,25 +35,21 @@ const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
-
   const menuItemTranslations = useMenuItemTranslationDetailsQuery({
     variables: { id, language: languageCode },
   });
-
-  const [updateTranslations, updateTranslationsOpts] =
-    useUpdateMenuItemTranslationsMutation({
-      onCompleted: data => {
-        if (data.menuItemTranslate.errors.length === 0) {
-          menuItemTranslations.refetch();
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          navigate("?", { replace: true });
-        }
-      },
-    });
-
+  const [updateTranslations, updateTranslationsOpts] = useUpdateMenuItemTranslationsMutation({
+    onCompleted: data => {
+      if (data.menuItemTranslate.errors.length === 0) {
+        menuItemTranslations.refetch();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        navigate("?", { replace: true });
+      }
+    },
+  });
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -62,11 +58,9 @@ const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
         }),
       { replace: true },
     );
-
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
-
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
     data: string,
@@ -80,7 +74,6 @@ const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
         },
       }),
     );
-
   const translation = menuItemTranslations?.data?.translation;
 
   return (
@@ -94,11 +87,7 @@ const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={
-        translation?.__typename === "MenuItemTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === "MenuItemTranslatableContent" ? translation : null}
     />
   );
 };

@@ -10,12 +10,7 @@ import { commonMessages } from "@dashboard/intl";
 import { IntlShape } from "react-intl";
 
 import messages from "./messages";
-import {
-  InvoiceGenerateParams,
-  QueuedTask,
-  TaskData,
-  TaskStatus,
-} from "./types";
+import { InvoiceGenerateParams, QueuedTask, TaskData, TaskStatus } from "./types";
 
 function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
   switch (jobStatus) {

@@ -2,10 +2,7 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import {
-  LanguageCodeEnum,
-  ProductVariantTranslationFragment,
-} from "@dashboard/graphql";
+import { LanguageCodeEnum, ProductVariantTranslationFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
@@ -24,8 +21,7 @@ import { useIntl } from "react-intl";
 import ProductContextSwitcher from "../ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsProductsPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   data: ProductVariantTranslationFragment;
   productId: string;
   variantId: string;
@@ -58,8 +54,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         title={intl.formatMessage(
           {
             id: "98WMlR",
-            defaultMessage:
-              'Translation Product Variant "{productName}" - {languageCode}',
+            defaultMessage: 'Translation Product Variant "{productName}" - {languageCode}',
             description: "header",
           },
           {
@@ -76,9 +71,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang =>
-            productVariantUrl(lang, productId, translationId)
-          }
+          getLanguageUrl={lang => productVariantUrl(lang, productId, translationId)}
         />
       </TopNav>
       <TranslationFields
@@ -112,10 +105,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             disabled={disabled}
             initialState={true}
             title={intl.formatMessage(commonMessages.translationAttributes)}
-            fields={mapAttributeValuesToTranslationFields(
-              data.attributeValues,
-              intl,
-            )}
+            fields={mapAttributeValuesToTranslationFields(data.attributeValues, intl)}
             saveButtonState={saveButtonState}
             richTextResetKey={languageCode}
             onEdit={onEdit}

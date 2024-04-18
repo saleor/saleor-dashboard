@@ -5,9 +5,7 @@ import { orderUrl } from "@dashboard/orders/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { MessageDescriptor } from "react-intl";
 
-export const getEventSecondaryTitle = (
-  event: OrderEventFragment,
-): [MessageDescriptor, any?] => {
+export const getEventSecondaryTitle = (event: OrderEventFragment): [MessageDescriptor, any?] => {
   switch (event.type) {
     case OrderEventsEnum.ORDER_MARKED_AS_PAID: {
       return [
@@ -70,11 +68,7 @@ export const isTimelineEventOfType = (
 export const isTimelineEventOfDiscountType = (eventType: OrderEventsEnum) =>
   isTimelineEventOfType("discount", eventType);
 
-const selectEmployeeName = ({
-  firstName,
-  lastName,
-  email,
-}: OrderEventFragment["user"]) => {
+const selectEmployeeName = ({ firstName, lastName, email }: OrderEventFragment["user"]) => {
   if (!!firstName) {
     return getFullName({ firstName, lastName }).trim();
   }
@@ -95,10 +89,7 @@ export const getEmployeeNameLink = (event: OrderEventFragment) => {
   };
 };
 
-export const hasOrderLineDiscountWithNoPreviousValue = ({
-  type,
-  lines,
-}: OrderEventFragment) =>
+export const hasOrderLineDiscountWithNoPreviousValue = ({ type, lines }: OrderEventFragment) =>
   type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED &&
   lines?.[0]?.discount &&
   !lines?.[0].discount?.oldValue;
@@ -118,13 +109,7 @@ const hasEnsuredOrderEventFields = (
   fields: Array<keyof OrderEventFragment>,
 ) => !fields.some((field: keyof OrderEventFragment) => !event[field]);
 
-export const getOrderNumberLinkObject = ({
-  id,
-  number,
-}: {
-  id: string;
-  number: string;
-}) => ({
+export const getOrderNumberLinkObject = ({ id, number }: { id: string; number: string }) => ({
   link: orderUrl(id),
   text: `#${number}`,
 });

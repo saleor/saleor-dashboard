@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  WebhookEventTypeAsyncEnum,
-  WebhookEventTypeSyncEnum,
-} from "@dashboard/graphql";
+import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { capitalize } from "@dashboard/misc";
 import { toggle } from "@dashboard/utils/lists";
@@ -32,13 +29,7 @@ interface CreateSyncEventsSelectHandler {
 }
 
 export const createSyncEventsSelectHandler =
-  ({
-    change,
-    data,
-    query,
-    setQuery,
-    availableEvents,
-  }: CreateSyncEventsSelectHandler) =>
+  ({ change, data, query, setQuery, availableEvents }: CreateSyncEventsSelectHandler) =>
   (event: ChangeEvent) => {
     const { syncEvents, asyncEvents } = data;
     const events = toggle(event.target.value, syncEvents, (a, b) => a === b);
@@ -46,7 +37,6 @@ export const createSyncEventsSelectHandler =
     // Clear asyncEvents
     if (!isEmpty(asyncEvents)) {
       setQuery("");
-
       change({
         target: {
           name: "asyncEvents",
@@ -61,7 +51,6 @@ export const createSyncEventsSelectHandler =
         value: events,
       },
     });
-
     handleQuery({ events, query, setQuery, availableEvents });
   };
 
@@ -74,13 +63,7 @@ interface CreateAsyncEventsSelectHandler {
 }
 
 export const createAsyncEventsSelectHandler =
-  ({
-    change,
-    data,
-    query,
-    setQuery,
-    availableEvents,
-  }: CreateAsyncEventsSelectHandler) =>
+  ({ change, data, query, setQuery, availableEvents }: CreateAsyncEventsSelectHandler) =>
   (event: ChangeEvent) => {
     const { syncEvents, asyncEvents } = data;
     const events = toggle(event.target.value, asyncEvents, (a, b) => a === b);
@@ -89,7 +72,6 @@ export const createAsyncEventsSelectHandler =
     // Clear syncEvents
     if (!isEmpty(syncEvents)) {
       setQuery("");
-
       change({
         target: {
           name: "syncEvents",
@@ -104,7 +86,6 @@ export const createAsyncEventsSelectHandler =
         value: filteredEvents,
       },
     });
-
     handleQuery({ events: filteredEvents, query, setQuery, availableEvents });
   };
 
@@ -122,43 +103,26 @@ interface HandleQuery {
   availableEvents: IntrospectionNode[];
 }
 
-const handleQuery = ({
-  events,
-  query,
-  setQuery,
-  availableEvents,
-}: HandleQuery) => {
+const handleQuery = ({ events, query, setQuery, availableEvents }: HandleQuery) => {
   const availableEventNames = availableEvents.map(({ name }) => name);
   const eventsNames: string[] = events
     .map(enumToEventName)
     .filter(eventName => availableEventNames.includes(eventName));
 
   if (eventsNames.length > 0 && query.length === 0) {
-    setQuery(
-      print(
-        parse(
-          `subscription { event { ... on ${eventsNames[0]} { __typename } } }`,
-        ),
-      ),
-    );
+    setQuery(print(parse(`subscription { event { ... on ${eventsNames[0]} { __typename } } }`)));
   }
 
   if (query.length > 0) {
     try {
       const ast = parse(query);
-
       const editedAst: DocumentNode = visit(ast, {
         SelectionSet(node, _key, parent) {
           if ((parent as ObjectFieldNode).name?.value === "event") {
             const queryEvents = node.selections.map(
-              selection =>
-                (selection as InlineFragmentNode).typeCondition.name.value,
+              selection => (selection as InlineFragmentNode).typeCondition.name.value,
             );
-
-            const eventsToRemove = queryEvents.filter(
-              event => !eventsNames.includes(event),
-            );
-
+            const eventsToRemove = queryEvents.filter(event => !eventsNames.includes(event));
             const selections = [...node.selections].filter(
               selection =>
                 !eventsToRemove.includes(
@@ -191,7 +155,6 @@ const handleQuery = ({
     }
   }
 };
-
 const createEventInlineFragment = (event: string): SelectionNode => ({
   kind: "InlineFragment",
   typeCondition: {
@@ -203,12 +166,9 @@ const createEventInlineFragment = (event: string): SelectionNode => ({
   },
   selectionSet: {
     kind: "SelectionSet",
-    selections: [
-      { kind: "Field", name: { kind: "Name", value: "__typename" } },
-    ],
+    selections: [{ kind: "Field", name: { kind: "Name", value: "__typename" } }],
   },
 });
-
 const isEmptyQuery = (ast: DocumentNode): boolean => {
   let empty = false;
 

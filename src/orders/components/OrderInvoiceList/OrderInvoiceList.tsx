@@ -7,13 +7,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, TableBody, TableCell, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -55,14 +49,9 @@ export interface OrderInvoiceListProps {
 
 const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
   const { invoices, onInvoiceGenerate, onInvoiceClick, onInvoiceSend } = props;
-
   const classes = useStyles(props);
-
   const intl = useIntl();
-
-  const generatedInvoices = invoices?.filter(
-    invoice => invoice.status === "SUCCESS",
-  );
+  const generatedInvoices = invoices?.filter(invoice => invoice.status === "SUCCESS");
 
   return (
     <Card className={classes.card}>
@@ -74,10 +63,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
         })}
         toolbar={
           onInvoiceGenerate && (
-            <Button
-              onClick={onInvoiceGenerate}
-              className={sprinkles({ marginRight: 0.5 })}
-            >
+            <Button onClick={onInvoiceGenerate} className={sprinkles({ marginRight: 0.5 })}>
               <FormattedMessage
                 id="e0RKe+"
                 defaultMessage="Generate"
@@ -92,10 +78,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           <Skeleton />
         ) : !generatedInvoices?.length ? (
           <Typography color="textSecondary">
-            <FormattedMessage
-              id="hPB89Y"
-              defaultMessage="No invoices to be shown"
-            />
+            <FormattedMessage id="hPB89Y" defaultMessage="No invoices to be shown" />
           </Typography>
         ) : (
           <ResponsiveTable className={classes.invoicesTable}>
@@ -103,11 +86,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
               {generatedInvoices.map(invoice => (
                 <TableRowLink key={invoice.id} hover={!!invoice}>
                   <TableCell
-                    className={
-                      onInvoiceClick
-                        ? classes.colNumberClickable
-                        : classes.colNumber
-                    }
+                    className={onInvoiceClick ? classes.colNumberClickable : classes.colNumber}
                     onClick={() => onInvoiceClick(invoice.id)}
                   >
                     <FormattedMessage

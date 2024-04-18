@@ -16,35 +16,22 @@ interface RuleConditionsProps {
   openPlayground: () => void;
 }
 
-export const RuleConditions = ({
-  hasSelectedChannels,
-  openPlayground,
-}: RuleConditionsProps) => {
+export const RuleConditions = ({ hasSelectedChannels, openPlayground }: RuleConditionsProps) => {
   const intl = useIntl();
   const { discountType, disabled } = useDiscountRulesContext();
   const conditionNames = useConditionNames(discountType);
-
   const { watch } = useFormContext<Rule>();
-
   const { append, remove, update, fields } = useFieldArray<Rule, "conditions">({
     name: "conditions",
   });
-
   const conditionsList = watch("conditions");
   const hasPredicateNestedConditions = watch("hasPredicateNestedConditions");
-
   const allConditionsSelected = conditionsList.length === conditionNames.length;
-
   const isConditionNameSelected = (conditionType: string) =>
     conditionsList.some(condition => condition.id === conditionType);
 
   if (hasPredicateNestedConditions) {
-    return (
-      <NestedConditionsWarning
-        disabled={disabled}
-        openPlayground={openPlayground}
-      />
-    );
+    return <NestedConditionsWarning disabled={disabled} openPlayground={openPlayground} />;
   }
 
   if (!hasSelectedChannels) {
@@ -68,12 +55,7 @@ export const RuleConditions = ({
   }
 
   return (
-    <Box
-      data-test-id="conditions-section"
-      display="flex"
-      flexDirection="column"
-      gap={4}
-    >
+    <Box data-test-id="conditions-section" display="flex" flexDirection="column" gap={4}>
       <Text>{intl.formatMessage(messages.conditions)}</Text>
 
       <Box display="flex" flexDirection="column" gap={2}>

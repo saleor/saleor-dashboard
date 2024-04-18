@@ -12,14 +12,12 @@ interface InstallWithManifestFormButtonProps {
   onSubmitted: (manifestUrl: string) => void;
 }
 
-export const InstallWithManifestFormButton: React.FC<
-  InstallWithManifestFormButtonProps
-> = ({ onSubmitted }) => {
+export const InstallWithManifestFormButton: React.FC<InstallWithManifestFormButtonProps> = ({
+  onSubmitted,
+}) => {
   const styles = useStyles();
   const intl = useIntl();
-
   const [inputOpened, setInputOpened] = useState(false);
-
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
 

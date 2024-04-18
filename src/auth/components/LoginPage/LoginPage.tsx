@@ -5,12 +5,7 @@ import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
-import {
-  CircularProgress,
-  Divider,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { CircularProgress, Divider, TextField, Typography } from "@material-ui/core";
 import { EyeIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -38,7 +33,6 @@ const LoginPage: React.FC<LoginCardProps> = props => {
     onExternalAuthentication,
     onSubmit,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
   const [showPassword, setShowPassword] = React.useState(false);
@@ -56,18 +50,10 @@ const LoginPage: React.FC<LoginCardProps> = props => {
       {({ change: handleChange, data, submit }) => (
         <>
           <Typography variant="h3" className={classes.header}>
-            <FormattedMessage
-              id="vzgZ3U"
-              defaultMessage="Sign In"
-              description="card header"
-            />
+            <FormattedMessage id="vzgZ3U" defaultMessage="Sign In" description="card header" />
           </Typography>
           {errors.map(error => (
-            <div
-              className={classes.panel}
-              key={error}
-              data-test-id="login-error-message"
-            >
+            <div className={classes.panel} key={error} data-test-id="login-error-message">
               {getErrorMessage(error, intl)}
             </div>
           ))}
@@ -137,11 +123,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               type="submit"
               data-test-id="submit"
             >
-              <FormattedMessage
-                id="AubJ/S"
-                defaultMessage="Sign in"
-                description="button"
-              />
+              <FormattedMessage id="AubJ/S" defaultMessage="Sign in" description="button" />
             </Button>
           </div>
           {externalAuthentications.length > 0 && (
@@ -164,9 +146,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               <Button
                 fullWidth
                 variant="secondary"
-                onClick={() =>
-                  onExternalAuthentication(externalAuthentication.id)
-                }
+                onClick={() => onExternalAuthentication(externalAuthentication.id)}
                 data-test-id="external-authentication"
                 disabled={disabled}
               >

@@ -34,19 +34,14 @@ import {
 } from "@dashboard/graphql";
 import { staffMember } from "@dashboard/staff/fixtures";
 import { RelayToFlat } from "@dashboard/types";
-import {
-  warehouseForPickup,
-  warehouseList,
-} from "@dashboard/warehouses/fixtures";
+import { warehouseForPickup, warehouseList } from "@dashboard/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 
 export const MOCK_PAYMENT_GATEWAY_ID = "saleor.dummy.payment";
 
-export const prepareMoney = (
-  amount?: number,
-): OrderDetailsQuery["order"]["totalAuthorized"] => ({
+export const prepareMoney = (amount?: number): OrderDetailsQuery["order"]["totalAuthorized"] => ({
   __typename: "Money",
   amount: amount ?? ORDER_AMOUNT,
   currency: "USD",
@@ -915,17 +910,10 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
 
 export const ORDER_AMOUNT = 234.93;
 
-export const order = (
-  placeholder: string,
-): OrderDetailsWithMetadataFragment => ({
+export const order = (placeholder: string): OrderDetailsWithMetadataFragment => ({
   __typename: "Order",
   giftCards: [],
-  actions: [
-    OrderAction.CAPTURE,
-    OrderAction.MARK_AS_PAID,
-    OrderAction.REFUND,
-    OrderAction.VOID,
-  ],
+  actions: [OrderAction.CAPTURE, OrderAction.MARK_AS_PAID, OrderAction.REFUND, OrderAction.VOID],
   shippingMethods: [
     {
       __typename: "ShippingMethod",
@@ -1817,9 +1805,7 @@ export const order = (
   transactions: orderTransactions,
 });
 
-export const draftOrder = (
-  placeholder: string,
-): OrderDetailsWithMetadataFragment => ({
+export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragment => ({
   __typename: "Order" as "Order",
   giftCards: [],
   actions: [OrderAction.CAPTURE],
@@ -2200,9 +2186,7 @@ export const flatOrders = orders.map(order => ({
   } as any),
 }));
 
-export const fulfillOrderLine = (
-  placeholderImage: string,
-): OrderFulfillLineFragment => ({
+export const fulfillOrderLine = (placeholderImage: string): OrderFulfillLineFragment => ({
   __typename: "OrderLine",
   id: "T3JkZXJMaW5lOjIz",
   isShippingRequired: false,

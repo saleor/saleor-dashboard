@@ -76,9 +76,7 @@ const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
 export const TimelineNote: React.FC<TimelineNoteProps> = props => {
   const { date, user, message, hasPlainDate } = props;
   const { user: currentUser } = useUser();
-
   const classes = useStyles(props);
-
   const getUserTitleOrEmail = () => {
     if (user?.firstName && user?.lastName) {
       return `${user.firstName} ${user.lastName}`;

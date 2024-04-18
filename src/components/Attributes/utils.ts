@@ -14,9 +14,7 @@ import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { OutputData } from "@editorjs/editorjs";
 import { IntlShape } from "react-intl";
 
-export function getSingleChoices(
-  values: AttributeValueFragment[],
-): SingleAutocompleteChoiceType[] {
+export function getSingleChoices(values: AttributeValueFragment[]): SingleAutocompleteChoiceType[] {
   return values.map(value => ({
     label: value.name,
     value: value.slug,
@@ -30,7 +28,6 @@ export const getRichTextData = (attribute: AttributeInput): OutputData => {
 
 export function getFileChoice(attribute: AttributeInput): FileChoiceType {
   const attributeValue = attribute.value?.length > 0 && attribute.value[0];
-
   const definedAttributeValue = attribute.data.values.find(
     definedValue => definedValue.slug === attributeValue,
   );
@@ -49,9 +46,7 @@ export function getFileChoice(attribute: AttributeInput): FileChoiceType {
   };
 }
 
-export function getReferenceDisplayValue(
-  attribute: AttributeInput,
-): SortableChipsFieldValueType[] {
+export function getReferenceDisplayValue(attribute: AttributeInput): SortableChipsFieldValueType[] {
   if (!attribute.value) {
     return [];
   }
@@ -80,9 +75,7 @@ export function getReferenceDisplayValue(
     // is no longer available, use metadata
     if (attribute.metadata) {
       return {
-        label: attribute.metadata.find(
-          metadata => metadata.value === attributeValue,
-        )?.label,
+        label: attribute.metadata.find(metadata => metadata.value === attributeValue)?.label,
         value: attributeValue,
       };
     }
@@ -94,9 +87,7 @@ export function getReferenceDisplayValue(
   });
 }
 
-export function getMultiChoices(
-  values: AttributeValueFragment[],
-): MultiAutocompleteChoiceType[] {
+export function getMultiChoices(values: AttributeValueFragment[]): MultiAutocompleteChoiceType[] {
   return values.map(value => ({
     label: value.name,
     value: value.slug,
@@ -109,8 +100,7 @@ export function getSingleDisplayValue(
 ): string {
   return (
     attributeValues.find(value => value.slug === attribute.value[0])?.name ||
-    attribute.data.values.find(value => value.slug === attribute.value[0])
-      ?.name ||
+    attribute.data.values.find(value => value.slug === attribute.value[0])?.name ||
     attribute.value[0] ||
     ""
   );
@@ -126,12 +116,8 @@ export function getMultiDisplayValue(
 
   return attribute.value.map(attributeValue => {
     const definedAttributeValue =
-      attributeValues.find(
-        definedValue => definedValue.slug === attributeValue,
-      ) ||
-      attribute.data.values.find(
-        definedValue => definedValue.slug === attributeValue,
-      );
+      attributeValues.find(definedValue => definedValue.slug === attributeValue) ||
+      attribute.data.values.find(definedValue => definedValue.slug === attributeValue);
     if (!!definedAttributeValue) {
       return {
         label: definedAttributeValue.name,

@@ -7,10 +7,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import {
-  DiscountListUrlSortField,
-  discountUrl,
-} from "@dashboard/discounts/discountsUrls";
+import { DiscountListUrlSortField, discountUrl } from "@dashboard/discounts/discountsUrls";
 import { PromotionFragment } from "@dashboard/graphql";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
@@ -19,15 +16,10 @@ import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { canBeSorted } from "../../views/DiscountList/sort";
-import {
-  createGetCellContent,
-  dicountListStaticColumnsAdapter,
-} from "./datagrid";
+import { createGetCellContent, dicountListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 
-interface DiscountListDatagridProps
-  extends ListProps,
-    SortPage<DiscountListUrlSortField> {
+interface DiscountListDatagridProps extends ListProps, SortPage<DiscountListUrlSortField> {
   promotions: PromotionFragment[];
   onRowClick: (id: string) => void;
   hasRowHover?: boolean;
@@ -45,14 +37,11 @@ export const DiscountListDatagrid = ({
 }: DiscountListDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
-
   const emptyColumn = useEmptyColumn();
-
   const discountListStaticColumns = useMemo(
     () => dicountListStaticColumnsAdapter(intl, sort, emptyColumn),
     [intl, sort, emptyColumn],
   );
-
   const onColumnChange = useCallback(
     (picked: string[]) => {
       if (onUpdateListSettings) {
@@ -61,19 +50,12 @@ export const DiscountListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
-  const {
-    handlers,
-    visibleColumns,
-    staticColumns,
-    selectedColumns,
-    recentlyAddedColumn,
-  } = useColumns({
-    staticColumns: discountListStaticColumns,
-    selectedColumns: settings?.columns ?? [],
-    onSave: onColumnChange,
-  });
-
+  const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
+    useColumns({
+      staticColumns: discountListStaticColumns,
+      selectedColumns: settings?.columns ?? [],
+      onSave: onColumnChange,
+    });
   const getCellContent = useCallback(
     createGetCellContent({
       promotions,
@@ -82,7 +64,6 @@ export const DiscountListDatagrid = ({
     }),
     [promotions, visibleColumns],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       if (!onRowClick) {
@@ -93,12 +74,10 @@ export const DiscountListDatagrid = ({
     },
     [onRowClick, promotions],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => discountUrl(promotions[row].id),
     [promotions],
   );
-
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as DiscountListUrlSortField;

@@ -10,11 +10,8 @@ import { useEffect, useState } from "react";
 export const useFetchConditionsOptionsDetails = (
   promotionData: PromotionDetailsQuery | undefined,
 ) => {
-  const conditionsOptionsIdsToFetch =
-    getAllConditionsOptionsIdsToFetch(promotionData);
-
+  const conditionsOptionsIdsToFetch = getAllConditionsOptionsIdsToFetch(promotionData);
   const [hasBeenLoaded, setHasBeenLoaded] = useState(false);
-
   const { data: ruleConditionsOptionsDetails, loading } =
     useRuleConditionsSelectedOptionsDetailsQuery({
       variables: conditionsOptionsIdsToFetch,
@@ -103,9 +100,7 @@ export function getRuleConditionsOptionsDetailsMap(
 
   return Object.values(data).reduce<Record<string, string>>((acc, value) => {
     const items =
-      mapEdgesToItems(
-        value as RuleConditionsSelectedOptionsDetailsQuery["productVariants"],
-      ) ?? [];
+      mapEdgesToItems(value as RuleConditionsSelectedOptionsDetailsQuery["productVariants"]) ?? [];
     items.forEach(item => {
       if (item.product) {
         acc[item.id] = `${item.product.name} - ${item.name}`;
@@ -119,7 +114,5 @@ export function getRuleConditionsOptionsDetailsMap(
 }
 
 function whenNoCondtionsIds(conditionsOptionsIdsToFetch: AllConditionsIds) {
-  return Object.values(conditionsOptionsIdsToFetch).every(
-    ids => ids.length === 0,
-  );
+  return Object.values(conditionsOptionsIdsToFetch).every(ids => ids.length === 0);
 }

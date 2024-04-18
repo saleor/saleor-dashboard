@@ -11,12 +11,7 @@ interface ContentProps {
   isEnabled: boolean;
 }
 
-export const Content = ({
-  flagName,
-  flagSlug,
-  component,
-  isEnabled,
-}: ContentProps) => {
+export const Content = ({ flagName, flagSlug, component, isEnabled }: ContentProps) => {
   const TabComponent = component;
 
   return (

@@ -16,21 +16,13 @@ export interface SaleInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const SaleInfo: React.FC<SaleInfoProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const SaleInfo: React.FC<SaleInfoProps> = ({ data, disabled, errors, onChange }) => {
   const intl = useIntl();
-
   const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
           disabled={disabled}

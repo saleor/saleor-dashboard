@@ -34,14 +34,9 @@ interface OrderHistoryProps {
 const OrderHistory: React.FC<OrderHistoryProps> = props => {
   const { history, orderCurrency, onNoteAdd } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
-
-  const getTimelineEventTitleProps = (
-    event: OrderEventFragment,
-  ): Partial<TimelineEventProps> => {
+  const getTimelineEventTitleProps = (event: OrderEventFragment): Partial<TimelineEventProps> => {
     const { type, message } = event;
-
     const title = isTimelineEventOfType("rawMessage", type)
       ? message
       : getEventMessage(event, intl);
@@ -64,12 +59,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
       <Hr />
       {history ? (
         <Timeline>
-          <Form
-            confirmLeave
-            initial={{ message: "" }}
-            onSubmit={onNoteAdd}
-            resetOnSubmit
-          >
+          <Form confirmLeave initial={{ message: "" }} onSubmit={onNoteAdd} resetOnSubmit>
             {({ change, data, reset, submit }) => (
               <TimelineAddNote
                 message={data.message}
@@ -86,25 +76,11 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
               const { id, user, date, message, type } = event;
 
               if (isTimelineEventOfType("note", type)) {
-                return (
-                  <TimelineNote
-                    date={date}
-                    user={user}
-                    message={message}
-                    key={id}
-                  />
-                );
+                return <TimelineNote date={date} user={user} message={message} key={id} />;
               }
 
               if (isTimelineEventOfType("note_updated", type)) {
-                return (
-                  <TimelineNote
-                    date={date}
-                    user={user}
-                    message={message}
-                    key={id}
-                  />
-                );
+                return <TimelineNote date={date} user={user} message={message} key={id} />;
               }
 
               if (isTimelineEventOfType("extendable", type)) {
@@ -119,9 +95,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
               }
 
               if (isTimelineEventOfType("linked", type)) {
-                return (
-                  <LinkedTimelineEvent event={event} key={id} hasPlainDate />
-                );
+                return <LinkedTimelineEvent event={event} key={id} hasPlainDate />;
               }
 
               return (

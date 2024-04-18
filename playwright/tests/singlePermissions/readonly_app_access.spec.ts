@@ -11,7 +11,6 @@ const permissionList = permissions.filter(item => item !== permissionToExclude);
 
 for (const permission of permissionList) {
   test.use({ storageState: `playwright/.auth/${permission}.json` });
-
   test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps @e2e`, async ({
     page,
   }) => {
@@ -33,9 +32,7 @@ for (const permission of permissionList) {
     for (const appList of appLists) {
       await expect(appList).toBeVisible();
     }
-    await appsPage.waitForNetworkIdle(() =>
-      appsPage.installedAppRow.first().click(),
-    );
+    await appsPage.waitForNetworkIdle(() => appsPage.installedAppRow.first().click());
     await expect(appPage.appSettingsButton).toBeVisible();
     await appsPage.waitForNetworkIdle(() => appPage.appSettingsButton.click());
     await expect(appDetailsPage.appDetailsSection).toBeVisible();

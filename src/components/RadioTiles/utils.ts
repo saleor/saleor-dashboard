@@ -3,10 +3,7 @@ interface RadioTileState {
   isHoverState: boolean;
 }
 
-export const getHoverStateBgColor = ({
-  checked,
-  isHoverState,
-}: RadioTileState) => {
+export const getHoverStateBgColor = ({ checked, isHoverState }: RadioTileState) => {
   if (checked && isHoverState) {
     return "accent1Hovered";
   }

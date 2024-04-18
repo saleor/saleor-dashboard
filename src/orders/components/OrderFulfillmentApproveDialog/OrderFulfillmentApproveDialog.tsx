@@ -1,8 +1,5 @@
 import { Button } from "@dashboard/components/Button";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -33,11 +30,8 @@ export interface OrderFulfillmentAcceptDialogProps {
   onConfirm: (data: OrderFulfillmentAcceptDialogFormData) => void;
 }
 
-const OrderFulfillmentAcceptDialog: React.FC<
-  OrderFulfillmentAcceptDialogProps
-> = props => {
+const OrderFulfillmentAcceptDialog: React.FC<OrderFulfillmentAcceptDialogProps> = props => {
   const { confirmButtonState, errors, open, onConfirm, onClose } = props;
-
   const intl = useIntl();
 
   return (
@@ -54,9 +48,7 @@ const OrderFulfillmentAcceptDialog: React.FC<
               </DialogContentText>
               <ControlledCheckbox
                 data-test-id="notify-customer"
-                name={
-                  "notifyCustomer" as keyof OrderFulfillmentAcceptDialogFormData
-                }
+                name={"notifyCustomer" as keyof OrderFulfillmentAcceptDialogFormData}
                 label={intl.formatMessage(messages.notifyCustomer)}
                 checked={data.notifyCustomer}
                 onChange={change}

@@ -55,20 +55,15 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const initialFormData: PluginDetailsPageFormData = {
     active: selectedConfig?.active,
     configuration: selectedConfig?.configuration
-      ?.filter(
-        field =>
-          !isSecretField(selectedConfig?.configuration || [], field.name),
-      )
+      ?.filter(field => !isSecretField(selectedConfig?.configuration || [], field.name))
       .map(field => ({
         ...field,
         value: field.value || "",
       })),
   };
-
   const selectedChannelId = selectedConfig?.channel?.id;
 
   return (
@@ -139,10 +134,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                         onChange={onChange}
                       />
                       {selectedConfig?.configuration.some(field =>
-                        isSecretField(
-                          selectedConfig?.configuration,
-                          field.name,
-                        ),
+                        isSecretField(selectedConfig?.configuration, field.name),
                       ) && (
                         <>
                           <CardSpacer />

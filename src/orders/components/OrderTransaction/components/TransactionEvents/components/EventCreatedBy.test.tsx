@@ -14,7 +14,6 @@ describe("EventCreatedBy", () => {
     render(<EventCreatedBy createdBy={null} />);
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
-
   it("displays a link to the app if app is passed", () => {
     render(
       <MemoryRouter>
@@ -26,11 +25,9 @@ describe("EventCreatedBy", () => {
     expect(link).toHaveTextContent(appAvatar.name);
     expect(link).toHaveProperty(
       "href",
-      "http://localhost" +
-        AppPaths.resolveAppPath(encodeURIComponent(appAvatar.id)),
+      "http://localhost" + AppPaths.resolveAppPath(encodeURIComponent(appAvatar.id)),
     );
   });
-
   it("displays a link to the user settings if user is passed", () => {
     render(
       <MemoryRouter>
@@ -43,8 +40,7 @@ describe("EventCreatedBy", () => {
     expect(link).toHaveTextContent(staffMemberAvatar.lastName);
     expect(link).toHaveProperty(
       "href",
-      "http://localhost" +
-        staffMemberDetailsPath(encodeURIComponent(staffMemberAvatar.id)),
+      "http://localhost" + staffMemberDetailsPath(encodeURIComponent(staffMemberAvatar.id)),
     );
   });
 });

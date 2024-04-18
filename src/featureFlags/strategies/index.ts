@@ -4,7 +4,4 @@ import { MetadataStrategy } from "./MetadataStrategy";
 
 export { EnvVarsStrategy, LocalStorageStrategy, MetadataStrategy };
 
-export type AvailableStrategies =
-  | EnvVarsStrategy
-  | LocalStorageStrategy
-  | MetadataStrategy;
+export type AvailableStrategies = EnvVarsStrategy | LocalStorageStrategy | MetadataStrategy;

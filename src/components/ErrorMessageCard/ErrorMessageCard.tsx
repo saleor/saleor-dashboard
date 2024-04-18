@@ -9,11 +9,7 @@ const ErrorMessageCard: React.FC<ErrorMessageCardProps> = ({ message }) => (
   <Card>
     <CardContent>
       <Typography variant="h5" component="h2">
-        <FormattedMessage
-          id="7v2oBd"
-          defaultMessage="Error"
-          description="header"
-        />
+        <FormattedMessage id="7v2oBd" defaultMessage="Error" description="header" />
       </Typography>
       <Typography variant="body1">{message}</Typography>
     </CardContent>

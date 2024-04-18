@@ -31,12 +31,9 @@ export interface InitialAPIState {
 
 export const useProductInitialAPIState = (): InitialAPIState => {
   const client = useApolloClient();
-  const [data, setData] = useState<InitialStateResponse>(
-    InitialStateResponse.empty(),
-  );
+  const [data, setData] = useState<InitialStateResponse>(InitialStateResponse.empty());
   const [loading, setLoading] = useState(true);
   const queriesToRun: Array<Promise<InitialAPIResponse>> = [];
-
   const fetchQueries = async ({
     category,
     collection,
@@ -46,10 +43,7 @@ export const useProductInitialAPIState = (): InitialAPIState => {
   }: FetchingParams) => {
     if (channel.length > 0) {
       queriesToRun.push(
-        client.query<
-          _GetChannelOperandsQuery,
-          _GetChannelOperandsQueryVariables
-        >({
+        client.query<_GetChannelOperandsQuery, _GetChannelOperandsQueryVariables>({
           query: _GetChannelOperandsDocument,
         }),
       );
@@ -57,10 +51,7 @@ export const useProductInitialAPIState = (): InitialAPIState => {
 
     if (collection.length > 0) {
       queriesToRun.push(
-        client.query<
-          _SearchCollectionsOperandsQuery,
-          _SearchCollectionsOperandsQueryVariables
-        >({
+        client.query<_SearchCollectionsOperandsQuery, _SearchCollectionsOperandsQueryVariables>({
           query: _SearchCollectionsOperandsDocument,
           variables: {
             collectionsSlugs: collection,
@@ -72,10 +63,7 @@ export const useProductInitialAPIState = (): InitialAPIState => {
 
     if (category.length > 0) {
       queriesToRun.push(
-        client.query<
-          _SearchCategoriesOperandsQuery,
-          _SearchCategoriesOperandsQueryVariables
-        >({
+        client.query<_SearchCategoriesOperandsQuery, _SearchCategoriesOperandsQueryVariables>({
           query: _SearchCategoriesOperandsDocument,
           variables: {
             categoriesSlugs: category,
@@ -87,10 +75,7 @@ export const useProductInitialAPIState = (): InitialAPIState => {
 
     if (productType.length > 0) {
       queriesToRun.push(
-        client.query<
-          _SearchProductTypesOperandsQuery,
-          _SearchProductTypesOperandsQueryVariables
-        >({
+        client.query<_SearchProductTypesOperandsQuery, _SearchProductTypesOperandsQueryVariables>({
           query: _SearchProductTypesOperandsDocument,
           variables: {
             productTypesSlugs: productType,
@@ -102,10 +87,7 @@ export const useProductInitialAPIState = (): InitialAPIState => {
 
     if (Object.keys(attribute).length > 0) {
       queriesToRun.push(
-        client.query<
-          _SearchAttributeOperandsQuery,
-          _SearchAttributeOperandsQueryVariables
-        >({
+        client.query<_SearchAttributeOperandsQuery, _SearchAttributeOperandsQueryVariables>({
           query: _SearchAttributeOperandsDocument,
           variables: {
             attributesSlugs: Object.keys(attribute),

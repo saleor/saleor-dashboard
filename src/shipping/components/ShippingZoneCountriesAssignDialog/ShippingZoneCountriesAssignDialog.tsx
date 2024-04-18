@@ -1,20 +1,14 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryWithCodeFragment } from "@dashboard/graphql";
-import {
-  getCountrySelectionMap,
-  isRestWorldCountriesSelected,
-} from "@dashboard/shipping/handlers";
+import { getCountrySelectionMap, isRestWorldCountriesSelected } from "@dashboard/shipping/handlers";
 import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import {
   Dialog,
@@ -30,10 +24,7 @@ import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-  createCountryChangeHandler,
-  createRestOfTheWorldChangeHandler,
-} from "./handlers";
+import { createCountryChangeHandler, createRestOfTheWorldChangeHandler } from "./handlers";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -55,20 +46,11 @@ export interface ShippingZoneCountriesAssignDialogProps {
 const ShippingZoneCountriesAssignDialog: React.FC<
   ShippingZoneCountriesAssignDialogProps
 > = props => {
-  const {
-    confirmButtonState,
-    onClose,
-    countries,
-    restWorldCountries,
-    open,
-    initial,
-    onConfirm,
-  } = props;
-
+  const { confirmButtonState, onClose, countries, restWorldCountries, open, initial, onConfirm } =
+    props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle();
   const intl = useIntl();
-
   const initialForm: FormData = {
     countries: initial,
     query: "",
@@ -76,24 +58,14 @@ const ShippingZoneCountriesAssignDialog: React.FC<
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <Form
-        initial={initialForm}
-        onSubmit={onConfirm}
-        className={scrollableDialogClasses.form}
-      >
+      <Form initial={initialForm} onSubmit={onConfirm} className={scrollableDialogClasses.form}>
         {({ data, change }) => {
-          const countrySelectionMap = getCountrySelectionMap(
-            countries,
-            data.countries,
-          );
+          const countrySelectionMap = getCountrySelectionMap(countries, data.countries);
           const isRestOfTheWorldSelected = isRestWorldCountriesSelected(
             restWorldCountries,
             countrySelectionMap,
           );
-          const handleCountryChange = createCountryChangeHandler(
-            data.countries,
-            change,
-          );
+          const handleCountryChange = createCountryChangeHandler(data.countries, change);
           const handleRestOfTheWorldChange = createRestOfTheWorldChangeHandler(
             countrySelectionMap,
             data.countries,
@@ -117,9 +89,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                   value={data.query}
                   onChange={event => change(event)}
                   label={intl.formatMessage(messages.searchCountriesLabel)}
-                  placeholder={intl.formatMessage(
-                    messages.searchCountriesPlaceholder,
-                  )}
+                  placeholder={intl.formatMessage(messages.searchCountriesPlaceholder)}
                   fullWidth
                 />
                 <FormSpacer />
@@ -136,30 +106,16 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                         <TableRowLink
                           data-test-id="rest-of-the-world-row"
                           className={classes.clickableRow}
-                          onClick={() =>
-                            handleRestOfTheWorldChange(
-                              !isRestOfTheWorldSelected,
-                            )
-                          }
+                          onClick={() => handleRestOfTheWorldChange(!isRestOfTheWorldSelected)}
                         >
                           <TableCell className={classes.wideCell}>
-                            <FormattedMessage
-                              {...messages.restOfTheWorldCheckbox}
-                            />
+                            <FormattedMessage {...messages.restOfTheWorldCheckbox} />
                             <Typography variant="caption">
-                              <FormattedMessage
-                                {...messages.restOfTheWorldCheckboxDescription}
-                              />
+                              <FormattedMessage {...messages.restOfTheWorldCheckboxDescription} />
                             </Typography>
                           </TableCell>
-                          <TableCell
-                            padding="checkbox"
-                            className={classes.checkboxCell}
-                          >
-                            <Checkbox
-                              name="restOfTheWorld"
-                              checked={isRestOfTheWorldSelected}
-                            />
+                          <TableCell padding="checkbox" className={classes.checkboxCell}>
+                            <Checkbox name="restOfTheWorld" checked={isRestOfTheWorldSelected} />
                           </TableCell>
                         </TableRowLink>
                       </TableBody>
@@ -183,18 +139,11 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                         <TableRowLink
                           data-test-id="country-row"
                           className={classes.clickableRow}
-                          onClick={() =>
-                            handleCountryChange(country.code, !isChecked)
-                          }
+                          onClick={() => handleCountryChange(country.code, !isChecked)}
                           key={country.code}
                         >
-                          <TableCell className={classes.wideCell}>
-                            {country.country}
-                          </TableCell>
-                          <TableCell
-                            padding="checkbox"
-                            className={classes.checkboxCell}
-                          >
+                          <TableCell className={classes.wideCell}>{country.country}</TableCell>
+                          <TableCell padding="checkbox" className={classes.checkboxCell}>
                             <Checkbox checked={isChecked} />
                           </TableCell>
                         </TableRowLink>
@@ -220,6 +169,5 @@ const ShippingZoneCountriesAssignDialog: React.FC<
     </Dialog>
   );
 };
-ShippingZoneCountriesAssignDialog.displayName =
-  "ShippingZoneCountriesAssignDialog";
+ShippingZoneCountriesAssignDialog.displayName = "ShippingZoneCountriesAssignDialog";
 export default ShippingZoneCountriesAssignDialog;

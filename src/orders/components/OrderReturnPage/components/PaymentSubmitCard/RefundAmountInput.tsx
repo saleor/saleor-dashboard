@@ -67,7 +67,6 @@ const messages = defineMessages({
     description: "order refund amount, input label",
   },
 });
-
 const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
   const {
     data,
@@ -82,7 +81,6 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
   const formErrors = getFormErrors(["amount"], errors);
-
   const isError = !!formErrors.amount || amountTooSmall || amountTooBig;
 
   return (

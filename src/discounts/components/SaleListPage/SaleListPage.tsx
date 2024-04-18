@@ -4,11 +4,7 @@ import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import {
-  saleAddUrl,
-  SaleListUrlSortField,
-  saleUrl,
-} from "@dashboard/discounts/urls";
+import { saleAddUrl, SaleListUrlSortField, saleUrl } from "@dashboard/discounts/urls";
 import { SaleFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -24,11 +20,7 @@ import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { SaleListDatagrid } from "../SaleListDatagrid";
-import {
-  createFilterStructure,
-  SaleFilterKeys,
-  SaleListFilterOpts,
-} from "./filters";
+import { createFilterStructure, SaleFilterKeys, SaleListFilterOpts } from "./filters";
 
 export interface SaleListPageProps
   extends PageListProps,
@@ -64,7 +56,6 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterDependency = structure.find(getByName("channel"));
-
   const handleRowClick = (id: string) => {
     navigation(saleUrl(id));
   };
@@ -76,12 +67,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
         withoutBorder
         title={intl.formatMessage(commonMessages.discounts)}
       >
-        <Box
-          __flex={1}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
               <ChevronRightIcon />
@@ -111,11 +97,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
               variant="primary"
               data-test-id="create-sale"
             >
-              <FormattedMessage
-                id="+MJW+8"
-                defaultMessage="Create Discount"
-                description="button"
-              />
+              <FormattedMessage id="+MJW+8" defaultMessage="Create Discount" description="button" />
             </Button>
           </Box>
         </Box>
@@ -136,10 +118,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
             <Box display="flex" gap={4}>
               {selectedSaleIds.length > 0 && (
                 <BulkDeleteButton onClick={onSalesDelete}>
-                  <FormattedMessage
-                    defaultMessage="Delete discounts"
-                    id="Hswqx2"
-                  />
+                  <FormattedMessage defaultMessage="Delete discounts" id="Hswqx2" />
                 </BulkDeleteButton>
               )}
             </Box>

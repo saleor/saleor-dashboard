@@ -1,14 +1,8 @@
 // @ts-strict-ignore
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import {
-  ProductFragment,
-  ProductVariantStocksUpdateInput,
-} from "@dashboard/graphql";
-import {
-  getColumnStock,
-  isCurrentRow,
-} from "@dashboard/products/utils/datagrid";
+import { ProductFragment, ProductVariantStocksUpdateInput } from "@dashboard/graphql";
+import { getColumnStock, isCurrentRow } from "@dashboard/products/utils/datagrid";
 
 export function getStockData(data: DatagridChange[], currentIndex: number) {
   return data
@@ -33,10 +27,7 @@ export function getVaraintUpdateStockData(
 }
 
 function toUpdateStockData(variant: ProductFragment["variants"][number]) {
-  return (
-    acc: ProductVariantStocksUpdateInput,
-    stock: ReturnType<typeof toStockData>,
-  ) => {
+  return (acc: ProductVariantStocksUpdateInput, stock: ReturnType<typeof toStockData>) => {
     const variantStock = variant.stocks.find(
       variantStock => variantStock.warehouse.id === stock.warehouse,
     );
@@ -73,7 +64,5 @@ function byStockWithQuantity(stock: { quantity: unknown }) {
 }
 
 function byHavingStockColumn(change: DatagridChange, currentIndex: number) {
-  return (
-    getColumnStock(change.column) && isCurrentRow(change.row, currentIndex)
-  );
+  return getColumnStock(change.column) && isCurrentRow(change.row, currentIndex);
 }

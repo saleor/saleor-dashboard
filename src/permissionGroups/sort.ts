@@ -4,8 +4,7 @@ import { getUserName } from "@dashboard/misc";
 import { MembersListUrlSortField } from "./urls";
 
 export const sortMembers =
-  (sort: string, asc: boolean) =>
-  (a: StaffMemberFragment, b: StaffMemberFragment) => {
+  (sort: string, asc: boolean) => (a: StaffMemberFragment, b: StaffMemberFragment) => {
     let valueA: string = "";
     let valueB: string = "";
 
@@ -20,7 +19,5 @@ export const sortMembers =
         break;
     }
 
-    return asc
-      ? valueA.localeCompare(valueB)
-      : valueA.localeCompare(valueB) * -1;
+    return asc ? valueA.localeCompare(valueB) : valueA.localeCompare(valueB) * -1;
   };

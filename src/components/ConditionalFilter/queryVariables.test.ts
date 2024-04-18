@@ -14,7 +14,6 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
     // Assert
     expect(result).toEqual(expectedOutput);
   });
-
   it("should create variables with selected filters", () => {
     // Arrange
     const filters: FilterContainer = [

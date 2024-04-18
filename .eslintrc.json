@@ -26,21 +26,17 @@
     "formatjs",
     "react-refresh",
     "react-hooks",
-    "simple-import-sort"
+    "simple-import-sort",
+    "prettier"
   ],
   "overrides": [
     {
-        "plugins": [
-          "prettier"
-        ],
-        "extends": ["prettier"],
         "files": ["playwright/**/*.ts"],
         "parserOptions": {
             "project": "./playwright/tsconfig.json"
         },
         "rules": {
-           "no-console": "off",
-           "prettier/prettier": "error"
+           "no-console": "off"
         }
     },
     {
@@ -51,7 +47,6 @@
     }
   ],
   "rules": {
-    // Custom rules:
     "import/no-duplicates": "error",
     "import/no-extraneous-dependencies": "off", // imports are handled by simple-import-sort/sort
     "import/no-internal-modules": "off", // imports are handled by simple-import-sort/sort
@@ -60,6 +55,12 @@
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "react-hooks/rules-of-hooks": "error",
+    "prettier/prettier": "error",
+    "padding-line-between-statements" : [
+      "error",
+      { "blankLine": "always", "prev": "*", "next": ["class"]},
+      { "blankLine": "never", "prev": "expression", "next": ["expression"]}
+    ],
     "formatjs/enforce-id": [
       "error",
       {
@@ -111,7 +112,7 @@
     "@typescript-eslint/prefer-optional-chain": "off",
     "@typescript-eslint/restrict-plus-operands": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
-    "react-refresh/only-export-components": "warn"
+    "react-refresh/only-export-components": "off"
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }

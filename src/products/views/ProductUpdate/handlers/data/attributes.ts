@@ -6,10 +6,7 @@ import {
   BulkAttributeValueInput,
   VariantAttributeFragment,
 } from "@dashboard/graphql";
-import {
-  getColumnAttribute,
-  isCurrentRow,
-} from "@dashboard/products/utils/datagrid";
+import { getColumnAttribute, isCurrentRow } from "@dashboard/products/utils/datagrid";
 
 import { byAttributeName } from "../utils";
 
@@ -31,10 +28,7 @@ function byHavingAnyAttribute(change: DatagridChange): boolean {
 function toAttributeData(variantAttributes: VariantAttributeFragment[]) {
   return (change: DatagridChange): AttributeValueInput | undefined => {
     const attributeId = getColumnAttribute(change.column);
-    const attributeType = getAttributeType(
-      variantAttributes,
-      attributeId ?? "",
-    );
+    const attributeType = getAttributeType(variantAttributes, attributeId ?? "");
 
     if (!attributeType) {
       return undefined;
@@ -138,9 +132,7 @@ export function getAttributeInput(
 
   if (inputType === AttributeInputTypeEnum.REFERENCE) {
     return {
-      references: values
-        .map(({ reference }) => reference)
-        .filter(byAttributeName),
+      references: values.map(({ reference }) => reference).filter(byAttributeName),
     };
   }
 
@@ -172,9 +164,7 @@ function getAttributeValueOrNull(
   return null;
 }
 
-function getBooleanValue(
-  value: AttributeValueDetailsFragment | undefined,
-): boolean {
+function getBooleanValue(value: AttributeValueDetailsFragment | undefined): boolean {
   const booleanValue = getAttributeValueOrNull(value, "name") || "";
 
   if (booleanValue.includes("true") || booleanValue.includes("false")) {

@@ -21,10 +21,7 @@ import { giftCardUpdatePageHeaderMessages as giftCardStatusChipMessages } from "
 import { GiftCardUrlSortField } from "../types";
 import { columnsMessages, messages } from "./messages";
 
-export const getColumns = (
-  intl: IntlShape,
-  sort?: Sort<GiftCardUrlSortField>,
-): AvailableColumn[] =>
+export const getColumns = (intl: IntlShape, sort?: Sort<GiftCardUrlSortField>): AvailableColumn[] =>
   [
     {
       id: "giftCardCode",
@@ -64,9 +61,7 @@ export const getColumns = (
 export const createGetCellContent =
   (
     categories: Array<
-      ExtendedGiftCard<
-        NonNullable<GiftCardListQuery["giftCards"]>["edges"][0]["node"]
-      >
+      ExtendedGiftCard<NonNullable<GiftCardListQuery["giftCards"]>["edges"][0]["node"]>
     >,
     columns: AvailableColumn[],
     intl: IntlShape,
@@ -107,9 +102,7 @@ export const createGetCellContent =
           );
         }
 
-        const statusLabel = status?.label
-          ? intl.formatMessage(status.label)
-          : "";
+        const statusLabel = status?.label ? intl.formatMessage(status.label) : "";
 
         return tagsCell(
           [
@@ -127,17 +120,12 @@ export const createGetCellContent =
         return readonlyTextCell(rowData?.product?.name ?? PLACEHOLDER);
       case "usedBy":
         if (rowData.usedBy) {
-          return readonlyTextCell(
-            `${rowData.usedBy.firstName} ${rowData.usedBy.lastName}`,
-          );
+          return readonlyTextCell(`${rowData.usedBy.firstName} ${rowData.usedBy.lastName}`);
         }
 
         return readonlyTextCell(rowData?.usedByEmail ?? PLACEHOLDER);
       case "balance":
-        return moneyCell(
-          rowData.currentBalance.amount,
-          rowData.currentBalance.currency,
-        );
+        return moneyCell(rowData.currentBalance.amount, rowData.currentBalance.currency);
       default:
         return readonlyTextCell("", false);
     }
@@ -151,9 +139,7 @@ export const getTagCellText = (tags: GiftCardDataFragment["tags"]) => {
   return PLACEHOLDER;
 };
 
-export const getStatusText = (
-  giftCard: ExtendedGiftCard<GiftCardBase & { isActive: boolean }>,
-) => {
+export const getStatusText = (giftCard: ExtendedGiftCard<GiftCardBase & { isActive: boolean }>) => {
   const { isExpired, isActive } = giftCard;
 
   if (isExpired) {

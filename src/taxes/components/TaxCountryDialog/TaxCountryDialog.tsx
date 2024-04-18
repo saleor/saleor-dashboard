@@ -37,9 +37,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
 }) => {
   const classes = useStyles();
   const intl = useIntl();
-
-  const [selectedCountry, setSelectedCountry] =
-    React.useState<CountryFragment>();
+  const [selectedCountry, setSelectedCountry] = React.useState<CountryFragment>();
 
   useModalDialogOpen(open, {
     onClose: () => {

@@ -14,7 +14,6 @@ test.beforeEach(({ page }) => {
   installationPage = new AppInstallationPage(page);
   appPage = new AppPage(page);
 });
-
 // Adding temporary skip https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
 test.skip("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
   page,
@@ -47,11 +46,8 @@ test.skip("TC: SALEOR_119 User should be able to install and configure app from 
   await iframeLocator.getByText("Save").click();
   await appsPage.expectSuccessBanner();
 });
-
 test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async () => {
-  await appPage.waitForNetworkIdle(() =>
-    appPage.goToExistingAppPage(APPS.appToBeDeleted.id),
-  );
+  await appPage.waitForNetworkIdle(() => appPage.goToExistingAppPage(APPS.appToBeDeleted.id));
   await appPage.pageHeader.waitFor({ state: "visible", timeout: 10000 });
   await expect(appPage.pageHeader).toContainText("Saleor QA App");
   await appPage.deleteButton.click();

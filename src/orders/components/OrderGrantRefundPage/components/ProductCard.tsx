@@ -18,11 +18,7 @@ interface ProductsCardProps {
   lines: OrderLineGrantRefundFragment[];
 }
 
-export const ProductsCard: React.FC<ProductsCardProps> = ({
-  title,
-  subtitle,
-  lines,
-}) => {
+export const ProductsCard: React.FC<ProductsCardProps> = ({ title, subtitle, lines }) => {
   const classes = useProductsCardStyles();
   const { dispatch, state } = useGrantRefundContext();
 
@@ -31,8 +27,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
   }
 
   const getHandleAmountChange =
-    (line: OrderLineGrantRefundFragment) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (line: OrderLineGrantRefundFragment) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const parsedValue = parseInt(e.target.value, 10);
       const value = Number.isNaN(parsedValue) ? 0 : parsedValue;
 
@@ -43,7 +38,6 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
         unitPrice: line.unitPrice.gross.amount,
       });
     };
-
   const handleSetMaxQuanity = () => {
     dispatch({
       type: "setMaxQuantity",
@@ -96,10 +90,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
 
               return (
                 <TableRowLink key={line.id}>
-                  <TableCellAvatar
-                    thumbnail={line.thumbnail?.url}
-                    className={classes.colProduct}
-                  >
+                  <TableCellAvatar thumbnail={line.thumbnail?.url} className={classes.colProduct}>
                     <div className={classes.productName}>
                       <span>{line.productName}</span>
                       <span>{line.variantName}</span>
@@ -108,9 +99,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                   <TableCell className={classes.colUnitPrice}>
                     <Money money={line.unitPrice.gross} />
                   </TableCell>
-                  <TableCell className={classes.colQuantity}>
-                    {line.quantity}
-                  </TableCell>
+                  <TableCell className={classes.colQuantity}>{line.quantity}</TableCell>
                   <TableCell className={classes.colQuantityInput}>
                     <Input
                       size="small"
@@ -136,10 +125,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
             () => (
               <TableRowLink>
                 <TableCell colSpan={3}>
-                  <FormattedMessage
-                    id="Q1Uzbb"
-                    defaultMessage="No products found"
-                  />
+                  <FormattedMessage id="Q1Uzbb" defaultMessage="No products found" />
                 </TableCell>
               </TableRowLink>
             ),

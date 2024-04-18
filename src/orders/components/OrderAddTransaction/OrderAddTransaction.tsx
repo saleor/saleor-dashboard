@@ -23,11 +23,7 @@ const useStyles = makeStyles(
   }),
   { name: "OrderAddTransaction" },
 );
-
-const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({
-  order,
-  onAddTransaction,
-}) => {
+const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({ order, onAddTransaction }) => {
   const classes = useStyles();
 
   if (!order) {

@@ -23,9 +23,7 @@ const AppInProgressDeleteDialog = ({
   onConfirm,
 }: AppInProgressDeleteDialogProps) => {
   const intl = useIntl();
-
   const isNameMissing = name === null || name === "";
-
   const getMainText = () => {
     if (isNameMissing) {
       return intl.formatMessage(msgs.deleteApp);
@@ -44,9 +42,7 @@ const AppInProgressDeleteDialog = ({
       title={intl.formatMessage(msgs.header)}
       variant="delete"
     >
-      <DialogContentText data-test-id="dialog-content">
-        {getMainText()}
-      </DialogContentText>
+      <DialogContentText data-test-id="dialog-content">{getMainText()}</DialogContentText>
     </ActionDialog>
   );
 };

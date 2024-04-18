@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
@@ -50,16 +47,11 @@ export interface OrderFulfillmentCancelDialogProps {
   onConfirm: (data: OrderFulfillmentCancelDialogFormData) => any;
 }
 
-const OrderFulfillmentCancelDialog: React.FC<
-  OrderFulfillmentCancelDialogProps
-> = props => {
-  const { confirmButtonState, errors, open, warehouses, onConfirm, onClose } =
-    props;
-
+const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> = props => {
+  const { confirmButtonState, errors, open, warehouses, onConfirm, onClose } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const [displayValue, setDisplayValue] = React.useState("");
-
   const choices = warehouses?.map(warehouse => ({
     label: warehouse.name,
     value: warehouse.id,

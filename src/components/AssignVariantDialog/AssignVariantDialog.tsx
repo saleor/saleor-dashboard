@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Money from "@dashboard/components/Money";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -54,7 +51,6 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
-
 const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
   const {
     confirmButtonState,
@@ -69,26 +65,18 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
   } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
-
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [variants, setVariants] = React.useState<VariantWithProductLabel[]>([]);
-
-  const productChoices =
-    products?.filter(product => product?.variants?.length > 0) || [];
-
+  const productChoices = products?.filter(product => product?.variants?.length > 0) || [];
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
         product.variants.map(variant => isVariantSelected(variant, variants)),
       )
     : [];
-
   const productsWithAllVariantsSelected = productChoices
-    ? productChoices.map(product =>
-        hasAllVariantsSelected(product.variants, variants),
-      )
+    ? productChoices.map(product => hasAllVariantsSelected(product.variants, variants))
     : [];
-
   const handleSubmit = () =>
     onSubmit(
       variants.map(variant => ({
@@ -96,7 +84,6 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
         id: variant.id,
       })),
     );
-
   const handleClose = () => {
     queryReset();
     onClose();
@@ -127,10 +114,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
           }}
         />
       </DialogContent>
-      <DialogContent
-        className={scrollableDialogClasses.scrollArea}
-        id={scrollableTargetId}
-      >
+      <DialogContent className={scrollableDialogClasses.scrollArea} id={scrollableTargetId}>
         <InfiniteScroll
           dataLength={variants?.length}
           next={onFetchMore}
@@ -150,14 +134,9 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                 (product, productIndex) => (
                   <React.Fragment key={product ? product.id : "skeleton"}>
                     <TableRowLink>
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.productCheckboxCell}
-                      >
+                      <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                         <Checkbox
-                          checked={
-                            productsWithAllVariantsSelected[productIndex]
-                          }
+                          checked={productsWithAllVariantsSelected[productIndex]}
                           disabled={loading}
                           onChange={() =>
                             handleProductAssign(
@@ -178,54 +157,45 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                         {maybe(() => product.name)}
                       </TableCell>
                     </TableRowLink>
-                    {maybe(() => product.variants, []).map(
-                      (variant, variantIndex) => (
-                        <TableRowLink
-                          key={variant.id}
-                          data-test-id="assign-variant-table-row"
-                        >
-                          <TableCell />
-                          <TableCell className={classes.colVariantCheckbox}>
-                            <Checkbox
-                              className={classes.variantCheckbox}
-                              checked={
-                                selectedVariantsToProductsMap[productIndex][
-                                  variantIndex
-                                ]
-                              }
-                              disabled={loading}
-                              onChange={() =>
-                                handleVariantAssign(
-                                  variant,
-                                  product,
-                                  variantIndex,
-                                  productIndex,
-                                  variants,
-                                  selectedVariantsToProductsMap,
-                                  setVariants,
-                                )
-                              }
+                    {maybe(() => product.variants, []).map((variant, variantIndex) => (
+                      <TableRowLink key={variant.id} data-test-id="assign-variant-table-row">
+                        <TableCell />
+                        <TableCell className={classes.colVariantCheckbox}>
+                          <Checkbox
+                            className={classes.variantCheckbox}
+                            checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
+                            disabled={loading}
+                            onChange={() =>
+                              handleVariantAssign(
+                                variant,
+                                product,
+                                variantIndex,
+                                productIndex,
+                                variants,
+                                selectedVariantsToProductsMap,
+                                setVariants,
+                              )
+                            }
+                          />
+                        </TableCell>
+                        <TableCell className={classes.colName}>
+                          <div>{variant.name}</div>
+                          <div className={classes.grayText}>
+                            <FormattedMessage
+                              {...messages.assignVariantDialogSKU}
+                              values={{
+                                sku: variant.sku,
+                              }}
                             />
-                          </TableCell>
-                          <TableCell className={classes.colName}>
-                            <div>{variant.name}</div>
-                            <div className={classes.grayText}>
-                              <FormattedMessage
-                                {...messages.assignVariantDialogSKU}
-                                values={{
-                                  sku: variant.sku,
-                                }}
-                              />
-                            </div>
-                          </TableCell>
-                          <TableCell className={classes.textRight}>
-                            {variant?.channelListings[0]?.price && (
-                              <Money money={variant.channelListings[0].price} />
-                            )}
-                          </TableCell>
-                        </TableRowLink>
-                      ),
-                    )}
+                          </div>
+                        </TableCell>
+                        <TableCell className={classes.textRight}>
+                          {variant?.channelListings[0]?.price && (
+                            <Money money={variant.channelListings[0].price} />
+                          )}
+                        </TableCell>
+                      </TableRowLink>
+                    ))}
                   </React.Fragment>
                 ),
                 () => (

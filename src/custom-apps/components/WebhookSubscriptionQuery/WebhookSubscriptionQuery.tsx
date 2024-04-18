@@ -33,7 +33,6 @@ interface WebhookSubscriptionQueryProps {
 const fetcher = createGraphiQLFetcher({
   url: process.env.API_URI,
 });
-
 const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
   errors,
   query,
@@ -41,15 +40,12 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
   data,
 }) => {
   const intl = useIntl();
-
   const explorerPlugin = useExplorerPlugin({
     query,
     onEdit: setQuery,
     showAttribution: false,
   });
-
   const classes = useStyles();
-
   const formErrors = getFormErrors(["subscriptionQuery"], errors);
 
   return (

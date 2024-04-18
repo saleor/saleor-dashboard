@@ -6,21 +6,14 @@ import { AppstoreApi } from "./appstore.types";
 import { appsMessages } from "./messages";
 import { AppLink } from "./types";
 
-const getInstallableAppstoreApps = (
-  appstoreAppList?: AppstoreApi.SaleorApp[],
-) =>
-  appstoreAppList?.filter(
-    app => "manifestUrl" in app || "githubForkUrl" in app,
-  ) as AppstoreApi.ReleasedSaleorApp[] | undefined;
-
+const getInstallableAppstoreApps = (appstoreAppList?: AppstoreApi.SaleorApp[]) =>
+  appstoreAppList?.filter(app => "manifestUrl" in app || "githubForkUrl" in app) as
+    | AppstoreApi.ReleasedSaleorApp[]
+    | undefined;
 const getComingSoonAppstoreApps = (appstoreAppList?: AppstoreApi.SaleorApp[]) =>
   appstoreAppList?.filter(
-    app =>
-      !("manifestUrl" in app) &&
-      !("githubForkUrl" in app) &&
-      "releaseDate" in app,
+    app => !("manifestUrl" in app) && !("githubForkUrl" in app) && "releaseDate" in app,
   ) as AppstoreApi.ComingSoonSaleorApp[] | undefined;
-
 const getAppManifestUrl = (appstoreApp: AppstoreApi.SaleorApp) => {
   if ("manifestUrl" in appstoreApp) {
     return appstoreApp.manifestUrl;
@@ -34,9 +27,7 @@ export const resolveInstallationOfAppstoreApp = (
   const manifestUrl = getAppManifestUrl(appstoreApp);
 
   if (manifestUrl) {
-    return appInstallations?.find(
-      appInstallation => appInstallation.manifestUrl === manifestUrl,
-    );
+    return appInstallations?.find(appInstallation => appInstallation.manifestUrl === manifestUrl);
   }
 };
 
@@ -59,15 +50,10 @@ export const getAppstoreAppsLists = (
 
 export const isAppInTunnel = (manifestUrl: string) =>
   Boolean(
-    getAppsConfig().tunnelUrlKeywords.find(keyword =>
-      new URL(manifestUrl).host.includes(keyword),
-    ),
+    getAppsConfig().tunnelUrlKeywords.find(keyword => new URL(manifestUrl).host.includes(keyword)),
   );
 
-const prepareAppLinks = (
-  intl: IntlShape,
-  app: AppstoreApi.ReleasedSaleorApp,
-): AppLink[] => [
+const prepareAppLinks = (intl: IntlShape, app: AppstoreApi.ReleasedSaleorApp): AppLink[] => [
   {
     name: intl.formatMessage(appsMessages.repository),
     url: app.repositoryUrl,
@@ -102,19 +88,13 @@ export const getAppDetails = ({
   removeAppInstallation,
 }: GetAppDetailsOpts) => {
   const isAppComingSoon = !("manifestUrl" in app);
-
   const isAppInstallable =
-    "manifestUrl" in app &&
-    app.manifestUrl !== null &&
-    !!navigateToAppInstallPage;
-  const isAppForkableOnGithub =
-    "githubForkUrl" in app && !!navigateToGithubForkPage;
-  const installationPending =
-    appInstallation && appInstallation.status === JobStatusEnum.PENDING;
+    "manifestUrl" in app && app.manifestUrl !== null && !!navigateToAppInstallPage;
+  const isAppForkableOnGithub = "githubForkUrl" in app && !!navigateToGithubForkPage;
+  const installationPending = appInstallation && appInstallation.status === JobStatusEnum.PENDING;
 
   return {
-    releaseDate:
-      !appInstallation && isAppComingSoon ? app.releaseDate : undefined,
+    releaseDate: !appInstallation && isAppComingSoon ? app.releaseDate : undefined,
     installHandler:
       !appInstallation && isAppInstallable
         ? () => navigateToAppInstallPage(app.manifestUrl || "")
@@ -136,7 +116,5 @@ export const getAppDetails = ({
   };
 };
 
-export const getAppInProgressName = (
-  id: string,
-  collection?: AppInstallationFragment[],
-) => collection?.find(app => app.id === id)?.appName || id;
+export const getAppInProgressName = (id: string, collection?: AppInstallationFragment[]) =>
+  collection?.find(app => app.id === id)?.appName || id;

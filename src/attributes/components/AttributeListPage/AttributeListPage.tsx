@@ -1,7 +1,4 @@
-import {
-  attributeAddUrl,
-  AttributeListUrlSortField,
-} from "@dashboard/attributes/urls";
+import { attributeAddUrl, AttributeListUrlSortField } from "@dashboard/attributes/urls";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
@@ -15,17 +12,9 @@ import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-  FilterPagePropsWithPresets,
-  PageListProps,
-  SortPage,
-} from "../../../types";
+import { FilterPagePropsWithPresets, PageListProps, SortPage } from "../../../types";
 import { AttributeListDatagrid } from "../AttributeListDatagrid";
-import {
-  AttributeFilterKeys,
-  AttributeListFilterOpts,
-  createFilterStructure,
-} from "./filters";
+import { AttributeFilterKeys, AttributeListFilterOpts, createFilterStructure } from "./filters";
 
 export interface AttributeListPageProps
   extends PageListProps,
@@ -57,7 +46,6 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
@@ -69,12 +57,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
         withoutBorder
         isAlignToRight={false}
       >
-        <Box
-          __flex={1}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
               <ChevronRightIcon />
@@ -128,10 +111,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
             <Box display="flex" gap={4}>
               {selectedAttributesIds.length > 0 && (
                 <BulkDeleteButton onClick={onAttributesDelete}>
-                  <FormattedMessage
-                    defaultMessage="Delete attributes"
-                    id="g0GAdN"
-                  />
+                  <FormattedMessage defaultMessage="Delete attributes" id="g0GAdN" />
                 </BulkDeleteButton>
               )}
             </Box>

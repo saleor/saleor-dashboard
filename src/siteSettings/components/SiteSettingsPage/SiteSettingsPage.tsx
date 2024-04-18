@@ -35,8 +35,7 @@ export interface SiteSettingsPageAddressFormData {
   streetAddress2: string;
 }
 
-export interface SiteSettingsPageFormData
-  extends SiteSettingsPageAddressFormData {
+export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormData {
   description: string;
   reserveStockDurationAnonymousUser: number;
   reserveStockDurationAuthenticatedUser: number;
@@ -52,9 +51,7 @@ export interface SiteSettingsPageProps {
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
 
-export function areAddressInputFieldsModified(
-  data: SiteSettingsPageAddressFormData,
-): boolean {
+export function areAddressInputFieldsModified(data: SiteSettingsPageAddressFormData): boolean {
   return (
     [
       "city",
@@ -74,14 +71,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const { disabled, errors, saveButtonBarState, shop, onSubmit } = props;
   const intl = useIntl();
   const navigate = useNavigator();
-
   const [displayCountry, setDisplayCountry] = useStateFromProps(
     shop?.companyAddress?.country.country || "",
   );
-
   const { errors: validationErrors, submit: handleSubmitWithAddress } =
     useAddressValidation(onSubmit);
-
   const initialFormAddress: SiteSettingsPageAddressFormData = {
     city: shop?.companyAddress?.city || "",
     companyName: shop?.companyAddress?.companyName || "",
@@ -92,14 +86,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     streetAddress1: shop?.companyAddress?.streetAddress1 || "",
     streetAddress2: shop?.companyAddress?.streetAddress2 || "",
   };
-
   const initialForm: SiteSettingsPageFormData = {
     ...initialFormAddress,
     description: shop?.description || "",
-    reserveStockDurationAnonymousUser:
-      shop?.reserveStockDurationAnonymousUser ?? 0,
-    reserveStockDurationAuthenticatedUser:
-      shop?.reserveStockDurationAuthenticatedUser ?? 0,
+    reserveStockDurationAnonymousUser: shop?.reserveStockDurationAnonymousUser ?? 0,
+    reserveStockDurationAuthenticatedUser: shop?.reserveStockDurationAuthenticatedUser ?? 0,
     limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
   };
@@ -108,9 +99,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     <Form
       initial={initialForm}
       onSubmit={data => {
-        const submitFunc = areAddressInputFieldsModified(data)
-          ? handleSubmitWithAddress
-          : onSubmit;
+        const submitFunc = areAddressInputFieldsModified(data) ? handleSubmitWithAddress : onSubmit;
         return submitFunc(data);
       }}
       confirmLeave
@@ -123,9 +112,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
           setDisplayCountry,
           countryChoices,
         );
-
         const handleCountrySelect = createCountryHandler(countrySelect, set);
-
         const handleEmailConfirmationChange = isEnabled => {
           change({ target: { name: "emailConfirmation", value: isEnabled } });
         };
@@ -138,16 +125,10 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
             />
             <DetailPageLayout.Content>
               <Box gap={2}>
-                <Box
-                  display="grid"
-                  __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={6}
-                >
+                <Box display="grid" __gridTemplateColumns="1fr 3fr" paddingLeft={6}>
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCheckoutTitle)}
-                    description={intl.formatMessage(
-                      messages.sectionCheckoutDescription,
-                    )}
+                    description={intl.formatMessage(messages.sectionCheckoutDescription)}
                   />
                   <SiteCheckoutSettingsCard
                     data={data}
@@ -167,9 +148,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 >
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCompanyTitle)}
-                    description={intl.formatMessage(
-                      messages.sectionCompanyDescription,
-                    )}
+                    description={intl.formatMessage(messages.sectionCompanyDescription)}
                   />
                   <CompanyAddressInput
                     data={data}
@@ -196,18 +175,12 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                   paddingBottom={8}
                 >
                   <PageSectionHeader
-                    title={intl.formatMessage(
-                      messages.sectionEmailConfirmationTitle,
-                    )}
-                    description={intl.formatMessage(
-                      messages.sectionEmailConfirmationDescription,
-                    )}
+                    title={intl.formatMessage(messages.sectionEmailConfirmationTitle)}
+                    description={intl.formatMessage(messages.sectionEmailConfirmationDescription)}
                   />
                   <DashboardCard>
                     <DashboardCard.Title>
-                      {intl.formatMessage(
-                        messages.sectionEmailConfirmationHeader,
-                      )}
+                      {intl.formatMessage(messages.sectionEmailConfirmationHeader)}
                     </DashboardCard.Title>
                     <DashboardCard.Content>
                       <Checkbox
@@ -215,11 +188,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                         checked={data.emailConfirmation}
                         onCheckedChange={handleEmailConfirmationChange}
                       >
-                        <Text>
-                          {intl.formatMessage(
-                            messages.sectionEmailConfirmationHeader,
-                          )}
-                        </Text>
+                        <Text>{intl.formatMessage(messages.sectionEmailConfirmationHeader)}</Text>
                       </Checkbox>
                     </DashboardCard.Content>
                   </DashboardCard>

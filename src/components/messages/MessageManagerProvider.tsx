@@ -29,68 +29,53 @@ const MessageManagerProvider = ({ children }) => {
 
   const timerCallback = (notification: INotification) => {
     remove(notification.id);
-    timersArr.current = timersArr.current.filter(
-      timer => timer.id !== notification.id,
-    );
+    timersArr.current = timersArr.current.filter(timer => timer.id !== notification.id);
   };
-
   const remove = useCallback(notificationId => {
     setNotifications(currentNotifications =>
       currentNotifications.filter(n => n.id !== notificationId),
     );
   }, []);
-
   const clearErrorNotifications = useCallback(() => {
     setNotifications(notifications =>
-      notifications.filter(
-        notification => notification.message.status !== "error",
-      ),
+      notifications.filter(notification => notification.message.status !== "error"),
     );
   }, []);
+  const show = useCallback((message = {}, timeout = DEFAULT_NOTIFICATION_SHOW_TIME) => {
+    const id = timer.current;
+    timer.current += 1;
+    const notification = {
+      close: () => remove(id),
+      id,
+      message,
+      timeout,
+    };
+    if (timeout !== null) {
+      const timeoutId = window.setTimeout(() => {
+        timerCallback(notification);
+      }, timeout);
 
-  const show = useCallback(
-    (message = {}, timeout = DEFAULT_NOTIFICATION_SHOW_TIME) => {
-      const id = timer.current;
-      timer.current += 1;
-      const notification = {
-        close: () => remove(id),
-        id,
-        message,
-        timeout,
-      };
-      if (timeout !== null) {
-        const timeoutId = window.setTimeout(() => {
-          timerCallback(notification);
-        }, timeout);
+      timersArr.current.push({
+        id: notification.id,
+        notification,
+        remaining: timeout,
+        start: new Date().getTime(),
+        timeoutId,
+      });
+    }
 
-        timersArr.current.push({
-          id: notification.id,
-          notification,
-          remaining: timeout,
-          start: new Date().getTime(),
-          timeoutId,
-        });
-      }
+    setNotifications(state => [notification, ...state]);
 
-      setNotifications(state => [notification, ...state]);
-
-      return notification;
-    },
-    [],
-  );
-
+    return notification;
+  }, []);
   const getCurrentTimer = (notification: INotification) => {
-    const currentTimerIndex = timersArr.current.findIndex(
-      timer => timer.id === notification.id,
-    );
+    const currentTimerIndex = timersArr.current.findIndex(timer => timer.id === notification.id);
     return timersArr.current[currentTimerIndex];
   };
-
   const pauseTimer = (notification: INotification) => {
     const currentTimer = getCurrentTimer(notification);
     if (currentTimer) {
-      currentTimer.remaining =
-        currentTimer.remaining - (new Date().getTime() - currentTimer.start);
+      currentTimer.remaining = currentTimer.remaining - (new Date().getTime() - currentTimer.start);
       window.clearTimeout(currentTimer.timeoutId);
     }
   };
@@ -107,16 +92,10 @@ const MessageManagerProvider = ({ children }) => {
 
   return (
     <>
-      <MessageContext.Provider
-        value={{ remove, show, clearErrorNotifications }}
-      >
+      <MessageContext.Provider value={{ remove, show, clearErrorNotifications }}>
         {children}
       </MessageContext.Provider>
-      <TransitionGroup
-        appear
-        options={{ position: "top right" }}
-        component={Container}
-      >
+      <TransitionGroup appear options={{ position: "top right" }} component={Container}>
         {!!notifications.length &&
           notifications.map(notification => (
             <Transition key={notification.id}>
@@ -147,12 +126,8 @@ const MessageManagerProvider = ({ children }) => {
                         {notification.message.apiMessage}
                       </pre>
                     ),
-                    hideApiLabel: intl.formatMessage(
-                      notificationMessages.hideError,
-                    ),
-                    showApiLabel: intl.formatMessage(
-                      notificationMessages.seeError,
-                    ),
+                    hideApiLabel: intl.formatMessage(notificationMessages.hideError),
+                    showApiLabel: intl.formatMessage(notificationMessages.seeError),
                   }
                 }
                 {...(!!notification.message.actionBtn

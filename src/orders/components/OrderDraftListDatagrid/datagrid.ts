@@ -1,7 +1,4 @@
-import {
-  moneyCell,
-  readonlyTextCell,
-} from "@dashboard/components/Datagrid/customCells/cells";
+import { moneyCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { OrderDraft } from "@dashboard/orders/types";
@@ -65,19 +62,13 @@ export const createGetCellContent =
       case "number":
         return readonlyTextCell(`#${rowData.number}`);
       case "date":
-        return readonlyTextCell(
-          moment(rowData.created).locale(locale).format("lll"),
-        );
+        return readonlyTextCell(moment(rowData.created).locale(locale).format("lll"));
       case "customer":
         return readonlyTextCell(getCustomerName(rowData));
       case "total":
-        return moneyCell(
-          rowData.total?.gross?.amount ?? 0,
-          rowData.total?.gross?.currency ?? "",
-          {
-            readonly: true,
-          },
-        );
+        return moneyCell(rowData.total?.gross?.amount ?? 0, rowData.total?.gross?.currency ?? "", {
+          readonly: true,
+        });
       default:
         return readonlyTextCell("");
     }

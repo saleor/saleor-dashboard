@@ -1,16 +1,11 @@
 // @ts-strict-ignore
 import { FormChange } from "@dashboard/hooks/useForm";
 
-export function createCountryChangeHandler(
-  selectedCountries: string[],
-  change: FormChange,
-) {
+export function createCountryChangeHandler(selectedCountries: string[], change: FormChange) {
   return (countryCode: string, checked: boolean) => {
     const updatedCountries = checked
       ? [...selectedCountries, countryCode]
-      : selectedCountries.filter(
-          selectedCountry => selectedCountry !== countryCode,
-        );
+      : selectedCountries.filter(selectedCountry => selectedCountry !== countryCode);
     change({
       target: {
         name: "countries" as keyof FormData,
@@ -42,10 +37,7 @@ export function createRestOfTheWorldChangeHandler(
           name: "countries" as keyof FormData,
           value: selectedCountries.filter(
             countryCode =>
-              !(
-                countrySelectionMap[countryCode] &&
-                restWorldCountries.includes(countryCode)
-              ),
+              !(countrySelectionMap[countryCode] && restWorldCountries.includes(countryCode)),
           ),
         },
       } as any);

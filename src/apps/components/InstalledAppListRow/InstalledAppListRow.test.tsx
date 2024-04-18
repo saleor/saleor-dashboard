@@ -9,13 +9,7 @@ import { MemoryRouter as Router } from "react-router-dom";
 
 import InstalledAppListRow from "./InstalledAppListRow";
 
-const Component = ({
-  data,
-  context,
-}: {
-  data: InstalledApp;
-  context: AppListContextValues;
-}) => (
+const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>
     <Router>
       <AppListContext.Provider value={context}>
@@ -57,7 +51,6 @@ describe("Apps InstalledAppListRow", () => {
     expect(externalLabel).toBeFalsy();
     expect(tunnelLabel).toBeFalsy();
   });
-
   it("displays external label when app is external", () => {
     // Arrange
     const removeAppInstallation = jest.fn();
@@ -80,7 +73,6 @@ describe("Apps InstalledAppListRow", () => {
     // Assert
     expect(externalLabel).toBeTruthy();
   });
-
   it("displays tunnnel label when app is served via tunnnel", () => {
     // Arrange
     const removeAppInstallation = jest.fn();

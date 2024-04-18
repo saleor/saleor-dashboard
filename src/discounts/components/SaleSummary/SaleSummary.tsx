@@ -20,26 +20,16 @@ export interface SaleSummaryProps extends ChannelProps {
   sale: SaleDetailsFragment;
 }
 
-const SaleSummary: React.FC<SaleSummaryProps> = ({
-  selectedChannelId,
-  sale,
-}) => {
+const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) => {
   const classes = useStyles();
   const intl = useIntl();
-
-  const channel = sale?.channelListings?.find(
-    listing => listing.channel.id === selectedChannelId,
-  );
+  const channel = sale?.channelListings?.find(listing => listing.channel.id === selectedChannelId);
   return (
     <Card>
       <CardTitle title={intl.formatMessage(commonMessages.summary)} />
       <CardContent>
         <Typography variant="caption">
-          <FormattedMessage
-            id="F56hOz"
-            defaultMessage="Name"
-            description="sale name"
-          />
+          <FormattedMessage id="F56hOz" defaultMessage="Name" description="sale name" />
         </Typography>
         <Typography className={classes.ellipsis}>
           {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
@@ -47,11 +37,7 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({
         <FormSpacer />
 
         <Typography variant="caption">
-          <FormattedMessage
-            id="XZR590"
-            defaultMessage="Value"
-            description="sale value"
-          />
+          <FormattedMessage id="XZR590" defaultMessage="Value" description="sale value" />
         </Typography>
         <Typography>
           {sale ? (
@@ -94,8 +80,7 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({
         </Typography>
         <Typography>
           {maybe<React.ReactNode>(
-            () =>
-              sale.endDate === null ? "-" : <Date date={sale.endDate} plain />,
+            () => (sale.endDate === null ? "-" : <Date date={sale.endDate} plain />),
             <Skeleton />,
           )}
         </Typography>

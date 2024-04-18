@@ -20,14 +20,9 @@ export const ColumnPickerSearch: React.FC<ColumnPickerSearchProps> = ({
   const intl = useIntl();
 
   return (
-    <Debounce
-      debounceFn={(value: string) => currentCategory.onSearch(value)}
-      time={500}
-    >
+    <Debounce debounceFn={(value: string) => currentCategory.onSearch(value)} time={500}>
       {debounceSearchChange => {
-        const handleSearchChange = (
-          event: React.ChangeEvent<HTMLInputElement>,
-        ) => {
+        const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
           const value = event.target.value ?? "";
           setQuery(value);
           debounceSearchChange(value);

@@ -26,10 +26,8 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
   type,
 }) => {
   const intl = useIntl();
-
   const isNameMissing = name === null || name === "";
   const isExternal = type === "EXTERNAL";
-
   const getMainText = () => {
     if (isNameMissing && isExternal) {
       return intl.formatMessage(msgs.deleteApp);
@@ -56,10 +54,7 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
       title={intl.formatMessage(msgs.deleteAppTitle)}
       variant="delete"
     >
-      <DialogContentText
-        data-test-id="dialog-content"
-        style={{ marginTop: "-12px" }}
-      >
+      <DialogContentText data-test-id="dialog-content" style={{ marginTop: "-12px" }}>
         <Box
           backgroundColor="warning1"
           padding={2}

@@ -22,17 +22,12 @@ describe("Apps AppDeleteDialog", () => {
       </Wrapper>,
     );
     const dialogContent = screen.getByTestId("dialog-content");
-
     // Assert
-    const expectedText = msgs.deleteNamedApp.defaultMessage.replace(
-      "{name}",
-      name,
-    );
+    const expectedText = msgs.deleteNamedApp.defaultMessage.replace("{name}", name);
     const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
     expect(dialogContent).toHaveTextContent(expectedText);
     expect(dialogContent).toHaveTextContent(expectedQuestion);
   });
-
   it("displays custom app action text with app name when custom app with app name passed", () => {
     // Arrange
     const name = "Test App";
@@ -49,17 +44,12 @@ describe("Apps AppDeleteDialog", () => {
       </Wrapper>,
     );
     const dialogContent = screen.getByTestId("dialog-content");
-
     // Assert
-    const expectedText = msgs.deleteLocalNamedApp.defaultMessage.replace(
-      "{name}",
-      name,
-    );
+    const expectedText = msgs.deleteLocalNamedApp.defaultMessage.replace("{name}", name);
     const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
     expect(dialogContent).toHaveTextContent(expectedText);
     expect(dialogContent).toHaveTextContent(expectedQuestion);
   });
-
   it("displays external action text without app name when external app name is empty", () => {
     // Arrange
     render(
@@ -75,14 +65,12 @@ describe("Apps AppDeleteDialog", () => {
       </Wrapper>,
     );
     const dialogContent = screen.getByTestId("dialog-content");
-
     // Assert
     const expectedText = msgs.deleteApp.defaultMessage;
     const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
     expect(dialogContent).toHaveTextContent(expectedText);
     expect(dialogContent).toHaveTextContent(expectedQuestion);
   });
-
   it("displays custom action text without app name when custom app name is empty", () => {
     // Arrange
     render(
@@ -98,14 +86,12 @@ describe("Apps AppDeleteDialog", () => {
       </Wrapper>,
     );
     const dialogContent = screen.getByTestId("dialog-content");
-
     // Assert
     const expectedText = msgs.deleteLocalApp.defaultMessage;
     const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
     expect(dialogContent).toHaveTextContent(expectedText);
     expect(dialogContent).toHaveTextContent(expectedQuestion);
   });
-
   it("displays external action text without app name when external app name is null", () => {
     // Arrange
     render(
@@ -121,14 +107,12 @@ describe("Apps AppDeleteDialog", () => {
       </Wrapper>,
     );
     const dialogContent = screen.getByTestId("dialog-content");
-
     // Assert
     const expectedText = msgs.deleteApp.defaultMessage;
     const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
     expect(dialogContent).toHaveTextContent(expectedText);
     expect(dialogContent).toHaveTextContent(expectedQuestion);
   });
-
   it("displays custom action text without app name when custom app name is null", () => {
     // Arrange
     render(
@@ -144,7 +128,6 @@ describe("Apps AppDeleteDialog", () => {
       </Wrapper>,
     );
     const dialogContent = screen.getByTestId("dialog-content");
-
     // Assert
     const expectedText = msgs.deleteLocalApp.defaultMessage;
     const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;

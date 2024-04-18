@@ -6,10 +6,7 @@ import {
   TransactionItemFragment,
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import {
-  SavebarProps,
-  ThemeProvider as LegacyThemeProvider,
-} from "@saleor/macaw-ui";
+import { SavebarProps, ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -19,7 +16,6 @@ import { BrowserRouter } from "react-router-dom";
 import { OrderManualTransationRefundPage } from "./OrderManualTransationRefundPage";
 
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn);
-
 jest.mock("@dashboard/components/Savebar", () => {
   const SavebarComponent = ({ onCancel, onSubmit, disabled }: SavebarProps) => (
     <div>
@@ -32,22 +28,17 @@ jest.mock("@dashboard/components/Savebar", () => {
 
   return SavebarComponent;
 });
-
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => (
-    <>{defaultMessage}</>
-  ),
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
-
 jest.mock("@dashboard/hooks/useNotifier", () => ({
   __esModule: true,
   default: jest.fn(() => () => undefined),
 }));
-
 mockResizeObserver();
 
 const getWrapper = (mocks: MockedResponse[] = []) => {
@@ -85,7 +76,6 @@ describe("OrderManualTransationRefundPage", () => {
         result: { data: { transactionRequestAction: { errors: [] } } },
       },
     ];
-
     const transactions = [
       {
         id: "1",
@@ -110,19 +100,16 @@ describe("OrderManualTransationRefundPage", () => {
       />,
       { wrapper: getWrapper(mocks) },
     );
-
     // Act
     await userEvent.click(screen.getByRole("radio", { name: "Transaction 2" }));
     await userEvent.type(screen.getByLabelText(/refund amount/i), "5");
     await userEvent.click(screen.getByRole("button", { name: "save" }));
-
     // Assert
     expect(mockNofitication).toHaveBeenCalledWith({
       status: "success",
       text: "Transaction action requested successfully",
     });
   });
-
   it("should display skeleton when loading", async () => {
     // Arrange &&  Act
     render(
@@ -134,7 +121,6 @@ describe("OrderManualTransationRefundPage", () => {
       />,
       { wrapper: getWrapper() },
     );
-
     // Assert
     expect(screen.getByTestId("loading-skeleton")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "save" })).toBeDisabled();

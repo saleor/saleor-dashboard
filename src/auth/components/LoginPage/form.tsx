@@ -29,15 +29,10 @@ const getLoginFormData = () => {
   return { email: "", password: "" };
 };
 
-function useLoginForm(
-  onSubmit: (data: LoginFormData) => SubmitPromise,
-): UseLoginFormResult {
+function useLoginForm(onSubmit: (data: LoginFormData) => SubmitPromise): UseLoginFormResult {
   const form = useForm(getLoginFormData());
-
   const { change, data } = form;
-
   const handleFormSubmit = useHandleFormSubmit({ onSubmit });
-
   const submit = async () => handleFormSubmit(data);
 
   return {
@@ -49,7 +44,6 @@ function useLoginForm(
 
 const LoginForm: React.FC<LoginFormProps> = ({ children, onSubmit }) => {
   const props = useLoginForm(onSubmit);
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // Cypress tests blow up without it
     event.preventDefault();

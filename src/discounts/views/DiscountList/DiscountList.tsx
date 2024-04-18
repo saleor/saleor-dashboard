@@ -38,17 +38,12 @@ interface DiscountListProps {
 export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.DISCOUNTS_LIST,
-  );
+  const { updateListSettings, settings } = useListSettings(ListViews.DISCOUNTS_LIST);
 
   usePaginationReset(discountListUrl, params, settings.rowNumber);
   const paginationState = createPaginationState(settings.rowNumber, params);
-
   const { valueProvider } = useConditionalFilterContext();
   const where = creatDiscountsQueryVariables(valueProvider.value);
-
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
@@ -62,15 +57,11 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-
   const { data, loading } = usePromotionsListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
-
-  const promotions: PromotionFragment[] =
-    mapEdgesToItems(data?.promotions) ?? [];
-
+  const promotions: PromotionFragment[] = mapEdgesToItems(data?.promotions) ?? [];
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: discountListUrl,
@@ -79,12 +70,10 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
     params,
     keepActiveTab: true,
   });
-
   const [openModal, closeModal] = createDialogActionHandlers<
     DiscountListUrlDialog,
     DiscountListUrlQueryParams
   >(navigate, discountListUrl, params);
-
   const {
     hasPresetsChanged,
     onPresetChange,
@@ -117,7 +106,6 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
     paginationState,
     queryString: params,
   });
-
   const handleSort = createSortHandler(navigate, discountListUrl, params);
 
   return (

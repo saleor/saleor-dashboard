@@ -6,12 +6,8 @@ interface OrderAlertsProps {
   alerts: Array<string | MessageDescriptor>;
 }
 
-export const OrderAlerts: React.FC<OrderAlertsProps> = ({
-  alertsHeader,
-  alerts,
-}) => {
+export const OrderAlerts: React.FC<OrderAlertsProps> = ({ alertsHeader, alerts }) => {
   const intl = useIntl();
-
   const formattedAlerts = alerts.map((alert, index) => {
     if (typeof alert === "string") {
       return { id: `${index}_${alert}`, text: alert };

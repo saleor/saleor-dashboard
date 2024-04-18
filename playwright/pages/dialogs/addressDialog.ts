@@ -3,41 +3,23 @@ import type { Page } from "@playwright/test";
 export class AddressDialog {
   constructor(
     page: Page,
-    readonly newAddressRadioButton = page
-      .getByTestId("newAddress")
-      .locator('[value="newAddress"]'),
+    readonly newAddressRadioButton = page.getByTestId("newAddress").locator('[value="newAddress"]'),
     readonly existingAddressRadioButton = page
       .getByTestId("customerAddress")
       .locator('[value="customerAddress"]'),
 
     readonly submitButton = page.getByTestId("submit"),
-    readonly firstNameInput = page
-      .getByTestId("first-name-input")
-      .locator("input"),
-    readonly lastNameInput = page
-      .getByTestId("last-name-input")
-      .locator("input"),
-    readonly companyNameInput = page
-      .getByTestId("company-name-input")
-      .locator("input"),
+    readonly firstNameInput = page.getByTestId("first-name-input").locator("input"),
+    readonly lastNameInput = page.getByTestId("last-name-input").locator("input"),
+    readonly companyNameInput = page.getByTestId("company-name-input").locator("input"),
     readonly phoneInput = page.getByTestId("phone-input").locator("input"),
     readonly cityInput = page.getByTestId("city-input").locator("input"),
     readonly zipInput = page.getByTestId("zip-input").locator("input"),
-    readonly addressLine1Input = page
-      .getByTestId("address-line-1-input")
-      .locator("input"),
-    readonly addressLine2Input = page
-      .getByTestId("address-line-2-input")
-      .locator("input"),
-    readonly countrySelect = page.getByTestId(
-      "address-edit-country-select-field",
-    ),
-    readonly countryAreaSelect = page.getByTestId(
-      "address-edit-country-area-field",
-    ),
-    readonly selectOptions = page.getByTestId(
-      "single-autocomplete-select-option",
-    ),
+    readonly addressLine1Input = page.getByTestId("address-line-1-input").locator("input"),
+    readonly addressLine2Input = page.getByTestId("address-line-2-input").locator("input"),
+    readonly countrySelect = page.getByTestId("address-edit-country-select-field"),
+    readonly countryAreaSelect = page.getByTestId("address-edit-country-area-field"),
+    readonly selectOptions = page.getByTestId("single-autocomplete-select-option"),
   ) {}
 
   async clickConfirmButton() {

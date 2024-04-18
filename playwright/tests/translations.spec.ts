@@ -9,7 +9,6 @@ let translationsPage: TranslationsPage;
 test.beforeEach(({ page }) => {
   translationsPage = new TranslationsPage(page);
 });
-
 test("TC: SALEOR_121 Should be able to add translation  @e2e @translations", async () => {
   await translationsPage.gotoTranslationsPage();
   await translationsPage.translationPl_PL.click();
@@ -25,11 +24,8 @@ test("TC: SALEOR_121 Should be able to add translation  @e2e @translations", asy
   await translationsPage.translationInput.fill("Kategoria do Translacji");
   await translationsPage.saveButton.click();
   await expect(translationsPage.successBanner).toBeVisible();
-  await expect(
-    translationsPage.page.getByText("Kategoria do Translacji"),
-  ).toBeVisible();
+  await expect(translationsPage.page.getByText("Kategoria do Translacji")).toBeVisible();
 });
-
 test("TC: SALEOR_122 Should be able to edit translation  @e2e @translations", async () => {
   const newDescription =
     "Brukselka, szpinak, groszek, jarmuż, sałata, kapusta, cukinia, więcej brukselki. Wszystkie warzywa, jakich będziesz potrzebować, w jednym pysznym soku.";
@@ -45,9 +41,7 @@ test("TC: SALEOR_122 Should be able to edit translation  @e2e @translations", as
   await translationsPage.page
     .getByText('Translation Product "Green Juice" - PL_PL')
     .waitFor({ state: "visible", timeout: 50000 });
-  await expect(
-    translationsPage.page.getByText("Brukselka, szpinak"),
-  ).toBeVisible();
+  await expect(translationsPage.page.getByText("Brukselka, szpinak")).toBeVisible();
   await translationsPage.editTranslationDescriptionButton.click();
   await translationsPage.translationRichText.clear();
   await translationsPage.translationRichText.type(newDescription);
@@ -55,7 +49,6 @@ test("TC: SALEOR_122 Should be able to edit translation  @e2e @translations", as
   await expect(translationsPage.successBanner).toBeVisible();
   await expect(translationsPage.page.getByText(newDescription)).toBeVisible();
 });
-
 test("TC: SALEOR_123 Should be able to clear translation  @e2e @translations", async () => {
   const description =
     "Letnia kolekcja Saleor obejmuje gamę produktów, które cieszą się popularnością na rynku.Sklep demonstracyjny na każdą porę roku.Saleor uchwycił słońce open source, e-commerce.";

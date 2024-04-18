@@ -1,11 +1,7 @@
 // @ts-strict-ignore
 import photoIcon from "@assets/images/photo-icon.svg";
 import CardTitle from "@dashboard/components/CardTitle";
-import {
-  StaffErrorFragment,
-  StaffMemberDetailsFragment,
-  UserFragment,
-} from "@dashboard/graphql";
+import { StaffErrorFragment, StaffMemberDetailsFragment, UserFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getUserInitials } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -124,19 +120,12 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
     onImageDelete,
     onImageUpload,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
   const imgInputAnchor = React.createRef<HTMLInputElement>();
-
   const clickImgInput = () => imgInputAnchor.current.click();
-  const formErrors = getFormErrors(
-    ["id", "firstName", "lastName", "email"],
-    errors || [],
-  );
-
+  const formErrors = getFormErrors(["id", "firstName", "lastName", "email"], errors || []);
   const hasAvatar = !!staffMember?.avatar?.url;
-
   const getFieldProps = (name: string) => ({
     disabled: props.disabled,
     error: !!formErrors[name],
@@ -160,10 +149,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
           <div>
             <div className={classes.avatar}>
               {hasAvatar ? (
-                <img
-                  className={classes.avatarImage}
-                  src={staffMember.avatar.url}
-                />
+                <img className={classes.avatarImage} src={staffMember.avatar.url} />
               ) : (
                 <div className={classes.avatarDefault}>
                   <Typography>{getUserInitials(data)}</Typography>
@@ -172,10 +158,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
               {canEditAvatar && (
                 <div className={classes.avatarHover}>
                   <SVG src={photoIcon} />
-                  <Typography
-                    onClick={clickImgInput}
-                    className={classes.avatarActionText}
-                  >
+                  <Typography onClick={clickImgInput} className={classes.avatarActionText}>
                     <FormattedMessage
                       id="+2VzH4"
                       defaultMessage="Change"
@@ -184,10 +167,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                   </Typography>
                   {hasAvatar && (
                     <>
-                      <Typography
-                        onClick={onImageDelete}
-                        className={classes.avatarActionText}
-                      >
+                      <Typography onClick={onImageDelete} className={classes.avatarActionText}>
                         <FormattedMessage
                           id="11lR5V"
                           defaultMessage="Delete"
@@ -248,9 +228,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
       </CardContent>
       {!!formErrors.id && (
         <CardContent>
-          <Typography color="error">
-            {getStaffErrorMessage(formErrors.id, intl)}
-          </Typography>
+          <Typography color="error">{getStaffErrorMessage(formErrors.id, intl)}</Typography>
         </CardContent>
       )}
     </Card>

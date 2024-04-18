@@ -13,7 +13,6 @@ export interface CustomerStatsProps {
 
 const CustomerStats: React.FC<CustomerStatsProps> = props => {
   const { customer } = props;
-
   const intl = useIntl();
 
   return (
@@ -31,11 +30,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
         </Text>
         {customer ? (
           <Text>
-            {customer.lastLogin === null ? (
-              "-"
-            ) : (
-              <DateTime date={customer.lastLogin} plain />
-            )}
+            {customer.lastLogin === null ? "-" : <DateTime date={customer.lastLogin} plain />}
           </Text>
         ) : (
           <Skeleton />
@@ -52,10 +47,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
               {customer.lastPlacedOrder.edges.length === 0 ? (
                 "-"
               ) : (
-                <DateTime
-                  date={customer.lastPlacedOrder.edges[0].node.created}
-                  plain
-                />
+                <DateTime date={customer.lastPlacedOrder.edges[0].node.created} plain />
               )}
             </Text>
           ) : (

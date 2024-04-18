@@ -20,10 +20,7 @@ export class AssignCountriesDialog {
   }
 
   async checkAndSaveSingleCountry(countryName = "Canada") {
-    await this.countryRow
-      .filter({ hasText: countryName })
-      .locator(this.rowCheckBox)
-      .click();
+    await this.countryRow.filter({ hasText: countryName }).locator(this.rowCheckBox).click();
     await this.assignAndSaveButton.click();
     await this.countryRow.first().waitFor({ state: "hidden" });
   }

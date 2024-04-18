@@ -25,14 +25,9 @@ export const splitConditions = (
   };
 };
 
-export const mapConditionToOption = (
-  conditions: EnrichCondition[],
-): Option[] => {
+export const mapConditionToOption = (conditions: EnrichCondition[]): Option[] => {
   return conditions.reduce<Option[]>((acc, condition) => {
-    if (
-      isArrayOfOptions(condition.value) &&
-      condition.inputType === "multiselect"
-    ) {
+    if (isArrayOfOptions(condition.value) && condition.inputType === "multiselect") {
       // Flat each condition array of Options
       acc.push(
         ...condition.value.map(conditionValue => ({
@@ -53,14 +48,9 @@ export const mapConditionToOption = (
 
 export const conditionTypeToHue = (type: string, theme: DefaultTheme) => {
   const hue = stringToHue(type);
-  return theme === "defaultDark"
-    ? hueToPillColorDark(hue)
-    : hueToPillColorLight(hue);
+  return theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 };
 
 export const hasNoRuleConditions = (rule: Rule) => {
-  return (
-    !rule.conditions.length ||
-    rule.conditions.every(condition => !condition?.value?.length)
-  );
+  return !rule.conditions.length || rule.conditions.every(condition => !condition?.value?.length);
 };

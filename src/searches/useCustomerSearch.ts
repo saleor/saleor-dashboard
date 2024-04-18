@@ -9,11 +9,7 @@ import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchCustomers = gql`
   query SearchCustomers($after: String, $first: Int!, $query: String!) {
-    search: customers(
-      after: $after
-      first: $first
-      filter: { search: $query }
-    ) {
+    search: customers(after: $after, first: $first, filter: { search: $query }) {
       edges {
         node {
           id
@@ -29,7 +25,6 @@ export const searchCustomers = gql`
   }
 `;
 
-export default makeTopLevelSearch<
-  SearchCustomersQuery,
-  SearchCustomersQueryVariables
->(SearchCustomersDocument);
+export default makeTopLevelSearch<SearchCustomersQuery, SearchCustomersQueryVariables>(
+  SearchCustomersDocument,
+);

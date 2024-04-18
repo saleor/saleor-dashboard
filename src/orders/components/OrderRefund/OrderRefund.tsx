@@ -32,7 +32,6 @@ const messages = defineMessages({
     description: "refund type",
   },
 });
-
 const OrderRefund: React.FC<OrderRefundProps> = props => {
   const { data, disabled, onChange } = props;
   const classes = useStyles(props);

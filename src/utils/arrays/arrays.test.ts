@@ -1,7 +1,6 @@
 import { arrayDiff } from "./arrays";
 
 const fruits = ["apple", "orange", "strawberry"];
-
 const vegetables = ["potato", "onion"];
 
 describe("Validate diff results", () => {
@@ -9,12 +8,10 @@ describe("Validate diff results", () => {
     const diff = arrayDiff([], []);
     expect(diff).toStrictEqual({ added: [], removed: [], common: [] });
   });
-
   it("Compare array with itself", () => {
     const diff = arrayDiff(fruits, fruits);
     expect(diff).toStrictEqual({ added: [], removed: [], common: fruits });
   });
-
   it("Added elements to empty", () => {
     const diff = arrayDiff([], vegetables);
     expect(diff).toStrictEqual({
@@ -23,7 +20,6 @@ describe("Validate diff results", () => {
       common: [],
     });
   });
-
   it("Added elements to populated array", () => {
     const diff = arrayDiff(fruits, [...fruits, ...vegetables]);
     expect(diff).toStrictEqual({
@@ -32,7 +28,6 @@ describe("Validate diff results", () => {
       common: fruits,
     });
   });
-
   it("Removed elements", () => {
     const diff = arrayDiff([...fruits, ...vegetables], fruits);
     expect(diff).toStrictEqual({
@@ -41,7 +36,6 @@ describe("Validate diff results", () => {
       common: fruits,
     });
   });
-
   it("Added, removed, and common elements", () => {
     const before = ["a", "b", "c", "d"];
     const after = ["b", "e", "a", "t"];

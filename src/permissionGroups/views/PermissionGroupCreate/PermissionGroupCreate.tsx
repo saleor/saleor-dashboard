@@ -27,42 +27,31 @@ export const PermissionGroupCreate: React.FC = () => {
   const shop = useShop();
   const user = useUser();
   const { availableChannels } = useAppChannel(false);
-
-  const hasUserRestrictedAccessToChannels =
-    checkIfUserHasRestictedAccessToChannels(user.user);
+  const hasUserRestrictedAccessToChannels = checkIfUserHasRestictedAccessToChannels(user.user);
   const userAccessibleChannelsOptions = useMemo(
     () => getUserAccessibleChannelsOptions(availableChannels, user.user),
     [availableChannels, user.user],
   );
+  const [createPermissionGroup, createPermissionGroupResult] = usePermissionGroupCreateMutation({
+    onCompleted: data => {
+      if (data?.permissionGroupCreate?.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            id: "eUjFjW",
+            defaultMessage: "Permission group created",
+          }),
+        });
 
-  const [createPermissionGroup, createPermissionGroupResult] =
-    usePermissionGroupCreateMutation({
-      onCompleted: data => {
-        if (data?.permissionGroupCreate?.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage({
-              id: "eUjFjW",
-              defaultMessage: "Permission group created",
-            }),
-          });
-
-          if (data?.permissionGroupCreate?.group?.id) {
-            navigate(
-              permissionGroupDetailsUrl(data.permissionGroupCreate.group.id),
-            );
-          }
+        if (data?.permissionGroupCreate?.group?.id) {
+          navigate(permissionGroupDetailsUrl(data.permissionGroupCreate.group.id));
         }
-      },
-    });
-
-  const errors =
-    createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
-
+      }
+    },
+  });
+  const errors = createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
   const onSubmit = (formData: PermissionGroupCreateFormData) => {
-    const channelChoices = userAccessibleChannelsOptions.map(
-      channel => channel.id,
-    );
+    const channelChoices = userAccessibleChannelsOptions.map(channel => channel.id);
 
     return extractMutationErrors(
       createPermissionGroup({
@@ -71,9 +60,7 @@ export const PermissionGroupCreate: React.FC = () => {
             addPermissions: formData.permissions,
             addUsers: [],
             name: formData.name,
-            addChannels: formData.hasAllChannels
-              ? channelChoices
-              : formData.channels,
+            addChannels: formData.hasAllChannels ? channelChoices : formData.channels,
             restrictedAccessToChannels:
               hasUserRestrictedAccessToChannels || !formData.hasAllChannels,
           },
@@ -81,9 +68,7 @@ export const PermissionGroupCreate: React.FC = () => {
       }),
     );
   };
-
   const userPermissions = user?.user?.userPermissions?.map(p => p.code) || [];
-
   const permissions: PermissionData[] =
     shop?.permissions.map(
       p =>
@@ -91,7 +76,7 @@ export const PermissionGroupCreate: React.FC = () => {
           ...p,
           disabled: !userPermissions.includes(p.code),
           lastSource: false,
-        } as PermissionData),
+        }) as PermissionData,
     ) || [];
 
   return (

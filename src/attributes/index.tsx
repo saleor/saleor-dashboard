@@ -21,32 +21,19 @@ import AttributeListComponent from "./views/AttributeList";
 
 const AttributeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
-  const params: AttributeListUrlQueryParams = asSortParams(
-    qs,
-    AttributeListUrlSortField,
-  );
+  const params: AttributeListUrlQueryParams = asSortParams(qs, AttributeListUrlSortField);
 
   return <AttributeListComponent params={params} />;
 };
-
 const AttributeCreate: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: AttributeAddUrlQueryParams = qs;
   return <AttributeCreateComponent params={params} />;
 };
-
-const AttributeDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
-  location,
-  match,
-}) => {
+const AttributeDetails: React.FC<RouteComponentProps<{ id: string }>> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: AttributeUrlQueryParams = qs;
-  return (
-    <AttributeDetailsComponent
-      id={decodeURIComponent(match.params.id)}
-      params={params}
-    />
-  );
+  return <AttributeDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
 export const AttributeSection: React.FC = () => {

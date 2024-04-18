@@ -9,7 +9,6 @@ let collectionsPage: CollectionsPage;
 test.beforeEach(({ page }) => {
   collectionsPage = new CollectionsPage(page);
 });
-
 test("TC: SALEOR_112 Create collection @collections @e2e", async () => {
   await collectionsPage.gotoCollectionsListView();
   await collectionsPage.waitForDOMToFullyLoad();
@@ -27,12 +26,9 @@ test("TC: SALEOR_112 Create collection @collections @e2e", async () => {
   await collectionsPage.clickSaveButton();
   await collectionsPage.expectSuccessBanner();
 });
-
 test("TC: SALEOR_113 Edit collection: assign product @collections @e2e", async () => {
   const productToBeAssigned = "Bean Juice";
-  await collectionsPage.gotoExistingCollectionView(
-    COLLECTIONS.collectionToBeUpdated.id,
-  );
+  await collectionsPage.gotoExistingCollectionView(COLLECTIONS.collectionToBeUpdated.id);
   await collectionsPage.clickAssignProductButton();
   await collectionsPage.assignSpecificProductsDialog.assignSpecificProductsByNameAndSave(
     productToBeAssigned,
@@ -47,7 +43,6 @@ test("TC: SALEOR_113 Edit collection: assign product @collections @e2e", async (
     `Only 1 category should be visible in table`,
   ).toEqual(1);
 });
-
 test("TC: SALEOR_114 Bulk delete collections @collections @e2e", async () => {
   await collectionsPage.gotoCollectionsListView();
   await collectionsPage.waitForDOMToFullyLoad();
@@ -58,9 +53,7 @@ test("TC: SALEOR_114 Bulk delete collections @collections @e2e", async () => {
   await collectionsPage.deleteCollectionDialog.clickDeleteButton();
   await collectionsPage.waitForGrid();
   expect(
-    await collectionsPage.findRowIndexBasedOnText(
-      COLLECTIONS.collectionsToBeBulkDeleted.names,
-    ),
+    await collectionsPage.findRowIndexBasedOnText(COLLECTIONS.collectionsToBeBulkDeleted.names),
     `Given collections: ${COLLECTIONS.collectionsToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
 });

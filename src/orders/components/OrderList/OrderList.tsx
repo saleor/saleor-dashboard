@@ -17,12 +17,7 @@ import {
 import { OrderListUrlSortField, orderUrl } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import {
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-} from "@material-ui/core";
+import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -81,12 +76,9 @@ interface OrderListProps extends ListProps, SortPage<OrderListUrlSortField> {
 const numberOfColumns = 6;
 
 export const OrderList: React.FC<OrderListProps> = props => {
-  const { disabled, settings, orders, onUpdateListSettings, onSort, sort } =
-    props;
+  const { disabled, settings, orders, onUpdateListSettings, onSort, sort } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
-
   const orderList = orders
     ? orders.map(order => ({
         ...order,
@@ -100,9 +92,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
         <TableRowLink>
           <TableCellHeader
             direction={
-              sort.sort === OrderListUrlSortField.number
-                ? getArrowDirection(sort.asc)
-                : undefined
+              sort.sort === OrderListUrlSortField.number ? getArrowDirection(sort.asc) : undefined
             }
             arrowPosition="right"
             onClick={() => onSort(OrderListUrlSortField.number)}
@@ -112,9 +102,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
           </TableCellHeader>
           <TableCellHeader
             direction={
-              sort.sort === OrderListUrlSortField.date
-                ? getArrowDirection(sort.asc)
-                : undefined
+              sort.sort === OrderListUrlSortField.date ? getArrowDirection(sort.asc) : undefined
             }
             onClick={() => onSort(OrderListUrlSortField.date)}
             className={classes.colDate}
@@ -127,9 +115,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
           </TableCellHeader>
           <TableCellHeader
             direction={
-              sort.sort === OrderListUrlSortField.customer
-                ? getArrowDirection(sort.asc)
-                : undefined
+              sort.sort === OrderListUrlSortField.customer ? getArrowDirection(sort.asc) : undefined
             }
             onClick={() => onSort(OrderListUrlSortField.customer)}
             className={classes.colCustomer}
@@ -142,18 +128,12 @@ export const OrderList: React.FC<OrderListProps> = props => {
           </TableCellHeader>
           <TableCellHeader
             direction={
-              sort.sort === OrderListUrlSortField.payment
-                ? getArrowDirection(sort.asc)
-                : undefined
+              sort.sort === OrderListUrlSortField.payment ? getArrowDirection(sort.asc) : undefined
             }
             onClick={() => onSort(OrderListUrlSortField.payment)}
             className={classes.colPayment}
           >
-            <FormattedMessage
-              id="p+UDec"
-              defaultMessage="Payment"
-              description="payment status"
-            />
+            <FormattedMessage id="p+UDec" defaultMessage="Payment" description="payment status" />
           </TableCellHeader>
           <TableCellHeader
             direction={
@@ -167,11 +147,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
             <FormattedMessage id="NWxomz" defaultMessage="Fulfillment status" />
           </TableCellHeader>
           <TableCellHeader textAlign="right" className={classes.colTotal}>
-            <FormattedMessage
-              id="k9hf7F"
-              defaultMessage="Total"
-              description="total order price"
-            />
+            <FormattedMessage id="k9hf7F" defaultMessage="Total" description="total order price" />
           </TableCellHeader>
         </TableRowLink>
       </TableHead>
@@ -255,10 +231,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
           () => (
             <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage
-                  id="RlfqSV"
-                  defaultMessage="No orders found"
-                />
+                <FormattedMessage id="RlfqSV" defaultMessage="No orders found" />
               </TableCell>
             </TableRowLink>
           ),

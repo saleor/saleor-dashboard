@@ -17,9 +17,7 @@ import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-const getAutomaticallyCalculatedProductsRefundInput = (
-  formData: OrderRefundSubmitData,
-) => ({
+const getAutomaticallyCalculatedProductsRefundInput = (formData: OrderRefundSubmitData) => ({
   fulfillmentLines: formData.refundedFulfilledProductQuantities
     .filter(line => line.value !== "0")
     .map(line => ({
@@ -34,9 +32,7 @@ const getAutomaticallyCalculatedProductsRefundInput = (
       quantity: Number(line.value),
     })),
 });
-const getManuallySetProductsRefundInput = (
-  formData: OrderRefundSubmitData,
-) => ({
+const getManuallySetProductsRefundInput = (formData: OrderRefundSubmitData) => ({
   amountToRefund: formData.amount,
   fulfillmentLines: formData.refundedFulfilledProductQuantities
     .filter(line => line.value !== "0")
@@ -61,7 +57,6 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const { data, loading } = useOrderRefundDataQuery({
     displayLoader: true,
     variables: {
@@ -99,10 +94,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
         }
       },
     });
-
-  const handleSubmitMiscellaneousRefund = async (
-    formData: OrderRefundSubmitData,
-  ) => {
+  const handleSubmitMiscellaneousRefund = async (formData: OrderRefundSubmitData) => {
     extractMutationErrors(
       refundOrder({
         variables: {
@@ -112,13 +104,9 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
       }),
     );
   };
-
-  const handleSubmitProductsRefund = async (
-    formData: OrderRefundSubmitData,
-  ) => {
+  const handleSubmitProductsRefund = async (formData: OrderRefundSubmitData) => {
     const input =
-      formData.amountCalculationMode ===
-      OrderRefundAmountCalculationMode.AUTOMATIC
+      formData.amountCalculationMode === OrderRefundAmountCalculationMode.AUTOMATIC
         ? getAutomaticallyCalculatedProductsRefundInput(formData)
         : getManuallySetProductsRefundInput(formData);
 
@@ -131,7 +119,6 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
       }),
     );
   };
-
   const handleSubmit = async (formData: OrderRefundSubmitData) =>
     formData.type === OrderRefundType.MISCELLANEOUS
       ? handleSubmitMiscellaneousRefund(formData)
@@ -140,15 +127,10 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   return (
     <OrderRefundPage
       order={data?.order}
-      disabled={
-        loading ||
-        refundOrderOpts.loading ||
-        refundOrderFulfillmentProductsOpts.loading
-      }
+      disabled={loading || refundOrderOpts.loading || refundOrderFulfillmentProductsOpts.loading}
       errors={[
         ...(refundOrderOpts.data?.orderRefund.errors || []),
-        ...(refundOrderFulfillmentProductsOpts.data
-          ?.orderFulfillmentRefundProducts.errors || []),
+        ...(refundOrderFulfillmentProductsOpts.data?.orderFulfillmentRefundProducts.errors || []),
       ]}
       onSubmit={handleSubmit}
     />

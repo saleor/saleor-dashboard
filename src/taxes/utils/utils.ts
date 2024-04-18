@@ -9,17 +9,13 @@ import uniqBy from "lodash/uniqBy";
 
 export const encodeURIComponentOptional = (
   uriComponent: string | number | boolean | undefined,
-): string | undefined =>
-  uriComponent ? encodeURIComponent(uriComponent) : undefined;
+): string | undefined => (uriComponent ? encodeURIComponent(uriComponent) : undefined);
 
 export const filterChosenCountries = (
   countries: CountryFragment[],
   configurations: TaxCountryConfigurationFragment[],
 ) =>
-  countries.filter(
-    country =>
-      !configurations.find(config => config.country.code === country.code),
-  );
+  countries.filter(country => !configurations.find(config => config.country.code === country.code));
 export const mapUndefinedTaxRatesToCountries = (
   taxConfigurations: TaxCountryConfigurationFragment[],
   taxClasses: TaxClassFragment[],
@@ -45,12 +41,8 @@ export const mapUndefinedTaxRatesToCountries = (
           ],
           "taxClass.id",
         );
-        const defaultRate = taxClassCountryRates.find(
-          rate => rate.taxClass === null,
-        );
-        const parsedCountryRates = taxClassCountryRates.filter(
-          rate => rate.taxClass !== null,
-        );
+        const defaultRate = taxClassCountryRates.find(rate => rate.taxClass === null);
+        const parsedCountryRates = taxClassCountryRates.filter(rate => rate.taxClass !== null);
         parsedCountryRates.unshift(
           defaultRate ?? {
             rate: undefined,
@@ -69,8 +61,7 @@ export const mapUndefinedTaxRatesToCountries = (
 
 export const getCountriesFromCountryConfigurations = (
   data: TaxCountriesListQuery,
-): CountryFragment[] =>
-  data?.taxCountryConfigurations?.map(config => config.country);
+): CountryFragment[] => data?.taxCountryConfigurations?.map(config => config.country);
 
 export const mapUndefinedCountriesToTaxClasses = (
   taxConfigurations: TaxCountryConfigurationFragment[],
@@ -91,8 +82,7 @@ export const mapUndefinedCountriesToTaxClasses = (
     ),
   }));
 
-export const isLastElement = (arr: any[], index: number): boolean =>
-  index === arr.length - 1;
+export const isLastElement = (arr: any[], index: number): boolean => index === arr.length - 1;
 
 export const excludeExistingCountries = (
   allCountries: CountryFragment[],

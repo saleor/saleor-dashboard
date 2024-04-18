@@ -54,7 +54,6 @@ const messages = defineMessages({
     description: "button",
   },
 });
-
 const useStyles = makeStyles(
   {
     actions: {
@@ -84,7 +83,6 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
     onSetAsDefault,
   } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
@@ -96,10 +94,10 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
               {isDefaultBillingAddress && isDefaultShippingAddress
                 ? intl.formatMessage(messages.defaultAddress)
                 : isDefaultShippingAddress
-                ? intl.formatMessage(messages.defaultShippingAddress)
-                : isDefaultBillingAddress
-                ? intl.formatMessage(messages.defaultBillingAddress)
-                : null}
+                  ? intl.formatMessage(messages.defaultShippingAddress)
+                  : isDefaultBillingAddress
+                    ? intl.formatMessage(messages.defaultBillingAddress)
+                    : null}
             </>
           ) : (
             <Skeleton />

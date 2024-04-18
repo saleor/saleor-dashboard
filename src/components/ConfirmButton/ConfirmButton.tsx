@@ -7,11 +7,7 @@ import { useIntl } from "react-intl";
 
 const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
 
-export type ConfirmButtonTransitionState =
-  | "default"
-  | "loading"
-  | "success"
-  | "error";
+export type ConfirmButtonTransitionState = "default" | "loading" | "success" | "error";
 
 export type ConfirmButtonLabels = Partial<Record<"confirm" | "error", string>>;
 
@@ -37,21 +33,14 @@ export const ConfirmButton = ({
   ...props
 }: ConfirmButtonProps) => {
   const intl = useIntl();
-  const [displayCompletedActionState, setDisplayCompletedActionState] =
-    useState(false);
+  const [displayCompletedActionState, setDisplayCompletedActionState] = useState(false);
   const timeout = useRef<number>();
-
-  const isCompleted = noTransition
-    ? transitionState !== "default"
-    : displayCompletedActionState;
-
+  const isCompleted = noTransition ? transitionState !== "default" : displayCompletedActionState;
   const isError = transitionState === "error" && isCompleted;
-
   const defaultLabels: ConfirmButtonLabels = {
     confirm: intl.formatMessage(buttonMessages.save),
     error: intl.formatMessage(commonMessages.error),
   };
-
   const componentLabels: ConfirmButtonLabels = {
     ...defaultLabels,
     ...labels,
@@ -62,17 +51,12 @@ export const ConfirmButton = ({
       setDisplayCompletedActionState(true);
     }
   }, [transitionState, noTransition]);
-
   useEffect(() => {
     if (noTransition) {
       return;
     }
 
-    if (
-      (["error", "success"] as ConfirmButtonTransitionState[]).includes(
-        transitionState,
-      )
-    ) {
+    if ((["error", "success"] as ConfirmButtonTransitionState[]).includes(transitionState)) {
       timeout.current = setTimeout(() => {
         setDisplayCompletedActionState(false);
         if (onTransitionToDefault) {
@@ -119,7 +103,6 @@ export const ConfirmButton = ({
 
     return null;
   };
-
   const getByLabelText = () => {
     if (isError) {
       return componentLabels.error;
@@ -139,10 +122,7 @@ export const ConfirmButton = ({
       {renderContent()}
       <span
         className={sprinkles({
-          opacity:
-            ["loading", "success"].includes(transitionState) && isCompleted
-              ? "0"
-              : "1",
+          opacity: ["loading", "success"].includes(transitionState) && isCompleted ? "0" : "1",
           transition: "ease",
         })}
       >

@@ -31,9 +31,7 @@ export class PageTypesPage extends BasePage {
 
   async assignAttributes(attributeName: string) {
     await this.assignAttributesButton.click();
-    await this.attributeDialog.assignSpecificAttributeByNameAndSave(
-      attributeName,
-    );
+    await this.attributeDialog.assignSpecificAttributeByNameAndSave(attributeName);
   }
 
   async gotoPageTypeListPage() {
@@ -63,9 +61,7 @@ export class PageTypesPage extends BasePage {
 
   async gotoExistingPageTypePage(pageTypeId: string) {
     const existingPageTypeUrl = URL_LIST.pageTypes + pageTypeId;
-    await console.log(
-      "Navigating to page type details: " + existingPageTypeUrl,
-    );
+    await console.log("Navigating to page type details: " + existingPageTypeUrl);
     await this.page.goto(existingPageTypeUrl);
   }
 

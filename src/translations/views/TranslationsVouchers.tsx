@@ -35,25 +35,21 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
-
   const voucherTranslations = useVoucherTranslationDetailsQuery({
     variables: { id, language: languageCode },
   });
-
-  const [updateTranslations, updateTranslationsOpts] =
-    useUpdateVoucherTranslationsMutation({
-      onCompleted: data => {
-        if (data.voucherTranslate.errors.length === 0) {
-          voucherTranslations.refetch();
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          navigate("?", { replace: true });
-        }
-      },
-    });
-
+  const [updateTranslations, updateTranslationsOpts] = useUpdateVoucherTranslationsMutation({
+    onCompleted: data => {
+      if (data.voucherTranslate.errors.length === 0) {
+        voucherTranslations.refetch();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        navigate("?", { replace: true });
+      }
+    },
+  });
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -62,11 +58,9 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
         }),
       { replace: true },
     );
-
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
-
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
     data: string,
@@ -83,7 +77,6 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
         },
       }),
     );
-
   const translation = voucherTranslations?.data?.translation;
 
   return (
@@ -97,11 +90,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={
-        translation?.__typename === "VoucherTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === "VoucherTranslatableContent" ? translation : null}
     />
   );
 };

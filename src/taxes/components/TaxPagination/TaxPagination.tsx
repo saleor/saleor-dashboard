@@ -31,11 +31,9 @@ export const TaxPagination = ({
 }: TaxPaginationProps) => {
   const classes = useStyles();
   const intl = useIntl();
-
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
   };
-
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
   };

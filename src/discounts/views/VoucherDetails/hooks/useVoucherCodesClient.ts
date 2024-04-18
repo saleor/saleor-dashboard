@@ -21,10 +21,7 @@ interface UseVoucherCodesClient {
   handleDeleteAddedVoucherCodes: (idsToDelete: string[]) => void;
   handleAddVoucherCode: (code: string) => void;
   handleClearAddedVoucherCodes: () => void;
-  handleGenerateMultipleCodes: ({
-    quantity,
-    prefix,
-  }: GenerateMultipleVoucherCodeFormData) => void;
+  handleGenerateMultipleCodes: ({ quantity, prefix }: GenerateMultipleVoucherCodeFormData) => void;
 }
 
 export const useVoucherCodesClient = (
@@ -32,22 +29,16 @@ export const useVoucherCodesClient = (
   switchToClientPagination: () => void,
 ): UseVoucherCodesClient => {
   const [addedVoucherCodes, setAddedVoucherCodes] = useState<VoucherCode[]>([]);
-
   const {
     paginatedCodes: clientVoucherCodes,
     pagination: clientVoucherCodesPagination,
     onSettingsChange,
     resetPage,
   } = useVoucherCodesPagination(addedVoucherCodes);
-
-  const hasClientPaginationNextPage =
-    clientVoucherCodesPagination?.pageInfo?.hasNextPage ?? false;
+  const hasClientPaginationNextPage = clientVoucherCodesPagination?.pageInfo?.hasNextPage ?? false;
   const hasClientPaginationPrevPage =
     clientVoucherCodesPagination.pageInfo?.hasPreviousPage ?? false;
-
-  const freeSlotsInClientPagianationPage =
-    settings.rowNumber - clientVoucherCodes.length;
-
+  const freeSlotsInClientPagianationPage = settings.rowNumber - clientVoucherCodes.length;
   const handleAddVoucherCode = (code: string) => {
     if (voucherCodeExists(code, addedVoucherCodes)) {
       throw new Error("Code already exists");
@@ -57,25 +48,17 @@ export const useVoucherCodesClient = (
     switchToClientPagination();
     resetPage();
   };
-
   const handleGenerateMultipleCodes = ({
     quantity,
     prefix,
   }: GenerateMultipleVoucherCodeFormData) => {
-    setAddedVoucherCodes(codes => [
-      ...generateMultipleIds(quantity, prefix),
-      ...codes,
-    ]);
+    setAddedVoucherCodes(codes => [...generateMultipleIds(quantity, prefix), ...codes]);
     switchToClientPagination();
     resetPage();
   };
-
   const handleDeleteAddedVoucherCodes = (idsToDelete: string[]) => {
-    setAddedVoucherCodes(codes =>
-      codes.filter(({ code }) => !idsToDelete.includes(code)),
-    );
+    setAddedVoucherCodes(codes => codes.filter(({ code }) => !idsToDelete.includes(code)));
   };
-
   const handleClearAddedVoucherCodes = () => {
     setAddedVoucherCodes([]);
   };

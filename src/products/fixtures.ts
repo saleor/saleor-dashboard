@@ -21,8 +21,7 @@ const content = richTextEditorFixtures.richTextEditor;
 
 export const product: (
   placeholderImage: string,
-) => ProductFragment &
-  ProductVariantCreateDataQuery["product"] = placeholderImage => ({
+) => ProductFragment & ProductVariantCreateDataQuery["product"] = placeholderImage => ({
   __typename: "Product" as "Product",
   attributes: [
     {
@@ -1228,9 +1227,7 @@ export const product: (
     value: 5,
   },
 });
-export const products = (
-  placeholderImage: string,
-): RelayToFlat<ProductListQuery["products"]> => [
+export const products = (placeholderImage: string): RelayToFlat<ProductListQuery["products"]> => [
   {
     __typename: "Product",
     description:
@@ -4083,16 +4080,13 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     value: 6,
   },
 });
-export const variantMedia = (placeholderImage: string) =>
-  variant(placeholderImage).media;
+export const variantMedia = (placeholderImage: string) => variant(placeholderImage).media;
 export const variantProductImages = (placeholderImage: string) =>
   variant(placeholderImage).product.media;
 export const variantSiblings = (placeholderImage: string) =>
   variant(placeholderImage).product.variants;
 
-export const productTypesList: Array<
-  Pick<ProductType, "id" | "name" | "hasVariants">
-> = [
+export const productTypesList: Array<Pick<ProductType, "id" | "name" | "hasVariants">> = [
   {
     hasVariants: true,
     id: "UHJvZHVjdFR5cGU6Nw==",

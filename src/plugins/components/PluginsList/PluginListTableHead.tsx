@@ -11,19 +11,14 @@ import { pluginsListTableHeadMessages as messages } from "./messages";
 
 type PluginListTableHeadProps = SortPage<PluginListUrlSortField>;
 
-const PluginListTableHead: React.FC<PluginListTableHeadProps> = ({
-  sort,
-  onSort,
-}) => {
+const PluginListTableHead: React.FC<PluginListTableHeadProps> = ({ sort, onSort }) => {
   const intl = useIntl();
 
   return (
     <TableHead>
       <TableCellHeader
         direction={
-          sort.sort === PluginListUrlSortField.name
-            ? getArrowDirection(sort.asc)
-            : undefined
+          sort.sort === PluginListUrlSortField.name ? getArrowDirection(sort.asc) : undefined
         }
         arrowPosition="right"
         onClick={() => onSort(PluginListUrlSortField.name)}
@@ -34,17 +29,13 @@ const PluginListTableHead: React.FC<PluginListTableHeadProps> = ({
       <TableCellHeader
         colSpan={2}
         direction={
-          sort.sort === PluginListUrlSortField.active
-            ? getArrowDirection(sort.asc)
-            : undefined
+          sort.sort === PluginListUrlSortField.active ? getArrowDirection(sort.asc) : undefined
         }
         onClick={() => onSort(PluginListUrlSortField.active)}
       >
         {intl.formatMessage(messages.confLabel)}
       </TableCellHeader>
-      <TableCellHeader colSpan={2}>
-        {intl.formatMessage(messages.channelLabel)}
-      </TableCellHeader>
+      <TableCellHeader colSpan={2}>{intl.formatMessage(messages.channelLabel)}</TableCellHeader>
       <TableCellHeader></TableCellHeader>
     </TableHead>
   );

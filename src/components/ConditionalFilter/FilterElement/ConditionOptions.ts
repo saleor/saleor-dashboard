@@ -1,9 +1,6 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import {
-  ATTRIBUTE_INPUT_TYPE_CONDITIONS,
-  STATIC_CONDITIONS,
-} from "../constants";
+import { ATTRIBUTE_INPUT_TYPE_CONDITIONS, STATIC_CONDITIONS } from "../constants";
 
 export type StaticElementName = keyof typeof STATIC_CONDITIONS;
 export type AttributeInputType = keyof typeof ATTRIBUTE_INPUT_TYPE_CONDITIONS;
@@ -52,9 +49,7 @@ export class ConditionOptions extends Array<ConditionItem> {
     return new ConditionOptions(options);
   }
 
-  public static fromName(
-    name: AttributeInputType | StaticElementName | AttributeInputTypeEnum,
-  ) {
+  public static fromName(name: AttributeInputType | StaticElementName | AttributeInputTypeEnum) {
     const optionsStatic = this.isStaticName(name) && STATIC_CONDITIONS[name];
     const optionsAttribute =
       this.isAttributeInputType(name) && ATTRIBUTE_INPUT_TYPE_CONDITIONS[name];

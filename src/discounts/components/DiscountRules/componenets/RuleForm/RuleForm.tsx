@@ -4,10 +4,7 @@ import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
-import {
-  CommonError,
-  getCommonFormFieldErrorMessage,
-} from "@dashboard/utils/errors/common";
+import { CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { Box, Input, Option } from "@saleor/macaw-ui-next";
@@ -27,36 +24,27 @@ interface RuleFormProps<ErrorCode> {
   openPlayground: () => void;
 }
 
-export const RuleForm = <ErrorCode,>({
-  errors,
-  openPlayground,
-}: RuleFormProps<ErrorCode>) => {
+export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<ErrorCode>) => {
   const intl = useIntl();
   const { disabled, channels, discountType } = useDiscountRulesContext();
   const { watch, getValues, setValue, formState } = useFormContext<Rule>();
   const formErrors = getFormErrors(["rewardValue"], errors);
-
   const { trigger } = useFormContext<Rule>();
   const { field: nameField } = useController<Rule, "name">({
     name: "name",
   });
-
   const { field: channelfield } = useController<Rule, "channel">({
     name: "channel",
   });
-
   const selectedChannel = watch("channel");
-
   const conditions = watch("conditions");
   const hasSelectedChannel = !!selectedChannel;
   const currencySymbol = getCurencySymbol(selectedChannel, channels);
-
   const richText = useRichText({
     initial: getValues("description"),
     loading: false,
     triggerChange: trigger,
   });
-
   const channelOptions = useMemo(
     () =>
       channels.map<Option>(channel => ({
@@ -78,11 +66,7 @@ export const RuleForm = <ErrorCode,>({
     const channel = channels.find(channel => channel.id === channelId);
 
     if (channel) {
-      setValue(
-        "channel",
-        { value: channel.id, label: channel.name },
-        { shouldValidate: true },
-      );
+      setValue("channel", { value: channel.id, label: channel.name }, { shouldValidate: true });
     }
     setValue("rewardGifts", []);
 

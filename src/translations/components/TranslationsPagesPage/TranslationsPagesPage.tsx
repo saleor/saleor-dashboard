@@ -21,8 +21,7 @@ import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsPagesPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsPagesPageProps extends TranslationsEntitiesPageProps {
   data: PageTranslationFragment;
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
@@ -149,10 +148,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               disabled={disabled}
               initialState={true}
               title={intl.formatMessage(commonMessages.translationAttributes)}
-              fields={mapAttributeValuesToTranslationFields(
-                data.attributeValues,
-                intl,
-              )}
+              fields={mapAttributeValuesToTranslationFields(data.attributeValues, intl)}
               saveButtonState={saveButtonState}
               richTextResetKey={languageCode}
               onEdit={onEdit}

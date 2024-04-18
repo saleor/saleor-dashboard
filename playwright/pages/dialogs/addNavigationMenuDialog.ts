@@ -5,9 +5,7 @@ export class AddNavigationMenuDialog {
 
   constructor(
     page: Page,
-    readonly menuNameInput = page
-      .getByTestId("menu-name-input")
-      .locator("input"),
+    readonly menuNameInput = page.getByTestId("menu-name-input").locator("input"),
     readonly saveButton = page.getByTestId("submit"),
     readonly backButton = page.getByTestId("back"),
   ) {

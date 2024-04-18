@@ -1,31 +1,17 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { SearchStaffMembersQuery } from "@dashboard/graphql";
-import useElementScroll, {
-  isScrolledToBottom,
-} from "@dashboard/hooks/useElementScroll";
+import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  getUserInitials,
-  getUserName,
-  renderCollection,
-} from "@dashboard/misc";
-import {
-  DialogProps,
-  FetchMoreProps,
-  RelayToFlat,
-  SearchPageProps,
-} from "@dashboard/types";
+import { getUserInitials, getUserName, renderCollection } from "@dashboard/misc";
+import { DialogProps, FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import {
   Checkbox,
   CircularProgress,
@@ -109,10 +95,7 @@ const useStyles = makeStyles(
   { name: "AssignStaffMembersDialog" },
 );
 
-export interface AssignMembersDialogProps
-  extends DialogProps,
-    FetchMoreProps,
-    SearchPageProps {
+export interface AssignMembersDialogProps extends DialogProps, FetchMoreProps, SearchPageProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   staffMembers: RelayToFlat<SearchStaffMembersQuery["search"]>;
@@ -125,14 +108,10 @@ function handleStaffMemberAssign(
   member: RelayToFlat<SearchStaffMembersQuery["search"]>[0],
   isSelected: boolean,
   selectedMembers: RelayToFlat<SearchStaffMembersQuery["search"]>,
-  setSelectedMembers: (
-    data: RelayToFlat<SearchStaffMembersQuery["search"]>,
-  ) => void,
+  setSelectedMembers: (data: RelayToFlat<SearchStaffMembersQuery["search"]>) => void,
 ) {
   if (isSelected) {
-    setSelectedMembers(
-      selectedMembers.filter(selectedMember => selectedMember.id !== member.id),
-    );
+    setSelectedMembers(selectedMembers.filter(selectedMember => selectedMember.id !== member.id));
   } else {
     setSelectedMembers([...selectedMembers, member]);
   }
@@ -153,11 +132,9 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
   const [query, onQueryChange] = useSearchQuery(onSearchChange);
-
   const [selectedMembers, setSelectedMembers] = React.useState<
     RelayToFlat<SearchStaffMembersQuery["search"]>
   >([]);
-
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
   const dropShadow = !isScrolledToBottom(anchor, scrollPosition);
@@ -221,10 +198,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
 
                   return (
                     <TableRowLink key={member.id} data-test-id="user-row">
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.checkboxCell}
-                      >
+                      <TableCell padding="checkbox" className={classes.checkboxCell}>
                         <Checkbox
                           color="primary"
                           checked={isSelected}
@@ -239,17 +213,10 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                         />
                       </TableCell>
                       <TableCell className={classes.avatarCell}>
-                        <UserAvatar
-                          url={member?.avatar?.url}
-                          initials={getUserInitials(member)}
-                        />
+                        <UserAvatar url={member?.avatar?.url} initials={getUserInitials(member)} />
                       </TableCell>
                       <TableCell className={classes.colName}>
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          justifyContent="center"
-                        >
+                        <Box display="flex" flexDirection="column" justifyContent="center">
                           <Text>{getUserName(member) || <Skeleton />}</Text>
                           <Text size={2} color="default2">
                             {!!member ? (

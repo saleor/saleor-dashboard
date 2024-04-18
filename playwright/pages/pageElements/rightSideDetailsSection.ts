@@ -18,67 +18,37 @@ export class RightSideDetailsPage {
     ),
     readonly pickupDisabledButton = page.getByTestId("DISABLED"),
     readonly pickupAllWarehousesButton = page.getByTestId("ALL"),
-    readonly categorySelectOption = page.locator(
-      "[data-test-id*='select-option']",
-    ),
+    readonly categorySelectOption = page.locator("[data-test-id*='select-option']"),
     readonly taxSelectOption = page.locator("[data-test-id*='select-option']"),
-    readonly selectOption = page.getByTestId(
-      "multi-autocomplete-select-option",
-    ),
+    readonly selectOption = page.getByTestId("multi-autocomplete-select-option"),
     readonly categoryInput = page.getByTestId("category"),
     readonly taxInput = page.getByTestId("taxes"),
-    readonly categoryItem = page.getByTestId(
-      "single-autocomplete-select-option",
-    ),
+    readonly categoryItem = page.getByTestId("single-autocomplete-select-option"),
     readonly collectionInput = page.getByTestId("collections"),
     readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
-    readonly manageChannelsButton = page.getByTestId(
-      "channels-availability-manage-button",
-    ),
+    readonly manageChannelsButton = page.getByTestId("channels-availability-manage-button"),
     readonly expandButton = page.getByTestId("expand-icon"),
     readonly assignedChannels = page.getByTestId("channel-availability-item"),
     readonly publishedRadioButtons = page.locator("[name*='isPublished'] > "),
-    readonly availableForPurchaseRadioButtons = page.locator(
-      "[id*='isAvailableForPurchase']",
-    ),
+    readonly availableForPurchaseRadioButtons = page.locator("[id*='isAvailableForPurchase']"),
     readonly radioButtonsValueTrue = page.locator("[value='true']"),
     readonly radioButtonsValueFalse = page.locator("[value='false']"),
-    readonly visibleInListingsButton = page.locator(
-      "[id*='visibleInListings']",
-    ),
-    readonly availableChannel = page.locator(
-      "[data-test-id*='channel-availability-item']",
-    ),
-    readonly editShippingAddressButton = page.getByTestId(
-      "edit-shipping-address",
-    ),
-    readonly editBillingAddressButton = page.getByTestId(
-      "edit-billing-address",
-    ),
-    readonly shippingAddressSection = page.getByTestId(
-      "shipping-address-section",
-    ),
-    readonly billingAddressSection = page.getByTestId(
-      "billing-address-section",
-    ),
+    readonly visibleInListingsButton = page.locator("[id*='visibleInListings']"),
+    readonly availableChannel = page.locator("[data-test-id*='channel-availability-item']"),
+    readonly editShippingAddressButton = page.getByTestId("edit-shipping-address"),
+    readonly editBillingAddressButton = page.getByTestId("edit-billing-address"),
+    readonly shippingAddressSection = page.getByTestId("shipping-address-section"),
+    readonly billingAddressSection = page.getByTestId("billing-address-section"),
     readonly warehousesSection = page.getByTestId("warehouses-section"),
     readonly shippingZoneSection = page.getByTestId("shipping-zones-section"),
     readonly editCustomerButton = page.getByTestId("edit-customer"),
     readonly searchCustomerInput = page.getByTestId("select-customer"),
-    readonly selectCustomerOption = page.getByTestId(
-      "single-autocomplete-select-option",
-    ),
+    readonly selectCustomerOption = page.getByTestId("single-autocomplete-select-option"),
     readonly addShippingZonesButton = page.getByTestId("shipping-add-link"),
     readonly addWarehousesButton = page.getByTestId("warehouse-add-link"),
-    readonly shippingZonesSelect = page.getByTestId(
-      "shipping-auto-complete-select",
-    ),
-    readonly warehouseSelect = page.getByTestId(
-      "warehouse-auto-complete-select",
-    ),
-    readonly allocationHighStockButton = page.getByTestId(
-      "PRIORITIZE_HIGH_STOCK",
-    ),
+    readonly shippingZonesSelect = page.getByTestId("shipping-auto-complete-select"),
+    readonly warehouseSelect = page.getByTestId("warehouse-auto-complete-select"),
+    readonly allocationHighStockButton = page.getByTestId("PRIORITIZE_HIGH_STOCK"),
   ) {
     this.page = page;
     this.channelSelectDialog = new ChannelSelectDialog(page);
@@ -107,10 +77,7 @@ export class RightSideDetailsPage {
   }
 
   async typeAndSelectSingleWarehouseShippingPage(warehouse = "Europe") {
-    await this.selectWarehouseShippingMethodButton
-      .locator("input")
-      .fill(warehouse);
-
+    await this.selectWarehouseShippingMethodButton.locator("input").fill(warehouse);
     await this.selectOption.filter({ hasText: warehouse }).first().click();
     // below click hides prompted options
     this.clickWarehouseSelectShippingPage();
@@ -118,10 +85,7 @@ export class RightSideDetailsPage {
 
   async typeAndSelectMultipleWarehousesShippingPage(warehouses: string[]) {
     for (const warehouse of warehouses) {
-      await this.selectWarehouseShippingMethodButton
-        .locator("input")
-        .fill(warehouse);
-
+      await this.selectWarehouseShippingMethodButton.locator("input").fill(warehouse);
       await this.selectOption.filter({ hasText: warehouse }).first().click();
     }
     this.clickWarehouseSelectShippingPage();

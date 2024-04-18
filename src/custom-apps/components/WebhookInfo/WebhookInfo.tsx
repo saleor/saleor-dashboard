@@ -7,13 +7,7 @@ import { WebhookErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getWebhookErrorMessage from "@dashboard/utils/errors/webhooks";
-import {
-  Card,
-  CardContent,
-  Popper,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, Popper, TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,17 +22,10 @@ interface WebhookInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const WebhookInfo: React.FC<WebhookInfoProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const WebhookInfo: React.FC<WebhookInfoProps> = ({ data, disabled, errors, onChange }) => {
   const intl = useIntl();
   const classes = useStyles();
-
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
-
   const [isPopupOpen, setPopupOpen] = React.useState(false);
   const anchor = React.useRef<HTMLDivElement>(null);
 
@@ -105,11 +92,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
                   outlined
                   size="small"
                 />
-                <Popper
-                  anchorEl={anchor.current}
-                  open={isPopupOpen}
-                  placement={"top"}
-                >
+                <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"top"}>
                   <Card elevation={8} className={classes.toolbar}>
                     <Typography>
                       <FormattedMessage {...messages.useSignature} />

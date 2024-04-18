@@ -55,11 +55,9 @@ export const getGrantRefundReducerInitialState = (
   grantedRefund?: OrderDetailsGrantedRefundFragment,
 ): GrantRefundState => {
   const toGrantRefundLine = createToGrantRefundLineMap(order, grantedRefund);
-
   const unfulfilledLines = order?.lines
     .filter(line => line.quantityToFulfill > 0)
     .map(toGrantRefundLine);
-
   const fulfilmentLines = order.fulfillments
     .flatMap(fulfilment => fulfilment.lines)
     .map(toGrantRefundLine);
@@ -145,8 +143,7 @@ function createToGrantRefundLineMap(
       | OrderDetailsGrantRefundFragment["fulfillments"][0]["lines"][0],
   ): GrantRefundLineKeyValue => {
     const initialQuantity =
-      grantedRefund?.lines?.find(initLine => initLine.orderLine.id === line.id)
-        ?.quantity ?? 0;
+      grantedRefund?.lines?.find(initLine => initLine.orderLine.id === line.id)?.quantity ?? 0;
 
     return [
       line.id,
@@ -160,9 +157,7 @@ function createToGrantRefundLineMap(
           grantRefundId: grantedRefund?.id,
         }),
         unitPrice:
-          "orderLine" in line
-            ? line.orderLine.unitPrice.gross.amount
-            : line.unitPrice.gross.amount,
+          "orderLine" in line ? line.orderLine.unitPrice.gross.amount : line.unitPrice.gross.amount,
         selectedQuantity: initialQuantity,
         initialQuantity,
       },

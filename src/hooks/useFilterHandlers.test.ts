@@ -4,14 +4,12 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useFilterHandlers } from "./useFilterHandlers";
 
 jest.mock("./useNavigator", () => () => jest.fn());
-
 describe("useFilterHandlers", () => {
   describe("resetFilters", () => {
     test("should run cleanup function and call createUrl function", () => {
       // Arrange
       const cleanupFn = jest.fn();
       const createUrl = jest.fn();
-
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(),
@@ -27,15 +25,12 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const resetFilters = result.current[1];
 
       // Act
       resetFilters();
-
       // Assert
-
       expect(cleanupFn).toHaveBeenCalledTimes(1);
       expect(createUrl).toHaveBeenCalledWith({
         asc: true,
@@ -43,11 +38,9 @@ describe("useFilterHandlers", () => {
       });
     });
   });
-
   describe("changeFilters", () => {
     test("should call cleanup function when provided", () => {
       const cleanupFn = jest.fn();
-
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(),
@@ -63,20 +56,15 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-
       const [changeFilters] = result.current;
 
       // Act
       changeFilters([]);
-
       // Assert
-
       expect(cleanupFn).toHaveBeenCalledTimes(1);
     });
-
     test("should call createUrl function with with proper params when no filters", () => {
       const createUrl = jest.fn();
-
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(filter => ({
@@ -93,12 +81,10 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-
       const [changeFilters] = result.current;
 
       // Act
       changeFilters([]);
-
       // Assert
       expect(createUrl).toHaveBeenCalledWith({
         asc: true,
@@ -107,10 +93,8 @@ describe("useFilterHandlers", () => {
         activeTab: undefined,
       });
     });
-
     test("should call createUrl function with with proper params when filters selected", () => {
       const createUrl = jest.fn();
-
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(filter => ({
@@ -127,7 +111,6 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-
       const [changeFilters] = result.current;
 
       // Act
@@ -147,7 +130,6 @@ describe("useFilterHandlers", () => {
           multiple: false,
         },
       ]);
-
       // Assert
       expect(createUrl).toHaveBeenCalledWith({
         filter: "value",
@@ -158,10 +140,8 @@ describe("useFilterHandlers", () => {
         activeTab: undefined,
       });
     });
-
     test("should call createUrl function with active tab value when keepActiveTab is true", () => {
       const createUrl = jest.fn();
-
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(filter => ({
@@ -178,7 +158,6 @@ describe("useFilterHandlers", () => {
           keepActiveTab: true,
         }),
       );
-
       const [changeFilters] = result.current;
 
       // Act
@@ -191,7 +170,6 @@ describe("useFilterHandlers", () => {
           multiple: false,
         },
       ]);
-
       // Assert
       expect(createUrl).toHaveBeenCalledWith({
         filter: "value",
@@ -202,11 +180,9 @@ describe("useFilterHandlers", () => {
       });
     });
   });
-
   describe("handleSearchChange", () => {
     test("should call createUrl function when provided", () => {
       const cleanupFn = jest.fn();
-
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(),
@@ -222,20 +198,14 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-
       const handleSearchChange = result.current[2];
-
       // Act
       handleSearchChange("queryTest");
-
       // Assert
-
       expect(cleanupFn).toHaveBeenCalledTimes(1);
     });
-
     test("should run createUrl function with params and query", () => {
       const createUrl = jest.fn();
-
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(filter => ({
@@ -252,13 +222,11 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const handleSearchChange = result.current[2];
 
       // Act
       handleSearchChange("queryTest");
-
       // Assert
       expect(createUrl).toHaveBeenCalledWith({
         after: undefined,
@@ -269,10 +237,8 @@ describe("useFilterHandlers", () => {
         activeTab: undefined,
       });
     });
-
     test("should run createUrl function  with sort rank and asc false when hasSortWithRank is true", () => {
       const createUrl = jest.fn();
-
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(filter => ({
@@ -290,13 +256,11 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const handleSearchChange = result.current[2];
 
       // Act
       handleSearchChange("queryTest");
-
       // Assert
       expect(createUrl).toHaveBeenCalledWith({
         after: undefined,

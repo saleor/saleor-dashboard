@@ -32,9 +32,7 @@ export interface UseFormsetOutput<TData = {}, TValue = any, TMetadata = any> {
 function useFormset<TData = {}, TValue = any, TMetadata = any>(
   initial: FormsetData<TData, TValue>,
 ): UseFormsetOutput<TData, TValue> {
-  const [data, setData] = useStateFromProps<
-    FormsetData<TData, TValue, TMetadata>
-  >(initial || []);
+  const [data, setData] = useStateFromProps<FormsetData<TData, TValue, TMetadata>>(initial || []);
 
   function addItem(itemData: FormsetAtomicData<TData, TValue, TMetadata>) {
     setData(prevData => [...prevData, itemData]);

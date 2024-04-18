@@ -46,7 +46,6 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
   const intl = useIntl();
   const navigation = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-
   const handleRowClick = (id: string) => {
     navigation(discountUrl(id));
   };
@@ -58,12 +57,7 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
         withoutBorder
         title={intl.formatMessage(commonMessages.discounts)}
       >
-        <Box
-          __flex={1}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
               <ChevronRightIcon />
@@ -93,11 +87,7 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
               variant="primary"
               data-test-id="create-sale"
             >
-              <FormattedMessage
-                id="+MJW+8"
-                defaultMessage="Create Discount"
-                description="button"
-              />
+              <FormattedMessage id="+MJW+8" defaultMessage="Create Discount" description="button" />
             </Button>
           </Box>
         </Box>
@@ -105,13 +95,7 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
 
       <DashboardCard>
         <LegacyFiltersPresetsAlert />
-        <Box
-          display="grid"
-          __gridTemplateColumns="auto 1fr"
-          gap={4}
-          paddingBottom={2}
-          paddingX={6}
-        >
+        <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4} paddingBottom={2} paddingX={6}>
           <Box display="flex" alignItems="center" gap={4}>
             <ExpressionFilters data-test-id="filters-button" />
             <Box __width="320px">

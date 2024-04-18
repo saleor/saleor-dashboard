@@ -15,14 +15,9 @@ interface OrderRefundDialogProps {
 
 type RefundType = "standard" | "misc";
 
-export const OrderRefundDialog = ({
-  open,
-  onClose,
-  onConfirm,
-}: OrderRefundDialogProps) => {
+export const OrderRefundDialog = ({ open, onClose, onConfirm }: OrderRefundDialogProps) => {
   const [selected, setSelected] = React.useState<RefundType>("standard");
   const intl = useIntl();
-
   const handleClose = () => {
     setSelected("standard");
     onClose();
@@ -34,11 +29,7 @@ export const OrderRefundDialog = ({
           {intl.formatMessage(orderRefundDialogMesages.title)}
         </DashboardModal.Title>
         <Text>{intl.formatMessage(orderRefundDialogMesages.subtitle)}</Text>
-        <RadioTiles
-          asChild
-          value={selected}
-          onValueChange={val => setSelected(val as RefundType)}
-        >
+        <RadioTiles asChild value={selected} onValueChange={val => setSelected(val as RefundType)}>
           <Box
             as="fieldset"
             borderWidth={0}
@@ -51,30 +42,20 @@ export const OrderRefundDialog = ({
             <RadioTiles.RadioTile
               value={"standard"}
               checked={selected === "standard"}
-              title={intl.formatMessage(
-                orderRefundDialogMesages.standardRefundTitle,
-              )}
-              description={intl.formatMessage(
-                orderRefundDialogMesages.standardRefundSubtitle,
-              )}
+              title={intl.formatMessage(orderRefundDialogMesages.standardRefundTitle)}
+              description={intl.formatMessage(orderRefundDialogMesages.standardRefundSubtitle)}
             />
             <RadioTiles.RadioTile
               value={"misc"}
               checked={selected === "misc"}
-              title={intl.formatMessage(
-                orderRefundDialogMesages.miscRefundTitle,
-              )}
-              description={intl.formatMessage(
-                orderRefundDialogMesages.miscRefundSubtitle,
-              )}
+              title={intl.formatMessage(orderRefundDialogMesages.miscRefundTitle)}
+              description={intl.formatMessage(orderRefundDialogMesages.miscRefundSubtitle)}
             />
           </Box>
         </RadioTiles>
         <DashboardModal.Actions>
           <Button onClick={onClose} variant="secondary">
-            <Text fontWeight="medium">
-              {intl.formatMessage(buttonMessages.cancel)}
-            </Text>
+            <Text fontWeight="medium">{intl.formatMessage(buttonMessages.cancel)}</Text>
           </Button>
           <Button onClick={onConfirm}>
             <Text fontWeight="medium" color="buttonDefaultPrimary">

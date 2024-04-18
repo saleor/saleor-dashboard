@@ -57,20 +57,16 @@ const useStyles = makeStyles(
   }),
   { name: "OrderDraftDetailsSummary" },
 );
-
 const PRICE_PLACEHOLDER = "---";
 
-interface OrderDraftDetailsSummaryProps
-  extends OrderDiscountContextConsumerProps {
+interface OrderDraftDetailsSummaryProps extends OrderDiscountContextConsumerProps {
   disabled?: boolean;
   order: OrderDetailsFragment;
   errors: OrderErrorFragment[];
   onShippingMethodEdit: () => void;
 }
 
-const OrderDraftDetailsSummary: React.FC<
-  OrderDraftDetailsSummaryProps
-> = props => {
+const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props => {
   const {
     order,
     errors,
@@ -85,7 +81,6 @@ const OrderDraftDetailsSummary: React.FC<
     orderDiscountRemoveStatus,
     undiscountedPrice,
   } = props;
-
   const intl = useIntl();
   const classes = useStyles(props);
 
@@ -103,36 +98,22 @@ const OrderDraftDetailsSummary: React.FC<
     shippingAddress,
     isShippingRequired,
   } = order;
-
   const formErrors = getFormErrors(["shipping"], errors);
-
-  const hasChosenShippingMethod =
-    shippingMethod !== null && shippingMethodName !== null;
-
+  const hasChosenShippingMethod = shippingMethod !== null && shippingMethodName !== null;
   const hasShippingMethods = !!shippingMethods?.length || isShippingRequired;
-
-  const discountTitle = orderDiscount
-    ? messages.discount
-    : messages.addDiscount;
-
+  const discountTitle = orderDiscount ? messages.discount : messages.addDiscount;
   const getOrderDiscountLabel = (orderDiscountData: OrderDiscountData) => {
     if (!orderDiscountData) {
       return PRICE_PLACEHOLDER;
     }
 
-    const {
-      value: discountValue,
-      calculationMode,
-      amount: discountAmount,
-    } = orderDiscountData;
+    const { value: discountValue, calculationMode, amount: discountAmount } = orderDiscountData;
     const currency = total.gross.currency;
 
     if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
       return (
         <div className={classes.percentDiscountLabelContainer}>
-          <Typography
-            className={classes.subtitle}
-          >{`(${discountValue}%)`}</Typography>
+          <Typography className={classes.subtitle}>{`(${discountValue}%)`}</Typography>
           <Money money={discountAmount} />
         </div>
       );
@@ -140,30 +121,22 @@ const OrderDraftDetailsSummary: React.FC<
 
     return <Money money={{ amount: discountValue, currency }} />;
   };
-
   const getShippingMethodComponent = () => {
     if (hasChosenShippingMethod) {
-      return (
-        <Link onClick={onShippingMethodEdit}>{`${shippingMethodName}`}</Link>
-      );
+      return <Link onClick={onShippingMethodEdit}>{`${shippingMethodName}`}</Link>;
     }
 
     const shippingCarrierBase = intl.formatMessage(messages.addShippingCarrier);
 
     if (!!shippingAddress) {
       return (
-        <Link
-          onClick={onShippingMethodEdit}
-          data-test-id="add-shipping-carrier"
-        >
+        <Link onClick={onShippingMethodEdit} data-test-id="add-shipping-carrier">
           {shippingCarrierBase}
         </Link>
       );
     }
 
-    const addShippingAddressInfo = intl.formatMessage(
-      messages.addShippingAddressInfo,
-    );
+    const addShippingAddressInfo = intl.formatMessage(messages.addShippingAddressInfo);
 
     return (
       <div className={classes.shippingMethodContainer}>
@@ -183,17 +156,11 @@ const OrderDraftDetailsSummary: React.FC<
           <td>
             <Popover open={isDialogOpen}>
               <Popover.Trigger>
-                <Button
-                  variant="tertiary"
-                  onClick={isDialogOpen ? closeDialog : openDialog}
-                >
+                <Button variant="tertiary" onClick={isDialogOpen ? closeDialog : openDialog}>
                   <Link>{intl.formatMessage(discountTitle)}</Link>
                 </Button>
               </Popover.Trigger>
-              <Popover.Content
-                align="start"
-                className={sprinkles({ zIndex: "3" })}
-              >
+              <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
                 <Box boxShadow="defaultOverlay">
                   <OrderDiscountCommonModal
                     modalType={ORDER_DISCOUNT}
@@ -209,9 +176,7 @@ const OrderDraftDetailsSummary: React.FC<
               </Popover.Content>
             </Popover>
           </td>
-          <td className={classes.textRight}>
-            {getOrderDiscountLabel(orderDiscount)}
-          </td>
+          <td className={classes.textRight}>{getOrderDiscountLabel(orderDiscount)}</td>
         </tr>
         <tr data-test-id="order-subtotal-price">
           <td>{intl.formatMessage(messages.subtotal)}</td>
@@ -223,8 +188,7 @@ const OrderDraftDetailsSummary: React.FC<
           <td>
             {hasShippingMethods && getShippingMethodComponent()}
 
-            {!hasShippingMethods &&
-              intl.formatMessage(messages.noShippingCarriers)}
+            {!hasShippingMethods && intl.formatMessage(messages.noShippingCarriers)}
 
             {formErrors.shipping && (
               <Typography variant="body2" className={classes.textError}>
@@ -234,11 +198,7 @@ const OrderDraftDetailsSummary: React.FC<
           </td>
 
           <td className={classes.textRight}>
-            {hasChosenShippingMethod ? (
-              <Money money={shippingPrice.gross} />
-            ) : (
-              PRICE_PLACEHOLDER
-            )}
+            {hasChosenShippingMethod ? <Money money={shippingPrice.gross} /> : PRICE_PLACEHOLDER}
           </td>
         </tr>
         <tr data-test-id="order-taxes-price">

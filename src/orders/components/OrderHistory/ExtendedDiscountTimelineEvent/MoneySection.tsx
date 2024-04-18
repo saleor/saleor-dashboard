@@ -79,8 +79,7 @@ const MoneySection: React.FC<MoneySectionProps> = ({
   }
 
   const getDiscountSubitle = () => {
-    const isDiscountedByPercent =
-      calculationMode === DiscountValueTypeEnum.PERCENTAGE;
+    const isDiscountedByPercent = calculationMode === DiscountValueTypeEnum.PERCENTAGE;
 
     if (isDiscountedByPercent) {
       return `${value}% ${intl.formatMessage(messages.discount)}`;
@@ -88,7 +87,6 @@ const MoneySection: React.FC<MoneySectionProps> = ({
 
     return intl.formatMessage(messages.fixedAmount);
   };
-
   const sectionTitleMessageKey = `${sectionType}DiscountSectionTitle`;
 
   return (

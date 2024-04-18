@@ -34,18 +34,13 @@ const useStyles = makeStyles(
     name: "OrderTransactionEvents",
   },
 );
-
 const isFakeEventsList = (
   events: TransactionEventFragment[] | TransactionFakeEvent[],
-): events is TransactionFakeEvent[] =>
-  events[0]?.__typename === "TransactionFakeEvent";
+): events is TransactionFakeEvent[] => events[0]?.__typename === "TransactionFakeEvent";
 
-export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
-  events,
-}) => {
+export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({ events }) => {
   const classes = useStyles();
   const [hoveredPspReference, setHoveredPspReference] = useState(null);
-
   const hasCreatedBy = React.useMemo(() => {
     if (isFakeEventsList(events)) {
       return false;

@@ -7,11 +7,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { sortAlphabetically } from "@dashboard/utils/sort";
 
 import { Rule } from "./models";
-import {
-  SearchCategoriesOpts,
-  SearchCollectionOpts,
-  SearchProductsOpts,
-} from "./types";
+import { SearchCategoriesOpts, SearchCollectionOpts, SearchProductsOpts } from "./types";
 
 type SaleOrVoucherData = SaleDetailsQuery | VoucherDetailsQuery;
 
@@ -29,16 +25,13 @@ export function getFilteredCategories(
   searchCategoriesOpts: SearchCategoriesOpts,
 ) {
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search);
-
   const criteria = getCriteria(data);
 
   if (!criteria?.categories?.edges) {
     return categories;
   }
 
-  const excludedCategoryIds = criteria.categories.edges.map(
-    category => category.node.id,
-  );
+  const excludedCategoryIds = criteria.categories.edges.map(category => category.node.id);
 
   return categories?.filter(
     suggestedCategory => !excludedCategoryIds.includes(suggestedCategory.id),
@@ -50,20 +43,16 @@ export function getFilteredCollections(
   searchCollectionsOpts: SearchCollectionOpts,
 ) {
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search);
-
   const criteria = getCriteria(data);
 
   if (!criteria?.collections?.edges) {
     return collections;
   }
 
-  const excludedCollectionIds = criteria?.collections.edges.map(
-    collection => collection.node.id,
-  );
+  const excludedCollectionIds = criteria?.collections.edges.map(collection => collection.node.id);
 
   return collections?.filter(
-    suggestedCollection =>
-      !excludedCollectionIds.includes(suggestedCollection.id),
+    suggestedCollection => !excludedCollectionIds.includes(suggestedCollection.id),
   );
 }
 
@@ -72,20 +61,15 @@ export function getFilteredProducts(
   searchProductsOpts: SearchProductsOpts,
 ) {
   const products = mapEdgesToItems(searchProductsOpts?.data?.search);
-
   const criteria = getCriteria(data);
 
   if (!criteria?.products?.edges) {
     return products;
   }
 
-  const excludedProductIds = criteria?.products.edges.map(
-    product => product.node.id,
-  );
+  const excludedProductIds = criteria?.products.edges.map(product => product.node.id);
 
-  return products?.filter(
-    suggestedProduct => !excludedProductIds.includes(suggestedProduct.id),
-  );
+  return products?.filter(suggestedProduct => !excludedProductIds.includes(suggestedProduct.id));
 }
 
 export function getFilteredProductVariants(
@@ -97,9 +81,7 @@ export function getFilteredProductVariants(
   if (!data?.sale?.variants?.edges) {
     return products;
   }
-  const excludedVariantsIds = data?.sale?.variants.edges.map(
-    variant => variant.node.id,
-  );
+  const excludedVariantsIds = data?.sale?.variants.edges.map(variant => variant.node.id);
 
   return products?.map(suggestedProduct => ({
     ...suggestedProduct,

@@ -13,10 +13,7 @@ import {
   useCommonStyles,
 } from "./utils";
 
-type FilterDateTimeFieldProps = FilterFieldBaseProps<
-  string,
-  FieldType.dateTime | FieldType.date
->;
+type FilterDateTimeFieldProps = FilterFieldBaseProps<string, FieldType.dateTime | FieldType.date>;
 
 export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({
   filter,
@@ -25,7 +22,6 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({
   const classes = useCommonStyles({});
   const isDateTime = filter.type === FieldType.dateTime;
   const isMultiple = filter.multiple;
-
   const handleChange = (value: string[]) =>
     onFilterPropertyChange({
       payload: {
@@ -56,11 +52,7 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({
           }}
           value={splitDateTime(filter.value[0]).date}
           onChange={event => {
-            const value = getDateFilterValue(
-              event.target.value,
-              filter.value[0],
-              isDateTime,
-            );
+            const value = getDateFilterValue(event.target.value, filter.value[0], isDateTime);
             handleChange(isMultiple ? [value, filter.value[1]] : [value]);
           }}
         />
@@ -76,10 +68,7 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({
             }}
             value={splitDateTime(filter.value[0]).time}
             onChange={event => {
-              const value = getDateTimeFilterValue(
-                filter.value[0],
-                event.target.value,
-              );
+              const value = getDateTimeFilterValue(filter.value[0], event.target.value);
               handleChange(isMultiple ? [value, filter.value[1]] : [value]);
             }}
           />
@@ -114,11 +103,7 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({
               onChange={event =>
                 handleChange([
                   filter.value[0],
-                  getDateFilterValue(
-                    event.target.value,
-                    filter.value[1],
-                    isDateTime,
-                  ),
+                  getDateFilterValue(event.target.value, filter.value[1], isDateTime),
                 ])
               }
             />

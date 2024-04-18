@@ -56,17 +56,7 @@ interface PageHeaderProps {
 }
 
 const PageHeader: React.FC<PageHeaderProps> = props => {
-  const {
-    children,
-    className,
-    inline,
-    underline,
-    limitText,
-    title,
-    cardMenu,
-    preview,
-  } = props;
-
+  const { children, className, inline, underline, limitText, title, cardMenu, preview } = props;
   const classes = useStyles(props);
 
   return (
@@ -80,11 +70,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
         title={
           <>
             <Typography className={classes.title} variant="h3">
-              {title !== undefined ? (
-                title
-              ) : (
-                <Skeleton style={{ width: "10em" }} />
-              )}
+              {title !== undefined ? title : <Skeleton style={{ width: "10em" }} />}
             </Typography>
             {cardMenu}
           </>

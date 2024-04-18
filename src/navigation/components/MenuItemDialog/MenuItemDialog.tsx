@@ -1,10 +1,7 @@
 // @ts-strict-ignore
 import AutocompleteSelectMenu from "@dashboard/components/AutocompleteSelectMenu";
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import {
   MenuErrorFragment,
@@ -97,12 +94,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
 }) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
-  const [displayValue, setDisplayValue] = React.useState(
-    initialDisplayValue || "",
-  );
-  const [data, setData] = useStateFromProps<MenuItemDialogFormData>(
-    initial || defaultInitial,
-  );
+  const [displayValue, setDisplayValue] = React.useState(initialDisplayValue || "");
+  const [data, setData] = useStateFromProps<MenuItemDialogFormData>(initial || defaultInitial);
   const [url, setUrl] = React.useState<string>(undefined);
 
   // Reset input state after closing dialog
@@ -113,12 +106,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
       setUrl(undefined);
     },
   });
-
   // Refresh initial display value if changed
-  React.useEffect(
-    () => setDisplayValue(initialDisplayValue),
-    [initialDisplayValue],
-  );
+  React.useEffect(() => setDisplayValue(initialDisplayValue), [initialDisplayValue]);
 
   const mutationErrors = errors.filter(err => err.field === null);
   const formErrors = getFormErrors(["name"], errors);
@@ -207,7 +196,6 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     }
     onQueryChange(query);
   };
-
   const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const menuItemData = getMenuItemData(value);
@@ -218,7 +206,6 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     }));
     setDisplayValue(getDisplayValue(options, value));
   };
-
   const handleSubmit = () => onSubmit(data);
 
   return (

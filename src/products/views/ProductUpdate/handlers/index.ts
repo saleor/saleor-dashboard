@@ -24,9 +24,7 @@ export function createImageUploadHandler(
 
 export function createImageReorderHandler(
   product: ProductFragment,
-  reorderProductImages: (
-    variables: ProductMediaReorderMutationVariables,
-  ) => void,
+  reorderProductImages: (variables: ProductMediaReorderMutationVariables) => void,
 ) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {
     let ids = product.media.map(image => image.id);
@@ -42,9 +40,10 @@ function areVariantsEqual(a: Node, b: Node) {
   return a.id === b.id;
 }
 
-export function createVariantReorderHandler<
-  T extends { id: string; variants: any[] },
->(product: T, reorderProductVariants: ProductVariantReorderMutationFn) {
+export function createVariantReorderHandler<T extends { id: string; variants: any[] }>(
+  product: T,
+  reorderProductVariants: ProductVariantReorderMutationFn,
+) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {
     const oldVariantOrder = [...product.variants];
 

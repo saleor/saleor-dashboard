@@ -5,10 +5,7 @@ import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import {
-  voucherAddUrl,
-  VoucherListUrlSortField,
-} from "@dashboard/discounts/urls";
+import { voucherAddUrl, VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import { VoucherFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -24,11 +21,7 @@ import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { VoucherListDatagrid } from "../VoucherListDatagrid";
-import {
-  createFilterStructure,
-  VoucherFilterKeys,
-  VoucherListFilterOpts,
-} from "./filters";
+import { createFilterStructure, VoucherFilterKeys, VoucherListFilterOpts } from "./filters";
 
 export interface VoucherListPageProps
   extends PageListProps,
@@ -62,7 +55,6 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-
   const filterDependency = structure.find(getByName("channel"));
 
   return (
@@ -72,12 +64,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
         withoutBorder
         isAlignToRight={false}
       >
-        <Box
-          __flex={1}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
               <ChevronRightIcon />
@@ -107,11 +94,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
               variant="primary"
               data-test-id="create-voucher"
             >
-              <FormattedMessage
-                id="GbhZJ4"
-                defaultMessage="Create voucher"
-                description="button"
-              />
+              <FormattedMessage id="GbhZJ4" defaultMessage="Create voucher" description="button" />
             </Button>
           </Box>
         </Box>
@@ -131,20 +114,14 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
             <Box display="flex" gap={4}>
               {selectedVouchersIds.length > 0 && (
                 <BulkDeleteButton onClick={onVoucherDelete}>
-                  <FormattedMessage
-                    defaultMessage="Delete vouchers"
-                    id="lfXze9"
-                  />
+                  <FormattedMessage defaultMessage="Delete vouchers" id="lfXze9" />
                 </BulkDeleteButton>
               )}
             </Box>
           }
         />
 
-        <VoucherListDatagrid
-          filterDependency={filterDependency}
-          {...listProps}
-        />
+        <VoucherListDatagrid filterDependency={filterDependency} {...listProps} />
       </Card>
     </ListPageLayout>
   );

@@ -38,12 +38,7 @@ export const collectionListUrl = (params?: CollectionListUrlQueryParams) =>
   collectionSectionUrl + "?" + stringifyQs(params);
 
 export const collectionPath = (id: string) => urlJoin(collectionSectionUrl, id);
-export type CollectionUrlDialog =
-  | "remove"
-  | "removeImage"
-  | "assign"
-  | "unassign"
-  | ChannelsAction;
+export type CollectionUrlDialog = "remove" | "removeImage" | "assign" | "unassign" | ChannelsAction;
 export type CollectionUrlQueryParams = BulkAction & Dialog<CollectionUrlDialog>;
 export type CollectionCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const collectionUrl = (id: string, params?: CollectionUrlQueryParams) =>

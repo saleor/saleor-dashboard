@@ -28,7 +28,6 @@ const getUserOrApp = (event: GiftCardEventFragment): string | null => {
 
   return null;
 };
-
 const getUserOrAppUrl = (event: GiftCardEventFragment): string => {
   if (event.user) {
     return staffMemberDetailsUrl(event.user.id);
@@ -38,7 +37,6 @@ const getUserOrAppUrl = (event: GiftCardEventFragment): string => {
   }
   return null;
 };
-
 const getEventMessage = (event: GiftCardEventFragment, intl: IntlShape) => {
   const user = getUserOrApp(event);
   const userUrl = getUserOrAppUrl(event);
@@ -58,9 +56,7 @@ const getEventMessage = (event: GiftCardEventFragment, intl: IntlShape) => {
         : intl.formatMessage(timelineMessages.balanceResetAnonymous);
     case GiftCardEventsEnum.BOUGHT:
       return intl.formatMessage(timelineMessages.bought, {
-        orderNumber: (
-          <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>
-        ),
+        orderNumber: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
       });
     case GiftCardEventsEnum.DEACTIVATED:
       return user
@@ -91,24 +87,18 @@ const getEventMessage = (event: GiftCardEventFragment, intl: IntlShape) => {
     case GiftCardEventsEnum.USED_IN_ORDER:
       return user
         ? intl.formatMessage(timelineMessages.usedInOrder, {
-            orderLink: (
-              <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>
-            ),
+            orderLink: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
             buyer: content =>
               !!user && (
                 <Link
                   href={
-                    event.user
-                      ? customerPath(event.user.id)
-                      : AppPaths.resolveAppPath(event.app.id)
+                    event.user ? customerPath(event.user.id) : AppPaths.resolveAppPath(event.app.id)
                   }
                 >{`${content} ${user}`}</Link>
               ),
           })
         : intl.formatMessage(timelineMessages.usedInOrderAnonymous, {
-            orderLink: (
-              <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>
-            ),
+            orderLink: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
           });
   }
 };
@@ -118,18 +108,9 @@ export interface GiftCardTimelineEventProps {
   event: GiftCardEventFragment;
 }
 
-const GiftCardTimelineEvent: React.FC<GiftCardTimelineEventProps> = ({
-  date,
-  event,
-}) => {
+const GiftCardTimelineEvent: React.FC<GiftCardTimelineEventProps> = ({ date, event }) => {
   const intl = useIntl();
-  return (
-    <TimelineEvent
-      date={date}
-      title={getEventMessage(event, intl)}
-      hasPlainDate
-    />
-  );
+  return <TimelineEvent date={date} title={getEventMessage(event, intl)} hasPlainDate />;
 };
 
 export default GiftCardTimelineEvent;

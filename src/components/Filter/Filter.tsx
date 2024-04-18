@@ -8,12 +8,7 @@ import React, { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { FilterContent } from ".";
-import {
-  FilterElement,
-  FilterErrorMessages,
-  IFilter,
-  InvalidFilters,
-} from "./types";
+import { FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from "./types";
 import useFilter from "./useFilter";
 import { extractInvalidFilters, getSelectedFiltersAmount } from "./utils";
 
@@ -88,27 +83,14 @@ const useStyles = makeStyles(
   { name: "Filter" },
 );
 const Filter: React.FC<FilterProps> = props => {
-  const {
-    currencySymbol,
-    menu,
-    onFilterAdd,
-    onFilterAttributeFocus,
-    errorMessages,
-  } = props;
+  const { currencySymbol, menu, onFilterAdd, onFilterAttributeFocus, errorMessages } = props;
   const classes = useStyles(props);
-
   const anchor = React.useRef<HTMLDivElement>();
   const [isFilterMenuOpened, setFilterMenuOpened] = useState(false);
   const [filterErrors, setFilterErrors] = useState<InvalidFilters<string>>({});
   const [data, dispatch, reset] = useFilter(menu);
-
   const isFilterActive = menu.some(filterElement => filterElement.active);
-
-  const selectedFilterAmount = useMemo(
-    () => getSelectedFiltersAmount(menu, data),
-    [data, menu],
-  );
-
+  const selectedFilterAmount = useMemo(() => getSelectedFiltersAmount(menu, data), [data, menu]);
   const handleSubmit = () => {
     const invalidFilters = extractInvalidFilters(data, menu);
 
@@ -121,7 +103,6 @@ const Filter: React.FC<FilterProps> = props => {
     onFilterAdd(data);
     setFilterMenuOpened(false);
   };
-
   const handleClear = () => {
     reset();
     setFilterErrors({});
@@ -139,23 +120,16 @@ const Filter: React.FC<FilterProps> = props => {
       <div ref={anchor}>
         <Button
           className={clsx(classes.filterButton, {
-            [classes.addFilterButtonActive]:
-              isFilterMenuOpened || isFilterActive,
+            [classes.addFilterButtonActive]: isFilterMenuOpened || isFilterActive,
           })}
           onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
           data-test-id="show-filters-button"
           variant="secondary"
         >
           <Typography className={classes.addFilterText}>
-            <FormattedMessage
-              id="FNpv6K"
-              defaultMessage="Filters"
-              description="button"
-            />
+            <FormattedMessage id="FNpv6K" defaultMessage="Filters" description="button" />
           </Typography>
-          {isFilterActive && selectedFilterAmount > 0 && (
-            <>({selectedFilterAmount})</>
-          )}
+          {isFilterActive && selectedFilterAmount > 0 && <>({selectedFilterAmount})</>}
         </Button>
         <Popper
           className={classes.popover}

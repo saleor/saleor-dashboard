@@ -25,9 +25,7 @@ export class MetadataSeoPage {
     readonly metaDeletedButton = page.getByTestId("delete-field-0"),
     readonly privateMetaSection = page.locator("[data-test-is-private='true']"),
     readonly publicMetaSection = page.locator("[data-test-is-private='false']"),
-    readonly fulfillmentMetaSection = page.getByTestId(
-      "fulfilled-order-section",
-    ),
+    readonly fulfillmentMetaSection = page.getByTestId("fulfilled-order-section"),
     readonly addMetaButton = page
       .locator("[data-test-is-private='false']")
       .getByTestId("add-field"),

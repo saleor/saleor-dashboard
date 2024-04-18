@@ -11,33 +11,19 @@ export class SiteSettingsPage extends BasePage {
     readonly stockReservationForAnonUserInput = page
       .getByTestId("reserve-stock-duration-for-anon-user-input")
       .locator("input"),
-    readonly checkoutLineLimitInput = page
-      .getByTestId("checkout-limits-input")
-      .locator("input"),
-    readonly companyInput = page
-      .getByTestId("company-name-input")
-      .locator("input"),
-    readonly addressLine1Input = page
-      .getByTestId("company-address-line-1-input")
-      .locator("input"),
-    readonly addressLine2Input = page
-      .getByTestId("company-address-line-2-input")
-      .locator("input"),
+    readonly checkoutLineLimitInput = page.getByTestId("checkout-limits-input").locator("input"),
+    readonly companyInput = page.getByTestId("company-name-input").locator("input"),
+    readonly addressLine1Input = page.getByTestId("company-address-line-1-input").locator("input"),
+    readonly addressLine2Input = page.getByTestId("company-address-line-2-input").locator("input"),
     readonly city = page.getByTestId("company-city-input").locator("input"),
-    readonly countryInput = page
-      .getByTestId("address-edit-country-select-field")
-      .locator("input"),
+    readonly countryInput = page.getByTestId("address-edit-country-select-field").locator("input"),
     readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
     readonly countryAreaDropdown = page
       .getByTestId("address-edit-country-area-field")
       .locator("input"),
     readonly zipInput = page.getByTestId("company-zip-input").locator("input"),
-    readonly phoneInput = page
-      .getByTestId("company-phone-input")
-      .locator("input"),
-    readonly emailConfirmationCheckbox = page.getByTestId(
-      "require-email-confirmation-checkbox",
-    ),
+    readonly phoneInput = page.getByTestId("company-phone-input").locator("input"),
+    readonly emailConfirmationCheckbox = page.getByTestId("require-email-confirmation-checkbox"),
     readonly companyInfoSection = page.getByTestId("company-info"),
   ) {
     super(page);
@@ -76,9 +62,7 @@ export class SiteSettingsPage extends BasePage {
     await this.countryInput.click();
     await this.autocompleteDropdown.getByText(country, { exact: true }).click();
     await this.countryAreaDropdown.fill(countryArea);
-    await this.autocompleteDropdown
-      .getByText(countryArea, { exact: true })
-      .click();
+    await this.autocompleteDropdown.getByText(countryArea, { exact: true }).click();
     await this.zipInput.fill(zip);
     await this.phoneInput.fill(phone);
   }

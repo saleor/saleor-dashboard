@@ -125,7 +125,6 @@ export const LocaleContext = React.createContext<LocaleContextType>({
 });
 
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
-
 const LocaleProvider: React.FC = ({ children }) => {
   const [locale, setLocale] = useLocalStorage("locale", defaultLocale);
   const [messages, setMessages] = React.useState(undefined);

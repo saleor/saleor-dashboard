@@ -16,14 +16,10 @@ export class CategoriesPage extends BasePage {
     readonly productsTabButton = page.getByTestId("products-tab"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly productsGridList = page.getByTestId("list"),
-    readonly categoryDescriptionEditor = page.getByTestId(
-      "rich-text-editor-description",
-    ),
+    readonly categoryDescriptionEditor = page.getByTestId("rich-text-editor-description"),
 
     readonly categoryDescriptionLoader = page.locator(".codex-editor__loader"),
-    readonly categoryNameInput = page
-      .getByTestId("category-name-input")
-      .locator("input"),
+    readonly categoryNameInput = page.getByTestId("category-name-input").locator("input"),
   ) {
     super(page);
     this.page = page;

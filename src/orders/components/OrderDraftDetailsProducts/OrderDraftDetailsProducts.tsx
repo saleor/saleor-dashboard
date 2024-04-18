@@ -35,7 +35,6 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = ({
   onShowMetadata,
 }) => {
   const classes = useStyles();
-
   const lines = order?.lines ?? [];
   const formErrors = errors.filter(error => error.field === "lines");
 

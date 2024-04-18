@@ -48,13 +48,11 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-
   const getErrorMessage = (code: string) => {
     try {
-      return intl.formatMessage(
-        errorMessages?.[code] || validationMessages[code],
-        { dependencies: dependencies?.join() },
-      );
+      return intl.formatMessage(errorMessages?.[code] || validationMessages[code], {
+        dependencies: dependencies?.join(),
+      });
     } catch (e) {
       errorTracker.captureException(e as Error);
       console.warn("Translation missing for filter error code: ", code);
@@ -73,9 +71,7 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
           {errors.map(code => (
             <div className={classes.itemContainer} key={code}>
               <div className={classes.dot} />
-              <Typography className={classes.listItemTitle}>
-                {getErrorMessage(code)}
-              </Typography>
+              <Typography className={classes.listItemTitle}>{getErrorMessage(code)}</Typography>
             </div>
           ))}
         </InlineAlert>

@@ -8,21 +8,16 @@ export interface UseRowSelection {
   setClearDatagridRowSelectionCallback: (callback: () => void) => void;
 }
 
-export const useRowSelection = (
-  paginationParams?: Pagination,
-): UseRowSelection => {
+export const useRowSelection = (paginationParams?: Pagination): UseRowSelection => {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
-
   // Keep reference to clear datagrid selection function
   const clearDatagridRowSelectionCallback = useRef<(() => void) | null>(null);
-
   const clearRowSelection = () => {
     if (clearDatagridRowSelectionCallback.current) {
       clearDatagridRowSelectionCallback.current();
     }
     setSelectedRowIds([]);
   };
-
   const setClearDatagridRowSelectionCallback = (callback: () => void) => {
     clearDatagridRowSelectionCallback.current = callback;
   };

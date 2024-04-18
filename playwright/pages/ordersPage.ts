@@ -28,18 +28,14 @@ export class OrdersPage extends BasePage {
     readonly addTrackingButton = page.getByTestId("add-tracking-button"),
     readonly editTrackingButton = page.getByTestId("edit-tracking-button"),
     readonly setTrackingNumber = page.getByTestId("tracking-number-set"),
-    readonly manualTransactionButton = page.getByTestId(
-      "captureManualTransactionButton",
-    ),
+    readonly manualTransactionButton = page.getByTestId("captureManualTransactionButton"),
     readonly orderSummarySection = page.getByTestId("OrderSummaryCard"),
     readonly paymentSummarySection = page.getByTestId("payment-section"),
     readonly paymentStatusInfo = page.getByTestId("payment-status"),
     readonly balanceStatusInfo = page.getByTestId("order-balance-status"),
     readonly fulfillButton = page.getByTestId("fulfill-button"),
     readonly addProducts = page.getByTestId("add-products-button"),
-    readonly orderTransactionsList = page
-      .getByTestId("orderTransactionsList")
-      .locator("table"),
+    readonly orderTransactionsList = page.getByTestId("orderTransactionsList").locator("table"),
     readonly salesChannel = page.getByTestId("salesChannel"),
     readonly addShippingCarrierLink = page.getByTestId("add-shipping-carrier"),
     readonly finalizeButton = page.getByTestId("button-bar-confirm"),

@@ -6,12 +6,8 @@ export class ChangePasswordDialog {
   constructor(
     page: Page,
     readonly saveButton = page.getByTestId("submit"),
-    readonly newPasswordInput = page
-      .getByTestId("new-password-input")
-      .locator("input"),
-    readonly oldPasswordInput = page
-      .getByTestId("old-password-input")
-      .locator("input"),
+    readonly newPasswordInput = page.getByTestId("new-password-input").locator("input"),
+    readonly oldPasswordInput = page.getByTestId("old-password-input").locator("input"),
   ) {
     this.page = page;
   }

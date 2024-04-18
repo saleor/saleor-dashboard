@@ -7,11 +7,7 @@ interface RuleListContainerProps {
 
 export const RuleListContainer = ({ children }: RuleListContainerProps) => {
   return (
-    <Box
-      display="grid"
-      __gridTemplateColumns="repeat(auto-fill, minmax(600px, 1fr))"
-      gap={6}
-    >
+    <Box display="grid" __gridTemplateColumns="repeat(auto-fill, minmax(600px, 1fr))" gap={6}>
       {children}
     </Box>
   );

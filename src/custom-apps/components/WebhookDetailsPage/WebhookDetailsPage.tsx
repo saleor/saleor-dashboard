@@ -83,19 +83,14 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     subscriptionQuery: prettified || "",
     customHeaders: webhook?.customHeaders || "{}",
   };
-
   const backUrl = CustomAppUrls.resolveAppUrl(appId);
-
   const [query, setQuery] = useState(prettified);
 
   useEffect(() => {
     setQuery(prettified);
   }, [prettified]);
 
-  const [localErrors, setLocalErrors] = React.useState<WebhookErrorFragment[]>(
-    [],
-  );
-
+  const [localErrors, setLocalErrors] = React.useState<WebhookErrorFragment[]>([]);
   const handleSubmit = (data: WebhookFormData) => {
     if (!webhook && query.length === 0) {
       setLocalErrors([
@@ -136,17 +131,8 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
             <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
             <DetailPageLayout.Content>
               <Box padding={6}>
-                <WebhookStatus
-                  data={data.isActive}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <WebhookInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
+                <WebhookStatus data={data.isActive} disabled={disabled} onChange={change} />
+                <WebhookInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               </Box>
               <FormSpacer />
               <Box>

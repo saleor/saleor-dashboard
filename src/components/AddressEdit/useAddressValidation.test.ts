@@ -7,7 +7,6 @@ jest.mock("@dashboard/graphql", () => ({
   CountryCode: jest.requireActual("@dashboard/graphql").CountryCode,
   useAddressValidationRulesQuery: jest.fn(),
 }));
-
 describe("useAddressValidation", () => {
   it("skips loading validation rules when country is not provided", () => {
     // Arrange
@@ -29,7 +28,6 @@ describe("useAddressValidation", () => {
     });
     expect(current.isFieldAllowed("country")).toBeFalsy();
   });
-
   it("loads validation rules when country is provided", () => {
     // Arrange
     (useAddressValidationRulesQuery as jest.Mock).mockReturnValue({

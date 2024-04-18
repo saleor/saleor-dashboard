@@ -5,17 +5,11 @@ import CardTitle from "@dashboard/components/CardTitle";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
-import {
-  SortableTableBody,
-  SortableTableRow,
-} from "@dashboard/components/SortableTable";
+import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  ProductAttributeType,
-  ProductTypeDetailsQuery,
-} from "@dashboard/graphql";
+import { ProductAttributeType, ProductTypeDetailsQuery } from "@dashboard/graphql";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
 import { Card, CardContent, TableCell } from "@material-ui/core";
@@ -87,9 +81,7 @@ function handleContainerAssign(
 ) {
   if (isSelected) {
     setSelectedAttributes(
-      selectedAttributes.filter(
-        selectedContainer => selectedContainer !== variantID,
-      ),
+      selectedAttributes.filter(selectedContainer => selectedContainer !== variantID),
     );
   } else {
     setSelectedAttributes([...selectedAttributes, variantID]);
@@ -97,10 +89,7 @@ function handleContainerAssign(
 }
 
 const numberOfColumns = 6;
-
-const ProductTypeVariantAttributes: React.FC<
-  ProductTypeVariantAttributesProps
-> = props => {
+const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> = props => {
   const {
     assignedVariantAttributes,
     disabled,
@@ -118,7 +107,6 @@ const ProductTypeVariantAttributes: React.FC<
     selectedVariantAttributes,
   } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   useEffect(() => {
@@ -144,11 +132,7 @@ const ProductTypeVariantAttributes: React.FC<
             variant="tertiary"
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
-            <FormattedMessage
-              id="uxPpRx"
-              defaultMessage="Assign attribute"
-              description="button"
-            />
+            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>
         }
       />
@@ -237,16 +221,9 @@ const ProductTypeVariantAttributes: React.FC<
                       {attribute.name ?? <Skeleton />}
                     </TableCell>
                     <TableCell className={classes.colSlug} data-test-id="slug">
-                      {maybe(() => attribute.slug) ? (
-                        attribute.slug
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {maybe(() => attribute.slug) ? attribute.slug : <Skeleton />}
                     </TableCell>
-                    <TableCell
-                      className={classes.colVariant}
-                      data-test-id="variant-selection"
-                    >
+                    <TableCell className={classes.colVariant} data-test-id="variant-selection">
                       <div className={classes.colVariantContent}>
                         <Checkbox
                           data-test-id="variant-selection-checkbox"
@@ -265,9 +242,7 @@ const ProductTypeVariantAttributes: React.FC<
                         {!!variantSelectionDisabled && (
                           <Tooltip>
                             <Tooltip.Trigger>
-                              <HelpOutline
-                                className={classes.colVariantDisabled}
-                              />
+                              <HelpOutline className={classes.colVariantDisabled} />
                             </Tooltip.Trigger>
                             <Tooltip.Content side="bottom">
                               <Tooltip.Arrow />
@@ -300,10 +275,7 @@ const ProductTypeVariantAttributes: React.FC<
               () => (
                 <TableRowLink>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      id="ztQgD8"
-                      defaultMessage="No attributes found"
-                    />
+                    <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
                   </TableCell>
                 </TableRowLink>
               ),

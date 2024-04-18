@@ -5,10 +5,7 @@ import CardTitle from "@dashboard/components/CardTitle";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
-import {
-  SortableTableBody,
-  SortableTableRow,
-} from "@dashboard/components/SortableTable";
+import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -55,7 +52,6 @@ interface PageTypeAttributesProps extends ListActions {
 }
 
 const numberOfColumns = 5;
-
 const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
   const {
     attributes,
@@ -71,7 +67,6 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
     onAttributeUnassign,
   } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
@@ -88,11 +83,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
             onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
             data-test-id="assign-attributes"
           >
-            <FormattedMessage
-              id="uxPpRx"
-              defaultMessage="Assign attribute"
-              description="button"
-            />
+            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>
         }
       />
@@ -174,10 +165,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
               () => (
                 <TableRowLink>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      id="ztQgD8"
-                      defaultMessage="No attributes found"
-                    />
+                    <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
                   </TableCell>
                 </TableRowLink>
               ),

@@ -40,7 +40,6 @@ const messages = defineMessages({
     description: "field is optional",
   },
 });
-
 const useStyles = makeStyles(
   theme => ({
     image: {
@@ -95,23 +94,15 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     onRowClick,
     onSubmit,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
   const navigate = useNavigator();
 
   return (
-    <Form
-      initial={{ description: mediaObj ? mediaObj.alt : "" }}
-      onSubmit={onSubmit}
-      confirmLeave
-    >
+    <Form initial={{ description: mediaObj ? mediaObj.alt : "" }} onSubmit={onSubmit} confirmLeave>
       {({ change, data, submit }) => (
         <>
-          <TopNav
-            href={productUrl(productId)}
-            title={intl.formatMessage(messages.editMedia)}
-          />
+          <TopNav href={productUrl(productId)} title={intl.formatMessage(messages.editMedia)} />
           <Grid variant="inverted">
             <div>
               <ProductMediaNavigation
@@ -121,9 +112,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                 onRowClick={onRowClick}
               />
               <Card>
-                <CardTitle
-                  title={intl.formatMessage(messages.mediaInformation)}
-                />
+                <CardTitle title={intl.formatMessage(messages.mediaInformation)} />
                 <CardContent>
                   <TextField
                     name="description"
@@ -145,11 +134,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                   {!!mediaObj ? (
                     mediaObj?.type === ProductMediaType.IMAGE ? (
                       <div className={classes.imageContainer}>
-                        <img
-                          className={classes.image}
-                          src={mediaObj.url}
-                          alt={mediaObj.alt}
-                        />
+                        <img className={classes.image} src={mediaObj.url} alt={mediaObj.alt} />
                       </div>
                     ) : (
                       <div

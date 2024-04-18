@@ -3,9 +3,7 @@ import { SearchProductsQuery } from "@dashboard/graphql";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
 import { RelayToFlat } from "@dashboard/types";
 
-export type SearchVariant = RelayToFlat<
-  SearchProductsQuery["search"]
->[0]["variants"][0];
+export type SearchVariant = RelayToFlat<SearchProductsQuery["search"]>[0]["variants"][0];
 
 export interface VariantWithProductLabel extends SearchVariant {
   productName: string;
@@ -29,10 +27,7 @@ export const handleProductAssign = (
 ) =>
   productsWithAllVariantsSelected[productIndex]
     ? setVariants(
-        variants.filter(
-          selectedVariant =>
-            !product.variants.find(getById(selectedVariant.id)),
-        ),
+        variants.filter(selectedVariant => !product.variants.find(getById(selectedVariant.id))),
       )
     : setVariants([
         ...variants,

@@ -34,14 +34,12 @@ describe("OrderManualTrasactionForm / Form", () => {
 
     const form = document.querySelector("form");
     fireEvent.submit(form);
-
     expect(submitFn).toHaveBeenCalledWith({
       amount: 1,
       description: "test",
       pspReference: "test-1234",
     });
   });
-
   test("it doesn't handle submit if amount is missing", () => {
     const submitFn = jest.fn();
     render(
@@ -62,7 +60,6 @@ describe("OrderManualTrasactionForm / Form", () => {
 
     const form = document.querySelector("form");
     fireEvent.submit(form);
-
     expect(submitFn).not.toHaveBeenCalled();
   });
 });

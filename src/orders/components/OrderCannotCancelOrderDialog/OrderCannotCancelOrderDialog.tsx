@@ -22,11 +22,7 @@ const useStyles = makeStyles(
     name: "OrderCannotCancelOrderDialog",
   },
 );
-
-const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({
-  open,
-  onClose,
-}) => {
+const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const classes = useStyles({});
 
   return (

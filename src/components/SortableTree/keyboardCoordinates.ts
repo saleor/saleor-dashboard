@@ -15,7 +15,6 @@ const directions: string[] = [
   KeyboardCode.Up,
   KeyboardCode.Left,
 ];
-
 const horizontal: string[] = [KeyboardCode.Left, KeyboardCode.Right];
 
 export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
@@ -27,13 +26,7 @@ export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
     event,
     {
       currentCoordinates,
-      context: {
-        active,
-        over,
-        collisionRect,
-        droppableRects,
-        droppableContainers,
-      },
+      context: { active, over, collisionRect, droppableRects, droppableContainers },
     },
   ) => {
     if (directions.includes(event.code)) {
@@ -140,7 +133,6 @@ export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
             const isBelow = newIndex > activeIndex;
             const modifier = isBelow ? 1 : -1;
             const offset = 0;
-
             const newCoordinates = {
               x: newRect.left + depth * indentationWidth,
               y: newRect.top + modifier * offset,

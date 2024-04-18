@@ -16,14 +16,13 @@ interface GiftCardsListHeaderAlertContentProps {
 const alertLinkClassName = sprinkles({
   fontSize: 1,
 });
-
-const GiftCardsListHeaderAlertContent: React.FC<
-  GiftCardsListHeaderAlertContentProps
-> = ({ giftCardProductTypesExist, giftCardProductsExist }) => {
+const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentProps> = ({
+  giftCardProductTypesExist,
+  giftCardProductsExist,
+}) => {
   const giftCardProductTypeUrl = productTypeAddUrl({
     kind: ProductTypeKindEnum.GIFT_CARD,
   });
-
   const giftCardCreateGiftCardProductUrl = productAddUrl();
 
   if (!giftCardProductTypesExist) {
@@ -47,10 +46,7 @@ const GiftCardsListHeaderAlertContent: React.FC<
         {...messages.noGiftCardsProducts}
         values={{
           createGiftCardProduct: (
-            <Link
-              href={giftCardCreateGiftCardProductUrl}
-              className={alertLinkClassName}
-            >
+            <Link href={giftCardCreateGiftCardProductUrl} className={alertLinkClassName}>
               <FormattedMessage {...messages.createGiftCardProduct} />
             </Link>
           ),

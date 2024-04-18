@@ -1,10 +1,7 @@
 // @ts-strict-ignore
 import { GiftCardEventsEnum, OrderGiftCardFragment } from "@dashboard/graphql";
 
-export const getUsedInGiftCardEvents = (
-  giftCard: OrderGiftCardFragment,
-  orderId: string,
-) => {
+export const getUsedInGiftCardEvents = (giftCard: OrderGiftCardFragment, orderId: string) => {
   if (!giftCard.events || !orderId) {
     return [];
   }
@@ -14,12 +11,9 @@ export const getUsedInGiftCardEvents = (
   );
 };
 
-export const getGiftCardAmount = (
-  usedInOrderEvents: OrderGiftCardFragment["events"],
-) =>
+export const getGiftCardAmount = (usedInOrderEvents: OrderGiftCardFragment["events"]) =>
   usedInOrderEvents.reduce((resultAmount, { balance }) => {
     const { currentBalance, oldCurrentBalance } = balance;
-
     const amountToAdd = oldCurrentBalance.amount - currentBalance.amount;
 
     return resultAmount + amountToAdd;

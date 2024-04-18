@@ -18,14 +18,8 @@ interface VoucherDatesProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const VoucherDates = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}: VoucherDatesProps) => {
+const VoucherDates = ({ data, disabled, errors, onChange }: VoucherDatesProps) => {
   const intl = useIntl();
-
   const formErrors = getFormErrors(["startDate", "endDate"], errors);
 
   return (

@@ -77,10 +77,7 @@ export enum OrderDraftListUrlFiltersEnum {
   query = "query",
 }
 export type OrderDraftListUrlFilters = Filters<OrderDraftListUrlFiltersEnum>;
-export type OrderDraftListUrlDialog =
-  | "remove"
-  | CreateOrderDialog
-  | TabActionDialog;
+export type OrderDraftListUrlDialog = "remove" | CreateOrderDialog | TabActionDialog;
 export enum OrderDraftListUrlSortField {
   number = "number",
   customer = "customer",
@@ -94,9 +91,7 @@ export type OrderDraftListUrlQueryParams = ActiveTab &
   OrderDraftListUrlFilters &
   OrderDraftListUrlSort &
   Pagination;
-export const orderDraftListUrl = (
-  params?: OrderDraftListUrlQueryParams,
-): string => {
+export const orderDraftListUrl = (params?: OrderDraftListUrlQueryParams): string => {
   const orderDraftList = orderDraftListPath;
   if (params === undefined) {
     return orderDraftList;
@@ -142,53 +137,39 @@ export type OrderUrlQueryParams =
 export type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
 export type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;
 export type OrderFulfillUrlDialog = "change-warehouse";
-export type OrderFulfillUrlQueryParams = Dialog<OrderFulfillUrlDialog> &
-  OrderFulfillUrlFilters;
+export type OrderFulfillUrlQueryParams = Dialog<OrderFulfillUrlDialog> & OrderFulfillUrlFilters;
 
 export const orderUrl = (id: string, params?: OrderUrlQueryParams) =>
   orderPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
-export const orderFulfillPath = (id: string) =>
-  urlJoin(orderPath(id), "fulfill");
+export const orderFulfillPath = (id: string) => urlJoin(orderPath(id), "fulfill");
 
 export const orderReturnPath = (id: string) => urlJoin(orderPath(id), "return");
 
-export const orderFulfillUrl = (
-  id: string,
-  params?: OrderFulfillUrlQueryParams,
-) => orderFulfillPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+export const orderFulfillUrl = (id: string, params?: OrderFulfillUrlQueryParams) =>
+  orderFulfillPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const orderSettingsPath = urlJoin(orderSectionUrl, "settings");
 
-export const orderPaymentRefundPath = (id: string) =>
-  urlJoin(orderPath(id), "payment-refund");
+export const orderPaymentRefundPath = (id: string) => urlJoin(orderPath(id), "payment-refund");
 
-export const orderSendRefundPath = (id: string) =>
-  urlJoin(orderPath(id), "send-refund");
+export const orderSendRefundPath = (id: string) => urlJoin(orderPath(id), "send-refund");
 
-export const orderPaymentRefundUrl = (id: string) =>
-  orderPaymentRefundPath(encodeURIComponent(id));
+export const orderPaymentRefundUrl = (id: string) => orderPaymentRefundPath(encodeURIComponent(id));
 
-export const orderSendRefundUrl = (id: string) =>
-  orderSendRefundPath(encodeURIComponent(id));
+export const orderSendRefundUrl = (id: string) => orderSendRefundPath(encodeURIComponent(id));
 
-export const orderGrantRefundPath = (id: string) =>
-  urlJoin(orderPath(id), "grant-refund");
+export const orderGrantRefundPath = (id: string) => urlJoin(orderPath(id), "grant-refund");
 
-export const orderGrantRefundUrl = (id: string) =>
-  orderGrantRefundPath(encodeURIComponent(id));
+export const orderGrantRefundUrl = (id: string) => orderGrantRefundPath(encodeURIComponent(id));
 
 export const orderGrantRefundEditPath = (orderId: string, refundId: string) =>
   urlJoin(orderGrantRefundPath(orderId), refundId);
 
 export const orderGrantRefundEditUrl = (orderId: string, refundId: string) =>
-  orderGrantRefundEditPath(
-    encodeURIComponent(orderId),
-    encodeURIComponent(refundId),
-  );
+  orderGrantRefundEditPath(encodeURIComponent(orderId), encodeURIComponent(refundId));
 
-export const orderReturnUrl = (id: string) =>
-  orderReturnPath(encodeURIComponent(id));
+export const orderReturnUrl = (id: string) => orderReturnPath(encodeURIComponent(id));
 
 export const orderGiftCardBoughtPath = () =>
   orderListUrl({

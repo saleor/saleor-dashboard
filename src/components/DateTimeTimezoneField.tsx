@@ -70,12 +70,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
           value={value.time}
         />
       </Box>
-      {error && (
-        <ErrorNoticeBar
-          className={sprinkles({ marginTop: 3 })}
-          message={error}
-        />
-      )}
+      {error && <ErrorNoticeBar className={sprinkles({ marginTop: 3 })} message={error} />}
     </>
   );
 };

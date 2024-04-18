@@ -80,7 +80,6 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
     testId,
   } = props;
   const classes = useStyles(props);
-
   const choicesByKey: Record<string, string> =
     choices === undefined
       ? {}
@@ -90,11 +89,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
         }, {});
 
   return (
-    <FormControl
-      className={clsx(classes.formControl, className)}
-      error={error}
-      disabled={disabled}
-    >
+    <FormControl className={clsx(classes.formControl, className)} error={error} disabled={disabled}>
       <InputLabel className={classes.label} shrink={!!value}>
         {label}
       </InputLabel>
@@ -140,11 +135,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
             </MenuItem>
           ))
         ) : (
-          <MenuItem
-            data-test-id="select-field-option"
-            data-test-disabled
-            disabled={true}
-          >
+          <MenuItem data-test-id="select-field-option" data-test-disabled disabled={true}>
             <FormattedMessage id="hX5PAb" defaultMessage="No results found" />
           </MenuItem>
         )}

@@ -5,10 +5,7 @@ import {
 } from "@dashboard/attributes/views/AttributeList/filters";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
-import {
-  useAttributeBulkDeleteMutation,
-  useAttributeListQuery,
-} from "@dashboard/graphql";
+import { useAttributeBulkDeleteMutation, useAttributeListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -31,11 +28,7 @@ import { useIntl } from "react-intl";
 
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
-import {
-  attributeListUrl,
-  AttributeListUrlDialog,
-  AttributeListUrlQueryParams,
-} from "../../urls";
+import { attributeListUrl, AttributeListUrlDialog, AttributeListUrlQueryParams } from "../../urls";
 import { getFilterQueryParam } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -46,12 +39,8 @@ interface AttributeListProps {
 const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-
   const intl = useIntl();
-
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.ATTRIBUTE_LIST,
-  );
+  const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_LIST);
 
   usePaginationReset(attributeListUrl, params, settings.rowNumber);
 
@@ -67,14 +56,12 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const { data, loading, refetch } = useAttributeListQuery({
     variables: queryVariables,
   });
-
   const {
     clearRowSelection,
     selectedRowIds,
     setSelectedRowIds,
     setClearDatagridRowSelectionCallback,
   } = useRowSelection(params);
-
   const {
     hasPresetsChanged,
     onPresetChange,
@@ -91,51 +78,42 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     storageUtils,
     reset: clearRowSelection,
   });
-
-  const [attributeBulkDelete, attributeBulkDeleteOpts] =
-    useAttributeBulkDeleteMutation({
-      onCompleted: data => {
-        if (data.attributeBulkDelete?.errors.length === 0) {
-          closeModal();
-          notify({
-            status: "success",
-            text: intl.formatMessage({
-              id: "z3GGbZ",
-              defaultMessage: "Attributes successfully deleted",
-              description: "deleted multiple attributes",
-            }),
-          });
-          clearRowSelection();
-          refetch();
-        }
-      },
-    });
-
+  const [attributeBulkDelete, attributeBulkDeleteOpts] = useAttributeBulkDeleteMutation({
+    onCompleted: data => {
+      if (data.attributeBulkDelete?.errors.length === 0) {
+        closeModal();
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            id: "z3GGbZ",
+            defaultMessage: "Attributes successfully deleted",
+            description: "deleted multiple attributes",
+          }),
+        });
+        clearRowSelection();
+        refetch();
+      }
+    },
+  });
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeListUrlDialog,
     AttributeListUrlQueryParams
   >(navigate, attributeListUrl, params);
-
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      cleanupFn: clearRowSelection,
-      createUrl: attributeListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-      keepActiveTab: true,
-    });
-
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+    cleanupFn: clearRowSelection,
+    createUrl: attributeListUrl,
+    getFilterQueryParam,
+    navigate,
+    params,
+    keepActiveTab: true,
+  });
   const paginationValues = usePaginator({
     pageInfo: data?.attributes?.pageInfo,
     paginationState,
     queryString: params,
   });
-
   const handleSort = createSortHandler(navigate, attributeListUrl, params);
-
   const attributes = mapEdgesToItems(data?.attributes);
-
   const handleSelectAttributesIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!attributes) {
@@ -151,12 +129,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
 
       setClearDatagridRowSelectionCallback(clearSelection);
     },
-    [
-      attributes,
-      selectedRowIds,
-      setClearDatagridRowSelectionCallback,
-      setSelectedRowIds,
-    ],
+    [attributes, selectedRowIds, setClearDatagridRowSelectionCallback, setSelectedRowIds],
   );
 
   return (

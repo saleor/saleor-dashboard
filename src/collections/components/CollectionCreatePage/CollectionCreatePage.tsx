@@ -67,12 +67,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
             })}
           />
           <DetailPageLayout.Content>
-            <CollectionDetails
-              data={data}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
-            />
+            <CollectionDetails data={data} disabled={disabled} errors={errors} onChange={change} />
             <CardSpacer />
             <CollectionImage
               image={

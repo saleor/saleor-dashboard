@@ -44,9 +44,5 @@ export function getAuthErrorType(graphQLError: GraphQLError): UserContextError {
 }
 
 export function parseAuthError(authError: ApolloError): UserContextError[] {
-  return (
-    authError?.graphQLErrors?.map(graphQLError =>
-      getAuthErrorType(graphQLError),
-    ) || []
-  );
+  return authError?.graphQLErrors?.map(graphQLError => getAuthErrorType(graphQLError)) || [];
 }

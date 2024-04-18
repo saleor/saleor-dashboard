@@ -1,22 +1,13 @@
 // @ts-strict-ignore
 import { buttonMessages } from "@dashboard/intl";
-import {
-  CircularProgress,
-  MenuItem,
-  Paper,
-  TextField,
-} from "@material-ui/core";
+import { CircularProgress, MenuItem, Paper, TextField } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import { makeStyles } from "@saleor/macaw-ui";
 import Downshift from "downshift";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import {
-  getMenuItemByPath,
-  IMenu,
-  validateMenuOptions,
-} from "../../utils/menu";
+import { getMenuItemByPath, IMenu, validateMenuOptions } from "../../utils/menu";
 import Debounce, { DebounceProps } from "../Debounce";
 
 export interface AutocompleteSelectMenuProps {
@@ -37,10 +28,7 @@ export interface AutocompleteSelectMenuProps {
 const validationError: Error = new Error(
   "Values supplied to AutocompleteSelectMenu should be unique",
 );
-
-const DebounceAutocomplete: React.ComponentType<DebounceProps<string>> =
-  Debounce;
-
+const DebounceAutocomplete: React.ComponentType<DebounceProps<string>> = Debounce;
 const useStyles = makeStyles(
   theme => ({
     container: {
@@ -79,13 +67,9 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
     onInputChange,
   } = props;
   const classes = useStyles(props);
-
   const [isFocused, setIsFocused] = React.useState(false);
-
   const [inputValue, setInputValue] = React.useState(displayValue || "");
-
   const [menuPath, setMenuPath] = React.useState<number[]>([]);
-
   const handleChange = (value: string) =>
     onChange({
       target: {
@@ -100,10 +84,8 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
       throw validationError;
     }
   }, []);
-
   // Navigate back to main menu after input field change
   React.useEffect(() => setMenuPath([]), [options]);
-
   // Reset input value after displayValue change
   React.useEffect(() => setInputValue(displayValue), [displayValue]);
 
@@ -112,15 +94,10 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
       {debounceFn => (
         <Downshift onSelect={handleChange}>
           {({ getItemProps, isOpen, openMenu, closeMenu, selectItem }) => (
-            <div
-              className={classes.container}
-              data-test-id="container-autocomplete-select"
-            >
+            <div className={classes.container} data-test-id="container-autocomplete-select">
               <TextField
                 InputProps={{
-                  endAdornment: isFocused && loading && (
-                    <CircularProgress size={16} />
-                  ),
+                  endAdornment: isFocused && loading && <CircularProgress size={16} />,
                   id: undefined,
                   onBlur() {
                     setIsFocused(false);
@@ -147,11 +124,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                 value={inputValue}
               />
               {isOpen && (
-                <Paper
-                  data-test-id="menu-link-options"
-                  className={classes.paper}
-                  square
-                >
+                <Paper data-test-id="menu-link-options" className={classes.paper} square>
                   {options.length ? (
                     <>
                       {menuPath.length > 0 && (
@@ -160,9 +133,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                           {...getItemProps({
                             item: "Back",
                           })}
-                          onClick={() =>
-                            setMenuPath(menuPath.slice(0, menuPath.length - 2))
-                          }
+                          onClick={() => setMenuPath(menuPath.slice(0, menuPath.length - 2))}
                         >
                           <ArrowBack className={classes.menuBack} />
                           <FormattedMessage {...buttonMessages.back} />
@@ -189,10 +160,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                     </>
                   ) : (
                     <MenuItem disabled component="div">
-                      <FormattedMessage
-                        id="jHJmjf"
-                        defaultMessage="No results"
-                      />
+                      <FormattedMessage id="jHJmjf" defaultMessage="No results" />
                     </MenuItem>
                   )}
                 </Paper>

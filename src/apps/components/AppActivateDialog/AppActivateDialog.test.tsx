@@ -21,15 +21,10 @@ describe("Apps AppActivateDialog", () => {
       </Wrapper>,
     );
     const dialogContent = screen.getByTestId("dialog-content");
-
     // Assert
-    const expectedText = msgs.activateNamedApp.defaultMessage.replace(
-      "{name}",
-      name,
-    );
+    const expectedText = msgs.activateNamedApp.defaultMessage.replace("{name}", name);
     expect(dialogContent).toHaveTextContent(expectedText);
   });
-
   it("displays action text without app name when app name is empty", () => {
     // Arrange
     render(
@@ -44,12 +39,10 @@ describe("Apps AppActivateDialog", () => {
       </Wrapper>,
     );
     const dialogContent = screen.getByTestId("dialog-content");
-
     // Assert
     const expectedText = msgs.activateApp.defaultMessage;
     expect(dialogContent).toHaveTextContent(expectedText);
   });
-
   it("displays action text without app name when app name is null", () => {
     // Arrange
     render(
@@ -64,7 +57,6 @@ describe("Apps AppActivateDialog", () => {
       </Wrapper>,
     );
     const dialogContent = screen.getByTestId("dialog-content");
-
     // Assert
     const expectedText = msgs.activateApp.defaultMessage;
     expect(dialogContent).toHaveTextContent(expectedText);

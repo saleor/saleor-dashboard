@@ -20,7 +20,6 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
   const classes = useStyles();
   const navigate = useNavigator();
   const [appState, dispatchAppState] = useAppState();
-
   const handleOnBack = () => {
     navigate("/", { replace: true });
     dispatchAppState({
@@ -31,9 +30,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
     });
     onBack();
   };
-
-  const errorTrackingId =
-    appState.error?.type === "unhandled" ? appState.error.id : null;
+  const errorTrackingId = appState.error?.type === "unhandled" ? appState.error.id : null;
 
   return (
     <div className={classes.root}>
@@ -49,11 +46,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
             </Typography>
             {!!errorTrackingId && (
               <div>
-                <Typography
-                  variant="caption"
-                  color="textSecondary"
-                  className={classes.errorId}
-                >
+                <Typography variant="caption" color="textSecondary" className={classes.errorId}>
                   Error ID
                 </Typography>
                 <Typography variant="body1">{errorTrackingId}</Typography>

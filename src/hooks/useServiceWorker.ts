@@ -19,11 +19,9 @@ export const useServiceWorker = (timeout: number) => {
   const onRegistered = (registration: ServiceWorkerRegistration) => {
     registrationRef.current = registration;
   };
-
   const onUpdate = (registration: ServiceWorkerRegistration) => {
     setUpdateAvailable(!!registration?.waiting);
   };
-
   const update = useCallback(() => {
     if (updateAvailable && registrationRef.current?.waiting) {
       registrationRef.current.waiting.postMessage("update");

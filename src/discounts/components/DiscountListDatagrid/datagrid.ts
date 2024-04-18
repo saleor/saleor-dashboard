@@ -1,8 +1,5 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
-import {
-  dateCell,
-  readonlyTextCell,
-} from "@dashboard/components/Datagrid/customCells/cells";
+import { dateCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { DiscountListUrlSortField } from "@dashboard/discounts/discountsUrls";
 import { PromotionFragment, PromotionTypeEnum } from "@dashboard/graphql";
@@ -67,13 +64,9 @@ export const createGetCellContent =
       case "name":
         return readonlyTextCell(rowData.name);
       case "startDate":
-        return rowData.startDate
-          ? dateCell(rowData.startDate)
-          : readonlyTextCell(PLACEHOLDER);
+        return rowData.startDate ? dateCell(rowData.startDate) : readonlyTextCell(PLACEHOLDER);
       case "endDate":
-        return rowData.endDate
-          ? dateCell(rowData.endDate)
-          : readonlyTextCell(PLACEHOLDER);
+        return rowData.endDate ? dateCell(rowData.endDate) : readonlyTextCell(PLACEHOLDER);
       case "type":
         return readonlyTextCell(getDiscountType(rowData, intl));
       default:

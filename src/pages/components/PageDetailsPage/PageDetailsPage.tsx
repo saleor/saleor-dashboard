@@ -46,9 +46,7 @@ export interface PageDetailsPageProps {
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedPageType?: PageDetailsFragment["pageType"];
-  attributeValues: RelayToFlat<
-    SearchAttributeValuesQuery["attribute"]["choices"]
-  >;
+  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   onRemove: () => void;
   onSubmit: (data: PageData) => SubmitPromise;
   fetchPageTypes?: (data: string) => void;
@@ -95,15 +93,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const navigate = useNavigator();
-
   const pageExists = page !== null;
-
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
-
-  const pageTypes = pageTypeChoiceList
-    ? mapNodeToChoice(pageTypeChoiceList)
-    : [];
-
+  const pageTypes = pageTypeChoiceList ? mapNodeToChoice(pageTypeChoiceList) : [];
   const handleAssignReferenceAttribute = (
     attributeValues: Container[],
     data: PageData,
@@ -123,7 +115,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     );
     onCloseDialog();
   };
-
   const handleSelectPageType = (pageTypeId: string) =>
     onSelectPageType && onSelectPageType(pageTypeId);
 
@@ -143,31 +134,17 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
       onSubmit={onSubmit}
       disabled={loading}
     >
-      {({
-        change,
-        data,
-        validationErrors,
-        handlers,
-        submit,
-        attributeRichTextGetters,
-      }) => {
+      {({ change, data, validationErrors, handlers, submit, attributeRichTextGetters }) => {
         const errors = [...apiErrors, ...validationErrors];
 
         return (
           <DetailPageLayout>
             <TopNav
               href={pageListUrl()}
-              title={
-                !pageExists ? intl.formatMessage(messages.title) : page?.title
-              }
+              title={!pageExists ? intl.formatMessage(messages.title) : page?.title}
             />
             <DetailPageLayout.Content>
-              <PageInfo
-                data={data}
-                disabled={loading}
-                errors={errors}
-                onChange={change}
-              />
+              <PageInfo data={data} disabled={loading} errors={errors} onChange={change} />
               <CardSpacer />
               <SeoForm
                 errors={errors}
@@ -212,12 +189,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 disabled={loading}
                 messages={{
                   hiddenLabel: intl.formatMessage(messages.hiddenLabel),
-                  hiddenSecondLabel: intl.formatMessage(
-                    messages.hiddenSecondLabel,
-                    {
-                      date: localizeDate(data.publicationDate),
-                    },
-                  ),
+                  hiddenSecondLabel: intl.formatMessage(messages.hiddenSecondLabel, {
+                    date: localizeDate(data.publicationDate),
+                  }),
                   visibleLabel: intl.formatMessage(messages.visibleLabel),
                 }}
                 onChange={change}
@@ -249,9 +223,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   assignReferencesAttributeId,
                   data.attributes,
                 )}
-                attribute={data.attributes.find(
-                  ({ id }) => id === assignReferencesAttributeId,
-                )}
+                attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}
@@ -262,11 +234,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 loading={handlers.fetchMoreReferences?.loading}
                 onClose={onCloseDialog}
                 onSubmit={attributeValues =>
-                  handleAssignReferenceAttribute(
-                    attributeValues,
-                    data,
-                    handlers,
-                  )
+                  handleAssignReferenceAttribute(attributeValues, data, handlers)
                 }
               />
             )}

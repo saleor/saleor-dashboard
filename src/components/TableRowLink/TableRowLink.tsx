@@ -24,29 +24,26 @@ const useStyles = makeStyles(
   },
   { name: "TableRowLink" },
 );
+const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>((props, ref) => {
+  const { href, children, linkClassName, onClick, ...restProps } = props;
+  const classes = useStyles();
 
-const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>(
-  (props, ref) => {
-    const { href, children, linkClassName, onClick, ...restProps } = props;
-    const classes = useStyles();
-
-    if (!href || isExternalURL(href)) {
-      return (
-        <TableRow ref={ref} hover={!!onClick} onClick={onClick} {...restProps}>
-          {children}
-        </TableRow>
-      );
-    }
-
+  if (!href || isExternalURL(href)) {
     return (
-      <TableRow ref={ref} hover={true} onClick={onClick} {...restProps}>
-        <Link className={clsx(classes.link, linkClassName)} to={href}>
-          {children}
-        </Link>
+      <TableRow ref={ref} hover={!!onClick} onClick={onClick} {...restProps}>
+        {children}
       </TableRow>
     );
-  },
-);
+  }
+
+  return (
+    <TableRow ref={ref} hover={true} onClick={onClick} {...restProps}>
+      <Link className={clsx(classes.link, linkClassName)} to={href}>
+        {children}
+      </Link>
+    </TableRow>
+  );
+});
 
 TableRowLink.displayName = "TableRowLink";
 export default TableRowLink;

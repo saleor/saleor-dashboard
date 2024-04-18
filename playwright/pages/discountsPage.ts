@@ -23,9 +23,7 @@ export class DiscountsPage extends BasePage {
     readonly endDateCheckbox = page.getByTestId("has-end-date"),
     readonly endDateInput = page.getByTestId("end-date-input"),
     readonly endHourInput = page.getByTestId("end-hour-input"),
-    readonly discountDescriptionInput = page.getByTestId(
-      "rich-text-editor-description",
-    ),
+    readonly discountDescriptionInput = page.getByTestId("rich-text-editor-description"),
     readonly addRuleButton = page.getByTestId("add-rule"),
     readonly editRuleButton = page.getByTestId("rule-edit-button"),
     readonly deleteRuleButton = page.getByTestId("rule-delete-button"),
@@ -58,16 +56,11 @@ export class DiscountsPage extends BasePage {
       state: "visible",
       timeout: 10000,
     });
-    await this.page
-      .getByTestId("select-option")
-      .filter({ hasText: type })
-      .click();
+    await this.page.getByTestId("select-option").filter({ hasText: type }).click();
   }
 
   async typePromotionDescription(description: string) {
-    await this.discountDescriptionInput
-      .locator('[contenteditable="true"]')
-      .fill(description);
+    await this.discountDescriptionInput.locator('[contenteditable="true"]').fill(description);
   }
 
   async typeStartDate() {
@@ -100,11 +93,8 @@ export class DiscountsPage extends BasePage {
 
   async gotoExistingDiscount(promotionId: string) {
     const existingDiscountUrl = `${URL_LIST.discounts}${promotionId}`;
-    await console.log(
-      `Navigates to existing discount page: ${existingDiscountUrl}`,
-    );
+    await console.log(`Navigates to existing discount page: ${existingDiscountUrl}`);
     await this.page.goto(existingDiscountUrl);
-
     await this.discountForm.waitFor({
       state: "visible",
       timeout: 30000,

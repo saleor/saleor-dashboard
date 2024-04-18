@@ -5,9 +5,7 @@ export class AppInstallationPage {
 
   constructor(
     page: Page,
-    readonly appInstallationPageHeader = page.getByTestId(
-      "app-installation-page-header",
-    ),
+    readonly appInstallationPageHeader = page.getByTestId("app-installation-page-header"),
     readonly installAppButton = page.getByTestId("install-app-button"),
   ) {
     this.page = page;

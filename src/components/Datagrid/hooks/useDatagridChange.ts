@@ -43,7 +43,6 @@ export function useDatagridChangeState(): UseDatagridChangeState {
   const [added, setAdded] = useState<number[]>([]);
   const [removed, setRemoved] = useState<number[]>([]);
   const changes = useRef<DatagridChange[]>([]);
-
   const clear = () => {
     changes.current = [];
     setAdded([]);
@@ -60,10 +59,8 @@ export function useDatagridChangeState(): UseDatagridChangeState {
   };
 }
 
-export const DatagridChangeStateContext =
-  createContext<UseDatagridChangeState>(undefined);
-export const useDatagridChangeStateContext = () =>
-  useContext(DatagridChangeStateContext);
+export const DatagridChangeStateContext = createContext<UseDatagridChangeState>(undefined);
+export const useDatagridChangeStateContext = () => useContext(DatagridChangeStateContext);
 
 function useDatagridChange(
   availableColumns: readonly AvailableColumn[],
@@ -71,16 +68,12 @@ function useDatagridChange(
   onChange?: OnDatagridChange,
   setMarkCellsDirty?: (areCellsDirty: boolean) => void,
 ) {
-  const { added, setAdded, removed, setRemoved, changes } =
-    useDatagridChangeStateContext();
+  const { added, setAdded, removed, setRemoved, changes } = useDatagridChangeStateContext();
   const getChangeIndex = useCallback(
     (column: string, row: number): number =>
-      changes.current.findIndex(
-        change => change.column === column && change.row === row,
-      ),
+      changes.current.findIndex(change => change.column === column && change.row === row),
     [],
   );
-
   const notify = useCallback(
     ({
       added,
@@ -107,7 +100,6 @@ function useDatagridChange(
     },
     [onChange, setMarkCellsDirty],
   );
-
   const onCellEdited = useCallback(
     ([column, row]: Item, newValue: EditableGridCell): void => {
       const columnId = availableColumns[column].id;
@@ -126,13 +118,10 @@ function useDatagridChange(
     },
     [availableColumns, notify, added, removed],
   );
-
   const onRowsRemoved = useCallback(
     (rows: number[]) => {
       const getRowOffset = (row: number) => rows.filter(r => r < row).length;
-      const newAdded = added
-        .filter(row => !rows.includes(row))
-        .map(row => row - getRowOffset(row));
+      const newAdded = added.filter(row => !rows.includes(row)).map(row => row - getRowOffset(row));
       const newRemoved = [
         ...removed,
         ...rows
@@ -148,7 +137,6 @@ function useDatagridChange(
           row: change.row - getRowOffset(change.row),
         }));
       setAdded(newAdded);
-
       notify({
         updates: changes.current,
         added: newAdded,
@@ -158,7 +146,6 @@ function useDatagridChange(
     },
     [added, removed, notify],
   );
-
   const onRowAdded = useCallback(() => {
     const newAdded = [...added, rows - removed.length + added.length];
     setAdded(newAdded);

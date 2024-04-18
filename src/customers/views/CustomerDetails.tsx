@@ -29,18 +29,13 @@ interface CustomerDetailsViewProps {
   params: CustomerUrlQueryParams;
 }
 
-const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
-  id,
-  params,
-}) => {
+const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const customerDetails = useCustomerDetails();
   const user = customerDetails?.customer?.user;
   const customerDetailsLoading = customerDetails?.loading;
-
   const [removeCustomer, removeCustomerOpts] = useRemoveCustomerMutation({
     onCompleted: data => {
       if (data.customerDelete.errors.length === 0) {
@@ -55,7 +50,6 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
       }
     },
   });
-
   const [updateCustomer, updateCustomerOpts] = useUpdateCustomerMutation({
     onCompleted: data => {
       if (data.customerUpdate.errors.length === 0) {
@@ -66,7 +60,6 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
       }
     },
   });
-
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
@@ -89,7 +82,6 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
         },
       }),
     );
-
   const handleSubmit = createMetadataUpdateHandler(
     user,
     updateData,
@@ -104,9 +96,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
         customerId={id}
         customer={user}
         disabled={
-          customerDetailsLoading ||
-          updateCustomerOpts.loading ||
-          removeCustomerOpts.loading
+          customerDetailsLoading || updateCustomerOpts.loading || removeCustomerOpts.loading
         }
         errors={updateCustomerOpts.data?.customerUpdate.errors || []}
         saveButtonBar={updateCustomerOpts.status}
@@ -152,10 +142,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
   );
 };
 
-export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
-  id,
-  params,
-}) => (
+export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({ id, params }) => (
   <CustomerDetailsProvider id={id}>
     <CustomerDetailsViewInner id={id} params={params} />
   </CustomerDetailsProvider>

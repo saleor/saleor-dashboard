@@ -32,10 +32,7 @@ import {
 } from "../../utils/datagrid";
 import messages from "./messages";
 
-function errorMatchesColumn(
-  error: ProductVariantListError,
-  columnId: string,
-): boolean {
+function errorMatchesColumn(error: ProductVariantListError, columnId: string): boolean {
   if (error.type === "channel") {
     return (
       error.channelIds.includes(getColumnChannel(columnId)) ||
@@ -68,16 +65,12 @@ export function getError(
   const variantId = variants[row + removed.filter(r => r <= row).length]?.id;
 
   if (!variantId) {
-    return errors.some(
-      err => err.type === "create" && err.index === row - variants.length,
-    );
+    return errors.some(err => err.type === "create" && err.index === row - variants.length);
   }
 
   return errors.some(
     err =>
-      err.type !== "create" &&
-      err.variantId === variantId &&
-      errorMatchesColumn(err, columnId),
+      err.type !== "create" && err.variantId === variantId && errorMatchesColumn(err, columnId),
   );
 }
 
@@ -90,10 +83,7 @@ interface GetDataOrError {
   channels: ChannelData[];
   added: number[];
   removed: number[];
-  searchAttributeValues: (
-    id: string,
-    text: string,
-  ) => Promise<Array<Choice<string, string>>>;
+  searchAttributeValues: (id: string, text: string) => Promise<Array<Choice<string, string>>>;
   getChangeIndex: (column: string, row: number) => number;
 }
 
@@ -130,9 +120,7 @@ export function getData({
   if (getColumnStock(columnId)) {
     const value =
       change?.value ??
-      dataRow?.stocks.find(
-        stock => stock.warehouse.id === getColumnStock(columnId),
-      )?.quantity ??
+      dataRow?.stocks.find(stock => stock.warehouse.id === getColumnStock(columnId))?.quantity ??
       numberCellEmptyValue;
 
     return numberCell(value);
@@ -140,12 +128,9 @@ export function getData({
 
   if (getColumnChannel(columnId)) {
     const channelId = getColumnChannel(columnId);
-    const listing = dataRow?.channelListings.find(
-      listing => listing.channel.id === channelId,
-    );
+    const listing = dataRow?.channelListings.find(listing => listing.channel.id === channelId);
     const available =
-      changes.current[getChangeIndex(`availableInChannel:${channelId}`, row)]
-        ?.data ?? !!listing;
+      changes.current[getChangeIndex(`availableInChannel:${channelId}`, row)]?.data ?? !!listing;
 
     if (!available) {
       return {
@@ -155,9 +140,7 @@ export function getData({
       };
     }
 
-    const currency = channels.find(
-      channel => channelId === channel.id,
-    )?.currency;
+    const currency = channels.find(channel => channelId === channel.id)?.currency;
     const value = change?.value ?? listing?.price?.amount ?? 0;
 
     return moneyCell(value, currency);
@@ -165,9 +148,7 @@ export function getData({
 
   if (getColumnChannelAvailability(columnId)) {
     const channelId = getColumnChannelAvailability(columnId);
-    const listing = dataRow?.channelListings.find(
-      listing => listing.channel.id === channelId,
-    );
+    const listing = dataRow?.channelListings.find(listing => listing.channel.id === channelId);
     const value = change ?? !!listing;
 
     return booleanCell(value);
@@ -217,16 +198,13 @@ export function getColumnData(
     return {
       ...common,
       width: 100,
-      title: warehouses.find(warehouse => warehouse.id === getColumnStock(name))
-        ?.name,
+      title: warehouses.find(warehouse => warehouse.id === getColumnStock(name))?.name,
       group: intl.formatMessage(messages.warehouses),
     };
   }
 
   if (getColumnChannel(name)) {
-    const channel = channels.find(
-      channel => channel.id === getColumnChannel(name),
-    );
+    const channel = channels.find(channel => channel.id === getColumnChannel(name));
     return {
       ...common,
       width: 150,
@@ -236,9 +214,7 @@ export function getColumnData(
   }
 
   if (getColumnChannelAvailability(name)) {
-    const channel = channels.find(
-      channel => channel.id === getColumnChannelAvailability(name),
-    );
+    const channel = channels.find(channel => channel.id === getColumnChannelAvailability(name));
     return {
       ...common,
       width: 80,
@@ -250,9 +226,7 @@ export function getColumnData(
   if (getColumnAttribute(name)) {
     return {
       ...common,
-      title: variantAttributes.find(
-        attribute => attribute.id === getColumnAttribute(name),
-      )?.name,
+      title: variantAttributes.find(attribute => attribute.id === getColumnAttribute(name))?.name,
       group: intl.formatMessage(messages.attributes),
     };
   }

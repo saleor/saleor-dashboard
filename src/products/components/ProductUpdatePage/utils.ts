@@ -19,11 +19,7 @@ const getFractionDigits = (locale: Locale, currency: string) => {
   }
 };
 
-export const parseCurrency = (
-  value: string,
-  locale: Locale,
-  currency: string,
-): number => {
+export const parseCurrency = (value: string, locale: Locale, currency: string): number => {
   // Thousand seperators are not allowedd
   const number = value.replace(/,/, ".");
   const fractionDigits = getFractionDigits(locale, currency);
@@ -54,16 +50,9 @@ function updateVaraintWithPriceFormat(
   product: ProductFragment,
 ) {
   const channelId = dataChange.column.split(":")[1];
-  const currencyCode = getChannelCurrencyCodeById(
-    channelId,
-    product.channelListings,
-  );
+  const currencyCode = getChannelCurrencyCodeById(channelId, product.channelListings);
 
-  dataChange.data.value = parseCurrency(
-    `${dataChange.data.value}`,
-    locale,
-    currencyCode,
-  );
+  dataChange.data.value = parseCurrency(`${dataChange.data.value}`, locale, currencyCode);
 
   return dataChange;
 }

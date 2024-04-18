@@ -34,15 +34,12 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
   const total = payment?.total?.amount ?? 0;
   const captured = payment?.capturedAmount?.amount ?? 0;
   const authorized = payment?.availableCaptureAmount?.amount ?? 0;
-
   const refunded = total - captured - authorized;
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fakeEvents = React.useMemo(
     () => mapPaymentToTransactionEvents(payment),
     [payment.transactions],
   );
-
   const transactionFromPayment: FakeTransaction = {
     id: payment.id,
     name: findMethodName(payment.gateway, allPaymentMethods),
@@ -50,10 +47,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
     pspReference: "",
     externalUrl: null,
     chargedAmount: getTransactionAmount(payment.capturedAmount, currency),
-    authorizedAmount: getTransactionAmount(
-      payment.availableCaptureAmount,
-      currency,
-    ),
+    authorizedAmount: getTransactionAmount(payment.availableCaptureAmount, currency),
     refundedAmount: prepareMoney(refunded > 0 ? refunded : 0, currency),
     // Fake amounts
     refundPendingAmount: prepareMoney(0, currency),
@@ -63,16 +57,14 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
     cancelPendingAmount: prepareMoney(0, currency),
     __typename: "FakeTransaction",
   };
-
-  const handleTransactionAction: OrderTransactionProps["onTransactionAction"] =
-    (_, action) => {
-      if (action === TransactionActionEnum.CHARGE) {
-        onCapture();
-      }
-      if (action === TransactionActionEnum.CANCEL) {
-        onVoid();
-      }
-    };
+  const handleTransactionAction: OrderTransactionProps["onTransactionAction"] = (_, action) => {
+    if (action === TransactionActionEnum.CHARGE) {
+      onCapture();
+    }
+    if (action === TransactionActionEnum.CANCEL) {
+      onVoid();
+    }
+  };
 
   return (
     <OrderTransaction

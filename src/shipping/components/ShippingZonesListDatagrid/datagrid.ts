@@ -1,8 +1,5 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
-import {
-  moneyCell,
-  readonlyTextCell,
-} from "@dashboard/components/Datagrid/customCells/cells";
+import { moneyCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { getMoneyRange } from "@dashboard/components/MoneyRange";
@@ -67,9 +64,7 @@ export const createGetCellContent =
           : moneyCell(from.amount, from.currency);
       }
       case "countries":
-        return readonlyTextCell(
-          rowData?.countries.length.toString() ?? PLACEHOLDER,
-        );
+        return readonlyTextCell(rowData?.countries.length.toString() ?? PLACEHOLDER);
       default:
         return readonlyTextCell("");
     }

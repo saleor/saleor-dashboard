@@ -42,20 +42,14 @@ interface CategoryListProps {
 export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const navigate = useNavigator();
   const intl = useIntl();
-
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.CATEGORY_LIST,
-  );
-
+  const { updateListSettings, settings } = useListSettings(ListViews.CATEGORY_LIST);
   const handleSort = createSortHandler(navigate, categoryListUrl, params);
-
   const {
     selectedRowIds,
     setSelectedRowIds,
     clearRowSelection,
     setClearDatagridRowSelectionCallback,
   } = useRowSelection(params);
-
   const {
     hasPresetsChanged,
     onPresetChange,
@@ -72,7 +66,6 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     getUrl: categoryListUrl,
     reset: clearRowSelection,
   });
-
   const [openModal, closeModal] = createDialogActionHandlers<
     CategoryListUrlDialog,
     CategoryListUrlQueryParams
@@ -88,19 +81,16 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     }),
     [paginationState, params],
   );
-
   const { data, loading, refetch } = useRootCategoriesQuery({
     displayLoader: true,
     variables: queryVariables,
   });
   const categories = mapEdgesToItems(data?.categories);
-
   const paginationValues = usePaginator({
     pageInfo: data?.categories?.pageInfo,
     paginationState,
     queryString: params,
   });
-
   const changeFilterField = (filter: CategoryListUrlFilters) => {
     clearRowSelection();
     navigate(
@@ -111,17 +101,13 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       }),
     );
   };
-
-  const handleCategoryBulkDeleteOnComplete = (
-    data: CategoryBulkDeleteMutation,
-  ) => {
+  const handleCategoryBulkDeleteOnComplete = (data: CategoryBulkDeleteMutation) => {
     if (data?.categoryBulkDelete?.errors.length === 0) {
       navigate(categoryListUrl(), { replace: true });
       refetch();
       clearRowSelection();
     }
   };
-
   const handleSetSelectedCategoryIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!categories) {
@@ -137,19 +123,11 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
       setClearDatagridRowSelectionCallback(clearSelection);
     },
-    [
-      categories,
-      setClearDatagridRowSelectionCallback,
-      selectedRowIds,
-      setSelectedRowIds,
-    ],
+    [categories, setClearDatagridRowSelectionCallback, selectedRowIds, setSelectedRowIds],
   );
-
-  const [categoryBulkDelete, categoryBulkDeleteOpts] =
-    useCategoryBulkDeleteMutation({
-      onCompleted: handleCategoryBulkDeleteOnComplete,
-    });
-
+  const [categoryBulkDelete, categoryBulkDeleteOpts] = useCategoryBulkDeleteMutation({
+    onCompleted: handleCategoryBulkDeleteOnComplete,
+  });
   const handleCategoryBulkDelete = useCallback(async () => {
     await categoryBulkDelete({
       variables: {

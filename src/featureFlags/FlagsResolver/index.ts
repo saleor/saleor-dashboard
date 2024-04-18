@@ -7,10 +7,7 @@ export class FlagsResolver {
   private results: Promise<AvailableFlags.FlagList[]>;
   private readonly strategies: Strategy[];
 
-  constructor(
-    strategies: Strategy[],
-    defaultStrategy = new DefaultsStrategy(),
-  ) {
+  constructor(strategies: Strategy[], defaultStrategy = new DefaultsStrategy()) {
     this.results = Promise.resolve([]);
     this.strategies = [...strategies, defaultStrategy];
   }

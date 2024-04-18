@@ -4,12 +4,8 @@ import type { Page } from "@playwright/test";
 export class ProductCreateDialog extends BasePage {
   constructor(
     page: Page,
-    readonly dialogProductTypeInput = page.locator(
-      "[data-test-id='dialog-product-type'] input",
-    ),
-    readonly promptedOptions = page.getByTestId(
-      "single-autocomplete-select-option",
-    ),
+    readonly dialogProductTypeInput = page.locator("[data-test-id='dialog-product-type'] input"),
+    readonly promptedOptions = page.getByTestId("single-autocomplete-select-option"),
     readonly dropdown = page.getByTestId("autocomplete-dropdown"),
     readonly confirmButton = page.getByTestId("submit"),
     readonly tooltipResult = page.getByRole("tooltip"),
@@ -18,9 +14,7 @@ export class ProductCreateDialog extends BasePage {
   }
 
   async selectProductTypeWithVariants(productType: string = "Beer") {
-    await this.waitForNetworkIdle(() =>
-      this.dialogProductTypeInput.fill(productType),
-    );
+    await this.waitForNetworkIdle(() => this.dialogProductTypeInput.fill(productType));
     await this.promptedOptions.filter({ hasText: productType }).click();
   }
 

@@ -17,34 +17,24 @@ describe("ConditionalFilter / API / InitialStateResponse", () => {
         inputType: "DROPDOWN",
       },
     };
-    const token = UrlToken.fromUrlEntry(
-      new UrlEntry("o2.attribute-1", ["value-1"]),
-    );
-    const expectedOutput = [
-      { label: "Choice 1", slug: "choice-1", value: "value-1" },
-    ];
+    const token = UrlToken.fromUrlEntry(new UrlEntry("o2.attribute-1", ["value-1"]));
+    const expectedOutput = [{ label: "Choice 1", slug: "choice-1", value: "value-1" }];
     // Act
     const result = initialState.filterByUrlToken(token);
     // Assert
     expect(result).toEqual(expectedOutput);
   });
-
   it("should filter by static token type", () => {
     // Arrange
     const initialState = InitialStateResponse.empty();
-    initialState.category = [
-      { label: "Category 1", value: "1", slug: "category-1" },
-    ];
-    const token = UrlToken.fromUrlEntry(
-      new UrlEntry("s0.category-1", "category-1"),
-    );
+    initialState.category = [{ label: "Category 1", value: "1", slug: "category-1" }];
+    const token = UrlToken.fromUrlEntry(new UrlEntry("s0.category-1", "category-1"));
     const expectedOutput = ["category-1"];
     // Act
     const result = initialState.filterByUrlToken(token);
     // Assert
     expect(result).toEqual(expectedOutput);
   });
-
   it("should filter by boolean attribute token", () => {
     // Arrange
     const initialState = InitialStateResponse.empty();
@@ -72,7 +62,6 @@ describe("ConditionalFilter / API / InitialStateResponse", () => {
     // Assert
     expect(result).toEqual(expectedOutput);
   });
-
   it("should filter by static attribute token", () => {
     // Arrange
     const initialState = InitialStateResponse.empty();

@@ -8,13 +8,7 @@ export const taxConfigurationsList = gql`
     $last: Int
     $filter: TaxConfigurationFilterInput
   ) {
-    taxConfigurations(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-      filter: $filter
-    ) {
+    taxConfigurations(before: $before, after: $after, first: $first, last: $last, filter: $filter) {
       edges {
         node {
           ...TaxConfiguration

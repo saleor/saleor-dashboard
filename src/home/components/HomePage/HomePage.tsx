@@ -31,14 +31,7 @@ export interface HomePageProps {
 }
 
 const HomePage: React.FC<HomePageProps> = props => {
-  const {
-    userName,
-    analitics,
-    topProducts,
-    activities,
-    notifications,
-    noChannel,
-  } = props;
+  const { userName, analitics, topProducts, activities, notifications, noChannel } = props;
   const intl = useIntl();
 
   return (
@@ -47,15 +40,8 @@ const HomePage: React.FC<HomePageProps> = props => {
       <DetailPageLayout.Content>
         <Box paddingLeft={6} paddingRight={8}>
           <CardSpacer />
-          <RequirePermissions
-            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-          >
-            <Box
-              display="grid"
-              __gridTemplateColumns="repeat(2, 1fr)"
-              gap={5}
-              marginBottom={5}
-            >
+          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+            <Box display="grid" __gridTemplateColumns="repeat(2, 1fr)" gap={5} marginBottom={5}>
               <HomeAnalyticsCard
                 title={intl.formatMessage(homePageMessages.salesCardTitle)}
                 testId="sales-analytics"
@@ -85,15 +71,9 @@ const HomePage: React.FC<HomePageProps> = props => {
           <CardSpacer />
           {topProducts && (
             <RequirePermissions
-              requiredPermissions={[
-                PermissionEnum.MANAGE_ORDERS,
-                PermissionEnum.MANAGE_PRODUCTS,
-              ]}
+              requiredPermissions={[PermissionEnum.MANAGE_ORDERS, PermissionEnum.MANAGE_PRODUCTS]}
             >
-              <HomeProductList
-                testId="top-products"
-                topProducts={topProducts}
-              />
+              <HomeProductList testId="top-products" topProducts={topProducts} />
               <CardSpacer />
             </RequirePermissions>
           )}
@@ -101,9 +81,7 @@ const HomePage: React.FC<HomePageProps> = props => {
       </DetailPageLayout.Content>
       {activities && (
         <DetailPageLayout.RightSidebar>
-          <RequirePermissions
-            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-          >
+          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
             <HomeActivityCard activities={activities} testId="activity-card" />
           </RequirePermissions>
         </DetailPageLayout.RightSidebar>

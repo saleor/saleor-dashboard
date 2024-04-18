@@ -77,9 +77,7 @@ interface OrderRefundFulfilledProductsProps {
   onSetMaximalQuantities: () => void;
 }
 
-const OrderRefundFulfilledProducts: React.FC<
-  OrderRefundFulfilledProductsProps
-> = props => {
+const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> = props => {
   const {
     fulfillment,
     data,
@@ -109,9 +107,7 @@ const OrderRefundFulfilledProducts: React.FC<
         <Button
           className={classes.setMaximalQuantityButton}
           onClick={onSetMaximalQuantities}
-          data-test-id={
-            "set-maximal-quantity-fulfilled-button-" + fulfillment?.id
-          }
+          data-test-id={"set-maximal-quantity-fulfilled-button-" + fulfillment?.id}
         >
           <FormattedMessage
             id="2W4EBM"
@@ -157,10 +153,9 @@ const OrderRefundFulfilledProducts: React.FC<
           {renderCollection(
             fulfillment?.lines,
             line => {
-              const selectedLineQuantity =
-                data.refundedFulfilledProductQuantities.find(
-                  refundedLine => refundedLine.id === line.id,
-                );
+              const selectedLineQuantity = data.refundedFulfilledProductQuantities.find(
+                refundedLine => refundedLine.id === line.id,
+              );
               const isError =
                 Number(selectedLineQuantity?.value) > line?.quantity ||
                 Number(selectedLineQuantity?.value) < 0;
@@ -168,11 +163,7 @@ const OrderRefundFulfilledProducts: React.FC<
               return (
                 <TableRowLink key={line?.id}>
                   <TableCellAvatar thumbnail={line?.orderLine?.thumbnail?.url}>
-                    {line?.orderLine?.productName ? (
-                      line?.orderLine?.productName
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {line?.orderLine?.productName ? line?.orderLine?.productName : <Skeleton />}
                   </TableCellAvatar>
                   <TableCell>
                     {line?.orderLine?.unitPrice ? (
@@ -196,16 +187,11 @@ const OrderRefundFulfilledProducts: React.FC<
                         fullWidth
                         value={selectedLineQuantity?.value}
                         onChange={event =>
-                          onRefundedProductQuantityChange(
-                            line.id,
-                            event.target.value,
-                          )
+                          onRefundedProductQuantityChange(line.id, event.target.value)
                         }
                         InputProps={{
                           endAdornment: line?.quantity && (
-                            <div className={classes.remainingQuantity}>
-                              / {line?.quantity}
-                            </div>
+                            <div className={classes.remainingQuantity}>/ {line?.quantity}</div>
                           ),
                         }}
                         error={isError}
@@ -240,10 +226,7 @@ const OrderRefundFulfilledProducts: React.FC<
             () => (
               <TableRowLink>
                 <TableCell colSpan={4}>
-                  <FormattedMessage
-                    id="Q1Uzbb"
-                    defaultMessage="No products found"
-                  />
+                  <FormattedMessage id="Q1Uzbb" defaultMessage="No products found" />
                 </TableCell>
               </TableRowLink>
             ),

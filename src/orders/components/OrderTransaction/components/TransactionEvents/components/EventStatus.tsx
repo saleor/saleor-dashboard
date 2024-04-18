@@ -15,43 +15,23 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
   switch (status) {
     case "PENDING":
       return (
-        <Pill
-          color="warning"
-          size="small"
-          label={intl.formatMessage(statusMessages.pending)}
-        />
+        <Pill color="warning" size="small" label={intl.formatMessage(statusMessages.pending)} />
       );
     case "SUCCESS":
       return (
-        <Pill
-          color="success"
-          size={"small"}
-          label={intl.formatMessage(statusMessages.success)}
-        />
+        <Pill color="success" size={"small"} label={intl.formatMessage(statusMessages.success)} />
       );
     case "FAILED":
       return (
-        <Pill
-          color="error"
-          size={"small"}
-          label={intl.formatMessage(statusMessages.failure)}
-        />
+        <Pill color="error" size={"small"} label={intl.formatMessage(statusMessages.failure)} />
       );
     case "REQUEST":
       return (
-        <Pill
-          color="info"
-          size={"small"}
-          label={intl.formatMessage(statusMessages.request)}
-        />
+        <Pill color="info" size={"small"} label={intl.formatMessage(statusMessages.request)} />
       );
     case "INFO":
       return (
-        <Pill
-          color="generic"
-          size={"small"}
-          label={intl.formatMessage(statusMessages.info)}
-        />
+        <Pill color="generic" size={"small"} label={intl.formatMessage(statusMessages.info)} />
       );
     default: {
       const _exhaustiveCheck: never = status;

@@ -32,8 +32,8 @@ const FilterTextField: React.FC<FilterTextFieldProps> = ({
           filter.type === FieldType.date
             ? "date"
             : [FieldType.number, FieldType.price].includes(filter.type)
-            ? "number"
-            : "text",
+              ? "number"
+              : "text",
       }}
       value={filter.value[0]}
       onChange={event =>

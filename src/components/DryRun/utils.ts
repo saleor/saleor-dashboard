@@ -18,8 +18,7 @@ const getEventsFromQuery = (query: string) => {
       SelectionSet(node, _key, parent) {
         if ((parent as ObjectFieldNode).name?.value === "event") {
           const queryEvents = node.selections.map(
-            selection =>
-              (selection as InlineFragmentNode).typeCondition.name.value,
+            selection => (selection as InlineFragmentNode).typeCondition.name.value,
           );
 
           queryEvents.map(event => events.push(event));

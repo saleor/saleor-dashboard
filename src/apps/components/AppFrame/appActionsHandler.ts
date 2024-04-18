@@ -18,23 +18,15 @@ import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
 const debug = createAppsDebug("appActionsHandler");
-
-const createResponseStatus = (
-  actionId: string,
-  ok: boolean,
-): DispatchResponseEvent => ({
+const createResponseStatus = (actionId: string, ok: boolean): DispatchResponseEvent => ({
   type: "response",
   payload: {
     actionId,
     ok,
   },
 });
-
-const isExternalHost = (host: string) =>
-  new URL(host).hostname !== window.location.hostname;
-
+const isExternalHost = (host: string) => new URL(host).hostname !== window.location.hostname;
 const isLocalPath = (path: string) => path.startsWith("/");
-
 const useHandleNotificationAction = () => {
   const notify = useNotifier();
 
@@ -43,7 +35,6 @@ const useHandleNotificationAction = () => {
       const { actionId, ...notification } = action.payload;
 
       debug(`Handling Notification action with ID: %s`, actionId);
-
       notify({
         ...notification,
       });
@@ -52,12 +43,10 @@ const useHandleNotificationAction = () => {
     },
   };
 };
-
 const useHandleRedirectAction = (appId: string) => {
   const navigate = useNavigator();
   const { closeApp } = useExternalApp();
   const intl = useIntl();
-
   const handleAppDeepChange = (action: RedirectAction) => {
     debug("Handling deep app URL change");
 
@@ -75,12 +64,8 @@ const useHandleRedirectAction = (appId: string) => {
 
     return createResponseStatus(action.payload.actionId, true);
   };
-
   const handleExternalHostChange = (action: RedirectAction) => {
-    debug(
-      `Handling external host change action with ID: %s`,
-      action.payload.actionId,
-    );
+    debug(`Handling external host change action with ID: %s`, action.payload.actionId);
     debug(`Action payload is %O`, action.payload);
 
     if (action.payload.newContext) {
@@ -91,8 +76,7 @@ const useHandleRedirectAction = (appId: string) => {
       const confirmed = window.confirm(
         intl.formatMessage({
           id: "MSItJD",
-          defaultMessage:
-            "You are about to leave the Dashboard. Do you want to continue?",
+          defaultMessage: "You are about to leave the Dashboard. Do you want to continue?",
         }),
       );
 
@@ -105,7 +89,6 @@ const useHandleRedirectAction = (appId: string) => {
       return createResponseStatus(action.payload.actionId, false);
     }
   };
-
   const handleLocalDashboardPathChange = (action: RedirectAction) => {
     if (action.payload.newContext) {
       const exactLocation = urlJoin(getAppMountUri(), action.payload.to);
@@ -147,23 +130,16 @@ const useHandleRedirectAction = (appId: string) => {
       /**
        * Assume failure if nothing catched
        */
-      console.error(
-        "Couldn't handle Redirect action properly, this should not happen",
-      );
+      console.error("Couldn't handle Redirect action properly, this should not happen");
       return createResponseStatus(actionId, false);
     },
   };
 };
-
 const useHandleUpdateRoutingAction = (appId: string) => ({
   handle: (action: UpdateRouting) => {
     const { newRoute, actionId } = action.payload;
 
-    debug(
-      `Handling UpdateRouting action with ID: %s and new route: %s`,
-      actionId,
-      newRoute,
-    );
+    debug(`Handling UpdateRouting action with ID: %s and new route: %s`, actionId, newRoute);
 
     const exactLocation = urlJoin(
       getAppMountUri(),
@@ -172,13 +148,11 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
     );
 
     debug(`Update to new nested route:  %s`, exactLocation);
-
     window.history.pushState(null, "", exactLocation);
 
     return createResponseStatus(actionId, true);
   },
 });
-
 /**
  * TODO Remove prop drilling, consume context
  */
@@ -207,7 +181,6 @@ const useNotifyReadyAction = (
     },
   };
 };
-
 const useHandlePermissionRequest = (appId: string) => {
   const navigate = useNavigator();
 

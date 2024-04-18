@@ -10,15 +10,11 @@ export class TranslationsPage extends BasePage {
     page: Page,
     readonly translationPl_PL = page.getByTestId("PL_PL"),
     readonly editTranslationNameButton = page.getByTestId("edit-name"),
-    readonly translationInput = page
-      .getByTestId("translation-field")
-      .locator("input"),
+    readonly translationInput = page.getByTestId("translation-field").locator("input"),
     readonly translationRichText = page
       .getByTestId("rich-text-editor-translation")
       .locator("[contenteditable]"),
-    readonly editTranslationDescriptionButton = page.getByTestId(
-      "edit-description",
-    ),
+    readonly editTranslationDescriptionButton = page.getByTestId("edit-description"),
   ) {
     super(page);
     this.page = page;

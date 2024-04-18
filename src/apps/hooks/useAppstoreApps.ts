@@ -16,15 +16,12 @@ type Action =
 
 function useAppstoreApps(appstoreUrl?: string): State {
   const cache = useRef<Cache>({});
-
   // Used to prevent state update if the component is unmounted
   const cancelRequest = useRef<boolean>(false);
-
   const initialState: State = {
     error: undefined,
     data: undefined,
   };
-
   // Keep state logic separated
   const fetchReducer = (state: State, action: Action): State => {
     switch (action.type) {
@@ -42,7 +39,6 @@ function useAppstoreApps(appstoreUrl?: string): State {
         return state;
     }
   };
-
   const [state, dispatch] = useReducer(fetchReducer, initialState);
 
   useEffect(() => {

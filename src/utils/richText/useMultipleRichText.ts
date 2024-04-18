@@ -26,7 +26,6 @@ export const useMultipleRichText = <TKey extends string>({
 }: RichTextMultipleOptions<TKey>) => {
   const editorRefs = useRef<RefsMap<TKey>>({} as RefsMap<TKey>);
   const [shouldMountMap, { set: setShouldMountById }] = useMap();
-
   const getMountEditor = useCallback(
     (id: TKey) => (ref: EditorCore | null) => {
       editorRefs.current = {
@@ -36,9 +35,7 @@ export const useMultipleRichText = <TKey extends string>({
     },
     [],
   );
-
   const getHandleChange = (_: TKey) => () => triggerChange();
-
   const getDefaultValue = useCallback(
     (id: TKey) => {
       if (initial[id] === undefined) {
@@ -56,17 +53,14 @@ export const useMultipleRichText = <TKey extends string>({
     },
     [initial],
   );
-
   const getShouldMount = useCallback(
     (id: TKey) => shouldMountMap.get(id) ?? false,
     [shouldMountMap],
   );
-
   const getValues = async () => {
     const availableRefs = Object.entries(editorRefs.current).filter(
       ([, value]) => value !== null,
     ) as Array<[string, EditorCore]>;
-
     const results = await Promise.all(
       availableRefs.map(async ([key, ref]) => {
         const value = await ref.save();

@@ -8,46 +8,30 @@ export class PromotionRuleDialog {
     readonly ruleChannelDropdown = page.getByText("Channel", { exact: true }),
     readonly ruleChannelDropdownOptions = page.getByRole("listbox"),
     readonly selectOption = page.getByTestId("select-option"),
-    readonly ruleDescriptionInput = page.getByTestId(
-      "rich-text-editor-rule-description",
-    ),
+    readonly ruleDescriptionInput = page.getByTestId("rich-text-editor-rule-description"),
     readonly addRuleConditionButton = page.getByTestId("add-condition-button"),
     readonly addRuleConditionSection = page.getByTestId("conditions-section"),
     readonly addRuleConditionPredicateDropdown = page.getByTestId(
       "rule-condition-predicate-dropdown",
     ),
-    readonly addRuleConditionTypeDropdown = page.getByTestId(
-      "rule-condition-type-dropdown",
-    ),
-    readonly addRuleConditionValueDropdown = page.getByTestId(
-      "rule-condition-value-dropdown",
-    ),
+    readonly addRuleConditionTypeDropdown = page.getByTestId("rule-condition-type-dropdown"),
+    readonly addRuleConditionValueDropdown = page.getByTestId("rule-condition-value-dropdown"),
     readonly rewardTypeSelect = page.getByTestId("reward-type-select"),
     readonly rewardValueInput = page.getByTestId("reward-value-input"),
     readonly rewardGiftSelect = page.getByTestId("reward-gifts-select"),
-    readonly percentageRewardValueTypeOption = page.getByTestId(
-      "percentage-reward-value-type",
-    ),
-    readonly fixedRewardValueTypeOption = page.getByTestId(
-      "fixed-reward-value-type",
-    ),
+    readonly percentageRewardValueTypeOption = page.getByTestId("percentage-reward-value-type"),
+    readonly fixedRewardValueTypeOption = page.getByTestId("fixed-reward-value-type"),
     readonly saveRuleButton = page.getByTestId("saveRuleButton"),
     readonly ruleConfirmationButton = page.getByTestId("saveRuleButton"),
-    readonly gteConditionValueInput = page
-      .getByTestId("condition-value-0")
-      .first(),
-    readonly lteConditionValueInput = page
-      .getByTestId("condition-value-0")
-      .last(),
+    readonly gteConditionValueInput = page.getByTestId("condition-value-0").first(),
+    readonly lteConditionValueInput = page.getByTestId("condition-value-0").last(),
     readonly ruleConditionRow = page.getByTestId("rule-condition-row"),
   ) {
     this.page = page;
   }
 
   async typePromotionRuleDescription(description: string) {
-    await this.ruleDescriptionInput
-      .locator('[contenteditable="true"]')
-      .fill(description);
+    await this.ruleDescriptionInput.locator('[contenteditable="true"]').fill(description);
   }
 
   async clickChannelsDropdown() {
@@ -72,10 +56,7 @@ export class PromotionRuleDialog {
   }
 
   async removeExistingGiftReward(giftRewardId: string, index: number = 0) {
-    await this.page
-      .getByTestId(`selected-option-${giftRewardId}-${index}`)
-      .getByText("✕")
-      .click();
+    await this.page.getByTestId(`selected-option-${giftRewardId}-${index}`).getByText("✕").click();
   }
 
   async selectPercentageRewardValueType() {
@@ -105,17 +86,12 @@ export class PromotionRuleDialog {
 
   async selectPredicate(predicate: string, index: number = 0) {
     await this.page.getByTestId(`condition-name-${index}`).click();
-    await this.page
-      .getByRole("option", { name: predicate, exact: true })
-      .click();
+    await this.page.getByRole("option", { name: predicate, exact: true }).click();
   }
 
   async selectRuleConditionType(type: string) {
     await this.addRuleConditionTypeDropdown.last().click();
-    await this.page
-      .getByTestId("select-option")
-      .filter({ hasText: type })
-      .click();
+    await this.page.getByTestId("select-option").filter({ hasText: type }).click();
   }
 
   async typeRuleConditionValue(value: string, index: number = 0) {

@@ -26,10 +26,7 @@ import { CollectionImage } from "../CollectionImage/CollectionImage";
 import CollectionProducts from "../CollectionProducts/CollectionProducts";
 import CollectionUpdateForm, { CollectionUpdateData } from "./form";
 
-export interface CollectionDetailsPageProps
-  extends PageListProps,
-    ListActions,
-    ChannelProps {
+export interface CollectionDetailsPageProps extends PageListProps, ListActions, ChannelProps {
   onAdd: () => void;
   channelsCount: number;
   channelsErrors: CollectionChannelListingErrorFragment[];
@@ -77,12 +74,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
         <DetailPageLayout>
           <TopNav href={collectionListUrl()} title={collection?.name} />
           <DetailPageLayout.Content>
-            <CollectionDetails
-              data={data}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
-            />
+            <CollectionDetails data={data} disabled={disabled} errors={errors} onChange={change} />
             <CardSpacer />
             <CollectionImage
               data={data}

@@ -12,15 +12,10 @@ interface StaffPreferencesProps {
   onLocaleChange: (locale: Locale) => void;
 }
 
-const StaffPreferences: React.FC<StaffPreferencesProps> = ({
-  locale,
-  onLocaleChange,
-}) => {
+const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleChange }) => {
   const intl = useIntl();
-
   const handleLocaleChange = async (locale: Locale) => {
     await onLocaleChange(locale);
-
     /*
       Workaround, after changing language we reload the page.
       saleor-sdk causes the error related to wrong cache management.
@@ -48,8 +43,7 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({
           displayValue={localeNames[locale]}
           helperText={intl.formatMessage({
             id: "JJgJwi",
-            defaultMessage:
-              "Selecting this will change the language of your dashboard",
+            defaultMessage: "Selecting this will change the language of your dashboard",
           })}
           label={intl.formatMessage({
             id: "mr9jbO",

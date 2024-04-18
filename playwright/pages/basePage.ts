@@ -11,9 +11,7 @@ export class BasePage {
     readonly pageHeaderStatusInfo = page.getByTestId("status-info"),
     readonly bulkDeleteGridRowsButton = page.getByTestId("bulk-delete-button"),
     readonly gridCanvas = page.locator('[data-testid="data-grid-canvas"]'),
-    readonly gridInput = page
-      .locator('[class="clip-region"]')
-      .locator("textarea"),
+    readonly gridInput = page.locator('[class="clip-region"]').locator("textarea"),
     readonly successBanner = page.locator(LOCATORS.successBanner),
     readonly deleteButton = page.locator(LOCATORS.deleteButton),
     readonly filterButton = page.getByTestId("filters-button"),
@@ -21,20 +19,14 @@ export class BasePage {
     readonly saveButton = page.locator(LOCATORS.saveButton),
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
     readonly loader = page.locator(LOCATORS.loader),
-    readonly previousPagePaginationButton = page.getByTestId(
-      "button-pagination-back",
-    ),
+    readonly previousPagePaginationButton = page.getByTestId("button-pagination-back"),
     readonly rowNumberButton = page.getByTestId("PaginationRowNumberSelect"),
     readonly rowNumberOption = page.getByTestId("rowNumberOption"),
-    readonly nextPagePaginationButton = page.getByTestId(
-      "button-pagination-next",
-    ),
+    readonly nextPagePaginationButton = page.getByTestId("button-pagination-next"),
     readonly searchInputListView = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
     readonly dialog = page.getByRole("dialog"),
-    readonly selectAllCheckbox = page
-      .getByTestId("select-all-checkbox")
-      .locator("input"),
+    readonly selectAllCheckbox = page.getByTestId("select-all-checkbox").locator("input"),
   ) {
     this.page = page;
   }
@@ -76,18 +68,12 @@ export class BasePage {
 
   async clickNextPageButton() {
     await this.nextPagePaginationButton.click();
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
   async clickPreviousPageButton() {
     await this.previousPagePaginationButton.click();
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
   async clickNumbersOfRowsButton() {
@@ -105,37 +91,21 @@ export class BasePage {
   }
 
   async expectSuccessBannerMessage(msg: string) {
-    await this.successBanner
-      .locator(`text=${msg}`)
-      .waitFor({ state: "visible", timeout: 10000 });
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await this.successBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
   async expectSuccessBanner() {
-    await this.successBanner
-      .first()
-      .waitFor({ state: "visible", timeout: 15000 });
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await this.successBanner.first().waitFor({ state: "visible", timeout: 15000 });
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
   async expectInfoBanner() {
     await this.infoBanner.first().waitFor({ state: "visible", timeout: 15000 });
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
-  async waitForNetworkIdle(
-    action: () => Promise<void>,
-    timeoutMs: number = 50000,
-  ) {
+  async waitForNetworkIdle(action: () => Promise<void>, timeoutMs: number = 50000) {
     const responsePromise = this.page.waitForResponse("**/graphql/", {
       timeout: timeoutMs,
     });
@@ -167,24 +137,16 @@ export class BasePage {
   private async findGridCellBounds(col: number, row: number) {
     return this.gridCanvas.evaluate(
       (node, { col, row }) => {
-        const fiberKey = Object.keys(node).find(
-          x => x && x.includes("__reactFiber"),
-        );
+        const fiberKey = Object.keys(node).find(x => x && x.includes("__reactFiber"));
 
         if (!fiberKey || !node.parentNode) return null;
 
         /*
         We seek over the fiber node (hack), ignore typings for it.
       */
-        const fiberParent = node.parentNode[
-          fiberKey as keyof typeof node.parentNode
-        ] as any;
-
+        const fiberParent = node.parentNode[fiberKey as keyof typeof node.parentNode] as any;
         const bounds: { x: number; y: number; width: number; height: number } =
-          fiberParent.pendingProps.children.props.gridRef.current.getBounds(
-            col,
-            row,
-          );
+          fiberParent.pendingProps.children.props.gridRef.current.getBounds(col, row);
 
         if (!bounds) return null;
 
@@ -215,8 +177,7 @@ export class BasePage {
   async fillGridCell(col: number, row: number, content: string) {
     const bounds = await this.findGridCellBounds(col, row);
 
-    if (!bounds)
-      throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
+    if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
 
     await this.page.mouse.dblclick(bounds.center.x, bounds.center.y);
     await this.gridInput.waitFor({ state: "attached" });
@@ -226,27 +187,18 @@ export class BasePage {
   async clickGridCell(col: number, row: number) {
     const bounds = await this.findGridCellBounds(col, row);
 
-    if (!bounds)
-      throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
+    if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
 
     await this.page.mouse.click(bounds.center.x, bounds.center.y);
   }
 
   async findRowIndexBasedOnText(searchTextArray: string[]) {
-    await this.gridCanvas
-      .locator("table tr")
-      .first()
-      .waitFor({ state: "attached" });
+    await this.gridCanvas.locator("table tr").first().waitFor({ state: "attached" });
     const rowIndexes: number[] = [];
-
-    const rows = await this.page.$$eval("table tr", rows =>
-      rows.map(row => row.textContent),
-    );
+    const rows = await this.page.$$eval("table tr", rows => rows.map(row => row.textContent));
 
     for (const searchedText of searchTextArray) {
-      const rowIndex = rows.findIndex(rowText =>
-        rowText!.includes(searchedText),
-      );
+      const rowIndex = rows.findIndex(rowText => rowText!.includes(searchedText));
 
       if (rowIndex !== -1) {
         console.log("Index of row containing text:", rowIndex - 1);
@@ -272,10 +224,7 @@ export class BasePage {
     await this.clickGridCell(1, rowIndex[0]);
   }
 
-  async expectElementContainsTextFromObjectValues(
-    locator: Locator,
-    object: object,
-  ) {
+  async expectElementContainsTextFromObjectValues(locator: Locator, object: object) {
     const objectValuesArray = await Object.values(object);
     for (const objectProperty of objectValuesArray) {
       expect(locator).toContainText(objectProperty);

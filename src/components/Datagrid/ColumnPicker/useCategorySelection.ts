@@ -3,10 +3,7 @@ import React from "react";
 import { ColumnCategory } from "./useColumns";
 
 export const useCategorySelection = (columnCategories: ColumnCategory[]) => {
-  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(
-    null,
-  );
-
+  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
   const currentCategory = React.useMemo(
     () => columnCategories.find(category => category.name === selectedCategory),
     [columnCategories, selectedCategory],

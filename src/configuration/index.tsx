@@ -112,8 +112,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         {
           description: intl.formatMessage({
             id: "ivJ1qt",
-            defaultMessage:
-              "Manage your permission groups and their permissions",
+            defaultMessage: "Manage your permission groups and their permissions",
           }),
           icon: <PermissionGroups />,
           permissions: [PermissionEnum.MANAGE_STAFF],
@@ -228,11 +227,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "View and update your plugins and their settings.",
           }),
           icon: (
-            <Plugins
-              fontSize="inherit"
-              viewBox="-8 -5 44 44"
-              preserveAspectRatio="xMinYMin meet"
-            />
+            <Plugins fontSize="inherit" viewBox="-8 -5 44 44" preserveAspectRatio="xMinYMin meet" />
           ),
           permissions: [PermissionEnum.MANAGE_PLUGINS],
           title: intl.formatMessage(sectionNames.plugins),
@@ -258,12 +253,10 @@ export const configurationMenuUrl = "/configuration/";
 
 export const ConfigurationSection: React.FC = () => {
   const shop = useShop();
-
   const versions = {
     dashboardVersion,
     coreVersion: shop?.version ?? "",
   };
-
   const user = useUser();
   const intl = useIntl();
 

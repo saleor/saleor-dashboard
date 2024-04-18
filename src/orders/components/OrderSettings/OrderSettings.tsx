@@ -14,11 +14,7 @@ export interface OrderSettingsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const OrderSettings: React.FC<OrderSettingsProps> = ({
-  data,
-  disabled,
-  onChange,
-}) => {
+const OrderSettings: React.FC<OrderSettingsProps> = ({ data, disabled, onChange }) => {
   const intl = useIntl();
 
   return (

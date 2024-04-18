@@ -69,10 +69,8 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     toggleAll,
     toolbar,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
-
   const products = mapEdgesToItems(collection?.products);
   const numberOfColumns = products?.length === 0 ? 4 : 5;
 
@@ -96,17 +94,8 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           )
         }
         toolbar={
-          <Button
-            data-test-id="add-product"
-            disabled={disabled}
-            variant="tertiary"
-            onClick={onAdd}
-          >
-            <FormattedMessage
-              id="scHVdW"
-              defaultMessage="Assign product"
-              description="button"
-            />
+          <Button data-test-id="add-product" disabled={disabled} variant="tertiary" onClick={onAdd}>
+            <FormattedMessage id="scHVdW" defaultMessage="Assign product" description="button" />
           </Button>
         }
       />
@@ -121,19 +110,11 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
         >
           <TableCell className={classes.colName}>
             <span className={classes.colNameLabel}>
-              <FormattedMessage
-                id="6AMFki"
-                defaultMessage="Name"
-                description="product name"
-              />
+              <FormattedMessage id="6AMFki" defaultMessage="Name" description="product name" />
             </span>
           </TableCell>
           <TableCell className={classes.colType}>
-            <FormattedMessage
-              id="k+HcTv"
-              defaultMessage="Type"
-              description="product type"
-            />
+            <FormattedMessage id="k+HcTv" defaultMessage="Type" description="product type" />
           </TableCell>
           <TableCell className={classes.colPublished}>
             <FormattedMessage
@@ -179,18 +160,13 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                     {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(
-                      () => product.productType.name,
-                      <Skeleton />,
-                    )}
+                    {maybe<React.ReactNode>(() => product.productType.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colType}>
                     {product && !product?.channelListings?.length ? (
                       "-"
                     ) : product?.channelListings !== undefined ? (
-                      <ChannelsAvailabilityDropdown
-                        channels={product?.channelListings}
-                      />
+                      <ChannelsAvailabilityDropdown channels={product?.channelListings} />
                     ) : (
                       <Skeleton />
                     )}
@@ -213,10 +189,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
             () => (
               <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage
-                    id="Q1Uzbb"
-                    defaultMessage="No products found"
-                  />
+                  <FormattedMessage id="Q1Uzbb" defaultMessage="No products found" />
                 </TableCell>
               </TableRowLink>
             ),

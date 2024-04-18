@@ -68,7 +68,6 @@ const useStyles = makeStyles(
   }),
   { name: "CardMenu" },
 );
-
 /**
  * @deprecated use [`TopNav.Menu`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/AppLayout/TopNav/Menu.tsx) instead
  */
@@ -85,30 +84,22 @@ const CardMenu: React.FC<CardMenuProps> = props => {
     ...rest
   } = props;
   const classes = useStyles(props);
-
   const anchorRef = useRef<HTMLButtonElement | null>(null);
   const [open, setOpen] = useState(false);
-
   const handleToggle = () => setOpen(prevOpen => !prevOpen);
-
   const handleClose = (event: React.MouseEvent<EventTarget>) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
+    if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
       return;
     }
 
     setOpen(false);
   };
-
   const handleListKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
     }
   };
-
   const prevOpen = useRef(open);
   useEffect(() => {
     if (prevOpen.current && !open) {
@@ -117,7 +108,6 @@ const CardMenu: React.FC<CardMenuProps> = props => {
 
     prevOpen.current = open;
   }, [open]);
-
   useEffect(() => {
     const hasAnyItemsLoadingOrWithError = menuItems
       ?.filter(({ withLoading }) => withLoading)
@@ -136,9 +126,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
       setOpen(false);
     }
   };
-
   const isWithLoading = menuItems.some(({ withLoading }) => withLoading);
-
   const Icon = icon ?? SettingsIcon;
 
   return (
@@ -168,8 +156,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin:
-                placement === "bottom" ? "right top" : "right bottom",
+              transformOrigin: placement === "bottom" ? "right top" : "right bottom",
               overflowY: "auto",
             }}
           >
@@ -196,9 +183,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                         {menuItem.loading ? (
                           <>
                             <Typography variant="subtitle1">
-                              <FormattedMessage
-                                {...messages.cardMenuItemLoading}
-                              />
+                              <FormattedMessage {...messages.cardMenuItemLoading} />
                             </Typography>
                             <CircularProgress size={24} />
                           </>

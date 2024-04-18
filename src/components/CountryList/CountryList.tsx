@@ -71,18 +71,9 @@ const useStyles = makeStyles(
   }),
   { name: "CountryList" },
 );
-
 const CountryList: React.FC<CountryListProps> = props => {
-  const {
-    countries,
-    disabled,
-    emptyText,
-    title,
-    onCountryAssign,
-    onCountryUnassign,
-  } = props;
+  const { countries, disabled, emptyText, title, onCountryAssign, onCountryUnassign } = props;
   const classes = useStyles(props);
-
   const [isCollapsed, setCollapseStatus] = React.useState(true);
   const toggleCollapse = () => setCollapseStatus(!isCollapsed);
 
@@ -95,16 +86,8 @@ const CountryList: React.FC<CountryListProps> = props => {
       <CardTitle
         title={title}
         toolbar={
-          <Button
-            disabled={disabled}
-            onClick={onCountryAssign}
-            data-test-id="assign-country"
-          >
-            <FormattedMessage
-              id="zZCCqz"
-              defaultMessage="Assign countries"
-              description="button"
-            />
+          <Button disabled={disabled} onClick={onCountryAssign} data-test-id="assign-country">
+            <FormattedMessage id="zZCCqz" defaultMessage="Assign countries" description="button" />
           </Button>
         }
       />
@@ -144,9 +127,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                           {(countryIndex === 0 ||
                             countries[countryIndex].country[0] !==
                               countries[countryIndex - 1].country[0]) && (
-                            <span className={classes.indicator}>
-                              {country.country[0]}
-                            </span>
+                            <span className={classes.indicator}>{country.country[0]}</span>
                           )}
                           {country.country}
                         </>
@@ -154,9 +135,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                       <Skeleton />,
                     )}
                   </TableCell>
-                  <TableCell
-                    className={clsx(classes.textRight, classes.iconCell)}
-                  >
+                  <TableCell className={clsx(classes.textRight, classes.iconCell)}>
                     <IconButton
                       data-test-id="delete-icon"
                       variant="secondary"

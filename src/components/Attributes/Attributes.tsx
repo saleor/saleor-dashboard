@@ -44,9 +44,7 @@ export interface AttributesProps extends AttributeRowHandlers {
   onAttributeSelectBlur: () => void;
   disabled: boolean;
   loading: boolean;
-  errors: Array<
-    ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
-  >;
+  errors: Array<ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment>;
   title?: React.ReactNode;
   richTextGetters: RichTextGetters<string>;
 }

@@ -19,11 +19,7 @@ import StaffDetailsPage, {
 } from "../components/StaffDetailsPage/StaffDetailsPage";
 import StaffPasswordResetDialog from "../components/StaffPasswordResetDialog";
 import { useProfileOperations, useStaffUserOperations } from "../hooks";
-import {
-  staffListUrl,
-  staffMemberDetailsUrl,
-  StaffMemberDetailsUrlQueryParams,
-} from "../urls";
+import { staffListUrl, staffMemberDetailsUrl, StaffMemberDetailsUrlQueryParams } from "../urls";
 import { groupsDiff } from "../utils";
 
 interface OrderListProps {
@@ -35,7 +31,6 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const user = useUser();
   const intl = useIntl();
-
   const closeModal = () =>
     navigate(
       staffMemberDetailsUrl(id, {
@@ -43,21 +38,14 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         action: undefined,
       }),
     );
-
   const isUserSameAsViewer = user.user?.id === id;
-
   const { data, loading, refetch } = useStaffMemberDetailsQuery({
     displayLoader: true,
     variables: { id },
     skip: isUserSameAsViewer,
   });
-  const {
-    deleteResult,
-    deleteStaffMember,
-    updateStaffMember,
-    updateStaffMemberOpts,
-  } = useStaffUserOperations();
-
+  const { deleteResult, deleteStaffMember, updateStaffMember, updateStaffMemberOpts } =
+    useStaffUserOperations();
   const {
     updateUserAccount,
     updateUserAccountOpts,
@@ -67,12 +55,10 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     deleteUserAvatar,
     updateUserAvatar,
   } = useProfileOperations({ closeModal, id, refetch });
-
   const staffMember = isUserSameAsViewer ? user.user : data?.user;
   const hasManageStaffPermission = hasPermissions(user.user.userPermissions, [
     PermissionEnum.MANAGE_STAFF,
   ]);
-
   const {
     loadMore: loadMorePermissionGroups,
     search: searchPermissionGroups,
@@ -96,14 +82,11 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             firstName: formData.firstName,
             isActive: formData.isActive,
             lastName: formData.lastName,
-            ...(hasManageStaffPermission
-              ? groupsDiff(data?.user, formData)
-              : {}),
+            ...(hasManageStaffPermission ? groupsDiff(data?.user, formData) : {}),
           },
         },
       }),
     );
-
   const handleUserUpdate = (formData: StaffDetailsFormData) =>
     extractMutationErrors(
       updateUserAccount({
@@ -156,18 +139,13 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             }),
           )
         }
-        availablePermissionGroups={mapEdgesToItems(
-          searchPermissionGroupsOpts?.data?.search,
-        )}
+        availablePermissionGroups={mapEdgesToItems(searchPermissionGroupsOpts?.data?.search)}
         staffMember={staffMember}
         saveButtonBarState={
-          isUserSameAsViewer
-            ? updateUserAccountOpts.status
-            : updateStaffMemberOpts.status
+          isUserSameAsViewer ? updateUserAccountOpts.status : updateStaffMemberOpts.status
         }
         fetchMorePermissionGroups={{
-          hasMore:
-            searchPermissionGroupsOpts.data?.search?.pageInfo.hasNextPage,
+          hasMore: searchPermissionGroupsOpts.data?.search?.pageInfo.hasNextPage,
           loading: searchPermissionGroupsOpts.loading,
           onFetchMore: loadMorePermissionGroups,
         }}
@@ -216,9 +194,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             id="fzpXvv"
             defaultMessage="Are you sure you want to remove {email} avatar?"
             values={{
-              email: (
-                <strong>{getStringOrPlaceholder(data?.user?.email)}</strong>
-              ),
+              email: <strong>{getStringOrPlaceholder(data?.user?.email)}</strong>,
             }}
           />
         </DialogContentText>

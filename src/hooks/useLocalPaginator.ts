@@ -26,7 +26,6 @@ export function useLocalPaginationState(
   const [state, setState] = useState<PaginationState>({
     first: paginateBy,
   });
-
   const setPaginationState = (paginationState: PaginationState) => {
     if (paginationState.after) {
       setState({
@@ -63,9 +62,7 @@ export function useSectionLocalPaginationState(
   section: string,
 ): [PaginationState, (paginationState: PaginationState) => void] {
   const [paginationSection, setPaginationSection] = useState(section);
-  const [paginationState, setPaginationState] =
-    useLocalPaginationState(paginateBy);
-
+  const [paginationState, setPaginationState] = useLocalPaginationState(paginateBy);
   const fallbackPaginationState = {
     first: paginateBy,
   };
@@ -75,7 +72,6 @@ export function useSectionLocalPaginationState(
       setPaginationState({});
     }
   }, [section]);
-
   useEffect(() => {
     if (section !== paginationSection) {
       setPaginationSection(section);
@@ -95,9 +91,7 @@ export interface LocalPagination {
   pageInfo?: PageInfo;
 }
 
-function useLocalPaginator(
-  setPaginationState: (paginationState: PaginationState) => void,
-) {
+function useLocalPaginator(setPaginationState: (paginationState: PaginationState) => void) {
   function paginate(
     pageInfo: PageInfo | undefined,
     paginationState: PaginationState,
@@ -108,14 +102,12 @@ function useLocalPaginator(
         after: pageInfo?.endCursor,
         before: undefined,
       });
-
     const loadPreviousPage = () =>
       setPaginationState({
         ...paginationState,
         after: undefined,
         before: pageInfo?.startCursor,
       });
-
     const newPageInfo = pageInfo
       ? {
           ...pageInfo,

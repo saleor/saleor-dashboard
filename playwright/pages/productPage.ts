@@ -38,9 +38,7 @@ export class ProductPage extends BasePage {
     readonly productTypeInput = page.getByTestId("product-type"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly categoryInput = page.getByTestId("category"),
-    readonly categoryItem = page.getByTestId(
-      "single-autocomplete-select-option",
-    ),
+    readonly categoryItem = page.getByTestId("single-autocomplete-select-option"),
     readonly collectionInput = page.getByTestId("collections"),
     readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
     readonly descriptionInput = page
@@ -62,12 +60,8 @@ export class ProductPage extends BasePage {
     readonly noVariantsText = page.getByTestId("empty-data-grid-text"),
     readonly firstCategoryItem = page.locator("#downshift-0-item-0"),
     readonly visibleRadioBtn = page.locator("[name='isPublished']"),
-    readonly channelAvailabilityItem = page.locator(
-      "[data-test-id*='channel-availability-item']",
-    ),
-    readonly addVariantButton = page.locator(
-      "[data-test-id*='button-add-variant']",
-    ),
+    readonly channelAvailabilityItem = page.locator("[data-test-id*='channel-availability-item']"),
+    readonly addVariantButton = page.locator("[data-test-id*='button-add-variant']"),
     readonly ratingInput = page.locator("[name='rating']"),
     readonly warehouseOption = page.locator("[role='menuitem']"),
     readonly costPriceInput = page.locator("[name*='costPrice']"),
@@ -167,20 +161,13 @@ export class ProductPage extends BasePage {
     await this.ratingInput.fill(rating);
   }
 
-  async typeSellingPriceForChannel(
-    channelName: string,
-    sellingPriceValue = "50",
-  ) {
-    const channel = this.page.locator(
-      `[data-test-id="Channel-${channelName}"]`,
-    );
+  async typeSellingPriceForChannel(channelName: string, sellingPriceValue = "50") {
+    const channel = this.page.locator(`[data-test-id="Channel-${channelName}"]`);
     await channel.locator(this.sellingPriceInput).fill(sellingPriceValue);
   }
 
   async typeCostPrice(channelName: string, costPriceValue = "40") {
-    const channel = this.page.locator(
-      `[data-test-id="Channel-${channelName}"]`,
-    );
+    const channel = this.page.locator(`[data-test-id="Channel-${channelName}"]`);
     await channel.locator(this.costPriceInput).fill(costPriceValue);
   }
 

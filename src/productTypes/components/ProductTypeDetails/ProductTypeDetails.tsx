@@ -6,13 +6,7 @@ import { ProductTypeKindEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import {
-  Card,
-  CardContent,
-  Divider,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, Divider, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -57,18 +51,14 @@ const kindOptions = [
     type: ProductTypeKindEnum.GIFT_CARD,
   },
 ];
-
 const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
   const { data, disabled, errors, onChange, onKindChange } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
     <Card className={classes.root}>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
           disabled={disabled}

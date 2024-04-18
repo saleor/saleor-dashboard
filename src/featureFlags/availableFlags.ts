@@ -19,9 +19,7 @@ type GeneralEntry = TypedEntry extends never ? FlagDefinition : TypedEntry;
 export type Entry = TypedEntry;
 export type Name = TypedEntry["name"];
 export type FlagList = Record<Name, FlagValue>;
-export type GeneralFlagList = TypedEntry extends never
-  ? Record<string, FlagValue>
-  : FlagList;
+export type GeneralFlagList = TypedEntry extends never ? Record<string, FlagValue> : FlagList;
 
 const toFlagValue = (p: GeneralFlagList, c: GeneralEntry) => {
   p[c.name] = new FlagValue(c.content.enabled, c.content.payload);
@@ -29,12 +27,9 @@ const toFlagValue = (p: GeneralFlagList, c: GeneralEntry) => {
 };
 
 export const isSupported = (name: string): name is Name =>
-  AVAILABLE_FLAGS.some(
-    (e: FlagDefinition) => e.name === name || `FF_${e.name}` === name,
-  );
+  AVAILABLE_FLAGS.some((e: FlagDefinition) => e.name === name || `FF_${e.name}` === name);
 
-export const asFlagValue = () =>
-  AVAILABLE_FLAGS.reduce(toFlagValue, {} as FlagList);
+export const asFlagValue = () => AVAILABLE_FLAGS.reduce(toFlagValue, {} as FlagList);
 
 export const asFlagInfoArray = (list: GeneralFlagList) =>
   AVAILABLE_FLAGS.map((el: GeneralEntry) => ({
@@ -44,10 +39,7 @@ export const asFlagInfoArray = (list: GeneralFlagList) =>
 
 export const flagInfoToFlagList = (flagInfos: FlagDefinition[]): FlagList => {
   return flagInfos.reduce((prev, curr) => {
-    prev[curr.name as Name] = new FlagValue(
-      curr.content.enabled,
-      curr.content.payload,
-    );
+    prev[curr.name as Name] = new FlagValue(curr.content.enabled, curr.content.payload);
 
     return prev;
   }, {} as FlagList);

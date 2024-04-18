@@ -7,9 +7,7 @@ export class HomePage {
   constructor(
     page: Page,
     readonly channelSelect = page.getByTestId("app-channel-select"),
-    readonly channelOptions = page.locator(
-      "[data-test-id*='select-field-option']",
-    ),
+    readonly channelOptions = page.locator("[data-test-id*='select-field-option']"),
     readonly welcomeMessage = page.getByTestId("home-header"),
     readonly sales = page.getByTestId("sales-analytics"),
     readonly orders = page.getByTestId("orders-analytics"),
@@ -31,10 +29,7 @@ export class HomePage {
   }
 
   async selectDifferentChannelThanGiven(defaultChannelName: string) {
-    await this.channelOptions
-      .filter({ hasNotText: defaultChannelName })
-      .first()
-      .click();
+    await this.channelOptions.filter({ hasNotText: defaultChannelName }).first().click();
   }
 
   async expectHomePageElementsToBeVisible() {

@@ -11,27 +11,18 @@ export function findNode(tree: RecursiveMenuItem[], id: string): number[] {
   if (foundNodeIndex !== -1) {
     return [foundNodeIndex];
   }
-  const nodeMap = tree.map((node, nodeIndex) => [
-    nodeIndex,
-    ...findNode(node.children, id),
-  ]);
+  const nodeMap = tree.map((node, nodeIndex) => [nodeIndex, ...findNode(node.children, id)]);
   return nodeMap.find(path => path[path.length - 1] !== null) || [null];
 }
 
-export function getNode(
-  tree: RecursiveMenuItem[],
-  path: number[],
-): RecursiveMenuItem {
+export function getNode(tree: RecursiveMenuItem[], path: number[]): RecursiveMenuItem {
   if (path.length === 1) {
     return tree[path[0]];
   }
   return getNode([...tree[path[0]].children], path.slice(1));
 }
 
-function removeNode(
-  tree: RecursiveMenuItem[],
-  path: number[],
-): RecursiveMenuItem[] {
+function removeNode(tree: RecursiveMenuItem[], path: number[]): RecursiveMenuItem[] {
   const removeIndex = path[0];
 
   if (path.length === 1) {
@@ -54,12 +45,7 @@ interface InsertNodeInput {
   position: number;
 }
 
-function insertNode({
-  tree,
-  path,
-  node,
-  position,
-}: InsertNodeInput): RecursiveMenuItem[] {
+function insertNode({ tree, path, node, position }: InsertNodeInput): RecursiveMenuItem[] {
   if (path.length === 0) {
     return [...tree.slice(0, position), node, ...tree.slice(position)];
   }
@@ -104,17 +90,10 @@ function permuteRelativeNode(
 ): RecursiveMenuItem[] {
   const sourcePath = findNode(tree, permutation.id);
   const node = getNode(tree, sourcePath);
-
   const hasParent = !!permutation.parentId;
-
   const treeAfterRemoval = removeNode(tree, sourcePath);
-
-  const targetPath = hasParent
-    ? findNode(treeAfterRemoval, permutation.parentId)
-    : [];
-
+  const targetPath = hasParent ? findNode(treeAfterRemoval, permutation.parentId) : [];
   const position = sourcePath[sourcePath.length - 1];
-
   const treeAfterInsertion = insertNode({
     tree: treeAfterRemoval,
     path: targetPath,

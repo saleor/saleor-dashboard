@@ -120,8 +120,7 @@ export const commonMessages = defineMessages({
   },
   sessionExpired: {
     id: "Fvvgoi",
-    defaultMessage:
-      "Your session has expired. Please log in again to continue.",
+    defaultMessage: "Your session has expired. Please log in again to continue.",
   },
   somethingWentWrong: {
     id: "LVa5ew",
@@ -699,7 +698,5 @@ export const paymentStatusMessages = defineMessages({
 });
 
 export function translateBoolean(value: boolean, intl: IntlShape): string {
-  return value
-    ? intl.formatMessage(commonMessages.yes)
-    : intl.formatMessage(commonMessages.no);
+  return value ? intl.formatMessage(commonMessages.yes) : intl.formatMessage(commonMessages.no);
 }

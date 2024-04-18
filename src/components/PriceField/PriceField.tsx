@@ -31,11 +31,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     value,
     ...inputProps
   } = props;
-
-  const { onChange, onKeyDown, minValue, step } = usePriceField(
-    currencySymbol,
-    onChangeBase,
-  );
+  const { onChange, onKeyDown, minValue, step } = usePriceField(currencySymbol, onChangeBase);
 
   return (
     <Input
@@ -66,6 +62,5 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
 PriceField.defaultProps = {
   name: "price",
 };
-
 PriceField.displayName = "PriceField";
 export default PriceField;

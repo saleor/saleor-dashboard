@@ -29,9 +29,7 @@ export const useUrlValueProvider = (
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
-
   const [value, setValue] = useState<FilterContainer>([]);
-
   const activeTab = params.get("activeTab");
   const query = params.get("query");
   const before = params.get("before");
@@ -49,7 +47,6 @@ export const useUrlValueProvider = (
   useEffect(() => {
     initialState?.fetchQueries(fetchingParams);
   }, [locationSearch]);
-
   useEffect(() => {
     if (!initialState) return;
 
@@ -59,7 +56,6 @@ export const useUrlValueProvider = (
 
     setValue(tokenizedUrl.asFilterValuesFromResponse(data));
   }, [initialState?.data, initialState?.loading]);
-
   useEffect(() => {
     if (initialState) return;
 
@@ -79,22 +75,18 @@ export const useUrlValueProvider = (
     });
     setValue(filterValue);
   };
-
   const clear = () => {
     router.history.replace({
       pathname: router.location.pathname,
     });
     setValue([]);
   };
-
   const isPersisted = (element: FilterElement) => {
     return value.some(p => FilterElement.isCompatible(p) && p.equals(element));
   };
-
   const getTokenByName = (name: string) => {
     return tokenizedUrl.asFlatArray().find(token => token.name === name);
   };
-
   const count = value.filter(v => typeof v !== "string").length;
 
   return {

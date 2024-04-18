@@ -22,23 +22,12 @@ import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { isLastElement } from "@dashboard/taxes/utils/utils";
 import { Card, CardContent, Divider } from "@material-ui/core";
-import {
-  List,
-  ListHeader,
-  ListItem,
-  ListItemCell,
-  PageTab,
-  PageTabs,
-} from "@saleor/macaw-ui";
+import { List, ListHeader, ListItem, ListItemCell, PageTab, PageTabs } from "@saleor/macaw-ui";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-  getSelectedTaxStrategy,
-  getTaxAppId,
-  getTaxCalculationStrategy,
-} from "./helpers";
+import { getSelectedTaxStrategy, getTaxAppId, getTaxCalculationStrategy } from "./helpers";
 import { useStyles } from "./styles";
 import TaxChannelsMenu from "./TaxChannelsMenu";
 import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
@@ -87,23 +76,18 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     savebarState,
     disabled,
   } = props;
-
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
-
   const { taxStrategyChoices, loading } = useTaxStrategyChoices();
-
   const currentTaxConfiguration = taxConfigurations?.find(
     taxConfigurations => taxConfigurations.id === selectedConfigurationId,
   );
-
   const initialForm: TaxConfigurationFormData = {
     chargeTaxes: currentTaxConfiguration?.chargeTaxes ?? false,
     taxCalculationStrategy: getSelectedTaxStrategy(currentTaxConfiguration),
     displayGrossPrices: currentTaxConfiguration?.displayGrossPrices ?? false,
-    pricesEnteredWithTax:
-      currentTaxConfiguration?.pricesEnteredWithTax ?? false,
+    pricesEnteredWithTax: currentTaxConfiguration?.pricesEnteredWithTax ?? false,
     updateCountriesConfiguration:
       currentTaxConfiguration?.countries.map(country => ({
         ...country,
@@ -111,24 +95,19 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
       })) ?? [],
     removeCountriesConfiguration: [],
   };
-
   const handleSubmit = (data: TaxConfigurationFormData) => {
     const { updateCountriesConfiguration, removeCountriesConfiguration } = data;
-
     const parsedUpdate: TaxConfigurationUpdateInput["updateCountriesConfiguration"] =
       updateCountriesConfiguration.map(config => ({
         countryCode: config.country.code as CountryCode,
         chargeTaxes: config.chargeTaxes,
-        taxCalculationStrategy: getTaxCalculationStrategy(
-          config.taxCalculationStrategy,
-        ),
+        taxCalculationStrategy: getTaxCalculationStrategy(config.taxCalculationStrategy),
         displayGrossPrices: config.displayGrossPrices,
         taxAppId: getTaxAppId(config.taxCalculationStrategy),
       }));
     const parsedRemove: TaxConfigurationUpdateInput["removeCountriesConfiguration"] =
       removeCountriesConfiguration.filter(
-        configId =>
-          !parsedUpdate.some(config => config.countryCode === configId),
+        configId => !parsedUpdate.some(config => config.countryCode === configId),
       );
 
     onSubmit({
@@ -159,7 +138,6 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
           triggerChange();
           set({ updateCountriesConfiguration: currentExceptions });
         };
-
         const handleCountryChange = (country: CountryFragment) => {
           closeDialog();
           const input: TaxCountryConfiguration = {
@@ -218,45 +196,33 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                     <Card>
                       <CardTitle
                         className={classes.toolbarMargin}
-                        title={intl.formatMessage(
-                          taxesMessages.countryExceptions,
-                        )}
+                        title={intl.formatMessage(taxesMessages.countryExceptions)}
                         toolbar={
                           <Button
                             data-test-id="add-country-button"
                             variant="secondary"
                             onClick={() => openDialog("add-country")}
                           >
-                            <FormattedMessage
-                              {...taxesMessages.addCountryLabel}
-                            />
+                            <FormattedMessage {...taxesMessages.addCountryLabel} />
                           </Button>
                         }
                       />
                       {countryExceptions?.length === 0 ? (
                         <CardContent>
-                          <FormattedMessage
-                            {...taxesMessages.noExceptionsForChannel}
-                          />
+                          <FormattedMessage {...taxesMessages.noExceptionsForChannel} />
                         </CardContent>
                       ) : (
                         <List gridTemplate={["1fr 500px 1fr 1fr"]}>
                           <ListHeader>
                             <ListItem>
                               <ListItemCell>
-                                <FormattedMessage
-                                  {...taxesMessages.countryNameHeader}
-                                />
+                                <FormattedMessage {...taxesMessages.countryNameHeader} />
                               </ListItemCell>
                               <ListItemCell className={classes.left}>
-                                <FormattedMessage
-                                  {...taxesMessages.chargeTaxesHeader}
-                                />
+                                <FormattedMessage {...taxesMessages.chargeTaxesHeader} />
                               </ListItemCell>
                               <ListItemCell className={classes.center}>
-                                <FormattedMessage
-                                  {...taxesMessages.showGrossHeader}
-                                />
+                                <FormattedMessage {...taxesMessages.showGrossHeader} />
                               </ListItemCell>
                               <ListItemCell>
                                 {/* This is required for the header row to be aligned with list items */}
@@ -267,36 +233,26 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                           <Divider />
                           {countryExceptions?.map((country, countryIndex) => (
                             <TaxCountryExceptionListItem
-                              divider={
-                                !isLastElement(countryExceptions, countryIndex)
-                              }
+                              divider={!isLastElement(countryExceptions, countryIndex)}
                               strategyChoices={taxStrategyChoices}
                               country={country}
                               key={country.country.code}
                               strategyChoicesLoading={loading}
                               onDelete={() => {
-                                const currentRemovals =
-                                  data.removeCountriesConfiguration;
-                                const currentExceptions = [
-                                  ...data.updateCountriesConfiguration,
-                                ];
+                                const currentRemovals = data.removeCountriesConfiguration;
+                                const currentExceptions = [...data.updateCountriesConfiguration];
                                 set({
                                   removeCountriesConfiguration: [
                                     ...currentRemovals,
                                     country.country.code as CountryCode,
                                   ],
-                                  updateCountriesConfiguration:
-                                    currentExceptions.filter(
-                                      exception =>
-                                        exception.country.code !==
-                                        country.country.code,
-                                    ),
+                                  updateCountriesConfiguration: currentExceptions.filter(
+                                    exception => exception.country.code !== country.country.code,
+                                  ),
                                 });
                                 triggerChange();
                               }}
-                              onChange={event =>
-                                handleExceptionChange(event, countryIndex)
-                              }
+                              onChange={event => handleExceptionChange(event, countryIndex)}
                             />
                           )) ?? <Skeleton />}
                         </List>
@@ -311,9 +267,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                     countries={allCountries
                       .filter(
                         ({ code }) =>
-                          !countryExceptions?.some(
-                            ({ country }) => country.code === code,
-                          ),
+                          !countryExceptions?.some(({ country }) => country.code === code),
                       )
                       .map(country => ({ checked: false, ...country }))}
                     onConfirm={handleCountryChange}

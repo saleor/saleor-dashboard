@@ -40,7 +40,6 @@ const useStyles = makeStyles(
   }),
   { name: "FilterContentBody" },
 );
-
 const filterTestingContext = "filter-field-";
 
 export interface FilterContentBodyProps<K extends string> {
@@ -48,9 +47,7 @@ export interface FilterContentBodyProps<K extends string> {
   filter: FilterElement<K>;
   currencySymbol?: string;
   initialAutocompleteDisplayValues: FilterAutocompleteDisplayValues;
-  onFilterPropertyChange: <T extends FieldType>(
-    value: FilterReducerAction<K, T>,
-  ) => void;
+  onFilterPropertyChange: <T extends FieldType>(value: FilterReducerAction<K, T>) => void;
   autocompleteDisplayValues: FilterAutocompleteDisplayValues;
   setAutocompleteDisplayValues: React.Dispatch<
     React.SetStateAction<Record<string, MultiAutocompleteChoiceType[]>>
@@ -102,10 +99,7 @@ const FilterContentBody = <K extends string = string>({
             filter={filter}
             onFilterPropertyChange={onFilterPropertyChange}
           />
-          <FilterDateTimeField
-            filter={filter}
-            onFilterPropertyChange={onFilterPropertyChange}
-          />
+          <FilterDateTimeField filter={filter} onFilterPropertyChange={onFilterPropertyChange} />
         </>
       )}
       {isFilterNumericType(filter) && (
@@ -131,10 +125,7 @@ const FilterContentBody = <K extends string = string>({
       )}
       {isFilterType(filter, FieldType.boolean) &&
         filter.options.map(option => (
-          <div
-            className={clsx(classes.option, classes.optionRadio)}
-            key={option.value}
-          >
+          <div className={clsx(classes.option, classes.optionRadio)} key={option.value}>
             <FormControlLabel
               control={
                 <Radio
@@ -161,10 +152,7 @@ const FilterContentBody = <K extends string = string>({
           </div>
         ))}
       {isFilterType(filter, FieldType.keyValue) && (
-        <FilterKeyValueField
-          filter={filter}
-          onFilterPropertyChange={onFilterPropertyChange}
-        />
+        <FilterKeyValueField filter={filter} onFilterPropertyChange={onFilterPropertyChange} />
       )}
       {isFilterType(filter, FieldType.autocomplete) && (
         <FilterAutocompleteField

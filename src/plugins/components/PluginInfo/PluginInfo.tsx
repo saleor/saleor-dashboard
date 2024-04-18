@@ -32,20 +32,10 @@ const useStyles = makeStyles(
   }),
   { name: "PluginInfo" },
 );
-
-const PluginInfo: React.FC<PluginInfoProps> = ({
-  data,
-  description,
-  errors,
-  name,
-  onChange,
-}) => {
+const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name, onChange }) => {
   const classes = useStyles({});
   const intl = useIntl();
-
-  const misconfiguredError = errors.find(
-    err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED,
-  );
+  const misconfiguredError = errors.find(err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED);
 
   return (
     <Card>
@@ -92,9 +82,7 @@ const PluginInfo: React.FC<PluginInfoProps> = ({
           onChange={onChange}
         />
         {misconfiguredError && (
-          <Typography color="error">
-            {getPluginErrorMessage(misconfiguredError, intl)}
-          </Typography>
+          <Typography color="error">{getPluginErrorMessage(misconfiguredError, intl)}</Typography>
         )}
       </CardContent>
     </Card>

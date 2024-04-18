@@ -84,14 +84,9 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const classes = useStyles(props);
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
-
   const renderVersionInfo = (
-    <VersionInfo
-      dashboardVersion={dashboardVersion}
-      coreVersion={coreVersion}
-    />
+    <VersionInfo dashboardVersion={dashboardVersion} coreVersion={coreVersion} />
   );
-
   const intl = useIntl();
 
   return (
@@ -103,9 +98,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
         <Box paddingX={6} __maxWidth={"1024px"} margin="auto">
           {menus
             .filter(menu =>
-              menu.menuItems.some(menuItem =>
-                hasUserMenuItemPermissions(menuItem, user),
-              ),
+              menu.menuItems.some(menuItem => hasUserMenuItemPermissions(menuItem, user)),
             )
             .map((menu, menuIndex) => (
               <div className={classes.configurationCategory} key={menuIndex}>
@@ -114,9 +107,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                 </div>
                 <div className={classes.configurationItem}>
                   {menu.menuItems
-                    .filter(menuItem =>
-                      hasUserMenuItemPermissions(menuItem, user),
-                    )
+                    .filter(menuItem => hasUserMenuItemPermissions(menuItem, user))
                     .map((item, itemIndex) => (
                       <Link
                         className={classes.link}
@@ -130,9 +121,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                           title={item.title}
                           description={item.description}
                           data-test-id={
-                            item.testId +
-                            "-settings-subsection-" +
-                            item.title.toLowerCase()
+                            item.testId + "-settings-subsection-" + item.title.toLowerCase()
                           }
                         />
                       </Link>

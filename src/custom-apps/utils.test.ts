@@ -9,7 +9,6 @@ describe("Custom Apps filtering events", () => {
       WebhookEventTypeAsyncEnum.PAGE_CREATED,
       WebhookEventTypeAsyncEnum.PRODUCT_CREATED,
     ];
-
     // Act
     const asyncEvents = filterSelectedAsyncEvents(selectedEvents);
 
@@ -17,7 +16,6 @@ describe("Custom Apps filtering events", () => {
     expect(asyncEvents).toHaveLength(2);
     expect(asyncEvents).toEqual(selectedEvents);
   });
-
   it("should return only any async event type when any event selected", () => {
     // Arrange
     const selectedEvents: WebhookEventTypeAsyncEnum[] = [
@@ -25,14 +23,10 @@ describe("Custom Apps filtering events", () => {
       WebhookEventTypeAsyncEnum.PAGE_CREATED,
       WebhookEventTypeAsyncEnum.PRODUCT_CREATED,
     ];
-
     // Act
     const asyncEvents = filterSelectedAsyncEvents(selectedEvents);
-
     // Assert
-    const expectedAsyncEvents: WebhookEventTypeAsyncEnum[] = [
-      WebhookEventTypeAsyncEnum.ANY_EVENTS,
-    ];
+    const expectedAsyncEvents: WebhookEventTypeAsyncEnum[] = [WebhookEventTypeAsyncEnum.ANY_EVENTS];
     expect(asyncEvents).toHaveLength(1);
     expect(asyncEvents).toEqual(expectedAsyncEvents);
   });

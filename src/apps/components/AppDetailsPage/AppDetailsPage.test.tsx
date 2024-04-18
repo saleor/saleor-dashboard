@@ -35,14 +35,12 @@ jest.mock("./DataPrivacyCard", () => ({
     return <></>;
   },
 }));
-
 beforeEach(() => {
   mockHeader.mockClear();
   mockAboutCard.mockClear();
   mockPermissionsCard.mockClear();
   mockDataPrivacyCard.mockClear();
 });
-
 /**
  * TODO Rewrite tests to actually render the tree
  */
@@ -63,7 +61,6 @@ describe("Apps AppDetailsPage", () => {
         onAppDeleteOpen={onAppDeleteOpen}
       />,
     );
-
     // Assert
     expect(mockHeader).toHaveBeenCalledWith({
       data: appDetails,

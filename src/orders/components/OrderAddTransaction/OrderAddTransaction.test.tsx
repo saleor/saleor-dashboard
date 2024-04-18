@@ -9,15 +9,9 @@ import OrderAddTransaction from "./OrderAddTransaction";
 
 describe("OrderAddTransaction", () => {
   it("renders skeleton when order is loading", () => {
-    render(
-      <OrderAddTransaction
-        order={undefined}
-        onAddTransaction={() => undefined}
-      />,
-    );
+    render(<OrderAddTransaction order={undefined} onAddTransaction={() => undefined} />);
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
-
   it("calls onAddTransaction when clicked", async () => {
     const callback = jest.fn();
 

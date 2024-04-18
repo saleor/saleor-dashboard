@@ -132,9 +132,7 @@ export const productListDynamicColumnAdapter = ({
 ];
 
 export const parseAttributesColumns = (
-  attributes: RelayToFlat<
-    SearchAvailableInGridAttributesQuery["availableInGrid"]
-  >,
+  attributes: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>,
   activeAttributeSortId: string,
   sort: Sort<ProductListUrlSortField>,
   intl: IntlShape,
@@ -181,10 +179,7 @@ export function createGetCellContent({
   products,
   selectedChannelId,
 }: GetCellContentProps) {
-  return (
-    [column, row]: Item,
-    { changes, getChangeIndex, added, removed }: GetCellContentOpts,
-  ) => {
+  return ([column, row]: Item, { changes, getChangeIndex, added, removed }: GetCellContentOpts) => {
     const columnId = columns[column]?.id;
 
     if (!columnId) {
@@ -195,7 +190,6 @@ export function createGetCellContent({
     const rowData = added.includes(row)
       ? undefined
       : products[getDatagridRowDataIndex(row, removed)];
-
     const channel = rowData?.channelListings?.find(
       listing => listing.channel.id === selectedChannelId,
     );
@@ -228,9 +222,7 @@ export function createGetCellContent({
   };
 }
 
-function getDateCellContent(
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
-) {
+function getDateCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
   return dateCell(rowData?.updatedAt);
 }
 function getProductTypeCellContent(
@@ -238,10 +230,7 @@ function getProductTypeCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   const hue = stringToHue(rowData.productType?.name);
-  const color =
-    theme === "defaultDark"
-      ? hueToPillColorDark(hue)
-      : hueToPillColorLight(hue);
+  const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
   return pillCell(rowData.productType?.name, color);
 }
 
@@ -254,10 +243,7 @@ function getCategoryCellContent(
   }
 
   const hue = stringToHue(rowData.category?.name);
-  const color =
-    theme === "defaultDark"
-      ? hueToPillColorDark(hue)
-      : hueToPillColorLight(hue);
+  const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
   return pillCell(rowData.category?.name, color);
 }
 
@@ -271,10 +257,7 @@ function getCollectionsCellContent(
 
   const tags = rowData.collections.map(collection => {
     const hue = stringToHue(collection.name);
-    const color =
-      theme === "defaultDark"
-        ? hueToPillColorDark(hue)
-        : hueToPillColorLight(hue);
+    const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
     return {
       tag: collection.name,
       color: color.base,
@@ -293,9 +276,7 @@ function getCollectionsCellContent(
 function getAvailabilityCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
   intl: IntlShape,
-  selectedChannnel?: RelayToFlat<
-    ProductListQuery["products"]
-  >[number]["channelListings"][number],
+  selectedChannnel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
 ) {
   if (!!selectedChannnel) {
     return statusCell(
@@ -341,15 +322,11 @@ function getNameCellContent(
 }
 
 function getPriceCellContent(
-  selectedChannnel?: RelayToFlat<
-    ProductListQuery["products"]
-  >[number]["channelListings"][number],
+  selectedChannnel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
 ) {
   const from = selectedChannnel?.pricing?.priceRange?.start?.net;
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
-
-  const price =
-    from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
+  const price = from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
 
   return from ? moneyCell(price, from?.currency || "") : readonlyTextCell("–");
 }
@@ -373,9 +350,7 @@ function getAttributeCellContent(
       }
     }
 
-    const textValue = productAttribute.values
-      .map(value => value.name)
-      .join(", ");
+    const textValue = productAttribute.values.map(value => value.name).join(", ");
 
     return readonlyTextCell(textValue);
   }
@@ -387,9 +362,7 @@ export function getDescriptionValue(value: string) {
   const parsed = JSON.parse(value);
 
   if (parsed) {
-    const descriptionFirstParagraph = parsed?.blocks.find(
-      block => block.type === "paragraph",
-    );
+    const descriptionFirstParagraph = parsed?.blocks.find(block => block.type === "paragraph");
 
     if (descriptionFirstParagraph) {
       return (descriptionFirstParagraph.data?.text ?? "").replace("&nbsp;", "");
@@ -506,21 +479,18 @@ export const getAttributesFetchMoreProps = ({
     queryAvailableColumnsAttributes({
       variables: {
         search: query,
-        before:
-          availableColumnsAttributesData.data?.attributes?.pageInfo.startCursor,
+        before: availableColumnsAttributesData.data?.attributes?.pageInfo.startCursor,
         last: 10,
         first: null,
         after: null,
       },
     });
-
   const hasNextPage =
     availableColumnsAttributesData.data?.attributes?.pageInfo?.hasNextPage ??
     gridAttributesOpts.data?.availableAttributes?.pageInfo?.hasNextPage ??
     false;
   const hasPreviousPage =
-    availableColumnsAttributesData.data?.attributes?.pageInfo
-      ?.hasPreviousPage ?? false;
+    availableColumnsAttributesData.data?.attributes?.pageInfo?.hasPreviousPage ?? false;
 
   return {
     hasNextPage,

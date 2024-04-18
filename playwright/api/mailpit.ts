@@ -33,20 +33,16 @@ export class MailpitService {
   async getEmailsFromTime(fromTime = 10000) {
     const latestEmails = await this.getLastEmails();
 
-    latestEmails.messages = latestEmails.messages.filter(
-      (message: { Created: string }) => {
-        const timeMinusLastMs = Date.now() - fromTime;
-        const mailCreated = new Date(message.Created);
-        return mailCreated.getTime() > timeMinusLastMs;
-      },
-    );
+    latestEmails.messages = latestEmails.messages.filter((message: { Created: string }) => {
+      const timeMinusLastMs = Date.now() - fromTime;
+      const mailCreated = new Date(message.Created);
+      return mailCreated.getTime() > timeMinusLastMs;
+    });
     return latestEmails;
   }
 
   async getEmailDetails(mailId: string) {
-    const emailDetails = await this.request.get(
-      `${mailpitUrl}/api/v1/message/${mailId}`,
-    );
+    const emailDetails = await this.request.get(`${mailpitUrl}/api/v1/message/${mailId}`);
     const emailDetailsJson = await emailDetails.json();
 
     return emailDetailsJson;
@@ -59,9 +55,9 @@ export class MailpitService {
         async () => {
           const emails = await this.getEmailsFromTime();
           userEmails = await emails.messages.filter((mails: { To: any[] }) =>
-            mails.To.map(
-              (recipientObj: { Address: any }) => `${recipientObj.Address}`,
-            ).includes(userEmail),
+            mails.To.map((recipientObj: { Address: any }) => `${recipientObj.Address}`).includes(
+              userEmail,
+            ),
           );
 
           return userEmails.length;
@@ -76,10 +72,7 @@ export class MailpitService {
     return userEmails;
   }
 
-  async checkDoesUserReceivedExportedData(
-    userEmail: string,
-    mailSubject: string,
-  ) {
+  async checkDoesUserReceivedExportedData(userEmail: string, mailSubject: string) {
     let confirmationMessageReceived: boolean = false;
     await expect
       .poll(
@@ -104,7 +97,6 @@ export class MailpitService {
 
   async generateResetPasswordUrl(userEmail: string) {
     const tokenRegex = /token=([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/;
-
     const userEmails = await this.getEmailsForUser(userEmail);
     const emailDetails = await this.getEmailDetails(userEmails[0].ID);
     const emailHtmlFormat = tokenRegex.exec(emailDetails.HTML.toString());

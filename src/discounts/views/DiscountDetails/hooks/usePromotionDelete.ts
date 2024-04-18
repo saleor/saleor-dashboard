@@ -8,7 +8,6 @@ export const usePromotionDelete = () => {
   const intl = useIntl();
   const notify = useNotifier();
   const navigate = useNavigator();
-
   const [promotionDelete, promotionDeleteOpts] = usePromotionDeleteMutation({
     onCompleted(data) {
       if (data?.promotionDelete?.errors?.length === 0) {

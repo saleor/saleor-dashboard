@@ -16,7 +16,6 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
       attribute: {},
     });
   });
-
   it("should parse params with values", () => {
     // Arrange
     const params = new URLSearchParams({
@@ -47,7 +46,6 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
       productType: ["beer"],
     });
   });
-
   it("should create filter container from a given response", () => {
     // Arrange
     const params = new URLSearchParams({
@@ -72,7 +70,6 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
         },
       ],
     );
-
     // Act
     const tokenArray = new TokenArray(params.toString());
     const container = tokenArray.asFilterValuesFromResponse(response);
@@ -80,7 +77,6 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
     // Assert
     expect(container).toMatchSnapshot();
   });
-
   it("creates filter container with removing constrain if there is no depepdent rows", () => {
     // Arrange
     const params = new URLSearchParams({
@@ -103,7 +99,6 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
         },
       ],
     );
-
     // Act
     const tokenArray = new TokenArray(params.toString());
     const container = tokenArray.asFilterValuesFromResponse(response);

@@ -29,31 +29,19 @@ export class Condition {
   }
 
   public static createEmpty() {
-    return new Condition(
-      ConditionOptions.empty(),
-      ConditionSelected.empty(),
-      false,
-    );
+    return new Condition(ConditionOptions.empty(), ConditionSelected.empty(), false);
   }
 
   public static emptyFromSlug(slug: StaticElementName) {
     const options = ConditionOptions.fromName(slug);
 
-    return new Condition(
-      options,
-      ConditionSelected.fromConditionItem(options.first()),
-      false,
-    );
+    return new Condition(options, ConditionSelected.fromConditionItem(options.first()), false);
   }
 
   public static emptyFromLeftOperand(operand: LeftOperand) {
     const options = ConditionOptions.fromName(operand.type);
 
-    return new Condition(
-      options,
-      ConditionSelected.fromConditionItem(options.first()),
-      false,
-    );
+    return new Condition(options, ConditionSelected.fromConditionItem(options.first()), false);
   }
 
   public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {

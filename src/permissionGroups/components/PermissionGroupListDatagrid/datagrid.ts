@@ -52,9 +52,7 @@ export const createGetCellContent =
       case "name":
         return readonlyTextCell(rowData?.name ?? PLACEHOLDER);
       case "members":
-        return readonlyTextCell(
-          rowData?.users?.length?.toString() ?? PLACEHOLDER,
-        );
+        return readonlyTextCell(rowData?.users?.length?.toString() ?? PLACEHOLDER);
       default:
         return readonlyTextCell("");
     }

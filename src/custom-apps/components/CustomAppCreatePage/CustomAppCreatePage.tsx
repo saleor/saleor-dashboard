@@ -6,11 +6,7 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
-import {
-  AppErrorFragment,
-  PermissionEnum,
-  PermissionFragment,
-} from "@dashboard/graphql";
+import { AppErrorFragment, PermissionEnum, PermissionFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -30,32 +26,23 @@ export interface CustomAppCreatePageProps {
   errors: AppErrorFragment[];
   permissions: PermissionFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onSubmit: (
-    data: CustomAppCreatePageFormData,
-  ) => SubmitPromise<AppErrorFragment[]>;
+  onSubmit: (data: CustomAppCreatePageFormData) => SubmitPromise<AppErrorFragment[]>;
 }
 
 const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
   const { disabled, errors, permissions, saveButtonBarState, onSubmit } = props;
   const intl = useIntl();
   const navigate = useNavigator();
-
   const initialForm: CustomAppCreatePageFormData = {
     hasFullAccess: false,
     name: "",
     permissions: [],
   };
-
   const formErrors = getFormErrors(["permissions"], errors || []);
   const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={onSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, submit, isSaveDisabled }) => (
         <DetailPageLayout>
           <TopNav

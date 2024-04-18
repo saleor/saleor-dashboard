@@ -200,14 +200,10 @@ export const productVariantCreateQuery = gql`
       name
       productType {
         id
-        selectionVariantAttributes: variantAttributes(
-          variantSelection: VARIANT_SELECTION
-        ) {
+        selectionVariantAttributes: variantAttributes(variantSelection: VARIANT_SELECTION) {
           ...VariantAttribute
         }
-        nonSelectionVariantAttributes: variantAttributes(
-          variantSelection: NOT_VARIANT_SELECTION
-        ) {
+        nonSelectionVariantAttributes: variantAttributes(variantSelection: NOT_VARIANT_SELECTION) {
           ...VariantAttribute
         }
       }
@@ -267,8 +263,7 @@ export const gridAttributes = gql`
         ...PageInfo
       }
     }
-    selectedAttributes: attributes(first: 25, filter: { ids: $ids })
-      @include(if: $hasAttributes) {
+    selectedAttributes: attributes(first: 25, filter: { ids: $ids }) @include(if: $hasAttributes) {
       edges {
         node {
           id
@@ -319,8 +314,7 @@ export const gridWarehouses = gql`
         ...PageInfo
       }
     }
-    selectedWarehouses: warehouses(first: 100, filter: { ids: $ids })
-      @include(if: $hasWarehouses) {
+    selectedWarehouses: warehouses(first: 100, filter: { ids: $ids }) @include(if: $hasWarehouses) {
       edges {
         node {
           ...Warehouse

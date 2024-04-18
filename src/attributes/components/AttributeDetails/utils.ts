@@ -97,17 +97,9 @@ export const unitMapping = {
       MeasurementUnitsEnum.ACRE_IN,
       MeasurementUnitsEnum.ACRE_FT,
     ],
-    distance: [
-      MeasurementUnitsEnum.FT,
-      MeasurementUnitsEnum.YD,
-      MeasurementUnitsEnum.INCH,
-    ],
+    distance: [MeasurementUnitsEnum.FT, MeasurementUnitsEnum.YD, MeasurementUnitsEnum.INCH],
     weight: [MeasurementUnitsEnum.LB, MeasurementUnitsEnum.OZ],
-    area: [
-      MeasurementUnitsEnum.SQ_FT,
-      MeasurementUnitsEnum.SQ_YD,
-      MeasurementUnitsEnum.SQ_INCH,
-    ],
+    area: [MeasurementUnitsEnum.SQ_FT, MeasurementUnitsEnum.SQ_YD, MeasurementUnitsEnum.SQ_INCH],
   },
   metric: {
     volume: [
@@ -124,11 +116,7 @@ export const unitMapping = {
       MeasurementUnitsEnum.M,
       MeasurementUnitsEnum.KM,
     ],
-    weight: [
-      MeasurementUnitsEnum.G,
-      MeasurementUnitsEnum.KG,
-      MeasurementUnitsEnum.TONNE,
-    ],
+    weight: [MeasurementUnitsEnum.G, MeasurementUnitsEnum.KG, MeasurementUnitsEnum.TONNE],
     area: [
       MeasurementUnitsEnum.SQ_MM,
       MeasurementUnitsEnum.SQ_CM,

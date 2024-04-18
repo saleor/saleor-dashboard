@@ -9,7 +9,6 @@ export const LegacyFiltersPresetsAlert = () => {
   const presets = storageUtils.getFilterTabs();
   const { theme: currentTheme } = useTheme();
   const { formatMessage } = useIntl();
-
   const legacyPresets = presets.filter(
     preset => !preset.data.match(`[${Object.values(TokenType)}][0-9].`),
   );

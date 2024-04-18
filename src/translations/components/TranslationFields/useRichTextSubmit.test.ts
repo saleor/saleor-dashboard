@@ -4,7 +4,6 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useRichTextSubmit } from "./useRichTextSubmit";
 
 jest.mock("@dashboard/utils/richText/useRichText", () => jest.fn());
-
 describe("useRichTextSubmit", () => {
   it("submits value from editor succesfully", async () => {
     // Given
@@ -16,7 +15,6 @@ describe("useRichTextSubmit", () => {
 
     // When
     await result.current.handleSubmit();
-
     // Then
     expect(submitFn).toHaveBeenCalledWith(textEditorValue);
   });

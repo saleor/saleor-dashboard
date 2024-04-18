@@ -1,7 +1,4 @@
-import {
-  AttributeListUrlSortField,
-  attributeUrl,
-} from "@dashboard/attributes/urls";
+import { AttributeListUrlSortField, attributeUrl } from "@dashboard/attributes/urls";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
@@ -18,20 +15,12 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  attributesListStaticColumnsAdapter,
-  createGetCellContent,
-} from "./datagrid";
+import { attributesListStaticColumnsAdapter, createGetCellContent } from "./datagrid";
 import { messages } from "./messages";
 
-interface AttributeListDatagridProps
-  extends ListProps,
-    SortPage<AttributeListUrlSortField> {
+interface AttributeListDatagridProps extends ListProps, SortPage<AttributeListUrlSortField> {
   attributes: AttributeFragment[];
-  onSelectAttributesIds: (
-    rowsIndex: number[],
-    clearSelection: () => void,
-  ) => void;
+  onSelectAttributesIds: (rowsIndex: number[], clearSelection: () => void) => void;
 }
 
 export const AttributeListDatagrid = ({
@@ -46,12 +35,10 @@ export const AttributeListDatagrid = ({
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
   const intl = useIntl();
-
   const attributesListStaticColumns = useMemo(
     () => attributesListStaticColumnsAdapter(intl, sort),
     [intl, sort],
   );
-
   const onColumnChange = useCallback(
     (picked: string[]) => {
       if (onUpdateListSettings) {
@@ -60,19 +47,12 @@ export const AttributeListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
-  const {
-    handlers,
-    visibleColumns,
-    recentlyAddedColumn,
-    staticColumns,
-    selectedColumns,
-  } = useColumns({
-    selectedColumns: settings?.columns ?? [],
-    staticColumns: attributesListStaticColumns,
-    onSave: onColumnChange,
-  });
-
+  const { handlers, visibleColumns, recentlyAddedColumn, staticColumns, selectedColumns } =
+    useColumns({
+      selectedColumns: settings?.columns ?? [],
+      staticColumns: attributesListStaticColumns,
+      onSave: onColumnChange,
+    });
   const getCellContent = useCallback(
     createGetCellContent({
       attributes,
@@ -81,7 +61,6 @@ export const AttributeListDatagrid = ({
     }),
     [attributes, intl, visibleColumns],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       const rowData: AttributeFragment = attributes[row];
@@ -92,7 +71,6 @@ export const AttributeListDatagrid = ({
     },
     [attributes],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => attributeUrl(attributes[row].id),
     [attributes],

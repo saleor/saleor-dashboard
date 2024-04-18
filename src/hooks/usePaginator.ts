@@ -42,24 +42,18 @@ interface UsePaginatorArgs {
   queryString: Pagination;
 }
 
-function usePaginator({
-  queryString,
-  paginationState,
-  pageInfo,
-}: UsePaginatorArgs) {
+function usePaginator({ queryString, paginationState, pageInfo }: UsePaginatorArgs) {
   const newPageInfo = useMemo<PageInfo | undefined>(
     () =>
       pageInfo
         ? {
             ...pageInfo,
             hasNextPage: !!paginationState.before || pageInfo.hasNextPage,
-            hasPreviousPage:
-              !!paginationState.after || pageInfo.hasPreviousPage,
+            hasPreviousPage: !!paginationState.after || pageInfo.hasPreviousPage,
           }
         : undefined,
     [paginationState, pageInfo],
   );
-
   const nextHref = useMemo(() => {
     if (!newPageInfo?.hasNextPage || !pageInfo?.endCursor) {
       return undefined;
@@ -74,7 +68,6 @@ function usePaginator({
       })
     );
   }, [pageInfo?.endCursor, newPageInfo?.hasNextPage, queryString]);
-
   const prevHref = useMemo(() => {
     if (!newPageInfo?.hasPreviousPage || !pageInfo?.startCursor) {
       return undefined;
@@ -119,17 +112,13 @@ export type PaginatorContextValues = PaginatorContextValuesCommon &
       }
   );
 
-export const PaginatorContext = createContext<PaginatorContextValues | null>(
-  null,
-);
+export const PaginatorContext = createContext<PaginatorContextValues | null>(null);
 
 export const usePaginatorContext = () => {
   const context = useContext(PaginatorContext);
 
   if (context === null) {
-    throw new Error(
-      "usePaginatorContext must be used within a PaginatorContext.Provider",
-    );
+    throw new Error("usePaginatorContext must be used within a PaginatorContext.Provider");
   }
 
   return context;

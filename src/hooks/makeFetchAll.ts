@@ -22,7 +22,6 @@ export function makeFetchAll<TData, TVariables>(
 ) {
   return (opts: QueryHookOptions<TVariables>) => {
     const useQuery = makeQuery<TData, TVariables>(query);
-
     const result = useQuery({
       ...opts,
     });

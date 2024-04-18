@@ -7,10 +7,7 @@ import { IntlShape } from "react-intl";
 
 import { isJwtError, isTokenExpired } from "./errors";
 
-export const displayDemoMessage = (
-  intl: IntlShape,
-  notify: UseNotifierResult,
-) => {
+export const displayDemoMessage = (intl: IntlShape, notify: UseNotifierResult) => {
   notify({
     text: intl.formatMessage(commonMessages.demo),
   });
@@ -24,17 +21,13 @@ const getNetworkErrors = (error: ApolloError): string[] => {
     if (Array.isArray(networkErrors.result)) {
       networkErrors.result.forEach(result => {
         if (result.errors) {
-          return result.errors.map(
-            ({ message }: { message: string }) => message,
-          );
+          return result.errors.map(({ message }: { message: string }) => message);
         }
       });
     }
 
     if (networkErrors.result?.errors) {
-      return networkErrors.result.errors.map(
-        ({ message }: { message: string }) => message,
-      );
+      return networkErrors.result.errors.map(({ message }: { message: string }) => message);
     }
 
     return [networkErrors.message];
@@ -42,7 +35,6 @@ const getNetworkErrors = (error: ApolloError): string[] => {
 
   return [];
 };
-
 const getAllErrorMessages = (error: ApolloError) => [
   ...(error.graphQLErrors?.map(err => err.message) || []),
   ...getNetworkErrors(error),

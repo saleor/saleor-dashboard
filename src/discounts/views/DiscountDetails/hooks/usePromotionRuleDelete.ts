@@ -13,46 +13,42 @@ import { useIntl } from "react-intl";
 export const usePromotionRuleDelete = (id: string) => {
   const intl = useIntl();
   const notify = useNotifier();
+  const [promotionRuleDelete, promotionRuleDeleteOpts] = usePromotionRuleDeleteMutation({
+    update(cache, { data }) {
+      if (data?.promotionRuleDelete?.errors?.length === 0) {
+        const cachedPromotion = cache.readQuery<{
+          promotion: PromotionDetailsFragment;
+        }>({
+          query: PromotionDetailsDocument,
+          variables: {
+            id,
+          },
+        });
 
-  const [promotionRuleDelete, promotionRuleDeleteOpts] =
-    usePromotionRuleDeleteMutation({
-      update(cache, { data }) {
-        if (data?.promotionRuleDelete?.errors?.length === 0) {
-          const cachedPromotion = cache.readQuery<{
-            promotion: PromotionDetailsFragment;
-          }>({
-            query: PromotionDetailsDocument,
-            variables: {
-              id,
-            },
-          });
-
-          if (!cachedPromotion?.promotion) {
-            return;
-          }
-
-          cache.writeQuery({
-            query: PromotionDetailsDocument,
-            data: {
-              promotion: {
-                ...cachedPromotion.promotion,
-                rules: sortAPIRules(
-                  removeRuleFromCache(cachedPromotion.promotion, data),
-                ),
-              },
-            },
-          });
+        if (!cachedPromotion?.promotion) {
+          return;
         }
-      },
-      onCompleted(data) {
-        if (data?.promotionRuleDelete?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
+
+        cache.writeQuery({
+          query: PromotionDetailsDocument,
+          data: {
+            promotion: {
+              ...cachedPromotion.promotion,
+              rules: sortAPIRules(removeRuleFromCache(cachedPromotion.promotion, data)),
+            },
+          },
+        });
+      }
+    },
+    onCompleted(data) {
+      if (data?.promotionRuleDelete?.errors?.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
 
   return {
     promotionRuleDelete,
