@@ -24,17 +24,18 @@ import {
   useOrderRefundStaticColumns,
 } from "./datagrid";
 import { refundGridMessages } from "./messages";
+import { manualRefundsExtractor, mergeRefunds } from "./refunds";
 import { getNotEditabledRefundMessage, isRefundEditable } from "./utils";
 
 interface OrderRefundDatagridProps {
-  grantedRefunds: OrderDetailsFragment["grantedRefunds"];
   orderId: string;
+  order: OrderDetailsFragment;
   onRefundAdd: () => void;
 }
 
 export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
-  grantedRefunds,
   orderId,
+  order,
   onRefundAdd,
 }) => {
   const intl = useIntl();
@@ -55,15 +56,20 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
     onSave: handleColumnChange,
   });
 
+  const mergedRefunds = mergeRefunds(
+    order?.grantedRefunds,
+    manualRefundsExtractor(order, intl),
+  );
+
   const getCellContent = createGetCellContent({
     columns: visibleColumns,
-    refunds: grantedRefunds,
+    refunds: mergedRefunds,
     currentTheme,
     intl,
   });
 
   const getMenuItems = React.useCallback(index => {
-    const refund = grantedRefunds[index];
+    const refund = (mergedRefunds ?? [])[index];
     const isEditable = isRefundEditable(refund);
 
     return [
@@ -73,7 +79,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
           <Link
             to={orderTransactionRefundEditUrl(
               orderId,
-              grantedRefunds[index]?.id,
+              (mergedRefunds ?? [])[index]?.id,
             )}
           >
             <EditIcon />
@@ -123,7 +129,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
           emptyText={intl.formatMessage(refundGridMessages.noRefunds)}
           getCellContent={getCellContent}
           getCellError={() => false}
-          rows={grantedRefunds.length}
+          rows={mergedRefunds?.length ?? 0}
           selectionActions={() => null}
           onColumnResize={handlers.onResize}
           onColumnMoved={handlers.onMove}

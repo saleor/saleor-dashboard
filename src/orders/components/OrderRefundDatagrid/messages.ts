@@ -51,6 +51,14 @@ export const refundGridMessages = defineMessages({
     defaultMessage:
       "This refund is currently being processed and cannot be edited",
   },
+  notEditableManual: {
+    id: "2eHzVW",
+    defaultMessage: "Manual refunds cannot be edited",
+  },
+  manualRefund: {
+    id: "FZTrzW",
+    defaultMessage: "Manual refund",
+  },
 });
 
 export const refundStatuses = defineMessages({

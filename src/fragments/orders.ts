@@ -618,6 +618,9 @@ export const fragmentOrderGrantedRefunds = gql`
       currency
       amount
     }
+    transactionEvents {
+      id
+    }
     reason
     user {
       ...UserBaseAvatar

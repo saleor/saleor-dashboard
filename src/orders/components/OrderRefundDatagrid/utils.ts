@@ -1,11 +1,9 @@
-import {
-  OrderDetailsFragment,
-  OrderGrantedRefundStatusEnum,
-} from "@dashboard/graphql";
+import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import { PillStatusType } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
 
 import { refundGridMessages, refundStatuses } from "./messages";
+import { DatagridRefund } from "./refunds";
 
 export const getGrantedRefundStatus = (
   status: OrderGrantedRefundStatusEnum,
@@ -46,9 +44,15 @@ export const getGrantedRefundStatusMessage = (
   }
 };
 
-const isRefundSuccessful = (
-  refund?: OrderDetailsFragment["grantedRefunds"][number],
-) => {
+const isRefundManual = (refund?: DatagridRefund) => {
+  if (!refund) {
+    return false;
+  }
+
+  return refund.type === "manual";
+};
+
+const isRefundSuccessful = (refund?: DatagridRefund) => {
   if (!refund) {
     return false;
   }
@@ -56,9 +60,7 @@ const isRefundSuccessful = (
   return refund.status === OrderGrantedRefundStatusEnum.SUCCESS;
 };
 
-const isRefundPending = (
-  refund?: OrderDetailsFragment["grantedRefunds"][number],
-) => {
+const isRefundPending = (refund?: DatagridRefund) => {
   if (!refund) {
     return false;
   }
@@ -66,19 +68,22 @@ const isRefundPending = (
   return refund.status === OrderGrantedRefundStatusEnum.PENDING;
 };
 
-export const isRefundEditable = (
-  refund?: OrderDetailsFragment["grantedRefunds"][number],
-) => {
+export const isRefundEditable = (refund?: DatagridRefund) => {
   if (!refund) {
     return false;
   }
 
-  return !(isRefundSuccessful(refund) || isRefundPending(refund));
+  return !(
+    isRefundSuccessful(refund) ||
+    isRefundPending(refund) ||
+    isRefundManual(refund)
+  );
 };
 
-export const getNotEditabledRefundMessage = (
-  refund?: OrderDetailsFragment["grantedRefunds"][number],
-) => {
+export const getNotEditabledRefundMessage = (refund?: DatagridRefund) => {
+  if (isRefundManual(refund)) {
+    return refundGridMessages.notEditableManual;
+  }
   if (isRefundSuccessful(refund)) {
     return refundGridMessages.notEditableSuccessfully;
   }

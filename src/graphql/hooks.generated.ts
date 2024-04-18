@@ -1608,6 +1608,9 @@ export const OrderGrantedRefundFragmentDoc = gql`
     currency
     amount
   }
+  transactionEvents {
+    id
+  }
   reason
   user {
     ...UserBaseAvatar
