@@ -215,12 +215,14 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           }
           onCheckedChange={onMarkAsPaidStrategyChange}
           hasError={!!formErrors.markAsPaidStrategy}
+          disabled={disabled}
         />
         <Box />
         <AllowUnpaidOrders
           onChange={onChange}
           isChecked={data.allowUnpaidOrders}
           hasError={!!formErrors.allowUnpaidOrders}
+          disabled={disabled}
         />
         <Box />
         <DefaultTransactionFlowStrategy
@@ -230,6 +232,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             TransactionFlowStrategyEnum.AUTHORIZATION
           }
           hasError={!!formErrors.defaultTransactionFlowStrategy}
+          disabled={disabled}
         />
       </Box>
     </>
