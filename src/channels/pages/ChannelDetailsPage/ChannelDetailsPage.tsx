@@ -209,7 +209,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
         const handleMarkAsPaidStrategyChange = () => {
           if (!data.markAsPaidStrategy) {
-            set({ markAsPaidStrategy: MarkAsPaidStrategyEnum.PAYMENT_FLOW });
+            set({
+              markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+            });
             return;
           }
 

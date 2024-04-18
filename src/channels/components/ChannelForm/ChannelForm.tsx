@@ -210,11 +210,11 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           />
         </Box>
         <MarkAsPaid
-          isDiabled={disabled}
           isChecked={
             data.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW
           }
           onCheckedChange={onMarkAsPaidStrategyChange}
+          hasError={!!formErrors.markAsPaidStrategy}
         />
         <Box />
         <AllowUnpaidOrders
