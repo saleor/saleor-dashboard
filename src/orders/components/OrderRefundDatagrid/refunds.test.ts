@@ -1,18 +1,13 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { createIntl, IntlShape } from "react-intl";
+import { intlMock } from "@test/intl";
 
-import { refundGridMessages } from "./messages";
 import { manualRefundsExtractor } from "./refunds";
 
 describe("manualRefundsExtractor", () => {
-  const intl: IntlShape = createIntl({
-    locale: "en",
-    messages: {},
-  });
-
   it("returns undefined when order is not provided", () => {
     // Arrange
     const order = undefined;
+    const intl = intlMock;
 
     // Act
     const result = manualRefundsExtractor(order, intl);
@@ -23,6 +18,7 @@ describe("manualRefundsExtractor", () => {
 
   it("returns empty array when transactions have no events", () => {
     // Arrange
+    const intl = intlMock;
     const order = {
       transactions: [
         {
@@ -41,6 +37,7 @@ describe("manualRefundsExtractor", () => {
 
   it("returns DatagridRefund objects for supported refund events", () => {
     // Arrange
+    const intl = intlMock;
     const order = {
       transactions: [
         {
@@ -75,13 +72,14 @@ describe("manualRefundsExtractor", () => {
         user: {
           email: "john.doe@example.com",
         },
-        reason: intl.formatMessage(refundGridMessages.manualRefund),
+        reason: "Manual refund",
       },
     ]);
   });
 
   it("filters out refunds that are already granted", () => {
     // Arrange
+    const intl = intlMock;
     const order = {
       transactions: [
         {
