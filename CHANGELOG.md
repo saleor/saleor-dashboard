@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.18.3
+
+### Patch Changes
+
+- cb22186e8: fixes e2e tests which fails on nightly run orders, apps, vouchers
+- 79a2c6d11: Fix action that configures login to staging Saleor Cloud for CLI
+
 ## 3.18.2
 
 ### Patch Changes
