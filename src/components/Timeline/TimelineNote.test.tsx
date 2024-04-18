@@ -9,6 +9,7 @@ const wrapperFriendlyDate = new Date("2018-08-07T14:30:40+00:00").toISOString();
 
 describe("TimelineNote", () => {
   it("renders user", () => {
+    // Arrange
     const mockedUser = {
       avatar: null,
       id: "1",
@@ -18,6 +19,7 @@ describe("TimelineNote", () => {
       __typename: "User",
     } satisfies OrderEventFragment["user"];
 
+    // Act
     render(
       <TimelineNote
         app={null}
@@ -29,6 +31,7 @@ describe("TimelineNote", () => {
       { wrapper: Wrapper },
     );
 
+    // Assert
     expect(screen.getByText("Test User")).toBeInTheDocument();
     expect(screen.getByText("Note")).toBeInTheDocument();
     expect(screen.getByText("TU")).toBeInTheDocument();
@@ -36,6 +39,7 @@ describe("TimelineNote", () => {
   });
 
   it("renders user avatar", () => {
+    // Arrange
     const mockedUser = {
       avatar: {
         __typename: "Image",
@@ -48,6 +52,7 @@ describe("TimelineNote", () => {
       __typename: "User",
     } satisfies OrderEventFragment["user"];
 
+    // Act
     const { container } = render(
       <TimelineNote
         app={null}
@@ -59,6 +64,7 @@ describe("TimelineNote", () => {
       { wrapper: Wrapper },
     );
 
+    // Assert
     const avatar = container.querySelector("img");
     const initials = screen.queryByText("TU");
 
@@ -70,6 +76,7 @@ describe("TimelineNote", () => {
   });
 
   it("renders app", () => {
+    // Arrange
     const mockedApp = {
       __typename: "App",
       id: "1",
@@ -78,6 +85,7 @@ describe("TimelineNote", () => {
       brand: null,
     } satisfies OrderEventFragment["app"];
 
+    // Act
     render(
       <TimelineNote
         app={mockedApp}
@@ -89,6 +97,7 @@ describe("TimelineNote", () => {
       { wrapper: Wrapper },
     );
 
+    // Assert
     expect(screen.getByText("Test App")).toBeInTheDocument();
     expect(screen.getByText("Note")).toBeInTheDocument();
     expect(screen.getByText("Te")).toBeInTheDocument();
@@ -96,6 +105,7 @@ describe("TimelineNote", () => {
   });
 
   it("renders app avatar", () => {
+    // Arrange
     const mockedApp = {
       __typename: "App",
       id: "1",
@@ -110,6 +120,7 @@ describe("TimelineNote", () => {
       },
     } satisfies OrderEventFragment["app"];
 
+    // Act
     const { container } = render(
       <TimelineNote
         app={mockedApp}
@@ -121,6 +132,7 @@ describe("TimelineNote", () => {
       { wrapper: Wrapper },
     );
 
+    // Assert
     const avatar = container.querySelector("img");
     const initials = screen.queryByText("TU");
 
