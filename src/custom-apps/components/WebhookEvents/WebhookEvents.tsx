@@ -120,6 +120,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
                 <ListBody className={classes.listBody}>
                   {Object.keys(EventTypes[tab]).map((object, idx) => (
                     <ListItem
+                      data-test-id="webhook-objects-items"
                       key={idx}
                       className={classes.listItem}
                       onClick={() => setObject(object)}
@@ -171,6 +172,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
                             )}
                           </strong>
                           <Checkbox
+                            data-test-id="events-checkbox"
                             name={`${tab}Events`}
                             checked={data[`${tab}Events`].includes(
                               getEventName(object, event),

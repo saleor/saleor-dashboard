@@ -98,8 +98,8 @@ export function updateChannelOrderSettings({
       automaticallyFulfillNonShippableGiftCard: ${automaticallyFulfillNonShippableGiftCard}, 
       expireOrdersAfter: ${expireOrdersAfter}, 
       markAsPaidStrategy: ${markAsPaidStrategy}, 
-      defaultTransactionFlowStrategy: ${defaultTransactionFlowStrategy} 
-    }}){
+    }paymentSettings:{      defaultTransactionFlowStrategy: ${defaultTransactionFlowStrategy} 
+  }}){
       errors{
         field
         message
