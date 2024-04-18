@@ -1,3 +1,4 @@
+import { OrderEventFragment } from "@dashboard/graphql/types.generated";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import React from "react";
@@ -8,23 +9,24 @@ const wrapperFriendlyDate = new Date("2018-08-07T14:30:40+00:00").toISOString();
 
 describe("TimelineNote", () => {
   it("renders user", () => {
+    const mockedUser = {
+      avatar: null,
+      id: "1",
+      email: "test@test.com",
+      firstName: "Test",
+      lastName: "User",
+      __typename: "User",
+    } satisfies OrderEventFragment["user"];
+
     render(
-      <Wrapper>
-        <TimelineNote
-          app={null}
-          user={{
-            avatar: null,
-            id: "1",
-            email: "test@test.com",
-            firstName: "Test",
-            lastName: "User",
-            __typename: "User",
-          }}
-          date={wrapperFriendlyDate}
-          message="Note"
-          hasPlainDate={false}
-        />
-      </Wrapper>,
+      <TimelineNote
+        app={null}
+        user={mockedUser}
+        date={wrapperFriendlyDate}
+        message="Note"
+        hasPlainDate={false}
+      />,
+      { wrapper: Wrapper },
     );
 
     expect(screen.getByText("Test User")).toBeInTheDocument();
@@ -34,26 +36,27 @@ describe("TimelineNote", () => {
   });
 
   it("renders user avatar", () => {
+    const mockedUser = {
+      avatar: {
+        __typename: "Image",
+        url: "http://example.com",
+      },
+      id: "1",
+      email: "test@test.com",
+      firstName: "Test",
+      lastName: "User",
+      __typename: "User",
+    } satisfies OrderEventFragment["user"];
+
     const { container } = render(
-      <Wrapper>
-        <TimelineNote
-          app={null}
-          user={{
-            avatar: {
-              __typename: "Image",
-              url: "http://example.com",
-            },
-            id: "1",
-            email: "test@test.com",
-            firstName: "Test",
-            lastName: "User",
-            __typename: "User",
-          }}
-          date={wrapperFriendlyDate}
-          message="Note"
-          hasPlainDate={false}
-        />
-      </Wrapper>,
+      <TimelineNote
+        app={null}
+        user={mockedUser}
+        date={wrapperFriendlyDate}
+        message="Note"
+        hasPlainDate={false}
+      />,
+      { wrapper: Wrapper },
     );
 
     const avatar = container.querySelector("img");
@@ -67,22 +70,23 @@ describe("TimelineNote", () => {
   });
 
   it("renders app", () => {
+    const mockedApp = {
+      __typename: "App",
+      id: "1",
+      name: "Test App",
+      appUrl: "http://example.com",
+      brand: null,
+    } satisfies OrderEventFragment["app"];
+
     render(
-      <Wrapper>
-        <TimelineNote
-          app={{
-            __typename: "App",
-            id: "1",
-            name: "Test App",
-            appUrl: "http://example.com",
-            brand: null,
-          }}
-          user={null}
-          date={wrapperFriendlyDate}
-          message="Note"
-          hasPlainDate={false}
-        />
-      </Wrapper>,
+      <TimelineNote
+        app={mockedApp}
+        user={null}
+        date={wrapperFriendlyDate}
+        message="Note"
+        hasPlainDate={false}
+      />,
+      { wrapper: Wrapper },
     );
 
     expect(screen.getByText("Test App")).toBeInTheDocument();
@@ -92,28 +96,29 @@ describe("TimelineNote", () => {
   });
 
   it("renders app avatar", () => {
+    const mockedApp = {
+      __typename: "App",
+      id: "1",
+      name: "Test App",
+      appUrl: "http://example.com",
+      brand: {
+        __typename: "AppBrand",
+        logo: {
+          __typename: "AppBrandLogo",
+          default: "http://example.com",
+        },
+      },
+    } satisfies OrderEventFragment["app"];
+
     const { container } = render(
-      <Wrapper>
-        <TimelineNote
-          app={{
-            __typename: "App",
-            id: "1",
-            name: "Test App",
-            appUrl: "http://example.com",
-            brand: {
-              __typename: "AppBrand",
-              logo: {
-                __typename: "AppBrandLogo",
-                default: "http://example.com",
-              },
-            },
-          }}
-          user={null}
-          date={wrapperFriendlyDate}
-          message="Note"
-          hasPlainDate={false}
-        />
-      </Wrapper>,
+      <TimelineNote
+        app={mockedApp}
+        user={null}
+        date={wrapperFriendlyDate}
+        message="Note"
+        hasPlainDate={false}
+      />,
+      { wrapper: Wrapper },
     );
 
     const avatar = container.querySelector("img");
