@@ -23,9 +23,6 @@ on:
           - electron
           - firefox
           - all
-
-  push:
-
 jobs:
 
   testmo-report-preparation:
