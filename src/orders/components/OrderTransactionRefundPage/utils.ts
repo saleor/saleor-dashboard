@@ -383,7 +383,7 @@ export const getRefundFormSubmitBehavior = ({
   onTransferFundsState?: ConfirmButtonTransitionState;
   onSaveDraft: (submitData: OrderTransactionRefundPageFormData) => void;
   onSaveDraftState: ConfirmButtonTransitionState;
-  onTransferFunds?: () => void;
+  onTransferFunds?: (data: OrderTransactionRefundPageFormData) => void;
   intl: IntlShape;
 }): TransactionRefundFormSubmitBehavior => {
   if (
@@ -403,8 +403,7 @@ export const getRefundFormSubmitBehavior = ({
     };
   }
   return {
-    onSubmit: (_submitData: OrderTransactionRefundPageFormData) =>
-      onTransferFunds(),
+    onSubmit: onTransferFunds,
     submitState: onTransferFundsState,
     submitLabels: {
       confirm: intl.formatMessage(refundSavebarMessages.transferFunds),

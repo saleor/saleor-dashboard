@@ -8837,6 +8837,9 @@
     "context": "limit voucher",
     "string": "Limit to one use per customer"
   },
+  "vUY6ir": {
+    "string": "Amount must be higher than 0 when you transfer funds"
+  },
   "vVviA2": {
     "string": "Those permissions are out of your scope"
   },

@@ -106,7 +106,8 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     watch,
     getValues,
     getFieldState,
-    formState: { isDirty },
+    setError,
+    formState: { isDirty, errors: formErrors },
   } = useForm<OrderTransactionRefundPageFormData>({
     values: getRefundFormDefaultValues({ order, draftRefund }),
   });
@@ -116,11 +117,23 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     PermissionEnum.HANDLE_PAYMENTS,
   ]);
 
+  const handleTransferFunds = (data: OrderTransactionRefundPageFormData) => {
+    if (!data.amount) {
+      setError("amount", {
+        type: "custom",
+        message: intl.formatMessage(messages.amountError),
+      });
+      return;
+    }
+
+    onTransferFunds?.();
+  };
+
   const submitBehavior = getRefundFormSubmitBehavior({
     canHandlePayments,
     isDirty,
     isEdit: !!draftRefund,
-    onTransferFunds,
+    onTransferFunds: handleTransferFunds,
     onSaveDraft,
     onSaveDraftState,
     onTransferFundsState,
@@ -224,7 +237,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             justifyContent="space-between"
           >
             <OrderTransactionSummary
-              error={!!amountError}
+              amountError={amountError || formErrors.amount}
               control={control}
               selectedProductsValue={selectedProductsValue}
               canRefundShipping={canRefundShipping(order, draftRefund)}

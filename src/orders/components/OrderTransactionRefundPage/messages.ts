@@ -21,6 +21,10 @@ export const orderTransactionRefundMessages = defineMessages({
     id: "EOPuT6",
     description: "datagrid title label",
   },
+  amountError: {
+    id: "vUY6ir",
+    defaultMessage: "Amount must be higher than 0 when you transfer funds",
+  },
 });
 
 export const refundSavebarMessages = defineMessages({

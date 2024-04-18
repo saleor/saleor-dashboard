@@ -10,14 +10,17 @@ import {
   Tooltip,
 } from "@saleor/macaw-ui-next";
 import React from "react";
-import { Control, useController } from "react-hook-form";
+import { Control, FieldError, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
-import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
+import {
+  OrderTransactionRefundError,
+  OrderTransactionRefundPageFormData,
+} from "../../OrderTransactionRefundPage";
 import { orderTransactionRefundSummaryMessages as messages } from "./messages";
 
 interface OrderTransactionSummaryProps {
-  error?: boolean;
+  amountError?: OrderTransactionRefundError | FieldError;
   control: Control<OrderTransactionRefundPageFormData, any>;
   selectedProductsValue: number;
   canRefundShipping: boolean;
@@ -28,7 +31,7 @@ interface OrderTransactionSummaryProps {
 export const OrderTransactionSummary: React.FC<
   OrderTransactionSummaryProps
 > = ({
-  error,
+  amountError,
   control,
   selectedProductsValue,
   canRefundShipping,
@@ -43,6 +46,7 @@ export const OrderTransactionSummary: React.FC<
     name: "amount",
     control,
   });
+
   return (
     <DashboardCard>
       <DashboardCard.Content display="flex" flexDirection="column" gap={5}>
@@ -125,7 +129,12 @@ export const OrderTransactionSummary: React.FC<
               </Box>
             )}
           </Box>
-          <Box display="flex" justifyContent="space-between" paddingY={4}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            paddingTop={4}
+            paddingBottom={!!amountError ? 2 : 4}
+          >
             <Text size={5} display="flex" alignItems="center">
               <FormattedMessage {...messages.totalAmount} />
             </Text>
@@ -133,11 +142,18 @@ export const OrderTransactionSummary: React.FC<
               type="number"
               value={amountField.value}
               onChange={amountField.onChange}
-              error={error}
-              __width="100px"
+              error={!!amountError}
+              __width={100}
               endAdornment={currency}
             />
           </Box>
+          {!!amountError && (
+            <Box textAlign="right" paddingBottom={4}>
+              <Text color="critical1" size={1}>
+                {amountError.message}
+              </Text>
+            </Box>
+          )}
         </Box>
       </DashboardCard.Content>
     </DashboardCard>
