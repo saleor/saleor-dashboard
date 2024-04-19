@@ -2646,6 +2646,10 @@
     "context": "order history message",
     "string": "Oversold {quantity} items"
   },
+  "FmwGVb": {
+    "context": "transaction refund tiles charged label",
+    "string": "Charged"
+  },
   "Fn3bE0": {
     "string": "Order line updated"
   },
