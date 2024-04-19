@@ -11,4 +11,9 @@ export const transactionRefundTilesMessages = defineMessages({
     id: "p12BmC",
     description: "transaction refund tiles disabled transaction",
   },
+  charged: {
+    defaultMessage: "Charged",
+    id: "FmwGVb",
+    description: "transaction refund tiles charged label",
+  },
 });

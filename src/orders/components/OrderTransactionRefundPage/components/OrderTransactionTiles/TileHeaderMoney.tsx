@@ -1,10 +1,11 @@
-import { formatMoneyAmount } from "@dashboard/components/Money";
+import { formatMoney } from "@dashboard/components/Money";
 import { TransactionItemFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { getTransactionMoneyAmount } from "./utils";
+import { transactionRefundTilesMessages } from "./messages";
 
 interface TileHeaderMoneyProps {
   transaction: TransactionItemFragment;
@@ -12,18 +13,22 @@ interface TileHeaderMoneyProps {
 
 export const TileHeaderMoney = ({ transaction }: TileHeaderMoneyProps) => {
   const { locale } = useLocale();
-  const money = getTransactionMoneyAmount(transaction);
+  const money = transaction.chargedAmount;
 
   if (!money) {
     return null;
   }
 
-  const amount = formatMoneyAmount(money, locale);
+  const amount = formatMoney(money, locale);
 
   return (
-    <Text fontSize={1} color="default2">
-      <span>{money.currency}&nbsp;</span>
-      <span>{amount}</span>
-    </Text>
+    <Box display="flex" flexDirection="column" alignItems="end">
+      <Text fontSize={1} color="default1">
+        <FormattedMessage {...transactionRefundTilesMessages.charged} />
+      </Text>
+      <Text fontSize={1} color="default1">
+        {amount}
+      </Text>
+    </Box>
   );
 };
