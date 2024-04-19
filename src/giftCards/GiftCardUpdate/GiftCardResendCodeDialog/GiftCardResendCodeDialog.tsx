@@ -65,7 +65,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const [resendGiftCardCode, resendGiftCardCodeOpts] = useGiftCardResendMutation({
     onCompleted: data => {
       const errors = data?.giftCardResend?.errors;
-      const notifierData: IMessage = !!errors?.length
+      const notifierData: IMessage = errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(commonErrorMessages.unknownError),

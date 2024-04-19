@@ -54,7 +54,7 @@ export const useFilterHandlers = <
     return params.activeTab;
   };
   const changeFilters = (filters: IFilter<TFilterKeys>) => {
-    if (!!cleanupFn) {
+    if (cleanupFn) {
       cleanupFn();
     }
     const filtersQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
@@ -69,7 +69,7 @@ export const useFilterHandlers = <
     );
   };
   const resetFilters = () => {
-    if (!!cleanupFn) {
+    if (cleanupFn) {
       cleanupFn();
     }
 
@@ -81,7 +81,7 @@ export const useFilterHandlers = <
     );
   };
   const handleSearchChange = (query: string) => {
-    if (!!cleanupFn) {
+    if (cleanupFn) {
       cleanupFn();
     }
     const trimmedQuery = query?.trim() ?? "";

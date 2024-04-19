@@ -219,7 +219,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
       }}
     >
       <DialogTitle disableTypography data-test-id="add-menu-item-dialog-title">
-        {!!initial
+        {initial
           ? intl.formatMessage({
               id: "KKQUMK",
               defaultMessage: "Edit Item",

@@ -144,7 +144,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                         : options
                       ).map((suggestion, index) => (
                         <MenuItem
-                          data-test-id={!!testIds ? testIds[index] : ""}
+                          data-test-id={testIds ? testIds[index] : ""}
                           key={`${suggestion.value}:${index}`}
                           component="div"
                           {...getItemProps({ item: suggestion.value ?? "" })}

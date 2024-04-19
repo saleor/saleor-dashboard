@@ -100,7 +100,7 @@ const MessageManagerProvider = ({ children }) => {
           notifications.map(notification => (
             <Transition key={notification.id}>
               <Notification
-                {...(!!notification.timeout
+                {...(notification.timeout
                   ? {
                       onMouseEnter: () => pauseTimer(notification),
                       onMouseLeave: () => resumeTimer(notification),
@@ -130,7 +130,7 @@ const MessageManagerProvider = ({ children }) => {
                     showApiLabel: intl.formatMessage(notificationMessages.seeError),
                   }
                 }
-                {...(!!notification.message.actionBtn
+                {...(notification.message.actionBtn
                   ? {
                       action: {
                         label: notification.message.actionBtn.label,

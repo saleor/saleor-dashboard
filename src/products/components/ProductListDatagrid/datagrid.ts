@@ -278,7 +278,7 @@ function getAvailabilityCellContent(
   intl: IntlShape,
   selectedChannnel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
 ) {
-  if (!!selectedChannnel) {
+  if (selectedChannnel) {
     return statusCell(
       getChannelAvailabilityStatus(selectedChannnel),
       intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),

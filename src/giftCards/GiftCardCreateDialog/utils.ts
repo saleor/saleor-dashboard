@@ -18,7 +18,7 @@ const addToCurrentDate = (
 export const getExpiryPeriodTerminationDate = (
   currentDate: number,
   expiryPeriodType: TimePeriodTypeEnum,
-  expiryPeriodAmount: number = 0,
+  expiryPeriodAmount = 0,
 ): moment.Moment | null => {
   switch (expiryPeriodType) {
     case TimePeriodTypeEnum.DAY:
@@ -55,7 +55,7 @@ export const getGiftCardCreateOnCompletedMessage = (
     return getGiftCardExpiryError(intl);
   }
 
-  return !!errors?.length
+  return errors?.length
     ? {
         status: "error",
         text: intl.formatMessage(commonErrorMessages.unknownError),

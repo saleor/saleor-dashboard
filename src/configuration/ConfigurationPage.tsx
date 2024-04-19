@@ -55,7 +55,7 @@ const useStyles = makeStyles(
     sectionDescription: {},
     sectionTitle: {
       fontSize: 20,
-      fontWeight: 600 as 600,
+      fontWeight: 600 as const,
     },
     navigationCard: {
       border: `1px solid ${vars.colors.border.default1}`,

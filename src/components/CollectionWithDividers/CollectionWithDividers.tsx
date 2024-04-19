@@ -40,7 +40,7 @@ function CollectionWithDividers<T>({
   }
 
   if (!collection.length) {
-    return !!renderEmpty ? renderEmpty(collection) : null;
+    return renderEmpty ? renderEmpty(collection) : null;
   }
 
   const SelectedDividerComponent = DividerComponent || Divider;

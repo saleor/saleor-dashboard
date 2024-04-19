@@ -70,7 +70,7 @@ const PluginList: React.FC<PluginListProps> = props => {
               <TableRowLink
                 data-test-id="plugin"
                 hover={!!plugin}
-                className={!!plugin ? classes.link : undefined}
+                className={plugin ? classes.link : undefined}
                 // FIXME: middle click doesn't work - issues with deployments
                 // shows 404 not found
                 onClick={() => plugin && navigate(pluginUrl(plugin.id))}

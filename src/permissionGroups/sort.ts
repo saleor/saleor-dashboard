@@ -5,8 +5,8 @@ import { MembersListUrlSortField } from "./urls";
 
 export const sortMembers =
   (sort: string, asc: boolean) => (a: StaffMemberFragment, b: StaffMemberFragment) => {
-    let valueA: string = "";
-    let valueB: string = "";
+    let valueA = "";
+    let valueB = "";
 
     switch (sort) {
       case MembersListUrlSortField.name:

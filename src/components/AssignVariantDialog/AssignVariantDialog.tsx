@@ -200,7 +200,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                 ),
                 () => (
                   <Typography className={classes.noContentText}>
-                    {!!query
+                    {query
                       ? intl.formatMessage(messages.noProductsInQuery)
                       : intl.formatMessage(messages.noProductsInChannel)}
                   </Typography>

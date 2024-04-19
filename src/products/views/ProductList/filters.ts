@@ -145,7 +145,7 @@ export function getFilterOpts(
     categories: {
       active: !!params.categories,
       choices: mapNodeToChoice(mapEdgesToItems(categories?.search?.result?.data?.search)),
-      displayValues: !!params.categories
+      displayValues: params.categories
         ? maybe(
             () =>
               categories.initial.map(category => ({
@@ -170,7 +170,7 @@ export function getFilterOpts(
     collections: {
       active: !!params.collections,
       choices: mapNodeToChoice(mapEdgesToItems(collections?.search?.result?.data?.search)),
-      displayValues: !!params.collections
+      displayValues: params.collections
         ? maybe(
             () =>
               collections.initial.map(category => ({
@@ -209,7 +209,7 @@ export function getFilterOpts(
     productType: {
       active: !!params.productTypes,
       choices: mapNodeToChoice(mapEdgesToItems(productTypes?.search?.result?.data?.search)),
-      displayValues: !!params.productTypes
+      displayValues: params.productTypes
         ? maybe(
             () =>
               productTypes.initial.map(productType => ({
@@ -356,7 +356,7 @@ export function getFilterQueryParam(
 ): ProductListUrlFilters {
   const { active, group, name, value } = filter;
 
-  if (!!group) {
+  if (group) {
     const rest = params && params[group] ? params[group] : undefined;
 
     return {

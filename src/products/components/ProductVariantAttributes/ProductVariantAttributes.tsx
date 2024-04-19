@@ -36,7 +36,7 @@ function getAttributeDisplayValue(
 ): string {
   const attribute = attributes.find(attr => attr.id === id);
   const attributeValue = attribute.data.values.find(value => value.node.slug === slug);
-  if (!!attributeValue) {
+  if (attributeValue) {
     return attributeValue.node.name;
   }
 

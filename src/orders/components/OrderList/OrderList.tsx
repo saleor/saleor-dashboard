@@ -168,7 +168,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
             <TableRowLink
               data-test-id="order-table-row"
               hover={!!order}
-              className={!!order ? classes.link : undefined}
+              className={order ? classes.link : undefined}
               href={order && orderUrl(order.id)}
               key={order ? order.id : "skeleton"}
             >

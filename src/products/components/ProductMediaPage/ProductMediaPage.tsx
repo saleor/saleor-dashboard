@@ -131,7 +131,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
               <Card>
                 <CardTitle title={intl.formatMessage(messages.mediaView)} />
                 <CardContent>
-                  {!!mediaObj ? (
+                  {mediaObj ? (
                     mediaObj?.type === ProductMediaType.IMAGE ? (
                       <div className={classes.imageContainer}>
                         <img className={classes.image} src={mediaObj.url} alt={mediaObj.alt} />

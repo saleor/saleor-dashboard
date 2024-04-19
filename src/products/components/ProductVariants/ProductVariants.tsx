@@ -77,13 +77,13 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
               `channel:${channel.id}`,
             ]),
             ...warehouses.map(warehouse => `warehouse:${warehouse.id}`),
-            ...variantAttributes
+            ...(variantAttributes
               ?.filter(
                 attribute =>
                   attribute.inputType === AttributeInputTypeEnum.DROPDOWN ||
                   attribute.inputType === AttributeInputTypeEnum.PLAIN_TEXT,
               )
-              .map(attribute => `attribute:${attribute.id}`),
+              .map(attribute => `attribute:${attribute.id}`) ?? []),
           ]
         : undefined,
     [channels, variantAttributes, warehouses],

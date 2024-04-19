@@ -128,7 +128,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                 return (
                   <SortableTableRow
                     selected={isSelected}
-                    className={!!attribute ? classes.link : undefined}
+                    className={attribute ? classes.link : undefined}
                     hover={!!attribute}
                     href={attribute ? attributeUrl(attribute.id) : undefined}
                     key={attribute?.id}

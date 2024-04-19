@@ -114,7 +114,7 @@ function useForm<T extends FormData, TErrors>(
     formId,
     onSubmit,
   });
-  const handleSetChanged = (value: boolean = true) => {
+  const handleSetChanged = (value = true) => {
     if (confirmLeave) {
       setIsFormDirtyInExitDialog(value);
     }

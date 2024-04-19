@@ -202,7 +202,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                 return (
                   <SortableTableRow
                     selected={isVariantSelected}
-                    className={!!attribute ? classes.link : undefined}
+                    className={attribute ? classes.link : undefined}
                     hover={!!attribute}
                     href={attribute ? attributeUrl(attribute.id) : undefined}
                     key={maybe(() => attribute.id)}

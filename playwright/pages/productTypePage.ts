@@ -39,7 +39,7 @@ export class ProductTypePage extends BasePage {
     await this.nameInput.fill(name);
   }
 
-  async makeProductShippableWithWeight(weight: string = "10") {
+  async makeProductShippableWithWeight(weight = "10") {
     await this.isShippingRequired.click();
     await this.shippingWeightInput.fill(weight);
   }

@@ -58,7 +58,7 @@ const orderBase: OrderDetailsFragment = {
   number: "19",
   paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
   status: OrderStatus.FULFILLED,
-  // @ts-expect-error
+  // @ts-expect-error error
   total: {
     __typename: "TaxedMoney",
     gross: {

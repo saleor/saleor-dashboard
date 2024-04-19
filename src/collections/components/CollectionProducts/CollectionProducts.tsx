@@ -78,7 +78,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     <Card>
       <CardTitle
         title={
-          !!collection ? (
+          collection ? (
             intl.formatMessage(
               {
                 id: "/dnWE8",

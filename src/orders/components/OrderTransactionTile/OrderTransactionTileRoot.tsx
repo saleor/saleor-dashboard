@@ -11,7 +11,7 @@ export const OrderTransactionTileRoot = ({ error, children }: OrderTransactionTi
     <Box
       borderStyle="solid"
       borderWidth={1}
-      borderColor={!!error ? "critical1" : "default1"}
+      borderColor={error ? "critical1" : "default1"}
       borderRadius={3}
       display="flex"
       flexDirection="column"

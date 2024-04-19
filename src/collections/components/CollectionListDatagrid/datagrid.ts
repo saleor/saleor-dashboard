@@ -75,7 +75,7 @@ export const createGetCellContent =
       case "productCount":
         return readonlyTextCell(rowData?.products?.totalCount?.toString() ?? "");
       case "availability": {
-        const { label, color } = !!channel
+        const { label, color } = channel
           ? getAvailabilityLabelWhenSelectedChannel(channel, intl, currentTheme)
           : getAvailabilityLabel(rowData, intl, currentTheme);
 

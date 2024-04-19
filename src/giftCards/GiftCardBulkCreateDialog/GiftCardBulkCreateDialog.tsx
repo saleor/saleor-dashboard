@@ -80,7 +80,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   const handleSubmit = (data: GiftCardBulkCreateFormData) => {
     const formErrors = validateForm(data);
 
-    if (!!Object.keys(formErrors).length) {
+    if (Object.keys(formErrors).length) {
       setFormErrors(formErrors);
     } else {
       bulkCreateGiftCard({

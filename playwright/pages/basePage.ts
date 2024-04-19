@@ -105,7 +105,7 @@ export class BasePage {
     await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
-  async waitForNetworkIdle(action: () => Promise<void>, timeoutMs: number = 50000) {
+  async waitForNetworkIdle(action: () => Promise<void>, timeoutMs = 50000) {
     const responsePromise = this.page.waitForResponse("**/graphql/", {
       timeout: timeoutMs,
     });

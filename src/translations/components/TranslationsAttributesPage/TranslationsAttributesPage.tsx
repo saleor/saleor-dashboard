@@ -90,7 +90,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
               }),
               name: fieldNames.attribute + ":" + data?.attribute.id,
               translation: data?.translation?.name || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.attribute?.name,
             },
           ]}

@@ -164,15 +164,10 @@
     "esbuild-loader": "^2.18.0",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard-with-typescript": "^35.0.0",
     "eslint-nibble": "^8.1.0",
-    "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-formatjs": "^4.10.3",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-local-rules": "^0.1.1",
-    "eslint-plugin-n": "^15.7.0",
-    "eslint-plugin-prefer-arrow": "^1.1.6",
-    "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.1",
@@ -289,9 +284,8 @@
     "resolve": "1.20.0"
   },
   "lint-staged": {
-    "./src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+    "./{src,playwright}/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
     ]
   },
   "scripts": {

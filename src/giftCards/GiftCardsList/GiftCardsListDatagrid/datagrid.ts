@@ -132,7 +132,7 @@ export const createGetCellContent =
   };
 
 export const getTagCellText = (tags: GiftCardDataFragment["tags"]) => {
-  if (!!tags.length) {
+  if (tags.length) {
     return tags.map(({ name }) => name).join(", ");
   }
 

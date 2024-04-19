@@ -84,7 +84,7 @@ export function useProductUpdateHandler(
   const [updateProduct, updateProductOpts] = useProductUpdateMutation();
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdateMutation({
     onCompleted: data => {
-      if (!!data.productChannelListingUpdate.errors.length) {
+      if (data.productChannelListingUpdate.errors.length) {
         data.productChannelListingUpdate.errors.forEach(error =>
           notify({
             status: "error",

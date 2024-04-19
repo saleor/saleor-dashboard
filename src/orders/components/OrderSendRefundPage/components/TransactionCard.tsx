@@ -109,7 +109,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
               </Button>
               <PriceField
                 id={inputId}
-                aria-invalid={!!submitError ? "true" : "false"}
+                aria-invalid={submitError ? "true" : "false"}
                 aria-describedby={errorId}
                 disabled={loading}
                 className={classes.input}

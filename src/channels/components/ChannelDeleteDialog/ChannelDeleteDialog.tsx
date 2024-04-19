@@ -70,7 +70,7 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
   const classes = useStyles({});
   const intl = useIntl();
   const [choice, setChoice] = useStateFromProps(
-    !!channelsChoices.length ? channelsChoices[0].value : "",
+    channelsChoices.length ? channelsChoices[0].value : "",
   );
   const hasChannels = !!channelsChoices?.length;
   const canBeDeleted = hasChannels || !hasOrders;

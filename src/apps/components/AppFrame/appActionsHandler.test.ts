@@ -60,7 +60,7 @@ describe("AppActionsHandler", function () {
    */
   beforeEach((): void => {
     delete (window as { location?: unknown }).location;
-    // @ts-expect-error
+    // @ts-expect-error error
     window.location = {
       href: "http://localhost:3000",
       hostname: "localhost",

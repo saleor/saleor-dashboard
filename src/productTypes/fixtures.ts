@@ -14,7 +14,7 @@ import { RelayToFlat } from "@dashboard/types";
 export const attributes: ProductTypeQuery["productType"]["productAttributes"] = [
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -23,20 +23,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
               name: "John Doe",
@@ -53,10 +53,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
               name: "Milionare Pirate",
@@ -78,7 +78,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo2",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -87,20 +87,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE1",
               name: "100g",
@@ -117,10 +117,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE2",
               name: "250g",
@@ -137,10 +137,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE3",
               name: "500g",
@@ -157,10 +157,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE4",
               name: "1kg",
@@ -182,7 +182,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToz",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -191,20 +191,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjY=",
               name: "Saleor",
@@ -226,7 +226,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo4",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -235,20 +235,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIx",
               name: "100g",
@@ -265,10 +265,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIy",
               name: "250g",
@@ -285,10 +285,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIz",
               name: "500g",
@@ -310,7 +310,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo1",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -319,20 +319,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEz",
               name: "Arabica",
@@ -349,10 +349,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE0",
               name: "Robusta",
@@ -374,7 +374,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToy",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -383,20 +383,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM=",
               name: "Round",
@@ -413,10 +413,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjQ=",
               name: "V-Neck",
@@ -433,10 +433,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjU=",
               name: "Polo",
@@ -458,7 +458,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTox",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -467,20 +467,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE=",
               name: "Blue",
@@ -497,10 +497,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI=",
               name: "White",
@@ -522,7 +522,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMg==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -531,20 +531,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMw",
               name: "Soft",
@@ -561,10 +561,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMx",
               name: "Hard",
@@ -581,10 +581,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMy",
               name: "Middle soft",
@@ -601,10 +601,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMz",
               name: "Middle hard",
@@ -621,10 +621,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM0",
               name: "Middle",
@@ -641,10 +641,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM1",
               name: "Very hard",
@@ -666,7 +666,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo3",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -675,20 +675,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE5",
               name: "Sour",
@@ -705,10 +705,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIw",
               name: "Sweet",
@@ -730,7 +730,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -739,20 +739,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI4",
               name: "English",
@@ -769,10 +769,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI5",
               name: "Pirate",
@@ -794,7 +794,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -803,20 +803,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI2",
               name: "Mirumee Press",
@@ -833,10 +833,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI3",
               name: "Saleor Publishing",
@@ -858,7 +858,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
   {
     node: {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo0",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -867,20 +867,20 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       valueRequired: true,
       unit: null,
       choices: {
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
         },
         edges: [
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjc=",
               name: "XS",
@@ -897,10 +897,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjg=",
               name: "S",
@@ -917,10 +917,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjk=",
               name: "M",
@@ -937,10 +937,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEw",
               name: "L",
@@ -957,10 +957,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEx",
               name: "XL",
@@ -977,10 +977,10 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
             },
           },
           {
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            __typename: "AttributeValueCountableEdge" as const,
             cursor: "",
             node: {
-              __typename: "AttributeValue" as "AttributeValue",
+              __typename: "AttributeValue" as const,
               file: null,
               id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEy",
               name: "XXL",
@@ -1003,13 +1003,13 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
 ].map(edge => edge.node);
 
 export const productTypeSearch: ProductTypeQuery["productType"] = {
-  __typename: "ProductType" as "ProductType",
+  __typename: "ProductType" as const,
   hasVariants: true,
   id: "UHJvZHVjdFR5cGU6NA==",
   name: "Candy",
   productAttributes: [attributes[0]],
   taxClass: {
-    __typename: "TaxClass" as "TaxClass",
+    __typename: "TaxClass" as const,
     name: "PB100000",
     id: "Books / Manuals",
   },
@@ -1020,7 +1020,7 @@ export const productTypes: Array<
     ProductTypeListQuery["productTypes"]["edges"][0]["node"]
 > = [
   {
-    __typename: "ProductType" as "ProductType",
+    __typename: "ProductType" as const,
     hasVariants: true,
     id: "UHJvZHVjdFR5cGU6NA==",
     isShippingRequired: true,
@@ -1028,14 +1028,14 @@ export const productTypes: Array<
     kind: ProductTypeKindEnum.NORMAL,
     productAttributes: [attributes[0]],
     taxClass: {
-      __typename: "TaxClass" as "TaxClass",
+      __typename: "TaxClass" as const,
       name: "Shipping method",
       id: "VGV4Q2xhc3M6MQ==",
     },
     variantAttributes: [attributes[1], attributes[2]],
   },
   {
-    __typename: "ProductType" as "ProductType",
+    __typename: "ProductType" as const,
     hasVariants: false,
     id: "UHJvZHVjdFR5cGU6NQ==",
     isShippingRequired: false,
@@ -1043,14 +1043,14 @@ export const productTypes: Array<
     kind: ProductTypeKindEnum.NORMAL,
     productAttributes: [attributes[5]],
     taxClass: {
-      __typename: "TaxClass" as "TaxClass",
+      __typename: "TaxClass" as const,
       name: "Digital goods",
       id: "VGV4Q4xhc3M6MQ==",
     },
     variantAttributes: [attributes[0], attributes[3]],
   },
   {
-    __typename: "ProductType" as "ProductType",
+    __typename: "ProductType" as const,
     hasVariants: false,
     id: "UHJvZHVjdFR5cGU6Mg==",
     isShippingRequired: true,
@@ -1058,14 +1058,14 @@ export const productTypes: Array<
     kind: ProductTypeKindEnum.NORMAL,
     productAttributes: [attributes[7]],
     taxClass: {
-      __typename: "TaxClass" as "TaxClass",
+      __typename: "TaxClass" as const,
       name: "Houseware",
       id: "VGV4Q3xhc3M6MQ==",
     },
     variantAttributes: [attributes[2], attributes[5]],
   },
   {
-    __typename: "ProductType" as "ProductType",
+    __typename: "ProductType" as const,
     hasVariants: true,
     id: "UHJvZHVjdFR5cGU6Mw==",
     isShippingRequired: true,
@@ -1073,14 +1073,14 @@ export const productTypes: Array<
     kind: ProductTypeKindEnum.NORMAL,
     productAttributes: [attributes[8]],
     taxClass: {
-      __typename: "TaxClass" as "TaxClass",
+      __typename: "TaxClass" as const,
       name: "PB100000",
       id: "Books / Manuals",
     },
     variantAttributes: [attributes[1], attributes[4]],
   },
   {
-    __typename: "ProductType" as "ProductType",
+    __typename: "ProductType" as const,
     hasVariants: true,
     id: "UHJvZHVjdFR5cGU6MQ==",
     isShippingRequired: true,
@@ -1088,19 +1088,19 @@ export const productTypes: Array<
     kind: ProductTypeKindEnum.NORMAL,
     productAttributes: [attributes[4]],
     taxClass: {
-      __typename: "TaxClass" as "TaxClass",
+      __typename: "TaxClass" as const,
       name: "PH403970",
       id: "Wheelchair",
     },
     variantAttributes: [attributes[1], attributes[6]],
   },
 ].map(productType => ({
-  __typename: "ProductType" as "ProductType",
+  __typename: "ProductType" as const,
   ...productType,
 }));
 
 export const productType: ProductTypeDetailsQuery["productType"] = {
-  __typename: "ProductType" as "ProductType",
+  __typename: "ProductType" as const,
   hasVariants: false,
   id: "UHJvZHVjdFR5cGU6NQ==",
   isShippingRequired: false,
@@ -1116,7 +1116,7 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
   privateMetadata: [],
   productAttributes: [
     {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       filterableInDashboard: true,
       filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
@@ -1128,7 +1128,7 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       unit: null,
     },
     {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       filterableInDashboard: true,
       filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
@@ -1140,7 +1140,7 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       unit: null,
     },
     {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       filterableInDashboard: true,
       filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
@@ -1177,9 +1177,9 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
   ],
   assignedVariantAttributes: [
     {
-      __typename: "AssignedVariantAttribute" as "AssignedVariantAttribute",
+      __typename: "AssignedVariantAttribute" as const,
       attribute: {
-        __typename: "Attribute" as "Attribute",
+        __typename: "Attribute" as const,
         filterableInDashboard: true,
         filterableInStorefront: false,
         id: "UHJvZHVjdEF0dHJpYnV0ATo5",

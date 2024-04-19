@@ -67,7 +67,7 @@ export function getFilterQueryParams<TFilterKeys extends string, TUrlFilters ext
 export type GteLte<T> = Partial<Record<"gte" | "lte", T>>;
 export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
   if (
-    !![variables.gte, variables.lte].some(
+    [variables.gte, variables.lte].some(
       v => v !== undefined && v !== null && v !== "" && !(typeof v === "number" && isNaN(v)),
     )
   ) {

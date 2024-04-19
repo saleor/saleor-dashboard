@@ -76,7 +76,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
             const isSelected = pageType ? isChecked(pageType.id) : false;
             return (
               <TableRowLink
-                className={!!pageType ? classes.link : undefined}
+                className={pageType ? classes.link : undefined}
                 hover={!!pageType}
                 key={pageType ? pageType.id : "skeleton"}
                 href={pageType && pageTypeUrl(pageType.id)}

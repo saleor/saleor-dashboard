@@ -13,7 +13,7 @@ export const getWebhookTypes = (webhookEvents: string[]) => {
       : [keywords[0], 1];
     const event = keywords.slice(sliceSize).join("_");
     const events = acc[keyword] || [];
-    events.push(!!event.length ? event : multiKeyword);
+    events.push(event.length ? event : multiKeyword);
     acc[keyword] = events;
 
     return acc;

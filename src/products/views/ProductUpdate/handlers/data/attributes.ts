@@ -52,7 +52,7 @@ export function getAttributeType(
 // Datagrid only support PLAIN_TEXT and DROPDOWN attribute types
 export function getDatagridAttributeInput(
   inputType: AttributeInputTypeEnum,
-  value: string = "",
+  value = "",
 ): BulkAttributeValueInput {
   if (inputType === AttributeInputTypeEnum.DROPDOWN) {
     return {

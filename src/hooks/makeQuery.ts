@@ -98,7 +98,7 @@ export function useQuery<TData, TVariables>(
     errorPolicy: "all",
     fetchPolicy: fetchPolicy ?? "cache-and-network",
     onError: error => {
-      if (!!handleError) {
+      if (handleError) {
         handleError(error);
       } else {
         handleQueryAuthError(error, notify, user.logout, intl);

@@ -28,7 +28,7 @@ export function textCell(value: string, opts?: Partial<TextCell>): GridCell {
   };
 }
 
-export function readonlyTextCell(value: string, hasCursorPointer: boolean = true): TextCell {
+export function readonlyTextCell(value: string, hasCursorPointer = true): TextCell {
   return {
     cursor: hasCursorPointer ? "pointer" : "default",
     allowOverlay: false,

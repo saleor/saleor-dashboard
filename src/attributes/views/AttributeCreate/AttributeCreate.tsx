@@ -165,19 +165,19 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       }
       saveButtonBarState={attributeCreateOpts.status}
       values={{
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
-          __typename: "PageInfo" as "PageInfo",
+          __typename: "PageInfo" as const,
           endCursor: "",
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "",
         },
         edges: pageValues.map((value, valueIndex) => ({
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename: "AttributeValueCountableEdge" as const,
           cursor: "1",
           node: {
-            __typename: "AttributeValue" as "AttributeValue",
+            __typename: "AttributeValue" as const,
             file: value?.fileUrl
               ? {
                   url: value.fileUrl,

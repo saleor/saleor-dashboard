@@ -99,7 +99,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
               <Combobox
                 {...channelfield}
                 onChange={handleChannelChange}
-                fetchOptions={() => {}}
+                fetchOptions={() => undefined}
                 size="small"
                 data-test-id="channel-dropdown"
                 label={intl.formatMessage(commonMessages.channel)}

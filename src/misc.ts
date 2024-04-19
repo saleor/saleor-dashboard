@@ -51,7 +51,7 @@ export function renderCollection<T>(
     return renderItem(undefined, undefined, collection);
   }
   if (collection.length === 0) {
-    return !!renderEmpty ? renderEmpty(collection) : null;
+    return renderEmpty ? renderEmpty(collection) : null;
   }
   return collection.map(renderItem);
 }
@@ -420,7 +420,7 @@ export function isInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
 
 export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   const match = Object.keys(haystack).find(key => key === needle);
-  if (!!match) {
+  if (match) {
     return haystack[needle as keyof TEnum];
   }
 

@@ -61,7 +61,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
               webhook => (
                 <TableRowLink
                   hover={!!webhook}
-                  className={!!webhook ? classes.tableRow : undefined}
+                  className={webhook ? classes.tableRow : undefined}
                   href={webhook && CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)}
                   key={webhook ? webhook.id : "skeleton"}
                 >

@@ -60,7 +60,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
       return {};
     }
 
-    const { expiryType, expiryPeriod } = settingsData?.giftCardSettings;
+    const { expiryType, expiryPeriod } = settingsData?.giftCardSettings ?? {};
 
     if (expiryType === GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE) {
       return {};

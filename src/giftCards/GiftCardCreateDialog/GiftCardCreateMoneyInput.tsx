@@ -32,7 +32,7 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
   const { data: channelCurrenciesData } = useChannelCurrenciesQuery({});
-  const { channelCurrencies } = channelCurrenciesData?.shop;
+  const { channelCurrencies } = channelCurrenciesData?.shop ?? {};
   const [savedCurrency, setCurrency] = useLocalStorage("giftCardCreateCurrency", undefined);
   const getInitialCurrency = () => {
     if (

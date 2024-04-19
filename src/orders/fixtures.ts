@@ -75,28 +75,28 @@ export const shop: OrderDetailsQuery["shop"] = {
 
 export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [
   {
-    __typename: "User" as "User",
+    __typename: "User" as const,
     email: "test.client1@example.com",
     firstName: "John",
     id: "c1",
     lastName: "Doe",
   },
   {
-    __typename: "User" as "User",
+    __typename: "User" as const,
     email: "test.client2@example.com",
     firstName: "Dough",
     id: "c2",
     lastName: "Jones",
   },
   {
-    __typename: "User" as "User",
+    __typename: "User" as const,
     email: "test.client3@example.com",
     firstName: "Jonas",
     id: "c3",
     lastName: "Dough",
   },
   {
-    __typename: "User" as "User",
+    __typename: "User" as const,
     email: "test.client4@example.com",
     firstName: "Bill",
     id: "c4",
@@ -1226,7 +1226,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               },
             ],
             thumbnail: {
-              __typename: "Image" as "Image",
+              __typename: "Image" as const,
               url: placeholder,
             },
             totalPrice: {
@@ -1356,7 +1356,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               },
             ],
             thumbnail: {
-              __typename: "Image" as "Image",
+              __typename: "Image" as const,
               url: placeholder,
             },
             totalPrice: {
@@ -1492,7 +1492,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         },
       ],
       thumbnail: {
-        __typename: "Image" as "Image",
+        __typename: "Image" as const,
         url: placeholder,
       },
       totalPrice: {
@@ -1605,7 +1605,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         },
       ],
       thumbnail: {
-        __typename: "Image" as "Image",
+        __typename: "Image" as const,
         url: placeholder,
       },
       totalPrice: {
@@ -1806,7 +1806,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
 });
 
 export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragment => ({
-  __typename: "Order" as "Order",
+  __typename: "Order" as const,
   giftCards: [],
   actions: [OrderAction.CAPTURE],
   shippingMethods: [],
@@ -1861,7 +1861,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
   isShippingRequired: false,
   lines: [
     {
-      __typename: "OrderLine" as "OrderLine",
+      __typename: "OrderLine" as const,
       id: "T3JkZXJMaW5lOjQ1",
       isShippingRequired: false,
       productName: "Davis Group (Hard)",
@@ -1883,7 +1883,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         },
       ],
       thumbnail: {
-        __typename: "Image" as "Image",
+        __typename: "Image" as const,
         url: placeholder,
       },
       totalPrice: {
@@ -1922,14 +1922,14 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
-        __typename: "TaxedMoney" as "TaxedMoney",
+        __typename: "TaxedMoney" as const,
         gross: {
-          __typename: "Money" as "Money",
+          __typename: "Money" as const,
           amount: 65.95,
           currency: "USD",
         },
         net: {
-          __typename: "Money" as "Money",
+          __typename: "Money" as const,
           amount: 65.95,
           currency: "USD",
         },
@@ -1974,7 +1974,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       },
     },
     {
-      __typename: "OrderLine" as "OrderLine",
+      __typename: "OrderLine" as const,
       id: "T3JkZXJMaW5lOjQ2",
       isShippingRequired: false,
       productName: "Anderson PLC (15-1337)",
@@ -1996,7 +1996,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         },
       ],
       thumbnail: {
-        __typename: "Image" as "Image",
+        __typename: "Image" as const,
         url: placeholder,
       },
       totalPrice: {
@@ -2035,14 +2035,14 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
-        __typename: "TaxedMoney" as "TaxedMoney",
+        __typename: "TaxedMoney" as const,
         gross: {
-          __typename: "Money" as "Money",
+          __typename: "Money" as const,
           amount: 68.2,
           currency: "USD",
         },
         net: {
-          __typename: "Money" as "Money",
+          __typename: "Money" as const,
           amount: 68.2,
           currency: "USD",
         },
@@ -2097,41 +2097,41 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
   collectionPointName: null,
   deliveryMethod: null,
   shippingPrice: {
-    __typename: "TaxedMoney" as "TaxedMoney",
+    __typename: "TaxedMoney" as const,
     gross: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 0,
       currency: "USD",
     },
   },
   status: "DRAFT" as OrderStatus.DRAFT,
   subtotal: {
-    __typename: "TaxedMoney" as "TaxedMoney",
+    __typename: "TaxedMoney" as const,
     gross: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 168.3,
       currency: "USD",
     },
     net: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 168.3,
       currency: "USD",
     },
   },
   total: {
-    __typename: "TaxedMoney" as "TaxedMoney",
+    __typename: "TaxedMoney" as const,
     gross: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 168.3,
       currency: "USD",
     },
     net: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 100,
       currency: "USD",
     },
     tax: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 68.3,
       currency: "USD",
     },
@@ -2139,7 +2139,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
   totalAuthorized: prepareMoney(234.93),
   totalCaptured: prepareMoney(0),
   totalBalance: {
-    __typename: "Money" as "Money",
+    __typename: "Money" as const,
     amount: 168.3,
     currency: "USD",
   },
@@ -2207,7 +2207,7 @@ export const fulfillOrderLine = (placeholderImage: string): OrderFulfillLineFrag
     },
   ],
   thumbnail: {
-    __typename: "Image" as "Image",
+    __typename: "Image" as const,
     url: placeholderImage,
   },
   variant: {
@@ -2263,16 +2263,16 @@ export const orderLineSearch = (
   placeholderImage: string,
 ): RelayToFlat<SearchOrderVariantQuery["search"]> => [
   {
-    __typename: "Product" as "Product",
+    __typename: "Product" as const,
     id: "UHJvZHVjdDo3Mg==",
     name: "Apple Juice",
     thumbnail: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: placeholderImage,
     },
     variants: [
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjAy",
         name: "500ml",
         sku: "93855755",
@@ -2298,7 +2298,7 @@ export const orderLineSearch = (
         },
       },
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
         name: "1l",
         sku: "43226647",
@@ -2324,7 +2324,7 @@ export const orderLineSearch = (
         },
       },
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjA0",
         name: "2l",
         sku: "80884671",
@@ -2352,16 +2352,16 @@ export const orderLineSearch = (
     ],
   },
   {
-    __typename: "Product" as "Product",
+    __typename: "Product" as const,
     id: "UHJvZHVjdDo3NQ==",
     name: "Pineapple Juice",
     thumbnail: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: placeholderImage,
     },
     variants: [
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjEx",
         name: "500ml",
         sku: "43200242",
@@ -2387,7 +2387,7 @@ export const orderLineSearch = (
         },
       },
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjEy",
         name: "1l",
         sku: "79129513",
@@ -2413,7 +2413,7 @@ export const orderLineSearch = (
         },
       },
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjEz",
         name: "2l",
         sku: "75799450",

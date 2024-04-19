@@ -128,7 +128,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
 
     const shippingCarrierBase = intl.formatMessage(messages.addShippingCarrier);
 
-    if (!!shippingAddress) {
+    if (shippingAddress) {
       return (
         <Link onClick={onShippingMethodEdit} data-test-id="add-shipping-carrier">
           {shippingCarrierBase}

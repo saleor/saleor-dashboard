@@ -93,7 +93,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
             order => (
               <TableRowLink
                 hover={!!order}
-                className={!!order ? classes.link : undefined}
+                className={order ? classes.link : undefined}
                 href={order && orderUrl(order.id)}
                 key={order ? order.id : "skeleton"}
               >

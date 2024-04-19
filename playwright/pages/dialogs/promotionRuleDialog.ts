@@ -55,7 +55,7 @@ export class PromotionRuleDialog {
     });
   }
 
-  async removeExistingGiftReward(giftRewardId: string, index: number = 0) {
+  async removeExistingGiftReward(giftRewardId: string, index = 0) {
     await this.page.getByTestId(`selected-option-${giftRewardId}-${index}`).getByText("✕").click();
   }
 
@@ -84,7 +84,7 @@ export class PromotionRuleDialog {
     await this.rewardValueInput.fill(value);
   }
 
-  async selectPredicate(predicate: string, index: number = 0) {
+  async selectPredicate(predicate: string, index = 0) {
     await this.page.getByTestId(`condition-name-${index}`).click();
     await this.page.getByRole("option", { name: predicate, exact: true }).click();
   }
@@ -94,7 +94,7 @@ export class PromotionRuleDialog {
     await this.page.getByTestId("select-option").filter({ hasText: type }).click();
   }
 
-  async typeRuleConditionValue(value: string, index: number = 0) {
+  async typeRuleConditionValue(value: string, index = 0) {
     await this.page.getByTestId(`condition-value-${index}`).fill(value);
   }
 

@@ -33,7 +33,7 @@ export const RuleConditionName = ({
   return (
     <Combobox
       value={getConditionNameValue(nameField.value, conditionNames)}
-      fetchOptions={() => {}}
+      fetchOptions={() => undefined}
       options={filteredConditionLeftOptions}
       onChange={e => {
         condition.value = [];

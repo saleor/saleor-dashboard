@@ -50,7 +50,7 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           label={intl.formatMessage(messages.stockReservationForAuthenticatedUser)}
           helperText={intl.formatMessage(messages.stockWillNotBeReserved)}
           value={
-            !!data.reserveStockDurationAuthenticatedUser
+            data.reserveStockDurationAuthenticatedUser
               ? String(data.reserveStockDurationAuthenticatedUser)
               : ""
           }
@@ -72,7 +72,7 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           label={intl.formatMessage(messages.stockReservationForAnonymousUser)}
           helperText={intl.formatMessage(messages.stockWillNotBeReserved)}
           value={
-            !!data.reserveStockDurationAnonymousUser
+            data.reserveStockDurationAnonymousUser
               ? String(data.reserveStockDurationAnonymousUser)
               : ""
           }
@@ -95,7 +95,7 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           name="limitQuantityPerCheckout"
           label={intl.formatMessage(messages.checkoutLineLimit)}
           helperText={intl.formatMessage(messages.checkoutLimitsDescription)}
-          value={!!data.limitQuantityPerCheckout ? String(data.limitQuantityPerCheckout) : ""}
+          value={data.limitQuantityPerCheckout ? String(data.limitQuantityPerCheckout) : ""}
           onChange={onChange}
           InputProps={{
             inputProps: {

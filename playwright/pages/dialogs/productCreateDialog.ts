@@ -13,7 +13,7 @@ export class ProductCreateDialog extends BasePage {
     super(page);
   }
 
-  async selectProductTypeWithVariants(productType: string = "Beer") {
+  async selectProductTypeWithVariants(productType = "Beer") {
     await this.waitForNetworkIdle(() => this.dialogProductTypeInput.fill(productType));
     await this.promptedOptions.filter({ hasText: productType }).click();
   }

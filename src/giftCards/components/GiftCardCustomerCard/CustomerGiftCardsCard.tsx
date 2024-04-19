@@ -67,7 +67,7 @@ const CustomerGiftCardsCard: React.FC = () => {
           }
         >
           <FormattedMessage
-            {...(!!giftCards?.length
+            {...(giftCards?.length
               ? messages.customerGiftCardsPresentSubtitle
               : messages.customerGiftCardsAbsentSubtitle)}
           />

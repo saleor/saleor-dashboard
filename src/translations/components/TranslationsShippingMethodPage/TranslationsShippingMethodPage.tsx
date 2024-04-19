@@ -78,7 +78,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
               }),
               name: TranslationInputFieldName.name,
               translation: data?.translation?.name || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.name,
             },
             {

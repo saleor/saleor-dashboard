@@ -77,14 +77,14 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               }),
               name: TranslationInputFieldName.name,
               translation: data?.translation?.name || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.category?.name,
             },
             {
               displayName: intl.formatMessage(commonMessages.description),
               name: TranslationInputFieldName.description,
               translation: data?.translation?.description || null,
-              type: "rich" as "rich",
+              type: "rich" as const,
               value: data?.category?.description,
             },
           ]}
@@ -111,7 +111,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               }),
               name: TranslationInputFieldName.seoTitle,
               translation: data?.translation?.seoTitle || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.category?.seoTitle,
             },
             {
@@ -121,7 +121,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               }),
               name: TranslationInputFieldName.seoDescription,
               translation: data?.translation?.seoDescription || null,
-              type: "long" as "long",
+              type: "long" as const,
               value: data?.category?.seoDescription,
             },
           ]}

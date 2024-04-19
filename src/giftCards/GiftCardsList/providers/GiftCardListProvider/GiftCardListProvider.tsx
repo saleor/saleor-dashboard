@@ -109,12 +109,12 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     [params, paginationState],
   );
   const handleGiftCardListError = (error: ApolloError) => {
-    const { message } = error?.graphQLErrors[0];
+    const graphqlErrors = error?.graphQLErrors[0];
 
-    if (!!message) {
+    if (graphqlErrors?.message) {
       notify({
         status: "error",
-        text: message,
+        text: graphqlErrors.message,
       });
     }
   };

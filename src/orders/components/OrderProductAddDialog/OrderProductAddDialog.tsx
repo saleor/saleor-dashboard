@@ -223,7 +223,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                 ),
                 () => (
                   <Typography className={classes.noContentText}>
-                    {!!query
+                    {query
                       ? intl.formatMessage(messages.noProductsInQuery)
                       : intl.formatMessage(messages.noProductsInChannel)}
                   </Typography>

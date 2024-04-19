@@ -1,6 +1,6 @@
 import { SEPARATOR_CHARACTERS } from "./consts";
 
-const getNumberFormatting = (currency: string = "USD") => {
+const getNumberFormatting = (currency = "USD") => {
   try {
     return new Intl.NumberFormat("en-GB", {
       style: "currency",

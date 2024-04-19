@@ -19,7 +19,7 @@ const Accordion: React.FC<AccordionProps> = ({
   dataTestId = "expand-icon",
 }) => {
   const [openedAccordionId, setOpendAccordionId] = useState<undefined | string>(
-    !!initialExpand ? AccordionItemId : undefined,
+    initialExpand ? AccordionItemId : undefined,
   );
 
   return (

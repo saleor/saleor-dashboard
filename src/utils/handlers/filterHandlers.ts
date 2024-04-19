@@ -29,7 +29,7 @@ function createFilterHandlers<TFilterKeys extends string, TFilters extends {}>(o
     return params.activeTab;
   };
   const changeFilters = (filters: IFilter<TFilterKeys>) => {
-    if (!!cleanupFn) {
+    if (cleanupFn) {
       cleanupFn();
     }
     const filtersQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
@@ -44,7 +44,7 @@ function createFilterHandlers<TFilterKeys extends string, TFilters extends {}>(o
     );
   };
   const resetFilters = () => {
-    if (!!cleanupFn) {
+    if (cleanupFn) {
       cleanupFn();
     }
 
@@ -56,7 +56,7 @@ function createFilterHandlers<TFilterKeys extends string, TFilters extends {}>(o
     );
   };
   const handleSearchChange = (query: string) => {
-    if (!!cleanupFn) {
+    if (cleanupFn) {
       cleanupFn();
     }
     const trimmedQuery = query?.trim() ?? "";

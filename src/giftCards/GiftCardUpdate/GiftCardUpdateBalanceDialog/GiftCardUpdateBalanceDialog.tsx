@@ -38,7 +38,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
   const [updateGiftCardBalance, updateGiftCardBalanceOpts] = useGiftCardUpdateMutation({
     onCompleted: data => {
       const errors = data?.giftCardUpdate?.errors;
-      const notifierData: IMessage = !!errors?.length
+      const notifierData: IMessage = errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(commonErrorMessages.unknownError),

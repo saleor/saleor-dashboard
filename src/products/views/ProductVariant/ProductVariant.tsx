@@ -191,10 +191,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
     return [
       ...mergeFileUploadErrors(uploadFilesResult),
       ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
-      ...result.data?.productVariantStocksCreate.errors,
-      ...result.data?.productVariantStocksDelete.errors,
-      ...result.data?.productVariantStocksUpdate.errors,
-      ...result.data?.productVariantUpdate.errors,
+      ...(result.data?.productVariantStocksCreate.errors ?? []),
+      ...(result.data?.productVariantStocksDelete.errors ?? []),
+      ...(result.data?.productVariantStocksUpdate.errors ?? []),
+      ...(result.data?.productVariantUpdate.errors ?? []),
       ...assignMediaErrors,
       ...channelErrors,
     ];

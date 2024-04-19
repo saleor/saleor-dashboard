@@ -76,7 +76,7 @@ export function createGetSortQueryVariables<
   return (params: TParams) => {
     const field = getSortQueryField(params.sort);
 
-    if (!!field) {
+    if (field) {
       return {
         direction: getOrderDirection(params.asc),
         field,

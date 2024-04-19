@@ -104,7 +104,7 @@ class ReturnFormDataParser {
       return false;
     }
 
-    if (!!this.getAmountToRefund()) {
+    if (this.getAmountToRefund()) {
       return true;
     }
 

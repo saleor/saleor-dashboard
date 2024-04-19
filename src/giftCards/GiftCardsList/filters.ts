@@ -361,7 +361,7 @@ export function getFilterVariables({
 
   return {
     code: query,
-    isActive: !!status ? status === "enabled" : undefined,
+    isActive: status ? status === "enabled" : undefined,
     tags: tag,
     usedBy,
     products: product,

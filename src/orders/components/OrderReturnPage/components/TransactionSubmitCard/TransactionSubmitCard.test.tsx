@@ -56,7 +56,7 @@ const transactionSubmitCardProps = {
   customRefundValue: undefined,
   disabled: false,
   submitStatus: "default" as const,
-  onAmountChange: () => {},
+  onAmountChange: () => undefined,
   isAmountDirty: false,
 };
 

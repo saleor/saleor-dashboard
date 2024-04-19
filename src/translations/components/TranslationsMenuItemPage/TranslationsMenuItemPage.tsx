@@ -78,7 +78,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
               }),
               name: TranslationInputFieldName.name,
               translation: data?.translation?.name || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.menuItem.name,
             },
           ]}

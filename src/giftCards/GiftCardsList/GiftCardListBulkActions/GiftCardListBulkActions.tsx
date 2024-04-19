@@ -31,7 +31,7 @@ export const GiftCardListBulkActions: React.FC = () => {
     .every(({ isActive }) => !isActive);
   const [activateGiftCards, activateGiftCardsOpts] = useGiftCardBulkActivateMutation({
     onCompleted: data => {
-      const notifierData: IMessage = !!data?.giftCardBulkActivate?.errors?.length
+      const notifierData: IMessage = data?.giftCardBulkActivate?.errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(messages.errorActivateAlertText, {
@@ -55,7 +55,7 @@ export const GiftCardListBulkActions: React.FC = () => {
   });
   const [deactivateGiftCards, deactivateGiftCardsOpts] = useGiftCardBulkDeactivateMutation({
     onCompleted: data => {
-      const notifierData: IMessage = !!data?.giftCardBulkDeactivate?.errors?.length
+      const notifierData: IMessage = data?.giftCardBulkDeactivate?.errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(messages.errorDeactivateAlertText, {

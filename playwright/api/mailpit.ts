@@ -73,7 +73,7 @@ export class MailpitService {
   }
 
   async checkDoesUserReceivedExportedData(userEmail: string, mailSubject: string) {
-    let confirmationMessageReceived: boolean = false;
+    let confirmationMessageReceived = false;
     await expect
       .poll(
         async () => {

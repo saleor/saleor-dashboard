@@ -135,7 +135,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) =>
       {selectedConfig && (
         <>
           <ActionDialog
-            confirmButtonState={!!params.action ? pluginUpdateOpts.status : "default"}
+            confirmButtonState={params.action ? pluginUpdateOpts.status : "default"}
             onClose={closeModal}
             open={params.action === "clear" && !!params.id}
             title={intl.formatMessage({
@@ -153,7 +153,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) =>
             </DialogContentText>
           </ActionDialog>
           <PluginSecretFieldDialog
-            confirmButtonState={!!params.action ? pluginUpdateOpts.status : "default"}
+            confirmButtonState={params.action ? pluginUpdateOpts.status : "default"}
             field={selectedConfig?.configuration.find(field => field.name === params.id)}
             onClose={closeModal}
             onConfirm={formData => handleFieldUpdate(formData.value)}

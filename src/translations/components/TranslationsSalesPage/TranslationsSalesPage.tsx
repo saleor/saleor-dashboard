@@ -78,7 +78,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
               }),
               name: fieldNames.name,
               translation: data?.translation?.name || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.sale?.name,
             },
           ]}

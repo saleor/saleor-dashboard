@@ -41,7 +41,7 @@ const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsPro
           name="quantityLimitPerCustomer"
           label={intl.formatMessage(messages.checkoutLineLimit)}
           helperText={intl.formatMessage(messages.checkoutLimitsDescription)}
-          value={!!data.quantityLimitPerCustomer ? String(data.quantityLimitPerCustomer) : ""}
+          value={data.quantityLimitPerCustomer ? String(data.quantityLimitPerCustomer) : ""}
           onChange={onChange}
           min={1}
           autoComplete="off"

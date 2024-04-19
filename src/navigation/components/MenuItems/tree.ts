@@ -24,7 +24,7 @@ export function getDiff(originalTree: MenuTreeItem[], newTree: MenuTreeItem[]): 
       const addedNode = patch.find(operation => operation.type === "add");
       const removedNode = patch.find(operation => operation.type === "remove");
 
-      if (!!addedNode) {
+      if (addedNode) {
         const changedParent = originalNode.length !== newNode.length;
         const sortOrder = removedNode ? addedNode.newPos - removedNode.oldPos : addedNode.newPos;
 

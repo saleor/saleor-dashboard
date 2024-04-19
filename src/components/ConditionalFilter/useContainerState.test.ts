@@ -11,10 +11,10 @@ describe("ConditionalFilter / useContainerState", () => {
   const valueProvider: FilterValueProvider = {
     loading: false,
     value: [],
-    persist: () => {},
+    persist: () => undefined,
     isPersisted: () => true,
     getTokenByName: () => undefined,
-    clear: () => {},
+    clear: () => undefined,
     count: 0,
   };
 

@@ -219,7 +219,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                         <Box display="flex" flexDirection="column" justifyContent="center">
                           <Text>{getUserName(member) || <Skeleton />}</Text>
                           <Text size={2} color="default2">
-                            {!!member ? (
+                            {member ? (
                               member.isActive ? (
                                 intl.formatMessage(messages.staffActive)
                               ) : (

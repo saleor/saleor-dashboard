@@ -56,7 +56,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
       definedValue => definedValue.reference === attributeValue,
     );
     // If value has been previously assigned, use it's data
-    if (!!definedAttributeValue) {
+    if (definedAttributeValue) {
       return {
         label: definedAttributeValue.name,
         value: definedAttributeValue.reference,
@@ -67,7 +67,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
       reference => reference.value === attributeValue,
     );
     // If value has not been yet assigned, use data of reference
-    if (!!definedAttributeReference) {
+    if (definedAttributeReference) {
       return definedAttributeReference;
     }
 
@@ -118,7 +118,7 @@ export function getMultiDisplayValue(
     const definedAttributeValue =
       attributeValues.find(definedValue => definedValue.slug === attributeValue) ||
       attribute.data.values.find(definedValue => definedValue.slug === attributeValue);
-    if (!!definedAttributeValue) {
+    if (definedAttributeValue) {
       return {
         label: definedAttributeValue.name,
         value: definedAttributeValue.slug,

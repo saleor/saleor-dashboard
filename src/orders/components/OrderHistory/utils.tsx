@@ -69,7 +69,7 @@ export const isTimelineEventOfDiscountType = (eventType: OrderEventsEnum) =>
   isTimelineEventOfType("discount", eventType);
 
 const selectEmployeeName = ({ firstName, lastName, email }: OrderEventFragment["user"]) => {
-  if (!!firstName) {
+  if (firstName) {
     return getFullName({ firstName, lastName }).trim();
   }
 

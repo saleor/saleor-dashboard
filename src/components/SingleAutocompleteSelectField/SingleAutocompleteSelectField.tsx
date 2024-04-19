@@ -131,7 +131,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
             );
             const isValueInValues = !!choiceFromInputValue;
             const isValueInLabels = !!choices.find(choice => choice.label === inputValue);
-            const ensureProperValues = (alwaysCheck: boolean = false) => {
+            const ensureProperValues = (alwaysCheck = false) => {
               if ((allowCustomValues || isValueInLabels) && !alwaysCheck) {
                 return;
               }

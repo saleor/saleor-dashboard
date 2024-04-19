@@ -23,7 +23,7 @@ const useGiftCardActivateToggle = ({
     onCompleted: data => {
       const errors = data?.giftCardActivate?.errors;
 
-      if (!!errors?.length) {
+      if (errors?.length) {
         notify({
           status: "error",
           text: intl.formatMessage(commonErrorMessages.unknownError),
@@ -37,7 +37,7 @@ const useGiftCardActivateToggle = ({
         text: intl.formatMessage(messages.successfullyEnabledTitle),
       });
 
-      if (!!onActivateActionComplete) {
+      if (onActivateActionComplete) {
         onActivateActionComplete();
       }
     },
@@ -47,7 +47,7 @@ const useGiftCardActivateToggle = ({
     onCompleted: data => {
       const errors = data?.giftCardDeactivate?.errors;
 
-      if (!!errors?.length) {
+      if (errors?.length) {
         notify({
           status: "error",
           text: intl.formatMessage(commonErrorMessages.unknownError),
@@ -60,7 +60,7 @@ const useGiftCardActivateToggle = ({
         text: intl.formatMessage(messages.successfullyDisabledTitle),
       });
 
-      if (!!onDeactivateActionComplete) {
+      if (onDeactivateActionComplete) {
         onDeactivateActionComplete();
       }
     },

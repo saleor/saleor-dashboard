@@ -180,7 +180,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                         inputProps={{
                           className: classes.quantityInnerInput,
                           "data-test-id": "quantityInput" + line?.id,
-                          max: (line?.quantity).toString(),
+                          max: (line?.quantity ?? 0).toString(),
                           min: 0,
                           style: { textAlign: "right" },
                         }}

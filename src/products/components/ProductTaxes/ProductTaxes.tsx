@@ -33,7 +33,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
               label: choice.name,
               value: choice.id,
             }))}
-            fetchOptions={() => {}}
+            fetchOptions={() => undefined}
             value={
               value
                 ? {

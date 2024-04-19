@@ -17,7 +17,7 @@ import {
 
 export const saleList: SaleFragment[] = [
   {
-    __typename: "Sale" as "Sale",
+    __typename: "Sale" as const,
     metadata: [],
     privateMetadata: [],
     channelListings: [
@@ -41,7 +41,7 @@ export const saleList: SaleFragment[] = [
     type: "PERCENTAGE" as SaleType,
   },
   {
-    __typename: "Sale" as "Sale",
+    __typename: "Sale" as const,
     metadata: [],
     privateMetadata: [],
     channelListings: [
@@ -65,7 +65,7 @@ export const saleList: SaleFragment[] = [
     type: "FIXED" as SaleType,
   },
   {
-    __typename: "Sale" as "Sale",
+    __typename: "Sale" as const,
     metadata: [],
     privateMetadata: [],
     channelListings: [
@@ -89,7 +89,7 @@ export const saleList: SaleFragment[] = [
     type: "PERCENTAGE" as SaleType,
   },
   {
-    __typename: "Sale" as "Sale",
+    __typename: "Sale" as const,
     metadata: [],
     privateMetadata: [],
     channelListings: [
@@ -113,7 +113,7 @@ export const saleList: SaleFragment[] = [
     type: "PERCENTAGE" as SaleType,
   },
   {
-    __typename: "Sale" as "Sale",
+    __typename: "Sale" as const,
     metadata: [],
     privateMetadata: [],
     channelListings: [
@@ -140,7 +140,7 @@ export const saleList: SaleFragment[] = [
 
 export const voucherList: VoucherFragment[] = [
   {
-    __typename: "Voucher" as "Voucher",
+    __typename: "Voucher" as const,
     name: "Free shipping",
     metadata: [],
     privateMetadata: [],
@@ -179,7 +179,7 @@ export const voucherList: VoucherFragment[] = [
     usageLimit: null,
   },
   {
-    __typename: "Voucher" as "Voucher",
+    __typename: "Voucher" as const,
     name: "Free 2019",
     metadata: [],
     privateMetadata: [],
