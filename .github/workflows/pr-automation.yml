@@ -64,8 +64,8 @@ jobs:
           for i in $(seq 1 "$CONCURRENCY"); do        # Loop through the numbers from 1 to $CONCURRENCY.
             shard_matrix+=("\"$i/$CONCURRENCY\"")     # For each number i, append a string in the format "${i}/${CONCURRENCY}" to the shard_matrix array.
           done
-          shard_matrix=$(IFS=,; echo "[${shard_matrix[*]}]") # Join the elements of the shard_matrix array with commas and wrap the result in square brackets to create a valid JSON array string.
-          echo "SHARD_MATRIX=$shard_matrix" >> "$GITHUB_OUTPUT"
+          shard_matrix=( $(IFS=,; echo "[${shard_matrix[*]}]") ) # Join the elements of the shard_matrix array with commas and wrap the result in square brackets to create a valid JSON array string.
+          echo "SHARD_MATRIX=${shard_matrix[0]}" >> "$GITHUB_OUTPUT"
 
   deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
