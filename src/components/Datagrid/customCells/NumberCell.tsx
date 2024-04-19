@@ -21,9 +21,6 @@ export interface NumberCellProps {
 
 export type NumberCell = CustomCell<NumberCellProps>;
 
-const onlyDigitsRegExp = /^\d+$/;
-const flaotingPointDigits = /^[0-9]+[.,]?[0-9]+$/;
-
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
   onChange,
@@ -82,10 +79,7 @@ export const numberCellRenderer = (
     }),
   }),
   onPaste: (value, data) => {
-    const testRegExp = data.options?.hasFloatingPoint
-      ? flaotingPointDigits
-      : onlyDigitsRegExp;
-    if (!testRegExp.test(value)) {
+    if (isNaN(parseFloat(value))) {
       return undefined;
     }
 
