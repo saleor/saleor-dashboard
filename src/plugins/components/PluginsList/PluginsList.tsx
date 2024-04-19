@@ -113,5 +113,6 @@ const PluginList: React.FC<PluginListProps> = props => {
     </ResponsiveTable>
   );
 };
+
 PluginList.displayName = "PluginList";
 export default PluginList;

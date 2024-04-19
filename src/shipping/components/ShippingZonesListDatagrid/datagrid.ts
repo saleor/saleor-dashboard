@@ -54,10 +54,13 @@ export const createGetCellContent =
       case "priceRange": {
         const from = rowData?.priceRange?.start;
         const to = rowData?.priceRange?.stop;
+
         if (!from) {
           return readonlyTextCell("");
         }
+
         const isRange = !!to;
+
         // TODO: update with moneyCell when it's ready to handle ranges
         return isRange
           ? readonlyTextCell(getMoneyRange(locale, intl, from, to))

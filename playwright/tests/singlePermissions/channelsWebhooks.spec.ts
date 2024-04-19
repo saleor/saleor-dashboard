@@ -6,6 +6,7 @@ import { WebhooksEventsPage } from "@pages/webhooksEventsPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/channel.json" });
+
 let channelPage: ChannelPage;
 let mainMenuPage: MainMenuPage;
 let configurationPage: ConfigurationPage;

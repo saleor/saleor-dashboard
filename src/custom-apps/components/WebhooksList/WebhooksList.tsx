@@ -117,5 +117,6 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
     </Card>
   );
 };
+
 WebhooksList.displayName = "WebhooksList";
 export default WebhooksList;

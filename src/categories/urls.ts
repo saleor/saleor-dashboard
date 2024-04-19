@@ -44,6 +44,7 @@ export const categoryAddPath = (parentId?: string) => {
   if (parentId) {
     return urlJoin(categoryPath(parentId), "add");
   }
+
   return urlJoin(categorySectionUrl, "add");
 };
 export const categoryAddUrl = (parentId?: string) =>

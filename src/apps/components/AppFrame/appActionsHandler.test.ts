@@ -8,6 +8,7 @@ import { IntlShape } from "react-intl";
 
 jest.mock("@dashboard/config", () => {
   const actualModule = jest.requireActual("@dashboard/config");
+
   return {
     __esModule: true,
     ...actualModule,
@@ -17,6 +18,7 @@ jest.mock("@dashboard/apps/components/ExternalAppContext/ExternalAppContext", ()
   const actualModule = jest.requireActual(
     "@dashboard/apps/components/ExternalAppContext/ExternalAppContext",
   );
+
   return {
     __esModule: true,
     ...actualModule,
@@ -45,6 +47,7 @@ jest.spyOn(ReactIntl, "useIntl").mockImplementation(
 );
 
 const mockNavigate = jest.fn();
+
 jest.mock("@dashboard/hooks/useNavigator", () => () => mockNavigate);
 describe("AppActionsHandler", function () {
   const { location } = window;
@@ -98,6 +101,7 @@ describe("AppActionsHandler", function () {
   describe("useUpdateRoutingAction", () => {
     it("Updates dashboard url properly", () => {
       const mockHistoryPushState = jest.fn();
+
       jest.spyOn(window.history, "pushState").mockImplementation(mockHistoryPushState);
 
       const {
@@ -204,6 +208,7 @@ describe("AppActionsHandler", function () {
       });
       it("Update route within the same app", () => {
         const mockHistoryPushState = jest.fn();
+
         jest.spyOn(window.history, "pushState").mockImplementation(mockHistoryPushState);
         window.location.pathname = "/apps/XYZ/app/foo";
         hookRenderResult.result.current.handle({

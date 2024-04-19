@@ -20,6 +20,7 @@ export const OrderSettings: React.FC = () => {
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
+
         return;
       }
 

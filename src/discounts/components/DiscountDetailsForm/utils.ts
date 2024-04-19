@@ -12,6 +12,7 @@ export const getCurrentConditionsValuesLabels = (rule: Rule[]) => {
         if (value.value !== value.label) {
           acc[value.value] = value.label;
         }
+
         return acc;
       },
       {} as Record<string, string>,

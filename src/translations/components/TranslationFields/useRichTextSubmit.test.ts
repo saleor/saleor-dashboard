@@ -9,7 +9,9 @@ describe("useRichTextSubmit", () => {
     // Given
     const textEditorValue = "text editor value";
     const getValue = jest.fn(() => textEditorValue);
+
     (useRichText as jest.Mock).mockImplementation(() => ({ getValue }));
+
     const submitFn = jest.fn();
     const { result } = renderHook(() => useRichTextSubmit("initial", submitFn));
 

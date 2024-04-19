@@ -136,5 +136,6 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
     </DetailPageLayout>
   );
 };
+
 TranslationsCollectionsPage.displayName = "TranslationsCollectionsPage";
 export default TranslationsCollectionsPage;

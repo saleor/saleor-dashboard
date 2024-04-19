@@ -46,6 +46,7 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
   ] = useTaxCountryConfigurationUpdateMutation({
     onCompleted: data => {
       const errors = data?.taxCountryConfigurationUpdate?.errors;
+
       if (errors.length === 0) {
         notify({
           status: "success",
@@ -57,6 +58,7 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
   const [taxCountryConfigurationDeleteMutation] = useTaxCountryConfigurationDeleteMutation({
     onCompleted: data => {
       const errors = data?.taxCountryConfigurationDelete?.errors;
+
       if (errors.length === 0) {
         notify({
           status: "success",
@@ -91,14 +93,18 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
   const handleDeleteConfiguration = async (countryCode: CountryCode) => {
     if (newCountry?.country.code === countryCode) {
       setNewCountry(undefined);
+
       return;
     }
+
     const res = await taxCountryConfigurationDeleteMutation({
       variables: {
         countryCode,
       },
     });
+
     refetch();
+
     return res;
   };
 
@@ -123,8 +129,10 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
               updateTaxClassRates: data,
             },
           });
+
           refetch();
           setNewCountry(undefined);
+
           return res;
         }}
         onDeleteConfiguration={handleDeleteConfiguration}
@@ -137,11 +145,13 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
           countries={excludeExistingCountries(shop?.countries, allCountryTaxes)}
           onConfirm={data => {
             closeDialog();
+
             const taxClassCountryRates = taxClasses.map(taxClass => ({
               __typename: "TaxClassCountryRate" as const,
               rate: undefined,
               taxClass,
             }));
+
             taxClassCountryRates.unshift({
               rate: undefined,
               taxClass: null,

@@ -135,4 +135,5 @@ const DiscountDates = <ErrorCode,>({
     </DashboardCard>
   );
 };
+
 export default DiscountDates;

@@ -137,6 +137,7 @@ const getReturnTotalAmount = ({
 
   if (refundShipmentCosts) {
     const totalValue = selectedProductsValue?.amount + getShipmentCost(order)?.amount;
+
     return totalValue || 0;
   }
 

@@ -88,5 +88,6 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     </Card>
   );
 };
+
 OrderDraftDetails.displayName = "OrderDraftDetails";
 export default OrderDraftDetails;

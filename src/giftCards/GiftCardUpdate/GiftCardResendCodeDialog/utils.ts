@@ -24,6 +24,7 @@ export function useDialogFormReset<TError extends UserError, TKey extends string
   }, [open]);
   useEffect(() => {
     const errors = getFormErrors(keys, apiErrors);
+
     setFormErrors(errors);
   }, [apiErrors]);
 

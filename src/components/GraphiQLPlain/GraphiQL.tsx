@@ -225,6 +225,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       ) {
         return props.defaultEditorToolsVisibility;
       }
+
       return !editorContext.initialVariables &&
         editorContext.initialHeaders &&
         isHeadersEditorEnabled
@@ -270,6 +271,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
             const isVisible = plugin === pluginContext.visiblePlugin;
             const label = `${isVisible ? "Hide" : "Show"} ${plugin.title}`;
             const Icon = plugin.icon;
+
             return (
               <Tooltip key={plugin.title} label={label}>
                 <UnStyledButton
@@ -345,6 +347,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                             if (editorContext.activeTabIndex === index) {
                               executionContext.stop();
                             }
+
                             editorContext.closeTab(index);
                           }}
                         />
@@ -427,6 +430,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                             if (editorToolsResize.hiddenElement === "second") {
                               editorToolsResize.setHiddenElement(null);
                             }
+
                             setActiveSecondaryEditor("variables");
                           }}
                         >
@@ -445,6 +449,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                               if (editorToolsResize.hiddenElement === "second") {
                                 editorToolsResize.setHiddenElement(null);
                               }
+
                               setActiveSecondaryEditor("headers");
                             }}
                           >

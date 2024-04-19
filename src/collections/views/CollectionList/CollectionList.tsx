@@ -47,6 +47,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(ListViews.COLLECTION_LIST);
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
+
   const { channel } = useAppChannel(false);
   const {
     clearRowSelection,

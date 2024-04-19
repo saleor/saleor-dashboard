@@ -87,5 +87,6 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
     </>
   );
 };
+
 ExtendedPageHeader.displayName = "ExtendedPageHeader";
 export default ExtendedPageHeader;

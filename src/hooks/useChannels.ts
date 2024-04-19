@@ -35,6 +35,7 @@ function useChannels<T extends Channel, A>(
     const sortedChannelListElements = channelListElements.sort((channel, nextChannel) =>
       channel.name.localeCompare(nextChannel.name),
     );
+
     setCurrentChannels(sortedChannelListElements);
     // hack so channels also update exit form dalog provider
     // despite not setting page's form data "changed" prop

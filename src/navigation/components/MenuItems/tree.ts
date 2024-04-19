@@ -62,6 +62,7 @@ export function getDiff(originalTree: MenuTreeItem[], newTree: MenuTreeItem[]): 
         };
       }
     }
+
     return undefined;
   });
 

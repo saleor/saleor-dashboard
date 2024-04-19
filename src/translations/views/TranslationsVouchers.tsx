@@ -94,5 +94,6 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
     />
   );
 };
+
 TranslationsVouchers.displayName = "TranslationsVouchers";
 export default TranslationsVouchers;

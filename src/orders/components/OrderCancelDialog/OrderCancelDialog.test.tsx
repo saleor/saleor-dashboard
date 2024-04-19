@@ -52,6 +52,7 @@ describe("OrderCancelDialog", () => {
 
     // Assert
     const errorMessages = screen.getAllByTestId("dialog-error");
+
     expect(errorMessages).toHaveLength(errors.length);
   });
   it("does not display error messages when none are provided", () => {
@@ -60,6 +61,7 @@ describe("OrderCancelDialog", () => {
 
     // Assert
     const errorMessages = screen.queryAllByTestId("dialog-error");
+
     expect(errorMessages).toHaveLength(0);
   });
 });

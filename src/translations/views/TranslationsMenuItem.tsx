@@ -91,5 +91,6 @@ const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
     />
   );
 };
+
 TranslationsMenuItem.displayName = "TranslationsMenuItem";
 export default TranslationsMenuItem;

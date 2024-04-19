@@ -135,5 +135,6 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
     </ListPageLayout>
   );
 };
+
 SaleListPage.displayName = "SaleListPage";
 export default SaleListPage;

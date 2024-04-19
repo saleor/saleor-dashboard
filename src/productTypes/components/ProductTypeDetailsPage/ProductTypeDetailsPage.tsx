@@ -236,5 +236,6 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
     </Form>
   );
 };
+
 ProductTypeDetailsPage.displayName = "ProductTypeDetailsPage";
 export default ProductTypeDetailsPage;

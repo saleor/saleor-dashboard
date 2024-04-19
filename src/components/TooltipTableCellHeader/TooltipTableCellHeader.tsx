@@ -13,6 +13,7 @@ export const TooltipTableCellHeader: React.FC<TooltipTableCellHeaderProps> = pro
     if (!tooltip) {
       return true;
     }
+
     return !disabled;
   };
 

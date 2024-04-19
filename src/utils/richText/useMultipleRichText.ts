@@ -40,12 +40,15 @@ export const useMultipleRichText = <TKey extends string>({
     (id: TKey) => {
       if (initial[id] === undefined) {
         setShouldMountById(id, true);
+
         return "";
       }
 
       try {
         const result = JSON.parse(initial[id]);
+
         setShouldMountById(id, true);
+
         return result;
       } catch (e) {
         return undefined;
@@ -64,6 +67,7 @@ export const useMultipleRichText = <TKey extends string>({
     const results = await Promise.all(
       availableRefs.map(async ([key, ref]) => {
         const value = await ref.save();
+
         return [key, value] as [string, OutputData];
       }),
     );

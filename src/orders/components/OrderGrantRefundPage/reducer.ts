@@ -99,6 +99,7 @@ export function grantRefundReducer(
 
       action.lines.forEach(line => {
         const currentLine = state.lines.get(line.id);
+
         newLines.set(line.id, {
           ...currentLine,
           isDirty: line.quantity !== currentLine.initialQuantity,

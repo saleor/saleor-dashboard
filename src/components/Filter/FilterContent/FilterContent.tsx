@@ -115,6 +115,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   };
   const handleFilterAttributeFocus = (filter?: FilterElement<string>) => {
     setOpenedFilter(filter);
+
     if (onFilterAttributeFocus) {
       onFilterAttributeFocus(filter?.id);
     }
@@ -131,20 +132,24 @@ const FilterContent: React.FC<FilterContentProps> = ({
     filter: FilterElement<string>,
   ) {
     const switchToActive = action.payload.update.active;
+
     if (switchToActive && filter.name !== openedFilter?.name) {
       handleFilterAttributeFocus(filter);
     } else if (!switchToActive && filter.name === openedFilter?.name) {
       handleFilterAttributeFocus(undefined);
     }
+
     if (!switchToActive) {
       action.payload.update.value = [];
     }
+
     onFilterPropertyChange(action);
   };
   const handleMultipleFieldPropertyChange = function <K extends string, T extends FieldType>(
     action: FilterReducerAction<K, T>,
   ) {
     const { update } = action.payload;
+
     onFilterPropertyChange({
       ...action,
       payload: { ...action.payload, update: { ...update, active: true } },
@@ -232,5 +237,6 @@ const FilterContent: React.FC<FilterContentProps> = ({
     </Paper>
   );
 };
+
 FilterContent.displayName = "FilterContent";
 export default FilterContent;

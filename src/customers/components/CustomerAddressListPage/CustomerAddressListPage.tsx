@@ -141,5 +141,6 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
     </ListPageLayout>
   );
 };
+
 CustomerAddressListPage.displayName = "CustomerAddressListPage";
 export default CustomerAddressListPage;

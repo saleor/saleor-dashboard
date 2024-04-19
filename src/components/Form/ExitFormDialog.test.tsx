@@ -27,6 +27,7 @@ describe("ExitFormDialog", () => {
     const user = userEvent.setup();
     // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
+
     await user.click(getByTestId("ignore-changes"));
     // Assert
     expect(props.onLeave).toHaveBeenCalled();
@@ -41,6 +42,7 @@ describe("ExitFormDialog", () => {
     const user = userEvent.setup();
     // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
+
     await user.click(getByTestId("keep-editing"));
     // Assert
     expect(props.onClose).toHaveBeenCalled();

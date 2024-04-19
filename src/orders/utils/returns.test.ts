@@ -52,6 +52,7 @@ describe("getItemPriceAndQuantity", () => {
     const id = "RnVsZmlsbG1lbnRMaW5lOjU1Ng==";
     // Act
     const result = getItemPriceAndQuantity({ orderLines, itemsQuantities, id });
+
     // Assert
     expect(result).toEqual({
       selectedQuantity: 1,

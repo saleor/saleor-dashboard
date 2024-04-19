@@ -54,6 +54,7 @@ function useFormset<TData = {}, TValue = any, TMetadata = any>(
   function setItemValue(id: string, value: TValue) {
     setData(data => {
       const itemIndex = data.findIndex(item => item.id === id);
+
       return [
         ...data.slice(0, itemIndex),
         {

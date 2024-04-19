@@ -32,6 +32,7 @@ const mapToTokens = (urlEntries: Array<ParsedQs | string>): TokenArray =>
   }) as TokenArray;
 const tokenizeUrl = (urlParams: string) => {
   const parsedUrl = Object.values(parse(urlParams)) as Array<ParsedQs | string>;
+
   return mapToTokens(parsedUrl);
 };
 const mapUrlTokensToFilterValues = (

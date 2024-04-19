@@ -85,6 +85,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
       ? {}
       : choices.reduce((prev, curr) => {
           prev[curr.value] = curr.label;
+
           return prev;
         }, {});
 

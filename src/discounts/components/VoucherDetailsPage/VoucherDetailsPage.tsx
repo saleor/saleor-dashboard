@@ -170,6 +170,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     listing => listing.channel.id === selectedChannelId,
   );
   let requirementsPickerInitValue;
+
   if (voucher?.minCheckoutItemsQuantity > 0) {
     requirementsPickerInitValue = RequirementsPicker.ITEM;
   } else if (channel?.minSpent?.amount > 0) {
@@ -405,6 +406,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     </Form>
   );
 };
+
 VoucherDetailsPage.displayName = "VoucherDetailsPage";
 
 export default VoucherDetailsPage;

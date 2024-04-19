@@ -87,6 +87,7 @@ export const useColumns = ({
       if (column.id === "empty") {
         return;
       }
+
       return setVisibleColumns(prevColumns =>
         prevColumns.map(prevColumn =>
           prevColumn.id === column.id ? { ...prevColumn, width: newSize } : prevColumn,
@@ -98,6 +99,7 @@ export const useColumns = ({
   const onToggle = (columnId: string) => {
     const isAdded = !selectedColumns.includes(columnId);
     const isDynamic = columnId.includes(":");
+
     if (!isDynamic) {
       if (isAdded) {
         onSave([...selectedColumns, columnId]);
@@ -106,6 +108,7 @@ export const useColumns = ({
         onSave(selectedColumns.filter(id => id !== columnId));
       }
     }
+
     if (isDynamic) {
       const [prefix, id] = columnId.split(":");
       const hiddenColumnPrefixes =

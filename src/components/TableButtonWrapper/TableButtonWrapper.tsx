@@ -26,6 +26,7 @@ export const TableButtonWrapper = <T extends HTMLElement>({ children }: TableBut
       // browser makes full page navigation directly, so we need to stop that
       e.preventDefault();
     }
+
     // Stop propagation of clicks to the <Link> component, to prevent navigation
     e.stopPropagation();
 

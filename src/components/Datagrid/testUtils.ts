@@ -11,6 +11,7 @@ export const prepareDatagridScroller = () => {
   // Datagrid reads clientWidth and clientHeight from the scroller element
   // and use those values to set canvas size
   const scroller = document.getElementsByClassName("dvn-scroller").item(0);
+
   if (scroller !== null) {
     jest.spyOn(scroller, "clientWidth", "get").mockImplementation(() => 1000);
     jest.spyOn(scroller, "clientHeight", "get").mockImplementation(() => 1000);

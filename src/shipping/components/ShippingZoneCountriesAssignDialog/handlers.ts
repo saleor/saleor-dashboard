@@ -6,6 +6,7 @@ export function createCountryChangeHandler(selectedCountries: string[], change: 
     const updatedCountries = checked
       ? [...selectedCountries, countryCode]
       : selectedCountries.filter(selectedCountry => selectedCountry !== countryCode);
+
     change({
       target: {
         name: "countries" as keyof FormData,

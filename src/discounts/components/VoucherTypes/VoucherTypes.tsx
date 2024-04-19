@@ -73,4 +73,5 @@ const VoucherTypes = ({ data, disabled, errors, onChange }: VoucherTypesProps) =
     </Card>
   );
 };
+
 export default VoucherTypes;

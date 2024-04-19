@@ -103,5 +103,6 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
     </DetailPageLayout>
   );
 };
+
 TranslationsShippingMethodPage.displayName = "TranslationsShippingMethodPage";
 export default TranslationsShippingMethodPage;

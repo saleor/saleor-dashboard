@@ -144,6 +144,7 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
     if (isReturn) {
       return disableSubmitButton;
     }
+
     return !selectedRefundAmount;
   };
   const disableRefundButton = shouldRefundButtonBeDisabled();

@@ -22,6 +22,7 @@ test("TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @st
     email: USERS.userToBeDeactivated.email,
     password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
   });
+
   await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors[0].code).toEqual(
     "INACTIVE",
   );
@@ -43,6 +44,7 @@ test("TC: SALEOR_38 Admin User should be able to activate other user @e2e @staff
     email: USERS.userToBeActivated.email,
     password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
   });
+
   await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors).toEqual([]);
   await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.token).not.toEqual(null);
 });

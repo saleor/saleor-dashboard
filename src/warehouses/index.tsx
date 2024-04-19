@@ -27,6 +27,7 @@ const WarehouseList: React.FC<RouteComponentProps> = ({ location }) => {
 const WarehouseDetails: React.FC<RouteComponentProps<{ id: string }>> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: WarehouseUrlQueryParams = qs;
+
   return <WarehouseDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 

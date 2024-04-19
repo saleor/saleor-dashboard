@@ -32,6 +32,7 @@ const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({ location }) =>
 interface PermissionGroupDetailsRouteProps {
   id: string;
 }
+
 const PermissionGroupDetails: React.FC<RouteComponentProps<PermissionGroupDetailsRouteProps>> = ({
   match,
 }) => {

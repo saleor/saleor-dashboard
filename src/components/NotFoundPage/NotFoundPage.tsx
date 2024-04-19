@@ -95,5 +95,6 @@ const NotFoundPage: React.FC<NotFoundPageProps> = props => {
     </div>
   );
 };
+
 NotFoundPage.displayName = "NotFoundPage";
 export default NotFoundPage;

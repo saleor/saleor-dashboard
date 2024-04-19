@@ -23,6 +23,7 @@ export type GeneralFlagList = TypedEntry extends never ? Record<string, FlagValu
 
 const toFlagValue = (p: GeneralFlagList, c: GeneralEntry) => {
   p[c.name] = new FlagValue(c.content.enabled, c.content.payload);
+
   return p;
 };
 

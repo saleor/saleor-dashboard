@@ -159,5 +159,6 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
     </CollectionCreateForm>
   );
 };
+
 CollectionCreatePage.displayName = "CollectionCreatePage";
 export default CollectionCreatePage;

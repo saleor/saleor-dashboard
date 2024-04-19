@@ -123,6 +123,7 @@ function useLocalPaginator(setPaginationState: (paginationState: PaginationState
       pageInfo: newPageInfo,
     };
   }
+
   return paginate;
 }
 export default useLocalPaginator;

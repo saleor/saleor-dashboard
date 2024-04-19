@@ -51,6 +51,7 @@ const SortableChip = SortableElement((props: SortableChipProps) => {
   const classes = useStyles(props);
   const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
     if (onClose) {
       onClose();
     }

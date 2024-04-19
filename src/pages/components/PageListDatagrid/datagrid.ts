@@ -69,6 +69,7 @@ export const createGetCellContent =
           status: rowData?.isPublished ? "success" : "error",
           currentTheme,
         });
+
         return tagsCell(
           [
             {

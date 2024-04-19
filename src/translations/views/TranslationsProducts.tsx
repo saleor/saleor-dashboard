@@ -117,5 +117,6 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
     />
   );
 };
+
 TranslationsProducts.displayName = "TranslationsProducts";
 export default TranslationsProducts;

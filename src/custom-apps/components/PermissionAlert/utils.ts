@@ -57,6 +57,7 @@ export const extractPermissions = (description?: string) => {
 
 export const getPermissions = (query: string, permissionMapping: PermissionMap) => {
   const cursors = extractCursorsFromQuery(query);
+
   return cursors.map(findPermission(permissionMapping)).flat().filter(uniq);
 };
 

@@ -81,6 +81,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                 data.channelListings,
                 (listing, index) => {
                   const error = formErrors.discountValue?.channels?.find(id => id === listing.id);
+
                   return (
                     <TableRowLink
                       key={listing?.id || `skeleton-${index}`}
@@ -181,4 +182,5 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
     </Card>
   );
 };
+
 export default VoucherValue;

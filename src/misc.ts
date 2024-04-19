@@ -50,9 +50,11 @@ export function renderCollection<T>(
   if (collection === undefined) {
     return renderItem(undefined, undefined, collection);
   }
+
   if (collection.length === 0) {
     return renderEmpty ? renderEmpty(collection) : null;
   }
+
   return collection.map(renderItem);
 }
 
@@ -60,6 +62,7 @@ export function decimal(value: string | number) {
   if (typeof value === "string") {
     return value === "" ? null : value;
   }
+
   return value;
 }
 
@@ -115,6 +118,7 @@ export const transformPaymentStatus = (
         status: StatusType.ERROR,
       };
   }
+
   return {
     localized: status,
     status: StatusType.ERROR,
@@ -167,6 +171,7 @@ export const transformOrderStatus = (
         status: StatusType.INFO,
       };
   }
+
   return {
     localized: status,
     status: StatusType.ERROR,
@@ -192,6 +197,7 @@ export function maybe<T>(exp: () => T, d: T): T;
 export function maybe(exp: any, d?: any) {
   try {
     const result = exp();
+
     return result === undefined ? d : result;
   } catch {
     return d;
@@ -220,9 +226,11 @@ export function getMutationState(
   if (loading) {
     return "loading";
   }
+
   if (called) {
     return errorList.map(hasErrors).reduce((acc, curr) => acc || curr, false) ? "error" : "success";
   }
+
   return "default";
 }
 
@@ -249,6 +257,7 @@ export const hasMutationErrors = (result: FetchResult): boolean => {
   if (!result?.data) {
     return false;
   }
+
   return Object.values(result.data).some(
     ({ errors }: SaleorMutationResult) => errors && errors.length > 0,
   );
@@ -264,6 +273,7 @@ export const getMutationErrors = <
   if (!result?.data) {
     return [] as TErrors;
   }
+
   return Object.values<TData>(result.data).reduce(
     (acc: TErrors[], mut) => [
       ...acc,
@@ -385,8 +395,10 @@ export function joinDateTime(date: string, time?: string) {
   if (!date) {
     return null;
   }
+
   const setTime = time || "00:00";
   const dateTime = moment(date + " " + setTime).format();
+
   return dateTime;
 }
 
@@ -397,8 +409,10 @@ export function splitDateTime(dateTime: string) {
       time: "",
     };
   }
+
   // Default html input format YYYY-MM-DD HH:mm
   const splitDateTime = moment(dateTime).format("YYYY-MM-DD HH:mm").split(" ");
+
   return {
     date: splitDateTime[0],
     time: splitDateTime[1],
@@ -408,9 +422,11 @@ export function splitDateTime(dateTime: string) {
 export function generateCode(charNum: number) {
   let result = "";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
   for (let i = 0; i < charNum; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
+
   return result;
 }
 
@@ -420,6 +436,7 @@ export function isInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
 
 export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   const match = Object.keys(haystack).find(key => key === needle);
+
   if (match) {
     return haystack[needle as keyof TEnum];
   }
@@ -444,6 +461,7 @@ export function parseBoolean(a: string | undefined, defaultValue: boolean): bool
   if (a === undefined) {
     return defaultValue;
   }
+
   return a === "true";
 }
 
@@ -566,6 +584,7 @@ const getStatusHue = (status: "error" | "warning" | "info" | "success" | "generi
   const blue = 236;
   const green = 145;
   const yellow = 71;
+
   switch (status) {
     case "error":
       return red;

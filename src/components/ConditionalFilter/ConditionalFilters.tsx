@@ -16,6 +16,7 @@ export const ConditionalFilters: FC<{ onClose: () => void }> = ({ onClose }) => 
     if (validator.isValid()) {
       valueProvider.persist(value);
       onClose();
+
       return;
     }
 

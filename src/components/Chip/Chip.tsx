@@ -45,5 +45,6 @@ const Chip: React.FC<ChipProps> = props => {
     </div>
   );
 };
+
 Chip.displayName = "Chip";
 export default Chip;

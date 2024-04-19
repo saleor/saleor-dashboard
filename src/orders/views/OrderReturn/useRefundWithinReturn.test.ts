@@ -8,6 +8,7 @@ describe("squashLines", () => {
       { id: "abc", quantity: 3 },
     ];
     const result = squashLines(items);
+
     expect(result).toEqual([
       { id: "abc", quantity: 4 },
       { id: "def", quantity: 2 },
@@ -16,6 +17,7 @@ describe("squashLines", () => {
   it("handles an empty array", () => {
     const items = [] as GrantRefundInputLine[];
     const result = squashLines(items);
+
     expect(result).toEqual([]);
   });
   it("does not modify items with unique IDs", () => {
@@ -24,6 +26,7 @@ describe("squashLines", () => {
       { id: "def", quantity: 2 },
     ];
     const result = squashLines(items);
+
     expect(result).toEqual(items);
   });
 });

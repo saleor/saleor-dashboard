@@ -161,5 +161,6 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
     </Card>
   );
 };
+
 DiscountProducts.displayName = "DiscountProducts";
 export default DiscountProducts;

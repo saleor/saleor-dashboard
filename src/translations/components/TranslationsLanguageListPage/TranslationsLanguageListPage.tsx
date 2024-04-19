@@ -26,5 +26,6 @@ const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> 
     </>
   );
 };
+
 TranslationsLanguageListPage.displayName = "TranslationsLanguageListPage";
 export default TranslationsLanguageListPage;

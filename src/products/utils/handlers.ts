@@ -74,6 +74,7 @@ export function createVariantChannelsChangeHandler(
       },
       ...channelListings.slice(channelIndex + 1),
     ];
+
     setData(updatedChannels);
     triggerChange();
   };
@@ -85,6 +86,7 @@ export function createProductTypeSelectHandler(
 ): FormChange {
   return (event: React.ChangeEvent<any>) => {
     const id = event.target.value;
+
     setProductType(id);
     triggerChange();
   };
@@ -135,11 +137,13 @@ export const createPreorderEndDateChangeHandler =
   ): FormChange =>
   event => {
     form.change(event);
+
     if (moment(event.target.value).isSameOrBefore(Date.now())) {
       form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
     } else {
       form.clearErrors("preorderEndDateTime");
     }
+
     triggerChange();
   };
 

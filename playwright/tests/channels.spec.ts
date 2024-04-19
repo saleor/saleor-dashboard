@@ -4,6 +4,7 @@ import { ConfigurationPage } from "@pages/configurationPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
+
 let configurationPage: ConfigurationPage;
 let channelPage: ChannelPage;
 
@@ -13,6 +14,7 @@ test.beforeEach(({ page }) => {
 });
 test("TC: SALEOR_97 Create basic channel @e2e @channels", async () => {
   const slugName = new Date().toISOString();
+
   await configurationPage.gotoConfigurationView();
   await configurationPage.openChannels();
   await channelPage.clickCreateChannelButton();

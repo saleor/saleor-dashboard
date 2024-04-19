@@ -53,6 +53,7 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({
           value={splitDateTime(filter.value[0]).date}
           onChange={event => {
             const value = getDateFilterValue(event.target.value, filter.value[0], isDateTime);
+
             handleChange(isMultiple ? [value, filter.value[1]] : [value]);
           }}
         />
@@ -69,6 +70,7 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({
             value={splitDateTime(filter.value[0]).time}
             onChange={event => {
               const value = getDateTimeFilterValue(filter.value[0], event.target.value);
+
               handleChange(isMultiple ? [value, filter.value[1]] : [value]);
             }}
           />

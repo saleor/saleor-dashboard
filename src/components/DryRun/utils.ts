@@ -40,6 +40,7 @@ export const getUnavailableObjects = (query: string) => {
       .split(/(?=[A-Z])/)
       .join("_")
       .toUpperCase();
+
     if (checkEventPresence(formattedEvent)) {
       acc.push(event);
     }

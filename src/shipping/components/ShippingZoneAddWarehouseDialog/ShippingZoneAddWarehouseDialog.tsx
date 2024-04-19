@@ -68,7 +68,9 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps("");
   const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
   const errors = useModalDialogErrors([...apiErrors, ...validationErrors], open);
+
   useModalDialogOpen(open, {});
+
   const intl = useIntl();
   const countryChoices = mapCountriesToChoices(countries);
 

@@ -10,5 +10,6 @@ const TranslationsLanguageList: React.FC = () => {
 
   return <TranslationsLanguageListPage languages={maybe(() => shop.languages)} />;
 };
+
 TranslationsLanguageList.displayName = "TranslationsLanguageList";
 export default TranslationsLanguageList;

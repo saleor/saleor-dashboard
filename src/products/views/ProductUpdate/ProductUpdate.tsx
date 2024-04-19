@@ -120,6 +120,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       const imageError = data.productMediaCreate.errors.find(
         error => error.field === ("image" as keyof ProductMediaCreateMutationVariables),
       );
+
       if (imageError) {
         notify({
           status: "error",

@@ -36,5 +36,6 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
     </ListPageLayout>
   );
 };
+
 MenuListPage.displayName = "MenuListPage";
 export default MenuListPage;

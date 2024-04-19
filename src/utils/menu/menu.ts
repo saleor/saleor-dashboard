@@ -22,6 +22,7 @@ export function validateMenuOptions<TMenuData = {}, TValue = string>(
     .map(menuItem => menuItem.value)
     .filter(isValue);
   const uniqueValues = Array.from(new Set(values));
+
   return uniqueValues.length === values.length;
 }
 
@@ -32,6 +33,7 @@ function _getMenuItemByPath<TMenuData = {}, TValue = string>(
   if (path.length === 0) {
     return menuItem;
   }
+
   return _getMenuItemByPath(menuItem.children[path[0]], path.slice(1));
 }
 
@@ -76,6 +78,7 @@ export function walkToMenuItem<TMenuData = {}, TValue = string>(
   path: number[],
 ): IMenu<TMenuData, TValue> {
   const walkByNode = menu[path[0]];
+
   return [walkByNode, ..._walkToMenuItem(walkByNode, path.slice(1))];
 }
 
@@ -125,6 +128,7 @@ function _toFlat<TMenuData = {}, TValue = string>(
     sort,
     value: menuItem.value,
   };
+
   return [
     flatMenuItem,
     ...menuItem.children

@@ -71,5 +71,6 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
     </Dialog>
   );
 };
+
 OrderInvoiceEmailSendDialog.displayName = "OrderInvoiceEmailSendDialog";
 export default OrderInvoiceEmailSendDialog;

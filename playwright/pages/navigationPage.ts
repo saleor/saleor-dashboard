@@ -51,6 +51,7 @@ export class NavigationPage extends BasePage {
 
   async selectNavigationMenu(name: string) {
     const item = await this.navigationMenu.filter({ hasText: name });
+
     await item.getByTestId("checkbox").click();
   }
 }

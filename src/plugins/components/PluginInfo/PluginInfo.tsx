@@ -88,5 +88,6 @@ const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name
     </Card>
   );
 };
+
 PluginInfo.displayName = "PluginInfo";
 export default PluginInfo;

@@ -61,7 +61,9 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
       if (!val) {
         return 0;
       }
+
       const parsedVal = parseInt(val, 10);
+
       return parsedVal > 255 ? 255 : parsedVal;
     };
 

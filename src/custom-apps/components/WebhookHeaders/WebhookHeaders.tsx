@@ -42,6 +42,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
 
   const add = () => {
     const items = [...headers];
+
     items.push({ name: "", value: "", error: false });
     onChange({
       target: {

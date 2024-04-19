@@ -26,6 +26,7 @@ const StaffList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface StaffDetailsRouteProps {
   id: string;
 }
+
 const StaffDetails: React.FC<RouteComponentProps<StaffDetailsRouteProps>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: StaffMemberDetailsUrlQueryParams = qs;

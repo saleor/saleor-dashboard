@@ -75,5 +75,6 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
     </Box>
   );
 };
+
 AppListCardActions.displayName = "AppListCardActions";
 export default AppListCardActions;

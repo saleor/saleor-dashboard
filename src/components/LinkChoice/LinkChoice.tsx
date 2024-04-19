@@ -49,6 +49,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({ className, choices, name, value
         } else {
           setOpen(true);
         }
+
         break;
     }
   };

@@ -49,6 +49,7 @@ export const ChannelCreateView = () => {
     useChannelReorderWarehousesMutation({
       onCompleted: data => {
         const errors = data.channelReorderWarehouses.errors;
+
         if (errors.length) {
           errors.forEach(error => handleError(error));
         }

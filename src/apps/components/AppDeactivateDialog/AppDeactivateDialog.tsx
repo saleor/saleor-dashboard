@@ -31,6 +31,7 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
     if (isNameMissing) {
       return intl.formatMessage(msgs.deactivateApp);
     }
+
     return intl.formatMessage(msgs.deactivateNamedApp, {
       name: <strong>{getStringOrPlaceholder(name)}</strong>,
     });
@@ -58,5 +59,6 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
     </ActionDialog>
   );
 };
+
 AppDeactivateDialog.displayName = "AppDeactivateDialog";
 export default AppDeactivateDialog;

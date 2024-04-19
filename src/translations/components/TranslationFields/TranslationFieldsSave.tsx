@@ -45,5 +45,6 @@ const TranslationFieldsSave: React.FC<TranslationFieldsSaveProps> = props => {
     </div>
   );
 };
+
 TranslationFieldsSave.displayName = "TranslationFieldsSave";
 export default TranslationFieldsSave;

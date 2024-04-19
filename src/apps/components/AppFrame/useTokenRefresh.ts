@@ -32,6 +32,7 @@ const useTokenRefresh = (token?: string, refetch?: () => void) => {
     if (refetch) {
       refetch();
     }
+
     createTimeout();
   };
   const createTimeout = () => {

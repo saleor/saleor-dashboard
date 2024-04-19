@@ -30,6 +30,7 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({ 
   const [webhookCreate, webhookCreateOpts] = useWebhookCreateMutation({
     onCompleted: data => {
       const webhook = data.webhookCreate?.webhook;
+
       if (webhook && data?.webhookCreate?.errors.length === 0) {
         notify({
           status: "success",

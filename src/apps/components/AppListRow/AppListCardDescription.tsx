@@ -35,5 +35,6 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({ app }) 
     </Text>
   </Box>
 );
+
 AppListCardDescription.displayName = "AppListCardDescription";
 export default AppListCardDescription;

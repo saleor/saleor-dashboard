@@ -218,6 +218,7 @@ export function createGetCellContent({
     }
 
     const value = change ?? rowData?.[columnId] ?? "";
+
     return readonlyTextCell(value || "");
   };
 }
@@ -225,12 +226,14 @@ export function createGetCellContent({
 function getDateCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
   return dateCell(rowData?.updatedAt);
 }
+
 function getProductTypeCellContent(
   theme: DefaultTheme,
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   const hue = stringToHue(rowData.productType?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
+
   return pillCell(rowData.productType?.name, color);
 }
 
@@ -244,6 +247,7 @@ function getCategoryCellContent(
 
   const hue = stringToHue(rowData.category?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
+
   return pillCell(rowData.category?.name, color);
 }
 
@@ -258,11 +262,13 @@ function getCollectionsCellContent(
   const tags = rowData.collections.map(collection => {
     const hue = stringToHue(collection.name);
     const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
+
     return {
       tag: collection.name,
       color: color.base,
     };
   });
+
   return tagsCell(
     tags,
     tags.map(tag => tag.tag),
@@ -316,6 +322,7 @@ function getNameCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   const name = change?.name ?? rowData?.name ?? "";
+
   return thumbnailCell(name, rowData?.thumbnail?.url ?? "", {
     cursor: "pointer",
   });
@@ -345,6 +352,7 @@ function getAttributeCellContent(
       if (productAttribute.values[0].date) {
         return readonlyTextCell(productAttribute.values[0].date);
       }
+
       if (productAttribute.values[0].dateTime) {
         return readonlyTextCell(productAttribute.values[0].dateTime);
       }

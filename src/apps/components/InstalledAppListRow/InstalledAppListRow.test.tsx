@@ -24,6 +24,7 @@ describe("Apps InstalledAppListRow", () => {
     // Arrange
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
+
     render(
       <Component
         data={{
@@ -36,6 +37,7 @@ describe("Apps InstalledAppListRow", () => {
         }}
       />,
     );
+
     const name = screen.queryByText(activeApp.name as string);
     // TODO: Uncomment this when manifests are added back in the UI
     // const manifestDomain = screen.queryByText(
@@ -68,6 +70,7 @@ describe("Apps InstalledAppListRow", () => {
         }}
       />,
     );
+
     const externalLabel = screen.queryByTestId("app-external-label");
 
     // Assert
@@ -95,6 +98,7 @@ describe("Apps InstalledAppListRow", () => {
         }}
       />,
     );
+
     const tunnelLabel = screen.queryByTestId("app-tunnel-label");
 
     // Assert

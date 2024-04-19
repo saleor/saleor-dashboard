@@ -31,6 +31,7 @@ const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface CustomerDetailsRouteParams {
   id: string;
 }
+
 const CustomerDetailsView: React.FC<RouteComponentProps<CustomerDetailsRouteParams>> = ({
   location,
   match,
@@ -44,6 +45,7 @@ const CustomerDetailsView: React.FC<RouteComponentProps<CustomerDetailsRoutePara
 interface CustomerAddressesRouteParams {
   id: string;
 }
+
 const CustomerAddressesView: React.FC<RouteComponentProps<CustomerAddressesRouteParams>> = ({
   match,
 }) => {

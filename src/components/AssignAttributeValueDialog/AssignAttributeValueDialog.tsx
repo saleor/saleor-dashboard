@@ -74,5 +74,6 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
       return <AssignVariantDialog products={filteredProducts} {...rest} />;
   }
 };
+
 AssignAttributeValueDialog.displayName = "AssignAttributeValueDialog";
 export default AssignAttributeValueDialog;

@@ -59,6 +59,7 @@ export const useRulesHandlers = ({
     let errors: Array<
       CommonError<PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment>
     > = [];
+
     updateLabels(rule);
 
     if (ruleEditIndex !== null) {
@@ -69,6 +70,7 @@ export const useRulesHandlers = ({
       }
     } else {
       errors = await onRuleCreateSubmit(rule);
+
       if (errors.length > 0) {
         setRulesErrors(errors);
       }
@@ -80,6 +82,7 @@ export const useRulesHandlers = ({
     }
 
     const ruleId = rules[ruleDeleteIndex].id;
+
     if (!ruleId) {
       return;
     }

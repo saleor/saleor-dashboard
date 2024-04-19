@@ -8,7 +8,9 @@ export const usePersistence = () => {
   const [updateAccount] = useUserAccountUpdateMutation();
   const toggleFlag = async (flagName: Name) => {
     const flagList = flagInfoToFlagList(flags);
+
     flagList[flagName].enabled = !flagList[flagName].enabled;
+
     const metadata = flagListToMetadata(flagList);
 
     await updateAccount({

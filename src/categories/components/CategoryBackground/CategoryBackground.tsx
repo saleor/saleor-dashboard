@@ -118,5 +118,6 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
     </Card>
   );
 };
+
 CategoryBackground.displayName = "CategoryBackground";
 export default CategoryBackground;

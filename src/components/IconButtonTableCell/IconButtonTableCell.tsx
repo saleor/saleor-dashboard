@@ -42,5 +42,6 @@ const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
     </TableCell>
   );
 };
+
 IconButtonTableCell.displayName = "IconButtonTableCell";
 export default IconButtonTableCell;

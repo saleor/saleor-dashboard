@@ -32,7 +32,9 @@ function createFilterHandlers<TFilterKeys extends string, TFilters extends {}>(o
     if (cleanupFn) {
       cleanupFn();
     }
+
     const filtersQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
+
     navigate(
       createUrl({
         ...params,
@@ -59,6 +61,7 @@ function createFilterHandlers<TFilterKeys extends string, TFilters extends {}>(o
     if (cleanupFn) {
       cleanupFn();
     }
+
     const trimmedQuery = query?.trim() ?? "";
 
     navigate(

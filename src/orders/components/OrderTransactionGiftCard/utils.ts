@@ -5,6 +5,7 @@ export const getUsedInGiftCardEvents = (giftCard: OrderGiftCardFragment, orderId
   if (!giftCard.events || !orderId) {
     return [];
   }
+
   return giftCard.events.filter(
     ({ orderId: eventOrderId, type }) =>
       type === GiftCardEventsEnum.USED_IN_ORDER && eventOrderId === orderId,

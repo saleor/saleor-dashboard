@@ -109,6 +109,7 @@ function getRewardProperties(rule: Rule, discountType: PromotionTypeEnum | null 
 
 function getOrderReward(rule: Rule) {
   const isGiftReward = rule.rewardType === RewardTypeEnum.GIFT;
+
   if (isGiftReward) {
     return {
       rewardValue: null,

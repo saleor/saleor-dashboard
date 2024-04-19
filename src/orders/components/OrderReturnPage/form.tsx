@@ -230,6 +230,7 @@ function useOrderReturnForm(
     waitingItemsQuantities.data.some(({ value }) => !!value) ||
     unfulfiledItemsQuantites.data.some(({ value }) => !!value);
   const isSaveDisabled = !hasAnyItemsSelected;
+
   setIsSubmitDisabled(isSaveDisabled);
 
   return {

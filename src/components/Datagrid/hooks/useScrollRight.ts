@@ -15,6 +15,7 @@ export const useScrollRight = () => {
     const handler = throttle(() => {
       const isScrolledToRight =
         scroller.scrollWidth - scroller.clientWidth - scroller.scrollLeft < 2;
+
       setScrolledToRight(isScrolledToRight);
     }, 100);
 

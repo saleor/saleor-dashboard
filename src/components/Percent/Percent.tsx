@@ -10,5 +10,6 @@ interface PercentProps {
 const Percent: React.FC<PercentProps> = ({ amount }) => (
   <LocaleConsumer>{({ locale }) => formatPercantage(amount, locale)}</LocaleConsumer>
 );
+
 Percent.displayName = "Percent";
 export default Percent;

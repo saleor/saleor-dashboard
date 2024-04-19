@@ -82,5 +82,6 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({ data, disabled, onChange 
     </Card>
   );
 };
+
 OrderSettings.displayName = "OrderSettings";
 export default OrderSettings;

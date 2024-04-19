@@ -86,6 +86,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
         status: transformOrderStatus(order.status, intl),
       }))
     : undefined;
+
   return (
     <ResponsiveTable>
       <TableHead>

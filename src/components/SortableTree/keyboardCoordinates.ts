@@ -57,6 +57,7 @@ export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
                 x: currentCoordinates.x - indentationWidth,
               };
             }
+
             break;
           case KeyboardCode.Right:
             if (depth < maxDepth) {
@@ -65,6 +66,7 @@ export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
                 x: currentCoordinates.x + indentationWidth,
               };
             }
+
             break;
         }
 
@@ -89,11 +91,13 @@ export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
             if (collisionRect.top < rect.top) {
               containers.push(container);
             }
+
             break;
           case KeyboardCode.Up:
             if (collisionRect.top > rect.top) {
               containers.push(container);
             }
+
             break;
         }
       });

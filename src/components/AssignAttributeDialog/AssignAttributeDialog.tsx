@@ -160,6 +160,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                   if (!attribute) {
                     return null;
                   }
+
                   const isChecked = !!selected.find(
                     selectedAttribute => selectedAttribute === attribute.id,
                   );
@@ -216,5 +217,6 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
     </Dialog>
   );
 };
+
 AssignAttributeDialog.displayName = "AssignAttributeDialog";
 export default AssignAttributeDialog;

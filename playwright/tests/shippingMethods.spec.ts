@@ -75,8 +75,10 @@ test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details
     SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id,
   );
   await expect(shippingMethodsPage.pageHeader).toBeVisible();
+
   const priceBasedRate =
     SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.priceBasedRateToBeDeleted.name;
+
   await expect(shippingMethodsPage.priceBasedRatesSection).toContainText(priceBasedRate);
   await shippingMethodsPage.clickDeletePriceBasedShippingMethod();
   await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
@@ -104,6 +106,7 @@ test("TC: SALEOR_36 Delete shipping zones in bulk @shipping-method @e2e", async 
   const shippingZone1 = SHIPPING_METHODS.shippingMethodToBeBulkDeleted1.name;
   const shippingZone2 = SHIPPING_METHODS.shippingMethodToBeBulkDeleted2.name;
   const shippingZone3 = SHIPPING_METHODS.shippingMethodToBeBulkDeleted3.name;
+
   await shippingMethodsPage.gotoListView();
   await shippingMethodsPage.checkListRowsBasedOnContainingText([
     shippingZone1,
@@ -127,6 +130,7 @@ test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () =>
     WAREHOUSES.warehouseAmericas.name,
     WAREHOUSES.warehouseEurope.name,
   ];
+
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodToBeUpdated.id,
   );
@@ -138,12 +142,16 @@ test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () =>
   );
   await shippingMethodsPage.saveShippingZone();
   await shippingMethodsPage.expectSuccessBanner();
+
   const updatedChannelsList = alreadyAssignedChannels.concat(channelsToBeAssigned);
+
   await shippingMethodsPage.rightSideDetailsPage.expectOptionsSelected(
     channelSection,
     updatedChannelsList,
   );
+
   const updatedWarehousesList = alreadyAssignedWarehouses.concat(warehousesToBeAssigned);
+
   await shippingMethodsPage.rightSideDetailsPage.expectOptionsSelected(
     warehouseSection,
     updatedWarehousesList,

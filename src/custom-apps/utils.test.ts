@@ -27,6 +27,7 @@ describe("Custom Apps filtering events", () => {
     const asyncEvents = filterSelectedAsyncEvents(selectedEvents);
     // Assert
     const expectedAsyncEvents: WebhookEventTypeAsyncEnum[] = [WebhookEventTypeAsyncEnum.ANY_EVENTS];
+
     expect(asyncEvents).toHaveLength(1);
     expect(asyncEvents).toEqual(expectedAsyncEvents);
   });

@@ -112,6 +112,7 @@ function useCollectionCreateForm(
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const isSaveDisabled = disabled;
+
   setIsSubmitDisabled(isSaveDisabled);
 
   return {

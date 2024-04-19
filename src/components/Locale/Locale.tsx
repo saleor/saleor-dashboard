@@ -105,8 +105,10 @@ const sepRegExp = new RegExp(dotSeparator, "g");
 function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
   if (messages) {
     const keyValueMessages: Record<string, string> = {};
+
     return Object.entries(messages).reduce((acc, [id, msg]) => {
       acc[id.replace(sepRegExp, ".")] = msg.string;
+
       return acc;
     }, keyValueMessages);
   }
@@ -134,6 +136,7 @@ const LocaleProvider: React.FC = ({ children }) => {
       if (locale !== Locale.EN) {
         // It seems like Webpack is unable to use aliases for lazy imports
         const mod = await import(`../../../locale/${locale}.json`);
+
         setMessages(mod.default);
       } else {
         setMessages(undefined);

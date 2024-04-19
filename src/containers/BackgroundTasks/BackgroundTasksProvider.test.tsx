@@ -50,6 +50,7 @@ describe.skip("Background task provider", () => {
       onCompleted,
       onError,
     });
+
     expect(taskId).toBe(1);
     expect(handle).toHaveBeenCalledTimes(0);
     expect(onCompleted).toHaveBeenCalledTimes(0);

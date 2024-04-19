@@ -92,5 +92,6 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsSalesPage.displayName = "TranslationsSalesPage";
 export default TranslationsSalesPage;

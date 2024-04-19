@@ -115,6 +115,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             {({ change, data }) => {
               const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                 change(event);
+
                 const value = event.target.value;
 
                 onCustomerEdit({
@@ -133,6 +134,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 setUserDisplayName,
                 userChoices,
               );
+
               return (
                 <SingleAutocompleteSelectField
                   data-test-id="select-customer"

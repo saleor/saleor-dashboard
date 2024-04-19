@@ -317,6 +317,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     </AttributePage>
   );
 };
+
 AttributeDetails.displayName = "AttributeDetails";
 
 export default AttributeDetails;

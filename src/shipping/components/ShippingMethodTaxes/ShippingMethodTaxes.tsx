@@ -59,5 +59,6 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
     </Card>
   );
 };
+
 ShippingMethodTaxes.displayName = "ShippingMethodTaxes";
 export default ShippingMethodTaxes;

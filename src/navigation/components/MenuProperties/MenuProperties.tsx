@@ -42,5 +42,6 @@ const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors,
     </Card>
   );
 };
+
 MenuProperties.displayName = "MenuProperties";
 export default MenuProperties;

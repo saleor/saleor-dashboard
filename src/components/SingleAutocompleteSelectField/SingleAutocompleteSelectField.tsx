@@ -108,6 +108,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
             if (changes.isOpen === false) {
               delete changes.inputValue;
             }
+
             return changes;
           }}
         >
@@ -138,6 +139,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
 
               if (isValueInValues && !isValueInLabels) {
                 reset({ inputValue: choiceFromInputValue.value });
+
                 return;
               }
 
@@ -151,9 +153,11 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
             );
             const handleBlur = () => {
               ensureProperValues(true);
+
               if (onBlur) {
                 onBlur();
               }
+
               closeMenu();
             };
             const handleFocus = () => {
@@ -169,6 +173,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
               if (disabled) {
                 return;
               }
+
               toggleMenu();
             };
             const TextFieldComponent = nakedInput ? InputBase : TextField;

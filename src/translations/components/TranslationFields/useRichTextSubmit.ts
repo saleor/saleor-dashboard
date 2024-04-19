@@ -13,6 +13,7 @@ export function useRichTextSubmit(initial: string, onSubmit: (data: OutputData) 
   const handleSubmit = React.useCallback(async () => {
     const result = onSubmit(await getValue());
     const errors = await result;
+
     if (errors?.length === 0) {
       setIsDirty(false);
 

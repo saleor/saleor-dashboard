@@ -186,5 +186,6 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
     </Form>
   );
 };
+
 CustomerCreatePage.displayName = "CustomerCreatePage";
 export default CustomerCreatePage;

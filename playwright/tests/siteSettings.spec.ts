@@ -11,6 +11,7 @@ test.beforeEach(({ page }) => {
 });
 test("TC: SALEOR_132 Should be able to update site settings", async () => {
   const companyName = faker.company.companyName();
+
   await siteSettingsPage.gotoSiteSettings();
   await siteSettingsPage.fillStockReservationForAuthUser("200");
   await siteSettingsPage.fillStockReservationForAnonUser("400");

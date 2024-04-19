@@ -105,6 +105,7 @@ function useDatagridChange(
       const columnId = availableColumns[column].id;
       const existingIndex = getChangeIndex(columnId, row);
       const update = { data: newValue.data, column: columnId, row };
+
       changes.current =
         existingIndex === -1
           ? [...changes.current, update]
@@ -148,6 +149,7 @@ function useDatagridChange(
   );
   const onRowAdded = useCallback(() => {
     const newAdded = [...added, rows - removed.length + added.length];
+
     setAdded(newAdded);
     notify({
       updates: changes.current,

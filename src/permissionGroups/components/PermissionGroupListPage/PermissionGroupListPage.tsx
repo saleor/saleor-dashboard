@@ -48,5 +48,6 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProp
     </ListPageLayout>
   );
 };
+
 PermissionGroupListPage.displayName = "PermissionGroupListPage";
 export default PermissionGroupListPage;

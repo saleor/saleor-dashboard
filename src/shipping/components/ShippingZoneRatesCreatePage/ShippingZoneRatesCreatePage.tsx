@@ -128,6 +128,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   );
   const isValid = !data.channelListings?.some(channel => validatePrice(channel.price));
   const isSaveDisabled = disabled || !isValid;
+
   setIsSubmitDisabled(isSaveDisabled);
 
   return (

@@ -48,6 +48,7 @@ export function createDiscountTypeChangeHandler(change: FormChange) {
         },
       });
     }
+
     change(event);
   };
 }
@@ -73,6 +74,7 @@ export function createChannelsChangeHandler(
       },
       ...channelListings.slice(channelIndex + 1),
     ];
+
     updateChannels(updatedChannels);
     triggerChange();
   };

@@ -44,6 +44,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
         paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
       }))
     : undefined;
+
   return (
     <Card>
       <CardTitle

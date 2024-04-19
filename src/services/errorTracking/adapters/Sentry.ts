@@ -22,8 +22,10 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
           "ResizeObserver loop limit exceeded",
         ],
       });
+
       return true;
     }
+
     return false;
   };
   const setUserData: TrackerMethods["setUserData"] = userData => Sentry.setUser(userData);

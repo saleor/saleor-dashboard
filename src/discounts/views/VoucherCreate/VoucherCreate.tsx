@@ -86,6 +86,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
           defaultMessage: "You must add at least one voucher code",
         }),
       });
+
       return false;
     }
 

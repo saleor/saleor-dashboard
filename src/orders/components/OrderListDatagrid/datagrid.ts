@@ -134,6 +134,7 @@ export function getStatusCellContent(
       status: orderStatus.status,
       currentTheme,
     });
+
     return pillCell(orderStatus.localized, color);
   }
 
@@ -152,6 +153,7 @@ export function getPaymentCellContent(
       status: paymentStatus.status,
       currentTheme,
     });
+
     return pillCell(paymentStatus.localized, color);
   }
 

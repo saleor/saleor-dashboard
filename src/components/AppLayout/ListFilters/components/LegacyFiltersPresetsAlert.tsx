@@ -33,6 +33,7 @@ export const LegacyFiltersPresetsAlert = () => {
       </Box>
     );
   }
+
   return null;
 };
 

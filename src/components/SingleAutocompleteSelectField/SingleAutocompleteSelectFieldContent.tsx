@@ -105,9 +105,11 @@ const useStyles = makeStyles(
 
 function getChoiceIndex(index: number, emptyValue: boolean, customValue: boolean, add: boolean) {
   let choiceIndex = index;
+
   if (emptyValue) {
     choiceIndex += 1;
   }
+
   if (customValue || add) {
     choiceIndex += 2;
   }

@@ -57,6 +57,7 @@ export const FilterPresetsSelect = ({
   };
   const handleSelectPreset = (e: MouseEvent<HTMLElement>, index: number) => {
     const target = e.target as HTMLElement;
+
     // Prevent run onSelect when click on remove button
     if (!["LI", "SPAN"].includes(target.tagName)) {
       return;

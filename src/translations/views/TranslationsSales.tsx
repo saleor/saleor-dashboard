@@ -90,5 +90,6 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({ id, languageCode,
     />
   );
 };
+
 TranslationsSales.displayName = "TranslationsSales";
 export default TranslationsSales;

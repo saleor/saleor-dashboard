@@ -13,6 +13,7 @@ export const useServiceWorker = (timeout: number) => {
         registrationRef.current.update();
       }
     }, timeout) as unknown as number;
+
     return () => clearInterval(interval);
   }, [timeout]);
 

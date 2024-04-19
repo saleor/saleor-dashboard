@@ -74,5 +74,6 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
     </ActionDialog>
   );
 };
+
 ChannelPickerDialog.displayName = "ChannelPickerDialog";
 export default ChannelPickerDialog;

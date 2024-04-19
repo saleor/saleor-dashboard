@@ -96,8 +96,10 @@ export const sortAlphabetically =
     if (aField < bField) {
       return -1;
     }
+
     if (aField > bField) {
       return 1;
     }
+
     return 0;
   };

@@ -224,5 +224,6 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
     </Dialog>
   );
 };
+
 AssignVariantDialog.displayName = "AssignVariantDialog";
 export default AssignVariantDialog;

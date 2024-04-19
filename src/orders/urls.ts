@@ -62,6 +62,7 @@ export type OrderListUrlQueryParams = BulkAction &
   ActiveTab;
 export const orderListUrl = (params?: OrderListUrlQueryParams): string => {
   const orderList = orderListPath;
+
   if (params === undefined) {
     return orderList;
   } else {
@@ -93,6 +94,7 @@ export type OrderDraftListUrlQueryParams = ActiveTab &
   Pagination;
 export const orderDraftListUrl = (params?: OrderDraftListUrlQueryParams): string => {
   const orderDraftList = orderDraftListPath;
+
   if (params === undefined) {
     return orderDraftList;
   } else {

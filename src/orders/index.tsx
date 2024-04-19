@@ -49,6 +49,7 @@ const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     OrderListUrlSortField.number,
     false,
   );
+
   return <OrderListComponent params={params} />;
 };
 const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
@@ -72,6 +73,7 @@ const OrderDetails: React.FC<RouteComponentProps<any>> = ({ location, match }) =
 const OrderFulfill: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderFulfillUrlQueryParams = qs;
+
   return <OrderFulfillComponent orderId={decodeURIComponent(match.params.id)} params={params} />;
 };
 const OrderPaymentRefund: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => (

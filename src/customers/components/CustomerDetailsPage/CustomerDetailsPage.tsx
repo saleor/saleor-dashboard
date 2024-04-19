@@ -140,5 +140,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     </Form>
   );
 };
+
 CustomerDetailsPage.displayName = "CustomerDetailsPage";
 export default CustomerDetailsPage;

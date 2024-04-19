@@ -15,6 +15,7 @@ export const useDevModeKeyTrigger = (callbackHandler: DevModeKeyTriggerCallback)
     };
 
     document.addEventListener("keydown", handler);
+
     return () => document.removeEventListener("keydown", handler);
   }, [callbackHandler]);
 };

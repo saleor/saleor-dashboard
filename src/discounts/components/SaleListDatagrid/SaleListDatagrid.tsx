@@ -75,7 +75,9 @@ export const SaleListDatagrid = ({
       if (!onRowClick) {
         return;
       }
+
       const rowData: SaleFragment = sales[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, sales],

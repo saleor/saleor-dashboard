@@ -69,7 +69,9 @@ test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow acti
   await ordersPage.clickMarkAsPaidButton();
   await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
   await ordersPage.expectSuccessBannerMessage("paid");
+
   const transactionsMadeRows = await ordersPage.orderTransactionsList.locator("tr");
+
   expect(await transactionsMadeRows.count()).toEqual(1);
   await expect(transactionsMadeRows).toContainText("Success");
   await ordersPage.clickFulfillButton();
@@ -91,7 +93,9 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
     "111111",
     firstManualTransactionAmount,
   );
+
   const completedTransactionsRows = await ordersPage.orderTransactionsList.locator("tr");
+
   await expect(
     completedTransactionsRows.filter({
       hasText: `EUR${firstManualTransactionAmount}`,
@@ -150,6 +154,7 @@ test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow @e2e @or
 });
 test("TC: SALEOR_80 Add tracking to order @e2e @order", async () => {
   const trackingNumber = "123456789";
+
   await ordersPage.goToExistingOrderPage(ORDERS.orderToAddTrackingNumberTo.id);
   await ordersPage.waitForGrid();
   await ordersPage.clickAddTrackingButton();

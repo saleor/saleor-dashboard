@@ -134,12 +134,14 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
             ...data.updateCountriesConfiguration[index],
             [name]: value,
           };
+
           currentExceptions[index] = exceptionToChange;
           triggerChange();
           set({ updateCountriesConfiguration: currentExceptions });
         };
         const handleCountryChange = (country: CountryFragment) => {
           closeDialog();
+
           const input: TaxCountryConfiguration = {
             __typename: "TaxConfigurationPerCountry",
             country,
@@ -149,6 +151,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
             taxAppId: getTaxAppId(data.taxCalculationStrategy),
           };
           const currentExceptions = data.updateCountriesConfiguration;
+
           triggerChange();
           set({
             updateCountriesConfiguration: [input, ...currentExceptions],
@@ -241,6 +244,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                               onDelete={() => {
                                 const currentRemovals = data.removeCountriesConfiguration;
                                 const currentExceptions = [...data.updateCountriesConfiguration];
+
                                 set({
                                   removeCountriesConfiguration: [
                                     ...currentRemovals,

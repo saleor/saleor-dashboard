@@ -147,5 +147,6 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
     </Card>
   );
 };
+
 ShippingRateInfo.displayName = "ShippingRateInfo";
 export default ShippingRateInfo;

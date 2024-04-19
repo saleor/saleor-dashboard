@@ -41,6 +41,7 @@ export const createTaxClassCreateInput = (data: TaxClassesPageFormData): TaxClas
     if (!item.value) {
       return [];
     }
+
     return createCountryRateInput(item);
   }),
 });

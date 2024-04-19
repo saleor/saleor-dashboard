@@ -16,6 +16,7 @@ export const getColumnStock = makeGetColumnData(/^warehouse:(.*)/);
 
 export const getColumnName = (column: string) => {
   const splited = column.split(":");
+
   return splited[0];
 };
 

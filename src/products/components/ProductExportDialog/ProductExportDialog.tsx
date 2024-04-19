@@ -145,6 +145,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
         },
       },
     });
+
     const choice = channels.find(choice => choice.id === option.id);
 
     setSelectedChannels(toggle(choice, selectedChannels, (a, b) => a.id === b.id));

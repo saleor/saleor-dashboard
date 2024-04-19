@@ -86,6 +86,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({ title, subtitle, lin
               if (!line) {
                 return null;
               }
+
               const stateLine = state.lines.get(line.id);
 
               return (

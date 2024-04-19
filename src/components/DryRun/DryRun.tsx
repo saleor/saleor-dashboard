@@ -56,6 +56,7 @@ const DryRun: React.FC<DryRunProps> = ({
     const { data } = await triggerWebhookDryRun({
       variables: { objectId, query },
     });
+
     setResult(JSON.stringify(JSON.parse(data.webhookDryRun.payload), null, 2));
     closeDialog();
   };

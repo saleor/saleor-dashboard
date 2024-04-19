@@ -66,6 +66,7 @@ export class CollectionsPage extends BasePage {
 
   async gotoExistingCollectionView(collectionId: string) {
     const collectionUrl = URL_LIST.collections + collectionId;
+
     await console.log("Navigating to existing collection url: " + collectionUrl);
     await this.page.goto(collectionUrl);
   }
@@ -83,8 +84,11 @@ export class CollectionsPage extends BasePage {
 
   async uploadCollectionImage(fileName: string) {
     const fileChooserPromise = this.page.waitForEvent("filechooser");
+
     await this.clickUploadImageButton();
+
     const fileChooser = await fileChooserPromise;
+
     await fileChooser.setFiles(path.join("playwright/data/images/", fileName));
     await this.page.waitForLoadState("domcontentloaded");
   }

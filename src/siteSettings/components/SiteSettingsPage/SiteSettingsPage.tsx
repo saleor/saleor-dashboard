@@ -100,6 +100,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
       initial={initialForm}
       onSubmit={data => {
         const submitFunc = areAddressInputFieldsModified(data) ? handleSubmitWithAddress : onSubmit;
+
         return submitFunc(data);
       }}
       confirmLeave

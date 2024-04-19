@@ -21,12 +21,14 @@ describe("ConditionalFilter / useContainerState", () => {
   it("should set initial value from value provider", () => {
     // Act
     const { result } = renderHook(() => useContainerState(valueProvider));
+
     // Assert
     expect(result.current.value).toEqual([]);
   });
   it("should create new empty row", () => {
     // Arrange
     const { result } = renderHook(() => useContainerState(valueProvider));
+
     // Act
     act(() => {
       result.current.createEmpty();
@@ -51,6 +53,7 @@ describe("ConditionalFilter / useContainerState", () => {
       ),
       false,
     );
+
     // Act
     act(() => {
       result.current.createEmpty();
@@ -78,6 +81,7 @@ describe("ConditionalFilter / useContainerState", () => {
       ),
       false,
     );
+
     // Act
     act(() => {
       result.current.create(staticPriceElement);
@@ -112,6 +116,7 @@ describe("ConditionalFilter / useContainerState", () => {
       ),
       false,
     );
+
     // Act
     act(() => {
       result.current.createEmpty();
@@ -142,6 +147,7 @@ describe("ConditionalFilter / useContainerState", () => {
       ),
       false,
     );
+
     // Act
     act(() => {
       result.current.createEmpty();

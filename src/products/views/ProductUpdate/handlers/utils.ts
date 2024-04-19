@@ -79,6 +79,7 @@ export function getProductChannelsUpdateVariables(
 ): ProductChannelListingUpdateMutationVariables {
   const channels = inferProductChannelsAfterUpdate(product, data);
   const dataUpdated = new Map<string, ProductChannelListingAddInput>();
+
   data.channels.updateChannels
     .map(listing => {
       const fielsToPick = [
@@ -108,6 +109,7 @@ export function getProductChannelsUpdateVariables(
     .filter(channelId => dataUpdated.has(channelId))
     .map(channelId => {
       const data = dataUpdated.get(channelId);
+
       return {
         ...data,
         isAvailableForPurchase:
@@ -134,6 +136,7 @@ export function getBulkVariantUpdateInputs(
   variantsAttributes: VariantAttributeFragment[],
 ): ProductVariantBulkUpdateInput[] {
   const toUpdateInput = createToUpdateInput(data, variantsAttributes);
+
   return variants
     .filter((_, index) => !data.removed.includes(index))
     .map(toUpdateInput)
@@ -184,6 +187,7 @@ const getVariantAttributesForUpdate = (
         ...getAttributeInput(attributeType, attribute.values),
       };
     });
+
   return [...updatedAttributes, ...notUpdatedAttributes];
 };
 const byAvailability = (variant: ProductVariantBulkUpdateInput): boolean =>

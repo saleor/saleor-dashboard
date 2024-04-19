@@ -158,5 +158,6 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
     </PaginatorContext.Provider>
   );
 };
+
 TranslationsAttributes.displayName = "TranslationsAttributes";
 export default TranslationsAttributes;

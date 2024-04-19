@@ -93,6 +93,7 @@ export function createHandler(
     );
 
     errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
+
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       formData.attributesWithNewFileValue,
       uploadFilesResult,
@@ -138,9 +139,11 @@ export function createHandler(
       ]);
       const channelErrors = result[0].data?.productChannelListingUpdate?.errors || [];
       const variantErrors = result[1].data?.productVariantCreate?.errors || [];
+
       errors = [...errors, ...channelErrors, ...variantErrors];
 
       const variantId = result[1].data.productVariantCreate.productVariant?.id;
+
       if (variantErrors.length === 0 && variantId) {
         updateVariantChannels({
           variables: {
@@ -171,6 +174,7 @@ export function createHandler(
 
       return { errors };
     }
+
     return { id: productId || null, errors };
   };
 }

@@ -74,6 +74,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
             setDisplayValue,
             choices,
           );
+
           return (
             <>
               <DialogTitle disableTypography>
@@ -136,5 +137,6 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
     </Dialog>
   );
 };
+
 OrderFulfillmentCancelDialog.displayName = "OrderFulfillmentCancelDialog";
 export default OrderFulfillmentCancelDialog;

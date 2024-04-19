@@ -26,6 +26,7 @@ export const InstallWithManifestFormButton: React.FC<InstallWithManifestFormButt
 
     try {
       const parsedURL = new URL(inputValue);
+
       onSubmitted(parsedURL.href);
     } catch (e) {
       console.error("Invalid URL from input. Should be validated by browser");

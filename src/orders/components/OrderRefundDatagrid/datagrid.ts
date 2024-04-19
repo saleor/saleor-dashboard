@@ -23,6 +23,7 @@ import { refundGridMessages } from "./messages";
 
 const useOrderRefundConstantColumns = () => {
   const intl = useIntl();
+
   return [
     {
       id: "status",
@@ -55,6 +56,7 @@ const useOrderRefundConstantColumns = () => {
 export const useOrderRefundStaticColumns = () => {
   const emptyColumn = useEmptyColumn();
   const constantColumns = useOrderRefundConstantColumns();
+
   return [emptyColumn, ...constantColumns];
 };
 
@@ -127,6 +129,7 @@ export const useDatagridOpts = (
     },
     [updateListSettings],
   );
+
   return {
     datagrid,
     currentTheme,

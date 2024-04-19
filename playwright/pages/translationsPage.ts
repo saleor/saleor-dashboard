@@ -38,6 +38,7 @@ export class TranslationsPage extends BasePage {
       translatedObjectType +
       "/" +
       translatedObjectId;
+
     await this.page.goto(translationUrl);
   }
 }

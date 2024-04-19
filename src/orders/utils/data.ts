@@ -45,6 +45,7 @@ export function getOrderCharged(order: OrderDetailsFragment) {
   if (order?.totalCharged) {
     return order.totalCharged;
   }
+
   return order?.totalCaptured;
 }
 
@@ -86,6 +87,7 @@ export const getItemPriceAndQuantity = ({
   if (orderLines.length === 0) {
     return {};
   }
+
   const selectedOrderLine = orderLines.find(getById(id));
   const selectedQuantity = itemsQuantities.find(getById(id))?.value;
 
@@ -110,6 +112,7 @@ const selectItemPriceAndQuantity = (
   isFulfillment: boolean,
 ) => {
   const fulfillment = getFulfillmentByFulfillmentLineId(order, id);
+
   if (fulfillment?.status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
     return getItemPriceAndQuantity({
       id,
@@ -117,6 +120,7 @@ const selectItemPriceAndQuantity = (
       orderLines: getAllOrderWaitingLines(order),
     });
   }
+
   return isFulfillment
     ? getItemPriceAndQuantity({
         id,
@@ -239,6 +243,7 @@ export function getRefundedLinesPriceSum(
     const refundedLine = refundedProductQuantities.find(
       refundedLine => refundedLine.id === line.id,
     );
+
     return sum + line.unitPrice.gross.amount * Number(refundedLine?.value || 0);
   }, 0);
 }
@@ -252,8 +257,10 @@ export function getAllFulfillmentLinesPriceSum(
       const refundedLine = refundedFulfilledProductQuantities.find(
         refundedLine => refundedLine.id === line.id,
       );
+
       return sum + line.orderLine.unitPrice.gross.amount * Number(refundedLine?.value || 0);
     }, 0);
+
     return sum + fulfilmentLinesSum;
   }, 0);
 }
@@ -284,6 +291,7 @@ export function mergeRepeatedOrderLines(
 export function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, __typename, ...rest } = address;
+
   return {
     ...rest,
     country: findInEnum(address.country.code, CountryCode),
@@ -309,6 +317,7 @@ export const getAllocatedQuantityForLine = (
   const warehouseAllocation = line.allocations.find(
     allocation => allocation.warehouse.id === warehouseId,
   );
+
   return warehouseAllocation?.quantity || 0;
 };
 
@@ -319,6 +328,7 @@ export const getOrderLineAvailableQuantity = (
   if (!stock) {
     return 0;
   }
+
   const allocatedQuantityForLine = getAllocatedQuantityForLine(line, stock.warehouse.id);
   const availableQuantity = stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
 
@@ -349,10 +359,13 @@ export const isLineAvailableInWarehouse = (
   if (!line?.variant?.stocks) {
     return false;
   }
+
   const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
+
   if (stock) {
     return line.quantityToFulfill <= getOrderLineAvailableQuantity(line, stock);
   }
+
   return false;
 };
 
@@ -363,10 +376,13 @@ export const getLineAvailableQuantityInWarehouse = (
   if (!line?.variant?.stocks) {
     return 0;
   }
+
   const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
+
   if (stock) {
     return getOrderLineAvailableQuantity(line, stock);
   }
+
   return 0;
 };
 
@@ -377,6 +393,7 @@ export const getLineAllocationWithHighestQuantity = (
     if (!prevAllocation || prevAllocation.quantity < allocation.quantity) {
       return allocation;
     }
+
     return prevAllocation;
   }, null);
 
@@ -390,8 +407,10 @@ export const getWarehouseWithHighestAvailableQuantity = (
       line.allocations.reduce((warehouse, allocation) => {
         if (allocation.quantity > highestAvailableQuantity) {
           highestAvailableQuantity = allocation.quantity;
+
           return allocation.warehouse;
         }
+
         return warehouse;
       }, selectedWarehouse),
     null as WarehouseFragment,

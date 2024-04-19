@@ -67,6 +67,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   const navigate = useNavigator();
 
   let prettified: string;
+
   try {
     prettified = print(parse(webhook?.subscriptionQuery || ""));
   } catch {
@@ -167,5 +168,6 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     </Form>
   );
 };
+
 WebhookDetailsPage.displayName = "WebhookDetailsPage";
 export default WebhookDetailsPage;

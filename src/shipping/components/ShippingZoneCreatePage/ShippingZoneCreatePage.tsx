@@ -123,5 +123,6 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
     </Form>
   );
 };
+
 ShippingZoneCreatePage.displayName = "ShippingZoneCreatePage";
 export default ShippingZoneCreatePage;

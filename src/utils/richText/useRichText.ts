@@ -40,12 +40,15 @@ export function useRichText({
 
     if (!initial) {
       setIsReadyForMount(true);
+
       return "";
     }
 
     try {
       const result = JSON.parse(initial);
+
       setIsReadyForMount(true);
+
       return result;
     } catch (e) {
       return undefined;

@@ -62,6 +62,7 @@ function availabilityToChannelColumn(change: DatagridChange) {
       column: `channel:${availabilityChannelId}`,
     };
   }
+
   return change;
 }
 
@@ -70,6 +71,7 @@ function byColumn(prev: DatagridChange[], change: DatagridChange) {
 
   if (index > -1) {
     prev[index] = change;
+
     return prev;
   }
 

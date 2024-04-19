@@ -131,6 +131,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const unfulfilled = (order?.lines || []).filter(line => line.quantityToFulfill > 0);
   const handleSubmit = async (data: MetadataIdSchema) => {
     const result = await onSubmit(data);
+
     return getMutationErrors(result);
   };
   const initial = createOrderMetadataIdSchema(order);
@@ -143,6 +144,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     } else if (!order?.lines?.length) {
       return true;
     }
+
     return loading;
   };
   const selectCardMenuItems = filteredConditionalItems([

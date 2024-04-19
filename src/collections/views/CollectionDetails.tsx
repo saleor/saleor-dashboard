@@ -83,6 +83,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
       const backgroundImageError = data.collectionUpdate.errors.find(
         error => error.field === ("backgroundImage" as keyof CollectionInput),
       );
+
       if (backgroundImageError) {
         notify({
           status: "error",

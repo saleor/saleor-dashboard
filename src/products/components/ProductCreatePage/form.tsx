@@ -387,6 +387,7 @@ function useProductCreateForm(
     if (hasInvalidChannelListingPrices) {
       return false;
     }
+
     return true;
   };
   const isSaveDisabled = loading || !onSubmit;

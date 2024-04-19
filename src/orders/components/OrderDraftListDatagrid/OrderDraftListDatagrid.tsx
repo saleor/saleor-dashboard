@@ -64,6 +64,7 @@ export const OrderDraftListDatagrid = ({
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as OrderDraftListUrlSortField;
+
       if (canBeSorted(columnName)) {
         onSort(columnName);
       }
@@ -77,6 +78,7 @@ export const OrderDraftListDatagrid = ({
       }
 
       const rowData = orders[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, orders],
@@ -84,6 +86,7 @@ export const OrderDraftListDatagrid = ({
   const handleRowAnchor = useCallback(
     ([, row]: Item) => {
       const rowData = orders[row];
+
       return orderUrl(rowData.id);
     },
     [orders],

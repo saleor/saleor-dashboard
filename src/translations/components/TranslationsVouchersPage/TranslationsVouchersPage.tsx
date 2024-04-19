@@ -92,5 +92,6 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsVouchersPage.displayName = "TranslationsVouchersPage";
 export default TranslationsVouchersPage;

@@ -135,5 +135,6 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
     </Card>
   );
 };
+
 AttributeProperties.displayName = "AttributeProperties";
 export default AttributeProperties;

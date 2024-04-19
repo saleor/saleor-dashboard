@@ -107,5 +107,6 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
     </ResponsiveTable>
   );
 };
+
 TranslationsEntitiesList.displayName = "TranslationsEntitiesList";
 export default TranslationsEntitiesList;

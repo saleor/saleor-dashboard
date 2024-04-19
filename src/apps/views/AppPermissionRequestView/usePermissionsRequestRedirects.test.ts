@@ -3,6 +3,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import { usePermissionsRequestRedirects } from "./usePermissionsRequestRedirects";
 
 const mockNavigate = jest.fn();
+
 jest.mock("@dashboard/hooks/useNavigator", () => () => mockNavigate);
 describe("usePermissionsRequestRedirects", () => {
   beforeEach(() => {

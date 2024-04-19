@@ -90,6 +90,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     // Clear credentials from browser's credential manager only when exist.
     // Chrome 115 crash when calling preventSilentAccess() when no credentials exist.
     const hasCredentials = await checkIfCredentialsExist();
+
     if (isCredentialsManagementAPISupported && !!hasCredentials) {
       navigator.credentials.preventSilentAccess();
     }
@@ -157,6 +158,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     if (!pluginId) {
       return;
     }
+
     try {
       const result = await getExternalAccessToken({
         pluginId,

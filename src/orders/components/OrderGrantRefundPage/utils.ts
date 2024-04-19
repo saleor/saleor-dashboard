@@ -17,6 +17,7 @@ export const calculateTotalPrice = (
   const lines = Array.from(state.lines.values());
   const linesValue = lines.reduce((total, line) => {
     const price = currency(line.unitPrice).multiply(line.selectedQuantity);
+
     return total.add(price.value);
   }, currency(0));
 
@@ -100,10 +101,12 @@ export const calculateCanRefundShipping = (
     if (editedGrantedRefund.grantRefundForShipping) {
       return true;
     }
+
     return !grantedRefunds?.some(
       refund => refund.shippingCostsIncluded && refund.id !== editedGrantedRefund.grantRefundId,
     );
   }
+
   return !grantedRefunds?.some(refund => refund.shippingCostsIncluded);
 };
 

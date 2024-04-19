@@ -37,6 +37,7 @@ export class NavigationDetailsPage extends BasePage {
 
   async clickEditMenuItemButton(name: string) {
     const menuItem = await this.menuItem.filter({ hasText: name });
+
     await menuItem.getByTestId("edit-menu-item-button").first().click();
   }
 

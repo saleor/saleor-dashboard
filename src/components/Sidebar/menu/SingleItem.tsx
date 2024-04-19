@@ -15,10 +15,12 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
   const active = isMenuActive(location.pathname, menuItem);
   const handleMenuItemClick = () => {
     const extension = getMenuItemExtension(extensions, menuItem.id);
+
     if (extension) {
       extension.open();
     }
   };
+
   return (
     <List.Item
       borderRadius={3}

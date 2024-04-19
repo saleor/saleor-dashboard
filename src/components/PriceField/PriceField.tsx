@@ -3,6 +3,7 @@ import { Input, InputProps, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { usePriceField } from "./usePriceField";
+
 export interface PriceFieldProps extends InputProps {
   className?: string;
   currencySymbol?: string;

@@ -26,6 +26,7 @@ const getLoginFormData = () => {
       password: "admin",
     };
   }
+
   return { email: "", password: "" };
 };
 

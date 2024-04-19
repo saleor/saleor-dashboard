@@ -181,5 +181,6 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     </Dialog>
   );
 };
+
 AssignProductDialog.displayName = "AssignProductDialog";
 export default AssignProductDialog;

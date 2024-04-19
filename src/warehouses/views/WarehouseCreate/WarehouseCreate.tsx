@@ -21,9 +21,11 @@ const WarehouseCreate: React.FC = () => {
     onCompleted: data => {
       if (data?.createWarehouse?.errors.length === 0) {
         const warehouse = data?.createWarehouse?.warehouse;
+
         if (warehouse?.id) {
           navigate(warehouseUrl(warehouse.id));
         }
+
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),

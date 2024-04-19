@@ -84,6 +84,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
     onStart: files => {
       Array.from(files).forEach((file, fileIndex) => {
         const reader = new FileReader();
+
         reader.onload = event => {
           setImagesToUpload(prevImagesToUpload => [
             ...prevImagesToUpload,
@@ -217,5 +218,6 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
     </DashboardCard>
   );
 };
+
 ProductMedia.displayName = "ProductMedia";
 export default ProductMedia;

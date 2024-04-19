@@ -14,6 +14,7 @@ describe("useAddressValidation", () => {
       data: null,
       loading: false,
     });
+
     // Act
     const {
       result: { current },
@@ -42,6 +43,7 @@ describe("useAddressValidation", () => {
       },
       loading: false,
     });
+
     // Act
     const {
       result: { current },

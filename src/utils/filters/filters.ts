@@ -13,6 +13,7 @@ function createFilterUtils<TQueryParams extends {}, TFilters extends {}>(filters
       .filter(key => Object.values(filters).includes(key))
       .reduce((acc, key) => {
         acc[key] = params[key as keyof typeof params];
+
         return acc;
       }, {} as any);
   }

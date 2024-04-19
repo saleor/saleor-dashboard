@@ -299,5 +299,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     </Form>
   );
 };
+
 SaleDetailsPage.displayName = "SaleDetailsPage";
 export default SaleDetailsPage;

@@ -30,6 +30,7 @@ describe("App List available sections util", () => {
       all: true,
       comingSoon: true,
     };
+
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
   it("should return no available app list sections when no data are passed", () => {
@@ -47,6 +48,7 @@ describe("App List available sections util", () => {
       all: false,
       comingSoon: false,
     };
+
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
   it("should return only installed apps section as available when only installed apps are passed", () => {
@@ -64,6 +66,7 @@ describe("App List available sections util", () => {
       all: false,
       comingSoon: false,
     };
+
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
   it("should return only installed apps section as available when only installations are passed", () => {
@@ -81,6 +84,7 @@ describe("App List available sections util", () => {
       all: false,
       comingSoon: false,
     };
+
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
   it("should return available app list sections when all data are undefined", () => {
@@ -98,6 +102,7 @@ describe("App List available sections util", () => {
       all: true,
       comingSoon: true,
     };
+
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
   it("should return installed apps section as available when installed apps passed and installations is undefined", () => {
@@ -115,6 +120,7 @@ describe("App List available sections util", () => {
       all: false,
       comingSoon: false,
     };
+
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
   it("should return installed apps section as available when installed apps is undefined and installations are passed", () => {
@@ -132,6 +138,7 @@ describe("App List available sections util", () => {
       all: false,
       comingSoon: false,
     };
+
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
 });
@@ -220,6 +227,7 @@ describe("App List verified installed apps util", () => {
         logo: undefined,
       },
     ];
+
     expect(verifiedInstalledApps).toEqual(expectedVerifiedInstalledApps);
   });
 });
@@ -316,6 +324,7 @@ describe("App List verified installable marketplace apps util", () => {
     );
     // Assert
     const expectedVerifiedInstallableMarketplaceApps = [installableMarketplaceApps[1]];
+
     expect(verifiedInstallableMarketplaceApps).toEqual(expectedVerifiedInstallableMarketplaceApps);
   });
 });

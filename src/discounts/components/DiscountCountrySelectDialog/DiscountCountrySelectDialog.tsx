@@ -51,6 +51,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
     countries: initial,
     query: "",
   };
+
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <Form initial={initialForm} onSubmit={onConfirm} className={scrollableDialogClasses.form}>
@@ -59,6 +60,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
             acc[country.code] = !!data.countries.find(
               selectedCountries => selectedCountries === country.code,
             );
+
             return acc;
           }, {});
 
@@ -162,5 +164,6 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
     </Dialog>
   );
 };
+
 DiscountCountrySelectDialog.displayName = "DiscountCountrySelectDialog";
 export default DiscountCountrySelectDialog;

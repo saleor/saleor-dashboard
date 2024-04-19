@@ -30,6 +30,7 @@ export class AddProductsDialog extends BasePage {
 
   async selectVariantBySKU(sku: string) {
     const variant = this.variantRow.filter({ hasText: `SKU ${sku}` });
+
     await variant.waitFor({ state: "visible" });
     await variant.getByRole("checkbox").click();
   }

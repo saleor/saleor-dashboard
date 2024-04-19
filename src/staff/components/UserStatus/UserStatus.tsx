@@ -37,5 +37,6 @@ const AppStatus: React.FC<AppStatusProps> = ({ data, disabled, label, onChange }
     </Card>
   );
 };
+
 AppStatus.displayName = "AppStatus";
 export default AppStatus;

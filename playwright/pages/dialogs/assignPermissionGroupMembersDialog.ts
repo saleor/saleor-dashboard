@@ -23,7 +23,9 @@ export class AssignPermissionGroupMembersDialog {
     await this.userRow
       .getByText(memberName, { exact: true })
       .waitFor({ state: "visible", timeout: 30000 });
+
     const memberInput = await this.userRow.filter({ hasText: memberName }).locator("input").first();
+
     await memberInput.click();
   }
 

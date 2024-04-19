@@ -124,5 +124,6 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
     </Form>
   );
 };
+
 ProductTypeCreatePage.displayName = "ProductTypeCreatePage";
 export default ProductTypeCreatePage;

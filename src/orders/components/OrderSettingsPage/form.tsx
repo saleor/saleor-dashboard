@@ -50,6 +50,7 @@ function useOrderSettingsForm(
     onSubmit,
   });
   const submit = () => handleFormSubmit(data);
+
   setIsSubmitDisabled(disabled);
 
   return {

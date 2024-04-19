@@ -52,6 +52,7 @@ const useGiftCardActivateToggle = ({
           status: "error",
           text: intl.formatMessage(commonErrorMessages.unknownError),
         });
+
         return;
       }
 

@@ -72,6 +72,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   >(navigate, categoryListUrl, params);
 
   usePaginationReset(categoryListUrl, params, settings.rowNumber);
+
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({

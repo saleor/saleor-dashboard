@@ -64,6 +64,7 @@ export interface AttributeValuesMetadata {
   value: string;
   label: string;
 }
+
 const getReferenceAttributeValuesLabels = (
   attribute: ProductFragment["attributes"][0],
 ): AttributeValuesMetadata[] => {
@@ -74,6 +75,7 @@ const getReferenceAttributeValuesLabels = (
     };
   });
 };
+
 export function getAttributeInputFromProductType(productType: ProductType): AttributeInput[] {
   return productType.productAttributes.map(attribute => ({
     data: {

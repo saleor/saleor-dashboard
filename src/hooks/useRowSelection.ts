@@ -16,6 +16,7 @@ export const useRowSelection = (paginationParams?: Pagination): UseRowSelection 
     if (clearDatagridRowSelectionCallback.current) {
       clearDatagridRowSelectionCallback.current();
     }
+
     setSelectedRowIds([]);
   };
   const setClearDatagridRowSelectionCallback = (callback: () => void) => {

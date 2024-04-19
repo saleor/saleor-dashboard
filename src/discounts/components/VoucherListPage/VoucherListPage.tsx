@@ -33,6 +33,7 @@ export interface VoucherListPageProps
   onVoucherDelete: () => void;
   onSelectVouchersIds: (rows: number[], clearSelection: () => void) => void;
 }
+
 const VoucherListPage: React.FC<VoucherListPageProps> = ({
   filterOpts,
   initialSearch,
@@ -126,5 +127,6 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
     </ListPageLayout>
   );
 };
+
 VoucherListPage.displayName = "VoucherListPage";
 export default VoucherListPage;

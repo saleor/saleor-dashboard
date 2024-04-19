@@ -93,6 +93,7 @@ const handleLegacyTheming = () => {
 
   if (activeTheme === "defaultDark") {
     localStorage.setItem("macaw-ui-theme", "dark");
+
     return;
   }
 

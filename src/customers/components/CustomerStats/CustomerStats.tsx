@@ -58,5 +58,6 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
     </DashboardCard>
   );
 };
+
 CustomerStats.displayName = "CustomerStats";
 export default CustomerStats;

@@ -6,6 +6,7 @@ const getUserOrApp = (event: OrderEventFragment) => {
   if (event.user) {
     return event.user.email;
   }
+
   if (event.app) {
     return event.app.name;
   }

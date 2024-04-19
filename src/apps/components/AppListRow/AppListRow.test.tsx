@@ -41,11 +41,13 @@ describe("Apps AppListRow", () => {
     const integrationImages = releasedApp.integrations.map(
       integration => integration.logo.light.source,
     );
+
     render(
       <Wrapper>
         <AppListRow app={releasedApp} />
       </Wrapper>,
     );
+
     const name = screen.queryAllByText(releasedApp.name.en);
     const description = screen.queryAllByText(releasedApp.description.en);
     const images = screen.getAllByRole("img");
@@ -54,19 +56,24 @@ describe("Apps AppListRow", () => {
     // Assert
     expect(name[0]).toBeTruthy();
     expect(description[0]).toBeTruthy();
+
     const expectedImages = [releasedApp.logo.source, ...integrationImages];
+
     images.forEach(image => expect(expectedImages).toContain(image.getAttribute("src")));
+
     const expectedLinks = [
       releasedApp.privacyUrl,
       releasedApp.repositoryUrl,
       releasedApp.supportUrl,
     ];
+
     links.forEach(link => expect(expectedLinks).toContain(link.getAttribute("href")));
   });
   it("calls handlers when released app data passed and buttons clicked", async () => {
     // Arrange
     const navigateToAppInstallPage = jest.fn();
     const navigateToVercelDeploymentPage = jest.fn();
+
     render(
       <Wrapper>
         <AppListRow
@@ -76,6 +83,7 @@ describe("Apps AppListRow", () => {
         />
       </Wrapper>,
     );
+
     const user = userEvent.setup();
     const installButton = screen.getAllByTestId("app-install-button");
     const deployToVercelButton = screen.getAllByTestId("app-fork-on-github-button");
@@ -92,11 +100,13 @@ describe("Apps AppListRow", () => {
     const integrationImages = comingSoonApp.integrations.map(
       integration => integration.logo.light.source,
     );
+
     render(
       <Wrapper>
         <AppListRow app={comingSoonApp} />
       </Wrapper>,
     );
+
     const name = screen.queryAllByText(comingSoonApp.name.en);
     const description = screen.queryAllByText(comingSoonApp.description.en);
     const images = screen.getAllByRole("img");
@@ -108,7 +118,9 @@ describe("Apps AppListRow", () => {
     // Assert
     expect(name[0]).toBeTruthy();
     expect(description[0]).toBeTruthy();
+
     const expectedImages = [comingSoonApp.logo.source, ...integrationImages];
+
     images.forEach(image => expect(expectedImages).toContain(image.getAttribute("src")));
     expect(links).toHaveLength(0);
     expect(releaseDate[0]).toBeTruthy();
@@ -122,11 +134,13 @@ describe("Apps AppListRow", () => {
         source: null,
       },
     };
+
     render(
       <Wrapper>
         <AppListRow app={app} />
       </Wrapper>,
     );
+
     const logo = screen.getAllByTestId("app-logo");
     const logoPlaceholder = within(logo[0]).queryByTestId("app-logo-placeholder");
     const logoImage = within(logo[0]).queryByRole("img");
@@ -145,11 +159,13 @@ describe("Apps AppListRow", () => {
         source: null,
       },
     };
+
     render(
       <Wrapper>
         <AppListRow app={app} />
       </Wrapper>,
     );
+
     const logo = screen.getAllByTestId("app-logo");
     const logoPlaceholder = within(logo[0]).queryByTestId("app-logo-placeholder");
     const logoImage = within(logo[0]).queryByRole("img");
@@ -166,6 +182,7 @@ describe("Apps AppListRow", () => {
         <AppListRow app={releasedApp} appInstallationList={[failedAppInProgress]} />
       </Wrapper>,
     );
+
     const status = screen.getAllByTestId("app-installation-failed");
     const statusDetails = within(status[0]).queryByText(
       appInstallationStatusMessages.failed.defaultMessage,
@@ -181,6 +198,7 @@ describe("Apps AppListRow", () => {
         <AppListRow app={releasedApp} appInstallationList={[pendingAppInProgress]} />
       </Wrapper>,
     );
+
     const status = screen.getAllByTestId("app-installation-pending");
     const statusText = within(status[0]).queryByText(
       appInstallationStatusMessages.pending.defaultMessage,
@@ -194,6 +212,7 @@ describe("Apps AppListRow", () => {
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
+
     jest.spyOn(context, "useAppListContext").mockImplementation(() => ({
       openAppSettings,
       removeAppInstallation,
@@ -204,6 +223,7 @@ describe("Apps AppListRow", () => {
         <AppListRow app={releasedApp} appInstallationList={[failedAppInProgress]} />
       </Wrapper>,
     );
+
     const user = userEvent.setup();
     const retryButton = screen.getAllByTestId("app-retry-install-button");
     const removeButton = screen.getAllByTestId("app-remove-install-button");

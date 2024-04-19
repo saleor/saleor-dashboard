@@ -85,5 +85,6 @@ const PageInfo: React.FC<PageInfoProps> = props => {
     </Card>
   );
 };
+
 PageInfo.displayName = "PageInfo";
 export default PageInfo;

@@ -63,6 +63,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
   const [activateApp, activateAppResult] = useAppActivateMutation({
     onCompleted: data => {
       const errors = data?.appActivate?.errors;
+
       if (errors?.length === 0) {
         notify({
           status: "success",
@@ -83,6 +84,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
   const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
     onCompleted: data => {
       const errors = data?.appDeactivate?.errors;
+
       if (errors.length === 0) {
         notify({
           status: "success",

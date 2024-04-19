@@ -46,6 +46,7 @@ describe("ConfirmButton", () => {
   });
   it("should call onClick when clicked", () => {
     const onClick = jest.fn();
+
     render(<ConfirmButton transitionState="default" onClick={onClick} />);
     fireEvent.click(screen.getByRole("button"));
     expect(onClick).toHaveBeenCalled();
@@ -60,6 +61,7 @@ describe("ConfirmButton", () => {
         }}
       />,
     );
+
     expect(screen.getByTestId("button-progress")).toBeInTheDocument();
     rerender(
       <ConfirmButton
@@ -86,6 +88,7 @@ describe("ConfirmButton", () => {
         }}
       />,
     );
+
     expect(screen.getByTestId("button-progress")).toBeInTheDocument();
     expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
     rerender(

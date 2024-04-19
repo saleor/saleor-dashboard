@@ -27,6 +27,7 @@ export const getValidationSchema = (intl: IntlShape) => {
           if (data.hasEndDate && data.endDate && !data.startDate) {
             return false;
           }
+
           return true;
         },
         {

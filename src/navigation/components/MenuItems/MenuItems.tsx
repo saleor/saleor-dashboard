@@ -67,5 +67,6 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
     </DashboardCard>
   );
 };
+
 MenuItems.displayName = "MenuItems";
 export default MenuItems;

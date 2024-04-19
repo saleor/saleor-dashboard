@@ -33,6 +33,7 @@ export const createChannelsChangeHandler =
   (channelId: string, value: { maxValue: string; minValue: string; price: string }) => {
     const itemIndex = selectedChannels.findIndex(item => item.id === channelId);
     const channel = selectedChannels[itemIndex];
+
     setSelectedChannels([
       ...selectedChannels.slice(0, itemIndex),
       {
@@ -66,6 +67,7 @@ export function getCreateShippingPriceRateVariables(
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
   const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
+
   return {
     input: {
       addPostalCodeRules: postalCodeRules,
@@ -92,6 +94,7 @@ export function getCreateShippingWeightRateVariables(
   const parsedMaxDays = parseInt(data.maxDays, 10);
   const isWeightSet = data.orderValueRestricted;
   const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
+
   return {
     input: {
       addPostalCodeRules: postalCodeRules,
@@ -118,6 +121,7 @@ export function getUpdateShippingPriceRateVariables(
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
   const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
+
   return {
     id: rateId,
     input: {
@@ -149,6 +153,7 @@ export function getUpdateShippingWeightRateVariables(
   const parsedMaxDays = parseInt(data.maxDays, 10);
   const isWeightSet = data.orderValueRestricted;
   const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
+
   return {
     id: rateId,
     input: {
@@ -249,6 +254,7 @@ export function useShippingRateCreator(
         text: intl.formatMessage(commonMessages.savedChanges),
       });
       navigate(shippingRateEditUrl(shippingZoneId, rateId));
+
       return [];
     }
   };
@@ -278,6 +284,7 @@ export function getCountrySelectionMap(
         acc[country.code] = !!countriesSelected.find(
           selectedCountries => selectedCountries === country.code,
         );
+
         return acc;
       },
       {} as Map<string, boolean>,

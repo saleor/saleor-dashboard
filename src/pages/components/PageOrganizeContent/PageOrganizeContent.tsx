@@ -96,5 +96,6 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
     </Card>
   );
 };
+
 PageOrganizeContent.displayName = "PageOrganizeContent";
 export default PageOrganizeContent;

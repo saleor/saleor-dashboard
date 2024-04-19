@@ -26,6 +26,7 @@ describe("ProductTile", () => {
 
     // Assert
     const img = screen.getByAltText(product.name);
+
     expect(img).toBeInTheDocument();
     expect(img).toHaveAttribute("src", PLACEHOLDER_URL);
     expect(screen.getByText(product.productType.name)).toBeInTheDocument();

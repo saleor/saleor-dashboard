@@ -135,5 +135,6 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsCategoriesPage.displayName = "TranslationsCategoriesPage";
 export default TranslationsCategoriesPage;

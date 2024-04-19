@@ -41,6 +41,7 @@ const ExternalLink: React.FC<ExternalLinkProps> = props => {
     </a>
   );
 };
+
 ExternalLink.displayName = "ExternalLink";
 export default ExternalLink;
 

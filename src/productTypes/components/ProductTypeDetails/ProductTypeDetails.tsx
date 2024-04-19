@@ -104,5 +104,6 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
     </Card>
   );
 };
+
 ProductTypeDetails.displayName = "ProductTypeDetails";
 export default ProductTypeDetails;

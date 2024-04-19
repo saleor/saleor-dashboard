@@ -31,6 +31,7 @@ export class SetUpNewPasswordPage {
 
   async gotoUserResetPasswordPage(userEmail: string) {
     const resetPasswordPageUrl = await this.mailpitService.generateResetPasswordUrl(userEmail);
+
     await this.page.goto(resetPasswordPageUrl);
   }
 }

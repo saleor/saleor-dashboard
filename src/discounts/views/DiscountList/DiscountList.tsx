@@ -41,6 +41,7 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(ListViews.DISCOUNTS_LIST);
 
   usePaginationReset(discountListUrl, params, settings.rowNumber);
+
   const paginationState = createPaginationState(settings.rowNumber, params);
   const { valueProvider } = useConditionalFilterContext();
   const where = creatDiscountsQueryVariables(valueProvider.value);

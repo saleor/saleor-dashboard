@@ -20,6 +20,7 @@ describe("OrderAddTransaction", () => {
         <OrderAddTransaction order={order(null)} onAddTransaction={callback} />
       </Wrapper>,
     );
+
     const button = await screen.findByRole("button");
 
     expect(button).toBeInTheDocument();

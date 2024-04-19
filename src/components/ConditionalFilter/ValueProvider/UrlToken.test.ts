@@ -5,18 +5,21 @@ describe("UrlEntry", () => {
   it("should create an instance with a single value", () => {
     // Arrange & Act
     const entry = new UrlEntry("key", "value");
+
     // Assert
     expect(entry).toEqual({ key: "value" });
   });
   it("should create an instance with an array value", () => {
     // Arrange & Act
     const entry = new UrlEntry("key", ["value1", "value2"]);
+
     // Assert
     expect(entry).toEqual({ key: ["value1", "value2"] });
   });
   it("should create an instance from a ParsedQs object", () => {
     // Arrange & Act
     const entry = UrlEntry.fromQs({ key: "value" });
+
     // Assert
     expect(entry).toEqual({ key: "value" });
   });
@@ -39,6 +42,7 @@ describe("UrlEntry", () => {
     );
     // Act
     const entry = UrlEntry.forAttribute(condition, "bottle-size");
+
     // Assert
     expect(entry).toEqual({ "s-1.bottle-size": "value-id" });
   });
@@ -56,6 +60,7 @@ describe("UrlEntry", () => {
     );
     // Act
     const entry = UrlEntry.forStatic(condition, "price");
+
     // Assert
     expect(entry).toEqual({ static: "value" });
   });
@@ -64,6 +69,7 @@ describe("UrlEntry", () => {
     const entry = new UrlEntry("s0.price", "value");
     // Act
     const info = entry.getInfo();
+
     // Assert
     expect(info).toEqual({
       key: "s0.price",

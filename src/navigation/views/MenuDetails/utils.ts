@@ -13,6 +13,7 @@ export function getMenuItemInputData(data: MenuItemDialogFormData): MenuItemInpu
   const variables: MenuItemInput = {
     name: data.name,
   };
+
   switch (data.type) {
     case "category":
       variables.category = data.id;
@@ -45,6 +46,7 @@ export function getMenuItemCreateInputData(
     menu,
     name: data.name,
   };
+
   switch (data.type) {
     case "category":
       variables.category = data.id;
@@ -73,6 +75,7 @@ export function getInitialDisplayValue(item: MenuItemFragment): string {
   if (!item) {
     return "...";
   }
+
   if (item.category) {
     return item.category.name;
   } else if (item.collection) {

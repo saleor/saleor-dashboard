@@ -31,8 +31,11 @@ test("TC: SALEOR_139 Should be able to navigate to permission groups page @permi
 test("TC: SALEOR_133 Should be able to create new permission group @permissions @e2e", async () => {
   await permissions.gotoPermissionGroupsView();
   await permissions.clickCreatePermissionGroupButton();
+
   const name = faker.random.words(2);
+
   await permissionDetails.fillPermissionGroupNameInput(name);
+
   const selectedPermissions = [
     "MANAGE_PRODUCTS",
     "MANAGE_USERS",
@@ -41,6 +44,7 @@ test("TC: SALEOR_133 Should be able to create new permission group @permissions 
     "MANAGE_DISCOUNTS",
     "MANAGE_PLUGINS",
   ];
+
   for (const permission of selectedPermissions) {
     await permissionDetails.selectPermissionGroup(permission);
   }
@@ -51,7 +55,9 @@ test("TC: SALEOR_133 Should be able to create new permission group @permissions 
     timeout: 50000,
   });
   await permissionDetails.clickAssignMembersButton();
+
   const members = PERMISSION_GROUPS.permissionGroupMembers;
+
   await assignmentDialog.searchForMembers("e2e_permission_group_member");
   for (const member of members) {
     await assignmentDialog.selectMember(member.name);
@@ -74,20 +80,28 @@ test("TC: SALEOR_133 Should be able to create new permission group @permissions 
 });
 test("TC: SALEOR_134 Should be able to edit existing permission group @permissions @e2e", async () => {
   await permissions.gotoPermissionGroupsView();
+
   const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
+
   await permissions.gotoExistingPermissionGroupPage(permission.id);
   await permissionDetails.permissionGroupList.waitFor({
     state: "visible",
     timeout: 30000,
   });
+
   const oldName = permission.name;
+
   await expect(permissionDetails.permissionGroupNameInput).toHaveValue(oldName);
   await permissionDetails.permissionGroupNameInput.clear();
+
   const newName = faker.random.words(2);
+
   await permissionDetails.fillPermissionGroupNameInput(newName);
   await permissionDetails.clickChannelPermissionsCheckbox();
+
   const assignedPermissions = PERMISSION_GROUPS.permissionGroupToBeEdited.assignedPermissions;
   const permissionsToBeUnchecked = [assignedPermissions.names[0], assignedPermissions.names[1]];
+
   for (const permission of permissionsToBeUnchecked) {
     await permissionDetails.selectPermissionGroup(permission);
   }
@@ -114,7 +128,9 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
       })
       .locator(permissionDetails.permissionGroupCheckbox),
   ).toBeChecked();
+
   const assignedMembers = PERMISSION_GROUPS.permissionGroupToBeEdited.assignedMembers;
+
   await permissionDetails.unassignSingleMember(assignedMembers.names[0]);
   await permissionDetails.unassignMembersDialog.waitFor({
     state: "visible",
@@ -147,7 +163,9 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
 });
 test("TC: SALEOR_135 Should be able to delete single permission group @permissions @e2e", async () => {
   await permissions.gotoPermissionGroupsView();
+
   const permission = PERMISSION_GROUPS.permissionGroupToBeDeleted;
+
   await permissions.gotoExistingPermissionGroupPage(permission.id);
   await permissionDetails.permissionGroupList.waitFor({
     state: "visible",

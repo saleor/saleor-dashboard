@@ -4,6 +4,7 @@ import { expect, test } from "@playwright/test";
 import faker from "faker";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
+
 let discounts: DiscountsPage;
 
 test.beforeEach(({ page }) => {
@@ -11,9 +12,11 @@ test.beforeEach(({ page }) => {
 });
 
 const discountType = ["Order", "Catalog"];
+
 for (const type of discountType) {
   test(`TC: SALEOR_149 Create promotion with ${type} predicate @discounts @e2e`, async () => {
     const discountName = `${faker.lorem.word()}+${type}`;
+
     await discounts.gotoListView();
     await discounts.clickCreateDiscountButton();
     await discounts.typeDiscountName(discountName);
@@ -34,6 +37,7 @@ for (const type of discountType) {
 
 test(`TC: SALEOR_151 Update existing promotion @discounts @e2e`, async () => {
   const newDiscountName = `${faker.lorem.word()}`;
+
   await discounts.waitForNetworkIdle(() =>
     discounts.gotoExistingDiscount(DISCOUNTS.promotionToBeEdited.id),
   );
@@ -62,6 +66,7 @@ const promotions = [
   DISCOUNTS.promotionWithoutRulesToBeDeleted,
   DISCOUNTS.promotionWithRulesToBeDeleted,
 ];
+
 for (const promotion of promotions) {
   test(`TC: SALEOR_153 Delete existing ${promotion.name} @discounts @e2e`, async () => {
     await discounts.waitForNetworkIdle(() => discounts.gotoExistingDiscount(promotion.id));
@@ -104,6 +109,7 @@ const collections = {
 const predicateValues = [categories, collections, products, variants];
 const rewardValue = "10";
 const channelName = CHANNELS.channelPLN.name;
+
 for (const { promotionRule, predicateValue } of predicateValues) {
   test(`TC: SALEOR_155 Create ${promotionRule} rule for ${predicateValue} in a catalogue promotion @discounts @e2e`, async () => {
     await discounts.waitForNetworkIdle(() => discounts.gotoExistingDiscount(promotion.id));
@@ -111,7 +117,9 @@ for (const { promotionRule, predicateValue } of predicateValues) {
       state: "visible",
       timeout: 10000,
     });
+
     const name = `Rule for ${promotionRule}`;
+
     await discounts.openPromotionRuleModal();
     await discounts.promotionRuleDialog.typePromotionRuleName(name);
     await discounts.promotionRuleDialog.typePromotionRuleDescription(faker.lorem.sentence());
@@ -148,6 +156,7 @@ const conditionGte = {
 };
 const notEqConditions = [conditionLte, conditionGte];
 const orderPromotion = DISCOUNTS.orderPromotion;
+
 for (const { conditionType, value, conditionDesc } of notEqConditions) {
   test(`TC: SALEOR_157 Create subtotal type rule with multiple conditions with ${conditionDesc} in order promotion @discounts @e2e`, async () => {
     await discounts.waitForNetworkIdle(() => discounts.gotoExistingDiscount(orderPromotion.id));
@@ -155,7 +164,9 @@ for (const { conditionType, value, conditionDesc } of notEqConditions) {
       state: "visible",
       timeout: 10000,
     });
+
     const name = `Rule with multiple conditions with ${conditionDesc} in order promotion`;
+
     await discounts.openPromotionRuleModal();
     await discounts.promotionRuleDialog.typePromotionRuleName(name);
     await discounts.promotionRuleDialog.typePromotionRuleDescription(faker.lorem.sentence());
@@ -186,6 +197,7 @@ for (const { conditionType, value, conditionDesc } of notEqConditions) {
 const condition1 = { condition: "Subtotal", gte: "150.00", lte: "170.00" };
 const condition2 = { condition: "Total", gte: "20.00", lte: "50.00" };
 const conditionsBetween = [condition1, condition2];
+
 for (const { condition, lte, gte } of conditionsBetween) {
   test(`TC: SALEOR_160 Create gift reward rule with ${condition} between ${gte} and ${lte} in order promotion @discounts @e2e`, async () => {
     await discounts.waitForNetworkIdle(() => discounts.gotoExistingDiscount(orderPromotion.id));
@@ -193,7 +205,9 @@ for (const { condition, lte, gte } of conditionsBetween) {
       state: "visible",
       timeout: 10000,
     });
+
     const name = `Gift reward rule for ${condition} between ${gte} and ${lte}`;
+
     await discounts.openPromotionRuleModal();
     await discounts.promotionRuleDialog.typePromotionRuleName(name);
     await discounts.promotionRuleDialog.typePromotionRuleDescription(faker.lorem.sentence());
@@ -223,6 +237,7 @@ const orderRules = [
   DISCOUNTS.orderPromotionWithRulesToBeUpdated.rules[0],
   DISCOUNTS.orderPromotionWithRulesToBeUpdated.rules[1],
 ];
+
 for (const rule of orderRules) {
   test(`TC: SALEOR_163 Update promotion ${rule.name} from Order promotion @discounts @e2e`, async () => {
     await discounts.waitForNetworkIdle(() =>
@@ -236,6 +251,7 @@ for (const rule of orderRules) {
       discounts.existingRule.filter({ hasText: `Order rule: ${rule.name}` }),
     ).toBeVisible();
     await discounts.clickEditRuleButton(`Order rule: ${rule.name}`);
+
     if (await discounts.promotionRuleDialog.ruleConditionRow.isVisible()) {
       await discounts.promotionRuleDialog.clickAddRuleConditionButton();
       await discounts.promotionRuleDialog.selectPredicate("Total price", 1);
@@ -250,6 +266,7 @@ for (const rule of orderRules) {
       );
     } else {
       const giftRewardToBeDeleted = orderRules[1].giftRewardToBeDeleted ?? "";
+
       await discounts.promotionRuleDialog.clickAddRuleConditionButton();
       await expect(discounts.promotionRuleDialog.ruleConditionRow.last()).toBeAttached();
       await discounts.promotionRuleDialog.clickRuleConditionPredicateDropdown();
@@ -273,6 +290,7 @@ const catalogRules = [
   DISCOUNTS.catalogPromotionWithRulesToBeUpdated.rules[0],
   DISCOUNTS.catalogPromotionWithRulesToBeUpdated.rules[1],
 ];
+
 for (const rule of catalogRules) {
   test(`TC: SALEOR_166 Update promotion ${rule.name} from Catalog promotion @discounts @e2e`, async () => {
     await discounts.waitForNetworkIdle(() =>
@@ -286,11 +304,14 @@ for (const rule of catalogRules) {
       state: "visible",
       timeout: 50000,
     });
+
     const ruleChips = await discounts.existingRule
       .filter({ hasText: `Catalog rule: ${rule.name}` })
       .locator(discounts.ruleSummaryChip)
       .count();
+
     await discounts.clickEditRuleButton(`Catalog rule: ${rule.name}`);
+
     if (await discounts.promotionRuleDialog.ruleConditionRow.isVisible()) {
       await discounts.promotionRuleDialog.selectRuleConditionValue(
         PRODUCTS.e2eProductWithVariant1.name,
@@ -304,6 +325,7 @@ for (const rule of catalogRules) {
       await discounts.promotionRuleDialog.selectPredicate("Collections");
       await discounts.promotionRuleDialog.selectRuleConditionValue(COLLECTIONS.e2eCollection.name);
     }
+
     await discounts.promotionRuleDialog.clickSaveEditedRuleButton();
     await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
     await discounts.ruleSection.waitFor({
@@ -322,6 +344,7 @@ const promotionsWithRules = [
   DISCOUNTS.orderPromotionWithRulesToBeDeleted,
   DISCOUNTS.catalogPromotionWithRulesToBeDeleted,
 ];
+
 for (const promotion of promotionsWithRules) {
   for (const rule of promotion.rules) {
     test(`TC: SALEOR_167 Delete promotion ${rule.name} from ${promotion.type} promotion @discounts @e2e`, async () => {

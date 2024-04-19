@@ -49,5 +49,6 @@ const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = 
     </ActionDialog>
   );
 };
+
 BulkAttributeUnassignDialog.displayName = "BulkAttributeUnassignDialog";
 export default BulkAttributeUnassignDialog;

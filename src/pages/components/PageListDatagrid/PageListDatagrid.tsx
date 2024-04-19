@@ -73,7 +73,9 @@ export const PageListDatagrid = ({
       if (!onRowClick || !pages) {
         return;
       }
+
       const rowData: Page = pages[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, pages],
@@ -83,7 +85,9 @@ export const PageListDatagrid = ({
       if (!rowAnchor || !pages) {
         return "";
       }
+
       const rowData: Page = pages[row];
+
       return rowAnchor(rowData.id);
     },
     [rowAnchor, pages],

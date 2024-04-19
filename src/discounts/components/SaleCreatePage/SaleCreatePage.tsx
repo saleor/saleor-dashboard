@@ -141,5 +141,6 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
     </Form>
   );
 };
+
 SaleCreatePage.displayName = "SaleCreatePage";
 export default SaleCreatePage;

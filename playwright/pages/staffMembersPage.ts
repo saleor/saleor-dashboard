@@ -52,6 +52,7 @@ export class StaffMembersPage extends BasePage {
 
   async gotToExistingStaffMemberPage(staffMemberId: string) {
     const staffMemberUrl = `${URL_LIST.staffMembers}${staffMemberId}`;
+
     await this.page.goto(staffMemberUrl);
   }
 }

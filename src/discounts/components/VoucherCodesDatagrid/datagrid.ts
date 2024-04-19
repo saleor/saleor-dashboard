@@ -83,6 +83,7 @@ function getStatus(isActive: boolean | undefined): DotStatus {
   if (isActive === undefined) {
     return "warning";
   }
+
   return isActive ? "success" : "error";
 }
 

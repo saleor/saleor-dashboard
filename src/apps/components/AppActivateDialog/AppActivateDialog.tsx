@@ -29,6 +29,7 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
     if (isNameMissing) {
       return intl.formatMessage(msgs.activateApp);
     }
+
     return intl.formatMessage(msgs.activateNamedApp, {
       name: <strong>{getStringOrPlaceholder(name)}</strong>,
     });
@@ -48,5 +49,6 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
     </ActionDialog>
   );
 };
+
 AppActivateDialog.displayName = "AppActivateDialog";
 export default AppActivateDialog;

@@ -130,8 +130,10 @@ export const getSuccessMessage = (isGrantRefund, isSendRefund): MessageDescripto
   if (isSendRefund) {
     return messages.successAlertWithSend;
   }
+
   if (isGrantRefund) {
     return messages.successAlertWithGrant;
   }
+
   return messages.successAlert;
 };

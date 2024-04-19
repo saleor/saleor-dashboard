@@ -116,5 +116,6 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
     </Card>
   );
 };
+
 ShippingZoneInfo.displayName = "ShippingZoneInfo";
 export default ShippingZoneInfo;

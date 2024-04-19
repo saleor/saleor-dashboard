@@ -373,6 +373,7 @@ function useProductVariantUpdateForm(
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const isSaveDisabled = loading || disabled;
+
   setIsSubmitDisabled(isSaveDisabled);
 
   return {

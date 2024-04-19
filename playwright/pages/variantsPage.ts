@@ -67,6 +67,7 @@ export class VariantsPage {
       .locator(`[data-test-id="Channel-${channelName}"]`)
       .locator(this.priceFieldInput)
       .first();
+
     await sellingPriceInput.clear();
     await sellingPriceInput.fill(sellingPriceValue);
   }
@@ -132,6 +133,7 @@ export class VariantsPage {
 
   async typeQuantityInStock(warehouse = "Oceania", quantity = "10") {
     const quantityInput = await this.page.getByTestId(warehouse).locator(this.stockInput);
+
     await quantityInput.clear();
     await quantityInput.fill(quantity);
   }
@@ -142,6 +144,7 @@ export class VariantsPage {
 
   async gotoExistingVariantPage(productId: string, variantId: string) {
     const existingVariantUrl = `${URL_LIST.products}${productId}/${URL_LIST.variant}${variantId}`;
+
     console.log(`Navigating to existing variant: ${existingVariantUrl}`);
     await this.page.goto(existingVariantUrl);
     await this.variantNameInput.waitFor({ state: "visible" });

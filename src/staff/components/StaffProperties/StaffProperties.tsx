@@ -234,5 +234,6 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
     </Card>
   );
 };
+
 StaffProperties.displayName = "StaffProperties";
 export default StaffProperties;

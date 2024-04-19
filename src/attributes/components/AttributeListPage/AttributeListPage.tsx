@@ -123,5 +123,6 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
     </>
   );
 };
+
 AttributeListPage.displayName = "AttributeListPage";
 export default AttributeListPage;

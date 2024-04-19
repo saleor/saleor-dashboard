@@ -137,9 +137,11 @@ function getChoiceIndex(
   add: boolean,
 ) {
   let choiceIndex = index;
+
   if (add || displayCustomValue) {
     choiceIndex += 2;
   }
+
   if (displayValues.length > 0) {
     choiceIndex += 1 + displayValues.length;
   }
@@ -162,6 +164,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<
     inputValue,
     onFetchMore,
   } = props;
+
   if (!!add && !!displayCustomValue) {
     throw new Error("Add and custom value cannot be displayed simultaneously");
   }
@@ -185,6 +188,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<
   }, [loading]);
 
   const hasValuesToDisplay = displayValues?.length > 0 || displayCustomValue || choices.length > 0;
+
   return (
     <Paper className={classes.root} elevation={8}>
       {hasValuesToDisplay && (

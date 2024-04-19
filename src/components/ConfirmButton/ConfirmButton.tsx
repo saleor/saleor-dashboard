@@ -59,6 +59,7 @@ export const ConfirmButton = ({
     if ((["error", "success"] as ConfirmButtonTransitionState[]).includes(transitionState)) {
       timeout.current = setTimeout(() => {
         setDisplayCompletedActionState(false);
+
         if (onTransitionToDefault) {
           onTransitionToDefault();
         }

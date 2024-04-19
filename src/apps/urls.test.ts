@@ -4,6 +4,7 @@ import { ThemeType } from "@saleor/app-sdk/app-bridge";
 
 jest.mock("@dashboard/config", () => {
   const actualModule = jest.requireActual("@dashboard/config");
+
   return {
     __esModule: true,
     ...actualModule,

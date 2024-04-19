@@ -72,6 +72,7 @@ export interface ProductListPageProps
 }
 
 export type ProductListViewType = "datagrid" | "tile";
+
 const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {

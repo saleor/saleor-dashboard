@@ -33,6 +33,7 @@ export const useManualRefund = ({ submitState, initialData }: ManualRefundHookPr
   };
   const handleChangeAmount: React.ChangeEventHandler<HTMLInputElement> = e => {
     const value = parseFloat(e.target.value);
+
     if (!Number.isNaN(value)) {
       setAmount(value);
     } else {

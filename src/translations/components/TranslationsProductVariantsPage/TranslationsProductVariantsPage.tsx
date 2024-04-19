@@ -118,5 +118,6 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
     </>
   );
 };
+
 TranslationsProductsPage.displayName = "TranslationsProductsPage";
 export default TranslationsProductsPage;

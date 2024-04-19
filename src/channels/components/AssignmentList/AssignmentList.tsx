@@ -93,4 +93,5 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
     </Accordion>
   );
 };
+
 export default AssignmentList;

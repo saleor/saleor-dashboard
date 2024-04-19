@@ -38,6 +38,7 @@ export const prepareVariantChangeData = (
     if (isColumnChannelPrice(update.column)) {
       return updateVaraintWithPriceFormat(update, locale, product);
     }
+
     return update;
   });
 

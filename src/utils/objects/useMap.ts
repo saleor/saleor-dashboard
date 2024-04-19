@@ -21,8 +21,11 @@ function useMap<K, V>(initialState: MapOrEntries<K, V> = new Map()): Return<K, V
         if (prev.get(key) === value) {
           return prev;
         }
+
         const copy = new Map(prev);
+
         copy.set(key, value);
+
         return copy;
       });
     }, []),
@@ -34,7 +37,9 @@ function useMap<K, V>(initialState: MapOrEntries<K, V> = new Map()): Return<K, V
     remove: useCallback(key => {
       setMap(prev => {
         const copy = new Map(prev);
+
         copy.delete(key);
+
         return copy;
       });
     }, []),

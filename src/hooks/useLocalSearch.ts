@@ -29,5 +29,6 @@ export function useLocalSearch<T>(
       ),
     [array, query],
   );
+
   return { query, setQuery, searchResult };
 }

@@ -60,5 +60,6 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
     </Card>
   );
 };
+
 ProductTypeTaxes.displayName = "ProductTypeTaxes";
 export default ProductTypeTaxes;

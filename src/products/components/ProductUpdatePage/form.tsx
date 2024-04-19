@@ -203,6 +203,7 @@ export function useProductUpdateForm(
   });
   const submit = useCallback(async () => {
     const result = await handleFormSubmit(await getSubmitData());
+
     await refetch();
     datagrid.setAdded(prevAdded =>
       prevAdded.filter((_, index) =>

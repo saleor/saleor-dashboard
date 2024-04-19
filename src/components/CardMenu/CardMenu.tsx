@@ -18,6 +18,7 @@ import { IconButton } from "../IconButton";
 import { cardMenuMessages as messages } from "./messages";
 
 const ITEM_HEIGHT = 48;
+
 export interface CardMenuItem {
   disabled?: boolean;
   label: string;
@@ -101,6 +102,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
     }
   };
   const prevOpen = useRef(open);
+
   useEffect(() => {
     if (prevOpen.current && !open) {
       anchorRef.current!.focus();
@@ -120,6 +122,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
 
   const handleMenuClick = (index: number) => {
     const selectedItem = menuItems[index];
+
     selectedItem.onSelect();
 
     if (!selectedItem.withLoading) {
@@ -204,5 +207,6 @@ const CardMenu: React.FC<CardMenuProps> = props => {
     </div>
   );
 };
+
 CardMenu.displayName = "CardMenu";
 export default CardMenu;

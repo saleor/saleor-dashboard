@@ -23,7 +23,9 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
     giftCardsPage.issueGiftCardDialog.clickIssueButton(),
   );
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
+
   const code = (await giftCardsPage.issueGiftCardDialog.cardCode.innerText()).slice(-4);
+
   await giftCardsPage.issueGiftCardDialog.clickCopyCodeButton();
   await giftCardsPage.expectSuccessBanner();
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
@@ -49,7 +51,9 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
     giftCardsPage.issueGiftCardDialog.clickIssueButton(),
   );
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
+
   const code = (await giftCardsPage.issueGiftCardDialog.cardCode.innerText()).slice(-4);
+
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });
   await giftCardsPage.expectSuccessBannerMessage("Successfully created gift card");

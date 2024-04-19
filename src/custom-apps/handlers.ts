@@ -133,6 +133,7 @@ const handleQuery = ({ events, query, setQuery, availableEvents }: HandleQuery) 
             eventsNames.forEach(event => {
               if (!queryEvents.includes(event)) {
                 const eventFragment = createEventInlineFragment(event);
+
                 selections.push(eventFragment);
               }
             });
@@ -178,6 +179,7 @@ const isEmptyQuery = (ast: DocumentNode): boolean => {
         const event = node.selections.filter(
           selection => (selection as FieldNode).name?.value === "event",
         )[0] as FieldNode;
+
         if (!event.selectionSet) {
           empty = true;
         }

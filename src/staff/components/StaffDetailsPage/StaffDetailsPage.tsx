@@ -194,5 +194,6 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
     </Form>
   );
 };
+
 StaffDetailsPage.displayName = "StaffDetailsPage";
 export default StaffDetailsPage;

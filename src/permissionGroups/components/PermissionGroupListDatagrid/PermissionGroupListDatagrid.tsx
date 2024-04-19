@@ -81,6 +81,7 @@ export const PermissionGroupListDatagrid = ({
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as PermissionGroupListUrlSortField;
+
       if (canBeSorted(columnName)) {
         onSort(columnName);
       }

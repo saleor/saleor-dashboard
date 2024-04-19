@@ -231,6 +231,7 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
     }),
     [themeValues, datagridTheme],
   );
+
   return readonly ? readonylDatagridTheme : datagridTheme;
 }
 

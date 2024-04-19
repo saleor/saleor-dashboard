@@ -35,10 +35,13 @@ function useAddressValidation<TInput, TOutput>(
         setValidationErrors(
           remove(countryRequiredError, validationErrors, (a, b) => a.field === b.field),
         );
+
         return onSubmit(transformFormToAddressInput(data));
       } catch {
         const errors = add(countryRequiredError, validationErrors);
+
         setValidationErrors(errors);
+
         // since every onSubmit must return Promise<error>
         return Promise.resolve(errors);
       }

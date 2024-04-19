@@ -69,6 +69,7 @@ export const AppUrls = {
       AppPaths.resolveAppPath(encodeURIComponent(appId)),
       "",
     );
+
     return deepSubPath || "/";
   },
   resolveAppCompleteUrlFromDashboardUrl: (
@@ -79,11 +80,13 @@ export const AppUrls = {
     if (!appUrl || !appId) {
       return appUrl;
     }
+
     const deepSubPath = dashboardUrl.replace(
       AppPaths.resolveAppPath(encodeURIComponent(appId)),
       "",
     );
     const appCompleteUrl = urlJoin(appUrl, deepSubPath);
+
     return appCompleteUrl;
   },
   resolveDashboardUrlFromAppCompleteUrl: (
@@ -94,8 +97,10 @@ export const AppUrls = {
     if (!appUrl || !appId) {
       return appUrl;
     }
+
     const deepSubPath = appCompleteUrl.replace(appUrl, "");
     const dashboardUrl = urlJoin(AppPaths.resolveAppPath(encodeURIComponent(appId)), deepSubPath);
+
     return dashboardUrl;
   },
   resolveAppIframeUrl: (

@@ -21,6 +21,7 @@ const TabContainer: React.FC<TabContainerProps> = props => {
 
   return <div className={clsx(classes.root, props.className)}>{children}</div>;
 };
+
 TabContainer.displayName = "TabContainer";
 
 export default TabContainer;

@@ -32,14 +32,17 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
     if (isNameMissing && isExternal) {
       return intl.formatMessage(msgs.deleteApp);
     }
+
     if (isNameMissing) {
       return intl.formatMessage(msgs.deleteLocalApp);
     }
+
     if (isExternal) {
       return intl.formatMessage(msgs.deleteNamedApp, {
         name: <strong>{getStringOrPlaceholder(name)}</strong>,
       });
     }
+
     return intl.formatMessage(msgs.deleteLocalNamedApp, {
       name: <strong>{getStringOrPlaceholder(name)}</strong>,
     });
@@ -71,5 +74,6 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
+
 AppDeleteDialog.displayName = "AppDeleteDialog";
 export default AppDeleteDialog;

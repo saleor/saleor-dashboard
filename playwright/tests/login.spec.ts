@@ -13,6 +13,7 @@ test("TC: SALEOR_39 Login as admin", async () => {
 
 const user: UserPermissionType = USER_PERMISSION;
 const password: string = process.env.E2E_PERMISSIONS_USERS_PASSWORD!;
+
 for (const permission of permissions) {
   test(`TC: SALEOR_41 Login as user with ${permission} permissions`, async () => {
     await login.loginViaUI(user[permission], password);

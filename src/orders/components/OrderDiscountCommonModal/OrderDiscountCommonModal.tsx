@@ -16,6 +16,7 @@ import ModalTitle from "./ModalTitle";
 import { ORDER_LINE_DISCOUNT, OrderDiscountCommonInput, OrderDiscountType } from "./types";
 
 type GetErrorMessageReturn = string | null;
+
 const numbersRegex = /([0-9]+\.?[0-9]*)$/;
 const useStyles = makeStyles(
   theme => ({

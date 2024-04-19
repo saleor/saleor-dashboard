@@ -8,6 +8,7 @@ const setUserDataMockFn = jest.fn();
 const TestAdapter = (): TrackerMethods => {
   const init: TrackerMethods["init"] = () => {
     initMockFn();
+
     return true;
   };
   const setUserData: TrackerMethods["setUserData"] = userData => setUserDataMockFn(userData);
@@ -39,7 +40,9 @@ describe("Error Tracking", () => {
   });
   it("Sends a captured exception", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter());
+
     errorTracking.init();
+
     const sampleError = new Error("test");
     const id = errorTracking.captureException(sampleError);
 
@@ -48,23 +51,29 @@ describe("Error Tracking", () => {
   });
   it("Does not save user data without permission", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter());
+
     errorTracking.init();
+
     const userData = {
       email: "john@example.com",
       id: "id",
       username: "John Doe",
     };
+
     errorTracking.setUserData(userData);
     expect(setUserDataMockFn).toHaveBeenCalledTimes(0);
   });
   it("Does save user data with proper permission", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter(), [TrackerPermission.USER_DATA]);
+
     errorTracking.init();
+
     const userData = {
       email: "john@example.com",
       id: "id",
       username: "John Doe",
     };
+
     errorTracking.setUserData(userData);
     expect(setUserDataMockFn).toHaveBeenCalledWith(userData);
   });

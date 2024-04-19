@@ -321,6 +321,7 @@ function getFilteredAttributeValue(params: ProductListUrlFilters): FilterParam[]
   if (!attrValues.length) {
     return null;
   }
+
   return attrValues;
 }
 
@@ -430,6 +431,7 @@ export const getWhereVariables = (
 ): ProductWhereInput => {
   if (productListingPageFiltersFlag.enabled) {
     const queryVars = createProductQueryVariables(value);
+
     return queryVars;
   }
 

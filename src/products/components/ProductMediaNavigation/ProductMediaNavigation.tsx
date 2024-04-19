@@ -98,5 +98,6 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
     </Card>
   );
 };
+
 ProductMediaNavigation.displayName = "ProductMediaNavigation";
 export default ProductMediaNavigation;

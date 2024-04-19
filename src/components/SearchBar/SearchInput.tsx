@@ -26,6 +26,7 @@ const SearchInput: React.FC<SearchInputProps> = props => {
   const { initialSearch, onSearchChange, placeholder } = props;
   const classes = useStyles(props);
   const [search, setSearch] = React.useState(initialSearch);
+
   React.useEffect(() => setSearch(initialSearch), [initialSearch]);
 
   return (
@@ -33,6 +34,7 @@ const SearchInput: React.FC<SearchInputProps> = props => {
       {debounceSearchChange => {
         const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
           const value = event.target.value;
+
           setSearch(value);
           debounceSearchChange(value);
         };

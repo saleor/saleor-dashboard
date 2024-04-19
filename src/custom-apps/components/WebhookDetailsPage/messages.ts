@@ -30,9 +30,11 @@ export const getHeaderTitle = (intl: IntlShape, webhook?: WebhookDetailsQuery["w
   if (!webhook) {
     return intl.formatMessage(messages.headerCreate);
   }
+
   if (isUnnamed(webhook)) {
     return intl.formatMessage(messages.header);
   }
+
   return intl.formatMessage(messages.headerNamed, {
     webhookName: getStringOrPlaceholder(webhook?.name),
   });

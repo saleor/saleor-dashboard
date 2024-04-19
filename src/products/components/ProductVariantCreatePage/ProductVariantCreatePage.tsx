@@ -340,5 +340,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     </ProductVariantCreateForm>
   );
 };
+
 ProductVariantCreatePage.displayName = "ProductVariantCreatePage";
 export default ProductVariantCreatePage;

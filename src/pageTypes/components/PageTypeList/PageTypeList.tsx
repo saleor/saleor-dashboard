@@ -74,6 +74,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
           pageTypes,
           pageType => {
             const isSelected = pageType ? isChecked(pageType.id) : false;
+
             return (
               <TableRowLink
                 className={pageType ? classes.link : undefined}
@@ -109,5 +110,6 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
     </ResponsiveTable>
   );
 };
+
 PageTypeList.displayName = "PageTypeList";
 export default PageTypeList;

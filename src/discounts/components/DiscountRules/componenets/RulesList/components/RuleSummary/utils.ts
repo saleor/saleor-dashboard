@@ -48,6 +48,7 @@ export const mapConditionToOption = (conditions: EnrichCondition[]): Option[] =>
 
 export const conditionTypeToHue = (type: string, theme: DefaultTheme) => {
   const hue = stringToHue(type);
+
   return theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 };
 

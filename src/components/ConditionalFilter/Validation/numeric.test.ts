@@ -32,6 +32,7 @@ describe("ConditionalFilter / validation / numeric", () => {
     );
     // Act
     const result = numeric(element, 0);
+
     // Assert
     expect(result).toEqual(expected);
   });

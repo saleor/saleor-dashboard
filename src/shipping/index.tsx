@@ -25,18 +25,21 @@ import ShippingZonesListComponent from "./views/ShippingZonesList";
 const ShippingZonesList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ShippingZonesListUrlQueryParams = qs;
+
   return <ShippingZonesListComponent params={params} />;
 };
 
 interface ShippingZoneDetailsRouteProps {
   id: string;
 }
+
 const ShippingZoneDetails: React.FC<RouteComponentProps<ShippingZoneDetailsRouteProps>> = ({
   location,
   match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ShippingZoneUrlQueryParams = qs;
+
   return <ShippingZoneDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 const RateCreate: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {

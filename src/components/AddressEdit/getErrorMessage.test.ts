@@ -30,6 +30,7 @@ describe("getErrorMessage", () => {
       code: "INVALID",
     } as AccountErrorFragment;
     const intlShape = {} as IntlShape;
+
     (getAccountErrorMessage as jest.Mock).mockReturnValue("account error message");
 
     // Act
@@ -46,6 +47,7 @@ describe("getErrorMessage", () => {
       code: "INVALID",
     } as unknown as OrderErrorFragment;
     const intlShape = {} as IntlShape;
+
     (getOrderErrorMessage as jest.Mock).mockReturnValue("order error message");
 
     // Act

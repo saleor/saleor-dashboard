@@ -192,6 +192,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                   if (!member) {
                     return null;
                   }
+
                   const isSelected = selectedMembers.some(
                     selectedMember => selectedMember.id === member.id,
                   );
@@ -267,5 +268,6 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
     </Dialog>
   );
 };
+
 AssignMembersDialog.displayName = "AssignMembersDialog";
 export default AssignMembersDialog;

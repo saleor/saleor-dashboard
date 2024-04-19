@@ -69,5 +69,6 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
     </div>
   );
 };
+
 ErrorPage.displayName = "ErrorPage";
 export default ErrorPage;

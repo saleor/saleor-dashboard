@@ -178,9 +178,11 @@ export function useMenuStructure() {
   ];
   const isMenuItemPermitted = (menuItem: SidebarMenuItem) => {
     const userPermissions = (user?.userPermissions || []).map(permission => permission.code);
+
     if (!menuItem?.permissions || menuItem?.permissions?.length < 1) {
       return true;
     }
+
     return menuItem.permissions.some(permission => userPermissions.includes(permission));
   };
   const getFilteredMenuItems = (menuItems: SidebarMenuItem[]) =>
@@ -190,6 +192,7 @@ export function useMenuStructure() {
     if (!isMenuItemPermitted(menuItem)) {
       return resultItems;
     }
+
     const { children } = menuItem;
     const filteredChildren = children ? getFilteredMenuItems(children) : undefined;
 

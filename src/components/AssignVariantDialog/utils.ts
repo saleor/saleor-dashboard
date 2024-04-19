@@ -64,5 +64,6 @@ export const getCompositeLabel = (variant: VariantWithProductLabel) => {
   if (!variant.name) {
     return variant.productName;
   }
+
   return `${variant.productName}: ${variant.name}`;
 };

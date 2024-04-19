@@ -11,6 +11,7 @@ function getPosition(anchor?: HTMLElement): Position {
       y: anchor.scrollTop,
     };
   }
+
   return undefined;
 }
 
@@ -32,6 +33,7 @@ function useElementScroll(anchor: MutableRefObject<HTMLElement>): Position {
 
     if (anchorInstance) {
       const handleScroll = throttle(() => setScroll(getPosition(anchorInstance)), 100);
+
       anchorInstance.addEventListener("scroll", handleScroll);
 
       return () => {

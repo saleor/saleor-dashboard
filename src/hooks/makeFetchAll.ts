@@ -25,6 +25,7 @@ export function makeFetchAll<TData, TVariables>(
     const result = useQuery({
       ...opts,
     });
+
     useEffect(() => {
       if (result.data) {
         const data = result.data[accessKey] as { pageInfo?: PageInfoFragment };

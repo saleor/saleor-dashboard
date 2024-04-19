@@ -79,5 +79,6 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
     </>
   );
 };
+
 ProductTypeListPage.displayName = "ProductTypeListPage";
 export default ProductTypeListPage;

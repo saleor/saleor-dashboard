@@ -10,6 +10,7 @@ import { messages } from "../../../../messages";
 import { RuleRewardGifts } from "../RuleRewardGifts";
 import { RuleRewardTypeSelect } from "../RuleRewardTypeSelect/RuleRewardTypeSelect";
 import { RuleRewardValue } from "../RuleRewardValue";
+
 interface RuleRewardProps {
   currencySymbol: string | null;
   error: string | undefined;

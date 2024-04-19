@@ -212,5 +212,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     </Card>
   );
 };
+
 AttributeDetails.displayName = "AttributeDetails";
 export default AttributeDetails;

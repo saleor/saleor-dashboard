@@ -130,5 +130,6 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
     </DashboardCard>
   );
 };
+
 ProductVariantNavigation.displayName = "ProductVariantNavigation";
 export default ProductVariantNavigation;

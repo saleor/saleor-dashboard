@@ -45,6 +45,7 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({ event
     if (isFakeEventsList(events)) {
       return false;
     }
+
     return !!events.find(event => !!event.createdBy);
   }, [events]);
 

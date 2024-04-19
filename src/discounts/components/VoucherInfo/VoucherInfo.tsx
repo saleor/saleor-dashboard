@@ -44,4 +44,5 @@ const VoucherInfo = ({ data, disabled, errors, onChange }: VoucherInfoProps) => 
     </DashboardCard>
   );
 };
+
 export default VoucherInfo;

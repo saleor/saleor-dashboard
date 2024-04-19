@@ -111,10 +111,12 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
   });
   const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
     clearProductRowSelection();
+
     if (data?.categoryUpdate?.errors.length! > 0) {
       const backgroundImageError = data?.categoryUpdate?.errors.find(
         error => error.field === ("backgroundImage" as keyof CategoryInput),
       );
+
       if (backgroundImageError) {
         notify({
           status: "error",
@@ -134,6 +136,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
   });
   const handleBulkCategoryDelete = (data: CategoryBulkDeleteMutation) => {
     clearCategryRowSelection();
+
     if (data?.categoryBulkDelete?.errors.length === 0) {
       closeModal();
       notify({
@@ -148,6 +151,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
   const [productBulkDelete, productBulkDeleteOpts] = useProductBulkDeleteMutation({
     onCompleted: data => {
       clearProductRowSelection();
+
       if (data?.productBulkDelete?.errors.length === 0) {
         closeModal();
         notify({

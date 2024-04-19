@@ -15,6 +15,7 @@ export class FlagsResolver {
 
   public fetchAll() {
     const promises = this.strategies.map(s => s.fetchAll());
+
     this.results = Promise.all(promises);
 
     return this;

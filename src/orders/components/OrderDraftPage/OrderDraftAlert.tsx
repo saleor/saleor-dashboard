@@ -25,9 +25,11 @@ const getAlerts = (
   if (isChannelInactive) {
     alerts = [...alerts, alertMessages.inactiveChannel];
   }
+
   if (noProductsInChannel) {
     alerts = [...alerts, alertMessages.noProductsInChannel];
   }
+
   if (noShippingMethodsInChannel) {
     alerts = [...alerts, alertMessages.noShippingMethodsInChannel];
   }

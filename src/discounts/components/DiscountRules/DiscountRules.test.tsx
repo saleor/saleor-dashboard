@@ -83,6 +83,7 @@ describe("DiscountRules", () => {
     });
 
     const mockIntersectionObserver = jest.fn();
+
     mockIntersectionObserver.mockReturnValue({
       observe: () => null,
       unobserve: () => null,
@@ -172,6 +173,7 @@ describe("DiscountRules", () => {
   it("should allow to add new catalog rule", async () => {
     // Arrange
     const onRuleAdd = jest.fn();
+
     render(
       <DiscountRules
         promotionId={null}
@@ -243,6 +245,7 @@ describe("DiscountRules", () => {
   it("should allow to add new order rule", async () => {
     // Arrange
     const onRuleAdd = jest.fn();
+
     render(
       <DiscountRules
         promotionId={null}
@@ -338,6 +341,7 @@ describe("DiscountRules", () => {
 
     // Edit name
     const nameField = screen.getByRole("input", { name: "Name" });
+
     await userEvent.clear(nameField);
     await userEvent.type(nameField, "New name");
     // Edit condition
@@ -359,9 +363,11 @@ describe("DiscountRules", () => {
     await userEvent.click(await screen.getAllByTestId("select-option")[1]);
     // Edit reward
     await userEvent.click(screen.getByRole("radio", { name: "$" }));
+
     const discountValueField = screen.getByRole("input", {
       name: "Reward value",
     });
+
     await userEvent.clear(discountValueField);
     await userEvent.type(discountValueField, "122");
     await userEvent.click(screen.getByRole("button", { name: /save/i }));
@@ -435,6 +441,7 @@ describe("DiscountRules", () => {
 
     // Edit name
     const nameField = screen.getByRole("input", { name: "Name" });
+
     await userEvent.clear(nameField);
     await userEvent.type(nameField, "New name");
     // Remove condition

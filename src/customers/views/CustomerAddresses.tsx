@@ -172,4 +172,5 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => 
     </>
   );
 };
+
 export default CustomerAddresses;

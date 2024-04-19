@@ -116,5 +116,6 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
     </ListPageLayout>
   );
 };
+
 DiscountListPage.displayName = "SaleListPage";
 export default DiscountListPage;

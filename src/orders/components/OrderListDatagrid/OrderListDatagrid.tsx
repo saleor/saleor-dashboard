@@ -74,6 +74,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
       }
 
       const rowData = orders[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, orders],
@@ -83,7 +84,9 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
       if (!rowAnchor) {
         return;
       }
+
       const rowData = orders[row];
+
       return rowAnchor(rowData.id);
     },
     [rowAnchor, orders],

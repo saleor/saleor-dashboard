@@ -59,6 +59,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
     } else {
       onChangeCustomerBillingAddress(temporarySelectedAddress);
     }
+
     if (openFromCustomerChange) {
       exitSearch();
     }

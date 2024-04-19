@@ -26,6 +26,7 @@ const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
     PageListUrlSortField,
     PageListUrlSortField.title,
   );
+
   return <PageListComponent params={params} />;
 };
 const PageCreate: React.FC<RouteComponentProps<any>> = ({ match }) => {

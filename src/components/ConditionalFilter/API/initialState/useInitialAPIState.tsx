@@ -100,6 +100,7 @@ export const useProductInitialAPIState = (): InitialAPIState => {
 
     const data = await Promise.all(queriesToRun);
     const initialState = createInitialStateFromData(data, channel);
+
     setData(
       new InitialStateResponse(
         initialState.category,

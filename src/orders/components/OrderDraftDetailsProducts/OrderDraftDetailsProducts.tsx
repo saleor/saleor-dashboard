@@ -4,6 +4,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import { OrderDraftDetailsDatagrid } from "../OrderDraftDetailsDatagrid/OrderDraftDetailsDatagrid";
+
 export interface FormData {
   quantity: number;
 }

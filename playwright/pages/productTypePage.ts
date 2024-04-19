@@ -73,6 +73,7 @@ export class ProductTypePage extends BasePage {
 
   async gotoExistingProductTypePage(productTypeId: string) {
     const existingProductTypeUrl = URL_LIST.productTypes + productTypeId;
+
     await console.log("Navigating to product type details: " + existingProductTypeUrl);
     await this.page.goto(existingProductTypeUrl);
   }
@@ -84,6 +85,7 @@ export class ProductTypePage extends BasePage {
   async checkProductTypesOnList(listRows: string[]) {
     for (const row of listRows) {
       const rowLocator = this.page.getByTestId(`id-${row}`);
+
       await rowLocator.locator("input").click();
     }
   }

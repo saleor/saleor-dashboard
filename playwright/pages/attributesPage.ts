@@ -71,6 +71,7 @@ export class AttributesPage extends BasePage {
   async assertSearchResultsVisibility(searchText: string) {
     const elements = await this.page.$$("text=" + searchText);
     const otherElements = await this.page.$$("text!=" + searchText);
+
     for (const element of elements) {
       await element.waitForElementState("visible");
     }
@@ -85,6 +86,7 @@ export class AttributesPage extends BasePage {
 
   async gotoExistingAttributePage(attributeId: string, attributeName: string) {
     const existingAttributeUrl = `${URL_LIST.attributes}${attributeId}`;
+
     await console.log(`Navigates to existing attribute page: ${existingAttributeUrl}`);
     await this.page.goto(existingAttributeUrl);
     await this.pageHeader.getByText(attributeName).waitFor({

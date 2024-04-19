@@ -103,6 +103,7 @@ export function getData({
   if (column === -1) {
     return textCell("");
   }
+
   const columnId = availableColumns[column]?.id;
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
   const dataRow = added.includes(row)
@@ -113,6 +114,7 @@ export function getData({
     case "name":
     case "sku": {
       const value = change ?? (dataRow ? dataRow[columnId] : "");
+
       return textCell(value || "");
     }
   }
@@ -205,6 +207,7 @@ export function getColumnData(
 
   if (getColumnChannel(name)) {
     const channel = channels.find(channel => channel.id === getColumnChannel(name));
+
     return {
       ...common,
       width: 150,
@@ -215,6 +218,7 @@ export function getColumnData(
 
   if (getColumnChannelAvailability(name)) {
     const channel = channels.find(channel => channel.id === getColumnChannelAvailability(name));
+
     return {
       ...common,
       width: 80,

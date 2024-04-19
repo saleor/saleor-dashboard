@@ -31,6 +31,7 @@ export const useLegacyThemeHandler = () => {
     }
 
     const isDark = event.newValue?.toLowerCase().includes("dark");
+
     setLegacyTheme(isDark ? "dark" : "light");
     setTheme(isDark ? "defaultDark" : "defaultLight");
   };

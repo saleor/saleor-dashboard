@@ -71,5 +71,6 @@ const ProductCategoryAndCollectionsForm = ({
     </>
   );
 };
+
 ProductCategoryAndCollectionsForm.displayName = "ProductCategoryAndCollectionsForm";
 export default ProductCategoryAndCollectionsForm;

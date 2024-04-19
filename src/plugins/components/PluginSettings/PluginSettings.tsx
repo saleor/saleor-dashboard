@@ -98,5 +98,6 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
     </Card>
   );
 };
+
 PluginSettings.displayName = "PluginSettings";
 export default PluginSettings;

@@ -16,9 +16,11 @@ export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMen
     onClick: open,
     type: "item",
   }));
+
   if (items.length) {
     items.unshift(header);
   }
+
   return items;
 };
 
@@ -65,5 +67,6 @@ export const getMenuItemExtension = (
     [],
   );
   const extension = extensionsList.find(extension => id === `extension-${extension.id}`);
+
   return extension;
 };

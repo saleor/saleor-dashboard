@@ -21,9 +21,11 @@ export const getDropdownColor = (channels: CollectionChannels[]) => {
   if (channels.some(isActive)) {
     return "success";
   }
+
   if (channels.some(isScheduled)) {
     return "warning";
   }
+
   return "error";
 };
 
@@ -31,9 +33,11 @@ export const getChannelAvailabilityColor = (channelData: CollectionChannels): Pi
   if (isActive(channelData)) {
     return "success";
   }
+
   if (isScheduled(channelData)) {
     return "warning";
   }
+
   return "error";
 };
 
@@ -41,18 +45,22 @@ export const getChannelAvailabilityLabel = (channelData: CollectionChannels): Me
   if (isActive(channelData)) {
     return channelStatusMessages.published;
   }
+
   if (isScheduled(channelData)) {
     return channelStatusMessages.scheduled;
   }
+
   return channelStatusMessages.unpublished;
 };
 export const getChannelAvailabilityStatus = (channelData: CollectionChannels): DotStatus => {
   if (isActive(channelData)) {
     return "success";
   }
+
   if (isScheduled(channelData)) {
     return "warning";
   }
+
   return "error";
 };
 

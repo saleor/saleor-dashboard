@@ -38,6 +38,7 @@ function useAttributeValueSearchHandler(
     if (query === "" || query !== state.query) {
       search(query);
     }
+
     if (id !== state.id || query !== state.query) {
       setState({
         query,

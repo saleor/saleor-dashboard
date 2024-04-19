@@ -11,6 +11,7 @@ export const Form: React.FC<React.HTMLProps<HTMLFormElement>> = ({ children, ...
       {...props}
       onSubmit={e => {
         e.preventDefault();
+
         if (amount) {
           onAddTransaction({ amount, description, pspReference });
         }

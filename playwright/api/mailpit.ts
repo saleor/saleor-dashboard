@@ -2,6 +2,7 @@ import { URL_LIST } from "@data/url";
 import { APIRequestContext, expect } from "@playwright/test";
 
 const mailpitUrl = process.env.MAILPITURL || "no mailpit url provided";
+
 export class MailpitService {
   readonly request: APIRequestContext;
 
@@ -11,12 +12,14 @@ export class MailpitService {
 
   async getLastEmails(getEmailsLimit = 50) {
     let latestEmails: any;
+
     await expect
       .poll(
         async () => {
           latestEmails = await this.request.get(
             `${mailpitUrl}/api/v1/messages?limit=${getEmailsLimit}`,
           );
+
           return latestEmails;
         },
         {
@@ -26,7 +29,9 @@ export class MailpitService {
         },
       )
       .not.toBeUndefined();
+
     const latestEmailsJson = await latestEmails!.json();
+
     return latestEmailsJson;
   }
 
@@ -36,8 +41,10 @@ export class MailpitService {
     latestEmails.messages = latestEmails.messages.filter((message: { Created: string }) => {
       const timeMinusLastMs = Date.now() - fromTime;
       const mailCreated = new Date(message.Created);
+
       return mailCreated.getTime() > timeMinusLastMs;
     });
+
     return latestEmails;
   }
 
@@ -50,10 +57,12 @@ export class MailpitService {
 
   async getEmailsForUser(userEmail: string) {
     let userEmails: any[] = [];
+
     await expect
       .poll(
         async () => {
           const emails = await this.getEmailsFromTime();
+
           userEmails = await emails.messages.filter((mails: { To: any[] }) =>
             mails.To.map((recipientObj: { Address: any }) => `${recipientObj.Address}`).includes(
               userEmail,
@@ -69,21 +78,25 @@ export class MailpitService {
         },
       )
       .toBeGreaterThanOrEqual(1);
+
     return userEmails;
   }
 
   async checkDoesUserReceivedExportedData(userEmail: string, mailSubject: string) {
     let confirmationMessageReceived = false;
+
     await expect
       .poll(
         async () => {
           const userEmails: any[] = await this.getEmailsForUser(userEmail);
+
           for (const email of userEmails) {
             if (email.Subject === mailSubject) {
               confirmationMessageReceived = true;
               break;
             }
           }
+
           return confirmationMessageReceived;
         },
         {
@@ -102,6 +115,7 @@ export class MailpitService {
     const emailHtmlFormat = tokenRegex.exec(emailDetails.HTML.toString());
     const token = "&" + emailHtmlFormat![0];
     const resetPasswordUrl = URL_LIST.resetPassword + userEmail + token;
+
     return resetPasswordUrl;
   }
 }

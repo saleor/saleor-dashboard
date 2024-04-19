@@ -21,6 +21,7 @@ export const DeleteShippingRateDialog: React.FC<DeleteShippingRateDialogProps> =
   open,
 }) => {
   const intl = useIntl();
+
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}

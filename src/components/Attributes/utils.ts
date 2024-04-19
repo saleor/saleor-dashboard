@@ -23,6 +23,7 @@ export function getSingleChoices(values: AttributeValueFragment[]): SingleAutoco
 
 export const getRichTextData = (attribute: AttributeInput): OutputData => {
   const data = attribute.data.selectedValues?.[0]?.richText;
+
   return data ? JSON.parse(data) : {};
 };
 
@@ -55,6 +56,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
     const definedAttributeValue = attribute.data.values.find(
       definedValue => definedValue.reference === attributeValue,
     );
+
     // If value has been previously assigned, use it's data
     if (definedAttributeValue) {
       return {
@@ -66,6 +68,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
     const definedAttributeReference = attribute.data.references?.find(
       reference => reference.value === attributeValue,
     );
+
     // If value has not been yet assigned, use data of reference
     if (definedAttributeReference) {
       return definedAttributeReference;
@@ -118,6 +121,7 @@ export function getMultiDisplayValue(
     const definedAttributeValue =
       attributeValues.find(definedValue => definedValue.slug === attributeValue) ||
       attribute.data.values.find(definedValue => definedValue.slug === attributeValue);
+
     if (definedAttributeValue) {
       return {
         label: definedAttributeValue.name,

@@ -20,11 +20,13 @@ function useStateFromProps<T>(
 
   useEffect(() => {
     const shouldUpdate = !isEqual(prevData, data);
+
     if (shouldUpdate) {
       const newData = typeof mergeFunc === "function" ? mergeFunc(prevData, state, data) : data;
 
       setState(newData);
       setPrevData(data);
+
       if (typeof onRefresh === "function") {
         onRefresh(data, newData);
       }

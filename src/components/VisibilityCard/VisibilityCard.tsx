@@ -113,6 +113,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
     });
   const handleRadioFieldChange = (type: keyof DateFields) => (e: ChangeEvent) => {
     const { value } = e.target;
+
     if (!value) {
       onChange({
         target: {
@@ -121,6 +122,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
         },
       });
     }
+
     return onChange(e);
   };
 

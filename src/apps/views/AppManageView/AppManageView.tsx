@@ -43,6 +43,7 @@ export const AppManageView: React.FC<Props> = ({ id, params }) => {
   const [activateApp, activateAppResult] = useAppActivateMutation({
     onCompleted: data => {
       const errors = data?.appActivate?.errors;
+
       if (errors?.length === 0) {
         notify({
           status: "success",
@@ -65,6 +66,7 @@ export const AppManageView: React.FC<Props> = ({ id, params }) => {
   const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
     onCompleted: data => {
       const errors = data?.appDeactivate?.errors;
+
       if (errors?.length === 0) {
         notify({
           status: "success",

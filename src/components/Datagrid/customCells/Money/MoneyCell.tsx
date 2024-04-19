@@ -95,6 +95,7 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
 
     for (const item of displayFormat.reverse()) {
       ctx.textAlign = "right";
+
       if (item.type === "currency" && item.value.length > 2) {
         ctx.fillStyle = theme.textLight;
       } else {
@@ -106,7 +107,9 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
         ctx.fillText(item.value, rect.x + theme.cellHorizontalPadding, y);
       } else {
         ctx.fillText(item.value, drawingPosition, y);
+
         const textWidth = ctx.measureText(item.value).width;
+
         drawingPosition -= textWidth;
       }
     }

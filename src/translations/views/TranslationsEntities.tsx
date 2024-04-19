@@ -114,6 +114,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({ language, p
     }),
     [params],
   );
+
   return (
     <TranslationsEntitiesListPage
       filters={{
@@ -144,5 +145,6 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({ language, p
     </TranslationsEntitiesListPage>
   );
 };
+
 TranslationsEntities.displayName = "TranslationsEntities";
 export default TranslationsEntities;

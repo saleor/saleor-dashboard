@@ -25,6 +25,7 @@ const ChannelDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
 const ChannelsList: React.FC<RouteComponentProps> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: ChannelsListUrlQueryParams = asSortParams(qs, ChannelsListUrlSortField);
+
   return <ChannelsListComponent params={params} />;
 };
 

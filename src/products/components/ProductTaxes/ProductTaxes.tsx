@@ -52,5 +52,6 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
     </DashboardCard>
   );
 };
+
 ProductTaxes.displayName = "ProductTaxes";
 export default ProductTaxes;

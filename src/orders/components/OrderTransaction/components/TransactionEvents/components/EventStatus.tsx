@@ -12,6 +12,7 @@ export interface EventStatusProps {
 
 export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
   const intl = useIntl();
+
   switch (status) {
     case "PENDING":
       return (
@@ -35,6 +36,7 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
       );
     default: {
       const _exhaustiveCheck: never = status;
+
       return _exhaustiveCheck;
     }
   }

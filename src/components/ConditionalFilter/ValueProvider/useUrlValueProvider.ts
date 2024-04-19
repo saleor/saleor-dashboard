@@ -34,6 +34,7 @@ export const useUrlValueProvider = (
   const query = params.get("query");
   const before = params.get("before");
   const after = params.get("after");
+
   params.delete("asc");
   params.delete("sort");
   params.delete("activeTab");

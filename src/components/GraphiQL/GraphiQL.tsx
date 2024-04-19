@@ -209,6 +209,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
             const isVisible = plugin === pluginContext.visiblePlugin;
             const label = `${isVisible ? "Hide" : "Show"} ${plugin.title}`;
             const Icon = plugin.icon;
+
             return (
               <Tooltip key={plugin.title} label={label}>
                 <UnStyledButton

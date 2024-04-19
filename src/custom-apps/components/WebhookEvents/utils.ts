@@ -13,6 +13,7 @@ export const getWebhookTypes = (webhookEvents: string[]) => {
       : [keywords[0], 1];
     const event = keywords.slice(sliceSize).join("_");
     const events = acc[keyword] || [];
+
     events.push(event.length ? event : multiKeyword);
     acc[keyword] = events;
 
@@ -37,5 +38,6 @@ export const getEventName = (object: string, event: string) => {
   if (object === event) {
     return object.toUpperCase() as WebhookEventTypeSyncEnum;
   }
+
   return [object, event].join("_").toUpperCase() as WebhookEventTypeSyncEnum;
 };

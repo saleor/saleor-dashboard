@@ -36,9 +36,11 @@ export const useChannelsSearchWithLoadMore = (
     }
 
     const newIndex = currentIndex + 1;
+
     setCurrentIndex(newIndex);
 
     const newChunk = allChannelsChunks[newIndex];
+
     setCurrentChannelsChunks([...currentChannelsChunks, newChunk]);
   };
   const hasMore = allChannelsChunks.length > currentChannelsChunks.length;

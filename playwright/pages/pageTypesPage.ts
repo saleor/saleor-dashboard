@@ -64,6 +64,7 @@ export class PageTypesPage extends BasePage {
 
   async gotoExistingPageTypePage(pageTypeId: string) {
     const existingPageTypeUrl = URL_LIST.pageTypes + pageTypeId;
+
     await console.log("Navigating to page type details: " + existingPageTypeUrl);
     await this.page.goto(existingPageTypeUrl);
   }
@@ -75,6 +76,7 @@ export class PageTypesPage extends BasePage {
   async checkPageTypesOnList(listRows: string[]) {
     for (const row of listRows) {
       const rowLocator = this.page.getByTestId(`id-${row}`);
+
       await rowLocator.locator("input").click();
     }
   }

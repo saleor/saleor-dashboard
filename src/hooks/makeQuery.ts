@@ -18,6 +18,7 @@ import { useIntl } from "react-intl";
 
 import useAppState from "./useAppState";
 import useNotifier from "./useNotifier";
+
 export { useLazyQuery } from "@apollo/client";
 
 const getPermissionKey = (permission: string) => `PERMISSION_${permission}` as PrefixedPermissions;
@@ -129,6 +130,7 @@ export function useQuery<TData, TVariables>(
         if (!fetchMoreResult) {
           return previousResults;
         }
+
         return mergeFunc(previousResults, fetchMoreResult);
       },
       variables: { ...variablesWithPermissions, ...extraVariables },

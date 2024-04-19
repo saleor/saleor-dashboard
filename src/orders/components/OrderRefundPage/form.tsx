@@ -126,6 +126,7 @@ function useOrderRefundForm(
         };
       },
     );
+
     refundedProductQuantities.set(newQuantities);
     triggerChange();
   };
@@ -143,9 +144,11 @@ function useOrderRefundForm(
             value: line.quantity.toString(),
           };
         }
+
         return selectedLine;
       },
     );
+
     refundedFulfilledProductQuantities.set(newQuantities);
     triggerChange();
   };
@@ -163,6 +166,7 @@ function useOrderRefundForm(
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const isSaveDisabled = disabled || !order;
+
   setIsSubmitDisabled(isSaveDisabled);
 
   return {

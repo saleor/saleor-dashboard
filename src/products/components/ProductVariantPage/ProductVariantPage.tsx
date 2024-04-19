@@ -420,5 +420,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 ProductVariantPage.displayName = "ProductVariantPage";
 export default ProductVariantPage;

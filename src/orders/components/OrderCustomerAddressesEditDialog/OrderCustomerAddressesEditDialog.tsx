@@ -101,12 +101,15 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     if (hasCustomerChanged || addressSearchState.open) {
       return false;
     }
+
     if (!customerAddresses.length) {
       return false;
     }
+
     if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
       return data.shippingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS;
     }
+
     return data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS;
   };
   const getCustomerAddress = (selectedCustomerAddressID: string): AddressInput =>
@@ -130,12 +133,14 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         ...(data.cloneAddress && { billingAddress: shippingAddress }),
       };
     }
+
     if (variant === AddressEditDialogVariant.CHANGE_BILLING_ADDRESS) {
       return {
         ...(data.cloneAddress && { shippingAddress: billingAddress }),
         billingAddress,
       };
     }
+
     return {
       shippingAddress,
       billingAddress: data.cloneAddress ? shippingAddress : billingAddress,
@@ -146,25 +151,31 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
       if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
         return dialogMessages.shippingTitle;
       }
+
       if (variant === AddressEditDialogVariant.CHANGE_BILLING_ADDRESS) {
         return dialogMessages.billingTitle;
       }
     }
+
     if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
       return dialogMessages.shippingChangeTitle;
     }
+
     if (variant === AddressEditDialogVariant.CHANGE_BILLING_ADDRESS) {
       return dialogMessages.billingChangeTitle;
     }
+
     return dialogMessages.customerChangeTitle;
   };
   const getDialogDescription = (): MessageDescriptor => {
     if (customerAddresses.length === 0) {
       return dialogMessages.noAddressDescription;
     }
+
     if (variant === AddressEditDialogVariant.CHANGE_CUSTOMER) {
       return dialogMessages.customerChangeDescription;
     }
+
     return dialogMessages.addressChangeDescription;
   };
   const handleContinue = (data: OrderCustomerAddressesEditFormData) => {
@@ -176,16 +187,20 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             ? AddressTypeEnum.SHIPPING
             : AddressTypeEnum.BILLING,
       });
+
       return;
     }
+
     handleSubmit(data);
   };
   const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
     const addressesInput = await handleAddressesSubmit(data);
+
     if (addressesInput && !hasPreSubmitErrors(addressesInput)) {
       await onConfirm(addressesInput as OrderCustomerAddressesEditDialogOutput);
       setAddressSearchState(defaultSearchState);
     }
+
     return Promise.resolve([...shippingValidationErrors, ...billingValidationErrors]);
   };
   const countryChoices = mapCountriesToChoices(countries);
@@ -246,6 +261,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             setAddressSearchState,
             addressEditCommonProps,
           );
+
           return (
             <>
               {addressSearchState.open ? (

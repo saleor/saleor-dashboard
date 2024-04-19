@@ -2,6 +2,7 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
+
 interface ErrorNoticeBarProps {
   className?: string;
   message: string | React.ReactNode;
@@ -29,5 +30,6 @@ const ErrorNoticeBar: React.FC<ErrorNoticeBarProps> = props => {
     </Card>
   );
 };
+
 ErrorNoticeBar.displayName = "ErrorNoticeBar";
 export default ErrorNoticeBar;

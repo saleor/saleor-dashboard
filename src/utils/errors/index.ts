@@ -16,6 +16,7 @@ export function getFormErrors<TField extends string, TError extends UserError>(
   return fields.reduce(
     (errs, field) => {
       errs[field] = getFieldError(errors, field);
+
       return errs;
     },
     {} as unknown as Record<TField, TError | undefined>,
@@ -38,6 +39,7 @@ export function getFormChannelErrors<TField extends string, TError extends Chann
   return fields.reduce(
     (errs, field) => {
       errs[field] = [...(errs[field] ? errs[field] : []), ...getFieldChannelError(errors, field)];
+
       return errs;
     },
     {} as Record<TField, TError[]>,

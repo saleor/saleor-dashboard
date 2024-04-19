@@ -81,6 +81,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   );
   const handlePaymentCapture = (data: OrderCaptureMutation) => {
     const errs = data.orderCapture?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -94,6 +95,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleOrderMarkAsPaid = (data: OrderMarkAsPaidMutation) => {
     const errs = data.orderMarkAsPaid?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -107,6 +109,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleOrderCancel = (data: OrderCancelMutation) => {
     const errs = data.orderCancel?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -120,6 +123,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleDraftCancel = (data: OrderDraftCancelMutation) => {
     const errs = data.draftOrderDelete?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -133,6 +137,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleOrderVoid = (data: OrderVoidMutation) => {
     const errs = data.orderVoid?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -146,6 +151,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleNoteAdd = (data: OrderAddNoteMutation) => {
     const errs = data.orderAddNote?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -158,6 +164,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleUpdate = (data: OrderUpdateMutation) => {
     const errs = data.orderUpdate?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -171,6 +178,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleDraftUpdate = (data: OrderDraftUpdateMutation) => {
     const errs = data.draftOrderUpdate?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -184,6 +192,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleShippingMethodUpdate = (data: OrderShippingMethodUpdateMutation) => {
     const errs = data.orderUpdateShipping?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -197,6 +206,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleOrderLineDelete = (data: OrderLineDeleteMutation) => {
     const errs = data.orderLineDelete?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -209,6 +219,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleOrderLinesAdd = (data: OrderLinesAddMutation) => {
     const errs = data.orderLinesCreate?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -222,6 +233,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleOrderLineUpdate = (data: OrderLineUpdateMutation) => {
     const errs = data.orderLineUpdate?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -241,6 +253,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleOrderFulfillmentApprove = (data: OrderFulfillmentApproveMutation) => {
     const errs = data.orderFulfillmentApprove?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -258,6 +271,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancelMutation) => {
     const errs = data.orderFulfillmentCancel?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -271,6 +285,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleOrderFulfillmentUpdate = (data: OrderFulfillmentUpdateTrackingMutation) => {
     const errs = data.orderFulfillmentUpdateTracking?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -284,6 +299,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleDraftFinalize = (data: OrderDraftFinalizeMutation) => {
     const errs = data.draftOrderComplete?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -296,6 +312,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleInvoiceGeneratePending = (data: InvoiceRequestMutation) => {
     const errs = data.invoiceRequest?.errors;
+
     if (errs.length === 0) {
       notify({
         text: intl.formatMessage({
@@ -313,6 +330,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleInvoiceGenerateFinished = (data: InvoiceRequestMutation) => {
     const errs = data.invoiceRequest?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -324,6 +342,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
   };
   const handleInvoiceSend = (data: InvoiceEmailSendMutation) => {
     const errs = data.invoiceSendNotification?.errors;
+
     if (errs.length === 0) {
       notify({
         text: intl.formatMessage({

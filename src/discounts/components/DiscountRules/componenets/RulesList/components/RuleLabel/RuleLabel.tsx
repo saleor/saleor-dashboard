@@ -15,6 +15,7 @@ export const RuleLabel = ({ ruleName }: RuleLabelProps) => {
     if (name) {
       return `: ${name}`;
     }
+
     return "";
   };
   const ruleTypeLabel = useMemo(() => {

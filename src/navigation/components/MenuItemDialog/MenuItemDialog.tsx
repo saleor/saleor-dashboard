@@ -63,6 +63,7 @@ const defaultInitial: MenuItemDialogFormData = {
 
 function getMenuItemData(value: string): MenuItemData {
   const [type, ...idParts] = value.split(":");
+
   return {
     id: idParts.join(":"),
     type: type as MenuItemType,
@@ -71,9 +72,11 @@ function getMenuItemData(value: string): MenuItemData {
 
 function getDisplayValue(menu: IMenu, value: string): string {
   const menuItemData = getMenuItemData(value);
+
   if (menuItemData.type === "link") {
     return menuItemData.id;
   }
+
   return getMenuItemByValue(menu, value).label.toString();
 }
 
@@ -194,6 +197,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     } else if (url) {
       setUrl(undefined);
     }
+
     onQueryChange(query);
   };
   const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -298,5 +302,6 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     </Dialog>
   );
 };
+
 MenuItemDialog.displayName = "MenuItemDialog";
 export default MenuItemDialog;

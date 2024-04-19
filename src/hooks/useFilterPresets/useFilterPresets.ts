@@ -43,8 +43,10 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
       : undefined;
   const onPresetChange = (index: number) => {
     reset?.();
+
     const currentPresets = storageUtils.getFilterTabs();
     const qs = new URLSearchParams(currentPresets[index - 1]?.data ?? "");
+
     qs.append("activeTab", index.toString());
     navigate(baseUrl.endsWith("?") ? baseUrl + qs.toString() : baseUrl + "?" + qs.toString());
   };
@@ -61,6 +63,7 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
       navigate(baseUrl);
     } else {
       const currentParams = { ...params };
+
       // When deleting a tab that is not the current one, only remove the action param from the query
       delete currentParams.action;
       // When deleting a tab that is before the current one, decrease the activeTab param by 1

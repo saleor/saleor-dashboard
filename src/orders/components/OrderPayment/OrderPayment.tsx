@@ -55,6 +55,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
         <FormattedMessage {...orderPaymentMessages.clickAndCollectShippingMethod} />
       );
     }
+
     return order.shippingMethodName;
   };
 
@@ -246,5 +247,6 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
     </Card>
   );
 };
+
 OrderPayment.displayName = "OrderPayment";
 export default OrderPayment;

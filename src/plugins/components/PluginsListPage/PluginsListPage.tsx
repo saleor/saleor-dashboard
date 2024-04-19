@@ -98,5 +98,6 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
     </ListPageLayout>
   );
 };
+
 PluginsListPage.displayName = "PluginsListPage";
 export default PluginsListPage;

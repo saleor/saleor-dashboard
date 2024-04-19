@@ -20,6 +20,7 @@ describe("EventCreatedBy", () => {
         <EventCreatedBy createdBy={appAvatar} />
       </MemoryRouter>,
     );
+
     const link = screen.getByRole("link");
 
     expect(link).toHaveTextContent(appAvatar.name);
@@ -34,6 +35,7 @@ describe("EventCreatedBy", () => {
         <EventCreatedBy createdBy={staffMemberAvatar} />
       </MemoryRouter>,
     );
+
     const link = screen.getByRole("link");
 
     expect(link).toHaveTextContent(staffMemberAvatar.firstName);

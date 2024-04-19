@@ -46,6 +46,7 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
     }).format(date);
 
     ctx.textAlign = "left";
+
     let justifyToRight = true;
 
     const candidateFormats = [
@@ -67,6 +68,7 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
 
     if (cellWidth < candidateFormats[0].width) {
       displayDate = candidateFormats.find(format => format.width <= cellWidth)?.format;
+
       if (!displayDate) {
         displayDate = dateFormats.short;
         justifyToRight = false;

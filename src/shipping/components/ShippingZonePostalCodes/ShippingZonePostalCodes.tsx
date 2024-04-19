@@ -66,6 +66,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
     if (inclusionType) {
       return inclusionType;
     }
+
     return postalCodes[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE;
   };
   const onInclusionRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,9 +85,11 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
     if (!postalCodeRange?.start) {
       return <Skeleton />;
     }
+
     if (postalCodeRange?.end) {
       return `${postalCodeRange.start} - ${postalCodeRange.end}`;
     }
+
     return postalCodeRange.start;
   };
 

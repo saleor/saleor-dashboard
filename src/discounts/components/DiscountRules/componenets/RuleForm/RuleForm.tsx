@@ -68,6 +68,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
     if (channel) {
       setValue("channel", { value: channel.id, label: channel.name }, { shouldValidate: true });
     }
+
     setValue("rewardGifts", []);
 
     // Restart conditions when catalog promotion

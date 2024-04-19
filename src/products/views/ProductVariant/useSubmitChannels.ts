@@ -27,6 +27,7 @@ const hasRecordDeleted = (data: Product, variant: Variant) =>
   data.channelListings.length !== variant.channelListings.length;
 const createProductUpdateListingInput = (data: Product, variant: Variant) => {
   const ids = data.channelListings.map(c => c.data.id);
+
   return variant.channelListings
     .map(c => c.channel.id)
     .filter(cId => !ids.includes(cId))
@@ -49,6 +50,7 @@ export const useSubmitChannels = () => {
 
     if (amountOfRecordsHasChanged) {
       const updateChannels = createProductUpdateListingInput(data, variant);
+
       await updateChannelListing({
         variables: {
           id: variant.product.id,

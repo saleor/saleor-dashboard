@@ -85,5 +85,6 @@ const AppListRow: React.FC<AppListRowProps> = ({
     </Box>
   );
 };
+
 AppListRow.displayName = "AppListRow";
 export default AppListRow;

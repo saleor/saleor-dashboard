@@ -86,6 +86,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
             mapEdgesToItems(sale?.collections),
             collection => {
               const isSelected = collection ? isChecked(collection.id) : false;
+
               return (
                 <TableRowLink
                   data-test-id="assigned-specific-product"
@@ -139,5 +140,6 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
     </Card>
   );
 };
+
 DiscountCollections.displayName = "DiscountCollections";
 export default DiscountCollections;

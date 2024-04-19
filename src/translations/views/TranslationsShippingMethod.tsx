@@ -91,5 +91,6 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
     />
   );
 };
+
 TranslationsShippingMethod.displayName = "TranslationsShippingMethod";
 export default TranslationsShippingMethod;

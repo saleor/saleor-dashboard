@@ -22,9 +22,11 @@ describe("Metadata editor", () => {
   it("can expand field", async () => {
     // Arrange
     render(<Component />);
+
     const user = userEvent.setup();
     const isExpandedAttribute = "data-state";
     const editor = screen.getAllByTestId("metadata-item")[0];
+
     // Assert
     expect(editor).toHaveAttribute(isExpandedAttribute, "closed");
     // Act
@@ -35,13 +37,17 @@ describe("Metadata editor", () => {
   xit("can edit field name", async () => {
     // Arrange
     render(<Component />);
+
     const user = userEvent.setup();
+
     // Act
     await user.click(getFirstExpandIcon());
+
     // Arrange
     const input = screen.getByRole("textbox", {
       name: /name:0/i,
     });
+
     // Assert
     expect(input).toHaveValue(props.data.metadata[0].key);
     // Act
@@ -52,11 +58,15 @@ describe("Metadata editor", () => {
   xit("can edit field value", async () => {
     // Arrange
     render(<Component />);
+
     const user = userEvent.setup();
+
     // Act
     await user.click(getFirstExpandIcon());
+
     // Arrange
     const input = screen.getByRole("textbox", { name: /value:0/i });
+
     // Assert
     expect(input).toHaveValue(props.data.metadata[0].value);
     // Act
@@ -67,7 +77,9 @@ describe("Metadata editor", () => {
   it("can delete field", async () => {
     // Arrange
     render(<Component />);
+
     const user = userEvent.setup();
+
     // Act
     await user.click(getFirstExpandIcon());
     // Assert
@@ -80,7 +92,9 @@ describe("Metadata editor", () => {
   xit("can add field", async () => {
     // Arrange
     render(<Component />);
+
     const user = userEvent.setup();
+
     // Act
     await user.click(getFirstExpandIcon());
     // Assert

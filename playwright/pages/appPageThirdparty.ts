@@ -24,6 +24,7 @@ export class AppPage extends BasePage {
 
   async goToExistingAppPage(appId: string) {
     const appUrl = URL_LIST.apps + appId;
+
     await this.page.goto(appUrl);
   }
 

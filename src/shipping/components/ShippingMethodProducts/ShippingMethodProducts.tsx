@@ -113,6 +113,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
           ) : (
             renderCollection(products, product => {
               const isSelected = product ? isChecked(product.id) : false;
+
               return (
                 <TableRowLink
                   data-test-id="excluded-products-rows"
@@ -147,5 +148,6 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
     </Card>
   );
 };
+
 ShippingMethodProducts.displayName = "ShippingMethodProducts";
 export default ShippingMethodProducts;

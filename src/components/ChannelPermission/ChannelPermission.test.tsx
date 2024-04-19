@@ -73,6 +73,7 @@ describe("ChannelPermission", () => {
   it("should render selected channels when has restricted channels selected", () => {
     // Arrange & Act
     const selectedChannels = [allChannels[1]];
+
     render(
       <ChannelPermission
         allChannels={allChannels}
@@ -90,6 +91,7 @@ describe("ChannelPermission", () => {
   it("should allow to remove selected channels", async () => {
     // Arrange & Act
     const selectedChannels = [allChannels[1]];
+
     render(
       <ChannelPermission
         allChannels={allChannels}

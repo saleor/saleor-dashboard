@@ -44,6 +44,7 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
     </Card>
   );
 };
+
 PageTypeDetails.defaultProps = {
   errors: [],
 };

@@ -22,6 +22,7 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
   selectedConfigurationId,
 }) => {
   const classes = useStyles();
+
   return (
     <Card>
       <List gridTemplate={["1fr"]}>

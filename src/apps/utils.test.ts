@@ -61,6 +61,7 @@ describe("App utils app details", () => {
         },
       ],
     };
+
     expect(details).toEqual(expectedDetails);
   });
   it("should return app details when required coming soon app data passed", () => {
@@ -99,6 +100,7 @@ describe("App utils app details", () => {
       removeInstallHandler: undefined,
       retryInstallHandler: undefined,
     };
+
     expect(details).toEqual(expectedDetails);
   });
   it("should return app details when required app pending installation data passed", () => {
@@ -163,6 +165,7 @@ describe("App utils app details", () => {
       removeInstallHandler: undefined,
       retryInstallHandler: undefined,
     };
+
     expect(details).toEqual(expectedDetails);
   });
   it("should return app details when required app failed installation data passed", () => {
@@ -227,6 +230,7 @@ describe("App utils app details", () => {
       removeInstallHandler: expect.any(Function),
       retryInstallHandler: expect.any(Function),
     };
+
     expect(details).toEqual(expectedDetails);
   });
   describe("App utils resolve apps installations", () => {

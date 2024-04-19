@@ -8,6 +8,7 @@ describe("useAllWarehouses", () => {
   it("should skip query when no channels and return empty array", () => {
     // Arrange
     const mockedUseFetchAllWarehouses = jest.fn();
+
     (useFetchAllWarehouses as jest.Mock).mockImplementation(mockedUseFetchAllWarehouses);
 
     // Act
@@ -41,6 +42,7 @@ describe("useAllWarehouses", () => {
         },
       },
     }));
+
     (useFetchAllWarehouses as jest.Mock).mockImplementation(mockedUseFetchAllWarehouses);
 
     // Act

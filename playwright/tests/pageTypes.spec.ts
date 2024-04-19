@@ -4,6 +4,7 @@ import { expect, test } from "@playwright/test";
 import * as faker from "faker";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
+
 const pageTypeName = `e2e-page-type-${faker.datatype.number()}`;
 
 test("TC: SALEOR_187 As an admin user I can create page type @e2e @page-type", async ({ page }) => {

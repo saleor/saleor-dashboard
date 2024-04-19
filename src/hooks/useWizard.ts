@@ -17,6 +17,7 @@ function useWizard<T>(initial: T, steps: T[], opts?: UseWizardOpts<T>): UseWizar
     if (typeof opts?.onTransition === "function") {
       opts.onTransition(steps[stepIndex], steps[nextStepIndex]);
     }
+
     setStepIndex(nextStepIndex);
   }
 
@@ -38,6 +39,7 @@ function useWizard<T>(initial: T, steps: T[], opts?: UseWizardOpts<T>): UseWizar
 
   function set(step: T) {
     const newStepIndex = steps.findIndex(s => s === step);
+
     if (newStepIndex === -1) {
       console.error("Step does not exist");
     } else {

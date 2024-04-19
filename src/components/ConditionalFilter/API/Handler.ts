@@ -64,6 +64,7 @@ export class AttributeChoicesHandler implements Handler {
         query,
       },
     });
+
     return createOptionsFromAPI(data.attribute?.choices?.edges ?? []);
   };
 }
@@ -175,6 +176,7 @@ export class AttributesHandler implements Handler {
         query: this.query,
       },
     });
+
     return (
       data.attributes?.edges.map(({ node }) => ({
         label: node.name ?? "",

@@ -5,6 +5,7 @@ import { AppsPage } from "@pages/appsPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
+
 let appsPage: AppsPage;
 let installationPage: AppInstallationPage;
 let appPage: AppPage;
@@ -40,7 +41,9 @@ test.skip("TC: SALEOR_119 User should be able to install and configure app from 
     .first()
     .waitFor({ state: "visible", timeout: 50000 });
   await appsPage.appKlaviyo.click();
+
   const iframeLocator = page.frameLocator("iframe");
+
   await expect(iframeLocator.getByLabel("PUBLIC_TOKEN")).toBeVisible();
   await iframeLocator.getByLabel("PUBLIC_TOKEN").fill("test_token");
   await iframeLocator.getByText("Save").click();

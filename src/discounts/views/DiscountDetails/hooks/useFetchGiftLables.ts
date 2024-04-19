@@ -23,6 +23,7 @@ export const useFetchGiftLables = (promotionData: PromotionDetailsQuery | undefi
     giftsLabels: (mapEdgesToItems(data?.productVariants) ?? []).reduce(
       (acc, gift) => {
         acc[gift.id] = formatGiftsLabels(gift);
+
         return acc;
       },
       {} as Record<string, string>,

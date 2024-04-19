@@ -68,5 +68,6 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
     </Dialog>
   );
 };
+
 ProductVariantDeleteDialog.displayName = "ProductVariantDeleteDialog";
 export default ProductVariantDeleteDialog;

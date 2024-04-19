@@ -5,16 +5,20 @@ import { appDetails } from "../../fixtures";
 import { AppDetailsPage } from "./AppDetailsPage";
 
 const mockHeader = jest.fn();
+
 // eslint-disable-next-line react/display-name
 jest.mock("./Header", () => (props: unknown) => {
   mockHeader(props);
+
   return <></>;
 });
 
 const mockAboutCard = jest.fn();
+
 jest.mock("./AboutCard", () => ({
   AboutCard: (props: unknown) => {
     mockAboutCard(props);
+
     return <></>;
   },
 }));
@@ -24,14 +28,17 @@ const mockPermissionsCard = jest.fn();
 jest.mock("./PermissionsCard", () => ({
   PermissionsCard: (props: unknown) => {
     mockPermissionsCard(props);
+
     return <></>;
   },
 }));
 
 const mockDataPrivacyCard = jest.fn();
+
 jest.mock("./DataPrivacyCard", () => ({
   DataPrivacyCard: (props: unknown) => {
     mockDataPrivacyCard(props);
+
     return <></>;
   },
 }));

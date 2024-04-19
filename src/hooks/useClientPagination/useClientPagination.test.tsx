@@ -64,6 +64,7 @@ describe("useClientPagination", () => {
 
     // Assert
     const paginatedData = result.current.paginate(Array.from(Array(20).keys()));
+
     expect(paginatedData.hasNextPage).toEqual(false);
     expect(paginatedData.hasPreviousPage).toEqual(true);
     expect(paginatedData.data.length).toEqual(10);
@@ -77,6 +78,7 @@ describe("useClientPagination", () => {
 
     // Assert
     const paginatedData = result.current.paginate(Array.from(Array(20).keys()));
+
     expect(paginatedData.hasNextPage).toEqual(false);
     expect(paginatedData.hasPreviousPage).toEqual(false);
     expect(paginatedData.data.length).toEqual(20);

@@ -36,6 +36,7 @@ function toUpdateStockData(variant: ProductFragment["variants"][number]) {
       if (variantStock) {
         acc.remove.push(variantStock.id);
       }
+
       return acc;
     }
 

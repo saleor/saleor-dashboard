@@ -189,6 +189,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 AttributeList.displayName = "AttributeList";
 
 export default AttributeList;

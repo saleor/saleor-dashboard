@@ -7,6 +7,7 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
     const url = new TokenArray("");
     // Act
     const fetchingParams = url.getFetchingParams();
+
     // Assert
     expect(fetchingParams).toEqual({
       category: [],
@@ -35,6 +36,7 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
     // Act
     const url = new TokenArray(params.toString());
     const fetchingParams = url.getFetchingParams();
+
     // Assert
     expect(fetchingParams).toEqual({
       attribute: {

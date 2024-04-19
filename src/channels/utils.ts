@@ -155,6 +155,7 @@ export const createVariantChannels = (
       price: listing.price?.amount?.toString(),
     })) as ChannelPriceData[];
   }
+
   return [];
 };
 
@@ -165,8 +166,10 @@ export const createChannelsDataWithSaleDiscountPrice = (
   if (data && saleData?.channelListings) {
     const dataArr = createSaleChannels(data);
     const saleDataArr = createChannelsDataFromSale(saleData);
+
     return uniqBy([...saleDataArr, ...dataArr!], obj => obj.id);
   }
+
   return [];
 };
 
@@ -177,8 +180,10 @@ export const createChannelsDataWithDiscountPrice = (
   if (data && voucherData?.channelListings) {
     const dataArr = createVoucherChannels(data);
     const voucherDataArr = createChannelsDataFromVoucher(voucherData);
+
     return uniqBy([...voucherDataArr, ...dataArr!], obj => obj.id);
   }
+
   return [];
 };
 
@@ -207,6 +212,7 @@ export const createChannelsDataWithPrice = (
 
     return uniqBy([...productDataArr, ...dataArr], obj => obj.id) as ChannelData[];
   }
+
   return [];
 };
 
@@ -242,6 +248,7 @@ export const createCollectionChannelsData = (collectionData?: CollectionDetailsF
       name: listing.channel.name,
       publicationDate: listing.publicationDate,
     }));
+
     return collectionDataArr;
   }
 };

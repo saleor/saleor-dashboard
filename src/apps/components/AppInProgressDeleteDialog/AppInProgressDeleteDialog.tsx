@@ -28,6 +28,7 @@ const AppInProgressDeleteDialog = ({
     if (isNameMissing) {
       return intl.formatMessage(msgs.deleteApp);
     }
+
     return intl.formatMessage(msgs.deleteNamedApp, {
       name: <strong>{getStringOrPlaceholder(name)}</strong>,
     });
@@ -46,5 +47,6 @@ const AppInProgressDeleteDialog = ({
     </ActionDialog>
   );
 };
+
 AppInProgressDeleteDialog.displayName = "AppInProgressDeleteDialog";
 export default AppInProgressDeleteDialog;

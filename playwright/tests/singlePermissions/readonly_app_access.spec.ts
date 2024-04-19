@@ -29,6 +29,7 @@ for (const permission of permissionList) {
       appsPage.availableAppsList,
       appsPage.upcomingAppsList,
     ];
+
     for (const appList of appLists) {
       await expect(appList).toBeVisible();
     }
@@ -42,6 +43,7 @@ for (const permission of permissionList) {
       appDetailsPage.appActivateButton,
       appDetailsPage.appEditPermissionsButton,
     ];
+
     for (const button of buttons) {
       await button.waitFor({
         state: "visible",

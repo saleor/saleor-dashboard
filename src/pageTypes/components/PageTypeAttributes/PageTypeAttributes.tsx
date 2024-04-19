@@ -176,5 +176,6 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
     </Card>
   );
 };
+
 PageTypeAttributes.displayName = "PageTypeAttributes";
 export default PageTypeAttributes;

@@ -54,6 +54,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = props => {
     ? {}
     : choices.reduce((prev, curr) => {
         prev[curr.value] = curr.label;
+
         return prev;
       }, {});
 

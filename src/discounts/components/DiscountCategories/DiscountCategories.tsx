@@ -140,5 +140,6 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
     </Card>
   );
 };
+
 DiscountCategories.displayName = "DiscountCategories";
 export default DiscountCategories;

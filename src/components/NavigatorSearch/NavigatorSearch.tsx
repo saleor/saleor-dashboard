@@ -116,6 +116,7 @@ const NavigatorSearch: React.FC = () => {
               itemToString={(item: QuickSearchAction) => (item ? item.label : "")}
               onSelect={(item: QuickSearchAction) => {
                 const shouldRemainVisible = item?.onClick();
+
                 if (!shouldRemainVisible) {
                   setNavigatorVisibility(false);
                 }

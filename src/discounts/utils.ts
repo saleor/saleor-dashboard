@@ -15,6 +15,7 @@ const getCriteria = (data: SaleOrVoucherData) => {
   if (!!data && "sale" in data) {
     return data.sale;
   }
+
   if (!!data && "voucher" in data) {
     return data.voucher;
   }
@@ -81,6 +82,7 @@ export function getFilteredProductVariants(
   if (!data?.sale?.variants?.edges) {
     return products;
   }
+
   const excludedVariantsIds = data?.sale?.variants.edges.map(variant => variant.node.id);
 
   return products?.map(suggestedProduct => ({

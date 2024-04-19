@@ -10,6 +10,7 @@ function useOnSetDefaultVariant(productId: string, variant: Node) {
   const [productVariantSetDefault] = useProductVariantSetDefaultMutation({
     onCompleted: data => {
       const errors = data.productVariantSetDefault.errors;
+
       if (errors.length) {
         errors.map(error =>
           notify({
@@ -21,6 +22,7 @@ function useOnSetDefaultVariant(productId: string, variant: Node) {
         const defaultVariant = data.productVariantSetDefault.product.variants.find(
           variant => variant.id === data.productVariantSetDefault.product.defaultVariant.id,
         );
+
         if (defaultVariant) {
           notify({
             status: "success",

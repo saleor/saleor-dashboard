@@ -61,6 +61,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
     if (action === TransactionActionEnum.CHARGE) {
       onCapture();
     }
+
     if (action === TransactionActionEnum.CANCEL) {
       onVoid();
     }

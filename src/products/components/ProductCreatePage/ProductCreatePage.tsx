@@ -215,6 +215,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
           assignReferencesAttributeId,
           data.attributes,
         );
+
         return (
           <DetailPageLayout>
             <TopNav href={productListUrl()} title={header} />

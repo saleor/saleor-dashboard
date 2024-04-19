@@ -65,6 +65,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
   const [activateChannel, activateChannelOpts] = useChannelActivateMutation({
     onCompleted: data => {
       const errors = data.channelActivate.errors;
+
       if (errors.length) {
         errors.forEach(error => handleError(error));
       }
@@ -73,6 +74,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
   const [deactivateChannel, deactivateChannelOpts] = useChannelDeactivateMutation({
     onCompleted: data => {
       const errors = data.channelDeactivate.errors;
+
       if (errors.length) {
         errors.forEach(error => handleError(error));
       }
@@ -82,6 +84,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
     useChannelReorderWarehousesMutation({
       onCompleted: data => {
         const errors = data.channelReorderWarehouses.errors;
+
         if (errors.length) {
           errors.forEach(error => handleError(error));
         }
@@ -148,6 +151,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
   };
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
     const errors = data.channelDelete.errors;
+
     if (errors.length === 0) {
       notify({
         status: "success",
@@ -177,6 +181,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
   );
   const handleRemoveConfirm = (channelId?: string) => {
     const data = channelId ? { id, input: { channelId } } : { id };
+
     deleteChannel({ variables: data });
   };
   const {

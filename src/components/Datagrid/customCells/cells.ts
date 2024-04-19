@@ -217,6 +217,7 @@ export function pillCell(
 ): PillCell {
   const pillColor = color;
   const fallbackColor = hueToPillColorLight(stringToHue(value));
+
   return {
     ...common,
     ...opts,

@@ -28,6 +28,7 @@ export class AssignProductsDialog {
 
   async selectProduct(name: string) {
     const product = this.productRow.filter({ hasText: name });
+
     await product.waitFor({ state: "visible" });
     await product.getByRole("checkbox").click();
   }

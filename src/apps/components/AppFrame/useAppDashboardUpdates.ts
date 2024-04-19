@@ -45,6 +45,7 @@ export const useAppDashboardUpdates = (
     if (!enabled) {
       return;
     }
+
     postToExtension({
       type: "redirect",
       payload: {

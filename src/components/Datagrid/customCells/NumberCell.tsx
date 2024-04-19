@@ -50,9 +50,11 @@ export const numberCellRenderer = (locale: Locale): CustomRenderer<NumberCell> =
     const { ctx, theme, rect } = args;
     const { value, options } = cell.data;
     let formatted = value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
+
     if (options?.format === "percent") {
       formatted += "%";
     }
+
     ctx.fillStyle = theme.textDark;
     ctx.textAlign = "right";
     ctx.fillText(
@@ -77,6 +79,7 @@ export const numberCellRenderer = (locale: Locale): CustomRenderer<NumberCell> =
   }),
   onPaste: (value, data) => {
     const testRegExp = data.options?.hasFloatingPoint ? flaotingPointDigits : onlyDigitsRegExp;
+
     if (!testRegExp.test(value)) {
       return undefined;
     }

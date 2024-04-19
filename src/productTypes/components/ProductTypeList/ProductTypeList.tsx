@@ -110,6 +110,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
           productTypes,
           productType => {
             const isSelected = productType ? isChecked(productType.id) : false;
+
             return (
               <TableRowLink
                 className={productType ? classes.link : undefined}
@@ -171,5 +172,6 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
     </ResponsiveTable>
   );
 };
+
 ProductTypeList.displayName = "ProductTypeList";
 export default ProductTypeList;

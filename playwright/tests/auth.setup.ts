@@ -11,6 +11,7 @@ const authenticateAndSaveState = async (
   filePath: string,
 ) => {
   const basicApiService = new BasicApiService(request);
+
   await basicApiService.logInUserViaApi({ email, password });
 
   const loginJsonInfo = await request.storageState();
@@ -33,9 +34,11 @@ const authSetup = async (
   fileName: string,
 ) => {
   const tempDir = path.join(__dirname, "../.auth");
+
   if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir, { recursive: true });
   }
+
   const tempFilePath = path.join(tempDir, fileName);
 
   if (!fs.existsSync(tempFilePath)) {

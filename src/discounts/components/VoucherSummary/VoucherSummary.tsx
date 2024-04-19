@@ -122,5 +122,6 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, vouc
     </Card>
   );
 };
+
 VoucherSummary.displayName = "VoucherSummary";
 export default VoucherSummary;

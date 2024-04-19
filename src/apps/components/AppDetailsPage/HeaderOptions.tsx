@@ -66,4 +66,5 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
     </Box>
   );
 };
+
 export default HeaderOptions;

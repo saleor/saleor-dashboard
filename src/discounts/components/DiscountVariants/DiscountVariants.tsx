@@ -151,5 +151,6 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
     </Card>
   );
 };
+
 DiscountVariants.displayName = "DiscountVariants";
 export default DiscountVariants;

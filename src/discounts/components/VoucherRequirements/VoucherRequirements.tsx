@@ -117,6 +117,7 @@ const VoucherRequirements = ({
                     data.channelListings,
                     (listing, index) => {
                       const error = formErrors.minSpent?.channels?.find(id => id === listing.id);
+
                       return (
                         <TableRowLink
                           key={listing?.id || `skeleton-${index}`}
@@ -178,4 +179,5 @@ const VoucherRequirements = ({
     </Card>
   );
 };
+
 export default VoucherRequirements;

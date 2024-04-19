@@ -126,6 +126,7 @@ describe("useColumns", () => {
         onSave,
       }),
     );
+
     // Assert
     expect(result.current.visibleColumns).toEqual(expectedVisibleColumns);
     expect(result.current.staticColumns).toEqual(mockedColumns);

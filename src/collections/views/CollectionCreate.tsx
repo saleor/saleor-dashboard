@@ -75,6 +75,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
         const backgroundImageError = data.collectionCreate.errors.find(
           error => error.field === ("backgroundImage" as keyof CollectionCreateInput),
         );
+
         if (backgroundImageError) {
           notify({
             status: "error",
@@ -100,6 +101,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
       },
     });
     const id = result.data?.collectionCreate.collection?.id || null;
+
     if (id) {
       updateChannels({
         variables: {

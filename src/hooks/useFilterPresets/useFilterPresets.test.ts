@@ -3,6 +3,7 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import { useFilterPresets } from "./useFilterPresets";
 
 const mockNavigate = jest.fn();
+
 jest.mock("@dashboard/hooks/useNavigator", () => () => mockNavigate);
 
 const baseUrl = "http://localhost";
@@ -164,6 +165,7 @@ describe("useFilterPresets", () => {
   it("should handle save new filter preset", () => {
     // Arrange
     const mockSaveStorage = jest.fn();
+
     window.location.search = "?query=John";
 
     const { result } = renderHook(() =>
@@ -191,6 +193,7 @@ describe("useFilterPresets", () => {
   it("should handle update existing filter preset", () => {
     // Arrange
     const mockUpdateStorage = jest.fn();
+
     window.location.search = "?query=JoeDoe";
 
     const { result } = renderHook(() =>

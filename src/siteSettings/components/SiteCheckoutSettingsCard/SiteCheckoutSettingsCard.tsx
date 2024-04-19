@@ -108,5 +108,6 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
     </Card>
   );
 };
+
 SiteCheckoutSettingsCard.displayName = "SiteCheckoutSettingsCard";
 export default SiteCheckoutSettingsCard;

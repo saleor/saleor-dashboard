@@ -61,6 +61,7 @@ describe("OrderManualTransationRefundPage", () => {
   it("should select transaction, set amount and submit form", async () => {
     // Arrange
     const mockNofitication = jest.fn();
+
     (useNotifier as jest.Mock).mockImplementation(() => mockNofitication);
 
     const mocks = [

@@ -23,7 +23,9 @@ export default function useLocalStorage<T>(
   function getValue(value: T, initOrCb: SetStateAction<T>): T {
     if (initOrCb instanceof Function) {
       const newValue = initOrCb(value);
+
       saveToLocalStorage(newValue);
+
       return newValue;
     }
 
@@ -40,6 +42,7 @@ export default function useLocalStorage<T>(
 
     try {
       const parsed = JSON.parse(item);
+
       if (!parsed) {
         throw new Error("Empty value");
       }
@@ -56,6 +59,7 @@ export default function useLocalStorage<T>(
   });
   const setValue = (value: SetStateAction<T>) => {
     const valueToStore = value instanceof Function ? value(storedValue) : value;
+
     setStoredValue(valueToStore);
     saveToLocalStorage(valueToStore);
   };

@@ -153,6 +153,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   const isValid = !formData.channelListings?.some(channel => validatePrice(channel.price));
   const changeMetadata = makeMetadataChangeHandler(change);
   const isSaveDisabled = disabled || !isValid;
+
   setIsSubmitDisabled(isSaveDisabled);
 
   return (

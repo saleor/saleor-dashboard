@@ -66,6 +66,7 @@ const getSwatchCellStyle = (value?: AttributeValueFragment | undefined) => {
   if (!value) {
     return;
   }
+
   return value.file
     ? { backgroundImage: `url(${value.file.url})` }
     : { backgroundColor: value.value ?? undefined };
@@ -209,5 +210,6 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
     </Card>
   );
 };
+
 AttributeValues.displayName = "AttributeValues";
 export default AttributeValues;

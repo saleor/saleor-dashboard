@@ -13,6 +13,7 @@ export const ThemeSwitcher = ({ theme }: { theme: DefaultTheme }) => {
       </>
     );
   }
+
   return (
     <>
       <LightModeIcon color="default2" />

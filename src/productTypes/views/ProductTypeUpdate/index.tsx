@@ -368,6 +368,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
               selected={maybe(() => params.ids, [])}
               onToggle={attributeId => {
                 const ids = maybe(() => params.ids, []);
+
                 navigate(
                   productTypeUrl(id, {
                     ...params,

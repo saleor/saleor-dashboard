@@ -40,6 +40,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+
   return (
     <ListPageLayout>
       <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.pageTypes)}>
@@ -72,5 +73,6 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
     </ListPageLayout>
   );
 };
+
 PageTypeListPage.displayName = "PageTypeListPage";
 export default PageTypeListPage;

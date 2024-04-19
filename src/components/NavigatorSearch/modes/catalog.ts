@@ -26,6 +26,7 @@ export function searchInCatalog(
       label: category.name,
       onClick: () => {
         navigate(categoryUrl(category.id));
+
         return false;
       },
       score: score(category.name, search),
@@ -39,6 +40,7 @@ export function searchInCatalog(
       label: collection.name,
       onClick: () => {
         navigate(collectionUrl(collection.id));
+
         return false;
       },
       score: score(collection.name, search),
@@ -53,6 +55,7 @@ export function searchInCatalog(
       label: product.name,
       onClick: () => {
         navigate(productUrl(product.id));
+
         return false;
       },
       score: score(product.name, search),

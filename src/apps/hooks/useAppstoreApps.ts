@@ -55,17 +55,21 @@ function useAppstoreApps(appstoreUrl?: string): State {
       // If a cache exists for this url, return it
       if (cache.current[appstoreUrl]) {
         dispatch({ type: "fetched", payload: cache.current[appstoreUrl] });
+
         return;
       }
 
       try {
         const response = await fetch(appstoreUrl);
+
         if (!response.ok) {
           throw new Error(response.statusText);
         }
 
         const data = (await response.json()) as AppstoreApi.SaleorApp[];
+
         cache.current[appstoreUrl] = data;
+
         if (cancelRequest.current) {
           return;
         }

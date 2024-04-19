@@ -123,5 +123,6 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsAttributesPage.displayName = "TranslationsAttributesPage";
 export default TranslationsAttributesPage;

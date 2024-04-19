@@ -34,6 +34,7 @@ import { getSortQueryVariables } from "./sort";
 interface MenuListProps {
   params: MenuListUrlQueryParams;
 }
+
 const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -225,4 +226,5 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default MenuList;

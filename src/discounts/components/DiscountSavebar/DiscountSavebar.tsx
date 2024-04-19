@@ -28,6 +28,7 @@ export const DiscountSavebar = ({
   const handleSubmit = () => {
     if (isDirty) {
       onSubmit();
+
       return;
     }
 

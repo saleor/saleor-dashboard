@@ -95,14 +95,18 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
         Object.entries(unitChoices).some(([system, types]) => {
           const systemMatch = Object.entries(types).some(([type, units]) => {
             const unitMatch = units.some(({ value }) => value === data.unit);
+
             if (unitMatch) {
               initialData.type = type as UnitType;
             }
+
             return unitMatch;
           });
+
           if (systemMatch) {
             initialData.system = system as UnitSystem;
           }
+
           return systemMatch;
         });
 
@@ -116,6 +120,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
     if (unit === undefined && !errors.unit) {
       setError("unit", formatMessage(commonMessages.requiredField));
     }
+
     if (errors.unit && (unit || unit === null)) {
       clearErrors("unit");
     }

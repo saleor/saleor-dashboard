@@ -177,6 +177,7 @@ export class VouchersPage extends BasePage {
 
   async gotoExistingVoucherPage(voucherId: string) {
     const existingVoucherUrl = `${URL_LIST.vouchers}${voucherId}`;
+
     console.log(`Navigating to existing variant: ${existingVoucherUrl}`);
     await this.page.goto(existingVoucherUrl);
   }
@@ -190,6 +191,7 @@ export class VouchersPage extends BasePage {
     const valueInput = await this.valueSection
       .getByTestId(channel)
       .locator(this.discountValueInput);
+
     await valueInput.scrollIntoViewIfNeeded();
     await valueInput.fill(discountValue);
   }

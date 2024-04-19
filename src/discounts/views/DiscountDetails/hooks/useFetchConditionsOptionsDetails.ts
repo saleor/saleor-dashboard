@@ -53,6 +53,7 @@ export function getAllConditionsOptionsIdsToFetch(
 
   const allConditionsIds = data.promotion.rules.reduce((acc, rule) => {
     reduceConditionsLabels(rule.cataloguePredicate, acc);
+
     return acc;
   }, initAllConditionsIds);
 
@@ -72,17 +73,21 @@ function reduceConditionsLabels(
     if (Array.isArray(predicate)) {
       predicate.forEach(item => reduceConditionsLabels(item, allConditionsIds));
     }
+
     const ids = predicate?.ids ?? [];
 
     if (key === "productPredicate") {
       allConditionsIds.productsIds.push(...ids);
     }
+
     if (key === "categoryPredicate") {
       allConditionsIds.categoriesIds.push(...ids);
     }
+
     if (key === "collectionPredicate") {
       allConditionsIds.collectionsIds.push(...ids);
     }
+
     if (key === "variantPredicate") {
       allConditionsIds.variantsIds.push(...ids);
     }
@@ -101,6 +106,7 @@ export function getRuleConditionsOptionsDetailsMap(
   return Object.values(data).reduce<Record<string, string>>((acc, value) => {
     const items =
       mapEdgesToItems(value as RuleConditionsSelectedOptionsDetailsQuery["productVariants"]) ?? [];
+
     items.forEach(item => {
       if (item.product) {
         acc[item.id] = `${item.product.name} - ${item.name}`;

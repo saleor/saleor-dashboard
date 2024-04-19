@@ -106,6 +106,7 @@ export class FilterElement {
   public updateRightLoadingState(loading: boolean) {
     if (loading) {
       this.condition.selected.enableLoading();
+
       return;
     }
 
@@ -189,6 +190,7 @@ export class FilterElement {
         false,
       );
     }
+
     return FilterElement.createEmpty();
   }
 }

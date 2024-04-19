@@ -266,5 +266,6 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
     </Card>
   );
 };
+
 TranslationFields.displayName = "TranslationFields";
 export default TranslationFields;

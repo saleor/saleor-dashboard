@@ -111,6 +111,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     allowStockToBeExceeded: boolean;
   }) => {
     setDisplayStockExceededDialog(false);
+
     return onSubmit({
       ...formData,
       allowStockToBeExceeded,
@@ -125,6 +126,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         })),
     });
   };
+
   React.useEffect(() => {
     if (errors && errors.every(err => err.code === OrderErrorCode.INSUFFICIENT_STOCK)) {
       setDisplayStockExceededDialog(true);
@@ -151,6 +153,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       .some(item => {
         const formQuantityFulfilled = item?.value?.[0]?.quantity;
         const quantityToFulfill = order?.lines?.find(line => line.id === item.id).quantityToFulfill;
+
         return formQuantityFulfilled > quantityToFulfill;
       });
 

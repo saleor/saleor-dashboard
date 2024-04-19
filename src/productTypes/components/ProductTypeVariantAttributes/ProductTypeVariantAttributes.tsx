@@ -286,5 +286,6 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     </Card>
   );
 };
+
 ProductTypeVariantAttributes.displayName = "ProductTypeVariantAttributes";
 export default ProductTypeVariantAttributes;

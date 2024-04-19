@@ -114,5 +114,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
     </Card>
   );
 };
+
 CustomerInfo.displayName = "CustomerInfo";
 export default CustomerInfo;

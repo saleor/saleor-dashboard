@@ -38,6 +38,7 @@ export const TaxChannelsList: React.FC<TaxChannelsListProps> = ({ id, params }) 
     useTaxConfigurationUpdateMutation({
       onCompleted: data => {
         const errors = data?.taxConfigurationUpdate?.errors;
+
         if (errors.length === 0) {
           notify({
             status: "success",

@@ -196,6 +196,7 @@ export const isFileValueUnused = (
   if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
     return false;
   }
+
   if (existingAttribute.values.length === 0) {
     return false;
   }
@@ -212,9 +213,11 @@ export const mergeFileUploadErrors = (
 ): UploadErrorFragment[] =>
   uploadFilesResult.reduce((errors, uploadFileResult) => {
     const uploadErrors = uploadFileResult?.data?.fileUpload?.errors;
+
     if (uploadErrors) {
       return [...errors, ...uploadErrors];
     }
+
     return errors;
   }, [] as UploadErrorFragment[]);
 
@@ -223,9 +226,11 @@ export const mergeAttributeValueDeleteErrors = (
 ): AttributeErrorFragment[] =>
   deleteAttributeValuesResult.reduce((errors, deleteValueResult) => {
     const deleteErrors = deleteValueResult?.data?.attributeValueDelete?.errors;
+
     if (deleteErrors) {
       return [...errors, ...deleteErrors];
     }
+
     return errors;
   }, [] as AttributeErrorFragment[]);
 
@@ -266,6 +271,7 @@ export const mergeAttributeValuesWithLabels = (
 export const mergeAttributes = (...attributeLists: AttributeInput[][]): AttributeInput[] =>
   attributeLists.reduce((prev, attributes) => {
     const newAttributeIds = new Set(attributes.map(attr => attr.id));
+
     return [...prev.filter(attr => !newAttributeIds.has(attr.id)), ...attributes];
   }, []);
 
@@ -353,6 +359,7 @@ export const getFileAttributeDisplayData = (
       value: attributeWithNewFileValue?.value?.name ? [attributeWithNewFileValue.value.name] : [],
     };
   }
+
   return attribute;
 };
 
@@ -373,6 +380,7 @@ export const getPageReferenceAttributeDisplayData = (
                 if (reference) {
                   acc.push(reference);
                 }
+
                 return acc;
               },
               [],
@@ -399,6 +407,7 @@ export const getProductReferenceAttributeDisplayData = (
                 if (reference) {
                   acc.push(reference);
                 }
+
                 return acc;
               },
               [],
@@ -426,6 +435,7 @@ export const getProductVariantReferenceAttributeDisplayData = (
               if (reference) {
                 acc.push(reference);
               }
+
               return acc;
             }, []),
           )
@@ -457,9 +467,11 @@ export const getAttributesDisplayData = (
     if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
       return getReferenceAttributeDisplayData(attribute, referencePages, referenceProducts);
     }
+
     if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
       return getFileAttributeDisplayData(attribute, attributesWithNewFileValue);
     }
+
     return attribute;
   });
 

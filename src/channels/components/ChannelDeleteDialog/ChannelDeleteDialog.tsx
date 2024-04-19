@@ -126,5 +126,6 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
+
 ChannelDeleteDialog.displayName = "ChannelDeleteDialog";
 export default ChannelDeleteDialog;

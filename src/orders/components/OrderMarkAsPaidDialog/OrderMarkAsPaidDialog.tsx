@@ -75,5 +75,6 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
     </ActionDialog>
   );
 };
+
 OrderMarkAsPaidDialog.displayName = "OrderMarkAsPaidDialog";
 export default OrderMarkAsPaidDialog;

@@ -72,6 +72,7 @@ export const extractInvalidFilters = function <T extends string>(
       const multipleFieldErrors = multipleFields
         .map(field => {
           const filter = filtersData.find(getByName(field.name));
+
           return { ...filter, active: true };
         })
         .filter(el => !isFilterValid(el))
@@ -85,6 +86,7 @@ export const extractInvalidFilters = function <T extends string>(
       const deps = dependencies
         .map(name => {
           const filter = filtersData.find(getByName(name));
+
           return { ...filter, required: true };
         })
         .filter(el => !isFilterValid(el));

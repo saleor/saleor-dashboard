@@ -272,6 +272,7 @@ function usePageForm(
 
   useEffect(() => {
     setIsSubmitDisabled(isSaveDisabled);
+
     if (!pageExists) {
       setIsDirty(true);
     }

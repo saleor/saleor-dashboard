@@ -9,5 +9,6 @@ const ResetPasswordSuccessView: React.FC = () => {
 
   return <ResetPasswordSuccessPage onBack={() => navigate(getAppMountUri())} />;
 };
+
 ResetPasswordSuccessView.displayName = "ResetPasswordSuccessView";
 export default ResetPasswordSuccessView;

@@ -41,9 +41,11 @@ describe("WebhookHeaders", () => {
   it("can expand field", async () => {
     // Arrange
     render(<Component />);
+
     const user = userEvent.setup();
     const isExpandedAttribute = "data-test-expanded";
     const editor = screen.getByTestId("webhook-headers-editor");
+
     // Assert
     expect(editor).toHaveAttribute(isExpandedAttribute, "true");
     // Act

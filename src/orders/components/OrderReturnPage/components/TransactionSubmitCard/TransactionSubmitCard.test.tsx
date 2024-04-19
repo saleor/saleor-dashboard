@@ -65,6 +65,7 @@ describe("TransactionSubmitCard", () => {
     // Arrange
     const submitFn = jest.fn();
     const onChangeFn = jest.fn();
+
     render(
       <TransactionSubmitCard
         {...transactionSubmitCardProps}
@@ -93,6 +94,7 @@ describe("TransactionSubmitCard", () => {
     // Arrange
     const submitFn = jest.fn();
     const onChangeFn = jest.fn();
+
     render(
       <TransactionSubmitCard
         {...transactionSubmitCardProps}
@@ -123,6 +125,7 @@ describe("TransactionSubmitCard", () => {
     // Arrange
     const submitFn = jest.fn();
     const onChangeFn = jest.fn();
+
     render(
       <TransactionSubmitCard
         {...transactionSubmitCardProps}
@@ -155,6 +158,7 @@ describe("TransactionSubmitCard", () => {
     const onChangeFn = jest.fn();
     const onAmountChangeFn = jest.fn();
     const CUSTOM_PRICE = "5";
+
     render(
       <TransactionSubmitCard
         {...transactionSubmitCardProps}

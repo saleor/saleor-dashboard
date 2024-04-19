@@ -41,6 +41,7 @@ export const useSaveChannel = ({ createChannel, reorderChannelWarehouses }: Save
         warehousesToDisplay,
       );
       const channelId = result.data?.channelCreate?.channel?.id;
+
       if (channelId) {
         await reorderChannelWarehouses({
           variables: { channelId, moves },

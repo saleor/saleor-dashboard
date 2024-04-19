@@ -27,6 +27,7 @@ export class DateProvider extends React.Component<{}, DateProviderState> {
   render() {
     const { children } = this.props;
     const { date } = this.state;
+
     return <Provider value={date}>{children}</Provider>;
   }
 }

@@ -96,6 +96,7 @@ const Filter: React.FC<FilterProps> = props => {
 
     if (Object.keys(invalidFilters).length > 0) {
       setFilterErrors(invalidFilters);
+
       return;
     }
 
@@ -171,5 +172,6 @@ const Filter: React.FC<FilterProps> = props => {
     </ClickAwayListener>
   );
 };
+
 Filter.displayName = "Filter";
 export default Filter;

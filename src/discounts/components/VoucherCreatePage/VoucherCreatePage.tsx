@@ -108,6 +108,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     if (voucherCodeExists(code, data.codes)) {
       throw new Error("Code already exists");
     }
+
     triggerChange(true);
     set({
       codes: [{ code }, ...data.codes],

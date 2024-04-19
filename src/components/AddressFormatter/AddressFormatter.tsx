@@ -12,6 +12,7 @@ const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
   if (!address) {
     return <Skeleton />;
   }
+
   return (
     <address
       style={{
@@ -41,5 +42,6 @@ const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
     </address>
   );
 };
+
 AddressFormatter.displayName = "AddressFormatter";
 export default AddressFormatter;

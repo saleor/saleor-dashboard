@@ -19,6 +19,7 @@ export function DevModeProvider({ children }) {
   const triggerHandler = ({ shift }: { shift: boolean }) => {
     if (shift) {
       setDevModeContent(DevModeQuery);
+
       const variables = JSON.stringify(
         {
           filter: getFilterVariables(params),
@@ -26,11 +27,13 @@ export function DevModeProvider({ children }) {
         null,
         2,
       );
+
       setVariables(variables);
     } else {
       setDevModeContent("");
       setVariables("");
     }
+
     setDevModeVisibility(!isDevModeVisible);
   };
 

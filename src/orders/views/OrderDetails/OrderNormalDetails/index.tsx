@@ -155,6 +155,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const [currentApproval, setCurrentApproval] = React.useState<ApprovalState | null>(null);
   const [stockExceeded, setStockExceeded] = React.useState(false);
   const approvalErrors = orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || [];
+
   React.useEffect(() => {
     if (approvalErrors.length && approvalErrors.every(err => err.code === "INSUFFICIENT_STOCK")) {
       setStockExceeded(true);
@@ -342,6 +343,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             fulfillment: order?.fulfillments.find(getById(params.id)),
             notifyCustomer,
           });
+
           return orderFulfillmentApprove.mutate({
             id: params.id,
             notifyCustomer,
@@ -360,6 +362,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         confirmButtonState="default"
         onSubmit={() => {
           setStockExceeded(false);
+
           return orderFulfillmentApprove.mutate({
             id: params.id,
             notifyCustomer: currentApproval?.notifyCustomer,

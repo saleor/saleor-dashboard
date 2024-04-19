@@ -72,6 +72,7 @@ function usePaginator({ queryString, paginationState, pageInfo }: UsePaginatorAr
     if (!newPageInfo?.hasPreviousPage || !pageInfo?.startCursor) {
       return undefined;
     }
+
     return (
       "?" +
       stringifyQs({

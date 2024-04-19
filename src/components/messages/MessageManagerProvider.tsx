@@ -43,13 +43,16 @@ const MessageManagerProvider = ({ children }) => {
   }, []);
   const show = useCallback((message = {}, timeout = DEFAULT_NOTIFICATION_SHOW_TIME) => {
     const id = timer.current;
+
     timer.current += 1;
+
     const notification = {
       close: () => remove(id),
       id,
       message,
       timeout,
     };
+
     if (timeout !== null) {
       const timeoutId = window.setTimeout(() => {
         timerCallback(notification);
@@ -70,10 +73,12 @@ const MessageManagerProvider = ({ children }) => {
   }, []);
   const getCurrentTimer = (notification: INotification) => {
     const currentTimerIndex = timersArr.current.findIndex(timer => timer.id === notification.id);
+
     return timersArr.current[currentTimerIndex];
   };
   const pauseTimer = (notification: INotification) => {
     const currentTimer = getCurrentTimer(notification);
+
     if (currentTimer) {
       currentTimer.remaining = currentTimer.remaining - (new Date().getTime() - currentTimer.start);
       window.clearTimeout(currentTimer.timeoutId);
@@ -81,6 +86,7 @@ const MessageManagerProvider = ({ children }) => {
   };
   const resumeTimer = (notification: INotification) => {
     const currentTimer = getCurrentTimer(notification);
+
     if (currentTimer) {
       currentTimer.start = new Date().getTime();
       currentTimer.timeoutId = window.setTimeout(

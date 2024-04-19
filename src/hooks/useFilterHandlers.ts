@@ -41,6 +41,7 @@ export const useFilterHandlers = <
 
   useEffect(() => {
     const hasQuery = !!params.query?.trim();
+
     if (hasQuery || params.sort === "rank") {
       prevAsc.current = params.asc;
     }
@@ -57,7 +58,9 @@ export const useFilterHandlers = <
     if (cleanupFn) {
       cleanupFn();
     }
+
     const filtersQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
+
     navigate(
       createUrl({
         ...params,
@@ -84,6 +87,7 @@ export const useFilterHandlers = <
     if (cleanupFn) {
       cleanupFn();
     }
+
     const trimmedQuery = query?.trim() ?? "";
     const hasQuery = !!trimmedQuery;
     const sortWithoutQuery = params.sort === "rank" ? defaultSortField : params.sort;

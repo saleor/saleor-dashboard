@@ -165,24 +165,28 @@ export const canSendRefundDuringReturn = ({
       reason: submitCardMessages.cantSendRefundGrantFirst,
     };
   }
+
   if (transactions.length === 0) {
     return {
       value: false,
       reason: submitCardMessages.cantSendRefundNoTransactions,
     };
   }
+
   if (transactions.length > 1) {
     return {
       value: false,
       reason: submitCardMessages.cantSendRefundMultipleTransactions,
     };
   }
+
   if (!transactions[0].actions.includes(TransactionActionEnum.REFUND)) {
     return {
       value: false,
       reason: submitCardMessages.cantSendRefundNonRefundable,
     };
   }
+
   return {
     value: true,
     reason: null,
@@ -203,9 +207,11 @@ export const getReturnRefundValue = ({
   if (!autoGrantRefund) {
     return "";
   }
+
   if (isAmountDirty) {
     return customRefundValue?.toString() ?? "";
   }
+
   return (
     amountData?.refundTotalAmount.amount
       .toFixed(getCurrencyDecimalPoints(amountData?.refundTotalAmount?.currency) ?? 2)

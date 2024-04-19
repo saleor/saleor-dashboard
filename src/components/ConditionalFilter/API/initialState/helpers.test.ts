@@ -100,6 +100,7 @@ describe("ConditionalFilter / API / createInitialStateFromData", () => {
     const channel = ["channel-1"];
     // Act
     const result = createInitialStateFromData(data, channel);
+
     // Assert
     expect(result).toMatchSnapshot();
   });

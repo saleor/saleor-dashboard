@@ -151,5 +151,6 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
     </div>
   );
 };
+
 ProductContextSwitcher.displayName = "ProductContextSwitcher";
 export default ProductContextSwitcher;

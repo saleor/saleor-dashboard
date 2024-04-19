@@ -76,6 +76,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
         isOpen: true,
       });
     }
+
     onChange({
       target: { name, value: item },
     } as any);
@@ -100,6 +101,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
               if (!changes.isOpen && state.inputValue === "") {
                 delete changes.inputValue;
               }
+
               return changes;
             }}
           >
@@ -131,6 +133,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
                 if (disabled) {
                   return;
                 }
+
                 toggleMenu();
               };
 

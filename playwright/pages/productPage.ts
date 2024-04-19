@@ -88,6 +88,7 @@ export class ProductPage extends BasePage {
 
   async gotoCreateProductPage(productTypeId: string) {
     const createProductUrl = `${URL_LIST.products}${URL_LIST.productsAdd}${productTypeId}`;
+
     await console.log("Navigating to create product view: " + createProductUrl);
     await this.page.goto(createProductUrl);
     await this.pageHeader.waitFor({ state: "visible", timeout: 50000 });
@@ -100,6 +101,7 @@ export class ProductPage extends BasePage {
 
   async gotoExistingProductPage(productId: string) {
     const existingProductUrl = `${URL_LIST.products}${productId}`;
+
     console.log(`Navigating to existing product: ${existingProductUrl}`);
     await this.page.goto(existingProductUrl);
     await this.pageHeader.waitFor({ state: "visible", timeout: 50000 });
@@ -169,11 +171,13 @@ export class ProductPage extends BasePage {
 
   async typeSellingPriceForChannel(channelName: string, sellingPriceValue = "50") {
     const channel = this.page.locator(`[data-test-id="Channel-${channelName}"]`);
+
     await channel.locator(this.sellingPriceInput).fill(sellingPriceValue);
   }
 
   async typeCostPrice(channelName: string, costPriceValue = "40") {
     const channel = this.page.locator(`[data-test-id="Channel-${channelName}"]`);
+
     await channel.locator(this.costPriceInput).fill(costPriceValue);
   }
 
@@ -203,8 +207,11 @@ export class ProductPage extends BasePage {
 
   async uploadProductImage(fileName: string) {
     const fileChooserPromise = this.page.waitForEvent("filechooser");
+
     await this.clickUploadImagesButton();
+
     const fileChooser = await fileChooserPromise;
+
     await fileChooser.setFiles(path.join("playwright/data/images/", fileName));
     await this.page.waitForLoadState("domcontentloaded");
   }

@@ -133,5 +133,6 @@ const TableHead: React.FC<TableHeadProps> = props => {
     </MuiTableHead>
   );
 };
+
 TableHead.displayName = "TableHead";
 export default TableHead;

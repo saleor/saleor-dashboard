@@ -142,11 +142,13 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
               icon: getColumnSortIconName(sort, ProductListUrlSortField.attribute),
             };
           }
+
           return {
             ...column,
             icon: undefined,
           };
         }
+
         return column;
       }),
     );
@@ -167,7 +169,9 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
       if (!onRowClick) {
         return;
       }
+
       const rowData = products[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, products],
@@ -177,7 +181,9 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
       if (!rowAnchor) {
         return;
       }
+
       const rowData = products[row];
+
       return rowAnchor(rowData.id);
     },
     [rowAnchor, products],
@@ -185,10 +191,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   const handleGetColumnTooltipContent = useCallback(
     (colIndex: number): string => {
       const { columnName } = getColumnMetadata(visibleColumns[colIndex].id);
+
       // Sortable column or empty
       if (canBeSorted(columnName, !!selectedChannelId) || visibleColumns[colIndex].id === "empty") {
         return "";
       }
+
       // No sortable column
       if (!Object.keys(ProductListUrlSortField).includes(columnName)) {
         return intl.formatMessage(commonTooltipMessages.noSortable);

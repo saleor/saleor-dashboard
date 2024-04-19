@@ -17,6 +17,7 @@ export const useRulesHandlers = (discountType: PromotionTypeEnum = PromotionType
     if (ruleEditIndex !== null) {
       setRules(rules => {
         rules[ruleEditIndex] = data;
+
         return rules;
       });
     } else {

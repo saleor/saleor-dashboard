@@ -80,5 +80,6 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
     </Card>
   );
 };
+
 TranslationsLanguageList.displayName = "TranslationsLanguageList";
 export default TranslationsLanguageList;

@@ -49,6 +49,7 @@ export const useChannelAdapter = ({
   const selectedChannels = selectedColumns
     ? listings?.filter(channel => selectedColumns.includes(`channel:${channel.id}`))
     : undefined;
+
   return {
     name: intl.formatMessage(messages.channel),
     prefix: "channel",
@@ -132,6 +133,7 @@ export const useAttributesAdapter = ({
     if (!attribute.inputType) {
       return false;
     }
+
     return [AttributeInputTypeEnum.DROPDOWN, AttributeInputTypeEnum.PLAIN_TEXT].includes(
       attribute.inputType,
     );
@@ -271,6 +273,7 @@ export const getWarehousesFetchMoreProps = ({
     false;
   const hasPreviousPage =
     availableWarehousesData.data?.warehouses?.pageInfo?.hasPreviousPage ?? false;
+
   return {
     hasNextPage,
     hasPreviousPage,

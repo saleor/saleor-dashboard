@@ -42,6 +42,7 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
   const [installApp] = useAppInstallMutation({
     onCompleted: data => {
       const installationData = data?.appInstall?.appInstallation;
+
       if (data.appInstall?.errors.length === 0) {
         if (installationData) {
           setActiveInstallations(activeInstallations => [
@@ -52,6 +53,7 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
             },
           ]);
         }
+
         navigateToAppsList();
       } else {
         (data?.appInstall?.errors ?? []).forEach(error => {
@@ -66,6 +68,7 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
   const navigateToAppsList = () => navigate(AppUrls.resolveAppListUrl());
   const handleSubmit = () => {
     const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
+
     return extractMutationErrors(
       installApp({
         variables: {

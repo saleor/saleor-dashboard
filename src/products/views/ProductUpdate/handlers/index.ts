@@ -28,6 +28,7 @@ export function createImageReorderHandler(
 ) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {
     let ids = product.media.map(image => image.id);
+
     ids = arrayMove(ids, oldIndex, newIndex);
     reorderProductImages({
       mediaIds: ids,

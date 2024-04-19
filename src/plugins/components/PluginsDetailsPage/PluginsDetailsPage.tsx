@@ -91,6 +91,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
 
           set(newData);
         };
+
         return (
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav

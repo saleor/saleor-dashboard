@@ -19,5 +19,6 @@ const CompanyAddressInput: React.FC<CompanyAddressInputProps> = props => {
     </DashboardCard>
   );
 };
+
 CompanyAddressInput.displayName = "CompanyAddressInput";
 export default CompanyAddressInput;

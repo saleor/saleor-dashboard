@@ -57,6 +57,7 @@ const renderVoucherCodes = (props: Partial<VoucherCodesProps>) => {
     />,
     { wrapper: Wrapper },
   );
+
   prepareDatagridScroller();
 
   return results;

@@ -225,6 +225,7 @@ describe("Sending only changed attributes", () => {
         updatedFileAttributes: [],
       });
       const expectedResult = expected !== null ? [{ id: ATTR_ID, references: expected }] : [];
+
       expect(result).toEqual(expectedResult);
     });
   });
@@ -244,6 +245,7 @@ describe("Sending only changed attributes", () => {
         updatedFileAttributes: [],
       });
       const expectedResult = expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
+
       expect(result).toEqual(expectedResult);
     });
   });
@@ -266,6 +268,7 @@ describe("Sending only changed attributes", () => {
         updatedFileAttributes: [],
       });
       const expectedResult = expected !== null ? [{ id: ATTR_ID, boolean: expected }] : [];
+
       expect(result).toEqual(expectedResult);
     });
   });
@@ -285,6 +288,7 @@ describe("Sending only changed attributes", () => {
         updatedFileAttributes: [],
       });
       const expectedResult = expected !== null ? [{ id: ATTR_ID, plainText: expected }] : [];
+
       expect(result).toEqual(expectedResult);
     });
   });
@@ -304,6 +308,7 @@ describe("Sending only changed attributes", () => {
         updatedFileAttributes: [],
       });
       const expectedResult = expected !== null ? [{ id: ATTR_ID, richText: expected }] : [];
+
       expect(result).toEqual(expectedResult);
     });
   });
@@ -323,11 +328,13 @@ describe("Sending only changed attributes", () => {
         updatedFileAttributes: [],
       });
       const expectedResult = expected !== null ? [{ id: ATTR_ID, date: expected }] : [];
+
       expect(result).toEqual(expectedResult);
     });
   });
   describe("works with date time attributes", () => {
     const dateTime = "2021-01-01T11:00:00+01:00";
+
     test.each`
       newAttr     | oldAttr     | expected
       ${null}     | ${null}     | ${null}
@@ -343,6 +350,7 @@ describe("Sending only changed attributes", () => {
         updatedFileAttributes: [],
       });
       const expectedResult = expected !== null ? [{ id: ATTR_ID, dateTime: expected }] : [];
+
       expect(result).toEqual(expectedResult);
     });
   });
@@ -363,6 +371,7 @@ describe("Sending only changed attributes", () => {
       });
       const expectedResult =
         expected !== null ? [{ id: ATTR_ID, swatch: { value: expected } }] : [];
+
       expect(result).toEqual(expectedResult);
     });
   });
@@ -382,6 +391,7 @@ describe("Sending only changed attributes", () => {
         updatedFileAttributes: [],
       });
       const expectedResult = expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
+
       expect(result).toEqual(expectedResult);
     });
   });

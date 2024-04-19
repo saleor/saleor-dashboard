@@ -45,20 +45,24 @@ import TranslationsVouchersComponent, {
 type TranslationsEntitiesRouteProps = RouteComponentProps<{
   languageCode: string;
 }>;
+
 const TranslationsEntities: React.FC<TranslationsEntitiesRouteProps> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
 
   return <TranslationsEntitiesComponent language={match.params.languageCode} params={qs} />;
 };
+
 type TranslationsEntityRouteProps = RouteComponentProps<{
   id: string;
   languageCode: string;
 }>;
+
 const TranslationsCategories: React.FC<TranslationsEntityRouteProps> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsCategoriesQueryParams = {
     activeField: qs.activeField as string,
   };
+
   return (
     <TranslationsCategoriesComponent
       id={decodeURIComponent(match.params.id)}
@@ -72,6 +76,7 @@ const TranslationsCollections: React.FC<TranslationsEntityRouteProps> = ({ locat
   const params: TranslationsCollectionsQueryParams = {
     activeField: qs.activeField as string,
   };
+
   return (
     <TranslationsCollectionsComponent
       id={decodeURIComponent(match.params.id)}
@@ -85,6 +90,7 @@ const TranslationsProducts: React.FC<TranslationsEntityRouteProps> = ({ location
   const params: TranslationsProductsQueryParams = {
     activeField: qs.activeField as string,
   };
+
   return (
     <TranslationsProductsComponent
       id={decodeURIComponent(match.params.id)}
@@ -93,11 +99,13 @@ const TranslationsProducts: React.FC<TranslationsEntityRouteProps> = ({ location
     />
   );
 };
+
 type TranslationsProductVariantProps = RouteComponentProps<{
   productId: string;
   id: string;
   languageCode: string;
 }>;
+
 const TranslationsProductVariants: React.FC<TranslationsProductVariantProps> = ({
   location,
   match,
@@ -106,6 +114,7 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantProps> = (
   const params: TranslationsProductVariantsQueryParams = {
     activeField: qs.activeField as string,
   };
+
   return (
     <TranslationsProductVariantsComponent
       id={decodeURIComponent(match.params.id)}
@@ -120,6 +129,7 @@ const TranslationsSales: React.FC<TranslationsEntityRouteProps> = ({ location, m
   const params: TranslationsSalesQueryParams = {
     activeField: qs.activeField as string,
   };
+
   return (
     <TranslationsSaleComponent
       id={decodeURIComponent(match.params.id)}
@@ -133,6 +143,7 @@ const TranslationsVouchers: React.FC<TranslationsEntityRouteProps> = ({ location
   const params: TranslationsVouchersQueryParams = {
     activeField: qs.activeField as string,
   };
+
   return (
     <TranslationsVouchersComponent
       id={decodeURIComponent(match.params.id)}
@@ -146,6 +157,7 @@ const TranslationsPages: React.FC<TranslationsEntityRouteProps> = ({ location, m
   const params: TranslationsPagesQueryParams = {
     activeField: qs.activeField as string,
   };
+
   return (
     <TranslationsPagesComponent
       id={decodeURIComponent(match.params.id)}
@@ -159,6 +171,7 @@ const TranslationsAttributes: React.FC<TranslationsEntityRouteProps> = ({ locati
   const params: TranslationsAttributesQueryParams = {
     activeField: qs.activeField as string,
   };
+
   return (
     <TranslationsAttributesComponent
       id={decodeURIComponent(match.params.id)}
@@ -175,6 +188,7 @@ const TranslationsShippingMethod: React.FC<TranslationsEntityRouteProps> = ({
   const params: TranslationsShippingMethodQueryParams = {
     activeField: qs.activeField as string,
   };
+
   return (
     <TranslationsShippingMethodComponent
       id={decodeURIComponent(match.params.id)}
@@ -188,6 +202,7 @@ const TranslationsMenuItem: React.FC<TranslationsEntityRouteProps> = ({ location
   const params: TranslationsShippingMethodQueryParams = {
     activeField: qs.activeField as string,
   };
+
   return (
     <TranslationsMenuItemComponent
       id={decodeURIComponent(match.params.id)}
@@ -269,5 +284,6 @@ const TranslationsRouter: React.FC = () => {
     </>
   );
 };
+
 TranslationsRouter.displayName = "TranslationsRouter";
 export default TranslationsRouter;

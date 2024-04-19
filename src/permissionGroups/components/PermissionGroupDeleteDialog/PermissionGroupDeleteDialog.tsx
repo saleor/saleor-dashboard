@@ -26,6 +26,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
   const intl = useIntl();
 
   let errorMessage;
+
   if (error?.code === PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION) {
     errorMessage = intl.formatMessage({
       id: "O22NIZ",
@@ -63,5 +64,6 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
+
 PermissionGroupDeleteDialog.displayName = "PermissionGroupDeleteDialog";
 export default PermissionGroupDeleteDialog;

@@ -165,6 +165,7 @@ function useOrderCustomerAddressesEditForm(
   const submit = (event: React.FormEvent<any>) => {
     event.stopPropagation();
     event.preventDefault();
+
     return handleSubmit();
   };
 

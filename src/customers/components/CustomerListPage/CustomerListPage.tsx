@@ -151,5 +151,6 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
     </>
   );
 };
+
 CustomerListPage.displayName = "CustomerListPage";
 export default CustomerListPage;

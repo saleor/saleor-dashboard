@@ -44,6 +44,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
       redirectUri: urlJoin(window.location.origin, getAppMountUriForRedirect(), loginCallbackPath),
     });
     const data = JSON.parse(result?.authenticationData || "");
+
     if (data && !result?.errors?.length) {
       setRequestedExternalPluginId(pluginId);
       window.location.href = data.authorizationUrl;
@@ -93,5 +94,6 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     />
   );
 };
+
 LoginView.displayName = "LoginView";
 export default LoginView;

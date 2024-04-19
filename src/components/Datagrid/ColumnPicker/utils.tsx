@@ -13,9 +13,11 @@ export const getExitIcon = (
   if (columnCategories.length === 1) {
     return <CloseIcon />;
   }
+
   if (currentCategory) {
     return <ArrowLeftIcon />;
   }
+
   return <CloseIcon />;
 };
 
@@ -33,6 +35,7 @@ export const getExitOnClick = ({
   if (columnCategories?.length === 1) {
     return onClose;
   }
+
   if (currentCategory) {
     return () => setCurrentCategory(null);
   } else {
@@ -46,6 +49,7 @@ export const isLastEnabledColumn = (
   selectedColumns: string[],
 ): boolean => {
   const enabledColumns = columnsToCheck.filter(column => selectedColumns.includes(column.id));
+
   return enabledColumns.length === 1 && enabledColumns[0].id === columnIdToCheck;
 };
 

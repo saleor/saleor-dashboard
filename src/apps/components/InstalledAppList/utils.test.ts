@@ -108,6 +108,7 @@ describe("InstalledAppList utils", () => {
   describe("appNotInstalled", () => {
     describe("has MANAGE_APPS permission", () => {
       const hasManagedAppsPermission = true;
+
       it("should return true when has empty apps installed and empty app installations", () => {
         // Arrange
         const appList: InstalledApp[] = [];

@@ -119,5 +119,6 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
     </div>
   );
 };
+
 LanguageSwitch.displayName = "LanguageSwitch";
 export default LanguageSwitch;

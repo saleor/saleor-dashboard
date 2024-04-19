@@ -163,5 +163,6 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     </Form>
   );
 };
+
 ProductMediaPage.displayName = "ProductMediaPage";
 export default ProductMediaPage;

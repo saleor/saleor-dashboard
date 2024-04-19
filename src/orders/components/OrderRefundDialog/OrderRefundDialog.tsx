@@ -22,6 +22,7 @@ export const OrderRefundDialog = ({ open, onClose, onConfirm }: OrderRefundDialo
     setSelected("standard");
     onClose();
   };
+
   return (
     <DashboardModal open={open} onChange={handleClose}>
       <DashboardModal.Content __width="400px">

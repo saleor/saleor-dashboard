@@ -63,5 +63,6 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
     </OrderSettingsForm>
   );
 };
+
 OrderSettingsPage.displayName = "OrderSettingsPage";
 export default OrderSettingsPage;

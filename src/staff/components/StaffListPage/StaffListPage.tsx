@@ -145,5 +145,6 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
     </ListPageLayout>
   );
 };
+
 StaffListPage.displayName = "StaffListPage";
 export default StaffListPage;

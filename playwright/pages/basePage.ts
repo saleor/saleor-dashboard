@@ -109,6 +109,7 @@ export class BasePage {
     const responsePromise = this.page.waitForResponse("**/graphql/", {
       timeout: timeoutMs,
     });
+
     await action();
     await responsePromise;
   }
@@ -194,6 +195,7 @@ export class BasePage {
 
   async findRowIndexBasedOnText(searchTextArray: string[]) {
     await this.gridCanvas.locator("table tr").first().waitFor({ state: "attached" });
+
     const rowIndexes: number[] = [];
     const rows = await this.page.$$eval("table tr", rows => rows.map(row => row.textContent));
 
@@ -206,12 +208,14 @@ export class BasePage {
         rowIndexes.push(rowIndex - 1);
       }
     }
+
     return rowIndexes;
   }
 
   // check row on grid list view
   async checkListRowsBasedOnContainingText(searchText: string[]) {
     const rowIndexes = await this.findRowIndexBasedOnText(searchText);
+
     for (const rowIndex of rowIndexes) {
       await this.clickGridCell(0, rowIndex);
     }
@@ -221,11 +225,13 @@ export class BasePage {
 
   async clickListRowBasedOnContainingText(searchText: string) {
     const rowIndex = await this.findRowIndexBasedOnText([searchText]);
+
     await this.clickGridCell(1, rowIndex[0]);
   }
 
   async expectElementContainsTextFromObjectValues(locator: Locator, object: object) {
     const objectValuesArray = await Object.values(object);
+
     for (const objectProperty of objectValuesArray) {
       expect(locator).toContainText(objectProperty);
     }
@@ -237,16 +243,20 @@ export class BasePage {
       .filter({ hasText: expectedText })
       .first()
       .waitFor({ state: "attached", timeout: 10000 });
+
     const gridRowsWithText = await this.gridCanvas
       .locator("tr")
       .filter({ hasText: expectedText })
       .count();
+
     return gridRowsWithText;
   }
 
   async getNumberOfGridRows() {
     await this.gridCanvas.locator("tr").first().waitFor({ state: "attached" });
+
     const gridRowsWithText = await this.gridCanvas.locator("tr").count();
+
     return gridRowsWithText;
   }
 

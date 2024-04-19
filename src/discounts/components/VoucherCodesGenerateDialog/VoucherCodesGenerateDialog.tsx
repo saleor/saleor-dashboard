@@ -35,6 +35,7 @@ export const VoucherCodesGenerateDialog = ({
 
     if (Number.isNaN(Number(value)) || Number(value) > MAX_VOUCHER_CODES || value.includes(".")) {
       e.preventDefault();
+
       return;
     }
 

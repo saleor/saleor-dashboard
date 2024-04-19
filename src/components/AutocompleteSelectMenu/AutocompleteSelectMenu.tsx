@@ -172,5 +172,6 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
     </DebounceAutocomplete>
   );
 };
+
 AutocompleteSelectMenu.displayName = "AutocompleteSelectMenu";
 export default AutocompleteSelectMenu;

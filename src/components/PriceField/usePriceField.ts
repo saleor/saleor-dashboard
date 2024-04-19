@@ -20,6 +20,7 @@ export function usePriceField(currency: string | undefined, onChange: FormChange
 
     if (decimalPart?.length > maxDecimalLength) {
       const shortenedDecimalPart = decimalPart.slice(0, maxDecimalLength);
+
       value = `${integerPart}${splitCharacter}${shortenedDecimalPart}`;
     }
 
@@ -35,6 +36,7 @@ export function usePriceField(currency: string | undefined, onChange: FormChange
     if (e.key === "e" || e.key === "E" || e.key === "-") {
       e.preventDefault();
     }
+
     // ignore separator input when currency doesn't support decimal values
     if (maxDecimalLength === 0 && SEPARATOR_CHARACTERS.some(separator => e.key === separator)) {
       e.preventDefault();

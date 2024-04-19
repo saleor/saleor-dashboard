@@ -78,5 +78,6 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     </Typography>
   );
 };
+
 TranslationFieldsRich.displayName = "TranslationFieldsRich";
 export default TranslationFieldsRich;

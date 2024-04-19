@@ -59,6 +59,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
             .map(mediaObj => {
               const parsedMediaOembedData = JSON.parse(mediaObj?.oembedData);
               const mediaUrl = parsedMediaOembedData?.thumbnail_url || mediaObj.url;
+
               return (
                 <div
                   className={clsx([

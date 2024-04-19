@@ -58,6 +58,7 @@ function useTaxCountriesForm(
   const submitData = formset.data.map(item => {
     const { id, value } = item;
     const parsedRate = parseFloat(value);
+
     return {
       rate: isNaN(parsedRate) ? null : parsedRate,
       taxClassId: id,

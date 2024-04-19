@@ -9,6 +9,7 @@ export const AppStateContext = React.createContext<AppStateContextType>([
   initialAppState,
   () => undefined,
 ]);
+
 const AppStateProvider: React.FC = ({ children }) => {
   const { location } = useRouter();
   const stateAndDispatch = React.useReducer(appStateReducer, initialAppState);

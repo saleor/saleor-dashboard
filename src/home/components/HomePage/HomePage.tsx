@@ -89,5 +89,6 @@ const HomePage: React.FC<HomePageProps> = props => {
     </DetailPageLayout>
   );
 };
+
 HomePage.displayName = "HomePage";
 export default HomePage;

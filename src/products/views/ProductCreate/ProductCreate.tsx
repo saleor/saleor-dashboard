@@ -177,6 +177,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const [productVariantCreate, productVariantCreateOpts] = useVariantCreateMutation({
     onCompleted: data => {
       const errors = data.productVariantCreate.errors;
+
       if (errors.length) {
         errors.map(error =>
           notify({

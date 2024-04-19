@@ -9,6 +9,7 @@ import {
 import difference from "lodash/difference";
 
 import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
+
 /**
  * Will return true if group has all permissions available in shop assigned.
  */
@@ -19,6 +20,7 @@ export const isGroupFullAccess = (
   if (!permissionGroup) {
     return false;
   }
+
   const assignedCodes = extractPermissionCodes(permissionGroup);
 
   if (assignedCodes.length !== shopPermissions?.length) {
@@ -30,6 +32,7 @@ export const isGroupFullAccess = (
       return false;
     }
   }
+
   return true;
 };
 
@@ -138,6 +141,7 @@ export const arePermissionsExceeded = (
 
   const groupPermissions = extractPermissionCodes(permissionGroup);
   const userPermissions = user?.userPermissions?.map(p => p.code) ?? [];
+
   return difference(groupPermissions, userPermissions).length > 0;
 };
 

@@ -97,5 +97,6 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
     />
   );
 };
+
 TranslationsCategories.displayName = "TranslationsCategories";
 export default TranslationsCategories;

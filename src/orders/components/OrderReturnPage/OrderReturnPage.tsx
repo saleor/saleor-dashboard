@@ -52,6 +52,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
   } = props;
   const canRefundShipping = calculateCanRefundShipping(null, order?.grantedRefunds);
   const intl = useIntl();
+
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit, isSaveDisabled, isAmountDirty }) => (

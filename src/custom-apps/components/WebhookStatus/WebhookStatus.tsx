@@ -14,6 +14,7 @@ interface WebhookStatusProps {
 
 const WebhookStatus: React.FC<WebhookStatusProps> = ({ data, disabled, onChange }) => {
   const intl = useIntl();
+
   return (
     <ControlledSwitch
       name={"isActive" as keyof WebhookFormData}

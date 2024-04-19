@@ -16,6 +16,7 @@ const OrderPriceLabel: React.FC<OrderPriceLabelProps> = ({ pricing }) => {
 
   if (pricing.onSale) {
     const { price, priceUndiscounted } = pricing;
+
     return (
       <div className={classes.percentDiscountLabelContainer}>
         <DiscountedPrice discountedPrice={price.gross} regularPrice={priceUndiscounted.gross} />

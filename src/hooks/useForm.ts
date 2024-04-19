@@ -179,6 +179,7 @@ function useForm<T extends FormData, TErrors>(
       if (data[name] !== value) {
         handleSetChanged(true);
       }
+
       setData(data => ({
         ...data,
         [name]: value,

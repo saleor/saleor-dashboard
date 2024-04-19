@@ -182,5 +182,6 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
     </Card>
   );
 };
+
 ProductTypeAttributes.displayName = "ProductTypeAttributes";
 export default ProductTypeAttributes;

@@ -242,5 +242,6 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
     </Card>
   );
 };
+
 PermissionGroupMemberList.displayName = "PermissionGroupMemberList";
 export default PermissionGroupMemberList;

@@ -75,10 +75,12 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
   const onPostalCodeAssign = (rule: MinMax) => {
     if (state.postalCodeRules.filter(getPostalCodeRuleByMinMax(rule)).length > 0) {
       closeModal();
+
       return;
     }
 
     const newCode = getRuleObject(rule, state.inclusionType);
+
     dispatch({
       havePostalCodesChanged: true,
       postalCodeRules: [...state.postalCodeRules, newCode],

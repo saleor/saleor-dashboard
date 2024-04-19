@@ -4,6 +4,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import useRichText from "./useRichText";
 
 type Fixtures = Record<"short", OutputData>;
+
 const fixtures: Fixtures = {
   short: {
     blocks: [
@@ -48,6 +49,7 @@ describe("useRichText", () => {
   it("runs editorJS .save() when getValue is called", async () => {
     const saveFn = jest.fn(async () => fixtures.short);
     const { result } = renderHook(() => useRichText({ initial: "", triggerChange }));
+
     result.current.editorRef.current = {
       save: saveFn,
       destroy: jest.fn(),
@@ -59,6 +61,7 @@ describe("useRichText", () => {
   });
   it("calls triggerChange when change is made in the editor", () => {
     triggerChange.mockClear();
+
     const { result } = renderHook(() => useRichText({ initial: "", triggerChange }));
 
     result.current.handleChange();

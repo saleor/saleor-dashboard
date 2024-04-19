@@ -38,6 +38,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   >(navigate, channelsListUrl, params);
   const onCompleted = (data: ChannelDeleteMutation) => {
     const errors = data.channelDelete.errors;
+
     if (errors.length === 0) {
       notify({
         status: "success",

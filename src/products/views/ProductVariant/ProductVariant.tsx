@@ -73,6 +73,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
   const notify = useNotifier();
   const intl = useIntl();
   const [errors, setErrors] = useState<ProductErrorWithAttributesFragment[]>([]);
+
   useEffect(() => {
     setErrors([]);
   }, [variantId]);
@@ -113,6 +114,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
+
       setErrors(data.productVariantUpdate.errors);
     },
   });

@@ -147,5 +147,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     </CollectionUpdateForm>
   );
 };
+
 CollectionDetailsPage.displayName = "CollectionDetailsPage";
 export default CollectionDetailsPage;

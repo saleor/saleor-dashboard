@@ -348,4 +348,5 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
     </>
   );
 };
+
 export default ShippingZoneDetails;

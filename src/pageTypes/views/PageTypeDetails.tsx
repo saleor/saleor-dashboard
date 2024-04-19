@@ -262,6 +262,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
             selected={params.ids || []}
             onToggle={attributeId => {
               const ids = params.ids || [];
+
               navigate(
                 pageTypeUrl(id, {
                   ...params,

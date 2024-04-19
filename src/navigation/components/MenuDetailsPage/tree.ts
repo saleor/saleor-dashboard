@@ -5,13 +5,17 @@ import { TreeOperation } from "../MenuItems";
 
 export function findNode(tree: RecursiveMenuItem[], id: string): number[] {
   const foundNodeIndex = tree.findIndex(node => node.id === id);
+
   if (tree.length === 0) {
     return [null];
   }
+
   if (foundNodeIndex !== -1) {
     return [foundNodeIndex];
   }
+
   const nodeMap = tree.map((node, nodeIndex) => [nodeIndex, ...findNode(node.children, id)]);
+
   return nodeMap.find(path => path[path.length - 1] !== null) || [null];
 }
 
@@ -19,6 +23,7 @@ export function getNode(tree: RecursiveMenuItem[], path: number[]): RecursiveMen
   if (path.length === 1) {
     return tree[path[0]];
   }
+
   return getNode([...tree[path[0]].children], path.slice(1));
 }
 
@@ -30,6 +35,7 @@ function removeNode(tree: RecursiveMenuItem[], path: number[]): RecursiveMenuIte
   }
 
   const newTree = [...tree];
+
   newTree[removeIndex] = {
     ...tree[path[0]],
     children: removeNode(tree[path[0]].children, path.slice(1)),
@@ -58,6 +64,7 @@ function insertNode({ tree, path, node, position }: InsertNodeInput): RecursiveM
       position,
     });
   }
+
   return tree;
 }
 
@@ -121,5 +128,6 @@ export function computeRelativeTree(
     (acc, operation) => executeRelativeOperation(acc, operation),
     JSON.parse(JSON.stringify(tree)),
   );
+
   return newTree;
 }

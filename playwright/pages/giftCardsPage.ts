@@ -91,6 +91,7 @@ export class GiftCardsPage extends BasePage {
 
   async gotoExistingGiftCardView(giftCardId: string) {
     const existingGiftCardUrl = URL_LIST.giftCards + giftCardId;
+
     console.log("Navigating to existing gift card: " + existingGiftCardUrl);
     await this.page.goto(existingGiftCardUrl);
   }

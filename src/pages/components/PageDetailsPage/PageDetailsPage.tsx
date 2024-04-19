@@ -244,5 +244,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     </PageForm>
   );
 };
+
 PageDetailsPage.displayName = "PageDetailsPage";
 export default PageDetailsPage;

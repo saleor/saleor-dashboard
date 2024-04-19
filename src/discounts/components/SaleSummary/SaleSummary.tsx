@@ -24,6 +24,7 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
   const classes = useStyles();
   const intl = useIntl();
   const channel = sale?.channelListings?.find(listing => listing.channel.id === selectedChannelId);
+
   return (
     <Card>
       <CardTitle title={intl.formatMessage(commonMessages.summary)} />
@@ -88,5 +89,6 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
     </Card>
   );
 };
+
 SaleSummary.displayName = "SaleSummary";
 export default SaleSummary;

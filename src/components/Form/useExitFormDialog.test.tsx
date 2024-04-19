@@ -13,6 +13,7 @@ jest.mock("../../hooks/useNotifier", () => undefined);
 
 const MockExitFormDialogProvider = ({ children }) => {
   const { providerData } = useExitFormDialogProvider();
+
   return (
     <ExitFormDialogContext.Provider value={providerData}>{children}</ExitFormDialogContext.Provider>
   );

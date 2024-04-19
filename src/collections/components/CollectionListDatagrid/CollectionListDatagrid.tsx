@@ -80,7 +80,9 @@ export const CollectionListDatagrid = ({
       if (!onRowClick) {
         return;
       }
+
       const rowData: Collection = collections[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, collections],
@@ -90,7 +92,9 @@ export const CollectionListDatagrid = ({
       if (!rowAnchor) {
         return "";
       }
+
       const rowData: Collection = collections[row];
+
       return rowAnchor(rowData.id);
     },
     [rowAnchor, collections],

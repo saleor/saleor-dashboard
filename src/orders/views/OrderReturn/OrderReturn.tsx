@@ -36,6 +36,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     onCompleted: data => {
       if (!data.orderFulfillmentReturnProducts?.errors.length) {
         const replaceOrder = data.orderFulfillmentReturnProducts?.replaceOrder;
+
         if (replaceOrder?.id) {
           setReplacedOrder(replaceOrder?.id);
         }
@@ -80,6 +81,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         title: intl.formatMessage(messages.cannotRefundTitle),
       });
     }
+
     if (!errors.length) {
       notify({
         status: "success",

@@ -94,5 +94,6 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
     />
   );
 };
+
 TranslationsCollections.displayName = "TranslationsCollections";
 export default TranslationsCollections;

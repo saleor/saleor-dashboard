@@ -113,5 +113,6 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({ id, languageCode,
     />
   );
 };
+
 TranslationsPages.displayName = "TranslationsPages";
 export default TranslationsPages;

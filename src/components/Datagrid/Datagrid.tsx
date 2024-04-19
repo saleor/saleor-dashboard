@@ -162,6 +162,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       }
 
       const datagridScroll = editor.current.scrollTo;
+
       datagridScroll(columnIndex, 0, "horizontal", 0, 0, { hAlign: "start" });
 
       // This is required to disable scroll whenever availableColumns
@@ -225,6 +226,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const handleOnCellEdited = useCallback(
     ([column, row]: Item, newValue: EditableGridCell): void => {
       onCellEdited([column, row], newValue);
+
       if (!editor.current) {
         return;
       }
@@ -242,6 +244,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       if (hasRowHover) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [_, row] = args.location;
+
         setHoverRow(args.kind !== "cell" ? undefined : row);
       }
 
@@ -250,6 +253,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       if (args.kind !== "cell" || !hackARef.current || !rowAnchor) {
         return;
       }
+
       const href = rowAnchor(args.location);
 
       if (!href) {
@@ -292,6 +296,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
     if (readonly && !gridSelection.current) {
       setSelection(gridSelection);
     }
+
     if (!readonly) {
       setSelection(gridSelection);
     }
@@ -352,6 +357,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       if (!onColumnResize) {
         return;
       }
+
       onColumnResize(column, newSize);
     },
     [clearTooltip, onColumnResize, tooltip],
@@ -361,9 +367,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
       if (tooltip) {
         clearTooltip();
       }
+
       if (!onColumnMoved) {
         return;
       }
+
       onColumnMoved(startIndex, endIndex);
     },
     [clearTooltip, onColumnMoved, tooltip],
@@ -382,6 +390,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const hideLinkAndShowAfterDelay = useCallback(
     (() => {
       let timer: ReturnType<typeof setTimeout> | null = null;
+
       return () => {
         if (timer) {
           clearTimeout(timer);
@@ -390,6 +399,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         if (hackARef.current) {
           hackARef.current.style.display = "none";
         }
+
         timer = setTimeout(() => {
           if (hackARef.current) {
             hackARef.current.style.display = "block";
@@ -547,6 +557,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           onWheelCapture={hideLinkAndShowAfterDelay}
           onClick={e => {
             e.preventDefault();
+
             if (e.currentTarget.dataset.reactRouterPath) {
               navigate(e.currentTarget.dataset.reactRouterPath);
             }

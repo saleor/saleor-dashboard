@@ -24,6 +24,7 @@ interface AddressEditCommonProps {
 export const stringifyAddress = (address: Partial<AddressFragment>): string => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, ...addressWithoutId } = address;
+
   return Object.values(flatten(addressWithoutId)).join(" ");
 };
 
@@ -36,12 +37,15 @@ export function validateDefaultAddress<T extends AddressFragment>(
   const fallbackAddress = {
     id: customerAddresses[0]?.id,
   } as AddressFragment;
+
   if (!defaultAddress) {
     return fallbackAddress;
   }
+
   if (!customerAddresses.some(getById(defaultAddress.id))) {
     return fallbackAddress;
   }
+
   return defaultAddress;
 }
 
@@ -88,6 +92,7 @@ export const getAddressEditProps = (
       onChangeFormAddressCountry: handlers.selectShippingCountry,
     };
   }
+
   return {
     ...addressEditCommonProps,
     addressInputName: "billingAddressInputOption",

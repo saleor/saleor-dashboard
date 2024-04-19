@@ -241,6 +241,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({ id, rateId, params }) =>
 
     if (state?.postalCodeRules!.filter(getPostalCodeRuleByMinMax(rule)).length > 0) {
       closeModal();
+
       return;
     }
 

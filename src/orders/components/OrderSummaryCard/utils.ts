@@ -64,8 +64,10 @@ export const getTaxTypeText = (order: OrderDetailsFragment, intl: IntlShape) => 
   if (order?.total?.tax === undefined) {
     return "";
   }
+
   if (order.total.tax.amount > 0) {
     return intl.formatMessage(orderSummaryMessages.vatIncluded);
   }
+
   return intl.formatMessage(orderSummaryMessages.vatNotIncluded);
 };

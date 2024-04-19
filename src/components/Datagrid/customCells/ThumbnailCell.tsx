@@ -64,6 +64,7 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
   provideEditor: () => ({
     editor: p => {
       const { isHighlighted, onChange, value } = p;
+
       return (
         <TextCellEntry
           highlight={isHighlighted}

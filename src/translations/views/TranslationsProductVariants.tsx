@@ -120,5 +120,6 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
     />
   );
 };
+
 TranslationsProductVariants.displayName = "TranslationsProductVariants";
 export default TranslationsProductVariants;

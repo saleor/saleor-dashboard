@@ -114,5 +114,6 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({ data, disabled, errors, onCha
     </Card>
   );
 };
+
 WebhookInfo.displayName = "WebhookInfo";
 export default WebhookInfo;

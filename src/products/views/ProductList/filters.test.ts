@@ -101,6 +101,7 @@ describe("Map attribute params to filter opts", () => {
         value: [],
       },
     ];
+
     expect(filterOpts).toEqual(expectedFilterOpts);
   });
   it("should return filter opts with proper values selected according to passed values selection in params", () => {
@@ -163,6 +164,7 @@ describe("Map attribute params to filter opts", () => {
         value: [],
       },
     ];
+
     expect(filterOpts).toEqual(expectedFilterOpts);
   });
 });
@@ -207,6 +209,7 @@ describe("Parsing filter value", () => {
       slug: "test-2",
       boolean: false,
     };
+
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
   });
@@ -237,6 +240,7 @@ describe("Parsing filter value", () => {
         lte: 2,
       },
     };
+
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
   });
@@ -261,6 +265,7 @@ describe("Parsing filter value", () => {
       slug: "test-2",
       values: ["value-2", "value-3"],
     };
+
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
   });
@@ -291,6 +296,7 @@ describe("Parsing filter value", () => {
         lte: "2020-02-02",
       },
     };
+
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
   });
@@ -321,6 +327,7 @@ describe("Parsing filter value", () => {
         lte: "2020-02-02T00:00:00",
       },
     };
+
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
   });

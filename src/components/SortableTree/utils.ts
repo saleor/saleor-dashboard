@@ -185,6 +185,7 @@ export function removeChildrenOf<T extends DataTypePlaceholder>(
       if (item.children.length) {
         excludeParentIds.push(item.id);
       }
+
       return false;
     }
 

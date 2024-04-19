@@ -138,5 +138,6 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
     </Dialog>
   );
 };
+
 StaffAddMemberDialog.displayName = "StaffAddMemberDialog";
 export default StaffAddMemberDialog;

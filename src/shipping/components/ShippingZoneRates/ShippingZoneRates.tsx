@@ -126,6 +126,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
               const channel = rate?.channelListings?.find(
                 listing => listing.channel.id === selectedChannelId,
               );
+
               return (
                 <TableRowLink
                   hover={!!rate}
@@ -195,5 +196,6 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
     </Card>
   );
 };
+
 ShippingZoneRates.displayName = "ShippingZoneRates";
 export default ShippingZoneRates;

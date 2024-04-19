@@ -12,6 +12,7 @@ export const OrderAlerts: React.FC<OrderAlertsProps> = ({ alertsHeader, alerts }
     if (typeof alert === "string") {
       return { id: `${index}_${alert}`, text: alert };
     }
+
     return {
       id: alert.id,
       text: intl.formatMessage(alert),

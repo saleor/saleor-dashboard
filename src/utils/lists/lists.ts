@@ -32,6 +32,7 @@ export function updateAtIndex<TData>(data: TData, list: List<TData>, index: numb
   if (!index.toFixed) {
     throw new Error("Index is not a number");
   }
+
   return addAtIndex(data, removeAtIndex(list, index), index);
 }
 

@@ -64,5 +64,6 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
     </Card>
   );
 };
+
 StaffPreferences.displayName = "StaffPreferences";
 export default StaffPreferences;

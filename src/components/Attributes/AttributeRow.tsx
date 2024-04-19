@@ -151,6 +151,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
     case AttributeInputTypeEnum.RICH_TEXT: {
       const { getShouldMount, getDefaultValue, getMountEditor, getHandleChange } = richTextGetters;
       const defaultValue = getDefaultValue(attribute.id);
+
       return (
         <BasicAttributeRow
           label={attribute.label}
@@ -268,5 +269,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
   }
 };
+
 AttributeRow.displayName = "AttributeRow";
 export default AttributeRow;

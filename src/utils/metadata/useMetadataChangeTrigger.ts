@@ -10,6 +10,7 @@ function useMetadataChangeTrigger() {
     } else {
       setPrivateMetadataModified(true);
     }
+
     onChange(event);
   };
   const resetMetadataChanged = () => {

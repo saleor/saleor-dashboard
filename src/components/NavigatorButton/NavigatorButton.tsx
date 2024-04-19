@@ -78,6 +78,7 @@ const NavigatorButton: React.FC<NavigatorButtonProps> = ({ className, isMac, ...
       clearTimeout(helperTimer.current);
       helperTimer.current = null;
     }
+
     setHelperVisibility(false);
   };
 

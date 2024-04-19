@@ -163,6 +163,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                     const isSelected = selectedProducts.some(
                       selectedProduct => selectedProduct.id === product.id,
                     );
+
                     return (
                       <React.Fragment key={product ? product.id : `skeleton-${productIndex}`}>
                         <TableRowLink data-test-id="product-row">
@@ -228,5 +229,6 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
     </Dialog>
   );
 };
+
 ShippingMethodProductsAddDialog.displayName = "ShippingMethodProductsAddDialog";
 export default ShippingMethodProductsAddDialog;

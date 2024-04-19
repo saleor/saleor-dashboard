@@ -30,6 +30,7 @@ export const EventType = ({ type, message }: EventTypeProps) => {
   const displayType = capitalize(
     mapEventToMessage ? intl.formatMessage(mapEventToMessage) : message || type,
   );
+
   return (
     <Box display="flex" alignItems="center">
       {displayType}

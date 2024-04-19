@@ -116,6 +116,7 @@ export const RightOperator = ({
         loading={selected.loading}
         onChange={value => {
           if (!value) return;
+
           emitter.changeRightOperator(index, value);
         }}
         onInputValueChange={value => emitter.inputChangeRightOperator(index, value)}

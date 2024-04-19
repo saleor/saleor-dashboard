@@ -73,4 +73,5 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     </Card>
   );
 };
+
 export default CollectionDetails;

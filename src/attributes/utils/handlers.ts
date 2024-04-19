@@ -47,6 +47,7 @@ export function createAttributeMultiChangeHandler(
     if (Array.isArray(value)) {
       triggerChange();
       changeAttributeData(attributeId, value);
+
       return;
     }
 
@@ -194,6 +195,7 @@ function getFileInput(attribute: AttributeInput, updatedFileAttributes: Attribut
       contentType: updatedFileAttribute.contentType,
     };
   }
+
   return {
     file: attribute.data.selectedValues?.[0]?.file?.url,
     contentType: attribute.data.selectedValues?.[0]?.file?.contentType,
@@ -212,6 +214,7 @@ function getAttributesMap(attributes: AttributeInput[] | null) {
   if (attributes && attributes?.length !== 0) {
     return new Map(attributes.map(attribute => [attribute.id, attribute.value]));
   }
+
   return new Map();
 }
 
@@ -230,40 +233,51 @@ export const prepareAttributesInput = ({
 
   return attributes.reduce((attrInput: AttributeValueInput[], attr) => {
     const prevAttrValue = prevAttributesMap.get(attr.id);
+
     if (isEqual(attr.value, prevAttrValue)) {
       return attrInput;
     }
 
     const inputType = attr.data.inputType;
+
     if (inputType === AttributeInputTypeEnum.FILE) {
       const fileInput = getFileInput(attr, updatedFileAttributes);
+
       if (fileInput.file) {
         attrInput.push(fileInput);
       }
+
       return attrInput;
     }
+
     if (inputType === AttributeInputTypeEnum.BOOLEAN) {
       const booleanInput = getBooleanInput(attr);
+
       // previous comparison doesn't work because value was string
       if (isEqual([booleanInput.boolean], prevAttrValue)) {
         return attrInput;
       }
 
       attrInput.push(booleanInput);
+
       return attrInput;
     }
+
     if (inputType === AttributeInputTypeEnum.PLAIN_TEXT) {
       attrInput.push({
         id: attr.id,
         plainText: attr.value[0],
       });
+
       return attrInput;
     }
+
     if (inputType === AttributeInputTypeEnum.RICH_TEXT) {
       attrInput.push({
         id: attr.id,
         richText: attr.value[0],
       });
+
       return attrInput;
     }
 
@@ -272,22 +286,28 @@ export const prepareAttributesInput = ({
         id: attr.id,
         references: attr.value,
       });
+
       return attrInput;
     }
+
     if (inputType === AttributeInputTypeEnum.DATE) {
       attrInput.push({
         id: attr.id,
         date: attr.value[0],
       });
+
       return attrInput;
     }
+
     if (inputType === AttributeInputTypeEnum.DATE_TIME) {
       attrInput.push({
         id: attr.id,
         dateTime: attr.value[0],
       });
+
       return attrInput;
     }
+
     if (inputType === AttributeInputTypeEnum.SWATCH) {
       attrInput.push({
         id: attr.id,
@@ -295,6 +315,7 @@ export const prepareAttributesInput = ({
           value: attr.value[0] ?? "",
         },
       });
+
       return attrInput;
     }
 
@@ -340,6 +361,7 @@ export const handleDeleteMultipleAttributeValues = async (
           firstValues: 20,
         });
       }
+
       return undefined;
     }),
   );

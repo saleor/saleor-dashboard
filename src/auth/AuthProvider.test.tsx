@@ -122,6 +122,7 @@ describe("AuthProvider", () => {
 
     // Act
     const hook = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
+
     await act(async () => {
       hook.result.current.login!(adminCredentials.email, adminCredentials.password);
     });
@@ -173,6 +174,7 @@ describe("AuthProvider", () => {
 
     // Act
     const hook = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
+
     await act(async () => {
       hook.result.current.login!(nonStaffUserCredentials.email, nonStaffUserCredentials.password);
     });
@@ -201,6 +203,7 @@ describe("AuthProvider", () => {
 
     // Act
     const hook = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
+
     await act(async () => {
       hook.result.current.login!(nonStaffUserCredentials.email, nonStaffUserCredentials.password);
     });

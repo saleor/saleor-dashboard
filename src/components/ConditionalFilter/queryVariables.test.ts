@@ -11,6 +11,7 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
     const expectedOutput = {};
     // Act
     const result = createProductQueryVariables(filters);
+
     // Assert
     expect(result).toEqual(expectedOutput);
   });
@@ -69,6 +70,7 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
     };
     // Act
     const result = createProductQueryVariables(filters);
+
     // Assert
     expect(result).toEqual(expectedOutput);
   });

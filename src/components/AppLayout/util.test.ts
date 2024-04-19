@@ -8,6 +8,7 @@ describe("extractQueryParams", () => {
       color: ["red", "green"],
       shape: ["round", "oval"],
     };
+
     expect(extractQueryParams(queryString)).toEqual(expected);
   });
   test("parses a query string into an object of key-value pairs (overwrites non array elements!)", () => {
@@ -17,6 +18,7 @@ describe("extractQueryParams", () => {
       color: "green",
       shape: ["round", "oval"],
     };
+
     expect(extractQueryParams(queryString)).toEqual(expected);
   });
 });

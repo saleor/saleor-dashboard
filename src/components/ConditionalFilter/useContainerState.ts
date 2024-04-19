@@ -79,10 +79,12 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     };
   const updateAt = (position: string, cb: StateCallback) => {
     const index = parseInt(position, 10);
+
     setValue(v => v.map(updateFilterElement(index, cb)));
   };
   const getAt = (position: string) => {
     const index = parseInt(position, 10);
+
     return value[index];
   };
   const updateBySlug = (slug: string, cb: StateCallback) => {

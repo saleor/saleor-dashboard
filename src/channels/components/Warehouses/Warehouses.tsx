@@ -59,4 +59,5 @@ const Warehouses: React.FC<WarehousesProps> = props => {
     </Card>
   );
 };
+
 export default Warehouses;

@@ -78,16 +78,20 @@ function useQuickSearch(open: boolean, input: RefObject<HTMLInputElement>): UseQ
 
     if (mode === "default" || mode === "help") {
       const newMode = getMode(value);
+
       if (newMode) {
         setMode(newMode);
       }
     }
+
     if (mode === "orders" && isQueryValidOrderNumber(value)) {
       getOrderData(getGqlOrderId(value));
     }
+
     if (mode === "catalog") {
       searchCatalog(value);
     }
+
     if (mode === "customers") {
       searchCustomers(value);
     }

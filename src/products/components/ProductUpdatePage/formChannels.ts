@@ -33,8 +33,10 @@ export const updateChannelsInput = (
         availableForPurchaseDate: data.availableForPurchase,
       };
     }
+
     return listing;
   };
+
   return {
     ...input,
     updateChannels: input.updateChannels.map(mergeListings),

@@ -41,6 +41,7 @@ export const RuleRewardValue = ({ currencySymbol, error }: RuleRewardPriceProps)
           ref={rewardValueType.ref}
           onChange={e => {
             const value = parseInt(e.target.value, 10);
+
             rewardValueType.onChange(Number.isNaN(value) ? null : value);
           }}
           error={!!error || !!formState.errors?.rewardValue?.message}

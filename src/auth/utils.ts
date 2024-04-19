@@ -15,6 +15,7 @@ export const displayDemoMessage = (intl: IntlShape, notify: UseNotifierResult) =
 
 const getNetworkErrors = (error: ApolloError): string[] => {
   const networkErrors = error.networkError as ServerError;
+
   if (networkErrors) {
     // Apparently network errors can be an object or an array
 
@@ -91,6 +92,7 @@ export async function handleQueryAuthError(
 ) {
   if (error.graphQLErrors.some(isJwtError)) {
     logout();
+
     if (error.graphQLErrors.every(isTokenExpired)) {
       notify({
         status: "error",

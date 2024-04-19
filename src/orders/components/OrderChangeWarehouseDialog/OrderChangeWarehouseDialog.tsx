@@ -110,9 +110,11 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
             {debounceSearchChange => {
               const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                 const value = event.target.value;
+
                 setQuery(value);
                 debounceSearchChange(value);
               };
+
               return (
                 <TextField
                   className={classes.searchBox}
@@ -149,6 +151,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
           >
             {filteredWarehouses.map(warehouse => {
               const lineQuantityInWarehouse = getLineAvailableQuantityInWarehouse(line, warehouse);
+
               return (
                 <TableRowLink key={warehouse.id}>
                   <TableCell className={classes.tableCell}>

@@ -57,4 +57,5 @@ const ShippingZoneCreate: React.FC<{}> = () => {
     />
   );
 };
+
 export default ShippingZoneCreate;

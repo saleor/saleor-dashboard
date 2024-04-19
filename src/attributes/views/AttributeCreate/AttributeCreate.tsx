@@ -85,8 +85,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const handleValueDelete = () => {
     if (id !== undefined) {
       const newValues = remove(values[id], values, areValuesEqual);
+
       setValues(newValues);
     }
+
     closeModal();
   };
   const handleValueUpdate = (input: AttributeValueEditDialogFormData) => {
@@ -96,6 +98,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       if (id !== undefined) {
         setValues(updateAtIndex(input, values, id));
       }
+
       closeModal();
     }
   };
@@ -104,6 +107,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       setValueErrors([attributeValueAlreadyExistsError]);
     } else {
       const newValues = add(input, values);
+
       setValues(newValues);
 
       const addedToNotVisibleLastPage =
@@ -111,6 +115,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
 
       if (addedToNotVisibleLastPage) {
         const maxPage = getMaxPage(newValues.length, settings.rowNumber);
+
         loadPage(maxPage);
       }
 
@@ -244,6 +249,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     </AttributePage>
   );
 };
+
 AttributeDetails.displayName = "AttributeDetails";
 
 export default AttributeDetails;

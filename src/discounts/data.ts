@@ -15,9 +15,11 @@ const getChannelMinAmountSpent = (
   if (formData.requirementsPicker === RequirementsPicker.NONE) {
     return null;
   }
+
   if (formData.requirementsPicker === RequirementsPicker.ITEM) {
     return 0;
   }
+
   return channel.minSpent;
 };
 const mapChannelToChannelInput =

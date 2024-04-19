@@ -53,6 +53,7 @@ export const createMetadataHandler =
   ) =>
   (event: ChangeEvent, objectId: string) => {
     const metadataType = event.target.name;
+
     set({
       [objectId]: {
         ...currentData[objectId],

@@ -95,6 +95,7 @@ export class DiscountsPage extends BasePage {
 
   async gotoExistingDiscount(promotionId: string) {
     const existingDiscountUrl = `${URL_LIST.discounts}${promotionId}`;
+
     await console.log(`Navigates to existing discount page: ${existingDiscountUrl}`);
     await this.page.goto(existingDiscountUrl);
     await this.discountForm.waitFor({

@@ -57,6 +57,7 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   const [taxClassDeleteMutation] = useTaxClassDeleteMutation({
     onCompleted: data => {
       const errors = data?.taxClassDelete?.errors;
+
       if (errors.length === 0) {
         notify({
           status: "success",
@@ -68,6 +69,7 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   const [taxClassUpdateMutation, taxClassUpdateMutationState] = useTaxClassUpdateMutation({
     onCompleted: data => {
       const errors = data?.taxClassUpdate?.errors;
+
       if (errors.length === 0) {
         notify({
           status: "success",
@@ -79,6 +81,7 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   const [taxClassCreateMutation, taxClassCreateMutationState] = useTaxClassCreateMutation({
     onCompleted: data => {
       const errors = data?.taxClassCreate?.errors;
+
       if (errors.length === 0) {
         notify({
           status: "success",
@@ -144,6 +147,7 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
       countryRatesData.taxCountryConfigurations,
       connectedTaxClasses,
     );
+
     return taxClasses;
   }, [countryRatesData?.taxCountryConfigurations, data?.taxClasses, isNewTaxClass, newTaxClass]);
   const selectedTaxClass = React.useMemo(() => {

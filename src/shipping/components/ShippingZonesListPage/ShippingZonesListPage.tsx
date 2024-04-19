@@ -91,5 +91,6 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
     </>
   );
 };
+
 ShippingZonesListPage.displayName = "ShippingZonesListPage";
 export default ShippingZonesListPage;

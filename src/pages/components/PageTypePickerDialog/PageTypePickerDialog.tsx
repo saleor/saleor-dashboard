@@ -77,5 +77,6 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
     </DashboardModal>
   );
 };
+
 PageTypePickerDialog.displayName = "PageTypePickerDialog";
 export default PageTypePickerDialog;

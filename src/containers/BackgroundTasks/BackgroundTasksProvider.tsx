@@ -30,6 +30,7 @@ export function useBackgroundTasks(
 
               if (status !== TaskStatus.PENDING) {
                 const taskIndex = tasks.current.findIndex(t => t.id === task.id);
+
                 tasks.current[taskIndex].status = status;
               }
             }
@@ -49,6 +50,7 @@ export function useBackgroundTasks(
 
   function queue(type: Task, data?: TaskData) {
     idCounter.current += 1;
+
     switch (type) {
       case Task.CUSTOM:
         queueCustom(idCounter.current, tasks, data);

@@ -11,6 +11,7 @@ export type FilterTextFieldProps = FilterFieldBaseProps<
 > & {
   currencySymbol: string | null;
 };
+
 const FilterTextField: React.FC<FilterTextFieldProps> = ({
   currencySymbol,
   filter,

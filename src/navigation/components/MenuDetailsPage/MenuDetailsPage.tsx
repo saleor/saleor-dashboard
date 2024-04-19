@@ -125,6 +125,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                             return operations.slice(0, operations.length - 2);
                           }
                         }
+
                         return operations.slice(0, operations.length - 1);
                       })
                     }
@@ -145,5 +146,6 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     </Form>
   );
 };
+
 MenuDetailsPage.displayName = "MenuDetailsPage";
 export default MenuDetailsPage;

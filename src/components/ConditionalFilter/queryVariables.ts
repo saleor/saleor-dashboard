@@ -22,12 +22,14 @@ const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => 
   if (label === "lower") {
     return { range: { lte: value } };
   }
+
   if (label === "greater") {
     return { range: { gte: value } };
   }
 
   if (isTuple(value) && label === "between") {
     const [gte, lte] = value;
+
     return { range: { lte, gte } };
   }
 

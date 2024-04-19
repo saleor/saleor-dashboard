@@ -62,5 +62,6 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
     </Card>
   );
 };
+
 CustomerCreateNote.displayName = "CustomerCreateNote";
 export default CustomerCreateNote;

@@ -145,5 +145,6 @@ const MediaTile: React.FC<MediaTileProps> = props => {
     </div>
   );
 };
+
 MediaTile.displayName = "MediaTile";
 export default MediaTile;

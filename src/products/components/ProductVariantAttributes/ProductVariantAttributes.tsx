@@ -36,6 +36,7 @@ function getAttributeDisplayValue(
 ): string {
   const attribute = attributes.find(attr => attr.id === id);
   const attributeValue = attribute.data.values.find(value => value.node.slug === slug);
+
   if (attributeValue) {
     return attributeValue.node.name;
   }
@@ -45,6 +46,7 @@ function getAttributeDisplayValue(
 
 function getAttributeValue(id: string, attributes: VariantAttributeInput[]): string {
   const attribute = attributes.find(attr => attr.id === id);
+
   return attribute?.value === null ? undefined : attribute.value;
 }
 
@@ -53,6 +55,7 @@ function getAttributeValueChoices(
   attributes: VariantAttributeInput[],
 ): SingleAutocompleteChoiceType[] {
   const attribute = attributes.find(attr => attr.id === id);
+
   return attribute.data.values.map(attributeValue => ({
     label: attributeValue.node.name,
     value: attributeValue.node.slug,
@@ -113,5 +116,6 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
     </Card>
   );
 };
+
 ProductVariantAttributes.displayName = "ProductVariantAttributes";
 export default ProductVariantAttributes;

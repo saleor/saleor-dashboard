@@ -29,6 +29,7 @@ function useNavigator(): UseNavigatorResult {
     } else {
       history.push(targetUrl);
     }
+
     if (resetScroll) {
       window.scrollTo({ behavior: "smooth", top: 0 });
     }

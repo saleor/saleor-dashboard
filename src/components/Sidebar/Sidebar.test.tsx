@@ -83,6 +83,7 @@ describe("Sidebar", () => {
   it("should call callback when click on playground shortcut", async () => {
     // Arrange
     const actionCallback = jest.fn();
+
     (useDevModeContext as jest.Mock).mockImplementationOnce(() => ({
       variables: "",
       setVariables: jest.fn(),
@@ -100,6 +101,7 @@ describe("Sidebar", () => {
   it("should call callback when click on search shortcut", async () => {
     // Arrange
     const actionCallback = jest.fn();
+
     (useNavigatorSearchContext as jest.Mock).mockImplementationOnce(() => ({
       isNavigatorVisible: false,
       setNavigatorVisibility: actionCallback,

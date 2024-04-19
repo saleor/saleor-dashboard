@@ -13,6 +13,7 @@ test.beforeEach(({ page }) => {
 test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount discount @vouchers @e2e", async () => {
   const codesQuantity = 5;
   const codesPrefix = "auto";
+
   await vouchersPage.gotoVouchersListPage();
   await vouchersPage.clickCreateVoucherButton();
   await vouchersPage.typeVoucherName();
@@ -22,7 +23,9 @@ test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount di
   await vouchersPage.addVoucherCodeDialog.typeCodesPrefix(codesPrefix);
   await vouchersPage.addVoucherCodeDialog.clickConfirmButton();
   await vouchersPage.waitForGrid();
+
   const generatedCodesRows = await vouchersPage.getNumberOfGridRowsWithText(codesPrefix);
+
   await expect(
     generatedCodesRows,
     `Auto-generated number of codes: ${codesQuantity} should be visible on grid`,
@@ -31,7 +34,9 @@ test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount di
   await vouchersPage.waitForNetworkIdle(() => vouchersPage.clickSaveButton());
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.waitForGrid();
+
   const activeCodesRows = await vouchersPage.getNumberOfGridRowsWithText("Active");
+
   await expect(
     activeCodesRows,
     `Given codes quantity: ${codesQuantity} should have status Active displayed on grid`,
@@ -39,6 +44,7 @@ test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount di
 });
 test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vouchers @e2e", async () => {
   const code = `code-TC: SALEOR_85 ${new Date().toISOString()}`;
+
   await vouchersPage.gotoVoucherAddPage();
   await vouchersPage.typeVoucherName();
   await vouchersPage.clickAddCodeButton();
@@ -46,7 +52,9 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
   await vouchersPage.addVoucherCodeDialog.typeCode(code);
   await vouchersPage.addVoucherCodeDialog.clickConfirmButton();
   await vouchersPage.waitForGrid();
+
   const manualCodesRows = await vouchersPage.getNumberOfGridRowsWithText(code);
+
   await expect(manualCodesRows, `Manually added code: ${code} should be visible on grid`).toEqual(
     1,
   );
@@ -58,7 +66,9 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
   await vouchersPage.waitForNetworkIdle(() => vouchersPage.clickSaveButton());
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.waitForGrid();
+
   const manualActiveCodesRows = await vouchersPage.getNumberOfGridRowsWithText("Active");
+
   await expect(
     manualActiveCodesRows,
     `Given codes: ${code} should have status Active displayed on grid`,
@@ -70,7 +80,9 @@ test("TC: SALEOR_86 Edit voucher to have free shipping discount @vouchers @e2e",
     VOUCHERS.vouchers.voucherToBeEditedWithFreeShipping.id,
   );
   await vouchersPage.waitForGrid();
+
   const codesRows = await vouchersPage.getNumberOfGridRows();
+
   await vouchersPage.clickFreeShippingDiscountTypeButton();
   await expect(
     vouchersPage.discountValueInput,
@@ -79,7 +91,9 @@ test("TC: SALEOR_86 Edit voucher to have free shipping discount @vouchers @e2e",
   await vouchersPage.waitForNetworkIdle(() => vouchersPage.clickSaveButton());
   await vouchersPage.waitForGrid();
   await vouchersPage.expectSuccessBanner();
+
   const codesRowsAfterSave = await vouchersPage.getNumberOfGridRows();
+
   await expect(
     codesRows,
     `Same amount of codes should have status Active displayed on grid after switching to free shipping`,
@@ -103,6 +117,7 @@ test("TC: SALEOR_87 Edit voucher Usage Limits: used in total, per customer, staf
 });
 test("TC: SALEOR_89 Create voucher with minimum value of order @vouchers @e2e", async () => {
   const code = `code-TC: SALEOR_89 ${new Date().toISOString()}`;
+
   await vouchersPage.gotoVoucherAddPage();
   await vouchersPage.typeVoucherName();
   await vouchersPage.clickAddCodeButton();
@@ -110,7 +125,9 @@ test("TC: SALEOR_89 Create voucher with minimum value of order @vouchers @e2e", 
   await vouchersPage.addVoucherCodeDialog.typeCode(code);
   await vouchersPage.addVoucherCodeDialog.clickConfirmButton();
   await vouchersPage.waitForGrid();
+
   const manualCodesRows = await vouchersPage.getNumberOfGridRowsWithText(code);
+
   await expect(manualCodesRows, `Manually added code: ${code} should be visible on grid`).toEqual(
     1,
   );
@@ -119,7 +136,9 @@ test("TC: SALEOR_89 Create voucher with minimum value of order @vouchers @e2e", 
   await vouchersPage.waitForNetworkIdle(() => vouchersPage.clickSaveButton());
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.waitForGrid();
+
   const manualActiveCodesRows = await vouchersPage.getNumberOfGridRowsWithText("Active");
+
   await expect(
     manualActiveCodesRows,
     `Given codes: ${code} should have status Active displayed on grid`,
@@ -185,6 +204,7 @@ test.skip("TC: SALEOR_94 Edit voucher - assign voucher to specific category @vou
 });
 test("TC:SALEOR_95  Edit voucher - assign voucher to specific collection @vouchers @e2e", async () => {
   const collectionToBeAssigned = "Featured Products";
+
   await vouchersPage.gotoExistingVoucherPage(
     VOUCHERS.vouchers.voucherToBeEditedAssignCategoryProductCollection.id,
   );
@@ -208,6 +228,7 @@ test("TC:SALEOR_95  Edit voucher - assign voucher to specific collection @vouche
 });
 test("TC: SALEOR_96 Edit voucher - assign voucher to specific product @vouchers @e2e", async () => {
   const productToBeAssigned = "Bean Juice";
+
   await vouchersPage.gotoExistingVoucherPage(
     VOUCHERS.vouchers.voucherToBeEditedAssignCategoryProductCollection.id,
   );

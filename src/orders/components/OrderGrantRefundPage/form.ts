@@ -76,6 +76,7 @@ export const useGrantRefundForm = ({
 
   const handleChange: FormChange = e => {
     if (e.target.name === "amount") setIsFormDirty({ ...isFormDirty, amount: true });
+
     if (e.target.name === "reason") setIsFormDirty({ ...isFormDirty, reason: true });
 
     change(e);

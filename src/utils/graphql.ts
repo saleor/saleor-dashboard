@@ -47,6 +47,7 @@ export const playgroundOpenHandler =
   ({ query, headers, operationName, variables }: PlaygroundOpenHandlerInput) =>
   () => {
     const playgroundURL = new URL(thisURL);
+
     playgroundURL.hash = encodeGraphQLStatement({
       query,
       headers,

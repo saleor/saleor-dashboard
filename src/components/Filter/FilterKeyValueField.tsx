@@ -39,6 +39,7 @@ const getUpdateArrayFn =
   <T,>(key: "key" | "value") =>
   (array: T[], index: number, value: string) => {
     const item = array[index];
+
     return [...array.slice(0, index), { ...item, [key]: value }, ...array.slice(index + 1)];
   };
 const updateKeyFn = getUpdateArrayFn<KeyValue>("key");

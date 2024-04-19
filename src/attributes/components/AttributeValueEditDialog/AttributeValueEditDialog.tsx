@@ -115,5 +115,6 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
     </Dialog>
   );
 };
+
 AttributeValueEditDialog.displayName = "AttributeValueEditDialog";
 export default AttributeValueEditDialog;

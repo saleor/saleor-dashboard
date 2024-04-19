@@ -44,6 +44,7 @@ const GiftCardHistory: React.FC = () => {
   });
   const onNoteAdd = (data: FormData) => {
     const { message } = data;
+
     addTimelineNote({ variables: { id, input: { message } } });
   };
 

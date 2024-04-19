@@ -25,8 +25,10 @@ function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
 
 export async function handleTask(task: QueuedTask): Promise<TaskStatus> {
   let status = TaskStatus.PENDING;
+
   try {
     status = await task.handle();
+
     if (status !== TaskStatus.PENDING) {
       task.onCompleted({
         status,
@@ -80,6 +82,7 @@ export function queueInvoiceGenerate(
   if (!generateInvoice) {
     throw new Error("generateInvoice is required when creating custom task");
   }
+
   tasks.current = [
     ...tasks.current,
     {

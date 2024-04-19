@@ -105,5 +105,6 @@ const FilterBar: React.FC<FilterBarProps> = props => {
     </>
   );
 };
+
 FilterBar.displayName = "FilterBar";
 export default FilterBar;

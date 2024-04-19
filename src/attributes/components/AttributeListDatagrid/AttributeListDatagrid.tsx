@@ -78,6 +78,7 @@ export const AttributeListDatagrid = ({
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as AttributeListUrlSortField;
+
       onSort(columnName);
     },
     [visibleColumns, onSort],

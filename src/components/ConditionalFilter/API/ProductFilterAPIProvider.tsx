@@ -17,6 +17,7 @@ import {
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];
+
   if (typeof possibleFilterElement !== "string" && !Array.isArray(possibleFilterElement)) {
     return possibleFilterElement;
   }
@@ -112,6 +113,7 @@ export const useProductFilterAPIProvider = (): FilterAPIProvider => {
   };
   const fetchLeftOptions = async (inputValue: string) => {
     const handler = new AttributesHandler(client, inputValue);
+
     return handler.fetch();
   };
 

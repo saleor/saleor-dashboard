@@ -15,6 +15,7 @@ export class ConditionOptions extends Array<ConditionItem> {
   private constructor(options: ConditionItem[] | number) {
     if (Array.isArray(options)) {
       super(...options);
+
       return;
     }
 

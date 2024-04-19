@@ -38,11 +38,13 @@ export const useFilterContainer = (
 
     if (!exist(dependency)) {
       create(FilterElement.createStaticBySlug(dependency));
+
       return;
     }
 
     updateBySlug(dependency, el => {
       const newConstraint = Constraint.fromSlug(dependency);
+
       if (newConstraint) el.setConstraint(newConstraint);
     });
   };
@@ -63,14 +65,18 @@ export const useFilterContainer = (
   };
   const _fetchRightOptions = async (position: string, inputValue: string) => {
     updateRightLoadingState(position, true);
+
     const options = await apiProvider.fetchRightOptions(position, value, inputValue);
+
     updateRightLoadingState(position, false);
     _updateRightOptions(position, options);
   };
   const updateRightOptions = useDebounce(_fetchRightOptions, 500);
   const _fetchLeftOptions = async (position: string, inputValue: string) => {
     updateLeftLoadingState(position, true);
+
     const options = await apiProvider.fetchLeftOptions(inputValue);
+
     updateLeftLoadingState(position, false);
     leftOperandsProvider.setOperands(options);
   };

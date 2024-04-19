@@ -35,6 +35,7 @@ export class CategoriesPage extends BasePage {
 
   async gotoExistingCategoriesPage(categoryId: string) {
     const categoryUrl = URL_LIST.categories + categoryId;
+
     await console.log("Navigating to category details: " + categoryUrl);
     await this.page.goto(categoryUrl);
   }

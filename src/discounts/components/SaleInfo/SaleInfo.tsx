@@ -42,5 +42,6 @@ const SaleInfo: React.FC<SaleInfoProps> = ({ data, disabled, errors, onChange })
     </Card>
   );
 };
+
 SaleInfo.displayName = "SaleInfo";
 export default SaleInfo;

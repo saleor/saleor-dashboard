@@ -76,7 +76,9 @@ export const CustomerListDatagrid = ({
       if (!onRowClick || !customers) {
         return;
       }
+
       const rowData: Customer = customers[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, customers],
@@ -86,7 +88,9 @@ export const CustomerListDatagrid = ({
       if (!rowAnchor || !customers) {
         return "";
       }
+
       const rowData: Customer = customers[row];
+
       return rowAnchor(rowData.id);
     },
     [rowAnchor, customers],

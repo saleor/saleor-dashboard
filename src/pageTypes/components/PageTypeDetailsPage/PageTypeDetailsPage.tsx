@@ -183,5 +183,6 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
     </Form>
   );
 };
+
 PageTypeDetailsPage.displayName = "PageTypeDetailsPage";
 export default PageTypeDetailsPage;

@@ -74,12 +74,14 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   });
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault();
+
     if (typeof value === "number" && transaction?.id) {
       await sendRefund();
     }
   };
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
     const value = parseFloat(e.target.value);
+
     if (!Number.isNaN(value)) {
       setValue(value);
     } else {

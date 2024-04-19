@@ -22,12 +22,14 @@ import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: ProductTypeListUrlQueryParams = asSortParams(qs, ProductTypeListUrlSortField);
+
   return <ProductTypeListComponent params={params} />;
 };
 
 interface ProductTypeCreateRouteParams {
   id: string;
 }
+
 const ProductTypeCreate: React.FC<RouteComponentProps<ProductTypeCreateRouteParams>> = ({
   location,
 }) => {
@@ -40,6 +42,7 @@ const ProductTypeCreate: React.FC<RouteComponentProps<ProductTypeCreateRoutePara
 interface ProductTypeUpdateRouteParams {
   id: string;
 }
+
 const ProductTypeUpdate: React.FC<RouteComponentProps<ProductTypeUpdateRouteParams>> = ({
   match,
 }) => {

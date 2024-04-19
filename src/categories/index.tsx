@@ -21,6 +21,7 @@ import CategoryListComponent from "./views/CategoryList";
 interface CategoryDetailsRouteParams {
   id: string;
 }
+
 const CategoryDetails: React.FC<RouteComponentProps<CategoryDetailsRouteParams>> = ({
   location,
   match,
@@ -34,6 +35,7 @@ const CategoryDetails: React.FC<RouteComponentProps<CategoryDetailsRouteParams>>
 interface CategoryCreateRouteParams {
   id: string;
 }
+
 const CategoryCreate: React.FC<RouteComponentProps<CategoryCreateRouteParams>> = ({ match }) => (
   <CategoryCreateView
     parentId={match.params.id ? decodeURIComponent(match.params.id) : undefined}

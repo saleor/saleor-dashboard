@@ -18,6 +18,7 @@ export const createChannelsChangeHandler =
       },
       ...channelListings.slice(channelIndex + 1),
     ];
+
     updateChannels(updatedChannels);
     triggerChange();
   };

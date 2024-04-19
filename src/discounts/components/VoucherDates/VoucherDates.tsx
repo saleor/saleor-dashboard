@@ -108,4 +108,5 @@ const VoucherDates = ({ data, disabled, errors, onChange }: VoucherDatesProps) =
     </Card>
   );
 };
+
 export default VoucherDates;

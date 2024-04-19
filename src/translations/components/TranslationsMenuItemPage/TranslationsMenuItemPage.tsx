@@ -92,5 +92,6 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsMenuItemPage.displayName = "TranslationsMenuItemPage";
 export default TranslationsMenuItemPage;

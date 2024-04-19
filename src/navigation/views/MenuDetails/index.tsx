@@ -248,6 +248,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
     </>
   );
 };
+
 MenuDetails.displayName = "MenuDetails";
 
 export default MenuDetails;

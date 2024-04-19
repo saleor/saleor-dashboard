@@ -204,5 +204,6 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
     </Form>
   );
 };
+
 ShippingZoneDetailsPage.displayName = "ShippingZoneDetailsPage";
 export default ShippingZoneDetailsPage;

@@ -199,6 +199,7 @@ describe("useFilterHandlers", () => {
         }),
       );
       const handleSearchChange = result.current[2];
+
       // Act
       handleSearchChange("queryTest");
       // Assert

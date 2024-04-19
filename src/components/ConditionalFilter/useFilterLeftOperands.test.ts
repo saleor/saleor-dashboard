@@ -8,6 +8,7 @@ describe("ConditionalFilter / useFilterLeftOperandsProvider", () => {
   it("should set unique operands", () => {
     // Arrange
     const { result } = renderHook(() => useFilterLeftOperandsProvider(STATIC_PRODUCT_OPTIONS));
+
     // Act
     act(() => {
       result.current.setOperands([

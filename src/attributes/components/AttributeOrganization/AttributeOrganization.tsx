@@ -101,5 +101,6 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
     </Card>
   );
 };
+
 AttributeOrganization.displayName = "AttributeOrganization";
 export default AttributeOrganization;

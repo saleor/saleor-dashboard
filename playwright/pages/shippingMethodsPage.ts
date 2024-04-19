@@ -73,6 +73,7 @@ export class ShippingMethodsPage extends BasePage {
 
   async gotoExistingShippingMethod(shippingMethodId: string) {
     const existingShippingMethodUrl = `${URL_LIST.shippingMethods}${shippingMethodId}`;
+
     await console.log(`Navigates to existing shipping method page: ${existingShippingMethodUrl}`);
     await this.page.goto(existingShippingMethodUrl);
     await this.rightSideDetailsPage.channelSection

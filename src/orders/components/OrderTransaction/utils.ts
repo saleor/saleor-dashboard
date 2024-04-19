@@ -124,6 +124,7 @@ export const mapTransactionEvent = (
   }
 
   const mappedResult = typeMap[event.type];
+
   if (mappedResult) {
     return mappedResult;
   }
@@ -141,5 +142,6 @@ export const getTransactionEvents = (
   if (transaction.__typename === "FakeTransaction") {
     return fakeEvents;
   }
+
   return transaction.events;
 };

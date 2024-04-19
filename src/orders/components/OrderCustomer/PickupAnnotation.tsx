@@ -26,5 +26,6 @@ export const PickupAnnotation: React.FC<PickupAnnotationProps> = ({ order }) => 
       </>
     );
   }
+
   return null;
 };

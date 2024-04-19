@@ -28,6 +28,7 @@ export class AssignAttributeDialog {
     const specificAttributeCheckbox = await this.page
       .getByRole("row", { name: attributeName })
       .getByRole("checkbox");
+
     await this.attributesList.waitFor({ state: "visible" });
     await this.searchAttribute(attributeName);
     await specificAttributeCheckbox.click();

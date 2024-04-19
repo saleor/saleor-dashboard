@@ -50,5 +50,6 @@ const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({ open, onClose }) 
     </Dialog>
   );
 };
+
 OrderCannotCancelOrderDialog.displayName = "OrderCannotCancelOrderDialog";
 export default OrderCannotCancelOrderDialog;

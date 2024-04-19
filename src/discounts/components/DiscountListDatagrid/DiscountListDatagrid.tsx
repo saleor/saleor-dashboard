@@ -69,7 +69,9 @@ export const DiscountListDatagrid = ({
       if (!onRowClick) {
         return;
       }
+
       const rowData: PromotionFragment = promotions[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, promotions],

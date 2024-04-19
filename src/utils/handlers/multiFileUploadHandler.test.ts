@@ -18,6 +18,7 @@ describe("Multiple file upload handler", () => {
         expect(cbs.onBeforeUpload).toBeCalledTimes(cbs.onAfterUpload.mock.calls.length + 1);
         resolve();
       });
+
       return promise;
     }, cbs);
 
@@ -46,6 +47,7 @@ describe("Multiple file upload handler", () => {
           resolve();
         }
       });
+
       return promise;
     }, cbs);
 

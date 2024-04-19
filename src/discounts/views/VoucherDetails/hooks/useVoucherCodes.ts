@@ -75,6 +75,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     if (addedVoucherCodes.length > 0 && isServerPagination) {
       setIsServerPagination(false);
     }
+
     restartServerPagination();
     updateVoucherCodesListSettings(key, value);
     onSettingsChange(key, value);

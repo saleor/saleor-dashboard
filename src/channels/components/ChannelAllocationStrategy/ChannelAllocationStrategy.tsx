@@ -98,5 +98,6 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
     </Card>
   );
 };
+
 ChannelAllocationStrategy.displayName = "ChannelAllocationStrategy";
 export default ChannelAllocationStrategy;

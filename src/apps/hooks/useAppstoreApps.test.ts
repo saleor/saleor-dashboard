@@ -14,12 +14,14 @@ global.fetch = jest.fn(url => {
       json: jest.fn(() => Promise.resolve(mockApps)),
     } as unknown as Response);
   }
+
   if (url === "https://apps.saleor.io/failing-apps-endpoint") {
     return Promise.resolve({
       ok: false,
       statusText: "API error",
     } as unknown as Response);
   }
+
   return Promise.reject(new Error("API is down"));
 }) as Fetch;
 describe("apps hooks useAppstoreApps", () => {
@@ -28,6 +30,7 @@ describe("apps hooks useAppstoreApps", () => {
     const appstoreUrl = "https://apps.saleor.io/apps";
     // Act
     const { result, waitForNextUpdate } = renderHook(() => useAppstoreApps(appstoreUrl));
+
     await waitForNextUpdate();
     // Assert
     expect(result.current).toEqual({ data: mockApps });
@@ -37,6 +40,7 @@ describe("apps hooks useAppstoreApps", () => {
     const appstoreUrl = "https://apps.saleor.io/failing-apps-endpoint";
     // Act
     const { result, waitForNextUpdate } = renderHook(() => useAppstoreApps(appstoreUrl));
+
     await waitForNextUpdate();
     // Assert
     expect(result.current).toEqual({ error: Error("API error") });
@@ -46,6 +50,7 @@ describe("apps hooks useAppstoreApps", () => {
     const appstoreUrl = "https://wrong-appstore.com";
     // Act
     const { result, waitForNextUpdate } = renderHook(() => useAppstoreApps(appstoreUrl));
+
     await waitForNextUpdate();
     // Assert
     expect(result.current).toEqual({ error: Error("API is down") });

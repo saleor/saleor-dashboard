@@ -53,5 +53,6 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({ integ
     </Box>
   );
 };
+
 AppListCardIntegrations.displayName = "AppListCardIntegrations";
 export default AppListCardIntegrations;

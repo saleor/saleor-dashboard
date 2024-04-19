@@ -132,5 +132,6 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
     </>
   );
 };
+
 TranslationsEntitiesListPage.displayName = "TranslationsEntitiesListPage";
 export default TranslationsEntitiesListPage;

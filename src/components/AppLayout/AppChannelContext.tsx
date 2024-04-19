@@ -41,6 +41,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
     skip: !authenticated || !user,
   });
   const [isPickerActive, setPickerActive] = React.useState(false);
+
   React.useEffect(() => {
     const channels = user?.accessibleChannels ?? [];
     const isValid = isValidChannel(selectedChannel, channels);
@@ -80,6 +81,7 @@ AppChannelProvider.displayName = "AppChannelProvider";
 
 function useAppChannel(enablePicker = true): UseAppChannel {
   const { setPickerActive, ...data } = React.useContext(AppChannelContext);
+
   React.useEffect(() => {
     if (enablePicker) {
       setPickerActive(true);

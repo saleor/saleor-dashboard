@@ -2,6 +2,7 @@ import { Typography } from "@material-ui/core";
 import React from "react";
 
 import { useStyles } from "./styles";
+
 interface VersionInfoProps {
   dashboardVersion: string;
   coreVersion: string;

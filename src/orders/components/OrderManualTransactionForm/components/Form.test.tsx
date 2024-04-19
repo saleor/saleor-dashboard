@@ -18,6 +18,7 @@ const commonTransactionFormProps: Pick<
 describe("OrderManualTrasactionForm / Form", () => {
   test("it handles submit event", () => {
     const submitFn = jest.fn();
+
     render(
       <OrderManualTransactionForm
         {...commonTransactionFormProps}
@@ -33,6 +34,7 @@ describe("OrderManualTrasactionForm / Form", () => {
     );
 
     const form = document.querySelector("form");
+
     fireEvent.submit(form);
     expect(submitFn).toHaveBeenCalledWith({
       amount: 1,
@@ -42,6 +44,7 @@ describe("OrderManualTrasactionForm / Form", () => {
   });
   test("it doesn't handle submit if amount is missing", () => {
     const submitFn = jest.fn();
+
     render(
       <OrderManualTransactionForm
         {...commonTransactionFormProps}
@@ -59,6 +62,7 @@ describe("OrderManualTrasactionForm / Form", () => {
     );
 
     const form = document.querySelector("form");
+
     fireEvent.submit(form);
     expect(submitFn).not.toHaveBeenCalled();
   });

@@ -5,6 +5,7 @@ import { getFilteredPayments } from "./utils";
 
 describe("getFilteredPayments", () => {
   const order = orderFixture(null);
+
   it("returns empty when there is no order", () => {
     expect(getFilteredPayments(null)).toStrictEqual([]);
   });

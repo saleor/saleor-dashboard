@@ -26,6 +26,7 @@ const getNumberFormatting = (currency = "USD") => {
 
 export const getCurrencyDecimalPoints = (currency?: string) => {
   const options = getNumberFormatting(currency).resolvedOptions();
+
   return options.maximumFractionDigits;
 };
 

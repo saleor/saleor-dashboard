@@ -54,5 +54,6 @@ const Checkbox: React.FC<CheckboxProps> = ({ helperText, error, ...props }) => {
     </>
   );
 };
+
 Checkbox.displayName = "Checkbox";
 export default Checkbox;

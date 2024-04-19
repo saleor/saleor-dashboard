@@ -57,11 +57,13 @@ export const useAnnouncement = <T extends DataTypePlaceholder>({
 
       if (!previousItem) {
         const nextItem = sortedItems[overIndex + 1];
+
         announcement = `${activeId} was ${movedVerb} before ${nextItem.id}.`;
       } else if (projected.depth > previousItem.depth) {
         announcement = `${activeId} was ${nestedVerb} under ${previousItem.id}.`;
       } else {
         const previousSibling = findPreviousSibling(projected, previousItem, sortedItems);
+
         if (previousSibling) {
           announcement = `${activeId} was ${movedVerb} after ${previousSibling.id}.`;
         }
@@ -98,9 +100,12 @@ function findPreviousSibling<T extends DataTypePlaceholder>(
   sortedItems: Array<FlattenedItem<T>>,
 ): FlattenedItem<T> | undefined {
   let previousSibling: FlattenedItem<T> | undefined = previousItem;
+
   while (previousSibling && projected.depth < previousSibling.depth) {
     const parentId: UniqueIdentifier | null = previousSibling.parentId;
+
     previousSibling = sortedItems.find(({ id }) => id === parentId);
   }
+
   return previousSibling;
 }

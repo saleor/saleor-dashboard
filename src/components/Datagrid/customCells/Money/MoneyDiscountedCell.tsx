@@ -82,6 +82,7 @@ export const moneyDiscountedCellRenderer = (): CustomRenderer<MoneyDiscuntedCell
     ctx.save();
     drawCurrency(ctx, theme, rect, hasValue ? currency : "-");
     ctx.restore();
+
     return true;
   },
   provideEditor: () => ({

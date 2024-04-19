@@ -19,6 +19,7 @@ import PluginsDetailsComponent from "./views/PluginsDetails";
 const PluginList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: PluginListUrlQueryParams = asSortParams(qs, PluginListUrlSortField);
+
   return <PluginsListComponent params={params} />;
 };
 const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
@@ -29,6 +30,7 @@ const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
 };
 const Component = () => {
   const intl = useIntl();
+
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.plugins)} />

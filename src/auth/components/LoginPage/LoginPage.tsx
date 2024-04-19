@@ -159,5 +159,6 @@ const LoginPage: React.FC<LoginCardProps> = props => {
     </LoginForm>
   );
 };
+
 LoginPage.displayName = "LoginPage";
 export default LoginPage;

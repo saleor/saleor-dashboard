@@ -60,6 +60,7 @@ export class InitialStateResponse implements InitialState {
 
     if (token.isAttribute()) {
       const attr = this.attribute[token.name];
+
       return attr.inputType === "BOOLEAN"
         ? createBooleanOption(token.value === "true", AttributeInputTypeEnum.BOOLEAN)
         : token.value;

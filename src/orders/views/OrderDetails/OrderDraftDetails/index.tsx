@@ -132,6 +132,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   }: CustomerEditData) => {
     const sameUser = user && user === prevUser;
     const sameUserEmail = userEmail && userEmail === prevUserEmail;
+
     if (sameUser || sameUserEmail) {
       return;
     }
@@ -149,6 +150,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     }
 
     const modalUri = prevUser ? "customer-change" : "edit-customer-addresses";
+
     openModal(modalUri);
   };
   const handleCustomerChangeAction = (data: OrderCustomerChangeData) => {
@@ -163,9 +165,11 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   ): Promise<FetchResult<OrderDraftUpdateMutation>> => orderDraftUpdate.mutate({ id, input: data });
   const handleOrderDraftCancel = async () => {
     const errors = await extractMutationErrors(orderDraftCancel.mutate({ id }));
+
     if (!errors.length) {
       navigate(orderDraftListUrl());
     }
+
     return errors;
   };
   const errors = orderDraftFinalize.opts.data?.draftOrderComplete.errors || [];

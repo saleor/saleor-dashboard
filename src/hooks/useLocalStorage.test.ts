@@ -86,6 +86,7 @@ describe("useLocalStorage", () => {
       foo: numberValue,
       bar: "baz",
     };
+
     expect(result.current[0]).toStrictEqual(newValue);
     expect(localStorage.getItem(key)).toBe(JSON.stringify(newValue));
   });

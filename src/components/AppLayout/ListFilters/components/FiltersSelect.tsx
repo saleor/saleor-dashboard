@@ -41,6 +41,7 @@ export const FiltersSelect = <TFilterKeys extends string = string>({
 
     if (Object.keys(invalidFilters).length > 0) {
       setFilterErrors(invalidFilters);
+
       return;
     }
 

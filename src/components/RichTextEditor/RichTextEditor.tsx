@@ -52,6 +52,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     if (typeof editorRef === "function") {
       return editorRef(editor);
     }
+
     if (editorRef) {
       return (editorRef.current = editor);
     }
@@ -90,7 +91,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           onInitialize={handleInitialize}
           onChange={async event => {
             const editorJsValue = await event.saver.save();
+
             setHasValue(editorJsValue.blocks.length > 0);
+
             return onChange?.(editorJsValue);
           }}
           {...props}

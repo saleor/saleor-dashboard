@@ -40,6 +40,7 @@ const SaleListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 
   if (enabled) {
     const params: DiscountListUrlQueryParams = asSortParams(qs, DiscountListUrlSortField);
+
     return (
       <ConditionalDiscountFilterProvider locationSearch={location.search}>
         <DiscountList params={params} />
@@ -78,6 +79,7 @@ const VoucherListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
     VoucherListUrlSortField,
     VoucherListUrlSortField.code,
   );
+
   return <VoucherListViewComponent params={params} />;
 };
 const VoucherDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({ match, location }) => {

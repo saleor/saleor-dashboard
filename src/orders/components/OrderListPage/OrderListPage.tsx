@@ -76,6 +76,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const context = useDevModeContext();
   const openPlaygroundURL = () => {
     context.setDevModeContent(DevModeQuery);
+
     const variables = JSON.stringify(
       {
         filter: getFilterVariables(params),
@@ -86,6 +87,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
       null,
       2,
     );
+
     context.setVariables(variables);
     context.setDevModeVisibility(true);
   };
@@ -213,5 +215,6 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
     </ListPageLayout>
   );
 };
+
 OrderListPage.displayName = "OrderListPage";
 export default OrderListPage;

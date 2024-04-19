@@ -118,5 +118,6 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
     </Form>
   );
 };
+
 PageTypeCreatePage.displayName = "PageTypeCreatePage";
 export default PageTypeCreatePage;

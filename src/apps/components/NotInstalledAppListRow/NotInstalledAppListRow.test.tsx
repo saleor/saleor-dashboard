@@ -22,6 +22,7 @@ describe("Apps NotInstalledAppListRow", () => {
         <NotInstalledAppListRow appInstallation={failedAppInProgress} isExternal={false} />
       </Wrapper>,
     );
+
     const name = screen.queryByText(failedAppInProgress.appName);
     // TODO: Uncomment this when manifests are implemented back in the UI
     // const manifestDomain = screen.queryByText(
@@ -44,6 +45,7 @@ describe("Apps NotInstalledAppListRow", () => {
         <NotInstalledAppListRow appInstallation={pendingAppInProgress} isExternal={false} />
       </Wrapper>,
     );
+
     const name = screen.queryByText(pendingAppInProgress.appName);
     // TODO: Uncomment this when manifests are implemented back in the UI
     // const manifestDomain = screen.queryByText(
@@ -64,6 +66,7 @@ describe("Apps NotInstalledAppListRow", () => {
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
+
     jest.spyOn(context, "useAppListContext").mockImplementation(() => ({
       openAppSettings,
       removeAppInstallation,
@@ -74,6 +77,7 @@ describe("Apps NotInstalledAppListRow", () => {
         <NotInstalledAppListRow appInstallation={failedAppInProgress} isExternal={false} />
       </Wrapper>,
     );
+
     const user = userEvent.setup();
     const retryButton = screen.getByTestId("app-installation-retry-button");
     const removeButton = screen.getByTestId("app-installation-remove-button");

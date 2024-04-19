@@ -170,5 +170,6 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     </DetailPageLayout>
   );
 };
+
 OrderDraftPage.displayName = "OrderDraftPage";
 export default OrderDraftPage;
