@@ -1,6 +1,6 @@
 name: PR automation
 
-on: 
+on:
   pull_request:
   workflow_dispatch:
     inputs:
@@ -8,7 +8,7 @@ on:
         type: number
         description: 'Number of shards to use for parallel testing'
         required: false
-        default: 4 # This is the default only for manually (re-)triggered runs. Default for runs triggered by pull requests is configured via `jobs.run-tests.with.concurrency`.
+        default: 4 # This is the default only for manually (re-)triggered runs. Default for runs triggered by pull requests is configured via `jobs.initialize-cloud.generate-shard-matrix.with.concurrency`.
 
 concurrency:
   group: ${{ github.ref }}
@@ -26,6 +26,7 @@ jobs:
       BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
+      SHARD_MATRIX: ${{ steps.generate-shard-matrix.outputs.SHARD_MATRIX }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -48,6 +49,21 @@ jobs:
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+
+      - name: Generate shard matrix
+        id: generate-shard-matrix
+        with:
+          concurrency: ${{ inputs.shards || 4 }}
+        run: |
+          max_concurrency=4
+          if [ "$concurrency" -gt "$max_concurrency" ]; then
+            echo "[WARN] The requested number of shards ($concurrency) exceeds maximum allowed value ($max_concurrency). Using $max_concurrency shards instead." >&2
+            concurrency=$max_concurrency
+          fi
+          shard_matrix=$(seq -f "%g/$concurrency" 1 "$concurrency" | paste -d ',' -s) # generate comma separated string like "1/4,2/4,3/4,4/4" (ranging from 1 to $concurrency)
+          shard_matrix=$(echo "$shard_matrix" | sed 's/,/, /g') # add space after each comma
+          shard_matrix=$(echo "$shard_matrix" | sed 's/^/[/; s/$/]/') # wrap the comma-space separated string in square brackets
+          echo "matrix=$shard_matrix" >> "$GITHUB_OUTPUT"
 
   deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
@@ -133,24 +149,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: ${{ steps.generate-shard-matrix.outputs.matrix }}
-    with:
-      concurrency: ${{ inputs.shards || 4 }}
+        shard: ${{ needs.initialize-cloud.outputs.SHARD_MATRIX }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Generate shard matrix 
-        id: generate-shard-matrix
-        run: |
-          max_concurrency=4
-          if [ "$concurrency" -gt "$max_concurrency" ]; then
-            echo "[WARN] The requested number of shards ($concurrency) exceeds maximum allowed value ($max_concurrency). Using $max_concurrency shards instead." >&2
-            concurrency=$max_concurrency
-          fi
-          shard_matrix=$(seq -f "%g/$concurrency" 1 "$concurrency" | paste -d ',' -s) # generate comma separated string like "1/4,2/4,3/4,4/4" (ranging from 1 to $concurrency)
-          shard_matrix=$(echo "$shard_matrix" | sed 's/,/, /g') # add space after each comma
-          shard_matrix=$(echo "$shard_matrix" | sed 's/^/[/; s/$/]/') # wrap the comma-space separated string in square brackets
-          echo "matrix=$shard_matrix" >> "$GITHUB_OUTPUT"
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
