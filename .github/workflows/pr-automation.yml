@@ -60,9 +60,11 @@ jobs:
             echo "[WARN] The requested number of shards ($CONCURRENCY) exceeds maximum allowed value ($MAX_CONCURRENCY). Using $MAX_CONCURRENCY shards instead." >&2
             CONCURRENCY=$MAX_CONCURRENCY
           fi
-          shard_matrix=$(seq -f "%g/$CONCURRENCY" 1 "$CONCURRENCY" | paste -d ',' -s) # generate comma separated string like "1/4,2/4,3/4,4/4" (ranging from 1 to $CONCURRENCY)
-          shard_matrix=$(echo "$shard_matrix" | sed 's/,/, /g') # add space after each comma
-          shard_matrix=$(echo "$shard_matrix" | sed 's/^/[/; s/$/]/') # wrap the comma-space separated string in square brackets
+          shard_matrix=()                             # Initialize an empty array to store the shard values.
+          for i in $(seq 1 "$CONCURRENCY"); do        # Loop through the numbers from 1 to $CONCURRENCY.
+            shard_matrix+=("\"$i/$CONCURRENCY\"")     # For each number i, append a string in the format "${i}/${CONCURRENCY}" to the shard_matrix array.
+          done
+          shard_matrix=$(IFS=,; echo "[${shard_matrix[*]}]") # Join the elements of the shard_matrix array with commas and wrap the result in square brackets to create a valid JSON array string.
           echo "SHARD_MATRIX=$shard_matrix" >> "$GITHUB_OUTPUT"
 
   deploy-dashboard:
