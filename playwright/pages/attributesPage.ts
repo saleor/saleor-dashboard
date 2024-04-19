@@ -9,9 +9,13 @@ import type { Page } from "@playwright/test";
 
 export class AttributesPage extends BasePage {
   readonly addValueDialog: AddValueDialog;
+
   readonly deleteAttributesInBulkDialog: DeleteAttributesInBulkDialog;
+
   readonly deleteAttributeDialog: DeleteAttributeDialog;
+
   readonly deleteAttributeValueDialog: DeleteAttributeValueDialog;
+
   readonly editAttributeValueDialog: EditAttributeValueDialog;
 
   constructor(

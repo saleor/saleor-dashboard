@@ -5,7 +5,9 @@ import type { Page } from "@playwright/test";
 
 export class ProductTypePage extends BasePage {
   readonly page: Page;
+
   readonly basePage: BasePage;
+
   readonly deleteProductTypeDialog: DeleteDialog;
 
   constructor(

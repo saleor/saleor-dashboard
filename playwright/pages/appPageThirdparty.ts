@@ -6,7 +6,9 @@ import { DeleteDialog } from "./dialogs/deleteDialog";
 
 export class AppPage extends BasePage {
   readonly page: Page;
+
   readonly basePage: BasePage;
+
   readonly deleteAppDialog: DeleteDialog;
 
   constructor(

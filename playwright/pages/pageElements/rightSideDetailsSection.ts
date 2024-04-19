@@ -3,6 +3,7 @@ import { expect, Locator, Page } from "@playwright/test";
 
 export class RightSideDetailsPage {
   readonly channelSelectDialog: ChannelSelectDialog;
+
   readonly page: Page;
 
   constructor(

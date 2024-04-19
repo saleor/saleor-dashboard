@@ -10,11 +10,17 @@ import type { Page } from "@playwright/test";
 
 export class GiftCardsPage extends BasePage {
   readonly page: Page;
+
   readonly issueGiftCardDialog: IssueGiftCardDialog;
+
   readonly resendGiftCardCodeDialog: ResendGiftCardCodeDialog;
+
   readonly metadataSeoPage: MetadataSeoPage;
+
   readonly deleteDialog: DeleteDialog;
+
   readonly exportGiftCardsDialog: ExportGiftCardsDialog;
+
   readonly setGiftCardsBalanceDialog: SetGiftCardsBalanceDialog;
 
   constructor(

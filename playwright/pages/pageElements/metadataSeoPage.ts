@@ -10,6 +10,7 @@ const seoDescriptionText = `e2e-seoSlugDescription-${faker.datatype.number()}`;
 
 export class MetadataSeoPage {
   readonly page: Page;
+
   readonly seoSlugName: string;
 
   constructor(

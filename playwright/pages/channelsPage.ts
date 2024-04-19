@@ -6,7 +6,9 @@ import { Page } from "@playwright/test";
 
 export class ChannelPage extends BasePage {
   readonly page: Page;
+
   readonly rightSideDetailsPage: RightSideDetailsPage;
+
   readonly deleteChannelDialog: DeleteDialog;
 
   constructor(

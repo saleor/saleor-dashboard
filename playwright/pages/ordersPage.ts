@@ -12,13 +12,21 @@ import { Page } from "@playwright/test";
 
 export class OrdersPage extends BasePage {
   orderCreateDialog: OrderCreateDialog;
+
   markOrderAsPaidDialog: MarkOrderAsPaidDialog;
+
   addProductsDialog: AddProductsDialog;
+
   addressDialog: AddressDialog;
+
   shippingAddressDialog: ShippingAddressDialog;
+
   basePage: BasePage;
+
   manualTransactionDialog: ManualTransactionDialog;
+
   addTrackingDialog: AddTrackingDialog;
+
   rightSideDetailsPage: RightSideDetailsPage;
 
   constructor(

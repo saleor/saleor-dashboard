@@ -7,6 +7,7 @@ import { DeleteDialog } from "./dialogs/deleteDialog";
 
 export class NavigationPage extends BasePage {
   addNavigationMenuDialog: AddNavigationMenuDialog;
+
   deleteDialog: DeleteDialog;
 
   constructor(

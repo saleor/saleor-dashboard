@@ -4,6 +4,7 @@ import type { Page } from "@playwright/test";
 
 export class TranslationsPage extends BasePage {
   readonly page: Page;
+
   readonly basePage: BasePage;
 
   constructor(

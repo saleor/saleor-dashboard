@@ -10,12 +10,19 @@ import type { Page } from "@playwright/test";
 
 export class DraftOrdersPage extends BasePage {
   readonly page: Page;
+
   readonly deleteDraftOrdersDialog: DeleteDialog;
+
   readonly draftOrderCreateDialog: DraftOrderCreateDialog;
+
   readonly addProductsDialog: AddProductsDialog;
+
   readonly rightSideDetailsPage: RightSideDetailsPage;
+
   readonly addressDialog: AddressDialog;
+
   readonly shippingAddressDialog: ShippingAddressDialog;
+
   constructor(
     page: Page,
     readonly createDraftOrderButton = page.getByTestId("create-draft-order-button"),

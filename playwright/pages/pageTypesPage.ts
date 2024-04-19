@@ -6,8 +6,11 @@ import type { Page } from "@playwright/test";
 
 export class PageTypesPage extends BasePage {
   readonly page: Page;
+
   readonly basePage: BasePage;
+
   readonly deletePageTypeDialog: DeleteDialog;
+
   readonly attributeDialog: AssignAttributeDialog;
 
   constructor(

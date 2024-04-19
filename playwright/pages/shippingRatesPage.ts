@@ -6,9 +6,13 @@ import type { Page } from "@playwright/test";
 
 export class ShippingRatesPage {
   readonly page: Page;
+
   readonly basePage: BasePage;
+
   readonly rightSideDetailsPage: RightSideDetailsPage;
+
   readonly assignProductsDialog: AssignProductsDialog;
+
   readonly addPostalCodeDialog: AddPostalCodeDialog;
 
   constructor(

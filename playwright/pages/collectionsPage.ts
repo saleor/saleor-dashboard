@@ -10,9 +10,13 @@ import { DeleteDialog } from "./dialogs/deleteDialog";
 
 export class CollectionsPage extends BasePage {
   readonly page: Page;
+
   readonly metadataSeoPage: MetadataSeoPage;
+
   readonly rightSideDetailsPage: RightSideDetailsPage;
+
   readonly assignSpecificProductsDialog: AssignSpecificProductsDialog;
+
   readonly deleteCollectionDialog: DeleteDialog;
 
   constructor(

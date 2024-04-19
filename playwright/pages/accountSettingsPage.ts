@@ -4,6 +4,7 @@ import type { Page } from "@playwright/test";
 
 export class AccountSettingsPage {
   readonly page: Page;
+
   readonly basePage: BasePage;
 
   readonly changePasswordDialog: ChangePasswordDialog;
@@ -35,3 +36,4 @@ export class AccountSettingsPage {
     await this.saveButton.click();
   }
 }
+export class x {}

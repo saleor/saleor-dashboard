@@ -6,7 +6,9 @@ import type { Page } from "@playwright/test";
 
 export class CategoriesPage extends BasePage {
   readonly page: Page;
+
   readonly metadataSeoPage: MetadataSeoPage;
+
   readonly deleteCategoriesDialog: DeleteDialog;
 
   constructor(

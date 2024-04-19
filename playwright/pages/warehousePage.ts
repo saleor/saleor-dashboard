@@ -7,8 +7,11 @@ import { RightSideDetailsPage } from "./pageElements/rightSideDetailsSection";
 
 export class WarehousePage extends BasePage {
   readonly page: Page;
+
   readonly basePage: BasePage;
+
   readonly deleteWarehouseDialog: DeleteDialog;
+
   readonly rightSideDetailsPage: RightSideDetailsPage;
 
   constructor(

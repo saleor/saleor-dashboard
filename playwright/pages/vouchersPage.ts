@@ -9,9 +9,13 @@ import { DeleteDialog } from "./dialogs/deleteDialog";
 
 export class VouchersPage extends BasePage {
   readonly page: Page;
+
   readonly addVoucherCodeDialog: AddVoucherCodeDialog;
+
   readonly rightSideDetailsPage: RightSideDetailsPage;
+
   readonly deleteVoucherDialog: DeleteDialog;
+
   readonly assignSpecificProductsDialog: AssignSpecificProductsDialog;
 
   constructor(

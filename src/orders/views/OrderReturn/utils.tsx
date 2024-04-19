@@ -17,7 +17,9 @@ import { messages } from "./messages";
 
 class ReturnFormDataParser {
   private readonly order: OrderDetailsFragment;
+
   private readonly formData: OrderReturnFormData;
+
   private readonly refundsEnabled: boolean;
 
   constructor(data: {

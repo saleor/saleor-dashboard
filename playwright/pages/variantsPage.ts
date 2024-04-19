@@ -7,9 +7,13 @@ import type { Page } from "@playwright/test";
 
 export class VariantsPage {
   readonly page: Page;
+
   channelSelectDialog: ChannelSelectDialog;
+
   metadataSeoPage: MetadataSeoPage;
+
   basePage: BasePage;
+
   deleteVariantDialog: DeleteVariantDialog;
 
   constructor(

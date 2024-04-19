@@ -2,6 +2,7 @@ import type { Page } from "@playwright/test";
 
 export class FiltersPage {
   readonly page: Page;
+
   constructor(
     page: Page,
     readonly saveFiltersButton = page.getByTestId("save-filters-button"),

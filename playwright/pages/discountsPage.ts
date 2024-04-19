@@ -8,7 +8,9 @@ import { date } from "faker";
 
 export class DiscountsPage extends BasePage {
   deleteDiscountDialog: DeleteDiscountDialog;
+
   promotionRuleDialog: PromotionRuleDialog;
+
   deleteRuleDialog: DeleteRuleDialog;
 
   constructor(

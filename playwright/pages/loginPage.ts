@@ -5,6 +5,7 @@ export class LoginPage {
   readonly page: Page;
 
   readonly homePage: HomePage;
+
   constructor(
     page: Page,
     readonly emailInput = page.getByTestId("email"),

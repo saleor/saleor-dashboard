@@ -7,7 +7,9 @@ import type { Page } from "@playwright/test";
 
 export class ShippingMethodsPage extends BasePage {
   rightSideDetailsPage: RightSideDetailsPage;
+
   assignCountriesDialog: AssignCountriesDialog;
+
   deleteShippingMethodDialog: DeleteShippingMethodDialog;
 
   constructor(

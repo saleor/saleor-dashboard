@@ -15,11 +15,17 @@ const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
 
 export class ProductPage extends BasePage {
   readonly metadataSeoPage: MetadataSeoPage;
+
   readonly exportProductsDialog: ExportProductsDialog;
+
   readonly rightSideDetailsPage: RightSideDetailsPage;
+
   readonly basePage: BasePage;
+
   readonly channelSelectDialog: ChannelSelectDialog;
+
   readonly deleteProductDialog: DeleteDialog;
+
   readonly filtersPage: FiltersPage;
 
   constructor(

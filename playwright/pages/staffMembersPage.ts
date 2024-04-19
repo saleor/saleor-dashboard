@@ -6,8 +6,11 @@ import type { APIRequestContext, Page } from "@playwright/test";
 
 export class StaffMembersPage extends BasePage {
   readonly request: APIRequestContext;
+
   readonly basePage: BasePage;
+
   readonly mailpitService: MailpitService;
+
   readonly inviteStaffMembersDialog: InviteStaffMembersDialog;
 
   constructor(

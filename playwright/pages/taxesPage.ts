@@ -7,7 +7,9 @@ import type { Page } from "@playwright/test";
 
 export class TaxesPage extends BasePage {
   readonly page: Page;
+
   readonly addCountriesDialog: AddCountriesDialog;
+
   readonly metadataSeoPage: MetadataSeoPage;
 
   constructor(

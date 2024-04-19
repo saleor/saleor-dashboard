@@ -2,6 +2,7 @@ import type { Page } from "@playwright/test";
 
 export class PromotionRuleDialog {
   readonly page: Page;
+
   constructor(
     page: Page,
     readonly ruleNameInput = page.getByTestId("rule-name-input"),

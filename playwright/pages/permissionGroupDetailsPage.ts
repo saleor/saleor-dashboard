@@ -7,7 +7,9 @@ import { UnassignPermissionGroupMembersDialog } from "./dialogs/unassignPermissi
 
 export class PermissionGroupDetailsPage extends BasePage {
   readonly assignPermissionGroupMemberDialog: AssignPermissionGroupMembersDialog;
+
   readonly unassignPermissionGroupMemberDialog: UnassignPermissionGroupMembersDialog;
+
   readonly deletePermissionGroupDialog: DeletePermissionGroupDialog;
 
   constructor(
