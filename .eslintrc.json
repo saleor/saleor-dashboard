@@ -46,6 +46,7 @@
     "sort-imports": "off", // imports are handled by simple-import-sort/sort
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
+    "react-refresh/only-export-components": "warn",
     "lines-between-class-members": ["error", "always"],
     "padding-line-between-statements": [
       "error",
