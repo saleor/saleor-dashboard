@@ -63,7 +63,7 @@ jobs:
           shard_matrix=$(seq -f "%g/$concurrency" 1 "$concurrency" | paste -d ',' -s) # generate comma separated string like "1/4,2/4,3/4,4/4" (ranging from 1 to $concurrency)
           shard_matrix=$(echo "$shard_matrix" | sed 's/,/, /g') # add space after each comma
           shard_matrix=$(echo "$shard_matrix" | sed 's/^/[/; s/$/]/') # wrap the comma-space separated string in square brackets
-          echo "matrix=$shard_matrix" >> "$GITHUB_OUTPUT"
+          echo "SHARD_MATRIX=$shard_matrix" >> "$GITHUB_OUTPUT"
 
   deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
