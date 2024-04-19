@@ -10,7 +10,7 @@ on:
         required: false
         default: 4 # This is the default only for manually (re-)triggered runs. Default for runs triggered by pull requests is configured via `jobs.initialize-cloud.generate-shard-matrix.with.CONCURRENCY`.
 
-CONCURRENCY:
+concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
