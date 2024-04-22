@@ -129,22 +129,26 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     onTransferFunds?.();
   };
 
+  const handleSaveDraft = (data: OrderTransactionRefundPageFormData) => {
+    onSaveDraft({
+      ...data,
+      amount: getFieldState("amount").isDirty ? data.amount : undefined,
+    });
+  };
+
   const submitBehavior = getRefundFormSubmitBehavior({
     canHandlePayments,
     isDirty,
     isEdit: !!draftRefund,
     onTransferFunds: handleTransferFunds,
-    onSaveDraft,
+    onSaveDraft: handleSaveDraft,
     onSaveDraftState,
     onTransferFundsState,
     intl,
   });
 
   const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = data => {
-    submitBehavior.onSubmit({
-      ...data,
-      amount: getFieldState("amount").isDirty ? data.amount : undefined,
-    });
+    submitBehavior.onSubmit(data);
   };
 
   const linesToRefund = watch("linesToRefund");
