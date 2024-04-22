@@ -105,7 +105,6 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     handleSubmit,
     watch,
     getValues,
-    getFieldState,
     setError,
     formState: { isDirty, errors: formErrors },
   } = useForm<OrderTransactionRefundPageFormData>({
@@ -141,10 +140,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   });
 
   const onSubmit: SubmitHandler<OrderTransactionRefundPageFormData> = data => {
-    submitBehavior.onSubmit({
-      ...data,
-      amount: getFieldState("amount").isDirty ? data.amount : undefined,
-    });
+    submitBehavior.onSubmit(data);
   };
 
   const linesToRefund = watch("linesToRefund");
