@@ -8,7 +8,18 @@ import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
-import { VitePWA } from "vite-plugin-pwa";
+
+const copyNoopSW = () => ({
+  name: "copy-noop-sw",
+  apply: "build",
+  writeBundle: () => {
+    mkdirSync(path.resolve("build", "dashboard"), { recursive: true });
+    copyFileSync(
+      path.resolve("assets", "sw.js"),
+      path.resolve("build", "dashboard", "sw.js"),
+    );
+  },
+});
 
 const copyOgImage = () => ({
   name: "copy-og-image",
@@ -98,23 +109,13 @@ export default defineConfig(({ command, mode }) => {
       },
     }),
     copyOgImage(),
+    copyNoopSW(),
   ];
 
   if (!isDev) {
     console.log("Enabling service worker...");
 
     plugins.push(
-      VitePWA({
-        injectRegister: false,
-        strategies: "injectManifest",
-        registerType: "autoUpdate",
-
-        srcDir: path.resolve(__dirname),
-        filename: "sw.js",
-        injectManifest: {
-          injectionPoint: undefined,
-        },
-      }),
       sentryVitePlugin({
         authToken: SENTRY_AUTH_TOKEN,
         org: SENTRY_ORG,
