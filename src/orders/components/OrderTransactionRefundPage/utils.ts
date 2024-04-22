@@ -394,8 +394,7 @@ export const getRefundFormSubmitBehavior = ({
     !onTransferFunds
   ) {
     return {
-      onSubmit: data =>
-        onSaveDraft({ ...data, amount: isDirty ? data.amount : undefined }),
+      onSubmit: onSaveDraft,
       submitState: onSaveDraftState,
       submitLabels: {
         confirm: intl.formatMessage(refundSavebarMessages.saveDraft),
