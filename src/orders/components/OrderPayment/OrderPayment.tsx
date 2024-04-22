@@ -1,11 +1,9 @@
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import Link from "@dashboard/components/Link";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
-import { giftCardPath } from "@dashboard/giftCards/urls";
 import {
   OrderAction,
   OrderDetailsFragment,
@@ -19,12 +17,13 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { transformPaymentStatus } from "../../../misc";
+import { OrderPaymentGiftCards } from "./components/OrderPaymentGiftCards";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
 import { useStyles } from "./styles";
 import {
   extractOrderGiftCardUsedAmount,
   extractRefundedAmount,
-  obtainUsedGifrcard,
+  obtainUsedGifrcards,
 } from "./utils";
 
 interface OrderPaymentProps {
@@ -50,7 +49,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const refundedAmount = extractRefundedAmount(order);
   const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
-  const usedGiftcard = obtainUsedGifrcard(order);
+  const usedGiftcards = obtainUsedGifrcards(order);
 
   const getDeliveryMethodName = (order: OrderDetailsFragment) => {
     if (
@@ -212,18 +211,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
       <Divider />
       <CardContent className={classes.payments}>
         <div className={classes.root}>
-          {!!usedGiftCardAmount && usedGiftcard && (
+          {!!usedGiftCardAmount && usedGiftcards && (
             <div>
-              <FormattedMessage
-                {...orderPaymentMessages.paidWithGiftCard}
-                values={{
-                  link: (
-                    <Link href={giftCardPath(usedGiftcard.id)}>
-                      {usedGiftcard.last4CodeChars}
-                    </Link>
-                  ),
-                }}
-              />
+              <OrderPaymentGiftCards usedGiftcards={usedGiftcards} />
               <div className={classes.leftmostRightAlignedElement}>
                 <Money
                   money={{
