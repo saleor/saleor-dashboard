@@ -9,9 +9,6 @@ import {
 
 const locale = Locale.EN;
 
-// TODO
-// check negative values
-
 describe("NumberCell renderer", () => {
   it("should paste integer value", () => {
     // Arrange
