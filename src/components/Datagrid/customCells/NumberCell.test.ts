@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Locale } from "@dashboard/components/Locale";
 
 import {
