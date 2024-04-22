@@ -17,7 +17,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { transformPaymentStatus } from "../../../misc";
-import { OrderPaymentGiftCards } from "./components/OrderPaymentGiftCards";
+import { OrderUsedGiftCards } from "../OrderUsedGiftCards";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
 import { useStyles } from "./styles";
 import {
@@ -213,7 +213,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
         <div className={classes.root}>
           {!!usedGiftCardAmount && usedGiftcards && (
             <div>
-              <OrderPaymentGiftCards usedGiftcards={usedGiftcards} />
+              <OrderUsedGiftCards giftCards={usedGiftcards} />
               <div className={classes.leftmostRightAlignedElement}>
                 <Money
                   money={{

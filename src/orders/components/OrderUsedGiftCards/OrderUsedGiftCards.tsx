@@ -4,20 +4,18 @@ import { OrderDetailsFragment } from "@dashboard/graphql";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { orderPaymentMessages } from "../../messages";
+import { messages } from "./messages";
 
-interface OrderPaymentGiftCardsProps {
-  usedGiftcards: OrderDetailsFragment["giftCards"];
+interface OrderUsedGiftCardsProps {
+  giftCards: OrderDetailsFragment["giftCards"];
 }
 
-export const OrderPaymentGiftCards = ({
-  usedGiftcards,
-}: OrderPaymentGiftCardsProps) => {
+export const OrderUsedGiftCards = ({ giftCards }: OrderUsedGiftCardsProps) => {
   return (
     <FormattedMessage
-      {...orderPaymentMessages.paidWithGiftCard}
+      {...messages.usedGiftCard}
       values={{
-        link: usedGiftcards.map(({ id, last4CodeChars }) => (
+        link: giftCards.map(({ id, last4CodeChars }) => (
           <Link key={id} href={giftCardPath(id)}>
             {last4CodeChars}
           </Link>

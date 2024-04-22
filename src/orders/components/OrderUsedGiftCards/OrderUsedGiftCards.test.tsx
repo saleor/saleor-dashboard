@@ -5,8 +5,8 @@ import React, { ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 
-import { orderPaymentMessages } from "../../messages";
-import { OrderPaymentGiftCards } from "./OrderPaymentGiftCards";
+import { messages } from "./messages";
+import { OrderUsedGiftCards } from "./OrderUsedGiftCards";
 
 const mockGiftCards = [
   {
@@ -26,8 +26,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
         <IntlProvider
           locale="EN"
           messages={{
-            paidWithGiftCard:
-              orderPaymentMessages.paidWithGiftCard.defaultMessage,
+            paidWithGiftCard: messages.usedGiftCard.defaultMessage,
           }}
         >
           {children}
@@ -37,10 +36,10 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
   );
 };
 
-describe("OrderPaymentGiftCards", () => {
+describe("OrderUsedGiftCards", () => {
   it("should render single gift card", () => {
     // Arrange & Act
-    render(<OrderPaymentGiftCards usedGiftcards={[mockGiftCards[0]]} />, {
+    render(<OrderUsedGiftCards giftCards={[mockGiftCards[0]]} />, {
       wrapper: Wrapper,
     });
 
@@ -56,9 +55,7 @@ describe("OrderPaymentGiftCards", () => {
   it("should render multipe gift cards", () => {
     // Arrange & Act
     render(
-      <OrderPaymentGiftCards
-        usedGiftcards={[mockGiftCards[0], mockGiftCards[1]]}
-      />,
+      <OrderUsedGiftCards giftCards={[mockGiftCards[0], mockGiftCards[1]]} />,
       { wrapper: Wrapper },
     );
 
