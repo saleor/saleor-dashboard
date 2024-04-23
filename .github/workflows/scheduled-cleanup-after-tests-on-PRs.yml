@@ -1,0 +1,39 @@
+name: Run test manually
+
+on: [pull_request]
+
+jobs:
+  cleanup-after-PR-testing:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Saleor login
+      uses: ./.github/actions/cli-login
+      with:
+        token: ${{ inputs.CLI_TOKEN }}
+
+    - name: Get open PRs and environments
+      id: get-prs-and-envs
+      run: |
+        OPEN_PRS=$((gh pr list --json headRefName,number --jq '.[] | ["pr-"+.headRefName , "pr-"+ (.number|tostring)]') | jq -s 'add')
+        ENVIRONMENTS_FOR_PR_TESTING=$(npx saleor environment list --json | jq 'map(select(.project.slug == "project-for-pr-testing") | {"key": .key, "name": .name})')
+        echo "OPEN_PRS=$OPEN_PRS" >> $GITHUB_OUTPUT
+        echo "ENVIRONMENTS_FOR_PR_TESTING=$ENVIRONMENTS_FOR_PR_TESTING" >> $GITHUB_OUTPUT
+
+    - id: get-environments-for-deletion
+      uses: actions/github-script@v6
+      env:
+        OPEN_PRS: ${{ steps.get-prs-and-envs.outputs.OPEN_PRS }}
+        ENVIRONMENTS_FOR_PR_TESTING: ${{ steps.get-prs-and-envs.outputs.ENVIRONMENTS_FOR_PR_TESTING }}
+      with:
+        result-encoding: json
+        script: |
+          const script = require('.github/workflows/getUnusedEnvironments.js')
+          return script()
+
+    - name: Remove instance
+      env:
+        ENVIRONMENT_IDS: ${{ steps.get-environments-for-deletion.outputs.result }}
+      run: | 
+        for env in "${ENVIRONMENT_IDS[@]}"; do
+        	npx saleor env remove "$env" --force
+        done  
