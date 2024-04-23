@@ -69,6 +69,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
+import { ProductsExportParameters } from "./export";
 import {
   getFilterOpts,
   getFilterQueryParam,
@@ -506,17 +507,19 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         channels={availableChannels}
         onClose={closeModal}
-        onSubmit={data =>
+        onSubmit={data => {
+          const productsExportParams = new ProductsExportParameters({
+            ...data,
+            ...filterVariables,
+            ids: selectedRowIds,
+          });
+
           exportProducts({
             variables: {
-              input: {
-                ...data,
-                ...filterVariables,
-                ids: selectedRowIds,
-              },
+              input: productsExportParams.asExportProductsInput(),
             },
-          })
-        }
+          });
+        }}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}
