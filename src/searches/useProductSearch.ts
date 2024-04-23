@@ -27,6 +27,13 @@ export const searchProducts = gql`
           thumbnail {
             url
           }
+          channelListings {
+            channel {
+              id
+              name
+              currencyCode
+            }
+          }
           variants {
             id
             name
