@@ -1550,10 +1550,6 @@
     "context": "order history message",
     "string": "Payment was voided"
   },
-  "8aV98y": {
-    "context": "new version notification content",
-    "string": "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below."
-  },
   "8cUEPV": {
     "context": "page title",
     "string": "Create New Attribute"
@@ -5334,10 +5330,6 @@
     "context": "product field",
     "string": "Export Variant Weight"
   },
-  "XCIV8H": {
-    "context": "button",
-    "string": "Refresh"
-  },
   "XDBeA+": {
     "context": "discount type",
     "string": "Fixed amount"
@@ -8492,10 +8484,6 @@
   "tCLTCb": {
     "context": "tab name",
     "string": "All products"
-  },
-  "tEdFmZ": {
-    "context": "notification title",
-    "string": "System update required"
   },
   "tIc2/h": {
     "context": "input helper text, search attributes",
