@@ -69,7 +69,8 @@ jobs:
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
-          PR_HEAD: "changeset-release/${{env.MINOR_VERSION}}"
+          # PR_HEAD: "changeset-release/${{env.MINOR_VERSION}}" TODO!!! before merging
+          PR_HEAD: "Remove-unused-environments"
           CHECK_NAME: "Automation_tests_run"
           STATUS: "in_progress"
           TITLE: "Automation tests run"
@@ -113,9 +114,10 @@ jobs:
         env: 
           VERSION: ${{inputs.CUSTOM_VERSION}}
         run: |
-          export GITHUB_TOKEN=$( \
+          GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
+          export "$GITHUB_TOKEN"
 
           payload=$(\
           jq --null-input \
@@ -131,7 +133,7 @@ jobs:
           )
 
           gh api /repos/saleor/saleor-dashboard/dispatches \
-            --input - <<< "$payload""
+            --input - <<< "$payload"
 
   run-pw-tests:
     runs-on: ubuntu-22.04
@@ -191,21 +193,20 @@ jobs:
         working-directory: ".github"
         id: send-slack-message
         env:
-          run_id: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
-          url_to_action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          testmo_token: ${{ secrets.TESTMO_TOKEN }}
-          environment: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
-          slack_webhook_url: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
-          ref_name: ${{github.ref_name}}
-
+          RUN_ID: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
+          URL_TO_ACTION: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
+          ENVIRONMENT: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
+          REF_NAME: ${{github.ref_name}}
         run: |
           node workflows/postTestsResults.js \
-          --run_id "$run_id" \
-          --testmo_token "$testmo_token" \
-          --slack_webhook_url "$slack_webhook_url" \
-          --environment "$environment" \
-          --url_to_action "$url_to_action" \
-          --ref_name "$ref_name" 
+          --run_id "$RUN_ID" \
+          --testmo_token "$TESTMO_TOKEN" \
+          --slack_webhook_url "$SLACK_WEBHOOK_URL" \
+          --environment "$ENVIRONMENT" \
+          --url_to_action "$URL_TO_ACTION" \
+          --ref_name "$REF_NAME" 
 
       - id: update-check
         if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
