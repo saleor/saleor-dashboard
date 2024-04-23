@@ -11,12 +11,14 @@ interface AllowUnpaidOrdersProps {
   onChange: FormChange;
   isChecked: boolean;
   hasError: boolean;
+  disabled?: boolean;
 }
 
 export const DefaultTransactionFlowStrategy = ({
   onChange,
   isChecked,
   hasError,
+  disabled,
 }: AllowUnpaidOrdersProps) => (
   <Box paddingX={6}>
     <Checkbox
@@ -27,6 +29,7 @@ export const DefaultTransactionFlowStrategy = ({
       onCheckedChange={value =>
         onChange({ target: { name: "defaultTransactionFlowStrategy", value } })
       }
+      disabled={disabled}
     >
       <Text>
         <FormattedMessage {...messages.defaultTransactionFlowStrategyLabel} />
