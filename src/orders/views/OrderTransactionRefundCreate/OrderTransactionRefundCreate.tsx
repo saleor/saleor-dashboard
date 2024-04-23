@@ -1,4 +1,5 @@
 import {
+  OrderGrantRefundCreateErrorCode,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundAddMutation,
 } from "@dashboard/graphql";
@@ -46,7 +47,26 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
           ),
         );
       }
+      if (submitData?.orderGrantRefundCreate?.errors.length) {
+        const errors = submitData.orderGrantRefundCreate.errors;
+        setLinesErrors(
+          errors.map(err => ({
+            code: err.code,
+            field: err.field,
+            lines: err.lines,
+            message: err.message,
+          })) as OrderTransactionRefundError[],
+        );
+        errors.forEach(err => {
+          if (err.code !== OrderGrantRefundCreateErrorCode.REQUIRED)
+            notify({
+              status: "error",
+              text: err.message,
+            });
+        });
+      }
     },
+    disableErrorHandling: true,
   });
 
   const handleCreateRefund = async (
