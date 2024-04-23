@@ -104,6 +104,7 @@ export function numberCell(
 ): NumberCell {
   return {
     ...common,
+    cursor: options?.cursor,
     data: {
       kind: "number-cell",
       value,

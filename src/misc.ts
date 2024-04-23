@@ -594,11 +594,18 @@ export const findById = <T extends Node>(id: string, list?: T[]) =>
 export const COLOR_WARNING = "#FBE5AC";
 export const COLOR_WARNING_DARK = "#3E2F0A";
 
+export type PillStatusType =
+  | "error"
+  | "warning"
+  | "info"
+  | "success"
+  | "generic";
+
 export const getStatusColor = ({
   status,
   currentTheme,
 }: {
-  status: "error" | "warning" | "info" | "success" | "generic";
+  status: PillStatusType;
   currentTheme: DefaultTheme;
 }) => {
   const statusHue = getStatusHue(status);
@@ -608,9 +615,7 @@ export const getStatusColor = ({
     : hueToPillColorLight(statusHue);
 };
 
-const getStatusHue = (
-  status: "error" | "warning" | "info" | "success" | "generic",
-): number => {
+const getStatusHue = (status: PillStatusType): number => {
   const red = 0;
   const blue = 236;
   const green = 145;
