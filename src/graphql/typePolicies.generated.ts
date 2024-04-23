@@ -622,9 +622,10 @@ export type AttributeReorderValuesFieldPolicy = {
 	attributeErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AttributeTranslatableContentKeySpecifier = ('attribute' | 'id' | 'name' | 'translation' | AttributeTranslatableContentKeySpecifier)[];
+export type AttributeTranslatableContentKeySpecifier = ('attribute' | 'attributeId' | 'id' | 'name' | 'translation' | AttributeTranslatableContentKeySpecifier)[];
 export type AttributeTranslatableContentFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	attributeId?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
@@ -635,11 +636,12 @@ export type AttributeTranslateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AttributeTranslationKeySpecifier = ('id' | 'language' | 'name' | AttributeTranslationKeySpecifier)[];
+export type AttributeTranslationKeySpecifier = ('id' | 'language' | 'name' | 'translatableContent' | AttributeTranslationKeySpecifier)[];
 export type AttributeTranslationFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AttributeUpdateKeySpecifier = ('attribute' | 'attributeErrors' | 'errors' | AttributeUpdateKeySpecifier)[];
 export type AttributeUpdateFieldPolicy = {
@@ -736,10 +738,11 @@ export type AttributeValueDeletedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AttributeValueTranslatableContentKeySpecifier = ('attribute' | 'attributeValue' | 'id' | 'name' | 'plainText' | 'richText' | 'translation' | AttributeValueTranslatableContentKeySpecifier)[];
+export type AttributeValueTranslatableContentKeySpecifier = ('attribute' | 'attributeValue' | 'attributeValueId' | 'id' | 'name' | 'plainText' | 'richText' | 'translation' | AttributeValueTranslatableContentKeySpecifier)[];
 export type AttributeValueTranslatableContentFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	attributeValue?: FieldPolicy<any> | FieldReadFunction<any>,
+	attributeValueId?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	plainText?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -752,13 +755,14 @@ export type AttributeValueTranslateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AttributeValueTranslationKeySpecifier = ('id' | 'language' | 'name' | 'plainText' | 'richText' | AttributeValueTranslationKeySpecifier)[];
+export type AttributeValueTranslationKeySpecifier = ('id' | 'language' | 'name' | 'plainText' | 'richText' | 'translatableContent' | AttributeValueTranslationKeySpecifier)[];
 export type AttributeValueTranslationFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	plainText?: FieldPolicy<any> | FieldReadFunction<any>,
-	richText?: FieldPolicy<any> | FieldReadFunction<any>
+	richText?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AttributeValueUpdateKeySpecifier = ('attribute' | 'attributeErrors' | 'attributeValue' | 'errors' | AttributeValueUpdateKeySpecifier)[];
 export type AttributeValueUpdateFieldPolicy = {
@@ -872,9 +876,10 @@ export type CategoryDeletedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CategoryTranslatableContentKeySpecifier = ('category' | 'description' | 'descriptionJson' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'translation' | CategoryTranslatableContentKeySpecifier)[];
+export type CategoryTranslatableContentKeySpecifier = ('category' | 'categoryId' | 'description' | 'descriptionJson' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'translation' | CategoryTranslatableContentKeySpecifier)[];
 export type CategoryTranslatableContentFieldPolicy = {
 	category?: FieldPolicy<any> | FieldReadFunction<any>,
+	categoryId?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -889,7 +894,7 @@ export type CategoryTranslateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CategoryTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | CategoryTranslationKeySpecifier)[];
+export type CategoryTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'translatableContent' | CategoryTranslationKeySpecifier)[];
 export type CategoryTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -897,7 +902,8 @@ export type CategoryTranslationFieldPolicy = {
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
-	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>
+	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CategoryUpdateKeySpecifier = ('category' | 'errors' | 'productErrors' | CategoryUpdateKeySpecifier)[];
 export type CategoryUpdateFieldPolicy = {
@@ -913,7 +919,7 @@ export type CategoryUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ChannelKeySpecifier = ('availableShippingMethodsPerCountry' | 'checkoutSettings' | 'countries' | 'currencyCode' | 'defaultCountry' | 'hasOrders' | 'id' | 'isActive' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'orderSettings' | 'paymentSettings' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'slug' | 'stockSettings' | 'warehouses' | ChannelKeySpecifier)[];
+export type ChannelKeySpecifier = ('availableShippingMethodsPerCountry' | 'checkoutSettings' | 'countries' | 'currencyCode' | 'defaultCountry' | 'hasOrders' | 'id' | 'isActive' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'orderSettings' | 'paymentSettings' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'slug' | 'stockSettings' | 'taxConfiguration' | 'warehouses' | ChannelKeySpecifier)[];
 export type ChannelFieldPolicy = {
 	availableShippingMethodsPerCountry?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutSettings?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -934,6 +940,7 @@ export type ChannelFieldPolicy = {
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	stockSettings?: FieldPolicy<any> | FieldReadFunction<any>,
+	taxConfiguration?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouses?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ChannelActivateKeySpecifier = ('channel' | 'channelErrors' | 'errors' | ChannelActivateKeySpecifier)[];
@@ -1422,9 +1429,10 @@ export type CollectionReorderProductsFieldPolicy = {
 	collectionErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CollectionTranslatableContentKeySpecifier = ('collection' | 'description' | 'descriptionJson' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'translation' | CollectionTranslatableContentKeySpecifier)[];
+export type CollectionTranslatableContentKeySpecifier = ('collection' | 'collectionId' | 'description' | 'descriptionJson' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'translation' | CollectionTranslatableContentKeySpecifier)[];
 export type CollectionTranslatableContentFieldPolicy = {
 	collection?: FieldPolicy<any> | FieldReadFunction<any>,
+	collectionId?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1439,7 +1447,7 @@ export type CollectionTranslateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CollectionTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | CollectionTranslationKeySpecifier)[];
+export type CollectionTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'translatableContent' | CollectionTranslationKeySpecifier)[];
 export type CollectionTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1447,7 +1455,8 @@ export type CollectionTranslationFieldPolicy = {
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
-	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>
+	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CollectionUpdateKeySpecifier = ('collection' | 'collectionErrors' | 'errors' | CollectionUpdateKeySpecifier)[];
 export type CollectionUpdateFieldPolicy = {
@@ -2559,10 +2568,11 @@ export type MenuItemMoveFieldPolicy = {
 	menu?: FieldPolicy<any> | FieldReadFunction<any>,
 	menuErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MenuItemTranslatableContentKeySpecifier = ('id' | 'menuItem' | 'name' | 'translation' | MenuItemTranslatableContentKeySpecifier)[];
+export type MenuItemTranslatableContentKeySpecifier = ('id' | 'menuItem' | 'menuItemId' | 'name' | 'translation' | MenuItemTranslatableContentKeySpecifier)[];
 export type MenuItemTranslatableContentFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	menuItem?: FieldPolicy<any> | FieldReadFunction<any>,
+	menuItemId?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
@@ -2572,11 +2582,12 @@ export type MenuItemTranslateFieldPolicy = {
 	menuItem?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MenuItemTranslationKeySpecifier = ('id' | 'language' | 'name' | MenuItemTranslationKeySpecifier)[];
+export type MenuItemTranslationKeySpecifier = ('id' | 'language' | 'name' | 'translatableContent' | MenuItemTranslationKeySpecifier)[];
 export type MenuItemTranslationFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type MenuItemUpdateKeySpecifier = ('errors' | 'menuErrors' | 'menuItem' | MenuItemUpdateKeySpecifier)[];
 export type MenuItemUpdateFieldPolicy = {
@@ -3648,13 +3659,14 @@ export type PageReorderAttributeValuesFieldPolicy = {
 	page?: FieldPolicy<any> | FieldReadFunction<any>,
 	pageErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PageTranslatableContentKeySpecifier = ('attributeValues' | 'content' | 'contentJson' | 'id' | 'page' | 'seoDescription' | 'seoTitle' | 'title' | 'translation' | PageTranslatableContentKeySpecifier)[];
+export type PageTranslatableContentKeySpecifier = ('attributeValues' | 'content' | 'contentJson' | 'id' | 'page' | 'pageId' | 'seoDescription' | 'seoTitle' | 'title' | 'translation' | PageTranslatableContentKeySpecifier)[];
 export type PageTranslatableContentFieldPolicy = {
 	attributeValues?: FieldPolicy<any> | FieldReadFunction<any>,
 	content?: FieldPolicy<any> | FieldReadFunction<any>,
 	contentJson?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	page?: FieldPolicy<any> | FieldReadFunction<any>,
+	pageId?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
 	title?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3666,7 +3678,7 @@ export type PageTranslateFieldPolicy = {
 	page?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PageTranslationKeySpecifier = ('content' | 'contentJson' | 'id' | 'language' | 'seoDescription' | 'seoTitle' | 'title' | PageTranslationKeySpecifier)[];
+export type PageTranslationKeySpecifier = ('content' | 'contentJson' | 'id' | 'language' | 'seoDescription' | 'seoTitle' | 'title' | 'translatableContent' | PageTranslationKeySpecifier)[];
 export type PageTranslationFieldPolicy = {
 	content?: FieldPolicy<any> | FieldReadFunction<any>,
 	contentJson?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3674,7 +3686,8 @@ export type PageTranslationFieldPolicy = {
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
-	title?: FieldPolicy<any> | FieldReadFunction<any>
+	title?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PageTypeKeySpecifier = ('attributes' | 'availableAttributes' | 'hasPages' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'slug' | PageTypeKeySpecifier)[];
 export type PageTypeFieldPolicy = {
@@ -4448,7 +4461,7 @@ export type ProductReorderAttributeValuesFieldPolicy = {
 	product?: FieldPolicy<any> | FieldReadFunction<any>,
 	productErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductTranslatableContentKeySpecifier = ('attributeValues' | 'description' | 'descriptionJson' | 'id' | 'name' | 'product' | 'seoDescription' | 'seoTitle' | 'translation' | ProductTranslatableContentKeySpecifier)[];
+export type ProductTranslatableContentKeySpecifier = ('attributeValues' | 'description' | 'descriptionJson' | 'id' | 'name' | 'product' | 'productId' | 'seoDescription' | 'seoTitle' | 'translation' | ProductTranslatableContentKeySpecifier)[];
 export type ProductTranslatableContentFieldPolicy = {
 	attributeValues?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4456,6 +4469,7 @@ export type ProductTranslatableContentFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	product?: FieldPolicy<any> | FieldReadFunction<any>,
+	productId?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
@@ -4466,7 +4480,7 @@ export type ProductTranslateFieldPolicy = {
 	product?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | ProductTranslationKeySpecifier)[];
+export type ProductTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'translatableContent' | ProductTranslationKeySpecifier)[];
 export type ProductTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4474,7 +4488,8 @@ export type ProductTranslationFieldPolicy = {
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
-	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>
+	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductTypeKeySpecifier = ('assignedVariantAttributes' | 'availableAttributes' | 'hasVariants' | 'id' | 'isDigital' | 'isShippingRequired' | 'kind' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productAttributes' | 'products' | 'slug' | 'taxClass' | 'taxType' | 'variantAttributes' | 'weight' | ProductTypeKeySpecifier)[];
 export type ProductTypeFieldPolicy = {
@@ -4774,12 +4789,13 @@ export type ProductVariantStocksUpdateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	productVariant?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductVariantTranslatableContentKeySpecifier = ('attributeValues' | 'id' | 'name' | 'productVariant' | 'translation' | ProductVariantTranslatableContentKeySpecifier)[];
+export type ProductVariantTranslatableContentKeySpecifier = ('attributeValues' | 'id' | 'name' | 'productVariant' | 'productVariantId' | 'translation' | ProductVariantTranslatableContentKeySpecifier)[];
 export type ProductVariantTranslatableContentFieldPolicy = {
 	attributeValues?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	productVariant?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariantId?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductVariantTranslateKeySpecifier = ('errors' | 'productVariant' | 'translationErrors' | ProductVariantTranslateKeySpecifier)[];
@@ -4788,11 +4804,12 @@ export type ProductVariantTranslateFieldPolicy = {
 	productVariant?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductVariantTranslationKeySpecifier = ('id' | 'language' | 'name' | ProductVariantTranslationKeySpecifier)[];
+export type ProductVariantTranslationKeySpecifier = ('id' | 'language' | 'name' | 'translatableContent' | ProductVariantTranslationKeySpecifier)[];
 export type ProductVariantTranslationFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductVariantUpdateKeySpecifier = ('errors' | 'productErrors' | 'productVariant' | ProductVariantUpdateKeySpecifier)[];
 export type ProductVariantUpdateFieldPolicy = {
@@ -4995,11 +5012,12 @@ export type PromotionRuleEventInterfaceKeySpecifier = ('ruleId' | PromotionRuleE
 export type PromotionRuleEventInterfaceFieldPolicy = {
 	ruleId?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionRuleTranslatableContentKeySpecifier = ('description' | 'id' | 'name' | 'translation' | PromotionRuleTranslatableContentKeySpecifier)[];
+export type PromotionRuleTranslatableContentKeySpecifier = ('description' | 'id' | 'name' | 'promotionRuleId' | 'translation' | PromotionRuleTranslatableContentKeySpecifier)[];
 export type PromotionRuleTranslatableContentFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	promotionRuleId?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionRuleTranslateKeySpecifier = ('errors' | 'promotionRule' | PromotionRuleTranslateKeySpecifier)[];
@@ -5007,12 +5025,13 @@ export type PromotionRuleTranslateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	promotionRule?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionRuleTranslationKeySpecifier = ('description' | 'id' | 'language' | 'name' | PromotionRuleTranslationKeySpecifier)[];
+export type PromotionRuleTranslationKeySpecifier = ('description' | 'id' | 'language' | 'name' | 'translatableContent' | PromotionRuleTranslationKeySpecifier)[];
 export type PromotionRuleTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionRuleUpdateKeySpecifier = ('errors' | 'promotionRule' | PromotionRuleUpdateKeySpecifier)[];
 export type PromotionRuleUpdateFieldPolicy = {
@@ -5059,11 +5078,12 @@ export type PromotionStartedEventFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionTranslatableContentKeySpecifier = ('description' | 'id' | 'name' | 'translation' | PromotionTranslatableContentKeySpecifier)[];
+export type PromotionTranslatableContentKeySpecifier = ('description' | 'id' | 'name' | 'promotionId' | 'translation' | PromotionTranslatableContentKeySpecifier)[];
 export type PromotionTranslatableContentFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	promotionId?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionTranslateKeySpecifier = ('errors' | 'promotion' | PromotionTranslateKeySpecifier)[];
@@ -5071,12 +5091,13 @@ export type PromotionTranslateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	promotion?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionTranslationKeySpecifier = ('description' | 'id' | 'language' | 'name' | PromotionTranslationKeySpecifier)[];
+export type PromotionTranslationKeySpecifier = ('description' | 'id' | 'language' | 'name' | 'translatableContent' | PromotionTranslationKeySpecifier)[];
 export type PromotionTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionUpdateKeySpecifier = ('errors' | 'promotion' | PromotionUpdateKeySpecifier)[];
 export type PromotionUpdateFieldPolicy = {
@@ -5319,11 +5340,12 @@ export type SaleToggleFieldPolicy = {
 	sale?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SaleTranslatableContentKeySpecifier = ('id' | 'name' | 'sale' | 'translation' | SaleTranslatableContentKeySpecifier)[];
+export type SaleTranslatableContentKeySpecifier = ('id' | 'name' | 'sale' | 'saleId' | 'translation' | SaleTranslatableContentKeySpecifier)[];
 export type SaleTranslatableContentFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	sale?: FieldPolicy<any> | FieldReadFunction<any>,
+	saleId?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type SaleTranslateKeySpecifier = ('errors' | 'sale' | 'translationErrors' | SaleTranslateKeySpecifier)[];
@@ -5332,11 +5354,12 @@ export type SaleTranslateFieldPolicy = {
 	sale?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SaleTranslationKeySpecifier = ('id' | 'language' | 'name' | SaleTranslationKeySpecifier)[];
+export type SaleTranslationKeySpecifier = ('id' | 'language' | 'name' | 'translatableContent' | SaleTranslationKeySpecifier)[];
 export type SaleTranslationFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type SaleUpdateKeySpecifier = ('discountErrors' | 'errors' | 'sale' | SaleUpdateKeySpecifier)[];
 export type SaleUpdateFieldPolicy = {
@@ -5437,20 +5460,22 @@ export type ShippingMethodPostalCodeRuleFieldPolicy = {
 	inclusionType?: FieldPolicy<any> | FieldReadFunction<any>,
 	start?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ShippingMethodTranslatableContentKeySpecifier = ('description' | 'id' | 'name' | 'shippingMethod' | 'translation' | ShippingMethodTranslatableContentKeySpecifier)[];
+export type ShippingMethodTranslatableContentKeySpecifier = ('description' | 'id' | 'name' | 'shippingMethod' | 'shippingMethodId' | 'translation' | ShippingMethodTranslatableContentKeySpecifier)[];
 export type ShippingMethodTranslatableContentFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>,
+	shippingMethodId?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ShippingMethodTranslationKeySpecifier = ('description' | 'id' | 'language' | 'name' | ShippingMethodTranslationKeySpecifier)[];
+export type ShippingMethodTranslationKeySpecifier = ('description' | 'id' | 'language' | 'name' | 'translatableContent' | ShippingMethodTranslationKeySpecifier)[];
 export type ShippingMethodTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ShippingMethodTypeKeySpecifier = ('channelListings' | 'description' | 'excludedProducts' | 'id' | 'maximumDeliveryDays' | 'maximumOrderPrice' | 'maximumOrderWeight' | 'metadata' | 'metafield' | 'metafields' | 'minimumDeliveryDays' | 'minimumOrderPrice' | 'minimumOrderWeight' | 'name' | 'postalCodeRules' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'taxClass' | 'translation' | 'type' | ShippingMethodTypeKeySpecifier)[];
 export type ShippingMethodTypeFieldPolicy = {
@@ -6663,12 +6688,13 @@ export type VoucherRemoveCataloguesFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	voucher?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type VoucherTranslatableContentKeySpecifier = ('id' | 'name' | 'translation' | 'voucher' | VoucherTranslatableContentKeySpecifier)[];
+export type VoucherTranslatableContentKeySpecifier = ('id' | 'name' | 'translation' | 'voucher' | 'voucherId' | VoucherTranslatableContentKeySpecifier)[];
 export type VoucherTranslatableContentFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>,
-	voucher?: FieldPolicy<any> | FieldReadFunction<any>
+	voucher?: FieldPolicy<any> | FieldReadFunction<any>,
+	voucherId?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type VoucherTranslateKeySpecifier = ('errors' | 'translationErrors' | 'voucher' | VoucherTranslateKeySpecifier)[];
 export type VoucherTranslateFieldPolicy = {
@@ -6676,11 +6702,12 @@ export type VoucherTranslateFieldPolicy = {
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	voucher?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type VoucherTranslationKeySpecifier = ('id' | 'language' | 'name' | VoucherTranslationKeySpecifier)[];
+export type VoucherTranslationKeySpecifier = ('id' | 'language' | 'name' | 'translatableContent' | VoucherTranslationKeySpecifier)[];
 export type VoucherTranslationFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type VoucherUpdateKeySpecifier = ('discountErrors' | 'errors' | 'voucher' | VoucherUpdateKeySpecifier)[];
 export type VoucherUpdateFieldPolicy = {

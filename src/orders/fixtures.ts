@@ -1025,6 +1025,7 @@ export const order = (
         __typename: "App",
         name: "Testapp",
         appUrl: "https://www.google.com/",
+        brand: null,
       },
       user: {
         __typename: "User",
@@ -1032,6 +1033,7 @@ export const order = (
         firstName: "John",
         id: "QWRkcmVzczoxNQ==",
         lastName: "Doe",
+        avatar: null,
       },
     },
     {
@@ -1080,6 +1082,7 @@ export const order = (
         __typename: "App",
         name: "Testapp",
         appUrl: "https://www.google.com/",
+        brand: null,
       },
       user: {
         __typename: "User",
@@ -1087,6 +1090,7 @@ export const order = (
         firstName: "Jane",
         id: "QWRkcmVzczoxNQ==",
         lastName: "Doe",
+        avatar: null,
       },
     },
     {

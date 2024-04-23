@@ -1276,10 +1276,18 @@ export const GiftCardEventFragmentDoc = gql`
   user {
     ...UserBase
     email
+    avatar(size: 128) {
+      url
+    }
   }
   app {
     id
     name
+    brand {
+      logo {
+        default(size: 128)
+      }
+    }
   }
   message
   email
@@ -1652,11 +1660,19 @@ export const OrderEventFragmentDoc = gql`
     email
     firstName
     lastName
+    avatar(size: 128) {
+      url
+    }
   }
   app {
     id
     name
     appUrl
+    brand {
+      logo {
+        default(size: 128)
+      }
+    }
   }
   lines {
     quantity
