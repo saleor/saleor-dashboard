@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { GiftCardEventFragment, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Card, CardContent, Typography } from "@material-ui/core";
@@ -55,12 +54,12 @@ interface TimelineNoteProps {
 }
 
 interface NoteMessageProps {
-  message: string;
+  message: string | null;
 }
 
 const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
   <>
-    {message.split("\n").map(string => {
+    {message?.split("\n").map(string => {
       if (string === "") {
         return <br key={`break-${string}`} />;
       }
@@ -92,8 +91,8 @@ const TimelineAvatar = ({
   if (app) {
     return (
       <UserAvatar
-        initials={app.name.slice(0, 2)}
-        url={app?.brand?.logo?.default}
+        initials={app.name?.slice(0, 2)}
+        url={app.brand?.logo?.default}
         className={className}
       />
     );
@@ -111,7 +110,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
 }) => {
   const classes = useStyles();
 
-  const userDisplayName = getUserName(user, true) ?? app.name;
+  const userDisplayName = getUserName(user, true) ?? app?.name;
 
   return (
     <div className={classes.root}>
