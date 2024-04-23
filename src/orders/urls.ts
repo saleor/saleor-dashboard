@@ -195,6 +195,25 @@ export const orderGiftCardBoughtPath = () =>
     giftCard: [OrderFilterGiftCard.paid],
   });
 
+export const orderTransactionRefundPath = (id: string) =>
+  urlJoin(orderPath(id), "refund");
+
+export const orderTransactionRefundUrl = (id: string) =>
+  orderTransactionRefundPath(encodeURIComponent(id));
+
+export const orderTransactionRefundEditPath = (
+  orderId: string,
+  refundId: string,
+) => urlJoin(orderTransactionRefundPath(orderId), refundId);
+
+export const orderTransactionRefundEditUrl = (
+  orderId: string,
+  refundId: string,
+) =>
+  orderTransactionRefundEditPath(
+    encodeURIComponent(orderId),
+    encodeURIComponent(refundId),
+  );
 export const orderManualTransationRefundPath = (id: string) =>
   urlJoin(orderPath(id), "manual-refund");
 

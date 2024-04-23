@@ -16,6 +16,7 @@ export interface NumberCellProps {
   readonly options?: {
     format?: "number" | "percent";
     hasFloatingPoint?: boolean;
+    cursor?: "pointer" | "default";
   };
 }
 

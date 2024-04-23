@@ -4,9 +4,16 @@ import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColum
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
+import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { ListViews } from "@dashboard/types";
-import { Box, Button, EditIcon, PlusIcon, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  Button,
+  EditIcon,
+  PlusIcon,
+  Text,
+  Tooltip,
+} from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -17,16 +24,18 @@ import {
   useOrderRefundStaticColumns,
 } from "./datagrid";
 import { refundGridMessages } from "./messages";
+import { manualRefundsExtractor, mergeRefunds } from "./refunds";
+import { getNotEditabledRefundMessage, isRefundEditable } from "./utils";
 
 interface OrderRefundDatagridProps {
-  grantedRefunds: OrderDetailsFragment["grantedRefunds"];
   orderId: string;
+  order: OrderDetailsFragment;
   onRefundAdd: () => void;
 }
 
 export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
-  grantedRefunds,
   orderId,
+  order,
   onRefundAdd,
 }) => {
   const intl = useIntl();
@@ -47,28 +56,49 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
     onSave: handleColumnChange,
   });
 
+  const mergedRefunds = mergeRefunds(
+    order?.grantedRefunds,
+    manualRefundsExtractor(order, intl),
+  );
+
   const getCellContent = createGetCellContent({
     columns: visibleColumns,
-    refunds: grantedRefunds,
+    refunds: mergedRefunds,
     currentTheme,
+    intl,
   });
 
-  const getMenuItems = React.useCallback(
-    index => [
+  const getMenuItems = React.useCallback(index => {
+    const refund = (mergedRefunds ?? [])[index];
+    const isEditable = isRefundEditable(refund);
+
+    return [
       {
         label: "",
-        Icon: (
+        Icon: isEditable ? (
           <Link
-            to={orderGrantRefundEditUrl(orderId, grantedRefunds[index]?.id)}
+            to={orderTransactionRefundEditUrl(
+              orderId,
+              (mergedRefunds ?? [])[index]?.id,
+            )}
           >
             <EditIcon />
           </Link>
+        ) : (
+          <Tooltip>
+            <Tooltip.Trigger>
+              <EditIcon color="defaultDisabled" />
+            </Tooltip.Trigger>
+            <Tooltip.Content>
+              <Tooltip.Arrow />
+              <FormattedMessage {...getNotEditabledRefundMessage(refund)} />
+            </Tooltip.Content>
+          </Tooltip>
         ),
         onSelect: () => false,
       },
-    ],
-    [],
-  );
+    ];
+  }, []);
 
   return (
     <DashboardCard>
@@ -99,7 +129,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
           emptyText={intl.formatMessage(refundGridMessages.noRefunds)}
           getCellContent={getCellContent}
           getCellError={() => false}
-          rows={grantedRefunds.length}
+          rows={mergedRefunds?.length ?? 0}
           selectionActions={() => null}
           onColumnResize={handlers.onResize}
           onColumnMoved={handlers.onMove}

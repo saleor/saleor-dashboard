@@ -22,6 +22,7 @@ import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFul
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
 import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog";
+import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
@@ -51,8 +52,10 @@ import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import {
   orderFulfillUrl,
+  orderManualTransationRefundUrl,
   orderPaymentRefundUrl,
   orderReturnUrl,
+  orderTransactionRefundUrl,
   orderUrl,
   OrderUrlQueryParams,
 } from "../../../urls";
@@ -493,6 +496,13 @@ export const OrderUnconfirmedDetails: React.FC<
         onConfirm={handleCustomerChangeAddresses}
         confirmButtonState={orderUpdate.opts.status}
         errors={orderUpdate.opts.data?.orderUpdate.errors}
+      />
+
+      <OrderRefundDialog
+        open={params.action === "add-refund"}
+        onClose={closeModal}
+        onStandardRefund={() => navigate(orderTransactionRefundUrl(id))}
+        onManualRefund={() => navigate(orderManualTransationRefundUrl(id))}
       />
     </>
   );

@@ -64,7 +64,7 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
           <>
             <OrderRefundDatagrid
               orderId={order?.id}
-              grantedRefunds={order?.grantedRefunds}
+              order={order}
               onRefundAdd={onRefundAdd}
             />
             <CardSpacer />

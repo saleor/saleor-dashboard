@@ -3339,7 +3339,7 @@ export type OrderGrantRefundUpdateLineErrorFieldPolicy = {
 	lineId?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type OrderGrantedRefundKeySpecifier = ('amount' | 'app' | 'createdAt' | 'id' | 'lines' | 'reason' | 'shippingCostsIncluded' | 'updatedAt' | 'user' | OrderGrantedRefundKeySpecifier)[];
+export type OrderGrantedRefundKeySpecifier = ('amount' | 'app' | 'createdAt' | 'id' | 'lines' | 'reason' | 'shippingCostsIncluded' | 'status' | 'transaction' | 'transactionEvents' | 'updatedAt' | 'user' | OrderGrantedRefundKeySpecifier)[];
 export type OrderGrantedRefundFieldPolicy = {
 	amount?: FieldPolicy<any> | FieldReadFunction<any>,
 	app?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3348,6 +3348,9 @@ export type OrderGrantedRefundFieldPolicy = {
 	lines?: FieldPolicy<any> | FieldReadFunction<any>,
 	reason?: FieldPolicy<any> | FieldReadFunction<any>,
 	shippingCostsIncluded?: FieldPolicy<any> | FieldReadFunction<any>,
+	status?: FieldPolicy<any> | FieldReadFunction<any>,
+	transaction?: FieldPolicy<any> | FieldReadFunction<any>,
+	transactionEvents?: FieldPolicy<any> | FieldReadFunction<any>,
 	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>
 };

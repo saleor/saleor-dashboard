@@ -407,7 +407,9 @@ input AccountRegisterInput {
   """Password."""
   password: String!
 
-  """Base of frontend URL that will be needed to create confirmation URL."""
+  """
+  Base of frontend URL that will be needed to create confirmation URL. Required when account confirmation is enabled.
+  """
   redirectUrl: String
 }
 
@@ -5001,7 +5003,7 @@ type CheckoutCustomerDetach {
 }
 
 """
-Updates the delivery method (shipping method or pick up point) of the checkout.
+Updates the delivery method (shipping method or pick up point) of the checkout. Updates the checkout shipping_address for click and collect delivery for a warehouse address. 
 
 Added in Saleor 3.1.
 
@@ -5074,6 +5076,7 @@ enum CheckoutErrorCode {
   QUANTITY_GREATER_THAN_LIMIT
   REQUIRED
   SHIPPING_ADDRESS_NOT_SET
+  SHIPPING_CHANGE_FORBIDDEN
   SHIPPING_METHOD_NOT_APPLICABLE
   SHIPPING_METHOD_NOT_SET
   SHIPPING_NOT_REQUIRED
@@ -12679,7 +12682,7 @@ type Mutation {
   ): CheckoutCustomerDetach
 
   """
-  Updates the delivery method (shipping method or pick up point) of the checkout.
+  Updates the delivery method (shipping method or pick up point) of the checkout. Updates the checkout shipping_address for click and collect delivery for a warehouse address. 
   
   Added in Saleor 3.1.
   
@@ -16410,13 +16413,13 @@ type Mutation {
     """The ID of the granted refund."""
     grantedRefundId: ID!
 
-    """The ID of the transaction. One of field id or token is required."""
+    """
+    The ID of the transaction. One of field id or token is required, if `transactionItem` is not already assigned to the `orderGrantedRefund`. If `transactionItem` is already assigned to the grantedRefund the field will be ignored.
+    """
     id: ID
 
     """
-    The token of the transaction. One of field id or token is required.
-    
-    Added in Saleor 3.14.
+    The token of the transaction. One of field id or token is required, if `transactionItem` is not already assigned to the `orderGrantedRefund`. If `transactionItem` is already assigned to the grantedRefund the field will be ignored.
     """
     token: UUID
   ): TransactionRequestRefundForGrantedRefund
@@ -18467,6 +18470,7 @@ type OrderGrantRefundCreateError {
 
 """An enumeration."""
 enum OrderGrantRefundCreateErrorCode {
+  AMOUNT_GREATER_THAN_AVAILABLE
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
@@ -18500,6 +18504,15 @@ input OrderGrantRefundCreateInput {
 
   """Reason of the granted refund."""
   reason: String
+
+  """
+  The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from Saleor 3.21.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  transactionId: ID
 }
 
 type OrderGrantRefundCreateLineError {
@@ -18588,6 +18601,7 @@ type OrderGrantRefundUpdateError {
 
 """An enumeration."""
 enum OrderGrantRefundUpdateErrorCode {
+  AMOUNT_GREATER_THAN_AVAILABLE
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
@@ -18630,6 +18644,15 @@ input OrderGrantRefundUpdateInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   removeLines: [ID!]
+
+  """
+  The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from Saleor 3.21.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  transactionId: ID
 }
 
 input OrderGrantRefundUpdateLineAddInput {
@@ -18705,6 +18728,27 @@ type OrderGrantedRefund {
   """
   shippingCostsIncluded: Boolean!
 
+  """
+  Status of the granted refund calculated based on transactionItem assigned to granted refund.
+  
+  Added in Saleor 3.20.
+  """
+  status: OrderGrantedRefundStatusEnum!
+
+  """
+  The transaction assigned to the granted refund.
+  
+  Added in Saleor 3.20.
+  """
+  transaction: TransactionItem
+
+  """
+  List of refund events associated with the granted refund.
+  
+  Added in Saleor 3.20.
+  """
+  transactionEvents: [TransactionEvent!]
+
   """Time of last update."""
   updatedAt: DateTime!
 
@@ -18732,6 +18776,22 @@ type OrderGrantedRefundLine {
 
   """Reason for refunding the line."""
   reason: String
+}
+
+"""
+Represents the status of a granted refund.
+
+    NONE - the refund on related transactionItem is not processed
+    PENDING - the refund on related transactionItem is pending
+    FULL - the refund on related transactionItem is fully processed
+    FAIL - the refund on related transactionItem failed
+    
+"""
+enum OrderGrantedRefundStatusEnum {
+  FAILURE
+  NONE
+  PENDING
+  SUCCESS
 }
 
 """Represents order line of particular order."""
@@ -31225,7 +31285,7 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   privateMetafields(keys: [String!]): Metadata
 
   """
-  The tax app id that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+  The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
   
   Added in Saleor 3.19.
   """
@@ -31278,7 +31338,7 @@ type TaxConfigurationPerCountry {
   displayGrossPrices: Boolean!
 
   """
-  The tax app id that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
+  The tax app `App.identifier` that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
   
   Added in Saleor 3.19.
   """
@@ -31303,7 +31363,7 @@ input TaxConfigurationPerCountryInput {
   displayGrossPrices: Boolean!
 
   """
-  The tax app identifier that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
+  The tax app `App.identifier` that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
   
   Added in Saleor 3.19.
   """
@@ -31365,7 +31425,7 @@ input TaxConfigurationUpdateInput {
   removeCountriesConfiguration: [CountryCode!]
 
   """
-  The tax app id that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+  The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. It's possible to set plugin by using prefix `plugin:` with `PLUGIN_ID` e.g. with Avalara `plugin:mirumee.taxes.avalara`.Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
   
   Added in Saleor 3.19.
   """
@@ -32569,10 +32629,13 @@ type TransactionRequestRefundForGrantedRefundError {
 
 """An enumeration."""
 enum TransactionRequestRefundForGrantedRefundErrorCode {
+  AMOUNT_GREATER_THAN_AVAILABLE
   GRAPHQL_ERROR
   INVALID
   MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK
   NOT_FOUND
+  REFUND_ALREADY_PROCESSED
+  REFUND_IS_PENDING
 }
 
 """
@@ -33187,6 +33250,10 @@ input UserCreateInput {
   User account is confirmed.
   
   Added in Saleor 3.15.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.
+  
+  The user will be always set as unconfirmed. The confirmation will take place when the user sets the password.
   """
   isConfirmed: Boolean
 

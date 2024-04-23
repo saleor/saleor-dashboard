@@ -8,13 +8,13 @@ import {
 import { IMoney } from "@dashboard/utils/intl";
 import compact from "lodash/compact";
 
-export const obtainUsedGifrcard = (order?: OrderDetailsFragment) => {
+export const obtainUsedGifrcards = (order?: OrderDetailsFragment) => {
   if (!order) return null;
 
   const { giftCards } = order;
 
   if (giftCards.length > 0) {
-    return giftCards[0];
+    return giftCards;
   }
 
   return null;
