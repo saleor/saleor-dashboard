@@ -51,7 +51,7 @@ runs:
         payload=$(\
         jq --null-input \
         --arg name "$NAME" \
-        --argjson head_sha "$PULL_REQUEST_HEAD_SHA" \
+        --arg head_sha "$PULL_REQUEST_HEAD_SHA" \
         --arg status "$STATUS" \
         --arg title "$TITLE" \
         --arg details_url "$DETAILS_URL" \
