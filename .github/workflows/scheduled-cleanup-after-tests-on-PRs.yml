@@ -1,4 +1,4 @@
-name: Run test manually
+name: Scheduled cleanup of environments
 
 on: [pull_request]
 
@@ -6,6 +6,10 @@ jobs:
   cleanup-after-PR-testing:
     runs-on: ubuntu-22.04
     steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: ./.github
+
     - name: Saleor login
       uses: ./.github/actions/cli-login
       with:
