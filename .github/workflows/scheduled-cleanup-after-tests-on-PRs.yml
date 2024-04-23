@@ -17,6 +17,8 @@ jobs:
 
     - name: Get open PRs and environments
       id: get-prs-and-envs
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         OPEN_PRS=$((gh pr list --json headRefName,number --jq '.[] | ["pr-"+.headRefName , "pr-"+ (.number|tostring)]') | jq -s 'add')
         ENVIRONMENTS_FOR_PR_TESTING=$(npx saleor environment list --json | jq 'map(select(.project.slug == "project-for-pr-testing") | {"key": .key, "name": .name})')
