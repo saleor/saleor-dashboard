@@ -7,21 +7,24 @@ import { FormattedMessage } from "react-intl";
 import { messages } from "./messages";
 
 interface MarkAsPaidProps {
-  isDiabled: boolean;
+  hasError: boolean;
   isChecked: boolean;
   onCheckedChange: () => void;
+  disabled?: boolean;
 }
 
 export const MarkAsPaid = ({
-  isDiabled,
+  hasError,
   isChecked,
   onCheckedChange,
+  disabled,
 }: MarkAsPaidProps) => (
   <Box paddingX={6} marginTop={4}>
     <Checkbox
       data-test-id="order-settings-mark-as-paid"
-      disabled={isDiabled}
+      error={hasError}
       checked={isChecked}
+      disabled={disabled}
       onCheckedChange={onCheckedChange}
       name="markAsPaidStrategy"
     >
