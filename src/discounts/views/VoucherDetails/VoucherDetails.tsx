@@ -532,6 +532,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             },
           })
         }
+        selectedChannels={currentChannels}
         products={getFilteredProducts(data, searchProductsOpts)}
       />
       <ActionDialog

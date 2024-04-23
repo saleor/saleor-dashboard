@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { ChannelVoucherData } from "@dashboard/channels/utils";
 import {
   ConfirmButton,
   ConfirmButtonTransitionState,
@@ -31,6 +32,7 @@ import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
+import { isProductChannelInSelectedChannels } from "./utils";
 
 export interface AssignProductDialogFormData {
   products: RelayToFlat<SearchProductsQuery["search"]>;
@@ -40,6 +42,7 @@ export interface AssignProductDialogFormData {
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;
+  selectedChannels: ChannelVoucherData[];
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
@@ -51,6 +54,7 @@ const scrollableTargetId = "assignProductScrollableDialog";
 const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   const {
     confirmButtonState,
+    selectedChannels,
     hasMore,
     open,
     loading,
@@ -172,6 +176,14 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                       />
                       <TableCell className={classes.colName}>
                         {product.name}
+                      </TableCell>
+                      <TableCell>
+                        {isProductChannelInSelectedChannels(
+                          product.channelListings,
+                          selectedChannels,
+                        )
+                          ? "Included"
+                          : "Not included"}
                       </TableCell>
                       <TableCell
                         padding="checkbox"
