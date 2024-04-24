@@ -4,7 +4,7 @@ import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Routes } from "react-router-dom";
 
 import {
   CustomAppDetailsUrlQueryParams,
@@ -91,21 +91,15 @@ const Component = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.webhooksAndEvents)} />
-      <Switch>
+      <Routes>
+        <Route path={CustomAppPaths.appListPath} element={CustomAppList} />
         <Route
-          exact
-          path={CustomAppPaths.appListPath}
-          component={CustomAppList}
-        />
-        <Route
-          exact
           path={CustomAppPaths.appAddPath}
-          render={() => <CustomAppCreateView setToken={setToken} />}
+          element={() => <CustomAppCreateView setToken={setToken} />}
         />
         <Route
-          exact
           path={CustomAppPaths.resolveAppPath(":id")}
-          render={props => (
+          element={props => (
             <CustomAppDetails
               {...props}
               token={token}
@@ -114,16 +108,14 @@ const Component = () => {
           )}
         />
         <Route
-          exact
           path={CustomAppPaths.resolveWebhookAddPath(":appId")}
-          component={CustomAppWebhookCreate}
+          element={CustomAppWebhookCreate}
         />
         <Route
-          exact
           path={CustomAppPaths.resolveWebhookPath(":appId", ":id")}
-          component={CustomAppWebhookDetails}
+          element={CustomAppWebhookDetails}
         />
-      </Switch>
+      </Routes>
     </>
   );
 };

@@ -6,7 +6,7 @@ import { getArrayQueryParam } from "@dashboard/utils/urls";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Routes } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -140,24 +140,23 @@ const Component = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.products)} />
-      <Switch>
-        <Route exact path={productListPath} component={ProductList} />
-        <Route exact path={productAddPath} component={ProductCreate} />
+      <Routes>
+        <Route path={productListPath} element={ProductList} />
+        <Route path={productAddPath} element={ProductCreate} />
         <Route
-          exact
           path={productVariantAddPath(":id")}
-          component={ProductVariantCreate}
+          element={ProductVariantCreate}
         />
         <Route
           path={productVariantEditPath(":productId", ":variantId")}
-          component={ProductVariant}
+          element={ProductVariant}
         />
         <Route
           path={productImagePath(":productId", ":imageId")}
-          component={ProductImage}
+          element={ProductImage}
         />
-        <Route path={productPath(":id")} component={ProductUpdate} />
-      </Switch>
+        <Route path={productPath(":id")} element={ProductUpdate} />
+      </Routes>
     </>
   );
 };

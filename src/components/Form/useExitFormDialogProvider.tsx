@@ -1,8 +1,7 @@
 // @ts-strict-ignore
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router";
-import useRouter from "use-react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import { ExitFormDialogData, FormData, FormsData } from "./types";
 
@@ -17,8 +16,8 @@ const defaultValues = {
 };
 
 export function useExitFormDialogProvider() {
-  const history = useHistory();
-  const { history: routerHistory } = useRouter();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
   const isSubmitDisabled = useRef(false);
@@ -30,9 +29,9 @@ export function useExitFormDialogProvider() {
   const isSubmitting = useRef(defaultValues.isSubmitting);
   const formsData = useRef<FormsData>({});
   const blockNav = useRef(defaultValues.blockNav);
-  const navAction = useRef<typeof history.location>(defaultValues.navAction);
+  const navAction = useRef<typeof location>(defaultValues.navAction);
   const enableExitDialog = useRef(defaultValues.enableExitDialog);
-  const currentLocation = useRef(history.location);
+  const currentLocation = useRef(location);
 
   const setIsSubmitting = (value: boolean) => {
     setEnableExitDialog(!value);
@@ -52,7 +51,7 @@ export function useExitFormDialogProvider() {
     formsData.current = defaultValues.formsData;
   };
 
-  const setCurrentLocation = (newLocation: typeof history.location) => {
+  const setCurrentLocation = (newLocation: typeof location) => {
     currentLocation.current = newLocation;
   };
 
@@ -117,7 +116,7 @@ export function useExitFormDialogProvider() {
     return blockNav.current;
   };
 
-  const isOnlyQuerying = (transition: typeof history.location) =>
+  const isOnlyQuerying = (transition: typeof location) =>
     // We need to compare to current path and not window location
     // so it works with browser back button as well
     transition.pathname === currentLocation.current.pathname;
@@ -125,27 +124,29 @@ export function useExitFormDialogProvider() {
   const handleNavigationBlock = () => {
     // This callback blocks only navigation between internal dashboard pages
     // https://github.com/remix-run/history/blob/main/docs/blocking-transitions.md#caveats
-    const unblock = history.block(transition => {
-      // needs to be done before the shouldBlockNav condition
-      // so it doesn't trigger setting default values
-      if (isOnlyQuerying(transition)) {
-        // transition type requires this function to return either
-        // false | void | string where string opens up the browser prompt
-        // hence we return null
-        return null;
-      }
-      if (shouldBlockNav()) {
-        navAction.current = transition;
-        setShowDialog(true);
-        return false;
-      }
 
-      setStateDefaultValues();
-      setCurrentLocation(transition);
-      return null;
-    });
+    // TODO: `usePrompt` - https://gist.github.com/rmorse/426ffcc579922a82749934826fa9f743
+    // const unblock = navigate.block(transition => {
+    //   // needs to be done before the shouldBlockNav condition
+    //   // so it doesn't trigger setting default values
+    //   if (isOnlyQuerying(transition)) {
+    //     // transition type requires this function to return either
+    //     // false | void | string where string opens up the browser prompt
+    //     // hence we return null
+    //     return null;
+    //   }
+    //   if (shouldBlockNav()) {
+    //     navAction.current = transition;
+    //     setShowDialog(true);
+    //     return false;
+    //   }
 
-    return unblock;
+    //   setStateDefaultValues();
+    //   setCurrentLocation(transition);
+    //   return null;
+    // });
+
+    return () => undefined;
   };
 
   useEffect(handleNavigationBlock, []);
@@ -158,7 +159,7 @@ export function useExitFormDialogProvider() {
     // because our useNavigator navigate action may be blocked
     // by exit dialog we want to avoid using it doing this transition
     if (navAction.current !== null) {
-      routerHistory.push(navAction.current.pathname + navAction.current.search);
+      navigate(navAction.current.pathname + navAction.current.search);
     }
     setStateDefaultValues();
   };

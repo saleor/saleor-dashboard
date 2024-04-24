@@ -3,7 +3,7 @@ import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Routes } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -43,11 +43,11 @@ export const ChannelsSection: React.FC<{}> = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.channels)} />
-      <Switch>
-        <Route exact path={channelsListPath} component={ChannelsList} />
-        <Route exact path={channelAddPath} component={ChannelCreateComponent} />
-        <Route exact path={channelPath(":id")} component={ChannelDetails} />
-      </Switch>
+      <Routes>
+        <Route path={channelsListPath} element={ChannelsList} />
+        <Route path={channelAddPath} element={ChannelCreateComponent} />
+        <Route path={channelPath(":id")} element={ChannelDetails} />
+      </Routes>
     </>
   );
 };

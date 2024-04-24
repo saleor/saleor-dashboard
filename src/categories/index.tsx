@@ -3,12 +3,16 @@ import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import {
+  Route,
+  RouteComponentProps,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   categoryAddPath,
-  categoryListPath,
   CategoryListUrlQueryParams,
   CategoryListUrlSortField,
   categoryPath,
@@ -46,7 +50,8 @@ const CategoryCreate: React.FC<
   />
 );
 
-const CategoryList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const CategoryList: React.FC<RouteComponentProps<{}>> = () => {
+  const location = useLocation();
   const qs = parseQs(location.search.substr(1)) as any;
   const params: CategoryListUrlQueryParams = {
     ...asSortParams(qs, CategoryListUrlSortField),
@@ -61,12 +66,12 @@ const Component = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.categories)} />
-      <Switch>
-        <Route exact path={categoryListPath} component={CategoryList} />
-        <Route exact path={categoryAddPath()} component={CategoryCreate} />
-        <Route exact path={categoryAddPath(":id")} component={CategoryCreate} />
-        <Route path={categoryPath(":id")} component={CategoryDetails} />
-      </Switch>
+      <Routes>
+        <Route path="*" element={<CategoryList />} />
+        <Route path={categoryAddPath()} element={CategoryCreate} />
+        <Route path={categoryAddPath(":id")} element={CategoryCreate} />
+        <Route path={categoryPath(":id")} element={CategoryDetails} />
+      </Routes>
     </>
   );
 };

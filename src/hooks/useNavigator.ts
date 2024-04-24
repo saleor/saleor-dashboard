@@ -1,6 +1,6 @@
 import { ExitFormDialogContext } from "@dashboard/components/Form/ExitFormDialogProvider";
 import { useContext } from "react";
-import useRouter from "use-react-router";
+import { useLocation, useNavigate } from "react-router";
 
 export type UseNavigatorResult = (
   url: string,
@@ -11,10 +11,8 @@ export type UseNavigatorResult = (
   },
 ) => void;
 function useNavigator(): UseNavigatorResult {
-  const {
-    location: { search },
-    history,
-  } = useRouter();
+  const navigate = useNavigate();
+  const { search } = useLocation();
 
   const { shouldBlockNavigation } = useContext(ExitFormDialogContext);
 
@@ -29,9 +27,11 @@ function useNavigator(): UseNavigatorResult {
     const targetUrl = preserveQs ? url + search : url;
 
     if (replace) {
-      history.replace(targetUrl);
+      navigate(targetUrl, {
+        replace: true,
+      });
     } else {
-      history.push(targetUrl);
+      navigate(targetUrl);
     }
     if (resetScroll) {
       window.scrollTo({ behavior: "smooth", top: 0 });

@@ -1,6 +1,6 @@
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
-import useRouter from "use-react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import { InitialAPIState } from "../API";
 import { FilterContainer, FilterElement } from "../FilterElement";
@@ -27,7 +27,8 @@ export const useUrlValueProvider = (
   locationSearch: string,
   initialState?: InitialAPIState,
 ): FilterValueProvider => {
-  const router = useRouter();
+  const location = useLocation();
+  const navigate = useNavigate();
   const params = new URLSearchParams(locationSearch);
 
   const [value, setValue] = useState<FilterContainer>([]);
@@ -67,23 +68,33 @@ export const useUrlValueProvider = (
   }, [locationSearch]);
 
   const persist = (filterValue: FilterContainer) => {
-    router.history.replace({
-      pathname: router.location.pathname,
-      search: stringify({
-        ...prepareStructure(filterValue),
-        ...{ activeTab: activeTab || undefined },
-        ...{ query: query || undefined },
-        ...{ before: before || undefined },
-        ...{ after: after || undefined },
-      }),
-    });
+    navigate(
+      {
+        pathname: location.pathname,
+        search: stringify({
+          ...prepareStructure(filterValue),
+          ...{ activeTab: activeTab || undefined },
+          ...{ query: query || undefined },
+          ...{ before: before || undefined },
+          ...{ after: after || undefined },
+        }),
+      },
+      {
+        replace: true,
+      },
+    );
     setValue(filterValue);
   };
 
   const clear = () => {
-    router.history.replace({
-      pathname: router.location.pathname,
-    });
+    navigate(
+      {
+        pathname: location.pathname,
+      },
+      {
+        replace: true,
+      },
+    );
     setValue([]);
   };
 

@@ -4,7 +4,7 @@ import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Routes } from "react-router-dom";
 
 import GiftCardSettings from "./GiftCardSettings";
 import GiftCardListComponent from "./GiftCardsList";
@@ -14,7 +14,12 @@ import {
 } from "./GiftCardsList/types";
 import GiftCardUpdateComponent from "./GiftCardUpdate";
 import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
-import { giftCardPath, giftCardSettingsUrl, giftCardsListPath } from "./urls";
+import {
+  giftCardPath,
+  giftCardSettingsUrl,
+  giftCardsListPath,
+  giftCardsSectionUrlName,
+} from "./urls";
 
 const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
@@ -47,11 +52,11 @@ const Component: React.FC = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.giftCards)} />
-      <Switch>
-        <Route path={giftCardSettingsUrl} component={GiftCardSettings} />
-        <Route exact path={giftCardsListPath} component={GiftCardList} />
-        <Route path={giftCardPath(":id")} component={GiftCardUpdatePage} />
-      </Switch>
+      <Routes>
+        <Route path={giftCardSettingsUrl} element={GiftCardSettings} />
+        <Route path={"*"} element={<GiftCardList />} />
+        <Route path={giftCardPath(":id")} element={GiftCardUpdatePage} />
+      </Routes>
     </>
   );
 };

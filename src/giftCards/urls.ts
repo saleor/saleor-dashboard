@@ -4,7 +4,7 @@ import urlJoin from "url-join";
 import { GiftCardListUrlQueryParams } from "./GiftCardsList/types";
 import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
 
-export const giftCardsSectionUrlName = "/gift-cards";
+export const giftCardsSectionUrlName = "/gift-cards/*";
 
 export const giftCardsListPath = `${giftCardsSectionUrlName}/`;
 

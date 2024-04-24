@@ -3,7 +3,7 @@ import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Routes } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -59,11 +59,11 @@ const Component = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.content)} />
-      <Switch>
-        <Route exact path={pageListPath} component={PageList} />
-        <Route exact path={pageCreatePath} component={PageCreate} />
-        <Route path={pagePath(":id")} component={PageDetails} />
-      </Switch>
+      <Routes>
+        <Route path={"*"} Component={PageList} />
+        <Route path={pageCreatePath} element={PageCreate} />
+        <Route path={pagePath(":id")} element={PageDetails} />
+      </Routes>
     </>
   );
 };

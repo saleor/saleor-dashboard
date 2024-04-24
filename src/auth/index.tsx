@@ -1,6 +1,6 @@
 import { parse as parseQs } from "qs";
 import React, { useContext } from "react";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Routes } from "react-router-dom";
 
 import Layout from "./components/Layout";
 import { UserContext as Context } from "./types";
@@ -35,12 +35,12 @@ export const UserContext = React.createContext<Context>({
 
 const AuthRouter: React.FC = () => (
   <Layout>
-    <Switch>
-      <Route path={passwordResetSuccessPath} component={ResetPasswordSuccess} />
-      <Route path={passwordResetPath} component={ResetPassword} />
-      <Route path={newPasswordPath} component={NewPassword} />
-      <Route component={LoginView} />
-    </Switch>
+    <Routes>
+      <Route path={passwordResetSuccessPath} element={ResetPasswordSuccess} />
+      <Route path={passwordResetPath} element={ResetPassword} />
+      <Route path={newPasswordPath} element={NewPassword} />
+      <Route element={LoginView} />
+    </Routes>
   </Layout>
 );
 

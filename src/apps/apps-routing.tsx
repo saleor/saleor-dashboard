@@ -8,7 +8,7 @@ import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Routes } from "react-router-dom";
 import {
   AppInstallView,
   AppListView,
@@ -55,27 +55,26 @@ export const AppsSectionRoot = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.apps)} />
-      <Switch>
-        <Route exact path={AppPaths.appListPath} component={AppListRoute} />
+      <Routes>
+        <Route path={AppPaths.appListPath} element={AppListRoute} />
         <SectionRoute
           exact
           permissions={[PermissionEnum.MANAGE_APPS]}
           path={AppPaths.appInstallPath}
-          component={AppInstallRoute}
+          element={AppInstallRoute}
         />
         <Route
-          exact
           path={AppPaths.resolveAppDetailsPath(":id")}
-          component={AppManageRoute}
+          element={AppManageRoute}
         />
         <SectionRoute
           exact
           permissions={[PermissionEnum.MANAGE_APPS]}
           path={AppPaths.resolveRequestPermissionsPath(":id")}
-          component={AppPermissionRequestView}
+          element={AppPermissionRequestView}
         />
-        <Route path={AppPaths.resolveAppPath(":id")} component={AppViewRoute} />
-      </Switch>
+        <Route path={AppPaths.resolveAppPath(":id")} element={AppViewRoute} />
+      </Routes>
     </>
   );
 };

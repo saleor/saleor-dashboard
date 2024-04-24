@@ -4,7 +4,7 @@ import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Routes } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -236,28 +236,21 @@ const TranslationsRouter: React.FC = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.translations)} />
-      <Switch>
+      <Routes>
+        <Route path={languageListPath} element={TranslationsLanguageList} />
         <Route
-          exact
-          path={languageListPath}
-          component={TranslationsLanguageList}
-        />
-        <Route
-          exact
           path={languageEntitiesPath(":languageCode")}
-          component={TranslationsEntities}
+          element={TranslationsEntities}
         />
         <Route
-          exact
           path={languageEntityPath(
             ":languageCode",
             TranslatableEntities.products,
             ":id",
           )}
-          component={TranslationsProducts}
+          element={TranslationsProducts}
         />
         <Route
-          exact
           path={languageEntityPath(
             ":languageCode",
             TranslatableEntities.products,
@@ -265,81 +258,73 @@ const TranslationsRouter: React.FC = () => {
             TranslatableEntities.productVariants,
             ":id",
           )}
-          component={TranslationsProductVariants}
+          element={TranslationsProductVariants}
         />
         <Route
-          exact
           path={languageEntityPath(
             ":languageCode",
             TranslatableEntities.categories,
             ":id",
           )}
-          component={TranslationsCategories}
+          element={TranslationsCategories}
         />
         <Route
-          exact
           path={languageEntityPath(
             ":languageCode",
             TranslatableEntities.collections,
             ":id",
           )}
-          component={TranslationsCollections}
+          element={TranslationsCollections}
         />
         <Route
-          exact
           path={languageEntityPath(
             ":languageCode",
             TranslatableEntities.sales,
             ":id",
           )}
-          component={TranslationsSales}
+          element={TranslationsSales}
         />
         <Route
-          exact
           path={languageEntityPath(
             ":languageCode",
             TranslatableEntities.vouchers,
             ":id",
           )}
-          component={TranslationsVouchers}
+          element={TranslationsVouchers}
         />
         <Route
-          exact
           path={languageEntityPath(
             ":languageCode",
             TranslatableEntities.pages,
             ":id",
           )}
-          component={TranslationsPages}
+          element={TranslationsPages}
         />
         <Route
-          exact
           path={languageEntityPath(
             ":languageCode",
             TranslatableEntities.attributes,
             ":id",
           )}
-          component={TranslationsAttributes}
+          element={TranslationsAttributes}
         />
         <Route
-          exact
           path={languageEntityPath(
             ":languageCode",
             TranslatableEntities.shippingMethods,
             ":id",
           )}
-          component={TranslationsShippingMethod}
+          element={TranslationsShippingMethod}
         />
         <Route
-          exact
           path={languageEntityPath(
             ":languageCode",
             TranslatableEntities.menuItems,
             ":id",
           )}
-          component={TranslationsMenuItem}
+          element={TranslationsMenuItem}
         />
-      </Switch>
+      </Routes>
     </>
   );
 };

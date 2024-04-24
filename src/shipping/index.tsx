@@ -2,7 +2,7 @@ import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Routes } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -82,28 +82,16 @@ export const ShippingRouter: React.FC = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.shipping)} />
-      <Switch>
-        <Route
-          exact
-          path={shippingZonesListPath}
-          component={ShippingZonesList}
-        />
-        <Route
-          exact
-          path={shippingZoneAddPath}
-          component={ShippingZoneCreate}
-        />
-        <Route
-          exact
-          path={shippingZonePath(":id")}
-          component={ShippingZoneDetails}
-        />
-        <Route path={shippingRateCreatePath(":id")} component={RateCreate} />
+      <Routes>
+        <Route path={shippingZonesListPath} element={ShippingZonesList} />
+        <Route path={shippingZoneAddPath} element={ShippingZoneCreate} />
+        <Route path={shippingZonePath(":id")} element={ShippingZoneDetails} />
+        <Route path={shippingRateCreatePath(":id")} element={RateCreate} />
         <Route
           path={shippingRateEditPath(":id", ":rateId")}
-          component={RateUpdate}
+          element={RateUpdate}
         />
-      </Switch>
+      </Routes>
     </>
   );
 };

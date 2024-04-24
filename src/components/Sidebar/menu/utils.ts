@@ -50,10 +50,13 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
     return false;
   }
 
-  return !!matchPath(activeUrl, {
-    exact: menuItemUrl === "/",
-    path: menuItemUrl,
-  });
+  return !!matchPath(
+    {
+      // exact: menuItemUrl === "/",
+      path: menuItemUrl,
+    },
+    activeUrl,
+  );
 }
 
 const getPureUrl = (url: string) => {

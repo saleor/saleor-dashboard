@@ -3,7 +3,7 @@ import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Routes } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -63,11 +63,11 @@ export const ProductTypeRouter: React.FC = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.productTypes)} />
-      <Switch>
-        <Route exact path={productTypeListPath} component={ProductTypeList} />
-        <Route exact path={productTypeAddPath} component={ProductTypeCreate} />
-        <Route path={productTypePath(":id")} component={ProductTypeUpdate} />
-      </Switch>
+      <Routes>
+        <Route path={productTypeListPath} element={ProductTypeList} />
+        <Route path={productTypeAddPath} element={ProductTypeCreate} />
+        <Route path={productTypePath(":id")} element={ProductTypeUpdate} />
+      </Routes>
     </>
   );
 };
