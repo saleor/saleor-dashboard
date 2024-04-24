@@ -3978,6 +3978,9 @@
   "ORQvOg": {
     "string": "You don't have permission to perform this action"
   },
+  "OSnO9P": {
+    "string": "All transactions are non-refundable"
+  },
   "OTDo9I": {
     "context": "tab name",
     "string": "All staff members"
@@ -6058,6 +6061,9 @@
   "bqAJCT": {
     "context": "section header",
     "string": "Refund Order"
+  },
+  "brkxbY": {
+    "string": "There are no transactions to refund"
   },
   "bsP4f3": {
     "string": "No tokens found"
