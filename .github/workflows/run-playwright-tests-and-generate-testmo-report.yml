@@ -1,4 +1,4 @@
-name: Run test manually
+name: Run Playwright tests and generate Testmo report
 
 on: [workflow_dispatch]
 
