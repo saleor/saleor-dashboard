@@ -83,7 +83,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
             .slice()
             .reverse()
             .map(event => {
-              const { id, user, date, message, type } = event;
+              const { id, user, date, message, type, app } = event;
 
               if (isTimelineEventOfType("note", type)) {
                 return (
@@ -92,6 +92,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                     user={user}
                     message={message}
                     key={id}
+                    app={app}
                   />
                 );
               }
@@ -103,6 +104,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                     user={user}
                     message={message}
                     key={id}
+                    app={app}
                   />
                 );
               }
@@ -113,21 +115,25 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                     key={event.id}
                     event={event}
                     orderCurrency={orderCurrency}
-                    hasPlainDate={true}
+                    hasPlainDate={false}
                   />
                 );
               }
 
               if (isTimelineEventOfType("linked", type)) {
                 return (
-                  <LinkedTimelineEvent event={event} key={id} hasPlainDate />
+                  <LinkedTimelineEvent
+                    event={event}
+                    key={id}
+                    hasPlainDate={false}
+                  />
                 );
               }
 
               return (
                 <TimelineEvent
                   {...getTimelineEventTitleProps(event)}
-                  hasPlainDate
+                  hasPlainDate={false}
                   key={id}
                   date={date}
                 />
