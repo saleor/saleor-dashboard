@@ -12,33 +12,18 @@ export const orderPaymentMessages = defineMessages({
     description: "Order summary refunds header",
   },
   authorized: {
-    id: "6gCaBF",
+    id: "IyV8CY",
     defaultMessage: "Authorized",
-    description: "authorized amount title",
-  },
-  authorizedAmount: {
-    id: "ZZ7Vfx",
-    defaultMessage: "Authorized amount",
-    description: "authorized amount from transactions in order",
+    description: "all authorized amount from transactions in order",
   },
   captured: {
-    id: "xPkD+U",
+    id: "egBBQ/",
     defaultMessage: "Captured",
-    description: "caputed amount title",
-  },
-  capturedAmount: {
-    id: "JxGx+O",
-    defaultMessage: "Captured amount",
     description: "all captured amount from transactions in order",
   },
   cancelled: {
     defaultMessage: "Cancelled",
-    id: "qqy6p3",
-    description: "cancelled amount title",
-  },
-  cancelledAmount: {
-    id: "u202Y1",
-    defaultMessage: "Cancelled amount",
+    id: "lrdAIY",
     description: "amount of all cancelled transactions in order",
   },
   pending: {
