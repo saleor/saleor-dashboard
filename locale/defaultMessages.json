@@ -2600,6 +2600,10 @@
     "context": "page header",
     "string": "Create Discount"
   },
+  "FX7ts2": {
+    "context": "error message",
+    "string": "Amount should be greater than 0"
+  },
   "FYfoiF": {
     "context": "section name",
     "string": "Allocation strategy"
