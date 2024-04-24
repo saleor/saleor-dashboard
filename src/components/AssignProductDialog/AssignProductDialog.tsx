@@ -7,12 +7,11 @@ import {
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SearchProductsQuery } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe } from "@dashboard/misc";
 import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
-import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { DialogProps, FetchMoreProps } from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -23,6 +22,7 @@ import {
   TableCell,
   TextField,
 } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -32,16 +32,17 @@ import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
-import { isProductChannelInSelectedChannels } from "./utils";
+import { Products } from "./types";
+import { isProductAvailableInVoucherChannels } from "./utils";
 
 export interface AssignProductDialogFormData {
-  products: RelayToFlat<SearchProductsQuery["search"]>;
+  products: Products;
   query: string;
 }
 
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  products: RelayToFlat<SearchProductsQuery["search"]>;
+  products: Products;
   selectedChannels: ChannelVoucherData[];
   selectedIds?: Record<string, boolean>;
   loading: boolean;
@@ -164,6 +165,11 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
               {products &&
                 products.map(product => {
                   const isSelected = productsDict[product.id] || false;
+                  const isProductAvailable =
+                    isProductAvailableInVoucherChannels(
+                      product.channelListings,
+                      selectedChannels,
+                    );
 
                   return (
                     <TableRowLink
@@ -176,14 +182,13 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                       />
                       <TableCell className={classes.colName}>
                         {product.name}
-                      </TableCell>
-                      <TableCell>
-                        {isProductChannelInSelectedChannels(
-                          product.channelListings,
-                          selectedChannels,
-                        )
-                          ? "Included"
-                          : "Not included"}
+                        {!isProductAvailable && (
+                          <Text display="block" size={1} color="default2">
+                            <FormattedMessage
+                              {...messages.productUnavailable}
+                            />
+                          </Text>
+                        )}
                       </TableCell>
                       <TableCell
                         padding="checkbox"
@@ -191,6 +196,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                       >
                         <Checkbox
                           checked={isSelected}
+                          disabled={!isProductAvailable}
                           onChange={() => handleChange(product.id)}
                         />
                       </TableCell>

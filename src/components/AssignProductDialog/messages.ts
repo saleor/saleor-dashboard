@@ -19,4 +19,8 @@ export const messages = defineMessages({
     id: "SHm7ee",
     defaultMessage: "Search by product name, attribute, product type etc...",
   },
+  productUnavailable: {
+    id: "XOkUxQ",
+    defaultMessage: "Product unavailable in voucher channels",
+  },
 });

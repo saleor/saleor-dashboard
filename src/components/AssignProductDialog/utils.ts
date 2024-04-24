@@ -1,11 +1,9 @@
 import { ChannelVoucherData } from "@dashboard/channels/utils";
-import { SearchProductsQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
 
-export const isProductChannelInSelectedChannels = (
-  productChannels: RelayToFlat<
-    SearchProductsQuery["search"]
-  >[number]["channelListings"],
+import { ProductChannels } from "./types";
+
+export const isProductAvailableInVoucherChannels = (
+  productChannels: ProductChannels,
   selectedChannels: ChannelVoucherData[],
 ) => {
   const selectedChannelsIds = selectedChannels.map(chan => chan.id);
