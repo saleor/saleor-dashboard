@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.19.6
+
+### Patch Changes
+
+- 4266a5c7d: Fixes a bug where order and gift card details views show incorrect avatar in history component. Notes added by apps will now show app's name and avatar. All events will now use the same date format to improve consistency.
+- 5cd49f67b: History component's texts will now have unified colors
+- b4798b719: Flow settings in channel creation will now persist after channel is created
+- 965d27c9e: Fixes an issue that prevented users from pasting values smaller than 10 into datagrid cells
+- 036568707: This change replaces old service worker with a noop service worker. Saleor Dashboard will no longer actively use service worker for caching and registering fonts.
+- b233322c8: Fixes an issue where product export threw an error due to invalid input data
+- c957d9c23: Show all gift card used in order details
+
 ## 3.19.5
 
 ### Patch Changes
