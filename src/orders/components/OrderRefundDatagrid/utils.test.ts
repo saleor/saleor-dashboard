@@ -10,7 +10,7 @@ import { canAddRefund } from "./utils";
 describe("canAddRefund", () => {
   it("returns false when there are no transactions", () => {
     // Arrange
-    const transactions = [];
+    const transactions: OrderDetailsFragment["transactions"] = [];
     const intl = intlMock;
 
     // Act
