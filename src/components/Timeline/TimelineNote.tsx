@@ -1,6 +1,5 @@
-// @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
-import { getUserInitials } from "@dashboard/misc";
+import { GiftCardEventFragment, OrderEventFragment } from "@dashboard/graphql";
+import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
@@ -49,21 +48,18 @@ const useStyles = makeStyles(
 interface TimelineNoteProps {
   date: string;
   message: string | null;
-  user: {
-    email: string;
-    firstName?: string;
-    lastName?: string;
-  };
+  user: OrderEventFragment["user"];
+  app: OrderEventFragment["app"] | GiftCardEventFragment["app"];
   hasPlainDate?: boolean;
 }
 
 interface NoteMessageProps {
-  message: string;
+  message: string | null;
 }
 
 const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
   <>
-    {message.split("\n").map(string => {
+    {message?.split("\n").map(string => {
       if (string === "") {
         return <br key={`break-${string}`} />;
       }
@@ -73,29 +69,50 @@ const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
   </>
 );
 
-export const TimelineNote: React.FC<TimelineNoteProps> = props => {
-  const { date, user, message, hasPlainDate } = props;
-  const { user: currentUser } = useUser();
-  const classes = useStyles(props);
-  const getUserTitleOrEmail = () => {
-    if (user?.firstName && user?.lastName) {
-      return `${user.firstName} ${user.lastName}`;
-    }
+const TimelineAvatar = ({
+  user,
+  app,
+  className,
+}: {
+  user: OrderEventFragment["user"];
+  app: OrderEventFragment["app"] | GiftCardEventFragment["app"];
+  className: string;
+}) => {
+  if (user) {
+    return (
+      <UserAvatar initials={getUserInitials(user)} url={user?.avatar?.url} className={className} />
+    );
+  }
 
-    return user?.email;
-  };
+  if (app) {
+    return (
+      <UserAvatar
+        initials={app.name?.slice(0, 2)}
+        url={app.brand?.logo?.default}
+        className={className}
+      />
+    );
+  }
+
+  return null;
+};
+
+export const TimelineNote: React.FC<TimelineNoteProps> = ({
+  date,
+  user,
+  message,
+  hasPlainDate,
+  app,
+}) => {
+  const classes = useStyles();
+
+  const userDisplayName = getUserName(user, true) ?? app?.name;
 
   return (
     <div className={classes.root}>
-      {user && (
-        <UserAvatar
-          initials={getUserInitials(currentUser)}
-          url={currentUser?.avatar?.url}
-          className={classes.avatar}
-        />
-      )}
+      <TimelineAvatar user={user} app={app} className={classes.avatar} />
       <div className={classes.title}>
-        <Typography>{getUserTitleOrEmail()}</Typography>
+        <Typography>{userDisplayName}</Typography>
         <Typography>
           <DateTime date={date} plain={hasPlainDate} />
         </Typography>

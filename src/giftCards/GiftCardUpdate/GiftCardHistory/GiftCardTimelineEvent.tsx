@@ -113,7 +113,7 @@ export interface GiftCardTimelineEventProps {
 const GiftCardTimelineEvent: React.FC<GiftCardTimelineEventProps> = ({ date, event }) => {
   const intl = useIntl();
 
-  return <TimelineEvent date={date} title={getEventMessage(event, intl)} hasPlainDate />;
+  return <TimelineEvent date={date} title={getEventMessage(event, intl)} hasPlainDate={false} />;
 };
 
 export default GiftCardTimelineEvent;

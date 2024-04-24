@@ -3,7 +3,7 @@ import { ChannelPage } from "@pages/channelsPage";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json", locale: "en" });
 
 let configurationPage: ConfigurationPage;
 let channelPage: ChannelPage;
@@ -25,6 +25,34 @@ test("TC: SALEOR_97 Create basic channel @e2e @channels", async () => {
   await channelPage.clickSaveButton();
   await channelPage.expectSuccessBanner();
 });
+
+test("TC: SALEOR_208 Create channel with all settings @e2e @channels", async () => {
+  const slugName = new Date().toISOString();
+
+  await configurationPage.gotoConfigurationView();
+  await configurationPage.openChannels();
+  await channelPage.clickCreateChannelButton();
+  await channelPage.typeChannelName();
+  await channelPage.typeSlugName(slugName);
+  await channelPage.selectCurrency("AFN - Afghanistan");
+  await channelPage.selectCountry("Afghanistan");
+  await channelPage.clickTransactionFlowCheckbox();
+  // Checking before save because checkboxes used to not work properly
+  await expect(channelPage.transactionFlowCheckbox).toBeChecked();
+  await channelPage.clickAllowUnpaidOrdersCheckbox();
+  await expect(channelPage.allowUnpaidOrdersCheckbox).toBeChecked();
+  await channelPage.clickAuthorizeInsteadOfChargingCheckbox();
+  await expect(channelPage.authorizeInsteadOfChargingCheckbox).toBeChecked();
+  await channelPage.clickSaveButton();
+  await channelPage.expectSuccessBanner();
+
+  // Checking again after save because state wasn't saved properly
+  await channelPage.page.waitForURL((url: URL) => !url.pathname.includes("add"));
+  await expect(channelPage.transactionFlowCheckbox).toBeChecked();
+  await expect(channelPage.authorizeInsteadOfChargingCheckbox).toBeChecked();
+  await expect(channelPage.allowUnpaidOrdersCheckbox).toBeChecked();
+});
+
 test("TC: SALEOR_98 Edit channel - transaction flow, allow unpaid, authorize, prio high stock @e2e @channels", async () => {
   await channelPage.gotoChannelDetails(CHANNELS.channelToBeEditedSettings.id);
   await channelPage.clickTransactionFlowCheckbox();

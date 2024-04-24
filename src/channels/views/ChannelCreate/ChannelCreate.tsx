@@ -62,27 +62,31 @@ export const ChannelCreateView = () => {
     reorderChannelWarehouses,
   });
   const handleSubmit = async ({
+    allocationStrategy,
+    allowUnpaidOrders,
+    currencyCode,
+    defaultCountry,
+    defaultTransactionFlowStrategy,
+    deleteExpiredOrdersAfter,
+    markAsPaidStrategy,
+    name,
     shippingZonesIdsToAdd,
+    slug,
     warehousesIdsToAdd,
     warehousesToDisplay,
-    currencyCode,
-    allocationStrategy,
-    name,
-    slug,
-    defaultCountry,
-    markAsPaidStrategy,
-    deleteExpiredOrdersAfter,
-    allowUnpaidOrders,
   }: FormData) => {
     const input: ChannelCreateInput = {
-      defaultCountry,
       name,
       slug,
+      defaultCountry,
       currencyCode: currencyCode.toUpperCase(),
       addShippingZones: shippingZonesIdsToAdd,
       addWarehouses: warehousesIdsToAdd,
       stockSettings: {
         allocationStrategy,
+      },
+      paymentSettings: {
+        defaultTransactionFlowStrategy,
       },
       orderSettings: {
         markAsPaidStrategy,

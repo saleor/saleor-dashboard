@@ -180,15 +180,30 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         const removeWarehouse = createWarehouseRemoveHandler(data, set, triggerChange);
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
         const handleMarkAsPaidStrategyChange = () => {
+          if (!data.markAsPaidStrategy) {
+            set({
+              markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+            });
+
+            return;
+          }
+
           set({
             markAsPaidStrategy:
-              // Swap enum values
               data.markAsPaidStrategy === MarkAsPaidStrategyEnum.PAYMENT_FLOW
                 ? MarkAsPaidStrategyEnum.TRANSACTION_FLOW
                 : MarkAsPaidStrategyEnum.PAYMENT_FLOW,
           });
         };
         const handleTransactionFlowStrategyChange = () => {
+          if (!data.defaultTransactionFlowStrategy) {
+            set({
+              defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.AUTHORIZATION,
+            });
+
+            return;
+          }
+
           set({
             defaultTransactionFlowStrategy:
               data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.CHARGE

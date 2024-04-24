@@ -15,7 +15,8 @@ describe("OrderRefundDialog", () => {
     const props = {
       open: true,
       onClose: jest.fn(),
-      onConfirm: jest.fn(),
+      onStandardRefund: jest.fn(),
+      onManualRefund: jest.fn(),
     };
 
     // Act
@@ -31,7 +32,8 @@ describe("OrderRefundDialog", () => {
     const props = {
       open: false,
       onClose: jest.fn(),
-      onConfirm: jest.fn(),
+      onStandardRefund: jest.fn(),
+      onManualRefund: jest.fn(),
     };
 
     // Act
@@ -42,12 +44,14 @@ describe("OrderRefundDialog", () => {
 
     expect(dialog).not.toBeInTheDocument();
   });
-  it("calls onClose when the cancel button is clicked", () => {
+
+  it("closes the modal when user clicks on cancel", () => {
     // Arrange
     const props = {
       open: true,
       onClose: jest.fn(),
-      onConfirm: jest.fn(),
+      onStandardRefund: jest.fn(),
+      onManualRefund: jest.fn(),
     };
 
     // Act
@@ -59,12 +63,14 @@ describe("OrderRefundDialog", () => {
     // Assert
     expect(props.onClose).toHaveBeenCalled();
   });
-  it("calls onConfirm when the confirm button is clicked", () => {
+
+  it("makes a standard refund (with order lines) when user confirms it", () => {
     // Arrange
     const props = {
       open: true,
       onClose: jest.fn(),
-      onConfirm: jest.fn(),
+      onStandardRefund: jest.fn(),
+      onManualRefund: jest.fn(),
     };
 
     // Act
@@ -74,6 +80,27 @@ describe("OrderRefundDialog", () => {
 
     fireEvent.click(confirmButton);
     // Assert
-    expect(props.onConfirm).toHaveBeenCalled();
+    expect(props.onStandardRefund).toHaveBeenCalled();
+  });
+  it("makes a manual refund when user confirms it", async () => {
+    // Arrange
+    const props = {
+      open: true,
+      onClose: jest.fn(),
+      onStandardRefund: jest.fn(),
+      onManualRefund: jest.fn(),
+    };
+
+    // Act
+    render(<OrderRefundDialog {...props} />);
+
+    const confirmButton = screen.getByRole("button", { name: /confirm/i });
+    const manualRefundRadio = screen.getByTestId("manual-refund");
+
+    await fireEvent.click(manualRefundRadio);
+    await fireEvent.click(confirmButton);
+
+    // Assert
+    expect(props.onManualRefund).toHaveBeenCalled();
   });
 });

@@ -91,19 +91,19 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
       },
     });
   const handleSubmit = async ({
-    name,
-    slug,
-    shippingZonesIdsToRemove,
-    shippingZonesIdsToAdd,
-    warehousesIdsToRemove,
-    warehousesIdsToAdd,
-    warehousesToDisplay,
-    defaultCountry,
     allocationStrategy,
-    markAsPaidStrategy,
-    deleteExpiredOrdersAfter,
     allowUnpaidOrders,
+    defaultCountry,
     defaultTransactionFlowStrategy,
+    deleteExpiredOrdersAfter,
+    markAsPaidStrategy,
+    name,
+    shippingZonesIdsToAdd,
+    shippingZonesIdsToRemove,
+    slug,
+    warehousesIdsToAdd,
+    warehousesIdsToRemove,
+    warehousesToDisplay,
   }: FormData) => {
     const updateChannelMutation = updateChannel({
       variables: {

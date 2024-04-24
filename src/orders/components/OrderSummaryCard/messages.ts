@@ -85,11 +85,6 @@ export const orderSummaryMessages = defineMessages({
     defaultMessage: "Outstanding Balance",
     description: "order payment",
   },
-  paidWithGiftCard: {
-    id: "yivxZJ",
-    defaultMessage: "Paid with Gift Card: ({link})",
-    description: "order payment",
-  },
   negative: {
     defaultMessage: "minus",
     id: "GcbFa9",

@@ -10,9 +10,15 @@ interface AllowUnpaidOrdersProps {
   onChange: FormChange;
   isChecked: boolean;
   hasError: boolean;
+  disabled?: boolean;
 }
 
-export const AllowUnpaidOrders = ({ onChange, isChecked, hasError }: AllowUnpaidOrdersProps) => (
+export const AllowUnpaidOrders = ({
+  onChange,
+  isChecked,
+  hasError,
+  disabled,
+}: AllowUnpaidOrdersProps) => (
   <Box paddingX={6}>
     <Checkbox
       name="allowUnpaidOrders"
@@ -20,6 +26,7 @@ export const AllowUnpaidOrders = ({ onChange, isChecked, hasError }: AllowUnpaid
       checked={isChecked}
       error={hasError}
       onCheckedChange={value => onChange({ target: { name: "allowUnpaidOrders", value } })}
+      disabled={disabled}
     >
       <Text>
         <FormattedMessage {...messages.allowUnpaidOrdersLabel} />

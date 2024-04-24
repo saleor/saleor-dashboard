@@ -12,11 +12,11 @@ export interface RadioTileProps {
   value: string;
 }
 
-export const RadioTile = ({ checked, title, description, value }: RadioTileProps) => {
+export const RadioTile = ({ checked, title, description, value, ...props }: RadioTileProps) => {
   const [isHoverState, setHoverState] = React.useState(false);
 
   return (
-    <RadixRadioGroup.Item value={value} asChild>
+    <RadixRadioGroup.Item value={value} asChild {...props}>
       <Box
         position="relative"
         as="label"

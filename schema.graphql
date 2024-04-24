@@ -407,7 +407,9 @@ input AccountRegisterInput {
   """Password."""
   password: String!
 
-  """Base of frontend URL that will be needed to create confirmation URL."""
+  """
+  Base of frontend URL that will be needed to create confirmation URL. Required when account confirmation is enabled.
+  """
   redirectUrl: String
 }
 
@@ -774,7 +776,7 @@ type AddressValidationData {
   Many fields in the JSON refer to address fields by one-letter abbreviations. These are defined as follows:
   
   - `N`: Name
-  - `O`: Organisation
+  - `O`: Organization
   - `A`: Street Address Line(s)
   - `D`: Dependent locality (may be an inner-city district or a suburb)
   - `C`: City or Locality
@@ -792,7 +794,7 @@ type AddressValidationData {
   Many fields in the JSON refer to address fields by one-letter abbreviations. These are defined as follows:
   
   - `N`: Name
-  - `O`: Organisation
+  - `O`: Organization
   - `A`: Street Address Line(s)
   - `D`: Dependent locality (may be an inner-city district or a suburb)
   - `C`: City or Locality
@@ -895,7 +897,7 @@ type App implements Node & ObjectWithMetadata {
   """Description of this app."""
   aboutApp: String
 
-  """JWT token used to authenticate by thridparty app."""
+  """JWT token used to authenticate by third-party app."""
   accessToken: String
 
   """URL to iframe with the app."""
@@ -2419,7 +2421,14 @@ type AttributeTranslatableContent implements Node {
   """Custom attribute of a product."""
   attribute: Attribute @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 
-  """The ID of the attribute."""
+  """
+  The ID of the attribute to translate.
+  
+  Added in Saleor 3.14.
+  """
+  attributeId: ID!
+
+  """The ID of the attribute translatable content."""
   id: ID!
 
   """Name of the attribute to translate."""
@@ -2461,6 +2470,13 @@ type AttributeTranslation implements Node {
 
   """Translated attribute name."""
   name: String!
+
+  """
+  Represents the attribute fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: AttributeTranslatableContent
 }
 
 """An enumeration."""
@@ -2606,7 +2622,7 @@ type AttributeValue implements Node {
   name: String
 
   """
-  Represents the text of the attribute value, plain text without formating.
+  Represents the text of the attribute value, plain text without formatting.
   """
   plainText: String
 
@@ -2758,7 +2774,7 @@ input AttributeValueCreateInput {
   name: String!
 
   """
-  Represents the text of the attribute value, plain text without formating.
+  Represents the text of the attribute value, plain text without formatting.
   
   DEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
   """
@@ -2955,6 +2971,13 @@ type AttributeValueTranslatableContent implements Node {
   """Represents a value of an attribute."""
   attributeValue: AttributeValue @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 
+  """
+  The ID of the attribute value to translate.
+  
+  Added in Saleor 3.14.
+  """
+  attributeValueId: ID!
+
   """The ID of the attribute value translatable content."""
   id: ID!
 
@@ -3017,6 +3040,13 @@ type AttributeValueTranslation implements Node {
   Rich text format. For reference see https://editorjs.io/
   """
   richText: JSONString
+
+  """
+  Represents the attribute value fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: AttributeValueTranslatableContent
 }
 
 input AttributeValueTranslationInput {
@@ -3068,7 +3098,7 @@ input AttributeValueUpdateInput {
   name: String
 
   """
-  Represents the text of the attribute value, plain text without formating.
+  Represents the text of the attribute value, plain text without formatting.
   
   DEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
   """
@@ -3733,6 +3763,13 @@ type CategoryTranslatableContent implements Node {
   category: Category @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 
   """
+  The ID of the category to translate.
+  
+  Added in Saleor 3.14.
+  """
+  categoryId: ID!
+
+  """
   Category description to translate.
   
   Rich text format. For reference see https://editorjs.io/
@@ -3806,6 +3843,13 @@ type CategoryTranslation implements Node {
 
   """Translated SEO title."""
   seoTitle: String
+
+  """
+  Represents the category fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: CategoryTranslatableContent
 }
 
 """
@@ -3995,6 +4039,15 @@ type Channel implements Node & ObjectWithMetadata {
   Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
   """
   stockSettings: StockSettings!
+
+  """
+  Channel specific tax configuration.
+  
+  Added in Saleor 3.20.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  """
+  taxConfiguration: TaxConfiguration!
 
   """
   List of warehouses assigned to this channel.
@@ -5001,7 +5054,7 @@ type CheckoutCustomerDetach {
 }
 
 """
-Updates the delivery method (shipping method or pick up point) of the checkout.
+Updates the delivery method (shipping method or pick up point) of the checkout. Updates the checkout shipping_address for click and collect delivery for a warehouse address. 
 
 Added in Saleor 3.1.
 
@@ -5046,7 +5099,7 @@ type CheckoutError {
   """The error message."""
   message: String
 
-  """List of varint IDs which causes the error."""
+  """List of variant IDs which causes the error."""
   variants: [ID!]
 }
 
@@ -5074,6 +5127,7 @@ enum CheckoutErrorCode {
   QUANTITY_GREATER_THAN_LIMIT
   REQUIRED
   SHIPPING_ADDRESS_NOT_SET
+  SHIPPING_CHANGE_FORBIDDEN
   SHIPPING_METHOD_NOT_APPLICABLE
   SHIPPING_METHOD_NOT_SET
   SHIPPING_NOT_REQUIRED
@@ -6158,6 +6212,13 @@ type CollectionTranslatableContent implements Node {
   collection: Collection @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 
   """
+  The ID of the collection to translate.
+  
+  Added in Saleor 3.14.
+  """
+  collectionId: ID!
+
+  """
   Collection's description to translate.
   
   Rich text format. For reference see https://editorjs.io/
@@ -6231,6 +6292,13 @@ type CollectionTranslation implements Node {
 
   """Translated SEO title."""
   seoTitle: String
+
+  """
+  Represents the collection fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: CollectionTranslatableContent
 }
 
 """
@@ -8155,7 +8223,7 @@ input ExternalNotificationTriggerInput {
   externalEventType: String!
 
   """
-  Additional payload that will be merged with the one based on the bussines object ID.
+  Additional payload that will be merged with the one based on the business object ID.
   """
   extraPayload: JSONString
 
@@ -11457,6 +11525,13 @@ type MenuItemTranslatableContent implements Node {
   """
   menuItem: MenuItem @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 
+  """
+  The ID of the menu item to translate.
+  
+  Added in Saleor 3.14.
+  """
+  menuItemId: ID!
+
   """Name of the menu item to translate."""
   name: String!
 
@@ -11488,6 +11563,13 @@ type MenuItemTranslation implements Node {
 
   """Translated menu item name."""
   name: String!
+
+  """
+  Represents the menu item fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: MenuItemTranslatableContent
 }
 
 """
@@ -12679,7 +12761,7 @@ type Mutation {
   ): CheckoutCustomerDetach
 
   """
-  Updates the delivery method (shipping method or pick up point) of the checkout.
+  Updates the delivery method (shipping method or pick up point) of the checkout. Updates the checkout shipping_address for click and collect delivery for a warehouse address. 
   
   Added in Saleor 3.1.
   
@@ -14624,7 +14706,7 @@ type Mutation {
   ): PaymentCheckBalance
 
   """
-  Initializes a payment gateway session. It triggers the webhook `PAYMENT_GATEWAY_INITIALIZE_SESSION`, to the requested `paymentGateways`. If `paymentGateways` is not provided, the webhook will be send to all subscribed payment gateways.
+  Initializes a payment gateway session. It triggers the webhook `PAYMENT_GATEWAY_INITIALIZE_SESSION`, to the requested `paymentGateways`. If `paymentGateways` is not provided, the webhook will be send to all subscribed payment gateways. There is a limit of 100 transaction items per checkout / order.
   
   Added in Saleor 3.13.
   
@@ -16299,7 +16381,7 @@ type Mutation {
   ): TransactionEventReport
 
   """
-  Initializes a transaction session. It triggers the webhook `TRANSACTION_INITIALIZE_SESSION`, to the requested `paymentGateways`. 
+  Initializes a transaction session. It triggers the webhook `TRANSACTION_INITIALIZE_SESSION`, to the requested `paymentGateways`. There is a limit of 100 transaction items per checkout / order.
   
   Added in Saleor 3.13.
   
@@ -16410,13 +16492,13 @@ type Mutation {
     """The ID of the granted refund."""
     grantedRefundId: ID!
 
-    """The ID of the transaction. One of field id or token is required."""
+    """
+    The ID of the transaction. One of field id or token is required, if `transactionItem` is not already assigned to the `orderGrantedRefund`. If `transactionItem` is already assigned to the grantedRefund the field will be ignored.
+    """
     id: ID
 
     """
-    The token of the transaction. One of field id or token is required.
-    
-    Added in Saleor 3.14.
+    The token of the transaction. One of field id or token is required, if `transactionItem` is not already assigned to the `orderGrantedRefund`. If `transactionItem` is already assigned to the grantedRefund the field will be ignored.
     """
     token: UUID
   ): TransactionRequestRefundForGrantedRefund
@@ -18467,6 +18549,7 @@ type OrderGrantRefundCreateError {
 
 """An enumeration."""
 enum OrderGrantRefundCreateErrorCode {
+  AMOUNT_GREATER_THAN_AVAILABLE
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
@@ -18500,6 +18583,15 @@ input OrderGrantRefundCreateInput {
 
   """Reason of the granted refund."""
   reason: String
+
+  """
+  The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from Saleor 3.21.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  transactionId: ID
 }
 
 type OrderGrantRefundCreateLineError {
@@ -18588,6 +18680,7 @@ type OrderGrantRefundUpdateError {
 
 """An enumeration."""
 enum OrderGrantRefundUpdateErrorCode {
+  AMOUNT_GREATER_THAN_AVAILABLE
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
@@ -18630,6 +18723,15 @@ input OrderGrantRefundUpdateInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   removeLines: [ID!]
+
+  """
+  The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from Saleor 3.21.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  transactionId: ID
 }
 
 input OrderGrantRefundUpdateLineAddInput {
@@ -18705,6 +18807,27 @@ type OrderGrantedRefund {
   """
   shippingCostsIncluded: Boolean!
 
+  """
+  Status of the granted refund calculated based on transactionItem assigned to granted refund.
+  
+  Added in Saleor 3.20.
+  """
+  status: OrderGrantedRefundStatusEnum!
+
+  """
+  The transaction assigned to the granted refund.
+  
+  Added in Saleor 3.20.
+  """
+  transaction: TransactionItem
+
+  """
+  List of refund events associated with the granted refund.
+  
+  Added in Saleor 3.20.
+  """
+  transactionEvents: [TransactionEvent!]
+
   """Time of last update."""
   updatedAt: DateTime!
 
@@ -18732,6 +18855,22 @@ type OrderGrantedRefundLine {
 
   """Reason for refunding the line."""
   reason: String
+}
+
+"""
+Represents the status of a granted refund.
+
+    NONE - the refund on related transactionItem is not processed
+    PENDING - the refund on related transactionItem is pending
+    FULL - the refund on related transactionItem is fully processed
+    FAIL - the refund on related transactionItem failed
+    
+"""
+enum OrderGrantedRefundStatusEnum {
+  FAILURE
+  NONE
+  PENDING
+  SUCCESS
 }
 
 """Represents order line of particular order."""
@@ -19310,7 +19449,7 @@ input OrderReturnProductsInput {
 """Represents the channel-specific order settings."""
 type OrderSettings {
   """
-  Determine if it is possible to place unpdaid order by calling `checkoutComplete` mutation.
+  Determine if it is possible to place unpaid order by calling `checkoutComplete` mutation.
   
   Added in Saleor 3.15.
   
@@ -19401,7 +19540,7 @@ input OrderSettingsInput {
   automaticallyConfirmAllNewOrders: Boolean
 
   """
-  When enabled, all non-shippable gift card orders will be fulfilled automatically. By defualt set to True.
+  When enabled, all non-shippable gift card orders will be fulfilled automatically. By default set to True.
   """
   automaticallyFulfillNonShippableGiftCard: Boolean
 
@@ -20077,6 +20216,13 @@ type PageTranslatableContent implements Node {
   """
   page: Page @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 
+  """
+  The ID of the page to translate.
+  
+  Added in Saleor 3.14.
+  """
+  pageId: ID!
+
   """SEO description to translate."""
   seoDescription: String
 
@@ -20134,6 +20280,13 @@ type PageTranslation implements Node {
 
   """Translated page title."""
   title: String
+
+  """
+  Represents the page fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: PageTranslatableContent
 }
 
 input PageTranslationInput {
@@ -20824,7 +20977,7 @@ enum PaymentGatewayConfigErrorCode {
 }
 
 """
-Initializes a payment gateway session. It triggers the webhook `PAYMENT_GATEWAY_INITIALIZE_SESSION`, to the requested `paymentGateways`. If `paymentGateways` is not provided, the webhook will be send to all subscribed payment gateways.
+Initializes a payment gateway session. It triggers the webhook `PAYMENT_GATEWAY_INITIALIZE_SESSION`, to the requested `paymentGateways`. If `paymentGateways` is not provided, the webhook will be send to all subscribed payment gateways. There is a limit of 100 transaction items per checkout / order.
 
 Added in Saleor 3.13.
 
@@ -21531,7 +21684,7 @@ type PermissionGroupDeleted implements Event {
 }
 
 type PermissionGroupError {
-  """List of chnnels IDs which causes the error."""
+  """List of channels IDs which causes the error."""
   channels: [ID!]
 
   """The error code."""
@@ -23409,6 +23562,13 @@ type ProductTranslatableContent implements Node {
   """Represents an individual item for sale in the storefront."""
   product: Product @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 
+  """
+  The ID of the product to translate.
+  
+  Added in Saleor 3.14.
+  """
+  productId: ID!
+
   """SEO description to translate."""
   seoDescription: String
 
@@ -23471,6 +23631,13 @@ type ProductTranslation implements Node {
 
   """Translated SEO title."""
   seoTitle: String
+
+  """
+  Represents the product fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: ProductTranslatableContent
 }
 
 """
@@ -24848,6 +25015,13 @@ type ProductVariantTranslatableContent implements Node {
   """Represents a version of a product such as different size or color."""
   productVariant: ProductVariant @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 
+  """
+  The ID of the product variant to translate.
+  
+  Added in Saleor 3.14.
+  """
+  productVariantId: ID!
+
   """Returns translated product variant fields for the given language code."""
   translation(
     """A language code to return the translation for product variant."""
@@ -24884,6 +25058,13 @@ type ProductVariantTranslation implements Node {
 
   """Translated product variant name."""
   name: String!
+
+  """
+  Represents the product variant fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: ProductVariantTranslatableContent
 }
 
 """
@@ -25817,6 +25998,13 @@ type PromotionRuleTranslatableContent implements Node {
   """Name of the promotion rule."""
   name: String
 
+  """
+  ID of the promotion rule to translate.
+  
+  Added in Saleor 3.14.
+  """
+  promotionRuleId: ID!
+
   """Returns translated promotion rule fields for the given language code."""
   translation(
     """A language code to return the translation for promotion rule."""
@@ -25857,6 +26045,13 @@ type PromotionRuleTranslation implements Node {
 
   """Translated name of the promotion rule."""
   name: String
+
+  """
+  Represents the promotion rule fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: PromotionRuleTranslatableContent
 }
 
 input PromotionRuleTranslationInput {
@@ -26125,6 +26320,9 @@ type PromotionTranslatableContent implements Node {
   """Name of the promotion."""
   name: String!
 
+  """ID of the promotion to translate."""
+  promotionId: ID!
+
   """Returns translated promotion fields for the given language code."""
   translation(
     """A language code to return the translation for promotion."""
@@ -26165,6 +26363,13 @@ type PromotionTranslation implements Node {
 
   """Translated name of the promotion."""
   name: String
+
+  """
+  Represents the promotion fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: PromotionTranslatableContent
 }
 
 input PromotionTranslationInput {
@@ -27801,7 +28006,7 @@ type Query {
   taxCountryConfigurations: [TaxCountryConfiguration!]
 
   """List of all tax rates available from tax gateway."""
-  taxTypes: [TaxType!]
+  taxTypes: [TaxType!] @deprecated(reason: "This field will be removed in Saleor 4.0. Use `taxClasses` field instead.")
 
   """
   Look up a transaction by ID.
@@ -28589,6 +28794,13 @@ type SaleTranslatableContent implements Node {
   """
   sale: Sale @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 
+  """
+  The ID of the sale to translate.
+  
+  Added in Saleor 3.14.
+  """
+  saleId: ID!
+
   """Returns translated sale fields for the given language code."""
   translation(
     """A language code to return the translation for sale."""
@@ -28623,6 +28835,13 @@ type SaleTranslation implements Node {
 
   """Translated name of sale."""
   name: String
+
+  """
+  Represents the sale fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: SaleTranslatableContent
 }
 
 enum SaleType {
@@ -28985,6 +29204,13 @@ type ShippingMethodTranslatableContent implements Node {
   """
   shippingMethod: ShippingMethodType @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 
+  """
+  The ID of the shipping method to translate.
+  
+  Added in Saleor 3.14.
+  """
+  shippingMethodId: ID!
+
   """Returns translated shipping method fields for the given language code."""
   translation(
     """A language code to return the translation for shipping method."""
@@ -29009,6 +29235,13 @@ type ShippingMethodTranslation implements Node {
 
   """Translated shipping method name."""
   name: String!
+
+  """
+  Represents the shipping method fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: ShippingMethodTranslatableContent
 }
 
 """
@@ -29699,7 +29932,7 @@ Represents a shop resource containing general shop data and configuration.
 """
 type Shop implements ObjectWithMetadata {
   """
-  Determines if user can login without confirmation when `enableAccountConfrimation` is enabled.
+  Determines if user can login without confirmation when `enableAccountConfirmation` is enabled.
   
   Added in Saleor 3.15.
   
@@ -31225,7 +31458,7 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   privateMetafields(keys: [String!]): Metadata
 
   """
-  The tax app id that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+  The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
   
   Added in Saleor 3.19.
   """
@@ -31278,7 +31511,7 @@ type TaxConfigurationPerCountry {
   displayGrossPrices: Boolean!
 
   """
-  The tax app id that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
+  The tax app `App.identifier` that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
   
   Added in Saleor 3.19.
   """
@@ -31303,7 +31536,7 @@ input TaxConfigurationPerCountryInput {
   displayGrossPrices: Boolean!
 
   """
-  The tax app identifier that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
+  The tax app `App.identifier` that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
   
   Added in Saleor 3.19.
   """
@@ -31365,7 +31598,7 @@ input TaxConfigurationUpdateInput {
   removeCountriesConfiguration: [CountryCode!]
 
   """
-  The tax app id that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+  The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. It's possible to set plugin by using prefix `plugin:` with `PLUGIN_ID` e.g. with Avalara `plugin:mirumee.taxes.avalara`.Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
   
   Added in Saleor 3.19.
   """
@@ -32085,7 +32318,7 @@ enum TransactionFlowStrategyEnum {
 }
 
 """
-Initializes a transaction session. It triggers the webhook `TRANSACTION_INITIALIZE_SESSION`, to the requested `paymentGateways`. 
+Initializes a transaction session. It triggers the webhook `TRANSACTION_INITIALIZE_SESSION`, to the requested `paymentGateways`. There is a limit of 100 transaction items per checkout / order.
 
 Added in Saleor 3.13.
 
@@ -32569,10 +32802,13 @@ type TransactionRequestRefundForGrantedRefundError {
 
 """An enumeration."""
 enum TransactionRequestRefundForGrantedRefundErrorCode {
+  AMOUNT_GREATER_THAN_AVAILABLE
   GRAPHQL_ERROR
   INVALID
   MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK
   NOT_FOUND
+  REFUND_ALREADY_PROCESSED
+  REFUND_IS_PENDING
 }
 
 """
@@ -33187,6 +33423,10 @@ input UserCreateInput {
   User account is confirmed.
   
   Added in Saleor 3.15.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.
+  
+  The user will be always set as unconfirmed. The confirmation will take place when the user sets the password.
   """
   isConfirmed: Boolean
 
@@ -34132,6 +34372,13 @@ type VoucherTranslatableContent implements Node {
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   """
   voucher: Voucher @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
+
+  """
+  The ID of the voucher to translate.
+  
+  Added in Saleor 3.14.
+  """
+  voucherId: ID!
 }
 
 """
@@ -34155,6 +34402,13 @@ type VoucherTranslation implements Node {
 
   """Translated voucher name."""
   name: String
+
+  """
+  Represents the voucher fields to translate.
+  
+  Added in Saleor 3.14.
+  """
+  translatableContent: VoucherTranslatableContent
 }
 
 enum VoucherTypeEnum {

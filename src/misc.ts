@@ -341,7 +341,7 @@ interface User {
   lastName?: string;
 }
 
-export function getUserName(user?: User, returnEmail?: boolean) {
+export function getUserName(user: User | null | undefined, returnEmail?: boolean) {
   return user && (user.email || (user.firstName && user.lastName))
     ? user.firstName && user.lastName
       ? [user.firstName, user.lastName].join(" ")
@@ -565,11 +565,13 @@ export const findById = <T extends Node>(id: string, list?: T[]) => list?.find(g
 export const COLOR_WARNING = "#FBE5AC";
 export const COLOR_WARNING_DARK = "#3E2F0A";
 
+export type PillStatusType = "error" | "warning" | "info" | "success" | "generic";
+
 export const getStatusColor = ({
   status,
   currentTheme,
 }: {
-  status: "error" | "warning" | "info" | "success" | "generic";
+  status: PillStatusType;
   currentTheme: DefaultTheme;
 }) => {
   const statusHue = getStatusHue(status);
@@ -579,7 +581,7 @@ export const getStatusColor = ({
     : hueToPillColorLight(statusHue);
 };
 
-const getStatusHue = (status: "error" | "warning" | "info" | "success" | "generic"): number => {
+const getStatusHue = (status: PillStatusType): number => {
   const red = 0;
   const blue = 236;
   const green = 145;

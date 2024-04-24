@@ -46,7 +46,6 @@ import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
-import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
 import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
@@ -111,7 +110,6 @@ const App: React.FC = () => (
             <DateProvider>
               <LocaleProvider>
                 <MessageManagerProvider>
-                  <ServiceWorker />
                   <BackgroundTasksProvider>
                     <AppStateProvider>
                       <AuthProvider>

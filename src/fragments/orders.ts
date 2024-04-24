@@ -37,11 +37,19 @@ export const fragmentOrderEvent = gql`
       email
       firstName
       lastName
+      avatar(size: 128) {
+        url
+      }
     }
     app {
       id
       name
       appUrl
+      brand {
+        logo {
+          default(size: 128)
+        }
+      }
     }
     lines {
       quantity
@@ -613,9 +621,13 @@ export const fragmentOrderGrantedRefunds = gql`
     id
     createdAt
     shippingCostsIncluded
+    status
     amount {
       currency
       amount
+    }
+    transactionEvents {
+      id
     }
     reason
     user {
@@ -655,9 +667,14 @@ export const orderDetailsGrantedRefund = gql`
       ...Money
     }
     shippingCostsIncluded
+    transaction {
+      id
+    }
+    status
     lines {
       id
       quantity
+      reason
       orderLine {
         ...OrderLine
       }
@@ -702,6 +719,9 @@ export const fragmentOrderDetailsGrantRefund = gql`
     }
     grantedRefunds {
       ...OrderDetailsGrantedRefund
+    }
+    transactions {
+      ...TransactionItem
     }
   }
 `;
