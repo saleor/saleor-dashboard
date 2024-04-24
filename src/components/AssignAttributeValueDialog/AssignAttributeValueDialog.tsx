@@ -75,7 +75,9 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
         />
       );
     case AttributeEntityTypeEnum.PRODUCT:
-      return <AssignProductDialog products={filteredProducts} {...rest} />;
+      return (
+        <AssignProductDialog products={filteredProducts ?? []} {...rest} />
+      );
     case AttributeEntityTypeEnum.PRODUCT_VARIANT:
       return <AssignVariantDialog products={filteredProducts} {...rest} />;
   }
