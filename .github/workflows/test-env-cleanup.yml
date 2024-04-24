@@ -1,4 +1,4 @@
-name: Testing
+name: Test env cleanup
 # Remove test instance for closed pull requests
 
 on:
