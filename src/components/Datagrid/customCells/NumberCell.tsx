@@ -22,8 +22,7 @@ export interface NumberCellProps {
 
 export type NumberCell = CustomCell<NumberCellProps>;
 
-const onlyDigitsRegExp = /^\d+$/;
-const flaotingPointDigits = /^[0-9]+[.,]?[0-9]+$/;
+const floatOrDigits = /^\d+$|^[0-9]+[.,]?[0-9]+$/;
 
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
@@ -83,16 +82,11 @@ export const numberCellRenderer = (
     }),
   }),
   onPaste: (value, data) => {
-    const testRegExp = data.options?.hasFloatingPoint
-      ? flaotingPointDigits
-      : onlyDigitsRegExp;
-    if (!testRegExp.test(value)) {
-      return undefined;
-    }
+    const isValueValid = floatOrDigits.test(value);
 
     return {
       ...data,
-      value: value ? parseFloat(value) : numberCellEmptyValue,
+      value: isValueValid ? parseFloat(value) : numberCellEmptyValue,
     };
   },
 });
