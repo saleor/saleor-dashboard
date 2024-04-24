@@ -368,6 +368,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         onChannelsChange={setCurrentChannels}
       />
       <AssignProductDialog
+        selectedChannels={currentChannels}
         selectedIds={assignedProductDict}
         confirmButtonState={assignProductOpts.status}
         hasMore={result.data?.search?.pageInfo.hasNextPage}

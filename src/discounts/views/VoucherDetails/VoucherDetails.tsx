@@ -513,6 +513,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         )}
       />
       <AssignProductDialog
+        selectedChannels={currentChannels}
         confirmButtonState={voucherCataloguesAddOpts.status}
         hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-product"}
@@ -532,7 +533,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             },
           })
         }
-        selectedChannels={currentChannels}
         products={getFilteredProducts(data, searchProductsOpts)}
       />
       <ActionDialog
