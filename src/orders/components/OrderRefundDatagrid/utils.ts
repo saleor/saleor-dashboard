@@ -1,4 +1,8 @@
-import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
+import {
+  OrderDetailsFragment,
+  OrderGrantedRefundStatusEnum,
+  TransactionActionEnum,
+} from "@dashboard/graphql";
 import { PillStatusType } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
 
@@ -89,4 +93,40 @@ export const getNotEditabledRefundMessage = (refund?: DatagridRefund) => {
   }
 
   return refundGridMessages.notEditablePending;
+};
+
+interface CanAddRefund {
+  canRefund: boolean;
+  reason?: string;
+}
+
+export const canAddRefund = ({
+  transactions,
+  intl,
+}: {
+  transactions: OrderDetailsFragment["transactions"];
+  intl: IntlShape;
+}): CanAddRefund => {
+  if (transactions.length === 0) {
+    return {
+      canRefund: false,
+      reason: intl.formatMessage(refundGridMessages.noTransactionsToRefund),
+    };
+  }
+  if (
+    transactions.every(
+      transaction =>
+        !transaction.actions.includes(TransactionActionEnum.REFUND),
+    )
+  ) {
+    return {
+      canRefund: false,
+      reason: intl.formatMessage(
+        refundGridMessages.allTransactionsNonRefundable,
+      ),
+    };
+  }
+  return {
+    canRefund: true,
+  };
 };

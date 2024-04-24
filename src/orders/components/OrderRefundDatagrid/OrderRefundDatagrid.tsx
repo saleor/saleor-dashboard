@@ -25,7 +25,11 @@ import {
 } from "./datagrid";
 import { refundGridMessages } from "./messages";
 import { manualRefundsExtractor, mergeRefunds } from "./refunds";
-import { getNotEditabledRefundMessage, isRefundEditable } from "./utils";
+import {
+  canAddRefund,
+  getNotEditabledRefundMessage,
+  isRefundEditable,
+} from "./utils";
 
 interface OrderRefundDatagridProps {
   orderId: string;
@@ -100,6 +104,11 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
     ];
   }, []);
 
+  const isRefundPossible = canAddRefund({
+    transactions: order?.transactions,
+    intl,
+  });
+
   return (
     <DashboardCard>
       <Box
@@ -111,10 +120,24 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
         <Text size={5} fontWeight="bold">
           <FormattedMessage {...refundGridMessages.refundSection} />
         </Text>
-        <Button variant="secondary" onClick={onRefundAdd}>
-          <PlusIcon />
-          <FormattedMessage {...refundGridMessages.addNewRefund} />
-        </Button>
+        <Tooltip>
+          <Tooltip.Trigger>
+            <Button
+              variant="secondary"
+              onClick={onRefundAdd}
+              disabled={!isRefundPossible.canRefund}
+            >
+              <PlusIcon />
+              <FormattedMessage {...refundGridMessages.addNewRefund} />
+            </Button>
+          </Tooltip.Trigger>
+          {!isRefundPossible.canRefund && (
+            <Tooltip.Content>
+              <Tooltip.Arrow />
+              {isRefundPossible.reason}
+            </Tooltip.Content>
+          )}
+        </Tooltip>
       </Box>
       <DatagridChangeStateContext.Provider value={datagrid}>
         <Datagrid
