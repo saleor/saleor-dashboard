@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Show info and disable the possibility of selecting products that are unavailable in channels of voucher in voucher details view
+Show info and disable checkbox in AssignProductDialog when product does have channels overlap with selected channels
