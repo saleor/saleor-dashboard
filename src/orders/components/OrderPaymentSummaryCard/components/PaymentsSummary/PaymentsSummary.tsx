@@ -1,6 +1,5 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { CardContent } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -21,68 +20,47 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
   return (
     <CardContent>
       <SummaryList className={classes.amountGrid}>
-        <Box fontSize={3}>
-          <Text size={3}>
-            <FormattedMessage {...orderPaymentMessages.authorized} />
-          </Text>
-          <Box paddingLeft={3} fontSize={2}>
-            <SummaryLine
-              hideEmpty
-              text={
-                <FormattedMessage {...orderPaymentMessages.authorizedAmount} />
-              }
-              money={order.totalAuthorized}
-            />
-            <SummaryLine
-              hideEmpty
-              text={<FormattedMessage {...orderPaymentMessages.pending} />}
-              money={order.totalAuthorizePending}
-            />
-          </Box>
-        </Box>
+        <SummaryLine
+          text={<FormattedMessage {...orderPaymentMessages.authorized} />}
+          money={order.totalAuthorized}
+        />
 
-        <Box>
-          <Text size={3}>
-            <FormattedMessage {...orderPaymentMessages.captured} />
-          </Text>
-          <Box paddingLeft={3} fontSize={2}>
-            <SummaryLine
-              hideEmpty
-              text={
-                <FormattedMessage {...orderPaymentMessages.capturedAmount} />
-              }
-              money={order.totalCharged}
-            />
+        {shouldDisplay.authorizedPending && (
+          <SummaryLine
+            hideEmpty
+            text={<FormattedMessage {...orderPaymentMessages.authorized} />}
+            subText={<FormattedMessage {...orderPaymentMessages.pending} />}
+            money={order.totalAuthorizePending}
+          />
+        )}
 
-            <SummaryLine
-              hideEmpty
-              text={<FormattedMessage {...orderPaymentMessages.pending} />}
-              money={order.totalChargePending}
-            />
-          </Box>
-        </Box>
+        <SummaryLine
+          text={<FormattedMessage {...orderPaymentMessages.captured} />}
+          money={order.totalCharged}
+        />
+
+        {shouldDisplay.chargedPending && (
+          <SummaryLine
+            text={<FormattedMessage {...orderPaymentMessages.captured} />}
+            subText={<FormattedMessage {...orderPaymentMessages.pending} />}
+            money={order.totalChargePending}
+          />
+        )}
 
         {shouldDisplay.cancelled && (
-          <Box>
-            <Text size={3}>
-              <FormattedMessage {...orderPaymentMessages.cancelled} />
-            </Text>
-            <Box paddingLeft={3} fontSize={2}>
-              <SummaryLine
-                hideEmpty
-                text={
-                  <FormattedMessage {...orderPaymentMessages.cancelledAmount} />
-                }
-                money={order.totalCanceled}
-              />
+          <SummaryLine
+            text={<FormattedMessage {...orderPaymentMessages.cancelled} />}
+            money={order.totalCanceled}
+          />
+        )}
 
-              <SummaryLine
-                hideEmpty
-                text={<FormattedMessage {...orderPaymentMessages.pending} />}
-                money={order.totalCancelPending}
-              />
-            </Box>
-          </Box>
+        {shouldDisplay.cancelledPending && (
+          <SummaryLine
+            hideEmpty
+            text={<FormattedMessage {...orderPaymentMessages.cancelled} />}
+            subText={<FormattedMessage {...orderPaymentMessages.pending} />}
+            money={order.totalCancelPending}
+          />
         )}
       </SummaryList>
     </CardContent>

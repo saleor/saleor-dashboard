@@ -15,7 +15,9 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
         authorized: false,
         charged: false,
         cancelled: false,
-        pending: false,
+        authorizedPending: false,
+        chargedPending: false,
+        cancelledPending: false,
       }),
     );
   });
@@ -34,7 +36,9 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
         authorized: false,
         charged: true,
         cancelled: true,
-        pending: true,
+        authorizedPending: false,
+        chargedPending: true,
+        cancelledPending: false,
       }),
     );
   });
@@ -53,15 +57,27 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
       totalAuthorizePending: prepareMoney(12),
     });
 
-    const expectedResult = {
-      authorized: true,
-      charged: true,
-      cancelled: true,
-      pending: true,
-    };
+    expect(result1).toStrictEqual(
+      expect.objectContaining({
+        authorized: true,
+        charged: true,
+        cancelled: true,
+        authorizedPending: false,
+        chargedPending: true,
+        cancelledPending: false,
+      }),
+    );
 
-    expect(result1).toStrictEqual(expect.objectContaining(expectedResult));
-    expect(result2).toStrictEqual(expect.objectContaining(expectedResult));
+    expect(result2).toStrictEqual(
+      expect.objectContaining({
+        authorized: true,
+        charged: true,
+        cancelled: true,
+        authorizedPending: true,
+        chargedPending: false,
+        cancelledPending: false,
+      }),
+    );
   });
 
   it("displays capture and authorize amount when they are different", () => {
@@ -76,7 +92,9 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
         authorized: true,
         charged: true,
         cancelled: false,
-        pending: false,
+        authorizedPending: false,
+        chargedPending: false,
+        cancelledPending: false,
       }),
     );
   });
@@ -99,7 +117,9 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
         authorized: false,
         charged: true,
         cancelled: false,
-        pending: false,
+        authorizedPending: false,
+        chargedPending: false,
+        cancelledPending: false,
       }),
     );
   });
@@ -116,7 +136,9 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
         authorized: true,
         charged: false,
         cancelled: false,
-        pending: false,
+        authorizedPending: false,
+        chargedPending: false,
+        cancelledPending: false,
       }),
     );
   });
@@ -144,7 +166,9 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
         authorized: false,
         charged: false,
         cancelled: false,
-        pending: false,
+        authorizedPending: false,
+        chargedPending: false,
+        cancelledPending: false,
       }),
     );
   });

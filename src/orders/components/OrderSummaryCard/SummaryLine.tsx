@@ -10,7 +10,7 @@ import { useSummaryLineStyles } from "./styles";
 
 interface SummaryLineProps {
   text: React.ReactNode;
-  subText?: string;
+  subText?: React.ReactNode;
   negative?: boolean;
   bold?: boolean;
   vertical?: boolean;
