@@ -1,6 +1,7 @@
 import {
   OrderDetailsGrantRefundDocument,
   OrderDetailsGrantRefundFragment,
+  OrderGrantRefundUpdateErrorCode,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundEditMutation,
   useOrderSendRefundForGrantedRefundMutation,
@@ -14,6 +15,9 @@ import OrderTransactionRefundPage, {
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderUrl } from "@dashboard/orders/urls";
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
+
+import { transactionRefundEditMessages } from "./messages";
 
 interface OrderTransactionRefundProps {
   orderId: string;
@@ -26,6 +30,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
 }) => {
   const notify = useNotifier();
   const navigate = useNavigator();
+  const intl = useIntl();
 
   const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>(
     [],
@@ -45,6 +50,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
           status: "success",
           text: "Saved draft",
         });
+        setLinesErrors([]);
       }
     },
     update(cache, { data }) {
@@ -65,6 +71,23 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
     if (!data?.order || !draftRefund) {
       return;
     }
+    // @ts-expect-error - submit data actually returns a string
+    // and not a number so we have to this is a workaround
+    // see more: https://github.com/orgs/react-hook-form/discussions/8068
+    if (submitData.amount === "0") {
+      setLinesErrors([
+        {
+          code: OrderGrantRefundUpdateErrorCode.REQUIRED,
+          field: "amount",
+          message: intl.formatMessage(
+            transactionRefundEditMessages.noAmountError,
+          ),
+          lines: [],
+        },
+      ]);
+      return;
+    }
+
     const { amount, reason, linesToRefund, includeShipping, transactionId } =
       submitData;
 

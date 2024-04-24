@@ -78,7 +78,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
     const { amount, reason, linesToRefund, includeShipping, transactionId } =
       submitData;
 
-    const result = await createRefund({
+    createRefund({
       variables: {
         orderId,
         amount,
@@ -92,19 +92,6 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
         transactionId,
       },
     });
-
-    const errors = result.data?.orderGrantRefundCreate?.errors;
-
-    if (errors?.length) {
-      setLinesErrors(
-        errors.map(err => ({
-          code: err.code,
-          field: err.field,
-          lines: err.lines,
-          message: err.message,
-        })) as OrderTransactionRefundError[],
-      );
-    }
   };
 
   return (
