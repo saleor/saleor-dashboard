@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { ChannelVoucherData } from "@dashboard/channels/utils";
 import {
   ConfirmButton,
   ConfirmButtonTransitionState,
@@ -32,7 +31,7 @@ import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
-import { Products } from "./types";
+import { Products, SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
 
 export interface AssignProductDialogFormData {
@@ -43,7 +42,7 @@ export interface AssignProductDialogFormData {
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: Products;
-  selectedChannels: ChannelVoucherData[];
+  selectedChannels?: SelectedChannel[];
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
