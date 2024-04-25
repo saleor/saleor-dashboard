@@ -22,7 +22,7 @@ jobs:
       run: |
         OPEN_PRS=$((gh pr list --json headRefName,number | jq '.[] | ["pr-"+.headRefName , "pr-"+ (.number|tostring)]') | jq -s 'add')
         ENVIRONMENTS_FOR_PR_TESTING=$(npx saleor environment list --json | jq ' . | map(select(.project.slug == "project-for-pr-testing") | {"key": .key, "name": .name})')
-        OPEN_PRS=\"$OPEN_PRS\"
+        OPEN_PRS=\'$OPEN_PRS\'
         echo $OPEN_PRS
         echo "OPEN_PRS=$OPEN_PRS" >> "$GITHUB_OUTPUT"
         echo "ENVIRONMENTS_FOR_PR_TESTING='$ENVIRONMENTS_FOR_PR_TESTING'" >> "$GITHUB_OUTPUT"
