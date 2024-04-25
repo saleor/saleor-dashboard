@@ -34,6 +34,5 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
 ActionDialog.defaultProps = {
   maxWidth: "xs",
 };
-
 ActionDialog.displayName = "ActionDialog";
 export default ActionDialog;

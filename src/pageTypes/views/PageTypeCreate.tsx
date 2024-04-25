@@ -12,9 +12,7 @@ import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreat
 import React from "react";
 import { useIntl } from "react-intl";
 
-import PageTypeCreatePage, {
-  PageTypeForm,
-} from "../components/PageTypeCreatePage";
+import PageTypeCreatePage, { PageTypeForm } from "../components/PageTypeCreatePage";
 import { pageTypeUrl } from "../urls";
 
 export const PageTypeCreate: React.FC = () => {
@@ -23,7 +21,6 @@ export const PageTypeCreate: React.FC = () => {
   const intl = useIntl();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
   const [createPageType, createPageTypeOpts] = usePageTypeCreateMutation({
     onCompleted: updateData => {
       if (updateData.pageTypeCreate.errors.length === 0) {
@@ -38,7 +35,6 @@ export const PageTypeCreate: React.FC = () => {
       }
     },
   });
-
   const handleCreate = async (formData: PageTypeForm) => {
     const result = await createPageType({
       variables: {
@@ -53,7 +49,6 @@ export const PageTypeCreate: React.FC = () => {
       errors: getMutationErrors(result),
     };
   };
-
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,

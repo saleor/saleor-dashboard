@@ -33,6 +33,7 @@ export function searchInCommands(
       label: intl.formatMessage(messages.createCategory),
       onClick: () => {
         navigate(categoryAddUrl());
+
         return false;
       },
     },
@@ -40,6 +41,7 @@ export function searchInCommands(
       label: intl.formatMessage(messages.createCollection),
       onClick: () => {
         navigate(collectionAddUrl());
+
         return false;
       },
     },
@@ -47,6 +49,7 @@ export function searchInCommands(
       label: intl.formatMessage(messages.createProduct),
       onClick: () => {
         navigate(productAddUrl());
+
         return false;
       },
     },
@@ -54,6 +57,7 @@ export function searchInCommands(
       label: intl.formatMessage(messages.createPermissionGroup),
       onClick: () => {
         navigate(permissionGroupAddUrl);
+
         return false;
       },
     },
@@ -61,6 +65,7 @@ export function searchInCommands(
       label: intl.formatMessage(messages.createCustomer),
       onClick: () => {
         navigate(customerAddUrl);
+
         return false;
       },
     },
@@ -68,6 +73,7 @@ export function searchInCommands(
       label: intl.formatMessage(messages.createVoucher),
       onClick: () => {
         navigate(voucherAddUrl());
+
         return false;
       },
     },
@@ -75,6 +81,7 @@ export function searchInCommands(
       label: intl.formatMessage(messages.createOrder),
       onClick: () => {
         createOrder();
+
         return false;
       },
     },
@@ -82,6 +89,7 @@ export function searchInCommands(
       label: intl.formatMessage(messages.helpMode),
       onClick: () => {
         setMode("help");
+
         return true;
       },
     },

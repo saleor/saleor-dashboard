@@ -23,14 +23,12 @@ describe("getMoneyRange", () => {
     // Assert
     expect(result).toBe("-");
   });
-
   it("should return formated money with currency when from and to have same amount", () => {
     // Arrange
     const fromMoney: IMoney = {
       amount: 10,
       currency: "eur",
     };
-
     const toMoney: IMoney = {
       amount: 10,
       currency: "eur",
@@ -39,25 +37,20 @@ describe("getMoneyRange", () => {
 
     expect(getMoneyRange(Locale.EN, intl, fromMoney, toMoney)).toBe("€10.00");
   });
-
   it("should return formated money range when from and to have different amount", () => {
     // Arrange
     const fromMoney: IMoney = {
       amount: 10,
       currency: "eur",
     };
-
     const toMoney: IMoney = {
       amount: 20,
       currency: "eur",
     };
     //  Act & Assert
 
-    expect(getMoneyRange(Locale.EN, intl, fromMoney, toMoney)).toBe(
-      "€10.00 - €20.00",
-    );
+    expect(getMoneyRange(Locale.EN, intl, fromMoney, toMoney)).toBe("€10.00 - €20.00");
   });
-
   it("should return formated money  when only from is provided", () => {
     // Arrange
     const fromMoney: IMoney = {
@@ -69,7 +62,6 @@ describe("getMoneyRange", () => {
 
     expect(getMoneyRange(Locale.EN, intl, fromMoney)).toBe("from €10.00");
   });
-
   it("should return formated money  when only to is provided", () => {
     // Arrange
     const toMoney: IMoney = {
@@ -79,8 +71,6 @@ describe("getMoneyRange", () => {
 
     //  Act & Assert
 
-    expect(getMoneyRange(Locale.EN, intl, undefined, toMoney)).toBe(
-      "to €10.00",
-    );
+    expect(getMoneyRange(Locale.EN, intl, undefined, toMoney)).toBe("to €10.00");
   });
 });

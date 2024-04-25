@@ -15,9 +15,7 @@ interface OrderTransactionTileEventProps {
   event: TransactionBaseEventFragment;
 }
 
-export const OrderTransactionTileEvent = ({
-  event,
-}: OrderTransactionTileEventProps) => {
+export const OrderTransactionTileEvent = ({ event }: OrderTransactionTileEventProps) => {
   const { type, status } = mapTransactionEvent(event);
 
   return (

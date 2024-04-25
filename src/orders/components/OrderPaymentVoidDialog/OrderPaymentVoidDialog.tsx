@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -38,11 +35,7 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle disableTypography>
-        <FormattedMessage
-          id="KszPFx"
-          defaultMessage="Void Payment"
-          description="dialog header"
-        />
+        <FormattedMessage id="KszPFx" defaultMessage="Void Payment" description="dialog header" />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -71,5 +64,6 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
     </Dialog>
   );
 };
+
 OrderPaymentVoidDialog.displayName = "OrderPaymentVoidDialog";
 export default OrderPaymentVoidDialog;

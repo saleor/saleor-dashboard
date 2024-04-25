@@ -1,27 +1,15 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import {
-  SearchPermissionGroupsQuery,
-  StaffErrorFragment,
-} from "@dashboard/graphql";
+import { SearchPermissionGroupsQuery, StaffErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { commonMessages } from "@dashboard/intl";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -42,7 +30,6 @@ const initialForm: AddMemberFormData = {
   lastName: "",
   permissionGroups: [],
 };
-
 const useStyles = makeStyles(
   theme => ({
     hr: {
@@ -52,7 +39,7 @@ const useStyles = makeStyles(
       marginBottom: 0,
     },
     sectionTitle: {
-      fontWeight: 600 as 600,
+      fontWeight: 600 as const,
       marginBottom: theme.spacing(),
       marginTop: theme.spacing(2),
     },
@@ -78,15 +65,10 @@ interface StaffAddMemberDialogProps extends SearchPageProps {
 
 const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
   const { confirmButtonState, errors, onClose, onConfirm, open } = props;
-
   const classes = useStyles(props);
   const dialogErrors = useModalDialogErrors(errors, open);
   const intl = useIntl();
-  const formErrors = getFormErrors(
-    ["firstName", "lastName", "email"],
-    dialogErrors,
-  );
-
+  const formErrors = getFormErrors(["firstName", "lastName", "email"], dialogErrors);
   const getFieldProps = (name: string) => ({
     disabled: props.disabled,
     error: !!formErrors[name],
@@ -147,11 +129,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
                 type="submit"
                 transitionState={confirmButtonState}
               >
-                <FormattedMessage
-                  id="hw9Fah"
-                  defaultMessage="Send invite"
-                  description="button"
-                />
+                <FormattedMessage id="hw9Fah" defaultMessage="Send invite" description="button" />
               </ConfirmButton>
             </DialogActions>
           </>
@@ -160,5 +138,6 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
     </Dialog>
   );
 };
+
 StaffAddMemberDialog.displayName = "StaffAddMemberDialog";
 export default StaffAddMemberDialog;

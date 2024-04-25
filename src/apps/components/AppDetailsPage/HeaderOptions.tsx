@@ -24,18 +24,12 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
 }) => {
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-
   const tooltipContent = !hasManagedAppsPermission
     ? intl.formatMessage(buttonMessages.noPermission)
     : undefined;
 
   return (
-    <Box
-      paddingX={6}
-      borderBottomStyle="solid"
-      borderColor="default1"
-      borderBottomWidth={1}
-    >
+    <Box paddingX={6} borderBottomStyle="solid" borderColor="default1" borderBottomWidth={1}>
       <Box display="flex" gap={1} paddingY={2}>
         <ButtonWithTooltip
           data-test-id="app-activate-button"
@@ -72,4 +66,5 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
     </Box>
   );
 };
+
 export default HeaderOptions;

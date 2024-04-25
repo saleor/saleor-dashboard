@@ -22,7 +22,7 @@ const useStyles = makeStyles(
       minWidth: "80px",
       opacity: 1,
       paddingTop: theme.spacing(1),
-      textTransform: "initial" as "initial",
+      textTransform: "initial" as const,
     },
   }),
   { name: "FilterTab" },
@@ -37,7 +37,6 @@ interface FilterTabProps {
 
 export const FilterTab: React.FC<FilterTabProps> = props => {
   const { onClick, label, selected, value } = props;
-
   const classes = useStyles(props);
 
   return (

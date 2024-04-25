@@ -62,5 +62,6 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
     <Typography>{initial}</Typography>
   );
 };
+
 TranslationFieldsShort.displayName = "TranslationFieldsShort";
 export default TranslationFieldsShort;

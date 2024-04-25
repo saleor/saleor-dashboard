@@ -4,10 +4,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
-import {
-  AttributeTranslationDetailsFragment,
-  LanguageCodeEnum,
-} from "@dashboard/graphql";
+import { AttributeTranslationDetailsFragment, LanguageCodeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
@@ -24,8 +21,7 @@ import { getTranslationFields } from "../../utils";
 import TranslationFields from "../TranslationFields";
 import { transtionsAttributesPageFieldsMessages as messages } from "./messages";
 
-export interface TranslationsAttributesPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsAttributesPageProps extends TranslationsEntitiesPageProps {
   data: AttributeTranslationDetailsFragment;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
@@ -52,7 +48,6 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   onUpdateListSettings,
 }) => {
   const intl = useIntl();
-
   const withChoices = data?.attribute?.withChoices;
 
   return (
@@ -64,8 +59,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         title={intl.formatMessage(
           {
             id: "SPBLzT",
-            defaultMessage:
-              'Translation Attribute "{attribute}" - {languageCode}',
+            defaultMessage: 'Translation Attribute "{attribute}" - {languageCode}',
             description: "header",
           },
           {
@@ -78,11 +72,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
           getLanguageUrl={lang =>
-            languageEntityUrl(
-              lang,
-              TranslatableEntities.attributes,
-              translationId,
-            )
+            languageEntityUrl(lang, TranslatableEntities.attributes, translationId)
           }
         />
       </TopNav>
@@ -100,7 +90,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
               }),
               name: fieldNames.attribute + ":" + data?.attribute.id,
               translation: data?.translation?.name || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.attribute?.name,
             },
           ]}
@@ -133,5 +123,6 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsAttributesPage.displayName = "TranslationsAttributesPage";
 export default TranslationsAttributesPage;

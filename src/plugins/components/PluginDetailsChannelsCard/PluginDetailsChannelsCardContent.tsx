@@ -33,9 +33,11 @@ export interface PluginDetailsChannelsCardProps {
   plugin: PluginsDetailsFragment;
 }
 
-const PluginDetailsChannelsCardContent: React.FC<
-  PluginDetailsChannelsCardProps
-> = ({ plugin, selectedChannelId, setSelectedChannelId }) => {
+const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps> = ({
+  plugin,
+  selectedChannelId,
+  setSelectedChannelId,
+}) => {
   const classes = useStyles({});
 
   if (!plugin) {
@@ -54,8 +56,7 @@ const PluginDetailsChannelsCardContent: React.FC<
     );
   }
 
-  const isChannelSelected = (channelId: string) =>
-    selectedChannelId === channelId;
+  const isChannelSelected = (channelId: string) => selectedChannelId === channelId;
 
   return (
     <>
@@ -68,9 +69,7 @@ const PluginDetailsChannelsCardContent: React.FC<
             key={channel.id}
             onClick={() => setSelectedChannelId(channel.id)}
           >
-            {isChannelSelected(channel.id) && (
-              <div className={classes.itemActiveIndicator}></div>
-            )}
+            {isChannelSelected(channel.id) && <div className={classes.itemActiveIndicator}></div>}
             <CardContent>
               <Typography>{channel.name}</Typography>
             </CardContent>

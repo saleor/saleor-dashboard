@@ -10,13 +10,7 @@ export const AppAvatar: React.FC<{
   size?: Size;
 }> = ({ logo, size = 8 }) =>
   logo ? (
-    <Box
-      width={size}
-      height={size}
-      display="flex"
-      placeItems="center"
-      borderRadius={2}
-    >
+    <Box width={size} height={size} display="flex" placeItems="center" borderRadius={2}>
       <Box as="img" src={logo.source} width="100%" />
     </Box>
   ) : (

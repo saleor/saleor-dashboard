@@ -14,12 +14,8 @@ interface UseRulesHandlersProps {
   data: PromotionDetailsFragment | undefined | null;
   ruleConditionsOptionsDetailsMap: Record<string, string>;
   giftsOptionsDetailsMap: Record<string, string>;
-  onRuleUpdateSubmit: (
-    data: Rule,
-  ) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
-  onRuleCreateSubmit: (
-    data: Rule,
-  ) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
+  onRuleUpdateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
+  onRuleCreateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
   onRuleDeleteSubmit: (id: string) => void;
 }
 
@@ -32,10 +28,9 @@ export const useRulesHandlers = ({
   onRuleDeleteSubmit,
 }: UseRulesHandlersProps) => {
   const [rulesErrors, setRulesErrors] = useState<Array<CommonError<any>>>([]);
-  const [conditionValuesLabelMap, setConditionValuesLabelMap] = useState<
-    Record<string, string>
-  >({});
-
+  const [conditionValuesLabelMap, setConditionValuesLabelMap] = useState<Record<string, string>>(
+    {},
+  );
   const rules = sortRules(
     data?.rules?.map(rule =>
       mapAPIRuleToForm(data?.type, rule, {
@@ -60,13 +55,11 @@ export const useRulesHandlers = ({
       ...getCurrentConditionsValuesLabels([rule]),
     }));
   };
-
   const onRuleSubmit = async (rule: Rule, ruleEditIndex: number | null) => {
     let errors: Array<
-      CommonError<
-        PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment
-      >
+      CommonError<PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment>
     > = [];
+
     updateLabels(rule);
 
     if (ruleEditIndex !== null) {
@@ -77,18 +70,19 @@ export const useRulesHandlers = ({
       }
     } else {
       errors = await onRuleCreateSubmit(rule);
+
       if (errors.length > 0) {
         setRulesErrors(errors);
       }
     }
   };
-
   const onDeleteRule = async (ruleDeleteIndex: number) => {
     if (ruleDeleteIndex === null) {
       return;
     }
 
     const ruleId = rules[ruleDeleteIndex].id;
+
     if (!ruleId) {
       return;
     }

@@ -13,20 +13,13 @@ interface LabelsMapsProoviderProps {
   promotionData: PromotionDetailsQuery | undefined;
 }
 
-export const LabelsMapsProvider = ({
-  children,
-  promotionData,
-}: LabelsMapsProoviderProps) => {
+export const LabelsMapsProvider = ({ children, promotionData }: LabelsMapsProoviderProps) => {
   const { ruleConditionsOptionsDetails, ruleConditionsOptionsDetailsLoading } =
     useFetchConditionsOptionsDetails(promotionData);
-
   const ruleConditionsOptionsDetailsMap = getRuleConditionsOptionsDetailsMap(
     ruleConditionsOptionsDetails,
   );
-
-  const { giftsLabels, loading: giftsLabelsLoading } =
-    useFetchGiftLables(promotionData);
-
+  const { giftsLabels, loading: giftsLabelsLoading } = useFetchGiftLables(promotionData);
   const contextValue = {
     ruleConditionsValues: {
       labels: ruleConditionsOptionsDetailsMap,
@@ -38,18 +31,10 @@ export const LabelsMapsProvider = ({
     },
   };
 
-  return (
-    <labelsMapsContext.Provider value={contextValue}>
-      {children}
-    </labelsMapsContext.Provider>
-  );
+  return <labelsMapsContext.Provider value={contextValue}>{children}</labelsMapsContext.Provider>;
 };
 
-export const EmpptyLabelsMapsProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}) => {
+export const EmpptyLabelsMapsProvider = ({ children }: { children: ReactNode }) => {
   return (
     <labelsMapsContext.Provider
       value={{

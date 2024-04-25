@@ -24,21 +24,13 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
   identifier,
 }) => {
   const logo = logoUrl ? { source: logoUrl } : undefined;
-
   const navigate = useNavigator();
-
   const navigateToAppScreen = () => {
     navigate(AppUrls.resolveAppDetailsUrl(id));
   };
 
   return (
-    <Box
-      gap={4}
-      alignItems="center"
-      display="grid"
-      width="100%"
-      __gridTemplateColumns="1fr auto"
-    >
+    <Box gap={4} alignItems="center" display="grid" width="100%" __gridTemplateColumns="1fr auto">
       <Box display="flex" alignItems="center" gap={3}>
         <AppAvatar logo={logo} />
         <Box>
@@ -76,13 +68,7 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
       <Button onClick={navigateToAppScreen} variant="tertiary">
         <Box display="flex" alignItems="center" gap={1}>
           {identifier && (
-            <Text
-              color="default2"
-              size={2}
-              ellipsis
-              __maxWidth="150px"
-              textDecoration="underline"
-            >
+            <Text color="default2" size={2} ellipsis __maxWidth="150px" textDecoration="underline">
               {identifier}
             </Text>
           )}

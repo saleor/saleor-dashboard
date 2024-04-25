@@ -2,10 +2,7 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import {
-  LanguageCodeEnum,
-  MenuItemTranslationFragment,
-} from "@dashboard/graphql";
+import { LanguageCodeEnum, MenuItemTranslationFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
@@ -22,8 +19,7 @@ import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsMenuItemPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsMenuItemPageProps extends TranslationsEntitiesPageProps {
   data: MenuItemTranslationFragment;
 }
 
@@ -50,8 +46,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
         title={intl.formatMessage(
           {
             id: "IOshTA",
-            defaultMessage:
-              'Translation MenuItem "{menuItemName}" - {languageCode}',
+            defaultMessage: 'Translation MenuItem "{menuItemName}" - {languageCode}',
             description: "header",
           },
           {
@@ -64,11 +59,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
           getLanguageUrl={lang =>
-            languageEntityUrl(
-              lang,
-              TranslatableEntities.menuItems,
-              translationId,
-            )
+            languageEntityUrl(lang, TranslatableEntities.menuItems, translationId)
           }
         />
       </TopNav>
@@ -87,7 +78,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
               }),
               name: TranslationInputFieldName.name,
               translation: data?.translation?.name || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.menuItem.name,
             },
           ]}
@@ -101,5 +92,6 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsMenuItemPage.displayName = "TranslationsMenuItemPage";
 export default TranslationsMenuItemPage;

@@ -20,9 +20,7 @@ export function canBeSorted(sort: DiscountListUrlSortField | undefined) {
   }
 }
 
-export function getSortQueryField(
-  sort: DiscountListUrlSortField,
-): PromotionSortField {
+export function getSortQueryField(sort: DiscountListUrlSortField): PromotionSortField {
   switch (sort) {
     case DiscountListUrlSortField.name:
       return PromotionSortField.NAME;
@@ -35,5 +33,4 @@ export function getSortQueryField(
   }
 }
 
-export const getSortQueryVariables =
-  createGetSortQueryVariables(getSortQueryField);
+export const getSortQueryVariables = createGetSortQueryVariables(getSortQueryField);

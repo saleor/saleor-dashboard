@@ -11,13 +11,9 @@ export type CollectionChannels = Pick<
   CollectionFragment["channelListings"][0],
   "isPublished" | "publicationDate" | "channel"
 >;
-export type Channels = Pick<
-  CollectionFragment["channelListings"][0],
-  "channel"
->;
+export type Channels = Pick<CollectionFragment["channelListings"][0], "channel">;
 
-export const isActive = (channelData: CollectionChannels) =>
-  channelData?.isPublished;
+export const isActive = (channelData: CollectionChannels) => channelData?.isPublished;
 export const isScheduled = (channelData: CollectionChannels) =>
   channelData?.publicationDate && !channelData?.isPublished;
 
@@ -25,44 +21,46 @@ export const getDropdownColor = (channels: CollectionChannels[]) => {
   if (channels.some(isActive)) {
     return "success";
   }
+
   if (channels.some(isScheduled)) {
     return "warning";
   }
+
   return "error";
 };
 
-export const getChannelAvailabilityColor = (
-  channelData: CollectionChannels,
-): PillColor => {
+export const getChannelAvailabilityColor = (channelData: CollectionChannels): PillColor => {
   if (isActive(channelData)) {
     return "success";
   }
+
   if (isScheduled(channelData)) {
     return "warning";
   }
+
   return "error";
 };
 
-export const getChannelAvailabilityLabel = (
-  channelData: CollectionChannels,
-): MessageDescriptor => {
+export const getChannelAvailabilityLabel = (channelData: CollectionChannels): MessageDescriptor => {
   if (isActive(channelData)) {
     return channelStatusMessages.published;
   }
+
   if (isScheduled(channelData)) {
     return channelStatusMessages.scheduled;
   }
+
   return channelStatusMessages.unpublished;
 };
-export const getChannelAvailabilityStatus = (
-  channelData: CollectionChannels,
-): DotStatus => {
+export const getChannelAvailabilityStatus = (channelData: CollectionChannels): DotStatus => {
   if (isActive(channelData)) {
     return "success";
   }
+
   if (isScheduled(channelData)) {
     return "warning";
   }
+
   return "error";
 };
 

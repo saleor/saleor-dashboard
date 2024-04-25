@@ -7,10 +7,7 @@ import {
   getChannelAvailabilityLabel,
   getDropdownColor,
 } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
-import {
-  readonlyTextCell,
-  tagsCell,
-} from "@dashboard/components/Datagrid/customCells/cells";
+import { readonlyTextCell, tagsCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { getStatusColor } from "@dashboard/misc";
 import { Sort } from "@dashboard/types";
@@ -76,11 +73,9 @@ export const createGetCellContent =
       case "name":
         return readonlyTextCell(rowData.name);
       case "productCount":
-        return readonlyTextCell(
-          rowData?.products?.totalCount?.toString() ?? "",
-        );
+        return readonlyTextCell(rowData?.products?.totalCount?.toString() ?? "");
       case "availability": {
-        const { label, color } = !!channel
+        const { label, color } = channel
           ? getAvailabilityLabelWhenSelectedChannel(channel, intl, currentTheme)
           : getAvailabilityLabel(rowData, intl, currentTheme);
 
@@ -129,7 +124,6 @@ export function getAvailabilityLabel(
         channelCount: rowData?.channelListings?.length,
       })
     : intl.formatMessage(messages.noChannels);
-
   const color = getStatusColor({
     status: getDropdownColor(rowData?.channelListings || []),
     currentTheme,

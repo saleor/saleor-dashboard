@@ -877,7 +877,6 @@ const relativeOutput: RecursiveMenuItem[][] = [
     },
   ],
 ];
-
 const secondTestTable: TreeOperation[][] = [
   // no moves
   [],
@@ -998,7 +997,6 @@ const secondTestTable: TreeOperation[][] = [
     },
   ],
 ];
-
 const testTable: TreeOperation[][] = [
   [],
   [
@@ -1158,12 +1156,10 @@ function innerTreeToString(tree: RecursiveMenuItem, level: number): string {
     "\n" +
     "··".repeat(level) +
     tree.name +
-    tree.children.reduce(
-      (acc, node) => acc + innerTreeToString(node, level + 1),
-      "",
-    )
+    tree.children.reduce((acc, node) => acc + innerTreeToString(node, level + 1), "")
   );
 }
+
 function treeToString(tree: RecursiveMenuItem[]): string {
   return tree.reduce((acc, node) => acc + innerTreeToString(node, 0), "");
 }
@@ -1172,64 +1168,65 @@ describe("Properly computes trees", () => {
   testTable.forEach(testData =>
     it("#", () => {
       const computedTree = computeRelativeTree(menu.items, testData);
+
       expect(treeToString(computedTree)).toMatchSnapshot();
     }),
   );
 });
-
 describe("Properly computes relative trees", () => {
   it("doesn't move anything", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[0]);
+
     expect(computedTree).toEqual(relativeOutput[0]);
   });
-
   it("moves one root element", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[1]);
+
     expect(computedTree).toEqual(relativeOutput[1]);
   });
-
   it("moves two root element", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[2]);
+
     expect(computedTree).toEqual(relativeOutput[2]);
   });
-
   it("empty moves", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[3]);
+
     expect(computedTree).toEqual(relativeOutput[3]);
   });
-
   it("moves every element", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[4]);
+
     expect(computedTree).toEqual(relativeOutput[4]);
   });
-
   it("moves children", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[5]);
+
     expect(computedTree).toEqual(relativeOutput[5]);
   });
-
   it("moves child outside", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[6]);
+
     expect(computedTree).toEqual(relativeOutput[6]);
   });
-
   it("moves child outside and puts it in a location", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[7]);
+
     expect(computedTree).toEqual(relativeOutput[7]);
   });
-
   it("moves child inside", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[8]);
+
     expect(computedTree).toEqual(relativeOutput[8]);
   });
-
   it("moves child inside then outside then changes index", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[9]);
+
     expect(computedTree).toEqual(relativeOutput[9]);
   });
-
   it("moves item as last child and moves it up", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[10]);
+
     expect(computedTree).toEqual(relativeOutput[10]);
   });
 });

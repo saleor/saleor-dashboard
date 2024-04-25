@@ -13,14 +13,12 @@ describe("getReturnRefundValue", () => {
       customRefundValue: undefined,
       amountData: undefined,
     };
-
     // Act
     const result = getReturnRefundValue(testData);
 
     // Assert
     expect(result).toEqual("");
   });
-
   it("should return customRefundValue as string if autoGrantRefund is true and isAmountDirty is true", () => {
     // Arrange
     const testData = {
@@ -29,14 +27,12 @@ describe("getReturnRefundValue", () => {
       customRefundValue: 123,
       amountData: undefined,
     };
-
     // Act
     const result = getReturnRefundValue(testData);
 
     // Assert
     expect(result).toEqual("123");
   });
-
   it("should return empty string if autoGrantRefund is true, isAmountDirty is true, but customRefundValue is undefined", () => {
     // Arrange
     const testData = {
@@ -45,14 +41,12 @@ describe("getReturnRefundValue", () => {
       customRefundValue: undefined,
       amountData: undefined,
     };
-
     // Act
     const result = getReturnRefundValue(testData);
 
     // Assert
     expect(result).toEqual("");
   });
-
   it("should return refundTotalAmount as string if autoGrantRefund is true, isAmountDirty is false, and amountData is defined", () => {
     // Arrange
     const testData = {
@@ -78,14 +72,12 @@ describe("getReturnRefundValue", () => {
         },
       },
     };
-
     // Act
     const result = getReturnRefundValue(testData);
 
     // Assert
     expect(result).toEqual("456.78");
   });
-
   it("should return empty string if autoGrantRefund is true, isAmountDirty is false, but amountData is undefined", () => {
     // Arrange
     const testData = {
@@ -94,7 +86,6 @@ describe("getReturnRefundValue", () => {
       customRefundValue: undefined,
       amountData: undefined,
     };
-
     // Act
     const result = getReturnRefundValue(testData);
 
@@ -102,13 +93,11 @@ describe("getReturnRefundValue", () => {
     expect(result).toEqual("");
   });
 });
-
 describe("canSendRefundDuringReturn", () => {
   it("should return false when autoGrantRefund is false", () => {
     // Arrange
     const transactionMock = orderTransactions[0];
     const autoGrantRefund = false;
-
     // Act
     const result = canSendRefundDuringReturn({
       autoGrantRefund,
@@ -121,11 +110,9 @@ describe("canSendRefundDuringReturn", () => {
       reason: submitCardMessages.cantSendRefundGrantFirst,
     });
   });
-
   it("should return false when there are no transactions", () => {
     // Arrange
     const autoGrantRefund = true;
-
     // Act
     const result = canSendRefundDuringReturn({
       autoGrantRefund,
@@ -138,12 +125,10 @@ describe("canSendRefundDuringReturn", () => {
       reason: submitCardMessages.cantSendRefundNoTransactions,
     });
   });
-
   it("should return false when there are multiple transactions", () => {
     // Arrange
     const transactionMock = orderTransactions[0];
     const autoGrantRefund = true;
-
     // Act
     const result = canSendRefundDuringReturn({
       autoGrantRefund,
@@ -156,12 +141,10 @@ describe("canSendRefundDuringReturn", () => {
       reason: submitCardMessages.cantSendRefundMultipleTransactions,
     });
   });
-
   it("should return false when the transaction does not include a refund action", () => {
     // Arrange
     const transactionMock = { ...orderTransactions[0], actions: [] };
     const autoGrantRefund = true;
-
     // Act
     const result = canSendRefundDuringReturn({
       autoGrantRefund,
@@ -174,7 +157,6 @@ describe("canSendRefundDuringReturn", () => {
       reason: submitCardMessages.cantSendRefundNonRefundable,
     });
   });
-
   it("should return true when all conditions are met", () => {
     // Arrange
     const transactionMock = {
@@ -182,7 +164,6 @@ describe("canSendRefundDuringReturn", () => {
       actions: [TransactionActionEnum.REFUND],
     };
     const autoGrantRefund = true;
-
     const result = canSendRefundDuringReturn({
       autoGrantRefund,
       transactions: [transactionMock],

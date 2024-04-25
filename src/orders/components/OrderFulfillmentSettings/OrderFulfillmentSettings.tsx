@@ -86,5 +86,6 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
     </Card>
   );
 };
+
 OrderFulfillmentSettings.displayName = "OrderFulfillmentSettings";
 export default OrderFulfillmentSettings;

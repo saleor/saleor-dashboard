@@ -13,7 +13,6 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
   const classes = useStyles({});
   const hasSingleMenuItem = menuItems.length === 1;
   const firstMenuItem = menuItems[0];
-
   const handleIconClick = () => {
     firstMenuItem.onSelect();
   };

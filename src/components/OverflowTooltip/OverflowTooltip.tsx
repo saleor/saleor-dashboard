@@ -31,7 +31,6 @@ const useStyles = makeStyles(
     name: "OverflowTooltip",
   },
 );
-
 const OverflowTooltip: React.FC<OverflowTooltipProps> = ({
   checkHorizontal = true,
   checkVertical = true,
@@ -41,7 +40,6 @@ const OverflowTooltip: React.FC<OverflowTooltipProps> = ({
   children,
 }) => {
   const classes = useStyles();
-
   const { ref, isOverflow } = useOverflow<HTMLDivElement>({
     horizontal: checkHorizontal,
     vertical: checkVertical,

@@ -66,7 +66,6 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
   const [unitData, setUnitData] = useState<UnitData>({
     unit: data.unit ?? null,
   });
-
   const { unit, system, type } = unitData;
   const errorProps = {
     error: !!errors.unit,
@@ -88,7 +87,6 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
   );
 
   useEffect(() => set({ unit }), [unit]);
-
   useEffect(() => {
     if (data.unit) {
       const selectInitialUnitData = () => {
@@ -97,14 +95,18 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
         Object.entries(unitChoices).some(([system, types]) => {
           const systemMatch = Object.entries(types).some(([type, units]) => {
             const unitMatch = units.some(({ value }) => value === data.unit);
+
             if (unitMatch) {
               initialData.type = type as UnitType;
             }
+
             return unitMatch;
           });
+
           if (systemMatch) {
             initialData.system = system as UnitSystem;
           }
+
           return systemMatch;
         });
 
@@ -114,11 +116,11 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
       setUnitData(selectInitialUnitData());
     }
   }, []);
-
   useEffect(() => {
     if (unit === undefined && !errors.unit) {
       setError("unit", formatMessage(commonMessages.requiredField));
     }
+
     if (errors.unit && (unit || unit === null)) {
       clearErrors("unit");
     }
@@ -132,9 +134,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
         name="selectUnit"
         label={formatMessage(M.messages.selectUnit)}
         checked={data.unit !== null}
-        onChange={({ target }) =>
-          setUnitData({ unit: target.value ? undefined : null })
-        }
+        onChange={({ target }) => setUnitData({ unit: target.value ? undefined : null })}
         disabled={disabled}
       />
       {data.unit !== null && (
@@ -180,9 +180,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
             }
             disabled={!type || disabled}
             value={
-              type && system && unit && unitMapping[system][type].includes(unit)
-                ? unit
-                : undefined
+              type && system && unit && unitMapping[system][type].includes(unit) ? unit : undefined
             }
           />
         </div>

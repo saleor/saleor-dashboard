@@ -28,7 +28,6 @@ export interface SaleVariantsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 5;
-
 const DiscountVariants: React.FC<SaleVariantsProps> = props => {
   const {
     variants,
@@ -42,7 +41,6 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
     toolbar,
   } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
@@ -73,20 +71,14 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
         >
           <TableCell className={classes.colProductName}>
             <span className={variants?.length > 0 && classes.colNameLabel}>
-              <FormattedMessage
-                {...messages.discountVariantsTableProductHeader}
-              />
+              <FormattedMessage {...messages.discountVariantsTableProductHeader} />
             </span>
           </TableCell>
           <TableCell className={classes.colVariantName}>
-            <FormattedMessage
-              {...messages.discountVariantsTableVariantHeader}
-            />
+            <FormattedMessage {...messages.discountVariantsTableVariantHeader} />
           </TableCell>
           <TableCell className={classes.colType}>
-            <FormattedMessage
-              {...messages.discountVariantsTableProductHeader}
-            />
+            <FormattedMessage {...messages.discountVariantsTableProductHeader} />
           </TableCell>
           <TableCell className={classes.colActions} />
         </TableHead>
@@ -105,10 +97,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                 <TableRowLink
                   hover={!!variant}
                   key={variant ? variant.id : "skeleton"}
-                  href={
-                    variant &&
-                    productVariantEditPath(variant.product.id, variant.id)
-                  }
+                  href={variant && productVariantEditPath(variant.product.id, variant.id)}
                   className={classes.tableRow}
                   selected={isSelected}
                 >
@@ -124,19 +113,13 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                     className={classes.colProductName}
                     thumbnail={maybe(() => variant.product.thumbnail.url)}
                   >
-                    {maybe<React.ReactNode>(
-                      () => variant.product.name,
-                      <Skeleton />,
-                    )}
+                    {maybe<React.ReactNode>(() => variant.product.name, <Skeleton />)}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
                     {maybe<React.ReactNode>(() => variant.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(
-                      () => variant.product.productType.name,
-                      <Skeleton />,
-                    )}
+                    {maybe<React.ReactNode>(() => variant.product.productType.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
@@ -168,5 +151,6 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
     </Card>
   );
 };
+
 DiscountVariants.displayName = "DiscountVariants";
 export default DiscountVariants;

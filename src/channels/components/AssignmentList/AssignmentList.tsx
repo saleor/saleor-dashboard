@@ -18,24 +18,13 @@ const messages = defineMessages({
     description: "all selected items message",
   },
 });
-
 const AssignmentList: React.FC<AssignmentListProps> = props => {
-  const {
-    items,
-    itemsName,
-    totalCount = 0,
-    loading,
-    removeItem,
-    reorderItem,
-  } = props;
-
+  const { items, itemsName, totalCount = 0, loading, removeItem, reorderItem } = props;
   const intl = useIntl();
   const classes = useStyles();
-
   const handleSortStart = () => {
     document.body.classList.add(classes.grabbing);
   };
-
   const handleSortEnd = (event: ReorderEvent) => {
     document.body.classList.remove(classes.grabbing);
 
@@ -43,7 +32,6 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
       reorderItem(event);
     }
   };
-
   const hasMoreItemsToBeSelected = totalCount !== items.length;
 
   return (
@@ -105,4 +93,5 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
     </Accordion>
   );
 };
+
 export default AssignmentList;

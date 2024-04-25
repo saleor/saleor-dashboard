@@ -15,7 +15,6 @@ const messages = defineMessages({
     description: "section header",
   },
 });
-
 const useStyles = makeStyles(
   theme => ({
     card: {
@@ -78,24 +77,18 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
           <div className={classes.root}>
             {media.map(mediaObj => {
               const mediaObjOembedData = JSON.parse(mediaObj?.oembedData);
-              const mediaUrl =
-                mediaObjOembedData?.thumbnail_url || mediaObj.url;
+              const mediaUrl = mediaObjOembedData?.thumbnail_url || mediaObj.url;
 
               return (
                 <div
                   className={clsx({
                     [classes.imageContainer]: true,
-                    [classes.highlightedImageContainer]:
-                      mediaObj.id === highlighted,
+                    [classes.highlightedImageContainer]: mediaObj.id === highlighted,
                   })}
                   onClick={onRowClick(mediaObj.id)}
                   key={mediaObj.id}
                 >
-                  <img
-                    className={classes.image}
-                    src={mediaUrl}
-                    alt={mediaObj.alt}
-                  />
+                  <img className={classes.image} src={mediaUrl} alt={mediaObj.alt} />
                 </div>
               );
             })}
@@ -105,5 +98,6 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
     </Card>
   );
 };
+
 ProductMediaNavigation.displayName = "ProductMediaNavigation";
 export default ProductMediaNavigation;

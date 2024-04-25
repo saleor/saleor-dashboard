@@ -35,8 +35,7 @@ const messages = defineMessages({
   },
   noCountriesAssigned: {
     id: "y7mfbl",
-    defaultMessage:
-      "Currently, there are no countries assigned to this shipping zone",
+    defaultMessage: "Currently, there are no countries assigned to this shipping zone",
   },
 });
 
@@ -59,10 +58,8 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
-
   const initialForm: ShippingZoneCreateFormData = {
     countries: [],
     description: "",
@@ -70,26 +67,13 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={onSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => (
         <DetailPageLayout gridTemplateColumns={1}>
-          <TopNav
-            href={shippingZonesListUrl()}
-            title={intl.formatMessage(messages.createZone)}
-          />
+          <TopNav href={shippingZonesListUrl()} title={intl.formatMessage(messages.createZone)} />
           <DetailPageLayout.Content>
             <div>
-              <ShippingZoneInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
+              <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
               <CountryList
                 countries={data.countries.map(selectedCountry =>
@@ -102,9 +86,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
                   change({
                     target: {
                       name: "countries",
-                      value: data.countries.filter(
-                        country => country !== countryCode,
-                      ),
+                      value: data.countries.filter(country => country !== countryCode),
                     },
                   } as any)
                 }
@@ -141,5 +123,6 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
     </Form>
   );
 };
+
 ShippingZoneCreatePage.displayName = "ShippingZoneCreatePage";
 export default ShippingZoneCreatePage;

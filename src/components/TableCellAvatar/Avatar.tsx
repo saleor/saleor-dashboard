@@ -34,11 +34,7 @@ const Avatar: React.FC<AvatarProps> = ({
       })}
     >
       {badge}
-      <AvatarImage
-        thumbnail={thumbnail}
-        initials={initials}
-        avatarProps={avatarProps}
-      />
+      <AvatarImage thumbnail={thumbnail} initials={initials} avatarProps={avatarProps} />
       {!alignRight && <div className={classes.children}>{children}</div>}
     </div>
   );

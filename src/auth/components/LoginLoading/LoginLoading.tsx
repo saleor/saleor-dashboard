@@ -22,5 +22,6 @@ const LoginLoading: React.FC = props => {
     </div>
   );
 };
+
 LoginLoading.displayName = "LoginLoading";
 export default LoginLoading;

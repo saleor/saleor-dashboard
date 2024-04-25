@@ -45,11 +45,10 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
         padding: vars.spacing[1],
       },
       portal: {
-        "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button":
-          {
-            appearance: "none",
-            margin: 0,
-          },
+        "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
+          appearance: "none",
+          margin: 0,
+        },
         "& input[type=number]": {
           appearance: "textfield",
         },
@@ -192,12 +191,8 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
   { name: "Datagrid-fullscreen" },
 );
 
-export function useDatagridTheme(
-  readonly?: boolean,
-  hasHeaderClickable?: boolean,
-) {
+export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolean) {
   const { themeValues } = useTheme();
-
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
       accentColor: themeValues.colors.background.accent1,
@@ -228,7 +223,6 @@ export function useDatagridTheme(
     }),
     [themeValues, hasHeaderClickable],
   );
-
   const readonylDatagridTheme = useMemo(
     () => ({
       ...datagridTheme,
@@ -237,6 +231,7 @@ export function useDatagridTheme(
     }),
     [themeValues, datagridTheme],
   );
+
   return readonly ? readonylDatagridTheme : datagridTheme;
 }
 

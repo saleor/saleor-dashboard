@@ -11,9 +11,7 @@ export interface OrderChannelSectionCardProps {
   channel?: Pick<ChannelFragment, "id" | "name">;
 }
 
-export const OrderChannelSectionCard: React.FC<
-  OrderChannelSectionCardProps
-> = ({ channel }) => {
+export const OrderChannelSectionCard: React.FC<OrderChannelSectionCardProps> = ({ channel }) => {
   const intl = useIntl();
 
   return (

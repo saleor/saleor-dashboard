@@ -1,7 +1,4 @@
-import {
-  RadioGroup as RadioGroupBase,
-  RadioGroupRootProps,
-} from "@saleor/macaw-ui-next";
+import { RadioGroup as RadioGroupBase, RadioGroupRootProps } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { StopPropagation } from "../StopPropagation";

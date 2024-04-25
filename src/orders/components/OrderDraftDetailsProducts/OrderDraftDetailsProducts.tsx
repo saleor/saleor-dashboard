@@ -4,6 +4,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import { OrderDraftDetailsDatagrid } from "../OrderDraftDetailsDatagrid/OrderDraftDetailsDatagrid";
+
 export interface FormData {
   quantity: number;
 }
@@ -35,7 +36,6 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = ({
   onShowMetadata,
 }) => {
   const classes = useStyles();
-
   const lines = order?.lines ?? [];
   const formErrors = errors.filter(error => error.field === "lines");
 

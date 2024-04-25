@@ -10,22 +10,17 @@ import GiftCardsListHeaderAlertContent from "./GiftCardsListHeaderAlertContent";
 const GiftCardsListHeaderAlert: React.FC = () => {
   const intl = useIntl();
   const [selectedChannel] = useLocalStorage("channel", "");
-
   const { data: giftCardProductsCount, loading: giftCardProductsCountLoading } =
     useGiftCardProductsCountQuery({
       variables: {
         channel: selectedChannel,
       },
     });
-
   const giftCardProductTypesExist =
     (giftCardProductsCount?.giftCardProductTypes?.totalCount ?? 0) > 0;
-  const giftCardProductsExist =
-    (giftCardProductsCount?.giftCardProducts?.totalCount ?? 0) > 0;
-
+  const giftCardProductsExist = (giftCardProductsCount?.giftCardProducts?.totalCount ?? 0) > 0;
   const showNoGiftCardProductsAlert =
-    !giftCardProductsCountLoading &&
-    (!giftCardProductTypesExist || !giftCardProductsExist);
+    !giftCardProductsCountLoading && (!giftCardProductTypesExist || !giftCardProductsExist);
 
   if (showNoGiftCardProductsAlert) {
     return (

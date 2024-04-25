@@ -30,15 +30,11 @@ interface ResponsiveTableProps {
 
 const ResponsiveTable: React.FC<ResponsiveTableProps> = props => {
   const { children, className, onMouseLeave } = props;
-
   const classes = useStyles(props);
 
   return (
     <div className={classes.root}>
-      <Table
-        className={clsx(classes.table, className)}
-        onMouseLeave={onMouseLeave}
-      >
+      <Table className={clsx(classes.table, className)} onMouseLeave={onMouseLeave}>
         {children}
       </Table>
     </div>

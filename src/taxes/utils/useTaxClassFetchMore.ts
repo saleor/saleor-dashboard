@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  TaxClassBaseFragment,
-  useTaxClassAssignQuery,
-} from "@dashboard/graphql";
+import { TaxClassBaseFragment, useTaxClassAssignQuery } from "@dashboard/graphql";
 import { FetchMoreProps } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
@@ -24,7 +21,6 @@ export function useTaxClassFetchMore(): UseTaxClassFetchMoreHookResult {
       first: 20,
     },
   });
-
   const taxClasses = mapEdgesToItems(data?.taxClasses);
   const fetchMoreTaxClasses = {
     hasMore: data?.taxClasses?.pageInfo?.hasNextPage,
@@ -32,10 +28,7 @@ export function useTaxClassFetchMore(): UseTaxClassFetchMoreHookResult {
     onFetchMore: () => {
       loadMore(
         (prev, next) => {
-          if (
-            prev.taxClasses.pageInfo.endCursor ===
-            next.taxClasses.pageInfo.endCursor
-          ) {
+          if (prev.taxClasses.pageInfo.endCursor === next.taxClasses.pageInfo.endCursor) {
             return prev;
           }
 

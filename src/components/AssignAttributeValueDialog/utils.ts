@@ -12,17 +12,13 @@ export const filterProductsByAttributeValues = (
 ): ProductsToFilter => {
   switch (attribute.data.entityType) {
     case "PRODUCT":
-      return (
-        products?.filter(product => !attribute.value.includes(product.id)) ?? []
-      );
+      return products?.filter(product => !attribute.value.includes(product.id)) ?? [];
     case "PRODUCT_VARIANT":
       return (
         products?.map(product => ({
           ...product,
           variants:
-            product.variants?.filter(
-              variant => !attribute.value.includes(variant.id),
-            ) ?? [],
+            product.variants?.filter(variant => !attribute.value.includes(variant.id)) ?? [],
         })) ?? []
       );
     default:

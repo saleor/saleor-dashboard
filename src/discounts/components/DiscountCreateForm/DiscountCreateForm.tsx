@@ -25,35 +25,26 @@ interface DiscountCreateFormProps {
   onSubmit: (data: DiscoutFormData) => void;
 }
 
-export const DiscountCreateForm = ({
-  children,
-  onSubmit,
-}: DiscountCreateFormProps) => {
+export const DiscountCreateForm = ({ children, onSubmit }: DiscountCreateFormProps) => {
   const intl = useIntl();
-
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: initialFormValues,
     resolver: zodResolver(getValidationSchema(intl)),
   });
-
   const discountType = methods.watch("type");
-
   const richText = useRichText({
     initial: "",
     loading: false,
     triggerChange: methods.trigger,
   });
-
   const { rules, onDeleteRule, onRuleSubmit } = useRulesHandlers(discountType);
-
   const handleSubmit: SubmitHandler<DiscoutFormData> = data => {
     onSubmit({
       ...data,
       rules,
     });
   };
-
   const submitHandlerWithValidation = methods.handleSubmit(handleSubmit);
 
   return (

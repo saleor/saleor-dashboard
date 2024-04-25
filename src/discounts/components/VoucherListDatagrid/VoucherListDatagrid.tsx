@@ -18,10 +18,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  createGetCellContent,
-  vouchersListStaticColumnsAdapter,
-} from "./datagrid";
+import { createGetCellContent, vouchersListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 
 interface VoucherListDatagridProps
@@ -29,10 +26,7 @@ interface VoucherListDatagridProps
     SortPage<VoucherListUrlSortField>,
     ChannelProps {
   vouchers: VoucherFragment[];
-  onSelectVouchersIds: (
-    rowsIndex: number[],
-    clearSelection: () => void,
-  ) => void;
+  onSelectVouchersIds: (rowsIndex: number[], clearSelection: () => void) => void;
 }
 
 export const VoucherListDatagrid = ({
@@ -50,12 +44,10 @@ export const VoucherListDatagrid = ({
   const navigate = useNavigator();
   const { locale } = useLocale();
   const intl = useIntl();
-
   const vouchersListStaticColumns = useMemo(
     () => vouchersListStaticColumnsAdapter(intl, sort),
     [intl, sort],
   );
-
   const onColumnChange = useCallback(
     (picked: string[]) => {
       if (onUpdateListSettings) {
@@ -64,19 +56,12 @@ export const VoucherListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
-  const {
-    handlers,
-    visibleColumns,
-    recentlyAddedColumn,
-    staticColumns,
-    selectedColumns,
-  } = useColumns({
-    selectedColumns: settings?.columns ?? [],
-    staticColumns: vouchersListStaticColumns,
-    onSave: onColumnChange,
-  });
-
+  const { handlers, visibleColumns, recentlyAddedColumn, staticColumns, selectedColumns } =
+    useColumns({
+      selectedColumns: settings?.columns ?? [],
+      staticColumns: vouchersListStaticColumns,
+      onSave: onColumnChange,
+    });
   const getCellContent = useCallback(
     createGetCellContent({
       vouchers,
@@ -86,7 +71,6 @@ export const VoucherListDatagrid = ({
     }),
     [vouchers, selectedChannelId, locale, visibleColumns],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       const rowData: VoucherFragment = vouchers[row];
@@ -97,12 +81,7 @@ export const VoucherListDatagrid = ({
     },
     [vouchers],
   );
-
-  const handleRowAnchor = useCallback(
-    ([, row]: Item) => voucherUrl(vouchers[row].id),
-    [vouchers],
-  );
-
+  const handleRowAnchor = useCallback(([, row]: Item) => voucherUrl(vouchers[row].id), [vouchers]);
   const handleGetColumnTooltipContent = useCallback(
     (col: number): string => {
       const columnName = visibleColumns[col].id as VoucherListUrlSortField;
@@ -118,7 +97,6 @@ export const VoucherListDatagrid = ({
     },
     [filterDependency, intl, selectedChannelId, visibleColumns],
   );
-
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as VoucherListUrlSortField;

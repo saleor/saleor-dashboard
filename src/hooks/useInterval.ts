@@ -7,13 +7,13 @@ function useInterval(callback: () => void, delay: number | null) {
   useEffect(() => {
     savedCallback.current = callback;
   });
-
   useEffect(() => {
     function tick() {
       savedCallback.current();
     }
 
     const id = setInterval(tick, delay);
+
     return () => clearInterval(id);
   }, []);
 }

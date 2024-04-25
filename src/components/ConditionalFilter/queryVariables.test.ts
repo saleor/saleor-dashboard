@@ -11,10 +11,10 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
     const expectedOutput = {};
     // Act
     const result = createProductQueryVariables(filters);
+
     // Assert
     expect(result).toEqual(expectedOutput);
   });
-
   it("should create variables with selected filters", () => {
     // Arrange
     const filters: FilterContainer = [
@@ -70,6 +70,7 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
     };
     // Act
     const result = createProductQueryVariables(filters);
+
     // Assert
     expect(result).toEqual(expectedOutput);
   });

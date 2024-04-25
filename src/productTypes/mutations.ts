@@ -37,10 +37,7 @@ export const productTypeUpdateMutation = gql`
 `;
 
 export const assignProductAttributeMutation = gql`
-  mutation AssignProductAttribute(
-    $id: ID!
-    $operations: [ProductAttributeAssignInput!]!
-  ) {
+  mutation AssignProductAttribute($id: ID!, $operations: [ProductAttributeAssignInput!]!) {
     productAttributeAssign(productTypeId: $id, operations: $operations) {
       errors {
         ...ProductAttributeAssignErrorFragment
@@ -84,11 +81,7 @@ export const productTypeAttributeReorder = gql`
     $productTypeId: ID!
     $type: ProductAttributeType!
   ) {
-    productTypeReorderAttributes(
-      moves: [$move]
-      productTypeId: $productTypeId
-      type: $type
-    ) {
+    productTypeReorderAttributes(moves: [$move], productTypeId: $productTypeId, type: $type) {
       errors {
         ...ProductTypeReorderAttributesErrorFragment
       }
@@ -104,10 +97,7 @@ export const productAttributeAssignmentUpdate = gql`
     $operations: [ProductAttributeAssignmentUpdateInput!]!
     $productTypeId: ID!
   ) {
-    productAttributeAssignmentUpdate(
-      operations: $operations
-      productTypeId: $productTypeId
-    ) {
+    productAttributeAssignmentUpdate(operations: $operations, productTypeId: $productTypeId) {
       errors {
         ...ProductAttributeAssignmentUpdateErrorFragment
       }

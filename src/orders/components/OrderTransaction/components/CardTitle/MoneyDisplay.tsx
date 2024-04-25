@@ -13,7 +13,6 @@ interface MoneyDisplayProps {
 export const MoneyDisplay = ({ label, money }: MoneyDisplayProps) => {
   const { locale } = useLocale();
   const classes = useMoneyDisplayStyles();
-
   const amount = formatMoneyAmount(money, locale);
 
   return (

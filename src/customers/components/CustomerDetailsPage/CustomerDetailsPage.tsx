@@ -15,16 +15,9 @@ import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Savebar from "@dashboard/components/Savebar";
-import {
-  customerAddressesUrl,
-  customerListUrl,
-} from "@dashboard/customers/urls";
+import { customerAddressesUrl, customerListUrl } from "@dashboard/customers/urls";
 import CustomerGiftCardsCard from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
-import {
-  AccountErrorFragment,
-  CustomerDetailsQuery,
-  PermissionEnum,
-} from "@dashboard/graphql";
+import { AccountErrorFragment, CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -55,9 +48,7 @@ export interface CustomerDetailsPageProps {
   disabled: boolean;
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
-  onSubmit: (
-    data: CustomerDetailsPageFormData,
-  ) => SubmitPromise<AccountErrorFragment[]>;
+  onSubmit: (data: CustomerDetailsPageFormData) => SubmitPromise<AccountErrorFragment[]>;
   onDelete: () => void;
 }
 
@@ -72,7 +63,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const initialForm: CustomerDetailsPageFormData = {
     email: customer?.email || "",
     firstName: customer?.firstName || "",
@@ -82,38 +72,22 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     note: customer?.note || "",
     privateMetadata: customer?.privateMetadata.map(mapMetadataItemToInput),
   };
-
-  const { makeChangeHandler: makeMetadataChangeHandler } =
-    useMetadataChangeTrigger();
-
-  const { CUSTOMER_DETAILS_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.CUSTOMER_DETAILS,
-  );
-
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
+  const { CUSTOMER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.CUSTOMER_DETAILS);
   const extensionMenuItems = mapToMenuItemsForCustomerDetails(
     CUSTOMER_DETAILS_MORE_ACTIONS,
     customerId,
   );
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={onSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <DetailPageLayout>
-            <TopNav
-              href={customerListUrl()}
-              title={getUserName(customer, true)}
-            >
-              {extensionMenuItems.length > 0 && (
-                <CardMenu menuItems={extensionMenuItems} />
-              )}
+            <TopNav href={customerListUrl()} title={getUserName(customer, true)}>
+              {extensionMenuItems.length > 0 && <CardMenu menuItems={extensionMenuItems} />}
             </TopNav>
             <DetailPageLayout.Content>
               <Backlink href={customerListUrl()}>
@@ -127,16 +101,9 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 onChange={change}
               />
               <CardSpacer />
-              <CustomerInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
+              <CustomerInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
-              <RequirePermissions
-                requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-              >
+              <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
                 <CustomerOrders
                   orders={mapEdgesToItems(customer?.orders)}
                   viewAllHref={orderListUrl({
@@ -156,9 +123,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               <CardSpacer />
               <CustomerStats customer={customer} />
               <CardSpacer />
-              <RequirePermissions
-                requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}
-              >
+              <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
                 <CustomerGiftCardsCard />
               </RequirePermissions>
             </DetailPageLayout.RightSidebar>
@@ -175,5 +140,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     </Form>
   );
 };
+
 CustomerDetailsPage.displayName = "CustomerDetailsPage";
 export default CustomerDetailsPage;

@@ -8,27 +8,15 @@ import { PluginBaseFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { getStatusColor } from "@dashboard/misc";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
-import {
-  FilterPageProps,
-  PageListProps,
-  SortPage,
-  TabPageProps,
-} from "@dashboard/types";
+import { FilterPageProps, PageListProps, SortPage, TabPageProps } from "@dashboard/types";
 import { Card } from "@material-ui/core";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import PluginsList from "../PluginsList/PluginsList";
-import {
-  createFilterStructure,
-  PluginFilterKeys,
-  PluginListFilterOpts,
-} from "./filters";
-import {
-  pluginsFilterErrorMessages,
-  pluginsListPageMessages,
-} from "./messages";
+import { createFilterStructure, PluginFilterKeys, PluginListFilterOpts } from "./filters";
+import { pluginsFilterErrorMessages, pluginsListPageMessages } from "./messages";
 
 export interface PluginsListPageProps
   extends PageListProps,
@@ -53,15 +41,11 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
 }) => {
   const intl = useIntl();
   const { theme: currentTheme } = useTheme();
-
   const filterStructure = createFilterStructure(intl, filterOpts);
 
   return (
     <ListPageLayout>
-      <TopNav
-        href={configurationMenuUrl}
-        title={intl.formatMessage(sectionNames.plugins)}
-      />
+      <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.plugins)} />
       <Card>
         <div>
           <Box
@@ -114,5 +98,6 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
     </ListPageLayout>
   );
 };
+
 PluginsListPage.displayName = "PluginsListPage";
 export default PluginsListPage;

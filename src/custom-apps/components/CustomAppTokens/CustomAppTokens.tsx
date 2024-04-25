@@ -6,13 +6,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { AppUpdateMutation } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  TableHead,
-} from "@material-ui/core";
+import { Card, CardContent, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -26,7 +20,6 @@ export interface CustomAppTokensProps {
 }
 
 const numberOfColumns = 3;
-
 const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
   const { tokens, onCreate, onDelete } = props;
   const classes = useStyles(props);
@@ -42,16 +35,8 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
         })}
         className={classes.cardTitle}
         toolbar={
-          <Button
-            variant="secondary"
-            onClick={onCreate}
-            data-test-id="create-token"
-          >
-            <FormattedMessage
-              id="RMB6fU"
-              defaultMessage="Create Token"
-              description="button"
-            />
+          <Button variant="secondary" onClick={onCreate} data-test-id="create-token">
+            <FormattedMessage id="RMB6fU" defaultMessage="Create Token" description="button" />
           </Button>
         }
       />
@@ -83,15 +68,9 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
               tokens,
               token => (
                 <TableRowLink key={token ? token.id : "skeleton"}>
-                  <TableCell className={classes.colNote}>
-                    {token?.name || <Skeleton />}
-                  </TableCell>
+                  <TableCell className={classes.colNote}>{token?.name || <Skeleton />}</TableCell>
                   <TableCell className={classes.colKey}>
-                    {token?.authToken ? (
-                      `**** ${token.authToken}`
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {token?.authToken ? `**** ${token.authToken}` : <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colActions}>
                     <IconButton
@@ -107,10 +86,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
               () => (
                 <TableRowLink>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      id="bsP4f3"
-                      defaultMessage="No tokens found"
-                    />
+                    <FormattedMessage id="bsP4f3" defaultMessage="No tokens found" />
                   </TableCell>
                 </TableRowLink>
               ),

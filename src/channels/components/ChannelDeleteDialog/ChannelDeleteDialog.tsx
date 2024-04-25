@@ -1,9 +1,6 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import {
-  Choices,
-  SingleSelectField,
-} from "@dashboard/components/SingleSelectField";
+import { Choices, SingleSelectField } from "@dashboard/components/SingleSelectField";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
@@ -72,21 +69,17 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-
   const [choice, setChoice] = useStateFromProps(
-    !!channelsChoices.length ? channelsChoices[0].value : "",
+    channelsChoices.length ? channelsChoices[0].value : "",
   );
   const hasChannels = !!channelsChoices?.length;
-
   const canBeDeleted = hasChannels || !hasOrders;
 
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}
       backButtonText={
-        canBeDeleted
-          ? buttonMessages.cancel.defaultMessage
-          : buttonMessages.ok.defaultMessage
+        canBeDeleted ? buttonMessages.cancel.defaultMessage : buttonMessages.ok.defaultMessage
       }
       open={open}
       onClose={onClose}
@@ -101,9 +94,7 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
         {hasOrders ? (
           hasChannels ? (
             <>
-              <Typography>
-                {intl.formatMessage(messages.deletingAllProductData)}
-              </Typography>
+              <Typography>{intl.formatMessage(messages.deletingAllProductData)}</Typography>
               <br />
               <Typography>
                 {intl.formatMessage(messages.needToBeMoved)}
@@ -129,13 +120,12 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
             </Typography>
           )
         ) : (
-          <Typography>
-            {intl.formatMessage(messages.deletingAllProductData)}
-          </Typography>
+          <Typography>{intl.formatMessage(messages.deletingAllProductData)}</Typography>
         )}
       </div>
     </ActionDialog>
   );
 };
+
 ChannelDeleteDialog.displayName = "ChannelDeleteDialog";
 export default ChannelDeleteDialog;

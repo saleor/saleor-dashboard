@@ -2,10 +2,7 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import {
-  LanguageCodeEnum,
-  VoucherTranslationFragment,
-} from "@dashboard/graphql";
+import { LanguageCodeEnum, VoucherTranslationFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
@@ -19,8 +16,7 @@ import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsVouchersPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsVouchersPageProps extends TranslationsEntitiesPageProps {
   data: VoucherTranslationFragment;
 }
 
@@ -51,8 +47,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
         title={intl.formatMessage(
           {
             id: "1tXSSK",
-            defaultMessage:
-              'Translation Voucher "{voucherName}" - {languageCode}',
+            defaultMessage: 'Translation Voucher "{voucherName}" - {languageCode}',
             description: "header",
           },
           {
@@ -65,11 +60,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
           getLanguageUrl={lang =>
-            languageEntityUrl(
-              lang,
-              TranslatableEntities.vouchers,
-              translationId,
-            )
+            languageEntityUrl(lang, TranslatableEntities.vouchers, translationId)
           }
         />
       </TopNav>
@@ -87,7 +78,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
               }),
               name: fieldNames.name,
               translation: data?.translation?.name || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.voucher?.name,
             },
           ]}
@@ -101,5 +92,6 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsVouchersPage.displayName = "TranslationsVouchersPage";
 export default TranslationsVouchersPage;

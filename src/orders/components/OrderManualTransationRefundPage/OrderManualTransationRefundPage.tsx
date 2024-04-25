@@ -37,10 +37,7 @@ export const OrderManualTransationRefundPage = ({
       }}
     >
       <DetailPageLayout gridTemplateColumns={1}>
-        <TopNav
-          href={orderUrl(orderId)}
-          title={<FormattedMessage {...messages.transactions} />}
-        />
+        <TopNav href={orderUrl(orderId)} title={<FormattedMessage {...messages.transactions} />} />
 
         <DetailPageLayout.Content>
           <DashboardCard>
@@ -49,10 +46,7 @@ export const OrderManualTransationRefundPage = ({
                 <FormattedMessage {...messages.selectTransation} />
               </Text>
 
-              <OrderManualTransationRefundTiles
-                loading={loading}
-                transactions={transactions}
-              />
+              <OrderManualTransationRefundTiles loading={loading} transactions={transactions} />
             </DashboardCard.Content>
           </DashboardCard>
         </DetailPageLayout.Content>

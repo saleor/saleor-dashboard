@@ -8,7 +8,6 @@ describe("ConditionalFilter / FilterElement / FilterElement", () => {
     // Act & Assert
     expect(element.isEmpty()).toBeTruthy();
   });
-
   it("creates for slug", () => {
     // Arrange
     const element = FilterElement.createStaticBySlug("category");

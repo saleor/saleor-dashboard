@@ -1,8 +1,5 @@
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
-import {
-  UpdateMetadataMutationFn,
-  UpdatePrivateMetadataMutationFn,
-} from "@dashboard/graphql";
+import { UpdateMetadataMutationFn, UpdatePrivateMetadataMutationFn } from "@dashboard/graphql";
 
 import { filterMetadataArray } from "./filterMetadataArray";
 
@@ -50,7 +47,6 @@ function createMetadataCreateHandler<T extends MetadataFormData, TError>(
           keysToDelete: [],
         },
       });
-
       const updatePrivateMetaErrors = [
         ...(updatePrivateMetaResult.data?.deletePrivateMetadata?.errors || []),
         ...(updatePrivateMetaResult.data?.updatePrivateMetadata?.errors || []),

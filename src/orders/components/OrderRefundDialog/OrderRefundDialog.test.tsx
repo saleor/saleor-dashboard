@@ -9,7 +9,6 @@ jest.mock("react-intl", () => ({
   })),
   defineMessages: jest.fn(x => x),
 }));
-
 describe("OrderRefundDialog", () => {
   it("renders the dialog when open is true", () => {
     // Arrange
@@ -25,9 +24,9 @@ describe("OrderRefundDialog", () => {
 
     // Assert
     const dialog = screen.getByRole("dialog");
+
     expect(dialog).toBeInTheDocument();
   });
-
   it("does not render the dialog when open is false", () => {
     // Arrange
     const props = {
@@ -42,6 +41,7 @@ describe("OrderRefundDialog", () => {
 
     // Assert
     const dialog = screen.queryByRole("dialog");
+
     expect(dialog).not.toBeInTheDocument();
   });
 
@@ -56,9 +56,10 @@ describe("OrderRefundDialog", () => {
 
     // Act
     render(<OrderRefundDialog {...props} />);
-    const cancelButton = screen.getByRole("button", { name: /cancel/i });
-    fireEvent.click(cancelButton);
 
+    const cancelButton = screen.getByRole("button", { name: /cancel/i });
+
+    fireEvent.click(cancelButton);
     // Assert
     expect(props.onClose).toHaveBeenCalled();
   });
@@ -74,9 +75,10 @@ describe("OrderRefundDialog", () => {
 
     // Act
     render(<OrderRefundDialog {...props} />);
-    const confirmButton = screen.getByRole("button", { name: /confirm/i });
-    fireEvent.click(confirmButton);
 
+    const confirmButton = screen.getByRole("button", { name: /confirm/i });
+
+    fireEvent.click(confirmButton);
     // Assert
     expect(props.onStandardRefund).toHaveBeenCalled();
   });
@@ -91,8 +93,10 @@ describe("OrderRefundDialog", () => {
 
     // Act
     render(<OrderRefundDialog {...props} />);
+
     const confirmButton = screen.getByRole("button", { name: /confirm/i });
     const manualRefundRadio = screen.getByTestId("manual-refund");
+
     await fireEvent.click(manualRefundRadio);
     await fireEvent.click(confirmButton);
 

@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  SearchPermissionGroupsQuery,
-  StaffErrorFragment,
-} from "@dashboard/graphql";
+import { SearchPermissionGroupsQuery, StaffErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -15,9 +12,7 @@ import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
 } from "../MultiAutocompleteSelectField";
 
-export interface AccountPermissionGroupsProps
-  extends FetchMoreProps,
-    SearchPageProps {
+export interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPageProps {
   formData: {
     permissionGroups: string[];
   };
@@ -28,9 +23,7 @@ export interface AccountPermissionGroupsProps
   displayValues: MultiAutocompleteChoiceType[];
 }
 
-const AccountPermissionGroups: React.FC<
-  AccountPermissionGroupsProps
-> = props => {
+const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props => {
   const {
     availablePermissionGroups,
     disabled,
@@ -43,15 +36,14 @@ const AccountPermissionGroups: React.FC<
     onFetchMore,
     onSearchChange,
   } = props;
-
   const intl = useIntl();
-
   const choices = availablePermissionGroups?.map(pg => ({
     disabled: !pg.userCanManage,
     label: pg.name,
     value: pg.id,
   }));
   const formErrors = getFormErrors(["addGroups", "removeGroups"], errors);
+
   return (
     <>
       <MultiAutocompleteSelectField
@@ -71,14 +63,10 @@ const AccountPermissionGroups: React.FC<
         loading={loading}
       />
       {!!formErrors.addGroups && (
-        <Typography color="error">
-          {getStaffErrorMessage(formErrors.addGroups, intl)}
-        </Typography>
+        <Typography color="error">{getStaffErrorMessage(formErrors.addGroups, intl)}</Typography>
       )}
       {!!formErrors.removeGroups && (
-        <Typography color="error">
-          {getStaffErrorMessage(formErrors.removeGroups, intl)}
-        </Typography>
+        <Typography color="error">{getStaffErrorMessage(formErrors.removeGroups, intl)}</Typography>
       )}
     </>
   );

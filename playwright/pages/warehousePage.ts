@@ -7,8 +7,11 @@ import { RightSideDetailsPage } from "./pageElements/rightSideDetailsSection";
 
 export class WarehousePage extends BasePage {
   readonly page: Page;
+
   readonly basePage: BasePage;
+
   readonly deleteWarehouseDialog: DeleteDialog;
+
   readonly rightSideDetailsPage: RightSideDetailsPage;
 
   constructor(
@@ -17,33 +20,19 @@ export class WarehousePage extends BasePage {
     readonly deleteWarehouseButton = page.getByTestId("delete-button"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly warehousesList = page.getByTestId("warehouses-list"),
-    readonly warehouseNameInput = page
-      .getByTestId("warehouse-name-input")
-      .locator("input"),
-    readonly companyNameInput = page
-      .getByTestId("company-name-input")
-      .locator("input"),
+    readonly warehouseNameInput = page.getByTestId("warehouse-name-input").locator("input"),
+    readonly companyNameInput = page.getByTestId("company-name-input").locator("input"),
     readonly companyAddressLine1Input = page
       .getByTestId("company-address-line-1-input")
       .locator("input"),
     readonly companyAddressLine2Input = page
       .getByTestId("company-address-line-2-input")
       .locator("input"),
-    readonly companyCityInput = page
-      .getByTestId("company-city-input")
-      .locator("input"),
-    readonly companyZipInput = page
-      .getByTestId("company-zip-input")
-      .locator("input"),
-    readonly companyPhoneInput = page
-      .getByTestId("company-phone-input")
-      .locator("input"),
-    readonly companyCountrySelect = page.getByTestId(
-      "address-edit-country-select-field",
-    ),
-    readonly companyCountryOptions = page.getByTestId(
-      "single-autocomplete-select-option",
-    ),
+    readonly companyCityInput = page.getByTestId("company-city-input").locator("input"),
+    readonly companyZipInput = page.getByTestId("company-zip-input").locator("input"),
+    readonly companyPhoneInput = page.getByTestId("company-phone-input").locator("input"),
+    readonly companyCountrySelect = page.getByTestId("address-edit-country-select-field"),
+    readonly companyCountryOptions = page.getByTestId("single-autocomplete-select-option"),
   ) {
     super(page);
     this.page = page;
@@ -55,6 +44,7 @@ export class WarehousePage extends BasePage {
   async clickCreateNewWarehouseButton() {
     await this.createNewWarehouseButton.click();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
@@ -86,32 +76,38 @@ export class WarehousePage extends BasePage {
   async typeWarehouseName(warehouseName: string) {
     await this.warehouseNameInput.fill(warehouseName);
   }
+
   async typeAddressLine1(lineAddress1: string) {
     await this.companyAddressLine1Input.fill(lineAddress1);
   }
+
   async typeAddressLine2(lineAddress2: string) {
     await this.companyAddressLine2Input.fill(lineAddress2);
   }
+
   async typeCompanyName(warehouseName: string) {
     await this.companyNameInput.fill(warehouseName);
   }
+
   async typePhone(phone: string) {
     await this.companyPhoneInput.fill(phone);
   }
+
   async gotoWarehouseListView() {
     await this.page.goto(URL_LIST.warehouses);
   }
+
   async clickDeleteWarehouseButton(warehouseName: string) {
     await this.page
       .getByTestId(`warehouse-entry-${warehouseName}`)
       .locator(this.deleteWarehouseButton)
       .click();
   }
+
   async gotoExistingWarehousePage(warehouseId: string) {
     const existingWarehouseUrl = URL_LIST.warehouses + warehouseId;
-    await console.log(
-      "Navigating to warehouse details: " + existingWarehouseUrl,
-    );
+
+    await console.log("Navigating to warehouse details: " + existingWarehouseUrl);
     await this.page.goto(existingWarehouseUrl);
   }
 }

@@ -22,6 +22,7 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
   selectedConfigurationId,
 }) => {
   const classes = useStyles();
+
   return (
     <Card>
       <List gridTemplate={["1fr"]}>
@@ -38,14 +39,11 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
             <ListItemLink
               data-test-id="channels-list-rows"
               className={clsx(classes.clickable, classes.tableRow, {
-                [classes.selected]:
-                  configuration.id === selectedConfigurationId,
+                [classes.selected]: configuration.id === selectedConfigurationId,
               })}
               href={taxConfigurationListUrl(configuration.id)}
             >
-              <ListItemCell className={classes.ellipsis}>
-                {configuration.channel.name}
-              </ListItemCell>
+              <ListItemCell className={classes.ellipsis}>{configuration.channel.name}</ListItemCell>
             </ListItemLink>
             {!isLastElement(configurations, confIndex) && <Divider />}
           </React.Fragment>

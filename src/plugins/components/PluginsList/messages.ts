@@ -12,8 +12,7 @@ export const pluginAvailabilityStatusMessages = defineMessages({
 export const channelConfigPluginMessages = defineMessages({
   title: {
     id: "8u7els",
-    defaultMessage:
-      "Assigned to {activeChannelsCount} of {allChannelsCount} channels",
+    defaultMessage: "Assigned to {activeChannelsCount} of {allChannelsCount} channels",
     description: "channel config plugin status popup title",
   },
 });

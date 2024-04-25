@@ -15,16 +15,11 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  createGetCellContent,
-  orderDraftListStaticColumnsAdapter,
-} from "./datagrid";
+import { createGetCellContent, orderDraftListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 import { canBeSorted } from "./utils";
 
-interface OrderDraftListDatagridProps
-  extends ListProps,
-    SortPage<OrderDraftListUrlSortField> {
+interface OrderDraftListDatagridProps extends ListProps, SortPage<OrderDraftListUrlSortField> {
   orders: OrderDraft[];
   hasRowHover?: boolean;
   onRowClick?: (id: string) => void;
@@ -45,7 +40,6 @@ export const OrderDraftListDatagrid = ({
   const intl = useIntl();
   const { locale } = useLocale();
   const datagridState = useDatagridChangeState();
-
   const handleColumnChange = useCallback(
     picked => {
       if (onUpdateListSettings) {
@@ -54,34 +48,29 @@ export const OrderDraftListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
   const memoizedStaticColumns = useMemo(
     () => orderDraftListStaticColumnsAdapter(intl, sort),
     [intl, sort],
   );
-
-  const { handlers, staticColumns, visibleColumns, selectedColumns } =
-    useColumns({
-      staticColumns: memoizedStaticColumns,
-      selectedColumns: settings?.columns ?? [],
-      onSave: handleColumnChange,
-    });
-
+  const { handlers, staticColumns, visibleColumns, selectedColumns } = useColumns({
+    staticColumns: memoizedStaticColumns,
+    selectedColumns: settings?.columns ?? [],
+    onSave: handleColumnChange,
+  });
   const getCellContent = useCallback(
     createGetCellContent({ orders, columns: visibleColumns, locale }),
     [visibleColumns, locale, orders],
   );
-
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as OrderDraftListUrlSortField;
+
       if (canBeSorted(columnName)) {
         onSort(columnName);
       }
     },
     [visibleColumns, onSort],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       if (!onRowClick) {
@@ -89,14 +78,15 @@ export const OrderDraftListDatagrid = ({
       }
 
       const rowData = orders[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, orders],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => {
       const rowData = orders[row];
+
       return orderUrl(rowData.id);
     },
     [orders],

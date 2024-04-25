@@ -60,11 +60,7 @@ import ProductVariants from "../ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
-import {
-  ProductUpdateData,
-  ProductUpdateHandlers,
-  ProductUpdateSubmitData,
-} from "./types";
+import { ProductUpdateData, ProductUpdateHandlers, ProductUpdateSubmitData } from "./types";
 
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
@@ -74,9 +70,7 @@ export interface ProductUpdatePageProps {
   errors: UseProductUpdateHandlerError[];
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
-  attributeValues: RelayToFlat<
-    SearchAttributeValuesQuery["attribute"]["choices"]
-  >;
+  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   disabled: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
@@ -102,10 +96,7 @@ export interface ProductUpdatePageProps {
   fetchReferenceProducts?: (data: string) => void;
   fetchAttributeValues: (query: string, attributeId: string) => void;
   refetch: () => Promise<any>;
-  onAttributeValuesSearch: (
-    id: string,
-    query: string,
-  ) => Promise<Array<Choice<string, string>>>;
+  onAttributeValuesSearch: (id: string, query: string) => Promise<Array<Choice<string, string>>>;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onImageDelete: (id: string) => () => void;
@@ -169,23 +160,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
-
-  const [selectedCategory, setSelectedCategory] = useStateFromProps(
-    product?.category?.name || "",
-  );
-
+  const [selectedCategory, setSelectedCategory] = useStateFromProps(product?.category?.name || "");
   const [mediaUrlModalStatus, setMediaUrlModalStatus] = useStateFromProps(
     isMediaUrlModalVisible || false,
   );
-
   const [selectedCollections, setSelectedCollections] = useStateFromProps(
     getChoices(maybe(() => product.collections, [])),
   );
-
-  const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(
-    product?.taxClass?.name ?? "",
-  );
-
+  const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(product?.taxClass?.name ?? "");
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
   const hasVariants = product?.productType?.hasVariants;
@@ -194,9 +176,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       label: taxClass.name,
       value: taxClass.id,
     })) || [];
-
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
-
   const handleAssignReferenceAttribute = (
     attributeValues: AttributeValuesMetadata[],
     data: ProductUpdateData,
@@ -210,17 +190,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         data.attributes,
       ),
     );
-    handlers.selectAttributeReferenceMetadata(
-      assignReferencesAttributeId,
-      attributeValues,
-    );
+    handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, attributeValues);
     onCloseDialog();
   };
-
-  const { PRODUCT_DETAILS_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.PRODUCT_DETAILS,
-  );
-
+  const { PRODUCT_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.PRODUCT_DETAILS);
   const productErrors = React.useMemo(
     () =>
       errors.filter(
@@ -228,7 +201,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       ) as ProductErrorWithAttributesFragment[],
     [errors],
   );
-
   const productOrganizationErrors = React.useMemo(
     () =>
       [...errors, ...channelsErrors].filter(err =>
@@ -236,14 +208,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       ) as Array<ProductErrorFragment | ProductChannelListingErrorFragment>,
     [errors, channelsErrors],
   );
-
   const extensionMenuItems = mapToMenuItemsForProductDetails(
     PRODUCT_DETAILS_MORE_ACTIONS,
     productId,
   );
-
   const context = useDevModeContext();
-
   const openPlaygroundURL = () => {
     context.setDevModeContent(defaultGraphiQLQuery);
     context.setVariables(`{ "id": "${product?.id}" }`);
@@ -273,14 +242,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       disabled={disabled}
       refetch={refetch}
     >
-      {({
-        change,
-        data,
-        handlers,
-        submit,
-        isSaveDisabled,
-        attributeRichTextGetters,
-      }) => {
+      {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters }) => {
         const availabilityCommonProps = {
           managePermissions: [PermissionEnum.MANAGE_PRODUCTS],
           messages: {
@@ -302,20 +264,16 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           onChange: handlers.changeChannels,
           openModal: () => setChannelPickerOpen(true),
         };
+        const listings = data.channels.updateChannels?.map<ChannelData>(listing => {
+          const channel = channels?.find(ac => ac.id === listing.channelId);
 
-        const listings = data.channels.updateChannels?.map<ChannelData>(
-          listing => {
-            const channel = channels?.find(ac => ac.id === listing.channelId);
-
-            return {
-              ...channel,
-              ...listing,
-              id: listing.channelId,
-              currency: channel.currencyCode,
-            };
-          },
-        );
-
+          return {
+            ...channel,
+            ...listing,
+            id: listing.channelId,
+            currency: channel.currencyCode,
+          };
+        });
         const entityType = getReferenceAttributeEntityTypeFromAttribute(
           assignReferencesAttributeId,
           data.attributes,
@@ -420,10 +378,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onCategoryChange={handlers.selectCategory}
                 onCollectionChange={handlers.selectCollection}
               />
-              <ChannelsAvailabilityCard
-                {...availabilityCommonProps}
-                channels={listings ?? []}
-              />
+              <ChannelsAvailabilityCard {...availabilityCommonProps} channels={listings ?? []} />
               <Box paddingBottom={52}>
                 <ProductTaxes
                   value={data.taxClassId}
@@ -449,9 +404,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}
-                attribute={data.attributes.find(
-                  ({ id }) => id === assignReferencesAttributeId,
-                )}
+                attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
                 onFetch={handlers.fetchReferences}

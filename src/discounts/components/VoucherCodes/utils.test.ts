@@ -18,11 +18,8 @@ describe("hasSavedVoucherCodesToDelete", () => {
       },
     ];
 
-    expect(
-      hasSavedVoucherCodesToDelete(voucherCodesIdsToDelete, voucherCodes),
-    ).toBe(true);
+    expect(hasSavedVoucherCodesToDelete(voucherCodesIdsToDelete, voucherCodes)).toBe(true);
   });
-
   it("should return false if there are no saved voucher codes to delete", () => {
     const voucherCodesIdsToDelete = ["voucherCode1", "voucherCode2"];
     const voucherCodes = [
@@ -36,8 +33,6 @@ describe("hasSavedVoucherCodesToDelete", () => {
       },
     ];
 
-    expect(
-      hasSavedVoucherCodesToDelete(voucherCodesIdsToDelete, voucherCodes),
-    ).toBe(false);
+    expect(hasSavedVoucherCodesToDelete(voucherCodesIdsToDelete, voucherCodes)).toBe(false);
   });
 });

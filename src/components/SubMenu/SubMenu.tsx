@@ -32,11 +32,7 @@ export const SubMenu = ({ menuItems }: SubMenuProps) => {
           >
             <Box display="flex" gap={3} alignItems="center">
               {icon}
-              <Text
-                data-test-id={String(title).toLowerCase()}
-                size={4}
-                fontWeight="bold"
-              >
+              <Text data-test-id={String(title).toLowerCase()} size={4} fontWeight="bold">
                 {title}
               </Text>
             </Box>

@@ -29,15 +29,12 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   errors,
 }) => {
   const intl = useIntl();
-  const { defaultValue, editorRef, isReadyForMount, handleChange } =
-    useRichTextContext();
+  const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
   const formErrors = getFormErrors(["name", "description"], errors);
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
           data-test-id="collection-name-input"
@@ -76,4 +73,5 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     </Card>
   );
 };
+
 export default CollectionDetails;

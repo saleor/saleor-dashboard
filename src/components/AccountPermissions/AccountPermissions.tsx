@@ -33,14 +33,11 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     fullAccessLabel,
     errorMessage,
   } = props;
-
   const permissions = Object.values(props?.permissions ?? {}).sort((a, b) =>
     a.name.localeCompare(b.name),
   );
-
   const intl = useIntl();
   const { user } = useUser();
-
   const handleFullAccessChange = () => {
     onChange({
       target: {
@@ -50,7 +47,6 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           : [],
       },
     } as ChangeEvent<any>);
-
     onChange({
       target: {
         name: "hasFullAccess",
@@ -58,7 +54,6 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
       },
     } as ChangeEvent<any>);
   };
-
   const handlePermissionChange = (key: string, value: boolean) => {
     const updatedPersmissions = !value
       ? data.permissions.concat([key])
@@ -68,13 +63,9 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     onChange({
       target: {
         name: "hasFullAccess",
-        value: !!(
-          permissions.length === updatedPersmissions.length &&
-          !data.hasFullAccess
-        ),
+        value: !!(permissions.length === updatedPersmissions.length && !data.hasFullAccess),
       },
     } as ChangeEvent<any>);
-
     onChange({
       target: {
         name: "permissions",
@@ -89,9 +80,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
         {intl.formatMessage(messages.title)}
       </Text>
 
-      {permissionsExceeded && (
-        <PermissionsExceeded userPermissions={user?.userPermissions ?? []} />
-      )}
+      {permissionsExceeded && <PermissionsExceeded userPermissions={user?.userPermissions ?? []} />}
 
       {!permissionsExceeded && (
         <>

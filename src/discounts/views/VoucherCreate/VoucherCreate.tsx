@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  ChannelVoucherData,
-  createSortedVoucherData,
-} from "@dashboard/channels/utils";
+import { ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -40,18 +37,14 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherUrlDialog,
     VoucherCreateUrlQueryParams
   >(navigate, params => voucherAddUrl(params), params);
-
   const { availableChannels } = useAppChannel(false);
-  const allChannels: ChannelVoucherData[] =
-    createSortedVoucherData(availableChannels);
-
+  const allChannels: ChannelVoucherData[] = createSortedVoucherData(availableChannels);
   const {
     channelListElements,
     channelsToggle,
@@ -69,10 +62,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     { closeModal, openModal },
     { formId: VOUCHER_CREATE_FORM_ID },
   );
-
-  const [updateChannels, updateChannelsOpts] =
-    useVoucherChannelListingUpdateMutation({});
-
+  const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({});
   const [voucherCreate, voucherCreateOpts] = useVoucherCreateMutation({
     onCompleted: data => {
       if (data.voucherCreate.errors.length === 0) {
@@ -87,7 +77,6 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
       }
     },
   });
-
   const handleFormValidate = (data: VoucherDetailsPageFormData) => {
     if (data.codes.length === 0) {
       notify({
@@ -97,12 +86,12 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
           defaultMessage: "You must add at least one voucher code",
         }),
       });
+
       return false;
     }
 
     return true;
   };
-
   const handleCreate = createHandler(
     variables => voucherCreate({ variables }),
     updateChannels,
@@ -141,8 +130,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         disabled={voucherCreateOpts.loading || updateChannelsOpts.loading}
         errors={[
           ...(voucherCreateOpts.data?.voucherCreate.errors || []),
-          ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors ||
-            []),
+          ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || []),
         ]}
         onSubmit={handleSubmit}
         saveButtonBarState={voucherCreateOpts.status}

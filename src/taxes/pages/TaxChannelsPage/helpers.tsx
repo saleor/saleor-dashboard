@@ -16,9 +16,7 @@ export const getTaxAppId = (taxCalculationStrategy: string) =>
   isStrategyFlatRates(taxCalculationStrategy) ? null : taxCalculationStrategy;
 
 export const getSelectedTaxStrategy = (
-  currentTaxConfiguration:
-    | TaxConfigurationFragment
-    | TaxConfigurationPerCountryFragment,
+  currentTaxConfiguration: TaxConfigurationFragment | TaxConfigurationPerCountryFragment,
 ) =>
   isStrategyFlatRates(currentTaxConfiguration?.taxCalculationStrategy)
     ? TaxCalculationStrategy.FLAT_RATES

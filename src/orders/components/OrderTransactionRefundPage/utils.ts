@@ -14,17 +14,12 @@ import {
   refundSavebarMessages,
   refundStatusMessages,
 } from "./messages";
-import {
-  LineToRefund,
-  OrderTransactionRefundPageFormData,
-} from "./OrderTransactionRefundPage";
+import { LineToRefund, OrderTransactionRefundPageFormData } from "./OrderTransactionRefundPage";
 
 export const getDefaultTransaction = (
   transactions: OrderDetailsGrantRefundFragment["transactions"] | undefined,
 ) =>
-  transactions?.find(transaction =>
-    transaction.actions.includes(TransactionActionEnum.REFUND),
-  )?.id;
+  transactions?.find(transaction => transaction.actions.includes(TransactionActionEnum.REFUND))?.id;
 
 export const getRefundFormDefaultValues = ({
   order,
@@ -36,6 +31,7 @@ export const getRefundFormDefaultValues = ({
   if (!draftRefund) {
     return getRefundCreateDefaultValues(order);
   }
+
   return getRefundEditDefaultValues(order, draftRefund);
 };
 
@@ -45,8 +41,7 @@ const getRefundEditDefaultValues = (
 ): OrderTransactionRefundPageFormData => {
   return {
     linesToRefund: getRefundEditOrderLinesToRefund(order, draftRefund) ?? [],
-    transactionId:
-      draftRefund.transaction?.id ?? getDefaultTransaction(order?.transactions),
+    transactionId: draftRefund.transaction?.id ?? getDefaultTransaction(order?.transactions),
     includeShipping: draftRefund.shippingCostsIncluded,
     amount: draftRefund.amount.amount,
     reason: draftRefund.reason ?? "",
@@ -66,8 +61,10 @@ export const getRefundEditOrderLinesToRefund = (
     quantity: line.quantity,
     reason: line.reason,
   }));
+
   return refundLines?.map(refundLine => {
     const line = lines?.find(line => line.id === refundLine.id);
+
     return {
       row: line?.index ?? 0,
       reason: refundLine?.reason ?? "",
@@ -90,15 +87,16 @@ export const canRefundShipping = (
   order: OrderDetailsGrantRefundFragment | undefined | null,
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined,
 ) => {
-  const refundWithShipping = order?.grantedRefunds.find(
-    refund => refund.shippingCostsIncluded,
-  );
+  const refundWithShipping = order?.grantedRefunds.find(refund => refund.shippingCostsIncluded);
+
   if (!refundWithShipping) {
     return true;
   }
+
   if (refundWithShipping.id === draftRefund?.id) {
     return true;
   }
+
   return false;
 };
 
@@ -119,21 +117,27 @@ export const validateQty = ({
   if (!update?.data.value || !order) {
     return 0;
   }
+
   const value = parseInt(update.data.value);
+
   if (isNaN(value)) {
     return 0;
   }
+
   if (value < 0) {
     return 0;
   }
+
   const maxQtyToRefund = getMaxQtyToRefund({
     rowData: order.lines[update.row],
     order,
     draftRefund,
   });
+
   if (value > maxQtyToRefund) {
     return maxQtyToRefund;
   }
+
   return value;
 };
 
@@ -185,9 +189,7 @@ export const handleLinesToRefundChange = ({
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
   setValue: UseFormSetValue<OrderTransactionRefundPageFormData>;
 }) => {
-  const unchangedLines = linesToRefund.filter(
-    qty => qty.row !== data.currentUpdate?.row,
-  );
+  const unchangedLines = linesToRefund.filter(qty => qty.row !== data.currentUpdate?.row);
 
   if (data.currentUpdate) {
     setValue(
@@ -226,12 +228,15 @@ export const useRecalculateTotalAmount = ({
   React.useEffect(() => {
     if (isFormDirty) {
       const customAmount = getValues("amount");
+
       if (includeShipping) {
         const shippingPrice = order?.shippingPrice.gross.amount;
         const totalAmount = selectedProductsValue + (shippingPrice ?? 0);
+
         if (totalAmount !== customAmount) {
           setValue("amount", totalAmount);
         }
+
         return;
       }
 
@@ -250,9 +255,9 @@ export const getSelectedProductsValue = ({
   order: OrderDetailsGrantRefundFragment | undefined | null;
 }) => {
   return linesToRefund?.reduce((acc, curr) => {
-    const unitPrice: number =
-      order?.lines[curr.row].unitPrice.gross.amount ?? 0;
+    const unitPrice: number = order?.lines[curr.row].unitPrice.gross.amount ?? 0;
     const totalPrice = (unitPrice ?? 0) * curr.quantity;
+
     return acc + totalPrice;
   }, 0);
 };
@@ -272,9 +277,8 @@ export const createSetMaxQty = ({
     if (!order) {
       return;
     }
-    const unchangedQuantites = linesToRefund.filter(
-      qty => !rows.includes(qty.row),
-    );
+
+    const unchangedQuantites = linesToRefund.filter(qty => !rows.includes(qty.row));
     const newQtyToRefund = rows.map(row => ({
       row,
       reason: linesToRefund[row]?.reason ?? "",
@@ -284,6 +288,7 @@ export const createSetMaxQty = ({
         draftRefund,
       }),
     }));
+
     setValue("linesToRefund", [...unchangedQuantites, ...newQtyToRefund], {
       shouldDirty: true,
     });
@@ -314,10 +319,7 @@ export const getRefundStatusColor = (status: OrderGrantedRefundStatusEnum) => {
   }
 };
 
-export const getRefundStatusLabel = (
-  status: OrderGrantedRefundStatusEnum,
-  intl: IntlShape,
-) => {
+export const getRefundStatusLabel = (status: OrderGrantedRefundStatusEnum, intl: IntlShape) => {
   switch (status) {
     case OrderGrantedRefundStatusEnum.SUCCESS:
       return intl.formatMessage(refundStatusMessages.success);
@@ -347,16 +349,13 @@ export const getMaxQtyToRefund = ({
   if (!rowData || !order) {
     return 0;
   }
+
   const otherGrantedRefunds = draftRefund
     ? order.grantedRefunds.filter(refund => refund.id !== draftRefund?.id)
     : order.grantedRefunds;
 
   const otherRefundedQty = otherGrantedRefunds.reduce((acc, refund) => {
-    return (
-      acc +
-      (refund.lines?.find(line => line.orderLine.id === rowData.id)?.quantity ??
-        0)
-    );
+    return acc + (refund.lines?.find(line => line.orderLine.id === rowData.id)?.quantity ?? 0);
   }, 0);
 
   return rowData.quantity - otherRefundedQty;
@@ -386,13 +385,7 @@ export const getRefundFormSubmitBehavior = ({
   onTransferFunds?: (data: OrderTransactionRefundPageFormData) => void;
   intl: IntlShape;
 }): TransactionRefundFormSubmitBehavior => {
-  if (
-    !canHandlePayments ||
-    isDirty ||
-    !isEdit ||
-    !onTransferFundsState ||
-    !onTransferFunds
-  ) {
+  if (!canHandlePayments || isDirty || !isEdit || !onTransferFundsState || !onTransferFunds) {
     return {
       onSubmit: onSaveDraft,
       submitState: onSaveDraftState,
@@ -402,6 +395,7 @@ export const getRefundFormSubmitBehavior = ({
       },
     };
   }
+
   return {
     onSubmit: onTransferFunds,
     submitState: onTransferFundsState,

@@ -17,15 +17,9 @@ const messages = defineMessages({
   },
 });
 
-export type ShippingError =
-  | Omit<ShippingErrorFragment, "__typename">
-  | ChannelError
-  | undefined;
+export type ShippingError = Omit<ShippingErrorFragment, "__typename"> | ChannelError | undefined;
 
-function getShippingErrorMessage(
-  err: ShippingError,
-  intl: IntlShape,
-): string | undefined {
+function getShippingErrorMessage(err: ShippingError, intl: IntlShape): string | undefined {
   if (err && "code" in err) {
     switch (err.code) {
       case ShippingErrorCode.ALREADY_EXISTS:

@@ -27,12 +27,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderOperations from "../../containers/OrderOperations";
-import {
-  orderListUrl,
-  orderUrl,
-  OrderUrlDialog,
-  OrderUrlQueryParams,
-} from "../../urls";
+import { orderListUrl, orderUrl, OrderUrlDialog, OrderUrlQueryParams } from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 import { OrderDraftDetails } from "./OrderDraftDetails";
 import { OrderNormalDetails } from "./OrderNormalDetails";
@@ -45,46 +40,37 @@ interface OrderDetailsProps {
 
 export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
-
   const { queue } = useBackgroundTask();
   const intl = useIntl();
-
   const user = useUser();
   const isStaffUser = hasPermissions(user?.user?.userPermissions ?? [], [
     PermissionEnum.MANAGE_STAFF,
   ]);
-
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata, updatePrivateMetadataOpts] =
-    useUpdatePrivateMetadataMutation({});
+  const [updatePrivateMetadata, updatePrivateMetadataOpts] = useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
   const apolloClient = useApolloClient();
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    OrderUrlDialog,
-    OrderUrlQueryParams
-  >(navigate, params => orderUrl(id, params), params, ["type"]);
-
+  const [openModal, closeModal] = createDialogActionHandlers<OrderUrlDialog, OrderUrlQueryParams>(
+    navigate,
+    params => orderUrl(id, params),
+    params,
+    ["type"],
+  );
   const handleBack = () => navigate(orderListUrl());
-
   const [orderConfirm] = useOrderConfirmMutation({
     onCompleted: ({ orderConfirm: { errors } }) => {
       const isError = !!errors.length;
 
       notify({
         status: isError ? "error" : "success",
-        text: isError
-          ? getOrderErrorMessage(errors[0], intl)
-          : "Confirmed Order",
+        text: isError ? getOrderErrorMessage(errors[0], intl) : "Confirmed Order",
       });
     },
   });
-
   const { data, loading } = useOrderDetailsWithMetadataQuery({
     displayLoader: true,
     variables: { id, isStaffUser },
   });
-
   const order = data?.order;
 
   if (order === null) {
@@ -93,7 +79,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
 
   const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
   const isOrderDraft = order?.status === OrderStatus.DRAFT;
-
   const handleSubmit = async (data: MetadataIdSchema) => {
     if (order?.status === OrderStatus.UNCONFIRMED) {
       await orderConfirm({ variables: { id: order?.id } });
@@ -110,7 +95,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
 
       return update(data[id]);
     });
-
     const result = await Promise.all(metadataPromises);
     const errors = result.reduce((p, c) => p.concat(c), []);
 
@@ -142,9 +126,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
           onOrderLineDelete={orderMessages.handleOrderLineDelete}
           onOrderLinesAdd={orderMessages.handleOrderLinesAdd}
           onOrderLineUpdate={orderMessages.handleOrderLineUpdate}
-          onOrderFulfillmentApprove={
-            orderMessages.handleOrderFulfillmentApprove
-          }
+          onOrderFulfillmentApprove={orderMessages.handleOrderFulfillmentApprove}
           onOrderFulfillmentCancel={orderMessages.handleOrderFulfillmentCancel}
           onOrderFulfillmentUpdate={orderMessages.handleOrderFulfillmentUpdate}
           onDraftFinalize={orderMessages.handleDraftFinalize}
@@ -211,9 +193,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderPaymentCapture={orderPaymentCapture}
                   orderFulfillmentApprove={orderFulfillmentApprove}
                   orderFulfillmentCancel={orderFulfillmentCancel}
-                  orderFulfillmentUpdateTracking={
-                    orderFulfillmentUpdateTracking
-                  }
+                  orderFulfillmentUpdateTracking={orderFulfillmentUpdateTracking}
                   orderInvoiceSend={orderInvoiceSend}
                   orderTransactionAction={orderTransactionAction}
                   orderAddManualTransaction={orderAddManualTransaction}
@@ -260,9 +240,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderPaymentCapture={orderPaymentCapture}
                   orderFulfillmentApprove={orderFulfillmentApprove}
                   orderFulfillmentCancel={orderFulfillmentCancel}
-                  orderFulfillmentUpdateTracking={
-                    orderFulfillmentUpdateTracking
-                  }
+                  orderFulfillmentUpdateTracking={orderFulfillmentUpdateTracking}
                   orderInvoiceSend={orderInvoiceSend}
                   updateMetadataOpts={updateMetadataOpts}
                   updatePrivateMetadataOpts={updatePrivateMetadataOpts}

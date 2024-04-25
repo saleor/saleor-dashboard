@@ -39,33 +39,21 @@ interface GiftCardCreateExpirySelectProps {
   change: FormChange;
   data: Pick<
     GiftCardCreateCommonFormData,
-    | "expirySelected"
-    | "expiryPeriodType"
-    | "expiryPeriodAmount"
-    | "expiryType"
-    | "expiryDate"
+    "expirySelected" | "expiryPeriodType" | "expiryPeriodAmount" | "expiryType" | "expiryDate"
   >;
 }
 
 const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
   errors,
   change,
-  data: {
-    expirySelected,
-    expiryPeriodType,
-    expiryPeriodAmount,
-    expiryType,
-    expiryDate,
-  },
+  data: { expirySelected, expiryPeriodType, expiryPeriodAmount, expiryType, expiryDate },
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
-
   const translatedOptions = options.map(({ label, value }) => ({
     value,
     label: intl.formatMessage(label),
   }));
-
   const currentDate = useCurrentDate();
 
   return (

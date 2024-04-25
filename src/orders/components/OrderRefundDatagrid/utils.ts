@@ -9,9 +9,7 @@ import { IntlShape } from "react-intl";
 import { refundGridMessages, refundStatuses } from "./messages";
 import { DatagridRefund } from "./refunds";
 
-export const getGrantedRefundStatus = (
-  status: OrderGrantedRefundStatusEnum,
-): PillStatusType => {
+export const getGrantedRefundStatus = (status: OrderGrantedRefundStatusEnum): PillStatusType => {
   switch (status) {
     case OrderGrantedRefundStatusEnum.FAILURE:
       return "error";
@@ -24,6 +22,7 @@ export const getGrantedRefundStatus = (
     default:
       // eslint-disable-next-line no-case-declarations
       const _exhaustiveCheck: never = status;
+
       return _exhaustiveCheck;
   }
 };
@@ -44,6 +43,7 @@ export const getGrantedRefundStatusMessage = (
     default:
       // eslint-disable-next-line no-case-declarations
       const _exhaustiveCheck: never = status;
+
       return _exhaustiveCheck;
   }
 };
@@ -77,17 +77,14 @@ export const isRefundEditable = (refund?: DatagridRefund) => {
     return false;
   }
 
-  return !(
-    isRefundSuccessful(refund) ||
-    isRefundPending(refund) ||
-    isRefundManual(refund)
-  );
+  return !(isRefundSuccessful(refund) || isRefundPending(refund) || isRefundManual(refund));
 };
 
 export const getNotEditabledRefundMessage = (refund?: DatagridRefund) => {
   if (isRefundManual(refund)) {
     return refundGridMessages.notEditableManual;
   }
+
   if (isRefundSuccessful(refund)) {
     return refundGridMessages.notEditableSuccessfully;
   }

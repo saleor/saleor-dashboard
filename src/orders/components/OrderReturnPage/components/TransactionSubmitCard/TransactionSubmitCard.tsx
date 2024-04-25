@@ -1,8 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
 import {
   OrderDetailsFragment,
@@ -59,7 +56,6 @@ export const TransactionSubmitCard = ({
   onAmountChange,
 }: TransactionSubmitCardProps) => {
   const intl = useIntl();
-
   const canSendRefund = canSendRefundDuringReturn({
     autoGrantRefund,
     transactions,
@@ -71,12 +67,7 @@ export const TransactionSubmitCard = ({
         <DashboardCard.Title>
           {intl.formatMessage(submitCardMessages.cardTitle)}
         </DashboardCard.Title>
-        <DashboardCard.Content
-          display="flex"
-          flexDirection="column"
-          gap={2}
-          alignItems="start"
-        >
+        <DashboardCard.Content display="flex" flexDirection="column" gap={2} alignItems="start">
           <Box display="flex" gap={1} alignItems="center" marginBottom={4}>
             <InfoIcon color="default2" size="small" />
             <Text color="default2">
@@ -102,9 +93,7 @@ export const TransactionSubmitCard = ({
             onChange={onChange}
           />
           <PriceField
-            label={intl.formatMessage(
-              submitCardMessages.returnRefundValueLabel,
-            )}
+            label={intl.formatMessage(submitCardMessages.returnRefundValueLabel)}
             onChange={e => onAmountChange(e.target.value)}
             name="amount"
             value={getReturnRefundValue({

@@ -5,6 +5,4 @@ import { ProductFragment } from "@dashboard/graphql";
 export const getTileStatus = (
   productChannelListings: ProductFragment["channelListings"],
 ): StatusDotProps["status"] =>
-  productChannelListings.some(channel => channel.isPublished)
-    ? "success"
-    : "error";
+  productChannelListings.some(channel => channel.isPublished) ? "success" : "error";

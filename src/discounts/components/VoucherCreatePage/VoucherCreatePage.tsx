@@ -61,32 +61,26 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
-  const { makeChangeHandler: makeMetadataChangeHandler } =
-    useMetadataChangeTrigger();
-
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const checkIfSaveIsDisabled = (data: FormData) =>
     (data.discountType.toString() !== "SHIPPING" &&
       data.channelListings?.some(
         channel =>
           validatePrice(channel.discountValue) ||
-          (data.requirementsPicker === RequirementsPicker.ORDER &&
-            validatePrice(channel.minSpent)),
+          (data.requirementsPicker === RequirementsPicker.ORDER && validatePrice(channel.minSpent)),
       )) ||
     disabled;
-
-  const { change, data, triggerChange, set, submit } = useForm<
-    FormData,
-    unknown
-  >({ ...initialForm, channelListings }, onSubmit, {
-    confirmLeave: true,
-    formId: VOUCHER_CREATE_FORM_ID,
-    checkIfSaveIsDisabled,
-  });
-
+  const { change, data, triggerChange, set, submit } = useForm<FormData, unknown>(
+    { ...initialForm, channelListings },
+    onSubmit,
+    {
+      confirmLeave: true,
+      formId: VOUCHER_CREATE_FORM_ID,
+      checkIfSaveIsDisabled,
+    },
+  );
   const { clearRowSelection, setSelectedVoucherCodesIds, selectedRowIds } =
     useVoucherCodesSelection(data.codes);
-
   const handleDiscountTypeChange = createDiscountTypeChangeHandler(change);
   const handleChannelChange = createChannelsChangeHandler(
     data.channelListings,
@@ -94,7 +88,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     triggerChange,
   );
   const changeMetadata = makeMetadataChangeHandler(change);
-
   const handleGenerateMultipleCodes = ({
     quantity,
     prefix,
@@ -105,26 +98,25 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       codes: [...generateMultipleIds(quantity, prefix), ...data.codes],
     });
   };
-
   const handleDeleteVoucherCodes = () => {
     clearRowSelection();
     set({
       codes: data.codes.filter(({ code }) => !selectedRowIds.includes(code)),
     });
   };
-
   const handleGenerateCustomCode = (code: string) => {
     if (voucherCodeExists(code, data.codes)) {
       throw new Error("Code already exists");
     }
+
     triggerChange(true);
     set({
       codes: [{ code }, ...data.codes],
     });
   };
-
-  const { pagination, paginatedCodes, settings, onSettingsChange } =
-    useVoucherCodesPagination(data.codes);
+  const { pagination, paginatedCodes, settings, onSettingsChange } = useVoucherCodesPagination(
+    data.codes,
+  );
 
   return (
     <form onSubmit={submit}>
@@ -155,12 +147,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             settings={settings}
             voucherCodesPagination={pagination}
           />
-          <VoucherTypes
-            data={data}
-            disabled={disabled}
-            errors={errors}
-            onChange={change}
-          />
+          <VoucherTypes data={data} disabled={disabled} errors={errors} onChange={change} />
           {data.discountType.toString() !== "SHIPPING" ? (
             <VoucherValue
               data={data}
@@ -187,12 +174,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             setData={set}
             isNewVoucher
           />
-          <VoucherDates
-            data={data}
-            disabled={disabled}
-            errors={errors}
-            onChange={change}
-          />
+          <VoucherDates data={data} disabled={disabled} errors={errors} onChange={change} />
           <Metadata data={data} onChange={changeMetadata} />
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar>

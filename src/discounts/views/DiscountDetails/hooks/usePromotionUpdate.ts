@@ -10,7 +10,6 @@ import { useIntl } from "react-intl";
 export const usePromotionUpdate = (id: string) => {
   const intl = useIntl();
   const notify = useNotifier();
-
   const [promotionUpdate, promotionUpdateOpts] = usePromotionUpdateMutation({
     update(cache, { data }) {
       if (data?.promotionUpdate?.errors?.length === 0) {

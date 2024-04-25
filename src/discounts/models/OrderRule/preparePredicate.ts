@@ -1,14 +1,9 @@
-import {
-  DiscountedObjectWhereInput,
-  OrderPredicateInput,
-} from "@dashboard/graphql";
+import { DiscountedObjectWhereInput, OrderPredicateInput } from "@dashboard/graphql";
 
 import { Condition } from "../Condition";
 import { createAPIWhereInput } from "../helpers";
 
-export function prepareOrderPredicate(
-  conditions: Condition[],
-): OrderPredicateInput {
+export function prepareOrderPredicate(conditions: Condition[]): OrderPredicateInput {
   const ruleConditions = conditions
     .map(condition => {
       if (!condition.id) {

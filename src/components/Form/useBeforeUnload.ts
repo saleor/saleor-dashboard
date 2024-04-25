@@ -6,7 +6,6 @@ const useBeforeUnload = (fn: (event: BeforeUnloadEvent) => void) => {
   useEffect(() => {
     cb.current = fn;
   }, [fn]);
-
   useEffect(() => {
     const onBeforeUnload = (event: BeforeUnloadEvent) => cb.current?.(event);
 

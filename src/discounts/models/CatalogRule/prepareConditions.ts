@@ -10,20 +10,14 @@ export function prepareCatalogueRuleConditions(
 
   if (Array.isArray(cataloguePredicate)) {
     return cataloguePredicate.flatMap(predicate =>
-      prepareCatalogueRuleConditions(
-        predicate,
-        ruleConditionsOptionsDetailsMap,
-      ),
+      prepareCatalogueRuleConditions(predicate, ruleConditionsOptionsDetailsMap),
     );
   }
 
   return Object.entries(cataloguePredicate)
     .flatMap(([key, value]) => {
       if (["OR", "AND"].includes(key)) {
-        return prepareCatalogueRuleConditions(
-          value,
-          ruleConditionsOptionsDetailsMap,
-        );
+        return prepareCatalogueRuleConditions(value, ruleConditionsOptionsDetailsMap);
       }
 
       return {
@@ -35,9 +29,7 @@ export function prepareCatalogueRuleConditions(
     .filter(Boolean);
 }
 
-function createToOptionMap(
-  ruleConditionsOptionsDetailsMap: Record<string, string>,
-) {
+function createToOptionMap(ruleConditionsOptionsDetailsMap: Record<string, string>) {
   return (id: string) => ({
     label: ruleConditionsOptionsDetailsMap[id] || id,
     value: id,

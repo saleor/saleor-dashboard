@@ -10,12 +10,7 @@ import {
   SaleCreateMutationVariables,
   SaleType,
 } from "@dashboard/graphql";
-import {
-  decimal,
-  extractMutationErrors,
-  getMutationErrors,
-  joinDateTime,
-} from "@dashboard/misc";
+import { decimal, extractMutationErrors, getMutationErrors, joinDateTime } from "@dashboard/misc";
 
 function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
   return type.toString() === DiscountValueTypeEnum.FIXED
@@ -24,9 +19,7 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 }
 
 export function createHandler(
-  createSale: (
-    variables: SaleCreateMutationVariables,
-  ) => Promise<FetchResult<SaleCreateMutation>>,
+  createSale: (variables: SaleCreateMutationVariables) => Promise<FetchResult<SaleCreateMutation>>,
   updateChannels: (options: {
     variables: SaleChannelListingUpdateMutationVariables;
   }) => Promise<FetchResult<SaleChannelListingUpdateMutation>>,
@@ -34,16 +27,13 @@ export function createHandler(
   return async (formData: FormData) => {
     const response = await createSale({
       input: {
-        endDate: formData.hasEndDate
-          ? joinDateTime(formData.endDate, formData.endTime)
-          : null,
+        endDate: formData.hasEndDate ? joinDateTime(formData.endDate, formData.endTime) : null,
         name: formData.name,
         startDate: joinDateTime(formData.startDate, formData.startTime),
         type: discountValueTypeEnum(formData.type),
         value: decimal(formData.value),
       },
     });
-
     const errors = getMutationErrors(response);
 
     if (errors.length > 0) {
@@ -52,10 +42,7 @@ export function createHandler(
 
     const updateChannelsErrors = await extractMutationErrors(
       updateChannels({
-        variables: getSaleChannelsVariables(
-          response.data.saleCreate.sale.id,
-          formData,
-        ),
+        variables: getSaleChannelsVariables(response.data.saleCreate.sale.id, formData),
       }),
     );
 

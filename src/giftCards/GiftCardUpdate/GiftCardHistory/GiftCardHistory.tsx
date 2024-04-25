@@ -2,14 +2,8 @@
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
 import Skeleton from "@dashboard/components/Skeleton";
-import Timeline, {
-  TimelineAddNote,
-  TimelineNote,
-} from "@dashboard/components/Timeline";
-import {
-  GiftCardEventsEnum,
-  useGiftCardAddNoteMutation,
-} from "@dashboard/graphql";
+import Timeline, { TimelineAddNote, TimelineNote } from "@dashboard/components/Timeline";
+import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Typography } from "@material-ui/core";
 import React from "react";
@@ -30,7 +24,6 @@ const GiftCardHistory: React.FC = () => {
   const notify = useNotifier();
   const { id, events } = useGiftCardHistoryEvents();
   const classes = useStyles();
-
   const [addTimelineNote, { loading }] = useGiftCardAddNoteMutation({
     refetchQueries: [GIFT_CARD_DETAILS_QUERY],
     onCompleted: ({ giftCardAddNote }) => {
@@ -49,9 +42,9 @@ const GiftCardHistory: React.FC = () => {
       }
     },
   });
-
   const onNoteAdd = (data: FormData) => {
     const { message } = data;
+
     addTimelineNote({ variables: { id, input: { message } } });
   };
 
@@ -94,9 +87,7 @@ const GiftCardHistory: React.FC = () => {
                   );
                 }
 
-                return (
-                  <GiftCardTimelineEvent key={id} date={date} event={event} />
-                );
+                return <GiftCardTimelineEvent key={id} date={date} event={event} />;
               })}
           </>
         ) : (

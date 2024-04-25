@@ -16,14 +16,14 @@ interface GiftCardCreateDialogCodeContentProps {
   onClose: () => void;
 }
 
-const GiftCardCreateDialogCodeContent: React.FC<
-  GiftCardCreateDialogCodeContentProps
-> = ({ cardCode, onClose }) => {
+const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentProps> = ({
+  cardCode,
+  onClose,
+}) => {
   const classes = useStyles({});
   const intl = useIntl();
   const notify = useNotifier();
   const [, copy] = useClipboard();
-
   const onCopyCode = () => {
     copy(cardCode);
     notify({
@@ -35,9 +35,7 @@ const GiftCardCreateDialogCodeContent: React.FC<
   return (
     <div className={classes.content}>
       <DialogContent>
-        <Typography>
-          {intl.formatMessage(messages.createdGiftCardLabel)}
-        </Typography>
+        <Typography>{intl.formatMessage(messages.createdGiftCardLabel)}</Typography>
         <VerticalSpacer />
         <Typography variant="h6" color="textSecondary" data-test-id="cardCode">
           {cardCode}

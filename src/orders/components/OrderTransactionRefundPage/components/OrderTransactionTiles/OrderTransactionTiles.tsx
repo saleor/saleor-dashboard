@@ -1,10 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import EventTime from "@dashboard/components/EventTime";
 import Money from "@dashboard/components/Money";
-import {
-  OrderDetailsGrantRefundFragment,
-  TransactionActionEnum,
-} from "@dashboard/graphql";
+import { OrderDetailsGrantRefundFragment, TransactionActionEnum } from "@dashboard/graphql";
 import {
   EventStatus,
   PspReference,
@@ -30,6 +27,7 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
   control,
 }: OrderTransactionTilesProps) => {
   const { field } = useController({ name: "transactionId", control });
+
   if (!transactions) {
     return (
       <Box display="flex">
@@ -37,14 +35,14 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
       </Box>
     );
   }
+
   return (
     <DashboardCard>
       <DashboardCard.Content>
         <RadioGroup value={field.value} onValueChange={field.onChange}>
           {transactions.map(transaction => {
-            const isDisabled = !transaction.actions.includes(
-              TransactionActionEnum.REFUND,
-            );
+            const isDisabled = !transaction.actions.includes(TransactionActionEnum.REFUND);
+
             return (
               <Box
                 key={transaction.id}
@@ -64,9 +62,7 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
                       </Box>
                     </Tooltip.Trigger>
                     <Tooltip.Content side="left">
-                      <FormattedMessage
-                        {...transactionRefundTilesMessages.disabledTransaction}
-                      />
+                      <FormattedMessage {...transactionRefundTilesMessages.disabledTransaction} />
                     </Tooltip.Content>
                   </Tooltip>
                 ) : (
@@ -75,6 +71,7 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
                 <Box>
                   {transaction.events.map((event, eventIndex) => {
                     const { type, status } = mapTransactionEvent(event);
+
                     return (
                       <Box
                         key={event.id}
@@ -83,9 +80,7 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
                         alignItems="center"
                         gap={8}
                         borderBottomStyle={
-                          eventIndex === transaction.events.length - 1
-                            ? "none"
-                            : "solid"
+                          eventIndex === transaction.events.length - 1 ? "none" : "solid"
                         }
                         borderBottomWidth={1}
                         borderColor="default1"
@@ -98,10 +93,7 @@ export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
                         <Money money={event.amount} />
                         <EventType type={type} message={event.message} />
                         {event.pspReference ? (
-                          <PspReference
-                            reference={event.pspReference}
-                            url={event.externalUrl}
-                          />
+                          <PspReference reference={event.pspReference} url={event.externalUrl} />
                         ) : (
                           <Box />
                         )}

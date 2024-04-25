@@ -29,10 +29,7 @@ import { messages } from "./messages";
 export interface ProductStockFormsetData {
   quantityAllocated: number;
 }
-export type ProductStockInput = FormsetAtomicData<
-  ProductStockFormsetData,
-  string
->;
+export type ProductStockInput = FormsetAtomicData<ProductStockFormsetData, string>;
 export interface ProductStockFormData {
   sku: string;
   trackInventory: boolean;
@@ -73,34 +70,26 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
 }) => {
   const intl = useIntl();
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
-
   const warehousesToAssign =
-    warehouses?.filter(
-      warehouse => !stocks.some(stock => stock.id === warehouse.id),
-    ) || [];
+    warehouses?.filter(warehouse => !stocks.some(stock => stock.id === warehouse.id)) || [];
   const formErrors = getFormErrors(["sku"], errors);
-
   const handleWarehouseStockAdd = (warehouseId: string) => {
     onWarehouseStockAdd(warehouseId);
     setLastStockRowFocus(true);
   };
-
   const handleStockInputFocus = (input: HTMLDivElement) => {
     if (lastStockRowFocus && input) {
       input.focus();
       setLastStockRowFocus(false);
     }
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFormDataChange(e);
   };
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage(messages.title)}
-      </DashboardCard.Title>
+      <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
       <DashboardCard.Content>
         <Box __width="50%">
           <Input
@@ -144,9 +133,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
               </Text>
               {!productVariantChannelListings?.length && (
                 <Text size={2} color="default2">
-                  <FormattedMessage
-                    {...messages.noChannelWarehousesAllocation}
-                  />
+                  <FormattedMessage {...messages.noChannelWarehousesAllocation} />
                 </Text>
               )}
             </Box>
@@ -156,18 +143,14 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                   <FormattedMessage
                     {...messages.configureWarehouseForVariant}
                     values={{
-                      a: chunks => (
-                        <Link onClick={onWarehouseConfigure}>{chunks}</Link>
-                      ),
+                      a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
                     }}
                   />
                 ) : (
                   <FormattedMessage
                     {...messages.configureWarehouseForProduct}
                     values={{
-                      a: chunks => (
-                        <Link onClick={onWarehouseConfigure}>{chunks}</Link>
-                      ),
+                      a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
                     }}
                   />
                 )}
@@ -201,10 +184,9 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
               </TableHead>
               <TableBody>
                 {renderCollection(stocks, (stock, index) => {
-                  const handleQuantityChange =
-                    createNonNegativeValueChangeHandler(event =>
-                      onChange(stock.id, event.target.value),
-                    );
+                  const handleQuantityChange = createNonNegativeValueChangeHandler(event =>
+                    onChange(stock.id, event.target.value),
+                  );
 
                   return (
                     <TableRowLink data-test-id={stock.label} key={stock.id}>
@@ -223,10 +205,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                           size="small"
                           type="number"
                           min={0}
-                          ref={input =>
-                            stocks.length === index + 1 &&
-                            handleStockInputFocus(input)
-                          }
+                          ref={input => stocks.length === index + 1 && handleStockInputFocus(input)}
                         />
                       </TableCell>
                       <TableCell>

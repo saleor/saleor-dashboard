@@ -265,12 +265,7 @@ export const attributeTranslationDetailsFragment = gql`
       name
       inputType
       withChoices
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
+      choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
         ...AttributeChoicesTranslation
       }
     }

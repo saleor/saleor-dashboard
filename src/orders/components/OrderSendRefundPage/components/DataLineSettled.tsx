@@ -11,9 +11,7 @@ interface DataLineSettledProps {
   unsettledMoney: IMoney;
 }
 
-export const DataLineSettled: React.FC<DataLineSettledProps> = ({
-  unsettledMoney,
-}) => {
+export const DataLineSettled: React.FC<DataLineSettledProps> = ({ unsettledMoney }) => {
   const classes = useDataLineSettledStyles();
 
   if (!unsettledMoney) {

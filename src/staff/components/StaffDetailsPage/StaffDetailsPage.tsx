@@ -21,10 +21,7 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { getUserName } from "@dashboard/misc";
 import UserStatus from "@dashboard/staff/components/UserStatus";
 import { staffListUrl } from "@dashboard/staff/urls";
-import {
-  getMemberPermissionGroups,
-  isMemberActive,
-} from "@dashboard/staff/utils";
+import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { Card, CardContent, Typography } from "@material-ui/core";
@@ -83,21 +80,18 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 }: StaffDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const { locale, setLocale } = useLocale();
-
   const isActive = isMemberActive(staffMember);
   const permissionGroups = getMemberPermissionGroups(staffMember);
-
-  const [permissionGroupsDisplayValues, setPermissionGroupsDisplayValues] =
-    useStateFromProps<MultiAutocompleteChoiceType[]>(
-      permissionGroups.map(group => ({
-        disabled: !group.userCanManage,
-        label: group.name,
-        value: group.id,
-      })) || [],
-    );
-
+  const [permissionGroupsDisplayValues, setPermissionGroupsDisplayValues] = useStateFromProps<
+    MultiAutocompleteChoiceType[]
+  >(
+    permissionGroups.map(group => ({
+      disabled: !group.userCanManage,
+      label: group.name,
+      value: group.id,
+    })) || [],
+  );
   const initialForm: StaffDetailsFormData = {
     email: staffMember?.email || "",
     firstName: staffMember?.firstName || "",
@@ -107,12 +101,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={onSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ data: formData, change, isSaveDisabled, submit, toggleValue }) => {
         const permissionGroupsChange = createMultiAutocompleteSelectHandler(
           toggleValue,
@@ -205,5 +194,6 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
     </Form>
   );
 };
+
 StaffDetailsPage.displayName = "StaffDetailsPage";
 export default StaffDetailsPage;

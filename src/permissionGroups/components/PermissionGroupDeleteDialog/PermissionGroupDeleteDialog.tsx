@@ -1,9 +1,6 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import {
-  PermissionGroupErrorCode,
-  PermissionGroupErrorFragment,
-} from "@dashboard/graphql";
+import { PermissionGroupErrorCode, PermissionGroupErrorFragment } from "@dashboard/graphql";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { DialogContentText, Typography } from "@material-ui/core";
 import React from "react";
@@ -29,14 +26,14 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
   const intl = useIntl();
 
   let errorMessage;
+
   if (error?.code === PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION) {
     errorMessage = intl.formatMessage({
       id: "O22NIZ",
-      defaultMessage:
-        "Cant's delete group which is out of your permission scope",
+      defaultMessage: "Cant's delete group which is out of your permission scope",
       description: "deletion error message",
     });
-  } else if (!!error) {
+  } else if (error) {
     errorMessage = getPermissionGroupErrorMessage(error, intl);
   }
 
@@ -67,5 +64,6 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
+
 PermissionGroupDeleteDialog.displayName = "PermissionGroupDeleteDialog";
 export default PermissionGroupDeleteDialog;

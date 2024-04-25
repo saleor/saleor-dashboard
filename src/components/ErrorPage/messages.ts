@@ -7,8 +7,7 @@ const messages = defineMessages({
   },
   content: {
     id: "/0gMCW",
-    defaultMessage:
-      "Try to refresh the page or go navigate to a different page and back.",
+    defaultMessage: "Try to refresh the page or go navigate to a different page and back.",
   },
   btnDashboard: {
     id: "9mGA/Q",
@@ -23,8 +22,7 @@ const messages = defineMessages({
   or: {
     id: "OA+fw+",
     defaultMessage: "or",
-    description:
-      "conjunction, choice between going to dashboard or refreshing page",
+    description: "conjunction, choice between going to dashboard or refreshing page",
   },
 });
 

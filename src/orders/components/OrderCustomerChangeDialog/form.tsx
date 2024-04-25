@@ -11,8 +11,7 @@ export interface OrderCustomerChangeData {
   changeActionOption: CustomerChangeActionEnum;
 }
 
-type UseOrderCustomerChangeFormResult =
-  CommonUseFormResult<OrderCustomerChangeData>;
+type UseOrderCustomerChangeFormResult = CommonUseFormResult<OrderCustomerChangeData>;
 
 export interface OrderCustomerChangeFormProps {
   children: (props: UseOrderCustomerChangeFormResult) => React.ReactNode;
@@ -32,16 +31,14 @@ function useOrderCustomerChangeForm(
     ...initial,
     ...defaultInitialFormData,
   });
-
   const handleFormSubmit = useHandleFormSubmit({
     onSubmit,
   });
-
   const handleSubmit = () => handleFormSubmit(data);
-
   const submit = (event: React.FormEvent<any>) => {
     event.stopPropagation();
     event.preventDefault();
+
     return handleSubmit();
   };
 

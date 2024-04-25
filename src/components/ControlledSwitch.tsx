@@ -24,17 +24,8 @@ interface ControlledSwitchProps {
 }
 
 export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
-  const {
-    checked,
-    disabled,
-    onChange,
-    label,
-    name,
-    secondLabel,
-    uncheckedLabel,
-    className,
-  } = props;
-
+  const { checked, disabled, onChange, label, name, secondLabel, uncheckedLabel, className } =
+    props;
   const classes = useStyles(props);
 
   return (
@@ -42,9 +33,7 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
       className={className}
       control={
         <Switch
-          onChange={() =>
-            onChange({ target: { name, value: !checked } } as any)
-          }
+          onChange={() => onChange({ target: { name, value: !checked } } as any)}
           checked={checked}
           name={name}
         />

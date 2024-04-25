@@ -32,12 +32,10 @@ describe("Product handlers", () => {
 
     // Act
     await handleAssignMedia(media, variant, assignMedia, unassignMedia);
-
     // Assert
     expect(assignMedia).not.toHaveBeenCalled();
     expect(unassignMedia).not.toHaveBeenCalled();
   });
-
   it("should assign media to product variant when more then all previous selected media ids passed", async () => {
     // Arrange
     const media: HandleAssignMediaParams[0] = ["1", "2", "3"];
@@ -58,7 +56,6 @@ describe("Product handlers", () => {
 
     // Act
     await handleAssignMedia(media, variant, assignMedia, unassignMedia);
-
     // Assert
     expect(assignMedia).toHaveBeenCalledTimes(2);
     expect(assignMedia).toHaveBeenCalledWith({
@@ -71,7 +68,6 @@ describe("Product handlers", () => {
     });
     expect(unassignMedia).not.toHaveBeenCalled();
   });
-
   it("should unassign media from product variant when not all previous selected media ids passed", async () => {
     // Arrange
     const media: HandleAssignMediaParams[0] = ["3"];
@@ -106,7 +102,6 @@ describe("Product handlers", () => {
 
     // Act
     await handleAssignMedia(media, variant, assignMedia, unassignMedia);
-
     // Assert
     expect(assignMedia).not.toHaveBeenCalled();
     expect(unassignMedia).toHaveBeenCalledTimes(2);
@@ -119,7 +114,6 @@ describe("Product handlers", () => {
       mediaId: "2",
     });
   });
-
   it("should assign and unassign media from product variant when not all but more selected media ids from previously selected passed", async () => {
     // Arrange
     const media: HandleAssignMediaParams[0] = ["1", "3"];
@@ -147,7 +141,6 @@ describe("Product handlers", () => {
 
     // Act
     await handleAssignMedia(media, variant, assignMedia, unassignMedia);
-
     // Assert
     expect(assignMedia).toHaveBeenCalledTimes(1);
     expect(assignMedia).toHaveBeenCalledWith({

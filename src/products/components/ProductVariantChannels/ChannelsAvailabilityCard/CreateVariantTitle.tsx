@@ -19,7 +19,6 @@ export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
   isEmpty,
 }) => {
   const intl = useIntl();
-
   const getCaptionText = () => {
     if (isEmpty) {
       return intl.formatMessage(messages.noItemsAvailable);
@@ -30,12 +29,7 @@ export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
 
   return (
     <DashboardCard.Title>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        marginBottom={4}
-      >
+      <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={4}>
         <Accordion.Trigger>
           <Box display="grid" gap={2}>
             {intl.formatMessage(messages.title)}

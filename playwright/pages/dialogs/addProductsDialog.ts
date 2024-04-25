@@ -13,12 +13,13 @@ export class AddProductsDialog extends BasePage {
     readonly assignAndSaveButton = page.getByTestId("assign-and-save-button"),
     readonly searchInput = page.getByTestId("search-query").locator("input"),
   ) {
-    super(page)
+    super(page);
   }
 
   async clickConfirmButton() {
     await this.confirmButton.click();
   }
+
   async clickBackButton() {
     await this.confirmButton.click();
   }
@@ -27,9 +28,10 @@ export class AddProductsDialog extends BasePage {
     await this.searchInput.fill(productName);
   }
 
-async selectVariantBySKU(sku: string) {
-const variant = this.variantRow.filter({hasText:`SKU ${sku}`})
-await variant.waitFor({state:"visible"});
-await variant.getByRole("checkbox").click();
-}
+  async selectVariantBySKU(sku: string) {
+    const variant = this.variantRow.filter({ hasText: `SKU ${sku}` });
+
+    await variant.waitFor({ state: "visible" });
+    await variant.getByRole("checkbox").click();
+  }
 }

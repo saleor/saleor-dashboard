@@ -1,7 +1,5 @@
 import CardTitle from "@dashboard/components/CardTitle";
-import RadioGroupField, {
-  RadioGroupFieldChoice,
-} from "@dashboard/components/RadioGroupField";
+import RadioGroupField, { RadioGroupFieldChoice } from "@dashboard/components/RadioGroupField";
 import { SaleType as SaleTypeEnum } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Card, CardContent } from "@material-ui/core";
@@ -53,10 +51,8 @@ function createChoices(intl: IntlShape): RadioGroupFieldChoice[] {
 
 const SaleType: React.FC<SaleTypeProps> = props => {
   const { data, disabled, onChange } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
-
   const choices = createChoices(intl);
 
   return (

@@ -34,14 +34,12 @@ export const giftCardsListHeaderMenuItemsMessages = defineMessages({
   },
   noGiftCardsProductTypes: {
     id: "VI+X8H",
-    defaultMessage:
-      "{createGiftCardProductType} to start selling gift cards in your store.",
+    defaultMessage: "{createGiftCardProductType} to start selling gift cards in your store.",
     description: "no gift card product types alert message",
   },
   noGiftCardsProducts: {
     id: "jmh0rV",
-    defaultMessage:
-      "{createGiftCardProduct} to start selling gift cards in your store.",
+    defaultMessage: "{createGiftCardProduct} to start selling gift cards in your store.",
     description: "no gift card products alert message",
   },
   createGiftCardProductType: {
@@ -130,26 +128,22 @@ export const bulkEnableDisableSectionMessages = defineMessages({
   },
   successActivateAlertText: {
     id: "IwEQvz",
-    defaultMessage:
-      "Successfully activated gift {count,plural,one{card} other{cards}}",
+    defaultMessage: "Successfully activated gift {count,plural,one{card} other{cards}}",
     description: "success activate alert message",
   },
   successDeactivateAlertText: {
     id: "SO56cv",
-    defaultMessage:
-      "Successfully deactivated gift {count,plural,one{card} other{cards}}",
+    defaultMessage: "Successfully deactivated gift {count,plural,one{card} other{cards}}",
     description: "success deactivate alert message",
   },
   errorActivateAlertText: {
     id: "KcsJKm",
-    defaultMessage:
-      "Error activating gift {count,plural,one{card} other{cards}}",
+    defaultMessage: "Error activating gift {count,plural,one{card} other{cards}}",
     description: "error with activatation alert message",
   },
   errorDeactivateAlertText: {
     id: "C90nKP",
-    defaultMessage:
-      "Errors deactivating gift {count,plural,one{card} other{cards}}",
+    defaultMessage: "Errors deactivating gift {count,plural,one{card} other{cards}}",
     description: "error with deactivatation alert message",
   },
 });

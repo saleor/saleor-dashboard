@@ -6,8 +6,11 @@ import type { APIRequestContext, Page } from "@playwright/test";
 
 export class StaffMembersPage extends BasePage {
   readonly request: APIRequestContext;
+
   readonly basePage: BasePage;
+
   readonly mailpitService: MailpitService;
+
   readonly inviteStaffMembersDialog: InviteStaffMembersDialog;
 
   constructor(
@@ -15,18 +18,10 @@ export class StaffMembersPage extends BasePage {
     request: APIRequestContext,
     readonly inviteStaffMembersButton = page.getByTestId("invite-staff-member"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
-    readonly permissionsGroupSelectButton = page.getByTestId(
-      "permission-groups",
-    ),
-    readonly permissionGroupOptions = page.getByTestId(
-      "multi-autocomplete-select-option",
-    ),
-    readonly assignedPermissionGroups = page.getByTestId(
-      "assigned-permission-group",
-    ),
-    readonly isActiveCheckbox = page
-      .getByTestId("is-active-checkbox")
-      .locator("input"),
+    readonly permissionsGroupSelectButton = page.getByTestId("permission-groups"),
+    readonly permissionGroupOptions = page.getByTestId("multi-autocomplete-select-option"),
+    readonly assignedPermissionGroups = page.getByTestId("assigned-permission-group"),
+    readonly isActiveCheckbox = page.getByTestId("is-active-checkbox").locator("input"),
   ) {
     super(page);
     this.request = request;
@@ -38,24 +33,26 @@ export class StaffMembersPage extends BasePage {
   async clickIsActiveCheckbox() {
     await this.isActiveCheckbox.click();
   }
+
   async clickPermissionsGroupSelectButton() {
     await this.permissionsGroupSelectButton.click();
   }
 
   async assignUserToPermissionGroup(permissionGroupName: string) {
-    await this.permissionGroupOptions
-      .filter({ hasText: permissionGroupName })
-      .click();
+    await this.permissionGroupOptions.filter({ hasText: permissionGroupName }).click();
   }
 
   async clickInviteStaffMemberButton() {
     await this.inviteStaffMembersButton.click();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async gotToExistingStaffMemberPage(staffMemberId: string) {
     const staffMemberUrl = `${URL_LIST.staffMembers}${staffMemberId}`;
+
     await this.page.goto(staffMemberUrl);
   }
 }

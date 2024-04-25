@@ -42,7 +42,6 @@ const ChannelsSection: React.FC<ChannelsSectionProps> = ({
   channelsDisplayValues,
 }) => {
   const { onQueryChange, filteredChannels } = useChannelsSearch(allChannels);
-
   const intl = useIntl();
 
   return (

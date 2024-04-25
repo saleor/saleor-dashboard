@@ -24,10 +24,8 @@ describe("Product media utils", () => {
       },
     ];
     const selectedIds: GetSelectedMediaParams[1] = ["1", "3", "4"];
-
     // Act
     const result = getSelectedMedia(media, selectedIds);
-
     // Assert
     const expectedResult = [
       {
@@ -46,7 +44,6 @@ describe("Product media utils", () => {
 
     expect(result).toEqual(expectedResult);
   });
-
   it("should return empty array of media when no media ids passed", () => {
     // Arrange
     const media: GetSelectedMediaParams[0] = [
@@ -68,7 +65,6 @@ describe("Product media utils", () => {
       },
     ];
     const selectedIds: GetSelectedMediaParams[1] = [];
-
     // Act
     const result = getSelectedMedia(media, selectedIds);
 

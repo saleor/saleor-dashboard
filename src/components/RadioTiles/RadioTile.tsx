@@ -12,13 +12,7 @@ export interface RadioTileProps {
   value: string;
 }
 
-export const RadioTile = ({
-  checked,
-  title,
-  description,
-  value,
-  ...props
-}: RadioTileProps) => {
+export const RadioTile = ({ checked, title, description, value, ...props }: RadioTileProps) => {
   const [isHoverState, setHoverState] = React.useState(false);
 
   return (

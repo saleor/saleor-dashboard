@@ -11,7 +11,7 @@ export class SetGiftCardsBalanceDialog {
     this.page = page;
   }
 
-  async setBalance(balance: string){
+  async setBalance(balance: string) {
     await this.enterAmountInput.fill(balance);
     await this.submitButton.click();
   }

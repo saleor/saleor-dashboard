@@ -8,7 +8,6 @@ interface OverflowConfig {
 
 const getIsHorizontal = (el: HTMLElement, config: OverflowConfig) =>
   config.horizontal && el && el.scrollWidth > el.clientWidth;
-
 const getIsVertical = (el: HTMLElement, config: OverflowConfig) =>
   config.vertical && el && el.scrollHeight > el.clientHeight;
 
