@@ -5369,6 +5369,9 @@
     "context": "section header",
     "string": "Eligible Collections"
   },
+  "XOkUxQ": {
+    "string": "Product unavailable in voucher channels"
+  },
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
     "string": "Void"
