@@ -20,11 +20,8 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => (
-    <>{defaultMessage}</>
-  ),
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
-
 jest.mock("@dashboard/auth/hooks/useUserPermissions", () => ({
   useUserPermissions: jest.fn(() => [
     {
@@ -59,7 +56,7 @@ const transactionSubmitCardProps = {
   customRefundValue: undefined,
   disabled: false,
   submitStatus: "default" as const,
-  onAmountChange: () => {},
+  onAmountChange: () => undefined,
   isAmountDirty: false,
 };
 
@@ -68,6 +65,7 @@ describe("TransactionSubmitCard", () => {
     // Arrange
     const submitFn = jest.fn();
     const onChangeFn = jest.fn();
+
     render(
       <TransactionSubmitCard
         {...transactionSubmitCardProps}
@@ -77,15 +75,12 @@ describe("TransactionSubmitCard", () => {
       { wrapper: Wrapper },
     );
 
-    const autoGrantRefundCheckbox = screen.getByTestId(
-      "auto-grant-refund-checkbox",
-    );
+    const autoGrantRefundCheckbox = screen.getByTestId("auto-grant-refund-checkbox");
     const submitBtn = screen.getByTestId("return-submit-button");
 
     // Act
     await userEvent.click(autoGrantRefundCheckbox);
     await userEvent.click(submitBtn);
-
     // Assert
     expect(onChangeFn).toHaveBeenCalledWith({
       target: {
@@ -95,11 +90,11 @@ describe("TransactionSubmitCard", () => {
     });
     expect(submitFn).toHaveBeenCalled();
   });
-
   it("submits grant refund & send refund", async () => {
     // Arrange
     const submitFn = jest.fn();
     const onChangeFn = jest.fn();
+
     render(
       <TransactionSubmitCard
         {...transactionSubmitCardProps}
@@ -111,15 +106,12 @@ describe("TransactionSubmitCard", () => {
       { wrapper: Wrapper },
     );
 
-    const autoSendRefundCheckbox = screen.getByTestId(
-      "auto-send-refund-checkbox",
-    );
+    const autoSendRefundCheckbox = screen.getByTestId("auto-send-refund-checkbox");
     const submitBtn = screen.getByTestId("return-submit-button");
 
     // Act
     await userEvent.click(autoSendRefundCheckbox);
     await userEvent.click(submitBtn);
-
     // Assert
     expect(onChangeFn).toHaveBeenCalledWith({
       target: {
@@ -133,6 +125,7 @@ describe("TransactionSubmitCard", () => {
     // Arrange
     const submitFn = jest.fn();
     const onChangeFn = jest.fn();
+
     render(
       <TransactionSubmitCard
         {...transactionSubmitCardProps}
@@ -144,15 +137,12 @@ describe("TransactionSubmitCard", () => {
       { wrapper: Wrapper },
     );
 
-    const refundShipmentCostCheckbox = screen.getByTestId(
-      "refund-shipment-costs-checkbox",
-    );
+    const refundShipmentCostCheckbox = screen.getByTestId("refund-shipment-costs-checkbox");
     const submitBtn = screen.getByTestId("return-submit-button");
 
     // Act
     await userEvent.click(refundShipmentCostCheckbox);
     await userEvent.click(submitBtn);
-
     // Assert
     expect(onChangeFn).toHaveBeenCalledWith({
       target: {
@@ -168,6 +158,7 @@ describe("TransactionSubmitCard", () => {
     const onChangeFn = jest.fn();
     const onAmountChangeFn = jest.fn();
     const CUSTOM_PRICE = "5";
+
     render(
       <TransactionSubmitCard
         {...transactionSubmitCardProps}
@@ -187,7 +178,6 @@ describe("TransactionSubmitCard", () => {
     await userEvent.clear(priceField);
     await userEvent.type(priceField, CUSTOM_PRICE);
     await userEvent.click(submitBtn);
-
     // Assert
     expect(onAmountChangeFn).toHaveBeenCalledWith(5);
     expect(submitFn).toHaveBeenCalled();

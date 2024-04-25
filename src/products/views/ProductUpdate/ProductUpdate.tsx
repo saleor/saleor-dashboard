@@ -5,10 +5,7 @@ import { AttributeInput } from "@dashboard/components/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  DEFAULT_INITIAL_SEARCH_DATA,
-  VALUES_PAGINATE_BY,
-} from "@dashboard/config";
+import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   ProductMediaCreateMutationVariables,
   useProductDeleteMutation,
@@ -44,10 +41,7 @@ import {
   ProductUrlQueryParams,
   productVariantEditUrl,
 } from "../../urls";
-import {
-  createImageReorderHandler,
-  createImageUploadHandler,
-} from "./handlers";
+import { createImageReorderHandler, createImageUploadHandler } from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
 import { productUpdatePageMessages as messages } from "./messages";
 
@@ -94,7 +88,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-
   const { data, loading, refetch } = useProductDetailsQuery({
     displayLoader: true,
     variables: {
@@ -102,20 +95,14 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       firstValues: VALUES_PAGINATE_BY,
     },
   });
-
   const isSimpleProduct = !data?.product?.productType?.hasVariants;
-
   const { availableChannels } = useAppChannel(false);
-
   const limitOpts = useShopLimitsQuery({
     variables: {
       productVariants: true,
     },
   });
-
-  const [reorderProductImages, reorderProductImagesOpts] =
-    useProductMediaReorderMutation({});
-
+  const [reorderProductImages, reorderProductImagesOpts] = useProductMediaReorderMutation({});
   const [deleteProduct, deleteProductOpts] = useProductDeleteMutation({
     onCompleted: () => {
       notify({
@@ -128,25 +115,21 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       navigate(productListUrl());
     },
   });
+  const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
+    onCompleted: data => {
+      const imageError = data.productMediaCreate.errors.find(
+        error => error.field === ("image" as keyof ProductMediaCreateMutationVariables),
+      );
 
-  const [createProductImage, createProductImageOpts] =
-    useProductMediaCreateMutation({
-      onCompleted: data => {
-        const imageError = data.productMediaCreate.errors.find(
-          error =>
-            error.field ===
-            ("image" as keyof ProductMediaCreateMutationVariables),
-        );
-        if (imageError) {
-          notify({
-            status: "error",
-            title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
-            text: intl.formatMessage(errorMessages.imageUploadErrorText),
-          });
-        }
-      },
-    });
-
+      if (imageError) {
+        notify({
+          status: "error",
+          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+          text: intl.formatMessage(errorMessages.imageUploadErrorText),
+        });
+      }
+    },
+  });
   const [deleteProductImage] = useProductMediaDeleteMutation({
     onCompleted: () =>
       notify({
@@ -154,37 +137,31 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         text: intl.formatMessage(commonMessages.savedChanges),
       }),
   });
-
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
-
   const product = data?.product;
-
   const getAttributeValuesSuggestions = useSearchAttributeValuesSuggestions();
+  const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
+    onCompleted: data => {
+      const errors = data.productMediaCreate.errors;
 
-  const [createProductMedia, createProductMediaOpts] =
-    useProductMediaCreateMutation({
-      onCompleted: data => {
-        const errors = data.productMediaCreate.errors;
-
-        if (errors.length) {
-          errors.map(error =>
-            notify({
-              status: "error",
-              text: getProductErrorMessage(error, intl),
-            }),
-          );
-        } else {
+      if (errors.length) {
+        errors.map(error =>
           notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
-
+            status: "error",
+            text: getProductErrorMessage(error, intl),
+          }),
+        );
+      } else {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
   const handleMediaUrlUpload = (mediaUrl: string) => {
     const variables = {
       alt: "",
@@ -196,21 +173,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       variables,
     });
   };
-
   const handleBack = () => navigate(productListUrl());
-
-  const handleImageDelete = (id: string) => () =>
-    deleteProductImage({ variables: { id } });
-
+  const handleImageDelete = (id: string) => () => deleteProductImage({ variables: { id } });
   const [submit, submitOpts] = useProductUpdateHandler(product);
-
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
   );
   const handleImageReorder = createImageReorderHandler(product, variables =>
     reorderProductImages({ variables }),
   );
-
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productUrl(id, {
@@ -220,7 +191,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       }),
       { resetScroll: false },
     );
-
   const disableFormSave =
     submitOpts.loading ||
     createProductImageOpts.loading ||
@@ -228,50 +198,24 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reorderProductImagesOpts.loading ||
     createProductMediaOpts.loading ||
     loading;
-
   const formTransitionState = getMutationState(
     submitOpts.called,
     submitOpts.loading,
     submitOpts.errors,
     createProductMediaOpts.data?.productMediaCreate.errors,
   );
-
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
-
-  const collections =
-    mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
-
-  const attributeValues =
-    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
-
-  const fetchMoreCollections = getSearchFetchMoreProps(
-    searchCollectionsOpts,
-    loadMoreCollections,
-  );
-
-  const fetchMoreCategories = getSearchFetchMoreProps(
-    searchCategoriesOpts,
-    loadMoreCategories,
-  );
-
-  const fetchMoreReferencePages = getSearchFetchMoreProps(
-    searchPagesOpts,
-    loadMorePages,
-  );
-
-  const fetchMoreReferenceProducts = getSearchFetchMoreProps(
-    searchProductsOpts,
-    loadMoreProducts,
-  );
-
+  const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
+  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const fetchMoreCollections = getSearchFetchMoreProps(searchCollectionsOpts, loadMoreCollections);
+  const fetchMoreCategories = getSearchFetchMoreProps(searchCategoriesOpts, loadMoreCategories);
+  const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
+  const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
   const fetchMoreAttributeValues = {
-    hasMore:
-      !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
-        ?.hasNextPage,
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues,
   };
-
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
   if (product === null) {
@@ -317,14 +261,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageDelete={handleImageDelete}
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
-        assignReferencesAttributeId={
-          params.action === "assign-attribute-value" && params.id
-        }
+        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
-        referenceProducts={
-          mapEdgesToItems(searchProductsOpts?.data?.search) || []
-        }
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}

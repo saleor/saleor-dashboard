@@ -2,10 +2,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  useBulkRemoveCustomersMutation,
-  useListCustomersQuery,
-} from "@dashboard/graphql";
+import { useBulkRemoveCustomersMutation, useListCustomersQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -29,17 +26,8 @@ import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerListPage from "../../components/CustomerListPage";
-import {
-  customerListUrl,
-  CustomerListUrlDialog,
-  CustomerListUrlQueryParams,
-} from "../../urls";
-import {
-  getFilterOpts,
-  getFilterQueryParam,
-  getFilterVariables,
-  storageUtils,
-} from "./filters";
+import { customerListUrl, CustomerListUrlDialog, CustomerListUrlQueryParams } from "../../urls";
+import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface CustomerListProps {
@@ -50,9 +38,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.CUSTOMER_LIST,
-  );
+  const { updateListSettings, settings } = useListSettings(ListViews.CUSTOMER_LIST);
 
   usePaginationReset(customerListUrl, params, settings.rowNumber);
 
@@ -62,7 +48,6 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     setClearDatagridRowSelectionCallback,
     setSelectedRowIds,
   } = useRowSelection(params);
-
   const {
     selectedPreset,
     presets,
@@ -79,7 +64,6 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     getUrl: customerListUrl,
     storageUtils,
   });
-
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
@@ -94,45 +78,37 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     variables: queryVariables,
   });
   const customers = mapEdgesToItems(data?.customers);
-
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      cleanupFn: clearRowSelection,
-      createUrl: customerListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-      keepActiveTab: true,
-    });
-
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+    cleanupFn: clearRowSelection,
+    createUrl: customerListUrl,
+    getFilterQueryParam,
+    navigate,
+    params,
+    keepActiveTab: true,
+  });
   const [openModal, closeModal] = createDialogActionHandlers<
     CustomerListUrlDialog,
     CustomerListUrlQueryParams
   >(navigate, customerListUrl, params);
-
   const paginationValues = usePaginator({
     pageInfo: data?.customers?.pageInfo,
     paginationState,
     queryString: params,
   });
-
-  const [bulkRemoveCustomers, bulkRemoveCustomersOpts] =
-    useBulkRemoveCustomersMutation({
-      onCompleted: data => {
-        if (data.customerBulkDelete?.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          refetch();
-          clearRowSelection();
-          closeModal();
-        }
-      },
-    });
-
+  const [bulkRemoveCustomers, bulkRemoveCustomersOpts] = useBulkRemoveCustomersMutation({
+    onCompleted: data => {
+      if (data.customerBulkDelete?.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        refetch();
+        clearRowSelection();
+        closeModal();
+      }
+    },
+  });
   const handleSort = createSortHandler(navigate, customerListUrl, params);
-
   const handleSetSelectedCustomerIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!customers) {
@@ -148,12 +124,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
 
       setClearDatagridRowSelectionCallback(clearSelection);
     },
-    [
-      customers,
-      selectedRowIds,
-      setClearDatagridRowSelectionCallback,
-      setSelectedRowIds,
-    ],
+    [customers, selectedRowIds, setClearDatagridRowSelectionCallback, setSelectedRowIds],
   );
 
   return (

@@ -3,7 +3,10 @@ import { Page } from "@playwright/test";
 export class ResendGiftCardCodeDialog {
   readonly page: Page;
 
-  constructor(page: Page, readonly resendButton = page.getByTestId("submit")) {
+  constructor(
+    page: Page,
+    readonly resendButton = page.getByTestId("submit"),
+  ) {
     this.page = page;
   }
 

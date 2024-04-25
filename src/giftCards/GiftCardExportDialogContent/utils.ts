@@ -6,10 +6,7 @@ interface ExportGiftCardsInputProps {
   data: ExportSettingsFormData;
 }
 
-export const getExportGiftCardsInput = ({
-  data,
-  ids,
-}: ExportGiftCardsInputProps) => {
+export const getExportGiftCardsInput = ({ data, ids }: ExportGiftCardsInputProps) => {
   const { scope, fileType } = data;
 
   if (scope === ExportScope.IDS) {

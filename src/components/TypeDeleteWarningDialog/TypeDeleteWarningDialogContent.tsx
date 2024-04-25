@@ -23,9 +23,7 @@ interface TypeDeleteWarningDialogContentProps {
   showViewAssignedItemsButton?: boolean;
 }
 
-const TypeDeleteWarningDialogContent: React.FC<
-  TypeDeleteWarningDialogContentProps
-> = ({
+const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentProps> = ({
   description,
   consentLabel,
   viewAssignedItemsUrl,
@@ -39,15 +37,10 @@ const TypeDeleteWarningDialogContent: React.FC<
   const classes = useStyles({});
   const intl = useIntl();
   const navigate = useNavigator();
-
   const [isConsentChecked, setIsConsentChecked] = useState(false);
-
   const handleViewAssignedItems = () => navigate(viewAssignedItemsUrl);
-
   const isDisbled = hasAssignedItems ? !isConsentChecked : false;
-
-  const shouldShowViewAssignedItemsButton =
-    showViewAssignedItemsButton && hasAssignedItems;
+  const shouldShowViewAssignedItemsButton = showViewAssignedItemsButton && hasAssignedItems;
 
   return (
     <CardContent>
@@ -65,20 +58,13 @@ const TypeDeleteWarningDialogContent: React.FC<
       <div className={classes.buttonsSection}>
         {shouldShowViewAssignedItemsButton && (
           <>
-            <ConfirmButton
-              onClick={handleViewAssignedItems}
-              transitionState="default"
-            >
+            <ConfirmButton onClick={handleViewAssignedItems} transitionState="default">
               {intl.formatMessage(viewAssignedItemsButtonLabel)}
             </ConfirmButton>
             <HorizontalSpacer spacing={3} />
           </>
         )}
-        <DeleteButton
-          onClick={onDelete}
-          disabled={isDisbled}
-          testId="confirm-delete"
-        />
+        <DeleteButton onClick={onDelete} disabled={isDisbled} testId="confirm-delete" />
       </div>
     </CardContent>
   );

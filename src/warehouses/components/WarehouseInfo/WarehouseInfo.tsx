@@ -15,14 +15,8 @@ export interface WarehouseInfoProps {
   onChange: FormChange;
 }
 
-const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const WarehouseInfo: React.FC<WarehouseInfoProps> = ({ data, disabled, errors, onChange }) => {
   const intl = useIntl();
-
   const formErrors = getFormErrors(["name"], errors);
 
   return (

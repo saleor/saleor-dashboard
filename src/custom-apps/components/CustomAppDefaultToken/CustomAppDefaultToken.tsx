@@ -59,17 +59,9 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
           <Typography>{token}</Typography>
           <Button className={classes.copy} onClick={() => copy(token)}>
             {copied ? (
-              <FormattedMessage
-                id="r86alc"
-                defaultMessage="Copied"
-                description="button"
-              />
+              <FormattedMessage id="r86alc" defaultMessage="Copied" description="button" />
             ) : (
-              <FormattedMessage
-                id="HVFq//"
-                defaultMessage="Copy token"
-                description="button"
-              />
+              <FormattedMessage id="HVFq//" defaultMessage="Copy token" description="button" />
             )}
           </Button>
         </Paper>

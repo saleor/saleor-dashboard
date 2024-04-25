@@ -15,20 +15,14 @@ import { CreateVariantTitle } from "./CreateVariantTitle";
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;
-  listings: FormsetData<
-    ChannelPriceAndPreorderData,
-    IChannelPriceAndPreorderArgs
-  >;
+  listings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
   onManageClick: () => void;
   disabled: boolean;
 }
 
 interface ProductDetailsChannelsAvailabilityCardProps {
   product: Product;
-  listings: FormsetData<
-    ChannelPriceAndPreorderData,
-    IChannelPriceAndPreorderArgs
-  >;
+  listings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
   onManageClick: () => void;
   disabled: boolean;
 }

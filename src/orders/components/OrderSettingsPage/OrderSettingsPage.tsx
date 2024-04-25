@@ -3,10 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
-import {
-  OrderSettingsFragment,
-  ShopOrderSettingsFragment,
-} from "@dashboard/graphql";
+import { OrderSettingsFragment, ShopOrderSettingsFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderListUrl } from "@dashboard/orders/urls";
@@ -51,16 +48,8 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
           />
           <DetailPageLayout.Content>
             <Box margin="auto" height="100vh">
-              <OrderSettings
-                data={data}
-                disabled={disabled}
-                onChange={change}
-              />
-              <OrderFulfillmentSettings
-                data={data}
-                disabled={disabled}
-                onChange={change}
-              />
+              <OrderSettings data={data} disabled={disabled} onChange={change} />
+              <OrderFulfillmentSettings data={data} disabled={disabled} onChange={change} />
             </Box>
           </DetailPageLayout.Content>
           <Savebar
@@ -74,5 +63,6 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
     </OrderSettingsForm>
   );
 };
+
 OrderSettingsPage.displayName = "OrderSettingsPage";
 export default OrderSettingsPage;

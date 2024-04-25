@@ -21,16 +21,11 @@ export const RuleConditionName = ({
   const { watch } = useFormContext<Rule>();
   const { discountType, disabled } = useDiscountRulesContext();
   const conditionNames = useConditionNames(discountType);
-
   const ruleConditionNameFieldName = `conditions.${conditionIndex}.id` as const;
-  const { field: nameField } = useController<
-    Rule,
-    typeof ruleConditionNameFieldName
-  >({
+  const { field: nameField } = useController<Rule, typeof ruleConditionNameFieldName>({
     name: ruleConditionNameFieldName,
   });
   const condition = watch(`conditions.${conditionIndex}`);
-
   const filteredConditionLeftOptions = conditionNames.filter(
     condition => !isConditionTypeSelected(condition.value),
   );
@@ -38,7 +33,7 @@ export const RuleConditionName = ({
   return (
     <Combobox
       value={getConditionNameValue(nameField.value, conditionNames)}
-      fetchOptions={() => {}}
+      fetchOptions={() => undefined}
       options={filteredConditionLeftOptions}
       onChange={e => {
         condition.value = [];

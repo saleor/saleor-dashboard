@@ -3,10 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import {
-  CategoryTranslationFragment,
-  LanguageCodeEnum,
-} from "@dashboard/graphql";
+import { CategoryTranslationFragment, LanguageCodeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
@@ -23,8 +20,7 @@ import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsCategoriesPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsCategoriesPageProps extends TranslationsEntitiesPageProps {
   data: CategoryTranslationFragment;
 }
 
@@ -51,8 +47,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         title={intl.formatMessage(
           {
             id: "XitW/z",
-            defaultMessage:
-              'Translation Category "{categoryName}" - {languageCode}',
+            defaultMessage: 'Translation Category "{categoryName}" - {languageCode}',
           },
           {
             categoryName: getStringOrPlaceholder(data?.category?.name),
@@ -64,11 +59,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
           getLanguageUrl={lang =>
-            languageEntityUrl(
-              lang,
-              TranslatableEntities.categories,
-              translationId,
-            )
+            languageEntityUrl(lang, TranslatableEntities.categories, translationId)
           }
         />
       </TopNav>
@@ -86,14 +77,14 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               }),
               name: TranslationInputFieldName.name,
               translation: data?.translation?.name || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.category?.name,
             },
             {
               displayName: intl.formatMessage(commonMessages.description),
               name: TranslationInputFieldName.description,
               translation: data?.translation?.description || null,
-              type: "rich" as "rich",
+              type: "rich" as const,
               value: data?.category?.description,
             },
           ]}
@@ -120,7 +111,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               }),
               name: TranslationInputFieldName.seoTitle,
               translation: data?.translation?.seoTitle || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.category?.seoTitle,
             },
             {
@@ -130,7 +121,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               }),
               name: TranslationInputFieldName.seoDescription,
               translation: data?.translation?.seoDescription || null,
-              type: "long" as "long",
+              type: "long" as const,
               value: data?.category?.seoDescription,
             },
           ]}
@@ -144,5 +135,6 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsCategoriesPage.displayName = "TranslationsCategoriesPage";
 export default TranslationsCategoriesPage;

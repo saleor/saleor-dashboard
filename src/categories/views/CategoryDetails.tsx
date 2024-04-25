@@ -41,12 +41,7 @@ import {
   CategoryUpdatePage,
 } from "../components/CategoryUpdatePage/CategoryUpdatePage";
 import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
-import {
-  categoryListUrl,
-  categoryUrl,
-  CategoryUrlDialog,
-  CategoryUrlQueryParams,
-} from "../urls";
+import { categoryListUrl, categoryUrl, CategoryUrlDialog, CategoryUrlQueryParams } from "../urls";
 
 export interface CategoryDetailsProps {
   params: CategoryUrlQueryParams;
@@ -59,35 +54,25 @@ export function getActiveTab(tabName: string): CategoryPageTab {
     : CategoryPageTab.categories;
 }
 
-export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
-  id,
-  params,
-}) => {
+export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
   const {
     clearRowSelection: clearProductRowSelection,
     selectedRowIds: selectedProductRowIds,
-    setClearDatagridRowSelectionCallback:
-      setClearProductDatagridRowSelectionCallback,
+    setClearDatagridRowSelectionCallback: setClearProductDatagridRowSelectionCallback,
     setSelectedRowIds: setSelectedProductRowIds,
   } = useRowSelection();
-
   const {
     clearRowSelection: clearCategryRowSelection,
     selectedRowIds: selectedCategoryRowIds,
-    setClearDatagridRowSelectionCallback:
-      setClearCategoryDatagridRowSelectionCallback,
+    setClearDatagridRowSelectionCallback: setClearCategoryDatagridRowSelectionCallback,
     setSelectedRowIds: setSelectedCategoryRowIds,
   } = useRowSelection();
-
-  const [activeTab, setActiveTab] = useState<CategoryPageTab>(
-    CategoryPageTab.categories,
-  );
+  const [activeTab, setActiveTab] = useState<CategoryPageTab>(CategoryPageTab.categories);
   const [paginationState, setPaginationState] = useSectionLocalPaginationState(
     PAGINATE_BY,
     activeTab,
@@ -98,19 +83,16 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     clearCategryRowSelection();
     setActiveTab(tab);
   };
-
-  const { settings, updateListSettings } =
-    useListSettings<ListViews.CATEGORY_LIST>(ListViews.CATEGORY_LIST);
-
+  const { settings, updateListSettings } = useListSettings<ListViews.CATEGORY_LIST>(
+    ListViews.CATEGORY_LIST,
+  );
   const { data, loading, refetch } = useCategoryDetailsQuery({
     displayLoader: true,
     variables: { ...paginationState, id },
   });
-
   const category = data?.category;
   const subcategories = mapEdgesToItems(data?.category?.children);
   const products = mapEdgesToItems(data?.category?.products);
-
   const handleCategoryDelete = (data: CategoryDeleteMutation) => {
     if (data?.categoryDelete?.errors.length === 0) {
       notify({
@@ -124,17 +106,17 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       navigate(categoryListUrl());
     }
   };
-
   const [deleteCategory, deleteResult] = useCategoryDeleteMutation({
     onCompleted: handleCategoryDelete,
   });
-
   const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
     clearProductRowSelection();
+
     if (data?.categoryUpdate?.errors.length! > 0) {
       const backgroundImageError = data?.categoryUpdate?.errors.find(
         error => error.field === ("backgroundImage" as keyof CategoryInput),
       );
+
       if (backgroundImageError) {
         notify({
           status: "error",
@@ -149,13 +131,12 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       });
     }
   };
-
   const [updateCategory, updateResult] = useCategoryUpdateMutation({
     onCompleted: handleCategoryUpdate,
   });
-
   const handleBulkCategoryDelete = (data: CategoryBulkDeleteMutation) => {
     clearCategryRowSelection();
+
     if (data?.categoryBulkDelete?.errors.length === 0) {
       closeModal();
       notify({
@@ -164,39 +145,33 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       });
     }
   };
+  const [categoryBulkDelete, categoryBulkDeleteOpts] = useCategoryBulkDeleteMutation({
+    onCompleted: handleBulkCategoryDelete,
+  });
+  const [productBulkDelete, productBulkDeleteOpts] = useProductBulkDeleteMutation({
+    onCompleted: data => {
+      clearProductRowSelection();
 
-  const [categoryBulkDelete, categoryBulkDeleteOpts] =
-    useCategoryBulkDeleteMutation({
-      onCompleted: handleBulkCategoryDelete,
-    });
-
-  const [productBulkDelete, productBulkDeleteOpts] =
-    useProductBulkDeleteMutation({
-      onCompleted: data => {
-        clearProductRowSelection();
-        if (data?.productBulkDelete?.errors.length === 0) {
-          closeModal();
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          refetch();
-        }
-      },
-    });
-
+      if (data?.productBulkDelete?.errors.length === 0) {
+        closeModal();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        refetch();
+      }
+    },
+  });
   const [openModal, closeModal] = createDialogActionHandlers<
     CategoryUrlDialog,
     CategoryUrlQueryParams
   >(navigate, params => categoryUrl(id, params), params);
-
   const { pageInfo, ...paginationFunctions } = paginate(
     activeTab === CategoryPageTab.categories
       ? data?.category?.children?.pageInfo
       : data?.category?.products?.pageInfo,
     paginationState,
   );
-
   const handleUpdate = async (formData: CategoryUpdateData) =>
     extractMutationErrors(
       updateCategory({
@@ -204,9 +179,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           id,
           input: {
             backgroundImageAlt: formData.backgroundImageAlt,
-            description: getParsedDataForJsonStringField(
-              formData?.description!,
-            ),
+            description: getParsedDataForJsonStringField(formData?.description!),
             name: formData.name,
             seo: {
               description: formData.seoDescription,
@@ -217,7 +190,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         },
       }),
     );
-
   const handleSetSelectedCategoryIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!subcategories) {
@@ -240,7 +212,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       subcategories,
     ],
   );
-
   const handleSetSelectedPrductIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!products) {
@@ -263,7 +234,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       setSelectedProductRowIds,
     ],
   );
-
   const handleSubmit = createMetadataUpdateHandler(
     data?.category!,
     handleUpdate,
@@ -374,9 +344,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
             values={{
               counter: maybe(() => selectedCategoryRowIds.length),
-              displayQuantity: (
-                <strong>{maybe(() => selectedCategoryRowIds.length)}</strong>
-              ),
+              displayQuantity: <strong>{maybe(() => selectedCategoryRowIds.length)}</strong>,
             }}
           />
         </DialogContentText>
@@ -410,9 +378,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             values={{
               counter: maybe(() => selectedProductRowIds.length),
-              displayQuantity: (
-                <strong>{maybe(() => selectedProductRowIds.length)}</strong>
-              ),
+              displayQuantity: <strong>{maybe(() => selectedProductRowIds.length)}</strong>,
             }}
           />
         </DialogContentText>

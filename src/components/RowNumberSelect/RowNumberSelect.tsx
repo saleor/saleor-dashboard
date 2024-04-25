@@ -58,11 +58,7 @@ const RowNumberSelect: React.FC<RowNumberSelectProps> = ({
       >
         {choices.length > 0 &&
           choices.map(choice => (
-            <MenuItem
-              value={choice}
-              key={choice}
-              data-test-id="row-number-option"
-            >
+            <MenuItem value={choice} key={choice} data-test-id="row-number-option">
               {choice}
             </MenuItem>
           ))}

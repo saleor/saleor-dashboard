@@ -28,10 +28,7 @@ export interface WebhookHeadersProps {
   onChange: FormChange;
 }
 
-const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
-  data: { customHeaders },
-  onChange,
-}) => {
+const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }, onChange }) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
@@ -45,8 +42,8 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
 
   const add = () => {
     const items = [...headers];
-    items.push({ name: "", value: "", error: false });
 
+    items.push({ name: "", value: "", error: false });
     onChange({
       target: {
         name: "customHeaders",
@@ -118,17 +115,10 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                   <Table className={classes.table}>
                     <TableHead>
                       <TableRowLink>
-                        <TableCell
-                          className={clsx(
-                            classes.colNameHeader,
-                            classes.tableCell,
-                          )}
-                        >
+                        <TableCell className={clsx(classes.colNameHeader, classes.tableCell)}>
                           <FormattedMessage {...messages.headerName} />
                         </TableCell>
-                        <TableCell
-                          className={clsx(classes.colValue, classes.tableCell)}
-                        >
+                        <TableCell className={clsx(classes.colValue, classes.tableCell)}>
                           <FormattedMessage {...messages.headerValue} />
                         </TableCell>
                         <TableCell className={classes.colActionHeader}>
@@ -136,10 +126,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                         </TableCell>
                       </TableRowLink>
                     </TableHead>
-                    <WebhookHeadersTableBody
-                      onChange={onChange}
-                      headers={headers}
-                    />
+                    <WebhookHeadersTableBody onChange={onChange} headers={headers} />
                   </Table>
                 </>
               )}

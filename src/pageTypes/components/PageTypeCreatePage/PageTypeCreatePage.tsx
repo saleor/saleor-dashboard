@@ -36,7 +36,6 @@ const formInitialData: PageTypeForm = {
   name: "",
   privateMetadata: [],
 };
-
 const useStyles = makeStyles(
   theme => ({
     hr: {
@@ -48,23 +47,15 @@ const useStyles = makeStyles(
     name: "PageTypeCreatePage",
   },
 );
-
 const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
   const { disabled, errors, saveButtonBarState, onSubmit } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const navigate = useNavigator();
-
-  const { makeChangeHandler: makeMetadataChangeHandler } =
-    useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
   return (
-    <Form
-      confirmLeave
-      initial={formInitialData}
-      onSubmit={onSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={formInitialData} onSubmit={onSubmit} disabled={disabled}>
       {({ change, data, submit, isSaveDisabled }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
@@ -88,9 +79,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
                 })}
               >
                 <div>
-                  <Typography>
-                    {intl.formatMessage(commonMessages.generalInformations)}
-                  </Typography>
+                  <Typography>{intl.formatMessage(commonMessages.generalInformations)}</Typography>
                   <Typography variant="body2">
                     <FormattedMessage
                       id="kZfIl/"
@@ -129,5 +118,6 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
     </Form>
   );
 };
+
 PageTypeCreatePage.displayName = "PageTypeCreatePage";
 export default PageTypeCreatePage;

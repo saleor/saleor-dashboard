@@ -22,9 +22,7 @@ const useStyles = makeStyles(
       fontSize: "12px",
       borderRadius: "4px",
       background:
-        theme.palette.type === "light"
-          ? theme.palette.grey[100]
-          : theme.palette.background.paper,
+        theme.palette.type === "light" ? theme.palette.grey[100] : theme.palette.background.paper,
       padding: "4px",
       cursor: "default",
       whiteSpace: "nowrap",
@@ -56,10 +54,7 @@ export interface PspReferenceProps {
   url?: string;
 }
 
-export const PspReference: React.FC<PspReferenceProps> = ({
-  reference,
-  url,
-}) => {
+export const PspReference: React.FC<PspReferenceProps> = ({ reference, url }) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const classes = useStyles();

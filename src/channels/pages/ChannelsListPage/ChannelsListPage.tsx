@@ -37,26 +37,18 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
-
   const limitReached = isLimitReached(limits, "channels");
 
   return (
     <ListPageLayout>
-      <TopNav
-        href={configurationMenuUrl}
-        title={intl.formatMessage(sectionNames.channels)}
-      >
+      <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.channels)}>
         <Button
           disabled={limitReached}
           href={channelAddUrl}
           variant="primary"
           data-test-id="add-channel"
         >
-          <FormattedMessage
-            id="OGm8wO"
-            defaultMessage="Create Channel"
-            description="button"
-          />
+          <FormattedMessage id="OGm8wO" defaultMessage="Create Channel" description="button" />
         </Button>
         {hasLimits(limits, "channels") && (
           <LimitsInfo
@@ -120,9 +112,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                   href={channel && channelUrl(channel.id)}
                 >
                   <TableCell className={classes.colName}>
-                    <span data-test-id="name">
-                      {channel?.name || <Skeleton />}
-                    </span>
+                    <span data-test-id="name">{channel?.name || <Skeleton />}</span>
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     {channelsList?.length > 1 && (
@@ -132,9 +122,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                           color="primary"
                           data-test-id="delete-channel"
                           onClick={
-                            channel
-                              ? stopPropagation(() => onRemove(channel.id))
-                              : undefined
+                            channel ? stopPropagation(() => onRemove(channel.id)) : undefined
                           }
                         >
                           <DeleteIcon />
@@ -147,10 +135,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
               () => (
                 <TableRowLink>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      id="/glQgs"
-                      defaultMessage="No channels found"
-                    />
+                    <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
                   </TableCell>
                 </TableRowLink>
               ),

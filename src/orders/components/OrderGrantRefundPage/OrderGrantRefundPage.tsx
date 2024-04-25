@@ -57,19 +57,9 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   const intl = useIntl();
   const { locale } = useLocale();
   const navigate = useNavigator();
-
-  const grantedRefund = useMemo(
-    () => getGrantedRefundData(initialData),
-    [initialData],
-  );
-
-  const unfulfilledLines = (order?.lines ?? []).filter(
-    line => line.quantityToFulfill > 0,
-  );
-  const [state, dispatch] = React.useReducer(
-    grantRefundReducer,
-    grantRefundDefaultState,
-  );
+  const grantedRefund = useMemo(() => getGrantedRefundData(initialData), [initialData]);
+  const unfulfilledLines = (order?.lines ?? []).filter(line => line.quantityToFulfill > 0);
+  const [state, dispatch] = React.useReducer(grantRefundReducer, grantRefundDefaultState);
 
   useEffect(() => {
     if (grantedRefund) {
@@ -79,7 +69,6 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
       });
     }
   }, [grantedRefund]);
-
   useEffect(() => {
     if (order?.id) {
       dispatch({
@@ -90,23 +79,17 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   }, [order, initialData]);
 
   const lines = prepareLineData(state.lines);
-  const canRefundShipping = calculateCanRefundShipping(
+  const canRefundShipping = calculateCanRefundShipping(grantedRefund, order?.grantedRefunds);
+  const { set, change, data, submit, setIsDirty, isFormDirty } = useGrantRefundForm({
+    onSubmit,
     grantedRefund,
-    order?.grantedRefunds,
-  );
-
-  const { set, change, data, submit, setIsDirty, isFormDirty } =
-    useGrantRefundForm({
-      onSubmit,
-      grantedRefund,
-      lines,
-      // Send grantRefundForShipping only when it's different than the one
-      grantRefundForShipping:
-        grantedRefund?.grantRefundForShipping === state.refundShipping
-          ? undefined
-          : state.refundShipping,
-    });
-
+    lines,
+    // Send grantRefundForShipping only when it's different than the one
+    grantRefundForShipping:
+      grantedRefund?.grantRefundForShipping === state.refundShipping
+        ? undefined
+        : state.refundShipping,
+  });
   const totalSelectedPrice = calculateTotalPrice(state, order);
   const amountValue = getRefundAmountValue({
     isEditedRefundAmount: grantedRefund !== undefined,
@@ -114,15 +97,12 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     refundAmount: Number(data.amount),
     totalCalulatedPrice: totalSelectedPrice,
   });
-
   const currency = order?.total?.gross?.currency ?? "";
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.stopPropagation();
     e.preventDefault();
     submit();
   };
-
   const getRefundAmountDisplayValue = () => {
     if (isFormDirty) {
       return amountValue.toString();
@@ -163,11 +143,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
         >
           <DetailPageLayout.Content>
             <DashboardCard>
-              <DashboardCard.Content
-                display="flex"
-                flexDirection="column"
-                gap={5}
-              >
+              <DashboardCard.Content display="flex" flexDirection="column" gap={5}>
                 <Text size={4} fontWeight="medium" as="p" marginTop={5}>
                   <FormattedMessage {...grantRefundPageMessages.pageSubtitle} />
                 </Text>
@@ -177,34 +153,26 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 ) : (
                   <>
                     <ProductsCard
-                      title={
-                        <FormattedMessage
-                          {...grantRefundPageMessages.unfulfilledProducts}
-                        />
-                      }
+                      title={<FormattedMessage {...grantRefundPageMessages.unfulfilledProducts} />}
                       lines={unfulfilledLines}
                     />
 
                     {order?.fulfillments?.map?.(fulfillment => (
                       <ProductsCard
                         key={fulfillment.id}
-                        title={intl.formatMessage(
-                          getOrderTitleMessage(fulfillment.status),
-                        )}
+                        title={intl.formatMessage(getOrderTitleMessage(fulfillment.status))}
                         subtitle={
                           <Text display="inline-block" marginLeft={1}>
                             {getFulfilmentSubtitle(order, fulfillment)}
                           </Text>
                         }
-                        lines={fulfillment.lines.map(
-                          ({ orderLine, id, quantity }) => {
-                            return {
-                              ...orderLine,
-                              id,
-                              quantity,
-                            };
-                          },
-                        )}
+                        lines={fulfillment.lines.map(({ orderLine, id, quantity }) => {
+                          return {
+                            ...orderLine,
+                            id,
+                            quantity,
+                          };
+                        })}
                       />
                     ))}
                   </>
@@ -219,9 +187,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 <Box display="flex" gap={3}>
                   <Box __flexGrow={2} flexBasis="0">
                     <Input
-                      label={intl.formatMessage(
-                        grantRefundPageMessages.reasonForRefund,
-                      )}
+                      label={intl.formatMessage(grantRefundPageMessages.reasonForRefund)}
                       disabled={loading}
                       value={data.reason}
                       name={"reason" as keyof OrderGrantRefundFormData}
@@ -233,9 +199,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                   <PriceField
                     flexGrow="1"
                     flexBasis="0"
-                    label={intl.formatMessage(
-                      grantRefundPageMessages.refundAmountLabel,
-                    )}
+                    label={intl.formatMessage(grantRefundPageMessages.refundAmountLabel)}
                     onChange={change}
                     disabled={loading}
                     name={"amount" as keyof OrderGrantRefundFormData}

@@ -1,10 +1,7 @@
 // @ts-strict-ignore
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  FulfillmentFragment,
-  OrderFulfillLineFragment,
-} from "@dashboard/graphql";
+import { FulfillmentFragment, OrderFulfillLineFragment } from "@dashboard/graphql";
 import {
   getAttributesCaption,
   getFulfillmentFormsetQuantity,
@@ -26,7 +23,6 @@ const OrderFulfillStockExceededDialogLine: React.FC<
   OrderFulfillStockExceededDialogLineProps
 > = props => {
   const { line: genericLine, warehouseId, formsetData } = props;
-
   const classes = useStyles(props);
 
   if (!genericLine) {
@@ -34,17 +30,11 @@ const OrderFulfillStockExceededDialogLine: React.FC<
   }
 
   const line = "orderLine" in genericLine ? genericLine.orderLine : genericLine;
-
-  const stock = line?.variant?.stocks.find(
-    stock => stock.warehouse.id === warehouseId,
-  );
+  const stock = line?.variant?.stocks.find(stock => stock.warehouse.id === warehouseId);
 
   return (
     <TableRowLink key={line?.id}>
-      <TableCellAvatar
-        className={classes.colName}
-        thumbnail={line?.thumbnail?.url}
-      >
+      <TableCellAvatar className={classes.colName} thumbnail={line?.thumbnail?.url}>
         {line?.productName}
         {line.variant && "attributes" in line.variant && (
           <Typography color="textSecondary" variant="caption">
@@ -62,6 +52,5 @@ const OrderFulfillStockExceededDialogLine: React.FC<
   );
 };
 
-OrderFulfillStockExceededDialogLine.displayName =
-  "OrderFulfillStockExceededDialogLine";
+OrderFulfillStockExceededDialogLine.displayName = "OrderFulfillStockExceededDialogLine";
 export default OrderFulfillStockExceededDialogLine;

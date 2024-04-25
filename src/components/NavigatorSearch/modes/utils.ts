@@ -1,9 +1,5 @@
 // @ts-strict-ignore
-import {
-  QuickSearchAction,
-  QuickSearchActionInput,
-  QuickSearchMode,
-} from "../types";
+import { QuickSearchAction, QuickSearchActionInput, QuickSearchMode } from "../types";
 
 export function getActions(actions: QuickSearchAction[]): QuickSearchAction[] {
   return actions.filter(action => action.type === "action");
@@ -19,9 +15,7 @@ export function hasViews(actions: QuickSearchAction[]): boolean {
   return getViews(actions).length > 0;
 }
 
-export function getCustomers(
-  actions: QuickSearchAction[],
-): QuickSearchAction[] {
+export function getCustomers(actions: QuickSearchAction[]): QuickSearchAction[] {
   return actions.filter(action => action.type === "customer");
 }
 export function hasCustomers(actions: QuickSearchAction[]): boolean {
@@ -35,10 +29,7 @@ export function hasCatalog(actions: QuickSearchAction[]): boolean {
   return getCatalog(actions).length > 0;
 }
 
-export function sortScores(
-  a: QuickSearchActionInput,
-  b: QuickSearchActionInput,
-) {
+export function sortScores(a: QuickSearchActionInput, b: QuickSearchActionInput) {
   return a.score <= b.score ? 1 : -1;
 }
 

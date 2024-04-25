@@ -1,10 +1,5 @@
 // @ts-strict-ignore
-import {
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from "@material-ui/core";
+import { FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -58,9 +53,7 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
     value,
   } = props;
   const classes = useStyles(props);
-
   const initialValue = value ? "true" : "false";
-
   const change = event => {
     onChange({
       target: {
@@ -71,11 +64,7 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
   };
 
   return (
-    <FormControl
-      className={clsx(classes.formControl, className)}
-      error={error}
-      disabled={disabled}
-    >
+    <FormControl className={clsx(classes.formControl, className)} error={error} disabled={disabled}>
       <RadioGroup
         aria-label={name}
         name={name}

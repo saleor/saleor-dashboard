@@ -12,7 +12,6 @@ describe("ConditionalFilter / FilterElement / Condition", () => {
     expect(condition.isEmpty()).toBeTruthy();
     expect(condition.options).toEqual([]);
   });
-
   it("creates empty for given slug", () => {
     // Arrange
     const condition = Condition.emptyFromSlug("category");
@@ -21,7 +20,6 @@ describe("ConditionalFilter / FilterElement / Condition", () => {
     expect(condition.isEmpty()).toBeTruthy();
     expect(condition.options).toEqual(STATIC_CONDITIONS.category);
   });
-
   // Arrange
   it.each([
     {

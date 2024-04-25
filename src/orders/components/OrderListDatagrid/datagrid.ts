@@ -9,11 +9,7 @@ import {
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderListQuery } from "@dashboard/graphql";
-import {
-  getStatusColor,
-  transformOrderStatus,
-  transformPaymentStatus,
-} from "@dashboard/misc";
+import { getStatusColor, transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
@@ -78,19 +74,14 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
 
-  return (
-    [column, row]: Item,
-    { added, removed }: GetCellContentOpts,
-  ): GridCell => {
+  return ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     const columnId = columns[column]?.id;
 
     if (!columnId) {
       return readonlyTextCell("");
     }
 
-    const rowData = added.includes(row)
-      ? undefined
-      : orders[getDatagridRowDataIndex(row, removed)];
+    const rowData = added.includes(row) ? undefined : orders[getDatagridRowDataIndex(row, removed)];
 
     switch (columnId) {
       case "number":
@@ -111,9 +102,7 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
   };
 };
 
-export function getDateCellContent(
-  rowData: RelayToFlat<OrderListQuery["orders"]>[number],
-) {
+export function getDateCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {
   return dateCell(rowData?.created);
 }
 
@@ -145,6 +134,7 @@ export function getStatusCellContent(
       status: orderStatus.status,
       currentTheme,
     });
+
     return pillCell(orderStatus.localized, color);
   }
 
@@ -163,15 +153,14 @@ export function getPaymentCellContent(
       status: paymentStatus.status,
       currentTheme,
     });
+
     return pillCell(paymentStatus.localized, color);
   }
 
   return readonlyTextCell("-");
 }
 
-export function getTotalCellContent(
-  rowData: RelayToFlat<OrderListQuery["orders"]>[number],
-) {
+export function getTotalCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {
   if (rowData?.total?.gross) {
     return moneyCell(rowData.total.gross.amount, rowData.total.gross.currency, {
       cursor: "pointer",

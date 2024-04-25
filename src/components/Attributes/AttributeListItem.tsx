@@ -9,9 +9,7 @@ import AttributeRow from "./AttributeRow";
 import { AttributeRowProps } from "./types";
 
 type AttributeListItemProps = Omit<AttributeRowProps, "error"> & {
-  errors: Array<
-    ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
-  >;
+  errors: Array<ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment>;
   onAttributeSelectBlur: () => void;
 };
 

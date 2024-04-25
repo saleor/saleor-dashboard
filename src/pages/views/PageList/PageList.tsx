@@ -33,12 +33,7 @@ import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import PageListPage from "../../components/PageListPage/PageListPage";
-import {
-  pageCreateUrl,
-  pageListUrl,
-  PageListUrlDialog,
-  PageListUrlQueryParams,
-} from "../../urls";
+import { pageCreateUrl, pageListUrl, PageListUrlDialog, PageListUrlQueryParams } from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { getFilterVariables, getSortQueryVariables } from "./sort";
 
@@ -50,9 +45,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.PAGES_LIST,
-  );
+  const { updateListSettings, settings } = useListSettings(ListViews.PAGES_LIST);
 
   usePaginationReset(pageListUrl, params, settings.rowNumber);
 
@@ -62,17 +55,14 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     setClearDatagridRowSelectionCallback,
     setSelectedRowIds,
   } = useRowSelection(params);
-
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      cleanupFn: clearRowSelection,
-      createUrl: pageListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-      keepActiveTab: true,
-    });
-
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+    cleanupFn: clearRowSelection,
+    createUrl: pageListUrl,
+    getFilterQueryParam,
+    navigate,
+    params,
+    keepActiveTab: true,
+  });
   const {
     selectedPreset,
     presets,
@@ -89,7 +79,6 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     getUrl: pageListUrl,
     storageUtils,
   });
-
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
@@ -103,20 +92,16 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables,
   });
-
   const pages = mapEdgesToItems(data?.pages);
-
   const paginationValues = usePaginator({
     pageInfo: data?.pages?.pageInfo,
     paginationState,
     queryString: params,
   });
-
   const [openModal, closeModal] = createDialogActionHandlers<
     PageListUrlDialog,
     PageListUrlQueryParams
   >(navigate, pageListUrl, params);
-
   const [bulkPageRemove, bulkPageRemoveOpts] = usePageBulkRemoveMutation({
     onCompleted: data => {
       if (data.pageBulkDelete?.errors.length === 0) {
@@ -134,7 +119,6 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
       }
     },
   });
-
   const [bulkPagePublish, bulkPagePublishOpts] = usePageBulkPublishMutation({
     onCompleted: data => {
       if (data.pageBulkPublish?.errors.length === 0) {
@@ -152,9 +136,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
       }
     },
   });
-
   const handleSort = createSortHandler(navigate, pageListUrl, params);
-
   const {
     loadMore: loadMoreDialogPageTypes,
     search: searchDialogPageTypes,
@@ -162,25 +144,19 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   } = usePageTypeSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-
   const fetchMoreDialogPageTypes = {
     hasMore: searchDialogPageTypesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchDialogPageTypesOpts.loading,
     onFetchMore: loadMoreDialogPageTypes,
   };
-
   const filterOpts = getFilterOpts({
     params,
     pageTypes: mapEdgesToItems(searchDialogPageTypesOpts?.data?.search),
     pageTypesProps: {
-      ...getSearchFetchMoreProps(
-        searchDialogPageTypesOpts,
-        loadMoreDialogPageTypes,
-      ),
+      ...getSearchFetchMoreProps(searchDialogPageTypesOpts, loadMoreDialogPageTypes),
       onSearchChange: searchDialogPageTypes,
     },
   });
-
   const handleSetSelectedPageIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!pages) {
@@ -196,12 +172,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
 
       setClearDatagridRowSelectionCallback(clearSelection);
     },
-    [
-      pages,
-      selectedRowIds,
-      setClearDatagridRowSelectionCallback,
-      setSelectedRowIds,
-    ],
+    [pages, selectedRowIds, setClearDatagridRowSelectionCallback, setSelectedRowIds],
   );
 
   return (
@@ -325,9 +296,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
       <PageTypePickerDialog
         confirmButtonState="success"
         open={params.action === "create-page"}
-        pageTypes={mapNodeToChoice(
-          mapEdgesToItems(searchDialogPageTypesOpts?.data?.search),
-        )}
+        pageTypes={mapNodeToChoice(mapEdgesToItems(searchDialogPageTypesOpts?.data?.search))}
         fetchPageTypes={searchDialogPageTypes}
         fetchMorePageTypes={fetchMoreDialogPageTypes}
         onClose={closeModal}

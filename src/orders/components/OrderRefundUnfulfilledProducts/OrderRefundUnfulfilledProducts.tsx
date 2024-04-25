@@ -71,9 +71,7 @@ interface OrderRefundUnfulfilledProductsProps {
   onSetMaximalQuantities: () => void;
 }
 
-const OrderRefundUnfulfilledProducts: React.FC<
-  OrderRefundUnfulfilledProductsProps
-> = props => {
+const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsProps> = props => {
   const {
     unfulfilledLines,
     data,
@@ -94,11 +92,7 @@ const OrderRefundUnfulfilledProducts: React.FC<
         })}
       />
       <CardContent className={classes.cartContent}>
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          className={classes.notice}
-        >
+        <Typography variant="caption" color="textSecondary" className={classes.notice}>
           <FormattedMessage
             id="iUIn50"
             defaultMessage="Unfulfilled products will be restocked"
@@ -168,11 +162,7 @@ const OrderRefundUnfulfilledProducts: React.FC<
                     {line?.productName ? line?.productName : <Skeleton />}
                   </TableCellAvatar>
                   <TableCell>
-                    {line?.unitPrice ? (
-                      <Money money={line?.unitPrice.gross} />
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {line?.unitPrice ? <Money money={line?.unitPrice.gross} /> : <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
                     {lineQuantity || lineQuantity === 0 ? (
@@ -189,16 +179,11 @@ const OrderRefundUnfulfilledProducts: React.FC<
                         fullWidth
                         value={selectedLineQuantity?.value}
                         onChange={event =>
-                          onRefundedProductQuantityChange(
-                            line.id,
-                            event.target.value,
-                          )
+                          onRefundedProductQuantityChange(line.id, event.target.value)
                         }
                         InputProps={{
                           endAdornment: lineQuantity && (
-                            <div className={classes.remainingQuantity}>
-                              / {lineQuantity}
-                            </div>
+                            <div className={classes.remainingQuantity}>/ {lineQuantity}</div>
                           ),
                         }}
                         error={isError}
@@ -233,10 +218,7 @@ const OrderRefundUnfulfilledProducts: React.FC<
             () => (
               <TableRowLink>
                 <TableCell colSpan={4}>
-                  <FormattedMessage
-                    id="Q1Uzbb"
-                    defaultMessage="No products found"
-                  />
+                  <FormattedMessage id="Q1Uzbb" defaultMessage="No products found" />
                 </TableCell>
               </TableRowLink>
             ),
@@ -246,5 +228,6 @@ const OrderRefundUnfulfilledProducts: React.FC<
     </Card>
   );
 };
+
 OrderRefundUnfulfilledProducts.displayName = "OrderRefundUnfulfilledProducts";
 export default OrderRefundUnfulfilledProducts;

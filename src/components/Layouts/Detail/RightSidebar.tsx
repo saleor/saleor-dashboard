@@ -5,9 +5,7 @@ interface DetailPageLayoutRightSidebarProps {
   children: React.ReactNode;
 }
 
-export const RightSidebar: React.FC<DetailPageLayoutRightSidebarProps> = ({
-  children,
-}) => (
+export const RightSidebar: React.FC<DetailPageLayoutRightSidebarProps> = ({ children }) => (
   <Box
     borderLeftStyle="solid"
     borderColor="default1"

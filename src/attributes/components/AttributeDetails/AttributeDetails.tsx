@@ -39,7 +39,6 @@ const entityTypeMessages = defineMessages({
     description: "product variant attribute entity type",
   },
 });
-
 const useStyles = makeStyles(
   theme => ({
     inputTypeSection: {
@@ -66,17 +65,8 @@ export interface AttributeDetailsProps
 }
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
-  const {
-    canChangeType,
-    errors,
-    clearErrors,
-    setError,
-    data,
-    disabled,
-    apiErrors,
-    onChange,
-    set,
-  } = props;
+  const { canChangeType, errors, clearErrors, setError, data, disabled, apiErrors, onChange, set } =
+    props;
   const classes = useStyles(props);
   const intl = useIntl();
   const inputTypeChoices = [
@@ -139,7 +129,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
       value: AttributeEntityTypeEnum.PRODUCT_VARIANT,
     },
   ];
-
   const formApiErrors = getFormErrors(
     ["name", "slug", "inputType", "entityType", "unit"],
     apiErrors,
@@ -147,9 +136,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
           data-test-id="attribute-default-label-input"
@@ -179,10 +166,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           onChange={onChange}
         />
         <FormSpacer />
-        <div
-          className={classes.inputTypeSection}
-          data-test-id="attribute-type-select"
-        >
+        <div className={classes.inputTypeSection} data-test-id="attribute-type-select">
           <SingleSelectField
             choices={inputTypeChoices}
             disabled={disabled || !canChangeType}
@@ -228,5 +212,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     </Card>
   );
 };
+
 AttributeDetails.displayName = "AttributeDetails";
 export default AttributeDetails;

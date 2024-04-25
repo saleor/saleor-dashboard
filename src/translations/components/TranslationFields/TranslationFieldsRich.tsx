@@ -32,14 +32,8 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
   onSubmit,
 }) => {
   const intl = useIntl();
-
-  const {
-    isReadyForMount,
-    handleSubmit,
-    defaultValue,
-    handleChange,
-    editorRef,
-  } = useRichTextSubmit(initial, onSubmit);
+  const { isReadyForMount, handleSubmit, defaultValue, handleChange, editorRef } =
+    useRichTextSubmit(initial, onSubmit);
 
   return edit ? (
     <form onSubmit={handleSubmit}>
@@ -80,11 +74,10 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     </Typography>
   ) : (
     <Typography>
-      {isReadyForMount && (
-        <RichTextEditorContent key={resetKey} value={defaultValue} />
-      )}
+      {isReadyForMount && <RichTextEditorContent key={resetKey} value={defaultValue} />}
     </Typography>
   );
 };
+
 TranslationFieldsRich.displayName = "TranslationFieldsRich";
 export default TranslationFieldsRich;

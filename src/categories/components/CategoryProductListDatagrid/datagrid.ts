@@ -1,7 +1,4 @@
-import {
-  readonlyTextCell,
-  thumbnailCell,
-} from "@dashboard/components/Datagrid/customCells/cells";
+import { readonlyTextCell, thumbnailCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { CategoryDetailsQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
@@ -20,9 +17,7 @@ export const getColumns = (intl: IntlShape): AvailableColumn[] => [
 
 export const createGetCellContent =
   (
-    products: RelayToFlat<
-      NonNullable<CategoryDetailsQuery["category"]>["products"]
-    >,
+    products: RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["products"]>,
     columns: AvailableColumn[],
   ) =>
   ([column, row]: Item): GridCell => {
@@ -36,13 +31,9 @@ export const createGetCellContent =
 
     switch (columnId) {
       case "name":
-        return thumbnailCell(
-          rowData?.name ?? "",
-          rowData?.thumbnail?.url ?? "",
-          {
-            cursor: "pointer",
-          },
-        );
+        return thumbnailCell(rowData?.name ?? "", rowData?.thumbnail?.url ?? "", {
+          cursor: "pointer",
+        });
       default:
         return readonlyTextCell("", false);
     }

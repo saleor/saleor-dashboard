@@ -39,10 +39,8 @@ export interface CustomerInfoProps {
 
 const CustomerInfo: React.FC<CustomerInfoProps> = props => {
   const { data, disabled, errors, onChange } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
-
   const formErrors = getFormErrors(["firstName", "lastName", "email"], errors);
 
   return (
@@ -116,5 +114,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
     </Card>
   );
 };
+
 CustomerInfo.displayName = "CustomerInfo";
 export default CustomerInfo;

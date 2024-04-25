@@ -18,9 +18,7 @@ import HomePage from "../components/HomePage";
 const HomeSection = () => {
   const { user } = useUser();
   const { channel } = useAppChannel();
-
   const noChannel = !channel && typeof channel !== "undefined";
-
   const userPermissions = user?.userPermissions || [];
   const hasPermissionToManageOrders = hasPermissions(userPermissions, [
     PermissionEnum.MANAGE_ORDERS,
@@ -28,7 +26,6 @@ const HomeSection = () => {
   const hasPermissionToManageProducts = hasPermissions(userPermissions, [
     PermissionEnum.MANAGE_PRODUCTS,
   ]);
-
   const {
     data: homeActivities,
     loading: homeActivitiesLoading,
@@ -39,7 +36,6 @@ const HomeSection = () => {
       hasPermissionToManageOrders,
     },
   });
-
   const {
     data: homeTopProducts,
     loading: homeTopProductsLoading,
@@ -51,7 +47,6 @@ const HomeSection = () => {
       hasPermissionToManageProducts,
     },
   });
-
   const {
     data: homeNotificationsData,
     loading: homeNotificationsLoaing,
@@ -60,7 +55,6 @@ const HomeSection = () => {
     skip: noChannel,
     variables: { channel: channel?.slug },
   });
-
   const {
     data: homeAnaliticsData,
     loading: homeAnaliticsLoading,
@@ -87,8 +81,7 @@ const HomeSection = () => {
       }}
       notifications={{
         data: {
-          productsOutOfStock:
-            homeNotificationsData?.productsOutOfStock.totalCount,
+          productsOutOfStock: homeNotificationsData?.productsOutOfStock.totalCount,
         },
         loading: homeNotificationsLoaing,
         hasError: !!homeNotificationsError,

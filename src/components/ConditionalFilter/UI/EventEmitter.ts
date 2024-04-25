@@ -44,11 +44,7 @@ export class FilterEventEmitter extends EventTarget {
     );
   }
 
-  changeLeftOperator(
-    index: number,
-    value: LeftOperatorOption,
-    rowType: string | undefined,
-  ) {
+  changeLeftOperator(index: number, value: LeftOperatorOption, rowType: string | undefined) {
     this.dispatchEvent(
       new CustomEvent<LeftOperatorChangeData>(this.type, {
         detail: {

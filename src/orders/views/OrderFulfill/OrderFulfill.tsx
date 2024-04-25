@@ -31,22 +31,17 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderFulfillUrlDialog,
     OrderFulfillUrlQueryParams
   >(navigate, params => orderFulfillUrl(orderId, params), params);
-
-  const { data: settings, loading: settingsLoading } =
-    useOrderFulfillSettingsQuery({});
-
+  const { data: settings, loading: settingsLoading } = useOrderFulfillSettingsQuery({});
   const { data, loading } = useOrderFulfillDataQuery({
     displayLoader: true,
     variables: {
       orderId,
     },
   });
-
   const [fulfillOrder, fulfillOrderOpts] = useFulfillOrderMutation({
     onCompleted: data => {
       if (data.orderFulfill.errors.length === 0) {
@@ -60,11 +55,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
           }),
         });
       } else {
-        if (
-          !data.orderFulfill.errors.every(
-            err => err.code === "INSUFFICIENT_STOCK",
-          )
-        ) {
+        if (!data.orderFulfill.errors.every(err => err.code === "INSUFFICIENT_STOCK")) {
           handleNestedMutationErrors({ data, intl, notify });
         }
       }
@@ -108,8 +99,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
                     orderLineId: line.id,
                     stocks: line.value,
                   })),
-                notifyCustomer:
-                  settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
+                notifyCustomer: settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
                 allowStockToBeExceeded: formData.allowStockToBeExceeded,
               },
               orderId,

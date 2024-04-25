@@ -26,9 +26,7 @@ export function useSortRedirects<SortField extends string>({
 }: UseSortRedirectsOpts<SortField>) {
   const navigate = useNavigator();
   const prevAscParams = useRef<boolean | null>(null);
-
   const hasQuery = !!params.query?.trim();
-
   const getAscParam = () => {
     if (hasQuery) {
       return false;
@@ -43,8 +41,7 @@ export function useSortRedirects<SortField extends string>({
 
   useEffect(() => {
     const sortWithQuery = "rank" as SortField;
-    const sortWithoutQuery =
-      params.sort === "rank" ? defaultSortField : params.sort;
+    const sortWithoutQuery = params.sort === "rank" ? defaultSortField : params.sort;
 
     if (hasQuery || params.sort === "rank") {
       prevAscParams.current = params.asc;
@@ -59,7 +56,6 @@ export function useSortRedirects<SortField extends string>({
       { replace: true },
     );
   }, [params.query]);
-
   useEffect(() => {
     if (resetToDefault) {
       navigate(

@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  ChannelUsabilityDataQuery,
-  OrderDetailsFragment,
-} from "@dashboard/graphql";
+import { ChannelUsabilityDataQuery, OrderDetailsFragment } from "@dashboard/graphql";
 import { Alert, AlertProps } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -18,7 +15,6 @@ const getAlerts = (
 ) => {
   const canDetermineShippingMethods =
     order?.shippingAddress?.country.code && !!order?.lines?.length;
-
   const isChannelInactive = order && !order.channel.isActive;
   const noProductsInChannel = channelUsabilityData?.products.totalCount === 0;
   const noShippingMethodsInChannel =
@@ -29,9 +25,11 @@ const getAlerts = (
   if (isChannelInactive) {
     alerts = [...alerts, alertMessages.inactiveChannel];
   }
+
   if (noProductsInChannel) {
     alerts = [...alerts, alertMessages.noProductsInChannel];
   }
+
   if (noShippingMethodsInChannel) {
     alerts = [...alerts, alertMessages.noShippingMethodsInChannel];
   }
@@ -48,7 +46,6 @@ const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
   const { order, channelUsabilityData, ...alertProps } = props;
   const classes = useAlertStyles();
   const intl = useIntl();
-
   const alerts = getAlerts(order, channelUsabilityData);
 
   if (!alerts.length) {
@@ -62,10 +59,7 @@ const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
       className={clsx(classes.root, "remove-icon-background")}
       {...alertProps}
     >
-      <OrderAlerts
-        alerts={alerts}
-        alertsHeader={intl.formatMessage(alertMessages.manyAlerts)}
-      />
+      <OrderAlerts alerts={alerts} alertsHeader={intl.formatMessage(alertMessages.manyAlerts)} />
     </Alert>
   );
 };

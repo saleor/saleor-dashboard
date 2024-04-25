@@ -5,11 +5,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { FlagList } from "./availableFlags";
 import { Provider } from "./context";
 import { FlagsResolver } from "./FlagsResolver";
-import {
-  AvailableStrategies,
-  EnvVarsStrategy,
-  LocalStorageStrategy,
-} from "./strategies";
+import { AvailableStrategies, EnvVarsStrategy, LocalStorageStrategy } from "./strategies";
 import { MetadataStrategy } from "./strategies/MetadataStrategy";
 
 interface FeatureFlagsProviderProps {
@@ -18,37 +14,25 @@ interface FeatureFlagsProviderProps {
   deps?: unknown[];
 }
 
-export const FeatureFlagsProvider = ({
-  children,
-  strategies,
-}: FeatureFlagsProviderProps) => {
+export const FeatureFlagsProvider = ({ children, strategies }: FeatureFlagsProviderProps) => {
   const [flags, setFlags] = useState<FlagList | undefined>(undefined);
   const [loading, setLoading] = useState(true);
-
   const disableLoading = () => setLoading(false);
 
   useEffect(() => {
     const resolver = new FlagsResolver(strategies);
 
-    resolver
-      .fetchAll()
-      .combineWithPriorities()
-      .then(setFlags)
-      .finally(disableLoading);
+    resolver.fetchAll().combineWithPriorities().then(setFlags).finally(disableLoading);
   }, [strategies]);
 
-  return (
-    <Provider value={flags}>{loading ? <LoginLoading /> : children}</Provider>
-  );
+  return <Provider value={flags}>{loading ? <LoginLoading /> : children}</Provider>;
 };
 
 interface FeatureFlagsProviderWithUserProps {
   children: ReactNode;
 }
 
-export const FeatureFlagsProviderWithUser = ({
-  children,
-}: FeatureFlagsProviderWithUserProps) => {
+export const FeatureFlagsProviderWithUser = ({ children }: FeatureFlagsProviderWithUserProps) => {
   const user = useUser();
 
   return (

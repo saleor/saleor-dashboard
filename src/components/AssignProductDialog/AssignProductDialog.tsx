@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -50,7 +47,6 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
-
 const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   const {
     confirmButtonState,
@@ -76,7 +72,6 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       setProductsDict(prev => {
         const prevIds = Object.keys(prev);
         const newIds = Object.keys(selectedIds);
-
         const preSelected = newIds
           .filter(n => !prevIds.includes(n))
           .reduce((p, c) => ({ ...p, [c]: true }), {});
@@ -85,7 +80,6 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       });
     }
   }, [selectedIds]);
-
   useModalDialogOpen(open, {
     onOpen: () => {
       queryReset();
@@ -105,14 +99,12 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       })),
     );
   };
-
   const handleChange = productId => {
     setProductsDict(prev => ({
       ...prev,
       [productId]: !prev[productId] ?? true,
     }));
   };
-
   const handleClose = () => {
     queryReset();
     onClose();
@@ -143,10 +135,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
           }}
         />
       </DialogContent>
-      <DialogContent
-        className={scrollableDialogClasses.scrollArea}
-        id={scrollableTargetId}
-      >
+      <DialogContent className={scrollableDialogClasses.scrollArea} id={scrollableTargetId}>
         <InfiniteScroll
           dataLength={products?.length ?? 0}
           next={onFetchMore}
@@ -164,17 +153,13 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
               {products &&
                 products.map(product => {
                   const isSelected = productsDict[product.id] || false;
-                  const isProductAvailable =
-                    isProductAvailableInVoucherChannels(
-                      product.channelListings,
-                      selectedChannels,
-                    );
+                  const isProductAvailable = isProductAvailableInVoucherChannels(
+                    product.channelListings,
+                    selectedChannels,
+                  );
 
                   return (
-                    <TableRowLink
-                      key={product.id}
-                      data-test-id="assign-product-table-row"
-                    >
+                    <TableRowLink key={product.id} data-test-id="assign-product-table-row">
                       <TableCellAvatar
                         className={classes.avatar}
                         thumbnail={maybe(() => product.thumbnail.url)}
@@ -183,16 +168,11 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                         {product.name}
                         {!isProductAvailable && (
                           <Text display="block" size={1} color="default2">
-                            <FormattedMessage
-                              {...messages.productUnavailable}
-                            />
+                            <FormattedMessage {...messages.productUnavailable} />
                           </Text>
                         )}
                       </TableCell>
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.checkboxCell}
-                      >
+                      <TableCell padding="checkbox" className={classes.checkboxCell}>
                         <Checkbox
                           checked={isSelected}
                           disabled={!isProductAvailable}
@@ -220,5 +200,6 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     </Dialog>
   );
 };
+
 AssignProductDialog.displayName = "AssignProductDialog";
 export default AssignProductDialog;

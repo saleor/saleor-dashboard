@@ -1,19 +1,9 @@
 import { gql } from "@apollo/client";
 
 export const productMediaCreateMutation = gql`
-  mutation ProductMediaCreate(
-    $product: ID!
-    $image: Upload
-    $alt: String
-    $mediaUrl: String
-  ) {
+  mutation ProductMediaCreate($product: ID!, $image: Upload, $alt: String, $mediaUrl: String) {
     productMediaCreate(
-      input: {
-        alt: $alt
-        image: $image
-        product: $product
-        mediaUrl: $mediaUrl
-      }
+      input: { alt: $alt, image: $image, product: $product, mediaUrl: $mediaUrl }
     ) {
       errors {
         ...ProductError
@@ -309,10 +299,7 @@ export const productBulkDeleteMutation = gql`
 `;
 
 export const ProductVariantBulkCreateMutation = gql`
-  mutation ProductVariantBulkCreate(
-    $id: ID!
-    $inputs: [ProductVariantBulkCreateInput!]!
-  ) {
+  mutation ProductVariantBulkCreate($id: ID!, $inputs: [ProductVariantBulkCreateInput!]!) {
     productVariantBulkCreate(product: $id, variants: $inputs) {
       errors {
         ...BulkProductError
@@ -348,10 +335,7 @@ export const productExportMutation = gql`
 `;
 
 export const ProductChannelListingUpdateMutation = gql`
-  mutation ProductChannelListingUpdate(
-    $id: ID!
-    $input: ProductChannelListingUpdateInput!
-  ) {
+  mutation ProductChannelListingUpdate($id: ID!, $input: ProductChannelListingUpdateInput!) {
     productChannelListingUpdate(id: $id, input: $input) {
       errors {
         ...ProductChannelListingError
@@ -423,11 +407,7 @@ export const ProductVariantBulkUpdateMutation = gql`
     $input: [ProductVariantBulkUpdateInput!]!
     $errorPolicy: ErrorPolicyEnum
   ) {
-    productVariantBulkUpdate(
-      errorPolicy: $errorPolicy
-      product: $product
-      variants: $input
-    ) {
+    productVariantBulkUpdate(errorPolicy: $errorPolicy, product: $product, variants: $input) {
       errors {
         ...ProductVariantBulkError
       }

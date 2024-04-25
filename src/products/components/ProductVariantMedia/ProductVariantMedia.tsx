@@ -32,9 +32,7 @@ interface ProductVariantMediaProps {
   onImageAdd: () => any;
 }
 
-export const ProductVariantMedia: React.FC<
-  ProductVariantMediaProps
-> = props => {
+export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => {
   const intl = useIntl();
   const { disabled, media, onImageAdd } = props;
 
@@ -61,13 +59,7 @@ export const ProductVariantMedia: React.FC<
             media
               .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1))
               .map(mediaObj => {
-                return (
-                  <MediaTile
-                    key={mediaObj.id}
-                    disableOverlay
-                    media={mediaObj}
-                  />
-                );
+                return <MediaTile key={mediaObj.id} disableOverlay media={mediaObj} />;
               })
           ) : (
             <Text __gridColumnEnd="span 4" size={3}>

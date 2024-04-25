@@ -30,7 +30,7 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
 }) => {
   const intl = useIntl();
   const [choice, setChoice] = useStateFromProps(
-    defaultChoice || (!!channelsChoices.length ? channelsChoices[0].value : ""),
+    defaultChoice || (channelsChoices.length ? channelsChoices[0].value : ""),
   );
   const { result, search } = useChoiceSearch(channelsChoices);
 
@@ -74,5 +74,6 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
     </ActionDialog>
   );
 };
+
 ChannelPickerDialog.displayName = "ChannelPickerDialog";
 export default ChannelPickerDialog;

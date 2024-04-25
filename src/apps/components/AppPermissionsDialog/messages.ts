@@ -22,7 +22,6 @@ const confirmation = defineMessages({
     id: "cS1wAx",
   },
 });
-
 const permissionsPicker = defineMessages({
   closeButton: {
     defaultMessage: "Close",
@@ -33,7 +32,6 @@ const permissionsPicker = defineMessages({
     id: "jvo0vs",
   },
 });
-
 const dialogRoot = defineMessages({
   heading: {
     defaultMessage: "Edit permissions",
@@ -48,8 +46,7 @@ const dialogRoot = defineMessages({
     id: "3SVI5p",
   },
   warningParagraph1: {
-    defaultMessage:
-      "Adding permission allows app to have more access to your data.",
+    defaultMessage: "Adding permission allows app to have more access to your data.",
     id: "azj0kR",
   },
   warningParagraph2: {
@@ -65,8 +62,7 @@ const dialogRoot = defineMessages({
     id: "47hJzu",
   },
   fallbackErrorText: {
-    defaultMessage:
-      "Failed to save permissions. Refresh the page and try again.",
+    defaultMessage: "Failed to save permissions. Refresh the page and try again.",
     id: "hAoqp6",
   },
 });

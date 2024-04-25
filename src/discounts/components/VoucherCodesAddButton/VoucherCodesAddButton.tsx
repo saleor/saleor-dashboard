@@ -1,11 +1,5 @@
 import { MenuItem, SubMenu } from "@dashboard/components/SubMenu";
-import {
-  ArrowDownIcon,
-  Box,
-  Button,
-  PlusIcon,
-  Popover,
-} from "@saleor/macaw-ui-next";
+import { ArrowDownIcon, Box, Button, PlusIcon, Popover } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -22,17 +16,14 @@ export const VoucherCodesAddButton = ({
 }: VoucherCodesAddButtonProps) => {
   const [isSubMenuOpen, setSubMenuOpen] = useState(false);
   const intl = useIntl();
-
   const handleMultupleCodesGenerate = useCallback(() => {
     onMultiCodesGenerate();
     setSubMenuOpen(false);
   }, []);
-
   const handleManualCodeGenerate = useCallback(() => {
     onSingleCodesGenerate();
     setSubMenuOpen(false);
   }, []);
-
   const subMenuItems = useMemo<MenuItem[]>(
     () => [
       {

@@ -1,8 +1,5 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
-import {
-  AppInstallationFragment,
-  AppListItemFragment,
-} from "@dashboard/graphql";
+import { AppInstallationFragment, AppListItemFragment } from "@dashboard/graphql";
 
 export interface AppListPageSections {
   appsInstallations?: AppInstallationFragment[];

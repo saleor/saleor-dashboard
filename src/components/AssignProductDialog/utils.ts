@@ -11,7 +11,5 @@ export const isProductAvailableInVoucherChannels = (
   const selectedChannelsIds = selectedChannels.map(chan => chan.id);
   const productChannelsIds = productChannels.map(chan => chan.channel.id);
 
-  return productChannelsIds.some(productChannel =>
-    selectedChannelsIds.includes(productChannel),
-  );
+  return productChannelsIds.some(productChannel => selectedChannelsIds.includes(productChannel));
 };

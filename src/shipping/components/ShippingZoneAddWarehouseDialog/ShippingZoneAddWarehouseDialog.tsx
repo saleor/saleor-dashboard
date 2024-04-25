@@ -1,17 +1,11 @@
 import BackButton from "@dashboard/components/BackButton";
 import CompanyAddressForm from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import { AddressTypeInput } from "@dashboard/customers/types";
-import {
-  CountryWithCodeFragment,
-  WarehouseErrorFragment,
-} from "@dashboard/graphql";
+import { CountryWithCodeFragment, WarehouseErrorFragment } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
@@ -21,19 +15,12 @@ import { buttonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ShippingZoneAddWarehouseDialogSubmitData
-  extends AddressTypeInput {
+export interface ShippingZoneAddWarehouseDialogSubmitData extends AddressTypeInput {
   name: string;
 }
 export interface ShippingZoneAddWarehouseDialogProps extends DialogProps {
@@ -58,7 +45,6 @@ const initialForm: ShippingZoneAddWarehouseDialogSubmitData = {
   streetAddress1: "",
   streetAddress2: "",
 };
-
 const useStyles = makeStyles(
   {
     overflow: {
@@ -69,10 +55,7 @@ const useStyles = makeStyles(
     name: "ShippingZoneAddWarehouseDialog",
   },
 );
-
-const ShippingZoneAddWarehouseDialog: React.FC<
-  ShippingZoneAddWarehouseDialogProps
-> = ({
+const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogProps> = ({
   confirmButtonState,
   countries,
   disabled,
@@ -83,15 +66,12 @@ const ShippingZoneAddWarehouseDialog: React.FC<
 }) => {
   const classes = useStyles({});
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps("");
-  const { errors: validationErrors, submit: handleSubmit } =
-    useAddressValidation(onSubmit);
-  const errors = useModalDialogErrors(
-    [...apiErrors, ...validationErrors],
-    open,
-  );
-  useModalDialogOpen(open, {});
-  const intl = useIntl();
+  const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
+  const errors = useModalDialogErrors([...apiErrors, ...validationErrors], open);
 
+  useModalDialogOpen(open, {});
+
+  const intl = useIntl();
   const countryChoices = mapCountriesToChoices(countries);
 
   return (
@@ -145,10 +125,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<
               </DialogContent>
               <DialogActions>
                 <BackButton onClick={onClose} />
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  type="submit"
-                >
+                <ConfirmButton transitionState={confirmButtonState} type="submit">
                   <FormattedMessage {...buttonMessages.create} />
                 </ConfirmButton>
               </DialogActions>

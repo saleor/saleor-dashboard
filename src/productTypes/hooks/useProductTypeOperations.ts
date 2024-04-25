@@ -19,11 +19,8 @@ function moveAttribute(
   attributes: ProductTypeDetailsFragment["productAttributes"],
   move: ReorderInput,
 ) {
-  const attributeIndex = attributes.findIndex(
-    attribute => attribute.id === move.id,
-  );
+  const attributeIndex = attributes.findIndex(attribute => attribute.id === move.id);
   const newIndex = attributeIndex + move.sortOrder;
-
   const attributesWithoutMovedOne = [
     ...attributes.slice(0, attributeIndex),
     ...attributes.slice(attributeIndex + 1),
@@ -40,9 +37,7 @@ interface ProductTypeOperationsProps {
   productType: ProductTypeDetailsFragment;
   onAssignAttribute: (data: AssignProductAttributeMutation) => void;
   onUnassignAttribute: (data: UnassignProductAttributeMutation) => void;
-  onProductTypeAttributeReorder: (
-    data: ProductTypeAttributeReorderMutation,
-  ) => void;
+  onProductTypeAttributeReorder: (data: ProductTypeAttributeReorderMutation) => void;
   onProductTypeDelete: (data: ProductTypeDeleteMutation) => void;
 }
 
@@ -67,8 +62,7 @@ function useProductTypeOperations({
     optimisticResponse: variables => ({
       __typename: "Mutation",
       productTypeReorderAttributes: {
-        __typename:
-          "ProductTypeReorderAttributes" as "ProductTypeReorderAttributes",
+        __typename: "ProductTypeReorderAttributes" as const,
         errors: [],
         productType: {
           ...productType,

@@ -1,11 +1,7 @@
 // @ts-strict-ignore
 import { Locale } from "@dashboard/components/Locale";
 
-import {
-  numberCellEmptyValue,
-  NumberCellProps,
-  numberCellRenderer,
-} from "./NumberCell";
+import { numberCellEmptyValue, NumberCellProps, numberCellRenderer } from "./NumberCell";
 
 const locale = Locale.EN;
 

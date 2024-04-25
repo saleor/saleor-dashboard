@@ -34,8 +34,7 @@ export const messages = defineMessages({
   authorizePending: {
     defaultMessage: "Pending auth",
     id: "9WhNiN",
-    description:
-      "Pending authorization transaction amount, data display header",
+    description: "Pending authorization transaction amount, data display header",
   },
   authorized: {
     defaultMessage: "Authorized",

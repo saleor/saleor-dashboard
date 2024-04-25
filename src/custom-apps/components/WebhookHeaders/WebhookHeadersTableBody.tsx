@@ -21,17 +21,12 @@ export interface WebhookHeadersTableBodyProps {
   headers: Header[];
 }
 
-const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({
-  onChange,
-  headers,
-}) => {
+const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({ onChange, headers }) => {
   const classes = useStyles();
   const intl = useIntl();
-
   const updateWebhookItem = (target: EventTarget & HTMLTextAreaElement) => {
     const { name, value } = target;
     const [field, index] = name.split(nameSeparator);
-
     const item: Header = headers[index];
 
     // lowercase header name
@@ -46,7 +41,6 @@ const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({
       index: parseInt(index, 10),
     };
   };
-
   const change = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     const { item, index } = updateWebhookItem(target);
 
@@ -77,10 +71,7 @@ const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({
               onChange={change}
               value={field.name}
               error={field.error}
-              helperText={
-                (field.error && intl.formatMessage(messages.headerNameError)) ||
-                " "
-              }
+              helperText={(field.error && intl.formatMessage(messages.headerNameError)) || " "}
             />
           </TableCell>
           <TableCell className={clsx(classes.colValue, classes.tableCell)}>

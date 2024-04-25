@@ -1,21 +1,14 @@
-import {
-  ProductErrorCode,
-  ProductErrorWithAttributesFragment,
-} from "@dashboard/graphql";
+import { ProductErrorCode, ProductErrorWithAttributesFragment } from "@dashboard/graphql";
 
 import { ProductCreateData } from "../components/ProductCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 
-export const validatePrice = (price: string) =>
-  price === "" || parseInt(price, 10) < 0;
+export const validatePrice = (price: string) => price === "" || parseInt(price, 10) < 0;
 
-export const validateCostPrice = (price: string) =>
-  price !== "" && parseInt(price, 10) < 0;
+export const validateCostPrice = (price: string) => price !== "" && parseInt(price, 10) < 0;
 
-const createEmptyRequiredError = (
-  field: string,
-): ProductErrorWithAttributesFragment => ({
+const createEmptyRequiredError = (field: string): ProductErrorWithAttributesFragment => ({
   __typename: "ProductError",
   code: ProductErrorCode.REQUIRED,
   field,

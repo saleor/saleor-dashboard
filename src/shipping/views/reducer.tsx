@@ -11,10 +11,7 @@ export interface PostalCodesState {
   postalCodeRules?: ShippingMethodWithPostalCodesFragment["postalCodeRules"];
 }
 
-function postalCodesReducer(
-  prevState: PostalCodesState,
-  newState: PostalCodesState,
-) {
+function postalCodesReducer(prevState: PostalCodesState, newState: PostalCodesState) {
   return { ...prevState, ...newState };
 }
 

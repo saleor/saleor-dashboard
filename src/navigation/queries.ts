@@ -8,13 +8,7 @@ export const menuList = gql`
     $before: String
     $sort: MenuSortingInput
   ) {
-    menus(
-      first: $first
-      after: $after
-      before: $before
-      last: $last
-      sortBy: $sort
-    ) {
+    menus(first: $first, after: $after, before: $before, last: $last, sortBy: $sort) {
       edges {
         node {
           ...Menu

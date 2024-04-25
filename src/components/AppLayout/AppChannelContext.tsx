@@ -25,7 +25,6 @@ const AppChannelContext = React.createContext<AppChannelContextData>({
   setChannel: () => undefined,
   setPickerActive: () => undefined,
 });
-
 const isValidChannel = (channelId: string, channelList?: ChannelFragment[]) => {
   if (!channelId) {
     return false;
@@ -41,8 +40,8 @@ export const AppChannelProvider: React.FC = ({ children }) => {
   const { data: channelData, refetch } = useBaseChannelsQuery({
     skip: !authenticated || !user,
   });
-
   const [isPickerActive, setPickerActive] = React.useState(false);
+
   React.useEffect(() => {
     const channels = user?.accessibleChannels ?? [];
     const isValid = isValidChannel(selectedChannel, channels);
@@ -55,15 +54,12 @@ export const AppChannelProvider: React.FC = ({ children }) => {
       setSelectedChannel("");
     }
   }, [selectedChannel, setSelectedChannel, user]);
-
   React.useEffect(() => {
     setChannel(selectedChannel);
   }, [selectedChannel]);
 
   const availableChannels = channelData?.channels || [];
-
-  const channel =
-    channelData && (availableChannels.find(getById(selectedChannel)) || null);
+  const channel = channelData && (availableChannels.find(getById(selectedChannel)) || null);
 
   return (
     <AppChannelContext.Provider
@@ -85,6 +81,7 @@ AppChannelProvider.displayName = "AppChannelProvider";
 
 function useAppChannel(enablePicker = true): UseAppChannel {
   const { setPickerActive, ...data } = React.useContext(AppChannelContext);
+
   React.useEffect(() => {
     if (enablePicker) {
       setPickerActive(true);

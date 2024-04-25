@@ -1,10 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const appCreateMutation = gql`
-  mutation AppCreate(
-    $input: AppInput!
-    $hasManagedAppsPermission: Boolean = true
-  ) {
+  mutation AppCreate($input: AppInput!, $hasManagedAppsPermission: Boolean = true) {
     appCreate(input: $input) {
       authToken
       app {
@@ -92,11 +89,7 @@ export const appRetryInstallMutation = gql`
 `;
 
 export const appUpdateMutation = gql`
-  mutation AppUpdate(
-    $id: ID!
-    $input: AppInput!
-    $hasManagedAppsPermission: Boolean = true
-  ) {
+  mutation AppUpdate($id: ID!, $input: AppInput!, $hasManagedAppsPermission: Boolean = true) {
     appUpdate(id: $id, input: $input) {
       app {
         ...App

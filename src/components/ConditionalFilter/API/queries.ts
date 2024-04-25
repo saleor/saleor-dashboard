@@ -7,17 +7,7 @@ export const initialDynamicLeftOperands = gql`
       search: $query
       where: {
         type: { eq: PRODUCT_TYPE }
-        inputType: {
-          oneOf: [
-            DROPDOWN
-            MULTISELECT
-            BOOLEAN
-            NUMERIC
-            DATE
-            DATE_TIME
-            SWATCH
-          ]
-        }
+        inputType: { oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH] }
       }
     ) {
       edges {
@@ -56,16 +46,8 @@ export const initialDynamicOperands = gql`
     }
   }
 
-  query _SearchCategoriesOperands(
-    $after: String
-    $first: Int!
-    $categoriesSlugs: [String!]
-  ) {
-    categories(
-      after: $after
-      first: $first
-      filter: { slugs: $categoriesSlugs }
-    ) {
+  query _SearchCategoriesOperands($after: String, $first: Int!, $categoriesSlugs: [String!]) {
+    categories(after: $after, first: $first, filter: { slugs: $categoriesSlugs }) {
       edges {
         node {
           id
@@ -76,16 +58,8 @@ export const initialDynamicOperands = gql`
     }
   }
 
-  query _SearchProductTypesOperands(
-    $after: String
-    $first: Int!
-    $productTypesSlugs: [String!]
-  ) {
-    productTypes(
-      after: $after
-      first: $first
-      filter: { slugs: $productTypesSlugs }
-    ) {
+  query _SearchProductTypesOperands($after: String, $first: Int!, $productTypesSlugs: [String!]) {
+    productTypes(after: $after, first: $first, filter: { slugs: $productTypesSlugs }) {
       edges {
         node {
           id
@@ -96,11 +70,7 @@ export const initialDynamicOperands = gql`
     }
   }
 
-  query _SearchAttributeOperands(
-    $attributesSlugs: [String!]
-    $choicesIds: [ID!]
-    $first: Int!
-  ) {
+  query _SearchAttributeOperands($attributesSlugs: [String!], $choicesIds: [ID!], $first: Int!) {
     attributes(first: $first, filter: { slugs: $attributesSlugs }) {
       edges {
         node {

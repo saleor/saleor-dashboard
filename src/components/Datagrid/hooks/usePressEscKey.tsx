@@ -10,6 +10,7 @@ export const usePressEscKey = (callback?: () => void) => {
     };
 
     document.addEventListener("keydown", handler);
+
     return () => document.removeEventListener("keydown", handler);
   }, [callback]);
 };

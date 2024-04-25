@@ -5,10 +5,7 @@ import { defaultTheme, localStorageKey } from "./consts";
 
 export const useTheme = () => {
   const { theme, setTheme } = useMacawTheme();
-  const [, setActiveTheme] = useLocalStorage<DefaultTheme>(
-    localStorageKey,
-    defaultTheme,
-  );
+  const [, setActiveTheme] = useLocalStorage<DefaultTheme>(localStorageKey, defaultTheme);
 
   return {
     theme,

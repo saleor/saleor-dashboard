@@ -26,7 +26,6 @@ const valueWithoutSettings = {
 beforeEach(() => {
   localStorage.clear();
 });
-
 describe("useListSettings", () => {
   it("properly inits from value", () => {
     expect(localStorage.getItem(listSettingsStorageKey)).toBe(null);
@@ -35,40 +34,25 @@ describe("useListSettings", () => {
 
     expect(result.current.settings).toStrictEqual(defaultListSettings[key]);
   });
-
   it("omits init if value is present", () => {
     localStorage.setItem(listSettingsStorageKey, JSON.stringify(storedValue));
-    expect(localStorage.getItem(listSettingsStorageKey)).toBe(
-      JSON.stringify(storedValue),
-    );
+    expect(localStorage.getItem(listSettingsStorageKey)).toBe(JSON.stringify(storedValue));
 
     const { result } = renderHook(() => useListSettings(key));
 
     expect(result.current.settings).toStrictEqual(storedValue[key]);
   });
-
   it("properly merges new default values to saved ones", () => {
-    localStorage.setItem(
-      listSettingsStorageKey,
-      JSON.stringify(valueWithoutKey),
-    );
-    expect(localStorage.getItem(listSettingsStorageKey)).toBe(
-      JSON.stringify(valueWithoutKey),
-    );
+    localStorage.setItem(listSettingsStorageKey, JSON.stringify(valueWithoutKey));
+    expect(localStorage.getItem(listSettingsStorageKey)).toBe(JSON.stringify(valueWithoutKey));
 
     const { result } = renderHook(() => useListSettings(key));
 
     expect(result.current.settings).toStrictEqual(defaultListSettings[key]);
   });
-
   it("properly fills missing settings", () => {
-    localStorage.setItem(
-      listSettingsStorageKey,
-      JSON.stringify(valueWithoutSettings),
-    );
-    expect(localStorage.getItem(listSettingsStorageKey)).toBe(
-      JSON.stringify(valueWithoutSettings),
-    );
+    localStorage.setItem(listSettingsStorageKey, JSON.stringify(valueWithoutSettings));
+    expect(localStorage.getItem(listSettingsStorageKey)).toBe(JSON.stringify(valueWithoutSettings));
 
     const { result } = renderHook(() => useListSettings(key));
 

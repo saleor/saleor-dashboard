@@ -19,13 +19,7 @@ const CardTitle: React.FC<CardTitleProps> = ({
   toolbar,
   ...rest
 }) => (
-  <CardHeader
-    action={toolbar}
-    className={className}
-    title={title}
-    subheader={subtitle}
-    {...rest}
-  >
+  <CardHeader action={toolbar} className={className} title={title} subheader={subtitle} {...rest}>
     {children}
   </CardHeader>
 );

@@ -49,7 +49,6 @@ describe("useProductUpdateForm", () => {
   it("should clear datagrid change set after submitting the form", async () => {
     // Arrange
     const mockOnSubmit = jest.fn();
-
     const { result } = renderHook(() =>
       useProductUpdateForm(
         { variants: [], channelListings: [] } as unknown as ProductFragment,
@@ -68,11 +67,9 @@ describe("useProductUpdateForm", () => {
         updates: [],
       });
     });
-
     await act(async () => {
       await result.current.submit();
     });
-
     // Assert
     expect(mockOnSubmit).toHaveBeenCalledWith({
       ...baseData,
@@ -82,12 +79,10 @@ describe("useProductUpdateForm", () => {
         updates: [],
       },
     });
-
     // Act
     await act(async () => {
       await result.current.submit();
     });
-
     // Assert
     expect(mockOnSubmit).toHaveBeenCalledWith({
       ...baseData,

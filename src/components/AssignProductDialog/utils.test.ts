@@ -8,16 +8,10 @@ describe("isProductAvailableInVoucherChannels", () => {
       { channel: { id: "1" } },
       { channel: { id: "2" } },
     ] as ProductChannels;
-    const mockVariantChannels = [
-      { id: "1" },
-      { id: "33" },
-    ] as SelectedChannel[];
+    const mockVariantChannels = [{ id: "1" }, { id: "33" }] as SelectedChannel[];
 
     // Act
-    const result = isProductAvailableInVoucherChannels(
-      mockProductChannels,
-      mockVariantChannels,
-    );
+    const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
     expect(result).toBe(true);
@@ -29,16 +23,10 @@ describe("isProductAvailableInVoucherChannels", () => {
       { channel: { id: "1" } },
       { channel: { id: "2" } },
     ] as ProductChannels;
-    const mockVariantChannels = [
-      { id: "12" },
-      { id: "33" },
-    ] as SelectedChannel[];
+    const mockVariantChannels = [{ id: "12" }, { id: "33" }] as SelectedChannel[];
 
     // Act
-    const result = isProductAvailableInVoucherChannels(
-      mockProductChannels,
-      mockVariantChannels,
-    );
+    const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
     expect(result).toBe(false);
@@ -48,16 +36,10 @@ describe("isProductAvailableInVoucherChannels", () => {
     // Arrange
     const mockProductChannels = [] as ProductChannels;
 
-    const mockVariantChannels = [
-      { id: "12" },
-      { id: "33" },
-    ] as SelectedChannel[];
+    const mockVariantChannels = [{ id: "12" }, { id: "33" }] as SelectedChannel[];
 
     // Act
-    const result = isProductAvailableInVoucherChannels(
-      mockProductChannels,
-      mockVariantChannels,
-    );
+    const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
     expect(result).toBe(false);
@@ -72,10 +54,7 @@ describe("isProductAvailableInVoucherChannels", () => {
     const mockVariantChannels = [] as SelectedChannel[];
 
     // Act
-    const result = isProductAvailableInVoucherChannels(
-      mockProductChannels,
-      mockVariantChannels,
-    );
+    const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
     expect(result).toBe(false);
@@ -87,10 +66,7 @@ describe("isProductAvailableInVoucherChannels", () => {
     const mockVariantChannels = [] as SelectedChannel[];
 
     // Act
-    const result = isProductAvailableInVoucherChannels(
-      mockProductChannels,
-      mockVariantChannels,
-    );
+    const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
     expect(result).toBe(false);
@@ -102,10 +78,7 @@ describe("isProductAvailableInVoucherChannels", () => {
     const mockVariantChannels = undefined;
 
     // Act
-    const result = isProductAvailableInVoucherChannels(
-      mockProductChannels,
-      mockVariantChannels,
-    );
+    const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
     expect(result).toBe(true);

@@ -12,6 +12,7 @@ function useModalDialogOpen(
   useEffect(() => {
     if (open !== prevOpen) {
       setPrevOpen(open);
+
       if (cbs.onOpen && open) {
         cbs.onOpen();
       }

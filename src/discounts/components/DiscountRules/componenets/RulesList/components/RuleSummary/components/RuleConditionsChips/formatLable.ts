@@ -5,11 +5,7 @@ import {
 } from "@dashboard/components/Money";
 import { Condition, isTuple } from "@dashboard/discounts/models";
 
-export const formatMoneyRange = (
-  condition: Condition,
-  currencySymbol: string,
-  locale: Locale,
-) => {
+export const formatMoneyRange = (condition: Condition, currencySymbol: string, locale: Locale) => {
   if (!isTuple(condition.value)) {
     return "";
   }
@@ -27,11 +23,7 @@ export const formatMoneyRange = (
   );
 };
 
-export const formatMoney = (
-  condition: Condition,
-  currencySymbol: string,
-  locale: Locale,
-) => {
+export const formatMoney = (condition: Condition, currencySymbol: string, locale: Locale) => {
   return formatMoneyUtils(
     {
       amount: Number(condition.value),

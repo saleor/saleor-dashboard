@@ -1,8 +1,6 @@
 import { MetadataFormData } from "@dashboard/components/Metadata";
 
-import createMetadataUpdateHandler, {
-  ObjectWithMetadata,
-} from "./metadataUpdateHandler";
+import createMetadataUpdateHandler, { ObjectWithMetadata } from "./metadataUpdateHandler";
 
 describe("createMetadataUpdateHandler", () => {
   it("should return array of errors when update function return errors", async () => {
@@ -16,11 +14,9 @@ describe("createMetadataUpdateHandler", () => {
       metadata: [],
       privateMetadata: [],
     };
-
     const updateFun = jest.fn(() => Promise.resolve(["error1", "error2"]));
     const metadataUpdateFun = jest.fn();
     const privateMetadataUpdateFun = jest.fn();
-
     // Act
     const handleUpdate = await createMetadataUpdateHandler(
       intialData,
@@ -33,7 +29,6 @@ describe("createMetadataUpdateHandler", () => {
     // Assert
     expect(result).toEqual(["error1", "error2"]);
   });
-
   it("should call only updateMetadata mutation", async () => {
     // Arrange
     const intialData: ObjectWithMetadata = {
@@ -50,7 +45,6 @@ describe("createMetadataUpdateHandler", () => {
       ],
       privateMetadata: [],
     };
-
     const updateFun = jest.fn(() => Promise.resolve([])) as any;
     const metadataUpdateFun = jest.fn(() =>
       Promise.resolve({
@@ -58,7 +52,6 @@ describe("createMetadataUpdateHandler", () => {
       }),
     ) as any;
     const privateMetadataUpdateFun = jest.fn();
-
     // Act
     const handleUpdate = await createMetadataUpdateHandler(
       intialData,
@@ -82,7 +75,6 @@ describe("createMetadataUpdateHandler", () => {
     });
     expect(privateMetadataUpdateFun).not.toHaveBeenCalled();
   });
-
   it("should call only updatePrivateMetadata mutation", async () => {
     // Arrange
     const intialData: ObjectWithMetadata = {
@@ -99,7 +91,6 @@ describe("createMetadataUpdateHandler", () => {
         },
       ],
     };
-
     const updateFun = jest.fn(() => Promise.resolve([])) as any;
     const metadataUpdateFun = jest.fn();
     const privateMetadataUpdateFun = jest.fn(() =>
@@ -107,7 +98,6 @@ describe("createMetadataUpdateHandler", () => {
         data: {},
       }),
     ) as any;
-
     // Act
     const handleUpdate = await createMetadataUpdateHandler(
       intialData,
@@ -131,7 +121,6 @@ describe("createMetadataUpdateHandler", () => {
     });
     expect(metadataUpdateFun).not.toHaveBeenCalled();
   });
-
   it("should return updateMetadata errors if exists", async () => {
     // Arrange
     const intialData: ObjectWithMetadata = {
@@ -153,7 +142,6 @@ describe("createMetadataUpdateHandler", () => {
         },
       ],
     };
-
     const updateFun = jest.fn(() => Promise.resolve([])) as any;
     const metadataUpdateFun = jest.fn(() =>
       Promise.resolve({
@@ -165,7 +153,6 @@ describe("createMetadataUpdateHandler", () => {
       }),
     ) as any;
     const privateMetadataUpdateFun = jest.fn();
-
     // Act
     const handleUpdate = await createMetadataUpdateHandler(
       intialData,
@@ -179,7 +166,6 @@ describe("createMetadataUpdateHandler", () => {
     expect(result).toEqual(["error1", "error2"]);
     expect(privateMetadataUpdateFun).not.toHaveBeenCalled();
   });
-
   it("should return updatePrivateMetadata errors if exists", async () => {
     // Arrange
     const intialData: ObjectWithMetadata = {
@@ -201,14 +187,12 @@ describe("createMetadataUpdateHandler", () => {
         },
       ],
     };
-
     const updateFun = jest.fn(() => Promise.resolve([])) as any;
     const metadataUpdateFun = jest.fn(() =>
       Promise.resolve({
         data: {},
       }),
     ) as any;
-
     const privateMetadataUpdateFun = jest.fn(() =>
       Promise.resolve({
         data: {
@@ -218,7 +202,6 @@ describe("createMetadataUpdateHandler", () => {
         },
       }),
     ) as any;
-
     // Act
     const handleUpdate = await createMetadataUpdateHandler(
       intialData,

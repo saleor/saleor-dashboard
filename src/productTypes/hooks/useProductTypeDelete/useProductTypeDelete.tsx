@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  ProductCountQueryVariables,
-  useProductCountQuery,
-} from "@dashboard/graphql";
+import { ProductCountQueryVariables, useProductCountQuery } from "@dashboard/graphql";
 import {
   UseTypeDeleteData,
   UseTypeDeleteProps,
@@ -16,9 +13,8 @@ import React from "react";
 
 import * as messages from "./messages";
 
-type UseProductTypeDeleteProps<
-  T = ProductTypeListUrlQueryParams | ProductTypeUrlQueryParams,
-> = UseTypeDeleteProps<T>;
+type UseProductTypeDeleteProps<T = ProductTypeListUrlQueryParams | ProductTypeUrlQueryParams> =
+  UseTypeDeleteProps<T>;
 
 function useProductTypeDelete({
   params,
@@ -26,22 +22,16 @@ function useProductTypeDelete({
   selectedTypes,
 }: UseProductTypeDeleteProps): UseTypeDeleteData {
   const productTypes = selectedTypes || [singleId];
-
   const isDeleteDialogOpen = params.action === "remove";
-
-  const productsAssignedToSelectedTypesQueryVars =
-    React.useMemo<ProductCountQueryVariables>(
-      () => ({
-        filter: {
-          productTypes,
-        },
-      }),
-      [productTypes],
-    );
-
-  const shouldSkipProductListQuery =
-    !productTypes.length || !isDeleteDialogOpen;
-
+  const productsAssignedToSelectedTypesQueryVars = React.useMemo<ProductCountQueryVariables>(
+    () => ({
+      filter: {
+        productTypes,
+      },
+    }),
+    [productTypes],
+  );
+  const shouldSkipProductListQuery = !productTypes.length || !isDeleteDialogOpen;
   const {
     data: productsAssignedToSelectedTypesData,
     loading: loadingProductsAssignedToSelectedTypes,
@@ -49,13 +39,10 @@ function useProductTypeDelete({
     variables: productsAssignedToSelectedTypesQueryVars,
     skip: shouldSkipProductListQuery,
   });
-
   const selectedProductsAssignedToDeleteUrl = productListUrl({
     productTypes,
   });
-
-  const assignedItemsCount =
-    productsAssignedToSelectedTypesData?.products?.totalCount;
+  const assignedItemsCount = productsAssignedToSelectedTypesData?.products?.totalCount;
 
   return {
     ...messages,

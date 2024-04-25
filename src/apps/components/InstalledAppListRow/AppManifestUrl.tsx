@@ -9,9 +9,7 @@ interface AppManifestUrlProps {
   manifestUrl: string;
 }
 
-export const AppManifestUrl: React.FC<AppManifestUrlProps> = ({
-  manifestUrl,
-}) => {
+export const AppManifestUrl: React.FC<AppManifestUrlProps> = ({ manifestUrl }) => {
   const [copied, setCopied] = useState(false);
 
   return (

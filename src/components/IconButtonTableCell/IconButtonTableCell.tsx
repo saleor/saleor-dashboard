@@ -26,7 +26,6 @@ const useStyles = makeStyles(
 );
 const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
   const { children, className, disabled, onClick } = props;
-
   const classes = useStyles(props);
 
   return (
@@ -43,5 +42,6 @@ const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
     </TableCell>
   );
 };
+
 IconButtonTableCell.displayName = "IconButtonTableCell";
 export default IconButtonTableCell;

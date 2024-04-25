@@ -24,8 +24,7 @@ export const messages = defineMessages({
   },
   asynchronousDescription: {
     id: "yJqbYv",
-    defaultMessage:
-      "Asynchronous webhook sends payload and continues processing.",
+    defaultMessage: "Asynchronous webhook sends payload and continues processing.",
     description: "Asynchronous events description",
   },
   objects: {

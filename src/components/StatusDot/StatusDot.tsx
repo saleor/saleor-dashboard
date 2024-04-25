@@ -10,7 +10,6 @@ export interface StatusDotProps {
 export const StatusDot: React.FC<StatusDotProps> = ({ status }) => {
   const { themeValues } = useTheme();
   const color = getDotColor(status, themeValues);
-  return (
-    <Box width={2} height={2} borderRadius="50%" __backgroundColor={color} />
-  );
+
+  return <Box width={2} height={2} borderRadius="50%" __backgroundColor={color} />;
 };

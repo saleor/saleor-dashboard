@@ -18,7 +18,6 @@ describe("Filtering query params", () => {
 
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
-
   it("should not be empty object if params given", () => {
     const params: CollectionListUrlFilters = {
       status: CollectionPublished.PUBLISHED,
@@ -28,10 +27,8 @@ describe("Filtering query params", () => {
     expect(getExistingKeys(filterVariables)).toHaveLength(1);
   });
 });
-
 describe("Filtering URL params", () => {
   const intl = createIntl(config);
-
   const filters = createFilterStructure(intl, {
     status: {
       active: false,
@@ -43,14 +40,10 @@ describe("Filtering URL params", () => {
   });
 
   it("should be empty if no active filters", () => {
-    const filterQueryParams = getFilterQueryParams(
-      filters,
-      getFilterQueryParam,
-    );
+    const filterQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
   });
-
   it("should not be empty if active filters are present", () => {
     const filters = createFilterStructure(intl, {
       status: {
@@ -61,7 +54,6 @@ describe("Filtering URL params", () => {
         choices: MultiAutocompleteChoiceType[];
       },
     });
-
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
       getFilterQueryParam,

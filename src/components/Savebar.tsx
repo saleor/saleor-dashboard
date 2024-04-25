@@ -40,7 +40,6 @@ const useStyles = makeStyles(
 export const Savebar: React.FC<SavebarProps> = ({ labels = {}, ...rest }) => {
   const intl = useIntl();
   const classes = useStyles();
-
   const defaultLabels: SavebarLabels = {
     cancel: intl.formatMessage(buttonMessages.back),
     confirm: intl.formatMessage(buttonMessages.save),
@@ -52,9 +51,7 @@ export const Savebar: React.FC<SavebarProps> = ({ labels = {}, ...rest }) => {
     ...labels,
   };
 
-  return (
-    <MacawSavebar labels={componentLabels} {...rest} className={classes.root} />
-  );
+  return <MacawSavebar labels={componentLabels} {...rest} className={classes.root} />;
 };
 Savebar.displayName = "SaveBar";
 export default Savebar;

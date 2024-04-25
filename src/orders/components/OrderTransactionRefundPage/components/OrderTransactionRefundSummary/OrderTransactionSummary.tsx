@@ -1,14 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import { IMoney } from "@dashboard/utils/intl";
-import {
-  Box,
-  Checkbox,
-  Input,
-  Skeleton,
-  Text,
-  Tooltip,
-} from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, FieldError, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
@@ -28,9 +21,7 @@ interface OrderTransactionSummaryProps {
   currency: string | undefined;
 }
 
-export const OrderTransactionSummary: React.FC<
-  OrderTransactionSummaryProps
-> = ({
+export const OrderTransactionSummary: React.FC<OrderTransactionSummaryProps> = ({
   amountError,
   control,
   selectedProductsValue,
@@ -93,10 +84,7 @@ export const OrderTransactionSummary: React.FC<
             paddingY={4}
           >
             {canRefundShipping ? (
-              <Checkbox
-                checked={shippingField.value}
-                onCheckedChange={shippingField.onChange}
-              >
+              <Checkbox checked={shippingField.value} onCheckedChange={shippingField.onChange}>
                 <Text size={3}>
                   <FormattedMessage {...messages.shipping} />
                 </Text>
@@ -133,7 +121,7 @@ export const OrderTransactionSummary: React.FC<
             display="flex"
             justifyContent="space-between"
             paddingTop={4}
-            paddingBottom={!!amountError ? 2 : 4}
+            paddingBottom={amountError ? 2 : 4}
           >
             <Text size={5} display="flex" alignItems="center">
               <FormattedMessage {...messages.totalAmount} />

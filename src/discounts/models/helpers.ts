@@ -52,21 +52,21 @@ export const createAPIWhereInput = (condition: Condition) => {
   if (label === "lower") {
     return { range: { lte: value } };
   }
+
   if (label === "greater") {
     return { range: { gte: value } };
   }
 
   if (isTuple(value) && label === "between") {
     const [gte, lte] = value;
+
     return { range: { lte, gte } };
   }
 
   return { eq: value };
 };
 
-export function getConditionType(
-  conditionValue: DecimalFilterInput,
-): ConditionType {
+export function getConditionType(conditionValue: DecimalFilterInput): ConditionType {
   if (conditionValue.eq) {
     return "is";
   }
@@ -120,18 +120,14 @@ export function hasPredicateNestedConditions(
   predicate: OrderPredicateAPI | CataloguePredicateAPI,
 ): boolean {
   const keys = Object.keys(predicate);
+
   if (keys.includes("AND") || keys.length > 2) {
     return true;
   }
 
-  if (
-    keys.length === 1 &&
-    keys[0] !== "OR" &&
-    keys[0] !== "discountedObjectPredicate"
-  ) {
-    const innerKeys = Object.keys(
-      predicate[keys[0] as keyof typeof predicate] ?? {},
-    );
+  if (keys.length === 1 && keys[0] !== "OR" && keys[0] !== "discountedObjectPredicate") {
+    const innerKeys = Object.keys(predicate[keys[0] as keyof typeof predicate] ?? {});
+
     return innerKeys.every(key => !ALLOW_KEYS.includes(key));
   }
 
@@ -150,6 +146,7 @@ function checkDeeplyNestedPredicate(
   nestedPredicate: OrderPredicateAPI | CataloguePredicateAPI,
 ): boolean {
   const keys = Object.keys(nestedPredicate);
+
   if (keys.includes("AND") || keys.includes("OR")) {
     return true;
   }
@@ -170,11 +167,10 @@ function checkDeeplyNestedPredicate(
 
     if (typeof nestedPredicate[key as keyType] === "object") {
       return checkDeeplyNestedPredicate(
-        nestedPredicate[key as keyType] as
-          | OrderPredicateAPI
-          | CataloguePredicateAPI,
+        nestedPredicate[key as keyType] as OrderPredicateAPI | CataloguePredicateAPI,
       );
     }
   }
+
   return false;
 }

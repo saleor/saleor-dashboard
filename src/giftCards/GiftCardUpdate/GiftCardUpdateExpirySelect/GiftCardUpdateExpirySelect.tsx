@@ -13,16 +13,12 @@ import { useGiftCardExpirySelectStyles as useStyles } from "./styles";
 const GiftCardUpdateExpirySelect: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
-
   const {
     change,
     data: { expiryDate },
     formErrors,
   } = useGiftCardUpdateForm();
-
-  const [cardExpiresSelected, setCardExpiresSelected] = useStateFromProps(
-    !!expiryDate,
-  );
+  const [cardExpiresSelected, setCardExpiresSelected] = useStateFromProps(!!expiryDate);
 
   useEffect(() => {
     if (!cardExpiresSelected) {

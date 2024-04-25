@@ -41,12 +41,12 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
         dateStyle: "short",
       }).format(date),
     };
-
     const time = new Intl.DateTimeFormat(locale, {
       timeStyle: "short",
     }).format(date);
 
     ctx.textAlign = "left";
+
     let justifyToRight = true;
 
     const candidateFormats = [
@@ -63,14 +63,12 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
         width: ctx.measureText(`${dateFormats.short} ${time}`).width,
       },
     ];
-
     const cellWidth = rect.width - theme.cellHorizontalPadding * 2;
     let displayDate: string | undefined = dateFormats.full;
 
     if (cellWidth < candidateFormats[0].width) {
-      displayDate = candidateFormats.find(
-        format => format.width <= cellWidth,
-      )?.format;
+      displayDate = candidateFormats.find(format => format.width <= cellWidth)?.format;
+
       if (!displayDate) {
         displayDate = dateFormats.short;
         justifyToRight = false;
@@ -78,23 +76,18 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
     }
 
     ctx.fillStyle = theme.textDark;
-
     ctx.fillText(
       displayDate,
       rect.x + theme.cellHorizontalPadding,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
-
     ctx.fillStyle = theme.textLight;
     ctx.textAlign = justifyToRight ? "right" : "left";
     ctx.fillText(
       time,
       justifyToRight
         ? rect.x + rect.width - theme.cellHorizontalPadding
-        : rect.x +
-            theme.cellHorizontalPadding +
-            ctx.measureText(displayDate).width +
-            5,
+        : rect.x + theme.cellHorizontalPadding + ctx.measureText(displayDate).width + 5,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
 

@@ -37,12 +37,12 @@ type OrderManualTransactionDialogProps = {
   dialogProps: DialogProps;
 } & OrderManualTransactionFormProps;
 
-export const OrderManualTransactionDialog: React.FC<
-  OrderManualTransactionDialogProps
-> = ({ dialogProps, ...props }) => {
+export const OrderManualTransactionDialog: React.FC<OrderManualTransactionDialogProps> = ({
+  dialogProps,
+  ...props
+}) => {
   const intl = useIntl();
   const classes = useStyles();
-
   const { onClose } = dialogProps;
 
   return (
@@ -54,9 +54,7 @@ export const OrderManualTransactionDialog: React.FC<
         <OrderManualTransactionForm.Form className={classes.form}>
           <DialogContent>
             <DialogContentText>
-              <FormattedMessage
-                {...manualTransactionMessages.dialogDescription}
-              />
+              <FormattedMessage {...manualTransactionMessages.dialogDescription} />
             </DialogContentText>
             <div className={classes.formWrapper}>
               <OrderManualTransactionForm.DescriptionField
@@ -68,9 +66,7 @@ export const OrderManualTransactionDialog: React.FC<
                 fullWidth
               />
               <OrderManualTransactionForm.PriceInputField
-                label={intl.formatMessage(
-                  manualTransactionMessages.transactionAmount,
-                )}
+                label={intl.formatMessage(manualTransactionMessages.transactionAmount)}
               />
               <OrderManualTransactionForm.ErrorText />
             </div>

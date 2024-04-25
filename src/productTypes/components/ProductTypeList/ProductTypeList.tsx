@@ -7,10 +7,7 @@ import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductTypeFragment } from "@dashboard/graphql";
-import {
-  ProductTypeListUrlSortField,
-  productTypeUrl,
-} from "@dashboard/productTypes/urls";
+import { ProductTypeListUrlSortField, productTypeUrl } from "@dashboard/productTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -51,19 +48,9 @@ interface ProductTypeListProps
 }
 
 const numberOfColumns = 4;
-
 const ProductTypeList: React.FC<ProductTypeListProps> = props => {
-  const {
-    disabled,
-    productTypes,
-    onSort,
-    isChecked,
-    selected,
-    sort,
-    toggle,
-    toggleAll,
-    toolbar,
-  } = props;
+  const { disabled, productTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
+    props;
   const classes = useStyles(props);
 
   return (
@@ -78,9 +65,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
       >
         <TableCellHeader
           direction={
-            sort.sort === ProductTypeListUrlSortField.name
-              ? getArrowDirection(sort.asc)
-              : undefined
+            sort.sort === ProductTypeListUrlSortField.name ? getArrowDirection(sort.asc) : undefined
           }
           arrowPosition="right"
           onClick={() => onSort(ProductTypeListUrlSortField.name)}
@@ -125,9 +110,10 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
           productTypes,
           productType => {
             const isSelected = productType ? isChecked(productType.id) : false;
+
             return (
               <TableRowLink
-                className={!!productType ? classes.link : undefined}
+                className={productType ? classes.link : undefined}
                 hover={!!productType}
                 key={productType ? productType.id : "skeleton"}
                 href={productType && productTypeUrl(productType.id)}
@@ -143,11 +129,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                   />
                 </TableCell>
                 <TableCell className={classes.colName}>
-                  {productType ? (
-                    <span data-test-id="name">{productType.name}</span>
-                  ) : (
-                    <Skeleton />
-                  )}
+                  {productType ? <span data-test-id="name">{productType.name}</span> : <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.colType}>
                   {maybe(() => productType.isShippingRequired) !== undefined ? (
@@ -181,10 +163,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
           () => (
             <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage
-                  id="0nLsyM"
-                  defaultMessage="No product types found"
-                />
+                <FormattedMessage id="0nLsyM" defaultMessage="No product types found" />
               </TableCell>
             </TableRowLink>
           ),
@@ -193,5 +172,6 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
     </ResponsiveTable>
   );
 };
+
 ProductTypeList.displayName = "ProductTypeList";
 export default ProductTypeList;

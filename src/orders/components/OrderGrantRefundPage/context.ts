@@ -7,16 +7,11 @@ import { GrantRefundAction, GrantRefundState } from "./reducer";
 interface GrantRefundContext {
   state: GrantRefundState;
   dispatch: React.Dispatch<GrantRefundAction>;
-  form: Pick<
-    UseFormResult<OrderGrantRefundFormData>,
-    "set" | "data" | "change"
-  >;
+  form: Pick<UseFormResult<OrderGrantRefundFormData>, "set" | "data" | "change">;
   totalSelectedPrice: number;
 }
 
-export const GrantRefundContext = createContext<GrantRefundContext | null>(
-  null,
-);
+export const GrantRefundContext = createContext<GrantRefundContext | null>(null);
 
 export const useGrantRefundContext = () => {
   const context = useContext(GrantRefundContext);

@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { OrderErrorFragment } from "@dashboard/graphql";
@@ -43,7 +40,6 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
   onSubmit,
 }) => {
   const intl = useIntl();
-
   const formFields = ["payment"];
   const formErrors = getFormErrors(formFields, errors);
 
@@ -97,10 +93,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
             </DialogContent>
             <DialogActions>
               <BackButton onClick={onClose} />
-              <ConfirmButton
-                transitionState={confirmButtonState}
-                onClick={submit}
-              >
+              <ConfirmButton transitionState={confirmButtonState} onClick={submit}>
                 <FormattedMessage {...buttonMessages.confirm} />
               </ConfirmButton>
             </DialogActions>
@@ -110,5 +103,6 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
     </Dialog>
   );
 };
+
 OrderPaymentDialog.displayName = "OrderPaymentDialog";
 export default OrderPaymentDialog;

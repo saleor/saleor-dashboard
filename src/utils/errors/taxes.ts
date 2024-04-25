@@ -5,11 +5,7 @@ import {
 } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
-import {
-  CommonError,
-  CommonErrorCode,
-  getCommonFormFieldErrorMessage,
-} from "./common";
+import { CommonError, CommonErrorCode, getCommonFormFieldErrorMessage } from "./common";
 
 export type TaxClassError =
   | TaxClassUpdateErrorFragment

@@ -1,7 +1,4 @@
-import {
-  CollectionDetailsQuery,
-  CollectionPublished,
-} from "@dashboard/graphql";
+import { CollectionDetailsQuery, CollectionPublished } from "@dashboard/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 import { CollectionListFilterOpts } from "./components/CollectionListPage";
@@ -157,10 +154,7 @@ export const collections: Collections = [
 export const collection: (
   placeholderCollectionImage: string,
   placeholderProductImage: string,
-) => CollectionDetailsQuery["collection"] = (
-  placeholderCollectionImage,
-  placeholderImage,
-) => ({
+) => CollectionDetailsQuery["collection"] = (placeholderCollectionImage, placeholderImage) => ({
   __typename: "Collection",
   backgroundImage: {
     __typename: "Image",

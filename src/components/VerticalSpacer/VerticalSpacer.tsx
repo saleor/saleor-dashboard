@@ -13,7 +13,6 @@ const useStyles = makeStyles(
   }),
   { name: "VerticalSpacer" },
 );
-
 const VerticalSpacer: React.FC<VerticalSpacerProps> = ({ spacing = 1 }) => {
   const classes = useStyles({ spacing });
 

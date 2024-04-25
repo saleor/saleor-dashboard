@@ -50,5 +50,6 @@ const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
+
 AttributeBulkDeleteDialog.displayName = "AttributeBulkDeleteDialog";
 export default AttributeBulkDeleteDialog;

@@ -7,5 +7,4 @@ export const ManualTransactionContext = createContext<
   (ManualRefundData & OrderManualTransactionFormProps) | null
 >(null);
 
-export const useManualTransactionContext = () =>
-  useContext(ManualTransactionContext);
+export const useManualTransactionContext = () => useContext(ManualTransactionContext);

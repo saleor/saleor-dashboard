@@ -14,10 +14,7 @@ import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const salesListStaticColumnsAdapter = (
-  intl: IntlShape,
-  sort: Sort<SaleListUrlSortField>,
-) =>
+export const salesListStaticColumnsAdapter = (intl: IntlShape, sort: Sort<SaleListUrlSortField>) =>
   [
     {
       id: "name",
@@ -59,7 +56,6 @@ export const createGetCellContent =
   ([column, row]: Item): GridCell => {
     const rowData = sales[row];
     const columnId = columns[column]?.id;
-
     const channel = rowData?.channelListings?.find(
       lisiting => lisiting.channel.id === selectedChannelId,
     );
@@ -73,15 +69,11 @@ export const createGetCellContent =
         return readonlyTextCell(rowData.name);
       case "startDate":
         return readonlyTextCell(
-          rowData.startDate
-            ? moment(rowData.startDate).locale(locale).format("lll")
-            : PLACEHOLDER,
+          rowData.startDate ? moment(rowData.startDate).locale(locale).format("lll") : PLACEHOLDER,
         );
       case "endDate":
         return readonlyTextCell(
-          rowData.endDate
-            ? moment(rowData.endDate).locale(locale).format("lll")
-            : PLACEHOLDER,
+          rowData.endDate ? moment(rowData.endDate).locale(locale).format("lll") : PLACEHOLDER,
         );
       case "value":
         if (!channel) {
@@ -101,9 +93,7 @@ export const createGetCellContent =
             );
           }
 
-          return readonlyTextCell(
-            formatPercantage(channel.discountValue, locale),
-          );
+          return readonlyTextCell(formatPercantage(channel.discountValue, locale));
         }
 
         return readonlyTextCell(PLACEHOLDER);

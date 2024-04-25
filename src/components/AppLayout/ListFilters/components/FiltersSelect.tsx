@@ -34,18 +34,14 @@ export const FiltersSelect = <TFilterKeys extends string = string>({
   const [isFilterMenuOpened, setFilterMenuOpened] = useState(false);
   const [filterErrors, setFilterErrors] = useState<InvalidFilters<string>>({});
   const [data, dispatch, reset] = useFilter(menu);
-
   const isFilterActive = menu.some(filterElement => filterElement.active);
-  const selectedFilterAmount = useMemo(
-    () => getSelectedFilterAmount(menu, data),
-    [data, menu],
-  );
-
+  const selectedFilterAmount = useMemo(() => getSelectedFilterAmount(menu, data), [data, menu]);
   const handleSubmit = () => {
     const invalidFilters = extractInvalidFilters(data, menu);
 
     if (Object.keys(invalidFilters).length > 0) {
       setFilterErrors(invalidFilters);
+
       return;
     }
 
@@ -53,7 +49,6 @@ export const FiltersSelect = <TFilterKeys extends string = string>({
     onFilterAdd(data);
     setFilterMenuOpened(false);
   };
-
   const handleClear = () => {
     reset();
     setFilterErrors({});
@@ -73,14 +68,8 @@ export const FiltersSelect = <TFilterKeys extends string = string>({
           data-test-id="show-filters-button"
           onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
         >
-          <FormattedMessage
-            id="FNpv6K"
-            defaultMessage="Filters"
-            description="button"
-          />
-          {isFilterActive && selectedFilterAmount > 0 && (
-            <>({selectedFilterAmount})</>
-          )}
+          <FormattedMessage id="FNpv6K" defaultMessage="Filters" description="button" />
+          {isFilterActive && selectedFilterAmount > 0 && <>({selectedFilterAmount})</>}
         </DropdownButton>
         <Popper
           className={sprinkles({

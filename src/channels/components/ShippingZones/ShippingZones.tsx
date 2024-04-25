@@ -32,7 +32,6 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
     shippingZones,
     shippingZonesChoices,
   } = props;
-
   const intl = useIntl();
 
   return (

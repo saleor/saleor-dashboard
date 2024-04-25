@@ -14,8 +14,7 @@ export const giftCardSendToCustomerMessages = defineMessages({
   },
   customerChannelSubtitle: {
     id: "0sd4ez",
-    defaultMessage:
-      "Customer will be sent the gift card code via this channels email address",
+    defaultMessage: "Customer will be sent the gift card code via this channels email address",
     description: "selected customer channel subtitle",
   },
   channelSelectLabel: {

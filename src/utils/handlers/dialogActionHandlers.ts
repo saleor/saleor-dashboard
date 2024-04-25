@@ -3,17 +3,17 @@ import { BulkAction, Dialog, SingleAction } from "@dashboard/types";
 
 type Url<T extends Dialog<any>> = (params: T) => string;
 
-export type OpenModalFunction<
-  TAction extends string,
-  TParams extends Dialog<TAction>,
-> = (action: TAction, newParams?: TParams) => void;
+export type OpenModalFunction<TAction extends string, TParams extends Dialog<TAction>> = (
+  action: TAction,
+  newParams?: TParams,
+) => void;
 
 export type CloseModalFunction = () => void;
 
-type CreateCloseModal<
-  TAction extends string,
-  TParams extends Dialog<TAction>,
-> = [OpenModalFunction<TAction, TParams>, CloseModalFunction];
+type CreateCloseModal<TAction extends string, TParams extends Dialog<TAction>> = [
+  OpenModalFunction<TAction, TParams>,
+  CloseModalFunction,
+];
 
 function createDialogActionHandlers<
   TAction extends string,
@@ -24,10 +24,7 @@ function createDialogActionHandlers<
   params: TParams,
   fieldsToClear?: Array<keyof TParams>,
 ): CreateCloseModal<TAction, TParams> {
-  const objToClear =
-    fieldsToClear?.reduce((obj, key) => ({ ...obj, [key]: undefined }), {}) ??
-    {};
-
+  const objToClear = fieldsToClear?.reduce((obj, key) => ({ ...obj, [key]: undefined }), {}) ?? {};
   const close = () =>
     navigate(
       url({

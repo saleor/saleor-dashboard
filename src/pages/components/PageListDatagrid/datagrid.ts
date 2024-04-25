@@ -1,7 +1,4 @@
-import {
-  readonlyTextCell,
-  tagsCell,
-} from "@dashboard/components/Datagrid/customCells/cells";
+import { readonlyTextCell, tagsCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { getStatusColor } from "@dashboard/misc";
 import { Pages } from "@dashboard/pages/types";
@@ -72,6 +69,7 @@ export const createGetCellContent =
           status: rowData?.isPublished ? "success" : "error",
           currentTheme,
         });
+
         return tagsCell(
           [
             {

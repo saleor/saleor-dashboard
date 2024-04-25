@@ -3,10 +3,7 @@ import { commonMessages } from "@dashboard/intl";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { IntlShape } from "react-intl";
 
-export const getDefaultNotifierSuccessErrorData = (
-  errors: any[],
-  intl: IntlShape,
-): IMessage =>
+export const getDefaultNotifierSuccessErrorData = (errors: any[], intl: IntlShape): IMessage =>
   !errors.length
     ? {
         status: "success",

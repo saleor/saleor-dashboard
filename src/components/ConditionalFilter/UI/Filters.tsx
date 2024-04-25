@@ -6,21 +6,12 @@ import { createErrorLookup, getErrorByRowIndex } from "./errors";
 import { FilterEventEmitter } from "./EventEmitter";
 import { RowComponent } from "./Row";
 
-type FiltersProps = Pick<
-  ExperimentalFiltersProps,
-  "value" | "leftOptions" | "error"
-> & {
+type FiltersProps = Pick<ExperimentalFiltersProps, "value" | "leftOptions" | "error"> & {
   emitter: FilterEventEmitter;
   locale: Record<string, string>;
 };
 
-export const Filters = ({
-  value,
-  leftOptions,
-  emitter,
-  locale,
-  error,
-}: FiltersProps) => {
+export const Filters = ({ value, leftOptions, emitter, locale, error }: FiltersProps) => {
   const errorsByRowIndex = createErrorLookup(error);
 
   return (

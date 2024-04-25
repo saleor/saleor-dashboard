@@ -10,6 +10,7 @@ export async function login<T>(
 
   try {
     const credential = await navigator.credentials.get({ password: true });
+
     if (credential instanceof PasswordCredential) {
       result = await loginFn(credential.id, credential.password ?? "");
     }
@@ -42,6 +43,7 @@ export function saveCredentials(
       name: user.firstName ? `${user.firstName} ${user.lastName}` : undefined,
       password,
     });
+
     try {
       result = navigator.credentials.store(cred);
     } catch {

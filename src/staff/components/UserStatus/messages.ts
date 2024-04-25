@@ -8,7 +8,6 @@ export const userStatusMessages = defineMessages({
   },
   userDisableInstruction: {
     id: "K/gnGg",
-    defaultMessage:
-      "If you want to disable this User please uncheck the box below.",
+    defaultMessage: "If you want to disable this User please uncheck the box below.",
   },
 });

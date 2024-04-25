@@ -6,9 +6,9 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { SortableContainer } from "react-sortable-hoc";
 
-const InnerSortableTableBody = SortableContainer<TableBodyProps>(
-  ({ children, ...props }) => <TableBody {...props}>{children}</TableBody>,
-);
+const InnerSortableTableBody = SortableContainer<TableBodyProps>(({ children, ...props }) => (
+  <TableBody {...props}>{children}</TableBody>
+));
 
 export interface SortableTableBodyProps {
   onSortEnd: ReorderAction;
@@ -29,10 +29,7 @@ const useStyles = makeStyles(
   }),
   { name: "SortableTableBody" },
 );
-
-const SortableTableBody: React.FC<
-  Omit<TableBodyProps & SortableTableBodyProps, "ref">
-> = props => {
+const SortableTableBody: React.FC<Omit<TableBodyProps & SortableTableBodyProps, "ref">> = props => {
   const classes = useStyles({});
 
   return (

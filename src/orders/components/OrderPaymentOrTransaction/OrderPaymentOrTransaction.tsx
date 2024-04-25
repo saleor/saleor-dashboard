@@ -1,10 +1,6 @@
 // @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
-import {
-  OrderDetailsFragment,
-  OrderDetailsQuery,
-  TransactionActionEnum,
-} from "@dashboard/graphql";
+import { OrderDetailsFragment, OrderDetailsQuery, TransactionActionEnum } from "@dashboard/graphql";
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import React from "react";
 
@@ -14,10 +10,7 @@ import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
 export interface OrderPaymentOrTransactionProps {
   order: OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
-  onTransactionAction: (
-    transactionId: string,
-    actionType: TransactionActionEnum,
-  ) => any;
+  onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => any;
   onPaymentCapture: () => any;
   onPaymentVoid: () => any;
   onPaymentRefund: () => any;
@@ -26,9 +19,7 @@ export interface OrderPaymentOrTransactionProps {
   onRefundAdd: () => void;
 }
 
-export const OrderPaymentOrTransaction: React.FC<
-  OrderPaymentOrTransactionProps
-> = ({
+export const OrderPaymentOrTransaction: React.FC<OrderPaymentOrTransactionProps> = ({
   order,
   shop,
   onTransactionAction,
