@@ -13,7 +13,7 @@ jobs:
     - name: Saleor login
       uses: ./.github/actions/cli-login
       with:
-        token: ${{ inputs.CLI_TOKEN }}
+        token: ${{ secrets.STAGING_TOKEN }}
 
     - name: Get open PRs and environments
       id: get-prs-and-envs
