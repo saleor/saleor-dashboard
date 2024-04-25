@@ -14,14 +14,9 @@ import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDiscountConsumerCommonProps, OrderDiscountData } from "./types";
-import {
-  getManualOrderDiscount,
-  getParsedDiscountData,
-  useDiscountDialog,
-} from "./utils";
+import { getManualOrderDiscount, getParsedDiscountData, useDiscountDialog } from "./utils";
 
-export interface OrderDiscountContextConsumerProps
-  extends OrderDiscountConsumerCommonProps {
+export interface OrderDiscountContextConsumerProps extends OrderDiscountConsumerCommonProps {
   orderDiscountAddStatus: ConfirmButtonTransitionState;
   orderDiscountRemoveStatus: ConfirmButtonTransitionState;
   orderDiscount?: OrderDiscountData;
@@ -42,35 +37,22 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
-
   const { id: orderId } = order;
-
   const { isDialogOpen, openDialog, closeDialog } = useDiscountDialog();
-
   const orderDiscount = getManualOrderDiscount(order);
-
   const [orderDiscountAdd, orderDiscountAddOpts] = useOrderDiscountAddMutation({
-    onCompleted: ({ orderDiscountAdd: { errors } }) =>
-      handleDiscountDataSubmission(errors),
+    onCompleted: ({ orderDiscountAdd: { errors } }) => handleDiscountDataSubmission(errors),
   });
-
-  const [orderDiscountUpdate, orderDiscountUpdateOpts] =
-    useOrderDiscountUpdateMutation({
-      onCompleted: ({ orderDiscountUpdate: { errors } }) =>
-        handleDiscountDataSubmission(errors),
-    });
-
-  const [orderDiscountRemove, orderDiscountRemoveOpts] =
-    useOrderDiscountDeleteMutation({
-      onCompleted: ({ orderDiscountDelete: { errors } }) =>
-        handleDiscountDataSubmission(errors),
-    });
-
+  const [orderDiscountUpdate, orderDiscountUpdateOpts] = useOrderDiscountUpdateMutation({
+    onCompleted: ({ orderDiscountUpdate: { errors } }) => handleDiscountDataSubmission(errors),
+  });
+  const [orderDiscountRemove, orderDiscountRemoveOpts] = useOrderDiscountDeleteMutation({
+    onCompleted: ({ orderDiscountDelete: { errors } }) => handleDiscountDataSubmission(errors),
+  });
   const handleDiscountDataSubmission = (errors: any[]) => {
     closeDialog();
     notify(getDefaultNotifierSuccessErrorData(errors, intl));
   };
-
   const addOrderDiscount = (data: OrderDiscountCommonInput) =>
     orderDiscountAdd({
       variables: {
@@ -78,7 +60,6 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
         input: getParsedDiscountData(data),
       },
     });
-
   const updateOrderDiscount = (data: OrderDiscountCommonInput) =>
     orderDiscount &&
     orderDiscountUpdate({
@@ -87,21 +68,15 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
         input: getParsedDiscountData(data),
       },
     });
-
   const removeOrderDiscount = () =>
     orderDiscount &&
     orderDiscountRemove({
       variables: { discountId: orderDiscount.id },
     });
-
-  const orderDiscountAction = orderDiscount
-    ? updateOrderDiscount
-    : addOrderDiscount;
-
+  const orderDiscountAction = orderDiscount ? updateOrderDiscount : addOrderDiscount;
   const orderDiscountAddStatus = orderDiscount
     ? orderDiscountUpdateOpts.status
     : orderDiscountAddOpts.status;
-
   const discountProviderValues: OrderDiscountContextConsumerProps = {
     orderDiscountAddStatus,
     orderDiscountRemoveStatus: orderDiscountRemoveOpts.status,
@@ -122,5 +97,4 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
   );
 };
 
-export const OrderDiscountContext =
-  createContext<OrderDiscountContextConsumerProps>(null);
+export const OrderDiscountContext = createContext<OrderDiscountContextConsumerProps>(null);

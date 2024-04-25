@@ -24,13 +24,12 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
   onConfirm,
 }) => {
   const intl = useIntl();
-
   const isNameMissing = name === null || name === "";
-
   const getMainText = () => {
     if (isNameMissing) {
       return intl.formatMessage(msgs.activateApp);
     }
+
     return intl.formatMessage(msgs.activateNamedApp, {
       name: <strong>{getStringOrPlaceholder(name)}</strong>,
     });
@@ -46,11 +45,10 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
       title={intl.formatMessage(msgs.activateAppTitle)}
       variant="default"
     >
-      <DialogContentText data-test-id="dialog-content">
-        {getMainText()}
-      </DialogContentText>
+      <DialogContentText data-test-id="dialog-content">{getMainText()}</DialogContentText>
     </ActionDialog>
   );
 };
+
 AppActivateDialog.displayName = "AppActivateDialog";
 export default AppActivateDialog;

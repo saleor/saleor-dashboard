@@ -64,16 +64,7 @@ interface ExtendedPageHeaderProps {
 }
 
 const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
-  const {
-    children,
-    className,
-    childrenWrapperClassName,
-    inline,
-    underline,
-    title,
-    testId,
-  } = props;
-
+  const { children, className, childrenWrapperClassName, inline, underline, title, testId } = props;
   const classes = useStyles(props);
 
   return (
@@ -86,9 +77,7 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
         })}
       >
         <div className={classes.titleRow}>{title}</div>
-        <div className={clsx(classes.action, childrenWrapperClassName)}>
-          {children}
-        </div>
+        <div className={clsx(classes.action, childrenWrapperClassName)}>{children}</div>
       </div>
       {underline && (
         <div className={classes.underline}>
@@ -98,5 +87,6 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
     </>
   );
 };
+
 ExtendedPageHeader.displayName = "ExtendedPageHeader";
 export default ExtendedPageHeader;

@@ -1,8 +1,5 @@
 import { Combobox } from "@dashboard/components/Combobox";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
@@ -80,5 +77,6 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
     </DashboardModal>
   );
 };
+
 PageTypePickerDialog.displayName = "PageTypePickerDialog";
 export default PageTypePickerDialog;

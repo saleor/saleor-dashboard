@@ -66,20 +66,15 @@ export const createGetCellContent =
 
     switch (columnId) {
       case "name":
-        return thumbnailCell(
-          getUserName(rowData) ?? "",
-          rowData?.avatar?.url ?? "",
-          {
-            cursor: "pointer",
-          },
-        );
+        return thumbnailCell(getUserName(rowData) ?? "", rowData?.avatar?.url ?? "", {
+          cursor: "pointer",
+        });
       case "status": {
         const isActive = rowData?.isActive;
         const color = getStatusColor({
           status: isActive ? "success" : "error",
           currentTheme,
         });
-
         const status = isActive
           ? intl.formatMessage(commonStatusMessages.active)
           : intl.formatMessage(commonStatusMessages.notActive);

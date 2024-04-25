@@ -17,9 +17,7 @@ import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import PluginsDetailsPage, {
-  PluginDetailsPageFormData,
-} from "../components/PluginsDetailsPage";
+import PluginsDetailsPage, { PluginDetailsPageFormData } from "../components/PluginsDetailsPage";
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
 import { pluginUrl, PluginUrlDialog, PluginUrlQueryParams } from "../urls";
 import { isSecretField } from "../utils";
@@ -46,41 +44,28 @@ export function getConfigurationInput(
     }));
 }
 
-export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
-  id,
-  params,
-}) => {
+export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const { data: pluginData, loading } = usePluginQuery({
     displayLoader: true,
     variables: { id },
   });
-
   const plugin = pluginData?.plugin;
-
   const initialSelectedChannelValue =
     plugin && !isPluginGlobal(plugin.globalConfiguration)
       ? plugin.channelConfigurations[0].channel.id
       : null;
-
-  const [selectedChannelId, setSelectedChannelId] = useStateFromProps(
-    initialSelectedChannelValue,
-  );
-
+  const [selectedChannelId, setSelectedChannelId] = useStateFromProps(initialSelectedChannelValue);
   const selectedConfig = isPluginGlobal(plugin?.globalConfiguration)
     ? plugin?.globalConfiguration
-    : plugin?.channelConfigurations.find(
-        getConfigByChannelId(selectedChannelId),
-      );
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    PluginUrlDialog,
-    PluginUrlQueryParams
-  >(navigate, params => pluginUrl(id, params), params);
-
+    : plugin?.channelConfigurations.find(getConfigByChannelId(selectedChannelId));
+  const [openModal, closeModal] = createDialogActionHandlers<PluginUrlDialog, PluginUrlQueryParams>(
+    navigate,
+    params => pluginUrl(id, params),
+    params,
+  );
   const [pluginUpdate, pluginUpdateOpts] = usePluginUpdateMutation({
     onCompleted: data => {
       if (data.pluginUpdate.errors.length === 0) {
@@ -92,9 +77,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
       }
     },
   });
-
   const formErrors = pluginUpdateOpts.data?.pluginUpdate.errors || [];
-
   const handleFieldUpdate = (value: string) =>
     pluginUpdate({
       variables: {
@@ -110,7 +93,6 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
         },
       },
     });
-
   const handleSubmit = async (formData: PluginDetailsPageFormData) =>
     extractMutationErrors(
       pluginUpdate({
@@ -134,9 +116,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
       <PluginsDetailsPage
         disabled={loading}
         errors={formErrors}
-        saveButtonBarState={
-          !params.action ? pluginUpdateOpts.status : "default"
-        }
+        saveButtonBarState={!params.action ? pluginUpdateOpts.status : "default"}
         plugin={plugin}
         onClear={id =>
           openModal("clear", {
@@ -155,9 +135,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
       {selectedConfig && (
         <>
           <ActionDialog
-            confirmButtonState={
-              !!params.action ? pluginUpdateOpts.status : "default"
-            }
+            confirmButtonState={params.action ? pluginUpdateOpts.status : "default"}
             onClose={closeModal}
             open={params.action === "clear" && !!params.id}
             title={intl.formatMessage({
@@ -175,12 +153,8 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
             </DialogContentText>
           </ActionDialog>
           <PluginSecretFieldDialog
-            confirmButtonState={
-              !!params.action ? pluginUpdateOpts.status : "default"
-            }
-            field={selectedConfig?.configuration.find(
-              field => field.name === params.id,
-            )}
+            confirmButtonState={params.action ? pluginUpdateOpts.status : "default"}
+            field={selectedConfig?.configuration.find(field => field.name === params.id)}
             onClose={closeModal}
             onConfirm={formData => handleFieldUpdate(formData.value)}
             open={params.action === "edit" && !!params.id}

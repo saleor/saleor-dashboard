@@ -21,8 +21,7 @@ export interface FilterBarProps<TKeys extends string = string>
 const useStyles = makeStyles<{ withoutBorder?: boolean }>(
   theme => ({
     root: {
-      borderBottom: props =>
-        props.withoutBorder ? "none" : `1px solid ${theme.palette.divider}`,
+      borderBottom: props => (props.withoutBorder ? "none" : `1px solid ${theme.palette.divider}`),
       display: "flex",
       flexWrap: "wrap",
       padding: theme.spacing(1, 4),
@@ -37,7 +36,6 @@ const useStyles = makeStyles<{ withoutBorder?: boolean }>(
     name: "FilterBar",
   },
 );
-
 const FilterBar: React.FC<FilterBarProps> = props => {
   const {
     allTabLabel,
@@ -56,27 +54,17 @@ const FilterBar: React.FC<FilterBarProps> = props => {
     onTabSave,
     errorMessages,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
-
   const isCustom = currentTab === tabs.length + 1;
-  const displayTabAction = isCustom
-    ? "save"
-    : currentTab === 0
-    ? null
-    : "delete";
+  const displayTabAction = isCustom ? "save" : currentTab === 0 ? null : "delete";
 
   return (
     <>
       <FilterTabs currentTab={currentTab}>
         <FilterTab label={allTabLabel} onClick={onAll} />
         {tabs.map((tab, tabIndex) => (
-          <FilterTab
-            onClick={() => onTabChange(tabIndex + 1)}
-            label={tab}
-            key={tabIndex}
-          />
+          <FilterTab onClick={() => onTabChange(tabIndex + 1)} label={tab} key={tabIndex} />
         ))}
         {isCustom && (
           <FilterTab
@@ -104,20 +92,12 @@ const FilterBar: React.FC<FilterBarProps> = props => {
         {displayTabAction &&
           (displayTabAction === "save" ? (
             <Button className={classes.tabActionButton} onClick={onTabSave}>
-              <FormattedMessage
-                id="DEa1T1"
-                defaultMessage="Save Search"
-                description="button"
-              />
+              <FormattedMessage id="DEa1T1" defaultMessage="Save Search" description="button" />
             </Button>
           ) : (
             displayTabAction === "delete" && (
               <Button className={classes.tabActionButton} onClick={onTabDelete}>
-                <FormattedMessage
-                  id="QCwBUI"
-                  defaultMessage="Delete Search"
-                  description="button"
-                />
+                <FormattedMessage id="QCwBUI" defaultMessage="Delete Search" description="button" />
               </Button>
             )
           ))}
@@ -125,5 +105,6 @@ const FilterBar: React.FC<FilterBarProps> = props => {
     </>
   );
 };
+
 FilterBar.displayName = "FilterBar";
 export default FilterBar;

@@ -15,11 +15,7 @@ import { useIntl } from "react-intl";
 
 import ChannelDeleteDialog from "../../components/ChannelDeleteDialog";
 import ChannelsListPage from "../../pages/ChannelsListPage";
-import {
-  channelsListUrl,
-  ChannelsListUrlDialog,
-  ChannelsListUrlQueryParams,
-} from "../../urls";
+import { channelsListUrl, ChannelsListUrlDialog, ChannelsListUrlQueryParams } from "../../urls";
 
 interface ChannelsListProps {
   params: ChannelsListUrlQueryParams;
@@ -29,25 +25,20 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const { data, refetch } = useChannelsQuery({ displayLoader: true });
   const limitOpts = useShopLimitsQuery({
     variables: {
       channels: true,
     },
   });
-
-  const selectedChannel = data?.channels?.find(
-    channel => channel.id === params?.id,
-  );
-
+  const selectedChannel = data?.channels?.find(channel => channel.id === params?.id);
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelsListUrlDialog,
     ChannelsListUrlQueryParams
   >(navigate, channelsListUrl, params);
-
   const onCompleted = (data: ChannelDeleteMutation) => {
     const errors = data.channelDelete.errors;
+
     if (errors.length === 0) {
       notify({
         status: "success",
@@ -68,17 +59,10 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
       );
     }
   };
-
   const [deleteChannel, deleteChannelOpts] = useChannelDeleteMutation({
     onCompleted,
   });
-
-  const channelsChoices = getChannelsCurrencyChoices(
-    params.id,
-    selectedChannel,
-    data?.channels,
-  );
-
+  const channelsChoices = getChannelsCurrencyChoices(params.id, selectedChannel, data?.channels);
   const handleRemoveConfirm = (channelId?: string) => {
     const inputVariables = channelId ? { input: { channelId } } : {};
 

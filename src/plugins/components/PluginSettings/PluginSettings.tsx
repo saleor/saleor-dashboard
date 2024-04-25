@@ -1,10 +1,7 @@
 // @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
-import {
-  ConfigurationItemFragment,
-  ConfigurationTypeFieldEnum,
-} from "@dashboard/graphql";
+import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
 import { Card, CardContent, TextField } from "@material-ui/core";
@@ -45,9 +42,7 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
       />
       <CardContent>
         {data.configuration.map(field => {
-          const fieldData = fields.find(
-            configField => configField.name === field.name,
-          );
+          const fieldData = fields.find(configField => configField.name === field.name);
 
           return (
             <div className={classes.item} key={field.name}>
@@ -57,9 +52,7 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
                     name={field.name}
                     label={fieldData.label}
                     checked={
-                      typeof field.value !== "boolean"
-                        ? field.value === "true"
-                        : field.value
+                      typeof field.value !== "boolean" ? field.value === "true" : field.value
                     }
                     onChange={onChange}
                     disabled={disabled}
@@ -83,13 +76,10 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
                   helperText={fieldData.helpText}
                   label={fieldData.label}
                   name={field.name}
-                  multiline={
-                    fieldData.type === ConfigurationTypeFieldEnum.MULTILINE
-                  }
+                  multiline={fieldData.type === ConfigurationTypeFieldEnum.MULTILINE}
                   InputProps={{
                     rowsMax: 6,
-                    readOnly:
-                      fieldData.type === ConfigurationTypeFieldEnum.OUTPUT,
+                    readOnly: fieldData.type === ConfigurationTypeFieldEnum.OUTPUT,
                   }}
                   onFocus={event => {
                     if (fieldData.type === ConfigurationTypeFieldEnum.OUTPUT) {
@@ -108,5 +98,6 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
     </Card>
   );
 };
+
 PluginSettings.displayName = "PluginSettings";
 export default PluginSettings;

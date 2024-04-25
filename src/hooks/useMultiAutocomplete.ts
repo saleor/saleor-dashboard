@@ -9,12 +9,10 @@ function useMultiAutocomplete(initial: MultiAutocompleteChoiceType[] = []) {
     initial,
     (a, b) => a.value === b.value,
   );
-  const handleSelect = (
-    event: React.ChangeEvent<any>,
-    choices: MultiAutocompleteChoiceType[],
-  ) => {
+  const handleSelect = (event: React.ChangeEvent<any>, choices: MultiAutocompleteChoiceType[]) => {
     const value: string = event.target.value;
     const match = choices.find(choice => choice.value === value);
+
     toggle({
       label: maybe(() => match.label, value),
       value,

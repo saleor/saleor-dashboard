@@ -35,11 +35,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
       <CardTitle
         title={intl.formatMessage(taxesMessages.countryList)}
         toolbar={
-          <Button
-            onClick={onCountryAdd}
-            variant="secondary"
-            data-test-id="add-country-button"
-          >
+          <Button onClick={onCountryAdd} variant="secondary" data-test-id="add-country-button">
             <FormattedMessage {...taxesMessages.addCountryLabel} />
           </Button>
         }

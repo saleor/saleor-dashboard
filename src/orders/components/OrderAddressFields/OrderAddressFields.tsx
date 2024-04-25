@@ -45,10 +45,7 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
   orderShippingAddress,
   orderBillingAddress,
 }) => {
-  const addressFieldCommonProps: Omit<
-    OrderCustomerAddressesEditDialogProps,
-    "open" | "variant"
-  > = {
+  const addressFieldCommonProps: Omit<OrderCustomerAddressesEditDialogProps, "open" | "variant"> = {
     loading: customerAddressesLoading,
     confirmButtonState,
     countries,

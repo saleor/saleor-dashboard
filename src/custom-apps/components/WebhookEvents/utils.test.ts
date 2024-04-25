@@ -14,10 +14,6 @@ describe("getWebhookTypes", () => {
 
     expect(Object.keys(TestWebhookTypes)).toEqual(["DRAFT_ORDER", "PRODUCT"]);
     expect(TestWebhookTypes.DRAFT_ORDER).toEqual(["CREATED", "UPDATED"]);
-    expect(TestWebhookTypes.PRODUCT).toEqual([
-      "CREATED",
-      "UPDATED",
-      "VARIANT_UPDATED",
-    ]);
+    expect(TestWebhookTypes.PRODUCT).toEqual(["CREATED", "UPDATED", "VARIANT_UPDATED"]);
   });
 });

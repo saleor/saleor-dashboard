@@ -24,6 +24,7 @@ import { transactionRefundGridMessages } from "./messages";
 
 export const useOrderTransactionRefundStaticColumns = () => {
   const intl = useIntl();
+
   return [
     {
       id: "product",
@@ -52,9 +53,7 @@ export const useOrderTransactionRefundStaticColumns = () => {
     },
     {
       id: "reason",
-      title: intl.formatMessage(
-        transactionRefundGridMessages.reasonToRefundCell,
-      ),
+      title: intl.formatMessage(transactionRefundGridMessages.reasonToRefundCell),
       width: 250,
     },
   ];
@@ -78,9 +77,7 @@ export const createGetCellContent =
     columns: AvailableColumn[];
     linesToRefund: LineToRefund[];
     order: OrderDetailsGrantRefundFragment | null | undefined;
-    draftRefund:
-      | OrderDetailsGrantRefundFragment["grantedRefunds"][0]
-      | undefined;
+    draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = lines?.[row];
@@ -112,10 +109,12 @@ export const createGetCellContent =
         );
       case "qtyToRefund": {
         const line = linesToRefund?.find(q => q.row === row);
+
         return numberCell(line?.quantity ?? 0, { cursor: "pointer" });
       }
       case "reason": {
         const line = linesToRefund?.find(q => q.row === row);
+
         return textCell(line?.reason ?? "");
       }
       default:
@@ -144,6 +143,7 @@ export const useDatagridOpts = (
     },
     [updateListSettings],
   );
+
   return {
     datagrid,
     currentTheme,

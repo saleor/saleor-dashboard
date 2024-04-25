@@ -2,9 +2,7 @@ import { CataloguePredicateInput } from "@dashboard/graphql";
 
 import { Condition, isArrayOfOptions } from "../Condition";
 
-export function prepareCataloguePredicate(
-  conditions: Condition[],
-): CataloguePredicateInput {
+export function prepareCataloguePredicate(conditions: Condition[]): CataloguePredicateInput {
   const ruleConditions = conditions
     .map(condition => {
       if (!condition.id) {

@@ -23,9 +23,7 @@ export function isVariantSelected(
   variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],
   selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
 ): boolean {
-  return !!selectedVariantsToProductsMap.find(
-    selectedVariant => selectedVariant.id === variant.id,
-  );
+  return !!selectedVariantsToProductsMap.find(selectedVariant => selectedVariant.id === variant.id);
 }
 
 export const onProductAdd = (
@@ -39,18 +37,14 @@ export const onProductAdd = (
     ? setVariants(
         variants.filter(
           selectedVariant =>
-            !product.variants.find(
-              productVariant => productVariant.id === selectedVariant.id,
-            ),
+            !product.variants.find(productVariant => productVariant.id === selectedVariant.id),
         ),
       )
     : setVariants([
         ...variants,
         ...product.variants.filter(
           productVariant =>
-            !variants.find(
-              selectedVariant => selectedVariant.id === productVariant.id,
-            ),
+            !variants.find(selectedVariant => selectedVariant.id === productVariant.id),
         ),
       ]);
 
@@ -63,7 +57,5 @@ export const onVariantAdd = (
   setVariants: SetVariantsAction,
 ) =>
   selectedVariantsToProductsMap[productIndex][variantIndex]
-    ? setVariants(
-        variants.filter(selectedVariant => selectedVariant.id !== variant.id),
-      )
+    ? setVariants(variants.filter(selectedVariant => selectedVariant.id !== variant.id))
     : setVariants([...variants, variant]);

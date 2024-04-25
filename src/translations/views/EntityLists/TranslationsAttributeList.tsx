@@ -2,10 +2,7 @@
 import { useAttributeTranslationsQuery } from "@dashboard/graphql";
 import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
-import {
-  languageEntityUrl,
-  TranslatableEntities,
-} from "@dashboard/translations/urls";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 
@@ -19,7 +16,6 @@ const TranslationsAttributeList: React.FC<TranslationsEntityListProps> = ({
     displayLoader: true,
     variables,
   });
-
   const paginationValues = usePaginator({
     pageInfo: data?.translations?.pageInfo,
     paginationState: variables,
@@ -39,11 +35,7 @@ const TranslationsAttributeList: React.FC<TranslationsEntityListProps> = ({
             },
         )}
         getRowHref={id =>
-          languageEntityUrl(
-            variables.language,
-            TranslatableEntities.attributes,
-            id,
-          )
+          languageEntityUrl(variables.language, TranslatableEntities.attributes, id)
         }
       />
     </PaginatorContext.Provider>

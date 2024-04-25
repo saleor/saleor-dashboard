@@ -31,7 +31,6 @@ describe("Product update utils", () => {
         },
       ],
     } as ProductFragment;
-
     const submitData = {
       channels: {
         updateChannels: [
@@ -45,12 +44,10 @@ describe("Product update utils", () => {
         removeChannels: ["2"],
       },
     } as ProductUpdateSubmitData;
-
     const result = inferProductChannelsAfterUpdate(product, submitData);
 
     expect(result).toEqual(["1", "3", "4"]);
   });
-
   it("should infer product channels after update without data", () => {
     const product = {
       channelListings: [
@@ -71,17 +68,14 @@ describe("Product update utils", () => {
         },
       ],
     } as ProductFragment;
-
     const submitData = {
       channels: {},
     } as ProductUpdateSubmitData;
-
     const result = inferProductChannelsAfterUpdate(product, submitData);
 
     expect(result).toEqual(["1", "2", "3"]);
   });
 });
-
 describe("getCreateVariantInput", () => {
   test("should return input data base on datagrid change data", () => {
     // Arrange
@@ -130,8 +124,7 @@ describe("getCreateVariantInput", () => {
             kind: "number-cell",
             value: 3223,
           },
-          column:
-            "warehouse:V2FyZWhvdXNlOmQ0YzI0ODQxLTg2MDgtNGFiNC04MDkzLWUxNmQ4NWNlYjdkYQ==",
+          column: "warehouse:V2FyZWhvdXNlOmQ0YzI0ODQxLTg2MDgtNGFiNC04MDkzLWUxNmQ4NWNlYjdkYQ==",
           row: 1,
         },
         {
@@ -152,11 +145,7 @@ describe("getCreateVariantInput", () => {
       added: [1],
     };
     // Act
-    const createDataInput = getCreateVariantInput(
-      inputData,
-      1,
-      variantAttributes,
-    );
+    const createDataInput = getCreateVariantInput(inputData, 1, variantAttributes);
 
     // Assert
     expect(createDataInput).toEqual({
@@ -182,14 +171,12 @@ describe("getCreateVariantInput", () => {
       ],
       stocks: [
         {
-          warehouse:
-            "V2FyZWhvdXNlOmQ0YzI0ODQxLTg2MDgtNGFiNC04MDkzLWUxNmQ4NWNlYjdkYQ==",
+          warehouse: "V2FyZWhvdXNlOmQ0YzI0ODQxLTg2MDgtNGFiNC04MDkzLWUxNmQ4NWNlYjdkYQ==",
           quantity: 3223,
         },
       ],
     });
   });
-
   test("should return only sku and name", () => {
     // Arrange
     const inputData: DatagridChangeOpts = {
@@ -208,13 +195,8 @@ describe("getCreateVariantInput", () => {
       removed: [],
       added: [1],
     };
-
     // Act
-    const createDataInput = getCreateVariantInput(
-      inputData,
-      1,
-      variantAttributes,
-    );
+    const createDataInput = getCreateVariantInput(inputData, 1, variantAttributes);
 
     // Assert
     expect(createDataInput).toEqual({
@@ -226,13 +208,10 @@ describe("getCreateVariantInput", () => {
     });
   });
 });
-
 describe("getBulkVariantUpdateInputs", () => {
   test("should return input data base on datagrid change data for multiple variants", () => {
     // Arrange
-    const variants: ProductFragment["variants"] =
-      product("http://google.com").variants;
-
+    const variants: ProductFragment["variants"] = product("http://google.com").variants;
     const inputData: DatagridChangeOpts = {
       updates: [
         {
@@ -293,7 +272,6 @@ describe("getBulkVariantUpdateInputs", () => {
       removed: [],
       added: [],
     };
-
     // Act
     const bulkVariantUpdateInput = getBulkVariantUpdateInputs(
       variants,
@@ -360,8 +338,7 @@ describe("getBulkVariantUpdateInputs", () => {
   });
   test("should return input data base on datagrid change data for simultaneous bulk operations", () => {
     // Arrange
-    const variants: ProductFragment["variants"] =
-      product("http://google.com").variants;
+    const variants: ProductFragment["variants"] = product("http://google.com").variants;
     const inputData: DatagridChangeOpts = {
       updates: [
         {
@@ -404,7 +381,6 @@ describe("getBulkVariantUpdateInputs", () => {
       removed: [1, 3],
       added: [3],
     };
-
     // Act
     const bulkVariantUpdateInput = getBulkVariantUpdateInputs(
       variants,

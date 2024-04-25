@@ -10,14 +10,12 @@ jest.mock("react-intl", () => ({
   })),
   defineMessages: jest.fn(x => x),
 }));
-
 jest.mock("@saleor/macaw-ui", () => ({
   useStyles: jest.fn(() => () => ({})),
   makeStyles: jest.fn(() => () => ({})),
   // eslint-disable-next-line react/display-name
   DialogHeader: jest.fn(() => () => <></>),
 }));
-
 describe("ExitFormDialog", () => {
   it("closes when ignore changes is clicked", async () => {
     // Arrange
@@ -27,11 +25,10 @@ describe("ExitFormDialog", () => {
       isOpen: true,
     };
     const user = userEvent.setup();
-
     // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
-    await user.click(getByTestId("ignore-changes"));
 
+    await user.click(getByTestId("ignore-changes"));
     // Assert
     expect(props.onLeave).toHaveBeenCalled();
   });
@@ -43,11 +40,10 @@ describe("ExitFormDialog", () => {
       isOpen: true,
     };
     const user = userEvent.setup();
-
     // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
-    await user.click(getByTestId("keep-editing"));
 
+    await user.click(getByTestId("keep-editing"));
     // Assert
     expect(props.onClose).toHaveBeenCalled();
   });

@@ -23,6 +23,4 @@ export const searchPages = gql`
   }
 `;
 
-export default makeTopLevelSearch<SearchPagesQuery, SearchPagesQueryVariables>(
-  SearchPagesDocument,
-);
+export default makeTopLevelSearch<SearchPagesQuery, SearchPagesQueryVariables>(SearchPagesDocument);

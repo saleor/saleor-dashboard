@@ -20,9 +20,7 @@ import { orderListStaticColumnAdapter, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
 import { canBeSorted, getColumnNameAndId, getOrdersRowsLength } from "./utils";
 
-interface OrderListDatagridProps
-  extends ListProps,
-    SortPage<OrderListUrlSortField> {
+interface OrderListDatagridProps extends ListProps, SortPage<OrderListUrlSortField> {
   orders: RelayToFlat<OrderListQuery["orders"]>;
   onRowClick?: (id: string) => void;
   rowAnchor?: (id: string) => string;
@@ -43,32 +41,25 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
   const ordersLength = getOrdersRowsLength(orders, disabled);
-
   const handleColumnChange = useCallback(
     picked => {
       onUpdateListSettings("columns", picked.filter(Boolean));
     },
     [onUpdateListSettings],
   );
-
   const emptyColumn = useEmptyColumn();
   const memoizedStaticColumns = useMemo(
     () => orderListStaticColumnAdapter(emptyColumn, intl, sort),
     [emptyColumn, intl, sort],
   );
-
-  const { handlers, staticColumns, visibleColumns, selectedColumns } =
-    useColumns({
-      staticColumns: memoizedStaticColumns,
-      selectedColumns: settings?.columns ?? [],
-      onSave: handleColumnChange,
-    });
-
+  const { handlers, staticColumns, visibleColumns, selectedColumns } = useColumns({
+    staticColumns: memoizedStaticColumns,
+    selectedColumns: settings?.columns ?? [],
+    onSave: handleColumnChange,
+  });
   const handleHeaderClick = useCallback(
     (col: number) => {
-      const { columnName, columnId } = getColumnNameAndId(
-        visibleColumns[col].id,
-      );
+      const { columnName, columnId } = getColumnNameAndId(visibleColumns[col].id);
 
       if (canBeSorted(columnName)) {
         onSort(columnName, columnId);
@@ -76,7 +67,6 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
     },
     [visibleColumns, onSort],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       if (!onRowClick) {
@@ -84,22 +74,23 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
       }
 
       const rowData = orders[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, orders],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => {
       if (!rowAnchor) {
         return;
       }
+
       const rowData = orders[row];
+
       return rowAnchor(rowData.id);
     },
     [rowAnchor, orders],
   );
-
   const getCellContent = useGetCellContent({
     columns: visibleColumns,
     orders,

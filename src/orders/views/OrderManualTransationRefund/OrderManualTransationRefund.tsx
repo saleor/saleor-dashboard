@@ -6,9 +6,7 @@ interface OrderManualTransationRefundProps {
   orderId: string;
 }
 
-const OrderManualTransationRefund = ({
-  orderId,
-}: OrderManualTransationRefundProps) => {
+const OrderManualTransationRefund = ({ orderId }: OrderManualTransationRefundProps) => {
   const { data, loading } = useOrderTransationsDataQuery({
     displayLoader: true,
     variables: {

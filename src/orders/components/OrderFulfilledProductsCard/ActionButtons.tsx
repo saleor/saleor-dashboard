@@ -26,7 +26,6 @@ const statusesToShow = [
   FulfillmentStatus.RETURNED,
   FulfillmentStatus.WAITING_FOR_APPROVAL,
 ];
-
 const ActionButtons: React.FC<AcionButtonsProps> = ({
   orderId,
   status,
@@ -38,7 +37,6 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   onApprove,
 }) => {
   const classes = useStyles();
-
   const hasTrackingNumber = !!trackingNumber;
 
   if (!statusesToShow.includes(status)) {
@@ -74,21 +72,13 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
 
   return hasTrackingNumber ? (
     <CardActions className={classes.actions}>
-      <Button
-        data-test-id="edit-tracking-button"
-        variant="primary"
-        onClick={onTrackingCodeAdd}
-      >
+      <Button data-test-id="edit-tracking-button" variant="primary" onClick={onTrackingCodeAdd}>
         <FormattedMessage {...actionButtonsMessages.editTracking} />
       </Button>
     </CardActions>
   ) : (
     <CardActions className={classes.actions}>
-      <Button
-        variant="primary"
-        onClick={onTrackingCodeAdd}
-        data-test-id="add-tracking-button"
-      >
+      <Button variant="primary" onClick={onTrackingCodeAdd} data-test-id="add-tracking-button">
         <FormattedMessage {...actionButtonsMessages.addTracking} />
       </Button>
     </CardActions>

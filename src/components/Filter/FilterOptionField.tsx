@@ -21,10 +21,11 @@ const useStyles = makeStyles(
   }),
   { name: "FilterOptionField" },
 );
-
-const FilterOptionField: React.FC<
-  FilterFieldBaseProps<string, FieldType.options>
-> = ({ filter, onFilterPropertyChange, ...rest }) => {
+const FilterOptionField: React.FC<FilterFieldBaseProps<string, FieldType.options>> = ({
+  filter,
+  onFilterPropertyChange,
+  ...rest
+}) => {
   const classes = useStyles({});
   const handleSelect = (value: string) =>
     onFilterPropertyChange({
@@ -32,9 +33,7 @@ const FilterOptionField: React.FC<
         name: filter.name,
         update: {
           active: true,
-          value: filter.multiple
-            ? toggle(value, filter.value, (a, b) => a === b)
-            : [value],
+          value: filter.multiple ? toggle(value, filter.value, (a, b) => a === b) : [value],
         },
       },
       type: "set-property",

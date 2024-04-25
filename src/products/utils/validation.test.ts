@@ -5,7 +5,6 @@ describe("validateProductCreateData", () => {
   it("returns errors when there is no productType or name", () => {
     // Arrange
     const data = { productType: "" } as unknown as ProductCreateData;
-
     // Act
     const errors = validateProductCreateData(data);
 
@@ -27,7 +26,6 @@ describe("validateProductCreateData", () => {
       },
     ]);
   });
-
   it("returns errors when there is no prices for channels in simple product", () => {
     // Arrange
     const data = {
@@ -40,7 +38,6 @@ describe("validateProductCreateData", () => {
         { id: "chann-2", price: "" },
       ],
     } as unknown as ProductCreateData;
-
     // Act
     const errors = validateProductCreateData(data);
 
@@ -62,7 +59,6 @@ describe("validateProductCreateData", () => {
       },
     ]);
   });
-
   it("returns errors when there is no prices for channels in product with variants", () => {
     // Arrange
     const data = {
@@ -75,7 +71,6 @@ describe("validateProductCreateData", () => {
         { id: "chann-2", price: "" },
       ],
     } as unknown as ProductCreateData;
-
     // Act
     const errors = validateProductCreateData(data);
 

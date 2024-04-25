@@ -52,7 +52,6 @@ const useStyles = makeStyles(
   }),
   { name: "TableHeader" },
 );
-
 const TableHeader = () => {
   const classes = useStyles({});
 
@@ -68,18 +67,10 @@ const TableHeader = () => {
       <TableHead>
         <TableRowLink>
           <TableCell className={classes.colName}>
-            <FormattedMessage
-              id="WE8IFE"
-              defaultMessage="Product"
-              description="product name"
-            />
+            <FormattedMessage id="WE8IFE" defaultMessage="Product" description="product name" />
           </TableCell>
           <TableCell className={classes.colSku}>
-            <FormattedMessage
-              id="8J81ri"
-              defaultMessage="SKU"
-              description="ordered product sku"
-            />
+            <FormattedMessage id="8J81ri" defaultMessage="SKU" description="ordered product sku" />
           </TableCell>
           <TableCell className={classes.colQuantity}>
             <FormattedMessage
@@ -89,11 +80,7 @@ const TableHeader = () => {
             />
           </TableCell>
           <TableCell className={classes.colPrice}>
-            <FormattedMessage
-              id="b810WJ"
-              defaultMessage="Price"
-              description="product price"
-            />
+            <FormattedMessage id="b810WJ" defaultMessage="Price" description="product price" />
           </TableCell>
           <TableCell className={classes.colTotal}>
             <FormattedMessage

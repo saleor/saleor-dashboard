@@ -2,10 +2,7 @@
 import { useShippingMethodTranslationsQuery } from "@dashboard/graphql";
 import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
-import {
-  languageEntityUrl,
-  TranslatableEntities,
-} from "@dashboard/translations/urls";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 
@@ -20,7 +17,6 @@ const TranslationsShippingMethodList: React.FC<TranslationsEntityListProps> = ({
     displayLoader: true,
     variables,
   });
-
   const paginationValues = usePaginator({
     pageInfo: data?.translations?.pageInfo,
     paginationState: variables,
@@ -35,10 +31,7 @@ const TranslationsShippingMethodList: React.FC<TranslationsEntityListProps> = ({
           node =>
             node.__typename === "ShippingMethodTranslatableContent" && {
               completion: {
-                current: sumCompleted([
-                  node.translation?.name,
-                  node.translation?.description,
-                ]),
+                current: sumCompleted([node.translation?.name, node.translation?.description]),
                 max: 2,
               },
               id: node?.shippingMethod.id,
@@ -46,11 +39,7 @@ const TranslationsShippingMethodList: React.FC<TranslationsEntityListProps> = ({
             },
         )}
         getRowHref={id =>
-          languageEntityUrl(
-            variables.language,
-            TranslatableEntities.shippingMethods,
-            id,
-          )
+          languageEntityUrl(variables.language, TranslatableEntities.shippingMethods, id)
         }
       />
     </PaginatorContext.Provider>

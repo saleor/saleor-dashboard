@@ -14,33 +14,21 @@ import { InitialAPIResponse } from "./types";
 
 const isChannelQuery = (
   query: InitialAPIResponse,
-): query is ApolloQueryResult<_GetChannelOperandsQuery> =>
-  "channels" in query.data;
-
+): query is ApolloQueryResult<_GetChannelOperandsQuery> => "channels" in query.data;
 const isCollectionQuery = (
   query: InitialAPIResponse,
-): query is ApolloQueryResult<_SearchCollectionsOperandsQuery> =>
-  "collections" in query.data;
-
+): query is ApolloQueryResult<_SearchCollectionsOperandsQuery> => "collections" in query.data;
 const isCategoryQuery = (
   query: InitialAPIResponse,
-): query is ApolloQueryResult<_SearchCategoriesOperandsQuery> =>
-  "categories" in query.data;
-
+): query is ApolloQueryResult<_SearchCategoriesOperandsQuery> => "categories" in query.data;
 const isProductTypeQuery = (
   query: InitialAPIResponse,
-): query is ApolloQueryResult<_SearchProductTypesOperandsQuery> =>
-  "productTypes" in query.data;
-
+): query is ApolloQueryResult<_SearchProductTypesOperandsQuery> => "productTypes" in query.data;
 const isAttributeQuery = (
   query: InitialAPIResponse,
-): query is ApolloQueryResult<_SearchAttributeOperandsQuery> =>
-  "attributes" in query.data;
+): query is ApolloQueryResult<_SearchAttributeOperandsQuery> => "attributes" in query.data;
 
-export const createInitialStateFromData = (
-  data: InitialAPIResponse[],
-  channel: string[],
-) =>
+export const createInitialStateFromData = (data: InitialAPIResponse[], channel: string[]) =>
   data.reduce<InitialState>(
     (acc, query) => {
       if (isChannelQuery(query)) {
@@ -55,9 +43,7 @@ export const createInitialStateFromData = (
       if (isCollectionQuery(query)) {
         return {
           ...acc,
-          collection: createOptionsFromAPI(
-            query.data?.collections?.edges ?? [],
-          ),
+          collection: createOptionsFromAPI(query.data?.collections?.edges ?? []),
         };
       }
 
@@ -71,9 +57,7 @@ export const createInitialStateFromData = (
       if (isProductTypeQuery(query)) {
         return {
           ...acc,
-          productType: createOptionsFromAPI(
-            query.data?.productTypes?.edges ?? [],
-          ),
+          productType: createOptionsFromAPI(query.data?.productTypes?.edges ?? []),
         };
       }
 

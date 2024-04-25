@@ -59,10 +59,7 @@ export interface FileAttributeInputData {
   attributeId: string;
   file: File;
 }
-export type FileAttributeInput = FormsetAtomicData<
-  FileAttributeInputData,
-  string[]
->;
+export type FileAttributeInput = FormsetAtomicData<FileAttributeInputData, string[]>;
 
 export interface FileAttributesSubmitData {
   fileAttributes: FileAttributeInput[];
@@ -83,21 +80,13 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
 
 export interface ProductUpdateHandlers
   extends Record<
-      | "changeMetadata"
-      | "selectCategory"
-      | "selectCollection"
-      | "selectTaxClass",
+      "changeMetadata" | "selectCategory" | "selectCollection" | "selectTaxClass",
       FormChange
     >,
-    Record<
-      "selectAttribute" | "selectAttributeMultiple",
-      FormsetChange<string>
-    > {
+    Record<"selectAttribute" | "selectAttributeMultiple", FormsetChange<string>> {
   changeChannels: (id: string, data: ChannelOpts) => void;
   selectAttributeReference: FormsetChange<string[]>;
-  selectAttributeReferenceMetadata: FormsetMetadataChange<
-    AttributeValuesMetadata[]
-  >;
+  selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;
@@ -107,10 +96,7 @@ export interface ProductUpdateHandlers
 }
 
 export interface UseProductUpdateFormOutput
-  extends CommonUseFormResultWithHandlers<
-      ProductUpdateData,
-      ProductUpdateHandlers
-    >,
+  extends CommonUseFormResultWithHandlers<ProductUpdateData, ProductUpdateHandlers>,
     RichTextProps {
   datagrid: UseDatagridChangeState;
   formErrors: FormErrors<ProductUpdateSubmitData>;
@@ -122,14 +108,9 @@ export type UseProductUpdateFormRenderProps = Omit<
 >;
 
 export interface UseProductUpdateFormOpts
-  extends Record<
-    "categories" | "collections" | "taxClasses",
-    SingleAutocompleteChoiceType[]
-  > {
+  extends Record<"categories" | "collections" | "taxClasses", SingleAutocompleteChoiceType[]> {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCollections: React.Dispatch<
-    React.SetStateAction<MultiAutocompleteChoiceType[]>
-  >;
+  setSelectedCollections: React.Dispatch<React.SetStateAction<MultiAutocompleteChoiceType[]>>;
   setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
   selectedCollections: MultiAutocompleteChoiceType[];
   hasVariants: boolean;

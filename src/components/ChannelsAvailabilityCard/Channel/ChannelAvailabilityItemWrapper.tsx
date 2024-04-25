@@ -12,9 +12,11 @@ export interface ChannelContentWrapperProps {
   messages: Messages;
 }
 
-export const ChannelAvailabilityItemWrapper: React.FC<
-  ChannelContentWrapperProps
-> = ({ data: { name }, messages, children }) => (
+export const ChannelAvailabilityItemWrapper: React.FC<ChannelContentWrapperProps> = ({
+  data: { name },
+  messages,
+  children,
+}) => (
   <Accordion data-test-id="channel-availability-item">
     <Accordion.Item value="channel-availability-item" gap={9}>
       <Accordion.Trigger>

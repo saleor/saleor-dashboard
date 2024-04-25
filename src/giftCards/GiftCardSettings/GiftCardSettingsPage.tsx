@@ -26,24 +26,17 @@ import { getGiftCardSettingsInputData } from "./utils";
 
 const GiftCardSettingsPage: React.FC = () => {
   const intl = useIntl();
-
   const navigate = useNavigator();
-
   const { data, loading } = useGiftCardSettingsQuery();
-
   const settingsData = data?.giftCardSettings;
-
   const initialData: GiftCardSettingsFormData = {
-    expiryPeriodActive:
-      settingsData?.expiryType === GiftCardSettingsExpiryTypeEnum.EXPIRY_PERIOD,
-    expiryPeriodType:
-      settingsData?.expiryPeriod?.type || TimePeriodTypeEnum.YEAR,
+    expiryPeriodActive: settingsData?.expiryType === GiftCardSettingsExpiryTypeEnum.EXPIRY_PERIOD,
+    expiryPeriodType: settingsData?.expiryPeriod?.type || TimePeriodTypeEnum.YEAR,
     expiryPeriodAmount: settingsData?.expiryPeriod?.amount || 1,
   };
-
-  const [updateGiftCardSettings, updateGiftCardSettingsOpts] =
-    useGiftCardSettingsUpdateMutation({});
-
+  const [updateGiftCardSettings, updateGiftCardSettingsOpts] = useGiftCardSettingsUpdateMutation(
+    {},
+  );
   const handleSubmit = (formData: GiftCardSettingsFormData) => {
     updateGiftCardSettings({
       variables: {
@@ -51,20 +44,13 @@ const GiftCardSettingsPage: React.FC = () => {
       },
     });
   };
-
   const formLoading = loading || updateGiftCardSettingsOpts?.loading;
-
-  const apiErrors =
-    updateGiftCardSettingsOpts?.data?.giftCardSettingsUpdate?.errors;
-
+  const apiErrors = updateGiftCardSettingsOpts?.data?.giftCardSettingsUpdate?.errors;
   const formErrors = getFormErrors(["expiryPeriod"], apiErrors);
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
-      <TopNav
-        href={giftCardsListPath}
-        title={intl.formatMessage(messages.title)}
-      />
+      <TopNav href={giftCardsListPath} title={intl.formatMessage(messages.title)} />
       <DetailPageLayout.Content>
         <Form initial={initialData} onSubmit={handleSubmit}>
           {({ data: formData, submit, change }) => (
@@ -73,9 +59,7 @@ const GiftCardSettingsPage: React.FC = () => {
                 <Grid variant="inverted">
                   <div>
                     <Typography>
-                      <FormattedMessage
-                        {...expirySettingsMessages.expiryDateSectionDescription}
-                      />
+                      <FormattedMessage {...expirySettingsMessages.expiryDateSectionDescription} />
                     </Typography>
                   </div>
                   <GiftCardExpirySettingsCard

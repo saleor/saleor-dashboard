@@ -27,21 +27,15 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
 
   return (
     <ListPageLayout>
-      <TopNav
-        href={configurationMenuUrl}
-        title={intl.formatMessage(sectionNames.navigation)}
-      >
+      <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.navigation)}>
         <Button variant="primary" href={addUrl} data-test-id="add-menu">
-          <FormattedMessage
-            id="JXRYQg"
-            defaultMessage="Create Menu"
-            description="button"
-          />
+          <FormattedMessage id="JXRYQg" defaultMessage="Create Menu" description="button" />
         </Button>
       </TopNav>
       <MenuList {...listProps} />
     </ListPageLayout>
   );
 };
+
 MenuListPage.displayName = "MenuListPage";
 export default MenuListPage;

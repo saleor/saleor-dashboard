@@ -31,17 +31,9 @@ export interface CustomerCreateAddressProps {
 }
 
 const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
-  const {
-    countries,
-    countryDisplayName,
-    data,
-    disabled,
-    errors,
-    onChange,
-    onCountryChange,
-  } = props;
+  const { countries, countryDisplayName, data, disabled, errors, onChange, onCountryChange } =
+    props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
@@ -55,10 +47,7 @@ const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
       />
       <CardContent className={classes.overflow}>
         <Typography>
-          <FormattedMessage
-            id="wNQzS/"
-            defaultMessage="The primary address of this customer."
-          />
+          <FormattedMessage id="wNQzS/" defaultMessage="The primary address of this customer." />
         </Typography>
         <FormSpacer />
         <AddressEdit
@@ -74,5 +63,6 @@ const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
     </Card>
   );
 };
+
 CustomerCreateAddress.displayName = "CustomerCreateAddress";
 export default CustomerCreateAddress;

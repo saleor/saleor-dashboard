@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
-import {
-  getErrorMessage,
-  getSingleDisplayValue,
-} from "@dashboard/components/Attributes/utils";
+import { getErrorMessage, getSingleDisplayValue } from "@dashboard/components/Attributes/utils";
 import { getBySlug } from "@dashboard/misc";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
@@ -34,7 +31,6 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
 }) => {
   const intl = useIntl();
   const value = attribute.data.values.find(getBySlug(attribute.value[0]));
-
   const options = useMemo(
     () =>
       attributeValues.map(({ file, value, slug, name }) => ({

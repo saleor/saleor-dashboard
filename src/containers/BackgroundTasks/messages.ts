@@ -7,8 +7,7 @@ export default defineMessages({
   },
   exportFinishedText: {
     id: "CJEIRC",
-    defaultMessage:
-      "Product export has finished and was sent to your email address.",
+    defaultMessage: "Product export has finished and was sent to your email address.",
   },
   exportFinishedTitle: {
     id: "JTcz2G",

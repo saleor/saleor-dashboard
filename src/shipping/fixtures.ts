@@ -1219,8 +1219,7 @@ export const shippingZones: ShippingZoneFragment[] = [
       {
         __typename: "CountryDisplay",
         code: "SH",
-        country:
-          "Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha",
+        country: "Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha",
       },
       {
         __typename: "CountryDisplay",
@@ -1891,56 +1890,55 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
   ],
 };
 
-export const products: RelayToFlat<NonNullable<SearchProductsQuery["search"]>> =
-  [
-    {
-      __typename: "Product",
-      id: "1",
-      name: "Apple Juice",
-      thumbnail: {
-        __typename: "Image",
-        url: "",
-      },
-      collections: [{ __typename: "Collection", id: "Q29sbGVjdGlvbjo0" }],
-      variants: [
-        {
-          __typename: "ProductVariant",
-          id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
-          name: "1l",
-          sku: "43226647",
-          channelListings: [
-            {
-              __typename: "ProductVariantChannelListing",
-              channel: {
-                __typename: "Channel",
-                id: "Q2hhbm5lbDox",
-                isActive: true,
-                name: "Channel-USD",
-                currencyCode: "USD",
-              },
-              price: {
-                __typename: "Money",
-                amount: 5,
-                currency: "USD",
-              },
-            },
-            {
-              __typename: "ProductVariantChannelListing",
-              channel: {
-                __typename: "Channel",
-                id: "Q2hhbm5lbDoy",
-                isActive: true,
-                name: "Channel-PLN",
-                currencyCode: "PLN",
-              },
-              price: {
-                __typename: "Money",
-                amount: 20,
-                currency: "PLN",
-              },
-            },
-          ],
-        },
-      ],
+export const products: RelayToFlat<NonNullable<SearchProductsQuery["search"]>> = [
+  {
+    __typename: "Product",
+    id: "1",
+    name: "Apple Juice",
+    thumbnail: {
+      __typename: "Image",
+      url: "",
     },
-  ];
+    collections: [{ __typename: "Collection", id: "Q29sbGVjdGlvbjo0" }],
+    variants: [
+      {
+        __typename: "ProductVariant",
+        id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
+        name: "1l",
+        sku: "43226647",
+        channelListings: [
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              id: "Q2hhbm5lbDox",
+              isActive: true,
+              name: "Channel-USD",
+              currencyCode: "USD",
+            },
+            price: {
+              __typename: "Money",
+              amount: 5,
+              currency: "USD",
+            },
+          },
+          {
+            __typename: "ProductVariantChannelListing",
+            channel: {
+              __typename: "Channel",
+              id: "Q2hhbm5lbDoy",
+              isActive: true,
+              name: "Channel-PLN",
+              currencyCode: "PLN",
+            },
+            price: {
+              __typename: "Money",
+              amount: 20,
+              currency: "PLN",
+            },
+          },
+        ],
+      },
+    ],
+  },
+];

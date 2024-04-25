@@ -1,10 +1,7 @@
 import AddressEdit from "@dashboard/components/AddressEdit";
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import {
   AccountErrorFragment,
@@ -18,12 +15,7 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -49,7 +41,6 @@ const useStyles = makeStyles(
   },
   { name: "CustomerAddressDialog" },
 );
-
 const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
   address,
   confirmButtonState,
@@ -64,13 +55,8 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
     address?.country.country || "",
   );
-  const { errors: validationErrors, submit: handleSubmit } =
-    useAddressValidation(onConfirm);
-  const dialogErrors = useModalDialogErrors(
-    [...errors, ...validationErrors],
-    open,
-  );
-
+  const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onConfirm);
+  const dialogErrors = useModalDialogErrors([...errors, ...validationErrors], open);
   const initialForm: AddressTypeInput = {
     city: address?.city || "",
     cityArea: address?.cityArea || "",
@@ -84,7 +70,6 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
     streetAddress1: address?.streetAddress1 || "",
     streetAddress2: address?.streetAddress2 || "",
   };
-
   const countryChoices = mapCountriesToChoices(countries || []);
 
   return (
@@ -108,7 +93,6 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
             setCountryDisplayName,
             countryChoices,
           );
-
           const handleCountrySelect = createCountryHandler(countrySelect, set);
 
           return (
@@ -155,5 +139,6 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
     </Dialog>
   );
 };
+
 CustomerAddressDialog.displayName = "CustomerAddressDialog";
 export default CustomerAddressDialog;

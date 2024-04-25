@@ -48,11 +48,7 @@ const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
         }
       />
       <span className={classes.andLabel}>
-        <FormattedMessage
-          id="34F7Jk"
-          defaultMessage="and"
-          description="filter range separator"
-        />
+        <FormattedMessage id="34F7Jk" defaultMessage="and" description="filter range separator" />
       </span>
       <TextField
         data-test-id={filterTestingContext + filter.name}
@@ -82,5 +78,6 @@ const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
     </>
   );
 };
+
 FilterRangeField.displayName = "FilterRangeField";
 export default FilterRangeField;

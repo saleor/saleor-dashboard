@@ -15,7 +15,6 @@ jest.mock("react-intl", () => ({
   })),
   defineMessages: jest.fn(x => x),
 }));
-
 describe("DryRun", () => {
   it("Dialog is available on the webhook page", async () => {
     // Arrange
@@ -35,7 +34,6 @@ describe("DryRun", () => {
         </ThemeProvider>
       </MockedProvider>,
     );
-
     // Assert
     expect(screen.queryByTestId("dry-run")).toBeInTheDocument();
   });

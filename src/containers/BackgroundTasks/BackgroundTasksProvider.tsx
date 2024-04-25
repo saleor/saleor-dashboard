@@ -7,12 +7,7 @@ import { IntlShape, useIntl } from "react-intl";
 
 import BackgroundTasksContext from "./context";
 import { checkExportFileStatus, checkOrderInvoicesStatus } from "./queries";
-import {
-  handleTask,
-  queueCustom,
-  queueExport,
-  queueInvoiceGenerate,
-} from "./tasks";
+import { handleTask, queueCustom, queueExport, queueInvoiceGenerate } from "./tasks";
 import { QueuedTask, Task, TaskData, TaskStatus } from "./types";
 
 export const backgroundTasksRefreshTime = 15 * 1000;
@@ -34,9 +29,8 @@ export function useBackgroundTasks(
               const status = await handleTask(task);
 
               if (status !== TaskStatus.PENDING) {
-                const taskIndex = tasks.current.findIndex(
-                  t => t.id === task.id,
-                );
+                const taskIndex = tasks.current.findIndex(t => t.id === task.id);
+
                 tasks.current[taskIndex].status = status;
               }
             }
@@ -56,6 +50,7 @@ export function useBackgroundTasks(
 
   function queue(type: Task, data?: TaskData) {
     idCounter.current += 1;
+
     switch (type) {
       case Task.CUSTOM:
         queueCustom(idCounter.current, tasks, data);

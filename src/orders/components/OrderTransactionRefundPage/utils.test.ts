@@ -3,10 +3,7 @@ import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 import { useForm } from "react-hook-form";
 
-import {
-  LineToRefund,
-  OrderTransactionRefundPageFormData,
-} from "./OrderTransactionRefundPage";
+import { LineToRefund, OrderTransactionRefundPageFormData } from "./OrderTransactionRefundPage";
 import {
   canRefundShipping,
   createSetMaxQty,

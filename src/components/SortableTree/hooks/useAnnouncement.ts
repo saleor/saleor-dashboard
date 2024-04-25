@@ -45,13 +45,10 @@ export const useAnnouncement = <T extends DataTypePlaceholder>({
         }
       }
 
-      const clonedItems: Array<FlattenedItem<T>> = JSON.parse(
-        JSON.stringify(flattenTree(items)),
-      );
+      const clonedItems: Array<FlattenedItem<T>> = JSON.parse(JSON.stringify(flattenTree(items)));
       const overIndex = clonedItems.findIndex(({ id }) => id === overId);
       const activeIndex = clonedItems.findIndex(({ id }) => id === activeId);
       const sortedItems = arrayMove(clonedItems, activeIndex, overIndex);
-
       const previousItem = sortedItems[overIndex - 1];
 
       let announcement;
@@ -60,15 +57,13 @@ export const useAnnouncement = <T extends DataTypePlaceholder>({
 
       if (!previousItem) {
         const nextItem = sortedItems[overIndex + 1];
+
         announcement = `${activeId} was ${movedVerb} before ${nextItem.id}.`;
       } else if (projected.depth > previousItem.depth) {
         announcement = `${activeId} was ${nestedVerb} under ${previousItem.id}.`;
       } else {
-        const previousSibling = findPreviousSibling(
-          projected,
-          previousItem,
-          sortedItems,
-        );
+        const previousSibling = findPreviousSibling(projected, previousItem, sortedItems);
+
         if (previousSibling) {
           announcement = `${activeId} was ${movedVerb} after ${previousSibling.id}.`;
         }
@@ -105,9 +100,12 @@ function findPreviousSibling<T extends DataTypePlaceholder>(
   sortedItems: Array<FlattenedItem<T>>,
 ): FlattenedItem<T> | undefined {
   let previousSibling: FlattenedItem<T> | undefined = previousItem;
+
   while (previousSibling && projected.depth < previousSibling.depth) {
     const parentId: UniqueIdentifier | null = previousSibling.parentId;
+
     previousSibling = sortedItems.find(({ id }) => id === parentId);
   }
+
   return previousSibling;
 }

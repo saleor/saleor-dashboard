@@ -12,11 +12,9 @@ interface ToggleButtonProps {
 export const ToggleButton = ({ isEnabled, flagSlug }: ToggleButtonProps) => {
   const { toggleFlag } = usePersistence();
   const [loading, setLoading] = useState(false);
-
   const handleToggleClick = async () => {
     setLoading(true);
     await toggleFlag(flagSlug);
-
     window.location.reload();
   };
 

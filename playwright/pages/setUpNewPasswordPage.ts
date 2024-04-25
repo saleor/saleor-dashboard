@@ -20,16 +20,18 @@ export class SetUpNewPasswordPage {
   async typePassword(password: string) {
     await this.passwordInput.fill(password);
   }
+
   async typeConfirmedPassword(password: string) {
     await this.confirmPasswordInput.fill(password);
   }
+
   async clickSetNewPasswordButton() {
     await this.setNewPasswordButton.click();
   }
 
   async gotoUserResetPasswordPage(userEmail: string) {
-    const resetPasswordPageUrl =
-      await this.mailpitService.generateResetPasswordUrl(userEmail);
+    const resetPasswordPageUrl = await this.mailpitService.generateResetPasswordUrl(userEmail);
+
     await this.page.goto(resetPasswordPageUrl);
   }
 }

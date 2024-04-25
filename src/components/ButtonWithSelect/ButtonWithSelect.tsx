@@ -41,7 +41,6 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const classes = useStyles();
-
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
     onClick: (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void,
@@ -49,16 +48,11 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
     onClick(event);
     setOpen(false);
   };
-
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
-
   const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
+    if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
       return;
     }
 

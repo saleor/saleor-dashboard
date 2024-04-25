@@ -1,7 +1,4 @@
-import {
-  WebhookEventTypeAsyncEnum,
-  WebhookEventTypeSyncEnum,
-} from "@dashboard/graphql";
+import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 
 type Actions = string[];
 
@@ -11,14 +8,13 @@ export const getWebhookTypes = (webhookEvents: string[]) => {
   return webhookEvents.sort().reduce<Record<string, Actions>>((acc, key) => {
     const keywords = key.split("_");
     const multiKeyword = keywords.slice(0, 2).join("_");
-
     const [keyword, sliceSize] = multiWords.includes(multiKeyword)
       ? [multiKeyword, 2]
       : [keywords[0], 1];
-
     const event = keywords.slice(sliceSize).join("_");
     const events = acc[keyword] || [];
-    events.push(!!event.length ? event : multiKeyword);
+
+    events.push(event.length ? event : multiKeyword);
     acc[keyword] = events;
 
     return acc;
@@ -42,5 +38,6 @@ export const getEventName = (object: string, event: string) => {
   if (object === event) {
     return object.toUpperCase() as WebhookEventTypeSyncEnum;
   }
+
   return [object, event].join("_").toUpperCase() as WebhookEventTypeSyncEnum;
 };

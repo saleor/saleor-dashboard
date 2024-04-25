@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import useForm, {
-  SubmitPromise,
-  UseFormResult,
-} from "@dashboard/hooks/useForm";
+import useForm, { SubmitPromise, UseFormResult } from "@dashboard/hooks/useForm";
 import React from "react";
 
 import { FormId } from "./types";
@@ -41,10 +38,7 @@ function Form<TData, Terrors>({
     mergeData,
   });
 
-  function handleSubmit(
-    event?: React.FormEvent<HTMLFormElement>,
-    cb?: () => void,
-  ) {
+  function handleSubmit(event?: React.FormEvent<HTMLFormElement>, cb?: () => void) {
     const { reset, submit } = renderProps;
 
     if (event) {

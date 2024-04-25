@@ -18,12 +18,8 @@ const prepareChoices = (values: ChoiceValue[]): AreaChoices[] =>
     value: v.verbose,
     raw: v.raw,
   }));
-
 const selectRules = (data: AddressValidationRulesQuery) =>
-  data
-    ? data.addressValidationRules
-    : { countryAreaChoices: [], allowedFields: [] };
-
+  data ? data.addressValidationRules : { countryAreaChoices: [], allowedFields: [] };
 const useValidationRules = (country?: string) => {
   const countryCode = CountryCode[country];
   const { data, loading } = useAddressValidationRulesQuery({
@@ -33,14 +29,12 @@ const useValidationRules = (country?: string) => {
 
   return { data, loading };
 };
-
 const useAreas = (data: AddressValidationRulesQuery) => {
   const rawChoices = selectRules(data).countryAreaChoices;
   const choices = prepareChoices(rawChoices);
 
   return choices;
 };
-
 const useAllowedFields = (data: AddressValidationRulesQuery) => {
   const isAllowed = (fieldName: string) => {
     if (!data) {
@@ -52,11 +46,8 @@ const useAllowedFields = (data: AddressValidationRulesQuery) => {
 
   return { isAllowed };
 };
-
 const useDisplayValues = (areas: AreaChoices[]) => {
-  const isProvinceCode = (code: string) =>
-    code.length === 2 && code.toLocaleUpperCase() === code;
-
+  const isProvinceCode = (code: string) => code.length === 2 && code.toLocaleUpperCase() === code;
   const getDisplayValue = (value: string) => {
     if (isProvinceCode(value)) {
       const area = areas.find(area => area.raw === value);

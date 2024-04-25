@@ -35,14 +35,8 @@ export const staffListUrl = (params?: StaffListUrlQueryParams) =>
   staffListPath + "?" + stringifyQs(params);
 
 export const staffMemberDetailsPath = (id: string) => urlJoin(staffSection, id);
-export type StaffMemberDetailsUrlDialog =
-  | "change-password"
-  | "remove"
-  | "remove-avatar";
-export type StaffMemberDetailsUrlQueryParams =
-  Dialog<StaffMemberDetailsUrlDialog>;
+export type StaffMemberDetailsUrlDialog = "change-password" | "remove" | "remove-avatar";
+export type StaffMemberDetailsUrlQueryParams = Dialog<StaffMemberDetailsUrlDialog>;
 
-export const staffMemberDetailsUrl = (
-  id: string,
-  params?: StaffMemberDetailsUrlQueryParams,
-) => staffMemberDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+export const staffMemberDetailsUrl = (id: string, params?: StaffMemberDetailsUrlQueryParams) =>
+  staffMemberDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

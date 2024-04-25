@@ -27,42 +27,33 @@ interface TaxChannelsListProps {
   params: TaxesUrlQueryParams | undefined;
 }
 
-export const TaxChannelsList: React.FC<TaxChannelsListProps> = ({
-  id,
-  params,
-}) => {
+export const TaxChannelsList: React.FC<TaxChannelsListProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const handleTabChange = (tab: TaxTab) => {
     navigate(taxTabPath(tab));
   };
+  const [taxConfigurationUpdateMutation, { status: mutationStatus, loading: mutationInProgress }] =
+    useTaxConfigurationUpdateMutation({
+      onCompleted: data => {
+        const errors = data?.taxConfigurationUpdate?.errors;
 
-  const [
-    taxConfigurationUpdateMutation,
-    { status: mutationStatus, loading: mutationInProgress },
-  ] = useTaxConfigurationUpdateMutation({
-    onCompleted: data => {
-      const errors = data?.taxConfigurationUpdate?.errors;
-      if (errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
-
+        if (errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
   const shop = useShop();
-
-  const [openDialog, closeDialog] = createDialogActionHandlers<
-    TaxesUrlDialog,
-    TaxesUrlQueryParams
-  >(navigate, params => taxConfigurationListUrl(id, params), params);
-
+  const [openDialog, closeDialog] = createDialogActionHandlers<TaxesUrlDialog, TaxesUrlQueryParams>(
+    navigate,
+    params => taxConfigurationListUrl(id, params),
+    params,
+  );
   const { data } = useTaxConfigurationsListQuery({ variables: { first: 100 } });
-
   const taxConfigurations = mapEdgesToItems(data?.taxConfigurations);
 
   useTaxUrlRedirect({

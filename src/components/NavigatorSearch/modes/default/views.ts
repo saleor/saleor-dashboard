@@ -128,6 +128,7 @@ function searchInViews(
     label: view.label,
     onClick: () => {
       navigate(view.url);
+
       return false;
     },
     score: score(view.label, search),

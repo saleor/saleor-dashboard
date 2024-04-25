@@ -3,10 +3,7 @@ import { FetchResult } from "@apollo/client";
 import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@dashboard/discounts/handlers";
-import {
-  DiscountTypeEnum,
-  RequirementsPicker,
-} from "@dashboard/discounts/types";
+import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import {
   DiscountValueTypeEnum,
   VoucherChannelListingUpdateMutation,
@@ -30,7 +27,6 @@ export function createUpdateHandler(
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
     const { id } = voucher;
-
     const errors = await Promise.all([
       updateVoucher({
         id,
@@ -43,11 +39,9 @@ export function createUpdateHandler(
             formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
               ? DiscountValueTypeEnum.PERCENTAGE
               : formData.discountType === DiscountTypeEnum.VALUE_FIXED
-              ? DiscountValueTypeEnum.FIXED
-              : DiscountValueTypeEnum.PERCENTAGE,
-          endDate: formData.hasEndDate
-            ? joinDateTime(formData.endDate, formData.endTime)
-            : null,
+                ? DiscountValueTypeEnum.FIXED
+                : DiscountValueTypeEnum.PERCENTAGE,
+          endDate: formData.hasEndDate ? joinDateTime(formData.endDate, formData.endTime) : null,
           minCheckoutItemsQuantity:
             formData.requirementsPicker !== RequirementsPicker.ITEM
               ? 0

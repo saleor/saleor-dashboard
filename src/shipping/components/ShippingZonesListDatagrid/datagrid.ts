@@ -1,8 +1,5 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
-import {
-  moneyCell,
-  readonlyTextCell,
-} from "@dashboard/components/Datagrid/customCells/cells";
+import { moneyCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { getMoneyRange } from "@dashboard/components/MoneyRange";
@@ -57,19 +54,20 @@ export const createGetCellContent =
       case "priceRange": {
         const from = rowData?.priceRange?.start;
         const to = rowData?.priceRange?.stop;
+
         if (!from) {
           return readonlyTextCell("");
         }
+
         const isRange = !!to;
+
         // TODO: update with moneyCell when it's ready to handle ranges
         return isRange
           ? readonlyTextCell(getMoneyRange(locale, intl, from, to))
           : moneyCell(from.amount, from.currency);
       }
       case "countries":
-        return readonlyTextCell(
-          rowData?.countries.length.toString() ?? PLACEHOLDER,
-        );
+        return readonlyTextCell(rowData?.countries.length.toString() ?? PLACEHOLDER);
       default:
         return readonlyTextCell("");
     }

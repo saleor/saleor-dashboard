@@ -21,14 +21,13 @@ const content = richTextEditorFixtures.richTextEditor;
 
 export const product: (
   placeholderImage: string,
-) => ProductFragment &
-  ProductVariantCreateDataQuery["product"] = placeholderImage => ({
-  __typename: "Product" as "Product",
+) => ProductFragment & ProductVariantCreateDataQuery["product"] = placeholderImage => ({
+  __typename: "Product" as const,
   attributes: [
     {
       __typename: "SelectedAttribute",
       attribute: {
-        __typename: "Attribute" as "Attribute",
+        __typename: "Attribute" as const,
         entityType: null,
         id: "pta18161",
         inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -105,7 +104,7 @@ export const product: (
     {
       __typename: "SelectedAttribute",
       attribute: {
-        __typename: "Attribute" as "Attribute",
+        __typename: "Attribute" as const,
         entityType: null,
         id: "pta22785",
         inputType: AttributeInputTypeEnum.MULTISELECT,
@@ -604,7 +603,7 @@ export const product: (
     name: "standard",
     id: "standard",
   },
-  thumbnail: { __typename: "Image" as "Image", url: placeholderImage },
+  thumbnail: { __typename: "Image" as const, url: placeholderImage },
   url: "/example-url",
   variants: [
     {
@@ -1228,9 +1227,7 @@ export const product: (
     value: 5,
   },
 });
-export const products = (
-  placeholderImage: string,
-): RelayToFlat<ProductListQuery["products"]> => [
+export const products = (placeholderImage: string): RelayToFlat<ProductListQuery["products"]> => [
   {
     __typename: "Product",
     description:
@@ -3673,7 +3670,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
   ],
   privateMetadata: [],
   product: {
-    __typename: "Product" as "Product",
+    __typename: "Product" as const,
     channelListings: [
       {
         id: "2",
@@ -3789,7 +3786,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       },
     ],
     name: "Our Awesome Book",
-    thumbnail: { __typename: "Image" as "Image", url: placeholderImage },
+    thumbnail: { __typename: "Image" as const, url: placeholderImage },
     variants: [
       {
         __typename: "ProductVariant",
@@ -3857,7 +3854,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     {
       __typename: "SelectedAttribute",
       attribute: {
-        __typename: "Attribute" as "Attribute",
+        __typename: "Attribute" as const,
         entityType: null,
         id: "pta18161",
         inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -3934,7 +3931,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     {
       __typename: "SelectedAttribute",
       attribute: {
-        __typename: "Attribute" as "Attribute",
+        __typename: "Attribute" as const,
         entityType: null,
         id: "pta22785",
         inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -4083,16 +4080,13 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     value: 6,
   },
 });
-export const variantMedia = (placeholderImage: string) =>
-  variant(placeholderImage).media;
+export const variantMedia = (placeholderImage: string) => variant(placeholderImage).media;
 export const variantProductImages = (placeholderImage: string) =>
   variant(placeholderImage).product.media;
 export const variantSiblings = (placeholderImage: string) =>
   variant(placeholderImage).product.variants;
 
-export const productTypesList: Array<
-  Pick<ProductType, "id" | "name" | "hasVariants">
-> = [
+export const productTypesList: Array<Pick<ProductType, "id" | "name" | "hasVariants">> = [
   {
     hasVariants: true,
     id: "UHJvZHVjdFR5cGU6Nw==",

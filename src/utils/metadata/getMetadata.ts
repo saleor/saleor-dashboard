@@ -7,9 +7,7 @@ function getMetadata(
 ) {
   return {
     metadata: isMetadataModified ? data.metadata : undefined,
-    privateMetadata: isPrivateMetadataModified
-      ? data.privateMetadata
-      : undefined,
+    privateMetadata: isPrivateMetadataModified ? data.privateMetadata : undefined,
   };
 }
 

@@ -5,23 +5,15 @@ import { parse as parseQs } from "qs";
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router";
 
-import NewPasswordPage, {
-  NewPasswordPageFormData,
-} from "../components/NewPasswordPage";
+import NewPasswordPage, { NewPasswordPageFormData } from "../components/NewPasswordPage";
 import { NewPasswordUrlQueryParams } from "../urls";
 
 const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const navigate = useNavigator();
-
   const { setPassword } = useAuth();
-
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<AccountErrorFragment[]>([]);
-
-  const params: NewPasswordUrlQueryParams = parseQs(
-    location.search.substr(1),
-  ) as any;
-
+  const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1)) as any;
   const handleSubmit = async (data: NewPasswordPageFormData) => {
     setLoading(true);
 
@@ -30,9 +22,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
       password: data.password,
       token: params.token,
     });
-
-    const errors = (result.data?.setPassword?.errors ||
-      []) as AccountErrorFragment[];
+    const errors = (result.data?.setPassword?.errors || []) as AccountErrorFragment[];
 
     setErrors(errors);
     setLoading(false);
@@ -42,13 +32,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
     }
   };
 
-  return (
-    <NewPasswordPage
-      errors={errors}
-      loading={loading}
-      onSubmit={handleSubmit}
-    />
-  );
+  return <NewPasswordPage errors={errors} loading={loading} onSubmit={handleSubmit} />;
 };
 
 NewPassword.displayName = "NewPassword";

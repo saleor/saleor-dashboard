@@ -26,7 +26,6 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
   isError,
 }) => {
   const intl = useIntl();
-
   const options = [
     {
       label: intl.formatMessage(messages.yearLabel),

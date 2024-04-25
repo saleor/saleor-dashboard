@@ -19,15 +19,10 @@ import {
 
 export const CUSTOMER_FILTERS_KEY = "customerFilters";
 
-export function getFilterOpts(
-  params: CustomerListUrlFilters,
-): CustomerListFilterOpts {
+export function getFilterOpts(params: CustomerListUrlFilters): CustomerListFilterOpts {
   return {
     joined: {
-      active:
-        [params.joinedFrom, params.joinedTo].some(
-          field => field !== undefined,
-        ) ?? false,
+      active: [params.joinedFrom, params.joinedTo].some(field => field !== undefined) ?? false,
       value: {
         max: params.joinedTo ?? "",
         min: params.joinedFrom ?? "",
@@ -35,9 +30,8 @@ export function getFilterOpts(
     },
     numberOfOrders: {
       active:
-        [params.numberOfOrdersFrom, params.numberOfOrdersTo].some(
-          field => field !== undefined,
-        ) ?? false,
+        [params.numberOfOrdersFrom, params.numberOfOrdersTo].some(field => field !== undefined) ??
+        false,
       value: {
         max: params.numberOfOrdersTo ?? "",
         min: params.numberOfOrdersFrom ?? "",
@@ -46,21 +40,15 @@ export function getFilterOpts(
   };
 }
 
-export function getFilterVariables(
-  params: CustomerListUrlFilters,
-): CustomerFilterInput {
+export function getFilterVariables(params: CustomerListUrlFilters): CustomerFilterInput {
   return {
     dateJoined: getGteLteVariables({
       gte: params.joinedFrom,
       lte: params.joinedTo,
     }),
     numberOfOrders: getGteLteVariables({
-      gte: params?.numberOfOrdersFrom
-        ? parseInt(params.numberOfOrdersFrom, 10)
-        : null,
-      lte: params?.numberOfOrdersTo
-        ? parseInt(params.numberOfOrdersTo, 10)
-        : null,
+      gte: params?.numberOfOrdersFrom ? parseInt(params.numberOfOrdersFrom, 10) : null,
+      lte: params?.numberOfOrdersTo ? parseInt(params.numberOfOrdersTo, 10) : null,
     }),
     search: params.query,
   };
@@ -90,7 +78,7 @@ export function getFilterQueryParam(
 
 export const storageUtils = createFilterTabUtils<string>(CUSTOMER_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
-  createFilterUtils<CustomerListUrlQueryParams, CustomerListUrlFilters>(
-    CustomerListUrlFiltersEnum,
-  );
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
+  CustomerListUrlQueryParams,
+  CustomerListUrlFilters
+>(CustomerListUrlFiltersEnum);

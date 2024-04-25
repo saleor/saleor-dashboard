@@ -14,9 +14,9 @@ interface GiftCardStatusChipProps<
   giftCard: T;
 }
 
-function GiftCardStatusChip<
-  T extends ExtendedGiftCard<GiftCardBase & { isActive: boolean }>,
->({ giftCard }: GiftCardStatusChipProps<T>) {
+function GiftCardStatusChip<T extends ExtendedGiftCard<GiftCardBase & { isActive: boolean }>>({
+  giftCard,
+}: GiftCardStatusChipProps<T>) {
   const { isExpired, isActive } = giftCard;
   const intl = useIntl();
 
@@ -24,9 +24,7 @@ function GiftCardStatusChip<
     return (
       <Pill
         color="info"
-        label={intl.formatMessage(
-          giftCardStatusChipMessages.expiredStatusLabel,
-        )}
+        label={intl.formatMessage(giftCardStatusChipMessages.expiredStatusLabel)}
       />
     );
   }
@@ -35,9 +33,7 @@ function GiftCardStatusChip<
     return (
       <Pill
         color="error"
-        label={intl.formatMessage(
-          giftCardStatusChipMessages.disabledStatusLabel,
-        )}
+        label={intl.formatMessage(giftCardStatusChipMessages.disabledStatusLabel)}
       />
     );
   }

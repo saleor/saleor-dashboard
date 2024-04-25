@@ -98,10 +98,10 @@ export const getConditionsTypes = (
 
 export const useCondtionTypes = () => {
   const intl = useIntl();
-  const conditionsTypes = useMemo<
-    Record<CatalogConditions | OrderConditions, ConditionType[]>
-  >(() => getConditionsTypes(intl), [intl]);
-
+  const conditionsTypes = useMemo<Record<CatalogConditions | OrderConditions, ConditionType[]>>(
+    () => getConditionsTypes(intl),
+    [intl],
+  );
   const getConditionTypesOptions = (type: string): Option[] => {
     const conditionTypes: ConditionType[] | undefined =
       conditionsTypes[type as CatalogConditions | OrderConditions];
@@ -115,7 +115,6 @@ export const useCondtionTypes = () => {
 
     return [];
   };
-
   const getConditionTypeByLabel = (conditionName: string, type: string) => {
     const conditionTypes: ConditionType[] | undefined =
       conditionsTypes[conditionName as CatalogConditions | OrderConditions];

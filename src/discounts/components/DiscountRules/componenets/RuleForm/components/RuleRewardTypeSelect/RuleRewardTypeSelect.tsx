@@ -11,14 +11,9 @@ export const RuleRewardTypeSelect = () => {
   const intl = useIntl();
   const { disabled } = useDiscountRulesContext();
   const { formState, setValue } = useFormContext<Rule>();
-
   const rewardTypeOptions = getRewardTypeOptions(intl);
-
   const ruleRewardTypeFileName = `rewardType` as const;
-  const { field: rewardType } = useController<
-    Rule,
-    typeof ruleRewardTypeFileName
-  >({
+  const { field: rewardType } = useController<Rule, typeof ruleRewardTypeFileName>({
     name: ruleRewardTypeFileName,
   });
 
@@ -31,10 +26,7 @@ export const RuleRewardTypeSelect = () => {
         id: "9CW3TD",
         description: "label",
       })}
-      value={
-        rewardTypeOptions.find(option => option.value === rewardType.value) ??
-        ""
-      }
+      value={rewardTypeOptions.find(option => option.value === rewardType.value) ?? ""}
       error={!!formState.errors.rewardType}
       helperText={formState.errors.rewardType?.message}
       onChange={type => {

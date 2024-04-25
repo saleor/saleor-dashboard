@@ -6,10 +6,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Pill } from "@dashboard/components/Pill";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import Savebar from "@dashboard/components/Savebar";
-import {
-  OrderDetailsGrantRefundFragment,
-  PermissionEnum,
-} from "@dashboard/graphql";
+import { OrderDetailsGrantRefundFragment, PermissionEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
@@ -56,9 +53,7 @@ export interface OrderTransactionRefundPageProps {
   order: OrderDetailsGrantRefundFragment | null | undefined;
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   disabled: boolean;
-  onSaveDraft: (
-    submitData: OrderTransactionRefundPageFormData,
-  ) => SubmitPromise;
+  onSaveDraft: (submitData: OrderTransactionRefundPageFormData) => SubmitPromise;
   onTransferFunds?: () => void;
   onSaveDraftState: ConfirmButtonTransitionState;
   onTransferFundsState?: ConfirmButtonTransitionState;
@@ -113,9 +108,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   });
 
   const permissions = useUserPermissions();
-  const canHandlePayments = hasPermissions(permissions ?? [], [
-    PermissionEnum.HANDLE_PAYMENTS,
-  ]);
+  const canHandlePayments = hasPermissions(permissions ?? [], [PermissionEnum.HANDLE_PAYMENTS]);
 
   const handleTransferFunds = (data: OrderTransactionRefundPageFormData) => {
     if (!data.amount) {
@@ -123,6 +116,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
         type: "custom",
         message: intl.formatMessage(messages.amountError),
       });
+
       return;
     }
 
@@ -189,17 +183,11 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   return (
     <DetailPageLayout gridTemplateColumns={1}>
       <Box as="form" display="contents" onSubmit={handleSubmit(onSubmit)}>
-        <TopNav
-          href={orderUrl(order?.id ?? "")}
-          title={getRefundViewTitle(draftRefund, intl)}
-        >
+        <TopNav href={orderUrl(order?.id ?? "")} title={getRefundViewTitle(draftRefund, intl)}>
           {draftRefund && (
             <Pill
               color={getRefundStatusColor(draftRefund.status)}
-              label={getRefundStatusLabel(
-                draftRefund.status,
-                intl,
-              ).toLocaleUpperCase()}
+              label={getRefundStatusLabel(draftRefund.status, intl).toLocaleUpperCase()}
             />
           )}
         </TopNav>
@@ -227,10 +215,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
               </Text>
             </DashboardCard.Content>
           </DashboardCard>
-          <OrderTransactionTiles
-            transactions={order?.transactions}
-            control={control}
-          />
+          <OrderTransactionTiles transactions={order?.transactions} control={control} />
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar>
           <Box

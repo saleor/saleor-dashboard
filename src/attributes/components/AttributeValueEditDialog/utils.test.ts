@@ -11,7 +11,6 @@ describe("getAttributeValueFields", () => {
       value: "value",
     } as AttributeValueEditDialogFormData;
     const isSwatch = true;
-
     // Act
     const result = getAttributeValueFields(attributeValue, isSwatch);
 
@@ -21,14 +20,12 @@ describe("getAttributeValueFields", () => {
       contentType: "contentType",
     });
   });
-
   it("should return value when attributeValue has value and is swatch type", () => {
     // Arrange
     const attributeValue = {
       value: "value",
     } as AttributeValueEditDialogFormData;
     const isSwatch = true;
-
     // Act
     const result = getAttributeValueFields(attributeValue, isSwatch);
 
@@ -37,14 +34,12 @@ describe("getAttributeValueFields", () => {
       value: "value",
     });
   });
-
   it("should return empty object when attributeValue has value but type is not swatch", () => {
     // Arrange
     const attributeValue = {
       value: "value",
     } as AttributeValueEditDialogFormData;
     const isSwatch = false;
-
     // Act
     const result = getAttributeValueFields(attributeValue, isSwatch);
 

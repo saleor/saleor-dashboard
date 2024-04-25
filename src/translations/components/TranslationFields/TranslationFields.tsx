@@ -7,10 +7,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  TranslationField,
-  TranslationFieldType,
-} from "@dashboard/translations/types";
+import { TranslationField, TranslationFieldType } from "@dashboard/translations/types";
 import { ListProps } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, Typography } from "@material-ui/core";
@@ -24,10 +21,7 @@ import TranslationFieldsLong from "./TranslationFieldsLong";
 import TranslationFieldsRich from "./TranslationFieldsRich";
 import TranslationFieldsShort from "./TranslationFieldsShort";
 
-type Pagination = Pick<
-  ListProps,
-  Exclude<keyof ListProps, "getRowHref" | "disabled">
->;
+type Pagination = Pick<ListProps, Exclude<keyof ListProps, "getRowHref" | "disabled">>;
 
 export interface TranslationFieldsProps {
   activeField: string;
@@ -40,10 +34,7 @@ export interface TranslationFieldsProps {
   richTextResetKey: string; // temporary workaround TODO: fix rich text editor
   onEdit: (field: string) => void;
   onDiscard: () => void;
-  onSubmit: (
-    field: TranslationField,
-    data: string | OutputData,
-  ) => SubmitPromise;
+  onSubmit: (field: TranslationField, data: string | OutputData) => SubmitPromise;
 }
 
 const useStyles = makeStyles(
@@ -110,9 +101,7 @@ const useStyles = makeStyles(
   }),
   { name: "TranslationFields" },
 );
-
 const numberOfColumns = 2;
-
 const TranslationFields: React.FC<TranslationFieldsProps> = props => {
   const {
     activeField,
@@ -128,7 +117,6 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
     onSubmit,
   } = props;
   const classes = useStyles(props);
-
   const [expanded, setExpandedState] = React.useState(initialState);
 
   return (
@@ -136,10 +124,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
       <CardTitle
         title={title}
         toolbar={
-          <IconButton
-            variant="secondary"
-            onClick={() => setExpandedState(!expanded)}
-          >
+          <IconButton variant="secondary" onClick={() => setExpandedState(!expanded)}>
             <ArrowIcon
               className={clsx({
                 [classes.rotate]: expanded,
@@ -168,10 +153,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                   {field.displayName}
                 </Typography>
                 <div className={classes.editButtonContainer}>
-                  <Button
-                    data-test-id={`edit-${field.name}`}
-                    onClick={() => onEdit(field.name)}
-                  >
+                  <Button data-test-id={`edit-${field.name}`} onClick={() => onEdit(field.name)}>
                     <FormattedMessage {...buttonMessages.edit} />
                   </Button>
                 </div>
@@ -284,5 +266,6 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
     </Card>
   );
 };
+
 TranslationFields.displayName = "TranslationFields";
 export default TranslationFields;

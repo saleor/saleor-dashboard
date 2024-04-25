@@ -23,11 +23,9 @@ export function useRichText({
 }: UseRichTextOptions): UseRichTextResult {
   const editorRef = useRef<EditorCore | null>(null);
   const [isReadyForMount, setIsReadyForMount] = useState(false);
-
   const handleChange = () => {
     triggerChange();
   };
-
   const getValue = async () => {
     if (editorRef.current) {
       return editorRef.current.save();
@@ -35,7 +33,6 @@ export function useRichText({
       throw new Error("Editor instance is not available");
     }
   };
-
   const defaultValue = useMemo<OutputData | undefined>(() => {
     if (loading) {
       return;
@@ -43,12 +40,15 @@ export function useRichText({
 
     if (!initial) {
       setIsReadyForMount(true);
+
       return "";
     }
 
     try {
       const result = JSON.parse(initial);
+
       setIsReadyForMount(true);
+
       return result;
     } catch (e) {
       return undefined;

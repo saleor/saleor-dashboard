@@ -35,12 +35,10 @@ const useStyles = makeStyles(
   }),
   { name: "ProductErrorCell" },
 );
-
 const messages = defineMessages({
   description: {
     id: "RlbhwF",
-    defaultMessage:
-      "This product is no longer in database so it can’t be replaced, nor returned",
+    defaultMessage: "This product is no longer in database so it can’t be replaced, nor returned",
     description: "product no longer exists error description",
   },
   title: {
@@ -58,7 +56,6 @@ const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
   const classes = useStyles({});
   const intl = useIntl();
   const popperAnchorRef = React.useRef<HTMLButtonElement | null>(null);
-
   const [showErrorBox, setShowErrorBox] = useState<boolean>(false);
 
   if (hasVariant) {
@@ -66,11 +63,7 @@ const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
   }
 
   return (
-    <TableCell
-      align="right"
-      className={classes.container}
-      ref={popperAnchorRef}
-    >
+    <TableCell align="right" className={classes.container} ref={popperAnchorRef}>
       <div
         className={classes.titleContainer}
         onMouseEnter={() => setShowErrorBox(true)}
@@ -81,11 +74,7 @@ const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
         </Typography>
         <ErrorExclamationCircleIcon />
       </div>
-      <Popper
-        placement="bottom-end"
-        open={showErrorBox}
-        anchorEl={popperAnchorRef.current}
-      >
+      <Popper placement="bottom-end" open={showErrorBox} anchorEl={popperAnchorRef.current}>
         <div className={classes.errorBox}>
           <Typography className={classes.errorText}>
             {intl.formatMessage(messages.description)}

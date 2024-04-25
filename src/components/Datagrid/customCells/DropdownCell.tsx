@@ -21,9 +21,7 @@ export type DropdownCellContentProps = Pick<
   "allowCustomValues" | "emptyOption"
 >;
 
-export type DropdownCellGetSuggestionsFn = (
-  text: string,
-) => Promise<DropdownChoice[]>;
+export type DropdownCellGetSuggestionsFn = (text: string) => Promise<DropdownChoice[]>;
 interface DropdownCellProps extends DropdownCellContentProps {
   readonly choices?: DropdownChoice[];
   readonly update?: DropdownCellGetSuggestionsFn;
@@ -51,7 +49,6 @@ const useStyles = makeStyles(
   },
   { name: "DropdownCell" },
 );
-
 const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   value: cell,
   onFinishedEditing,
@@ -64,7 +61,6 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
     [cell.data],
   );
   const classes = useStyles();
-
   const userProps = pick(cell.data, ["allowCustomValues", "emptyOption"]);
   const props = cell.data.update
     ? { fetchOnFocus: true, fetchChoices: getChoices, choices: data }

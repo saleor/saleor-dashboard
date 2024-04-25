@@ -12,9 +12,7 @@ interface AppListCardInstallButtonProps {
   installHandler?: () => void;
 }
 
-export const AppListCardInstallButton = ({
-  installHandler,
-}: AppListCardInstallButtonProps) => {
+export const AppListCardInstallButton = ({ installHandler }: AppListCardInstallButtonProps) => {
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
@@ -32,11 +30,7 @@ export const AppListCardInstallButton = ({
 
   if (IS_CLOUD_INSTANCE) {
     return (
-      <Button
-        variant="primary"
-        onClick={installHandler}
-        data-test-id="app-install-button"
-      >
+      <Button variant="primary" onClick={installHandler} data-test-id="app-install-button">
         <FormattedMessage {...buttonMessages.install} />
       </Button>
     );

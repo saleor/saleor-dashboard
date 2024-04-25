@@ -33,7 +33,5 @@ export interface AddressType {
   streetAddress2?: string;
 }
 
-export type Customers = RelayToFlat<
-  NonNullable<ListCustomersQuery["customers"]>
->;
+export type Customers = RelayToFlat<NonNullable<ListCustomersQuery["customers"]>>;
 export type Customer = Customers[number];

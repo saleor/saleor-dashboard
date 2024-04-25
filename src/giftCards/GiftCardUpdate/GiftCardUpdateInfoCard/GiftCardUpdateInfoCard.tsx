@@ -10,15 +10,12 @@ import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 
 const GiftCardUpdateInfoCard: React.FC = () => {
   const intl = useIntl();
-
   const { loading } = useGiftCardDetails();
 
   return (
     <Card>
       <CardTitle title={intl.formatMessage(messages.title)} />
-      <CardContent>
-        {loading ? <Skeleton /> : <GiftCardUpdateInfoCardContent />}
-      </CardContent>
+      <CardContent>{loading ? <Skeleton /> : <GiftCardUpdateInfoCardContent />}</CardContent>
     </Card>
   );
 };

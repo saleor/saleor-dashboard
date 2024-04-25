@@ -10,13 +10,8 @@ type AboutCardProps = {
   loading: boolean;
 } & BoxProps;
 
-export const AboutCard: React.FC<AboutCardProps> = ({
-  aboutApp,
-  loading,
-  ...boxProps
-}) => {
+export const AboutCard: React.FC<AboutCardProps> = ({ aboutApp, loading, ...boxProps }) => {
   const intl = useIntl();
-
   const renderContent = () => {
     if (loading) {
       return <Skeleton />;

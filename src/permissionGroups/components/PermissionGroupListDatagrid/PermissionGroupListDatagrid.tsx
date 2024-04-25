@@ -19,10 +19,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  createGetCellContent,
-  permissionGroupsListStaticColumnsAdapter,
-} from "./datagrid";
+import { createGetCellContent, permissionGroupsListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 
 interface PermissionGroupListDatagridProps
@@ -42,13 +39,11 @@ export const PermissionGroupListDatagrid = ({
   const intl = useIntl();
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
-
   const emptyColumn = useEmptyColumn();
   const permissionGroupsListStaticColumns = useMemo(
     () => permissionGroupsListStaticColumnsAdapter(intl, sort, emptyColumn),
     [intl, sort],
   );
-
   const onColumnChange = useCallback(
     (picked: string[]) => {
       if (onUpdateListSettings) {
@@ -57,13 +52,11 @@ export const PermissionGroupListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
   const { handlers, visibleColumns, recentlyAddedColumn } = useColumns({
     selectedColumns: settings?.columns ?? [],
     staticColumns: permissionGroupsListStaticColumns,
     onSave: onColumnChange,
   });
-
   const getCellContent = useCallback(
     createGetCellContent({
       permissionGroups,
@@ -71,7 +64,6 @@ export const PermissionGroupListDatagrid = ({
     }),
     [permissionGroups, intl, visibleColumns],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       const rowData: PermissionGroupFragment = permissionGroups[row];
@@ -82,15 +74,14 @@ export const PermissionGroupListDatagrid = ({
     },
     [permissionGroups],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => permissionGroupDetailsUrl(permissionGroups[row].id),
     [permissionGroups],
   );
   const handleHeaderClick = useCallback(
     (col: number) => {
-      const columnName = visibleColumns[col]
-        .id as PermissionGroupListUrlSortField;
+      const columnName = visibleColumns[col].id as PermissionGroupListUrlSortField;
+
       if (canBeSorted(columnName)) {
         onSort(columnName);
       }

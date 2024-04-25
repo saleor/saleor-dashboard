@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   Dialog,
   DialogActions,
@@ -36,21 +33,14 @@ export interface ProductVariantDeleteDialogProps {
   onConfirm?: () => any;
 }
 
-const ProductVariantDeleteDialog: React.FC<
-  ProductVariantDeleteDialogProps
-> = props => {
+const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = props => {
   const { confirmButtonState, name, open, onConfirm, onClose } = props;
-
   const classes = useStyles(props);
 
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle disableTypography>
-        <FormattedMessage
-          id="GFJabu"
-          defaultMessage="Delete Variant"
-          description="dialog header"
-        />
+        <FormattedMessage id="GFJabu" defaultMessage="Delete Variant" description="dialog header" />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -72,15 +62,12 @@ const ProductVariantDeleteDialog: React.FC<
           onClick={onConfirm}
           data-test-id="delete-variant-button"
         >
-          <FormattedMessage
-            id="rbkmfG"
-            defaultMessage="Delete variant"
-            description="button"
-          />
+          <FormattedMessage id="rbkmfG" defaultMessage="Delete variant" description="button" />
         </ConfirmButton>
       </DialogActions>
     </Dialog>
   );
 };
+
 ProductVariantDeleteDialog.displayName = "ProductVariantDeleteDialog";
 export default ProductVariantDeleteDialog;

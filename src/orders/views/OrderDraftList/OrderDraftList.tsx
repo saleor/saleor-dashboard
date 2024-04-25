@@ -6,10 +6,7 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
-import {
-  useOrderDraftCreateMutation,
-  useOrderDraftListQuery,
-} from "@dashboard/graphql";
+import { useOrderDraftCreateMutation, useOrderDraftListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -39,12 +36,7 @@ import {
   OrderDraftListUrlQueryParams,
   orderUrl,
 } from "../../urls";
-import {
-  getFilterOpts,
-  getFilterQueryParam,
-  getFilterVariables,
-  storageUtils,
-} from "./filters";
+import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 import { useBulkDeletion } from "./useBulkDeletion";
 
@@ -56,10 +48,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.DRAFT_LIST,
-  );
+  const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
 
   usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 
@@ -69,15 +58,11 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     setClearDatagridRowSelectionCallback,
     setSelectedRowIds,
   } = useRowSelection(params);
-
-  const { onOrderDraftBulkDelete, orderDraftBulkDeleteOpts } = useBulkDeletion(
-    () => {
-      refetch();
-      clearRowSelection();
-      closeModal();
-    },
-  );
-
+  const { onOrderDraftBulkDelete, orderDraftBulkDeleteOpts } = useBulkDeletion(() => {
+    refetch();
+    clearRowSelection();
+    closeModal();
+  });
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: data => {
       notify({
@@ -90,32 +75,26 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
       navigate(orderUrl(data.draftOrderCreate.order.id));
     },
   });
-
   const { channel } = useAppChannel(false);
   const user = useUser();
   const channels = user?.user?.accessibleChannels ?? [];
-
   const limitOpts = useShopLimitsQuery({
     variables: {
       orders: true,
     },
   });
-
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      cleanupFn: clearRowSelection,
-      createUrl: orderDraftListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-      keepActiveTab: true,
-    });
-
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+    cleanupFn: clearRowSelection,
+    createUrl: orderDraftListUrl,
+    getFilterQueryParam,
+    navigate,
+    params,
+    keepActiveTab: true,
+  });
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderDraftListUrlDialog,
     OrderDraftListUrlQueryParams
   >(navigate, orderDraftListUrl, params);
-
   const {
     selectedPreset,
     presets,
@@ -132,9 +111,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     getUrl: orderDraftListUrl,
     storageUtils,
   });
-
   const paginationState = createPaginationState(settings.rowNumber, params);
-
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
@@ -147,17 +124,13 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables,
   });
-
   const orderDrafts = mapEdgesToItems(data?.draftOrders);
-
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.draftOrders.pageInfo),
     paginationState,
     queryString: params,
   });
-
   const handleSort = createSortHandler(navigate, orderDraftListUrl, params);
-
   const handleSetSelectedOrderDraftIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!orderDrafts) {
@@ -173,12 +146,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
       setClearDatagridRowSelectionCallback(clearSelection);
     },
-    [
-      orderDrafts,
-      selectedRowIds,
-      setClearDatagridRowSelectionCallback,
-      setSelectedRowIds,
-    ],
+    [orderDrafts, selectedRowIds, setClearDatagridRowSelectionCallback, setSelectedRowIds],
   );
 
   return (
@@ -238,9 +206,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
             description="dialog content"
             values={{
               counter: maybe(() => selectedRowIds.length),
-              displayQuantity: (
-                <strong>{maybe(() => selectedRowIds.length)}</strong>
-              ),
+              displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
             }}
           />
         </DialogContentText>

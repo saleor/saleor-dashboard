@@ -2,12 +2,7 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-} from "@material-ui/core";
+import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -44,11 +39,8 @@ const useStyles = makeStyles(
   },
   { name: "TranslationsEntitiesList" },
 );
-const TranslationsEntitiesList: React.FC<
-  TranslationsEntitiesListProps
-> = props => {
+const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props => {
   const { disabled, entities, getRowHref } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
 
@@ -64,10 +56,7 @@ const TranslationsEntitiesList: React.FC<
             />
           </TableCell>
           <TableCell className={classes.textRight}>
-            <FormattedMessage
-              id="LWmYSU"
-              defaultMessage="Completed Translations"
-            />
+            <FormattedMessage id="LWmYSU" defaultMessage="Completed Translations" />
           </TableCell>
         </TableRowLink>
       </TableHead>
@@ -109,10 +98,7 @@ const TranslationsEntitiesList: React.FC<
           () => (
             <TableRowLink>
               <TableCell colSpan={2}>
-                <FormattedMessage
-                  id="vcwrgW"
-                  defaultMessage="No translatable entities found"
-                />
+                <FormattedMessage id="vcwrgW" defaultMessage="No translatable entities found" />
               </TableCell>
             </TableRowLink>
           ),
@@ -121,5 +107,6 @@ const TranslationsEntitiesList: React.FC<
     </ResponsiveTable>
   );
 };
+
 TranslationsEntitiesList.displayName = "TranslationsEntitiesList";
 export default TranslationsEntitiesList;

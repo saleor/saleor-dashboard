@@ -10,10 +10,7 @@ import {
 import { FormChange } from "@dashboard/hooks/useForm";
 import { flatten, getById } from "@dashboard/misc";
 
-import {
-  OrderCustomerAddressesEditData,
-  OrderCustomerAddressesEditHandlers,
-} from "./form";
+import { OrderCustomerAddressesEditData, OrderCustomerAddressesEditHandlers } from "./form";
 import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
 import { OrderCustomerSearchAddressState } from "./types";
 
@@ -27,11 +24,11 @@ interface AddressEditCommonProps {
 export const stringifyAddress = (address: Partial<AddressFragment>): string => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, ...addressWithoutId } = address;
+
   return Object.values(flatten(addressWithoutId)).join(" ");
 };
 
-export const parseQuery = (query: string) =>
-  query.replace(/([.?*+\-=:^$\\[\]<>(){}|])/g, "\\$&");
+export const parseQuery = (query: string) => query.replace(/([.?*+\-=:^$\\[\]<>(){}|])/g, "\\$&");
 
 export function validateDefaultAddress<T extends AddressFragment>(
   defaultAddress: Node,
@@ -40,12 +37,15 @@ export function validateDefaultAddress<T extends AddressFragment>(
   const fallbackAddress = {
     id: customerAddresses[0]?.id,
   } as AddressFragment;
+
   if (!defaultAddress) {
     return fallbackAddress;
   }
+
   if (!customerAddresses.some(getById(defaultAddress.id))) {
     return fallbackAddress;
   }
+
   return defaultAddress;
 }
 
@@ -70,9 +70,7 @@ export const getAddressEditProps = (
   handlers: OrderCustomerAddressesEditHandlers,
   change: FormChange,
   dialogErrors: Array<OrderErrorFragment | AccountErrorFragment>,
-  setAddressSearchState: React.Dispatch<
-    React.SetStateAction<OrderCustomerSearchAddressState>
-  >,
+  setAddressSearchState: React.Dispatch<React.SetStateAction<OrderCustomerSearchAddressState>>,
   addressEditCommonProps: AddressEditCommonProps,
 ): OrderCustomerAddressEditProps => {
   if (variant === "shipping") {
@@ -90,11 +88,11 @@ export const getAddressEditProps = (
       selectedCustomerAddressId: data.customerShippingAddress?.id,
       formAddress: data.shippingAddress,
       formAddressCountryDisplayName: data.shippingCountryDisplayName,
-      onChangeFormAddress: event =>
-        handlers.changeFormAddress(event, "shippingAddress"),
+      onChangeFormAddress: event => handlers.changeFormAddress(event, "shippingAddress"),
       onChangeFormAddressCountry: handlers.selectShippingCountry,
     };
   }
+
   return {
     ...addressEditCommonProps,
     addressInputName: "billingAddressInputOption",
@@ -109,8 +107,7 @@ export const getAddressEditProps = (
     selectedCustomerAddressId: data.customerBillingAddress?.id,
     formAddress: data.billingAddress,
     formAddressCountryDisplayName: data.billingCountryDisplayName,
-    onChangeFormAddress: event =>
-      handlers.changeFormAddress(event, "billingAddress"),
+    onChangeFormAddress: event => handlers.changeFormAddress(event, "billingAddress"),
     onChangeFormAddressCountry: handlers.selectBillingCountry,
   };
 };

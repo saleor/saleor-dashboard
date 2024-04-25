@@ -15,28 +15,19 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors } from "../../misc";
-import ProductTypeCreatePage, {
-  ProductTypeForm,
-} from "../components/ProductTypeCreatePage";
-import {
-  productTypeAddUrl,
-  ProductTypeAddUrlQueryParams,
-  productTypeUrl,
-} from "../urls";
+import ProductTypeCreatePage, { ProductTypeForm } from "../components/ProductTypeCreatePage";
+import { productTypeAddUrl, ProductTypeAddUrlQueryParams, productTypeUrl } from "../urls";
 
 interface ProductTypeCreateProps {
   params: ProductTypeAddUrlQueryParams;
 }
 
-export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
-  params,
-}) => {
+export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
   const handleChangeKind = (kind: ProductTypeKindEnum) =>
     navigate(
       productTypeAddUrl({
@@ -44,29 +35,24 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
         kind,
       }),
     );
-
   const { data, loading } = useProductTypeCreateDataQuery({
     displayLoader: true,
   });
-
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
-
-  const [createProductType, createProductTypeOpts] =
-    useProductTypeCreateMutation({
-      onCompleted: data => {
-        if (data.productTypeCreate.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage({
-              id: "paa4m0",
-              defaultMessage: "Successfully created product type",
-            }),
-          });
-          navigate(productTypeUrl(data.productTypeCreate.productType.id));
-        }
-      },
-    });
-
+  const [createProductType, createProductTypeOpts] = useProductTypeCreateMutation({
+    onCompleted: data => {
+      if (data.productTypeCreate.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            id: "paa4m0",
+            defaultMessage: "Successfully created product type",
+          }),
+        });
+        navigate(productTypeUrl(data.productTypeCreate.productType.id));
+      }
+    },
+  });
   const handleCreate = async (formData: ProductTypeForm) => {
     const result = await createProductType({
       variables: {
@@ -86,7 +72,6 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
       errors: getMutationErrors(result),
     };
   };
-
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,

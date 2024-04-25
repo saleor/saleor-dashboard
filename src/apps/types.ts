@@ -1,7 +1,4 @@
-import {
-  AppInstallationFragment,
-  AppListItemFragment,
-} from "@dashboard/graphql";
+import { AppInstallationFragment, AppListItemFragment } from "@dashboard/graphql";
 
 export interface AppLogo {
   source?: string;

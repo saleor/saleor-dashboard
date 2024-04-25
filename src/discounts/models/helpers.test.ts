@@ -20,7 +20,6 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
 
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
   });
-
   it("should return true if predicate has nested AND property", () => {
     const catalogPredicate = {
       OR: [
@@ -51,7 +50,6 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
 
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
   });
-
   it("should return true if predicate is one and has not allow key", () => {
     const catalogPredicate = {
       productPredicate: {
@@ -61,7 +59,6 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
 
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
   });
-
   it("should return true if predicate has many nested conditions and one  has not allow key", () => {
     const catalogPredicate = {
       OR: [
@@ -80,7 +77,6 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
 
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
   });
-
   it("should return true if predicate has nested OR property", () => {
     const catalogPredicate = {
       OR: [
@@ -111,7 +107,6 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
 
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
   });
-
   it("should return true if predicate has nested AND property", () => {
     const catalogPredicate = {
       OR: [
@@ -140,7 +135,6 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
 
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(true);
   });
-
   it("should return false if predicate has only OR property", () => {
     const catalogPredicate = {
       OR: [
@@ -164,7 +158,6 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
 
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(false);
   });
-
   it("should return false if predicate has single not nested property", () => {
     const catalogPredicate = {
       collectionPredicate: {
@@ -174,7 +167,6 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
 
     expect(hasPredicateNestedConditions(catalogPredicate)).toBe(false);
   });
-
   it("shouldd return false when order predicate with proper nesting", () => {
     const orderPredicate = {
       discountedObjectPredicate: {

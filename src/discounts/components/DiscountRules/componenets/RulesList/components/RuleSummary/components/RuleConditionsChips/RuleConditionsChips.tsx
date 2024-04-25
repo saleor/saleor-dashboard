@@ -11,17 +11,10 @@ interface RuleChipsProps {
   currencySymbol: string;
 }
 
-export const RuleConditionsChips = ({
-  rule,
-  currencySymbol,
-}: RuleChipsProps) => {
+export const RuleConditionsChips = ({ rule, currencySymbol }: RuleChipsProps) => {
   const enrichConditions = useEnrichConditions(rule.conditions, currencySymbol);
-
   const conditions = mapConditionToOption(enrichConditions);
-
-  const { conditionsInSummary, conditionsInTooltip } =
-    splitConditions(conditions);
-
+  const { conditionsInSummary, conditionsInTooltip } = splitConditions(conditions);
   const hasConditionInTooltip = conditionsInTooltip.length > 0;
 
   return (
@@ -29,9 +22,7 @@ export const RuleConditionsChips = ({
       {conditionsInSummary.map(({ label, value }) => (
         <RuleSummaryChips key={value} value={value} label={label} />
       ))}
-      {hasConditionInTooltip ? (
-        <RuleSummaryTooltip conditionsValues={conditionsInTooltip} />
-      ) : null}
+      {hasConditionInTooltip ? <RuleSummaryTooltip conditionsValues={conditionsInTooltip} /> : null}
     </>
   );
 };

@@ -79,7 +79,6 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     errors,
   } = props;
   const navigate = useNavigator();
-
   const intl = useIntl();
 
   return (
@@ -171,5 +170,6 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     </DetailPageLayout>
   );
 };
+
 OrderDraftPage.displayName = "OrderDraftPage";
 export default OrderDraftPage;

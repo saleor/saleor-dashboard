@@ -5,10 +5,7 @@ import {
 } from "@dashboard/graphql";
 import { makeFetchAll } from "@dashboard/hooks/makeFetchAll";
 
-export const useFetchAllWarehouses = makeFetchAll<
-  WarehouseListQuery,
-  WarehouseListQueryVariables
->(
+export const useFetchAllWarehouses = makeFetchAll<WarehouseListQuery, WarehouseListQueryVariables>(
   WarehouseListDocument,
   "warehouses",
   (previousResult, { fetchMoreResult }) => {

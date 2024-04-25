@@ -38,10 +38,7 @@ const messages = defineMessages({
   },
 });
 
-function getAppErrorMessage(
-  err: AppErrorFragment,
-  intl: IntlShape,
-): string | undefined {
+function getAppErrorMessage(err: AppErrorFragment, intl: IntlShape): string | undefined {
   if (err) {
     switch (err.code) {
       case AppErrorCode.INVALID_MANIFEST_FORMAT:

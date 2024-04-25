@@ -18,7 +18,6 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   const classes = useStyles();
   const intl = useIntl();
   const { giftCard } = useGiftCardDetails();
-
   const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
   if (!giftCard) {
@@ -26,7 +25,6 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   }
 
   const { last4CodeChars, isExpired } = giftCard;
-
   const title = intl.formatMessage(tableMessages.codeEndingWithLabel, {
     last4CodeChars,
   });
@@ -46,11 +44,7 @@ const GiftCardUpdatePageHeader: React.FC = () => {
         <GiftCardEnableDisableSection />
         <HorizontalSpacer />
         {!isExpired && (
-          <Button
-            variant="primary"
-            onClick={openResendCodeDialog}
-            data-test-id="resend-code"
-          >
+          <Button variant="primary" onClick={openResendCodeDialog} data-test-id="resend-code">
             {intl.formatMessage(messages.resendButtonLabel)}
           </Button>
         )}

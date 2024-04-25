@@ -7,15 +7,12 @@ import {
 
 export const getLastSourcesOfPermission = (
   groupId: string,
-  userPermissions: Array<
-    NonNullable<UserUserPermissionWithSourcePermissionGroupsFragment>
-  >,
+  userPermissions: Array<NonNullable<UserUserPermissionWithSourcePermissionGroupsFragment>>,
 ) =>
   userPermissions
     .filter(
       perm =>
-        perm.sourcePermissionGroups?.length === 1 &&
-        perm.sourcePermissionGroups[0]?.id === groupId,
+        perm.sourcePermissionGroups?.length === 1 && perm.sourcePermissionGroups[0]?.id === groupId,
     )
     .map(perm => perm.code);
 
@@ -34,7 +31,5 @@ export const getPermissionsComponentChoices = (
   }));
 };
 
-export const hasPermissionSelected = (
-  permissions: string[],
-  permissionCode: PermissionEnum,
-) => permissions.filter(userPerm => userPerm === permissionCode).length === 1;
+export const hasPermissionSelected = (permissions: string[], permissionCode: PermissionEnum) =>
+  permissions.filter(userPerm => userPerm === permissionCode).length === 1;

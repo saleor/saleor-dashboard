@@ -53,22 +53,17 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const [displayCountry, setDisplayCountry] = useStateFromProps(
     warehouse?.address?.country.country || "",
   );
-
-  const { errors: validationErrors, submit: handleSubmit } =
-    useAddressValidation(onSubmit);
-
+  const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
   const initialForm: WarehouseDetailsPageFormData = {
     city: warehouse?.address.city ?? "",
     companyName: warehouse?.address.companyName ?? "",
     country: warehouse?.address.country.code ?? "",
     isPrivate: !!warehouse?.isPrivate,
     clickAndCollectOption:
-      warehouse?.clickAndCollectOption ||
-      WarehouseClickAndCollectOptionEnum.DISABLED,
+      warehouse?.clickAndCollectOption || WarehouseClickAndCollectOptionEnum.DISABLED,
     countryArea: warehouse?.address.countryArea ?? "",
     name: warehouse?.name ?? "",
     phone: warehouse?.address.phone ?? "",
@@ -78,12 +73,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={handleSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit, set }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const countrySelect = createSingleAutocompleteSelectHandler(
@@ -97,12 +87,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
           <DetailPageLayout>
             <TopNav href={warehouseListUrl()} title={warehouse?.name} />
             <DetailPageLayout.Content>
-              <WarehouseInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
+              <WarehouseInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
               <CompanyAddressInput
                 countries={countryChoices}

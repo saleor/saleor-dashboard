@@ -1,15 +1,8 @@
 // @ts-strict-ignore
 import chevronDown from "@assets/images/ChevronDown.svg";
-import useElementScroll, {
-  isScrolledToBottom,
-} from "@dashboard/hooks/useElementScroll";
+import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
 import { FetchMoreProps } from "@dashboard/types";
-import {
-  CircularProgress,
-  MenuItem,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { CircularProgress, MenuItem, Paper, Typography } from "@material-ui/core";
 import Add from "@material-ui/icons/Add";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
@@ -25,10 +18,7 @@ const maxMenuItems = 5;
 const offset = 24;
 
 export type ChoiceValue = string;
-export interface SingleAutocompleteChoiceType<
-  V extends ChoiceValue = ChoiceValue,
-  L = string,
-> {
+export interface SingleAutocompleteChoiceType<V extends ChoiceValue = ChoiceValue, L = string> {
   label: L;
   value: V;
 }
@@ -36,8 +26,7 @@ export interface SingleAutocompleteActionType {
   label: string;
   onClick: () => void;
 }
-export interface SingleAutocompleteSelectFieldContentProps
-  extends Partial<FetchMoreProps> {
+export interface SingleAutocompleteSelectFieldContentProps extends Partial<FetchMoreProps> {
   add?: SingleAutocompleteActionType;
   choices: Array<SingleAutocompleteChoiceType<string, string | JSX.Element>>;
   displayCustomValue: boolean;
@@ -65,10 +54,7 @@ const useStyles = makeStyles(
     },
     arrowInnerContainer: {
       alignItems: "center",
-      background:
-        theme.palette.type === "light"
-          ? theme.palette.grey[50]
-          : theme.palette.grey[900],
+      background: theme.palette.type === "light" ? theme.palette.grey[50] : theme.palette.grey[900],
       bottom: 0,
       color: theme.palette.grey[500],
       display: "flex",
@@ -80,9 +66,7 @@ const useStyles = makeStyles(
       width: "100%",
     },
     content: {
-      maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(
-        2,
-      )})`,
+      maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(2)})`,
       overflow: "scroll",
       padding: 8,
     },
@@ -119,16 +103,13 @@ const useStyles = makeStyles(
   },
 );
 
-function getChoiceIndex(
-  index: number,
-  emptyValue: boolean,
-  customValue: boolean,
-  add: boolean,
-) {
+function getChoiceIndex(index: number, emptyValue: boolean, customValue: boolean, add: boolean) {
   let choiceIndex = index;
+
   if (emptyValue) {
     choiceIndex += 1;
   }
+
   if (customValue || add) {
     choiceIndex += 2;
   }
@@ -137,7 +118,6 @@ function getChoiceIndex(
 }
 
 const sliceSize = 20;
-
 const SingleAutocompleteSelectFieldContent: React.FC<
   SingleAutocompleteSelectFieldContentProps
 > = props => {
@@ -166,7 +146,6 @@ const SingleAutocompleteSelectFieldContent: React.FC<
   const [calledForMore, setCalledForMore] = React.useState(false);
   const [slice, setSlice] = React.useState(onFetchMore ? 10000 : sliceSize);
   const [initialized, setInitialized] = React.useState(false);
-
   const scrolledToBottom = isScrolledToBottom(anchor, scrollPosition, offset);
 
   React.useEffect(() => {
@@ -177,13 +156,11 @@ const SingleAutocompleteSelectFieldContent: React.FC<
       setSlice(slice => slice + sliceSize);
     }
   }, [scrolledToBottom]);
-
   React.useEffect(() => {
     if (!onFetchMore) {
       setSlice(sliceSize);
     }
   }, [choices?.length]);
-
   React.useEffect(() => {
     if (anchor.current?.scrollTo && !initialized) {
       anchor.current.scrollTo({
@@ -192,11 +169,9 @@ const SingleAutocompleteSelectFieldContent: React.FC<
       setInitialized(true);
     }
   }, [initialized]);
-
   React.useEffect(() => {
     setInitialized(false);
   }, [inputValue]);
-
   React.useEffect(() => {
     if (calledForMore && !loading) {
       setCalledForMore(false);
@@ -206,7 +181,6 @@ const SingleAutocompleteSelectFieldContent: React.FC<
   const emptyOptionProps = getItemProps({
     item: "",
   });
-
   const choicesToDisplay = choices.slice(0, slice);
 
   return (
@@ -274,20 +248,11 @@ const SingleAutocompleteSelectFieldContent: React.FC<
                 />
               </MenuItem>
             )}
-            {choices.length > 0 && (!!add || displayCustomValue) && (
-              <Hr className={classes.hr} />
-            )}
+            {choices.length > 0 && (!!add || displayCustomValue) && <Hr className={classes.hr} />}
             {choicesToDisplay.map((suggestion, index) => {
-              const choiceIndex = getChoiceIndex(
-                index,
-                emptyOption,
-                displayCustomValue,
-                !!add,
-              );
+              const choiceIndex = getChoiceIndex(index, emptyOption, displayCustomValue, !!add);
               const key = React.isValidElement(suggestion.label)
-                ? `${index}${suggestion.value}${
-                    (suggestion as unknown as ReactElement).props
-                  }`
+                ? `${index}${suggestion.value}${(suggestion as unknown as ReactElement).props}`
                 : JSON.stringify(suggestion);
 
               return (
@@ -344,6 +309,5 @@ const SingleAutocompleteSelectFieldContent: React.FC<
   );
 };
 
-SingleAutocompleteSelectFieldContent.displayName =
-  "SingleAutocompleteSelectFieldContent";
+SingleAutocompleteSelectFieldContent.displayName = "SingleAutocompleteSelectFieldContent";
 export default SingleAutocompleteSelectFieldContent;

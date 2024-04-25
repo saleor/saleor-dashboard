@@ -3,10 +3,7 @@ import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
 } from "@dashboard/components/SaveFilterTabDialog";
-import {
-  useProductTypeBulkDeleteMutation,
-  useProductTypeListQuery,
-} from "@dashboard/graphql";
+import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -62,7 +59,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     toggle,
     toggleAll,
   } = useBulkActions(params.ids);
-
   const { settings } = useListSettings(ListViews.PRODUCT_LIST);
   const intl = useIntl();
 
@@ -81,25 +77,19 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables,
   });
-
   const tabs = getFilterTabs();
-
   const currentTab = getFiltersCurrentTab(params, tabs);
-
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      cleanupFn: reset,
-      createUrl: productTypeListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-    });
-
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: productTypeListUrl,
+    getFilterQueryParam,
+    navigate,
+    params,
+  });
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductTypeListUrlDialog,
     ProductTypeListUrlQueryParams
   >(navigate, productTypeListUrl, params);
-
   const handleTabChange = (tab: number) => {
     reset();
     navigate(
@@ -109,54 +99,45 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
       }),
     );
   };
-
   const handleTabDelete = () => {
     deleteFilterTab(currentTab);
     reset();
     navigate(productTypeListUrl());
   };
-
   const handleTabSave = (data: SaveFilterTabDialogFormData) => {
     saveFilterTab(data.name, getActiveFilters(params));
     handleTabChange(tabs.length + 1);
   };
-
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.productTypes.pageInfo),
     paginationState,
     queryString: params,
   });
-
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
-
   const productTypeDeleteData = useProductTypeDelete({
     selectedTypes: selectedProductTypes,
     params,
   });
-
   const productTypesData = mapEdgesToItems(data?.productTypes);
-
-  const [productTypeBulkDelete, productTypeBulkDeleteOpts] =
-    useProductTypeBulkDeleteMutation({
-      onCompleted: data => {
-        if (data.productTypeBulkDelete.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          reset();
-          refetch();
-          navigate(
-            productTypeListUrl({
-              ...params,
-              action: undefined,
-              ids: undefined,
-            }),
-          );
-        }
-      },
-    });
-
+  const [productTypeBulkDelete, productTypeBulkDeleteOpts] = useProductTypeBulkDeleteMutation({
+    onCompleted: data => {
+      if (data.productTypeBulkDelete.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        reset();
+        refetch();
+        navigate(
+          productTypeListUrl({
+            ...params,
+            action: undefined,
+            ids: undefined,
+          }),
+        );
+      }
+    },
+  });
   const onProductTypeBulkDelete = () =>
     productTypeBulkDelete({
       variables: {

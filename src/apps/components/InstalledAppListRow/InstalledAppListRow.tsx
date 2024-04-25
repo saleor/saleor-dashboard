@@ -16,9 +16,7 @@ import { messages } from "./messages";
 export const InstalledAppListRow: React.FC<InstalledApp> = props => {
   const { app, isExternal, logo } = props;
   const intl = useIntl();
-
   const location = useLocation();
-
   /**
    * Active app will redirect to app iframe, but disabled app is likely not going to work - so iframe is blocked.
    * Link will point to app "manage" screen where app can be enabled or uninstalled
@@ -50,19 +48,9 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         }}
         cursor={"pointer"}
       >
-        <Box
-          gap={2}
-          alignItems="center"
-          display="grid"
-          __gridTemplateColumns="1fr auto"
-        >
+        <Box gap={2} alignItems="center" display="grid" __gridTemplateColumns="1fr auto">
           <AppAvatar logo={logo} />
-          <Box
-            display="flex"
-            gap={1}
-            flexDirection="column"
-            alignItems="flex-start"
-          >
+          <Box display="flex" gap={1} flexDirection="column" alignItems="flex-start">
             <Box display="flex" gap={2}>
               <Text
                 size={4}
@@ -89,9 +77,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
                 </Text>
               ) : null}
             </Box>
-            {app.manifestUrl && (
-              <AppManifestUrl manifestUrl={app.manifestUrl} />
-            )}
+            {app.manifestUrl && <AppManifestUrl manifestUrl={app.manifestUrl} />}
           </Box>
         </Box>
         <Box
@@ -107,10 +93,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
                 <FormattedMessage {...messages.appDisabled} />
               </Text>
             )}
-            <AppAdditionalInfo
-              permissions={app.permissions}
-              created={app.created}
-            />
+            <AppAdditionalInfo permissions={app.permissions} created={app.created} />
           </Box>
         </Box>
       </List.Item>

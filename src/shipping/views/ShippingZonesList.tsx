@@ -37,17 +37,12 @@ interface ShippingZonesListProps {
   params: ShippingZonesListUrlQueryParams;
 }
 
-export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
-  params,
-}) => {
+export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
   const { user } = useUser();
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.SHIPPING_METHODS_LIST,
-  );
-
+  const { updateListSettings, settings } = useListSettings(ListViews.SHIPPING_METHODS_LIST);
   const {
     clearRowSelection,
     selectedRowIds,
@@ -58,9 +53,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
   usePaginationReset(shippingZonesListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
-
   const paginationState = createPaginationState(settings.rowNumber, params);
-
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
@@ -68,20 +61,17 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     }),
     [params, settings.rowNumber],
   );
-
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingZonesListUrlDialog,
     ShippingZonesListUrlQueryParams
   >(navigate, shippingZonesListUrl, params);
-
   const { data, loading, refetch } = useShippingZonesQuery({
     displayLoader: true,
     variables: queryVariables,
   });
   const shippingZones = mapEdgesToItems(data?.shippingZones);
-
-  const [updateDefaultWeightUnit, updateDefaultWeightUnitOpts] =
-    useUpdateDefaultWeightUnitMutation({
+  const [updateDefaultWeightUnit, updateDefaultWeightUnitOpts] = useUpdateDefaultWeightUnitMutation(
+    {
       onCompleted: data => {
         if (data.shopSettingsUpdate?.errors.length === 0) {
           notify({
@@ -91,29 +81,26 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
           closeModal();
         }
       },
-    });
-
-  const [bulkDeleteShippingZone, bulkDeleteShippingZoneOpts] =
-    useBulkDeleteShippingZoneMutation({
-      onCompleted: data => {
-        if (data.shippingZoneBulkDelete?.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          closeModal();
-          clearRowSelection();
-          refetch();
-        }
-      },
-    });
-
+    },
+  );
+  const [bulkDeleteShippingZone, bulkDeleteShippingZoneOpts] = useBulkDeleteShippingZoneMutation({
+    onCompleted: data => {
+      if (data.shippingZoneBulkDelete?.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        closeModal();
+        clearRowSelection();
+        refetch();
+      }
+    },
+  });
   const paginationValues = usePaginator({
     pageInfo: data?.shippingZones?.pageInfo,
     paginationState,
     queryString: params,
   });
-
   const handleSetSelectedShippingZonesIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!shippingZones) {
@@ -129,16 +116,9 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
 
       setClearDatagridRowSelectionCallback(clearSelection);
     },
-    [
-      shippingZones,
-      selectedRowIds,
-      setClearDatagridRowSelectionCallback,
-      setSelectedRowIds,
-    ],
+    [shippingZones, selectedRowIds, setClearDatagridRowSelectionCallback, setSelectedRowIds],
   );
-
-  const searchHandler = (query: string) =>
-    navigate(shippingZonesListUrl({ ...params, query }));
+  const searchHandler = (query: string) => navigate(shippingZonesListUrl({ ...params, query }));
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
@@ -146,9 +126,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         defaultWeightUnit={shop?.defaultWeightUnit ?? undefined}
         settings={settings}
         disabled={
-          loading ||
-          bulkDeleteShippingZoneOpts.loading ||
-          updateDefaultWeightUnitOpts.loading
+          loading || bulkDeleteShippingZoneOpts.loading || updateDefaultWeightUnitOpts.loading
         }
         shippingZones={shippingZones}
         onUpdateListSettings={updateListSettings}
@@ -204,9 +182,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             values={{
               counter: selectedRowIds?.length,
               displayQuantity: (
-                <strong>
-                  {getStringOrPlaceholder(selectedRowIds?.length.toString())}
-                </strong>
+                <strong>{getStringOrPlaceholder(selectedRowIds?.length.toString())}</strong>
               ),
             }}
           />

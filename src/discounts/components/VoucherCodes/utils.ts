@@ -5,9 +5,7 @@ export const hasSavedVoucherCodesToDelete = (
   voucherCodes: VoucherCode[],
 ): boolean => {
   return voucherCodesIdsToDelete.some(voucherCodeId => {
-    const voucherCode = voucherCodes.find(
-      voucherCode => voucherCode.code === voucherCodeId,
-    );
+    const voucherCode = voucherCodes.find(voucherCode => voucherCode.code === voucherCodeId);
 
     return voucherCode && voucherCode.status !== "Draft";
   });

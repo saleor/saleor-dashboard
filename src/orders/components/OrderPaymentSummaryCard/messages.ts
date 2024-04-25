@@ -34,20 +34,17 @@ export const orderPaymentMessages = defineMessages({
   grantedRefund: {
     defaultMessage: "Granted",
     id: "NPIBGp",
-    description:
-      "heading, sum of all granted refunds from transactions in order",
+    description: "heading, sum of all granted refunds from transactions in order",
   },
   pendingRefund: {
     defaultMessage: "Pending",
     id: "IfiR4M",
-    description:
-      "heading, sum of all pending refunds from transactions in order",
+    description: "heading, sum of all pending refunds from transactions in order",
   },
   refunded: {
     id: "hoii+4",
     defaultMessage: "Refunded",
-    description:
-      "heading, sum of all completed refunds from transactions in order",
+    description: "heading, sum of all completed refunds from transactions in order",
   },
   refundsExplanation: {
     id: "16sza6",

@@ -4,8 +4,7 @@ import React from "react";
  * This function removes characters which break
  * regexps but are rarely useful in searches
  */
-const parseQuery = (query: string) =>
-  query.replace(/([.?*+\-=:^$\\[\]<>(){}|])/g, "\\$&");
+const parseQuery = (query: string) => query.replace(/([.?*+\-=:^$\\[\]<>(){}|])/g, "\\$&");
 
 /**
  * useLocalSearch is a hook that is useful when client-side
@@ -26,12 +25,10 @@ export function useLocalSearch<T>(
   const searchResult = React.useMemo(
     () =>
       array?.filter(
-        element =>
-          getStringToSearch(element).search(
-            new RegExp(parseQuery(query), "i"),
-          ) >= 0,
+        element => getStringToSearch(element).search(new RegExp(parseQuery(query), "i")) >= 0,
       ),
     [array, query],
   );
+
   return { query, setQuery, searchResult };
 }

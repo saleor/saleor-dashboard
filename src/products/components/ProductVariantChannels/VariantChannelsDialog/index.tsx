@@ -13,10 +13,7 @@ import { ProductChannelListing } from "../types";
 
 interface VariantChannelsDialogProps {
   channelListings: ProductChannelListing;
-  selectedChannelListings?: FormsetData<
-    ChannelPriceAndPreorderData,
-    IChannelPriceAndPreorderArgs
-  >;
+  selectedChannelListings?: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
   open: boolean;
   onClose: () => void;
   onConfirm: (selectedIds: string[]) => void;
@@ -34,18 +31,14 @@ export const VariantChannelsDialog: React.FC<VariantChannelsDialogProps> = ({
   const allChannels = channelListings.map(c => c.channel);
   const preSelectedIds = selectedOrDefaults.map(c => c.id);
   const [selected, setSelected] = useState(preSelectedIds);
-
   const isSelected = currentItem => selected.includes(currentItem.id);
-
   const handleToggleAll = () => {
     setSelected(prev => (prev.length > 0 ? [] : allChannelsIds));
   };
-
   const handleConfirm = () => {
     onConfirm(selected);
     onClose();
   };
-
   const handleChange = ({ id }) => {
     setSelected(state => toggle(id, state, (aId, bId) => aId === bId));
   };

@@ -41,9 +41,7 @@ export const useColumns = ({
   columnCategories,
   onSave,
 }: UseColumnsProps) => {
-  const [dynamicColumns, updateDynamicColumns] = React.useState<
-    AvailableColumn[] | null
-  >(null);
+  const [dynamicColumns, updateDynamicColumns] = React.useState<AvailableColumn[] | null>(null);
 
   // Dynamic columns are loaded from the API, thus they need to be updated
   // after query resolves with data. Then we also sort them by order of addition
@@ -51,26 +49,17 @@ export const useColumns = ({
   React.useEffect(() => {
     if (dynamicColumns === null && areCategoriesLoaded(columnCategories)) {
       updateDynamicColumns(
-        sortColumns(
-          extractSelectedNodesFromCategories(columnCategories),
-          selectedColumns,
-        ),
+        sortColumns(extractSelectedNodesFromCategories(columnCategories), selectedColumns),
       );
     }
   }, [columnCategories, selectedColumns, dynamicColumns]);
 
   const initialColumnsState = React.useMemo(
-    () =>
-      mergeSelectedColumns({ staticColumns, dynamicColumns, selectedColumns }),
+    () => mergeSelectedColumns({ staticColumns, dynamicColumns, selectedColumns }),
     [dynamicColumns, staticColumns, selectedColumns],
   );
-  const [recentlyAddedColumn, setRecentlyAddedColumn] = React.useState<
-    string | null
-  >(null);
-
-  const [visibleColumns, setVisibleColumns] =
-    useStateFromProps(initialColumnsState);
-
+  const [recentlyAddedColumn, setRecentlyAddedColumn] = React.useState<string | null>(null);
+  const [visibleColumns, setVisibleColumns] = useStateFromProps(initialColumnsState);
   const onMove = React.useCallback(
     (startIndex: number, endIndex: number): void => {
       // When empty column prevent to rearrange it order
@@ -82,11 +71,7 @@ export const useColumns = ({
         // Keep empty column always at beginning
         if (endIndex === 0) {
           return setVisibleColumns(old =>
-            addAtIndex(
-              old[startIndex],
-              removeAtIndex(old, startIndex),
-              endIndex + 1,
-            ),
+            addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex + 1),
           );
         }
       }
@@ -97,26 +82,24 @@ export const useColumns = ({
     },
     [visibleColumns, setVisibleColumns],
   );
-
   const onResize = React.useCallback(
     (column: GridColumn, newSize: number) => {
       if (column.id === "empty") {
         return;
       }
+
       return setVisibleColumns(prevColumns =>
         prevColumns.map(prevColumn =>
-          prevColumn.id === column.id
-            ? { ...prevColumn, width: newSize }
-            : prevColumn,
+          prevColumn.id === column.id ? { ...prevColumn, width: newSize } : prevColumn,
         ),
       );
     },
     [setVisibleColumns],
   );
-
   const onToggle = (columnId: string) => {
     const isAdded = !selectedColumns.includes(columnId);
     const isDynamic = columnId.includes(":");
+
     if (!isDynamic) {
       if (isAdded) {
         onSave([...selectedColumns, columnId]);
@@ -125,6 +108,7 @@ export const useColumns = ({
         onSave(selectedColumns.filter(id => id !== columnId));
       }
     }
+
     if (isDynamic) {
       const [prefix, id] = columnId.split(":");
       const hiddenColumnPrefixes =
@@ -154,9 +138,7 @@ export const useColumns = ({
       }
     }
   };
-
   const onClearRecentlyAddedColumn = () => setRecentlyAddedColumn(null);
-
   // Should be used only for special cases
   const onCustomUpdateVisible = setVisibleColumns;
   const onResetDynamicToInitial = (customSelected?: string[]) => {

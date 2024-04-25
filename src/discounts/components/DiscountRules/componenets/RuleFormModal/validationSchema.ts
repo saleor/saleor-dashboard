@@ -24,35 +24,25 @@ const validationMessages = defineMessages({
     defaultMessage: "You must select at least one gift",
   },
 });
-
 const option = z.object({ label: z.string(), value: z.string() });
 const rewardValueRequired = (intl: IntlShape) =>
   z
     .number({
-      required_error: intl.formatMessage(
-        validationMessages.rewardValueRequired,
-      ),
-      invalid_type_error: intl.formatMessage(
-        validationMessages.rewardValueRequired,
-      ),
+      required_error: intl.formatMessage(validationMessages.rewardValueRequired),
+      invalid_type_error: intl.formatMessage(validationMessages.rewardValueRequired),
     })
     .min(1, intl.formatMessage(validationMessages.rewardValueRequired));
-
 const getDefaultSchema = (intl: IntlShape) =>
   z.object({
     id: z.string().optional(),
     description: z.string().nullable(),
     hasPredicateNestedConditions: z.boolean().optional(),
-    name: z
-      .string()
-      .min(1, intl.formatMessage(validationMessages.nameRequired)),
+    name: z.string().min(1, intl.formatMessage(validationMessages.nameRequired)),
     channel: z.object(
       { label: z.string(), value: z.string() },
       {
         required_error: intl.formatMessage(validationMessages.channelRequired),
-        invalid_type_error: intl.formatMessage(
-          validationMessages.channelRequired,
-        ),
+        invalid_type_error: intl.formatMessage(validationMessages.channelRequired),
       },
     ),
     conditions: z.array(
@@ -67,7 +57,6 @@ const getDefaultSchema = (intl: IntlShape) =>
       }),
     ),
   });
-
 const getCatalogRewardValidation = (intl: IntlShape) =>
   z.object({
     rewardValue: rewardValueRequired(intl),
@@ -75,7 +64,6 @@ const getCatalogRewardValidation = (intl: IntlShape) =>
     rewardType: z.literal(null),
     rewardGifts: z.array(option).optional(),
   });
-
 const getOrderRewardSubtotalValidation = (intl: IntlShape) => {
   return z.object({
     rewardValue: rewardValueRequired(intl),
@@ -84,7 +72,6 @@ const getOrderRewardSubtotalValidation = (intl: IntlShape) => {
     rewardGifts: z.array(option).optional(),
   });
 };
-
 const getOrderRewardGiftsValidation = (intl: IntlShape) =>
   z.object({
     rewardValue: z.null(),
@@ -115,9 +102,7 @@ export const getValidationSchema = (intl: IntlShape) => {
       return true;
     },
     {
-      message: intl.formatMessage(
-        validationMessages.rewardValueMustBeLessThan100,
-      ),
+      message: intl.formatMessage(validationMessages.rewardValueMustBeLessThan100),
       path: ["rewardValue"],
     },
   );

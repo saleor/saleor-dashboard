@@ -18,7 +18,6 @@ describe("getStockData", () => {
       { column: "warehouse:Q2hhbm5lbDox", row: 1, data: { value: "12345" } },
       { column: "warehouse:Q2hhbm5lbDot", row: 1, data: { value: "5666" } },
     ];
-
     // Act
     const stocks = getStockData(changeData, 1);
 
@@ -34,26 +33,20 @@ describe("getStockData", () => {
       },
     ]);
   });
-
   test("should return empty array when no changes for given row", () => {
     // Arrange
     const changeData: DatagridChange[] = [
       { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
     ];
-
     // Act
     const stocks = getStockData(changeData, 1);
 
     // Assert
     expect(stocks).toEqual([]);
   });
-
   test("should return empty string when no name column for given row", () => {
     // Arrange
-    const changeData: DatagridChange[] = [
-      { column: "name", row: 2, data: "Joe" },
-    ];
-
+    const changeData: DatagridChange[] = [{ column: "name", row: 2, data: "Joe" }];
     // Act
     const stocks = getStockData(changeData, 1);
 
@@ -61,7 +54,6 @@ describe("getStockData", () => {
     expect(stocks).toEqual([]);
   });
 });
-
 describe("getVaraintUpdateStockData", () => {
   const stocks = [
     {
@@ -84,7 +76,6 @@ describe("getVaraintUpdateStockData", () => {
       { column: "warehouse:Q2hhbm5lbDox", row: 1, data: { value: "12345" } },
       { column: "warehouse:Q2hhbm5lbDot", row: 1, data: { value: "5666" } },
     ];
-
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
@@ -106,7 +97,6 @@ describe("getVaraintUpdateStockData", () => {
       ],
     });
   });
-
   test("should handle remove stocks", () => {
     // Arrange
     const changeData: DatagridChange[] = [
@@ -121,7 +111,6 @@ describe("getVaraintUpdateStockData", () => {
         data: { value: numberCellEmptyValue },
       },
     ];
-
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
@@ -137,14 +126,12 @@ describe("getVaraintUpdateStockData", () => {
       update: [],
     });
   });
-
   test("should handle create stocks", () => {
     // Arrange
     const changeData: DatagridChange[] = [
       { column: "warehouse:Q2hhbm5lbDof", row: 1, data: { value: "12345" } },
       { column: "warehouse:Q2hhbm5lbDod", row: 1, data: { value: "5666" } },
     ];
-
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
@@ -166,13 +153,11 @@ describe("getVaraintUpdateStockData", () => {
       update: [],
     });
   });
-
   test("should return empty array when no changes for given row", () => {
     // Arrange
     const changeData: DatagridChange[] = [
       { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
     ];
-
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
@@ -181,13 +166,9 @@ describe("getVaraintUpdateStockData", () => {
     // Assert
     expect(variantStocks).toEqual({ create: [], remove: [], update: [] });
   });
-
   test("should return empty string when no name column for given row", () => {
     // Arrange
-    const changeData: DatagridChange[] = [
-      { column: "name", row: 2, data: "Joe" },
-    ];
-
+    const changeData: DatagridChange[] = [{ column: "name", row: 2, data: "Joe" }];
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,

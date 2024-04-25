@@ -16,7 +16,6 @@ describe("getUnavailableObjects", () => {
         }
       }
     }`;
-
     const events = getUnavailableObjects(query);
 
     expect(events).toEqual(["AddressUpdated"]);

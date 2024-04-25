@@ -1,4 +1,4 @@
-name: Run unit tests
+name: QA
 
 on: [pull_request]
 

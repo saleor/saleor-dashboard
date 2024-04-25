@@ -19,14 +19,11 @@ interface CustomAppCreateProps {
   setToken: (token: string) => void;
 }
 
-export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
-  setToken,
-}) => {
+export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({ setToken }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-
   const onSubmit = (data: AppCreateMutation) => {
     if (data.appCreate.errors.length === 0) {
       notify({
@@ -37,11 +34,9 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
       setToken(data.appCreate.authToken);
     }
   };
-
   const [createApp, createAppOpts] = useAppCreateMutation({
     onCompleted: onSubmit,
   });
-
   const handleSubmit = async (data: CustomAppCreatePageFormData) =>
     extractMutationErrors(
       createApp({

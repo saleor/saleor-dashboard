@@ -10,18 +10,16 @@ import {
 
 export class ProductsExportParameters {
   private readonly exportInfo?: InputMaybe<ExportInfoInput>;
+
   private readonly fileType: FileTypesEnum;
+
   private readonly filter?: InputMaybe<ProductFilterInput>;
+
   private readonly ids?: InputMaybe<Array<Scalars["ID"]>>;
+
   private readonly scope: ExportScope;
 
-  constructor({
-    exportInfo,
-    fileType,
-    filter,
-    ids,
-    scope,
-  }: ExportProductsInputType) {
+  constructor({ exportInfo, fileType, filter, ids, scope }: ExportProductsInputType) {
     this.exportInfo = exportInfo;
     this.fileType = fileType;
     this.filter = filter;

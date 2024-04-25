@@ -17,7 +17,6 @@ const useStyles = makeStyles(
   }),
   { name: "SortableHandle" },
 );
-
 const SortableHandle = SortableHandleHoc(() => {
   const classes = useStyles({});
 

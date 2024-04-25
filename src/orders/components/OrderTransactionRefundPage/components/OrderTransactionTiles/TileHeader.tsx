@@ -11,10 +11,7 @@ interface TileHeaderProps {
   isDisabled?: boolean;
 }
 
-export const TileHeader: React.FC<TileHeaderProps> = ({
-  transaction,
-  isDisabled = false,
-}) => {
+export const TileHeader: React.FC<TileHeaderProps> = ({ transaction, isDisabled = false }) => {
   return (
     <RadioGroup.Item
       position="relative"
@@ -34,9 +31,7 @@ export const TileHeader: React.FC<TileHeaderProps> = ({
           color={isDisabled ? "defaultDisabled" : "default1"}
         >
           {transaction.name === "" ? (
-            <FormattedMessage
-              {...transactionRefundTilesMessages.defaultTransactionName}
-            />
+            <FormattedMessage {...transactionRefundTilesMessages.defaultTransactionName} />
           ) : (
             transaction.name
           )}

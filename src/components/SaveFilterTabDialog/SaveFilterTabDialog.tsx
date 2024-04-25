@@ -1,13 +1,7 @@
 // @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -94,5 +88,6 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
     </Dialog>
   );
 };
+
 SaveFilterTabDialog.displayName = "SaveFilterTabDialog";
 export default SaveFilterTabDialog;

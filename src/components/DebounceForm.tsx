@@ -9,12 +9,7 @@ export interface DebounceFormProps {
   time?: number;
 }
 
-export const DebounceForm: React.FC<DebounceFormProps> = ({
-  change,
-  children,
-  submit,
-  time,
-}) => (
+export const DebounceForm: React.FC<DebounceFormProps> = ({ change, children, submit, time }) => (
   <Debounce debounceFn={submit} time={time}>
     {debounceFn =>
       children(event => {

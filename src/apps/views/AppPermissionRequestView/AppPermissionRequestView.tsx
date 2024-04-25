@@ -2,11 +2,7 @@ import { createAppsDebug } from "@dashboard/apps/apps-debug";
 import { getPermissionsDiff } from "@dashboard/apps/getPermissionsDiff";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
 import Link from "@dashboard/components/Link";
-import {
-  PermissionEnum,
-  useAppQuery,
-  useAppUpdatePermissionsMutation,
-} from "@dashboard/graphql";
+import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import { Box, BoxProps, Button, Text, TextProps } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
@@ -37,7 +33,6 @@ function usePageQuery() {
   return React.useMemo(() => {
     const params = new URLSearchParams(search);
     const permissionsParams = params.get("requestedPermissions");
-
     const requestedPermissions = permissionsParams
       ? (permissionsParams.split(",") as PermissionEnum[])
       : [];
@@ -58,9 +53,7 @@ export const AppPermissionRequestView = () => {
   const params = useParams<{ id: string }>();
   const { redirectPath, requestedPermissions } = usePageQuery();
   const { formatMessage } = useIntl();
-
   const appId = params.id;
-
   const { data } = useAppQuery({
     variables: {
       id: appId,
@@ -68,13 +61,10 @@ export const AppPermissionRequestView = () => {
     },
   });
   const [updatePermissions, { loading }] = useAppUpdatePermissionsMutation();
-
-  const { navigateToAppApproved, navigateToAppDenied } =
-    usePermissionsRequestRedirects({
-      appId,
-      redirectPath,
-    });
-
+  const { navigateToAppApproved, navigateToAppDenied } = usePermissionsRequestRedirects({
+    appId,
+    redirectPath,
+  });
   const { mapCodesToNames, isReady } = useGetAvailableAppPermissions();
 
   useEffect(() => {
@@ -97,10 +87,7 @@ export const AppPermissionRequestView = () => {
     updatePermissions({
       variables: {
         id: appId,
-        permissions: [
-          ...(data.app?.permissions ?? []).map(p => p.code),
-          ...requestedPermissions,
-        ],
+        permissions: [...(data.app?.permissions ?? []).map(p => p.code), ...requestedPermissions],
       },
     })
       .then(resp => {
@@ -120,14 +107,12 @@ export const AppPermissionRequestView = () => {
         return navigateToAppDenied("UPDATE_PERMISSIONS_FAILED");
       });
   };
-
   const onDeny = () => navigateToAppDenied("USER_DENIED_PERMISSIONS");
 
   return (
     <Box padding={12}>
       <Text as="h1" size={9} fontWeight="medium" textAlign="center">
-        {formatMessage(appPermissionsRequestViewMessages.headerAuthorize)}{" "}
-        {data.app.name}
+        {formatMessage(appPermissionsRequestViewMessages.headerAuthorize)} {data.app.name}
       </Text>
       <WrapperBox>
         <Box display="flex" gap={4}>
@@ -139,27 +124,17 @@ export const AppPermissionRequestView = () => {
               <Text size={4} fontWeight="bold">
                 {data.app.name}
               </Text>{" "}
-              {formatMessage(appPermissionsRequestViewMessages.by)}{" "}
-              {data.app.author}
+              {formatMessage(appPermissionsRequestViewMessages.by)} {data.app.author}
             </Text>
             <Text as="p" color="default2">
-              {formatMessage(
-                appPermissionsRequestViewMessages.requestsNewPermissions,
-              )}
+              {formatMessage(appPermissionsRequestViewMessages.requestsNewPermissions)}
             </Text>
           </Box>
         </Box>
         <Box marginY={8} display="grid" gridTemplateColumns={2} gap={6}>
-          <Box
-            borderRightStyle="solid"
-            borderWidth={1}
-            borderColor="default1"
-            paddingRight={6}
-          >
+          <Box borderRightStyle="solid" borderWidth={1} borderColor="default1" paddingRight={6}>
             <SmallHeading marginBottom={2}>
-              {formatMessage(
-                appPermissionsRequestViewMessages.currentPermissionsHeader,
-              )}
+              {formatMessage(appPermissionsRequestViewMessages.currentPermissionsHeader)}
             </SmallHeading>
             {(data.app.permissions ?? []).map(permission => (
               <Text as="p" key={permission.code}>
@@ -169,9 +144,7 @@ export const AppPermissionRequestView = () => {
           </Box>
           <Box>
             <SmallHeading marginBottom={2}>
-              {formatMessage(
-                appPermissionsRequestViewMessages.requestedPermissionsHeader,
-              )}
+              {formatMessage(appPermissionsRequestViewMessages.requestedPermissionsHeader)}
             </SmallHeading>
             {mapCodesToNames(requestedPermissions).map(permissionName => (
               <Text as="p" key={permissionName}>
@@ -180,41 +153,26 @@ export const AppPermissionRequestView = () => {
             ))}
           </Box>
         </Box>
-        <Box
-          borderTopStyle="solid"
-          paddingTop={8}
-          borderWidth={1}
-          borderColor="default1"
-        >
+        <Box borderTopStyle="solid" paddingTop={8} borderWidth={1} borderColor="default1">
           <SmallHeading marginBottom={2}>
-            {formatMessage(
-              appPermissionsRequestViewMessages.approveScenarioHelperHeader,
-            )}
+            {formatMessage(appPermissionsRequestViewMessages.approveScenarioHelperHeader)}
           </SmallHeading>
           <SmallText>
-            {formatMessage(
-              appPermissionsRequestViewMessages.approveScenarioHelperBody,
-            )}
+            {formatMessage(appPermissionsRequestViewMessages.approveScenarioHelperBody)}
           </SmallText>
           <SmallText as="p">
             <Link
               target="__blank"
               href="https://docs.saleor.io/docs/3.x/developer/permissions#app-permissions"
             >
-              {formatMessage(
-                appPermissionsRequestViewMessages.permissionsDocsLink,
-              )}
+              {formatMessage(appPermissionsRequestViewMessages.permissionsDocsLink)}
             </Link>
           </SmallText>
           <SmallHeading marginBottom={2} marginTop={4}>
-            {formatMessage(
-              appPermissionsRequestViewMessages.denyScenarioHelperHeader,
-            )}
+            {formatMessage(appPermissionsRequestViewMessages.denyScenarioHelperHeader)}
           </SmallHeading>
           <SmallText>
-            {formatMessage(
-              appPermissionsRequestViewMessages.denyScenarioHelperBody,
-            )}
+            {formatMessage(appPermissionsRequestViewMessages.denyScenarioHelperBody)}
           </SmallText>
         </Box>
         <Box display="flex" justifyContent="flex-end" gap={4} marginTop={12}>

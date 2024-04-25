@@ -947,8 +947,7 @@ export const customerList: Customers = [
     },
   },
 ];
-export const customer: CustomerDetailsQuery["user"] &
-  CustomerAddressesQuery["user"] = {
+export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["user"] = {
   __typename: "User",
   addresses: [
     {

@@ -1,10 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const shopSettingsUpdate = gql`
-  mutation ShopSettingsUpdate(
-    $shopSettingsInput: ShopSettingsInput!
-    $addressInput: AddressInput
-  ) {
+  mutation ShopSettingsUpdate($shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput) {
     shopSettingsUpdate(input: $shopSettingsInput) {
       errors {
         ...ShopError

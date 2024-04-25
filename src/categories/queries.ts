@@ -31,13 +31,7 @@ export const rootCategories = gql`
 `;
 
 export const categoryDetails = gql`
-  query CategoryDetails(
-    $id: ID!
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
-  ) {
+  query CategoryDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
     category(id: $id) {
       ...CategoryDetails
       children(first: $first, after: $after, last: $last, before: $before) {

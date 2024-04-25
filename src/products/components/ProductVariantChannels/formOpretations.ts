@@ -3,10 +3,7 @@ import { ChannelPriceAndPreorderData } from "@dashboard/channels/utils";
 import { ProductVariantCreateDataQuery } from "@dashboard/graphql";
 import { UseFormsetOutput } from "@dashboard/hooks/useFormset";
 import { getChannelsInput } from "@dashboard/products/utils/handlers";
-import {
-  validateCostPrice,
-  validatePrice,
-} from "@dashboard/products/utils/validation";
+import { validateCostPrice, validatePrice } from "@dashboard/products/utils/validation";
 
 import { VariantChannelListing } from "./types";
 
@@ -15,8 +12,7 @@ type FormChannels = UseFormsetOutput<ChannelPriceAndPreorderData>;
 export const validateChannels = (channels: FormChannels["data"]) =>
   channels.some(
     channelData =>
-      validatePrice(channelData.value.price) ||
-      validateCostPrice(channelData.value.costPrice),
+      validatePrice(channelData.value.price) || validateCostPrice(channelData.value.costPrice),
   );
 
 export const createChannelsWithPreorderInfo = (
@@ -35,16 +31,10 @@ export const concatChannelsBySelection = (
   formChannels: FormChannels,
   allChannels: ChannelPriceAndPreorderData[],
 ) => {
-  const includedAndSelected = formChannels.data.filter(ch =>
-    selectedIds.includes(ch.id),
-  );
+  const includedAndSelected = formChannels.data.filter(ch => selectedIds.includes(ch.id));
   const includedAndSelectedIds = includedAndSelected.map(ch => ch.id);
-  const restSelectedIds = selectedIds.filter(
-    id => !includedAndSelectedIds.includes(id),
-  );
-  const newlySelected = allChannels.filter(ch =>
-    restSelectedIds.includes(ch.id),
-  );
+  const restSelectedIds = selectedIds.filter(id => !includedAndSelectedIds.includes(id));
+  const newlySelected = allChannels.filter(ch => restSelectedIds.includes(ch.id));
 
   return getChannelsInput(newlySelected).concat(includedAndSelected);
 };

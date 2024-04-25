@@ -7,11 +7,7 @@ export interface DisplayColumnProps<TColumn extends string = string> {
   column: TColumn;
 }
 
-const DisplayColumn: React.FC<DisplayColumnProps> = ({
-  displayColumns,
-  children,
-  column,
-}) => {
+const DisplayColumn: React.FC<DisplayColumnProps> = ({ displayColumns, children, column }) => {
   const display = React.useMemo(
     () => isSelected(column, displayColumns, (a, b) => a === b),
     [column, displayColumns],
