@@ -5,9 +5,7 @@ module.exports = () => {
   });
   let environmentsForPRTesting = process.env.ENVIRONMENTS_FOR_PR_TESTING.replace(/'/g, "")
   console.log(environmentsForPRTesting);
-  environmentsForPRTesting = JSON.parse(
-    process.env.ENVIRONMENTS_FOR_PR_TESTING
-  );
+  environmentsForPRTesting = JSON.parse(environmentsForPRTesting);
   const prsToRemove = [];
   environmentsForPRTesting.forEach(environment => {
     if (!openPullRequests.includes(environment.name)) {
