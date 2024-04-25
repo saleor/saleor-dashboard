@@ -11,7 +11,6 @@ COPY locale/ locale/
 COPY scripts/ scripts/
 COPY vite.config.js ./
 COPY tsconfig.json ./
-COPY sw.js ./
 COPY *.d.ts ./
 COPY schema.graphql ./
 COPY introspection.json ./
