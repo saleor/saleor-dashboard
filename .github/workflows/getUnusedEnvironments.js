@@ -1,15 +1,15 @@
 module.exports = () => {
-  const openPullRequests = JSON.parse(process.env.OPEN_PRS);
-  console.log(openPullRequests);
-  const OPEN_PRS = JSON.parse(openPullRequests).map(function (v) {
+  let openPullRequests = JSON.parse(process.env.OPEN_PRS);
+  openPullRequests = JSON.parse(openPullRequests).map(function (v) {
     return v.toLowerCase();
   });
-  const ENVIRONMENTS_FOR_PR_TESTING = JSON.parse(JSON.parse(
+  let environmentsForPRTesting = JSON.parse(
     process.env.ENVIRONMENTS_FOR_PR_TESTING,
-  ));
+  );
+  environmentsForPRTesting = JSON.parse(environmentsForPRTesting);
   const prsToRemove = [];
-  ENVIRONMENTS_FOR_PR_TESTING.forEach(environment => {
-    if (!OPEN_PRS.includes(environment.name)) {
+  environmentsForPRTesting.forEach(environment => {
+    if (!openPullRequests.includes(environment.name)) {
       prsToRemove.push(environment.key);
     }
   });
