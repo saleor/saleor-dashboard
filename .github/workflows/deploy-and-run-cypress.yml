@@ -1,0 +1,123 @@
+name: Deploy and run test with API
+# Build and deploy test instance for every pull request
+
+on:
+  workflow_dispatch:
+    inputs:
+      api_url:
+        required: true
+        description: "Build dashboard and run test with this API url"
+        type: string
+      tags:
+        required: true
+        description: "Run tests with typed tags"
+        type: string
+        default: "@stable"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      base_URL: ${{ steps.set-domain.outputs.domain }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: rlespinasse/github-slug-action@e4699e49fcf890a3172a02c56ba78d867dbb9fd5
+
+      - name: Start deployment
+        uses: bobheadxi/deployments@2666faab9444f09ccd666f2dbe67687a5f6512f0
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          ref: ${{ github.head_ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+
+      - name: Install deps
+        run: |
+          npm ci
+
+      - name: Run build
+        env:
+          API_URI: ${{github.event.inputs.api_url}}
+          APP_MOUNT_URI: /
+          STATIC_URL: /
+          IS_CLOUD_INSTANCE: true
+        run: |
+          npm run build
+
+      - name: Set domain
+        id: set-domain
+        # Set test instance domain based on branch name slug
+        run: |
+          echo "domain=test-deploy-${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ steps.set-domain.outputs.domain }}
+
+      - name: Invalidate cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ steps.set-domain.outputs.domain }}/*"
+
+      - name: Update deployment status
+        uses: bobheadxi/deployments@2666faab9444f09ccd666f2dbe67687a5f6512f0
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env_url: https://${{ steps.set-domain.outputs.domain }}/
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+  cypress-run:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Cypress run critical
+        uses: cypress-io/github-action@v4
+        env:
+          API_URI: ${{github.event.inputs.api_url}}
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          BASE_URL: https://${{needs.deploy.outputs.base_URL}}
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          COMMIT_INFO_MESSAGE: ${{github.event.inputs.tags}} tests triggered on PR - https://github.com/${{ github.repository }}/pull/${{ github.ref_name }}
+          CYPRESS_grepTags: ${{github.event.inputs.tags}}
+        with:
+          record: true
+          tag: ${{github.event.inputs.tags}}, buildAndRun
