@@ -110,19 +110,16 @@ export const canAddRefund = ({
       reason: intl.formatMessage(refundGridMessages.noTransactionsToRefund),
     };
   }
+
   if (
-    transactions.every(
-      transaction =>
-        !transaction.actions.includes(TransactionActionEnum.REFUND),
-    )
+    transactions.every(transaction => !transaction.actions.includes(TransactionActionEnum.REFUND))
   ) {
     return {
       canRefund: false,
-      reason: intl.formatMessage(
-        refundGridMessages.allTransactionsNonRefundable,
-      ),
+      reason: intl.formatMessage(refundGridMessages.allTransactionsNonRefundable),
     };
   }
+
   return {
     canRefund: true,
   };

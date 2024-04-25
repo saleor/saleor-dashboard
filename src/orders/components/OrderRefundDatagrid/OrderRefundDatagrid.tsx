@@ -14,11 +14,7 @@ import { Link } from "react-router-dom";
 import { createGetCellContent, useDatagridOpts, useOrderRefundStaticColumns } from "./datagrid";
 import { refundGridMessages } from "./messages";
 import { manualRefundsExtractor, mergeRefunds } from "./refunds";
-import {
-  canAddRefund,
-  getNotEditabledRefundMessage,
-  isRefundEditable,
-} from "./utils";
+import { canAddRefund, getNotEditabledRefundMessage, isRefundEditable } from "./utils";
 
 interface OrderRefundDatagridProps {
   orderId: string;

@@ -1,7 +1,4 @@
-import {
-  OrderDetailsFragment,
-  TransactionActionEnum,
-} from "@dashboard/graphql";
+import { OrderDetailsFragment, TransactionActionEnum } from "@dashboard/graphql";
 import { intlMock } from "@test/intl";
 
 import { refundGridMessages } from "./messages";
