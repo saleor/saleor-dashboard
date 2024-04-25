@@ -1,0 +1,92 @@
+name: e2e-parallel
+description: "Trigger e2e tests and create reports"
+inputs:
+  apiUrl:
+    description: "API URL from PR or staging"
+    required: true
+  baseUrl:
+    description: "FE URL from PR or staging"
+    required: true
+  commitInfoMessage:
+    description: "Info displayed in commit"
+    required: false
+  cypressGrepTags:
+    description: "Passed tags that should be executed"
+    required: true
+  split:
+    description: "E2E tests containers number"
+    required: true
+  splitIndex:
+    description: "E2E tests container index"
+    required: true
+  install:
+    description: "Triggers cypress installation"
+    required: false
+  browser:
+    description: "Browser which e2e should test"
+    required: false
+  appMountUri:
+    description: "URL for Apps"
+    required: true
+  userName:
+    description: "Name of user which e2e uses"
+    required: true
+  secondUserName:
+    description: "Name of the second user which e2e uses"
+    required: true
+  userPassword:
+    description: "User password for e2e"
+    required: true
+  permissionsUserPassword:
+    description: "User with limited permissions password"
+    required: true
+  mailpitUrl:
+    description: "Mail provider URL"
+    required: true
+  stripeSecretKey:
+    description: "Payments providers secret"
+    required: false
+  stripePublicKey:
+    description: "Payments providers secret"
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: e2e with reports
+      uses: cypress-io/github-action@v6
+      with:
+        install: ${{inputs.install}}
+        browser: ${{inputs.browser}}
+      env:
+        API_URI: ${{inputs.apiUrl}}
+        APP_MOUNT_URI: ${{ inputs.appMountUri }}
+        BASE_URL: ${{inputs.baseUrl}}
+        CYPRESS_USER_NAME: ${{ inputs.userName }}
+        CYPRESS_SECOND_USER_NAME: ${{ inputs.secondUserName }}
+        CYPRESS_USER_PASSWORD: ${{ inputs.userPassword }}
+        CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ inputs.permissionsUserPassword }}
+        CYPRESS_MAILPITURL: ${{ inputs.mailpitUrl }}
+        CYPRESS_grepTags: ${{ inputs.cypressGrepTags }}
+        SPLIT: ${{ inputs.split }}
+        SPLIT_INDEX: ${{ inputs.splitIndex}}
+        STRIPE_SECRET_KEY: ${{inputs.stripeSecretKey}}
+        STRIPE_PUBLIC_KEY: ${{inputs.stripePublicKey}}
+        COMMIT_INFO_MESSAGE: ${{inputs.commitInfoMessage}}
+    - name: Create reports dir
+      shell: bash
+      continue-on-error: true
+      if: ${{ ! cancelled() }}
+      run: npm run qa:create-artifacts-dirs
+    - name: Move screenshots into reports dir
+      shell: bash
+      continue-on-error: true
+      if: ${{ ! cancelled() }}
+      run: npm run qa:move-screenshots
+    - name: Upload reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: report-${{ strategy.job-index }}
+        path: ./cypress/reports
+        retention-days: 5
+        if-no-files-found: ignore
