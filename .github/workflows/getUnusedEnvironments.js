@@ -4,6 +4,7 @@ module.exports = () => {
     return v.toLowerCase();
   });
   let environmentsForPRTesting = process.env.ENVIRONMENTS_FOR_PR_TESTING.replace(/'/g, "")
+  console.log(environmentsForPRTesting);
   environmentsForPRTesting = JSON.parse(
     process.env.ENVIRONMENTS_FOR_PR_TESTING
   );
