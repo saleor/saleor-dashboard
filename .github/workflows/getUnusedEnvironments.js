@@ -3,11 +3,10 @@ module.exports = () => {
   openPullRequests = JSON.parse(openPullRequests).map(function (v) {
     return v.toLowerCase();
   });
-  console.log(process.env.ENVIRONMENTS_FOR_PR_TESTING);
-  let environmentsForPRTesting = JSON.parse(
+  let environmentsForPRTesting = process.env.ENVIRONMENTS_FOR_PR_TESTING.replace(/'/g, "")
+  environmentsForPRTesting = JSON.parse(
     process.env.ENVIRONMENTS_FOR_PR_TESTING
   );
-  environmentsForPRTesting = JSON.parse(environmentsForPRTesting);
   const prsToRemove = [];
   environmentsForPRTesting.forEach(environment => {
     if (!openPullRequests.includes(environment.name)) {
