@@ -1,7 +1,7 @@
 module.exports = () => {
-  const openPullRequestsInString = process.env.OPEN_PRS;
+  const openPullRequests = JSON.parse(process.env.OPEN_PRS);
   console.log(openPullRequestsInString);
-  const OPEN_PRS = JSON.parse(openPullRequestsInString).map(function (v) {
+  const OPEN_PRS = openPullRequests.map(function (v) {
     return v.toLowerCase();
   });
   const ENVIRONMENTS_FOR_PR_TESTING = JSON.parse(JSON.parse(
