@@ -31,7 +31,6 @@ jobs:
         OPEN_PRS: ${{ steps.get-prs-and-envs.outputs.OPEN_PRS }}
         ENVIRONMENTS_FOR_PR_TESTING: ${{ steps.get-prs-and-envs.outputs.ENVIRONMENTS_FOR_PR_TESTING }}
       with:
-        result-encoding: json
         script: |
           const script = require('.github/workflows/getUnusedEnvironments.js')
           return script()
