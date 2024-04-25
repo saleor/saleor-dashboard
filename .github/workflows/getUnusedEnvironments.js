@@ -3,8 +3,9 @@ module.exports = () => {
   openPullRequests = JSON.parse(openPullRequests).map(function (v) {
     return v.toLowerCase();
   });
+  console.log(process.env.ENVIRONMENTS_FOR_PR_TESTING);
   let environmentsForPRTesting = JSON.parse(
-    process.env.ENVIRONMENTS_FOR_PR_TESTING,
+    process.env.ENVIRONMENTS_FOR_PR_TESTING
   );
   environmentsForPRTesting = JSON.parse(environmentsForPRTesting);
   const prsToRemove = [];
