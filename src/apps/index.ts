@@ -1,1 +1,3 @@
-export { AppsSectionRoot } from "./apps-routing";
+import { AppsSectionRoot } from "./apps-routing";
+
+export default AppsSectionRoot;

@@ -16,8 +16,8 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { AppsSectionRoot } from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
+import { AppSections } from "./apps/urls";
 import { attributeSection } from "./attributes/urls";
 import Auth from "./auth";
 import AuthProvider from "./auth/AuthProvider";
@@ -60,7 +60,7 @@ const CategorySection = loadable(() => import("./categories"));
 const ChannelsSection = loadable(() => import("./channels"));
 const CollectionSection = loadable(() => import("./collections"));
 const ConfigurationSection = loadable(() => import("./configuration"));
-const AppSections = loadable(() => import("./apps"));
+const AppSectionsRoot = loadable(() => import("./apps/"));
 const AttributeSection = loadable(() => import("./attributes"));
 const CustomAppsSection = loadable(() => import("./custom-apps"));
 const CustomerSection = loadable(() => import("./customers"));
@@ -277,7 +277,7 @@ const Routes: React.FC = () => {
                   <SectionRoute
                     permissions={[]}
                     path={AppSections.appsSection}
-                    component={AppsSectionRoot}
+                    component={AppSectionsRoot}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PRODUCTS]}

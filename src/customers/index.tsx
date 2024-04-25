@@ -57,7 +57,7 @@ const CustomerAddressesView: React.FC<RouteComponentProps<CustomerAddressesRoute
   );
 };
 
-export const CustomerSection: React.FC<{}> = () => {
+const CustomerSection: React.FC<{}> = () => {
   const intl = useIntl();
 
   return (
@@ -72,3 +72,5 @@ export const CustomerSection: React.FC<{}> = () => {
     </>
   );
 };
+
+export default CustomerSection;
